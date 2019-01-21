@@ -4,7 +4,7 @@ require_once 'include/utils/activity_utils.php';
 
 class activity_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 

@@ -51,6 +51,7 @@ require_once("data/Relationships/One2MRelationship.php");
  */
 class One2OneRelationship extends M2MRelationship
 {
+
     public function __construct($def)
     {
         parent::__construct($def);
@@ -65,7 +66,8 @@ class One2OneRelationship extends M2MRelationship
     {
         $dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
         //If the current data matches the existing data, don't do anything
-        if (!$this->checkExisting($dataToInsert)) {
+        if (!$this->checkExisting($dataToInsert))
+        {
             $lhsLinkName = $this->lhsLink;
             $rhsLinkName = $this->rhsLink;
             //In a one to one, any existing links from both sides must be removed first.
@@ -81,4 +83,6 @@ class One2OneRelationship extends M2MRelationship
         // data matched what was there so return false, since nothing happened
         return false;
     }
+
+
 }

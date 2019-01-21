@@ -254,7 +254,7 @@ class AOR_Chart extends Basic
     }
 
     /**
-     * 
+     *
      * @param type $labels
      * @return boolean Returns TRUE if colours successfully changed. FALSE on error and using colour defaults.
      */
@@ -357,7 +357,7 @@ class AOR_Chart extends Basic
             // exception
             LoggerManager::getLogger()->error("Invalid char data labels detected for chart type: $this->type");
         }
-        
+
         return $chart;
     }
 

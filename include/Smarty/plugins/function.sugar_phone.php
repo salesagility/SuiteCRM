@@ -10,7 +10,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -98,23 +98,25 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Type:     function<br>
  * Name:     sugar_translate<br>
  * Purpose:  translates a label into the users current language
- *
+ * 
  * @author Majed Itani {majed at sugarcrm.com
  * @param array
  * @param Smarty
  */
 function smarty_function_sugar_phone($params, &$smarty)
 {
-    if (!isset($params['value'])) {
-        $smarty->trigger_error("sugar_phone: missing 'value' parameter");
-        return '';
+	if (!isset($params['value'])){
+		$smarty->trigger_error("sugar_phone: missing 'value' parameter");
+		return '';
+	}
+	
+	global $system_config;
+    if(isset($system_config->settings['system_skypeout_on']) && $system_config->settings['system_skypeout_on'] == 1
+    	&& isset($params['value']) && skype_formatted($params['value'])  ) {
+    		$GLOBALS['log']->debug($params['value']);
+			return '<a href="tel:'.format_skype($params['value']).'">'.$params['value'].'</a>';
+    } else {
+    	return $params['value'];
     }
-    
-    global $system_config;
-    if (isset($system_config->settings['system_skypeout_on']) && $system_config->settings['system_skypeout_on'] == 1
-        && isset($params['value']) && skype_formatted($params['value'])) {
-        $GLOBALS['log']->debug($params['value']);
-        return '<a href="tel:'.format_skype($params['value']).'">'.$params['value'].'</a>';
-    }
-    return $params['value'];
 }
+?>

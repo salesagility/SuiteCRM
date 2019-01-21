@@ -1087,7 +1087,7 @@ class nusoap_server extends nusoap_base
 
     /**
     * Specify a fault to be returned to the client.
-    * This also acts as a flag to the server that a fault has occured.
+    * This also acts as a flag to the server that a fault has occurred.
     *
     * @param	string $faultcode
     * @param	string $faultstring

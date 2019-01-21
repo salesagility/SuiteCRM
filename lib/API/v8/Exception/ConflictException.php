@@ -48,7 +48,9 @@ use SuiteCRM\Enumerator\ExceptionCode;
  */
 class ConflictException extends ApiException
 {
+    
     const MSG_PREFIX = '[Conflict]';
     const DEFAULT_CODE = 8021;
     const HTTP_STATUS = 409;
+    
 }

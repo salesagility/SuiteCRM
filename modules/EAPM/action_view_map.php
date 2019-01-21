@@ -39,3 +39,4 @@
  */
 
 $action_view_map['displayproperties']= 'displayproperties';
+ 

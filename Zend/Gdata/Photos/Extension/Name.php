@@ -43,6 +43,7 @@ require_once 'Zend/Gdata/Photos.php';
  */
 class Zend_Gdata_Photos_Extension_Name extends Zend_Gdata_Extension
 {
+
     protected $_rootNamespace = 'gphoto';
     protected $_rootElement = 'name';
 
@@ -57,4 +58,5 @@ class Zend_Gdata_Photos_Extension_Name extends Zend_Gdata_Extension
         parent::__construct();
         $this->setText($text);
     }
+
 }

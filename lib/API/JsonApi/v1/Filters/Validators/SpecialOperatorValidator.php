@@ -58,7 +58,7 @@ class SpecialOperatorValidator implements ValidatorInterface
      */
     public function isValid($value)
     {
-        if (!is_string(value)) {
+        if(!is_string(value)) {
             throw new InvalidArgumentException(
                 '[JsonApi][v1][Filters][Validators][SpecialOperatorValidator][expected type to be string] $fieldKey'
             );

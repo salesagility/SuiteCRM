@@ -38,6 +38,7 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_Extension_Rating extends Zend_Gdata_Extension
 {
+
     protected $_rootElement = 'rating';
     protected $_min = null;
     protected $_max = null;
@@ -54,13 +55,9 @@ class Zend_Gdata_Extension_Rating extends Zend_Gdata_Extension
      * @param integer $numRaters (optional) Number of raters.
      * @param integer $value (optional) The value of the rating.
      */
-    public function __construct(
-        $average = null,
-        $min = null,
-            $max = null,
-        $numRaters = null,
-        $value = null
-    ) {
+    public function __construct($average = null, $min = null,
+            $max = null, $numRaters = null, $value = null)
+    {
         parent::__construct();
         $this->_average = $average;
         $this->_min = $min;
@@ -125,7 +122,6 @@ class Zend_Gdata_Extension_Rating extends Zend_Gdata_Extension
                 break;
             case 'value':
                 $this->_value = $attribute->nodeValue;
-                // no break
             default:
                 parent::takeAttributeFromDOM($attribute);
         }
@@ -240,4 +236,5 @@ class Zend_Gdata_Extension_Rating extends Zend_Gdata_Extension
         $this->_value = $value;
         return $this;
     }
+
 }

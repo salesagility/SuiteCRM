@@ -46,18 +46,17 @@ require_once('include/EditView/QuickCreate.php');
 
 
 
-class AccountsQuickCreate extends QuickCreate
-{
-    public $javascript;
+class AccountsQuickCreate extends QuickCreate {
     
-    public function process()
-    {
+    var $javascript;
+    
+    function process() {
         global $current_user, $timedate, $app_list_strings, $current_language, $mod_strings;
         $mod_strings = return_module_language($current_language, 'Accounts');
         
         parent::process();
   
-        if ($this->viaAJAX) { // override for ajax call
+        if($this->viaAJAX) { // override for ajax call
             $this->ss->assign('saveOnclick', "onclick='if(check_form(\"accountsQuickCreate\")) return SUGAR.subpanelUtils.inlineSave(this.form.id, \"accounts\"); else return false;'");
             $this->ss->assign('cancelOnclick', "onclick='return SUGAR.subpanelUtils.cancelCreate(\"subpanel_accounts\")';");
         }
@@ -72,5 +71,5 @@ class AccountsQuickCreate extends QuickCreate
         $this->javascript->addAllFields('');
 
         $this->ss->assign('additionalScripts', $this->javascript->getScript(false));
-    }
+    }   
 }

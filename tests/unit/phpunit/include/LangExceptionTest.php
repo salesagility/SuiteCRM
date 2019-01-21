@@ -53,7 +53,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class LangExceptionTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         if (!defined('sugarEntry')) {
@@ -77,7 +77,7 @@ class LangExceptionTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         include_once __DIR__ . '/../../../../include/LangException.php';
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
     }

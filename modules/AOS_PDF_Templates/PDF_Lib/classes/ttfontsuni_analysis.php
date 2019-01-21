@@ -2,8 +2,7 @@
 
 require_once(_MPDF_PATH.'classes/ttfontsuni.php');
 
-class TTFontFile_Analysis EXTENDS TTFontFile
-{
+class TTFontFile_Analysis EXTENDS TTFontFile {
 
 	// Used to get font information from files in directory
 	function extractCoreInfo($file, $TTCfontID=0) {
@@ -141,7 +140,7 @@ class TTFontFile_Analysis EXTENDS TTFontFile
 					$this->_pos = $opos;
 					$this->seek($opos);
 				}
-				elseif ($platformId == 1 && $encodingId == 0 && $languageId == 0) { // Macintosh, Roman, English, PS Name
+				else if ($platformId == 1 && $encodingId == 0 && $languageId == 0) { // Macintosh, Roman, English, PS Name
 					$opos = $this->_pos;
 					$N = $this->get_chunk($string_data_offset + $offset, $length);
 					$this->_pos = $opos;
@@ -155,9 +154,9 @@ class TTFontFile_Analysis EXTENDS TTFontFile
 			}
 			if ($names[6])
 				$psName = preg_replace('/ /','-',$names[6]);
-			elseif ($names[4])
+			else if ($names[4])
 				$psName = preg_replace('/ /','-',$names[4]);
-			elseif ($names[1])
+			else if ($names[1])
 				$psName = preg_replace('/ /','-',$names[1]);
 			else
 				$psName = '';
@@ -236,7 +235,7 @@ class TTFontFile_Analysis EXTENDS TTFontFile
 					if (!$unicode_cmap_offset) $unicode_cmap_offset = $cmap_offset + $offset;
 				}
 			}
-			elseif ((($platformID == 3 && $encodingID == 10) || $platformID == 0)) { // Microsoft, Unicode Format 12 table HKCS
+			else if ((($platformID == 3 && $encodingID == 10) || $platformID == 0)) { // Microsoft, Unicode Format 12 table HKCS
 				$format = $this->get_ushort($cmap_offset + $offset);
 				if ($format == 12) {
 					$unicode_cmap_offset = $cmap_offset + $offset;
@@ -392,7 +391,7 @@ class TTFontFile_Analysis EXTENDS TTFontFile
 						// Assign new PUA Unicode between F500 - F7FF
 						$bit = $uni & 0xFF;
 						if ($form == 'I') { $bit += 0xF600; }
-						elseif ($form == 'M') { $bit += 0xF700; }
+						else if ($form == 'M') { $bit += 0xF700; }
 						else  { $bit += 0xF500; }
 						$unAGlyphs .= $gid;
 						$name = 'uni'.strtoupper($m[1]).'.'.strtolower($m[2]);
@@ -424,16 +423,16 @@ class TTFontFile_Analysis EXTENDS TTFontFile
 		$italic = false; 
 		$ftype = '';
 		if ($macStyle & (1 << 0)) { $bold = true; }	// bit 0 bold
-		elseif ($fsSelection & (1 << 5)) { $bold = true; }	// 5 	BOLD 	Characters are emboldened
+		else if ($fsSelection & (1 << 5)) { $bold = true; }	// 5 	BOLD 	Characters are emboldened
 
 		if ($macStyle & (1 << 1)) { $italic = true; }	// bit 1 italic
-		elseif ($fsSelection & (1 << 0)) { $italic = true; }	// 0 	ITALIC 	Font contains Italic characters, otherwise they are upright
-		elseif ($this->italicAngle <> 0) { $italic = true; }
+		else if ($fsSelection & (1 << 0)) { $italic = true; }	// 0 	ITALIC 	Font contains Italic characters, otherwise they are upright
+		else if ($this->italicAngle <> 0) { $italic = true; }
 
 		if ($isFixedPitch ) { $ftype = 'mono'; }
-		elseif ($sFamily >0 && $sFamily <8) { $ftype = 'serif'; }
-		elseif ($sFamily ==8) { $ftype = 'sans'; }
-		elseif ($sFamily ==10) { $ftype = 'cursive'; }
+		else if ($sFamily >0 && $sFamily <8) { $ftype = 'serif'; }
+		else if ($sFamily ==8) { $ftype = 'sans'; }
+		else if ($sFamily ==10) { $ftype = 'cursive'; }
 		// Use PANOSE
 		if ($panose) { 
 			$bFamilyType=ord($panose[0]); 
@@ -441,12 +440,12 @@ class TTFontFile_Analysis EXTENDS TTFontFile
 				$bSerifStyle=ord($panose[1]); 
 				if (!$ftype) { 
 					if ($bSerifStyle>1 && $bSerifStyle<11) { $ftype = 'serif'; }
-					elseif ($bSerifStyle>10) { $ftype = 'sans'; }
+					else if ($bSerifStyle>10) { $ftype = 'sans'; }
 				}
 				$bProportion=ord($panose[3]);
 				if ($bProportion==9 || $bProportion==1) { $ftype = 'mono'; }	// ==1 i.e. No Fit needed for OCR-a and -b
 			}
-			elseif ($bFamilyType==3) {
+			else if ($bFamilyType==3) {
 				$ftype = 'cursive'; 
 			}
 		}

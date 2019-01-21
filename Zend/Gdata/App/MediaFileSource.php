@@ -142,4 +142,5 @@ class Zend_Gdata_App_MediaFileSource extends Zend_Gdata_App_BaseMediaSource
     {
         return $this->getFilename();
     }
+
 }

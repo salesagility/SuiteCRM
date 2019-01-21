@@ -117,7 +117,7 @@ class FilterParser
      */
     public function parseFilter($filterKey, $filterValue)
     {
-        if (empty($filterKey)) {
+        if(empty($filterKey)) {
             // predefined filter eg roi
             $response = array($filterValue);
         } else {
@@ -249,41 +249,43 @@ class FilterParser
          *      [[operator]][field]
          *      [[operator]][[[special_operator]]]
          */
-        foreach ($values as $value) {
+        foreach ($values as $value)
+        {
             if ($standardOperator->hasOperator($value)) {
                 $operand = '';
                 $operators = '';
                 $operatorsMatches= array();
                 $operatorsArray= array();
-                if (preg_match_all('/\[+[A-Za-z0-9\_\-\.]+\]+/', $value, $operatorsMatches) !== false) {
+                if(preg_match_all('/\[+[A-Za-z0-9\_\-\.]+\]+/', $value, $operatorsMatches) !== false) {
                     // split operators in from their operands
-                    foreach ($operatorsMatches[0] as $operator) {
-                        // Field Operators [field.fieldname]
-                        if ($this->isInOperatorsArray($operator, self::$filterFieldOperators)) {
-                            $operators .= $operator;
-                            $operatorsArray[] = $operator;
-                        } elseif ($this->isInOperatorsArray($operator, self::$filterSpecialOperators)) {
-                            $operators .= $operator;
-                            $operatorsArray[] = $operator;
-                        } elseif ($this->isInOperatorsArray($operator, self::$filterOperators)) {
-                            $operators .= $operator;
-                            $operatorsArray[] = $operator;
-                        } else {
-                            throw new Exception(
+                   foreach ($operatorsMatches[0] as $operator) {
+                       // Field Operators [field.fieldname]
+                       if ($this->isInOperatorsArray($operator, self::$filterFieldOperators)) {
+                           $operators .= $operator;
+                           $operatorsArray[] = $operator;
+                       } elseif ($this->isInOperatorsArray($operator, self::$filterSpecialOperators)) {
+                           $operators .= $operator;
+                           $operatorsArray[] = $operator;
+                       } elseif ($this->isInOperatorsArray($operator, self::$filterOperators)) {
+                           $operators .= $operator;
+                           $operatorsArray[] = $operator;
+                       } else {
+                           throw new Exception(
                                '[JsonApi][v1][Filters][Parsers][FilterParser]' .
                                '[parserFieldFilters][operator not found] please ensure that an operator has been added to '.
                                'containers '
                            );
-                        }
-                    }
+                       }
+                   }
                 }
 
                 $parsedValues = $operatorsArray;
                 $diff = $this->stringDifference($value, $operators);
-                if (empty($diff) === false) {
+                if(empty($diff) === false) {
                     // add operands to the end or data structure
                     $parsedValues[] = $diff;
                 }
+
             } else {
                 $parsedValues[] = $value;
             }
@@ -323,11 +325,10 @@ class FilterParser
      * @param OperatorInterface[] $operatorsHaystack
      * @return bool
      */
-    protected function isInOperatorsArray($operatorNeedle, array $operatorsHaystack)
-    {
+    protected function isInOperatorsArray($operatorNeedle, array $operatorsHaystack) {
         foreach ($operatorsHaystack as $operator) {
             /** @var OperatorInterface $operator */
-            if ($operator->isOperator($operatorNeedle)) {
+            if($operator->isOperator($operatorNeedle)) {
                 return true;
             }
         }
@@ -339,8 +340,7 @@ class FilterParser
      * @param string $b
      * @return string
      */
-    private function stringDifference($a, $b)
-    {
+    private function stringDifference($a, $b) {
         $aArray = str_split($a);
         $bArray = str_split($b);
         $arrayDiff = array_diff($aArray, $bArray);
@@ -355,21 +355,22 @@ class FilterParser
     private function mergeValueToFilterKey(array $filterKeyArray, array $filterValueArray)
     {
         $filterStructure = $filterKeyArray;
-        if (empty($filterKeyArray)) {
+        if(empty($filterKeyArray)) {
             return $filterValueArray;
         }
 
         $nodeReference = &$filterStructure;
         $isLeaf = false;
         do {
-            if (is_array(current($nodeReference))) {
+            if(is_array(current($nodeReference))) {
                 $nodeReference = & $nodeReference[key($nodeReference)];
             } else {
                 $isLeaf = true;
                 $nodeReference = $filterValueArray;
             }
-        } while ($isLeaf === false);
+        } while($isLeaf === false);
 
         return $filterStructure;
     }
+
 }

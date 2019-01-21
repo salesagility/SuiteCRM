@@ -152,10 +152,10 @@ class Spots extends Basic
      *
      * @return string is the config file with the label values in place of the key names
      */
-    public function replaceKeyValueWithLabel($config)
+     public function replaceKeyValueWithLabel($config)
     {
         //Strings are loaded this way as the dashlet mod_strings was set to Home
-        $spotStrings = return_module_language($GLOBALS['current_language'], 'Spots');
+       $spotStrings = return_module_language($GLOBALS['current_language'], 'Spots');
 
         $jsonConfig = json_decode($config, true);
         if (isset($jsonConfig['cols']) && count($jsonConfig['cols']) > 0) {
@@ -177,7 +177,9 @@ class Spots extends Basic
                 $jsonConfig['exclusions'][$newKey] = $jsonConfig['exclusions'][$key];
                 unset($jsonConfig['exclusions'][$key]);
             }
-        } elseif (isset($jsonConfig['exclusions']) && count($jsonConfig['exclusions']) == 0) {
+        }
+        elseif(isset($jsonConfig['exclusions']) && count($jsonConfig['exclusions']) == 0)
+        {
             $jsonConfig['exclusions'] = new stdClass();
         }
 
@@ -187,7 +189,9 @@ class Spots extends Basic
                 $jsonConfig['inclusions'][$newKey] = $jsonConfig['inclusions'][$key];
                 unset($jsonConfig['inclusions'][$key]);
             }
-        } elseif (isset($jsonConfig['inclusions']) && count($jsonConfig['inclusions']) == 0) {
+        }
+        elseif(isset($jsonConfig['inclusions']) && count($jsonConfig['inclusions']) == 0)
+        {
             $jsonConfig['inclusions'] = new stdClass();
         }
 
@@ -197,7 +201,9 @@ class Spots extends Basic
                 $jsonConfig['inclusionsInfo'][$newKey] = $jsonConfig['inclusionsInfo'][$key];
                 unset($jsonConfig['inclusionsInfo'][$key]);
             }
-        } elseif (isset($jsonConfig['inclusionsInfo']) && count($jsonConfig['inclusionsInfo']) == 0) {
+        }
+        elseif(isset($jsonConfig['inclusionsInfo']) && count($jsonConfig['inclusionsInfo']) == 0)
+        {
             $jsonConfig['inclusionsInfo'] = new stdClass();
         }
 
@@ -225,8 +231,9 @@ class Spots extends Basic
                 $this->logSpotsErrorWithKeyMatching($type);
 
                 return array();
+            } else {
+                $keys[] = reset($key);
             }
-            $keys[] = reset($key);
         }
 
         return $keys;

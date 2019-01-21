@@ -62,6 +62,7 @@ require_once 'Zend/Gdata/YouTube/Extension/CountHint.php';
  */
 class Zend_Gdata_YouTube_PlaylistListEntry extends Zend_Gdata_Entry
 {
+
     protected $_entryClassName = 'Zend_Gdata_YouTube_PlaylistListEntry';
 
     /**
@@ -295,4 +296,5 @@ class Zend_Gdata_YouTube_PlaylistListEntry extends Zend_Gdata_Entry
             return $this->getFeedLink(Zend_Gdata_YouTube::PLAYLIST_REL)->href;
         }
     }
+
 }

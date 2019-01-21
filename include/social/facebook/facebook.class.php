@@ -2,12 +2,11 @@
 require_once("include/social/facebook/facebook_sdk/src/facebook.php");
 
 
-class facebook_helper
-{
-    public $facebook;
+class facebook_helper{
 
-    public function __construct()
-    {
+    var $facebook;
+
+    function __construct() {
         require_once("custom/modules/Connectors/connectors/sources/ext/rest/facebook/config.php");
 
         $fb_config = array(
@@ -16,8 +15,7 @@ class facebook_helper
         );
         $this->facebook = new Facebook($fb_config);
     }
-    public function get_my_user()
-    {
+    function get_my_user(){
         try {
             // Proceed knowing you have a logged in user who's authenticated.
             return $this->facebook->api('/me');
@@ -26,16 +24,13 @@ class facebook_helper
             $user = null;
         }
     }
-    public function get_my_newsfeed()
-    {
+    function get_my_newsfeed(){
         return $this->facebook->api('me/home'); //get my news feed
     }
-    public function get_other_newsfeed($user, $limit = "100")
-    {
+    function get_other_newsfeed($user, $limit = "100"){
         return $this->facebook->api('/' . $user . '/feed?limit=' . $limit);
     }
-    public function get_login_url($url)
-    {
+    function get_login_url($url){
         $params = array(
             'scope' => 'read_stream, publish_stream'
 
@@ -44,18 +39,15 @@ class facebook_helper
 
         return $this->facebook->getLoginUrl($params);
     }
-    public function get_logout_url()
-    {
+    function get_logout_url(){
         return $this->facebook->getLogoutUrl();
     }
-    public function get_facebook_user($username)
-    {
+    function get_facebook_user($username){
         return $this->facebook->api('/' . $username);
     }
 
-    public function process_feed($story)
-    {
-        switch ($story['type']) {
+    function process_feed($story){
+        switch($story['type']){
             case "status":
                 return $this->status($story);
                 break;
@@ -71,8 +63,9 @@ class facebook_helper
         }
     }
 
-    public function photo_status($story)
-    {
+    function photo_status($story){
+
+
         $string .= "<div style=' margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc'>";
         $string .= '<div style="padding: 3px; width: 100%;">' .$story['from']['name'] . '</div>';
         $string .= '<img src=https://graph.facebook.com/' . $story['from']['id'] . '/picture>';
@@ -83,17 +76,17 @@ class facebook_helper
         return $string;
     }
 
-    public function status($story)
-    {
+    function status($story){
+
         $to_name = $this->get_to($story);
 
         $string .= "<div style=' margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc'>";
         $string .= '<div style="padding: 3px; width: 100%;">' .$story['from']['name'] . '</div>';
 
-        if ($story['status_type'] == 'approved_friend') {
+        if($story['status_type'] == 'approved_friend'){
             $string .= '<img src=https://graph.facebook.com/' . $story['story_tags']['0']['0']['id']. '/picture>';
             $string .= '<img src=https://graph.facebook.com/' . $story['story_tags']['18']['0']['id']. '/picture>';
-        } else {
+        }else{
             $string .= '<img src=https://graph.facebook.com/' . $story['from']['id'] . '/picture>';
             $string .= '<img src=https://graph.facebook.com/' . $story['to']['id'] . '/picture>';
         }
@@ -106,9 +99,10 @@ class facebook_helper
         $string .= "</div>";
 
         return $string;
+
+
     }
-    public function link_type($story)
-    {
+    function link_type($story){
         $string .= "<div style='margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc'>";
         $string .= '<div style="padding: 3px; width: 100%;">' . $story['message'] . '</div>';
 
@@ -117,10 +111,12 @@ class facebook_helper
         $string .= '<p>' . $story['caption'] . '</p>';
         $string .= "</div>";
         return $string;
+
+
     }
 
-    public function video_type($story)
-    {
+    function video_type($story){
+
         $string = '';
         $string .= "<div style=' margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc'>";
         $string .= '<div style="padding: 3px; width: 100%;">' . $story['from']['name'] .' Shared a video with '. $story['message'] . '</div>';
@@ -132,16 +128,16 @@ class facebook_helper
         return $string;
     }
 
-    public function get_to($story)
-    {
+    function get_to($story){
+
         $value = '';
 
-        foreach ($story as $field => $value) {
-            if (isset($story[$field]['data'][0]['name'])) {
-                $value = $story['data']['0']['name'];
-                break;
-            }
-            if ($field == 'to') {
+        foreach($story as $field => $value){
+           if(isset($story[$field]['data'][0]['name'])){
+               $value = $story['data']['0']['name'];
+               break;
+           }
+            if($field == 'to'){
                 $value = $story['data']['0']['name'];
 
                 break;
@@ -149,5 +145,6 @@ class facebook_helper
         }
 
         return $value;
+
     }
 }

@@ -37,11 +37,14 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+error_reporting(E_ALL);
+
 /* bootstrap composer's autoloader */
 require_once __DIR__ . '/../vendor/autoload.php';
 
 /* bootstrap sugarcrm */
 //echo "CWD:" . getcwd() . "\n";
+error_reporting(E_ALL);
 chdir('../');
 define('sugarEntry', true);
 global $sugar_config, $db;

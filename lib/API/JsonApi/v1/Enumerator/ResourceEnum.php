@@ -39,6 +39,7 @@
  */
 namespace SuiteCRM\API\JsonApi\v1\Enumerator;
 
+
 /**
  * Class ResourceEnum
  * @package SuiteCRM\API\JsonApi\v1

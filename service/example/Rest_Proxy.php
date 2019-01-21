@@ -41,56 +41,40 @@
 
 ob_start();
 $fp =  fopen('proxy.log', 'a');
-define('PROXY_SERVER', 'http://localhost/service/v2/rest.php');
+define('PROXY_SERVER',  'http://localhost/service/v2/rest.php');
 $headers = (function_exists('getallheaders'))?getallheaders(): array();
 $_headers  = array();
-foreach ($headers as $k=>$v) {
-    $_headers[strtolower($k)] = $v;
+foreach($headers as $k=>$v){
+	$_headers[strtolower($k)] = $v;
 }
 $url = parse_url(PROXY_SERVER);
-if (!empty($_headers['referer'])) {
-    $curl_headers['referer'] = 'Referer: '  . $_headers['referer'];
-}
-if (!empty($_headers['user-agent'])) {
-    $curl_headers['user-agent'] = 'User-Agent: ' . $_headers['user-agent'];
-}
-if (!empty($_headers['accept'])) {
-    $curl_headers['accept'] = 'Accept: ' . $_headers['accept'];
-}
-if (!empty($_headers['accept-language'])) {
-    $curl_headers['accept-Language'] = 'Accept-Language: ' . $_headers['accept-language'];
-}
-if (!empty($_headers['accept-encoding'])) {
-    $curl_headers['accept-encoding:'] = 'Accept-Encoding: ' .$_headers['accept-encoding'];
-}
-if (!empty($_headers['accept-charset'])) {
-    $curl_headers['accept-charset:'] = 'Accept-Charset: ' .$_headers['accept-charset'];
-}
+if(!empty($_headers['referer']))$curl_headers['referer'] = 'Referer: '  . $_headers['referer'];
+if(!empty($_headers['user-agent']))$curl_headers['user-agent'] = 'User-Agent: ' . $_headers['user-agent'];
+if(!empty($_headers['accept']))$curl_headers['accept'] = 'Accept: ' . $_headers['accept'];
+if(!empty($_headers['accept-language']))$curl_headers['accept-Language'] = 'Accept-Language: ' . $_headers['accept-language'];
+if(!empty($_headers['accept-encoding']))$curl_headers['accept-encoding:'] = 'Accept-Encoding: ' .$_headers['accept-encoding'];
+if(!empty($_headers['accept-charset']))$curl_headers['accept-charset:'] = 'Accept-Charset: ' .$_headers['accept-charset'];
 
 // create a new cURL resource
 $ch = curl_init();
 // set URL and other appropriate options
 curl_setopt($ch, CURLOPT_URL, PROXY_SERVER);
-curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt ($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_HTTPHEADER, $curl_headers);
 curl_setopt($ch, CURLOPT_HEADER, 1);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
-curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
+curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0  );
 $post_data = '';
-if (!empty($_POST)) {
-    foreach ($_POST as $k=>$v) {
-        if (get_magic_quotes_gpc()) {
-            $v = stripslashes($v);
-        }
-        if (!empty($post_data)) {
-            $post_data .= '&';
-        }
-        $post_data .= "$k=" . $v;
-    }
+if(!empty($_POST)){
+	foreach($_POST as $k=>$v){
+		if(get_magic_quotes_gpc())$v = stripslashes($v);
+		if(!empty($post_data))$post_data .= '&';
+		$post_data .= "$k=" . $v;
+	}
 }
-curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+curl_setopt ($ch, CURLOPT_POSTFIELDS, $post_data);
 // grab URL and pass it to the browser
 fwrite($fp, 'client headers:' . var_export($headers, true) . "\n");
 fwrite($fp, 'starting curl request' . "\n");
@@ -105,10 +89,9 @@ $result = explode("\r\n\r\n", $result, 2);
 $result_headers = explode("\r\n", $result[0]);
 //now echo out the same headers the server passed to us
 fwrite($fp, "setting headers\n");
-foreach ($result_headers as &$header) {
-    if (substr_count($header, 'Set-Cookie:') ==0) {
-        header($header);
-    }
+foreach($result_headers as &$header){
+	if(substr_count($header, 'Set-Cookie:') ==0)
+	header($header);
 }
 header('Content-Length: ' . strlen($result[1]));
 header('Connection: close');

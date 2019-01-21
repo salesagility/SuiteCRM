@@ -1,42 +1,42 @@
 <?php
-$popupMeta = array(
+$popupMeta = array (
     'moduleMain' => 'OutboundEmailAccount',
     'varName' => 'OutboundEmailAccount',
     'orderBy' => 'outboundemailaccount.name',
-    'whereClauses' => array(
+    'whereClauses' => array (
   'mail_smtpuser' => 'outbound_email.mail_smtpuser',
   'mail_smtpserver' => 'outbound_email.mail_smtpserver',
 ),
-    'searchInputs' => array(
+    'searchInputs' => array (
   4 => 'mail_smtpuser',
   5 => 'mail_smtpserver',
 ),
-    'searchdefs' => array(
+    'searchdefs' => array (
   'mail_smtpuser' =>
-  array(
+  array (
     'type' => 'varchar',
     'label' => 'LBL_USERNAME',
     'width' => '10%',
     'name' => 'mail_smtpuser',
   ),
   'mail_smtpserver' =>
-  array(
+  array (
     'type' => 'varchar',
     'label' => 'LBL_SMTP_SERVERNAME',
     'width' => '10%',
     'name' => 'mail_smtpserver',
   ),
 ),
-    'listviewdefs' => array(
+    'listviewdefs' => array (
   'mail_smtpuser' =>
-  array(
+  array (
     'type' => 'varchar',
     'label' => 'LBL_USERNAME',
     'width' => '10%',
     'default' => true,
   ),
   'mail_smtpserver' =>
-  array(
+  array (
     'type' => 'varchar',
     'label' => 'LBL_SMTP_SERVERNAME',
     'width' => '10%',

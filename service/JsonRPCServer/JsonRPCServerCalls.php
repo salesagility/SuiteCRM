@@ -96,7 +96,8 @@ class JsonRPCServerCalls
         $jsonServerUtils = new JsonRPCServerUtils();
         $list_arr = array();
         // override query limits
-        if ($sugar_config['list_max_entries_per_page'] < 31) {
+        if ($sugar_config['list_max_entries_per_page'] < 31)
+        {
             $sugar_config['list_max_entries_per_page'] = 31;
         }
 

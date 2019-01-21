@@ -38,6 +38,7 @@ require_once 'Zend/Gdata/App/Extension.php';
  */
 abstract class Zend_Gdata_App_Extension_Text extends Zend_Gdata_App_Extension
 {
+
     protected $_rootElement = null;
     protected $_type = 'text';
 
@@ -85,4 +86,5 @@ abstract class Zend_Gdata_App_Extension_Text extends Zend_Gdata_App_Extension
         $this->_type = $value;
         return $this;
     }
+
 }

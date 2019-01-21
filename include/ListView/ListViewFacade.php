@@ -215,15 +215,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
              ob_end_clean();
          } else {
              $output = get_form_header($title, '', false) . $this->lv->display();
-         }
-         if ($return) {
-             return $output;
-         }
-         echo $output;
-     }
+ 		}
+        if($return)
+            return $output;
+        else
+            echo $output;
+ 	}
 
-     public function setTitle($title = '')
-     {
-         $this->title = $title;
-     }
+	function setTitle($title = ''){
+		$this->title = $title;
+	}
  }

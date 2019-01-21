@@ -49,8 +49,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelTopMessage extends SugarWidgetSubPanelTopButton
 {
-    public function display($defines, $additionalFormFields = null, $nonbutton = false)
-    {
+	function display($defines, $additionalFormFields = null, $nonbutton = false)
+	{
         return $defines['message'];
-    }
+	}
 }

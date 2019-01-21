@@ -1,140 +1,140 @@
 <?php
-// created: 2018-05-16 12:26:27
-$unified_search_modules_display = array(
-  'AOP_Case_Events' =>
-  array(
-    'visible' => false,
-  ),
-  'AOP_Case_Updates' =>
-  array(
-    'visible' => false,
-  ),
-  'AOR_Reports' =>
-  array(
-    'visible' => false,
-  ),
-  'AOS_Contracts' =>
-  array(
-    'visible' => false,
-  ),
-  'AOS_Invoices' =>
-  array(
-    'visible' => false,
-  ),
-  'AOS_PDF_Templates' =>
-  array(
-    'visible' => false,
-  ),
-  'AOS_Product_Categories' =>
-  array(
-    'visible' => false,
-  ),
-  'AOS_Products' =>
-  array(
-    'visible' => false,
-  ),
-  'AOS_Quotes' =>
-  array(
-    'visible' => false,
-  ),
-  'AOW_Processed' =>
-  array(
-    'visible' => false,
-  ),
-  'AOW_WorkFlow' =>
-  array(
-    'visible' => false,
-  ),
-  'Accounts' =>
-  array(
+// created: 2018-08-15 11:18:10
+$unified_search_modules_display = array (
+  'Accounts' => 
+  array (
     'visible' => true,
   ),
-  'Bugs' =>
-  array(
-    'visible' => false,
-  ),
-  'Calls' =>
-  array(
+  'Contacts' => 
+  array (
     'visible' => true,
   ),
-  'Calls_Reschedule' =>
-  array(
-    'visible' => false,
-  ),
-  'Campaigns' =>
-  array(
-    'visible' => false,
-  ),
-  'Cases' =>
-  array(
+  'Opportunities' => 
+  array (
     'visible' => true,
   ),
-  'Contacts' =>
-  array(
+  'Calls' => 
+  array (
     'visible' => true,
   ),
-  'Documents' =>
-  array(
+  'Documents' => 
+  array (
     'visible' => true,
   ),
-  'FP_Event_Locations' =>
-  array(
-    'visible' => false,
-  ),
-  'FP_events' =>
-  array(
-    'visible' => false,
-  ),
-  'Leads' =>
-  array(
+  'Cases' => 
+  array (
     'visible' => true,
   ),
-  'Meetings' =>
-  array(
+  'AOS_Contracts' => 
+  array (
     'visible' => true,
   ),
-  'Notes' =>
-  array(
+  'Leads' => 
+  array (
     'visible' => true,
   ),
-  'Opportunities' =>
-  array(
+  'Meetings' => 
+  array (
     'visible' => true,
   ),
-  'Project' =>
-  array(
+  'Notes' => 
+  array (
+    'visible' => true,
+  ),
+  'Campaigns' => 
+  array (
+    'visible' => true,
+  ),
+  'AOP_Case_Events' => 
+  array (
     'visible' => false,
   ),
-  'ProjectTask' =>
-  array(
+  'AOP_Case_Updates' => 
+  array (
     'visible' => false,
   ),
-  'ProspectLists' =>
-  array(
+  'AOR_Reports' => 
+  array (
     'visible' => false,
   ),
-  'Prospects' =>
-  array(
+  'AOS_Invoices' => 
+  array (
     'visible' => false,
   ),
-  'Tasks' =>
-  array(
+  'AOS_PDF_Templates' => 
+  array (
     'visible' => false,
   ),
-  'jjwg_Address_Cache' =>
-  array(
+  'AOS_Product_Categories' => 
+  array (
     'visible' => false,
   ),
-  'jjwg_Areas' =>
-  array(
+  'AOS_Products' => 
+  array (
     'visible' => false,
   ),
-  'jjwg_Maps' =>
-  array(
+  'AOS_Quotes' => 
+  array (
     'visible' => false,
   ),
-  'jjwg_Markers' =>
-  array(
+  'AOW_Processed' => 
+  array (
+    'visible' => false,
+  ),
+  'AOW_WorkFlow' => 
+  array (
+    'visible' => false,
+  ),
+  'Bugs' => 
+  array (
+    'visible' => false,
+  ),
+  'Calls_Reschedule' => 
+  array (
+    'visible' => false,
+  ),
+  'FP_Event_Locations' => 
+  array (
+    'visible' => false,
+  ),
+  'FP_events' => 
+  array (
+    'visible' => false,
+  ),
+  'Project' => 
+  array (
+    'visible' => false,
+  ),
+  'ProjectTask' => 
+  array (
+    'visible' => false,
+  ),
+  'ProspectLists' => 
+  array (
+    'visible' => false,
+  ),
+  'Prospects' => 
+  array (
+    'visible' => false,
+  ),
+  'Tasks' => 
+  array (
+    'visible' => false,
+  ),
+  'jjwg_Address_Cache' => 
+  array (
+    'visible' => false,
+  ),
+  'jjwg_Areas' => 
+  array (
+    'visible' => false,
+  ),
+  'jjwg_Maps' => 
+  array (
+    'visible' => false,
+  ),
+  'jjwg_Markers' => 
+  array (
     'visible' => false,
   ),
 );
