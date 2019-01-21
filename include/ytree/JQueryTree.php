@@ -49,8 +49,9 @@ require_once('include/JSON.php');
  * Class JQueryTree
  * @inheritdoc
  */
-class JQueryTree extends Tree
+class JQueryTree extends  Tree
 {
     public $tree_style = '';
     public $_header_files = array();
 }
+

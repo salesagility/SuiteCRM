@@ -60,7 +60,7 @@ class ContractsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Contracts $contract
-     * @param \Step\Acceptance\Accounts $account
+     * @param \Step\Acceptance\AccountsTester $account
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a contract so that I can test
@@ -71,7 +71,7 @@ class ContractsCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Contracts $contract,
-        \Step\Acceptance\Accounts $account,
+        \Step\Acceptance\AccountsTester $account,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a Contract');

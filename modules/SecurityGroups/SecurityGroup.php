@@ -50,8 +50,8 @@ class SecurityGroup extends SecurityGroup_sugar
                     and secu.user_id = '$user_id'
                 where secg.deleted = 0
             )";
-        }
-        return " EXISTS (SELECT  1
+        } else {
+            return " EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -63,6 +63,7 @@ class SecurityGroup extends SecurityGroup_sugar
                                AND secr.module = '$module'
                        WHERE   secr.record_id = " . $table_name . '.id
                                AND secg.deleted = 0) ';
+        }
     }
 
     /**
@@ -105,14 +106,15 @@ class SecurityGroup extends SecurityGroup_sugar
             and secu.user_id = '" . $user_id . "'
     where secg.deleted = 0
 ) securitygroup_join on securitygroup_join.id = " . $table_name . '.id ';
-        }
-        return " LEFT JOIN (select distinct secr.record_id as id from securitygroups secg
+        } else {
+            return " LEFT JOIN (select distinct secr.record_id as id from securitygroups secg
     inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0
             and secu.user_id = '" . $user_id . "'
     inner join securitygroups_records secr on secg.id = secr.securitygroup_id and secr.deleted = 0
              and secr.module = '" . $module . "'
     where secg.deleted = 0
 ) securitygroup_join on securitygroup_join.id = " . $table_name . '.id ';
+        }
     }
 
     /**
@@ -238,10 +240,8 @@ class SecurityGroup extends SecurityGroup_sugar
                 if ($defaultGroup['module'] == 'All' || $defaultGroup['module'] == $focus->module_dir) {
                     if ($focus->module_dir == 'Users') {
                         $query = 'insert into securitygroups_users(id,date_modified,deleted,securitygroup_id,user_id,noninheritable) '
-                            . "select distinct '" . create_guid() . "'," . $focus->db->convert(
-                                '',
-                                'today'
-                            ) . ",0,g.id,'$focus->id',1 "
+                            . "select distinct '" . create_guid() . "'," . $focus->db->convert('',
+                                'today') . ",0,g.id,'$focus->id',1 "
                             . 'from securitygroups g '
                             . "left join securitygroups_users d on d.securitygroup_id = g.id and d.user_id = '$focus->id' and d.deleted = 0 "
                             . "where d.id is null and g.id = '" . $defaultGroup['securitygroup_id'] . "' and g.deleted = 0 ";
@@ -278,6 +278,7 @@ class SecurityGroup extends SecurityGroup_sugar
             $security_modules = $groupFocus->getSecurityModules();
 
             if (in_array($focus->module_dir, array_keys($security_modules))) {
+
                 $query = 'INSERT INTO securitygroups_records(id,securitygroup_id,record_id,module,date_modified,deleted) '
                     . 'SELECT DISTINCT ';
                 if ($focus->db->dbType == 'mysql') {
@@ -367,11 +368,8 @@ class SecurityGroup extends SecurityGroup_sugar
                     //check to see if relate_to is the relationship name
                     require_once 'modules/Relationships/Relationship.php';
                     $relationship = new Relationship();
-                    $rel_module = $relationship->get_other_module(
-                        $_REQUEST['relate_to'],
-                        $focus_module_dir,
-                        $focus->db
-                    );
+                    $rel_module = $relationship->get_other_module($_REQUEST['relate_to'], $focus_module_dir,
+                        $focus->db);
                     if (isset($rel)) {
                         $parent_type = $rel_module;
                         $parent_id = $_REQUEST['relate_id'];
@@ -409,24 +407,14 @@ class SecurityGroup extends SecurityGroup_sugar
                         $relate_parent_id = $_REQUEST[$def['id_name']];
                         $relate_parent_type = $def['module'];
 
-                        self::inherit_parentQuery(
-                            $focus,
-                            $relate_parent_type,
-                            $relate_parent_id,
-                            $focus_id,
-                            $focus_module_dir
-                        );
+                        self::inherit_parentQuery($focus, $relate_parent_type, $relate_parent_id, $focus_id,
+                            $focus_module_dir);
                     } elseif (isset($_SESSION['portal_id']) && isset($_SESSION[$def['id_name']])) { //soap account
                         $relate_parent_id = $_SESSION[$def['id_name']];
                         $relate_parent_type = $def['module'];
 
-                        self::inherit_parentQuery(
-                            $focus,
-                            $relate_parent_type,
-                            $relate_parent_id,
-                            $focus_id,
-                            $focus_module_dir
-                        );
+                        self::inherit_parentQuery($focus, $relate_parent_type, $relate_parent_id, $focus_id,
+                            $focus_module_dir);
                     }
                 }
             }
@@ -577,10 +565,8 @@ class SecurityGroup extends SecurityGroup_sugar
         } elseif ($this->db->dbType == 'mssql') {
             $query .= ' lower(newid()) ';
         }
-        $query .= ",'" . htmlspecialchars($group_id, ENT_QUOTES) . "', '" . htmlspecialchars(
-            $module,
-                ENT_QUOTES
-        ) . "'," . $this->db->convert('', 'today') . ',0 )';
+        $query .= ",'" . htmlspecialchars($group_id, ENT_QUOTES) . "', '" . htmlspecialchars($module,
+                ENT_QUOTES) . "'," . $this->db->convert('', 'today') . ',0 )';
         $GLOBALS['log']->debug("SecuritySuite: Save Default Group: $query");
         $this->db->query($query);
     }
@@ -624,6 +610,7 @@ class SecurityGroup extends SecurityGroup_sugar
                 if (isset($app_list_strings['moduleList'][$row['rhs_module']])) {
                     $security_modules[$row['rhs_module']] = $app_list_strings['moduleList'][$row['rhs_module']];//rost fix
                 }
+
             } else {
                 if (in_array($row['lhs_module'], $module_blacklist)) {
                     continue;
@@ -669,10 +656,8 @@ class SecurityGroup extends SecurityGroup_sugar
         }
         $db = DBManagerFactory::getInstance();
         $query = 'insert into securitygroups_records(id,securitygroup_id,record_id,module,date_modified,deleted) '
-            . "values( '" . create_guid() . "','" . $securitygroup_id . "','$record_id','$module'," . $db->convert(
-                '',
-                'today'
-            ) . ',0) ';
+            . "values( '" . create_guid() . "','" . $securitygroup_id . "','$record_id','$module'," . $db->convert('',
+                'today') . ',0) ';
         $GLOBALS['log']->debug("SecuritySuite: addGroupToRecord: $query");
         $db->query($query, true);
     }

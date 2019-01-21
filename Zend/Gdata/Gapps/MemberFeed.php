@@ -46,6 +46,8 @@ require_once 'Zend/Gdata/Gapps/MemberEntry.php';
  */
 class Zend_Gdata_Gapps_MemberFeed extends Zend_Gdata_Feed
 {
+
     protected $_entryClassName = 'Zend_Gdata_Gapps_MemberEntry';
     protected $_feedClassName = 'Zend_Gdata_Gapps_MemberFeed';
+
 }

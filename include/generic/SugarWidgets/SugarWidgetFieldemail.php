@@ -44,4 +44,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetFieldEmail extends SugarWidgetFieldVarchar
 {
+
+
 }

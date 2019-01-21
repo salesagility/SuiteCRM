@@ -111,9 +111,9 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
          */
         foreach ($tokens['list'] as $token) {
             $expires = $timedate->fromUser($token->access_token_expires);
-            if (!empty($expires)) {
+            if(!empty($expires)) {
                 $now = new \DateTime('now', $expires->getTimezone());
-                if ($now > $expires || (bool)$token->token_is_revoked === true) {
+                if($now > $expires || (bool)$token->token_is_revoked === true) {
                     $token->token_is_revoked = true;
                     $token->save();
                     return true;

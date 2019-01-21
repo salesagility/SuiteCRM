@@ -51,7 +51,7 @@ class SugarWidgetSubPanelEmailLink extends SugarWidgetField
      * @param array $layout_def
      * @return string
      */
-    public function displayList(&$layout_def)
+    function displayList(&$layout_def)
     {
         global $current_user;
         global $sugar_config;

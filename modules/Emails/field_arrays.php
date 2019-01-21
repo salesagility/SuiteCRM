@@ -83,6 +83,29 @@ $fields_array['Email'] = array(
         ,"category_id"
         ),
     'list_fields' => array(
-        'id', 'name', 'parent_type', 'parent_name', 'parent_id', 'date_start', 'time_start', 'assigned_user_name', 'assigned_user_id', 'contact_name', 'contact_id', 'first_name','last_name','to_addrs','from_addr','date_sent','type_name','type','status','link_action','date_entered','attachment_image','intent','date_sent',"category_id"
+        'id',
+        'name',
+        'parent_type',
+        'parent_name',
+        'parent_id',
+        'date_start',
+        'time_start',
+        'assigned_user_name',
+        'assigned_user_id',
+        'contact_name',
+        'contact_id',
+        'first_name',
+        'last_name',
+        'to_addrs',
+        'from_addr',
+        'date_sent_received',
+        'type_name',
+        'type',
+        'status',
+        'link_action',
+        'date_entered',
+        'attachment_image',
+        'intent',
+        'category_id'
         ),
 );

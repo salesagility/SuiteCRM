@@ -9,7 +9,7 @@ class Spots extends \AcceptanceTester
      */
     public function gotoSpots()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Spots');
     }
 }

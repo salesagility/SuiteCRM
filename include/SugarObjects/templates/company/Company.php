@@ -205,4 +205,5 @@ class Company extends Basic
 
         return $query;
     }
+
 }

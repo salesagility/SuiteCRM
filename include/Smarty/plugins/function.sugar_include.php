@@ -10,7 +10,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -28,7 +28,7 @@ r23115 - 2007-05-25 13:07:34 -0700 (Fri, 25 May 2007) - clee - Updated to suppor
 
 r22603 - 2007-05-09 13:43:21 -0700 (Wed, 09 May 2007) - clee - Removed warning where there is no include value supplied.
 
-r22571 - 2007-05-08 16:35:35 -0700 (Tue, 08 May 2007) - clee -
+r22571 - 2007-05-08 16:35:35 -0700 (Tue, 08 May 2007) - clee - 
 
 */
 
@@ -47,7 +47,7 @@ r22571 - 2007-05-08 16:35:35 -0700 (Tue, 08 May 2007) - clee -
  * Name:     sugar_include<br>
  * Purpose:  Handles rendering the global file includes from the metadata files defined
  *           in templateMeta=>includes.
- *
+ * 
  * @author Collin Lee {clee@sugarcrm.com}
  * @param array
  * @param Smarty
@@ -56,35 +56,36 @@ function smarty_function_sugar_include($params, &$smarty)
 {
     global $app_strings;
 
-    if (isset($params['type']) && $params['type'] == 'php') {
-        if (!isset($params['file'])) {
-            $smarty->trigger_error($app_strings['ERR_MISSING_REQUIRED_FIELDS'] . 'include');
-        }
-        
-        $includeFile = $params['file'];
-        if (!file_exists($includeFile)) {
-            $smarty->trigger_error($app_strings['ERR_NO_SUCH_FILE'] . ': ' . $includeFile);
-        }
-        
-        ob_start();
-        require($includeFile);
-        $output_html = ob_get_contents();
-        ob_end_clean();
-        echo $output_html;
-    } elseif (isset($params['type']) && $params['type'] == 'smarty') {
-        return $smarty->fetch($params['file']);
-    } elseif (is_array($params['include'])) {
-        $code = '';
-        foreach ($params['include'] as $include) {
-            if (isset($include['file'])) {
-                $file = $include['file'];
-                if (preg_match('/[\.]js$/si', $file)) {
-                    $code .= "<script src=\"". getJSPath($include['file']) ."\"></script>";
-                } elseif (preg_match('/[\.]php$/si', $file)) {
-                    require_once($file);
-                }
-            }
-        } //foreach
-        return $code;
-    } //if
+    if(isset($params['type']) && $params['type'] == 'php') {
+		if(!isset($params['file'])) {
+		   $smarty->trigger_error($app_strings['ERR_MISSING_REQUIRED_FIELDS'] . 'include');
+		} 
+		
+		$includeFile = $params['file'];
+		if(!file_exists($includeFile)) {
+		   $smarty->trigger_error($app_strings['ERR_NO_SUCH_FILE'] . ': ' . $includeFile);
+		}
+		
+	    ob_start();
+	    require($includeFile);
+	    $output_html = ob_get_contents();
+	    ob_end_clean();
+	    echo $output_html; 
+    } else if(isset($params['type']) && $params['type'] == 'smarty') {
+		return $smarty->fetch($params['file']);
+	} else if(is_array($params['include'])) {
+	   	  $code = '';
+	   	  foreach($params['include'] as $include) {
+	   	  	      if(isset($include['file'])) {
+	   	  	         $file = $include['file'];
+	   	  	         if(preg_match('/[\.]js$/si',$file)) {
+	   	  	            $code .= "<script src=\"". getJSPath($include['file']) ."\"></script>";
+	   	  	         } else if(preg_match('/[\.]php$/si', $file)) {
+	   	  	            require_once($file);	
+	   	  	         }
+	   	  	      } 
+	   	  } //foreach
+	      return $code;
+   	} //if
 }
+?>

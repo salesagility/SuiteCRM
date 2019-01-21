@@ -109,13 +109,14 @@ function buildEditField(){
 
 
     var onInlineEditDblClick = function(elem, e) {
+
         var _this = elem;
         e.preventDefault();
         // depending on what view you are using will find the id,module,type of field, and field name from the view
 
         if(view == "view_GanttChart" )
             view = "DetailView";
-
+        
         if(view == "DetailView"){
             var field = $(_this).attr( "field" );
             var type = $(_this).attr( "type" );
@@ -132,6 +133,10 @@ function buildEditField(){
             var type = $(_this).attr( "type" );
             var module = $("#displayMassUpdate input[name=module]").val();
             var id = $(_this).closest('tr').find('[type=checkbox]').attr( "value" );
+        }
+
+        if ($('[field="'+field+'"]').attr('class').indexOf('fix-inlineEdit-textarea') > 0) {
+            $('[field="'+field+'"]').removeClass('fix-inlineEdit-textarea');
         }
 
         //If we find all the required variables to do inline editing.
@@ -186,7 +191,7 @@ function buildEditField(){
     };
 
     var touchtime = 0;
-    $(".inlineEdit").dblclick(function(e) {
+    $('.inlineEdit').on('click', function(e) {
         if(touchtime == 0) {
             //set first click
             touchtime = new Date().getTime();
@@ -218,12 +223,15 @@ function buildEditField(){
  * @param type - the type of the field we are editing.
  */
 function validateFormAndSave(field,id,module,type){
+
     $("#inlineEditSaveButton").on('click', function () {
         var valid_form = check_form("EditView");
         if(valid_form){
             handleSave(field, id, module, type)
             clickListenerActive = false;
+            $('[field="'+field+'"]').addClass('fix-inlineEdit-textarea');
         }else{
+            $('[field="'+field+'"]').removeClass('fix-inlineEdit-textarea');
             return false
         };
     });
@@ -252,6 +260,7 @@ function clickedawayclose(field,id,module, type){
     // Fix for issue #373 get name from system field name.
     message_field = 'LBL_' + field.toUpperCase();
     message_field = SUGAR.language.get(module, message_field);
+
     // Fix for issue #373 remove ':'
     var last_charachter = message_field.substring(message_field.length, message_field.length - 1);
     if (':'.toUpperCase() === last_charachter.toUpperCase()) {
@@ -266,7 +275,7 @@ function clickedawayclose(field,id,module, type){
 }
 
 $(document).on('click', function (e) {
-    if (clickListenerActive) {
+    if(clickListenerActive) {
         var field = ie_field;
         var id = ie_id;
         var module = ie_module;
@@ -348,6 +357,8 @@ $(document).on('click', function (e) {
 
 function getInputValue(field,type){
 
+
+
     if($('#'+ field).length > 0 && type){
 
         switch(type) {
@@ -426,7 +437,6 @@ function getInputValue(field,type){
 function handleSave(field,id,module,type){
     var value = getInputValue(field,type);
     var parent_type = "";
-
     if(typeof value === "undefined"){
         var value = "";
     }
@@ -434,6 +444,8 @@ function handleSave(field,id,module,type){
     if(type == "parent") {
         parent_type = $('#parent_type').val();
     }
+
+
     var output_value = saveFieldHTML(field,module,id,value, parent_type);
     var output = setValueClose(output_value);
 }
@@ -470,18 +482,18 @@ function setValueClose(value){
 
 function saveFieldHTML(field,module,id,value, parent_type) {
     $.ajaxSetup({"async": false});
-    var result = $.getJSON('index.php',
-        {
-            'module': 'Home',
-            'action': 'saveHTMLField',
-            'field': field,
-            'current_module': module,
-            'id': id,
-            'value': value,
-            'view' : view,
-            'parent_type': parent_type,
-            'to_pdf': true
-        }
+    var result = $.post('index.php',
+      {
+          'module': 'Home',
+          'action': 'saveHTMLField',
+          'field': field,
+          'current_module': module,
+          'id': id,
+          'value': value,
+          'view' : view,
+          'parent_type': parent_type,
+          'to_pdf': true
+      }, null, "json"
     );
     $.ajaxSetup({"async": true});
     return(result.responseText);
@@ -499,18 +511,18 @@ function saveFieldHTML(field,module,id,value, parent_type) {
  * @returns {*}
  */
 
-function loadFieldHTML(field, module, id) {
+function loadFieldHTML(field,module,id) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
-        {
-            'module': 'Home',
-            'action': 'getEditFieldHTML',
-            'field': field,
-            'current_module': module,
-            'id': id,
-            'view': view,
-            'to_pdf': true
-        }
+      {
+          'module': 'Home',
+          'action': 'getEditFieldHTML',
+          'field': field,
+          'current_module': module,
+          'id': id,
+          'view' : view,
+          'to_pdf': true
+      }
     );
     $.ajaxSetup({"async": true});
     if(result.responseText){
@@ -537,22 +549,22 @@ function loadFieldHTML(field, module, id) {
  * @returns {*}
  */
 
-function loadFieldHTMLValue(field, id, module) {
+function loadFieldHTMLValue(field,id,module) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
-        {
-            'module': 'Home',
-            'action': 'getDisplayValue',
-            'field': field,
-            'current_module': module,
-            'view': view,
-            'id': id,
-            'to_pdf': true
-        }
+      {
+          'module': 'Home',
+          'action': 'getDisplayValue',
+          'field': field,
+          'current_module': module,
+          'view': view,
+          'id': id,
+          'to_pdf': true
+      }
     );
     $.ajaxSetup({"async": true});
 
-    return (result.responseText);
+    return(result.responseText);
 }
 
 /**
@@ -565,17 +577,17 @@ function loadFieldHTMLValue(field, id, module) {
  * @returns {*}
  */
 
-function getValidationRules(field, module, id) {
+function getValidationRules(field,module,id){
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
-        {
-            'module': 'Home',
-            'action': 'getValidationRules',
-            'field': field,
-            'current_module': module,
-            'id': id,
-            'to_pdf': true
-        }
+      {
+          'module': 'Home',
+          'action': 'getValidationRules',
+          'field': field,
+          'current_module': module,
+          'id': id,
+          'to_pdf': true
+      }
     );
     $.ajaxSetup({"async": true});
 
@@ -599,17 +611,17 @@ function getValidationRules(field, module, id) {
  * @returns {*}
  */
 
-function getRelateFieldJS(field, module, id) {
+function getRelateFieldJS(field, module, id){
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
-        {
-            'module': 'Home',
-            'action': 'getRelateFieldJS',
-            'field': field,
-            'current_module': module,
-            'id': id,
-            'to_pdf': true
-        }
+      {
+          'module': 'Home',
+          'action': 'getRelateFieldJS',
+          'field': field,
+          'current_module': module,
+          'id': id,
+          'to_pdf': true
+      }
     );
     $.ajaxSetup({"async": true});
 

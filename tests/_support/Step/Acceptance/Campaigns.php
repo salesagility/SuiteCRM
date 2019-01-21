@@ -9,7 +9,7 @@ class Campaigns extends \AcceptanceTester
      */
     public function gotoCampaigns()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Campaigns');
     }
 

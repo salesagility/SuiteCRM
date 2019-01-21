@@ -172,3 +172,4 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer
         return self::$_defaultImpl;
     }
 }
+

@@ -14,7 +14,7 @@ function array_insert(&$array, $value, $offset) {
 		$array  = array_values($array);
 		$offset = intval($offset);
 		if ($offset < 0 || $offset >= count($array)) { array_push($array, $value); }
-		elseif ($offset == 0) { array_unshift($array, $value); }
+		else if ($offset == 0) { array_unshift($array, $value); }
 		else { 
 			$temp  = array_slice($array, 0, $offset);
 			array_push($temp, $value);
@@ -45,7 +45,7 @@ function _strspn($str1, $str2, $start=null, $length=null) {
 	if ($numargs == 2) {
 		return strspn($str1, $str2);
 	}
-	elseif ($numargs == 3) {
+	else if ($numargs == 3) {
 		return strspn($str1, $str2, $start);
 	}
 	else {
@@ -59,7 +59,7 @@ function _strcspn($str1, $str2, $start=null, $length=null) {
 	if ($numargs == 2) {
 		return strcspn($str1, $str2);
 	} 
-	elseif ($numargs == 3) {
+	else if ($numargs == 3) {
 		return strcspn($str1, $str2, $start);
 	} 
 	else {

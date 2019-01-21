@@ -52,11 +52,11 @@ require_once('modules/Import/maps/ImportMapOther.php');
 
 class ImportMapOutlook extends ImportMapOther
 {
-    /**
+	/**
      * String identifier for this import
      */
     public $name = 'outlook';
-    /**
+	/**
      * Field delimiter
      */
     public $delimiter = ',';
@@ -64,7 +64,7 @@ class ImportMapOutlook extends ImportMapOther
      * Field enclosure
      */
     public $enclosure = '"';
-    /**
+	/**
      * Do we have a header?
      */
     public $has_header = true;
@@ -75,9 +75,10 @@ class ImportMapOutlook extends ImportMapOther
      * @param  string $module
      * @return array field mappings
      */
-    public function getMapping(
+	public function getMapping(
         $module
-        ) {
+        )
+    {
         $return_array = parent::getMapping($module);
         switch ($module) {
         case 'Contacts':
@@ -96,3 +97,4 @@ class ImportMapOutlook extends ImportMapOther
         }
     }
 }
+

@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /**
  * Advanced OpenSales, Advanced, robust set of sales modules.
  * @package Advanced OpenSales for SugarCRM
@@ -28,44 +26,40 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/MVC/View/views/view.edit.php');
 
-class AOS_QuotesViewEdit extends ViewEdit
-{
-    public function __construct()
-    {
-        parent::__construct();
-    }
+class AOS_QuotesViewEdit extends ViewEdit {
+	function __construct(){
+ 		parent::__construct();
+ 	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function AOS_QuotesViewEdit()
-    {
+    function AOS_QuotesViewEdit(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    public function display()
-    {
-        $this->populateQuoteTemplates();
-        parent::display();
-    }
+	function display(){
+		$this->populateQuoteTemplates();
+		parent::display();
+	}
 
-    public function populateQuoteTemplates()
-    {
-        global $app_list_strings;
+	function populateQuoteTemplates(){
+		global $app_list_strings;
 
-        $sql = "SELECT id, name FROM aos_pdf_templates WHERE deleted='0' AND type='AOS_Quotes'";
-        $res = $this->bean->db->query($sql);
+		$sql = "SELECT id, name FROM aos_pdf_templates WHERE deleted='0' AND type='AOS_Quotes'";
+		$res = $this->bean->db->query($sql);
 
-        $app_list_strings['template_ddown_c_list'] = array();
-        while ($row = $this->bean->db->fetchByAssoc($res)) {
-            $app_list_strings['template_ddown_c_list'][$row['id']] = $row['name'];
-        }
-    }
+		$app_list_strings['template_ddown_c_list'] = array();
+		while($row = $this->bean->db->fetchByAssoc($res)){
+			$app_list_strings['template_ddown_c_list'][$row['id']] = $row['name'];
+		}
+	}
 }

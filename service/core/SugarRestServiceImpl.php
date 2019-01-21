@@ -46,12 +46,11 @@ if (!defined('sugarEntry')) {
  * This class is an implemenatation class for all the rest services
  */
 require_once('service/core/SugarWebServiceImpl.php');
-class SugarRestServiceImpl extends SugarWebServiceImpl
-{
-    public function md5($string)
-    {
-        return md5($string);
-    }
+class SugarRestServiceImpl extends SugarWebServiceImpl {
+	
+	function md5($string){
+		return md5($string);
+	}
 }
 require_once('service/core/SugarRestUtils.php');
 SugarRestServiceImpl::$helperObject = new SugarRestUtils();

@@ -42,9 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-$config = array(
+$config = array (
   'name' => 'InsideView&#169;',
   'order' => 65,
-  'properties' => array(
+  'properties' => array (
       ),
 );

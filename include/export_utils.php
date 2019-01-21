@@ -46,8 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * gets the system default delimiter or an user-preference based override
  * @return string the delimiter
  */
-function getDelimiter()
-{
+function getDelimiter() {
     global $sugar_config;
     global $current_user;
 
@@ -70,8 +69,7 @@ function getDelimiter()
  * @param array records an array of records if coming directly from a query
  * @return string delimited string for export
  */
-function export($type, $records = null, $members = false, $sample=false)
-{
+function export($type, $records = null, $members = false, $sample=false) {
     global $locale;
     global $beanList;
     global $beanFiles;
@@ -93,14 +91,14 @@ function export($type, $records = null, $members = false, $sample=false)
     $searchFields = array();
     $db = DBManagerFactory::getInstance();
 
-    if ($records) {
+    if($records) {
         $records = explode(',', $records);
         $records = "'" . implode("','", $records) . "'";
         $where = "{$focus->table_name}.id in ($records)";
-    } elseif (isset($_REQUEST['all'])) {
+    } elseif (isset($_REQUEST['all']) ) {
         $where = '';
     } else {
-        if (!empty($_REQUEST['current_post'])) {
+        if(!empty($_REQUEST['current_post'])) {
             $ret_array = generateSearchWhere($type, $_REQUEST['current_post']);
 
             $where = $ret_array['where'];
@@ -110,65 +108,68 @@ function export($type, $records = null, $members = false, $sample=false)
         }
     }
     $order_by = "";
-    if ($focus->bean_implements('ACL')) {
-        if (!ACLController::checkAccess($focus->module_dir, 'export', true)) {
+    if($focus->bean_implements('ACL')){
+        if(!ACLController::checkAccess($focus->module_dir, 'export', true)){
             ACLController::displayNoAccess();
             sugar_die('');
         }
-        if (ACLController::requireOwner($focus->module_dir, 'export')) {
-            if (!empty($where)) {
+        if(ACLController::requireOwner($focus->module_dir, 'export')){
+            if(!empty($where)){
                 $where .= ' AND ';
             }
             $where .= $focus->getOwnerWhere($current_user->id);
         }
-        /* BEGIN - SECURITY GROUPS */
-        if (ACLController::requireSecurityGroup($focus->module_dir, 'export')) {
-            require_once('modules/SecurityGroups/SecurityGroup.php');
-            global $current_user;
-            $owner_where = $focus->getOwnerWhere($current_user->id);
-            $group_where = SecurityGroup::getGroupWhere($focus->table_name, $focus->module_dir, $current_user->id);
-            if (!empty($owner_where)) {
-                if (empty($where)) {
-                    $where = " (".  $owner_where." or ".$group_where.")";
-                } else {
-                    $where .= " AND (".  $owner_where." or ".$group_where.")";
-                }
-            } else {
-                if (!empty($where)) {
-                    $where .= ' AND ';
-                }
-                $where .= $group_where;
-            }
-        }
-        /* END - SECURITY GROUPS */
+		/* BEGIN - SECURITY GROUPS */
+    	if(ACLController::requireSecurityGroup($focus->module_dir, 'export') )
+    	{
+			require_once('modules/SecurityGroups/SecurityGroup.php');
+    		global $current_user;
+    		$owner_where = $focus->getOwnerWhere($current_user->id);
+	    	$group_where = SecurityGroup::getGroupWhere($focus->table_name,$focus->module_dir,$current_user->id);
+	    	if(!empty($owner_where)) {
+				if(empty($where))
+	    		{
+	    			$where = " (".  $owner_where." or ".$group_where.")";
+	    		} else {
+	    			$where .= " AND (".  $owner_where." or ".$group_where.")";
+	    		}
+			} else {
+				if(!empty($where)){
+					$where .= ' AND ';
+				}
+				$where .= $group_where;
+			}
+    	}
+    	/* END - SECURITY GROUPS */
+
     }
     // Export entire list was broken because the where clause already has "where" in it
     // and when the query is built, it has a "where" as well, so the query was ill-formed.
     // Eliminating the "where" here so that the query can be constructed correctly.
-    if ($members == true) {
-        $query = $focus->create_export_members_query($records);
-    } else {
+    if($members == true){
+           $query = $focus->create_export_members_query($records);
+    }else{
         $beginWhere = substr(trim($where), 0, 5);
-        if ($beginWhere == "where") {
+        if ($beginWhere == "where")
             $where = substr(trim($where), 5, strlen($where));
-        }
 
-        $query = $focus->create_export_query($order_by, $where);
+        $query = $focus->create_export_query($order_by,$where);
     }
 
     $result = '';
     $populate = false;
-    if ($sample) {
-        $result = $db->limitQuery($query, 0, $sampleRecordNum, true, $app_strings['ERR_EXPORT_TYPE'].$type.": <BR>.".$query);
-        if ($focus->_get_num_rows_in_query($query)<1) {
+    if($sample) {
+       $result = $db->limitQuery($query, 0, $sampleRecordNum, true, $app_strings['ERR_EXPORT_TYPE'].$type.": <BR>.".$query);
+        if( $focus->_get_num_rows_in_query($query)<1 ){
             $populate = true;
         }
-    } else {
+    }
+    else {
         $result = $db->query($query, true, $app_strings['ERR_EXPORT_TYPE'].$type.": <BR>.".$query);
     }
 
 
-    $fields_array = $db->getFieldsArray($result, true);
+    $fields_array = $db->getFieldsArray($result,true);
 
     //set up the order on the header row
     $fields_array = get_field_order_mapping($focus->module_dir, $fields_array);
@@ -177,29 +178,31 @@ function export($type, $records = null, $members = false, $sample=false)
 
     //set up labels to be used for the header row
     $field_labels = array();
-    foreach ($fields_array as $key=>$dbname) {
+    foreach($fields_array as $key=>$dbname){
         //Remove fields that are only used for logic
-        if ($members && (in_array($dbname, $remove_from_members))) {
+        if($members && (in_array($dbname, $remove_from_members)))
             continue;
-        }
 
         //If labels should not be exportable skip them
-        if (isset($focus->field_name_map[$key])  && isset($focus->field_name_map[$key]['exportable'])
+        if (isset($focus->field_name_map[$key])  && isset( $focus->field_name_map[$key]['exportable'])
             && $focus->field_name_map[$key]['exportable'] === false) {
             continue;
         }
 
         //default to the db name of label does not exist
-        $field_labels[$key] = translateForExport($dbname, $focus);
+        $field_labels[$key] = translateForExport($dbname,$focus);
     }
 
     $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
     if ($locale->getExportCharset() == 'UTF-8' &&
-        ! preg_match('/macintosh|mac os x|mac_powerpc/i', $user_agent)) { // Bug 60377 - Mac Excel doesn't support UTF-8
+        ! preg_match('/macintosh|mac os x|mac_powerpc/i', $user_agent)) // Bug 60377 - Mac Excel doesn't support UTF-8
+    {
         //Bug 55520 - add BOM to the exporting CSV so any symbols are displayed correctly in Excel
         $BOM = "\xEF\xBB\xBF";
         $content = $BOM;
-    } else {
+    }
+    else
+    {
         $content = '';
     }
 
@@ -207,48 +210,52 @@ function export($type, $records = null, $members = false, $sample=false)
     $content .= "\"".implode("\"".getDelimiter()."\"", array_values($field_labels))."\"\r\n";
     $pre_id = '';
 
-    if ($populate) {
+    if($populate){
         //this is a sample request with no data, so create fake datarows
-        $content .= returnFakeDataRow($focus, $fields_array, $sampleRecordNum);
-    } else {
+         $content .= returnFakeDataRow($focus,$fields_array,$sampleRecordNum);
+    }else{
         $records = array();
 
         //process retrieved record
-        while ($val = $db->fetchByAssoc($result, false)) {
-            if ($members) {
-                $focus = BeanFactory::getBean($val['related_type']);
-            } else { // field order mapping is not applied for member-exports, as they include multiple modules
-                //order the values in the record array
-                $val = get_field_order_mapping($focus->module_dir, $val);
-            }
+    	while($val = $db->fetchByAssoc($result, false)) {
+
+        	if ($members)
+			$focus = BeanFactory::getBean($val['related_type']);
+		else
+		{ // field order mapping is not applied for member-exports, as they include multiple modules
+            //order the values in the record array
+            $val = get_field_order_mapping($focus->module_dir,$val);
+		}
 
             $new_arr = array();
-            if ($members) {
-                if ($pre_id == $val['id']) {
-                    continue;
-                }
-                if ($val['ea_deleted']==1 || $val['ear_deleted']==1) {
-                    $val['primary_email_address'] = '';
-                }
-                unset($val['ea_deleted']);
-                unset($val['ear_deleted']);
-                unset($val['primary_address']);
-            }
-            $pre_id = $val['id'];
+		if($members){
+			if($pre_id == $val['id'])
+				continue;
+			if($val['ea_deleted']==1 || $val['ear_deleted']==1){
+				$val['primary_email_address'] = '';
+			}
+			unset($val['ea_deleted']);
+			unset($val['ear_deleted']);
+			unset($val['primary_address']);
+		}
+		$pre_id = $val['id'];
 
-            foreach ($val as $key => $value) {
-                //getting content values depending on their types
-                $fieldNameMapKey = $fields_array[$key];
+		foreach ($val as $key => $value)
+		{
+            //getting content values depending on their types
+            $fieldNameMapKey = $fields_array[$key];
 
-                //Dont export fields that have been explicitly marked not to be exportable
-                if (isset($focus->field_name_map[$fieldNameMapKey])  && isset($focus->field_name_map[$fieldNameMapKey]['exportable']) &&
+            //Dont export fields that have been explicitly marked not to be exportable
+            if (isset($focus->field_name_map[$fieldNameMapKey])  && isset($focus->field_name_map[$fieldNameMapKey]['exportable']) &&
                 $focus->field_name_map[$fieldNameMapKey]['exportable'] === false) {
-                    continue;
-                }
+                continue;
+            }
 
-                if (isset($focus->field_name_map[$fieldNameMapKey])  && $focus->field_name_map[$fieldNameMapKey]['type']) {
-                    $fieldType = $focus->field_name_map[$fieldNameMapKey]['type'];
-                    switch ($fieldType) {
+            if (isset($focus->field_name_map[$fieldNameMapKey])  && $focus->field_name_map[$fieldNameMapKey]['type'])
+            {
+                $fieldType = $focus->field_name_map[$fieldNameMapKey]['type'];
+                switch ($fieldType)
+                {
                     //if our value is a currency field, then apply the users locale
                     case 'currency':
                         require_once('modules/Currencies/Currency.php');
@@ -269,49 +276,53 @@ function export($type, $records = null, $members = false, $sample=false)
 
                     // Bug 32463 - Properly have multienum field translated into something useful for the client
                     case 'multienum':
-            $valueArray = unencodeMultiEnum($value);
+			$valueArray = unencodeMultiEnum($value);
 
-                        if (isset($focus->field_name_map[$fields_array[$key]]['options']) && isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']])) {
-                            foreach ($valueArray as $multikey => $multivalue) {
-                                if (isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$multivalue])) {
+                        if (isset($focus->field_name_map[$fields_array[$key]]['options']) && isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']]) )
+                        {
+                            foreach ($valueArray as $multikey => $multivalue )
+                            {
+                                if (isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$multivalue]) )
+                                {
                                     $valueArray[$multikey] = $app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$multivalue];
                                 }
                             }
                         }
-            $value = implode(",", $valueArray);
+			$value = implode(",",$valueArray);
 
                         break;
 
-        case 'enum':
-            if (isset($focus->field_name_map[$fields_array[$key]]['options']) &&
-                isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']]) &&
-                isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$value])
-            ) {
-                $value = $app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$value];
+		case 'enum':
+			if (	isset($focus->field_name_map[$fields_array[$key]]['options']) &&
+				isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']]) &&
+				isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$value])
+			)
+				$value = $app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$value];
+
+			break;
+                }
             }
 
-            break;
-                }
-                }
 
-
-                // Keep as $key => $value for post-processing
-                $new_arr[$key] = preg_replace("/\"/", "\"\"", $value);
-            }
-
-            // Use Bean ID as key for records
-            $records[$pre_id] = $new_arr;
+            // Keep as $key => $value for post-processing
+            $new_arr[$key] = preg_replace("/\"/","\"\"", $value);
         }
 
+        // Use Bean ID as key for records
+        $records[$pre_id] = $new_arr;
+    }
+
         // Check if we're going to export non-primary emails
-        if ($focus->hasEmails() && in_array('email_addresses_non_primary', $fields_array)) {
+        if ($focus->hasEmails() && in_array('email_addresses_non_primary', $fields_array))
+        {
             // $records keys are bean ids
             $keys = array_keys($records);
 
             // Split the ids array into chunks of size 100
             $chunks = array_chunk($keys, 100);
 
-            foreach ($chunks as $chunk) {
+            foreach ($chunks as $chunk)
+            {
                 // Pick all the non-primary mails for the chunk
                 $query =
                     "
@@ -340,9 +351,9 @@ function export($type, $records = null, $members = false, $sample=false)
 
         $customRelateFields = array();
         $selects = array();
-        foreach ($records as $record) {
-            foreach ($record as $recordKey => $recordValue) {
-                if (preg_match('/{relate\s+from=""([^"]+)""\s+to=""([^"]+)""}/', $recordValue, $matches)) {
+        foreach($records as $record) {
+            foreach($record as $recordKey => $recordValue) {
+                if(preg_match('/{relate\s+from=""([^"]+)""\s+to=""([^"]+)""}/', $recordValue, $matches)) {
                     $marker = $matches[0];
                     $relatedValue = '';
 
@@ -359,9 +370,9 @@ function export($type, $records = null, $members = false, $sample=false)
                     $relatedTable = $relatedBean->table_name;
 
                     $relatedLabel = "$relatedTable.name AS related_label, NULL AS related_label1";
-                    if (isset($relatedBean->field_defs['name']['source']) && $relatedBean->field_defs['name']['source'] == 'non-db') {
+                    if(isset($relatedBean->field_defs['name']['source']) && $relatedBean->field_defs['name']['source'] == 'non-db') {
                         //$relatedLabel = 'NULL AS related_label, NULL AS related_label1';
-                        if (
+                        if(
                             !isset($relatedBean->field_defs['first_name']['source']) || $relatedBean->field_defs['first_name']['source'] != 'non-db' &&
                             !isset($relatedBean->field_defs['last_name']['source']) || $relatedBean->field_defs['last_name']['source'] != 'non-db'
                         ) {
@@ -371,10 +382,10 @@ function export($type, $records = null, $members = false, $sample=false)
 
                     $relatedTableCustomJoin = '';
                     $relatedFieldSelect = "NULL AS related_value";
-                    if (!isset($existsTables["{$relatedTable}_cstm"])) {
+                    if(!isset($existsTables["{$relatedTable}_cstm"])) {
                         $existsTables["{$relatedTable}_cstm"] = $db->tableExists("{$relatedTable}_cstm");
                     }
-                    if ($existsTables["{$relatedTable}_cstm"]) {
+                    if($existsTables["{$relatedTable}_cstm"]) {
                         $relatedTableCustomJoin = "
                         JOIN {$relatedTable}_cstm ON {$relatedTable}_cstm.id_c = {$currentTable}_cstm.$relatedField
                         ";
@@ -382,7 +393,7 @@ function export($type, $records = null, $members = false, $sample=false)
                     }
 
                     $relatedTableJoin = "LEFT JOIN $relatedTable ON $relatedTable.id = {$currentTable}_cstm.id_c";
-                    if (isset($currentBean->field_defs[$relatedField])) {
+                    if(isset($currentBean->field_defs[$relatedField])) {
                         $relatedTableJoin = "LEFT JOIN $relatedTable ON $relatedTable.id = {$currentTable}_cstm.$relatedField";
                     }
 
@@ -419,16 +430,19 @@ function export($type, $records = null, $members = false, $sample=false)
         }
 
 
-        foreach ($records as $record) {
+        foreach($records as $record)
+        {
             $line = implode("\"" . getDelimiter() . "\"", $record);
             $line = "\"" . $line;
             $line .= "\"\r\n";
             $line = parseRelateFields($line, $record, $customRelateFields);
             $content .= $line;
         }
+
     }
 
-    return $content;
+	return $content;
+
 }
 
 /**
@@ -466,17 +480,17 @@ function parseRelateFields($line, $record, $customRelateFields)
     return $line;
 }
 
-function generateSearchWhere($module, $query)
-{//this function is similar with function prepareSearchForm() in view.list.php
+function generateSearchWhere($module, $query) {//this function is similar with function prepareSearchForm() in view.list.php
     $seed = loadBean($module);
-    if (file_exists('modules/'.$module.'/SearchForm.html')) {
-        if (file_exists('modules/' . $module . '/metadata/SearchFields.php')) {
+    if(file_exists('modules/'.$module.'/SearchForm.html')){
+        if(file_exists('modules/' . $module . '/metadata/SearchFields.php')) {
             require_once('include/SearchForm/SearchForm.php');
             $searchForm = new SearchForm($module, $seed);
-        } elseif (!empty($_SESSION['export_where'])) { //bug 26026, sometimes some module doesn't have a metadata/SearchFields.php, the searchfrom is generated in the ListView.php.
-            // Currently, massupdate will not generate the where sql. It will use the sql stored in the SESSION. But this will cause bug 24722, and it cannot be avoided now.
+        }
+        elseif(!empty($_SESSION['export_where'])) { //bug 26026, sometimes some module doesn't have a metadata/SearchFields.php, the searchfrom is generated in the ListView.php.
+        // Currently, massupdate will not generate the where sql. It will use the sql stored in the SESSION. But this will cause bug 24722, and it cannot be avoided now.
             $where = $_SESSION['export_where'];
-            $whereArr = explode(" ", trim($where));
+            $whereArr = explode (" ", trim($where));
             if ($whereArr[0] == trim('where')) {
                 $whereClean = array_shift($whereArr);
             }
@@ -487,48 +501,58 @@ function generateSearchWhere($module, $query)
             $ret_array['where'] = $where;
             $ret_array['searchFields'] =array();
             return $ret_array;
-        } else {
+        }
+        else {
             return;
         }
-    } else {
+    }
+    else{
         require_once('include/SearchForm/SearchForm2.php');
 
-        if (file_exists('custom/modules/'.$module.'/metadata/metafiles.php')) {
+        if(file_exists('custom/modules/'.$module.'/metadata/metafiles.php')){
             require('custom/modules/'.$module.'/metadata/metafiles.php');
-        } elseif (file_exists('modules/'.$module.'/metadata/metafiles.php')) {
+        }elseif(file_exists('modules/'.$module.'/metadata/metafiles.php')){
             require('modules/'.$module.'/metadata/metafiles.php');
         }
 
-        if (file_exists('custom/modules/'.$module.'/metadata/searchdefs.php')) {
+        if (file_exists('custom/modules/'.$module.'/metadata/searchdefs.php'))
+        {
             require_once('custom/modules/'.$module.'/metadata/searchdefs.php');
-        } elseif (!empty($metafiles[$module]['searchdefs'])) {
+        }
+        elseif (!empty($metafiles[$module]['searchdefs']))
+        {
             require_once($metafiles[$module]['searchdefs']);
-        } elseif (file_exists('modules/'.$module.'/metadata/searchdefs.php')) {
+        }
+        elseif (file_exists('modules/'.$module.'/metadata/searchdefs.php'))
+        {
             require_once('modules/'.$module.'/metadata/searchdefs.php');
         }
 
         //fixing bug #48483: Date Range search on custom date field then export ignores range filter
         // first of all custom folder should be checked
-        if (file_exists('custom/modules/'.$module.'/metadata/SearchFields.php')) {
+        if(file_exists('custom/modules/'.$module.'/metadata/SearchFields.php'))
+        {
             require_once('custom/modules/'.$module.'/metadata/SearchFields.php');
-        } elseif (!empty($metafiles[$module]['searchfields'])) {
+        }
+        elseif(!empty($metafiles[$module]['searchfields']))
+        {
             require_once($metafiles[$module]['searchfields']);
-        } elseif (file_exists('modules/'.$module.'/metadata/SearchFields.php')) {
+        }
+        elseif(file_exists('modules/'.$module.'/metadata/SearchFields.php'))
+        {
             require_once('modules/'.$module.'/metadata/SearchFields.php');
         }
-        if (empty($searchdefs) || empty($searchFields)) {
-            //for some modules, such as iframe, it has massupdate, but it doesn't have search function, the where sql should be empty.
+        if(empty($searchdefs) || empty($searchFields)) {
+           //for some modules, such as iframe, it has massupdate, but it doesn't have search function, the where sql should be empty.
             return;
         }
         $searchForm = new SearchForm($seed, $module);
         $searchForm->setup($searchdefs, $searchFields, 'SearchFormGeneric.tpl');
     }
-    $searchForm->populateFromArray(json_decode(html_entity_decode($query), true));
+    $searchForm->populateFromArray(json_decode(html_entity_decode($query),true));
     $where_clauses = $searchForm->generateSearchWhere(true, $module);
-    if (count($where_clauses) > 0) {
-        $where = '('. implode(' ) AND ( ', $where_clauses) . ')';
-    }
-    $GLOBALS['log']->info("Export Where Clause: {$where}");
+    if (count($where_clauses) > 0 )$where = '('. implode(' ) AND ( ', $where_clauses) . ')';
+        $GLOBALS['log']->info("Export Where Clause: {$where}");
     $ret_array['where'] = $where;
     $ret_array['searchFields'] = $searchForm->searchFields;
     return $ret_array;
@@ -538,8 +562,7 @@ function generateSearchWhere($module, $query)
   * @param string type the bean-type to export
   * @return string delimited string for export with some tutorial text
   */
-     function exportSample($type)
-     {
+     function exportSample($type) {
          global $app_strings;
 
          //first grab the
@@ -549,23 +572,23 @@ function generateSearchWhere($module, $query)
          $content = export($type, null, false, true);
 
          // Add a new row and add details on removing the sample data
-         // Our Importer will stop after he gets to the new row, ignoring the text below
+         // Our Importer will stop after he gets to the new row, ignoring the text below 
          return $content . "\n" . $app_strings['LBL_IMPORT_SAMPLE_FILE_TEXT'];
+
      }
  //this function will take in the bean and field mapping and return a proper value
- function returnFakeDataRow($focus, $field_array, $rowsToReturn = 5)
- {
-     if (empty($focus) || empty($field_array)) {
-         return ;
-     }
+ function returnFakeDataRow($focus,$field_array,$rowsToReturn = 5){
+
+    if(empty($focus) || empty($field_array))
+     return ;
 
      //include the file that defines $sugar_demodata
      include('install/demoData.en_us.php');
 
-     $person_bean = false;
-     if (isset($focus->first_name)) {
-         $person_bean = true;
-     }
+    $person_bean = false;
+    if( isset($focus->first_name)){
+        $person_bean = true;
+    }
 
      global $timedate;
      $returnContent = '';
@@ -573,18 +596,19 @@ function generateSearchWhere($module, $query)
      $new_arr = array();
 
      //iterate through the record creation process as many times as defined.  Each iteration will create a new row
-     while ($counter < $rowsToReturn) {
+     while($counter < $rowsToReturn){
          $counter++;
          //go through each field and populate with dummy data if possible
-         foreach ($field_array as $field_name) {
-             if (empty($focus->field_name_map[$field_name]) || empty($focus->field_name_map[$field_name]['type'])) {
-                 //type is not set, fill in with empty string and continue;
-                 $returnContent .= '"",';
-                 continue;
-             }
-             $field = $focus->field_name_map[$field_name];
-             //fill in value according to type
-             $type = $field['type'];
+         foreach($field_array as $field_name){
+
+            if(empty($focus->field_name_map[$field_name]) || empty($focus->field_name_map[$field_name]['type'])){
+                //type is not set, fill in with empty string and continue;
+                $returnContent .= '"",';
+                continue;
+            }
+            $field = $focus->field_name_map[$field_name];
+                         //fill in value according to type
+            $type = $field['type'];
 
              switch ($type) {
 
@@ -595,68 +619,81 @@ function generateSearchWhere($module, $query)
                      break;
                  case "int":
                      //return random number`
-                    $returnContent .= '"'.mt_rand(0, 4).'",';
+                    $returnContent .= '"'.mt_rand(0,4).'",';
                      break;
                  case "name":
                      //return first, last, user name, or random name string
-                     if ($field['name'] == 'first_name') {
+                     if($field['name'] == 'first_name'){
                          $count = count($sugar_demodata['first_name_array']) - 1;
-                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0, $count)].'",';
-                     } elseif ($field['name'] == 'last_name') {
+                        $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0,$count)].'",';
+                     }elseif($field['name'] == 'last_name'){
                          $count = count($sugar_demodata['last_name_array']) - 1;
-                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0, $count)].'",';
-                     } elseif ($field['name'] == 'user_name') {
-                         $count = count($sugar_demodata['first_name_array']) - 1;
-                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0, $count)].'_'.mt_rand(1, 111).'",';
-                     } else {
+                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0,$count)].'",';
+                     }elseif($field['name'] == 'user_name'){
+                       $count = count($sugar_demodata['first_name_array']) - 1;
+                        $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0,$count)].'_'.mt_rand(1,111).'",';
+                     }else{
                          //return based on bean
-                         if ($focus->module_dir =='Accounts') {
+                         if($focus->module_dir =='Accounts'){
                              $count = count($sugar_demodata['company_name_array']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['company_name_array'][mt_rand(0, $count)].'",';
-                         } elseif ($focus->module_dir =='Bugs') {
+                            $returnContent .= '"'.$sugar_demodata['company_name_array'][mt_rand(0,$count)].'",';
+
+                         }elseif($focus->module_dir =='Bugs'){
                              $count = count($sugar_demodata['bug_seed_names']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['bug_seed_names'][mt_rand(0, $count)].'",';
-                         } elseif ($focus->module_dir =='Notes') {
+                            $returnContent .= '"'.$sugar_demodata['bug_seed_names'][mt_rand(0,$count)].'",';
+                         }elseif($focus->module_dir =='Notes'){
                              $count = count($sugar_demodata['note_seed_names_and_Descriptions']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['note_seed_names_and_Descriptions'][mt_rand(0, $count)].'",';
-                         } elseif ($focus->module_dir =='Calls') {
-                             $count = count($sugar_demodata['call_seed_data_names']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['call_seed_data_names'][mt_rand(0, $count)].'",';
-                         } elseif ($focus->module_dir =='Tasks') {
+                            $returnContent .= '"'.$sugar_demodata['note_seed_names_and_Descriptions'][mt_rand(0,$count)].'",';
+
+                         }elseif($focus->module_dir =='Calls'){
+                              $count = count($sugar_demodata['call_seed_data_names']) - 1;
+                            $returnContent .= '"'.$sugar_demodata['call_seed_data_names'][mt_rand(0,$count)].'",';
+
+                         }elseif($focus->module_dir =='Tasks'){
                              $count = count($sugar_demodata['task_seed_data_names']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['task_seed_data_names'][mt_rand(0, $count)].'",';
-                         } elseif ($focus->module_dir =='Meetings') {
+                           $returnContent .= '"'.$sugar_demodata['task_seed_data_names'][mt_rand(0,$count)].'",';
+
+                         }elseif($focus->module_dir =='Meetings'){
                              $count = count($sugar_demodata['meeting_seed_data_names']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['meeting_seed_data_names'][mt_rand(0, $count)].'",';
-                         } elseif ($focus->module_dir =='ProductCategories') {
+                           $returnContent .= '"'.$sugar_demodata['meeting_seed_data_names'][mt_rand(0,$count)].'",';
+
+                         }elseif($focus->module_dir =='ProductCategories'){
                              $count = count($sugar_demodata['productcategory_seed_data_names']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['productcategory_seed_data_names'][mt_rand(0, $count)].'",';
-                         } elseif ($focus->module_dir =='ProductTypes') {
+                           $returnContent .= '"'.$sugar_demodata['productcategory_seed_data_names'][mt_rand(0,$count)].'",';
+
+
+                         }elseif($focus->module_dir =='ProductTypes'){
                              $count = count($sugar_demodata['producttype_seed_data_names']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['producttype_seed_data_names'][mt_rand(0, $count)].'",';
-                         } elseif ($focus->module_dir =='ProductTemplates') {
+                           $returnContent .= '"'.$sugar_demodata['producttype_seed_data_names'][mt_rand(0,$count)].'",';
+
+
+                         }elseif($focus->module_dir =='ProductTemplates'){
                              $count = count($sugar_demodata['producttemplate_seed_data']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['producttemplate_seed_data'][mt_rand(0, $count)].'",';
-                         } else {
-                             $returnContent .= '"Default Name for '.$focus->module_dir.'",';
+                           $returnContent .= '"'.$sugar_demodata['producttemplate_seed_data'][mt_rand(0,$count)].'",';
+
+                         }else{
+                           $returnContent .= '"Default Name for '.$focus->module_dir.'",';
+
                          }
+
                      }
                     break;
                  case "relate":
-                     if ($field['name'] == 'team_name') {
+                     if($field['name'] == 'team_name'){
                          //apply team names and user_name
                          $teams_count = count($sugar_demodata['teams']) - 1;
                          $users_count = count($sugar_demodata['users']) - 1;
 
-                         $returnContent .= '"'.$sugar_demodata['teams'][mt_rand(0, $teams_count)]['name'].','.$sugar_demodata['users'][mt_rand(0, $users_count)]['user_name'].'",';
-                     } else {
+                     $returnContent .= '"'.$sugar_demodata['teams'][mt_rand(0,$teams_count)]['name'].','.$sugar_demodata['users'][mt_rand(0,$users_count)]['user_name'].'",';
+
+                     }else{
                          //apply GUID
                          $returnContent .= '"'.create_guid().'",';
                      }
                      break;
                  case "bool":
                      //return 0 or 1
-                     $returnContent .= '"'.mt_rand(0, 1).'",';
+                     $returnContent .= '"'.mt_rand(0,1).'",';
                      break;
 
                  case "text":
@@ -667,7 +704,7 @@ function generateSearchWhere($module, $query)
                  case "team_list":
                      $teams_count = count($sugar_demodata['teams']) - 1;
                      //give fake team names (East,West,North,South)
-                     $returnContent .= '"'.$sugar_demodata['teams'][mt_rand(0, $teams_count)]['name'].'",';
+                     $returnContent .= '"'.$sugar_demodata['teams'][mt_rand(0,$teams_count)]['name'].'",';
                      break;
 
                  case "date":
@@ -691,37 +728,38 @@ function generateSearchWhere($module, $query)
 
                      break;
                 case "phone":
-                    $value = '('.mt_rand(300, 999).') '.mt_rand(300, 999).'-'.mt_rand(1000, 9999);
+                    $value = '('.mt_rand(300,999).') '.mt_rand(300,999).'-'.mt_rand(1000,9999);
                       $returnContent .= '"'.$value.'",';
                      break;
                  case "varchar":
                                      //process varchar for possible values
-                                     if ($field['name'] == 'first_name') {
+                                     if($field['name'] == 'first_name'){
                                          $count = count($sugar_demodata['first_name_array']) - 1;
-                                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0, $count)].'",';
-                                     } elseif ($field['name'] == 'last_name') {
+                                        $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0,$count)].'",';
+                                     }elseif($field['name'] == 'last_name'){
                                          $count = count($sugar_demodata['last_name_array']) - 1;
-                                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0, $count)].'",';
-                                     } elseif ($field['name'] == 'user_name') {
-                                         $count = count($sugar_demodata['first_name_array']) - 1;
-                                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0, $count)].'_'.mt_rand(1, 111).'",';
-                                     } elseif ($field['name'] == 'title') {
+                                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0,$count)].'",';
+                                     }elseif($field['name'] == 'user_name'){
+                                       $count = count($sugar_demodata['first_name_array']) - 1;
+                                        $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0,$count)].'_'.mt_rand(1,111).'",';
+                                     }elseif($field['name'] == 'title'){
                                          $count = count($sugar_demodata['titles']) - 1;
-                                         $returnContent .= '"'.$sugar_demodata['titles'][mt_rand(0, $count)].'",';
-                                     } elseif (strpos($field['name'], 'address_street')>0) {
-                                         $count = count($sugar_demodata['street_address_array']) - 1;
-                                         $returnContent .= '"'.$sugar_demodata['street_address_array'][mt_rand(0, $count)].'",';
-                                     } elseif (strpos($field['name'], 'address_city')>0) {
-                                         $count = count($sugar_demodata['city_array']) - 1;
-                                         $returnContent .= '"'.$sugar_demodata['city_array'][mt_rand(0, $count)].'",';
-                                     } elseif (strpos($field['name'], 'address_state')>0) {
+                                         $returnContent .= '"'.$sugar_demodata['titles'][mt_rand(0,$count)].'",';
+                                     }elseif(strpos($field['name'],'address_street')>0){
+                                       $count = count($sugar_demodata['street_address_array']) - 1;
+                                        $returnContent .= '"'.$sugar_demodata['street_address_array'][mt_rand(0,$count)].'",';
+                                     }elseif(strpos($field['name'],'address_city')>0){
+                                       $count = count($sugar_demodata['city_array']) - 1;
+                                        $returnContent .= '"'.$sugar_demodata['city_array'][mt_rand(0,$count)].'",';
+                                     }elseif(strpos($field['name'],'address_state')>0){
                                          $state_arr = array('CA','NY','CO','TX','NV');
-                                         $count = count($state_arr) - 1;
-                                         $returnContent .= '"'.$state_arr[mt_rand(0, $count)].'",';
-                                     } elseif (strpos($field['name'], 'address_postalcode')>0) {
-                                         $returnContent .= '"'.mt_rand(12345, 99999).'",';
-                                     } else {
+                                       $count = count($state_arr) - 1;
+                                        $returnContent .= '"'.$state_arr[mt_rand(0,$count)].'",';
+                                     }elseif(strpos($field['name'],'address_postalcode')>0){
+                                        $returnContent .= '"'.mt_rand(12345,99999).'",';
+                                     }else{
                                          $returnContent .= '"",';
+
                                      }
                      break;
                 case "url":
@@ -732,8 +770,8 @@ function generateSearchWhere($module, $query)
                     //get the associated enum if available
                     global $app_list_strings;
 
-                    if (isset($focus->field_name_map[$field_name]['type']) && !empty($focus->field_name_map[$field_name]['options'])) {
-                        if (!empty($app_list_strings[$focus->field_name_map[$field_name]['options']])) {
+                    if(isset($focus->field_name_map[$field_name]['type']) && !empty($focus->field_name_map[$field_name]['options'])){
+                        if ( !empty($app_list_strings[$focus->field_name_map[$field_name]['options']]) ) {
 
                             //get the values into an array
                             $dd_values = $app_list_strings[$focus->field_name_map[$field_name]['options']];
@@ -743,12 +781,12 @@ function generateSearchWhere($module, $query)
                             $count = count($dd_values) - 1;
 
                             //choose one at random
-                            $returnContent .= '"'.$dd_values[mt_rand(0, $count)].'",';
-                        } else {
-                            //name of enum options array was found but is empty, return blank
-                            $returnContent .= '"",';
-                        }
-                    } else {
+                            $returnContent .= '"'.$dd_values[mt_rand(0,$count)].'",';
+                            } else{
+                                //name of enum options array was found but is empty, return blank
+                                $returnContent .= '"",';
+                            }
+                    }else{
                         //name of enum options array was not found on field, return blank
                         $returnContent .= '"",';
                     }
@@ -768,45 +806,51 @@ function generateSearchWhere($module, $query)
 
 
  //expects the field name to translate and a bean of the type being translated (to access field map and mod_strings)
- function translateForExport($field_db_name, $focus)
- {
+ function translateForExport($field_db_name,$focus){
      global $mod_strings,$app_strings;
 
-     if (empty($field_db_name) || empty($focus)) {
-         return false;
+     if (empty($field_db_name) || empty($focus)){
+        return false;
      }
 
-     //grab the focus module strings
-     $temp_mod_strings = $mod_strings;
-     global $current_language;
-     $mod_strings = return_module_language($current_language, $focus->module_dir);
-     $fieldLabel = '';
+    //grab the focus module strings
+    $temp_mod_strings = $mod_strings;
+    global $current_language;
+    $mod_strings = return_module_language($current_language, $focus->module_dir);
+    $fieldLabel = '';
 
      //!! first check to see if we are overriding the label for export.
-     if (!empty($mod_strings['LBL_EXPORT_'.strtoupper($field_db_name)])) {
+     if (!empty($mod_strings['LBL_EXPORT_'.strtoupper($field_db_name)])){
          //entry exists which means we are overriding this value for exporting, use this label
          $fieldLabel = $mod_strings['LBL_EXPORT_'.strtoupper($field_db_name)];
+
      }
      //!! next check to see if we are overriding the label for export on app_strings.
-     elseif (!empty($app_strings['LBL_EXPORT_'.strtoupper($field_db_name)])) {
+     elseif (!empty($app_strings['LBL_EXPORT_'.strtoupper($field_db_name)])){
          //entry exists which means we are overriding this value for exporting, use this label
          $fieldLabel = $app_strings['LBL_EXPORT_'.strtoupper($field_db_name)];
+
      }//check to see if label exists in mapping and in mod strings
-     elseif (!empty($focus->field_name_map[$field_db_name]['vname']) && !empty($mod_strings[$focus->field_name_map[$field_db_name]['vname']])) {
+     elseif (!empty($focus->field_name_map[$field_db_name]['vname']) && !empty($mod_strings[$focus->field_name_map[$field_db_name]['vname']])){
          $fieldLabel = $mod_strings[$focus->field_name_map[$field_db_name]['vname']];
+
      }//check to see if label exists in mapping and in app strings
-     elseif (!empty($focus->field_name_map[$field_db_name]['vname']) && !empty($app_strings[$focus->field_name_map[$field_db_name]['vname']])) {
+     elseif (!empty($focus->field_name_map[$field_db_name]['vname']) && !empty($app_strings[$focus->field_name_map[$field_db_name]['vname']])){
          $fieldLabel = $app_strings[$focus->field_name_map[$field_db_name]['vname']];
+
      }//field is not in mapping, so check to see if db can be uppercased and found in mod strings
-     elseif (!empty($mod_strings['LBL_'.strtoupper($field_db_name)])) {
+     elseif (!empty($mod_strings['LBL_'.strtoupper($field_db_name)])){
          $fieldLabel = $mod_strings['LBL_'.strtoupper($field_db_name)];
+
      }//check to see if db can be uppercased and found in app strings
-     elseif (!empty($app_strings['LBL_'.strtoupper($field_db_name)])) {
+     elseif (!empty($app_strings['LBL_'.strtoupper($field_db_name)])){
          $fieldLabel = $app_strings['LBL_'.strtoupper($field_db_name)];
-     } else {
+
+     }else{
          //we could not find the label in mod_strings or app_strings based on either a mapping entry
          //or on the db_name itself or being overwritten, so default to the db name as a last resort
          $fieldLabel = $field_db_name;
+
      }
      //strip the label of any columns
      $fieldLabel= preg_replace("/([:]|\xEF\xBC\x9A)[\\s]*$/", '', trim($fieldLabel));
@@ -814,13 +858,13 @@ function generateSearchWhere($module, $query)
      //reset the bean mod_strings back to original import strings
      $mod_strings = $temp_mod_strings;
      return $fieldLabel;
+
  }
 
 //call this function to return the desired order to display columns for export in.
 //if you pass in an array, it will reorder the array and send back to you.  It expects the array
 //to have the db names as key values, or as labels
-function get_field_order_mapping($name='', $reorderArr = '', $exclude = true)
-{
+function get_field_order_mapping($name='',$reorderArr = '', $exclude = true){
 
     //define the ordering of fields, note that the key value is what is important, and should be the db field name
     $field_order_array = array();
@@ -844,25 +888,25 @@ function get_field_order_mapping($name='', $reorderArr = '', $exclude = true)
     $fields_to_exclude['tasks'] = array('date_start_flag', 'date_due_flag');
 
     //of array is passed in for reordering, process array
-    if (!empty($name) && !empty($reorderArr) && is_array($reorderArr)) {
+    if(!empty($name) && !empty($reorderArr) && is_array($reorderArr)){
 
         //make sure reorderArr has values as keys, if not then iterate through and assign the value as the key
         $newReorder = array();
-        foreach ($reorderArr as $rk=> $rv) {
-            if (is_int($rk)) {
+        foreach($reorderArr as $rk=> $rv){
+            if(is_int($rk)){
                 $newReorder[$rv]=$rv;
-            } else {
+            }else{
                 $newReorder[$rk]=$rv;
             }
         }
 
         //if module is not defined, lets default the order to another module of the same type
         //this would apply mostly to custom modules
-        if (!isset($field_order_array[strtolower($name)]) && isset($_REQUEST['module'])) {
+        if(!isset($field_order_array[strtolower($name)]) && isset($_REQUEST['module'])){
+
             $exemptModuleList = array('ProspectLists');
-            if (in_array($name, $exemptModuleList)) {
+            if(in_array($name, $exemptModuleList))
                 return $newReorder;
-            }
 
             //get an instance of the bean
             global $beanList;
@@ -874,51 +918,52 @@ function get_field_order_mapping($name='', $reorderArr = '', $exclude = true)
 
 
             //if module is of type person
-            if ($focus instanceof Person) {
+            if($focus instanceof Person){
                 $name = 'contacts';
             }
             //if module is of type company
-            elseif ($focus instanceof Company) {
+            else if ($focus instanceof Company){
                 $name = 'accounts';
             }
             //if module is of type Sale
-            elseif ($focus instanceof Sale) {
+            else if ($focus instanceof Sale){
                 $name = 'opportunities';
             }//if module is of type File
-            elseif ($focus instanceof Issue) {
+            else if ($focus instanceof Issue){
                 $name = 'bugs';
             }//all others including type File can use basic
-            else {
+            else{
                 $name = 'Notes';
             }
+
         }
 
         //lets iterate through and create a reordered temporary array using
         //the  newly formatted copy of passed in array
         $temp_result_arr = array();
         $lname = strtolower($name);
-        if (!empty($field_order_array[$lname])) {
-            foreach ($field_order_array[$lname] as $fk=> $fv) {
+        if(!empty($field_order_array[$lname])) {
+	        foreach($field_order_array[$lname] as $fk=> $fv){
 
-                //if the value exists as a key in the passed in array, add to temp array and remove from reorder array.
-                //Do not force into the temp array as we don't want to violate acl's
-                if (array_key_exists($fk, $newReorder)) {
-                    $temp_result_arr[$fk] = $newReorder[$fk];
-                    unset($newReorder[$fk]);
-                }
-            }
+	            //if the value exists as a key in the passed in array, add to temp array and remove from reorder array.
+	            //Do not force into the temp array as we don't want to violate acl's
+	            if(array_key_exists($fk,$newReorder)){
+	                $temp_result_arr[$fk] = $newReorder[$fk];
+	                unset($newReorder[$fk]);
+	            }
+	        }
         }
         //add in all the left over values that were not in our ordered list
         //array_splice($temp_result_arr, count($temp_result_arr), 0, $newReorder);
-        foreach ($newReorder as $nrk=>$nrv) {
+        foreach($newReorder as $nrk=>$nrv){
             $temp_result_arr[$nrk] = $nrv;
         }
 
 
-        if ($exclude) {
+        if($exclude){
             //Some arrays have values we wish to exclude
-            if (isset($fields_to_exclude[$lname])) {
-                foreach ($fields_to_exclude[$lname] as $exclude_field) {
+            if (isset($fields_to_exclude[$lname])){
+                foreach($fields_to_exclude[$lname] as $exclude_field){
                     unset($temp_result_arr[$exclude_field]);
                 }
             }
@@ -929,8 +974,10 @@ function get_field_order_mapping($name='', $reorderArr = '', $exclude = true)
     }
 
     //if no array was passed in, pass back either the list of ordered columns by module, or the entireorder array
-    if (empty($name)) {
+    if(empty($name)){
         return $field_order_array;
+    }else{
+        return $field_order_array[strtolower($name)];
     }
-    return $field_order_array[strtolower($name)];
+
 }

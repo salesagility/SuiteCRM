@@ -43,22 +43,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
-    function additional_details($fields, SugarBean $bean, $params)
-    {
+    function additional_details($fields, SugarBean $bean, $params) {
         global $current_language, $timedate, $app_list_strings;
         $mod_strings = return_module_language($current_language, $bean->module_name);
 
         // Create DB Date versions of each date field
-        foreach ($fields as $i => $f) {
-            if (empty($f)) {
+        foreach($fields as $i => $f) {
+
+            if(empty($f)) {
                 continue;
             }
 
-            if (!isset($bean->field_name_map[strtolower($i)])) {
+            if(!isset($bean->field_name_map[strtolower($i)])) {
                 continue;
             }
 
-            if ($bean->field_name_map[strtolower($i)]['type'] == 'datetime' or $bean->field_name_map[strtolower($i)]['type'] == 'datetimecombo') {
+            if($bean->field_name_map[strtolower($i)]['type'] == 'datetime' OR $bean->field_name_map[strtolower($i)]['type'] == 'datetimecombo') {
                 $db_date = $timedate->fromUser($f);
                 $db_date_format = $db_date->format('Y-m-d H:i:s');
                 $fields['DB_'.$i] = $db_date_format;
@@ -100,4 +100,5 @@ if (!defined('sugarEntry') || !sugarEntry) {
             'body' => $body,
             'version' => '7.7.6'
         );
+
     }

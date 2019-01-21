@@ -9,7 +9,7 @@ class PDFTemplates extends \AcceptanceTester
      */
     public function gotoPDFTemplates()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('PDF - Templates');
     }
 

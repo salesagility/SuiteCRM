@@ -67,6 +67,10 @@ class actionCreateRecord extends actionBase
         if (isset($params['relate_to_workflow']) && !$params['relate_to_workflow']) {
             $checked = '';
         }
+        $copy_email_addresses_checked = '';
+        if (isset($params['copy_email_addresses']) && $params['copy_email_addresses']) {
+            $copy_email_addresses_checked = 'CHECKED';
+        }
 
         $html = "<table border='0' cellpadding='0' cellspacing='0' width='100%' data-workflow-action='create-record'>";
         $html .= '<tr>';
@@ -80,6 +84,9 @@ class actionCreateRecord extends actionBase
                  '</label>:';
         $html .= "<input type='hidden' name='aow_actions_param[".$line."][relate_to_workflow]' value='0' >";
         $html .= "<input type='checkbox' id='aow_actions_param[".$line."][relate_to_workflow]' name='aow_actions_param[".$line."][relate_to_workflow]' value='1' $checked></td>";
+        $html .= '<td id="copy_email_addresses_label" scope="row" valign="top">'.translate("LBL_COPY_EMAIL_ADDRESSES_WORKFLOW", "AOW_Actions").':&nbsp;&nbsp;';
+        $html .= "<input type='hidden' name='aow_actions_param[".$line."][copy_email_addresses]' value='0' >";
+        $html .= "<input type='checkbox' id='aow_actions_param[".$line."][copy_email_addresses]' name='aow_actions_param[".$line."][copy_email_addresses]' value='1' $copy_email_addresses_checked></td>";
         $html .= '</tr>';
         $html .= '<tr>';
         $html .= '<td colspan="4" scope="row"><table id="crLine' .
@@ -87,41 +94,26 @@ class actionCreateRecord extends actionBase
                  '_table" width="100%" class="lines"></table></td>';
         $html .= '</tr>';
         $html .= '<tr>';
-        $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate(
-            'LBL_ADD_FIELD',
-                'AOW_Actions'
-        ).'" id="addcrline'.$line.'" onclick="add_crLine('.$line.')" /></td>';
+        $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate('LBL_ADD_FIELD',
+                'AOW_Actions').'" id="addcrline'.$line.'" onclick="add_crLine('.$line.')" /></td>';
         $html .= '</tr>';
         $html .= '<tr>';
         $html .= '<td colspan="4" scope="row"><table id="crRelLine'.$line.'_table" width="100%" class="relationship"></table></td>';
         $html .= '</tr>';
         $html .= '<tr>';
-        $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate(
-            'LBL_ADD_RELATIONSHIP',
-                'AOW_Actions'
-        ).'" id="addcrrelline'.$line.'" onclick="add_crRelLine('.$line.')" /></td>';
+        $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate('LBL_ADD_RELATIONSHIP',
+                'AOW_Actions').'" id="addcrrelline'.$line.'" onclick="add_crRelLine('.$line.')" /></td>';
         $html .= '</tr>';
 
 
         if (isset($params['record_type']) && $params['record_type'] != '') {
             require_once 'modules/AOW_WorkFlow/aow_utils.php';
             $html .= "<script id ='aow_script".$line."'>";
-            $html .= 'cr_fields[' . $line . '] = "' . trim(preg_replace(
-                '/\s+/',
-                ' ',
-                    getModuleFields(
-                        $params['record_type'],
-                        'EditView',
-                        '',
-                        array(),
-                        array('email1', 'email2')
-                    )
-            )) . '";';
-            $html .= 'cr_relationships[' . $line . '] = "' . trim(preg_replace(
-                '/\s+/',
-                ' ',
-                    getModuleRelationships($params['record_type'])
-            )) . '";';
+            $html .= 'cr_fields[' . $line . '] = "' . trim(preg_replace('/\s+/', ' ',
+                    getModuleFields($params['record_type'], 'EditView', '', array(),
+                        array('email1', 'email2')))) . '";';
+            $html .= 'cr_relationships[' . $line . '] = "' . trim(preg_replace('/\s+/', ' ',
+                    getModuleRelationships($params['record_type']))) . '";';
             $html .= 'cr_module[' .$line. '] = "' .$params['record_type']. '";';
             if (isset($params['field'])) {
                 foreach ($params['field'] as $key => $field) {
@@ -161,6 +153,13 @@ class actionCreateRecord extends actionBase
                 $record = new $beanList[$params['record_type']]();
                 $this->set_record($record, $bean, $params);
                 $this->set_relationships($record, $bean, $params);
+                $invalidEmails = $this->copyEmailAddresses($record, $bean, $params);
+                if ($invalidEmails > 0) {
+                    LoggerManager::getLogger()->warn("Given bean contains $invalidEmails invalid Email address(es).");
+                }
+                if ($invalidEmails < 0) {
+                    LoggerManager::getLogger()->error("Email address copy error occured, bean was: $bean->module_name");
+                }
 
                 if (isset($params['relate_to_workflow']) && $params['relate_to_workflow']) {
                     require_once 'modules/Relationships/Relationship.php';
@@ -220,14 +219,14 @@ class actionCreateRecord extends actionBase
                             case 'int':
                                 $value = format_number($bean->$fieldName);
                                 break;
-                case 'relate':
-                    if (isset($data['id_name']) && $record_vardefs[$field]['type'] === 'relate') {
-                        $idName = $data['id_name'];
-                        $value = $bean->$idName;
-                    } else {
-                        $value = $bean->$fieldName;
-                    }
-                break;
+			    case 'relate':
+			        if(isset($data['id_name']) && $record_vardefs[$field]['type'] === 'relate'){
+				    $idName = $data['id_name'];
+                                    $value = $bean->$idName;
+				}else{
+				    $value = $bean->$fieldName;
+				}
+				break;
                             default:
                                 $value = $bean->$fieldName;
                                 break;
@@ -425,5 +424,84 @@ class actionCreateRecord extends actionBase
                 }
             }
         }
+    }
+
+    /**
+     *
+     * @param SugarBean $toBean
+     * @param SugarBean $fromBean
+     * @param array $params
+     * @return int Number of invalid email addresses found in $fromBean's email addresses argument. Negative numbers are error code
+     */
+    protected function copyEmailAddresses(SugarBean $toBean, SugarBean $fromBean, $params = array())
+    {
+        $ret = 0;
+        if (isset($params['copy_email_addresses']) && $params['copy_email_addresses']) {
+            $toBean->addresses = $fromBean->addresses;
+            $toBean->email1 = $fromBean->email1;
+            $toBean->email2 = $fromBean->email2;
+            if (isset($fromBean->emailAddress) && $fromBean->emailAddress instanceof SugarEmailAddress) {
+                $tmp_sea2 = new SugarEmailAddress();
+                foreach ($fromBean->emailAddress->addresses as $currentEmailAddress) {
+                    if ($this->validateCurrentEmailAddress($currentEmailAddress)) {
+                        $ret++;
+                    }
+                    $tmp_sea2->addAddress(
+                        $currentEmailAddress['email_address'],
+                        $currentEmailAddress['primary_address'],
+                        $currentEmailAddress['reply_to_address'],
+                        $currentEmailAddress['invalid_email'],
+                        $currentEmailAddress['opt_out'],
+                        $currentEmailAddress['email_address_id']
+                    );
+                }
+                $tmp_sea2->saveEmail($toBean->id, $toBean->module_name);
+            } else {
+                // exception
+                LoggerManager::getLogger()->error('From-bean should implement emailAddress. Given bean is ' . $fromBean->module_name);
+                return -1;
+            }
+        } else {
+            // exception
+            LoggerManager::getLogger()->error('Given parameter should contains index "copy_email_addresses"');
+            return -2;
+        }
+        
+        return $ret;
+    }
+    
+    /**
+     *
+     * @param arra $currentEmailAddress
+     * @return bool Returns TRUE if it's a valid email address parameter, FALSE otherwise.
+     */
+    protected function validateCurrentEmailAddress($currentEmailAddress)
+    {
+        $ret = true;
+        if (!isset($currentEmailAddress['email_address'])) {
+            LoggerManager::getLogger()->warn('Index "email_address" is not set.');
+            $ret = false;
+        }
+        if (!isset($currentEmailAddress['primary_address'])) {
+            LoggerManager::getLogger()->warn('Index "primary_address" is not set.');
+            $ret = false;
+        }
+        if (!isset($currentEmailAddress['reply_to_address'])) {
+            LoggerManager::getLogger()->warn('Index "reply_to_address" is not set.');
+            $ret = false;
+        }
+        if (!isset($currentEmailAddress['invalid_email'])) {
+            LoggerManager::getLogger()->warn('Index "invalid_email" is not set.');
+            $ret = false;
+        }
+        if (!isset($currentEmailAddress['opt_out'])) {
+            LoggerManager::getLogger()->warn('Index "opt_out" is not set.');
+            $ret = false;
+        }
+        if (!isset($currentEmailAddress['email_address_id'])) {
+            LoggerManager::getLogger()->warn('Index "email_address_id" is not set.');
+            $ret = false;
+        }
+        return $ret;
     }
 }

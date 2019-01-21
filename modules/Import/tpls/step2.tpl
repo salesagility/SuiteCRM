@@ -140,7 +140,7 @@
             <td scope="row">
                 {if $is_admin}
                 <input type="button" name="publish" value="{$MOD.LBL_PUBLISH}" class="button" publish="yes"
-                    onclick="publishMapping(this, 'yes','{$item.IMPORT_ID}');">
+                    onclick="publishMapping(this, 'yes','{$item.IMPORT_ID}', '{$IMPORT_MODULE}');">
                 {/if}
                 <input type="button" name="delete" value="{$MOD.LBL_DELETE}" class="button"
 					onclick="if(confirm('{$MOD.LBL_DELETE_MAP_CONFIRMATION}')){literal}{{/literal} deleteMapping('custom_import_{$smarty.foreach.saved.index}', '{$item.IMPORT_ID}' );{literal}}{/literal}">
@@ -157,7 +157,7 @@
             <td scope="row">
                 {if $is_admin}
                 <input type="button" name="publish" value="{$MOD.LBL_UNPUBLISH}" class="button" publish="no"
-                    onclick="publishMapping(this, 'no','{$item.IMPORT_ID}');">
+                    onclick="publishMapping(this, 'no','{$item.IMPORT_ID}', '{$IMPORT_MODULE}');">
                 <input type="button" name="delete" value="{$MOD.LBL_DELETE}" class="button"
                     onclick="if(confirm('{$MOD.LBL_DELETE_MAP_CONFIRMATION}')){literal}{{/literal}deleteMapping('published_import_{$smarty.foreach.published.index}','{$item.IMPORT_ID}' );{literal}}{/literal}">
                 {/if}

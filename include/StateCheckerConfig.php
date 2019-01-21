@@ -120,7 +120,7 @@ class StateCheckerConfig
      * (Slow working but give more information about the error location, use in development only)
      * @var boolean
      */
-    protected static $saveTraces = false;
+    protected static $saveTraces = true;
     
     /**
      * Redefine memory limit
@@ -185,7 +185,7 @@ class StateCheckerConfig
      */
     protected static $phpConfigOptionKeys = ['max_execution_time', 'display_errors', 'display_startup_errors'];
     
-    
+
     /**
      *
      * @var boolean

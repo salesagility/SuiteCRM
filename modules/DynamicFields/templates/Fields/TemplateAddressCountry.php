@@ -43,15 +43,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('modules/DynamicFields/templates/Fields/TemplateEnum.php');
 require_once('include/utils/array_utils.php');
-class TemplateAddressCountry extends TemplateEnum
-{
-    public $group = '';
+class TemplateAddressCountry extends TemplateEnum {
     
-    public function get_field_def()
-    {
-        $def = parent::get_field_def();
-        $def['group'] = $this->group;
-        $def['options'] = 'countries_dom';
-        return $def;
-    }
+    var $group = '';
+    
+	function get_field_def(){
+		$def = parent::get_field_def();
+		$def['group'] = $this->group;
+		$def['options'] = 'countries_dom';
+		return $def;	
+	}
 }

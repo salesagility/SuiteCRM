@@ -40,6 +40,7 @@
 
 namespace SuiteCRM\Utility;
 
+
 use Psr\Log\AbstractLogger;
 use Psr\Log\InvalidArgumentException;
 use Psr\Log\LogLevel;
@@ -111,7 +112,7 @@ class SuiteLogger extends AbstractLogger
     {
         $replace = array();
 
-        if (empty($context)) {
+        if(empty($context)) {
             return $message;
         }
 

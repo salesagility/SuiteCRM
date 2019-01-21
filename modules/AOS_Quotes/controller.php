@@ -24,78 +24,78 @@
  
 require_once('include/MVC/Controller/SugarController.php');
 
-class AOS_QuotesController extends SugarController
-{
-    public function action_editview()
-    {
-        global $mod_string;
+class AOS_QuotesController extends SugarController {
+	function action_editview() {
+		global $mod_string;
 
-        $this->view = 'edit';
-        $GLOBALS['view'] = $this->view;
-        
-        if (isset($_REQUEST['aos_invoices_id'])) {
-            $query = "SELECT * FROM aos_invoices WHERE id = '{$_REQUEST['aos_invoices_id']}'";
-            $result = $this->bean->db->query($query, true);
-            $row = $this->bean->db->fetchByAssoc($result);
-            $this->bean->name = $row['name'];
+		$this->view = 'edit';
+		$GLOBALS['view'] = $this->view;
+		
+		if (isset($_REQUEST['aos_invoices_id'])) {
+            		$query = "SELECT * FROM aos_invoices WHERE id = '{$_REQUEST['aos_invoices_id']}'";
+            		$result = $this->bean->db->query($query, true);
+            		$row = $this->bean->db->fetchByAssoc($result);
+            		$this->bean->name = $row['name'];
             
-            if (isset($row['billing_account_id'])) {
-                $_REQUEST['account_id'] = $row['billing_account_id'];
-            }
-                
-            if (isset($row['billing_contact_id'])) {
-                $_REQUEST['contact_id'] = $row['billing_contact_id'];
-            }
-        }
-        
-        if (isset($_REQUEST['aos_contracts_id'])) {
-            $query = "SELECT * FROM aos_contracts WHERE id = '{$_REQUEST['aos_contracts_id']}'";
-            $result = $this->bean->db->query($query, true);
-            $row = $this->bean->db->fetchByAssoc($result);
-            $this->bean->name = $row['name'];
+			if (isset($row['billing_account_id'])) {
+			$_REQUEST['account_id'] = $row['billing_account_id'];
+        		}
+        		
+        		if (isset($row['billing_contact_id'])) {
+        		$_REQUEST['contact_id'] = $row['billing_contact_id'];
+        		}
+        	}
+		
+        	if (isset($_REQUEST['aos_contracts_id'])) {
+            		$query = "SELECT * FROM aos_contracts WHERE id = '{$_REQUEST['aos_contracts_id']}'";
+            		$result = $this->bean->db->query($query, true);
+            		$row = $this->bean->db->fetchByAssoc($result);
+            		$this->bean->name = $row['name'];
             
-            if (isset($row['contract_account_id'])) {
-                $_REQUEST['account_id'] = $row['contract_account_id'];
-            }
-                
-            if (isset($row['opportunity_id'])) {
-                $_REQUEST['opportunity_id'] = $row['opportunity_id'];
-            }
-        }
+			if (isset($row['contract_account_id'])) {
+			$_REQUEST['account_id'] = $row['contract_account_id'];
+        		}
+        		
+        		if (isset($row['opportunity_id'])) {
+        		$_REQUEST['opportunity_id'] = $row['opportunity_id'];
+        		}
+        	}
 
 
-        if (isset($_REQUEST['account_id'])) {
-            $query = "SELECT * FROM accounts WHERE id = '{$_REQUEST['account_id']}'";
-            $result = $this->bean->db->query($query, true);
-            $row = $this->bean->db->fetchByAssoc($result);
-            $this->bean->billing_account_id = $row['id'];
-            $this->bean->billing_account = $row['name'];
-            $this->bean->billing_address_street = $row['billing_address_street'];
-            $this->bean->billing_address_city = $row['billing_address_city'];
-            $this->bean->billing_address_state = $row['billing_address_state'];
-            $this->bean->billing_address_postalcode = $row['billing_address_postalcode'];
-            $this->bean->billing_address_country = $row['billing_address_country'];
-            $this->bean->shipping_address_street = $row['shipping_address_street'];
-            $this->bean->shipping_address_city = $row['shipping_address_city'];
-            $this->bean->shipping_address_state = $row['shipping_address_state'];
-            $this->bean->shipping_address_postalcode = $row['shipping_address_postalcode'];
-            $this->bean->shipping_address_country = $row['shipping_address_country'];
-        }
-        
-        if (isset($_REQUEST['contact_id'])) {
-            $query = "SELECT id,first_name,last_name FROM contacts WHERE id = '{$_REQUEST['contact_id']}'";
-            $result = $this->bean->db->query($query, true);
-            $row = $this->bean->db->fetchByAssoc($result);
-            $this->bean->billing_contact_id = $row['id'];
-            $this->bean->billing_contact = $row['first_name'].' '.$row['last_name'];
-        }
-        
-        if (isset($_REQUEST['opportunity_id'])) {
-            $query = "SELECT id,name FROM opportunities WHERE id = '{$_REQUEST['opportunity_id']}'";
-            $result = $this->bean->db->query($query, true);
-            $row = $this->bean->db->fetchByAssoc($result);
-            $this->bean->opportunity_id = $row['id'];
-            $this->bean->opportunity = $row['name'];
-        }
-    }
+		if (isset($_REQUEST['account_id'])) {
+            		$query = "SELECT * FROM accounts WHERE id = '{$_REQUEST['account_id']}'";
+			$result = $this->bean->db->query($query, true);
+			$row = $this->bean->db->fetchByAssoc($result);
+			$this->bean->billing_account_id = $row['id'];
+			$this->bean->billing_account = $row['name'];
+			$this->bean->billing_address_street = $row['billing_address_street'];
+			$this->bean->billing_address_city = $row['billing_address_city'];
+			$this->bean->billing_address_state = $row['billing_address_state'];
+			$this->bean->billing_address_postalcode = $row['billing_address_postalcode'];
+			$this->bean->billing_address_country = $row['billing_address_country'];
+			$this->bean->shipping_address_street = $row['shipping_address_street'];
+			$this->bean->shipping_address_city = $row['shipping_address_city'];
+			$this->bean->shipping_address_state = $row['shipping_address_state'];
+			$this->bean->shipping_address_postalcode = $row['shipping_address_postalcode'];
+			$this->bean->shipping_address_country = $row['shipping_address_country'];
+		}	
+		
+		if (isset($_REQUEST['contact_id'])) {
+            		$query = "SELECT id,first_name,last_name FROM contacts WHERE id = '{$_REQUEST['contact_id']}'";
+			$result = $this->bean->db->query($query, true);
+			$row = $this->bean->db->fetchByAssoc($result);
+			$this->bean->billing_contact_id = $row['id'];
+			$this->bean->billing_contact = $row['first_name'].' '.$row['last_name'];
+		}
+		
+		if (isset($_REQUEST['opportunity_id'])) {
+            		$query = "SELECT id,name FROM opportunities WHERE id = '{$_REQUEST['opportunity_id']}'";
+            		$result = $this->bean->db->query($query, true);
+            		$row = $this->bean->db->fetchByAssoc($result);
+            		$this->bean->opportunity_id = $row['id'];
+            		$this->bean->opportunity = $row['name'];
+        	}
+        	
+    	}
+
 }

@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
  * @package Advanced OpenWorkflow for SugarCRM
@@ -27,11 +25,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
  
 $popupMeta = array('moduleMain' => 'AOW_WorkFlow',
-                        'varName' => 'AOW_WorkFlow',
-                        'orderBy' => 'aow_workflow.name',
-                        'whereClauses' =>
-                            array('name' => 'aow_workflow.name',
-                                ),
-                            'searchInputs'=> array('aow_workflow_number', 'name', 'priority','status'),
-                            
-                        );
+						'varName' => 'AOW_WorkFlow',
+						'orderBy' => 'aow_workflow.name',
+						'whereClauses' => 
+							array('name' => 'aow_workflow.name',
+								),
+						    'searchInputs'=> array('aow_workflow_number', 'name', 'priority','status'),
+							
+						);

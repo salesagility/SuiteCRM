@@ -48,7 +48,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
  
-function get_body(&$ss, $vardef)
-{
-    return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/encrypt.tpl');
-}
+function get_body(&$ss, $vardef){
+	return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/encrypt.tpl');
+ }

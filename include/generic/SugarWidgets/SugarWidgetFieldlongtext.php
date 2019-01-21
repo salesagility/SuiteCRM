@@ -46,4 +46,5 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetFieldLongtext extends SugarWidgetFieldText
 {
+ 
 }

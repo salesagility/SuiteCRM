@@ -7,74 +7,74 @@ $viewdefs['EmailTemplates']['EditView'] = array(
                                             array('label' => '10', 'field' => '30')
                                             ),
     ),
- 'panels' =>array(
-  'default' =>
-  array(
+ 'panels' =>array (
+  'default' => 
+  array (
     
-    array(
+    array (
       'name',
       '',
     ),
     
-    array(
+    array (
       'type',
     ),
     
-    array(
+    array (
       
-      array(
+      array (
         'name' => 'description',
-        'displayParams' =>
-        array(
+        'displayParams' => 
+        array (
           'rows' => '1',
           'cols' => '90',
         ),
       ),
     ),
     
-    array(
+    array (
       
-      array(
+      array (
         'name' => 'tracker_url',
-        'fields' =>
-        array(
+        'fields' => 
+        array (
           'tracker_url',
           'url_text',
         ),
       ),
     ),
     
-    array(
+    array (
       
-      array(
+      array (
         'name' => 'subject',
-        'displayParams' =>
-        array(
+        'displayParams' => 
+        array (
           'rows' => '1',
           'cols' => '90',
         ),
       ),
     ),
     
-    array(
+    array (
       'text_only',
     ),
     
-    array(
+    array (
       
-      array(
+      array (
         'name' => 'body_html',
-        'displayParams' =>
-        array(
+        'displayParams' => 
+        array (
           'rows' => '20',
           'cols' => '100',
         ),
       ),
     ),
     
-    array(
+    array (
       
-      array(
+      array (
         'name' => 'ATTACHMENTS_JAVASCRIPT',
         'customCode' => '{$fields.attachments_javascript.value} {$fields.attachments.value}',
         'description' => 'This field was auto generated',
