@@ -87,6 +87,12 @@ class UsersCest
         $I->fillField('#username_password', 'Test');
         $I->click('Log In');
         $I->waitForElementNotVisible('#loginform', 120);
+
+        // Logout
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+        $users->logoutUser();
     }
     
     public function testEmailSettingsMailAccountAdd(AcceptanceTester $I, UsersTester $Users, WebDriverHelper $webDriverHelper)
