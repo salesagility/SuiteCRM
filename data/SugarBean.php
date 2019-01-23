@@ -2532,7 +2532,7 @@ class SugarBean
                     case 'currency':
                     case 'float':
                         if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
-                            continue;
+                            break;
                         }
                         if (is_string($this->$field)) {
                             $this->$field = (float)unformat_number($this->$field);
@@ -2546,7 +2546,7 @@ class SugarBean
                     case 'tinyint':
                     case 'int':
                         if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
-                            continue;
+                            break;
                         }
                         if (is_string($this->$field)) {
                             $this->$field = (int)unformat_number($this->$field);
