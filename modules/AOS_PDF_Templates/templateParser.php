@@ -94,19 +94,18 @@ class templateParser
                                             $secureLink = $sugar_config['site_url'] . '/'. $file_location;
                                         }
 
-                                        if (empty($focus->$fieldName)) {
-                                            $repl_arr[$key . "_" . $fieldName] = "";
-                                        } else {
-                                            $link = $secureLink;
-                                            $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="'.$field_def['width'].'" height="'.$field_def['height'].'"/>';
-                                        }
-                                    } else {
-                                        $repl_arr[$key . "_" . $fieldName] = $focus->$fieldName;
-                                    }
-                                }
-                            }
-                        }
+                    if (empty($focus->$fieldName)) {
+                        $repl_arr[$key . "_" . $fieldName] = "";
+                    } else {
+                        $link = $secureLink;
+                        $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="'.$field_def['width'].'" height="'.$field_def['height'].'"/>';
                     }
+                }
+                else if($field_def['type'] == 'wysiwyg') {
+                    $repl_arr[$key . "_" . $field_def['name']] = html_entity_decode($focus->$field_def['name'], ENT_COMPAT, 'UTF-8');
+                    $repl_arr[$key . "_" . $fieldName] = html_entity_decode($focus->$fieldName, ENT_COMPAT, 'UTF-8');
+                } else {
+                    $repl_arr[$key . "_" . $fieldName] = $focus->$fieldName;
                 }
             }
         } // end foreach()
