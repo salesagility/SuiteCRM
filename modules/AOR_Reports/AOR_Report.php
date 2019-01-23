@@ -1645,15 +1645,25 @@ class AOR_Report extends Basic
                             $multi_values = unencodeMultienum($condition->value);
                             if (!empty($multi_values)) {
                                 $value = '(';
-                                foreach ($multi_values as $multi_value) {
-                                    if ($value != '(') {
-                                        $value .= $sep;
+                                if ($data['type'] == 'multienum') {
+                                    $multi_operator =  $condition->operator == 'Equal_To' ? 'LIKE' : 'NOT LIKE';
+                                    foreach ($multi_values as $multi_value) {
+                                        if ($value != '(') {
+                                            $value .= $sep;
+                                        }
+                                        $value .= $field . ' ' . $multi_operator . ' \'%' . $this->db->quote(encodeMultienumValue(array($multi_value))) . '%\'';
                                     }
-                                    $value .= $field . ' ' . $aor_sql_operator_list[$condition->operator] . " '" . $multi_value . "'";
+                                } else {
+                                    foreach ($multi_values as $multi_value) {
+                                        if ($value != '(') {
+                                            $value .= $sep;
+                                        }
+                                        $value .= $field . ' ' . $aor_sql_operator_list[$condition->operator] . " '" . $multi_value . "'";
+                                    }
                                 }
                                 $value .= ')';
+                                $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $value;
                             }
-                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $value;
                             $where_set = true;
                             break;
                         case "Period":
