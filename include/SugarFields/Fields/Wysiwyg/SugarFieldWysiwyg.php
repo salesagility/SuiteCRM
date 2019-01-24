@@ -59,8 +59,6 @@ class SugarFieldWysiwyg extends SugarFieldBase {
     if(!empty($this->ss->_tpl_vars['displayParams']['formName']))
         $form_name = $this->ss->_tpl_vars['displayParams']['formName'];
     $tiny = new SugarTinyMCE();
-    $tiny->buttonConfigs['default']['buttonConfig2'] = "cut,copy,paste,pastetext,pasteword,selectall,separator,search,replace,separator,bullist,numlist,separator,outdent,indent,separator,ltr,rtl,separator,undo,redo,separator,link,unlink,anchor,separator,sub,sup,separator,charmap,visualaid";
-    $tiny->buttonConfigs['default']['buttonConfig3'] = "tablecontrols,separator,hr,removeformat,separator,insertdate,inserttime,separator";
     $tiny->defaultConfig['apply_source_formatting']=false;
     $tiny->defaultConfig['cleanup_on_startup']=true;
     $tiny->defaultConfig['relative_urls']=false;

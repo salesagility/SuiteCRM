@@ -40,7 +40,7 @@
  * This file was contributed by Urdhva tech private limited <contact@urdhva-tech.com>
  **/
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-function get_body(&$ss, $vardef) {
+function get_body(&$ss) {
 	return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/wysiwyg.tpl');
  }
 ?>
