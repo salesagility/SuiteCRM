@@ -444,7 +444,7 @@ class SugarApplication
         }
 
         if (!is_null($theme) && !headers_sent()) {
-            setcookie('sugar_user_theme', $theme, time() + 31536000, null, null, false, true); // expires in a year
+            setcookie('sugar_user_theme', $theme, time() + 31536000, null, null, isSSL(), true); // expires in a year
         }
 
         SugarThemeRegistry::set($theme);
@@ -795,6 +795,9 @@ class SugarApplication
         $secure = false,
         $httponly = true
     ) {
+        if(isSSL()){
+	        $secure = true;
+        }
         if (is_null($domain)) {
             if (isset($_SERVER["HTTP_HOST"])) {
                 $domain = $_SERVER["HTTP_HOST"];
