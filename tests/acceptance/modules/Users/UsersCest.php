@@ -33,26 +33,26 @@ class UsersCest
         $this->fakeDataSeed = rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
-//
-//    public function testEmailSettingsMailAccountAdd(AcceptanceTester $I, UsersTester $Users, WebDriverHelper $webDriverHelper)
-//    {
-//        $instanceUrl = $webDriverHelper->getInstanceURL();
-//        $I->amOnUrl($instanceUrl);
-//        $I->loginAsAdmin();
-//        $Users->gotoProfile();
-//        $I->see('User Profile', '.panel-heading');
-//        $I->click('Settings');
-//        $I->see('Mail Accounts');
-//        $I->click('Mail Accounts');
-//        $I->click('Add');
-//        $I->executeJS('javascript:SUGAR.email2.accounts.fillInboundGmailDefaults();'); // <-- instead of $I->click('Prefill Gmail™ Defaults');
-//        $I->fillField('ie_name', 'testuser_acc');
-//        $I->fillField('email_user', 'testuser_name');
-//        $I->fillField('email_password', 'testuser_pass');
-//        $I->click('Test Settings');
-//        $I->wait(10);
-//        $I->see('Connection completed successfully.');
-//    }
+
+    public function testEmailSettingsMailAccountAdd(AcceptanceTester $I, UsersTester $Users, WebDriverHelper $webDriverHelper)
+    {
+        $instanceUrl = $webDriverHelper->getInstanceURL();
+        $I->amOnUrl($instanceUrl);
+        $I->loginAsAdmin();
+        $Users->gotoProfile();
+        $I->see('User Profile', '.panel-heading');
+        $I->click('Settings');
+        $I->see('Mail Accounts');
+        $I->click('Mail Accounts');
+        $I->click('Add');
+        $I->executeJS('javascript:SUGAR.email2.accounts.fillInboundGmailDefaults();'); // <-- instead of $I->click('Prefill Gmail™ Defaults');
+        $I->fillField('ie_name', 'testuser_acc');
+        $I->fillField('email_user', 'testuser_name');
+        $I->fillField('email_password', 'testuser_pass');
+        $I->click('Test Settings');
+        $I->wait(20);
+        $I->see('Connection completed successfully.');
+    }
 
     public function testShowCollapsedSubpanelHint(
         AcceptanceTester $I,
