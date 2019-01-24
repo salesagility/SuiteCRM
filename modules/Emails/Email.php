@@ -3031,11 +3031,11 @@ class Email extends Basic
                 $mime_type = 'text/plain';
                 if ($note->object_name == 'Note') {
                     if (!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) { // brandy-new file upload/attachment
-                        $file_location = "file://" . $note->file->temp_file_location;
+                        $file_location = "file/" . $note->file->temp_file_location;
                         $filename = $note->file->original_file_name;
                         $mime_type = $note->file->mime_type;
                     } else { // attachment coming from template/forward
-                        $file_location = "upload://{$note->id}";
+                        $file_location = "upload/{$note->id}";
                         // cn: bug 9723 - documents from EmailTemplates sent with Doc Name, not file name.
                         $filename = !empty($note->filename) ? $note->filename : $note->name;
                         $mime_type = $note->file_mime_type;
@@ -3044,7 +3044,7 @@ class Email extends Basic
                     $filePathName = $note->id;
                     // cn: bug 9723 - Emails with documents send GUID instead of Doc name
                     $filename = $note->getDocumentRevisionNameForDisplay();
-                    $file_location = "upload://$note->id";
+                    $file_location = "upload/$note->id";
                     $mime_type = $note->file_mime_type;
                 }
 
