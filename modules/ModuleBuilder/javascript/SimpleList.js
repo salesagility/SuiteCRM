@@ -290,7 +290,6 @@ if(typeof(SimpleList) == 'undefined'){
         let dispSpan = document.getElementById('span_'+id);
         let editSpan = document.getElementById('span_edit_'+id);
 
-
         let value = encodeURI(val);
         dispSpan.style.display = 'inline';
         editSpan.style.display = 'none';
