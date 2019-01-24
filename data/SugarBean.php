@@ -1104,13 +1104,17 @@ class SugarBean
             }
 
             if (isset($post_retrieve)) {
-                $key = array_keys($post_retrieve)[0];
                 $parent_fields = array();
-                foreach ($post_retrieve[$key] as $single_record)
+                foreach($post_retrieve as  $key=> $post_retrive_single)
                 {
-                    $parent_fields = array_merge($parent_fields,$this->retrieve_parent_fields(array($key,array(0,$single_record)))) ;
+                    //$key = array_keys($post_retrive_single);
+                    foreach ($post_retrive_single as $single_record)
+                    {
+                        $parent_fields = array_merge($parent_fields,$this->retrieve_parent_fields(array($key,array(0,$single_record)))) ;
+                    }
                 }
-            } else {
+            }
+            else {
                 $parent_fields = array();
             }
             if (!empty($sugar_config['disable_count_query']) && !empty($limit)) {
