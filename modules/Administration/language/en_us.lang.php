@@ -801,6 +801,7 @@ $mod_strings = array(
     'LBL_GOOGLE_CALENDAR_SETTINGS_JSON' => 'Upload Google API Credentials File',
     'LBL_GOOGLE_CALENDAR_SETTINGS_JSON_HELP' => 'Upload the JSON Credentials file you downloaded from Google Developers Console.',
     'LBL_GOOGLE_CALENDAR_GET_API_KEY' => 'Get API Credentials',
+    'LBL_GOOGLE_CALENDAR_JSON_TEXT' => 'JSON file is:',
 
     'LBL_DISPLAY_SIDEBAR' => 'Display Sidebar',
     'LBL_COLOUR_ADMIN_PAGEHEADER' => 'Page header colour',

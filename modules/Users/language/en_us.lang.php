@@ -685,9 +685,20 @@ $mod_strings = array(
     // for Google Token/Synchronization settings
     'LBL_GOOGLE_API_SETTINGS' => 'Google Account Synchronization',
     'LBL_GOOGLE_API_TOKEN' => 'Google API Token',
+    'LBL_GOOGLE_API_TOKEN_UNCONFIGURED' => 'Unconfigured',
+    'LBL_GOOGLE_API_TOKEN_CONFIGURED' => 'Configured',
+    'LBL_GOOGLE_API_TOKEN_DISABLED' => 'Disabled',
+    'LBL_GOOGLE_API_TOKEN_INVALID' => 'Invalid Auth Key',
     'LBL_GOOGLE_API_TOKEN_HELP' => 'Use this to authorize SuiteCRM to access your Google Calendar. This is required for synchronization. Don\'t forget to check the "Enable Calendar Sync" checkbox when done.',
     'LBL_GOOGLE_API_TOKEN_BTN' => 'Get Token',
+    'LBL_GOOGLE_API_TOKEN_BTN_DISABLED' => 'Disabled',
+    'LBL_GOOGLE_API_TOKEN_BTN_REAUTHORIZE' => 'Reauthorize',
+    'LBL_GOOGLE_API_TOKEN_BTN_AUTHORIZE' => 'Authorize',
+
+    'LBL_GOOGLE_API_TOKEN_TEXT' => 'Current API Token is',
     'LBL_GSYNC_CAL' => 'Enable Calendar Sync',
+
+
     // END Google Token/Synchronization settings
 
 ); // END STRINGS DEFS
