@@ -200,7 +200,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
 <span class='chartFootnote'>
 <p align="right"><i><?php  echo $current_module_strings['LBL_CREATED_ON'].' '.$file_date; ?></i></p>
 </span>
-<?Php
+<?php
     }
 
 

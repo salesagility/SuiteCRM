@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /**
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
