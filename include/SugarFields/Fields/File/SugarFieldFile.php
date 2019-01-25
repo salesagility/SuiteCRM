@@ -76,13 +76,13 @@ class SugarFieldFile extends SugarFieldBase
     }
 
 
-    function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $this->fillInOptions($vardef, $displayParams);
         return parent::getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
     
-    function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $this->fillInOptions($vardef, $displayParams);
 
@@ -97,7 +97,7 @@ class SugarFieldFile extends SugarFieldBase
         return parent::getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
     
-    function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         return $this->getSmartyView($parentFieldArray, $vardef, $displayParams, $tabindex, 'SearchView');
     }

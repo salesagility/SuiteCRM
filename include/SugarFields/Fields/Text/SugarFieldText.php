@@ -42,7 +42,7 @@ require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 require_once 'include/clean.php';
 class SugarFieldText extends SugarFieldBase
 {
-    function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         if (!isset($displayParams['nl2br'])) {
             $displayParams['nl2br'] = true;
@@ -55,7 +55,7 @@ class SugarFieldText extends SugarFieldBase
         }
         return parent::getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
-    function getClassicEditView($field_id='description', $value='', $prefix='', $rich_text=false, $maxlength='', $tabindex=1, $cols=80, $rows=4)
+    public function getClassicEditView($field_id='description', $value='', $prefix='', $rich_text=false, $maxlength='', $tabindex=1, $cols=80, $rows=4)
     {
         $this->ss->assign('prefix', $prefix);
         $this->ss->assign('field_id', $field_id);
@@ -85,7 +85,7 @@ class SugarFieldText extends SugarFieldBase
         return $this->ss->fetch($this->findTemplate('ClassicEditView'));
     }
 
-    function setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass = true)
+    public function setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass = true)
     {
         parent::setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass);
         $editor = "";

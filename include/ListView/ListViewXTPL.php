@@ -48,16 +48,16 @@ require_once('include/ListView/ListViewDisplay.php');
 
 class ListViewXTPL extends ListViewDisplay
 {
-    var $row_block = 'main.row';
-    var $main_block = 'main';
-    var $pro_block = 'main.row.pro';
-    var $os_block  = 'main.row.os';
-    var $nav_block = 'main.list_nav_row';
-    var $pro_nav_block = 'main.pro_nav';
-    var $data;
-    var $xtpl;
+    public $row_block = 'main.row';
+    public $main_block = 'main';
+    public $pro_block = 'main.row.pro';
+    public $os_block  = 'main.row.os';
+    public $nav_block = 'main.list_nav_row';
+    public $pro_nav_block = 'main.pro_nav';
+    public $data;
+    public $xtpl;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -65,7 +65,7 @@ class ListViewXTPL extends ListViewDisplay
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ListViewXTPL()
+    public function ListViewXTPL()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -86,7 +86,7 @@ class ListViewXTPL extends ListViewDisplay
      * @param html_var string the corresponding html var in xtpl per row
      *
      */
-    function process($file, $data, $html_var)
+    public function process($file, $data, $html_var)
     {
         global $odd_bg, $even_bg, $hilite_bg, $click_bg;
 
@@ -138,7 +138,7 @@ class ListViewXTPL extends ListViewDisplay
      * @param ordering array data that contains the ordering info
      *
      */
-    function processArrows($ordering)
+    public function processArrows($ordering)
     {
         $pathParts = pathinfo(SugarThemeRegistry::current()->getImageURL('arrow.gif', false));
 
@@ -154,7 +154,7 @@ class ListViewXTPL extends ListViewDisplay
      * Assigns the pagination links at the top and bottom of the listview
      *
      */
-    function processPagination()
+    public function processPagination()
     {
         global $app_strings;
         //_pp($this->data['pageData']);
@@ -238,7 +238,7 @@ class ListViewXTPL extends ListViewDisplay
      * @param echo bool echo or return contents
      *
      */
-    function display($echo = true)
+    public function display($echo = true)
     {
         $str = parent::display();
         $strend = parent::displayEnd();

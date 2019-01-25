@@ -66,7 +66,7 @@ class UsersViewDetail extends ViewDetail
     }
 
 
-    function preDisplay()
+    public function preDisplay()
     {
         global $current_user, $app_strings, $sugar_config;
 
@@ -178,7 +178,7 @@ class UsersViewDetail extends ViewDetail
         return $metadataFile;
     }
 
-    function display()
+    public function display()
     {
         if ($this->bean->portal_only == 1 || $this->bean->is_group == 1) {
             $this->options['show_subpanels'] = false;

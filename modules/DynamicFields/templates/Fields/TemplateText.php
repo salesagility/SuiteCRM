@@ -44,15 +44,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/DynamicFields/templates/Fields/TemplateField.php');
 class TemplateText extends TemplateField
 {
-    var $type='varchar';
-    var $supports_unified_search = true;
+    public $type='varchar';
+    public $supports_unified_search = true;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
 
-    function get_xtpl_edit()
+    public function get_xtpl_edit()
     {
         $name = $this->name;
         $returnXTPL = array();
@@ -70,7 +70,7 @@ class TemplateText extends TemplateField
         }
         return $returnXTPL;
     }
-    function get_xtpl_search()
+    public function get_xtpl_search()
     {
         if (!empty($_REQUEST[$this->name])) {
             return $_REQUEST[$this->name];
@@ -79,7 +79,7 @@ class TemplateText extends TemplateField
 
 
 
-    function get_xtpl_detail()
+    public function get_xtpl_detail()
     {
         $name = $this->name;
         if (isset($this->bean->$name)) {

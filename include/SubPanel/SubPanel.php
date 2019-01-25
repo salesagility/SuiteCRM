@@ -282,7 +282,7 @@ class SubPanel
     }
 
     //saves overrides for defs
-    function saveSubPanelDefOverride($panel, $subsection, $override)
+    public function saveSubPanelDefOverride($panel, $subsection, $override)
     {
         global $layout_defs, $beanList;
 
@@ -331,7 +331,7 @@ class SubPanel
         }
     }
 
-    function get_subpanel_setup($module)
+    public function get_subpanel_setup($module)
     {
         $subpanel_setup = '';
         $layout_defs = get_layout_defs();
@@ -346,7 +346,7 @@ class SubPanel
     /**
      * Retrieve the subpanel definition from the registered layout_defs arrays.
      */
-    function getSubPanelDefine($module, $subpanel_id)
+    public function getSubPanelDefine($module, $subpanel_id)
     {
         $default_subpanel_define = SubPanel::_get_default_subpanel_define($module, $subpanel_id);
         $custom_subpanel_define = SubPanel::_get_custom_subpanel_define($module, $subpanel_id);
@@ -360,7 +360,7 @@ class SubPanel
         return $subpanel_define;
     }
 
-    function _get_custom_subpanel_define($module, $subpanel_id)
+    public function _get_custom_subpanel_define($module, $subpanel_id)
     {
         $ret_val = array();
 
@@ -375,7 +375,7 @@ class SubPanel
         return $ret_val;
     }
 
-    function _get_default_subpanel_define($module, $subpanel_id)
+    public function _get_default_subpanel_define($module, $subpanel_id)
     {
         $ret_val = array();
 
@@ -390,7 +390,7 @@ class SubPanel
         return $ret_val;
     }
 
-    function buildSearchQuery()
+    public function buildSearchQuery()
     {
         $thisPanel =& $this->subpanel_defs;
         $subpanel_defs = $thisPanel->_instance_properties;
@@ -426,7 +426,7 @@ class SubPanel
         $GLOBALS['log']->info("Subpanel Where Clause: $this->search_query");
     }
 
-    function get_searchdefs($module)
+    public function get_searchdefs($module)
     {
         $thisPanel =& $this->subpanel_defs;
         $subpanel_defs = $thisPanel->_instance_properties;
@@ -440,7 +440,7 @@ class SubPanel
         return false;
     }
 
-    function getSearchForm()
+    public function getSearchForm()
     {
         $thisPanel =& $this->subpanel_defs;
         $subpanel_defs = $thisPanel->_instance_properties;

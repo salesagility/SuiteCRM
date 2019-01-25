@@ -2580,7 +2580,7 @@ class SugarBean
                         case 'encrypt':
                             $this->$field = $this->encrpyt_before_save($this->$field);
                             break;
-                        default :
+                        default:
                             //do nothing
                     }
                 }

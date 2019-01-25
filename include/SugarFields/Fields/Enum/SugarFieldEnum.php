@@ -42,7 +42,7 @@ require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 
 class SugarFieldEnum extends SugarFieldBase
 {
-    function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         if (!empty($vardef['function']['returns']) && $vardef['function']['returns']== 'html') {
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
@@ -52,7 +52,7 @@ class SugarFieldEnum extends SugarFieldBase
         }
     }
     
-    function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         if (empty($displayParams['size'])) {
             $displayParams['size'] = 6;
@@ -68,7 +68,7 @@ class SugarFieldEnum extends SugarFieldBase
     
     
     
-    function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         if (empty($displayParams['size'])) {
             $displayParams['size'] = 6;
@@ -84,7 +84,7 @@ class SugarFieldEnum extends SugarFieldBase
     }
     
 
-    function displayFromFunc($displayType, $parentFieldArray, $vardef, $displayParams, $tabindex = 0)
+    public function displayFromFunc($displayType, $parentFieldArray, $vardef, $displayParams, $tabindex = 0)
     {
         if (isset($vardef['function']['returns']) && $vardef['function']['returns'] == 'html') {
             return parent::displayFromFunc($displayType, $parentFieldArray, $vardef, $displayParams, $tabindex);

@@ -49,7 +49,7 @@ class DocumentsViewEdit extends ViewEdit
     /**
      * @see SugarView::ViewEdit()
      */
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->useForSubpanel = true;
@@ -58,7 +58,7 @@ class DocumentsViewEdit extends ViewEdit
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function DocumentsViewEdit()
+    public function DocumentsViewEdit()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -142,12 +142,12 @@ class DocumentsViewEdit extends ViewEdit
             if (!empty($_REQUEST['parent_type'])) {
                 switch (strtolower($_REQUEST['parent_type'])) {
 
-                    case "contracts" :
+                    case "contracts":
                         $this->ss->assign("LBL_PARENT_NAME", $mod_strings['LBL_CONTRACT_NAME']);
                         break;
 
                     //todo remove leads case.
-                    case "leads" :
+                    case "leads":
                         $this->ss->assign("LBL_PARENT_NAME", $mod_strings['LBL_CONTRACT_NAME']);
                         break;
                 } //switch

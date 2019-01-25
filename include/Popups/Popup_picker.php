@@ -49,15 +49,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class Popup_Picker
 {
-    var $_popupMeta;
-    var $_create = false;
-    var $_hide_clear_button = false;
+    public $_popupMeta;
+    public $_create = false;
+    public $_hide_clear_button = false;
 
     /**
      * Creates a new Popup_Picker object. Controls displaying of single select and multi select popups
      *
      */
-    function __construct()
+    public function __construct()
     {
         global $currentModule, $popupMeta;
 
@@ -84,7 +84,7 @@ class Popup_Picker
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Popup_Picker()
+    public function Popup_Picker()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -98,7 +98,7 @@ class Popup_Picker
     /*
      *
      */
-    function _get_where_clause()
+    public function _get_where_clause()
     {
         $where = '';
         $whereClauses = array();
@@ -122,7 +122,7 @@ class Popup_Picker
     /**
      *
      */
-    function process_page()
+    public function process_page()
     {
         global $theme;
         global $mod_strings;

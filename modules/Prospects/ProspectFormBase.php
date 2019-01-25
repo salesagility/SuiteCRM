@@ -51,7 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class ProspectFormBase
 {
-    function checkForDuplicates($prefix)
+    public function checkForDuplicates($prefix)
     {
         global $local_log;
         require_once('include/formbase.php');
@@ -98,7 +98,7 @@ class ProspectFormBase
     }
 
 
-    function buildTableForm($rows, $mod='')
+    public function buildTableForm($rows, $mod='')
     {
         global $action;
         if (!empty($mod)) {
@@ -167,7 +167,7 @@ class ProspectFormBase
         }
         return $form;
     }
-    function getWideFormBody($prefix, $mod='', $formname='', $prospect = '')
+    public function getWideFormBody($prefix, $mod='', $formname='', $prospect = '')
     {
         if (!ACLController::checkAccess('Prospects', 'edit', true)) {
             return '';
@@ -299,7 +299,7 @@ EOQ;
         return $form;
     }
 
-    function getFormBody($prefix, $mod='', $formname='')
+    public function getFormBody($prefix, $mod='', $formname='')
     {
         if (!ACLController::checkAccess('Prospects', 'edit', true)) {
             return '';
@@ -360,7 +360,7 @@ EOQ;
         $mod_strings = $temp_strings;
         return $form;
     }
-    function getForm($prefix, $mod='')
+    public function getForm($prefix, $mod='')
     {
         if (!ACLController::checkAccess('Prospects', 'edit', true)) {
             return '';
@@ -398,7 +398,7 @@ EOQ;
     }
 
 
-    function handleSave($prefix, $redirect=true, $useRequired=false)
+    public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         global $theme;
     

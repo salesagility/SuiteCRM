@@ -40,15 +40,15 @@
 
 class MBVardefs
 {
-    var $templates = array();
-    var $iTemplates = array();
-    var $vardefs = array();
-    var $vardef = array();
-    var $path = '';
-    var $name = '';
-    var $errors = array();
+    public $templates = array();
+    public $iTemplates = array();
+    public $vardefs = array();
+    public $vardef = array();
+    public $path = '';
+    public $name = '';
+    public $errors = array();
 
-    function __construct($name, $path, $key_name)
+    public function __construct($name, $path, $key_name)
     {
         $this->path = $path;
         $this->name = $name;
@@ -59,7 +59,7 @@ class MBVardefs
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MBVardefs($name, $path, $key_name)
+    public function MBVardefs($name, $path, $key_name)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -71,7 +71,7 @@ class MBVardefs
     }
 
 
-    function loadTemplate($by_group, $template, $file)
+    public function loadTemplate($by_group, $template, $file)
     {
         $module = $this->name;
         $table_name = $this->name;
@@ -101,7 +101,7 @@ class MBVardefs
         }
     }
 
-    function mergeVardefs($by_group=false)
+    public function mergeVardefs($by_group=false)
     {
         $this->vardefs = array(
                     'fields'=>array(),
@@ -130,24 +130,24 @@ class MBVardefs
         }
     }
 
-    function updateVardefs($by_group=false)
+    public function updateVardefs($by_group=false)
     {
         $this->mergeVardefs($by_group);
     }
 
 
-    function getVardefs()
+    public function getVardefs()
     {
         return $this->vardefs;
     }
 
-    function getVardef()
+    public function getVardef()
     {
         return $this->vardef;
     }
 
 
-    function addFieldVardef($vardef)
+    public function addFieldVardef($vardef)
     {
         if (!isset($vardef['default']) || strlen($vardef['default']) == 0) {
             unset($vardef['default']);
@@ -155,23 +155,23 @@ class MBVardefs
         $this->vardef['fields'][$vardef['name']] = $vardef;
     }
 
-    function deleteField($field)
+    public function deleteField($field)
     {
         unset($this->vardef['fields'][$field->name]);
     }
 
-    function save()
+    public function save()
     {
         $header = file_get_contents('modules/ModuleBuilder/MB/header.php');
         write_array_to_file('vardefs', $this->vardef, $this->path . '/vardefs.php', 'w', $header);
     }
 
-    function build($path)
+    public function build($path)
     {
         $header = file_get_contents('modules/ModuleBuilder/MB/header.php');
         write_array_to_file('dictionary["' . $this->name . '"]', $this->getVardefs(), $path . '/vardefs.php', 'w', $header);
     }
-    function load()
+    public function load()
     {
         $this->vardef = array('fields'=>array(), 'relationships'=>array());
         if (file_exists($this->path . '/vardefs.php')) {

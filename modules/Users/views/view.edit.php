@@ -47,8 +47,8 @@ require_once('modules/Users/UserViewHelper.php');
 
 class UsersViewEdit extends ViewEdit
 {
-    var $useForSubpanel = true;
-    function __construct()
+    public $useForSubpanel = true;
+    public function __construct()
     {
         parent::__construct();
     }
@@ -56,7 +56,7 @@ class UsersViewEdit extends ViewEdit
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function UsersViewEdit()
+    public function UsersViewEdit()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -68,7 +68,7 @@ class UsersViewEdit extends ViewEdit
     }
 
 
-    function preDisplay()
+    public function preDisplay()
     {
         $this->fieldHelper = new UserViewHelper($this->ss, $this->bean, 'EditView');
         $this->fieldHelper->setupAdditionalFields();

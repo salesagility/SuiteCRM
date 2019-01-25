@@ -7,7 +7,7 @@ require_once('include/MVC/View/views/view.detail.php');
 
 class AOS_ContractsViewDetail extends ViewDetail
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -15,7 +15,7 @@ class AOS_ContractsViewDetail extends ViewDetail
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_ContractsViewDetail()
+    public function AOS_ContractsViewDetail()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -27,14 +27,14 @@ class AOS_ContractsViewDetail extends ViewDetail
     }
 
 
-    function display()
+    public function display()
     {
         $this->populateContractTemplates();
         $this->displayPopupHtml();
         parent::display();
     }
 
-    function populateContractTemplates()
+    public function populateContractTemplates()
     {
         global $app_list_strings;
 
@@ -47,7 +47,7 @@ class AOS_ContractsViewDetail extends ViewDetail
         }
     }
 
-    function displayPopupHtml()
+    public function displayPopupHtml()
     {
         global $app_list_strings,$app_strings, $mod_strings;
         $templates = array_keys($app_list_strings['template_ddown_c_list']);

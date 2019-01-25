@@ -55,7 +55,7 @@ require_once('include/MVC/View/views/view.list.php');
 
 class ProjectTaskViewList extends ViewList
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -63,7 +63,7 @@ class ProjectTaskViewList extends ViewList
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ProjectTaskViewList()
+    public function ProjectTaskViewList()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -75,7 +75,7 @@ class ProjectTaskViewList extends ViewList
     }
 
 
-    function display()
+    public function display()
     {
         if (!$this->bean->ACLAccess('list')) {
             ACLController::displayNoAccess();

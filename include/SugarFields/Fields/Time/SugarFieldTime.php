@@ -42,7 +42,7 @@ require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 
 class SugarFieldTime extends SugarFieldBase
 {
-    function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         // Create Smarty variables for the Calendar picker widget
         if (!isset($displayParams['showMinutesDropdown'])) {
@@ -64,7 +64,7 @@ class SugarFieldTime extends SugarFieldBase
         return $this->fetch('include/SugarFields/Fields/Time/EditView.tpl');
     }
 
-    function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         // Create Smarty variables for the Calendar picker widget
         if (!isset($displayParams['showMinutesDropdown'])) {

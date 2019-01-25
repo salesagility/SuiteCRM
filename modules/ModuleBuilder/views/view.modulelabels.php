@@ -62,7 +62,7 @@ class ViewModulelabels extends SugarView
            );
     }
 
-    function display()
+    public function display()
     {
         global $mod_strings;
         $bak_mod_strings=$mod_strings;

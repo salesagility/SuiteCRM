@@ -6,7 +6,7 @@ include_once('include/utils.php');
 
 class jjwg_MarkersController extends SugarController
 {
-    function action_marker_edit_map()
+    public function action_marker_edit_map()
     {
         $this->view = 'marker_edit_map';
         $jjwg_Markers = get_module_info('jjwg_Markers');
@@ -18,7 +18,7 @@ class jjwg_MarkersController extends SugarController
         $GLOBALS['loc'] = $jjwg_Markers->define_loc();
     }
 
-    function action_marker_detail_map()
+    public function action_marker_detail_map()
     {
         $this->view = 'marker_detail_map';
         $jjwg_Markers = get_module_info('jjwg_Markers');

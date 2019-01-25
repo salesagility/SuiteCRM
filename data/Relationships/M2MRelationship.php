@@ -50,7 +50,7 @@ require_once("data/Relationships/SugarRelationship.php");
  */
 class M2MRelationship extends SugarRelationship
 {
-    var $type = "many-to-many";
+    public $type = "many-to-many";
 
     public function __construct($def)
     {

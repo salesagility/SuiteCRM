@@ -223,7 +223,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
          }
      }
 
-     function setTitle($title = '')
+     public function setTitle($title = '')
      {
          $this->title = $title;
      }

@@ -41,7 +41,7 @@
 
 class ContactsController extends SugarController
 {
-    function action_Popup()
+    public function action_Popup()
     {
         if (!empty($_REQUEST['html']) && $_REQUEST['html'] == 'mail_merge') {
             $this->view = 'mailmergepopup';
@@ -50,22 +50,22 @@ class ContactsController extends SugarController
         }
     }
     
-    function action_ValidPortalUsername()
+    public function action_ValidPortalUsername()
     {
         $this->view = 'validportalusername';
     }
 
-    function action_RetrieveEmail()
+    public function action_RetrieveEmail()
     {
         $this->view = 'retrieveemail';
     }
 
-    function action_ContactAddressPopup()
+    public function action_ContactAddressPopup()
     {
         $this->view = 'contactaddresspopup';
     }
   
-    function action_CloseContactAddressPopup()
+    public function action_CloseContactAddressPopup()
     {
         $this->view = 'closecontactaddresspopup';
     }

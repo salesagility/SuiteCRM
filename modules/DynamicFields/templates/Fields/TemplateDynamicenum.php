@@ -45,10 +45,10 @@ require_once('modules/DynamicFields/templates/Fields/TemplateEnum.php');
 
 class TemplateDynamicenum extends TemplateEnum
 {
-    var $type = 'dynamicenum';
-    var $parentenum = '';
+    public $type = 'dynamicenum';
+    public $parentenum = '';
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->vardef_map['parentenum'] = 'ext2';
@@ -57,7 +57,7 @@ class TemplateDynamicenum extends TemplateEnum
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function TemplateDynamicenum()
+    public function TemplateDynamicenum()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -69,7 +69,7 @@ class TemplateDynamicenum extends TemplateEnum
     }
 
 
-    function get_field_def()
+    public function get_field_def()
     {
         $def = parent::get_field_def();
         $def['dbType'] = 'enum';
@@ -77,7 +77,7 @@ class TemplateDynamicenum extends TemplateEnum
         return $def;
     }
 
-    function get_xtpl_edit()
+    public function get_xtpl_edit()
     {
         $name = $this->name;
         $value = '';

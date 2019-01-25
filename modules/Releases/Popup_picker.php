@@ -62,7 +62,7 @@ class Popup_Picker
     /*
      *
      */
-    function _get_where_clause()
+    public function _get_where_clause()
     {
         $where = '';
         if (isset($_REQUEST['query'])) {
@@ -78,7 +78,7 @@ class Popup_Picker
     /**
      *
      */
-    function process_page()
+    public function process_page()
     {
         global $theme;
         global $mod_strings;

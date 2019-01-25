@@ -68,7 +68,7 @@ function get_currency()
 
 class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
 {
-    function __construct(&$layout_manager)
+    public function __construct(&$layout_manager)
     {
         parent::__construct($layout_manager);
         $this->reporter = $this->layout_manager->getAttribute('reporter');
@@ -77,7 +77,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarWidgetFieldCurrency(&$layout_manager)
+    public function SugarWidgetFieldCurrency(&$layout_manager)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -90,7 +90,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
 
 
 
-    function & displayList(&$layout_def)
+    public function & displayList(&$layout_def)
     {
         global $locale;
         $symbol = $locale->getPrecedentPreference('default_currency_symbol');
@@ -141,7 +141,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
         }
     }
 
-    function displayListPlain($layout_def)
+    public function displayListPlain($layout_def)
     {
         $value = currency_format_number(
             parent::displayListPlain($layout_def),
@@ -154,32 +154,32 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
         );
         return $value;
     }
-    function queryFilterEquals(&$layout_def)
+    public function queryFilterEquals(&$layout_def)
     {
         return $this->_get_column_select($layout_def)."=".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
     }
 
-    function queryFilterNot_Equals(&$layout_def)
+    public function queryFilterNot_Equals(&$layout_def)
     {
         return $this->_get_column_select($layout_def)."!=".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
     }
 
-    function queryFilterGreater(&$layout_def)
+    public function queryFilterGreater(&$layout_def)
     {
         return $this->_get_column_select($layout_def)." > ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
     }
 
-    function queryFilterLess(&$layout_def)
+    public function queryFilterLess(&$layout_def)
     {
         return $this->_get_column_select($layout_def)." < ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
     }
 
-    function queryFilterBetween(&$layout_def)
+    public function queryFilterBetween(&$layout_def)
     {
         return $this->_get_column_select($layout_def)." > ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0'])). " AND ". $this->_get_column_select($layout_def)." < ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name1']))."\n";
     }
 
-    function isSystemCurrency(&$layout_def)
+    public function isSystemCurrency(&$layout_def)
     {
         if (strpos($layout_def['name'], '_usdoll') === false) {
             return false;
@@ -188,7 +188,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
         }
     }
 
-    function querySelect(&$layout_def)
+    public function querySelect(&$layout_def)
     {
         // add currency column to select
         $table = $this->getCurrencyIdTable($layout_def);
@@ -198,7 +198,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
         return $this->_get_column_select($layout_def)." ".$this->_get_column_alias($layout_def)."\n";
     }
 
-    function queryGroupBy($layout_def)
+    public function queryGroupBy($layout_def)
     {
         // add currency column to group by
         $table = $this->getCurrencyIdTable($layout_def);
@@ -208,7 +208,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
         return $this->_get_column_select($layout_def)." \n";
     }
 
-    function getCurrencyIdTable($layout_def)
+    public function getCurrencyIdTable($layout_def)
     {
         // We need to fetch the currency id as well
         if (!$this->isSystemCurrency($layout_def) && empty($layout_def['group_function'])) {

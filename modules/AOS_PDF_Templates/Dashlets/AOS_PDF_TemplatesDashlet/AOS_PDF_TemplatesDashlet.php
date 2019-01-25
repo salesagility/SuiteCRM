@@ -40,7 +40,7 @@ require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates.php');
 
 class AOS_PDF_TemplatesDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
         require('modules/AOS_PDF_Templates/metadata/dashletviewdefs.php');
@@ -60,7 +60,7 @@ class AOS_PDF_TemplatesDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_PDF_TemplatesDashlet($id, $def = null)
+    public function AOS_PDF_TemplatesDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {

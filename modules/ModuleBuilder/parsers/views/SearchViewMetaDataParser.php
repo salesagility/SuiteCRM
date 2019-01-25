@@ -51,7 +51,7 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
     /**
      * @var array $variableMap
      */
-    static $variableMap = array(
+    public static $variableMap = array(
                             MB_BASICSEARCH => 'basic_search' ,
                             MB_ADVANCEDSEARCH => 'advanced_search' ,
                             ) ;
@@ -76,7 +76,7 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
      * @param string $packageName    If not empty, the name of the package to which this listview belongs
      * @throws Exception
      */
-    function __construct($searchLayout, $moduleName, $packageName = '')
+    public function __construct($searchLayout, $moduleName, $packageName = '')
     {
         $GLOBALS [ 'log' ]->debug(get_class($this) . ": __construct( $searchLayout , $moduleName , $packageName )") ;
 

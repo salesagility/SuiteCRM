@@ -547,7 +547,7 @@ class SugarTheme
      *
      * @return string
      */
-    public final function getDefaultFilePath()
+    final public function getDefaultFilePath()
     {
         return 'themes/default';
     }
@@ -557,7 +557,7 @@ class SugarTheme
      *
      * @return string
      */
-    public final function getDefaultImagePath()
+    final public function getDefaultImagePath()
     {
         return $this->getDefaultFilePath().'/images';
     }
@@ -567,7 +567,7 @@ class SugarTheme
      *
      * @return string
      */
-    public final function getDefaultCSSPath()
+    final public function getDefaultCSSPath()
     {
         return $this->getDefaultFilePath().'/css';
     }
@@ -577,7 +577,7 @@ class SugarTheme
      *
      * @return string
      */
-    public final function getDefaultTemplatePath()
+    final public function getDefaultTemplatePath()
     {
         return $this->getDefaultFilePath().'/tpls';
     }
@@ -587,7 +587,7 @@ class SugarTheme
      *
      * @return string
      */
-    public final function getDefaultJSPath()
+    final public function getDefaultJSPath()
     {
         return $this->getDefaultFilePath().'/js';
     }

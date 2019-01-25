@@ -53,9 +53,9 @@ class QuickCreate extends EditView
     /**
      * True if the create being populated via an AJAX call?
      */
-    var $viaAJAX = false;
+    public $viaAJAX = false;
 
-    function process()
+    public function process()
     {
         global $current_user, $timedate;
 

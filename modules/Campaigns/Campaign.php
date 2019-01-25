@@ -48,53 +48,53 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class Campaign extends SugarBean
 {
-    var $field_name_map;
+    public $field_name_map;
 
     // Stored fields
-    var $id;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $assigned_user_id;
-    var $created_by;
-    var $created_by_name;
-    var $currency_id;
-    var $modified_by_name;
-    var $name;
-    var $start_date;
-    var $end_date;
-    var $status;
-    var $expected_cost;
-    var $budget;
-    var $actual_cost;
-    var $expected_revenue;
-    var $campaign_type;
-    var $objective;
-    var $content;
-    var $tracker_key;
-    var $tracker_text;
-    var $tracker_count;
-    var $refer_url;
-    var $impressions;
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $assigned_user_id;
+    public $created_by;
+    public $created_by_name;
+    public $currency_id;
+    public $modified_by_name;
+    public $name;
+    public $start_date;
+    public $end_date;
+    public $status;
+    public $expected_cost;
+    public $budget;
+    public $actual_cost;
+    public $expected_revenue;
+    public $campaign_type;
+    public $objective;
+    public $content;
+    public $tracker_key;
+    public $tracker_text;
+    public $tracker_count;
+    public $refer_url;
+    public $impressions;
 
     // These are related
-    var $assigned_user_name;
+    public $assigned_user_name;
 
     // module name definitions and table relations
-    var $table_name = "campaigns";
-    var $rel_prospect_list_table = "prospect_list_campaigns";
-    var $object_name = "Campaign";
-    var $module_dir = 'Campaigns';
-    var $importable = true;
+    public $table_name = "campaigns";
+    public $rel_prospect_list_table = "prospect_list_campaigns";
+    public $object_name = "Campaign";
+    public $module_dir = 'Campaigns';
+    public $importable = true;
 
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = array(
+    public $additional_column_fields = array(
                 'assigned_user_name', 'assigned_user_id',
     );
 
-    var $relationship_fields = array('prospect_list_id'=>'prospect_lists');
+    public $relationship_fields = array('prospect_list_id'=>'prospect_lists');
 
-    var $new_schema = true;
+    public $new_schema = true;
         
     /**
      *
@@ -108,7 +108,7 @@ class Campaign extends SugarBean
      */
     public $survey_name;
 
-    function list_view_parse_additional_sections(&$listTmpl)
+    public function list_view_parse_additional_sections(&$listTmpl)
     {
         global $locale;
 
@@ -131,12 +131,12 @@ class Campaign extends SugarBean
     }
 
 
-    function get_summary_text()
+    public function get_summary_text()
     {
         return $this->name;
     }
 
-    function create_export_query($order_by, $where, $relate_link_join='')
+    public function create_export_query($order_by, $where, $relate_link_join='')
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
@@ -167,7 +167,7 @@ class Campaign extends SugarBean
 
 
 
-    function clear_campaign_prospect_list_relationship($campaign_id, $prospect_list_id='')
+    public function clear_campaign_prospect_list_relationship($campaign_id, $prospect_list_id='')
     {
         if (!empty($prospect_list_id)) {
             $prospect_clause = " and prospect_list_id = '$prospect_list_id' ";
@@ -181,17 +181,17 @@ class Campaign extends SugarBean
 
 
 
-    function mark_relationships_deleted($id)
+    public function mark_relationships_deleted($id)
     {
         $this->clear_campaign_prospect_list_relationship($id);
     }
 
-    function fill_in_additional_list_fields()
+    public function fill_in_additional_list_fields()
     {
         parent::fill_in_additional_list_fields();
     }
 
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
         parent::fill_in_additional_detail_fields();
         //format numbers.
@@ -204,12 +204,12 @@ class Campaign extends SugarBean
     }
 
 
-    function update_currency_id($fromid, $toid)
+    public function update_currency_id($fromid, $toid)
     {
     }
 
 
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         $temp_array = $this->get_list_view_array();
         if ($this->campaign_type != 'Email') {
@@ -228,7 +228,7 @@ class Campaign extends SugarBean
     	builds a generic search based on the query string using or
     	do not include any $this-> because this is called on without having the class instantiated
     */
-    function build_generic_where_clause($the_query_string)
+    public function build_generic_where_clause($the_query_string)
     {
         $where_clauses = array();
         $the_query_string = $this->db->quote($the_query_string);
@@ -246,7 +246,7 @@ class Campaign extends SugarBean
         return $the_where;
     }
 
-    function save($check_notify = false)
+    public function save($check_notify = false)
     {
 
             //US DOLLAR
@@ -266,7 +266,7 @@ class Campaign extends SugarBean
     }
 
 
-    function mark_deleted($id)
+    public function mark_deleted($id)
     {
         $query = "update contacts set campaign_id = null where campaign_id = '{$id}' ";
         $this->db->query($query);
@@ -278,7 +278,7 @@ class Campaign extends SugarBean
         return parent::mark_deleted($id);
     }
 
-    function set_notification_body($xtpl, $camp)
+    public function set_notification_body($xtpl, $camp)
     {
         $xtpl->assign("CAMPAIGN_NAME", $camp->name);
         $xtpl->assign("CAMPAIGN_AMOUNT", $camp->budget);
@@ -289,7 +289,7 @@ class Campaign extends SugarBean
         return $xtpl;
     }
 
-    function track_log_leads()
+    public function track_log_leads()
     {
         $this->load_relationship('log_entries');
         $query_array = $this->log_entries->getQuery(true);
@@ -300,7 +300,7 @@ class Campaign extends SugarBean
         return implode(' ', $query_array);
     }
 
-    function track_log_entries($type=array())
+    public function track_log_entries($type=array())
     {
         //get arguments being passed in
         $args = func_get_args();
@@ -356,7 +356,7 @@ class Campaign extends SugarBean
     }
 
 
-    function get_queue_items()
+    public function get_queue_items()
     {
         //get arguments being passed in
         $args = func_get_args();
@@ -412,7 +412,7 @@ class Campaign extends SugarBean
     //		return $query;
     //	}
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL':return true;
@@ -433,7 +433,7 @@ class Campaign extends SugarBean
      * @return string count query
      *
      */
-    function create_list_count_query($query, $params=array())
+    public function create_list_count_query($query, $params=array())
     {
         //include the distinct filter if a marketing id is defined, which means we need to filter out duplicates by the passed in group by.
         //if no marketing id is specified, it is understood there might be duplicate target entries so no need to filter out
@@ -454,7 +454,7 @@ class Campaign extends SugarBean
      *
      * @return integer
      */
-    function getDeletedCampaignLogLeadsCount()
+    public function getDeletedCampaignLogLeadsCount()
     {
         $query = "SELECT COUNT(*) AS count FROM campaign_log WHERE campaign_id = '" . $this->getFieldValue('id') . "' AND target_id IS NULL AND activity_type = 'lead'";
         $result = $this->db->fetchOne($query);

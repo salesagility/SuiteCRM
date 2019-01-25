@@ -64,7 +64,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
      *
      * Contributions by Erik Mitchell erikm@logicpd.com
      */
-    function authenticateUser($name, $password, $fallback=false)
+    public function authenticateUser($name, $password, $fallback=false)
     {
         $server = $GLOBALS['ldap_config']->settings['ldap_hostname'];
         $port = $GLOBALS['ldap_config']->settings['ldap_port'];
@@ -240,7 +240,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
      * @param $name
      * @return String
      */
-    function getUserNameFilter($name)
+    public function getUserNameFilter($name)
     {
         $name_filter = "(" . $GLOBALS['ldap_config']->settings['ldap_login_attr']. "=" . $name . ")";
         //add the additional user filter if it is specified
@@ -261,7 +261,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
      * @param STRING $name
      * @return STRING $id
      */
-    function createUser($name)
+    public function createUser($name)
     {
         $user = new User();
         $user->user_name = $name;
@@ -284,7 +284,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
      * @param array $params
      * @return boolean
      */
-    function loadUserOnLogin($name, $password, $fallback = false, $params = array())
+    public function loadUserOnLogin($name, $password, $fallback = false, $params = array())
     {
         global $mod_strings;
 
@@ -323,7 +323,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
      * @param INT $error
      * @return boolean
      */
-    function loginError($error)
+    public function loginError($error)
     {
         if (empty($error)) {
             return false;
@@ -348,7 +348,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
      * distinguished name using anonymous credentials for OpenLDAP.
      * Contributions by Erik Mitchell erikm@logicpd.com
     */
-    function ldap_rdn_lookup($user_name, $password)
+    public function ldap_rdn_lookup($user_name, $password)
     {
 
         // MFH BUG# 14547 - Added htmlspecialchars_decode()

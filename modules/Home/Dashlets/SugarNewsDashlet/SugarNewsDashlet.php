@@ -47,10 +47,10 @@ require_once('modules/Home/Dashlets/iFrameDashlet/iFrameDashlet.php');
 
 class SugarNewsDashlet extends iFrameDashlet
 {
-    var $displayTpl = 'modules/Home/Dashlets/SugarNewsDashlet/display.tpl';
-    var $configureTpl = 'modules/Home/Dashlets/SugarNewsDashlet/configure.tpl';
-    var $defaultURL = 'https://suitecrm.com/';
-    var $url;
+    public $displayTpl = 'modules/Home/Dashlets/SugarNewsDashlet/display.tpl';
+    public $configureTpl = 'modules/Home/Dashlets/SugarNewsDashlet/configure.tpl';
+    public $defaultURL = 'https://suitecrm.com/';
+    public $url;
 
     public function __construct($id, $options = null)
     {
@@ -61,7 +61,7 @@ class SugarNewsDashlet extends iFrameDashlet
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarNewsDashlet($id, $options = null)
+    public function SugarNewsDashlet($id, $options = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {

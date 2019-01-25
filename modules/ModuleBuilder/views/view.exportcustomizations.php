@@ -54,7 +54,7 @@ class ViewExportcustomizations extends SugarView
            );
     }
 
-    function display()
+    public function display()
     {
         global $current_user, $mod_strings;
         $smarty = new Sugar_Smarty();

@@ -73,7 +73,7 @@ class AOR_Field extends Basic
     public $group_display;
     public $aor_report_id;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -81,7 +81,7 @@ class AOR_Field extends Basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOR_Field()
+    public function AOR_Field()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -93,7 +93,7 @@ class AOR_Field extends Basic
     }
 
 
-    function save_lines($post_data, $parent, $key = '')
+    public function save_lines($post_data, $parent, $key = '')
     {
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 

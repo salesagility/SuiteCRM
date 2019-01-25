@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class FormatterFactory
 {
-    static $formatter_map = array();
+    public static $formatter_map = array();
 
     /**
      * getInstance

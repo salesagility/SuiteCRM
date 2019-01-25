@@ -40,7 +40,7 @@
 
 class FieldViewer
 {
-    function __construct()
+    public function __construct()
     {
         $this->ss = new Sugar_Smarty();
     }
@@ -48,7 +48,7 @@ class FieldViewer
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function FieldViewer()
+    public function FieldViewer()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -59,7 +59,7 @@ class FieldViewer
         self::__construct();
     }
 
-    function getLayout($vardef)
+    public function getLayout($vardef)
     {
         if (empty($vardef['type'])) {
             $vardef['type'] = 'varchar';

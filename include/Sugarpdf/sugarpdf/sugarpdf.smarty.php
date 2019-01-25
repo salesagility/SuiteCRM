@@ -76,7 +76,7 @@ class SugarpdfSmarty extends Sugarpdf
     protected $smartyCell = false;
     protected $smartyAlign = "";
     
-    function preDisplay()
+    public function preDisplay()
     {
         parent::preDisplay();
         $this->print_header = false;
@@ -84,7 +84,7 @@ class SugarpdfSmarty extends Sugarpdf
         $this->_initSmartyInstance();
     }
     
-    function display()
+    public function display()
     {
         //turn off all error reporting so that PHP warnings don't munge the PDF code
         $state = new \SuiteCRM\StateSaver();

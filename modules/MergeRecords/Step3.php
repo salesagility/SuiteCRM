@@ -215,45 +215,45 @@ foreach ($temp_field_array as $field_array) {
         $xtpl->assign("TAB_INDEX", $field_count);
 
         switch ($field_check) {
-            case ('name') :
-            case ('varchar') :
-            case ('phone') :
-            case ('num') :
-            case ('email') :
-            case ('custom_fields') :
-            case ('url') :
-            case ('int') :
-            case ('float') :
-            case ('double') :
-            case ('currency') :
+            case ('name'):
+            case ('varchar'):
+            case ('phone'):
+            case ('num'):
+            case ('email'):
+            case ('custom_fields'):
+            case ('url'):
+            case ('int'):
+            case ('float'):
+            case ('double'):
+            case ('currency'):
 
                 $xtpl->assign("EDIT_FIELD_VALUE", $select_row_curr_field_value);
                 $xtpl->assign("CELL_WIDTH", $col_width);
                 $xtpl->parse("main.".$section_name.".merge_cell_edit_text");
                 break;
-            case ('text') :
+            case ('text'):
                 $xtpl->assign("EDIT_FIELD_VALUE", $select_row_curr_field_value);
                 $xtpl->assign("CELL_WIDTH", $col_width);
                 $xtpl->parse("main.".$section_name.".merge_cell_edit_textarea");
                 break;
-            case ('enum') :
+            case ('enum'):
                 $xtpl->assign("SELECT_OPTIONS", get_select_options_with_id($app_list_strings[$field_array['options']], $select_row_curr_field_value));
                 $xtpl->assign("CELL_WIDTH", $col_width);
                 $xtpl->parse("main.".$section_name.".merge_cell_edit_dropdown");
                 break;
-            case ('multienum') :
+            case ('multienum'):
                 $select_row_curr_field_value = unencodeMultienum($select_row_curr_field_value);
                 $xtpl->assign("SELECT_OPTIONS", get_select_options_with_id($app_list_strings[$field_array['options']], $select_row_curr_field_value));
                 $xtpl->assign("CELL_WIDTH", $col_width);
                 $xtpl->parse("main.".$section_name.".merge_cell_edit_multidropdown");
                 break;
                 //popup fields need to be fixed.., cant automate with vardefs
-            case ('relate') :
+            case ('relate'):
                 if (!empty($field_array['link'])) {
                     $exclude[$field_array['link']] = $field_array['link'];
                 }
                 // no break
-            case ('link') :
+            case ('link'):
                 //get_related_name
                 $tempId = $field_array['id_name'];
                 if (empty($select_row_curr_field_value)) {
@@ -278,7 +278,7 @@ foreach ($temp_field_array as $field_array) {
 
                 $xtpl->parse("main.".$section_name.".merge_cell_edit_popup");
                 break;
-            case ('bool') :
+            case ('bool'):
                 if (($select_row_curr_field_value == '1' || $select_row_curr_field_value == 'yes' || $select_row_curr_field_value == 'on') && !empty($select_row_curr_field_value)) {
                     $xtpl->assign("EDIT_FIELD_VALUE", " checked");
                 } else {
@@ -288,8 +288,8 @@ foreach ($temp_field_array as $field_array) {
                 $xtpl->assign("CELL_WIDTH", $col_width);
                 $xtpl->parse("main.".$section_name.".merge_cell_edit_checkbox");
                 break;
-            case ('date') :
-            case ('datetime') :
+            case ('date'):
+            case ('datetime'):
                 $xtpl->assign("CALENDAR_LANG", "en");
                 $xtpl->assign("USER_DATEFORMAT", '('.$timedate->get_user_date_format().')');
                 $xtpl->assign("CALENDAR_DATEFORMAT", $timedate->get_cal_date_format());
@@ -298,7 +298,7 @@ foreach ($temp_field_array as $field_array) {
                 $xtpl->assign("THEME", $theme);
                 $xtpl->parse("main.".$section_name.".merge_cell_edit_date");
                 break;
-            case ('datetimecombo') :
+            case ('datetimecombo'):
                 $xtpl->assign("CALENDAR_LANG", "en");
                 $xtpl->assign("USER_DATEFORMAT", $timedate->get_user_time_format());
                 $xtpl->assign("CALENDAR_DATEFORMAT", $timedate->get_cal_date_format());
@@ -307,7 +307,7 @@ foreach ($temp_field_array as $field_array) {
                 $xtpl->assign("THEME", $theme);
                 $xtpl->parse("main.".$section_name.".merge_cell_edit_datetime");
                 break;
-            default :
+            default:
                 break;
         }
 
@@ -316,7 +316,7 @@ foreach ($temp_field_array as $field_array) {
             $xtpl->assign("CELL_WIDTH", $col_width);
             $field_name=null;
             switch ($field_check) {
-                case ('bool') :
+                case ('bool'):
                     if (($mergeBeanArray[$id]->$tempName == '1' || $mergeBeanArray[$id]->$tempName == 'yes' || $mergeBeanArray[$id]->$tempName == 'on') && !empty($mergeBeanArray[$id]->$tempName)) {
                         $xtpl->assign("FIELD_VALUE", " checked");
                     } else {
@@ -324,7 +324,7 @@ foreach ($temp_field_array as $field_array) {
                     }
                     $field_name="main.".$section_name.".merge_cell_field_value_checkbox";
                     break;
-                case ('enum') :
+                case ('enum'):
                     if ($mergeBeanArray[$id]->$tempName != '' and isset($field_array['options']) and isset($app_list_strings[$field_array['options']][$mergeBeanArray[$id]->$tempName])) {
                         display_field_value($app_list_strings[$field_array['options']][$mergeBeanArray[$id]->$tempName]);
                     } else {
@@ -332,7 +332,7 @@ foreach ($temp_field_array as $field_array) {
                     }
                     $field_name="main.".$section_name.".merge_cell_field_value";
                     break;
-                case ('multienum') :
+                case ('multienum'):
                     if ($mergeBeanArray[$id]->$tempName != '' and isset($field_array['options']) and isset($app_list_strings[$field_array['options']][$mergeBeanArray[$id]->$tempName])) {
                         display_field_value(str_replace("^", "", $app_list_strings[$field_array['options']][$mergeBeanArray[$id]->$tempName]));
                     } else {
@@ -340,8 +340,8 @@ foreach ($temp_field_array as $field_array) {
                     }
                     $field_name="main.".$section_name.".merge_cell_field_value";
                     break;
-                case ('relate') :
-                case ('link') :
+                case ('relate'):
+                case ('link'):
                     $related_name=false;
                     $tempId = $field_array['id_name'];
                     if (empty($mergeBeanArray[$id]->$tempName) && !empty($mergeBeanArray[$id]->$tempId)) {
@@ -353,7 +353,7 @@ foreach ($temp_field_array as $field_array) {
                        display_field_value($mergeBeanArray[$id]->$tempName);
                     $field_name="main.".$section_name.".merge_cell_field_value";
                     break;
-                default :
+                default:
                     display_field_value($mergeBeanArray[$id]->$tempName);
                     $field_name="main.".$section_name.".merge_cell_field_value";
                     break;

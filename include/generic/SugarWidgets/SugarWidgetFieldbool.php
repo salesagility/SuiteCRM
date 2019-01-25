@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetFieldBool extends SugarWidgetReportField
 {
-    function queryFilterEquals(&$layout_def)
+    public function queryFilterEquals(&$layout_def)
     {
         $bool_val = $layout_def['input_name0'][0];
         if ($bool_val == 'yes' || $bool_val == '1') {
@@ -55,7 +55,7 @@ class SugarWidgetFieldBool extends SugarWidgetReportField
         }
     }
 
-    function displayListPlain($layout_def)
+    public function displayListPlain($layout_def)
     {
         $value = $this->_get_list_value($layout_def);
         $name = $layout_def['name'];
@@ -82,12 +82,12 @@ class SugarWidgetFieldBool extends SugarWidgetReportField
         return  $cell;
     }
     
-    function queryFilterStarts_With(&$layout_def)
+    public function queryFilterStarts_With(&$layout_def)
     {
         return $this->queryFilterEquals($layout_def);
     }
  
-    function displayInput($layout_def)
+    public function displayInput($layout_def)
     {
         global $app_strings;
         

@@ -49,7 +49,7 @@ class Popup_Picker
     /*
      *
      */
-    function _get_where_clause()
+    public function _get_where_clause()
     {
         $where = '';
         if (isset($_REQUEST['query'])) {
@@ -66,7 +66,7 @@ class Popup_Picker
     /**
      *
      */
-    function process_page_for_address()
+    public function process_page_for_address()
     {
         global $theme;
         global $mod_strings;
@@ -235,7 +235,7 @@ EOJS;
         return $output_html;
     }
 
-    function process_page_for_merge()
+    public function process_page_for_merge()
     {
         global $theme;
         global $mod_strings;

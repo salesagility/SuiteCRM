@@ -67,7 +67,7 @@ class ACLJSController
     }
 
 
-    function getJavascript()
+    public function getJavascript()
     {
         global $action;
         if (!ACLController::moduleSupportsACL($this->module)) {
@@ -124,7 +124,7 @@ EOQ;
         return $script;
     }
 
-    function getHTMLValues($def)
+    public function getHTMLValues($def)
     {
         $return_array = array();
         switch ($def['display_option']) {
@@ -132,7 +132,7 @@ EOQ;
                 $return_array['href']= "#";
                 $return_array['className']= "nolink";
                 break;
-            default;
+            default:
                 $return_array[$def['display_option']] = $def['display_option'];
                 break;
 
@@ -140,7 +140,7 @@ EOQ;
         return $return_array;
     }
 
-    function getFieldByIdScript($name, $def)
+    public function getFieldByIdScript($name, $def)
     {
         $script = '';
         if (!ACLController::checkAccess($def['module'], $def['action_option'], true)) {
@@ -151,7 +151,7 @@ EOQ;
         return $script;
     }
 
-    function getFieldByNameScript($name, $def)
+    public function getFieldByNameScript($name, $def)
     {
         $script = '';
         if (!ACLController::checkAccess($def['module'], $def['action_option'], true)) {
@@ -167,7 +167,7 @@ EOQ;
         return $script;
     }
 
-    function getFieldByFormScript($form, $name, $def)
+    public function getFieldByFormScript($form, $name, $def)
     {
         $script = '';
 

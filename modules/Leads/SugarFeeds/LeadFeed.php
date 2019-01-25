@@ -46,8 +46,8 @@ require_once('modules/SugarFeed/feedLogicBase.php');
 
 class LeadFeed extends FeedLogicBase
 {
-    var $module = 'Leads';
-    function pushFeed($bean, $event, $arguments)
+    public $module = 'Leads';
+    public function pushFeed($bean, $event, $arguments)
     {
         global $locale;
 

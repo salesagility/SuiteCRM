@@ -26,12 +26,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class ProjectController extends SugarController
 {
     //Loads the gantt view
-    function action_view_GanttChart()
+    public function action_view_GanttChart()
     {
         $this->view = 'GanttChart';
     }
 
-    function action_generate_chart()
+    public function action_generate_chart()
     {
         $db = DBManagerFactory::getInstance();
 
@@ -87,7 +87,7 @@ class ProjectController extends SugarController
     }
 
     //Create new project task
-    function action_update_GanttChart()
+    public function action_update_GanttChart()
     {
         global $current_user, $db;
 
@@ -218,7 +218,7 @@ class ProjectController extends SugarController
     }
 
     //mark project task as deleted
-    function action_delete_task()
+    public function action_delete_task()
     {
         $id = $_POST['task_id'];
         $task = new ProjectTask();
@@ -251,7 +251,7 @@ class ProjectController extends SugarController
 
 
     //updates the order of the tasks
-    function action_update_order()
+    public function action_update_order()
     {
 
        //convert quotes in json string back to normal
@@ -268,7 +268,7 @@ class ProjectController extends SugarController
         }
     }
     //returns tasks for predecessor in the add task pop-up form
-    function action_get_predecessors()
+    public function action_get_predecessors()
     {
         global $mod_strings;
         $project = new Project();
@@ -284,7 +284,7 @@ class ProjectController extends SugarController
     }
 
 
-    function create_task($name, $start, $end, $project_id, $milestone_flag, $status, $project_task_id, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description, $actual_duration, $order_number)
+    public function create_task($name, $start, $end, $project_id, $milestone_flag, $status, $project_task_id, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description, $actual_duration, $order_number)
     {
         $task = new ProjectTask();
         $task->name = $name;
@@ -306,7 +306,7 @@ class ProjectController extends SugarController
         $task->save();
     }
 
-    function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description, $actual_duration)
+    public function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description, $actual_duration)
     {
         $task = new ProjectTask();
         $task->retrieve($id);
@@ -332,13 +332,13 @@ class ProjectController extends SugarController
     /*********************************** Resource chart functions **************************************/
 
     //Loads the resource chart view
-    function action_ResourceList()
+    public function action_ResourceList()
     {
         $this->view = 'ResourceList';
     }
 
     //Updates the resource chart based on specified dates and users
-    function action_update_chart()
+    public function action_update_chart()
     {
         $db = DBManagerFactory::getInstance();
         include('modules/Project/chart.php');
@@ -481,7 +481,7 @@ class ProjectController extends SugarController
 
 
     //Get tasks for resource chart tooltips
-    function action_Tooltips()
+    public function action_Tooltips()
     {
         global $mod_strings;
 
@@ -515,7 +515,7 @@ class ProjectController extends SugarController
 
 
     //Returns the total number of days between two dates
-    function count_days($start_date, $end_date)
+    public function count_days($start_date, $end_date)
     {
         $d1 = new DateTime($start_date);
         $d2 = new DateTime($end_date);

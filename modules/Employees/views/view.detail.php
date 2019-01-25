@@ -47,7 +47,7 @@ require_once('include/MVC/View/views/view.detail.php');
 
 class EmployeesViewDetail extends ViewDetail
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -55,7 +55,7 @@ class EmployeesViewDetail extends ViewDetail
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function EmployeesViewDetail()
+    public function EmployeesViewDetail()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -121,7 +121,7 @@ EOHTML;
         return $theTitle;
     }
 
-    function display()
+    public function display()
     {
         if (is_admin($GLOBALS['current_user']) || $_REQUEST['record'] == $GLOBALS['current_user']->id) {
             $this->ss->assign('DISPLAY_EDIT', true);

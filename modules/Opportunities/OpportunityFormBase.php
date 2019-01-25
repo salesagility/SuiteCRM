@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class OpportunityFormBase
 {
-    function checkForDuplicates($prefix)
+    public function checkForDuplicates($prefix)
     {
         require_once('include/formbase.php');
     
@@ -78,7 +78,7 @@ class OpportunityFormBase
     }
 
 
-    function buildTableForm($rows, $mod='Opportunities')
+    public function buildTableForm($rows, $mod='Opportunities')
     {
         if (!empty($mod)) {
             global $current_language;
@@ -135,7 +135,7 @@ class OpportunityFormBase
         return $form;
     }
 
-    function getForm($prefix, $mod='Opportunities')
+    public function getForm($prefix, $mod='Opportunities')
     {
         if (!ACLController::checkAccess('Opportunities', 'edit', true)) {
             return '';
@@ -173,7 +173,7 @@ EOQ;
         return $the_form;
     }
 
-    function getWideFormBody($prefix, $mod='Opportunities', $formname='', $lead='', $showaccount = true)
+    public function getWideFormBody($prefix, $mod='Opportunities', $formname='', $lead='', $showaccount = true)
     {
         if (!ACLController::checkAccess('Opportunities', 'edit', true)) {
             return '';
@@ -324,7 +324,7 @@ EOQ;
         return $the_form;
     } // end getWideFormBody
 
-    function getFormBody($prefix, $mod='Opportunities', $formname='')
+    public function getFormBody($prefix, $mod='Opportunities', $formname='')
     {
         if (!ACLController::checkAccess('Opportunities', 'edit', true)) {
             return '';
@@ -436,7 +436,7 @@ EOQ;
     }
 
 
-    function handleSave($prefix, $redirect=true, $useRequired=false)
+    public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         global $current_user;
     

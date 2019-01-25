@@ -64,7 +64,7 @@ class MBModule
 
     public $config_md5 = null ;
 
-    function __construct($name, $path, $package, $package_key)
+    public function __construct($name, $path, $package, $package_key)
     {
         global $mod_strings;
         $this->config [ 'templates' ] = array( 'basic' => 1 ) ;
@@ -85,17 +85,17 @@ class MBModule
         $this->load() ;
     }
 
-    function getDBName($name)
+    public function getDBName($name)
     {
         return preg_replace("/[^\w]+/", "_", $name) ;
     }
 
-    function getModuleName()
+    public function getModuleName()
     {
         return $this->name;
     }
 
-    function getPackageName()
+    public function getPackageName()
     {
         return $this->package;
     }
@@ -103,7 +103,7 @@ class MBModule
     /**
      * @return UndeployedRelationships
      */
-    function getRelationships()
+    public function getRelationships()
     {
         return $this->relationships;
     }
@@ -112,7 +112,7 @@ class MBModule
      * Loads the module based on the module name
      *
      */
-    function load()
+    public function load()
     {
         if (file_exists($this->path . '/config.php')) {
             include($this->path . '/config.php') ;
@@ -132,33 +132,33 @@ class MBModule
         $this->mblanguage->load() ;
     }
 
-    function addTemplate($template)
+    public function addTemplate($template)
     {
         $this->config [ 'templates' ] [ $template ] = 1 ;
     }
 
-    function getModuleDir()
+    public function getModuleDir()
     {
         return $this->package_path . '/modules/' . $this->name ;
     }
 
-    function removeTemplate($template)
+    public function removeTemplate($template)
     {
         unset($this->config [ 'templates' ] [ $template ]) ;
     }
 
-    function getVardefs($by_group = false)
+    public function getVardefs($by_group = false)
     {
         $this->mbvardefs->updateVardefs($by_group) ;
         return $this->mbvardefs->getVardefs() ;
     }
 
-    function addField($vardef)
+    public function addField($vardef)
     {
         $this->mbvardefs->addFieldVardef($vardef) ;
     }
 
-    function addFieldObject($field)
+    public function addFieldObject($field)
     {
         $vardef = $field->get_field_def() ;
         $this->mbvardefs->mergeVardefs();
@@ -176,12 +176,12 @@ class MBModule
         $this->mbvardefs->save();
     }
 
-    function deleteField($name)
+    public function deleteField($name)
     {
         $this->mbvardefs->deleteField($name) ;
     }
 
-    function fieldExists($name = '', $type = '')
+    public function fieldExists($name = '', $type = '')
     {
         $vardefs = $this->getVardefs();
         if (! empty($vardefs)) {
@@ -208,12 +208,12 @@ class MBModule
         }
     }
 
-    function getModStrings($language = 'en_us')
+    public function getModStrings($language = 'en_us')
     {
         return $this->mblanguage->getModStrings($language) ;
     }
 
-    function setModStrings($language, $mod_strings= array())
+    public function setModStrings($language, $mod_strings= array())
     {
         // set $language = 'en_us' as default
         if (!$language) {
@@ -224,7 +224,7 @@ class MBModule
         $this->mblanguage->strings [$language] = $mod_strings;
     }
 
-    function setLabel($language, $key, $value= null)
+    public function setLabel($language, $key, $value= null)
     {
         // set $language = 'en_us' as default
         if (!$language) {
@@ -241,7 +241,7 @@ class MBModule
         }
     }
 
-    function deleteLabel($language, $key= null)
+    public function deleteLabel($language, $key= null)
     {
         // set $language = 'en_us' as default
         if (!$language) {
@@ -258,13 +258,13 @@ class MBModule
     /**
      * Required for an MB module to work with Dynamic fields
      */
-    function addLabel($displayLabel)
+    public function addLabel($displayLabel)
     {
         $this->setLabel('en_us', $this->getDBName($displayLabel, false), translate($displayLabel));
         $this->save();
     }
 
-    function getLabel($language, $key= null)
+    public function getLabel($language, $key= null)
     {
         // set $language = 'en_us' as default
         if (!$language) {
@@ -278,12 +278,12 @@ class MBModule
         return $this->mblanguage->strings [ $language ] [ $key ] ;
     }
 
-    function getAppListStrings($language = 'en_us')
+    public function getAppListStrings($language = 'en_us')
     {
         return $this->mblanguage->getAppListStrings($language) ;
     }
 
-    function setAppListStrings($language, $app_list_strings= array())
+    public function setAppListStrings($language, $app_list_strings= array())
     {
         // set $language = 'en_us' as default
         if (!$language) {
@@ -293,7 +293,7 @@ class MBModule
         $this->mblanguage->appListStrings [ $language ] = $app_list_strings ;
     }
 
-    function setDropDown($language, $key = null, $value= null)
+    public function setDropDown($language, $key = null, $value= null)
     {
         // set $language = 'en_us' as default
         if (!$language) {
@@ -303,7 +303,7 @@ class MBModule
         $this->mblanguage->appListStrings [ $language ] [ $key ] = $value ;
     }
 
-    function deleteDropDown($language, $key= null)
+    public function deleteDropDown($language, $key= null)
     {
         // set $language = 'en_us' as default
         if (!$language) {
@@ -314,7 +314,7 @@ class MBModule
         unset($this->mblanguage->appListStrings [ $language ] [ $key ]) ;
     }
 
-    function save()
+    public function save()
     {
         $this->path = $this->getModuleDir() ;
         if (mkdir_recursive($this->path)) {
@@ -343,7 +343,7 @@ class MBModule
         }
     }
 
-    function copyDashlet()
+    public function copyDashlet()
     {
         $templates = array_reverse($this->config [ 'templates' ], true) ;
         foreach ($templates as $template => $a) {
@@ -353,7 +353,7 @@ class MBModule
         }
     }
 
-    function copyViews()
+    public function copyViews()
     {
         $templates = array_reverse($this->config [ 'templates' ], true) ;
         foreach ($templates as $template => $a) {
@@ -363,7 +363,7 @@ class MBModule
         }
     }
 
-    function copyCustomFiles($from, $to)
+    public function copyCustomFiles($from, $to)
     {
         $d = dir($from) ;
         while ($filename = $d->read()) {
@@ -376,7 +376,7 @@ class MBModule
         }
     }
 
-    function copyMetaData()
+    public function copyMetaData()
     {
         $templates = array_reverse($this->config [ 'templates' ], true) ;
         foreach ($templates as $template => $a) {
@@ -386,7 +386,7 @@ class MBModule
         }
     }
 
-    function copyMetaRecursive($from, $to, $overwrite = false)
+    public function copyMetaRecursive($from, $to, $overwrite = false)
     {
         if (! file_exists($from)) {
             return ;
@@ -418,7 +418,7 @@ class MBModule
         }
     }
 
-    function saveConfig()
+    public function saveConfig()
     {
         $header = file_get_contents('modules/ModuleBuilder/MB/header.php') ;
         if (! write_array_to_file('config', $this->config, $this->path . '/config.php', 'w', $header)) {
@@ -427,14 +427,14 @@ class MBModule
         $this->setConfigMD5() ;
     }
 
-    function setConfigMD5()
+    public function setConfigMD5()
     {
         if (file_exists($this->path . '/config.php')) {
             $this->config_md5 = md5(base64_encode(serialize($this->config))) ;
         }
     }
 
-    function build($basepath)
+    public function build($basepath)
     {
         global $app_list_strings;
         $path = $basepath . '/modules/' . $this->key_name ;
@@ -451,7 +451,7 @@ class MBModule
         }
     }
 
-    function createClasses($path)
+    public function createClasses($path)
     {
         $class = array( ) ;
         $class [ 'name' ] = $this->key_name ;
@@ -511,7 +511,7 @@ class MBModule
         }
     }
 
-    function createMenu($path)
+    public function createMenu($path)
     {
         $smarty = new Sugar_Smarty() ;
         $smarty->assign('moduleName', $this->key_name) ;
@@ -523,7 +523,7 @@ class MBModule
         fclose($fp) ;
     }
 
-    function addInstallDefs(&$installDefs)
+    public function addInstallDefs(&$installDefs)
     {
         $name = $this->key_name ;
         $installDefs [ 'copy' ] [] = array( 'from' => '<basepath>/SugarModules/modules/' . $name , 'to' => 'modules/' . $name ) ;
@@ -531,7 +531,7 @@ class MBModule
         $this->relationships->addInstallDefs($installDefs) ;
     }
 
-    function getNodes()
+    public function getNodes()
     {
         $lSubs = array( ) ;
         $psubs = $this->getProvidedSubpanels() ;
@@ -581,7 +581,7 @@ class MBModule
     }
 
 
-    function getProvidedSubpanels()
+    public function getProvidedSubpanels()
     {
         $this->providedSubpanels = array() ;
 
@@ -602,7 +602,7 @@ class MBModule
         return $this->providedSubpanels;
     }
 
-    static function getTypes()
+    public static function getTypes()
     {
         $types = array( ) ;
         $d = dir(MB_TEMPLATES) ;
@@ -615,7 +615,7 @@ class MBModule
         return $types ;
     }
 
-    function rename($new_name)
+    public function rename($new_name)
     {
         $old = $this->getModuleDir() ;
         $old_name = $this->key_name;
@@ -633,7 +633,7 @@ class MBModule
         return $renamed ;
     }
 
-    function renameLanguageFiles($new_dir, $duplicate = false)
+    public function renameLanguageFiles($new_dir, $duplicate = false)
     {
         $this->mblanguage->name = $this->name ;
         $this->mblanguage->path = $new_dir ;
@@ -701,7 +701,7 @@ class MBModule
         }
     }
 
-    function copy($new_name)
+    public function copy($new_name)
     {
         $old = $this->getModuleDir() ;
 
@@ -727,12 +727,12 @@ class MBModule
         return $copied ;
     }
 
-    function delete()
+    public function delete()
     {
         return rmdir_recursive($this->getModuleDir()) ;
     }
 
-    function populateFromPost()
+    public function populateFromPost()
     {
         foreach ($this->implementable as $key => $value) {
             $this->config [ $key ] = ! empty($_REQUEST [ $key ]) ;
@@ -751,7 +751,7 @@ class MBModule
         $this->config [ 'importable' ] = ! empty($_REQUEST[ 'importable' ]) ;
     }
 
-    function getAvailibleSubpanelDef($panelName)
+    public function getAvailibleSubpanelDef($panelName)
     {
         $filepath = $this->getModuleDir() . "/metadata/subpanels/{$panelName}.php" ;
         if (file_exists($filepath)) {
@@ -761,7 +761,7 @@ class MBModule
         return array( ) ;
     }
 
-    function saveAvailibleSubpanelDef($panelName, $layout)
+    public function saveAvailibleSubpanelDef($panelName, $layout)
     {
         $dir = $this->getModuleDir() . "/metadata/subpanels" ;
         $filepath = "$dir/{$panelName}.php" ;
@@ -780,11 +780,11 @@ class MBModule
         }
     }
 
-    function getLocalSubpanelDef($panelName)
+    public function getLocalSubpanelDef($panelName)
     {
     }
 
-    function createIcon()
+    public function createIcon()
     {
         $icondir = $this->package_path . "/icons";
         mkdir_recursive($icondir);
@@ -832,7 +832,7 @@ class MBModule
         }
     }
 
-    function removeFieldFromLayouts($fieldName)
+    public function removeFieldFromLayouts($fieldName)
     {
         // hardcoded list of types for now, as also hardcoded in a different form in getNodes
         // TODO: replace by similar mechanism to StudioModule to determine the list of available views for this module

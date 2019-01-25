@@ -190,7 +190,7 @@ class Contact extends Person implements EmailInterface
     }
 
 
-    function add_list_count_joins(&$query, $where)
+    public function add_list_count_joins(&$query, $where)
     {
         // accounts.name
         if (stristr($where, "accounts.name")) {
@@ -206,7 +206,7 @@ class Contact extends Person implements EmailInterface
         $query .= $custom_join['join'];
     }
 
-    function listviewACLHelper()
+    public function listviewACLHelper()
     {
         $array_assign = parent::listviewACLHelper();
         $is_owner = false;
@@ -223,7 +223,7 @@ class Contact extends Person implements EmailInterface
         return $array_assign;
     }
 
-    function create_new_list_query(
+    public function create_new_list_query(
         $order_by,
         $where,
         $filter = array(),
@@ -253,7 +253,7 @@ class Contact extends Person implements EmailInterface
     }
 
 
-    function address_popup_create_new_list_query(
+    public function address_popup_create_new_list_query(
         $order_by,
         $where,
         $filter = array(),
@@ -331,7 +331,7 @@ class Contact extends Person implements EmailInterface
     }
 
 
-    function create_export_query($order_by, $where, $relate_link_join = '')
+    public function create_export_query($order_by, $where, $relate_link_join = '')
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
@@ -373,7 +373,7 @@ class Contact extends Person implements EmailInterface
         return $query;
     }
 
-    function fill_in_additional_list_fields()
+    public function fill_in_additional_list_fields()
     {
         parent::fill_in_additional_list_fields();
         $this->_create_proper_name_field();
@@ -386,7 +386,7 @@ class Contact extends Person implements EmailInterface
         }
     }
 
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
         parent::fill_in_additional_detail_fields();
         if (empty($this->id)) {
@@ -461,7 +461,7 @@ class Contact extends Person implements EmailInterface
      * where a user can select if they would like to sync a particular
      * contact to Outlook
      */
-    function load_contacts_users_relationship()
+    public function load_contacts_users_relationship()
     {
         global $current_user;
 
@@ -485,7 +485,7 @@ class Contact extends Person implements EmailInterface
         }
     }
 
-    function get_list_view_data($filter_fields = array())
+    public function get_list_view_data($filter_fields = array())
     {
         $temp_array = parent::get_list_view_data();
 
@@ -503,7 +503,7 @@ class Contact extends Person implements EmailInterface
      * builds a generic search based on the query string using or
      * do not include any $this-> because this is called on without having the class instantiated
      */
-    function build_generic_where_clause($the_query_string)
+    public function build_generic_where_clause($the_query_string)
     {
         $where_clauses = array();
         $the_query_string = $this->db->quote($the_query_string);
@@ -535,7 +535,7 @@ class Contact extends Person implements EmailInterface
         return $the_where;
     }
 
-    function set_notification_body($xtpl, $contact)
+    public function set_notification_body($xtpl, $contact)
     {
         global $locale;
 
@@ -545,7 +545,7 @@ class Contact extends Person implements EmailInterface
         return $xtpl;
     }
 
-    function get_contact_id_by_email($email)
+    public function get_contact_id_by_email($email)
     {
         $email = trim($email);
         if (empty($email)) {
@@ -562,7 +562,7 @@ class Contact extends Person implements EmailInterface
         return empty($result) ? null : $result;
     }
 
-    function save_relationship_changes($is_update, $exclude = array())
+    public function save_relationship_changes($is_update, $exclude = array())
     {
 
         //if account_id was replaced unlink the previous account_id.
@@ -577,7 +577,7 @@ class Contact extends Person implements EmailInterface
         parent::save_relationship_changes($is_update);
     }
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL':
@@ -587,7 +587,7 @@ class Contact extends Person implements EmailInterface
         return false;
     }
 
-    function get_unlinked_email_query($type = array())
+    public function get_unlinked_email_query($type = array())
     {
         return get_unlinked_email_query($type, $this);
     }
@@ -601,7 +601,7 @@ class Contact extends Person implements EmailInterface
      *
      * @param string $list_of_user
      */
-    function process_sync_to_outlook($list_of_users)
+    public function process_sync_to_outlook($list_of_users)
     {
         static $focus_user;
 

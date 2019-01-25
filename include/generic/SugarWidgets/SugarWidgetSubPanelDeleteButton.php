@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelDeleteButton extends SugarWidgetField
 {
-    function displayList(&$layout_def)
+    public function displayList(&$layout_def)
     {
         global $app_strings;
         global $subpanel_item_count;

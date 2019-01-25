@@ -47,45 +47,45 @@ require_once 'modules/SchedulersJobs/SchedulersJob.php';
 class Scheduler extends SugarBean
 {
     // table columns
-    var $id;
-    var $deleted;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $created_by;
-    var $created_by_name;
-    var $modified_by_name;
-    var $name;
-    var $job;
-    var $date_time_start;
-    var $date_time_end;
-    var $job_interval;
-    var $time_from;
-    var $time_to;
-    var $last_run;
-    var $status;
-    var $catch_up;
+    public $id;
+    public $deleted;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $created_by;
+    public $created_by_name;
+    public $modified_by_name;
+    public $name;
+    public $job;
+    public $date_time_start;
+    public $date_time_end;
+    public $job_interval;
+    public $time_from;
+    public $time_to;
+    public $last_run;
+    public $status;
+    public $catch_up;
     // object attributes
-    var $user;
-    var $intervalParsed;
-    var $intervalHumanReadable;
-    var $metricsVar;
-    var $metricsVal;
-    var $dayInt;
-    var $dayLabel;
-    var $monthsInt;
-    var $monthsLabel;
-    var $suffixArray;
-    var $datesArray;
-    var $scheduledJobs;
-    var $timeOutMins = 60;
+    public $user;
+    public $intervalParsed;
+    public $intervalHumanReadable;
+    public $metricsVar;
+    public $metricsVal;
+    public $dayInt;
+    public $dayLabel;
+    public $monthsInt;
+    public $monthsLabel;
+    public $suffixArray;
+    public $datesArray;
+    public $scheduledJobs;
+    public $timeOutMins = 60;
     // standard SugarBean attrs
-    var $table_name				= "schedulers";
-    var $object_name			= "Scheduler";
-    var $module_dir				= "Schedulers";
-    var $new_schema				= true;
-    var $process_save_dates 	= true;
-    var $order_by;
+    public $table_name				= "schedulers";
+    public $object_name			= "Scheduler";
+    public $module_dir				= "Schedulers";
+    public $new_schema				= true;
+    public $process_save_dates 	= true;
+    public $order_by;
 
     public static $job_strings;
 
@@ -221,7 +221,7 @@ class Scheduler extends SugarBean
      * 						the	 job_interval attribute
      * @return	false		If we the Scheduler is not in scope, return false.
      */
-    function deriveDBDateTimes($focus)
+    public function deriveDBDateTimes($focus)
     {
         global $timedate;
         $GLOBALS['log']->debug('----->Schedulers->deriveDBDateTimes() got an object of type: '.$focus->object_name);
@@ -767,7 +767,7 @@ class Scheduler extends SugarBean
         }
     }
 
-    function displayCronInstructions()
+    public function displayCronInstructions()
     {
         global $mod_strings;
         global $sugar_config;
@@ -839,7 +839,7 @@ class Scheduler extends SugarBean
      * Archives schedulers of the same functionality, then instantiates new
      * ones.
      */
-    function rebuildDefaultSchedulers()
+    public function rebuildDefaultSchedulers()
     {
         $mod_strings = return_module_language($GLOBALS['current_language'], 'Schedulers');
         // truncate scheduler-related tables
@@ -1023,7 +1023,7 @@ class Scheduler extends SugarBean
     /**
      * function overrides the one in SugarBean.php
      */
-    function create_export_query($order_by, $where, $show_deleted = 0)
+    public function create_export_query($order_by, $where, $show_deleted = 0)
     {
         return $this->create_new_list_query($order_by, $where, array(), array(), $show_deleted);
     }
@@ -1035,7 +1035,7 @@ class Scheduler extends SugarBean
     /**
      * function overrides the one in SugarBean.php
      */
-    function fill_in_additional_list_fields()
+    public function fill_in_additional_list_fields()
     {
         $this->fill_in_additional_detail_fields();
     }
@@ -1043,14 +1043,14 @@ class Scheduler extends SugarBean
     /**
      * function overrides the one in SugarBean.php
      */
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
     }
 
     /**
      * function overrides the one in SugarBean.php
      */
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         global $mod_strings;
         $temp_array = $this->get_list_view_array();

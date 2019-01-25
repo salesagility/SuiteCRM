@@ -56,7 +56,7 @@ class vCard
         $this->properties = array();
     }
 
-    function loadContact($contactid, $module='Contacts')
+    public function loadContact($contactid, $module='Contacts')
     {
         global $app_list_strings;
 
@@ -90,15 +90,15 @@ class vCard
         $this->setTitle($contact->title);
     }
 
-    function setTitle($title)
+    public function setTitle($title)
     {
         $this->setProperty("TITLE", $title);
     }
-    function setORG($org, $dep)
+    public function setORG($org, $dep)
     {
         $this->setProperty("ORG", "$org;$dep");
     }
-    function setAddress($address, $city, $state, $postal, $country, $type, $encoding='')
+    public function setAddress($address, $city, $state, $postal, $country, $type, $encoding='')
     {
         if (!empty($encoding)) {
             $encoding = ";ENCODING={$encoding}";
@@ -106,19 +106,19 @@ class vCard
         $this->setProperty("ADR;$type$encoding", ";;$address;$city;$state;$postal;$country");
     }
 
-    function setName($first_name, $last_name, $prefix)
+    public function setName($first_name, $last_name, $prefix)
     {
         $this->name = strtr($first_name.'_'.$last_name, ' ', '_');
         $this->setProperty('N', $last_name.';'.$first_name.';;'.$prefix);
         $this->setProperty('FN', "$prefix $first_name $last_name");
     }
 
-    function setEmail($address)
+    public function setEmail($address)
     {
         $this->setProperty('EMAIL;INTERNET', $address);
     }
 
-    function setPhoneNumber($number, $type)
+    public function setPhoneNumber($number, $type)
     {
         if ($type != 'FAX') {
             $this->setProperty("TEL;$type", $number);
@@ -126,11 +126,11 @@ class vCard
             $this->setProperty("TEL;WORK;$type", $number);
         }
     }
-    function setBirthDate($date)
+    public function setBirthDate($date)
     {
         $this->setProperty('BDAY', $date);
     }
-    function getProperty($name)
+    public function getProperty($name)
     {
         if (isset($this->properties[$name])) {
             return $this->properties[$name];
@@ -138,12 +138,12 @@ class vCard
         return null;
     }
 
-    function setProperty($name, $value)
+    public function setProperty($name, $value)
     {
         $this->properties[$name] = $value;
     }
 
-    function toString()
+    public function toString()
     {
         global $locale;
         $temp = "BEGIN:VCARD\n";
@@ -160,7 +160,7 @@ class vCard
         return $temp;
     }
 
-    function saveVCard()
+    public function saveVCard()
     {
         global $locale;
         $content = $this->toString();
@@ -181,7 +181,7 @@ class vCard
         print $locale->translateCharset($content, 'UTF-8', $locale->getExportCharset());
     }
 
-    function importVCard($filename, $module = 'Contacts')
+    public function importVCard($filename, $module = 'Contacts')
     {
         global $current_user;
         $lines = file($filename);

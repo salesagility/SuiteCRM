@@ -44,18 +44,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class MailMerge
 {
-    var $mm_data_dir;
-    var $obj;
-    var $datasource_file = 'ds.doc';
-    var $header_file = 'header.doc';
-    var $fieldcnt;
-    var $rowcnt;
-    var $template;
-    var $visible = false;
-    var $list;
-    var $fieldList;
+    public $mm_data_dir;
+    public $obj;
+    public $datasource_file = 'ds.doc';
+    public $header_file = 'header.doc';
+    public $fieldcnt;
+    public $rowcnt;
+    public $template;
+    public $visible = false;
+    public $list;
+    public $fieldList;
 
-    function __construct($list = null, $fieldList = null, $data_dir = 'data')
+    public function __construct($list = null, $fieldList = null, $data_dir = 'data')
     {
         // this is the path to your data dir.
         $this->mm_data_dir = $data_dir;
@@ -66,7 +66,7 @@ class MailMerge
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MailMerge($list = null, $fieldList = null, $data_dir = 'data')
+    public function MailMerge($list = null, $fieldList = null, $data_dir = 'data')
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -78,7 +78,7 @@ class MailMerge
     }
 
 
-    function Execute()
+    public function Execute()
     {
         $this->Initialize();
         if (count($this->list) > 0) {
@@ -93,14 +93,14 @@ class MailMerge
         }
     }
 
-    function Template($template = null)
+    public function Template($template = null)
     {
         if (is_array($template)) {
             $this->template = $template;
         }
     }
 
-    function CleanUp()
+    public function CleanUp()
     {
         //remove the temp files
         unlink($this->mm_data_dir.'/Temp/'.$this->datasource_file);
@@ -110,7 +110,7 @@ class MailMerge
         $this->Quit();
     }
 
-    function CreateHeaderFile()
+    public function CreateHeaderFile()
     {
         $this->obj->Documents->Add();
 
@@ -124,7 +124,7 @@ class MailMerge
         $this->obj->ActiveDocument->Close();
     }
 
-    function CreateDataSource()
+    public function CreateDataSource()
     {
         $this->obj->Documents->Add();
         $this->obj->ActiveDocument->Tables->Add($this->obj->Selection->Range, $this->rowcnt, $this->fieldcnt);
@@ -139,7 +139,7 @@ class MailMerge
         $this->obj->ActiveDocument->Close();
     }
 
-    function CreateDocument($template)
+    public function CreateDocument($template)
     {
         //$this->obj->Documents->Open($this->mm_data_dir.'/Templates/'.$template[0].'.dot');
         $this->obj->Documents->Open($template[0]);
@@ -156,7 +156,7 @@ class MailMerge
         return $template[1].'.doc';
     }
 
-    function Initialize()
+    public function Initialize()
     {
         $this->rowcnt = count($this->list);
         $this->fieldcnt = count($this->fieldList);
@@ -168,19 +168,19 @@ class MailMerge
         sugar_mkdir($this->mm_data_dir.'/Temp/');
     }
 
-    function Quit()
+    public function Quit()
     {
         $this->obj->Quit();
     }
 
-    function SetDataList($list = null)
+    public function SetDataList($list = null)
     {
         if (is_array($list)) {
             $this->list = $list;
         }
     }
 
-    function SetFieldList($list = null)
+    public function SetFieldList($list = null)
     {
         if (is_array($list)) {
             $this->fieldList = $list;

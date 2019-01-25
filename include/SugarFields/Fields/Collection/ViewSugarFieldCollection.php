@@ -43,27 +43,27 @@ require_once('include/SugarFields/Fields/Collection/SugarFieldCollection.php');
 
 class ViewSugarFieldCollection
 {
-    var $ss; // Sugar Smarty Object
-    var $bean;
-    var $bean_id;
-    var $name;
-    var $value_name;
-    var $displayParams; // DisplayParams for the collection field (defined in the metadata)
-    var $vardef; // vardef of the collection field.
-    var $related_module; // module name of the related module
-    var $module_dir; // name of the module where the collection field is.
-    var $numFields;
-    var $json;
-    var $tpl_path;
-    var $extra_var;
-    var $skipModuleQuickSearch = false;
-    var $field_to_name_array; //mapping of fields for the return of the select popup
-    var $showSelectButton = true;
-    var $hideShowHideButton = false;
-    var $action_type;
-    var $form_name;
+    public $ss; // Sugar Smarty Object
+    public $bean;
+    public $bean_id;
+    public $name;
+    public $value_name;
+    public $displayParams; // DisplayParams for the collection field (defined in the metadata)
+    public $vardef; // vardef of the collection field.
+    public $related_module; // module name of the related module
+    public $module_dir; // name of the module where the collection field is.
+    public $numFields;
+    public $json;
+    public $tpl_path;
+    public $extra_var;
+    public $skipModuleQuickSearch = false;
+    public $field_to_name_array; //mapping of fields for the return of the select popup
+    public $showSelectButton = true;
+    public $hideShowHideButton = false;
+    public $action_type;
+    public $form_name;
 
-    function __construct($fill_data = true)
+    public function __construct($fill_data = true)
     {
         $this->json = getJSONobj();
         if ($fill_data) {
@@ -85,7 +85,7 @@ class ViewSugarFieldCollection
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ViewSugarFieldCollection($fill_data = true)
+    public function ViewSugarFieldCollection($fill_data = true)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -100,7 +100,7 @@ class ViewSugarFieldCollection
      * Retrieve the related module and load the bean and the relationship
      * call retrieve values()
      */
-    function setup()
+    public function setup()
     {
         if (!class_exists('Relationship')) {
         }
@@ -147,7 +147,7 @@ class ViewSugarFieldCollection
      * Retrieve the values from the DB using the get method of the link class
      * Organize and save the value into the bean
      */
-    function retrieve_values()
+    public function retrieve_values()
     {
         if (empty($this->bean->{$this->value_name}) && isset($this->bean->{$this->name})) {
             $values = array();
@@ -207,7 +207,7 @@ class ViewSugarFieldCollection
     /*
      * redirect to the good process method.
      */
-    function process()
+    public function process()
     {
         if ($this->action_type == 'editview') {
             $this->process_editview();
@@ -217,13 +217,13 @@ class ViewSugarFieldCollection
             }
         }
     }
-    function process_detailview()
+    public function process_detailview()
     {
     }
     /*
      * Build the DisplayParams array
      */
-    function process_editview()
+    public function process_editview()
     {
         if (isset($this->bean->{$this->value_name}['secondaries'])) {
             $this->numFields=count($this->bean->{$this->value_name}['secondaries'])+1;
@@ -335,7 +335,7 @@ FRA;
     /*
      * Init the template with the variables
      */
-    function init_tpl()
+    public function init_tpl()
     {
         foreach ($this->extra_var as $k=>$v) {
             $this->ss->assign($k, $v);
@@ -361,7 +361,7 @@ FRA;
     /*
      * Display the collection field after retrieving the cached row.
      */
-    function display()
+    public function display()
     {
         $cacheRowFile = sugar_cached('modules/') . $this->module_dir .  '/collections/'. $this->name . '.tpl';
         if (!$this->checkTemplate($cacheRowFile)) {
@@ -379,7 +379,7 @@ FRA;
      * Check if the template is cached
      * return a bool
      */
-    function checkTemplate($cacheRowFile)
+    public function checkTemplate($cacheRowFile)
     {
         if (inDeveloperMode() || !empty($_SESSION['developerMode'])) {
             return false;
@@ -392,7 +392,7 @@ FRA;
      * Create the quickSearch code for the collection field.
      * return the javascript code which define sqs_objects.
      */
-    function createQuickSearchCode($returnAsJavascript = true)
+    public function createQuickSearchCode($returnAsJavascript = true)
     {
         $sqs_objects = array();
         require_once('include/QuickSearchDefaults.php');
@@ -510,7 +510,7 @@ FRA;
     /*
      * Always call createQuickSearchCode() before createPopupCode() to define field_to_name_array
      */
-    function createPopupCode()
+    public function createPopupCode()
     {
         // TODO the 'select' button is not fully working. We should use the sqs_objects in open_popup instead of the parameter.
         if (isset($this->field_to_name_array) && !empty($this->field_to_name_array)) {
@@ -545,7 +545,7 @@ FRA;
 
 
 
-    function findTemplate($view)
+    public function findTemplate($view)
     {
         static $tplCache = array();
 

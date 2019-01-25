@@ -47,9 +47,9 @@ require_once('include/Dashlets/Dashlet.php');
 
 class ChartsDashlet extends Dashlet
 {
-    var $width = '400';
-    var $height = '480';
-    var $report_id;
+    public $width = '400';
+    public $height = '480';
+    public $report_id;
 
     /**
      * Constructor
@@ -59,7 +59,7 @@ class ChartsDashlet extends Dashlet
      * @param report_id $report_id id of the saved report
      * @param array $def options saved for this dashlet
      */
-    function __construct($id, $report_id, $def)
+    public function __construct($id, $report_id, $def)
     {
         $this->report_id = $report_id;
 
@@ -75,7 +75,7 @@ class ChartsDashlet extends Dashlet
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ChartsDashlet($id, $report_id, $def)
+    public function ChartsDashlet($id, $report_id, $def)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -92,7 +92,7 @@ class ChartsDashlet extends Dashlet
      *
      * @return string html to display dashlet
      */
-    function display()
+    public function display()
     {
         require_once("modules/Reports/Report.php");
 
@@ -137,7 +137,7 @@ class ChartsDashlet extends Dashlet
      *
      * @return string javascript to use with this dashlet
      */
-    function displayScript()
+    public function displayScript()
     {
         require_once("modules/Reports/Report.php");
 
@@ -169,7 +169,7 @@ class ChartsDashlet extends Dashlet
      *
      * @return string html to display form
      */
-    function displayOptions()
+    public function displayOptions()
     {
     }
 
@@ -179,11 +179,11 @@ class ChartsDashlet extends Dashlet
      * @param array $req $_REQUEST
      * @return array filtered options to save
      */
-    function saveOptions($req)
+    public function saveOptions($req)
     {
     }
 
-    function setConfigureIcon()
+    public function setConfigureIcon()
     {
         if ($this->isConfigurable) {
             $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet"><a href="index.php?module=Reports&record=' . $this->report_id . '&action=ReportCriteriaResults&page=report">'
@@ -197,7 +197,7 @@ class ChartsDashlet extends Dashlet
         return $additionalTitle;
     }
 
-    function setRefreshIcon()
+    public function setRefreshIcon()
     {
         $additionalTitle = '';
         if ($this->isRefreshable) {

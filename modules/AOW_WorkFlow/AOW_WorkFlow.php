@@ -128,7 +128,7 @@ class AOW_WorkFlow extends Basic
         return false;
     }
 
-    function save($check_notify = false)
+    public function save($check_notify = false)
     {
         if (empty($this->id) || (isset($_POST['duplicateSave']) && $_POST['duplicateSave'] == 'true')) {
             unset($_POST['aow_conditions_id']);
@@ -148,7 +148,7 @@ class AOW_WorkFlow extends Basic
         return $return_id;
     }
 
-    function load_flow_beans()
+    public function load_flow_beans()
     {
         global $beanList, $app_list_strings;
 
@@ -189,7 +189,7 @@ class AOW_WorkFlow extends Basic
     /**
      * Retrieve the beans to actioned and run the actions
      */
-    function run_flow()
+    public function run_flow()
     {
         $beans = $this->get_flow_beans();
         if (!empty($beans)) {
@@ -224,7 +224,7 @@ class AOW_WorkFlow extends Basic
     /**
      * Use the condition statements and processed table to build query to retrieve beans to be actioned
      */
-    function get_flow_beans()
+    public function get_flow_beans()
     {
         global $beanList;
 
@@ -300,7 +300,7 @@ class AOW_WorkFlow extends Basic
         return $query;
     }
 
-    function build_flow_query_where($query = array())
+    public function build_flow_query_where($query = array())
     {
         global $beanList;
 
@@ -362,7 +362,7 @@ class AOW_WorkFlow extends Basic
         return $query;
     }
 
-    function build_query_where(AOW_Condition $condition, $module, $query = array())
+    public function build_query_where(AOW_Condition $condition, $module, $query = array())
     {
         global $beanList, $app_list_strings, $sugar_config, $timedate;
         $path = unserialize(base64_decode($condition->module_path));
@@ -481,7 +481,7 @@ class AOW_WorkFlow extends Basic
 
                     if ($params[1] != 'now') {
                         switch ($params[3]) {
-                            case 'business_hours';
+                            case 'business_hours':
                                 if (file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php') && $params[0] == 'now') {
                                     require_once('modules/AOBH_BusinessHours/AOBH_BusinessHours.php');
 
@@ -702,10 +702,10 @@ class AOW_WorkFlow extends Basic
                             $value = strtotime($value);
                         }
                         switch ($condition->operator) {
-                            case 'Not_Equal_To';
+                            case 'Not_Equal_To':
                                 $condition->operator = 'Equal_To';
                                 break;
-                            case 'Equal_To';
+                            case 'Equal_To':
                             default:
                                 $condition->operator = 'Not_Equal_To';
                                 break;
@@ -730,7 +730,7 @@ class AOW_WorkFlow extends Basic
 
                         if ($params[1] != 'now') {
                             switch ($params[3]) {
-                                case 'business_hours';
+                                case 'business_hours':
                                     if (file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php')) {
                                         require_once('modules/AOBH_BusinessHours/AOBH_BusinessHours.php');
 
@@ -767,10 +767,10 @@ class AOW_WorkFlow extends Basic
                             $field = unencodeMultienum($field);
                         }
                         switch ($condition->operator) {
-                            case 'Not_Equal_To';
+                            case 'Not_Equal_To':
                                 $condition->operator = 'Not_One_of';
                                 break;
-                            case 'Equal_To';
+                            case 'Equal_To':
                             default:
                                 $condition->operator = 'One_of';
                                 break;
@@ -830,7 +830,7 @@ class AOW_WorkFlow extends Basic
         return true;
     }
 
-    function compare_condition($var1, $var2, $operator = 'Equal_To')
+    public function compare_condition($var1, $var2, $operator = 'Equal_To')
     {
         switch ($operator) {
             case "Not_Equal_To": return $var1 != $var2;
@@ -838,9 +838,9 @@ class AOW_WorkFlow extends Basic
             case "Less_Than":  return $var1 <  $var2;
             case "Greater_Than_or_Equal_To": return $var1 >= $var2;
             case "Less_Than_or_Equal_To": return $var1 <= $var2;
-            case "Contains" : return strpos($var1, $var2);
-            case "Starts_With" : return strrpos($var1, $var2, -strlen($var1));
-            case "Ends_With" : return strpos($var1, $var2, strlen($var1) - strlen($var2));
+            case "Contains": return strpos($var1, $var2);
+            case "Starts_With": return strrpos($var1, $var2, -strlen($var1));
+            case "Ends_With": return strpos($var1, $var2, strlen($var1) - strlen($var2));
             case "is_null": return $var1 == '';
             case "One_of":
                 if (is_array($var1)) {
@@ -869,7 +869,7 @@ class AOW_WorkFlow extends Basic
         }
     }
 
-    function check_in_group($bean_id, $module, $group)
+    public function check_in_group($bean_id, $module, $group)
     {
         $sql = "SELECT id FROM securitygroups_records WHERE record_id = '".$bean_id."' AND module = '".$module."' AND securitygroup_id = '".$group."' AND deleted=0";
         if ($module == 'Users') {
@@ -885,7 +885,7 @@ class AOW_WorkFlow extends Basic
     /**
      * Run the actions against the passed $bean
      */
-    function run_actions(SugarBean &$bean, $in_save = false)
+    public function run_actions(SugarBean &$bean, $in_save = false)
     {
         require_once('modules/AOW_Processed/AOW_Processed.php');
         $processed = new AOW_Processed();

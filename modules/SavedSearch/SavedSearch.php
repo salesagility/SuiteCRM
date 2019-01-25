@@ -47,29 +47,29 @@ require_once('include/templates/TemplateGroupChooser.php');
 
 class SavedSearch extends SugarBean
 {
-    var $db;
-    var $field_name_map;
+    public $db;
+    public $field_name_map;
 
     // Stored fields
-    var $id;
-    var $date_entered;
-    var $date_modified;
-    var $assigned_user_id;
-    var $assigned_user_name;
-    var $modified_by_name;
-    var $name;
-    var $description;
-    var $content;
-    var $search_module;
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $modified_by_name;
+    public $name;
+    public $description;
+    public $content;
+    public $search_module;
 
-    var $object_name = 'SavedSearch';
-    var $table_name = 'saved_search';
+    public $object_name = 'SavedSearch';
+    public $table_name = 'saved_search';
 
-    var $module_dir = 'SavedSearch';
-    var $field_defs = array();
-    var $field_defs_map = array();
+    public $module_dir = 'SavedSearch';
+    public $field_defs = array();
+    public $field_defs_map = array();
 
-    var $columns;
+    public $columns;
 
     public function __construct($columns = array(), $orderBy = null, $sortOrder = 'DESC')
     {
@@ -98,7 +98,7 @@ class SavedSearch extends SugarBean
     }
 
     // Saved Search Form
-    function getForm($module, $inline = true, $orderBySelectOnly = false)
+    public function getForm($module, $inline = true, $orderBySelectOnly = false)
     {
         global $current_user, $currentModule, $current_language, $app_strings;
         $db = DBManagerFactory::getInstance();
@@ -219,7 +219,7 @@ class SavedSearch extends SugarBean
         return $chooser;
     }
 
-    function getSelect($module, &$savedSearchData = null)
+    public function getSelect($module, &$savedSearchData = null)
     {
         global $current_user, $currentModule, $current_lang, $app_strings;
         $db = DBManagerFactory::getInstance();
@@ -259,7 +259,7 @@ class SavedSearch extends SugarBean
         return $sugarSmarty->fetch('modules/SavedSearch/SavedSearchSelects.tpl');
     }
 
-    function returnSavedSearch($id, $searchFormTab = 'advanced_search', $showDiv = 'no')
+    public function returnSavedSearch($id, $searchFormTab = 'advanced_search', $showDiv = 'no')
     {
         global $current_user, $currentModule;
         $db = DBManagerFactory::getInstance();
@@ -317,7 +317,7 @@ class SavedSearch extends SugarBean
         );
     }
 
-    function returnSavedSearchContents($id)
+    public function returnSavedSearchContents($id)
     {
         global $current_user, $currentModule;
         $db = DBManagerFactory::getInstance();
@@ -344,7 +344,7 @@ class SavedSearch extends SugarBean
         return $contents;
     }
 
-    function handleDelete($id)
+    public function handleDelete($id)
     {
         $this->mark_deleted($id);
 
@@ -480,7 +480,7 @@ class SavedSearch extends SugarBean
         }
     }
 
-    function handleRedirect($return_module, $search_query, $saved_search_id, $advanced = 'false')
+    public function handleRedirect($return_module, $search_query, $saved_search_id, $advanced = 'false')
     {
         $_SESSION['LastSavedView'][$return_module] = $saved_search_id;
         $return_action = 'index';
@@ -490,7 +490,7 @@ class SavedSearch extends SugarBean
         die();
     }
 
-    function fill_in_additional_list_fields()
+    public function fill_in_additional_list_fields()
     {
         global $app_list_strings;
         // Fill in the assigned_user_name
@@ -499,13 +499,13 @@ class SavedSearch extends SugarBean
     }
 
 
-    function retrieveSavedSearch($id)
+    public function retrieveSavedSearch($id)
     {
         parent::retrieve($id);
         $this->contents = unserialize(base64_decode($this->contents));
     }
 
-    function populateRequest()
+    public function populateRequest()
     {
         global $timedate;
 

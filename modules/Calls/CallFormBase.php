@@ -53,7 +53,7 @@ require_once('include/SugarObjects/forms/FormBase.php');
 
 class CallFormBase extends FormBase
 {
-    function getFormBody($prefix, $mod='', $formname='', $cal_date='', $cal_time='')
+    public function getFormBody($prefix, $mod='', $formname='', $cal_date='', $cal_time='')
     {
         if (!ACLController::checkAccess('Calls', 'edit', true)) {
             return '';
@@ -146,7 +146,7 @@ EOQ;
         $mod_strings = $temp_strings;
         return $form;
     }
-    function getFormHeader($prefix, $mod='', $title='')
+    public function getFormHeader($prefix, $mod='', $title='')
     {
         if (!ACLController::checkAccess('Calls', 'edit', true)) {
             return '';
@@ -176,7 +176,7 @@ EOQ;
 EOQ;
         return $the_form;
     }
-    function getFormFooter($prefic, $mod='')
+    public function getFormFooter($prefic, $mod='')
     {
         if (!ACLController::checkAccess('Calls', 'edit', true)) {
             return '';
@@ -191,7 +191,7 @@ EOQ;
         return $the_form;
     }
 
-    function getForm($prefix, $mod='')
+    public function getForm($prefix, $mod='')
     {
         if (!ACLController::checkAccess('Calls', 'edit', true)) {
             return '';
@@ -204,7 +204,7 @@ EOQ;
     }
 
 
-    function handleSave($prefix, $redirect=true, $useRequired=false)
+    public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         require_once('include/formbase.php');
 
@@ -530,7 +530,7 @@ EOQ;
         }
     } // end handleSave();
 
-    function getWideFormBody($prefix, $mod='', $formname='', $wide =true)
+    public function getWideFormBody($prefix, $mod='', $formname='', $wide =true)
     {
         if (!ACLController::checkAccess('Calls', 'edit', true)) {
             return '';

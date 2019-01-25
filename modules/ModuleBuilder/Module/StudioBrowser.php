@@ -47,9 +47,9 @@ function cmp($a, $b)
 
 class StudioBrowser
 {
-    var $modules = array();
+    public $modules = array();
     
-    function loadModules()
+    public function loadModules()
     {
         global $current_user;
         $access = $current_user->getDeveloperModules();
@@ -64,7 +64,7 @@ class StudioBrowser
         }
     }
     
-    function loadRelatableModules()
+    public function loadRelatableModules()
     {
         $d = dir('modules');
         while ($e = $d->read()) {
@@ -77,7 +77,7 @@ class StudioBrowser
         }
     }
         
-    function getNodes()
+    public function getNodes()
     {
         $this->loadModules();
         $nodes = array();

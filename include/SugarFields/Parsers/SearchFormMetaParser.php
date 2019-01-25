@@ -42,7 +42,7 @@ require_once('include/SugarFields/Parsers/MetaParser.php');
 
 class SearchFormMetaParser extends MetaParser
 {
-    function __construct()
+    public function __construct()
     {
         $this->mView = 'Search';
     }
@@ -50,7 +50,7 @@ class SearchFormMetaParser extends MetaParser
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SearchFormMetaParser()
+    public function SearchFormMetaParser()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -67,7 +67,7 @@ class SearchFormMetaParser extends MetaParser
      * @param $mixed
      * @return $obj A MetaDataBean instance
      **/
-    function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $masterCopy=null)
+    public function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $masterCopy=null)
     {
         $contents = file_get_contents($filePath);
         $contents = $this->trimHTML($contents);
@@ -109,7 +109,7 @@ class SearchFormMetaParser extends MetaParser
         return $header;
     }
 
-    function mergeSection($section, $masterSection)
+    public function mergeSection($section, $masterSection)
     {
 
   // Get all the names in the panel
@@ -155,7 +155,7 @@ class SearchFormMetaParser extends MetaParser
         return $section;
     }
 
-    function processSection($section, $table, $filePath, $vardefs=array())
+    public function processSection($section, $table, $filePath, $vardefs=array())
     {
         $toptr = $this->getElementsByType("tr", $table);
 
@@ -267,7 +267,7 @@ class SearchFormMetaParser extends MetaParser
         return $metarow;
     }
 
-    function applyRules($moduleDir, $section=array())
+    public function applyRules($moduleDir, $section=array())
     {
         require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
         $baseRule = new BaseRule();

@@ -46,9 +46,9 @@ require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
 
 class TemplateDatetimecombo extends TemplateRange
 {
-    var $type = 'datetimecombo';
-    var $len = '';
-    var $dateStrings = array(
+    public $type = 'datetimecombo';
+    public $len = '';
+    public $dateStrings = array(
         '-none-' => '',
         'today'=>'now',
         'yesterday'=> '-1 day',
@@ -64,7 +64,7 @@ class TemplateDatetimecombo extends TemplateRange
         'next year'=> '+1 year',
     );
     
-    var $hoursStrings = array(
+    public $hoursStrings = array(
         '' => '',
         '01' => '01',
         '02' => '02',
@@ -80,7 +80,7 @@ class TemplateDatetimecombo extends TemplateRange
         '12' => '12',
     );
     
-    var $hoursStrings24 = array(
+    public $hoursStrings24 = array(
         '' => '',
         '00' => '00',
         '01' => '01',
@@ -108,7 +108,7 @@ class TemplateDatetimecombo extends TemplateRange
         '23' => '23',
     );
     
-    var $minutesStrings = array(
+    public $minutesStrings = array(
         '' => '',
         '00' => '00',
         '15' => '15',
@@ -116,18 +116,18 @@ class TemplateDatetimecombo extends TemplateRange
         '45' => '45',
     );
     
-    var $meridiemStrings = array(
+    public $meridiemStrings = array(
         '' => '',
         'am' => 'am',
         'pm' => 'pm',
     );
 
-    function get_db_default($modify=false)
+    public function get_db_default($modify=false)
     {
         return '';
     }
 
-    function get_field_def()
+    public function get_field_def()
     {
         $def = parent::get_field_def();
         $def['dbType'] = 'datetime';
@@ -138,7 +138,7 @@ class TemplateDatetimecombo extends TemplateRange
         return $def;
     }
     
-    function populateFromPost()
+    public function populateFromPost()
     {
         parent::populateFromPost();
         if (!empty($_REQUEST['defaultDate']) && !empty($_REQUEST['defaultTime'])) {

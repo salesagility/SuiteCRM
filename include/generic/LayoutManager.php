@@ -68,7 +68,7 @@ class LayoutManager
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function LayoutManager()
+    public function LayoutManager()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -80,17 +80,17 @@ class LayoutManager
     }
 
 
-    function setAttribute($key, $value)
+    public function setAttribute($key, $value)
     {
         $this->defs[$key] = $value;
     }
 
-    function setAttributePtr($key, &$value)
+    public function setAttributePtr($key, &$value)
     {
         $this->defs[$key] = $value;
     }
 
-    function getAttribute($key)
+    public function getAttribute($key)
     {
         if (isset($this->defs[$key])) {
             return $this->defs[$key];
@@ -101,7 +101,7 @@ class LayoutManager
 
     // Take the class name from the widget definition and use the class to look it up
     // $use_default will default classes to SugarWidgetFieldxxxxx
-    function getClassFromWidgetDef($widget_def, $use_default = false)
+    public function getClassFromWidgetDef($widget_def, $use_default = false)
     {
         static $class_map = array(
             'SugarWidgetSubPanelTopCreateButton' => array(
@@ -335,7 +335,7 @@ class LayoutManager
     }
 
     // 27426
-    function getFieldDef($widget_def)
+    public function getFieldDef($widget_def)
     {
         static $beanCache;
         if (!empty($widget_def['module']) &&!empty($GLOBALS['beanList'][$widget_def['module']]) && !empty($GLOBALS['beanFiles'][$GLOBALS['beanList'][$widget_def['module']]])) {
@@ -351,7 +351,7 @@ class LayoutManager
         return null;
     }
 
-    function widgetDisplay($widget_def, $use_default = false, $grabName = false, $grabId = false)
+    public function widgetDisplay($widget_def, $use_default = false, $grabName = false, $grabId = false)
     {
         $theclass = $this->getClassFromWidgetDef($widget_def, $use_default);
         $label = isset($widget_def['module']) ? $widget_def['module'] : '';
@@ -378,7 +378,7 @@ class LayoutManager
         return $theclass->display($widget_def, null, null);
     }
 
-    function widgetQuery($widget_def, $use_default = false)
+    public function widgetQuery($widget_def, $use_default = false)
     {
         $theclass = $this->getClassFromWidgetDef($widget_def, $use_default);
         //				_pp($theclass);
@@ -387,7 +387,7 @@ class LayoutManager
 
     // display an input field
     // module is the parent module of the def
-    function widgetDisplayInput($widget_def, $use_default = false)
+    public function widgetDisplayInput($widget_def, $use_default = false)
     {
         $theclass = $this->getClassFromWidgetDef($widget_def, $use_default);
         return $theclass->displayInput($widget_def);

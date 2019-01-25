@@ -60,7 +60,7 @@ class ManyToOneRelationship extends AbstractRelationship
      * @param array $definition Parameters passed in as array defined in parent::$definitionKeys
      * The lhs_module value is for the One side; the rhs_module value is for the Many
      */
-    function __construct($definition)
+    public function __construct($definition)
     {
         parent::__construct($definition) ;
         $onetomanyDef = array_merge($definition, array(
@@ -85,7 +85,7 @@ class ManyToOneRelationship extends AbstractRelationship
      * BUILD methods called during the build
      */
     
-    function buildLabels($update = false)
+    public function buildLabels($update = false)
     {
         return $this->one_to_many->buildLabels();
     }
@@ -95,7 +95,7 @@ class ManyToOneRelationship extends AbstractRelationship
      * The format is that of TO_MODULE => relationship, FROM_MODULE, FROM_MODULES_SUBPANEL, mimicking the format in the layoutdefs.php
      * @return array    An array of subpanel definitions, keyed by the module
      */
-    function buildSubpanelDefinitions()
+    public function buildSubpanelDefinitions()
     {
         return $this->one_to_many->buildSubpanelDefinitions();
     }
@@ -104,7 +104,7 @@ class ManyToOneRelationship extends AbstractRelationship
     /*
      * @return array    An array of field definitions, ready for the vardefs, keyed by module
      */
-    function buildVardefs()
+    public function buildVardefs()
     {
         return $this->one_to_many->buildVardefs();
     }
@@ -113,7 +113,7 @@ class ManyToOneRelationship extends AbstractRelationship
      * Define what fields to add to which modules layouts
      * @return array    An array of module => fieldname
      */
-    function buildFieldsToLayouts()
+    public function buildFieldsToLayouts()
     {
         if ($this->relationship_only) {
             return array() ;
@@ -125,7 +125,7 @@ class ManyToOneRelationship extends AbstractRelationship
     /*
      * @return array    An array of relationship metadata definitions
      */
-    function buildRelationshipMetaData()
+    public function buildRelationshipMetaData()
     {
         return $this->one_to_many->buildRelationshipMetaData();
     }

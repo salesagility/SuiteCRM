@@ -44,10 +44,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  
  class ListCurrency
  {
-     var $focus = null;
-     var $list = null;
-     var $javascript = '<script>';
-     function lookupCurrencies()
+     public $focus = null;
+     public $list = null;
+     public $javascript = '<script>';
+     public function lookupCurrencies()
      {
          $this->focus = new Currency();
          $this->list = $this->focus->get_full_list('name');
@@ -58,7 +58,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
              $this->list = array($this->focus);
          }
      }
-     function handleAdd()
+     public function handleAdd()
      {
          global $current_user;
          if ($current_user->is_admin) {
@@ -78,7 +78,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
          }
      }
         
-     function handleUpdate()
+     public function handleUpdate()
      {
          global $current_user;
          if ($current_user->is_admin) {
@@ -106,7 +106,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
          }
      }
     
-     function getJavascript()
+     public function getJavascript()
      {
          // wp: DO NOT add formatting and unformatting numbers in here, add them prior to calling these to avoid double calling
          // of unformat number
@@ -164,7 +164,7 @@ EOQ;
      }
     
     
-     function getSelectOptions($id = '')
+     public function getSelectOptions($id = '')
      {
          global $current_user;
          $this->javascript .="var ConversionRates = new Array(); \n";
@@ -193,7 +193,7 @@ EOQ;
          }
          return $options;
      }
-     function getTable()
+     public function getTable()
      {
          $this->lookupCurrencies();
          $usdollar = translate('LBL_US_DOLLAR');
@@ -231,7 +231,7 @@ EOQ;
          return $form;
      }
     
-     function setCurrencyFields($fields)
+     public function setCurrencyFields($fields)
      {
          $json = getJSONobj();
          $this->javascript .= 'var currencyFields = ' . $json->encode($fields) . ";\n";

@@ -55,27 +55,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SubPanelViewNotes
 {
-    var $notes_list = null;
-    var $hideNewButton = false;
-    var $focus;
+    public $notes_list = null;
+    public $hideNewButton = false;
+    public $focus;
 
-    function setFocus(&$value)
+    public function setFocus(&$value)
     {
         $this->focus =(object) $value;
     }
 
 
-    function setNotesList(&$value)
+    public function setNotesList(&$value)
     {
         $this->notes_list =$value;
     }
 
-    function setHideNewButton($value)
+    public function setHideNewButton($value)
     {
         $this->hideNewButton = $value;
     }
 
-    function __construct()
+    public function __construct()
     {
         global $theme;
     }
@@ -83,7 +83,7 @@ class SubPanelViewNotes
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SubPanelViewNotes()
+    public function SubPanelViewNotes()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -95,7 +95,7 @@ class SubPanelViewNotes
     }
 
 
-    function getHeaderText($action, $currentModule)
+    public function getHeaderText($action, $currentModule)
     {
         global $app_strings;
         $button  = "<table cellspacing='0' cellpadding='0' border='0'><form border='0' action='index.php' method='post' name='form' id='form'>\n";
@@ -107,7 +107,7 @@ class SubPanelViewNotes
         return $button;
     }
 
-    function ProcessSubPanelListView($xTemplatePath, &$mod_strings, $action, $curModule='')
+    public function ProcessSubPanelListView($xTemplatePath, &$mod_strings, $action, $curModule='')
     {
         global $currentModule,$app_strings;
         if (empty($curModule)) {

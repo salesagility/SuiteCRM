@@ -47,8 +47,8 @@ require_once('modules/Administration/Common.php');
 require_once('modules/Administration/QuickRepairAndRebuild.php');
 class DropDownHelper
 {
-    var $modules = array();
-    function getDropDownModules()
+    public $modules = array();
+    public function getDropDownModules()
     {
         $dir = dir('modules');
         while ($entry = $dir->read()) {
@@ -58,7 +58,7 @@ class DropDownHelper
         }
     }
 
-    function scanForDropDowns($filepath, $module)
+    public function scanForDropDowns($filepath, $module)
     {
         $contents = file_get_contents($filepath);
         $matches = array();
@@ -77,7 +77,7 @@ class DropDownHelper
      * @param array dropdown
      * @return array Filtered dropdown list
      */
-    function filterDropDown($name, $dropdown)
+    public function filterDropDown($name, $dropdown)
     {
         $results = array();
         switch ($name) {
@@ -107,7 +107,7 @@ class DropDownHelper
      *
      * @param REQUEST params  $params
      */
-    function saveDropDown($params)
+    public function saveDropDown($params)
     {
         $count = 0;
         $dropdown = array();

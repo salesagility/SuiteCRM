@@ -253,7 +253,7 @@ class ProjectViewGanttChart extends ViewDetail
     }
 
     //Returns the time span between two dates in years  months and days
-    function time_range($start_date, $end_date)
+    public function time_range($start_date, $end_date)
     {
         global $mod_strings;
 

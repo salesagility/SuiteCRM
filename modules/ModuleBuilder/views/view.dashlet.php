@@ -50,7 +50,7 @@ require_once 'modules/ModuleBuilder/parsers/constants.php' ;
 
 class ViewDashlet extends ViewListView
 {
-    function __construct()
+    public function __construct()
     {
         $this->editModule = $_REQUEST [ 'view_module' ] ;
         $this->editLayout = $_REQUEST [ 'view' ] ;
@@ -83,11 +83,11 @@ class ViewDashlet extends ViewListView
     }
 
     // DO NOT REMOVE - overrides parent ViewEdit preDisplay() which attempts to load a bean for a non-existent module
-    function preDisplay()
+    public function preDisplay()
     {
     }
 
-    function display(
+    public function display(
         $preview = false
         ) {
         require_once 'modules/ModuleBuilder/parsers/ParserFactory.php' ;
@@ -103,7 +103,7 @@ class ViewDashlet extends ViewListView
         }
     }
 
-    function constructAjax()
+    public function constructAjax()
     {
         require_once('modules/ModuleBuilder/MB/AjaxCompose.php') ;
         $ajax = new AjaxCompose() ;
@@ -127,7 +127,7 @@ class ViewDashlet extends ViewListView
         return $ajax ;
     }
 
-    function constructSmarty($parser)
+    public function constructSmarty($parser)
     {
         $smarty = new Sugar_Smarty() ;
         $smarty->assign('translate', true) ;
@@ -203,7 +203,7 @@ class ViewDashlet extends ViewListView
         return $smarty ;
     }
 
-    function _constructTitle()
+    public function _constructTitle()
     {
         global $app_list_strings ;
 

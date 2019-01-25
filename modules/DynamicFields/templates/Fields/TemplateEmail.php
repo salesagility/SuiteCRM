@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class TemplateEmail extends TemplateText
 {
-    function get_html_detail()
+    public function get_html_detail()
     {
         return '<a href="mailto:{'. strtoupper($this->name).'}">{'. strtoupper($this->name).'}</a>';
     }

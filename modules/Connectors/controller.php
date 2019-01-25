@@ -48,12 +48,12 @@ require_once('include/MVC/Controller/SugarController.php');
 
 class ConnectorsController extends SugarController
 {
-    var $admin_actions = array('ConnectorSettings', 'DisplayProperties', 'MappingProperties', 'ModifyMapping', 'ModifyDisplay', 'ModifyProperties',
+    public $admin_actions = array('ConnectorSettings', 'DisplayProperties', 'MappingProperties', 'ModifyMapping', 'ModifyDisplay', 'ModifyProperties',
                                'ModifySearch', 'SearchProperties', 'SourceProperties',
                                'SavedModifyDisplay', 'SaveModifyProperties', 'SaveModifySearch', 'RunTest');
 
 
-    function process()
+    public function process()
     {
         if (!is_admin($GLOBALS['current_user']) && in_array($this->action, $this->admin_actions)) {
             $this->hasAccess = false;
@@ -68,7 +68,7 @@ class ConnectorsController extends SugarController
      * the data that was saved in the session.
      *
      */
-    function action_SetSearch()
+    public function action_SetSearch()
     {
         if (empty($_REQUEST)) {
             return;
@@ -112,7 +112,7 @@ class ConnectorsController extends SugarController
      * This action it meant to handle the hover action on the listview.
      *
      */
-    function action_RetrieveSourceDetails()
+    public function action_RetrieveSourceDetails()
     {
         $this->view = 'ajax';
         $source_id = $_REQUEST['source_id'];
@@ -159,7 +159,7 @@ class ConnectorsController extends SugarController
     }
 
 
-    function action_GetSearchForm()
+    public function action_GetSearchForm()
     {
         $this->view = 'ajax';
         if (!empty($_REQUEST['source_id'])) {
@@ -207,15 +207,15 @@ class ConnectorsController extends SugarController
     }
 
 
-    function pre_save()
+    public function pre_save()
     {
     }
-    function post_save()
+    public function post_save()
     {
     }
 
 
-    function action_CallConnectorFunc()
+    public function action_CallConnectorFunc()
     {
         $this->view = 'ajax';
         $json = getJSONobj();
@@ -264,7 +264,7 @@ class ConnectorsController extends SugarController
         return $ret;
     }
 
-    function action_CallRest()
+    public function action_CallRest()
     {
         $this->view = 'ajax';
 
@@ -295,7 +295,7 @@ class ConnectorsController extends SugarController
         }
     }
 
-    function action_CallSoap()
+    public function action_CallSoap()
     {
         $this->view = 'ajax';
         $source_id = $_REQUEST['source_id'];
@@ -321,7 +321,7 @@ class ConnectorsController extends SugarController
     }
 
 
-    function action_DefaultSoapPopup()
+    public function action_DefaultSoapPopup()
     {
         $this->view = 'ajax';
         $source_id = $_REQUEST['source_id'];
@@ -365,7 +365,7 @@ class ConnectorsController extends SugarController
         }
     }
 
-    function action_SaveModifyProperties()
+    public function action_SaveModifyProperties()
     {
         require_once('include/connectors/sources/SourceFactory.php');
         $sources = array();
@@ -398,7 +398,7 @@ class ConnectorsController extends SugarController
         // END SUGAR INT
     }
 
-    function action_SaveModifyDisplay()
+    public function action_SaveModifyDisplay()
     {
         if (empty($_REQUEST['display_sources'])) {
             return;
@@ -630,7 +630,7 @@ class ConnectorsController extends SugarController
     /**
      * action_SaveModifyMapping
      */
-    function action_SaveModifyMapping()
+    public function action_SaveModifyMapping()
     {
         $mapping_sources = !empty($_REQUEST['mapping_sources']) ? explode(',', $_REQUEST['mapping_sources']) : array();
         $mapping_values = !empty($_REQUEST['mapping_values']) ? explode(',', $_REQUEST['mapping_values']) : array();
@@ -700,7 +700,7 @@ class ConnectorsController extends SugarController
     }
 
 
-    function action_RunTest()
+    public function action_RunTest()
     {
         $this->view = 'ajax';
         $source_id = $_REQUEST['source_id'];
@@ -738,7 +738,7 @@ class ConnectorsController extends SugarController
      * Returns a JSON encoded format of the Connectors that are configured for the system
      *
      */
-    function action_RetrieveSources()
+    public function action_RetrieveSources()
     {
         require_once('include/connectors/utils/ConnectorUtils.php');
         $this->view = 'ajax';
@@ -751,7 +751,7 @@ class ConnectorsController extends SugarController
         echo $json->encode($results);
     }
 
-    function add_social_field($module, $field_name)
+    public function add_social_field($module, $field_name)
     {
         $field = array(
                 array(

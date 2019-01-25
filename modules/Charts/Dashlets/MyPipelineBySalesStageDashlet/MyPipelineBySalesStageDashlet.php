@@ -303,7 +303,7 @@ EOD;
      * @param  $query string
      * @return array
      */
-    function getChartData(
+    public function getChartData(
         $query
     ) {
         global $app_list_strings, $db;

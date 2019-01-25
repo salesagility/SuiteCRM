@@ -130,7 +130,7 @@ class SubPanelTiles
      * @param string $selectedGroup	The requested tab group
      * @return array Visible tabs
      */
-    function getTabs($showTabs = true, $selectedGroup='')
+    public function getTabs($showTabs = true, $selectedGroup='')
     {
         global $current_user;
 
@@ -173,7 +173,7 @@ class SubPanelTiles
         }
         return $tabs;
     }
-    function display($showContainer = true, $forceTabless = false)
+    public function display($showContainer = true, $forceTabless = false)
     {
         global $layout_edit_mode, $sugar_version, $sugar_config, $current_user, $app_strings, $modListHeader;
 
@@ -412,7 +412,7 @@ class SubPanelTiles
         return $this->layout_manager;
     }
 
-    function get_buttons($thisPanel, $panel_query=null)
+    public function get_buttons($thisPanel, $panel_query=null)
     {
         $subpanel_def = $thisPanel->get_buttons();
         $layout_manager = $this->getLayoutManager();

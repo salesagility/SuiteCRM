@@ -304,11 +304,11 @@ class InboundEmail extends SugarBean
     public function mark_answered($mailid, $type = 'smtp')
     {
         switch ($type) {
-            case 'smtp' :
+            case 'smtp':
                 $q = "update email_cache set answered = 1 WHERE imap_uid = $mailid and ie_id = '{$this->id}'";
                 $this->db->query($q);
                 break;
-            case 'pop3' :
+            case 'pop3':
                 $q = "update email_cache set answered = 1 WHERE message_id = '$mailid' and ie_id = '{$this->id}'";
                 $this->db->query($q);
                 break;
@@ -1154,7 +1154,7 @@ class InboundEmail extends SugarBean
                             $values .= $this->db->quoted($overview->from);
                             break;
 
-                        case "message_id" :
+                        case "message_id":
                             $values .= $this->db->quoted($overview->message_id);
                             break;
 
@@ -2703,7 +2703,7 @@ class InboundEmail extends SugarBean
      * @param string $userId
      * @return string
      */
-    function generateDynamicFolderQuery($type, $userId)
+    public function generateDynamicFolderQuery($type, $userId)
     {
         if (!isset($this->coreDynamicFolderQuery)) {
             $this->coreDynamicFolderQuery = null;

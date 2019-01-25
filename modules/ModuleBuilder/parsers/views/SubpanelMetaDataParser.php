@@ -67,7 +67,7 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
      * @param string $moduleName
      * @param string $packageName
      */
-    function __construct($subpanelName, $moduleName, $packageName = '')
+    public function __construct($subpanelName, $moduleName, $packageName = '')
     {
         $GLOBALS ['log']->debug(get_class($this) . ": __construct()");
 

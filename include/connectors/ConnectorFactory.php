@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class ConnectorFactory
 {
-    static $source_map = array();
+    public static $source_map = array();
 
     public static function getInstance($source_name)
     {

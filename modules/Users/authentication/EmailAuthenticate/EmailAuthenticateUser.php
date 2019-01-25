@@ -51,7 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticateUser.php');
 class EmailAuthenticateUser extends SugarAuthenticateUser
 {
-    var $passwordLength = 4;
+    public $passwordLength = 4;
 
 
     /**
@@ -61,7 +61,7 @@ class EmailAuthenticateUser extends SugarAuthenticateUser
      * @param STRING $password
      * @return boolean
      */
-    function loadUserOnLogin($name, $password)
+    public function loadUserOnLogin($name, $password)
     {
         global $login_error;
 
@@ -119,7 +119,7 @@ class EmailAuthenticateUser extends SugarAuthenticateUser
      * @param unknown_type $user_id
      * @param unknown_type $password
      */
-    function sendEmailPassword($user_id, $password)
+    public function sendEmailPassword($user_id, $password)
     {
         $result = DBManagerFactory::getInstance()->query("SELECT email1, email2, first_name, last_name FROM users WHERE id='$user_id'");
         $row = DBManagerFactory::getInstance()->fetchByAssoc($result);

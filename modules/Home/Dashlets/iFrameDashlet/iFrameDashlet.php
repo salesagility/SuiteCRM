@@ -47,13 +47,13 @@ require_once('include/Dashlets/Dashlet.php');
 
 class iFrameDashlet extends Dashlet
 {
-    var $displayTpl = 'modules/Home/Dashlets/iFrameDashlet/display.tpl';
-    var $configureTpl = 'modules/Home/Dashlets/iFrameDashlet/configure.tpl';
-    var $defaultURL = 'http://apps.sugarcrm.com/dashlet/sugarcrm-news-dashlet.html?lang=@@LANG@@&edition=@@EDITION@@&ver=@@VER@@';
-    var $url;
+    public $displayTpl = 'modules/Home/Dashlets/iFrameDashlet/display.tpl';
+    public $configureTpl = 'modules/Home/Dashlets/iFrameDashlet/configure.tpl';
+    public $defaultURL = 'http://apps.sugarcrm.com/dashlet/sugarcrm-news-dashlet.html?lang=@@LANG@@&edition=@@EDITION@@&ver=@@VER@@';
+    public $url;
     protected $allowed_schemes = array("http", "https");
 
-    function __construct($id, $options = null)
+    public function __construct($id, $options = null)
     {
         parent::__construct($id);
         $this->isConfigurable = true;
@@ -90,7 +90,7 @@ class iFrameDashlet extends Dashlet
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function iFrameDashlet($id, $options = null)
+    public function iFrameDashlet($id, $options = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -111,7 +111,7 @@ class iFrameDashlet extends Dashlet
         return true;
     }
 
-    function displayOptions()
+    public function displayOptions()
     {
         global $app_strings;
         $ss = new Sugar_Smarty();
@@ -134,7 +134,7 @@ class iFrameDashlet extends Dashlet
         return  $ss->fetch($this->configureTpl);
     }
 
-    function saveOptions($req)
+    public function saveOptions($req)
     {
         $options = array();
 
@@ -152,7 +152,7 @@ class iFrameDashlet extends Dashlet
         return $options;
     }
 
-    function display()
+    public function display()
     {
         $sugar_edition = 'COM';
 

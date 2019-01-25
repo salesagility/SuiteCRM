@@ -56,7 +56,7 @@ class Viewdeletepackage extends SugarView
            );
     }
 
-    function display()
+    public function display()
     {
         global $mod_strings;
         

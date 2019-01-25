@@ -515,7 +515,7 @@ class iCal extends vCal
     * @param integer $num_months the number of months to search before and after today
     * @return string the iCal calenar string
     */
-    function getVcalIcal(&$user_focus, $num_months)
+    public function getVcalIcal(&$user_focus, $num_months)
     {
         global $current_user, $timedate;
         $current_user = $user_focus;

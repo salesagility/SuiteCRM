@@ -60,7 +60,7 @@ class ViewRelationship extends SugarView
            );
     }
 
-    function overrideDefinitionFromPOST(
+    public function overrideDefinitionFromPOST(
         $definition
         ) {
         require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationship.php' ;
@@ -75,7 +75,7 @@ class ViewRelationship extends SugarView
         return $definition ;
     }
 
-    function display()
+    public function display()
     {
         $selected_lang = (!empty($_REQUEST['relationship_lang'])?$_REQUEST['relationship_lang']:$_SESSION['authenticated_user_language']);
         $this->smarty = new Sugar_Smarty() ;
@@ -228,10 +228,10 @@ class ViewRelationship extends SugarView
         $this->smarty->assign('available_languages', get_languages());
         
         switch ($relationship->relationship_type) {
-            case MB_ONETOONE :
+            case MB_ONETOONE:
                 break ;
             
-            case MB_ONETOMANY :
+            case MB_ONETOMANY:
                 if (empty($relationship->relationship_column_name)) {
                     $validRoleColumnFields = array( ) ;
                     foreach ($fields as $field) {
@@ -243,7 +243,7 @@ class ViewRelationship extends SugarView
                     $this->smarty->assign('relationship_role_column_value', $relationship->relationship_role_column_value) ;
                 }
                 break ;
-            case MB_MANYTOMANY :
+            case MB_MANYTOMANY:
                 if (! empty($relationship->relationship_role_column_value)) {
                     $this->smarty->assign('relationship_role_column_value', $relationship->relationship_role_column_value) ;
                 }

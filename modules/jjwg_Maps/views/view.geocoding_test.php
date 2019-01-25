@@ -6,7 +6,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class Jjwg_MapsViewGeocoding_Test extends SugarView
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -14,7 +14,7 @@ class Jjwg_MapsViewGeocoding_Test extends SugarView
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Jjwg_MapsViewGeocoding_Test()
+    public function Jjwg_MapsViewGeocoding_Test()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -26,7 +26,7 @@ class Jjwg_MapsViewGeocoding_Test extends SugarView
     }
 
 
-    function display()
+    public function display()
     {
         if (!isset($_REQUEST['geocoding_address'])) {
             $_REQUEST['geocoding_address'] = '';

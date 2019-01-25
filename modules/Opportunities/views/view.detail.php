@@ -56,7 +56,7 @@ require_once('include/MVC/View/views/view.detail.php');
 
 class OpportunitiesViewDetail extends ViewDetail
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -64,7 +64,7 @@ class OpportunitiesViewDetail extends ViewDetail
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function OpportunitiesViewDetail()
+    public function OpportunitiesViewDetail()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -76,7 +76,7 @@ class OpportunitiesViewDetail extends ViewDetail
     }
 
 
-    function display()
+    public function display()
     {
         $currency = new Currency();
         if (isset($this->bean->currency_id) && !empty($this->bean->currency_id)) {

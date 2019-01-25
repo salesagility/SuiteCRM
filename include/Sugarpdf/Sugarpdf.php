@@ -68,15 +68,15 @@ class Sugarpdf extends TCPDF
      * the controller and the view.  The bean will automatically be set for us, but this
      * is meant to hold anything else.
      */
-    var $sugarpdf_object_map = array();
+    public $sugarpdf_object_map = array();
     /**
      * The name of the current module.
      */
-    var $module = '';
+    public $module = '';
     /**
      * The name of the current action.
      */
-    var $action = '';
+    public $action = '';
     /**
      */
     public $bean = null;
@@ -87,17 +87,17 @@ class Sugarpdf extends TCPDF
     /**
      * Use to set the filename of the output pdf file.
      */
-    var $fileName = PDF_FILENAME;
+    public $fileName = PDF_FILENAME;
     /**
      * Use for the ACL access.
      */
-    var $aclAction = PDF_ACL_ACCESS;
+    public $aclAction = PDF_ACL_ACCESS;
     /**
      * Constructor which will peform the setup.
      */
 
 
-    function __construct($bean = null, $sugarpdf_object_map = array(), $orientation=PDF_PAGE_ORIENTATION, $unit=PDF_UNIT, $format=PDF_PAGE_FORMAT, $unicode=true, $encoding='UTF-8', $diskcache=false)
+    public function __construct($bean = null, $sugarpdf_object_map = array(), $orientation=PDF_PAGE_ORIENTATION, $unit=PDF_UNIT, $format=PDF_PAGE_FORMAT, $unicode=true, $encoding='UTF-8', $diskcache=false)
     {
         global $locale;
         //  $encoding = $locale->getExportCharset();
@@ -116,7 +116,7 @@ class Sugarpdf extends TCPDF
     /**
      * This method will be called from the controller and is not meant to be overridden.
      */
-    function process()
+    public function process()
     {
         $this->preDisplay();
         $this->display();
@@ -125,7 +125,7 @@ class Sugarpdf extends TCPDF
     /**
      * This method will display the errors on the page.
      */
-    function displayErrors()
+    public function displayErrors()
     {
         foreach ($this->errors as $error) {
             echo '<span class="error">' . $error . '</span><br>';
@@ -141,7 +141,7 @@ class Sugarpdf extends TCPDF
      * and then the subview can just override display(). If it so desires, can also override
      * preDisplay().
      */
-    function preDisplay()
+    public function preDisplay()
     {
         // set document information
         $this->SetCreator(PDF_CREATOR);
@@ -193,7 +193,7 @@ class Sugarpdf extends TCPDF
     /**
      * [OVERRIDE] - This method is meant to overidden in a subclass.
      */
-    function display()
+    public function display()
     {
         $this->AddPage();
         $this->SetFont(PDF_FONT_NAME_MAIN, 'B', 16);
@@ -282,7 +282,7 @@ class Sugarpdf extends TCPDF
         parent::SetFont($family, $style, $size, $fontfile);
     }
 
-    function Info()
+    public function Info()
     {
         $this->SetFont(PDF_FONT_NAME_MAIN, '', 12);
         $this->MultiCell(0, 0, '---', 0, 'L');

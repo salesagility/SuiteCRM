@@ -46,17 +46,17 @@ require_once('include/charts/Charts.php');
 
 class Chart_pipeline_by_lead_source
 {
-    var $order = 0;
-    var $modules = array('Opportunities');
+    public $order = 0;
+    public $modules = array('Opportunities');
 
-    function __construct()
+    public function __construct()
     {
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Chart_pipeline_by_lead_source()
+    public function Chart_pipeline_by_lead_source()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -68,7 +68,7 @@ class Chart_pipeline_by_lead_source
     }
 
 
-    function draw($extra_tools)
+    public function draw($extra_tools)
     {
         global $app_list_strings, $current_language, $ids, $sugar_config ,$theme;
         $current_module_strings = return_module_language($current_language, 'Charts');
@@ -346,7 +346,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
         return $return;
     }
 
-    function constructQuery()
+    public function constructQuery()
     {
         global $current_user;
         global $app_list_strings;
@@ -441,7 +441,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
         return $query;
     }
 
-    function constructGroupBy()
+    public function constructGroupBy()
     {
         return array( 'lead_source', );
     }

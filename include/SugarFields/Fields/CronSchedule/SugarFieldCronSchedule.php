@@ -27,7 +27,7 @@ class SugarFieldCronSchedule extends SugarFieldBase
         return $days;
     }
 
-    function setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass = true)
+    public function setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass = true)
     {
         global $app_list_strings,$app_strings;
         parent::setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass);

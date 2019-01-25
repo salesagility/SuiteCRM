@@ -47,7 +47,7 @@ require_once('include/MVC/View/views/view.detail.php');
 
 class BugsViewDetail extends ViewDetail
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -55,7 +55,7 @@ class BugsViewDetail extends ViewDetail
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function BugsViewDetail()
+    public function BugsViewDetail()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -67,7 +67,7 @@ class BugsViewDetail extends ViewDetail
     }
 
 
-    function display()
+    public function display()
     {
         $admin = new Administration();
         $admin->retrieveSettings();

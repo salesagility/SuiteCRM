@@ -40,7 +40,7 @@
 
 class LeadsController extends SugarController
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -48,7 +48,7 @@ class LeadsController extends SugarController
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function LeadsController()
+    public function LeadsController()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -59,7 +59,7 @@ class LeadsController extends SugarController
         self::__construct();
     }
 
-    function pre_editview()
+    public function pre_editview()
     {
         //IF we have a prospect id leads convert it to a lead
         if (empty($this->bean->id) && !empty($_REQUEST['return_module']) &&$_REQUEST['return_module'] == 'Prospects') {
@@ -77,7 +77,7 @@ class LeadsController extends SugarController
         }
         return true;
     }
-    function action_editview()
+    public function action_editview()
     {
         $this->view = 'edit';
         return true;

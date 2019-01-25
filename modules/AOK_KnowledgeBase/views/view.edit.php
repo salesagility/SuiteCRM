@@ -45,7 +45,7 @@ require_once('include/MVC/View/views/view.edit.php');
 
 class AOK_KnowledgeBaseViewEdit extends ViewEdit
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -53,7 +53,7 @@ class AOK_KnowledgeBaseViewEdit extends ViewEdit
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOK_KnowledgeBaseViewEdit()
+    public function AOK_KnowledgeBaseViewEdit()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -73,14 +73,14 @@ class AOK_KnowledgeBaseViewEdit extends ViewEdit
         $this->bean->user_id_c = $current_user->id;
     }
 
-    function display()
+    public function display()
     {
         parent::display();
         $this->displayTMCE();
     }
 
 
-    function displayTMCE()
+    public function displayTMCE()
     {
         require_once("include/SugarTinyMCE.php");
         global $locale;

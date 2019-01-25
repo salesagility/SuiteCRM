@@ -53,15 +53,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class UnifiedSearchAdvanced
 {
-    var $query_string = '';
+    public $query_string = '';
     
     /* path to search form */
-    var $searchFormPath = 'include/SearchForm/SearchForm2.php';
+    public $searchFormPath = 'include/SearchForm/SearchForm2.php';
 
     /*search form class name*/
-    var $searchFormClass = 'SearchForm';
+    public $searchFormClass = 'SearchForm';
 
-    function __construct()
+    public function __construct()
     {
         if (!empty($_REQUEST['query_string'])) {
             $query_string = trim($_REQUEST['query_string']);
@@ -73,7 +73,7 @@ class UnifiedSearchAdvanced
         $this->cache_display = sugar_cached('modules/unified_search_modules_display.php');
     }
 
-    function getDropDownDiv($tpl = 'modules/Home/UnifiedSearchAdvanced.tpl')
+    public function getDropDownDiv($tpl = 'modules/Home/UnifiedSearchAdvanced.tpl')
     {
         global $app_list_strings, $app_strings;
 
@@ -168,7 +168,7 @@ class UnifiedSearchAdvanced
      *
      *
      */
-    function search()
+    public function search()
     {
         $unified_search_modules = $this->getUnifiedSearchModules();
         $unified_search_modules_display = $this->getUnifiedSearchModulesDisplay();
@@ -365,7 +365,7 @@ class UnifiedSearchAdvanced
         }
     }
 
-    function buildCache()
+    public function buildCache()
     {
         global $beanList, $beanFiles, $dictionary;
 
@@ -459,7 +459,7 @@ class UnifiedSearchAdvanced
      *
      * @return array
      */
-    function retrieveEnabledAndDisabledModules()
+    public function retrieveEnabledAndDisabledModules()
     {
         global $app_list_strings;
 
@@ -505,7 +505,7 @@ class UnifiedSearchAdvanced
      * the results in the unified_search_modules_display.php file
      *
      */
-    function saveGlobalSearchSettings()
+    public function saveGlobalSearchSettings()
     {
         if (isset($_REQUEST['enabled_modules'])) {
             $unified_search_modules_display = $this->getUnifiedSearchModulesDisplay();

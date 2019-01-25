@@ -46,10 +46,10 @@ require_once('modules/ModuleBuilder/MB/MBPackage.php');
 
 class ParserSearchFields extends ModuleBuilderParser
 {
-    var $searchFields;
-    var $packageKey;
+    public $searchFields;
+    public $packageKey;
 
-    function __construct($moduleName, $packageName='')
+    public function __construct($moduleName, $packageName='')
     {
         $this->moduleName = $moduleName;
         if (!empty($packageName)) {
@@ -64,7 +64,7 @@ class ParserSearchFields extends ModuleBuilderParser
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ParserSearchFields($moduleName, $packageName='')
+    public function ParserSearchFields($moduleName, $packageName='')
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -75,7 +75,7 @@ class ParserSearchFields extends ModuleBuilderParser
         self::__construct($moduleName, $packageName);
     }
 
-    function addSearchField($name, $searchField)
+    public function addSearchField($name, $searchField)
     {
         if (empty($name) || empty($searchField) || !is_array($searchField)) {
             return;
@@ -85,7 +85,7 @@ class ParserSearchFields extends ModuleBuilderParser
         $this->searchFields[$key][$name] = $searchField;
     }
 
-    function removeSearchField($name)
+    public function removeSearchField($name)
     {
         $key = isset($this->packageKey) ? $this->packageKey . '_' . $this->moduleName : $this->moduleName;
 
@@ -94,7 +94,7 @@ class ParserSearchFields extends ModuleBuilderParser
         }
     }
 
-    function getSearchFields()
+    public function getSearchFields()
     {
         $searchFields = array();
         if (!empty($this->packageName) && file_exists("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php")) { //we are in Module builder
@@ -112,7 +112,7 @@ class ParserSearchFields extends ModuleBuilderParser
         return $searchFields;
     }
 
-    function saveSearchFields($searchFields)
+    public function saveSearchFields($searchFields)
     {
         if (!empty($this->packageName)) { //we are in Module builder
             $header = file_get_contents('modules/ModuleBuilder/MB/header.php');

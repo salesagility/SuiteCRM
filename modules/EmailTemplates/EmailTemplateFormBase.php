@@ -52,11 +52,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class EmailTemplateFormBase
 {
-    function __construct()
+    public function __construct()
     {
     }
 
-    function getFormBody($prefix, $mod='', $formname='', $size='30')
+    public function getFormBody($prefix, $mod='', $formname='', $size='30')
     {
         global $mod_strings;
 
@@ -103,7 +103,7 @@ EOF;
         return $form;
     }
 
-    function getForm($prefix, $mod='')
+    public function getForm($prefix, $mod='')
     {
         if (!empty($mod)) {
             global $current_language;
@@ -141,7 +141,7 @@ EOQ;
     }
 
 
-    function handleSave($prefix, $redirect=true, $useRequired=false, $useSiteURL = false, $entryPoint = 'download', $useUploadFolder = false)
+    public function handleSave($prefix, $redirect=true, $useRequired=false, $useSiteURL = false, $entryPoint = 'download', $useUploadFolder = false)
     {
         require_once('include/formbase.php');
         require_once('include/upload_file.php');

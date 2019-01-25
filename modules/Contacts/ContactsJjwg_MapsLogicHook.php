@@ -8,8 +8,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class ContactsJjwg_MapsLogicHook
 {
-    var $jjwg_Maps;
-    function __construct()
+    public $jjwg_Maps;
+    public function __construct()
     {
         $this->jjwg_Maps = get_module_info('jjwg_Maps');
     }
@@ -17,7 +17,7 @@ class ContactsJjwg_MapsLogicHook
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ContactsJjwg_MapsLogicHook()
+    public function ContactsJjwg_MapsLogicHook()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -29,7 +29,7 @@ class ContactsJjwg_MapsLogicHook
     }
 
 
-    function updateGeocodeInfo(&$bean, $event, $arguments)
+    public function updateGeocodeInfo(&$bean, $event, $arguments)
     {
         // before_save
         if ($this->jjwg_Maps->settings['logic_hooks_enabled']) {
@@ -37,7 +37,7 @@ class ContactsJjwg_MapsLogicHook
         }
     }
 
-    function updateRelatedMeetingsGeocodeInfo(&$bean, $event, $arguments)
+    public function updateRelatedMeetingsGeocodeInfo(&$bean, $event, $arguments)
     {
         // after_save
         if ($this->jjwg_Maps->settings['logic_hooks_enabled']) {

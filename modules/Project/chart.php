@@ -647,7 +647,7 @@ class chart
         return $aResult;
     }
 
-    function get_weeks($start_date, $end_date)
+    public function get_weeks($start_date, $end_date)
     {
         $begin = new DateTime($start_date);
         $end = new DateTime($end_date);
@@ -665,7 +665,7 @@ class chart
 
 
     //count number of months between task start day and chart current month
-    function count_months($start, $day, $x)
+    public function count_months($start, $day, $x)
     {
         $sdate = DateTime::createFromFormat('Y-m-d', $start);
         $edate = DateTime::createFromFormat('Y-m-d', $start);
@@ -686,7 +686,7 @@ class chart
 
 
     //Returns the total number of days between two dates
-    function count_days($start_date, $end_date)
+    public function count_days($start_date, $end_date)
     {
         $d1 = new DateTime($start_date);
         $d2 = new DateTime($end_date);
@@ -705,7 +705,7 @@ class chart
 
 
     //returns first and last date of a week
-    function get_week_dates($start, $weeks)
+    public function get_week_dates($start, $weeks)
     {
         $date = DateTime::createFromFormat('Y-m-d', $start);
 
@@ -717,7 +717,7 @@ class chart
     }
 
     //returns first and last date of a month
-    function get_month_dates($start, $months)
+    public function get_month_dates($start, $months)
     {
         $date = DateTime::createFromFormat('Y-m-d', $start);
 
@@ -728,7 +728,7 @@ class chart
 
 
     //get date of passed in day in relation to the charts start date
-    function get_date($start, $day)
+    public function get_date($start, $day)
     {
         $date = DateTime::createFromFormat('Y-m-d', $start);
         // $date->setTimezone(new DateTimeZone("Europe/London"));
@@ -739,7 +739,7 @@ class chart
 
 
     //checks if the day is a weekend and if the day is today.
-    function check_weekend($day)
+    public function check_weekend($day)
     {
         global $current_user;
         //get users timezone setting

@@ -96,7 +96,7 @@ class Calendar
      * @param array $time_arr
      * @param array $views
      */
-    function __construct($view = "agendaWeek", $time_arr = array())
+    public function __construct($view = "agendaWeek", $time_arr = array())
     {
         global $current_user, $timedate, $current_language;
         
@@ -391,7 +391,7 @@ class Calendar
     /**
      * calculate count of timeslots per visible day, calculates day start and day end in minutes
      */
-    function calculate_day_range()
+    public function calculate_day_range()
     {
         list($hour_start, $minute_start) =  explode(":", $this->day_start_time);
         list($hour_end, $minute_end) =  explode(":", $this->day_end_time);

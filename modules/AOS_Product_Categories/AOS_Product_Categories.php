@@ -44,7 +44,7 @@
 require_once('modules/AOS_Product_Categories/AOS_Product_Categories_sugar.php');
 class AOS_Product_Categories extends AOS_Product_Categories_sugar
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -52,7 +52,7 @@ class AOS_Product_Categories extends AOS_Product_Categories_sugar
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Product_Categories()
+    public function AOS_Product_Categories()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -72,7 +72,7 @@ class AOS_Product_Categories extends AOS_Product_Categories_sugar
     }
 
 
-    function save($check_notify = false)
+    public function save($check_notify = false)
     {
         if ($this->is_parent) {
             $this->clearParent();

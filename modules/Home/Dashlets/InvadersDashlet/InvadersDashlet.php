@@ -47,8 +47,8 @@ require_once('include/Dashlets/Dashlet.php');
 
 class InvadersDashlet extends Dashlet
 {
-    var $savedText; // users's saved text
-    var $height = '100'; // height of the pad
+    public $savedText; // users's saved text
+    public $height = '100'; // height of the pad
 
     /**
      * Constructor
@@ -57,7 +57,7 @@ class InvadersDashlet extends Dashlet
      * @param guid $id id for the current dashlet (assigned from Home module)
      * @param array $def options saved for this dashlet
      */
-    function __construct($id, $def)
+    public function __construct($id, $def)
     {
         $this->loadLanguage('InvadersDashlet'); // load the language strings here
 
@@ -81,7 +81,7 @@ class InvadersDashlet extends Dashlet
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function InvadersDashlet($id, $def)
+    public function InvadersDashlet($id, $def)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -98,7 +98,7 @@ class InvadersDashlet extends Dashlet
      *
      * @return string html to display dashlet
      */
-    function display()
+    public function display()
     {
         $ss = new Sugar_Smarty();
         $ss->assign('id', $this->id);
@@ -114,7 +114,7 @@ class InvadersDashlet extends Dashlet
      *
      * @return string javascript to use with this dashlet
      */
-    function displayScript()
+    public function displayScript()
     {
         $ss = new Sugar_Smarty();
         $ss->assign('id', $this->id);
@@ -129,7 +129,7 @@ class InvadersDashlet extends Dashlet
      *
      * @return string html to display form
      */
-    function displayOptions()
+    public function displayOptions()
     {
         global $app_strings;
 
@@ -151,7 +151,7 @@ class InvadersDashlet extends Dashlet
      * @param array $req $_REQUEST
      * @return array filtered options to save
      */
-    function saveOptions($req)
+    public function saveOptions($req)
     {
         global $sugar_config, $timedate, $current_user, $theme;
         $options = array();
@@ -176,7 +176,7 @@ class InvadersDashlet extends Dashlet
      * Used to save text on textarea blur. Accessed via Home/CallMethodDashlet.php
      * This is an example of how to to call a custom method via ajax
      */
-    function saveText()
+    public function saveText()
     {
         if (isset($_REQUEST['savedText'])) {
             $optionsArray = $this->loadOptions();

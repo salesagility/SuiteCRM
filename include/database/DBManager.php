@@ -1852,14 +1852,14 @@ abstract class DBManager
         $sqlStr = '';
         foreach ($tokens as $key => $val) {
             switch ($val) {
-                case '?' :
-                case '!' :
-                case '&' :
+                case '?':
+                case '!':
+                case '&':
                     $count++;
                     $sqlStr .= '?';
                     break;
 
-                default :
+                default:
                     //escape any special characters
                     $tokens[$key] = preg_replace('/\\\([&?!])/', "\\1", $val);
                     $sqlStr .= $tokens[$key];
@@ -2154,7 +2154,7 @@ abstract class DBManager
                     }
 
                     return intval($val);
-                case 'bigint' :
+                case 'bigint':
                     $val = (float)$val;
                     if (!empty($fieldDef['required']) && $val == false) {
                         if (isset($fieldDef['default'])) {
@@ -3789,7 +3789,7 @@ abstract class DBManager
      * @param  bool $execute Execute or return SQL?
      * @return resource query result
      */
-    abstract function limitQuery($sql, $start, $count, $dieOnError = false, $msg = '', $execute = true);
+    abstract public function limitQuery($sql, $start, $count, $dieOnError = false, $msg = '', $execute = true);
 
 
     /**
@@ -3804,7 +3804,7 @@ abstract class DBManager
      * @param string $column
      * @param string $newname
      */
-    abstract function renameColumnSQL($tablename, $column, $newname);
+    abstract public function renameColumnSQL($tablename, $column, $newname);
 
     /**
      * Returns definitions of all indies for passed table.

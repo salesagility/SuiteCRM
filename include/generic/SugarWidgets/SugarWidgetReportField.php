@@ -57,7 +57,7 @@ class SugarWidgetReportField extends SugarWidgetField
      */
     protected $reporter;
 
-    function __construct(&$layout_manager)
+    public function __construct(&$layout_manager)
     {
         parent::__construct($layout_manager);
         $this->reporter = $this->layout_manager->getAttribute("reporter");
@@ -66,7 +66,7 @@ class SugarWidgetReportField extends SugarWidgetField
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarWidgetReportField(&$layout_manager)
+    public function SugarWidgetReportField(&$layout_manager)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -78,7 +78,7 @@ class SugarWidgetReportField extends SugarWidgetField
     }
 
 
-    function getSubClass($layout_def)
+    public function getSubClass($layout_def)
     {
         if (! empty($layout_def['type'])) {
             if ($layout_def['type'] == 'time') {
@@ -93,7 +93,7 @@ class SugarWidgetReportField extends SugarWidgetField
     }
 
 
-    function display($layout_def)
+    public function display($layout_def)
     {
         $obj = $this->getSubClass($layout_def);
 
@@ -108,7 +108,7 @@ class SugarWidgetReportField extends SugarWidgetField
         }
     }
 
-    function _get_column_select_special($layout_def)
+    public function _get_column_select_special($layout_def)
     {
         $alias = '';
         if (! empty($layout_def['table_alias'])) {
@@ -125,7 +125,7 @@ class SugarWidgetReportField extends SugarWidgetField
         }
     }
 
-    function _get_column_select($layout_def)
+    public function _get_column_select($layout_def)
     {
         global $reportAlias;
         if (!isset($reportAlias)) {
@@ -181,18 +181,18 @@ class SugarWidgetReportField extends SugarWidgetField
         return $alias;
     }
 
-    function querySelect(&$layout_def)
+    public function querySelect(&$layout_def)
     {
         return $this->_get_column_select($layout_def)." ".$this->_get_column_alias($layout_def)."\n";
     }
 
-    function queryGroupBy($layout_def)
+    public function queryGroupBy($layout_def)
     {
         return $this->_get_column_select($layout_def)." \n";
     }
 
 
-    function queryOrderBy($layout_def)
+    public function queryOrderBy($layout_def)
     {
         $field_def = array();
         if (!empty($this->reporter->all_fields[$layout_def['column_key']])) {
@@ -224,13 +224,13 @@ class SugarWidgetReportField extends SugarWidgetField
     }
 
 
-    function queryFilter($layout_def)
+    public function queryFilter($layout_def)
     {
         $method_name = "queryFilter".$layout_def['qualifier_name'];
         return $this->$method_name($layout_def);
     }
 
-    function displayHeaderCell($layout_def)
+    public function displayHeaderCell($layout_def)
     {
         global $start_link_wrapper,$end_link_wrapper;
 
@@ -279,7 +279,7 @@ class SugarWidgetReportField extends SugarWidgetField
         return $this->displayHeaderCellPlain($layout_def);
     }
 
-    function query($layout_def)
+    public function query($layout_def)
     {
         $obj = $this->getSubClass($layout_def);
 
@@ -293,7 +293,7 @@ class SugarWidgetReportField extends SugarWidgetField
         }
     }
 
-    function _get_column_alias($layout_def)
+    public function _get_column_alias($layout_def)
     {
         $alias_arr = array();
 
@@ -348,23 +348,23 @@ class SugarWidgetReportField extends SugarWidgetField
         }
     }
 
-    function queryFilterEmpty($layout_def)
+    public function queryFilterEmpty($layout_def)
     {
         $column = $this->_get_column_select($layout_def);
         return "($column IS NULL OR $column = ".$this->reporter->db->emptyValue($layout_def['type']).")";
     }
 
-    function queryFilterIs($layout_def)
+    public function queryFilterIs($layout_def)
     {
         return '( '.$this->_get_column_select($layout_def)."='".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."')\n";
     }
 
-    function queryFilteris_not($layout_def)
+    public function queryFilteris_not($layout_def)
     {
         return '( '.$this->_get_column_select($layout_def)."<>'".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."')\n";
     }
 
-    function queryFilterNot_Empty($layout_def)
+    public function queryFilterNot_Empty($layout_def)
     {
         /** @var $db DBManager */
         $db = $this->reporter->db;

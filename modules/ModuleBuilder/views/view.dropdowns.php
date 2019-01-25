@@ -55,7 +55,7 @@ class ViewDropdowns extends SugarView
            );
     }
 
-    function display()
+    public function display()
     {
         $ajax = new AjaxCompose();
         $smarty = new Sugar_Smarty();

@@ -57,31 +57,31 @@ require_once('include/upload_file.php');
 // User is used to store Forecast information.
 class DocumentRevision extends SugarBean
 {
-    var $id;
-    var $document_id;
-    var $doc_id;
-    var $doc_type;
-    var $doc_url;
-    var $date_entered;
-    var $created_by;
-    var $filename;
-    var $file_mime_type;
-    var $revision;
-    var $change_log;
-    var $document_name;
-    var $latest_revision;
-    var $file_url;
-    var $file_ext;
-    var $created_by_name;
+    public $id;
+    public $document_id;
+    public $doc_id;
+    public $doc_type;
+    public $doc_url;
+    public $date_entered;
+    public $created_by;
+    public $filename;
+    public $file_mime_type;
+    public $revision;
+    public $change_log;
+    public $document_name;
+    public $latest_revision;
+    public $file_url;
+    public $file_ext;
+    public $created_by_name;
 
-    var $img_name;
-    var $img_name_bare;
+    public $img_name;
+    public $img_name_bare;
 
-    var $table_name = "document_revisions";
-    var $object_name = "DocumentRevision";
-    var $module_dir = 'DocumentRevisions';
-    var $new_schema = true;
-    var $latest_revision_id;
+    public $table_name = "document_revisions";
+    public $object_name = "DocumentRevision";
+    public $module_dir = 'DocumentRevisions';
+    public $new_schema = true;
+    public $latest_revision_id;
 
     /*var $column_fields = Array("id"
     	,"document_id"
@@ -94,13 +94,13 @@ class DocumentRevision extends SugarBean
     	,"file_ext"
     	);
 */
-    var $encodeFields = array();
+    public $encodeFields = array();
 
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = array('');
+    public $additional_column_fields = array('');
 
     // This is the list of fields that are in the lists.
-    var $list_fields = array("id"
+    public $list_fields = array("id"
         ,"document_id"
         ,"date_entered"
         ,"created_by"
@@ -113,7 +113,7 @@ class DocumentRevision extends SugarBean
         ,"created_by_name"
         );
 
-    var $required_fields = array("revision");
+    public $required_fields = array("revision");
 
     public $authenticated = null;
 
@@ -140,7 +140,7 @@ class DocumentRevision extends SugarBean
     }
 
 
-    function save($check_notify = false)
+    public function save($check_notify = false)
     {
         $saveRet = parent::save($check_notify);
 
@@ -157,12 +157,12 @@ class DocumentRevision extends SugarBean
 
         return $saveRet;
     }
-    function get_summary_text()
+    public function get_summary_text()
     {
         return "$this->filename";
     }
 
-    function retrieve($id = -1, $encode=false, $deleted=true)
+    public function retrieve($id = -1, $encode=false, $deleted=true)
     {
         $ret = parent::retrieve($id, $encode, $deleted);
 
@@ -178,12 +178,12 @@ class DocumentRevision extends SugarBean
         return $this->authenticated;
     }
 
-    function fill_in_additional_list_fields()
+    public function fill_in_additional_list_fields()
     {
         $this->fill_in_additional_detail_fields();
     }
 
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
         global $theme;
         global $current_language;
@@ -216,7 +216,7 @@ class DocumentRevision extends SugarBean
      * @param string revId Revision ID if not latest
      * @return string formatted name
      */
-    function getDocumentRevisionNameForDisplay($revId='')
+    public function getDocumentRevisionNameForDisplay($revId='')
     {
         global $sugar_config;
         global $current_language;
@@ -274,7 +274,7 @@ class DocumentRevision extends SugarBean
         return $return;
     }
 
-    function fill_document_name_revision($doc_id)
+    public function fill_document_name_revision($doc_id)
     {
 
         //find the document name and current version.
@@ -288,12 +288,12 @@ class DocumentRevision extends SugarBean
         }
     }
 
-    function list_view_parse_additional_sections(&$list_form/*, $xTemplateSection*/)
+    public function list_view_parse_additional_sections(&$list_form/*, $xTemplateSection*/)
     {
         return $list_form;
     }
 
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         $revision_fields = $this->get_list_view_array();
 
@@ -302,7 +302,7 @@ class DocumentRevision extends SugarBean
     }
 
     //static function..
-    function get_document_revision_name($doc_revision_id)
+    public function get_document_revision_name($doc_revision_id)
     {
         if (empty($doc_revision_id)) {
             return null;
@@ -321,7 +321,7 @@ class DocumentRevision extends SugarBean
     }
 
     //static function.
-    function get_document_revisions($doc_id)
+    public function get_document_revisions($doc_id)
     {
         $return_array= array();
         if (empty($doc_id)) {
@@ -342,7 +342,7 @@ class DocumentRevision extends SugarBean
     public function bean_implements($interface)
     {
         switch ($interface) {
-            case 'FILE' : return true;
+            case 'FILE': return true;
         }
         return parent::bean_implements($interface);
     }

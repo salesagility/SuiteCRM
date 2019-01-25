@@ -46,7 +46,7 @@ require_once('modules/Meetings/MeetingsListViewSmarty.php');
 
 class MeetingsViewList extends ViewList
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -54,7 +54,7 @@ class MeetingsViewList extends ViewList
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MeetingsViewList()
+    public function MeetingsViewList()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -66,7 +66,7 @@ class MeetingsViewList extends ViewList
     }
 
 
-    function preDisplay()
+    public function preDisplay()
     {
         $this->lv = new MeetingsListViewSmarty();
     }

@@ -44,7 +44,7 @@ require_once('modules/ModuleBuilder/parsers/ParserFactory.php');
 
 class ViewProperty extends SugarView
 {
-    function __construct()
+    public function __construct()
     {
         $this->init();
     }
@@ -52,7 +52,7 @@ class ViewProperty extends SugarView
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ViewProperty()
+    public function ViewProperty()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -78,7 +78,7 @@ class ViewProperty extends SugarView
     }
 
 
-    function init($bean = null, $view_object_map = array()) // pseudo-constuctor - given a well-known name to allow subclasses to call this classes constructor
+    public function init($bean = null, $view_object_map = array()) // pseudo-constuctor - given a well-known name to allow subclasses to call this classes constructor
     {
         $this->editModule = (! empty($_REQUEST['view_module'])) ? $_REQUEST['view_module'] : null;
         $this->editPackage = (! empty($_REQUEST['view_package'])) ? $_REQUEST['view_package'] : null;
@@ -108,7 +108,7 @@ class ViewProperty extends SugarView
         }
     }
 
-    function display()
+    public function display()
     {
         global $mod_strings;
         $ajax = new AjaxCompose();
