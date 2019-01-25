@@ -78,7 +78,7 @@ class SugarWidgetReportField extends SugarWidgetField
     }
 
 
-    function  getSubClass($layout_def)
+    function getSubClass($layout_def)
     {
         if (! empty($layout_def['type'])) {
             if ($layout_def['type'] == 'time') {

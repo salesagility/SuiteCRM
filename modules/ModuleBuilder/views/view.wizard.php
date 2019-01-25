@@ -180,7 +180,7 @@ class ModuleBuilderViewWizard extends SugarView
         }
     }
 
-    function processMB ( 
+    function processMB( 
 	    $ajax 
 	    ) {
         if (! isset ( $_REQUEST [ 'view_package' ] )) {

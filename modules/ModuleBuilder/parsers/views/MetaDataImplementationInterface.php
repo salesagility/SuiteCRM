@@ -44,9 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 interface MetaDataImplementationInterface
 {
-    public function getViewdefs () ;
-    public function getFielddefs () ;
-    public function getLanguage () ;
-    public function deploy ($layoutDefinitions) ;
-    public function getHistory () ;
+    public function getViewdefs() ;
+    public function getFielddefs() ;
+    public function getLanguage() ;
+    public function deploy($layoutDefinitions) ;
+    public function getHistory() ;
 }

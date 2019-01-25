@@ -88,7 +88,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
      }
  }
 
-function  hasPasswordExpired($username)
+function hasPasswordExpired($username)
 {
     $current_user= new user();
     $usr_id=$current_user->retrieve_user_id($username);

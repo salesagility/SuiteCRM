@@ -4495,7 +4495,7 @@ if (!function_exists("getValidDBName")) {
      * @param string $ensureUnique
      * @return string Valid column name trimmed to right length and with invalid characters removed
      */
-    function getValidDBName ($name, $ensureUnique = false, $maxLen = 30)
+    function getValidDBName($name, $ensureUnique = false, $maxLen = 30)
     {
         // first strip any invalid characters - all but alphanumerics and -
         $name = preg_replace ( '/[^\w-]+/i', '', $name ) ;

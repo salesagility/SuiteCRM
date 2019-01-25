@@ -477,7 +477,7 @@ class InboundEmail extends SugarBean
             $emailSortedHeaders = $this->getImap()->fetchOverview($sequence);
 
             $uids = array_map(
-                function($x) {
+                function ($x) {
                     return $x->uid;
                 },
                 $emailSortedHeaders // TODO: this should be an array!

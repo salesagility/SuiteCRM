@@ -406,7 +406,7 @@ class PackageManager
 
     //////////////////////////////////////////////////////////////////////
     /////////// INSTALL SECTION
-    function extractFile( $zip_file, $file_in_zip, $base_tmp_upgrade_dir)
+    function extractFile($zip_file, $file_in_zip, $base_tmp_upgrade_dir)
     {
         $my_zip_dir = mk_temp_dir( $base_tmp_upgrade_dir );
         $this->addToCleanup($my_zip_dir);
@@ -414,7 +414,7 @@ class PackageManager
         return( "$my_zip_dir/$file_in_zip" );
     }
 
-    function extractManifest( $zip_file,$base_tmp_upgrade_dir )
+    function extractManifest($zip_file,$base_tmp_upgrade_dir)
     {
         global $sugar_config;
         $base_upgrade_dir       = $this->upload_dir."/upgrades";
@@ -422,7 +422,7 @@ class PackageManager
         return $this->extractFile( $zip_file, "manifest.php",$base_tmp_upgrade_dir );
     }
 
-    function validate_manifest( $manifest )
+    function validate_manifest($manifest)
     {
         // takes a manifest.php manifest array and validates contents
         global $subdirs;
@@ -466,7 +466,7 @@ class PackageManager
         }
     }
 
-    function getInstallType( $type_string )
+    function getInstallType($type_string)
     {
         // detect file type
         global $subdirs;
@@ -652,7 +652,7 @@ class PackageManager
         }
     }
 
-    function getUITextForType( $type )
+    function getUITextForType($type)
     {
         if ( $type == "full" ) {
             return( "Full Upgrade" );
@@ -671,7 +671,7 @@ class PackageManager
         }
     }
 
-    function getImageForType( $type )
+    function getImageForType($type)
     {
         $icon = "";
         switch ( $type ) {

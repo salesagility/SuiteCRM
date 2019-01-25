@@ -23,7 +23,7 @@ class AM_ProjectTemplatesTable
 {
     private $tasks;
     private $project_template_id;
-    public function __construct( $project_template_id, $tasks)
+    public function __construct($project_template_id, $tasks)
     {
         $this->tasks = $tasks;
         $this->project_template_id = $project_template_id;

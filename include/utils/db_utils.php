@@ -145,7 +145,7 @@ function from_html($string, $encode=true)
  * @param int $maxlen Deprecated and ignored
  * @return string Valid column name trimmed to right length and with invalid characters removed
  */
-function getValidDBName ($name, $ensureUnique = false, $maxLen = 30)
+function getValidDBName($name, $ensureUnique = false, $maxLen = 30)
 {
     return DBManagerFactory::getInstance()->getValidDBName($name, $ensureUnique);
 }

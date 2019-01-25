@@ -82,7 +82,7 @@ class AbstractRelationships
      * @param boolean $includeActivitiesSubmodules True if the list should include Calls, Meetings etc; false if they should be replaced by the parent, Activities
      * @return array    Array of [$module][$subpanel]
      */
-    static function findRelatableModules ($includeActivitiesSubmodules = true)
+    static function findRelatableModules($includeActivitiesSubmodules = true)
     {
         $relatableModules = array ( ) ;
         
@@ -109,7 +109,7 @@ class AbstractRelationships
         return $relatableModules ;
     }
 
-    static function validSubpanel ($filename)
+    static function validSubpanel($filename)
     {
         if (! file_exists ( $filename )) {
             return false ;
@@ -123,7 +123,7 @@ class AbstractRelationships
      * Get a list of all relationships (which have not been deleted)
      * @return array    Array of relationship names, ready for use in get()
      */
-    function getRelationshipList ()
+    function getRelationshipList()
     {
         $list = array ( ) ;
         foreach ( $this->relationships as $name => $relationship ) {
@@ -139,7 +139,7 @@ class AbstractRelationships
      * @param string $relationshipName  The unique name for this relationship, as returned by $relationship->getName()
      * @return AbstractRelationship or false if $relationshipName is not in this set of relationships
      */
-    function get ($relationshipName)
+    function get($relationshipName)
     {
         if (isset ( $this->relationships [ $relationshipName ] )) {
             return $this->relationships [ $relationshipName ] ;
@@ -153,7 +153,7 @@ class AbstractRelationships
      * Otherwise, create and add a new relationship with the information in the $_REQUEST
      * @return AbstractRelationship
      */
-    function addFromPost ()
+    function addFromPost()
     {
         $definition = array ( ) ;
         
@@ -184,7 +184,7 @@ class AbstractRelationships
      * Add a relationship to the set
      * @param AbstractRelationship $relationship    The relationship to add
      */
-    function add ($relationship)
+    function add($relationship)
     {
         $name = $this->getUniqueName ( $relationship ) ;
         $relationship->setName ( $name ) ;
@@ -197,7 +197,7 @@ class AbstractRelationships
      * @param string $basepath  Base directory in which to store the relationships information
      * @return Array of AbstractRelationship objects
      */
-    protected function _load ($basepath)
+    protected function _load($basepath)
     {
         $GLOBALS [ 'log' ]->info ( get_class ( $this ) . ": loading relationships from " . $basepath . '/relationships.php' ) ;
         $objects = array ( ) ;
@@ -224,7 +224,7 @@ class AbstractRelationships
      * Save the set of relationships to a file
      * @param string $basepath  Base directory in which to store the relationships information
      */
-    protected function _save ($relationships , $basepath)
+    protected function _save($relationships , $basepath)
     {
         $GLOBALS [ 'log' ]->info ( get_class ( $this ) . ": saving relationships to " . $basepath . '/relationships.php' ) ;
         $header = file_get_contents ( 'modules/ModuleBuilder/MB/header.php' ) ;
@@ -251,7 +251,7 @@ class AbstractRelationships
      * relationship (products-products) uses it (and there it makes no difference from our POV) and we don't use it when creating new ones
      * @return array Array of $relationshipName => $relationshipDefinition as an array
      */
-    protected function getDeployedRelationships ()
+    protected function getDeployedRelationships()
     {
         $db = DBManagerFactory::getInstance () ;
         $query = "SELECT * FROM relationships WHERE deleted = 0" ;
@@ -271,7 +271,7 @@ class AbstractRelationships
      * @param AbstractRelationship The relationship object
      * @return string A globally unique relationship name
      */
-    protected function getUniqueName ($relationship)
+    protected function getUniqueName($relationship)
     {
         $allRelationships = $this->getRelationshipList () ;
         $basename = $relationship->getName () ;
@@ -315,7 +315,7 @@ class AbstractRelationships
      * @param string $installDefPrefix  Pathname prefix for the installdefs, for example for ModuleBuilder use "<basepath>/SugarModules"
      * @param array $relationships      Relationships to implement
      */
-    protected function build ($basepath , $installDefPrefix , $relationships )
+    protected function build($basepath , $installDefPrefix , $relationships)
     {
         global $sugar_config;
         // keep the relationships data separate from any other build data by ading /relationships to the basepath
@@ -366,7 +366,7 @@ class AbstractRelationships
      * @param array $labelDefinitions       Array of System label => Display label pairs
      * @return null Nothing to be added to the installdefs for an undeployed module
      */
-    protected function saveLabels ($basepath , $installDefPrefix , $relationshipName , $labelDefinitions)
+    protected function saveLabels($basepath , $installDefPrefix , $relationshipName , $labelDefinitions)
     {
         global $sugar_config;
         
@@ -432,7 +432,7 @@ class AbstractRelationships
      * @param array $relationshipMetaData   Set of metadata definitions in the form $relationshipMetaData[$relationshipName]
      * @return array $installDefs           Set of new installDefs
      */
-    protected function saveRelationshipMetaData ($basepath , $installDefPrefix , $relationshipName , $relationshipMetaData)
+    protected function saveRelationshipMetaData($basepath , $installDefPrefix , $relationshipName , $relationshipMetaData)
     {
         mkdir_recursive ( "$basepath/relationships" ) ;
         
@@ -453,7 +453,7 @@ class AbstractRelationships
      * @param array $subpanelDefinitions    Set of subpanel definitions in the form $subpanelDefinitions[$for_module][]
      * @return array $installDefs           Set of new installDefs
      */
-    protected function saveSubpanelDefinitions ($basepath , $installDefPrefix , $relationshipName , $subpanelDefinitions)
+    protected function saveSubpanelDefinitions($basepath , $installDefPrefix , $relationshipName , $subpanelDefinitions)
     {
         mkdir_recursive ( "$basepath/layoutdefs/" ) ;
         
@@ -490,7 +490,7 @@ class AbstractRelationships
      * @param array $linkFieldDefinitions   Set of link field definitions in the form $linkFieldDefinitions[$for_module]
      * @return array $installDefs           Set of new installDefs
      */
-    protected function saveVardefs ($basepath , $installDefPrefix , $relationshipName , $vardefs)
+    protected function saveVardefs($basepath , $installDefPrefix , $relationshipName , $vardefs)
     {
         mkdir_recursive ( "$basepath/vardefs/" ) ;
         $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . "->saveVardefs(): vardefs =" . print_r ( $vardefs, true ) ) ;
@@ -540,7 +540,7 @@ class AbstractRelationships
      * @param $deployedName Name of the module in the deployed form - that is, keyname_modulename or modulename
      * @return array ('moduleName'=>name, 'packageName'=>package) if undeployed, ('moduleName'=>name) if deployed
      */
-    static function parseDeployedModuleName ($deployedName)
+    static function parseDeployedModuleName($deployedName)
     {
         require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php' ;
         $mb = new ModuleBuilder ( ) ;

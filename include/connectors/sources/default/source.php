@@ -252,7 +252,7 @@ abstract class source
      * @param array $moduleList
      * @return array Allowed modules
      */
-    public function filterAllowedModules( $moduleList )
+    public function filterAllowedModules($moduleList)
     {
         // Most modules can connect to everything, no further filtering necessary
         return $moduleList;

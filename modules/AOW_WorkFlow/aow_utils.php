@@ -210,7 +210,7 @@ function getModuleTreeData($module)
                     }
                 }
             } //End loop.
-            uasort($sort_fields,function($a,$b) {
+            uasort($sort_fields,function ($a,$b) {
                 return strcmp($a['label'],$b['label']);
             });
 

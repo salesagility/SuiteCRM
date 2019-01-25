@@ -1058,7 +1058,7 @@ function write_mail_merge_log_entry($campaign_id,$pl_row)
     /*
      * This function will return an array that has been formatted to work as a Quick Search Object for prospect lists
      */
-    function getProspectListQSObjects($source = '', $return_field_name='name', $return_field_id='id' )
+    function getProspectListQSObjects($source = '', $return_field_name='name', $return_field_id='id')
     {
         global $app_strings;
         //if source has not been specified, then search across all prospect lists

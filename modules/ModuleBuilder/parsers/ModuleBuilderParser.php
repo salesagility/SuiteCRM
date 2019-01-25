@@ -70,7 +70,7 @@ class ModuleBuilderParser
     /*
      * Initialize this parser
      */
-    function init ()
+    function init()
     {
     }
 
@@ -118,7 +118,7 @@ class ModuleBuilderParser
         return (array('viewdefs' => $defs, 'variables' => $variables));
     }
 
-    function handleSave ($file,$view,$moduleName,$defs)
+    function handleSave($file,$view,$moduleName,$defs)
     {
     }
 
@@ -126,7 +126,7 @@ class ModuleBuilderParser
     /*
      * Save the new layout
      */
-    function _writeToFile ($file,$view,$moduleName,$defs,$variables)
+    function _writeToFile($file,$view,$moduleName,$defs,$variables)
     {
         if (file_exists($file)) {
             unlink($file);
@@ -173,7 +173,7 @@ class ModuleBuilderParser
     }
 
 
-    function _fatalError ($msg)
+    function _fatalError($msg)
     {
         $GLOBALS ['log']->fatal($msg);
         echo $msg;

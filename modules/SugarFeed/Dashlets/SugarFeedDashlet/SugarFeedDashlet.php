@@ -394,7 +394,7 @@ class SugarFeedDashlet extends DashletGeneric
         }
     }
 
-    function pushUserFeedReply( )
+    function pushUserFeedReply()
     {
         if (!empty($_REQUEST['text'])&&!empty($_REQUEST['parentFeed'])) {
             $text = htmlspecialchars($_REQUEST['text']);
@@ -511,7 +511,7 @@ enableQS(false);
         $listview = parent::display();
 
         $class = $this;
-        $function = function($matches) use ($class) {
+        $function = function ($matches) use ($class) {
             if ($matches[1] == "this") {
                 $var = $matches[2];
                 return $class->$var;

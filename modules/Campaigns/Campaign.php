@@ -228,7 +228,7 @@ class Campaign extends SugarBean
     	builds a generic search based on the query string using or
     	do not include any $this-> because this is called on without having the class instantiated
     */
-    function build_generic_where_clause ($the_query_string)
+    function build_generic_where_clause($the_query_string)
     {
         $where_clauses = Array();
         $the_query_string = $this->db->quote($the_query_string);

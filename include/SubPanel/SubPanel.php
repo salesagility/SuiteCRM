@@ -282,7 +282,7 @@ class SubPanel
     }
 
     //saves overrides for defs
-    function saveSubPanelDefOverride( $panel, $subsection, $override)
+    function saveSubPanelDefOverride($panel, $subsection, $override)
     {
         global $layout_defs, $beanList;
 

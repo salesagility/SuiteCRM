@@ -50,7 +50,7 @@ require_once('include/utils/sugar_file_utils.php');
  * @param string $path
  * @return string
  */
-function clean_path( $path )
+function clean_path($path)
 {
     // clean directory/file path with a functional equivalent
     $appendpath = '';
@@ -95,7 +95,7 @@ function get_module_dir_list()
     return $modules;
 }
 
-function mk_temp_dir( $base_dir, $prefix="" )
+function mk_temp_dir($base_dir, $prefix="")
 {
     $temp_dir = tempnam( $base_dir, $prefix );
     if ( !$temp_dir || !unlink( $temp_dir ) ) {
@@ -109,12 +109,12 @@ function mk_temp_dir( $base_dir, $prefix="" )
     return( false );
 }
 
-function remove_file_extension( $filename )
+function remove_file_extension($filename)
 {
     return( substr( $filename, 0, strrpos($filename, ".") ) );
 }
 
-function write_array_to_file( $the_name, $the_array, $the_file, $mode="w", $header='' )
+function write_array_to_file($the_name, $the_array, $the_file, $mode="w", $header='')
 {
     if (!empty($header) && ($mode != 'a' || !file_exists($the_file))) {
         $the_string = $header;
@@ -135,7 +135,7 @@ function write_array_to_file( $the_name, $the_array, $the_file, $mode="w", $head
     return $result;
 }
 
-function write_encoded_file( $soap_result, $write_to_dir, $write_to_file="" )
+function write_encoded_file($soap_result, $write_to_dir, $write_to_file="")
 {
     // this function dies when encountering an error -- use with caution!
     // the path/file is returned upon success
@@ -309,7 +309,7 @@ function readfile_chunked($filename,$retbytes=true)
  * @param string $old_filename
  * @param string $new_filename
  */
-function sugar_rename( $old_filename, $new_filename)
+function sugar_rename($old_filename, $new_filename)
 {
     if (empty($old_filename) || empty($new_filename)) {
         return false;

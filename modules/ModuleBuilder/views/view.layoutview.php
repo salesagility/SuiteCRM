@@ -96,11 +96,11 @@ class ViewLayoutView extends SugarView
     }
 
     // DO NOT REMOVE - overrides parent ViewEdit preDisplay() which attempts to load a bean for a non-existent module
-    function preDisplay ()
+    function preDisplay()
     {
     }
 
-    function display ($preview = false)
+    function display($preview = false)
     {
         global $mod_strings ;
         $parser = ParserFactory::getParser($this->editLayout,$this->editModule,$this->package);

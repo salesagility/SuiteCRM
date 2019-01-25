@@ -57,7 +57,7 @@ class ModuleBuilder
 {
     var $packages = array ( ) ;
 
-    function getPackageList ()
+    function getPackageList()
     {
         static $list = array ( ) ;
         if (! empty ( $list ) || ! file_exists ( MB_PACKAGE_PATH )) {
@@ -77,7 +77,7 @@ class ModuleBuilder
      * @param $name
      * @return MBPackage
      */
-    function getPackage ($name)
+    function getPackage($name)
     {
         if (empty ( $this->packages [ $name ] )) {
             $this->packages [ $name ] = new MBPackage ( $name ) ;
@@ -86,7 +86,7 @@ class ModuleBuilder
         return $this->packages [ $name ] ;
     }
     
-    function getPackageKey ($name)
+    function getPackageKey($name)
     {
         $manifestPath = MB_PACKAGE_PATH . '/' . $name . '/manifest.php' ;
         if (file_exists ( $manifestPath )) {
@@ -103,14 +103,14 @@ class ModuleBuilder
      * @param $module
      * @return mixed
      */
-    function &getPackageModule ($package , $module)
+    function &getPackageModule($package , $module)
     {
         $this->getPackage ( $package ) ;
         $this->packages [ $package ]->getModule ( $module ) ;
         return $this->packages [ $package ]->modules [ $module ] ;
     }
 
-    function save ()
+    function save()
     {
         $packages = array_keys ( $this->packages ) ;
         foreach ( $packages as $package ) {
@@ -118,7 +118,7 @@ class ModuleBuilder
         }
     }
 
-    function build ()
+    function build()
     {
         $packages = array_keys ( $this->packages ) ;
         foreach ( $packages as $package ) {
@@ -130,7 +130,7 @@ class ModuleBuilder
         }
     }
 
-    function getPackages ()
+    function getPackages()
     {
         if (empty ( $this->packages )) {
             $list = $this->getPackageList () ;
@@ -143,7 +143,7 @@ class ModuleBuilder
         }
     }
 
-    function getNodes ()
+    function getNodes()
     {
         $this->getPackages () ;
         $nodes = array ( ) ;

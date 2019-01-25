@@ -57,7 +57,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  */
-function get_validate_record_document_revision_js ()
+function get_validate_record_document_revision_js()
 {
     global $mod_strings;
     global $app_strings;

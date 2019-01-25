@@ -748,7 +748,7 @@ class Importer
      *
      * @param array $ids ids of user_last_import records created
      */
-    protected function _undoCreatedBeans( array $ids )
+    protected function _undoCreatedBeans(array $ids)
     {
         $focus = new UsersLastImport();
         foreach ($ids as $id) {

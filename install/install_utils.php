@@ -1166,7 +1166,7 @@ function handleWebConfig()
 /**
  * Drop old tables if table exists and told to drop it
  */
-function drop_table_install( &$focus )
+function drop_table_install(&$focus)
 {
     $db = DBManagerFactory::getInstance();
     global $dictionary;
@@ -1184,7 +1184,7 @@ function drop_table_install( &$focus )
 }
 
 // Creating new tables if they don't exist.
-function create_table_if_not_exist( &$focus )
+function create_table_if_not_exist(&$focus)
 {
     global  $db;
     $table_created = false;
@@ -1243,7 +1243,7 @@ function create_default_users()
     }
 }
 
-function set_admin_password( $password )
+function set_admin_password($password)
 {
     $db = DBManagerFactory::getInstance();
 
@@ -1412,7 +1412,7 @@ function recursive_is_writable($start_file)
 }
 
 // one place for form validation/conversion to boolean
-function get_boolean_from_request( $field )
+function get_boolean_from_request($field)
 {
     if ( !isset($_REQUEST[$field]) ) {
         return( false );
@@ -1434,7 +1434,7 @@ function stripslashes_checkstrings($value)
 }
 
 
-function print_debug_array( $name, $debug_array )
+function print_debug_array($name, $debug_array)
 {
     ksort( $debug_array );
 
@@ -1827,7 +1827,7 @@ function getLangPacks($display_commit = true, $types = array('langpack'), $notic
 }
 
 if ( !function_exists('extractFile') ) {
-    function extractFile( $zip_file, $file_in_zip, $base_tmp_upgrade_dir)
+    function extractFile($zip_file, $file_in_zip, $base_tmp_upgrade_dir)
     {
         $my_zip_dir = mk_temp_dir( $base_tmp_upgrade_dir );
         unzip_file( $zip_file, $file_in_zip, $my_zip_dir );
@@ -1836,7 +1836,7 @@ if ( !function_exists('extractFile') ) {
 }
 
 if ( !function_exists('extractManifest') ) {
-    function extractManifest( $zip_file,$base_tmp_upgrade_dir )
+    function extractManifest($zip_file,$base_tmp_upgrade_dir)
     {
         return( extractFile( $zip_file, "manifest.php",$base_tmp_upgrade_dir ) );
     }
@@ -1916,7 +1916,7 @@ function langPackUnpack($unpack_type, $full_file)
 }
 
 if ( !function_exists('validate_manifest') ) {
-    function validate_manifest( $manifest )
+    function validate_manifest($manifest)
     {
         // takes a manifest.php manifest array and validates contents
         global $subdirs;
@@ -1937,7 +1937,7 @@ if ( !function_exists('validate_manifest') ) {
 }
 
 if ( !function_exists('getInstallType') ) {
-    function getInstallType( $type_string )
+    function getInstallType($type_string)
     {
         // detect file type
         $subdirs = array('full', 'langpack', 'module', 'patch', 'theme', 'temp');

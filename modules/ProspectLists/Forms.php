@@ -54,7 +54,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  */
-function get_validate_record_js ()
+function get_validate_record_js()
 {
     global $mod_strings;
     global $app_strings;
@@ -87,7 +87,7 @@ EOQ;
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  */
-function get_new_record_form ()
+function get_new_record_form()
 {
     require_once('modules/ProspectLists/ProspectListFormBase.php');
     $accountForm = new ProspectListFormBase();

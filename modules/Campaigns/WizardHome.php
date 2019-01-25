@@ -235,7 +235,7 @@ if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
 
 
 
-function create_campaign_summary  ($focus)
+function create_campaign_summary($focus)
 {
     global $mod_strings,$app_strings;
     $fields = array();
@@ -312,7 +312,7 @@ function create_campaign_summary  ($focus)
     return $cmpgn_tbl ;
 }
 
-function create_marketing_summary  ($focus)
+function create_marketing_summary($focus)
 {
     global $mod_strings,$app_strings;
     $colorclass = '';
@@ -403,7 +403,7 @@ function create_marketing_summary  ($focus)
     return $mrkt_tbl ;
 }
 
-function create_target_summary  ($focus)
+function create_target_summary($focus)
 {
     global $mod_strings,$app_strings,$app_list_strings;
     $colorclass = '';
@@ -474,7 +474,7 @@ function create_target_summary  ($focus)
     return $pl_tbl;
 }
 
-function create_tracker_summary  ($focus)
+function create_tracker_summary($focus)
 {
     global $mod_strings,$app_strings;
     $colorclass = '';

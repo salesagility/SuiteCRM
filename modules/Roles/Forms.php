@@ -50,7 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
-function get_validate_record_js ()
+function get_validate_record_js()
 {
     global $mod_strings;
     global $app_strings;

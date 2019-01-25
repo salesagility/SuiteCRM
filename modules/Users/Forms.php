@@ -57,7 +57,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  */
-function user_get_validate_record_js ()
+function user_get_validate_record_js()
 {
     // NO LONGER USED, MOVED TO UserEditView.js
     return '';

@@ -192,7 +192,7 @@ class ACLAction extends SugarBean
     * this is used for building select boxes
     * @return array containg access levels (ints) as keys and access names as values
     */
-    protected static function getAccessOptions( $action, $type='module')
+    protected static function getAccessOptions($action, $type='module')
     {
         global $ACLActions;
         $options = array();

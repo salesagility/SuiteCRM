@@ -49,7 +49,7 @@ class ParserSearchFields extends ModuleBuilderParser
     var $searchFields;
     var $packageKey;
 
-    function __construct ($moduleName, $packageName='')
+    function __construct($moduleName, $packageName='')
     {
         $this->moduleName = $moduleName;
         if (!empty($packageName)) {
@@ -112,7 +112,7 @@ class ParserSearchFields extends ModuleBuilderParser
         return $searchFields;
     }
 
-    function saveSearchFields ($searchFields)
+    function saveSearchFields($searchFields)
     {
         if (!empty($this->packageName)) { //we are in Module builder
             $header = file_get_contents('modules/ModuleBuilder/MB/header.php');

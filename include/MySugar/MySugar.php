@@ -70,7 +70,7 @@ class MySugar
     }
 
 
-    function checkDashletDisplay ()
+    function checkDashletDisplay()
     {
         if ((!in_array($this->type, $GLOBALS['moduleList'])
 				&& !in_array($this->type, $GLOBALS['modInvisList']))

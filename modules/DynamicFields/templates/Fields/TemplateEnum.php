@@ -53,7 +53,7 @@ class TemplateEnum extends TemplateText
     var $dependency ; // any dependency information
     var $supports_unified_search = true;
 
-    function __construct ()
+    function __construct()
     {
         // ensure that the field dependency information is read in from any _REQUEST
         $this->localVardefMap = array (
@@ -64,7 +64,7 @@ class TemplateEnum extends TemplateText
         $this->vardef_map = array_merge ( $this->vardef_map , $this->localVardefMap ) ;
     }
 
-    function populateFromPost ()
+    function populateFromPost()
     {
         parent::populateFromPost();
         if (!empty($this->visibility_grid) && is_string($this->visibility_grid)) {

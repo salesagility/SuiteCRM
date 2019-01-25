@@ -691,7 +691,7 @@ class JsChart extends SugarChart
         return true;
     }
 
-    function get_image_cache_file_name ($xmlFile,$ext = ".png")
+    function get_image_cache_file_name($xmlFile,$ext = ".png")
     {
         $filename = str_replace("/xml/","/images/",str_replace(".xml",$ext,$xmlFile));
 
@@ -735,7 +735,7 @@ class JsChart extends SugarChart
         * Replacement regex $pattern applied
         */
 
-        $return = preg_replace_callback('/\<link\>([a-zA-Z0-9#?&%.;\[\]\/=+\s\-\_]+)\<\/link\>/', function($m) {
+        $return = preg_replace_callback('/\<link\>([a-zA-Z0-9#?&%.;\[\]\/=+\s\-\_]+)\<\/link\>/', function ($m) {
             return '<link>'.urlencode($m[1]).'</link>';
         }, $content);
         return $return;

@@ -530,7 +530,7 @@ EOQ;
         }
     } // end handleSave();
 
-    function getWideFormBody ($prefix, $mod='', $formname='', $wide =true)
+    function getWideFormBody($prefix, $mod='', $formname='', $wide =true)
     {
         if (!ACLController::checkAccess('Calls', 'edit', true)) {
             return '';

@@ -86,7 +86,7 @@
          return $menu;
      }
 
-     static function menu($module, $offset, $isAuditEnabled, $saveAndContinue = false )
+     static function menu($module, $offset, $isAuditEnabled, $saveAndContinue = false)
      {
          $html_text = "";
          if ($offset < 0) {

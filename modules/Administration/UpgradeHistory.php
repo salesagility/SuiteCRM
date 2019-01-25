@@ -177,7 +177,7 @@ class UpgradeHistory extends SugarBean
         return( parent::build_related_list( $query, $this ) );
     }
 
-    function findByMd5( $var_md5 )
+    function findByMd5($var_md5)
     {
         $query = "SELECT id FROM " . $this->table_name . " where md5sum = '$var_md5'";
         return( parent::build_related_list( $query, $this ) );

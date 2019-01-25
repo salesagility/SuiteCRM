@@ -118,7 +118,7 @@ class vCard
         $this->setProperty('EMAIL;INTERNET', $address);
     }
 
-    function setPhoneNumber( $number, $type)
+    function setPhoneNumber($number, $type)
     {
         if ($type != 'FAX') {
             $this->setProperty("TEL;$type", $number);

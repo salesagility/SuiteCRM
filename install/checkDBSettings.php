@@ -219,7 +219,7 @@ function checkDBSettings($silent=false)
     installLog("End DB Check Process *************");
 }
 
-function printErrors($errors )
+function printErrors($errors)
 {
     global $mod_strings;
     if (count($errors) == 0) {

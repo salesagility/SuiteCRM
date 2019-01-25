@@ -54,7 +54,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  */
-function get_validate_record_js ()
+function get_validate_record_js()
 {
 }
 
@@ -65,6 +65,6 @@ function get_validate_record_js ()
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  */
-function get_new_record_form ()
+function get_new_record_form()
 {
 }

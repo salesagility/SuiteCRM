@@ -60,7 +60,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
       * @throws Exception Thrown if the provided view doesn't exist for this module
       */
 
-    function __construct ($view , $moduleName , $packageName)
+    function __construct($view , $moduleName , $packageName)
     {
 
     	// BEGIN ASSERTIONS
@@ -137,7 +137,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
         $this->_history = new History($this->getFileNameInPackage($view, $moduleName, $packageName, MB_HISTORYMETADATALOCATION)) ;
     }
 
-    function getLanguage ()
+    function getLanguage()
     {
         return $this->_packageName . $this->_moduleName ;
     }
@@ -146,7 +146,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
      * Deploy a layout
      * @param array defs    Layout definition in the same format as received by the constructor
      */
-    function deploy ($defs)
+    function deploy($defs)
     {
         //If we are pulling from the History Location, that means we did a restore, and we need to save the history for the previous file.
         if ($this->_sourceFilename == $this->getFileName($this->_view, $this->_moduleName, MB_HISTORYMETADATALOCATION)

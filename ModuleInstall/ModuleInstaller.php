@@ -1345,7 +1345,7 @@ class ModuleInstaller
      * Next it calls install_vardef and install_layoutdef. Finally, it rebuilds the vardefs and layoutdefs (by calling merge_files as usual), and then calls merge_files to merge
      * everything in 'Ext/TableDictionary/' into 'tabledictionary.ext.php'
      */
-    function install_relationships ()
+    function install_relationships()
     {
         if (isset ( $this->installdefs [ 'relationships' ] )) {
             $this->log ( translate ( 'LBL_MI_IN_RELATIONSHIPS' ) ) ;
@@ -2024,7 +2024,7 @@ class ModuleInstaller
     }
 
     /* BEGIN - RESTORE POINT - by MR. MILK August 31, 2005 02:15:18 PM 	*/
-    function copy_recursive_with_backup( $source, $dest, $backup_path, $uninstall=false )
+    function copy_recursive_with_backup($source, $dest, $backup_path, $uninstall=false)
     {
         if (is_file($source)) {
             if ($uninstall) {

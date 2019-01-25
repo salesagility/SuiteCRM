@@ -480,7 +480,7 @@ class MetaParser
      * @param $directory The directory to scan
      * @return $results The files in the directory that were found
      */
-    function dirList ($directory)
+    function dirList($directory)
     {
 
     // create an array to hold directory list

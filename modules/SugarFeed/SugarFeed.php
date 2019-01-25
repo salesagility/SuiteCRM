@@ -86,7 +86,7 @@ class SugarFeed extends Basic
     }
 
 
-    static function activateModuleFeed( $module, $updateDB = true )
+    static function activateModuleFeed($module, $updateDB = true)
     {
         if ( $module != 'UserFeed' ) {
             // UserFeed is a fake module, used for the user postings to the feed
@@ -107,7 +107,7 @@ class SugarFeed extends Basic
         }
     }
 
-    static function disableModuleFeed( $module, $updateDB = true )
+    static function disableModuleFeed($module, $updateDB = true)
     {
         if ( $module != 'UserFeed' ) {
             // UserFeed is a fake module, used for the user postings to the feed
@@ -129,7 +129,7 @@ class SugarFeed extends Basic
         }
     }
 
-    static function flushBackendCache( )
+    static function flushBackendCache()
     {
         // This function will flush the cache files used for the module list and the link type lists
         sugar_cache_clear('SugarFeedModules');
@@ -144,7 +144,7 @@ class SugarFeed extends Basic
     }
 
 
-    static function getModuleFeedFiles( $module )
+    static function getModuleFeedFiles($module)
     {
         $baseDirList = array('modules/'.$module.'/SugarFeeds/', 'custom/modules/'.$module.'/SugarFeeds/');
 
@@ -171,7 +171,7 @@ class SugarFeed extends Basic
         return($fileList);
     }
 
-    static function getActiveFeedModules( )
+    static function getActiveFeedModules()
     {
         // Stored in a cache somewhere
         $feedModules = sugar_cache_retrieve('SugarFeedModules');
@@ -217,7 +217,7 @@ class SugarFeed extends Basic
         return $feedModules;
     }
 
-    static function getAllFeedModules( )
+    static function getAllFeedModules()
     {
         // Uncached, only used from the admin panel and during installation currently
         $feedModules = array('UserFeed'=>'UserFeed');
@@ -354,7 +354,7 @@ class SugarFeed extends Basic
         return $linkTypeList;
     }
 
-    static function getLinkClass( $linkName )
+    static function getLinkClass($linkName)
     {
         $linkTypeList = SugarFeed::getLinkTypes();
 
