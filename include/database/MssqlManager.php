@@ -557,8 +557,11 @@ class MssqlManager extends DBManager
                             $newSQL = "SELECT TOP $countVar * FROM
                                         (
                                             SELECT ROW_NUMBER()
-                                                OVER (ORDER BY " . preg_replace('/^' . $dist_str . '\s+/', '',
-                                    $this->returnOrderBy($sql, $orderByMatch[3])) . ') AS row_number,
+                                                OVER (ORDER BY " . preg_replace(
+                                '/^' . $dist_str . '\s+/',
+                                '',
+                                    $this->returnOrderBy($sql, $orderByMatch[3])
+                            ) . ') AS row_number,
                                                 count(*) counter, ' . $distinctSQLARRAY[0] . '
                                                 ' . $distinctSQLARRAY[1] . '
                                                 group by ' . $grpByStr . "
@@ -657,10 +660,15 @@ class MssqlManager extends DBManager
                 $exists = strpos($strip_array[$patt . $i], $strip_beg);
                 if ($exists >= 0) {
                     $nested_pos = strrpos($strip_array[$patt . $i], $strip_beg);
-                    $strip_array[$patt . $i] = substr($p_sql, $nested_pos + $beg_sin,
-                        $sec_sin - ($nested_pos + $beg_sin) + 1);
-                    $p_sql = substr($p_sql, 0, $nested_pos + $beg_sin) . ' ##' . $patt . $i . '## ' . substr($p_sql,
-                            $sec_sin + 1);
+                    $strip_array[$patt . $i] = substr(
+                        $p_sql,
+                        $nested_pos + $beg_sin,
+                        $sec_sin - ($nested_pos + $beg_sin) + 1
+                    );
+                    $p_sql = substr($p_sql, 0, $nested_pos + $beg_sin) . ' ##' . $patt . $i . '## ' . substr(
+                        $p_sql,
+                            $sec_sin + 1
+                    );
                     ++$i;
                     continue;
                 }
@@ -981,7 +989,8 @@ class MssqlManager extends DBManager
 
         $this->checkConnection();
         $result = $this->getOne(
-            "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_NAME=" . $this->quoted($tableName));
+            "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_NAME=" . $this->quoted($tableName)
+        );
 
         return !empty($result);
     }

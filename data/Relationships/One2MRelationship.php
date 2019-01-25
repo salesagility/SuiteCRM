@@ -63,7 +63,9 @@ class One2MRelationship extends M2MRelationship
 
         if ($this->selfReferencing) {
             $links = VardefManager::getLinkFieldForRelationship(
-                $lhsModule, BeanFactory::getObjectName($lhsModule), $this->name
+                $lhsModule,
+                BeanFactory::getObjectName($lhsModule),
+                $this->name
             );
             if (empty($links)) {
                 $GLOBALS['log']->fatal("No Links found for relationship {$this->name}");
@@ -87,10 +89,14 @@ class One2MRelationship extends M2MRelationship
             }
         } else {
             $this->lhsLinkDef = VardefManager::getLinkFieldForRelationship(
-                $lhsModule, BeanFactory::getObjectName($lhsModule), $this->name
+                $lhsModule,
+                BeanFactory::getObjectName($lhsModule),
+                $this->name
             );
             $this->rhsLinkDef = VardefManager::getLinkFieldForRelationship(
-                $rhsModule, BeanFactory::getObjectName($rhsModule), $this->name
+                $rhsModule,
+                BeanFactory::getObjectName($rhsModule),
+                $this->name
             );
             if (!isset($this->lhsLinkDef['name']) && isset($this->lhsLinkDef[0])) {
                 $this->lhsLinkDef = $this->lhsLinkDef[0];

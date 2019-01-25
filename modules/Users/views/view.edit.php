@@ -198,7 +198,8 @@ class UsersViewEdit extends ViewEdit
 
         $processSpecial = false;
         $processFormName = '';
-        if (isset($this->fieldHelper->usertype) && ($this->fieldHelper->usertype == 'GROUP'
+        if (isset($this->fieldHelper->usertype) && (
+            $this->fieldHelper->usertype == 'GROUP'
             )) {
             $this->ev->formName = 'EditViewGroup';
 

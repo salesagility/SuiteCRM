@@ -179,8 +179,11 @@ class quicksearchQuery
                         sprintf(
                             "%s like '%%%s%%'",
                             $table_prefix . $db->getValidDBName($condition['name']),
-                            $db->quote($condition['value']
-                    )));
+                            $db->quote(
+                                $condition['value']
+                    )
+                        )
+                    );
                     break;
 
                 case self::CONDITION_LIKE_CUSTOM:
@@ -432,7 +435,8 @@ class quicksearchQuery
                     'id' => (string) $id,
                     'user_name' => $name,
                     'module' => 'Users'
-            ));
+            )
+            );
         }
 
         return $results;

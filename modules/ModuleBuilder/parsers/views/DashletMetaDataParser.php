@@ -184,8 +184,11 @@ class DashletMetaDataParser extends ListLayoutMetaDataParser
                 mkdir_recursive(dirname($writeFile));
             }
         } else {
-            $writeFile = $file = $this->implementation->getFileName(MB_DASHLET, $this->_moduleName,
-                $this->_packageName);
+            $writeFile = $file = $this->implementation->getFileName(
+                MB_DASHLET,
+                $this->_moduleName,
+                $this->_packageName
+            );
             $writeTodashletName = $dashletName = $this->implementation->module->key_name . 'Dashlet';
         }
 

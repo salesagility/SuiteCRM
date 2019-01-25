@@ -90,12 +90,12 @@ if ($bean_name === 'Team') {
 } else {
 
     // cut it off:
-     $focus->load_relationship($linked_field);
-     if ($focus->$linked_field->_relationship->relationship_name === 'quotes_contacts_shipto') {
-         unset($focus->$linked_field->_relationship->relationship_role_column);
-     }
-     $focus->$linked_field->delete($record, $linked_id);
- }
+    $focus->load_relationship($linked_field);
+    if ($focus->$linked_field->_relationship->relationship_name === 'quotes_contacts_shipto') {
+        unset($focus->$linked_field->_relationship->relationship_role_column);
+    }
+    $focus->$linked_field->delete($record, $linked_id);
+}
  if ($bean_name === 'Campaign' and $linked_field==='prospectlists') {
      $query = "SELECT email_marketing_prospect_lists.id from email_marketing_prospect_lists ";
      $query .= " left join email_marketing on email_marketing.id=email_marketing_prospect_lists.email_marketing_id";
@@ -104,8 +104,10 @@ if ($bean_name === 'Team') {
 
      $result = $focus->db->query($query);
      while (($row = $focus->db->fetchByAssoc($result)) != null) {
-         $del_query = " update email_marketing_prospect_lists set email_marketing_prospect_lists.deleted=1, email_marketing_prospect_lists.date_modified=" . $focus->db->convert("'" . TimeDate::getInstance()->nowDb() . "'",
-                'datetime');
+         $del_query = " update email_marketing_prospect_lists set email_marketing_prospect_lists.deleted=1, email_marketing_prospect_lists.date_modified=" . $focus->db->convert(
+             "'" . TimeDate::getInstance()->nowDb() . "'",
+                'datetime'
+         );
          $del_query .= " WHERE  email_marketing_prospect_lists.id='{$row['id']}'";
          $focus->db->query($del_query);
      }

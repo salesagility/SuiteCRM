@@ -228,9 +228,23 @@ EOQ;
         return $out;
     }
 
-    private function getFormItems($mod_strings, $app_list_strings, $sugarConfigDefaults, $drivers, $checked, $db, $errors, $supportedLanguages,
-        $current_language, $customSession, $customLog, $customId, $customSessionHidden, $customLogHidden, $customIdHidden)
-    {
+    private function getFormItems(
+        $mod_strings,
+        $app_list_strings,
+        $sugarConfigDefaults,
+        $drivers,
+        $checked,
+        $db,
+        $errors,
+        $supportedLanguages,
+        $current_language,
+        $customSession,
+        $customLog,
+        $customId,
+        $customSessionHidden,
+        $customLogHidden,
+        $customIdHidden
+    ) {
 
 
 
@@ -1716,8 +1730,23 @@ EOQ;
                 $formId,
                 $formId,
                 $errs,
-                $this->getFormItems($mod_strings, $app_list_strings, $sugarConfigDefaults, $drivers, $checked, $db, $errors, $supportedLanguages,
-                    $current_language, $customSession, $customLog, $customId, $customSessionHidden, $customLogHidden, $customIdHidden),
+                $this->getFormItems(
+                    $mod_strings,
+                    $app_list_strings,
+                    $sugarConfigDefaults,
+                    $drivers,
+                    $checked,
+                    $db,
+                    $errors,
+                    $supportedLanguages,
+                    $current_language,
+                    $customSession,
+                    $customLog,
+                    $customId,
+                    $customSessionHidden,
+                    $customLogHidden,
+                    $customIdHidden
+                ),
                 $this->getFormControlls($mod_strings, $formId),
                 $this->getFormScripts($mod_strings, $next_step),
                 $next_step

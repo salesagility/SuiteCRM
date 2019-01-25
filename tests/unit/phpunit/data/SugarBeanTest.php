@@ -2364,7 +2364,8 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
         $this->assertSame(
                 [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION],
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+                $bean->emailAddress->lastSaveAtUserProfileErrors
+        );
         $isValidator = new SuiteValidator();
         self::assertTrue($isValidator->isValidId($bean->id));
 
@@ -2387,7 +2388,8 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
         $this->assertSame(
                 [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION],
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+                $bean->emailAddress->lastSaveAtUserProfileErrors
+        );
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($results));
 
@@ -2444,7 +2446,8 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
         $this->assertSame(
                 [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION],
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+                $bean->emailAddress->lastSaveAtUserProfileErrors
+        );
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($bean->id));
 
@@ -2483,7 +2486,8 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
         $this->assertSame(
                 [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION],
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+                $bean->emailAddress->lastSaveAtUserProfileErrors
+        );
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($bean->id));
 
@@ -2522,7 +2526,8 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
         $this->assertSame(
                 [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION],
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+                $bean->emailAddress->lastSaveAtUserProfileErrors
+        );
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($bean->id));
 
@@ -2562,7 +2567,8 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
         $this->assertSame(
                 [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION],
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+                $bean->emailAddress->lastSaveAtUserProfileErrors
+        );
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($bean->id));
 

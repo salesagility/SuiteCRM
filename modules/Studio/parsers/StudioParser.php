@@ -362,9 +362,11 @@ EOQ;
                     return  $matches[0];
                 };
                 //preg_replace_callback doesn't seem to work w/o anonymous method
-                $output = preg_replace_callback("/name\s*=\s*[\"']([^\"']*)[\"']/Us",
+                $output = preg_replace_callback(
+                    "/name\s*=\s*[\"']([^\"']*)[\"']/Us",
                 $function,
-                                                          $fileparts[1]);
+                                                          $fileparts[1]
+                );
 
 
 

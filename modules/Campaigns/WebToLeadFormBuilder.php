@@ -415,7 +415,8 @@ HTML;
 
     // --------------- generate form ------------------
 
-    public static function generate($request,
+    public static function generate(
+        $request,
                                     $lead,
                                     $moduleDir,
                                     $siteURL,

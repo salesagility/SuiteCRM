@@ -370,7 +370,8 @@ class ACLAction extends SugarBean
                     && $isOverride
                     )
                 ||
-                    (!empty($selected_actions[$acl->category][$acl->acltype][$acl->name]['isDefault'])
+                    (
+                        !empty($selected_actions[$acl->category][$acl->acltype][$acl->name]['isDefault'])
                     && $isOverride
                     )
                 ) {
@@ -440,7 +441,8 @@ class ACLAction extends SugarBean
             return true;
         }
         */
-        if ($access != 0 && ($access == ACL_ALLOW_ALL
+        if ($access != 0 && (
+            $access == ACL_ALLOW_ALL
             || ($is_owner && ($access == ACL_ALLOW_OWNER || $access == ACL_ALLOW_GROUP))  //if owner that's better than in group so count it...better way to clean this up?
             || ($in_group && $access == ACL_ALLOW_GROUP) //need to pass if in group with access somehow
         )) {

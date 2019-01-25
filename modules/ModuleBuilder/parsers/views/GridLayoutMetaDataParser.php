@@ -121,8 +121,10 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
 
         $this->_fielddefs = $this->implementation->getFielddefs();
         $this->_standardizeFieldLabels($this->_fielddefs);
-        $this->_viewdefs ['panels'] = $this->_convertFromCanonicalForm($this->_viewdefs ['panels'],
-            $this->_fielddefs); // put into our internal format
+        $this->_viewdefs ['panels'] = $this->_convertFromCanonicalForm(
+            $this->_viewdefs ['panels'],
+            $this->_fielddefs
+        ); // put into our internal format
         $this->_originalViewDef = $this->getFieldsFromLayout($this->implementation->getOriginalViewdefs());
     }
 
@@ -265,8 +267,10 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                     ); // layouts use 'label' not 'vname' for the label entry
                 }
 
-                $availableFields[$key]['translatedLabel'] = translate(isset($def ['label']) ? $def ['label'] : $def['vname'],
-                    $this->_moduleName);
+                $availableFields[$key]['translatedLabel'] = translate(
+                    isset($def ['label']) ? $def ['label'] : $def['vname'],
+                    $this->_moduleName
+                );
             }
         }
 
@@ -614,13 +618,17 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                     } //Use the previous viewdef if this field was on it.
                     else {
                         if (isset($previousViewDef[$fieldname])) {
-                            $newRow[$colID - $offset] = $this->getNewRowItem($previousViewDef[$fieldname],
-                                $fieldDefinitions[$fieldname]);
+                            $newRow[$colID - $offset] = $this->getNewRowItem(
+                                $previousViewDef[$fieldname],
+                                $fieldDefinitions[$fieldname]
+                            );
                         } //next see if the field was on the original layout.
                         else {
                             if (isset($this->_originalViewDef [$fieldname])) {
-                                $newRow[$colID - $offset] = $this->getNewRowItem($this->_originalViewDef[$fieldname],
-                                    $fieldDefinitions[$fieldname]);
+                                $newRow[$colID - $offset] = $this->getNewRowItem(
+                                    $this->_originalViewDef[$fieldname],
+                                    $fieldDefinitions[$fieldname]
+                                );
                             } //Otherwise make up a viewdef for it from field_defs
                             else {
                                 if (isset($fieldDefinitions [$fieldname])) {
@@ -807,7 +815,8 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
      */
     public static function _trimFieldDefs($fieldDefinitions)
     {
-        $ret = array_intersect_key($fieldDefinitions,
+        $ret = array_intersect_key(
+            $fieldDefinitions,
             array(
                 'studio' => true,
                 'name' => true,
@@ -818,7 +827,8 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                 'customLabel' => true,
                 'tabindex' => true,
                 'hideLabel' => true
-            ));
+            )
+        );
         if (!empty($fieldDefinitions['vname']) && empty($fieldDefinitions['label'])) {
             $ret['label'] = $fieldDefinitions['vname'];
         }

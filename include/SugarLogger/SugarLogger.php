@@ -228,7 +228,8 @@ class SugarLogger implements LoggerTemplate
         }
 
         //write out to the file including the time in the dateFormat the process id , the user id , and the log level as well as the message
-        fwrite($this->fp,
+        fwrite(
+            $this->fp,
             strftime($this->dateFormat) . ' [' . getmypid() . '][' . $userID . '][' . strtoupper($level) . '] ' . $message . "\n"
             );
     }

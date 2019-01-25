@@ -64,8 +64,10 @@ $seedProjectTask = new ProjectTask();
 $where = "project_task.assigned_user_id='{$current_user->id}'"
     . " AND (project_task.status IS NULL OR (project_task.status!='Completed' AND project_task.status!='Deferred'))"
     . " AND (project_task.date_start IS NULL OR project_task.date_start <= '$today')";
-$ListView->initNewXTemplate('modules/ProjectTask/MyProjectTasks.html',
-    $current_module_strings);
+$ListView->initNewXTemplate(
+    'modules/ProjectTask/MyProjectTasks.html',
+    $current_module_strings
+);
 $header_text = '';
 
 if (is_admin($current_user)

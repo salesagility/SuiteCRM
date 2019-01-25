@@ -313,8 +313,10 @@ class SqlsrvManager extends MssqlManager
      */
     public function compareVarDefs($fielddef1, $fielddef2, $ignoreName = false)
     {
-        if ((isset($fielddef2['dbType']) && $fielddef2['dbType'] == 'id') || preg_match('/(_id$|^id$)/',
-                $fielddef2['name'])
+        if ((isset($fielddef2['dbType']) && $fielddef2['dbType'] == 'id') || preg_match(
+            '/(_id$|^id$)/',
+                $fielddef2['name']
+        )
         ) {
             if (isset($fielddef1['type']) && isset($fielddef2['type'])) {
                 $fielddef2['type'] = $fielddef1['type'];
@@ -405,8 +407,10 @@ class SqlsrvManager extends MssqlManager
                 $columns[$column_name]['type'] = str_replace(' identity', '', strtolower($row['TYPE_NAME']));
             }
 
-            if (!empty($row['IS_NULLABLE']) && $row['IS_NULLABLE'] == 'NO' && (empty($row['KEY']) || !stristr($row['KEY'],
-                        'PRI'))
+            if (!empty($row['IS_NULLABLE']) && $row['IS_NULLABLE'] == 'NO' && (empty($row['KEY']) || !stristr(
+                $row['KEY'],
+                        'PRI'
+            ))
             ) {
                 $columns[strtolower($row['COLUMN_NAME'])]['required'] = 'true';
             }

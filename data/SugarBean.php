@@ -1655,7 +1655,8 @@ class SugarBean
                 foreach ($this->field_defs as $field => $properties) {
                     if (
                     (
-                        !empty($properties['Audited']) || !empty($properties['audited']))
+                        !empty($properties['Audited']) || !empty($properties['audited'])
+                    )
                     ) {
                         $this->audit_enabled_fields[$field] = $properties;
                     }
@@ -2402,7 +2403,8 @@ class SugarBean
                         '',
                         '',
                         '',
-                        $this->in_workflow);
+                        $this->in_workflow
+                    );
                 } else {
                     LoggerManager::getLogger()->fatal('SugarBean::$emailAddress should be an EmailAddress, ' . gettype($this->emailAddress) . ' given.');
                 }
@@ -2957,11 +2959,13 @@ class SugarBean
                     //Determine if the parent field has changed.
                     if (
                         //First check if the fetched row parent existed and now we no longer have one
-                        (!empty($this->fetched_row[$typeField]) && !empty($this->fetched_row[$idField])
+                        (
+                            !empty($this->fetched_row[$typeField]) && !empty($this->fetched_row[$idField])
                             && (empty($this->$typeField) || empty($this->$idField))
                         ) ||
                         //Next check if we have one now that doesn't match the fetch row
-                        (!empty($this->$typeField) && !empty($this->$idField) &&
+                        (
+                            !empty($this->$typeField) && !empty($this->$idField) &&
                             (empty($this->fetched_row[$typeField]) || empty($this->fetched_row[$idField])
                                 || $this->fetched_row[$idField] != $this->$idField)
                         ) ||
@@ -4874,7 +4878,10 @@ class SugarBean
 
         if (!empty($this->parent_type)) {
             $this->last_parent_id = $this->parent_id;
-            $this->getRelatedFields($this->parent_type, $this->parent_id, array(
+            $this->getRelatedFields(
+                $this->parent_type,
+                $this->parent_id,
+                array(
                 'name' => 'parent_name',
                 'document_name' => 'parent_document_name',
                 'first_name' => 'parent_first_name',

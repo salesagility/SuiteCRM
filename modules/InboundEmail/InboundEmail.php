@@ -338,7 +338,8 @@ class InboundEmail extends SugarBean
             $sessionFoldersString = $this->getSessionInboundFoldersString(
                 $this->server_url,
                 $this->email_user,
-                $this->port, $this->protocol
+                $this->port,
+                $this->protocol
             );
             $sessionFoldersString = str_replace($oldName, $newName, $sessionFoldersString);
             $this->setSessionInboundFoldersString(
@@ -3305,7 +3306,8 @@ class InboundEmail extends SugarBean
             $this->setSessionConnectionString(
                 $this->server_url,
                 $this->email_user,
-                $this->port, $this->protocol,
+                $this->port,
+                $this->protocol,
                 $goodStr
             );
             $i = 0;
@@ -5462,7 +5464,8 @@ class InboundEmail extends SugarBean
                 // return email
                 $result = $this->db->query(
                     'SELECT id from emails WHERE message_id ="' . $this->compoundMessageId . '"' .
-                    'AND mailbox_id = "' . $this->id . '"');
+                    'AND mailbox_id = "' . $this->id . '"'
+                );
                 $row = $this->db->fetchRow($result);
                 if (!empty($row['id'])) {
                     return $row['id'];
@@ -5865,13 +5868,15 @@ class InboundEmail extends SugarBean
     public function setAutoreplyStatus($addr)
     {
         $timedate = TimeDate::getInstance();
-        $this->db->query('INSERT INTO inbound_email_autoreply (id, deleted, date_entered, date_modified, autoreplied_to, ie_id) VALUES (
+        $this->db->query(
+            'INSERT INTO inbound_email_autoreply (id, deleted, date_entered, date_modified, autoreplied_to, ie_id) VALUES (
                             \'' . create_guid() . '\',
                             0,
                             \'' . $timedate->nowDb() . '\',
                             \'' . $timedate->nowDb() . '\',
                             \'' . $addr . '\',
-                            \'' . $this->id . '\') ', true
+                            \'' . $this->id . '\') ',
+            true
         );
     }
 
@@ -7936,8 +7941,10 @@ eoq;
                         foreach (array_slice($tmpMsgs, -$limit, $limit) as $k1 => $v1) {
                             $query[] = $v1['msgId'];
                         }
-                        $query = 'SELECT count(emails.message_id) as cnt, emails.message_id AS mid FROM emails WHERE emails.message_id IN ("' . implode('","',
-                                $query) . '") and emails.deleted = 0 group by emails.message_id';
+                        $query = 'SELECT count(emails.message_id) as cnt, emails.message_id AS mid FROM emails WHERE emails.message_id IN ("' . implode(
+                            '","',
+                                $query
+                        ) . '") and emails.deleted = 0 group by emails.message_id';
                         $r = $this->db->query($query);
                         $tmp = array();
                         while ($a = $this->db->fetchByAssoc($r)) {

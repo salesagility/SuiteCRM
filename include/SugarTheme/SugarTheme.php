@@ -1030,9 +1030,11 @@ EOHTML;
         }
 
         // fix any image references that may be defined in css files
-        $cssFileContents = str_ireplace("entryPoint=getImage&",
+        $cssFileContents = str_ireplace(
+            "entryPoint=getImage&",
             "entryPoint=getImage&themeName={$this->dirName}&",
-            $cssFileContents);
+            $cssFileContents
+        );
 
         // create the cached file location
         $cssFilePath = create_cache_directory($fullFileName);

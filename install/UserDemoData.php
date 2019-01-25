@@ -112,9 +112,17 @@ class UserDemoData
     /**
      *  Create a user in the seed data.
      */
-    public function _create_seed_user($id, $last_name, $first_name, $user_name,
-        $title, $is_admin, $reports_to, $reports_to_name, $email)
-    {
+    public function _create_seed_user(
+        $id,
+        $last_name,
+        $first_name,
+        $user_name,
+        $title,
+        $is_admin,
+        $reports_to,
+        $reports_to_name,
+        $email
+    ) {
         $u = new User();
 
         $u->id=$id;
@@ -177,8 +185,17 @@ class UserDemoData
     {
         global $sugar_demodata;
         if (!$this->_user->retrieve($name.'_id')) {
-            $this->_create_seed_user("{$name}_id", $name, $name, $name,
-                $sugar_demodata['users'][0]['title'], $sugar_demodata['users'][0]['is_admin'], "seed_jim_id", $sugar_demodata['users'][0]['last_name'].", ".$sugar_demodata['users'][0]['first_name'], $sugar_demodata['users'][0]['email']);
+            $this->_create_seed_user(
+                "{$name}_id",
+                $name,
+                $name,
+                $name,
+                $sugar_demodata['users'][0]['title'],
+                $sugar_demodata['users'][0]['is_admin'],
+                "seed_jim_id",
+                $sugar_demodata['users'][0]['last_name'].", ".$sugar_demodata['users'][0]['first_name'],
+                $sugar_demodata['users'][0]['email']
+            );
         }
     }
 }

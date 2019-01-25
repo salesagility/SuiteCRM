@@ -248,7 +248,11 @@ class User extends Person implements EmailInterface
      * @throws \RuntimeException
      */
     public function getSignatures(
-    $live = false, $defaultSig = '', $forSettings = false, $elementId = 'signature_id', $useRequestedRecord = false
+    $live = false,
+        $defaultSig = '',
+        $forSettings = false,
+        $elementId = 'signature_id',
+        $useRequestedRecord = false
     ) {
         $sig = $this->getSignaturesArray($useRequestedRecord);
         $sigs = array();
@@ -280,7 +284,11 @@ class User extends Person implements EmailInterface
      * @throws \RuntimeException
      */
     public function getEmailAccountSignatures(
-    $live = false, $defaultSig = '', $forSettings = false, $elementId = 'account_signature_id', $useRequestedRecord = false
+    $live = false,
+        $defaultSig = '',
+        $forSettings = false,
+        $elementId = 'account_signature_id',
+        $useRequestedRecord = false
     ) {
         $sig = $this->getSignaturesArray($useRequestedRecord);
         $sigs = array();
@@ -383,7 +391,10 @@ class User extends Person implements EmailInterface
      * @param string $category Name of the category to retrieve
      */
     public function setPreference(
-    $name, $value, $nosession = 0, $category = 'global'
+    $name,
+        $value,
+        $nosession = 0,
+        $category = 'global'
     ) {
         // for BC
         if (func_num_args() > 4) {
@@ -1799,7 +1810,13 @@ EOQ;
      * @param class
      */
     public function getEmailLink2(
-    $emailAddress, &$focus, $contact_id = '', $ret_module = '', $ret_action = 'DetailView', $ret_id = '', $class = ''
+    $emailAddress,
+        &$focus,
+        $contact_id = '',
+        $ret_module = '',
+        $ret_action = 'DetailView',
+        $ret_id = '',
+        $class = ''
     ) {
         $emailLink = '';
 
@@ -1856,7 +1873,13 @@ EOQ;
      * @param class
      */
     public function getEmailLink(
-    $attribute, &$focus, $contact_id = '', $ret_module = '', $ret_action = 'DetailView', $ret_id = '', $class = ''
+    $attribute,
+        &$focus,
+        $contact_id = '',
+        $ret_module = '',
+        $ret_action = 'DetailView',
+        $ret_id = '',
+        $class = ''
     ) {
         $emailUI = new EmailUI();
         $emailLink = $emailUI->populateComposeViewFields($focus);
@@ -2107,7 +2130,16 @@ EOQ;
     }
 
     public function create_new_list_query(
-    $order_by, $where, $filter = array(), $params = array(), $show_deleted = 0, $join_type = '', $return_array = false, $parentbean = null, $singleSelect = false, $ifListForExport = false
+    $order_by,
+        $where,
+        $filter = array(),
+        $params = array(),
+        $show_deleted = 0,
+        $join_type = '',
+        $return_array = false,
+        $parentbean = null,
+        $singleSelect = false,
+        $ifListForExport = false
     ) {    //call parent method, specifying for array to be returned
         $ret_array = parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type, true, $parentbean, $singleSelect, $ifListForExport);
 

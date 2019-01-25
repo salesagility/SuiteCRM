@@ -93,7 +93,11 @@ class EmailsControllerActionGetFromFields
         $defaultEmailSignature = $this->getDefaultSignatures();
         $prependSignature = $this->currentUser->getPreference('signature_prepend');
         $dataAddresses = $this->collector->collectDataAddressesFromIEAccounts(
-            $ieAccounts, $showFolders, $prependSignature, $emailSignatures, $defaultEmailSignature
+            $ieAccounts,
+            $showFolders,
+            $prependSignature,
+            $emailSignatures,
+            $defaultEmailSignature
         );
 
         $dataEncoded = json_encode(array('data' => $dataAddresses), JSON_UNESCAPED_UNICODE);

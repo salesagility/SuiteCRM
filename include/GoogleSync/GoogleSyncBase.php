@@ -762,18 +762,23 @@ class GoogleSyncBase
         if (!$start) {
             throw new GoogleSyncException(
                 'GoogleSyncBase is trying to get "start" as Google_Service_Calendar_EventDateTime but it is not set',
-                GoogleSyncException::NO_REMOVE_EVENT_START_IS_NOT_SET);
+                GoogleSyncException::NO_REMOVE_EVENT_START_IS_NOT_SET
+            );
         }
         if (!$start instanceof Google_Service_Calendar_EventDateTime) {
             throw new GoogleSyncException(
                 'GoogleSyncBase is trying to get "start" as Google_Service_Calendar_EventDateTime but it is incorrect, ' .
-                gettype($start) . ' given.', GoogleSyncException::NO_REMOVE_EVENT_START_IS_INCORRECT);
+                gettype($start) . ' given.',
+                GoogleSyncException::NO_REMOVE_EVENT_START_IS_INCORRECT
+            );
         }
         $starttime = strtotime($start->getDateTime());
         $endtime = strtotime($event_remote->getEnd()->getDateTime());
         if (!$starttime || !$endtime) { // Verify we have valid time objects (All day events will fail here.)
-            throw new GoogleSyncException('Unable to retrieve times from Google Event',
-               GoogleSyncException::GOOGLE_RECORD_PARSE_FAILURE);
+            throw new GoogleSyncException(
+                'Unable to retrieve times from Google Event',
+               GoogleSyncException::GOOGLE_RECORD_PARSE_FAILURE
+            );
         }
         $diff = abs($starttime - $endtime);
         $tmins = $diff / 60;
@@ -867,7 +872,8 @@ class GoogleSyncBase
         // Copy over popup reminders
         $event_local_id = $this->db->quoted($event_local->id);
         $reminders_local = BeanFactory::getBean('Reminders')->get_full_list(
-                "", "reminders.related_event_module = 'Meetings'" .
+                "",
+            "reminders.related_event_module = 'Meetings'" .
                 " AND reminders.related_event_module_id = $event_local_id" .
                 " AND popup = '1'"
         );

@@ -194,14 +194,17 @@ eoq;
 
             if (is_string($value) && isset($this->sugarbean->field_defs[$post])) {
                 if (($this->sugarbean->field_defs[$post]['type'] == 'bool'
-                    || (!empty($this->sugarbean->field_defs[$post]['custom_type']) && $this->sugarbean->field_defs[$post]['custom_type'] == 'bool'
+                    || (
+                        !empty($this->sugarbean->field_defs[$post]['custom_type']) && $this->sugarbean->field_defs[$post]['custom_type'] == 'bool'
                     ))
                 ) {
                     if (strcmp($value, '2') == 0) {
                         $_POST[$post] = 0;
                     }
-                    if (!empty($this->sugarbean->field_defs[$post]['dbType']) && strcmp($this->sugarbean->field_defs[$post]['dbType'],
-                            'varchar') == 0
+                    if (!empty($this->sugarbean->field_defs[$post]['dbType']) && strcmp(
+                        $this->sugarbean->field_defs[$post]['dbType'],
+                            'varchar'
+                    ) == 0
                     ) {
                         if (strcmp($value, '1') == 0) {
                             $_POST[$post] = 'on';
@@ -249,8 +252,18 @@ eoq;
 
             // TODO: define filter array here to optimize the query
             // by not joining the unneeded tables
-            $query = $this->sugarbean->create_new_list_query($order_by, $this->where_clauses, array(), array(), 0, '',
-                false, $this, true, true);
+            $query = $this->sugarbean->create_new_list_query(
+                $order_by,
+                $this->where_clauses,
+                array(),
+                array(),
+                0,
+                '',
+                false,
+                $this,
+                true,
+                true
+            );
             $result = $db->query($query, true);
             $new_arr = array();
             while ($val = $db->fetchByAssoc($result, false)) {
@@ -438,8 +451,11 @@ eoq;
         $configurator = new Configurator();
         $sugar_config = $configurator->config;
 
-        if ($this->sugarbean->bean_implements('ACL') && (!ACLController::checkAccess($this->sugarbean->module_dir,
-                    'edit', true) || !ACLController::checkAccess($this->sugarbean->module_dir, 'massupdate', true))
+        if ($this->sugarbean->bean_implements('ACL') && (!ACLController::checkAccess(
+            $this->sugarbean->module_dir,
+                    'edit',
+            true
+        ) || !ACLController::checkAccess($this->sugarbean->module_dir, 'massupdate', true))
         ) {
             return '';
         }
@@ -553,14 +569,20 @@ eoq;
                         case "multienum":
                             if (!empty($field['isMultiSelect'])) {
                                 $even = !$even;
-                                $newhtml .= $this->addStatusMulti($displayname, $field["name"],
-                                    translate($field["options"]));
+                                $newhtml .= $this->addStatusMulti(
+                                    $displayname,
+                                    $field["name"],
+                                    translate($field["options"])
+                                );
                                 break;
                             } else {
                                 if (!empty($field['options'])) {
                                     $even = !$even;
-                                    $newhtml .= $this->addStatus($displayname, $field["name"],
-                                        translate($field["options"]));
+                                    $newhtml .= $this->addStatus(
+                                        $displayname,
+                                        $field["name"],
+                                        translate($field["options"])
+                                    );
                                     break;
                                 } else {
                                     if (!empty($field['function'])) {
@@ -745,8 +767,12 @@ EOJS;
                     break;
                 default:
                     if (!empty($field['massupdate'])) {
-                        $ret_val = $this->addGenericModuleID($displayname, $field['name'], $field['id_name'],
-                            $field['module']);
+                        $ret_val = $this->addGenericModuleID(
+                            $displayname,
+                            $field['name'],
+                            $field['id_name'],
+                            $field['module']
+                        );
                     }
                     break;
             }

@@ -270,21 +270,37 @@ abstract class AbstractMetaDataImplementation
                 //If there are no defs for this view, grab them from the non-popup view
                 if ($view == MB_POPUPLIST) {
                     $this->_view = MB_LISTVIEW;
-                    $defs = $this->_loadFromFile($this->getFileName(MB_LISTVIEW, $this->_moduleName, null,
-                        MB_CUSTOMMETADATALOCATION));
+                    $defs = $this->_loadFromFile($this->getFileName(
+                        MB_LISTVIEW,
+                        $this->_moduleName,
+                        null,
+                        MB_CUSTOMMETADATALOCATION
+                    ));
                     if ($defs == null) {
-                        $defs = $this->_loadFromFile($this->getFileName(MB_LISTVIEW, $this->_moduleName, null,
-                            MB_BASEMETADATALOCATION));
+                        $defs = $this->_loadFromFile($this->getFileName(
+                            MB_LISTVIEW,
+                            $this->_moduleName,
+                            null,
+                            MB_BASEMETADATALOCATION
+                        ));
                     }
                     $this->_view = $view;
                 } else {
                     if ($view == MB_POPUPSEARCH) {
                         $this->_view = MB_ADVANCEDSEARCH;
-                        $defs = $this->_loadFromFile($this->getFileName(MB_ADVANCEDSEARCH, $this->_moduleName, null,
-                            MB_CUSTOMMETADATALOCATION));
+                        $defs = $this->_loadFromFile($this->getFileName(
+                            MB_ADVANCEDSEARCH,
+                            $this->_moduleName,
+                            null,
+                            MB_CUSTOMMETADATALOCATION
+                        ));
                         if ($defs == null) {
-                            $defs = $this->_loadFromFile($this->getFileName(MB_ADVANCEDSEARCH, $this->_moduleName, null,
-                                MB_BASEMETADATALOCATION));
+                            $defs = $this->_loadFromFile($this->getFileName(
+                                MB_ADVANCEDSEARCH,
+                                $this->_moduleName,
+                                null,
+                                MB_BASEMETADATALOCATION
+                            ));
                         }
 
                         if (isset($defs['layout']) && isset($defs['layout']['advanced_search'])) {

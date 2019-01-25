@@ -95,7 +95,10 @@ class actionComputeField extends actionBase
             }
 
             $calculator = new FormulaCalculator(
-                $resolvedParameters, $resolvedRelationParameters, $bean->module_name, $bean->created_by
+                $resolvedParameters,
+                $resolvedRelationParameters,
+                $bean->module_name,
+                $bean->created_by
             );
 
             $relateFields = $this->getAllRelatedFields($bean);

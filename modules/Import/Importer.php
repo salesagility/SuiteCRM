@@ -649,8 +649,14 @@ class Importer
             }
         }
         $mapping_file->setDefaultValues($defaultValues);
-        $result = $mapping_file->save($current_user->id, $_REQUEST['save_map_as'], $_REQUEST['import_module'], $_REQUEST['source'],
-            (isset($_REQUEST['has_header']) && $_REQUEST['has_header'] == 'on'), $_REQUEST['custom_delimiter'], html_entity_decode($_REQUEST['custom_enclosure'], ENT_QUOTES)
+        $result = $mapping_file->save(
+            $current_user->id,
+            $_REQUEST['save_map_as'],
+            $_REQUEST['import_module'],
+            $_REQUEST['source'],
+            (isset($_REQUEST['has_header']) && $_REQUEST['has_header'] == 'on'),
+            $_REQUEST['custom_delimiter'],
+            html_entity_decode($_REQUEST['custom_enclosure'], ENT_QUOTES)
         );
     }
 
@@ -771,7 +777,8 @@ class Importer
         return preg_replace_callback(
             '|[^A-Za-z0-9\-\_]|',
             $function,
-            $string);
+            $string
+        );
     }
 
     public function retrieveAdvancedMapping()

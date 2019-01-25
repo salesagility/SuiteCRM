@@ -152,7 +152,8 @@ class TrackerManager
 
         if (isset($this->metadata) && isset($this->metadata[$name])) {
             try {
-                $instance = $this->_getMonitor($this->metadata[$name]['name'], //name
+                $instance = $this->_getMonitor(
+                    $this->metadata[$name]['name'], //name
                                       self::$monitor_id, //monitor_id
                                    $this->metadata[$name]['metadata'],
                                    $this->metadata[$name]['store'] //store

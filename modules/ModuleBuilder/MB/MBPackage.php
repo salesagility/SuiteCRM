@@ -602,7 +602,8 @@ class MBPackage
         }
 
         $recursiveIterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($path . $generalPath), RecursiveIteratorIterator::SELF_FIRST
+            new RecursiveDirectoryIterator($path . $generalPath),
+            RecursiveIteratorIterator::SELF_FIRST
         );
 
         /* @var $fInfo SplFileInfo */
@@ -908,7 +909,8 @@ class MBPackage
         }
 
         $recursiveIterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($extPath), RecursiveIteratorIterator::SELF_FIRST
+            new RecursiveDirectoryIterator($extPath),
+            RecursiveIteratorIterator::SELF_FIRST
         );
 
         /* @var $fileInfo SplFileInfo */
@@ -1143,7 +1145,8 @@ class MBPackage
         }
 
         $recursiveIterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST
+            new RecursiveDirectoryIterator($path),
+            RecursiveIteratorIterator::SELF_FIRST
         );
 
         /**

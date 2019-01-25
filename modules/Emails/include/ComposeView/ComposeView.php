@@ -52,7 +52,8 @@ class ComposeView extends EditView
     /**
      * @inheritdoc
      */
-    public function setup($module,
+    public function setup(
+        $module,
         $focus = null,
         $metadataFile = null,
         $tpl = 'modules/Emails/include/ComposeView/ComposeView.tpl',

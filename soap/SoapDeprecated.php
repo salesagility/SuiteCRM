@@ -110,37 +110,43 @@ $server->register(
     'create_session',
     array('user_name' => 'xsd:string', 'password' => 'xsd:string'),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'end_session',
     array('user_name' => 'xsd:string'),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'contact_by_email',
     array('user_name' => 'xsd:string', 'password' => 'xsd:string', 'email_address' => 'xsd:string'),
     array('return' => 'tns:contact_detail_array'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'get_contact_relationships',
     array('user_name' => 'xsd:string', 'password' => 'xsd:string', 'id' => 'xsd:string'),
     array('return' => 'tns:contact_detail_array'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'user_list',
     array('user_name' => 'xsd:string', 'password' => 'xsd:string'),
     array('return' => 'tns:user_detail_array'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'search',
     array('user_name' => 'xsd:string', 'password' => 'xsd:string', 'name' => 'xsd:string'),
     array('return' => 'tns:contact_detail_array'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'track_email',
@@ -154,7 +160,8 @@ $server->register(
         'email_body' => 'xsd:string'
     ),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'create_contact',
@@ -166,7 +173,8 @@ $server->register(
         'email_address' => 'xsd:string'
     ),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 $server->register(
     'create_lead',
     array(
@@ -177,7 +185,8 @@ $server->register(
         'email_address' => 'xsd:string'
     ),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 $server->register(
     'create_account',
     array(
@@ -188,19 +197,22 @@ $server->register(
         'website' => 'xsd:string'
     ),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'create_opportunity',
     array('user_name' => 'xsd:string', 'password' => 'xsd:string', 'name' => 'xsd:string', 'amount' => 'xsd:string'),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'create_case',
     array('user_name' => 'xsd:string', 'password' => 'xsd:string', 'name' => 'xsd:string'),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 /**
  * Create a new session.  This method is required before calling any other functions.
  *

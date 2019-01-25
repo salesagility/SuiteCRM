@@ -270,8 +270,11 @@ class EditView
             if (!file_exists("modules/$this->module/metadata/$metadataFileName.php")) {
                 global $app_strings;
 
-                $error = str_replace('[file]', "modules/$this->module/metadata/$metadataFileName.php",
-                    $app_strings['ERR_CANNOT_CREATE_METADATA_FILE']);
+                $error = str_replace(
+                    '[file]',
+                    "modules/$this->module/metadata/$metadataFileName.php",
+                    $app_strings['ERR_CANNOT_CREATE_METADATA_FILE']
+                );
                 $GLOBALS['log']->fatal($error);
                 echo $error;
                 die();
@@ -527,7 +530,8 @@ class EditView
                 'PAGINATION',
                 SugarVCR::menu(
                     $this->module,
-                    $this->offset, $this->focus->is_AuditEnabled(),
+                    $this->offset,
+                    $this->focus->is_AuditEnabled(),
                     $this->view === 'EditView'
                 )
             );
@@ -583,8 +587,11 @@ class EditView
 
                 foreach (array("formula", "default", "comments", "help") as $toEscape) {
                     if (!empty($this->fieldDefs[$name][$toEscape])) {
-                        $this->fieldDefs[$name][$toEscape] = htmlentities($this->fieldDefs[$name][$toEscape],
-                            ENT_QUOTES, 'UTF-8');
+                        $this->fieldDefs[$name][$toEscape] = htmlentities(
+                            $this->fieldDefs[$name][$toEscape],
+                            ENT_QUOTES,
+                            'UTF-8'
+                        );
                     }
                 }
 
@@ -650,7 +657,8 @@ class EditView
                         $this->fieldDefs[$name]['options'] = call_user_func(
                             $function,
                             $this->focus,
-                            $name, $value,
+                            $name,
+                            $value,
                             $this->view
                         );
                     }
@@ -774,21 +782,31 @@ class EditView
         $this->th->ss->assign('returnId', $this->returnId);
         $this->th->ss->assign('isDuplicate', $this->isDuplicate);
         $this->th->ss->assign('def', $this->defs);
-        $this->th->ss->assign('useTabs',
-            isset($this->defs['templateMeta']['useTabs']) && isset($this->defs['templateMeta']['tabDefs']) ? $this->defs['templateMeta']['useTabs'] : false);
-        $this->th->ss->assign('maxColumns',
-            isset($this->defs['templateMeta']['maxColumns']) ? $this->defs['templateMeta']['maxColumns'] : 2);
+        $this->th->ss->assign(
+            'useTabs',
+            isset($this->defs['templateMeta']['useTabs']) && isset($this->defs['templateMeta']['tabDefs']) ? $this->defs['templateMeta']['useTabs'] : false
+        );
+        $this->th->ss->assign(
+            'maxColumns',
+            isset($this->defs['templateMeta']['maxColumns']) ? $this->defs['templateMeta']['maxColumns'] : 2
+        );
         $this->th->ss->assign('module', $this->module);
-        $this->th->ss->assign('headerTpl',
-            isset($this->defs['templateMeta']['form']['headerTpl']) ? $this->defs['templateMeta']['form']['headerTpl'] : 'include/' . $this->view . '/header.tpl');
-        $this->th->ss->assign('footerTpl',
-            isset($this->defs['templateMeta']['form']['footerTpl']) ? $this->defs['templateMeta']['form']['footerTpl'] : 'include/' . $this->view . '/footer.tpl');
+        $this->th->ss->assign(
+            'headerTpl',
+            isset($this->defs['templateMeta']['form']['headerTpl']) ? $this->defs['templateMeta']['form']['headerTpl'] : 'include/' . $this->view . '/header.tpl'
+        );
+        $this->th->ss->assign(
+            'footerTpl',
+            isset($this->defs['templateMeta']['form']['footerTpl']) ? $this->defs['templateMeta']['form']['footerTpl'] : 'include/' . $this->view . '/footer.tpl'
+        );
         $this->th->ss->assign('current_user', $current_user);
         $this->th->ss->assign('bean', $this->focus);
         $this->th->ss->assign('isAuditEnabled', $this->focus->is_AuditEnabled());
         $this->th->ss->assign('gridline', $current_user->getPreference('gridline') === 'on' ? '1' : '0');
-        $this->th->ss->assign('tabDefs',
-            isset($this->defs['templateMeta']['tabDefs']) ? $this->defs['templateMeta']['tabDefs'] : false);
+        $this->th->ss->assign(
+            'tabDefs',
+            isset($this->defs['templateMeta']['tabDefs']) ? $this->defs['templateMeta']['tabDefs'] : false
+        );
         $this->th->ss->assign('VERSION_MARK', getVersionedPath(''));
 
         global $js_custom_version;
@@ -822,8 +840,10 @@ class EditView
         }
 
         if (isset($this->defs['templateMeta']['form']['closeFormBeforeCustomButtons'])) {
-            $this->th->ss->assign('closeFormBeforeCustomButtons',
-                $this->defs['templateMeta']['form']['closeFormBeforeCustomButtons']);
+            $this->th->ss->assign(
+                'closeFormBeforeCustomButtons',
+                $this->defs['templateMeta']['form']['closeFormBeforeCustomButtons']
+            );
         }
 
         if (isset($this->defs['templateMeta']['form']['enctype'])) {
@@ -844,10 +864,14 @@ class EditView
         $this->th->ss->assign('form_name', $form_name);
         $this->th->ss->assign('set_focus_block', get_set_focus_js());
 
-        $this->th->ss->assign('form',
-            isset($this->defs['templateMeta']['form']) ? $this->defs['templateMeta']['form'] : null);
-        $this->th->ss->assign('includes',
-            isset($this->defs['templateMeta']['includes']) ? $this->defs['templateMeta']['includes'] : null);
+        $this->th->ss->assign(
+            'form',
+            isset($this->defs['templateMeta']['form']) ? $this->defs['templateMeta']['form'] : null
+        );
+        $this->th->ss->assign(
+            'includes',
+            isset($this->defs['templateMeta']['includes']) ? $this->defs['templateMeta']['includes'] : null
+        );
         $this->th->ss->assign('view', $this->view);
 
 
@@ -1072,8 +1096,11 @@ EOQ;
                 if (isset($request[$timeHourKey])
                     && isset($request[$timeMinuteKey])
                 ) {
-                    $d .= sprintf(' %s:%s', $request[$timeHourKey],
-                        $request[$timeMinuteKey]);
+                    $d .= sprintf(
+                        ' %s:%s',
+                        $request[$timeHourKey],
+                        $request[$timeMinuteKey]
+                    );
                 }
 
                 if (isset($request['meridiem'])) {

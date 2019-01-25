@@ -325,8 +325,14 @@ class ListViewDisplay
         global $app_strings;
         global $mod_strings;
 
-        $closeText = SugarThemeRegistry::current()->getImage('close_inline', 'border=0', null, null, ".gif",
-            $app_strings['LBL_CLOSEINLINE']);
+        $closeText = SugarThemeRegistry::current()->getImage(
+            'close_inline',
+            'border=0',
+            null,
+            null,
+            ".gif",
+            $app_strings['LBL_CLOSEINLINE']
+        );
         $moreDetailImage = SugarThemeRegistry::current()->getImageURL('MoreDetail.png');
         $menuItems = array();
 

@@ -186,8 +186,10 @@ class EmailsDataAddressCollector
     protected function validateInboundEmail($inboundEmail = null)
     {
         if (!$inboundEmail instanceof InboundEmail) {
-            throw new InvalidArgumentException('Inbound Email Account should be a valid Inbound Email. ' . gettype($inboundEmail) . ' given.',
-                self::ERR_INVALID_INBOUND_EMAIL_TYPE);
+            throw new InvalidArgumentException(
+                'Inbound Email Account should be a valid Inbound Email. ' . gettype($inboundEmail) . ' given.',
+                self::ERR_INVALID_INBOUND_EMAIL_TYPE
+            );
         }
     }
 

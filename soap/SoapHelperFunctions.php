@@ -207,8 +207,10 @@ function new_get_field_list($value, $translate = true)
                 $link_fields[$var['name']] = $entry;
             } else {
                 if ($translate) {
-                    $entry['label'] = isset($var['vname']) ? translate($var['vname'],
-                        $value->module_dir) : $var['name'];
+                    $entry['label'] = isset($var['vname']) ? translate(
+                        $var['vname'],
+                        $value->module_dir
+                    ) : $var['name'];
                 } else {
                     $entry['label'] = isset($var['vname']) ? $var['vname'] : $var['name'];
                 }
@@ -262,8 +264,12 @@ function new_get_field_list($value, $translate = true)
 function setFaultObject($errorObject)
 {
     global $soap_server_object;
-    $soap_server_object->fault($errorObject->getFaultCode(), $errorObject->getName(), '',
-        $errorObject->getDescription());
+    $soap_server_object->fault(
+        $errorObject->getFaultCode(),
+        $errorObject->getName(),
+        '',
+        $errorObject->getDescription()
+    );
 } // fn
 
 function checkSessionAndModuleAccess(
@@ -371,8 +377,10 @@ function check_modules_access($user, $module_name, $action = 'write')
             }
 
             return false;
-        } elseif ($action == 'write' && strcmp(strtolower($module_name),
-                'users') == 0 && !$user->isAdminForModule($module_name)
+        } elseif ($action == 'write' && strcmp(
+            strtolower($module_name),
+                'users'
+        ) == 0 && !$user->isAdminForModule($module_name)
         ) {
             //rrs bug: 46000 - If the client is trying to write to the Users module and is not an admin then we need to stop them
             return false;
@@ -1038,10 +1046,16 @@ function check_for_duplicate_contacts($seed)
         } else {
             foreach ($contacts as $contact) {
                 if (!empty($trimmed_last) && strcmp($trimmed_last, $contact->last_name) == 0) {
-                    if ((!empty($trimmed_email) || !empty($trimmed_email2)) && (strcmp($trimmed_email,
-                                $contact->email1) == 0 || strcmp($trimmed_email,
-                                $contact->email2) == 0 || strcmp($trimmed_email2,
-                                $contact->email) == 0 || strcmp($trimmed_email2, $contact->email2) == 0)
+                    if ((!empty($trimmed_email) || !empty($trimmed_email2)) && (strcmp(
+                        $trimmed_email,
+                                $contact->email1
+                    ) == 0 || strcmp(
+                                    $trimmed_email,
+                                $contact->email2
+                                ) == 0 || strcmp(
+                                    $trimmed_email2,
+                                $contact->email
+                                ) == 0 || strcmp($trimmed_email2, $contact->email2) == 0)
                     ) {
                         //bug: 39234 - check if the account names are the same
                         //if the incoming contact's account_name is empty OR it is not empty and is the same

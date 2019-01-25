@@ -174,7 +174,9 @@ EOQ;
 
 
             // standard functionality
-            $this->addAlert($app_strings['MSG_JS_ALERT_MTG_REMINDER_MEETING'], $meetingName,
+            $this->addAlert(
+                $app_strings['MSG_JS_ALERT_MTG_REMINDER_MEETING'],
+                $meetingName,
                 $app_strings['MSG_JS_ALERT_MTG_REMINDER_TIME'].$timedate->to_display_date_time($db->fromConvert($row['date_start'], 'datetime')),
                 $app_strings['MSG_JS_ALERT_MTG_REMINDER_LOC'].$location.
                 $description.

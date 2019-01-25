@@ -48,7 +48,8 @@ $server->register(
     'sync_get_modified_relationships',
     array('session'=>'xsd:string', 'module_name'=>'xsd:string','related_module'=>'xsd:string', 'from_date'=>'xsd:string', 'to_date'=>'xsd:string','offset'=>'xsd:int', 'max_results'=>'xsd:int','deleted'=>'xsd:int', 'module_id'=>'xsd:string', 'select_fields'=>'tns:select_fields', 'ids'=>'tns:select_fields', 'relationship_name'=>'xsd:string', 'deletion_date'=>'xsd:string', 'php_serialize'=>'xsd:int'),
     array('return'=>'tns:get_entry_list_result_encoded'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 
 
@@ -158,7 +159,8 @@ $server->register(
     'get_modified_entries',
     array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'ids'=>'tns:select_fields', 'select_fields'=>'tns:select_fields'),
     array('return'=>'tns:get_sync_result_encoded'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 function get_modified_entries($session, $module_name, $ids, $select_fields)
 {
@@ -263,7 +265,8 @@ $server->register(
     'get_attendee_list',
     array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'id'=>'xsd:string'),
     array('return'=>'tns:get_sync_result_encoded'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 function get_attendee_list($session, $module_name, $id)
 {

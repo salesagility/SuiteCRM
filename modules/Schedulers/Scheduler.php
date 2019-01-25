@@ -481,9 +481,13 @@ class Scheduler extends SugarBean
         /*_pp('hours:'); _pp($hrName);_pp('mins:'); _pp($minName);*/
         $dateobj = $timedate->getNow();
         $nowTs = $dateobj->ts;
-        $GLOBALS['log']->debug(sprintf("Constraints: start: %s from: %s end: %s to: %s now: %s",
-            gmdate('Y-m-d H:i:s', $timeStartTs), gmdate('Y-m-d H:i:s', $timeFromTs), gmdate('Y-m-d H:i:s', $timeEndTs),
-            gmdate('Y-m-d H:i:s', $timeToTs), $timedate->nowDb()
+        $GLOBALS['log']->debug(sprintf(
+            "Constraints: start: %s from: %s end: %s to: %s now: %s",
+            gmdate('Y-m-d H:i:s', $timeStartTs),
+            gmdate('Y-m-d H:i:s', $timeFromTs),
+            gmdate('Y-m-d H:i:s', $timeEndTs),
+            gmdate('Y-m-d H:i:s', $timeToTs),
+            $timedate->nowDb()
             ));
         //		_pp('currentHour: '. $currentHour);
         //		_pp('timeStartTs: '.date('r',$timeStartTs));
