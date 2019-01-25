@@ -83,7 +83,7 @@ class Note extends File
     var $importable = true;
 
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = Array(
+    var $additional_column_fields = array(
         'contact_name',
         'contact_phone',
         'contact_email',

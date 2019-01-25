@@ -303,8 +303,8 @@ function set_custom_field($session, $module_name, $type, $properties, $add_to_la
         }
 
         // add the field to the DetailView
-        $parser = ParserFactory::getParser('layoutview', FALSE);
-        $parser->init($module_name, 'DetailView', FALSE);
+        $parser = ParserFactory::getParser('layoutview', false);
+        $parser->init($module_name, 'DetailView', false);
 
         $parser->_addField($layout_properties);
         $parser->writeWorkingFile();
@@ -313,8 +313,8 @@ function set_custom_field($session, $module_name, $type, $properties, $add_to_la
         unset($parser);
 
         // add the field to the EditView
-        $parser = ParserFactory::getParser('layoutview', FALSE);
-        $parser->init($module_name, 'EditView', FALSE);
+        $parser = ParserFactory::getParser('layoutview', false);
+        $parser->init($module_name, 'EditView', false);
 
         $parser->_addField($layout_properties);
         $parser->writeWorkingFile();

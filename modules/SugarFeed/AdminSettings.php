@@ -94,11 +94,11 @@ if ( !empty($_REQUEST['process']) ) {
             $modulesWithFeeds = SugarFeed::getAllFeedModules();
             
             foreach ( $modulesWithFeeds as $currFeedModule ) {
-                SugarFeed::disableModuleFeed($currFeedModule,FALSE);
+                SugarFeed::disableModuleFeed($currFeedModule,false);
             }
         }
 
-        $admin->retrieveSettings(FALSE,TRUE);
+        $admin->retrieveSettings(false,true);
         SugarFeed::flushBackendCache();
     } else {
         if ( $_REQUEST['process'] == 'deleteRecords' ) {

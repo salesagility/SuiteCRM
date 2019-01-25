@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelTopFilterButton extends SugarWidgetSubPanelTopButton
 {
-    function display($defines, $additionalFormFields = NULL, $nonbutton = false)
+    function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
         global $app_strings;
 

@@ -55,7 +55,7 @@ class MailMerge
     var $list;
     var $fieldList;
 
-    function __construct($list = NULL, $fieldList = null, $data_dir = 'data')
+    function __construct($list = null, $fieldList = null, $data_dir = 'data')
     {
         // this is the path to your data dir.
         $this->mm_data_dir = $data_dir;
@@ -66,7 +66,7 @@ class MailMerge
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MailMerge($list = NULL, $fieldList = null, $data_dir = 'data')
+    function MailMerge($list = null, $fieldList = null, $data_dir = 'data')
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -93,7 +93,7 @@ class MailMerge
         }
     }
 
-    function Template($template = NULL)
+    function Template($template = null)
     {
         if (is_array($template)) {
             $this->template = $template;
@@ -173,14 +173,14 @@ class MailMerge
         $this->obj->Quit();
     }
 
-    function SetDataList($list = NULL)
+    function SetDataList($list = null)
     {
         if (is_array($list)) {
             $this->list = $list;
         }
     }
 
-    function SetFieldList($list = NULL)
+    function SetFieldList($list = null)
     {
         if (is_array($list)) {
             $this->fieldList = $list;

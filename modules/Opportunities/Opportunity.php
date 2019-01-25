@@ -87,10 +87,10 @@ class Opportunity extends SugarBean
     var $object_name = "Opportunity";
 
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'account_name', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id'
+    var $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'account_name', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id'
     );
 
-    var $relationship_fields = Array('task_id'=>'tasks', 'note_id'=>'notes', 'account_id'=>'accounts',
+    var $relationship_fields = array('task_id'=>'tasks', 'note_id'=>'notes', 'account_id'=>'accounts',
                                     'meeting_id'=>'meetings', 'call_id'=>'calls', 'email_id'=>'emails', 'project_id'=>'project',
                                     // Bug 38529 & 40938
                                     'currency_id' => 'currencies',
@@ -340,7 +340,7 @@ class Opportunity extends SugarBean
     */
     function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
         array_push($where_clauses, "opportunities.name like '$the_query_string%'");
         array_push($where_clauses, "accounts.name like '$the_query_string%'");
@@ -357,7 +357,7 @@ class Opportunity extends SugarBean
         return $the_where;
     }
 
-    function save($check_notify = FALSE)
+    function save($check_notify = false)
     {
         // Bug 32581 - Make sure the currency_id is set to something
         global $current_user, $app_list_strings;

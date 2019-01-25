@@ -115,9 +115,9 @@ class Bug extends SugarBean
     var $object_name = "Bug";
 
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'case_id', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id');
+    var $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'case_id', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id');
 
-    var $relationship_fields = Array('case_id'=>'cases', 'account_id' => 'accounts', 'contact_id'=>'contacts',
+    var $relationship_fields = array('case_id'=>'cases', 'account_id' => 'accounts', 'contact_id'=>'contacts',
                                     'task_id'=>'tasks', 'note_id'=>'notes', 'meeting_id'=>'meetings',
                                     'call_id'=>'calls', 'email_id'=>'emails');
 
@@ -352,7 +352,7 @@ class Bug extends SugarBean
     */
     function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = $this->db->quote($the_query_string);
         array_push($where_clauses, "bugs.name like '$the_query_string%'");
         if (is_numeric($the_query_string)) {
@@ -396,7 +396,7 @@ class Bug extends SugarBean
         return false;
     }
 
-    function save($check_notify = FALSE)
+    function save($check_notify = false)
     {
         return parent::save($check_notify);
     }
@@ -407,7 +407,7 @@ function getReleaseDropDown()
     static $releases = null;
     if (!$releases) {
         $seedRelease = new Release();
-        $releases = $seedRelease->get_releases(TRUE, "Active");
+        $releases = $seedRelease->get_releases(true, "Active");
     }
     return $releases;
 }

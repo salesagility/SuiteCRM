@@ -111,7 +111,7 @@ class updatePortal
             $emailObj->description = $mail->AltBody;
             $emailObj->description_html = $mail->Body;
             $emailObj->from_addr_name = $mail->From;
-            if ($relatedBean instanceOf SugarBean && !empty($relatedBean->id)) {
+            if ($relatedBean instanceof SugarBean && !empty($relatedBean->id)) {
                 $emailObj->parent_type = $relatedBean->module_dir;
                 $emailObj->parent_id = $relatedBean->id;
             }

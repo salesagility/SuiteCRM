@@ -429,7 +429,7 @@ FROM prospect_lists_prospects plp
         return $the_where;
     }
 
-    function save($check_notify = FALSE)
+    function save($check_notify = false)
     {
         return parent::save($check_notify);
     }

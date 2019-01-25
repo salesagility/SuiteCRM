@@ -87,15 +87,15 @@ class Document extends File
     var $object_name = "Document";
     var $user_preferences;
 
-    var $encodeFields = Array();
+    var $encodeFields = array();
 
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = Array('revision');
+    var $additional_column_fields = array('revision');
 
     var $new_schema = true;
     var $module_dir = 'Documents';
 
-    var $relationship_fields = Array(
+    var $relationship_fields = array(
         'contract_id' => 'contracts',
     );
 

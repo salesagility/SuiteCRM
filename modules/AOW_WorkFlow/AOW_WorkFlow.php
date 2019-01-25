@@ -334,7 +334,7 @@ class AOW_WorkFlow extends Basic
                         } else {
                             $query['where'][] = $module->table_name . '.' . 'date_entered' . ' > ' . "'" . $this->date_entered . "'";
                         }
-                        Break;
+                        break;
 
                     case'Modified_Records':
                         if ($module->table_name === 'campaign_log') {
@@ -342,7 +342,7 @@ class AOW_WorkFlow extends Basic
                         } else {
                             $query['where'][] = $module->table_name . '.' . 'date_modified' . ' > ' . "'" . $this->date_entered . "'" . ' AND ' . $module->table_name . '.' . 'date_entered' . ' <> ' . $module->table_name . '.' . 'date_modified';
                         }
-                        Break;
+                        break;
 
                 }
             }
@@ -573,7 +573,7 @@ class AOW_WorkFlow extends Basic
             }
 
             //handle like conditions
-            Switch ($condition->operator) {
+            switch ($condition->operator) {
                 case 'Contains':
                     $value = "CONCAT('%', ".$value." ,'%')";
                     break;
@@ -629,14 +629,14 @@ class AOW_WorkFlow extends Basic
                     if (!empty($bean->fetched_row) || $beanDateEntered < $dateEntered) {
                         return false;
                     }
-                    Break;
+                    break;
 
                 case'Modified_Records':
                     if (empty($bean->fetched_row) ||
                         ($beanDateModified < $dateEntered && $beanDateModified !== $beanDateEntered)) {
                         return false;
                     }
-                    Break;
+                    break;
             }
         }
 

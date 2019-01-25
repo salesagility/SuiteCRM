@@ -109,7 +109,7 @@ class Prospect extends Person implements EmailInterface
 
     var $importable = true;
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = Array('assigned_user_name');
+    var $additional_column_fields = array('assigned_user_name');
 
 
     function __construct()

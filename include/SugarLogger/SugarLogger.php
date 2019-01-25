@@ -293,7 +293,7 @@ class SugarLogger implements LoggerTemplate
     {
         if ($this->fp) {
             fclose($this->fp);
-            $this->fp = FALSE;
+            $this->fp = false;
         }
     }
 }

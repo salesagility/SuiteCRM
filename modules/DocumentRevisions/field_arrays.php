@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['DocumentRevision'] = array ('column_fields' => Array("id"
+$fields_array['DocumentRevision'] = array ('column_fields' => array("id"
         ,"change_log"
         ,"document_id"
         ,"date_entered"
@@ -60,7 +60,7 @@ $fields_array['DocumentRevision'] = array ('column_fields' => Array("id"
         ,"date_modified"
         ,"deleted"				
         ),
-        'list_fields' =>  Array("id"
+        'list_fields' =>  array("id"
         ,"change_log"
         ,"document_id"
         ,"date_entered"
@@ -73,5 +73,5 @@ $fields_array['DocumentRevision'] = array ('column_fields' => Array("id"
         ,"deleted"		
         ,"latest_revision_id"		
         ),
-        'required_fields' => Array("revision"=>1),
+        'required_fields' => array("revision"=>1),
 );

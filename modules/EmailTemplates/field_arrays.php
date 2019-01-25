@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['EmailTemplate'] = array ('column_fields' => Array("id"
+$fields_array['EmailTemplate'] = array ('column_fields' => array("id"
         , "date_entered"
         , "date_modified"
         , "modified_user_id"
@@ -60,7 +60,7 @@ $fields_array['EmailTemplate'] = array ('column_fields' => Array("id"
         , "name"
         , "published"
         ),
-        'list_fields' =>  Array('id', 'name', 'description','date_modified'
+        'list_fields' =>  array('id', 'name', 'description','date_modified'
     ),
     'required_fields' => array("name"=>1),
 );

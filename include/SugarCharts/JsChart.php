@@ -680,7 +680,7 @@ class JsChart extends SugarChart
         }
 
         // write the contents to the file
-        if (fwrite($fh,$jsonContents) === FALSE) {
+        if (fwrite($fh,$jsonContents) === false) {
             $GLOBALS['log']->debug("Cannot write to file ($this->jsonFilename)");
             return false;
         }

@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['EmailMan'] = array ('column_fields' => Array(
+$fields_array['EmailMan'] = array ('column_fields' => array(
         "id"
         , "date_entered"
         , "date_modified"
@@ -67,7 +67,7 @@ $fields_array['EmailMan'] = array ('column_fields' => Array(
         , 'in_queue_date'
         ,'send_attempts'
         ),
-        'list_fields' =>  Array(
+        'list_fields' =>  array(
         "id"
         , 'user_id'
         , 'module'

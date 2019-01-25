@@ -435,7 +435,7 @@ class SuiteBeanResource extends Resource
     {
         $sugarBeanResource = clone $this;
         $objValues = get_object_vars($resource); // return array of object values
-        foreach ($objValues AS $key => $value) {
+        foreach ($objValues as $key => $value) {
             $sugarBeanResource->$key = $value;
         }
 

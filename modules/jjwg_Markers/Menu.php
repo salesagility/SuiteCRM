@@ -45,12 +45,12 @@
     global $mod_strings, $app_strings, $sugar_config;
 
     if (ACLController::checkAccess('jjwg_Markers', 'edit', true)) {
-        $module_menu[]=Array("index.php?module=jjwg_Markers&action=EditView", $mod_strings['LNK_NEW_RECORD'],"Create", 'jjwg_Markers');
+        $module_menu[]=array("index.php?module=jjwg_Markers&action=EditView", $mod_strings['LNK_NEW_RECORD'],"Create", 'jjwg_Markers');
     }
     if (ACLController::checkAccess('jjwg_Markers', 'list', true)) {
-        $module_menu[]=Array("index.php?module=jjwg_Markers&action=index", $mod_strings['LNK_LIST'],"List", 'jjwg_Markers');
+        $module_menu[]=array("index.php?module=jjwg_Markers&action=index", $mod_strings['LNK_LIST'],"List", 'jjwg_Markers');
     }
     if (ACLController::checkAccess('jjwg_Markers', 'import', true)) {
-        $module_menu[]=Array("index.php?module=jjwg_Markers&action=index", $mod_strings['LNK_IMPORT_JJWG_MARKERS'],"Import", 'jjwg_Markers');
+        $module_menu[]=array("index.php?module=jjwg_Markers&action=index", $mod_strings['LNK_IMPORT_JJWG_MARKERS'],"Import", 'jjwg_Markers');
     }
 

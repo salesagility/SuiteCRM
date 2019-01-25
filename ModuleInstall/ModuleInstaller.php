@@ -1166,7 +1166,7 @@ class ModuleInstaller
             $strings = $mod_strings;
         }
 
-        foreach ($uninstalLabes AS $label) {
+        foreach ($uninstalLabes as $label) {
             if (isset($strings[$label])) {
                 unset($strings[$label]);
             }
@@ -1207,7 +1207,7 @@ class ModuleInstaller
                 continue;
             }
 
-            foreach (array_keys($GLOBALS['sugar_config']['languages']) AS $language) {
+            foreach (array_keys($GLOBALS['sugar_config']['languages']) as $language) {
                 $pathDef = array(
                     'language' => $language,
                     'to_module' => $definition['module']
@@ -1229,7 +1229,7 @@ class ModuleInstaller
     protected function getLabelsToUninstall($labelDefinitions)
     {
         $labels = array();
-        foreach ($labelDefinitions AS $definition) {
+        foreach ($labelDefinitions as $definition) {
             $labels[] = $definition['system_label'];
         }
         return $labels;

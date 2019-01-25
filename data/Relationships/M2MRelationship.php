@@ -91,7 +91,7 @@ class M2MRelationship extends SugarRelationship
                 $GLOBALS['log']->error("Warning: Multiple links found for relationship {$this->name} within module {$module}");
                 return $this->getMostAppropriateLinkedDefinition($results);
             } else {
-                return FALSE;
+                return false;
             }
         }
     }
@@ -371,9 +371,9 @@ class M2MRelationship extends SugarRelationship
         $db = DBManagerFactory::getInstance();
         $query = $this->getQuery($link, $params);
         $result = $db->query($query);
-        $rows = Array();
+        $rows = array();
         $idField = $link->getSide() == REL_LHS ? $this->def['join_key_rhs'] : $this->def['join_key_lhs'];
-        while ($row = $db->fetchByAssoc($result, FALSE)) {
+        while ($row = $db->fetchByAssoc($result, false)) {
             if (empty($row['id']) && empty($row[$idField])) {
                 continue;
             }

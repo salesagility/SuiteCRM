@@ -179,8 +179,8 @@ class GoogleSyncHelper
      */
     public function createSuitecrmReminders(array $overrides, Meeting $meeting)
     {
-        $reminders = Array();
-        $invitees = Array();
+        $reminders = array();
+        $invitees = array();
 
         foreach ($overrides as $override) {
             if ($override->getMethod() == 'popup') {
@@ -208,7 +208,7 @@ class GoogleSyncHelper
                 $invitees[] = $reminderInvitee;
             }
         }
-        $ret = Array($reminders, $invitees);
+        $ret = array($reminders, $invitees);
         return $ret;
     }
 }

@@ -67,7 +67,7 @@ class SugarMerge
     private $custom_path = 'custom';
     private $original_path = '';
     private $merged = array();
-    private $fp = NULL;
+    private $fp = null;
 
     function __construct($new_path='', $original_path='', $custom_path='custom')
     {
@@ -144,7 +144,7 @@ class SugarMerge
 
                         if ( is_array($merge) ) {
                             if ( in_array($e,$merge) ) {
-                                $this->merged[$e] = $this->mergeModule($e, TRUE, $save,$logHistory );
+                                $this->merged[$e] = $this->mergeModule($e, true, $save,$logHistory );
                             } else {
                                 $GLOBALS['log']->debug("SugarMerge is skipping $e module as filter array passed in but module not specified for merge.");
                                 continue;

@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Account'] = array ('column_fields' => Array(
+$fields_array['Account'] = array ('column_fields' => array(
         "annual_revenue"
         ,"billing_address_street"
         ,"billing_address_city"
@@ -83,7 +83,7 @@ $fields_array['Account'] = array ('column_fields' => Array(
         ,"website"
         , "created_by"
         ),
-        'list_fields' => Array('id', 'name', 'website', 'phone_office', 'assigned_user_name', 'assigned_user_id'
+        'list_fields' => array('id', 'name', 'website', 'phone_office', 'assigned_user_name', 'assigned_user_id'
     , 'billing_address_street'
     , 'billing_address_city'
     , 'billing_address_state'

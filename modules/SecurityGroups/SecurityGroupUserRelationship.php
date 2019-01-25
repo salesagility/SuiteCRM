@@ -23,7 +23,7 @@ class SecurityGroupUserRelationship extends SugarBean
 
     var $table_name = "securitygroups_users";
     var $object_name = "SecurityGroupUserRelationship";
-    var $column_fields = Array("id"
+    var $column_fields = array("id"
         ,"securitygroup_id"
         ,"user_id"
         ,"noninheritable"
@@ -33,7 +33,7 @@ class SecurityGroupUserRelationship extends SugarBean
 
     var $new_schema = true;
 
-    var $additional_column_fields = Array();
+    var $additional_column_fields = array();
     var $field_defs = array (
        'id'=>array('name' =>'id', 'type' =>'char', 'len'=>'36', 'default'=>'')
       , 'securitygroup_id'=>array('name' =>'securitygroup_id', 'type' =>'char', 'len'=>'36', )

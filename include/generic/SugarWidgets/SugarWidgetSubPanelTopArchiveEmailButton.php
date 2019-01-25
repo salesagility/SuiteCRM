@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelTopArchiveEmailButton extends SugarWidgetSubPanelTopButton
 {
-    function display($defines, $additionalFormFields = NULL, $nonbutton = false)
+    function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
         if ((ACLController::moduleSupportsACL($defines['module'])  && !ACLController::checkAccess($defines['module'], 'edit', true) ||
             $defines['module'] == "History" & !ACLController::checkAccess("Emails", 'edit', true))) {

@@ -304,7 +304,7 @@ function add_contacts_matching_email_address(&$output_list, $email_address, &$se
             continue;
         }
 
-        $output_list[] = Array(
+        $output_list[] = array(
             "name1" => $contact->first_name,
             "name2" => $contact->last_name,
             "association" => $contact->account_name,
@@ -366,7 +366,7 @@ function add_leads_matching_email_address(&$output_list, $email_address, &$seed_
             continue;
         }
 
-        $output_list[] = Array(
+        $output_list[] = array(
             "name1" => $lead->first_name,
             "name2" => $lead->last_name,
             "association" => $lead->account_name,
@@ -405,7 +405,7 @@ function get_contact_relationships($user_name, $password, $id)
     $msi_id = 1;
     $seed_contact->retrieve($id);
 
-    $output_list[] = Array(
+    $output_list[] = array(
         "name1" => $seed_contact->first_name,
         "name2" => $seed_contact->last_name,
         "association" => $seed_contact->account_name,
@@ -465,11 +465,11 @@ function contact_by_email($user_name, $password, $email_address)
 
     $seed_contact = new Contact();
     $seed_lead = new Lead();
-    $output_list = Array();
+    $output_list = array();
     $email_address_list = explode("; ", $email_address);
 
     // remove duplicate email addresses
-    $non_duplicate_email_address_list = Array();
+    $non_duplicate_email_address_list = array();
     foreach ($email_address_list as $single_address) {
         // Check to see if the current address is a match of an existing address
         $found_match = false;
@@ -516,7 +516,7 @@ function get_contact_array($contact, $msi_id = '0')
 {
     $contact->emailAddress->handleLegacyRetrieve($contact);
 
-    return Array(
+    return array(
         "name1" => $contact->first_name,
         "name2" => $contact->last_name,
         "association" => $contact->account_name,
@@ -535,7 +535,7 @@ function get_contact_array($contact, $msi_id = '0')
  */
 function get_user_list_array($user)
 {
-    return Array(
+    return array(
         'email_address' => $user->email1,
         'user_name' => $user->user_name,
         'first_name' => $user->first_name,
@@ -562,7 +562,7 @@ function user_list($user, $password)
     }
 
     $seed_user = new User();
-    $output_list = Array();
+    $output_list = array();
     if (!$seed_user->ACLAccess('ListView')) {
         return $output_list;
     }
@@ -597,7 +597,7 @@ function contact_by_search($name, $where = '', $msi_id = '0')
     $response = $seed_contact->get_list("last_name, first_name", $where, 0);
     $contactList = $response['list'];
 
-    $output_list = Array();
+    $output_list = array();
 
     // create a return array of names and email addresses.
     foreach ($contactList as $contact) {
@@ -618,7 +618,7 @@ function get_lead_array($lead, $msi_id = '0')
 {
     $lead->emailAddress->handleLegacyRetrieve($lead);
 
-    return Array(
+    return array(
         "name1" => $lead->first_name,
         "name2" => $lead->last_name,
         "association" => $lead->account_name,
@@ -641,7 +641,7 @@ function lead_by_search($name, $where = '', $msi_id = '0')
     $response = $seed_lead->get_list("last_name, first_name", $where, 0);
     $lead_list = $response['list'];
 
-    $output_list = Array();
+    $output_list = array();
 
     // create a return array of names and email addresses.
     foreach ($lead_list as $lead) {
@@ -660,7 +660,7 @@ function lead_by_search($name, $where = '', $msi_id = '0')
  */
 function get_account_array($account, $msi_id)
 {
-    return Array(
+    return array(
         "name1" => '',
         "name2" => $account->name,
         "association" => $account->billing_address_city,
@@ -683,7 +683,7 @@ function account_by_search($name, $where = '', $msi_id = '0')
     $response = $seed_account->get_list("name", $where, 0);
     $accountList = $response['list'];
 
-    $output_list = Array();
+    $output_list = array();
 
     // create a return array of names and email addresses.
     foreach ($accountList as $account) {
@@ -702,7 +702,7 @@ function account_by_search($name, $where = '', $msi_id = '0')
  */
 function get_opportunity_array($value, $msi_id = '0')
 {
-    return Array(
+    return array(
         "name1" => '',
         "name2" => $value->name,
         "association" => $value->account_name,
@@ -725,7 +725,7 @@ function opportunity_by_search($name, $where = '', $msi_id = '0')
     $response = $seed->get_list("name", $where, 0);
     $list = $response['list'];
 
-    $output_list = Array();
+    $output_list = array();
 
     // create a return array of names and email addresses.
     foreach ($list as $value) {
@@ -744,7 +744,7 @@ function opportunity_by_search($name, $where = '', $msi_id = '0')
  */
 function get_bean_array($value, $msi_id, $type)
 {
-    return Array(
+    return array(
         "name1" => '',
         "name2" => $value->get_summary_text(),
         "association" => '',
@@ -764,7 +764,7 @@ function get_bean_array($value, $msi_id, $type)
  */
 function get_case_array($value, $msi_id)
 {
-    return Array(
+    return array(
         "name1" => '',
         "name2" => $value->get_summary_text(),
         "association" => $value->account_name,
@@ -787,7 +787,7 @@ function bug_by_search($name, $where = '', $msi_id = '0')
     $response = $seed->get_list("name", $where, 0);
     $list = $response['list'];
 
-    $output_list = Array();
+    $output_list = array();
 
     // create a return array of names and email addresses.
     foreach ($list as $value) {
@@ -809,7 +809,7 @@ function case_by_search($name, $where = '', $msi_id = '0')
     $response = $seed->get_list("name", $where, 0);
     $list = $response['list'];
 
-    $output_list = Array();
+    $output_list = array();
 
     // create a return array of names and email addresses.
     foreach ($list as $value) {

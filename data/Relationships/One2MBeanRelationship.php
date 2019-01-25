@@ -163,7 +163,7 @@ class One2MBeanRelationship extends One2MRelationship
         }
 
         if ($save && !$rhs->deleted) {
-            $rhs->in_relationship_update = TRUE;
+            $rhs->in_relationship_update = true;
             $rhs->save();
         }
 
@@ -206,7 +206,7 @@ class One2MBeanRelationship extends One2MRelationship
                 return array("rows" => array());
             }
             $result = $db->query($query);
-            while ($row = $db->fetchByAssoc($result, FALSE)) {
+            while ($row = $db->fetchByAssoc($result, false)) {
                 $id = $row['id'];
                 $rows[$id] = $row;
             }

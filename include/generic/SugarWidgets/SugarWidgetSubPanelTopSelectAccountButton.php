@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelTopSelectAccountButton extends SugarWidgetSubPanelTopSelectButton
 {
-    function display($widget_data, $additionalFormFields = NULL, $nonbutton = false)
+    function display($widget_data, $additionalFormFields = null, $nonbutton = false)
     {
         /*
         * i.dymovsky

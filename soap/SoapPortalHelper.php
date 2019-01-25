@@ -468,7 +468,7 @@ function portal_get_entry_list_limited($session, $module_name,$where, $order_by,
         }
     }
 
-    $output_list = Array();
+    $output_list = array();
     $field_list = array();
     foreach ($list as $value) {
 
