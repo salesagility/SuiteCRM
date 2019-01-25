@@ -95,7 +95,7 @@ class SugarWidgetSubPanelTopButtonQuickCreate extends SugarWidgetSubPanelTopButt
             //Set the return_name form variable that will allow EditView2.php 
             $additionalFormFields['return_name'] = $defines['focus']->name;
         }
-		
+        
         if (!empty($defines['view'])) {
             $button .= '<input type="hidden" name="target_view" value="'. $defines['view'] . '" />';
         }
@@ -189,7 +189,7 @@ class SugarWidgetSubPanelTopButtonQuickCreate extends SugarWidgetSubPanelTopButt
                 $relationship_name = $dataSource;
                 //Try to set the relationship name to the real relationship, not the link.
                 if (!empty($defines['subpanel_definition']->parent_bean->field_defs[$dataSource])
-				 && !empty($defines['subpanel_definition']->parent_bean->field_defs[$dataSource]['relationship'])) {
+                 && !empty($defines['subpanel_definition']->parent_bean->field_defs[$dataSource]['relationship'])) {
                     $relationship_name = $defines['subpanel_definition']->parent_bean->field_defs[$dataSource]['relationship'];
                 }
             }

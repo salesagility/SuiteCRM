@@ -49,7 +49,7 @@ function additionalDetailsUser($fields)
         global $current_language;
         $mod_strings = return_module_language($current_language, 'Users');
     }
-		
+        
     $overlib_string = '';
     if (!empty($fields['ID'])) {
         $overlib_string .= '<input type="hidden" value="'. $fields['ID'];
@@ -91,7 +91,7 @@ function additionalDetailsUser($fields)
     $viewLink = "index.php?action=DetailView&module=Users&record={$fields['ID']}";
 
     return array('fieldToAddTo' => 'NAME',
-				 'string' => $overlib_string,
-				 'editLink' => $editLink,
-				 'viewLink' => $viewLink);
+                 'string' => $overlib_string,
+                 'editLink' => $editLink,
+                 'viewLink' => $viewLink);
 }

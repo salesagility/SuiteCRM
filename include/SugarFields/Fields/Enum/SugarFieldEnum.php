@@ -57,7 +57,7 @@ class SugarFieldEnum extends SugarFieldBase
         if (empty($displayParams['size'])) {
             $displayParams['size'] = 6;
         }
-    	
+        
         if (isset($vardef['function']) && !empty($vardef['function']['returns']) && $vardef['function']['returns']== 'html') {
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
             return $this->fetch($this->findTemplate('EditViewFunction'));
@@ -73,7 +73,7 @@ class SugarFieldEnum extends SugarFieldBase
         if (empty($displayParams['size'])) {
             $displayParams['size'] = 6;
         }
-		
+        
         if (!empty($vardef['function']['returns']) && $vardef['function']['returns']== 'html') {
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
             return $this->fetch($this->findTemplate('EditViewFunction'));
@@ -140,10 +140,10 @@ class SugarFieldEnum extends SugarFieldBase
     public function formatField($rawField, $vardef)
     {
         global $app_list_strings;
-		
+        
         if (!empty($vardef['options'])) {
             $option_array_name = $vardef['options'];
-			
+            
             if (!empty($app_list_strings[$option_array_name][$rawField])) {
                 return $app_list_strings[$option_array_name][$rawField];
             } else {

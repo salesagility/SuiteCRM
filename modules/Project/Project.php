@@ -78,17 +78,17 @@ class Project extends SugarBean
 
     // This is used to retrieve related fields from form posts.
     var $additional_column_fields = array(
-		'account_id',
-		'contact_id',
-		'opportunity_id',
-	);
+        'account_id',
+        'contact_id',
+        'opportunity_id',
+    );
 
     var $relationship_fields = array(
-		'account_id' => 'accounts',
-		'contact_id'=>'contacts',
-		'opportunity_id'=>'opportunities',
-		'email_id' => 'emails',
-	);
+        'account_id' => 'accounts',
+        'contact_id'=>'contacts',
+        'opportunity_id'=>'opportunities',
+        'email_id' => 'emails',
+    );
 
     //////////////////////////////////////////////////////////////////
     // METHODS
@@ -130,7 +130,7 @@ class Project extends SugarBean
 
         $this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
         //$this->total_estimated_effort = $this->_get_total_estimated_effort($this->id);
-		//$this->total_actual_effort = $this->_get_total_actual_effort($this->id);
+        //$this->total_actual_effort = $this->_get_total_actual_effort($this->id);
     }
 
     /**
@@ -141,7 +141,7 @@ class Project extends SugarBean
         parent::fill_in_additional_list_fields();
         $this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
         //$this->total_estimated_effort = $this->_get_total_estimated_effort($this->id);
-		//$this->total_actual_effort = $this->_get_total_actual_effort($this->id);
+        //$this->total_actual_effort = $this->_get_total_actual_effort($this->id);
     }
 
     /**
@@ -258,8 +258,8 @@ class Project extends SugarBean
     function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL':return true;
-		}
+            case 'ACL':return true;
+        }
         return false;
     }
 

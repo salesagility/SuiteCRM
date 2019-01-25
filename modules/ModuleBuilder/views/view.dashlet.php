@@ -70,16 +70,16 @@ class ViewDashlet extends ViewListView
     }
 
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-	    
+        
         return array(
-    	   translate('LBL_MODULE_NAME','Administration'),
-    	   ModuleBuilderController::getModuleTitle(),
-    	   );
+           translate('LBL_MODULE_NAME','Administration'),
+           ModuleBuilderController::getModuleTitle(),
+           );
     }
 
     // DO NOT REMOVE - overrides parent ViewEdit preDisplay() which attempts to load a bean for a non-existent module
@@ -132,7 +132,7 @@ class ViewDashlet extends ViewListView
         $smarty = new Sugar_Smarty ( ) ;
         $smarty->assign ( 'translate', true ) ;
         $smarty->assign ( 'language', $parser->getLanguage () ) ;
-		
+        
         $smarty->assign ( 'view', $this->editLayout ) ;
         $smarty->assign ( 'action', 'dashletSave' ) ;
         $smarty->assign( 'module', 'ModuleBuilder');

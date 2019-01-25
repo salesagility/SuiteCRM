@@ -126,7 +126,7 @@ if (isset($_REQUEST['record'])) {
         $chooser->args['values_array'][1][$key] = $app_list_strings['moduleList'][$key];
     }
 }
-	
+    
 $chooser->args['left_name'] = 'display_tabs';
 $chooser->args['right_name'] = 'hide_tabs';
 $chooser->args['left_label'] =  $mod_strings['LBL_ALLOWED_MODULES'];

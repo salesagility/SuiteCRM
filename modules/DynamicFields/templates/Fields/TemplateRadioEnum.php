@@ -46,14 +46,14 @@ require_once('include/utils/array_utils.php');
 class TemplateRadioEnum extends TemplateEnum
 {
     var $type = 'radioenum';
-	
+    
     function get_html_edit()
     {
         $this->prepare();
         $xtpl_var = strtoupper( $this->name);
         return "{RADIOOPTIONS_".$xtpl_var. "}";
     }
-	
+    
     function get_field_def()
     {
         $def = parent::get_field_def();
@@ -61,8 +61,8 @@ class TemplateRadioEnum extends TemplateEnum
         $def['separator'] = '<br>';
         return $def;
     }
-	
-	
+    
+    
     function get_xtpl_edit($add_blank = false)
     {
         $name = $this->name;
@@ -77,16 +77,16 @@ class TemplateRadioEnum extends TemplateEnum
         if (!empty($this->help)) {
             $returnXTPL[$this->name . '_help'] = translate($this->help, $this->bean->module_dir);
         }
-		
+        
         global $app_list_strings;
         $returnXTPL = array();
         $returnXTPL[strtoupper($this->name)] = $value;
 
-		
+        
         $returnXTPL[strtoupper('RADIOOPTIONS_'.$this->name)] = $this->generateRadioButtons($value, false);
         return $returnXTPL;
     }
-	
+    
 
     function generateRadioButtons($value = '', $add_blank =false)
     {
@@ -103,7 +103,7 @@ class TemplateRadioEnum extends TemplateEnum
         }
         return $radiooptions;
     }
-	
+    
     function get_xtpl_search()
     {
         $searchFor = '';
@@ -116,7 +116,7 @@ class TemplateRadioEnum extends TemplateEnum
         $returnXTPL[strtoupper('RADIOOPTIONS_'.$this->name)] = $this->generateRadioButtons($searchFor, true);
         return $returnXTPL;
     }
-	
+    
     function get_xtpl_detail()
     {
         $name = $this->name;
@@ -134,7 +134,7 @@ class TemplateRadioEnum extends TemplateEnum
         }
         return '';
     }
-	
+    
     function get_db_default($modify = false)
     {
         return '';

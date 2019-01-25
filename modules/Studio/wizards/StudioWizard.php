@@ -60,13 +60,13 @@ class StudioWizard
     function options()
     {
         $options = array('SelectModuleWizard'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_MODULE'], 
-    	                 'EditDropDownWizard'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_DROPDOWNS'],
-    	                 'RenameTabs'=>$GLOBALS['mod_strings']['LBL_SW_RENAME_TABS'],
-    	                 'ConfigureTabs'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_TABS'],
-    	                 'ConfigureGroupTabs'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_GROUPTABS'],
-    	                 'Portal'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_PORTAL'],
-				         'RepairCustomFields'=>$GLOBALS['mod_strings']['LBL_SW_REPAIR_CUSTOMFIELDS'],
-				         'MigrateCustomFields'=>$GLOBALS['mod_strings']['LBL_SW_MIGRATE_CUSTOMFIELDS'],
+                         'EditDropDownWizard'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_DROPDOWNS'],
+                         'RenameTabs'=>$GLOBALS['mod_strings']['LBL_SW_RENAME_TABS'],
+                         'ConfigureTabs'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_TABS'],
+                         'ConfigureGroupTabs'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_GROUPTABS'],
+                         'Portal'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_PORTAL'],
+                         'RepairCustomFields'=>$GLOBALS['mod_strings']['LBL_SW_REPAIR_CUSTOMFIELDS'],
+                         'MigrateCustomFields'=>$GLOBALS['mod_strings']['LBL_SW_MIGRATE_CUSTOMFIELDS'],
 
         
         );
@@ -103,14 +103,14 @@ class StudioWizard
                 header('Location: index.php?module=WorkFlow&action=ListView');
                 sugar_cleanup(true);
             case 'RepairCustomFields':
-            	header('Location: index.php?module=Administration&action=UpgradeFields');
-            	sugar_cleanup(true);
+                header('Location: index.php?module=Administration&action=UpgradeFields');
+                sugar_cleanup(true);
             case 'MigrateCustomFields':
-            	header('LOCATION: index.php?module=Administration&action=Development');
-            	sugar_cleanup(true);
+                header('LOCATION: index.php?module=Administration&action=Development');
+                sugar_cleanup(true);
             case 'SugarPortal':
-            	header('LOCATION: index.php?module=Studio&action=Portal');
-            	sugar_cleanup(true);
+                header('LOCATION: index.php?module=Studio&action=Portal');
+                sugar_cleanup(true);
             case 'Classic':
                 header('Location: index.php?module=DynamicLayout&action=index');
                 sugar_cleanup(true);

@@ -10,7 +10,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     $type = $_GET['type'];
     $response = $_GET['response'];
 
-	//get event
+    //get event
     $event = new FP_events();
     $event->retrieve($even_id);
     

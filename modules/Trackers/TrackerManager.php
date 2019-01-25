@@ -153,10 +153,10 @@ class TrackerManager
         if (isset($this->metadata) && isset($this->metadata[$name])) {
             try {
                 $instance = $this->_getMonitor($this->metadata[$name]['name'], //name
-	       						   self::$monitor_id, //monitor_id
-	                               $this->metadata[$name]['metadata'],
-	                               $this->metadata[$name]['store'] //store
-	                               );
+                                      self::$monitor_id, //monitor_id
+                                   $this->metadata[$name]['metadata'],
+                                   $this->metadata[$name]['store'] //store
+                                   );
                 $this->monitors[$name] = $instance;
                 return $this->monitors[$name];
             } catch (Exception $ex) {

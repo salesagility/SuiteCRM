@@ -50,7 +50,7 @@ class AjaxCompose
         }
         $this->sections[$name] = array('title'=>$title,'crumb'=>$crumb, 'content'=>$content, 'action'=>$action);
     }
-	
+    
     function getJavascript()
     {
         if (!empty($this->sections['center'])) {
@@ -61,16 +61,16 @@ class AjaxCompose
                 $this->addSection('east2', '', '', 'deactivate');
             }
         }
-		
+        
         $json = getJSONobj();
         return $json->encode($this->sections);
     }
-	
+    
     function addCrumb($name, $action)
     {
         $this->crumbs[$name] = $action;
     }
-	
+    
     function getBreadCrumb()
     {
         $crumbs = '';
@@ -104,7 +104,7 @@ class AjaxCompose
         }
         return $crumbs . '<br><br>';
     }
-	
+    
     function echoErrorStatus($labelName='')
     {
         $sections = array('failure'=>true,'failMsg'=>$labelName);

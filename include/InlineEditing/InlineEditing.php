@@ -520,7 +520,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             $value : 'http://' . $value);
         $value = '<a href=' . $link . ' target="_blank">' . $value . '</a>';
     }
-	
+    
     if ($vardef['type'] == "currency") {
         if ($_REQUEST['view'] != "DetailView") {
             $value = currency_format_number($value);
@@ -528,7 +528,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             $value = format_number($value);
         }
     }
-	
+    
     return $value;
 }
 

@@ -92,8 +92,8 @@ class FP_Event_Locations_sugar extends Basic
     function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL': return true;
-		}
+            case 'ACL': return true;
+        }
         return false;
     }
 }

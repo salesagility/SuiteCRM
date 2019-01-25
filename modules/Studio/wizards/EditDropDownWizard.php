@@ -66,23 +66,23 @@ class EditDropDownWizard extends StudioWizard
     {
         //		return array('EditDropdown'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_DROPDOWNS'], 'CreateDropdown'=>$GLOBALS['mod_strings']['LBL_ED_CREATE_DROPDOWN'] );
     }
-	
+    
     function process($option)
     {
         switch ($option) {
-		    case 'EditDropdown':
-		        parent::process($option);
-		        require_once('modules/Studio/DropDowns/EditView.php');
-		        break;
-		    case 'SaveDropDown':
-		        DropDownHelper::saveDropDown($_REQUEST);
-		        require_once('modules/Studio/DropDowns/EditView.php');
-		        break;
-		    default:
-		         parent::process($option);
-		}
+            case 'EditDropdown':
+                parent::process($option);
+                require_once('modules/Studio/DropDowns/EditView.php');
+                break;
+            case 'SaveDropDown':
+                DropDownHelper::saveDropDown($_REQUEST);
+                require_once('modules/Studio/DropDowns/EditView.php');
+                break;
+            default:
+                 parent::process($option);
+        }
     }
-	
+    
     function display()
     {
         // override the parent display - don't display any wizard stuff

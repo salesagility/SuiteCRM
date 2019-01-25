@@ -300,7 +300,7 @@ if (isset($_REQUEST['emailUIAction'])) {
         } else {
             die();
         }
-    	break;
+        break;
     case 'getTemplateAttachments':
         $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments");
         if (isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {

@@ -99,7 +99,7 @@ class UpgradeSavedSearch
                             } //if
 
 
-			  	 	       //Unset the original key
+                           //Unset the original key
                             unset($new_contents[$key]);
 
                             //Add the any switch

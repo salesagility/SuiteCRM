@@ -43,6 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 $searchdefs = array(
-	
-	
+    
+    
 );

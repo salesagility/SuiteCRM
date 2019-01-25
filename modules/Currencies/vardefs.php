@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 $dictionary['Currency'] = array('table' => 'currencies',
-	'comment' => 'Currencies allow Sugar to store and display monetary values in various denominations'
+    'comment' => 'Currencies allow Sugar to store and display monetary values in various denominations'
                                ,'fields' => array (
   'id' =>
   array (
@@ -89,8 +89,8 @@ $dictionary['Currency'] = array('table' => 'currencies',
     'dbType' => 'double',
     'default' => '0',
      'required' => true,
-	 'comment' => 'Conversion rate factor (relative to stored value)',
-	 'importable' => 'required',
+     'comment' => 'Conversion rate factor (relative to stored value)',
+     'importable' => 'required',
   ),
   'status' =>
   array (
@@ -137,7 +137,7 @@ $dictionary['Currency'] = array('table' => 'currencies',
     'type' => 'id',
     'len'  => '36',
     'required' => true,
-  	'comment' => 'User ID who created record'
+    'comment' => 'User ID who created record'
   ),
 )
                                                       , 'indices' => array (

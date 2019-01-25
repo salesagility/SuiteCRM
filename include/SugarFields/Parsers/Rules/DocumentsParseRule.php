@@ -112,7 +112,7 @@ class DocumentsParseRule extends BaseRule
                 } //foreach
             } //foreach
         } //foreach
-	return $panels;
+    return $panels;
     }
 
     function parsePanels(& $panels, $view)
@@ -121,15 +121,15 @@ class DocumentsParseRule extends BaseRule
             foreach ($panel as $rowCount=>$row) {
                 foreach ($row as $key=>$column) {
                     if ($this->matches($column, '/related_doc_id/si') ||
-				   $this->matches($column, '/related_doc_rev_id/si') ||
-				   $this->matches($column, '/latest_revision/si') ||
-				   $this->matches($column, '/file_name/si')) {
+                   $this->matches($column, '/related_doc_rev_id/si') ||
+                   $this->matches($column, '/latest_revision/si') ||
+                   $this->matches($column, '/file_name/si')) {
                         $panels[$name][$rowCount][$key] = '';
                     }
                 } //foreach
             } //foreach
         } //foreach
 
-	   return $panels;
+       return $panels;
     }
 }

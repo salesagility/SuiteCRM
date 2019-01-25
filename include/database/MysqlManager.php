@@ -130,7 +130,7 @@ class MysqlManager extends DBManager
         'relate' => 'varchar',
         'multienum' => 'text',
         'html' => 'text',
-	'emailbody' => 'nvarchar(max)',
+    'emailbody' => 'nvarchar(max)',
         'longhtml' => 'longtext',
         'datetime' => 'datetime',
         'datetimecombo' => 'datetime',

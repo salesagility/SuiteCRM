@@ -223,7 +223,7 @@ class AM_ProjectTemplatesController extends SugarController
 
                 $startdate = $enddate;
                 //add one day to let the next task start on next day of it's finish.
-		$enddate_array[$count] = $enddate->modify('+1 Days')->format('Y-m-d'); //$end;		    
+        $enddate_array[$count] = $enddate->modify('+1 Days')->format('Y-m-d'); //$end;		    
                 $enddate = $end;
             }
             $project_task->save();

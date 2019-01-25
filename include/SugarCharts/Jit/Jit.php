@@ -47,12 +47,12 @@ class Jit extends JsChart
 {
     var $supports_image_export = true;
     var $print_html_legend_pdf = true;
-	
+    
     function __construct()
     {
         parent::__construct();
     }
-	
+    
     function getChartResources()
     {
         return '
@@ -63,14 +63,14 @@ class Jit extends JsChart
 		<script language="javascript" type="text/javascript" src="'.getJSPath('include/SugarCharts/Jit/js/sugarCharts.js').'"></script>
 		';
     }
-	
+    
     function getMySugarChartResources()
     {
         return '
 		<script language="javascript" type="text/javascript" src="'.getJSPath('include/SugarCharts/Jit/js/mySugarCharts.js').'"></script>
 		';
     }
-	
+    
 
     function display($name, $xmlFile, $width='320', $height='480', $resize=false)
     {
@@ -78,7 +78,7 @@ class Jit extends JsChart
 
         return $this->ss->fetch('include/SugarCharts/Jit/tpls/chart.tpl');
     }
-	
+    
 
     function getDashletScript($id,$xmlFile="")
     {

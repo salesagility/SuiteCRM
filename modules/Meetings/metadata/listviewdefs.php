@@ -119,8 +119,8 @@ array (
     'default' => false,
   ),
   'DATE_ENTERED' => array (
-	'width' => '10%',
-	'label' => 'LBL_DATE_ENTERED',
-	'default' => true
+    'width' => '10%',
+    'label' => 'LBL_DATE_ENTERED',
+    'default' => true
   ),  
 );

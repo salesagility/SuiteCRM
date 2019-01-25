@@ -56,14 +56,14 @@ class TemplateCurrencyId extends TemplateId
         $def['function'] = array('name'=>'getCurrencyDropDown', 'returns'=>'html');
         return $def;
     }
-	
+    
     function save($df)
     {
         if (!$df->fieldExists($this->name)) {
             parent::save($df);
         }
     }
-	
+    
     function delete($df)
     {
         if (!$df->fieldExists(null, 'currency')) {

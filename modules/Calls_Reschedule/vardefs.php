@@ -39,10 +39,10 @@
  */
 
 $dictionary['Calls_Reschedule'] = array(
-	'table'=>'calls_reschedule',
-	'audited'=>true,
-		'duplicate_merge'=>true,
-		'fields'=>array (
+    'table'=>'calls_reschedule',
+    'audited'=>true,
+        'duplicate_merge'=>true,
+        'fields'=>array (
   'reason' => 
   array (
     'required' => false,
@@ -114,11 +114,11 @@ $dictionary['Calls_Reschedule'] = array(
     'studio' => 'visible',
   ),
 ),
-	'relationships'=>array (
+    'relationships'=>array (
 ),
-	'optimistic_locking'=>true,
-		'unified_search'=>true,
-	);
+    'optimistic_locking'=>true,
+        'unified_search'=>true,
+    );
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }

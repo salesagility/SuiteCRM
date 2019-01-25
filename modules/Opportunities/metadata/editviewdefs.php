@@ -55,8 +55,8 @@ $viewdefs['Opportunities']['EditView'] = array(
       'account_name',
     ),
     array(
-    	array('name'=>'currency_id','label'=>'LBL_CURRENCY'),
-    	array('name'=>'date_closed'),
+        array('name'=>'currency_id','label'=>'LBL_CURRENCY'),
+        array('name'=>'date_closed'),
     ),
     array (
       array( 'name'=>'amount'),
@@ -67,11 +67,11 @@ $viewdefs['Opportunities']['EditView'] = array(
       'lead_source',
     ),
     array (      
-		'probability',
-      	'campaign_name',
+        'probability',
+          'campaign_name',
     ),
     array (
-      	'next_step',
+          'next_step',
     ),
     array (
       'description',
@@ -80,7 +80,7 @@ $viewdefs['Opportunities']['EditView'] = array(
   
   'LBL_PANEL_ASSIGNMENT' => array(
     array(
-	    'assigned_user_name',
+        'assigned_user_name',
     ),
   ),
 )

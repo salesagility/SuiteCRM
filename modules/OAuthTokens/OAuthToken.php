@@ -148,7 +148,7 @@ class OAuthToken extends SugarBean
     /**
      * Load token by ID
      * @param string $token
-	 * @return OAuthToken
+     * @return OAuthToken
      */
     static function load($token)
     {

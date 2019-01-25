@@ -48,31 +48,31 @@ class SugarDateTime extends DateTime
 {
     // Recognized properties and their formats
     protected $formats = array(
-		"sec" => "s",
-		"min" => "i",
-		"hour" => "G",
-		"zhour" => "H",
-		"day" => "j",
-		"zday" => "d",
-		"days_in_month" => "t",
-		"day_of_week" => "w",
-		"day_of_year" => "z",
-		"week" => "W",
-		"month" => "n",
-		"zmonth" => "m",
-		"year" => "Y",
-		"am_pm" => "A",
-		"hour_12" => "g",
-	);
+        "sec" => "s",
+        "min" => "i",
+        "hour" => "G",
+        "zhour" => "H",
+        "day" => "j",
+        "zday" => "d",
+        "days_in_month" => "t",
+        "day_of_week" => "w",
+        "day_of_year" => "z",
+        "week" => "W",
+        "month" => "n",
+        "zmonth" => "m",
+        "year" => "Y",
+        "am_pm" => "A",
+        "hour_12" => "g",
+    );
 
     // Property aliases
     protected $var_gets = array(
-		"24_hour" => "hour",
-		"day_of_week" => "day_of_week_long",
-		"day_of_week_short" => "day_of_week_short",
-		"month_name" => "month_long",
-		"hour" => "hour_12",
-	);
+        "24_hour" => "hour",
+        "day_of_week" => "day_of_week_long",
+        "day_of_week_short" => "day_of_week_short",
+        "month_name" => "month_long",
+        "hour" => "hour_12",
+    );
 
     /**
      * @var DateTimeZone
@@ -98,16 +98,16 @@ class SugarDateTime extends DateTime
     public static $use_strptime = true;
 
     /**
-	 * Copy of DateTime::createFromFormat
-	 *
-	 * Needed to return right type of the object
-	 *
-	 * @param string $format Format like in date()
-	 * @param string $time Time to parse
-	 * @param DateTimeZone $timezone
-	 * @return SugarDateTime
-	 * @see DateTime::createFromFormat
-	 */
+     * Copy of DateTime::createFromFormat
+     *
+     * Needed to return right type of the object
+     *
+     * @param string $format Format like in date()
+     * @param string $time Time to parse
+     * @param DateTimeZone $timezone
+     * @return SugarDateTime
+     * @see DateTime::createFromFormat
+     */
     public static function createFromFormat($format, $time, $timezone = null)
     {
         if (empty($time) || empty($format)) {
@@ -214,26 +214,26 @@ class SugarDateTime extends DateTime
         }
         // conditional, derived and translated ones
         switch ($var) {
-			case "ts":
-				return $this->format("U")+0;
-			case "tz_offset":
-				return $this->getTimezone()->getOffset($this);
-			case "days_in_year":
-				return $this->format("L") == '1'?366:365;
-				break;
-			case "day_of_week_short":
-				$str = $this->_getStrings('dom_cal_weekdays');
-				return $str[$this->day_of_week];
-			case "day_of_week_long":
-				$str = $this->_getStrings('dom_cal_weekdays_long');
-				return $str[$this->day_of_week];
-			case "month_short":
-				$str = $this->_getStrings('dom_cal_month');
-				return $str[$this->month];
-			case "month_long":
-				$str = $this->_getStrings('dom_cal_month_long');
-				return $str[$this->month];
-		}
+            case "ts":
+                return $this->format("U")+0;
+            case "tz_offset":
+                return $this->getTimezone()->getOffset($this);
+            case "days_in_year":
+                return $this->format("L") == '1'?366:365;
+                break;
+            case "day_of_week_short":
+                $str = $this->_getStrings('dom_cal_weekdays');
+                return $str[$this->day_of_week];
+            case "day_of_week_long":
+                $str = $this->_getStrings('dom_cal_weekdays_long');
+                return $str[$this->day_of_week];
+            case "month_short":
+                $str = $this->_getStrings('dom_cal_month');
+                return $str[$this->month];
+            case "month_long":
+                $str = $this->_getStrings('dom_cal_month_long');
+                return $str[$this->month];
+        }
 
         return '';
     }
@@ -321,7 +321,7 @@ class SugarDateTime extends DateTime
     {
         $newdate = clone $this;
         $newdate->setDate($this->year, $this->month, $this->day +
-			($day_index - $this->day_of_week))->setTime(0,0);
+            ($day_index - $this->day_of_week))->setTime(0,0);
         return $newdate;
     }
 
@@ -425,9 +425,9 @@ class SugarDateTime extends DateTime
     {
         $newdate = clone $this;
         $newdate->setDate(
-	         $year?$year:$this->year,
-	         $month?$month:$this->month,
-	         $day?$day:$this->day);
+             $year?$year:$this->year,
+             $month?$month:$this->month,
+             $day?$day:$this->day);
         $newdate->setTime(0, 0);
         return $newdate;
     }
@@ -443,9 +443,9 @@ class SugarDateTime extends DateTime
     {
         $newdate = clone $this;
         $newdate->setDate(
-	         $year?$year:$this->year,
-	         $month?$month:$this->month,
-	         $day?$day:$this->day);
+             $year?$year:$this->year,
+             $month?$month:$this->month,
+             $day?$day:$this->day);
         $newdate->setTime(23, 59, 59);
         return $newdate;
     }

@@ -188,8 +188,8 @@ class SecurityGroupMessage extends Basic
     function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL':return false;
-		}
+            case 'ACL':return false;
+        }
         return false;
     }
 }

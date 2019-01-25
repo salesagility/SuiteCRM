@@ -70,7 +70,7 @@ class GroupedTabStructure
         /* Apply patch, use a reference if we can */
         if ($patch) {
             $tabStructure = $GLOBALS['tabStructure'];
-        	
+            
             foreach ($patch as $mainTab => $subModules) {
                 $tabStructure[$mainTab]['modules'] = array_merge($tabStructure[$mainTab]['modules'], $subModules);
             }
@@ -84,7 +84,7 @@ class GroupedTabStructure
         if (in_array('Activities', $modList)) {
             $modList = array_merge($modList,$modInvisListActivities);
         }
-		
+        
         //Add any iFrame tabs to the 'other' group.
         $moduleExtraMenu = array();
         if (!should_hide_iframes()) {
@@ -98,7 +98,7 @@ class GroupedTabStructure
                 unset($modList['iFrames']);
             }
         }
-				
+                
         $modList = array_merge($modList,$moduleExtraMenu);
                 
         /* Only return modules which exists in the modList */

@@ -42,7 +42,7 @@ require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 class SugarFieldCollection extends SugarFieldBase
 {
     var $tpl_path;
-	
+    
     function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $nolink = array('Users');
@@ -140,7 +140,7 @@ class SugarFieldCollection extends SugarFieldBase
             require('include/modules.php');
             require_once('data/Link.php');
             $class = load_link_class($bean->field_defs[$field]);
-    		
+            
             $link_obj = new $class($bean->field_defs[$field]['relationship'], $bean, $bean->field_defs[$field]);
             $module = $link_obj->getRelatedModuleName();
             $beanName = $beanList[$module];

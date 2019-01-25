@@ -70,7 +70,7 @@ class SugarWidgetSubPanelEditRoleButton extends SugarWidgetField
         if ($layout_def['ListView']) {
             return '<a href="' . $href . '"'
             . "id=\"$unique_id\""
-			. 'class="listViewTdToolsS1">' . $app_strings['LNK_EDIT'] .'</a>&nbsp;';
+            . 'class="listViewTdToolsS1">' . $app_strings['LNK_EDIT'] .'</a>&nbsp;';
         } else {
             return '';
         }

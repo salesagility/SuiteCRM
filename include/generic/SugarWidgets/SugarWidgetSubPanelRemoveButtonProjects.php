@@ -106,21 +106,21 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
         $icon_remove_text = strtolower($app_strings['LBL_ID_FF_REMOVE']);
         $icon_remove_html = SugarThemeRegistry::current()->getImage( 'delete_inline', 'align="absmiddle" border="0"',null,null,'.gif','');//setting alt to blank on purpose on subpanels for 508
         $remove_url = $layout_def['start_link_wrapper']
-			. "index.php?module=$parent_module"
-			. "&action=$action"
-			. "&record=$parent_record_id"
-			. "&linked_field=$linked_field"
-			. "&linked_id=$record"
-			. "&return_url=" . urlencode(urlencode($return_url))
-			. "&refresh_page=1"
-			. $layout_def['end_link_wrapper'];
+            . "index.php?module=$parent_module"
+            . "&action=$action"
+            . "&record=$parent_record_id"
+            . "&linked_field=$linked_field"
+            . "&linked_id=$record"
+            . "&return_url=" . urlencode(urlencode($return_url))
+            . "&refresh_page=1"
+            . $layout_def['end_link_wrapper'];
         $remove_confirmation_text = $app_strings['NTC_REMOVE_CONFIRMATION'];
         //based on listview since that lets you select records
         if ($layout_def['ListView'] && !$hideremove && $is_owner) {
             return '<a href="' . $remove_url . '"'
-			. ' class="listViewTdToolsS1"'
-			. " onclick=\"return confirm('$remove_confirmation_text');\""
-			. ">$icon_remove_html&nbsp;$icon_remove_text</a>";
+            . ' class="listViewTdToolsS1"'
+            . " onclick=\"return confirm('$remove_confirmation_text');\""
+            . ">$icon_remove_html&nbsp;$icon_remove_text</a>";
         } else {
             return '';
         }

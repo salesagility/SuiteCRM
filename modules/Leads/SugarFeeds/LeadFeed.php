@@ -64,7 +64,7 @@ class LeadFeed extends FeedLogicBase
                 $text =  '{SugarFeed.CONVERTED_LEAD} [' . $bean->module_dir . ':' . $bean->id . ':' . $full_name . ']';
             }
         }
-		
+        
         if (!empty($text)) {
             SugarFeed::pushFeed2($text, $bean);
         }

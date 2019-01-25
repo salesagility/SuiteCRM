@@ -227,11 +227,11 @@ EOQ;
                 } // if
             } // foreach
         } // if
-		if (isset($GLOBALS['check_notify'])) {
-		    $check_notify = $GLOBALS['check_notify'];
-		} else {
-		    $check_notify = FALSE;
-		}
+        if (isset($GLOBALS['check_notify'])) {
+            $check_notify = $GLOBALS['check_notify'];
+        } else {
+            $check_notify = FALSE;
+        }
         if ($preProcessedImages) {
             $focus->body_html = $emailTemplateBodyHtml;
         }

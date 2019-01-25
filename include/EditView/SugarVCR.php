@@ -46,9 +46,9 @@
  class SugarVCR
  {
 
- 	/**
- 	 * records the query in the session for later retrieval
- 	 */
+    /**
+     * records the query in the session for later retrieval
+     */
      static function store($module, $query)
      {
          $_SESSION[$module .'2_QUERY'] = $query;

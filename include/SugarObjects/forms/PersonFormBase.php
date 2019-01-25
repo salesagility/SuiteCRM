@@ -229,9 +229,9 @@ abstract class PersonFormBase extends FormBase
         if (!empty($emailStr)) {
             $emailStr = substr($emailStr, 1);
             $query = 'SELECT DISTINCT er.bean_id AS id FROM email_addr_bean_rel er, ' .
-		         'email_addresses ea WHERE ea.id = er.email_address_id ' .
-		         'AND ea.deleted = 0 AND er.deleted = 0 AND er.bean_module = \'' . $this->moduleName . '\' ' .
-	             'AND email_address_caps IN (' . $emailStr . ')';
+                 'email_addresses ea WHERE ea.id = er.email_address_id ' .
+                 'AND ea.deleted = 0 AND er.deleted = 0 AND er.bean_module = \'' . $this->moduleName . '\' ' .
+                 'AND email_address_caps IN (' . $emailStr . ')';
 
             $result = $db->query($query);
             while (($row = $db->fetchByAssoc($result)) != null) {

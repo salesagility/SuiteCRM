@@ -112,7 +112,7 @@ $dictionary['ACLAction'] = array('table' => 'acl_actions', 'comment' => 'Determi
     'name' => 'category',
     'vname' => 'LBL_CATEGORY',
     'type' => 'varchar',
-	'len' =>100,
+    'len' =>100,
     'reportable'=>true,
     'comment' => 'Category of the allowable action (usually the name of a module)'
   ),
@@ -121,7 +121,7 @@ $dictionary['ACLAction'] = array('table' => 'acl_actions', 'comment' => 'Determi
     'name' => 'acltype',
     'vname' => 'LBL_TYPE',
     'type' => 'varchar',
-	'len' =>100,
+    'len' =>100,
     'reportable'=>true,
     'comment' => 'Specifier for Category, usually "module"'
   ),
@@ -144,11 +144,11 @@ $dictionary['ACLAction'] = array('table' => 'acl_actions', 'comment' => 'Determi
   ),
   'roles' =>
   array (
-  	'name' => 'roles',
+    'name' => 'roles',
     'type' => 'link',
     'relationship' => 'acl_roles_actions',
     'source'=>'non-db',
-	'vname'=>'LBL_USERS',
+    'vname'=>'LBL_USERS',
   ),
 ),
 'indices' => array (

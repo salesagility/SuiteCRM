@@ -258,10 +258,10 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
     {
         if (isset ($layout_def['rel_field'])) {
             $field_name = $this->reporter->db->convert(
-	            $this->reporter->db->convert($this->_get_column_select($layout_def), 'date_format', '%Y-%m-%d'),
-	            "CONCAT",
-	            array("' '", $this->reporter->db->convert($layout_def['rel_field'], 'time_format'))
-	        );
+                $this->reporter->db->convert($this->_get_column_select($layout_def), 'date_format', '%Y-%m-%d'),
+                "CONCAT",
+                array("' '", $this->reporter->db->convert($layout_def['rel_field'], 'time_format'))
+            );
         } else {
             $field_name = $this->_get_column_select($layout_def);
         }
@@ -725,9 +725,9 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
     {
         $column = $this->_get_column_select($layout_def);
         return $this->reporter->db->convert($this->reporter->db->convert($column, "date_format", array('%Y')),
-	        	'CONCAT',
-	            array("'-'", $this->reporter->db->convert($column, "quarter")))
-	        ." ".$this->_get_column_alias($layout_def)."\n";
+                'CONCAT',
+                array("'-'", $this->reporter->db->convert($column, "quarter")))
+            ." ".$this->_get_column_alias($layout_def)."\n";
     }
 
     function displayListquarter(& $layout_def)
@@ -744,8 +744,8 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $this->getReporter();
         $column = $this->_get_column_select($layout_def);
         return $this->reporter->db->convert($this->reporter->db->convert($column, "date_format", array('%Y')),
-	        	'CONCAT',
-	            array("'-'", $this->reporter->db->convert($column, "quarter")));
+                'CONCAT',
+                array("'-'", $this->reporter->db->convert($column, "quarter")));
     }
 
     /**

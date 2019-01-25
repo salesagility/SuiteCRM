@@ -69,8 +69,8 @@ class ViewConvertLead extends SugarView
     }
 
     /**
-	 * @see SugarView::display()
-	 */
+     * @see SugarView::display()
+     */
     public function display()
     {
         if (!empty($_REQUEST['handle']) && $_REQUEST['handle'] == 'save') {
@@ -217,26 +217,26 @@ class ViewConvertLead extends SugarView
                                         $focus->phone_office = $this->focus->phone_work;
                                     } else {
                                         if (strpos($field, "billing_address") !== false && $focus->field_defs[$field]["type"] == "varchar") /* Bug 42219 fix */         
-					{
-						$tmp_field = str_replace("billing_", "primary_", $field);
-						$focus->field_defs[$field]["type"] = "text";
+                    {
+                        $tmp_field = str_replace("billing_", "primary_", $field);
+                        $focus->field_defs[$field]["type"] = "text";
                         if (isset($this->focus->$tmp_field)) {
                             $focus->$field = $this->focus->$tmp_field;
                         }
-					 } else {
-					     if (strpos($field, "shipping_address") !== false && $focus->field_defs[$field]["type"] == "varchar") /* Bug 42219 fix */
-					{
-						$tmp_field = str_replace("shipping_", "primary_", $field);
-						if (isset($this->focus->$tmp_field)) {
-						    $focus->$field = $this->focus->$tmp_field;
-						}
-						$focus->field_defs[$field]["type"] = "text";
-					} else {
-					    if (isset($this->focus->$field)) {
-					        $focus->$field = $this->focus->$field;
-					    }
-					}
-					 }
+                     } else {
+                         if (strpos($field, "shipping_address") !== false && $focus->field_defs[$field]["type"] == "varchar") /* Bug 42219 fix */
+                    {
+                        $tmp_field = str_replace("shipping_", "primary_", $field);
+                        if (isset($this->focus->$tmp_field)) {
+                            $focus->$field = $this->focus->$tmp_field;
+                        }
+                        $focus->field_defs[$field]["type"] = "text";
+                    } else {
+                        if (isset($this->focus->$field)) {
+                            $focus->$field = $this->focus->$field;
+                        }
+                    }
+                     }
                                     }
                                 }
                             }
@@ -688,8 +688,8 @@ class ViewConvertLead extends SugarView
      * @return Array of Activity SugarBeans .
      */
     protected function getActivitiesFromLead(
-	    $lead
-	    ) {
+        $lead
+        ) {
         if (!$lead) {
             return;
         }
@@ -716,10 +716,10 @@ class ViewConvertLead extends SugarView
     }
 
     protected function copyActivityAndRelateToBean(
-	    $activity,
-	    $bean,
+        $activity,
+        $bean,
         $parentArr = array()
-	    ) {
+        ) {
         global $beanList;
 
         $newActivity = clone $activity;
@@ -787,11 +787,11 @@ class ViewConvertLead extends SugarView
      * @param Contact $contact Contact to relate the bean to.
      */
     protected function populateNewBean(
-	    $module,
-	    $bean,
-	    $contact,
-	    $lead
-	    ) {
+        $module,
+        $bean,
+        $contact,
+        $lead
+        ) {
         //Copy data from the contact to new bean
         foreach ($bean->field_defs as $field => $def) {
             if (!isset($_REQUEST[$module . $field]) && isset($lead->$field) && $field != 'id') {

@@ -65,7 +65,7 @@ class ModuleScanner
         'install_logichooks' => 'logic_hooks',
         'post_execute' => 'post_execute',
 
-	);
+    );
 
     /**
      * config settings
@@ -109,10 +109,10 @@ class ModuleScanner
         'reflector',
         'reflectionexception',
         'lua',
-	    'ziparchive',
-	    'splfileinfo',
-	    'splfileobject',
-	    'pclzip',
+        'ziparchive',
+        'splfileinfo',
+        'splfileobject',
+        'pclzip',
 
     );
     private $blackList = array(
@@ -217,26 +217,26 @@ class ModuleScanner
     //mutliple files per function call
     'copy',
     'copy_recursive',
-	'link',
-	'rename',
-	'symlink',
-	'move_uploaded_file',
-	'chdir',
-	'chroot',
-	'create_cache_directory',
-	'mk_temp_dir',
-	'write_array_to_file',
-	'write_encoded_file',
-	'create_custom_directory',
-	'sugar_rename',
-	'sugar_chown',
-	'sugar_fopen',
-	'sugar_mkdir',
-	'sugar_file_put_contents',
-	'sugar_file_put_contents_atomic',
-	'sugar_chgrp',
-	'sugar_chmod',
-	'sugar_touch',
+    'link',
+    'rename',
+    'symlink',
+    'move_uploaded_file',
+    'chdir',
+    'chroot',
+    'create_cache_directory',
+    'mk_temp_dir',
+    'write_array_to_file',
+    'write_encoded_file',
+    'create_custom_directory',
+    'sugar_rename',
+    'sugar_chown',
+    'sugar_fopen',
+    'sugar_mkdir',
+    'sugar_file_put_contents',
+    'sugar_file_put_contents_atomic',
+    'sugar_chgrp',
+    'sugar_chmod',
+    'sugar_touch',
 
         // Functions that have callbacks can circumvent our security measures.
         // List retrieved through PHP's XML documentation, and running the
@@ -418,8 +418,8 @@ class ModuleScanner
         'xml_set_processing_instruction_handler',
         'xml_set_start_namespace_decl_handler',
         'xml_set_unparsed_entity_decl_handler',
-	    'simplexml_load_file',
-	    'simplexml_load_string',
+        'simplexml_load_file',
+        'simplexml_load_string',
 
         // unzip
         'unzip',
@@ -608,85 +608,85 @@ class ModuleScanner
         foreach ($tokens as $index=>$token) {
             if (is_string($token[0])) {
                 switch ($token[0]) {
-					case '`':
-						$issues['backtick'] = translate('ML_INVALID_FUNCTION') . " '`'";
-					case '(':
-						if ($checkFunction) {
-						    $issues[] = $possibleIssue;
-						}
-						break;
-				}
+                    case '`':
+                        $issues['backtick'] = translate('ML_INVALID_FUNCTION') . " '`'";
+                    case '(':
+                        if ($checkFunction) {
+                            $issues[] = $possibleIssue;
+                        }
+                        break;
+                }
                 $checkFunction = false;
                 $possibleIssue = '';
             } else {
                 $token['_msi'] = token_name($token[0]);
                 switch ($token[0]) {
-					case T_WHITESPACE: continue;
-					case T_EVAL:
-						if (in_array('eval', $this->blackList) && !in_array('eval', $this->blackListExempt)) {
-						    $issues[]= translate('ML_INVALID_FUNCTION') . ' eval()';
-						}
-						break;
-					case T_STRING:
-						$token[1] = strtolower($token[1]);
-						if ($lastToken !== false && $lastToken[0] == T_NEW) {
-						    if (!in_array($token[1], $this->classBlackList)) {
-						        break;
-						    }
-						    if (in_array($token[1], $this->classBlackListExempt)) {
-						        break;
-						    }
-						} elseif ($token[0] == T_DOUBLE_COLON) {
-						    if (!in_array($lastToken[1], $this->classBlackList)) {
-						        break;
-						    }
-						    if (in_array($lastToken[1], $this->classBlackListExempt)) {
-						        break;
-						    }
-						} else {
-						    //if nothing else fit, lets check the last token to see if this is a possible method call
-						    if ($lastToken !== false &&
+                    case T_WHITESPACE: continue;
+                    case T_EVAL:
+                        if (in_array('eval', $this->blackList) && !in_array('eval', $this->blackListExempt)) {
+                            $issues[]= translate('ML_INVALID_FUNCTION') . ' eval()';
+                        }
+                        break;
+                    case T_STRING:
+                        $token[1] = strtolower($token[1]);
+                        if ($lastToken !== false && $lastToken[0] == T_NEW) {
+                            if (!in_array($token[1], $this->classBlackList)) {
+                                break;
+                            }
+                            if (in_array($token[1], $this->classBlackListExempt)) {
+                                break;
+                            }
+                        } elseif ($token[0] == T_DOUBLE_COLON) {
+                            if (!in_array($lastToken[1], $this->classBlackList)) {
+                                break;
+                            }
+                            if (in_array($lastToken[1], $this->classBlackListExempt)) {
+                                break;
+                            }
+                        } else {
+                            //if nothing else fit, lets check the last token to see if this is a possible method call
+                            if ($lastToken !== false &&
                             ($lastToken[0] == T_OBJECT_OPERATOR ||  $lastToken[0] == T_DOUBLE_COLON)) {
-						        // check static blacklist for methods
-						        if (!empty($this->methodsBlackList[$token[1]])) {
-						            if ($this->methodsBlackList[$token[1]] == '*') {
-						                $issues[]= translate('ML_INVALID_METHOD') . ' ' .$token[1].  '()';
-						                break;
-						            } else {
-						                if ($lastToken[0] == T_DOUBLE_COLON && $index > 2 && $tokens[$index-2][0] == T_STRING) {
-						                    $classname = strtolower($tokens[$index-2][1]);
-						                    if (in_array($classname, $this->methodsBlackList[$token[1]])) {
-						                        $issues[]= translate('ML_INVALID_METHOD') . ' ' .$classname . '::' . $token[1]. '()';
-						                        break;
-						                    }
-						                }
-						            }
-						        }
-						        //this is a method call, check the black list
-						        if (in_array($token[1], $this->methodsBlackList)) {
-						            $issues[]= translate('ML_INVALID_METHOD') . ' ' .$token[1].  '()';
-						        }
-						        break;
-						    }
+                                // check static blacklist for methods
+                                if (!empty($this->methodsBlackList[$token[1]])) {
+                                    if ($this->methodsBlackList[$token[1]] == '*') {
+                                        $issues[]= translate('ML_INVALID_METHOD') . ' ' .$token[1].  '()';
+                                        break;
+                                    } else {
+                                        if ($lastToken[0] == T_DOUBLE_COLON && $index > 2 && $tokens[$index-2][0] == T_STRING) {
+                                            $classname = strtolower($tokens[$index-2][1]);
+                                            if (in_array($classname, $this->methodsBlackList[$token[1]])) {
+                                                $issues[]= translate('ML_INVALID_METHOD') . ' ' .$classname . '::' . $token[1]. '()';
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                //this is a method call, check the black list
+                                if (in_array($token[1], $this->methodsBlackList)) {
+                                    $issues[]= translate('ML_INVALID_METHOD') . ' ' .$token[1].  '()';
+                                }
+                                break;
+                            }
 
 
-						    if (!in_array($token[1], $this->blackList)) {
-						        break;
-						    }
-						    if (in_array($token[1], $this->blackListExempt)) {
-						        break;
-						    }
-						}
-					case T_VARIABLE:
-						$checkFunction = true;
-						$possibleIssue = translate('ML_INVALID_FUNCTION') . ' ' .  $token[1] . '()';
-						break;
+                            if (!in_array($token[1], $this->blackList)) {
+                                break;
+                            }
+                            if (in_array($token[1], $this->blackListExempt)) {
+                                break;
+                            }
+                        }
+                    case T_VARIABLE:
+                        $checkFunction = true;
+                        $possibleIssue = translate('ML_INVALID_FUNCTION') . ' ' .  $token[1] . '()';
+                        break;
 
-					default:
-						$checkFunction = false;
-						$possibleIssue = '';
+                    default:
+                        $checkFunction = false;
+                        $possibleIssue = '';
 
-				}
+                }
                 if ($token[0] != T_WHITESPACE) {
                     $lastToken = $token;
                 }

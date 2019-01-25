@@ -70,17 +70,17 @@ class TemplateSectionLine_sugar extends Basic
     var $assigned_user_name;
     var $assigned_user_link;
     var $grp;
-	
+    
     function __construct()
     {
         parent::__construct();
     }
-	
+    
     function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL': return true;
-		}
+            case 'ACL': return true;
+        }
         return false;
     }
 }

@@ -89,8 +89,8 @@ class ProjectTask extends SugarBean
     var $new_schema = true;
 
     var $relationship_fields = array(
-		'email_id' => 'emails',
-	);
+        'email_id' => 'emails',
+    );
     /**
      * @var bool skip updating parent percent complete
      */
@@ -317,8 +317,8 @@ class ProjectTask extends SugarBean
     function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL':return true;
-		}
+            case 'ACL':return true;
+        }
         return false;
     }
     function listviewACLHelper()

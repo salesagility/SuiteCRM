@@ -104,9 +104,9 @@ class MBVardefs
     function mergeVardefs($by_group=false)
     {
         $this->vardefs = array(
-					'fields'=>array(),
-					'relationships'=>array(),
-		);
+                    'fields'=>array(),
+                    'relationships'=>array(),
+        );
         //		$object_name = $this->key_name;
         //		$_object_name = strtolower($this->name);
         $module_name = $this->name;

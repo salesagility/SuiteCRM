@@ -874,10 +874,10 @@ class Importer
 
 
     /**
-	 * upon bean save, the relationships are saved by SugarBean->save_relationship_changes() method, but those values depend on
+     * upon bean save, the relationships are saved by SugarBean->save_relationship_changes() method, but those values depend on
      * the request object and is not reliable during import.  This function makes sure any defined related or parent id's are processed
-	 * and their relationship saved.
-	 */
+     * and their relationship saved.
+     */
     public function checkRelatedIDsAfterSave($focus)
     {
         if (empty($focus)) {

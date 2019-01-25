@@ -55,7 +55,7 @@ class EmailTemplatesViewClassic extends ViewClassic
     function __construct()
     {
 
-		/* BEGIN - SECURITY GROUPS - The whole file is custom but the purpose is the following code */
+        /* BEGIN - SECURITY GROUPS - The whole file is custom but the purpose is the following code */
         //turn on normal display of subpanels
         $this->options['show_subpanels'] = true;
         /* END - SECURITY GROUPS */

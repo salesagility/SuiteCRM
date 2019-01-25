@@ -119,8 +119,8 @@ class AOS_Invoices_sugar extends Basic
     function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL': return true;
-		}
+            case 'ACL': return true;
+        }
         return false;
     }
 }

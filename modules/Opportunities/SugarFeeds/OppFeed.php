@@ -61,7 +61,7 @@ class OppFeed extends FeedLogicBase
                 $text = '{SugarFeed.WON_OPPORTUNITY} [' . $bean->module_dir . ':' . $bean->id . ':' . $bean->name . '] {SugarFeed.WITH} [Accounts:' . $bean->account_id . ':' . $bean->account_name . '] {SugarFeed.FOR_AMOUNT} '. $currency->symbol . format_number($bean->amount);
             }
         }
-		
+        
         if (!empty($text)) {
             SugarFeed::pushFeed2($text, $bean);
         }

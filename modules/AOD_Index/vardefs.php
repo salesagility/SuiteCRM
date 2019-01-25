@@ -39,10 +39,10 @@
  */
 
 $dictionary['AOD_Index'] = array(
-	'table'=>'aod_index',
-	'audited'=>true,
-		'duplicate_merge'=>true,
-		'fields'=>array (
+    'table'=>'aod_index',
+    'audited'=>true,
+        'duplicate_merge'=>true,
+        'fields'=>array (
   'last_optimised' => 
   array (
     'required' => false,
@@ -85,11 +85,11 @@ $dictionary['AOD_Index'] = array(
     'size' => '20',
   ),
 ),
-	'relationships'=>array (
+    'relationships'=>array (
 ),
-	'optimistic_locking'=>true,
-		'unified_search'=>false,
-	);
+    'optimistic_locking'=>true,
+        'unified_search'=>false,
+    );
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }

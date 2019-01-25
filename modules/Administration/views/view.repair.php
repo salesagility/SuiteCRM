@@ -53,8 +53,8 @@ require_once('modules/Administration/QuickRepairAndRebuild.php');
 class ViewRepair extends SugarView
 {
     /**
-	 * @see SugarView::display()
-	 */
+     * @see SugarView::display()
+     */
     public function display()
     {
         $randc = new RepairAndClear();

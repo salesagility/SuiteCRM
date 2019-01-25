@@ -49,16 +49,16 @@ require_once 'modules/ModuleBuilder/parsers/views/DeployedMetaDataImplementation
 class ViewResetmodule extends SugarView
 {
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-	    
+        
         return array(
-    	   translate('LBL_MODULE_NAME','Administration'),
-    	   ModuleBuilderController::getModuleTitle(),
-    	   );
+           translate('LBL_MODULE_NAME','Administration'),
+           ModuleBuilderController::getModuleTitle(),
+           );
     }
 
     function display()
@@ -80,7 +80,7 @@ class ViewResetmodule extends SugarView
             array("name" => "fields", "label" => translate("LBL_REMOVE_FIELDS")),
             array("name" => "layouts", "label" => translate("LBL_RESET_LAYOUTS")),
             array("name" => "labels", "label" => translate("LBL_RESET_LABELS")),
-			array("name" => "extensions", "label" => translate("LBL_CLEAR_EXTENSIONS")),
+            array("name" => "extensions", "label" => translate("LBL_CLEAR_EXTENSIONS")),
         ));
         
         $ajax->addSection ( 
@@ -107,15 +107,15 @@ class ViewResetmodule extends SugarView
         if (!empty($_REQUEST['layouts'])) {
             $out .= $this->removeCustomLayouts();
         }
-			
+            
         if (!empty($_REQUEST['labels'])) {
             $out .= $this->removeCustomLabels();
         }
-			
+            
         if (!empty($_REQUEST['extensions'])) {
             $out .= $this->removeCustomExtensions();
         }	
-			
+            
         
         $out .= "Complete!";
         
@@ -233,15 +233,15 @@ class ViewResetmodule extends SugarView
                 }
                 $language = substr($langFile, 0, strlen($langFile) - 9);
                 unlink($languageDir . "/" . $langFile);
-				
+                
                 LanguageManager::clearLanguageCache ( $this->module, $language ) ;
                 $out .= "Removed language file $langFile<br/>";
             }
         }
-		
+        
         return $out;
     }
-	
+    
     function removeCustomExtensions()
     {
         $out = "";
@@ -254,7 +254,7 @@ class ViewResetmodule extends SugarView
             $rac->rebuildExtensions();
             $out .= "Cleared extensions for {$this->module}<br/>";
         }
-		
+        
         return $out;
     }
 }

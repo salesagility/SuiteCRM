@@ -66,7 +66,7 @@ if (isset($_REQUEST['type']) && $_REQUEST['type'] == 'personal') {
         $ieX->retrieve($a['id']);
         $ieX->importMessages();
     }
-	
+    
     header('Location: index.php?module=Emails&action=ListViewGroup');
 } else { // fail gracefully
     header('Location: index.php?module=Emails&action=index');

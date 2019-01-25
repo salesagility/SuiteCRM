@@ -101,17 +101,17 @@ class DocumentRevision extends SugarBean
 
     // This is the list of fields that are in the lists.
     var $list_fields = Array("id"
-		,"document_id"
-		,"date_entered"
-		,"created_by"
-		,"filename"
-		,"file_mime_type"
-		,"revision"
-		,"file_url"
-		,"change_log"
-		,"file_ext"
-		,"created_by_name"
-		);
+        ,"document_id"
+        ,"date_entered"
+        ,"created_by"
+        ,"filename"
+        ,"file_mime_type"
+        ,"revision"
+        ,"file_url"
+        ,"change_log"
+        ,"file_ext"
+        ,"created_by_name"
+        );
 
     var $required_fields = Array("revision");
 
@@ -122,7 +122,7 @@ class DocumentRevision extends SugarBean
     {
         parent::__construct();
         $this->setupCustomFields('DocumentRevisions');  //parameter is module name
-		$this->disable_row_level_security =true; //no direct access to this module.
+        $this->disable_row_level_security =true; //no direct access to this module.
     }
 
     /**
@@ -277,7 +277,7 @@ class DocumentRevision extends SugarBean
     function fill_document_name_revision($doc_id)
     {
 
-		//find the document name and current version.
+        //find the document name and current version.
         $query = "SELECT documents.document_name, revision FROM documents, document_revisions where documents.id = '$doc_id'";
         $query .= " AND document_revisions.id = documents.document_revision_id";
         $result = $this->db->query($query,true,"Error fetching document details...:");

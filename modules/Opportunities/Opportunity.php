@@ -88,13 +88,13 @@ class Opportunity extends SugarBean
 
     // This is used to retrieve related fields from form posts.
     var $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'account_name', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id'
-	);
+    );
 
     var $relationship_fields = Array('task_id'=>'tasks', 'note_id'=>'notes', 'account_id'=>'accounts',
-									'meeting_id'=>'meetings', 'call_id'=>'calls', 'email_id'=>'emails', 'project_id'=>'project',
-									// Bug 38529 & 40938
-									'currency_id' => 'currencies',
-									);
+                                    'meeting_id'=>'meetings', 'call_id'=>'calls', 'email_id'=>'emails', 'project_id'=>'project',
+                                    // Bug 38529 & 40938
+                                    'currency_id' => 'currencies',
+                                    );
 
     public function __construct()
     {
@@ -277,7 +277,7 @@ class Opportunity extends SugarBean
         return $this->build_related_list2($query, $contact, $temp);
     }
 
-		
+        
 
     function update_currency_id($fromid, $toid)
     {
@@ -388,7 +388,7 @@ class Opportunity extends SugarBean
         //if account_id was replaced unlink the previous account_id.
         //this rel_fields_before_value is populated by sugarbean during the retrieve call.
         if (!empty($this->account_id) and !empty($this->rel_fields_before_value['account_id']) and
-				(trim($this->account_id) != trim($this->rel_fields_before_value['account_id']))) {
+                (trim($this->account_id) != trim($this->rel_fields_before_value['account_id']))) {
             //unlink the old record.
             $this->load_relationship('accounts');
             $this->accounts->delete($this->id,$this->rel_fields_before_value['account_id']);
@@ -425,8 +425,8 @@ class Opportunity extends SugarBean
     function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL':return true;
-		}
+            case 'ACL':return true;
+        }
         return false;
     }
     function listviewACLHelper()
@@ -473,11 +473,11 @@ class Opportunity extends SugarBean
         $ret_array = array();
         $db = DBManagerFactory::getInstance();
         $query = "SELECT acc.id, acc.name, acc.assigned_user_id "
-			. "FROM accounts acc, accounts_opportunities a_o "
-			. "WHERE acc.id=a_o.account_id"
-			. " AND a_o.opportunity_id='$opp_id'"
-			. " AND a_o.deleted=0"
-			. " AND acc.deleted=0";
+            . "FROM accounts acc, accounts_opportunities a_o "
+            . "WHERE acc.id=a_o.account_id"
+            . " AND a_o.opportunity_id='$opp_id'"
+            . " AND a_o.deleted=0"
+            . " AND acc.deleted=0";
         $result = $db->query($query, true,"Error filling in opportunity account details: ");
         $row = $db->fetchByAssoc($result);
         if ($row != null) {

@@ -47,22 +47,22 @@ class UserDemoData
     var $_user;
     var $_large_scale_test;
     var $guids = array(
-		'jim'	=> 'seed_jim_id',
-		'sarah'	=> 'seed_sarah_id',
-		'sally'	=> 'seed_sally_id',
-		'max'	=> 'seed_max_id',
-		'will'	=> 'seed_will_id',
-		'chris'	=> 'seed_chris_id',
-	/*
-	 * Pending fix of demo data mechanism
-		'jim'	=> 'jim00000-0000-0000-0000-000000000000',
-		'sarah'	=> 'sarah000-0000-0000-0000-000000000000',
-		'sally'	=> 'sally000-0000-0000-0000-000000000000',
-		'max'	=> 'max00000-0000-0000-0000-000000000000',
-		'will'	=> 'will0000-0000-0000-0000-000000000000',
-		'chris'	=> 'chris000-0000-0000-0000-000000000000',
-	*/
-	);
+        'jim'	=> 'seed_jim_id',
+        'sarah'	=> 'seed_sarah_id',
+        'sally'	=> 'seed_sally_id',
+        'max'	=> 'seed_max_id',
+        'will'	=> 'seed_will_id',
+        'chris'	=> 'seed_chris_id',
+    /*
+     * Pending fix of demo data mechanism
+        'jim'	=> 'jim00000-0000-0000-0000-000000000000',
+        'sarah'	=> 'sarah000-0000-0000-0000-000000000000',
+        'sally'	=> 'sally000-0000-0000-0000-000000000000',
+        'max'	=> 'max00000-0000-0000-0000-000000000000',
+        'will'	=> 'will0000-0000-0000-0000-000000000000',
+        'chris'	=> 'chris000-0000-0000-0000-000000000000',
+    */
+    );
 
     /**
      * Constructor for creating user demo data
@@ -113,7 +113,7 @@ class UserDemoData
      *  Create a user in the seed data.
      */
     function _create_seed_user($id, $last_name, $first_name, $user_name,
-		$title, $is_admin, $reports_to, $reports_to_name, $email)
+        $title, $is_admin, $reports_to, $reports_to_name, $email)
     {
         $u = new User();
 
@@ -178,7 +178,7 @@ class UserDemoData
         global $sugar_demodata;
         if (!$this->_user->retrieve($name.'_id')) {
             $this->_create_seed_user("{$name}_id", $name, $name, $name,
-				$sugar_demodata['users'][0]['title'], $sugar_demodata['users'][0]['is_admin'], "seed_jim_id", $sugar_demodata['users'][0]['last_name'].", ".$sugar_demodata['users'][0]['first_name'], $sugar_demodata['users'][0]['email']);
+                $sugar_demodata['users'][0]['title'], $sugar_demodata['users'][0]['is_admin'], "seed_jim_id", $sugar_demodata['users'][0]['last_name'].", ".$sugar_demodata['users'][0]['first_name'], $sugar_demodata['users'][0]['email']);
         }
     }
 }

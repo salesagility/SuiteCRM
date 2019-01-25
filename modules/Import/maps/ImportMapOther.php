@@ -143,7 +143,7 @@ class ImportMapOther
             return array();
         }
     }
-	
+    
     /**
      * Returns a list of fields that should be ignorred for the module during import
      *
@@ -151,8 +151,8 @@ class ImportMapOther
      * @return array of fields to ignor
      */
     public function getIgnoredFields(
-		$module
-		) {
+        $module
+        ) {
         return array();
     }
 }

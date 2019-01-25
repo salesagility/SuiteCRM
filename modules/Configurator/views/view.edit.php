@@ -63,8 +63,8 @@ class ConfiguratorViewEdit extends ViewEdit
     protected $configurator;
 
     /**
-	 * @see SugarView::preDisplay()
-	 */
+     * @see SugarView::preDisplay()
+     */
     public function preDisplay()
     {
         if (!is_admin($GLOBALS['current_user'])) {
@@ -73,16 +73,16 @@ class ConfiguratorViewEdit extends ViewEdit
     }
     
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-	    
+        
         return array(
-    	   "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
-    	   $mod_strings['LBL_SYSTEM_SETTINGS']
-    	   );
+           "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
+           $mod_strings['LBL_SYSTEM_SETTINGS']
+           );
     }
 
     public function __construct()
@@ -106,7 +106,7 @@ class ConfiguratorViewEdit extends ViewEdit
     public function display()
     {
         global $current_user, $mod_strings, $app_strings, $app_list_strings, $sugar_config, $locale;
-	    
+        
         $configurator = $this->configurator;
         $sugarConfig = SugarConfig::getInstance();
         $focus = new Administration();

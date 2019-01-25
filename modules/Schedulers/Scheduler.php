@@ -504,7 +504,7 @@ class Scheduler extends SugarBean
                 $tsGmt = $dateobj->ts;
 
                 if ( $tsGmt >= $timeStartTs ) { // start is greater than the date specified by admin
-					if ( $tsGmt >= $timeFromTs ) { // start is greater than the time_to spec'd by admin
+                    if ( $tsGmt >= $timeFromTs ) { // start is greater than the time_to spec'd by admin
                         if ($tsGmt > $lastRunTs) { // start from last run, last run should not be included
                             if ( $tsGmt <= $timeEndTs ) { // this is taken care of by the initial query - start is less than the date spec'd by admin
                                 if ( $tsGmt <= $timeToTs ) { // start is less than the time_to
@@ -516,9 +516,9 @@ class Scheduler extends SugarBean
                                 //_pp('Job Time is NOT smaller that DateTimeEnd: '.date('Y-m-d H:i:s',$tsGmt) .'<='. $dateTimeEnd); //_pp( $tsGmt .'<='. $timeEndTs );
                             }
                         }
-					} else {
-					    //_pp('Job Time is NOT bigger that TimeFrom: '.$tsGmt .'>='. $timeFromTs);
-					}
+                    } else {
+                        //_pp('Job Time is NOT bigger that TimeFrom: '.$tsGmt .'>='. $timeFromTs);
+                    }
                 } else {
                     //_pp('Job Time is NOT Bigger than DateTimeStart: '.date('Y-m-d H:i',$tsGmt) .'>='. $dateTimeStart);
                 }

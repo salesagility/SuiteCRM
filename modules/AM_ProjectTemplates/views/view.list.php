@@ -60,7 +60,7 @@ class AM_ProjectTemplatesViewList extends ViewList
     {
         parent::__construct();
     }
- 	
+    
     /*
      * Override listViewProcess with addition to where clause to exclude project templates
      */

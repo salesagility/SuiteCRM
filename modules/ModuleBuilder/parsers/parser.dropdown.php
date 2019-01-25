@@ -136,14 +136,14 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
      }
 
      /**
-	 * function synchDropDown
-	 * 	Ensures that the set of dropdown keys is consistant accross all languages.
-	 *
-	 * @param $dropdown_name The name of the dropdown to be synched
-	 * @param $dropdown array The dropdown currently being saved
-	 * @param $selected_lang String the language currently selected in Studio/MB
-	 * @param $saveLov String the path to the directory to save the new lang file in.
-	 */
+     * function synchDropDown
+     * 	Ensures that the set of dropdown keys is consistant accross all languages.
+     *
+     * @param $dropdown_name The name of the dropdown to be synched
+     * @param $dropdown array The dropdown currently being saved
+     * @param $selected_lang String the language currently selected in Studio/MB
+     * @param $saveLov String the path to the directory to save the new lang file in.
+     */
      function synchDropDown($dropdown_name, $dropdown, $selected_lang, $saveLoc)
      {
          $allLanguages =  get_languages();
@@ -164,14 +164,14 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
      }
 
      /**
-	 * function synchMBDropDown
-	 * 	Ensures that the set of dropdown keys is consistant accross all languages in a ModuleBuilder Module
-	 *
-	 * @param $dropdown_name The name of the dropdown to be synched
-	 * @param $dropdown array The dropdown currently being saved
-	 * @param $selected_lang String the language currently selected in Studio/MB
-	 * @param $module MBModule the module to update the languages in
-	 */
+     * function synchMBDropDown
+     * 	Ensures that the set of dropdown keys is consistant accross all languages in a ModuleBuilder Module
+     *
+     * @param $dropdown_name The name of the dropdown to be synched
+     * @param $dropdown array The dropdown currently being saved
+     * @param $selected_lang String the language currently selected in Studio/MB
+     * @param $module MBModule the module to update the languages in
+     */
      function synchMBDropDown($dropdown_name, $dropdown, $selected_lang, $module)
      {
          $selected_lang	= $selected_lang . '.lang.php';
@@ -209,7 +209,7 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
      function getPatternMatch($dropdown_name)
      {
          return '/\s*\$GLOBALS\s*\[\s*\'app_list_strings\s*\'\s*\]\[\s*\''
-    		 . $dropdown_name.'\'\s*\]\s*=\s*array\s*\([^\)]*\)\s*;\s*/ism';
+             . $dropdown_name.'\'\s*\]\s*=\s*array\s*\([^\)]*\)\s*;\s*/ism';
      }
 
      function getNewCustomContents($dropdown_name, $dropdown, $lang)

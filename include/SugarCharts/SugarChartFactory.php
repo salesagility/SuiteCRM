@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class SugarChartFactory
 {
     /**
-	 * Returns a reference to the ChartEngine object for instance $chartEngine, or the default
+     * Returns a reference to the ChartEngine object for instance $chartEngine, or the default
      * instance if one is not specified
      *
      * @param string $chartEngine optional, name of the chart engine from $sugar_config['chartEngine']

@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-		// Create the indexes
+        // Create the indexes
 $dictionary['vCal'] = array('table' => 'vcals'
                                ,'fields' => array (
   'id' => 
@@ -77,8 +77,8 @@ $dictionary['vCal'] = array('table' => 'vcals'
   array (
     'name' => 'user_id',
     'type' => 'id',
-	'required'=>true,
-	'reportable'=>false,
+    'required'=>true,
+    'reportable'=>false,
   ),
     'type' => 
   array (

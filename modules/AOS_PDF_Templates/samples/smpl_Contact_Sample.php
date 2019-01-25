@@ -8,7 +8,7 @@ class smpl_Contact_Sample
     {
         return 'Contacts';
     }
-		
+        
     function getBody()
     {
         global $locale;

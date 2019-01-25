@@ -569,9 +569,9 @@ abstract class source
     public abstract function getList($args=array(), $module=null);
 
     /**
-	 * Default destructor
-	 *
-	 */
+     * Default destructor
+     *
+     */
     public function __destruct()
     {
         // Bug # 47233 - This desctructor was originally removed by bug # 44533.

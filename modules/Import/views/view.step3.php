@@ -334,8 +334,8 @@ class ImportViewStep3 extends ImportView
                     // see if we have a match
                     $selected = '';
                     if ( strtolower($fieldname) == strtolower($field_name)
-							&& !in_array($fieldname,$mappedFields)
-							&& !in_array($fieldname,$ignored_fields) ) {
+                            && !in_array($fieldname,$mappedFields)
+                            && !in_array($fieldname,$ignored_fields) ) {
                         $selected = ' selected="selected" ';
                         $defaultField = $fieldname;
                         $mappedFields[] = $fieldname;

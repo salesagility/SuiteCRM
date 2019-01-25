@@ -78,39 +78,39 @@ class FieldsMetaData extends SugarBean
     var $object_name = 'FieldsMetaData';
     var $module_dir = 'DynamicFields';
     var $column_fields = array(
-		'id',
-		'name',
-		'vname',
-		'custom_module',
-		'type',
-		'len',
-		'required',
-		'default_value',
-		'deleted',
-		'ext1',
-		'ext2',
-		'ext3',
-		'audited',
-		'inline_edit',
-		'massupdate',
+        'id',
+        'name',
+        'vname',
+        'custom_module',
+        'type',
+        'len',
+        'required',
+        'default_value',
+        'deleted',
+        'ext1',
+        'ext2',
+        'ext3',
+        'audited',
+        'inline_edit',
+        'massupdate',
         'duplicate_merge',
         'reportable',
-	);
+    );
 
     var $list_fields = array(
-		'id',
-		'name',
-		'vname',
-		'type',
-		'len',
-		'required',
-		'default_value',
-		'audited',
+        'id',
+        'name',
+        'vname',
+        'type',
+        'len',
+        'required',
+        'default_value',
+        'audited',
         'inline_edit',
-		'massupdate',
+        'massupdate',
         'duplicate_merge',
         'reportable',
-	);
+    );
 
     var $field_name_map;
     var $new_schema = true;

@@ -311,10 +311,10 @@ function prepareDiag()
 
     // array of all tables that we need to pull rows from below
     $getDumpsFrom = array('config' => 'config',
-	                      'fields_meta_data' => 'fields_meta_data',
-	                      'upgrade_history' => 'upgrade_history',
-	                      'versions' => 'versions',
-	                      );
+                          'fields_meta_data' => 'fields_meta_data',
+                          'upgrade_history' => 'upgrade_history',
+                          'versions' => 'versions',
+                          );
 
 
     //Creates the diagnostic directory in the cache directory
@@ -751,8 +751,8 @@ function finishDiag()
     chdir(RETURN_FROM_DIAG_DIR);
 
     deleteDir($cacheDir);
-	
-	
+    
+    
     print "<a href=\"index.php?module=Administration&action=DiagnosticDownload&guid=$sod_guid&time=$curdatetime&to_pdf=1\">".$mod_strings['LBL_DIAGNOSTIC_DOWNLOADLINK']."</a><BR>";
 
     deleteDir($cacheDir);

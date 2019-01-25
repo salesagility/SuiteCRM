@@ -764,7 +764,7 @@ function process_subscriptions($subscription_string_to_parse)
                 $exempt_list->$relationship->add($focus->id);
             } elseif ($subscription_list['list_type'] == 'default' || $subscription_list['list_type'] == 'test') {
                 //if list type is default or test, then delete the relationship
-            	//$exempt_list->$relationship->delete($subscription_list['id'],$focus->id);
+                //$exempt_list->$relationship->delete($subscription_list['id'],$focus->id);
             }
         }
 

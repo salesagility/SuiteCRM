@@ -52,7 +52,7 @@ $disc_client_ignore = array (
     
      "\\.*sync\\.log\\.*",
     "\\.htaccess\$",
-	"\\.*\\.tmp\$",
+    "\\.*\\.tmp\$",
     "\\.*\\.bak\$",
     "\\.*\\.zip\$",
     

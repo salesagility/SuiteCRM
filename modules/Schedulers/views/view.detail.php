@@ -61,8 +61,8 @@ class SchedulersViewDetail extends ViewDetail
     }
 
     /**
- 	 * display
- 	 */
+     * display
+     */
     function display()
     {
         $this->bean->parseInterval();

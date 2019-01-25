@@ -57,7 +57,7 @@ class ProspectListFormBase
         if (!ACLController::checkAccess('ProspectLists', 'edit', true)) {
             return '';
         }
-	
+    
         if (!empty($mod)) {
             global $current_language;
             $mod_strings = return_module_language($current_language, $mod);
@@ -65,7 +65,7 @@ class ProspectListFormBase
             global $mod_strings;
         }
         global $app_strings,$current_user;
-	
+    
         $lbl_save_button_title = $app_strings['LBL_SAVE_BUTTON_TITLE'];
         $lbl_save_button_key = $app_strings['LBL_SAVE_BUTTON_KEY'];
         $lbl_save_button_label = $app_strings['LBL_SAVE_BUTTON_LABEL'];
@@ -107,7 +107,7 @@ EOQ;
         global $app_strings;
         global $current_user;
         global $app_list_strings;
-	
+    
         $lbl_required_symbol = $app_strings['LBL_REQUIRED_SYMBOL'];
         $lbl_save_button_title = $app_strings['LBL_SAVE_BUTTON_TITLE'];
         $lbl_save_button_key = $app_strings['LBL_SAVE_BUTTON_KEY'];
@@ -115,10 +115,10 @@ EOQ;
         $user_id = $current_user->id;
 
         $list_options=get_select_options_with_id($app_list_strings['prospect_list_type_dom'], 'default');
-	
+    
         $lbl_prospect_list_name = $mod_strings['LBL_PROSPECT_LIST_NAME'];
         $lbl_list_type = $mod_strings['LBL_LIST_TYPE'];
-	
+    
         $form = <<<EOQ
 			<p><input type="hidden" name="record" value="">
 			$lbl_prospect_list_name&nbsp;<span class="required">$lbl_required_symbol</span><br>
@@ -127,8 +127,8 @@ EOQ;
 			<select name="list_type">$list_options</select></p>
 EOQ;
 
-	
-	
+    
+    
         $javascript = new javascript();
         $javascript->setFormName($formname);
         $javascript->setSugarBean(new ProspectList());
@@ -141,8 +141,8 @@ EOQ;
     function handleSave($prefix,$redirect=true, $useRequired=false)
     {
         require_once('include/formbase.php');
-	
-		
+    
+        
         $focus = new ProspectList();
         if ($useRequired &&  !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
@@ -158,7 +158,7 @@ EOQ;
         if ( !isset($focus->assigned_user_id) || $focus->assigned_user_id == '' ) {
             $focus->assigned_user_id = $GLOBALS['current_user']->id;
         }
-	
+    
         $return_id = $focus->save();
         if ($redirect) {
             $GLOBALS['log']->debug("Saved record with id of ".$return_id);

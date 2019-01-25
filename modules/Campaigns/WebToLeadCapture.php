@@ -60,7 +60,7 @@ $app_list_strings['record_type_module'] = array('Contact'=>'Contacts', 'Account'
  * To make your changes upgrade safe create a file called leadCapture_override.php and place the changes there
  */
 $users = array(
-	'PUT A RANDOM KEY FROM THE WEBSITE HERE' => array('name'=>'PUT THE USER_NAME HERE', 'pass'=>'PUT THE USER_HASH FOR THE RESPECTIVE USER HERE'),
+    'PUT A RANDOM KEY FROM THE WEBSITE HERE' => array('name'=>'PUT THE USER_NAME HERE', 'pass'=>'PUT THE USER_HASH FOR THE RESPECTIVE USER HERE'),
 );
 
 if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
@@ -125,8 +125,8 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         $lead = $leadForm->handleSave($prefix, false, false, false, $lead);
             
         if (!empty($lead)) {
-				
-	            //create campaign log
+                
+                //create campaign log
             $camplog = new CampaignLog();
             $camplog->campaign_id  = $campaign_id;
             $camplog->related_id   = $lead->id;
@@ -192,7 +192,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 if ($param == 'redirect_url' && $param == 'submit') {
                     continue;
                 }
-					
+                    
                 if ($first_iteration) {
                     $first_iteration = false;
                     $query_string .= $first_char;
@@ -209,7 +209,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 }
                 $query_string .= "error=1";
             }
-				
+                
             $redirect_url = $redirect_url.$query_string;
 
 

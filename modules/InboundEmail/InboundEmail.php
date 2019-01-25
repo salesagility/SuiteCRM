@@ -3616,7 +3616,7 @@ class InboundEmail extends SugarBean
                     $c->account_name = $acct->name;
                 } // if
             } // if
-			$c->save(true);
+            $c->save(true);
             $c->retrieve($c->id);
             ;
             if ($c->load_relationship('emails')) {
@@ -3636,7 +3636,7 @@ class InboundEmail extends SugarBean
                     $c->contacts->add($contactIds);
                 } // if
             } // if
-			$c->email_id = $email->id;
+            $c->email_id = $email->id;
             $email->parent_type = "Cases";
             $email->parent_id = $c->id;
             // assign the email to the case owner

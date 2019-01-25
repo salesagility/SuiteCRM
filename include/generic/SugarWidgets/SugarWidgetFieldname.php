@@ -200,7 +200,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
         }
 
         return SugarWidgetFieldid::_get_column_select($layout_def)."="
-			.$this->reporter->db->quoted($input_name0)."\n";
+            .$this->reporter->db->quoted($input_name0)."\n";
     }
 
     function queryFilteris_not($layout_def)
@@ -218,7 +218,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
         }
 
         return SugarWidgetFieldid::_get_column_select($layout_def)."<>"
-			.$this->reporter->db->quoted($input_name0)."\n";
+            .$this->reporter->db->quoted($input_name0)."\n";
     }
 
     // $rename_columns, if true then you're coming from reports

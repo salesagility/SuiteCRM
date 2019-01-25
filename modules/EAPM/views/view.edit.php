@@ -68,8 +68,8 @@ class EAPMViewEdit extends ViewEdit
     }
 
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
@@ -107,8 +107,8 @@ class EAPMViewEdit extends ViewEdit
     }
 
     /**
-	 * @see SugarView::getModuleTitleIconPath()
-	 */
+     * @see SugarView::getModuleTitleIconPath()
+     */
     protected function getModuleTitleIconPath($module)
     {
         return parent::getModuleTitleIconPath('Users');

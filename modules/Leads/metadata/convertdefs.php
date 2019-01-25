@@ -47,13 +47,13 @@ $viewdefs['Contacts']['ConvertLead'] = array(
         'form'=>array(
             'hidden'=>array(
                 '<input type="hidden" name="opportunity_id" value="{$smarty.request.opportunity_id}">',
-    			'<input type="hidden" name="case_id" value="{$smarty.request.case_id}">',
-    			'<input type="hidden" name="bug_id" value="{$smarty.request.bug_id}">',
-    			'<input type="hidden" name="email_id" value="{$smarty.request.email_id}">',
-    			'<input type="hidden" name="inbound_email_id" value="{$smarty.request.inbound_email_id}">'
+                '<input type="hidden" name="case_id" value="{$smarty.request.case_id}">',
+                '<input type="hidden" name="bug_id" value="{$smarty.request.bug_id}">',
+                '<input type="hidden" name="email_id" value="{$smarty.request.email_id}">',
+                '<input type="hidden" name="inbound_email_id" value="{$smarty.request.inbound_email_id}">'
             )
         ),
-		'maxColumns' => '2', 
+        'maxColumns' => '2', 
         'widths' => array(
             array('label' => '10', 'field' => '30'), 
             array('label' => '10', 'field' => '30'),
@@ -106,7 +106,7 @@ $viewdefs['Accounts']['ConvertLead'] = array(
     'copyData' => true,
     'required' => true,
     'select' => "account_name",
-	'default_action' => 'create',
+    'default_action' => 'create',
     'relationship' => 'accounts_contacts',
     'templateMeta' => array(
         'form'=>array(
@@ -290,7 +290,7 @@ $viewdefs['Meetings']['ConvertLead'] = array(
             ), 
             array (
                'date_start', 
-	            array (
+                array (
                     'name' => 'duration_hours',
                     'label' => 'LBL_DURATION',
                     'customCode' => '{literal}
@@ -345,7 +345,7 @@ $viewdefs['Tasks']['ConvertLead'] = array(
             array (
                 array('name'=>'name', 'displayParams'=>array('size'=>90)),
             ), 
-			array (
+            array (
                'status', 'priority'
             ), 
             

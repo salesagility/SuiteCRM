@@ -127,7 +127,7 @@ class One2MRelationship extends M2MRelationship
             // only the bean id is loaded into $rhs->$rhsLinkName)
             $rhsLinkName = $this->rhsLink;
             $rhs->load_relationship($rhsLinkName);
-        	
+            
             // If it's a One2Many self-referencing relationship
             // the positions of the default One (LHS) and Many (RHS) are swaped
             // so we should clear the links from the many (left) side
@@ -136,14 +136,14 @@ class One2MRelationship extends M2MRelationship
                 $linkName = $this->rhsLink;
                 // Load the relationship into the left hand side bean
                 $lhs->load_relationship($linkName);
-	            
+                
                 // Pick the loaded link
                 $link = $lhs->$linkName;
                 // Get many (LHS) side bean
                 $focus = $link->getFocus();
                 // Get relations
                 $related = $link->getBeans();
-	        	
+                
                 // Clear the relations from many side bean
                 foreach ($related as $relBean) {
                     $this->remove($focus, $relBean);

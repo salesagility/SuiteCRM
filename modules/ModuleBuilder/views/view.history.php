@@ -48,16 +48,16 @@ class ViewHistory extends SugarView
     var $pageSize = 10 ;
 
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-	    
+        
         return array(
-    	   translate('LBL_MODULE_NAME','Administration'),
-    	   ModuleBuilderController::getModuleTitle(),
-    	   );
+           translate('LBL_MODULE_NAME','Administration'),
+           ModuleBuilderController::getModuleTitle(),
+           );
     }
 
     function display()
@@ -171,9 +171,9 @@ class ViewHistory extends SugarView
     }
 
     /**
- 	 * Restores a layout to its current customized state. 
- 	 * Called when leaving a restored layout without saving.
- 	 */
+     * Restores a layout to its current customized state. 
+     * Called when leaving a restored layout without saving.
+     */
     function unrestore()
     {
         $this->history->undoRestore () ;
