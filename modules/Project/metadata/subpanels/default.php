@@ -66,7 +66,7 @@ $subpanel_layout = array(
             'target_record_key' => 'assigned_user_id',
             'target_module' => 'Users',
             'width' => '15%',
-             'sortable'=>false,	
+             'sortable'=>false,
         ),
         'estimated_start_date' => array(
             'vname' => 'LBL_DATE_START',
@@ -77,7 +77,7 @@ $subpanel_layout = array(
             'vname' => 'LBL_DATE_END',
             'width' => '25%',
             'sortable' => true,
-        ),		
+        ),
         'edit_button'=>array(
             'vname' => 'LBL_EDIT_BUTTON',
             'widget_class' => 'SubPanelEditButton',
@@ -89,6 +89,6 @@ $subpanel_layout = array(
             'widget_class' => 'SubPanelRemoveButton',
             'module' => 'Project',
             'width' => '3%',
-        ),				
+        ),
     ),
 );

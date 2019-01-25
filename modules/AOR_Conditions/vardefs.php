@@ -46,7 +46,7 @@ $dictionary['AOR_Condition'] = array(
     'len' => 36,
     'size' => '20',
   ),
-  'condition_order' => 
+  'condition_order' =>
   array(
     'required' => false,
     'name' => 'condition_order',
@@ -85,7 +85,7 @@ $dictionary['AOR_Condition'] = array(
     'vname' => 'LBL_MODULE_PATH',
     'isnull' => true,
   ),
-  'field' => 
+  'field' =>
   array(
     'required' => false,
     'name' => 'field',
@@ -107,7 +107,7 @@ $dictionary['AOR_Condition'] = array(
     'studio' => 'visible',
     'dependency' => false,
   ),
-  'operator' => 
+  'operator' =>
   array(
     'required' => false,
     'name' => 'operator',
@@ -153,7 +153,7 @@ $dictionary['AOR_Condition'] = array(
     'studio' => 'visible',
     'dependency' => false,
   ),
-  'value' => 
+  'value' =>
   array(
     'required' => false,
     'name' => 'value',

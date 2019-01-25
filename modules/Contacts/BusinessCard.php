@@ -57,7 +57,7 @@ global $theme;
 $error_msg = '';
 global $current_language;
 $mod_strings = return_module_language($current_language, 'Contacts');
-echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$mod_strings['LBL_BUSINESSCARD']), true); 
+echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$mod_strings['LBL_BUSINESSCARD']), true);
 $xtpl=new XTemplate('modules/Contacts/BusinessCard.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
@@ -138,7 +138,7 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
             }
             if (isset($_POST['Contactslead_source']) && !empty($_POST['Contactslead_source'])) {
                 $_POST['Opportunitieslead_source'] = $_POST['Contactslead_source'];
-            } 
+            }
             $opportunity= $oppForm->handleSave('Opportunities', false, false);
         }
     }
@@ -253,7 +253,7 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
             $xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_EXISTING_ACCOUNT']. " - <a href='index.php?action=DetailView&module=Accounts&record=".$account->id."'>".$account->name."</a>");
             $xtpl->parse('main.row');
         } else {
-            $xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_CREATED_ACCOUNT']. " - <a href='index.php?action=DetailView&module=Accounts&record=".$account->id."'>".$account->name."</a>");		
+            $xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_CREATED_ACCOUNT']. " - <a href='index.php?action=DetailView&module=Accounts&record=".$account->id."'>".$account->name."</a>");
             $xtpl->parse('main.row');
         }
     }
@@ -270,17 +270,17 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
 
     if (isset($call)) {
         $call->track_view($current_user->id, 'Calls');
-        $xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_CREATED_CALL']. " - <a href='index.php?action=DetailView&module=Calls&record=".$call->id."'>".$call->name."</a>");	
+        $xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_CREATED_CALL']. " - <a href='index.php?action=DetailView&module=Calls&record=".$call->id."'>".$call->name."</a>");
         $xtpl->parse('main.row');
     }
     if (isset($meeting)) {
         $meeting->track_view($current_user->id, 'Meetings');
-        $xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_CREATED_MEETING']. " - <a href='index.php?action=DetailView&module=Calls&record=".$meeting->id."'>".$meeting->name."</a>");	
+        $xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_CREATED_MEETING']. " - <a href='index.php?action=DetailView&module=Calls&record=".$meeting->id."'>".$meeting->name."</a>");
         $xtpl->parse('main.row');
     }
-    $xtpl->assign('ROWVALUE', "&nbsp;");	
+    $xtpl->assign('ROWVALUE', "&nbsp;");
     $xtpl->parse('main.row');
-    $xtpl->assign('ROWVALUE', "<a href='index.php?module=Contacts&action=BusinessCard'>{$mod_strings['LBL_ADDMORE_BUSINESSCARD']}</a>");	
+    $xtpl->assign('ROWVALUE', "<a href='index.php?module=Contacts&action=BusinessCard'>{$mod_strings['LBL_ADDMORE_BUSINESSCARD']}</a>");
     $xtpl->parse('main.row');
     $xtpl->parse('main');
     $xtpl->out('main');

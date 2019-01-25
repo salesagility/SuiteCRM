@@ -1,18 +1,18 @@
 <?php
 $module_name = 'jjwg_Address_Cache';
-$searchdefs [$module_name] = 
+$searchdefs [$module_name] =
 array(
-  'layout' => 
+  'layout' =>
   array(
-    'basic_search' => 
+    'basic_search' =>
     array(
-      'name' => 
+      'name' =>
       array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'current_user_only' => 
+      'current_user_only' =>
       array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
@@ -21,15 +21,15 @@ array(
         'width' => '10%',
       ),
     ),
-    'advanced_search' => 
+    'advanced_search' =>
     array(
-      'name' => 
+      'name' =>
       array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'lat' => 
+      'lat' =>
       array(
         'type' => 'decimal',
         'label' => 'LBL_LAT',
@@ -37,7 +37,7 @@ array(
         'default' => true,
         'name' => 'lat',
       ),
-      'lng' => 
+      'lng' =>
       array(
         'type' => 'decimal',
         'label' => 'LBL_LNG',
@@ -45,15 +45,15 @@ array(
         'default' => true,
         'name' => 'lng',
       ),
-      'assigned_user_id' => 
+      'assigned_user_id' =>
       array(
         'name' => 'assigned_user_id',
         'label' => 'LBL_ASSIGNED_TO',
         'type' => 'enum',
-        'function' => 
+        'function' =>
         array(
           'name' => 'get_user_array',
-          'params' => 
+          'params' =>
           array(
             0 => false,
           ),
@@ -63,10 +63,10 @@ array(
       ),
     ),
   ),
-  'templateMeta' => 
+  'templateMeta' =>
   array(
     'maxColumns' => '3',
-    'widths' => 
+    'widths' =>
     array(
       'label' => '10',
       'field' => '30',

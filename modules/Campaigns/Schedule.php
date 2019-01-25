@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /*********************************************************************************
 
- * Description: 
+ * Description:
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
@@ -165,7 +165,7 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
         while (($row=$focus->db->fetchByAssoc($result)) != null) {
             $bean = new EmailMarketing();
             $bean->retrieve($row['email_marketing_id']);
-            $bean->mode='test';	
+            $bean->mode='test';
             $seed[]=$bean;
         }
         $query=" select email_marketing.id email_marketing_id from email_marketing ";
@@ -177,7 +177,7 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
         while (($row=$focus->db->fetchByAssoc($result)) != null) {
             $bean = new EmailMarketing();
             $bean->retrieve($row['email_marketing_id']);
-            $bean->mode='test';	
+            $bean->mode='test';
             $seed[]=$bean;
         }
 

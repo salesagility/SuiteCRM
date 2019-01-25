@@ -186,7 +186,7 @@ class ConfiguratorViewEdit extends ViewEdit
     }
     
     /**
-     * 
+     *
      * @param string $googleAuthJSON
      */
     protected function checkGoogleSyncJSON($googleAuthJSON)

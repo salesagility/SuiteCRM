@@ -53,6 +53,6 @@ $subpanel_layout = array(
             'module' => 'SecurityGroups',
             'width' => '5%',
             'refresh_page'=>true,
-        ), 
+        ),
     ),
 );

@@ -66,7 +66,7 @@ function get_node_data($params, $get_array=false)
 }
 
 /*
- *  
+ *
  *
  */
  function get_category_nodes($href_string)
@@ -85,7 +85,7 @@ function get_node_data($params, $get_array=false)
          } else {
              $cat_id=$row['category_id'];
              $cat_name=$app_list_strings['document_category_dom'][$row['category_id']];
-         }            
+         }
          if (empty($current_cat_id) or $current_cat_id != $cat_id) {
              $current_cat_id = $cat_id;
              if (!empty($cat_node)) {
@@ -96,7 +96,7 @@ function get_node_data($params, $get_array=false)
              $cat_node->set_property("href", $href_string);
              $cat_node->expanded = true;
              $cat_node->dynamic_load = false;
-         } 
+         }
 
          if (empty($row['subcategory_id'])) {
              $subcat_id='null';
@@ -104,14 +104,14 @@ function get_node_data($params, $get_array=false)
          } else {
              $subcat_id=$row['subcategory_id'];
              $subcat_name=$app_list_strings['document_subcategory_dom'][$row['subcategory_id']];
-         }            
+         }
          $subcat_node = new Node($subcat_id, $subcat_name);
          $subcat_node->set_property("href", $href_string);
          $subcat_node->expanded = false;
          $subcat_node->dynamic_load = true;
         
          $cat_node->add_node($subcat_node);
-     }    
+     }
      if (!empty($cat_node)) {
          $nodes[]=$cat_node;
      }

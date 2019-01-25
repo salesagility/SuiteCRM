@@ -71,7 +71,7 @@ class SugarSecure
                 $this->scan($path .'/' . $entry);
             }
             if (is_file($path . '/'. $entry) && substr($entry, strlen($entry) - strlen($ext), strlen($ext)) == $ext) {
-                $contents = file_get_contents($path .'/'. $entry);	
+                $contents = file_get_contents($path .'/'. $entry);
                 $this->scanContents($contents, $path .'/'. $entry);
             }
         }
@@ -91,13 +91,13 @@ class ScanFileIncludes extends SugarSecure
         $found = '';
         /*preg_match_all("'(require_once\([^\)]*\\$[^\)]*\))'si", $contents, $results, PREG_SET_ORDER);
         foreach($results as $result){
-        	
-        	$found .= "\n" . $result[0];	
+
+        	$found .= "\n" . $result[0];
         }
         $results = array();
         preg_match_all("'include_once\([^\)]*\\$[^\)]*\)'si", $contents, $results, PREG_SET_ORDER);
         foreach($results as $result){
-        	$found .= "\n" . $result[0];	
+        	$found .= "\n" . $result[0];
         }
         */
         $results = array();
@@ -162,7 +162,7 @@ class SugarSecureManager
     
     function save()
     {
-        //reset($this->scanners);	
+        //reset($this->scanners);
         $name = 'SugarSecure'. time() . '.txt';
         while ($this->scanners  = next($this->scanners)) {
             $scanner->save($name);

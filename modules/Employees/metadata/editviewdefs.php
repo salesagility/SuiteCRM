@@ -44,79 +44,79 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $viewdefs ['Employees'] =
 array(
-  'EditView' => 
+  'EditView' =>
   array(
-    'templateMeta' => 
+    'templateMeta' =>
     array(
       'maxColumns' => '2',
-      'widths' => 
+      'widths' =>
       array(
-        0 => 
+        0 =>
         array(
           'label' => '10',
           'field' => '30',
         ),
-        1 => 
+        1 =>
         array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'useTabs' => true,
-      'tabDefs' => 
+      'tabDefs' =>
       array(
-        'DEFAULT' => 
+        'DEFAULT' =>
         array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
-    'panels' => 
+    'panels' =>
     array(
-      'default' => 
+      'default' =>
       array(
-        0 => 
+        0 =>
         array(
           0 => 'employee_status',
         ),
-        1 => 
+        1 =>
         array(
           0 => 'first_name',
-          1 => 
+          1 =>
           array(
             'name' => 'last_name',
-            'displayParams' => 
+            'displayParams' =>
             array(
               'required' => true,
             ),
           ),
         ),
-        2 => 
+        2 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'title',
             'customCode' => '{if $EDIT_REPORTS_TO}<input type="text" name="{$fields.title.name}" id="{$fields.title.name}" size="30" maxlength="50" value="{$fields.title.value}" title="" tabindex="t" >{else}{$fields.title.value}<input type="hidden" name="{$fields.title.name}" id="{$fields.title.name}" value="{$fields.title.value}">{/if}',
           ),
-          1 => 
+          1 =>
           array(
             'name' => 'phone_work',
             'label' => 'LBL_OFFICE_PHONE',
           ),
         ),
-        3 => 
+        3 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'department',
             'customCode' => '{if $EDIT_REPORTS_TO}<input type="text" name="{$fields.department.name}" id="{$fields.department.name}" size="30" maxlength="50" value="{$fields.department.value}" title="" tabindex="t" >{else}{$fields.department.value}<input type="hidden" name="{$fields.department.name}" id="{$fields.department.name}" value="{$fields.department.value}">{/if}',
           ),
           1 => 'phone_mobile',
         ),
-        4 => 
+        4 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'reports_to_name',
             'label' => 'LBL_REPORTS_TO_NAME',
@@ -124,71 +124,71 @@ array(
           ),
           1 => 'phone_other',
         ),
-        5 => 
+        5 =>
         array(
           0 => 'phone_home',
-          1 => 
+          1 =>
           array(
             'name' => 'phone_fax',
             'label' => 'LBL_FAX',
           ),
         ),
-        6 => 
+        6 =>
         array(
           0 => 'messenger_type',
           1 => 'messenger_id',
         ),
-        7 => 
+        7 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'description',
             'label' => 'LBL_NOTES',
           ),
         ),
-        8 => 
+        8 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'address_street',
             'type' => 'text',
             'label' => 'LBL_PRIMARY_ADDRESS',
-            'displayParams' => 
+            'displayParams' =>
             array(
               'rows' => 2,
               'cols' => 30,
             ),
           ),
-          1 => 
+          1 =>
           array(
             'name' => 'address_city',
             'label' => 'LBL_CITY',
           ),
         ),
-        9 => 
+        9 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'address_state',
             'label' => 'LBL_STATE',
           ),
-          1 => 
+          1 =>
           array(
             'name' => 'address_postalcode',
             'label' => 'LBL_POSTAL_CODE',
           ),
         ),
-        10 => 
+        10 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'address_country',
             'label' => 'LBL_COUNTRY',
           ),
         ),
-        11 => 
+        11 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'email1',
             'label' => 'LBL_EMAIL',

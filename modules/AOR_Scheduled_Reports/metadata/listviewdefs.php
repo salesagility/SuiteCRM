@@ -1,16 +1,16 @@
 <?php
 $module_name = 'AOR_Scheduled_Reports';
 $OBJECT_NAME = 'AOR_SCHEDULED_REPORTS';
-$listViewDefs [$module_name] = 
+$listViewDefs [$module_name] =
 array(
-  'NAME' => 
+  'NAME' =>
   array(
     'width' => '40%',
     'label' => 'LBL_NAME',
     'link' => true,
     'default' => true,
   ),
-  'AOR_REPORT_NAME' => 
+  'AOR_REPORT_NAME' =>
   array(
     'type' => 'relate',
     'link' => true,
@@ -19,21 +19,21 @@ array(
     'width' => '10%',
     'default' => true,
   ),
-  'STATUS' => 
+  'STATUS' =>
   array(
     'type' => 'enum',
     'label' => 'LBL_STATUS',
     'width' => '10%',
     'default' => true,
   ),
-  'DATE_MODIFIED' => 
+  'DATE_MODIFIED' =>
   array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_MODIFIED',
     'width' => '10%',
     'default' => false,
   ),
-  'ASSIGNED_USER_NAME' => 
+  'ASSIGNED_USER_NAME' =>
   array(
     'link' => true,
     'type' => 'relate',
@@ -42,7 +42,7 @@ array(
     'width' => '10%',
     'default' => false,
   ),
-  'DATE_ENTERED' => 
+  'DATE_ENTERED' =>
   array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',

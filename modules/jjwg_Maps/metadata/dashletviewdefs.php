@@ -1,25 +1,25 @@
 <?php
 
 $dashletData['jjwg_MapsDashlet']['searchFields'] = array(
-  'name' => 
+  'name' =>
   array(
     'default' => '',
   ),
-  'module_type' => 
+  'module_type' =>
   array(
     'default' => '',
   ),
-  'date_entered' => 
+  'date_entered' =>
   array(
     'default' => '',
   ),
-  'date_modified' => 
+  'date_modified' =>
   array(
     'default' => '',
   ),
 );
 $dashletData['jjwg_MapsDashlet']['columns'] = array(
-  'name' => 
+  'name' =>
   array(
     'width' => '40%',
     'label' => 'LBL_LIST_NAME',
@@ -27,7 +27,7 @@ $dashletData['jjwg_MapsDashlet']['columns'] = array(
     'default' => true,
     'name' => 'name',
   ),
-  'module_type' => 
+  'module_type' =>
   array(
     'type' => 'enum',
     'default' => true,
@@ -36,14 +36,14 @@ $dashletData['jjwg_MapsDashlet']['columns'] = array(
     'sortable' => false,
     'width' => '10%',
   ),
-  'distance' => 
+  'distance' =>
   array(
     'type' => 'float',
     'label' => 'LBL_DISTANCE',
     'width' => '10%',
     'default' => true,
   ),
-  'unit_type' => 
+  'unit_type' =>
   array(
     'type' => 'enum',
     'default' => true,
@@ -52,14 +52,14 @@ $dashletData['jjwg_MapsDashlet']['columns'] = array(
     'sortable' => false,
     'width' => '10%',
   ),
-  'date_entered' => 
+  'date_entered' =>
   array(
     'width' => '15%',
     'label' => 'LBL_DATE_ENTERED',
     'default' => true,
     'name' => 'date_entered',
   ),
-  'parent_name' => 
+  'parent_name' =>
   array(
     'type' => 'parent',
     'studio' => 'visible',
@@ -67,28 +67,28 @@ $dashletData['jjwg_MapsDashlet']['columns'] = array(
     'width' => '10%',
     'default' => false,
   ),
-  'date_modified' => 
+  'date_modified' =>
   array(
     'width' => '15%',
     'label' => 'LBL_DATE_MODIFIED',
     'name' => 'date_modified',
     'default' => false,
   ),
-  'created_by' => 
+  'created_by' =>
   array(
     'width' => '8%',
     'label' => 'LBL_CREATED',
     'name' => 'created_by',
     'default' => false,
   ),
-  'assigned_user_name' => 
+  'assigned_user_name' =>
   array(
     'width' => '8%',
     'label' => 'LBL_LIST_ASSIGNED_USER',
     'name' => 'assigned_user_name',
     'default' => false,
   ),
-  'description' => 
+  'description' =>
   array(
     'type' => 'text',
     'label' => 'LBL_DESCRIPTION',

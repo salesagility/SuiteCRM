@@ -61,12 +61,12 @@ class EmailsControllerActionGetFromFields
     
     /**
      *
-     * @var EmailsDataAddressCollector 
+     * @var EmailsDataAddressCollector
      */
     protected $collector;
 
     /**
-     * 
+     *
      * @param User $currentUser
      * @param EmailsDataAddressCollector $collector
      */
@@ -77,7 +77,7 @@ class EmailsControllerActionGetFromFields
     }
 
     /**
-     * 
+     *
      * @param Email $email
      * @param InboundEmail $ie
      * @return string JSON

@@ -1,14 +1,14 @@
 <?php
 $module_name = 'AM_TaskTemplates';
-$viewdefs [$module_name] = 
+$viewdefs [$module_name] =
 array(
-  'DetailView' => 
+  'DetailView' =>
   array(
-    'templateMeta' => 
+    'templateMeta' =>
     array(
-      'form' => 
+      'form' =>
       array(
-        'buttons' => 
+        'buttons' =>
         array(
           0 => 'EDIT',
           1 => 'DUPLICATE',
@@ -17,23 +17,23 @@ array(
         ),
       ),
       'maxColumns' => '2',
-      'widths' => 
+      'widths' =>
       array(
-        0 => 
+        0 =>
         array(
           'label' => '10',
           'field' => '30',
         ),
-        1 => 
+        1 =>
         array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'useTabs' => false,
-      'tabDefs' => 
+      'tabDefs' =>
       array(
-        'DEFAULT' => 
+        'DEFAULT' =>
         array(
           'newTab' => false,
           'panelDefault' => 'expanded',
@@ -41,97 +41,97 @@ array(
       ),
       'syncDetailEditViews' => true,
     ),
-    'panels' => 
+    'panels' =>
     array(
-      'default' => 
+      'default' =>
       array(
-        0 => 
+        0 =>
         array(
           0 => 'name',
-          1 => 
+          1 =>
           array(
             'name' => 'duration',
             'label' => 'LBL_DURATION',
           ),
         ),
-        1 => 
+        1 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'status',
             'studio' => 'visible',
             'label' => 'LBL_STATUS',
           ),
-          1 => 
+          1 =>
           array(
             'name' => 'priority',
             'studio' => 'visible',
             'label' => 'LBL_PRIORITY',
           ),
         ),
-        2 => 
+        2 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'percent_complete',
             'label' => 'LBL_PERCENT_COMPLETE',
           ),
-          1 => 
+          1 =>
           array(
             'name' => 'predecessors',
             'label' => 'LBL_PREDECESSORS',
           ),
         ),
-        3 => 
+        3 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'milestone_flag',
             'label' => 'LBL_MILESTONE_FLAG',
           ),
-          1 => 
+          1 =>
           array(
             'name' => 'relationship_type',
             'studio' => 'visible',
             'label' => 'LBL_RELATIONSHIP_TYPE',
           ),
         ),
-        4 => 
+        4 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'task_number',
             'label' => 'LBL_TASK_NUMBER',
           ),
-          1 => 
+          1 =>
           array(
             'name' => 'order_number',
             'label' => 'LBL_ORDER_NUMBER',
           ),
         ),
-        5 => 
+        5 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'estimated_effort',
             'label' => 'LBL_ESTIMATED_EFFORT',
           ),
-          1 => 
+          1 =>
           array(
             'name' => 'utilization',
             'studio' => 'visible',
             'label' => 'LBL_UTILIZATION',
           ),
         ),
-        6 => 
+        6 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'am_tasktemplates_am_projecttemplates_name',
           ),
           1 => 'assigned_user_name',
         ),
-        7 => 
+        7 =>
         array(
           0 => 'description',
         ),

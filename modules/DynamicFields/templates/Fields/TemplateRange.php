@@ -81,7 +81,7 @@ class TemplateRange extends TemplateText
                 
                 if (file_exists('custom/modules/'.$module.'/metadata/SearchFields.php')) {
                     require('custom/modules/'.$module.'/metadata/SearchFields.php');
-                }                
+                }
                 
                 $field_name = $this->get_field_name($module, $_REQUEST['name']);
 
@@ -132,7 +132,7 @@ class TemplateRange extends TemplateText
                 
                 if (file_exists('custom/modules/'.$module.'/metadata/SearchFields.php')) {
                     require('custom/modules/'.$module.'/metadata/SearchFields.php');
-                }                
+                }
 
                 $field_name = $this->get_field_name($module, $_REQUEST['name']);
 

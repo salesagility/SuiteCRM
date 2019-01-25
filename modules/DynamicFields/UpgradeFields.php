@@ -64,7 +64,7 @@ require_once('modules/DynamicFields/DynamicField.php');
  if (!isset($_REQUEST['run'])) {
      $simulate = true;
      echo "SIMULATION MODE - NO CHANGES WILL BE MADE EXCEPT CLEARING CACHE";
- }	
+ }
 
  foreach ($modules as $the_module=>$fields) {
      if (isset($beanList[$the_module])) {

@@ -44,19 +44,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/DynamicFields/templates/Fields/TemplateText.php');
 class TemplateImage extends TemplateText
 {
-    var $type = 'image';	
+    var $type = 'image';
         
     function get_field_def()
     {
         $def = parent::get_field_def();
-        $def['studio'] = 'visible';		
+        $def['studio'] = 'visible';
         $def['type'] = 'image';
         $def['dbType'] = 'varchar';
         $def['len']= 255;
         
         if (isset($this->ext1)) {
             $def[ 'border' ] 	= $this->ext1 ;
-        }            
+        }
         if (isset($this->ext2)) {
             $def[ 'width' ] 	= $this->ext2 ;
         }
@@ -65,7 +65,7 @@ class TemplateImage extends TemplateText
         }
         if (isset($this->border)) {
             $def[ 'border' ] 	= $this->border ;
-        }          
+        }
         if (isset($this->width)) {
             $def[ 'width' ] 	= $this->width ;
         }

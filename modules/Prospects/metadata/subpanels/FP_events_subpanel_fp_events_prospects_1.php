@@ -1,7 +1,7 @@
 <?php
 // created: 2013-04-29 15:58:53
 $subpanel_layout['list_fields'] = array(
-  'checkbox' => 
+  'checkbox' =>
   array(
     'vname' => '<ul id="selectLinkTop" class="clickMenu selectmenu SugarActionMenu" name="">
                     <li class="sugar_action_button">
@@ -21,7 +21,7 @@ $subpanel_layout['list_fields'] = array(
     'sortable' => false,
     'default' => true,
   ),
-  'name' => 
+  'name' =>
   array(
     'name' => 'name',
     'vname' => 'LBL_LIST_NAME',
@@ -32,20 +32,20 @@ $subpanel_layout['list_fields'] = array(
     'width' => '23%',
     'default' => true,
   ),
-  'account_name' => 
+  'account_name' =>
   array(
     'type' => 'varchar',
     'vname' => 'LBL_ACCOUNT_NAME',
     'width' => '10%',
     'default' => true,
   ),
-  'phone_work' => 
+  'phone_work' =>
   array(
     'vname' => 'LBL_LIST_PHONE',
     'width' => '10%',
     'default' => true,
   ),
-  'email1' => 
+  'email1' =>
   array(
     'vname' => 'LBL_LIST_EMAIL_ADDRESS',
     'width' => '15%',
@@ -53,21 +53,21 @@ $subpanel_layout['list_fields'] = array(
     'sortable' => false,
     'default' => true,
   ),
-  'event_status_name' => 
+  'event_status_name' =>
   array(
     'vname' => 'LBL_STATUS',
     'width' => '10%',
     'sortable' => false,
     'default' => true,
   ),
-  'event_accept_status' => 
+  'event_accept_status' =>
   array(
     'width' => '10%',
     'sortable' => false,
     'default' => true,
     'vname' => 'LBL_ACCEPT_STATUS',
   ),
-  'edit_button' => 
+  'edit_button' =>
   array(
     'vname' => 'LBL_EDIT_BUTTON',
     'widget_class' => 'SubPanelEditButton',
@@ -75,7 +75,7 @@ $subpanel_layout['list_fields'] = array(
     'width' => '5%',
     'default' => true,
   ),
-  'remove_button' => 
+  'remove_button' =>
   array(
     'vname' => 'LBL_REMOVE',
     'widget_class' => 'SubPanelRemoveButton',
@@ -83,27 +83,27 @@ $subpanel_layout['list_fields'] = array(
     'width' => '5%',
     'default' => true,
   ),
-  'e_accept_status_fields' => 
+  'e_accept_status_fields' =>
   array(
     'usage' => 'query_only',
   ),
-  'event_status_id' => 
+  'event_status_id' =>
   array(
     'usage' => 'query_only',
   ),
-  'e_invite_status_fields' => 
+  'e_invite_status_fields' =>
   array(
     'usage' => 'query_only',
   ),
-  'event_invite_id' => 
+  'event_invite_id' =>
   array(
     'usage' => 'query_only',
   ),
-  'first_name' => 
+  'first_name' =>
   array(
     'usage' => 'query_only',
   ),
-  'last_name' => 
+  'last_name' =>
   array(
     'usage' => 'query_only',
   ),

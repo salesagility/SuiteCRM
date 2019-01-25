@@ -40,17 +40,17 @@
 
 $searchdefs ['Calls'] =
 array(
-  'layout' => 
+  'layout' =>
   array(
-    'basic_search' => 
+    'basic_search' =>
     array(
-      'name' => 
+      'name' =>
       array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'current_user_only' => 
+      'current_user_only' =>
       array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
@@ -68,15 +68,15 @@ array(
         'width' => '10%',
       ),
     ),
-    'advanced_search' => 
+    'advanced_search' =>
     array(
-      'name' => 
+      'name' =>
       array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'parent_name' => 
+      'parent_name' =>
       array(
         'type' => 'parent',
         'label' => 'LBL_LIST_RELATED_TO',
@@ -84,7 +84,7 @@ array(
         'default' => true,
         'name' => 'parent_name',
       ),
-      'current_user_only' => 
+      'current_user_only' =>
       array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
@@ -92,7 +92,7 @@ array(
         'default' => true,
         'width' => '10%',
       ),
-      'direction' => 
+      'direction' =>
       array(
         'type' => 'enum',
         'label' => 'LBL_DIRECTION',
@@ -100,13 +100,13 @@ array(
         'default' => true,
         'name' => 'direction',
       ),
-      'status' => 
+      'status' =>
       array(
         'name' => 'status',
         'default' => true,
         'width' => '10%',
       ),
-      'date_start' => 
+      'date_start' =>
       array(
         'type' => 'datetimecombo',
         'label' => 'LBL_DATE',
@@ -114,7 +114,7 @@ array(
         'default' => true,
         'name' => 'date_start',
       ),
-      'date_end' => 
+      'date_end' =>
       array(
         'type' => 'datetimecombo',
         'label' => 'LBL_DATE_END',
@@ -122,15 +122,15 @@ array(
         'default' => true,
         'name' => 'date_end',
       ),
-      'assigned_user_id' => 
+      'assigned_user_id' =>
       array(
         'name' => 'assigned_user_id',
         'type' => 'enum',
         'label' => 'LBL_ASSIGNED_TO',
-        'function' => 
+        'function' =>
         array(
           'name' => 'get_user_array',
-          'params' => 
+          'params' =>
           array(
             0 => false,
           ),
@@ -140,11 +140,11 @@ array(
       ),
     ),
   ),
-  'templateMeta' => 
+  'templateMeta' =>
   array(
     'maxColumns' => '3',
     'maxColumnsBasic' => '4',
-    'widths' => 
+    'widths' =>
     array(
       'label' => '10',
       'field' => '30',

@@ -16,7 +16,7 @@ $popupMeta = array(
   4 => 'assigned_user_name',
 ),
     'searchdefs' => array(
-  'name' => 
+  'name' =>
   array(
     'type' => 'name',
     'link' => true,
@@ -24,7 +24,7 @@ $popupMeta = array(
     'width' => '10%',
     'name' => 'name',
   ),
-  'status' => 
+  'status' =>
   array(
     'type' => 'enum',
     'studio' => 'visible',
@@ -32,7 +32,7 @@ $popupMeta = array(
     'width' => '10%',
     'name' => 'status',
   ),
-  'priority' => 
+  'priority' =>
   array(
     'type' => 'enum',
     'studio' => 'visible',
@@ -40,7 +40,7 @@ $popupMeta = array(
     'width' => '10%',
     'name' => 'priority',
   ),
-  'assigned_user_name' => 
+  'assigned_user_name' =>
   array(
     'link' => true,
     'type' => 'relate',
@@ -52,7 +52,7 @@ $popupMeta = array(
   ),
 ),
     'listviewdefs' => array(
-  'NAME' => 
+  'NAME' =>
   array(
     'type' => 'name',
     'link' => true,
@@ -60,7 +60,7 @@ $popupMeta = array(
     'width' => '10%',
     'default' => true,
   ),
-  'ASSIGNED_USER_NAME' => 
+  'ASSIGNED_USER_NAME' =>
   array(
     'link' => true,
     'type' => 'relate',
@@ -70,7 +70,7 @@ $popupMeta = array(
     'width' => '10%',
     'default' => true,
   ),
-  'STATUS' => 
+  'STATUS' =>
   array(
     'type' => 'enum',
     'default' => true,
@@ -78,7 +78,7 @@ $popupMeta = array(
     'label' => 'LBL_STATUS',
     'width' => '10%',
   ),
-  'PRIORITY' => 
+  'PRIORITY' =>
   array(
     'type' => 'enum',
     'default' => true,

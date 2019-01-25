@@ -6,16 +6,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * cssmin.php - A simple CSS minifier.
  * --
- * 
+ *
  * <code>
  * include("cssmin.php");
  * file_put_contents("path/to/target.css", cssmin::minify(file_get_contents("path/to/source.css")));
  * </code>
  * --
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING 
- * BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * --
@@ -34,17 +34,17 @@ class cssmin
      * <code>
      * $css_minified = cssmin::minify(file_get_contents("path/to/target/file.css"));
      * </code>
-     * 
+     *
      * @param	string			$css		Stylesheet definitions as string
      * @param	array|string	$options	Array or comma speperated list of options:
-     * 										
-     * 										- remove-last-semicolon: Removes the last semicolon in 
+     *
+     * 										- remove-last-semicolon: Removes the last semicolon in
      * 										the style definition of an element (activated by default).
-     * 										
+     *
      * 										- preserve-urls: Preserves every url defined in an url()-
-     * 										expression. This option is only required if you have 
-     * 										defined really uncommon urls with multiple spaces or 
-     * 										combination of colon, semi-colon, braces with leading or 
+     * 										expression. This option is only required if you have
+     * 										defined really uncommon urls with multiple spaces or
+     * 										combination of colon, semi-colon, braces with leading or
      * 										following spaces.
      * @return	string			Minified stylesheet definitions
      */
@@ -80,7 +80,7 @@ class cssmin
      * <code>
      * $css_structure = cssmin::toArray(file_get_contents("path/to/target/file.css"));
      * </code>
-     * 
+     *
      * @param	string		$css			Stylesheet definitions as string
      * @param	string		$options		Options for {@link cssmin::minify()}
      * @return	array						Structure of the stylesheet definitions as array
@@ -114,7 +114,7 @@ class cssmin
      * <code>
      * $css_string = cssmin::toString($css_structure);
      * </code>
-     * 
+     *
      * @param	array		$css
      * @return	array
      */
@@ -133,7 +133,7 @@ class cssmin
 }
 
 /**
- * Trims all elements of the array and removes empty elements. 
+ * Trims all elements of the array and removes empty elements.
  *
  * @param	array		$array
  * @return	array

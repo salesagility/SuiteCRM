@@ -43,7 +43,7 @@ $dictionary['AOR_Report'] = array(
     'audited'=>true,
     'duplicate_merge'=>true,
     'fields'=>array(
-      'report_module' => 
+      'report_module' =>
       array(
         'required' => true,
         'name' => 'report_module',

@@ -65,7 +65,7 @@ class SearchMerge extends ListViewMerge
      *
      * @param STRING $module - name of the module's files that are to be merged
      * @param STRING $original_file - path to the file that originally shipped with sugar
-     * @param STRING $new_file - path to the new file that is shipping with the patch 
+     * @param STRING $new_file - path to the new file that is shipping with the patch
      * @param STRING $custom_file - path to the custom file
      */
     protected function loadData($module, $original_file, $new_file, $custom_file)
@@ -105,8 +105,8 @@ class SearchMerge extends ListViewMerge
     
     /**
      * This builds the array of fields from the merged fields in the right order
-     * when building the panels for a list view the most important thing is order 
-     * so we ensure the fields that came from the custom file keep 
+     * when building the panels for a list view the most important thing is order
+     * so we ensure the fields that came from the custom file keep
      * their order then we add any new fields at the end
      *
      * @return ARRAY
@@ -145,7 +145,7 @@ class SearchMerge extends ListViewMerge
      *
      * @param STRING $module - name of the module's files that are to be merged
      * @param STRING $original_file - path to the file that originally shipped with sugar
-     * @param STRING $new_file - path to the new file that is shipping with the patch 
+     * @param STRING $new_file - path to the new file that is shipping with the patch
      * @param STRING $custom_file - path to the custom file
      * @param BOOLEAN $save - boolean on if it should save the results to the custom file or not
      * @return BOOLEAN - if the merged file was saved if false is passed in for the save parameter it always returns true
@@ -155,14 +155,14 @@ class SearchMerge extends ListViewMerge
         //Bug 37207
         if ($module == 'Connectors') {
             return false;
-        }			
+        }
         
         $this->clear();
         $this->log("\n\n". 'Starting a merge in ' . get_class($this));
         $this->log('merging the following files');
         $this->log('original file:'  . $original_file);
         $this->log('new file:'  . $new_file);
-        $this->log('custom file:'  . $custom_file);	
+        $this->log('custom file:'  . $custom_file);
         if (empty($custom_file) && $save) {
             return true;
         } else {
@@ -183,7 +183,7 @@ class SearchMerge extends ListViewMerge
             return true;
         }
         return false;
-    }	
+    }
     
     protected function mergeTemplateMeta()
     {

@@ -1,40 +1,40 @@
 <?php
 $module_name = 'TemplateSectionLine';
-$viewdefs [$module_name] = 
+$viewdefs [$module_name] =
 array(
-  'EditView' => 
+  'EditView' =>
   array(
-    'templateMeta' => 
+    'templateMeta' =>
     array(
       'maxColumns' => '1',
-      'widths' => 
+      'widths' =>
       array(
-        0 => 
+        0 =>
         array(
           'label' => '10',
           'field' => '30',
         ),
-        1 => 
+        1 =>
         array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'useTabs' => false,
-      'tabDefs' => 
+      'tabDefs' =>
       array(
-        'DEFAULT' => 
+        'DEFAULT' =>
         array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
-    'panels' => 
+    'panels' =>
     array(
-      'default' => 
+      'default' =>
       array(
-        0 => 
+        0 =>
         array(
           0 => 'name',
         ),

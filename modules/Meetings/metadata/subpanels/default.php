@@ -80,7 +80,7 @@ $subpanel_layout = array(
              'width' => '2%',
         ),
         'recurring_source'=>array(
-            'usage'=>'query_only',	
+            'usage'=>'query_only',
         ),
     ),
 );

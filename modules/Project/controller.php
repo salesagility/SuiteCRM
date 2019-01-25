@@ -486,14 +486,14 @@ class ProjectController extends SugarController
         global $mod_strings;
 
         $start_date = $_REQUEST['start_date'];
-        $end_date = $_REQUEST['end_date']; 
+        $end_date = $_REQUEST['end_date'];
         $resource_id = $_REQUEST['resource_id'];
 
         $projects = explode(",", $_REQUEST['projects']);
         $project_where = "";
         if (count($projects) > 1 || $projects[0] != '') {
             $project_where = " AND project_id IN( '" . implode("','", $projects) . "' )";
-        }	    
+        }
 
         $Task = BeanFactory::getBean('ProjectTask');
         

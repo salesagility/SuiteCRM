@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     **this is the ajax call that is called from RebuildJSLang.php.  It processes
     **the Request object in order to call correct methods for repairing/rebuilding JSfiles
     *Note that minify.php has already been included as part of index.php, so no need to include again.
-    */ 
+    */
 
  
     //set default root directory
@@ -57,7 +57,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     $tmp_time = ini_get('max_execution_time');
     ini_set('max_execution_time', '600');
         
-        //figure out which commands to call.  
+        //figure out which commands to call.
         if ($_REQUEST['js_admin_repair'] == 'concat') {
             //concatenate mode, call the files that will concatenate javascript group files
             $_REQUEST['js_rebuild_concat'] = 'rebuild';
@@ -80,5 +80,5 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 ConcatenateFiles("$from");
             }
         }
-    //set execution time back to what it was   
+    //set execution time back to what it was
     ini_set('max_execution_time', $tmp_time);

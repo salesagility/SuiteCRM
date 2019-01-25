@@ -486,7 +486,7 @@ class UserViewHelper
 
     /**
      * Set Google Auth variables
-     * 
+     *
      * @param array $sugar_config
      */
     protected function setGoogleAuthVariables($sugar_config)

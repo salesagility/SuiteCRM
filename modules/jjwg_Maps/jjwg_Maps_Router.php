@@ -26,15 +26,15 @@ if (!empty($_REQUEST['cron'])) {
 } else {
   
   /*
-   * This script is also used to pass selected records from 
+   * This script is also used to pass selected records from
    * a module list view to the Maps Module (jjwg_Maps).
    *
-   * Multiple records are posted thru 'uid' (comma separated) or 
+   * Multiple records are posted thru 'uid' (comma separated) or
    * 'current_post' (see export_utils.php)
-   * 
+   *
    * A Javascript post method is required here as the
    * parameters are sometimes too long for a get method
-   * 
+   *
    * Search Types
    * 1.) Default - All Records - Map
    *     Uses 'current_post' parameter to define search
@@ -62,7 +62,7 @@ if (!empty($_REQUEST['cron'])) {
     }
     echo '<input type="hidden" name="display_module" value="'.htmlspecialchars($_REQUEST['display_module']).'">'."\n";
     echo '</form>'."\n";
-    echo '<script language="javascript" type="text/javascript">document.redirect.submit();</script>'."\n"; 
+    echo '<script language="javascript" type="text/javascript">document.redirect.submit();</script>'."\n";
     echo '</body></html>';
   
     exit;

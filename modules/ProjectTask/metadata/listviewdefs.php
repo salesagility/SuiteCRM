@@ -1,7 +1,7 @@
 <?php
-$listViewDefs ['ProjectTask'] = 
+$listViewDefs ['ProjectTask'] =
 array(
-  'NAME' => 
+  'NAME' =>
   array(
     'width' => '40%',
     'label' => 'LBL_LIST_NAME',
@@ -9,7 +9,7 @@ array(
     'default' => true,
     'sortable' => true,
   ),
-  'PROJECT_NAME' => 
+  'PROJECT_NAME' =>
   array(
     'width' => '25%',
     'label' => 'LBL_PROJECT_NAME',
@@ -19,26 +19,26 @@ array(
     'sortable' => true,
     'module' => 'Project',
     'ACLTag' => 'PROJECT',
-    'related_fields' => 
+    'related_fields' =>
     array(
       0 => 'project_id',
     ),
   ),
-  'DATE_START' => 
+  'DATE_START' =>
   array(
     'width' => '10%',
     'label' => 'LBL_DATE_START',
     'default' => true,
     'sortable' => true,
   ),
-  'DATE_FINISH' => 
+  'DATE_FINISH' =>
   array(
     'width' => '10%',
     'label' => 'LBL_DATE_FINISH',
     'default' => true,
     'sortable' => true,
   ),
-  'ASSIGNED_USER_NAME' => 
+  'ASSIGNED_USER_NAME' =>
   array(
     'width' => '10%',
     'label' => 'LBL_LIST_ASSIGNED_USER_ID',
@@ -46,14 +46,14 @@ array(
     'id' => 'ASSIGNED_USER_ID',
     'default' => true,
   ),
-  'PRIORITY' => 
+  'PRIORITY' =>
   array(
     'width' => '10%',
     'label' => 'LBL_LIST_PRIORITY',
     'default' => true,
     'sortable' => true,
   ),
-  'PERCENT_COMPLETE' => 
+  'PERCENT_COMPLETE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_LIST_PERCENT_COMPLETE',

@@ -28,8 +28,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $popupMeta = array('moduleMain' => 'AOR_Reports',
                         'varName' => 'AOR_Report',
                         'orderBy' => 'aor_reports.name',
-                        'whereClauses' => 
-                            array('name' => 'aor_reports.name', 
+                        'whereClauses' =>
+                            array('name' => 'aor_reports.name',
                                 ),
                             'searchInputs'=> array('aor_reports_number', 'name', 'priority','status'),
                             

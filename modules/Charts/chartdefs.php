@@ -51,14 +51,14 @@ $chartDefs = array(
                 'label' => $chartsStrings['LBL_CHART_PIPELINE_BY_SALES_STAGE'],
                 'chartUnits' => $chartsStrings['LBL_OPP_SIZE'] . ' $1' . $chartsStrings['LBL_OPP_THOUSANDS'],
                 'chartType' => 'horizontal group by chart',
-                'groupBy' => array( 'sales_stage', 'user_name' ), 
-                'base_url'=> 
+                'groupBy' => array( 'sales_stage', 'user_name' ),
+                'base_url'=>
                     array( 	'module' => 'Opportunities',
                             'action' => 'index',
                             'query' => 'true',
                             'searchFormTab' => 'advanced_search',
                          ),
-                'url_params' => array( 'assigned_user_id', 'sales_stage', 'date_start', 'date_closed' ),				
+                'url_params' => array( 'assigned_user_id', 'sales_stage', 'date_start', 'date_closed' ),
             ),
     'lead_source_by_outcome'=>
         array(	'type' => 'code',
@@ -67,13 +67,13 @@ $chartDefs = array(
                 'chartUnits' => '',
                 'chartType' => 'horizontal group by chart',
                 'groupBy' => array( 'lead_source', 'sales_stage' ),
-                'base_url'=> 
+                'base_url'=>
                     array( 	'module' => 'Opportunities',
                             'action' => 'index',
                             'query' => 'true',
                             'searchFormTab' => 'advanced_search',
                          ),
-                'url_params' => array( 'lead_source', 'sales_stage', 'date_start', 'date_closed' ),				
+                'url_params' => array( 'lead_source', 'sales_stage', 'date_start', 'date_closed' ),
              ),
     'outcome_by_month'=>
         array(	'type' => 'code',
@@ -82,13 +82,13 @@ $chartDefs = array(
                 'chartUnits' => $chartsStrings['LBL_OPP_SIZE'] . ' $1' . $chartsStrings['LBL_OPP_THOUSANDS'],
                 'chartType' => 'stacked group by chart',
                 'groupBy' => array( 'm', 'sales_stage', ),
-                'base_url'=> 
+                'base_url'=>
                     array( 	'module' => 'Opportunities',
                             'action' => 'index',
                             'query' => 'true',
                             'searchFormTab' => 'advanced_search',
                          ),
-                'url_params' => array( 'sales_stage', 'date_closed' ),								
+                'url_params' => array( 'sales_stage', 'date_closed' ),
              ),
     'pipeline_by_lead_source'=>
         array(	'type' => 'code',
@@ -97,7 +97,7 @@ $chartDefs = array(
                 'chartUnits' => $chartsStrings['LBL_OPP_SIZE'] . ' $1' . $chartsStrings['LBL_OPP_THOUSANDS'],
                 'chartType' => 'pie chart',
                 'groupBy' => array( 'lead_source', ),
-                'base_url'=> 
+                'base_url'=>
                     array( 	'module' => 'Opportunities',
                             'action' => 'index',
                             'query' => 'true',
@@ -113,7 +113,7 @@ $chartDefs = array(
                 'chartType' => 'horizontal bar chart',
                 'chartUnits' => $chartsStrings['LBL_MY_MODULES_USED_SIZE'],
                 'groupBy' => array( 'module_name'),
-                'base_url'=> 
+                'base_url'=>
                     array( 	'module' => 'Trackers',
                             'action' => 'index',
                             'query' => 'true',

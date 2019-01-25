@@ -845,7 +845,7 @@ class MBModule
             } // don't populate from $_REQUEST, just save as is...
         }
         //Remove the fields in subpanel
-        $psubs = $this->getProvidedSubpanels() ; 
+        $psubs = $this->getProvidedSubpanels() ;
         foreach ($psubs as $sub) {
             $parser = ParserFactory::getParser(MB_LISTVIEW, $this->name, $this->package, $sub) ;
             if ($parser->removeField($fieldName)) {

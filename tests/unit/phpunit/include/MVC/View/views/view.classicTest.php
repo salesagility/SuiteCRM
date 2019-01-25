@@ -34,10 +34,10 @@ class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        if (isset($_SESSION)) {
 //            $session = $_SESSION;
 //        }
-//        
+//
 //        $state = new SuiteCRM\StateSaver();
-//        
-//        
+//
+//
 //        //
 //
 //        //test with a valid module but invalid action. it should return false.
@@ -52,7 +52,7 @@ class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        $view->module = 'Home';
 //        $view->action = 'About';
 //
-//        
+//
 //        // folowing code says: "Test code or tested code did not (only) close its own output buffers"
 ////        ob_start();
 ////        $ret = $view->display();
@@ -60,7 +60,7 @@ class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 ////        ob_end_clean();
 ////        $this->assertEquals(0, strlen($renderedContent), 'Renderered Content was: ' . $renderedContent);
 ////        $this->assertTrue($ret);
-//        
+//
 //        $this->markTestIncomplete("Warning was: Test code or tested code did not (only) close its own output buffers");
 //
 //        //test with a valid module and customized action. it should return true
@@ -74,12 +74,12 @@ class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        ob_end_clean();
 //        $this->assertGreaterThan(0, strlen($renderedContent));
 //        $this->assertTrue($ret);
-//        
-//        
+//
+//
 //        // clean up
-//        
-//        
-//        
+//
+//
+//
 //        if (isset($session)) {
 //            $_SESSION = $session;
 //        } else {

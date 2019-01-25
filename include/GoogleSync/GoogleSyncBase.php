@@ -87,7 +87,7 @@ class GoogleSyncBase
 
     /**
      * Class Constructor
-     * 
+     *
      * @param array $sugarConfig - using $sugar_config as a dependency
      */
     public function __construct($sugarConfig)
@@ -237,9 +237,9 @@ class GoogleSyncBase
 
     /**
      * Initialize Service for User
-     * 
+     *
      * @param string $id The SuiteCRM user id
-     * 
+     *
      * @return bool Success/Failure
      * @throws GoogleSyncException if $id is invalid
      * @throws GoogleSyncException if unable to retrive the user
@@ -353,7 +353,7 @@ class GoogleSyncBase
      * find the id of the 'SuiteCRM' calendar ... in the future, this will return the calendar of the users choosing.
      *
      * @param Google_Service_Calendar_CalendarList $calendarList
-     * 
+     *
      * @return string|null Matching Google Calendar ID or null.
      */
     protected function getSuiteCRMCalendar(Google_Service_Calendar_CalendarList $calendarList)
@@ -766,7 +766,7 @@ class GoogleSyncBase
         }
         if (!$start instanceof Google_Service_Calendar_EventDateTime) {
             throw new GoogleSyncException(
-                'GoogleSyncBase is trying to get "start" as Google_Service_Calendar_EventDateTime but it is incorrect, ' . 
+                'GoogleSyncBase is trying to get "start" as Google_Service_Calendar_EventDateTime but it is incorrect, ' .
                 gettype($start) . ' given.', GoogleSyncException::NO_REMOVE_EVENT_START_IS_INCORRECT);
         }
         $starttime = strtotime($start->getDateTime());

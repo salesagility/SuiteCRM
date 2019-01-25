@@ -24,7 +24,7 @@
 
 
  $metafiles['AOW_WorkFlow'] = array(
-    'detailviewdefs'  => 	'modules/AOW_WorkFlow/metadata/detailviewdefs.php', 	
+    'detailviewdefs'  => 	'modules/AOW_WorkFlow/metadata/detailviewdefs.php',
     'editviewdefs'    => 	'modules/AOW_WorkFlow/metadata/editviewdefs.php',
     'listviewdefs'    => 	'modules/AOW_WorkFlow/metadata/listviewdefs.php',
     'searchdefs'      =>    'modules/AOW_WorkFlow/metadata/searchdefs.php',

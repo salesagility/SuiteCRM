@@ -47,26 +47,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarFieldAddress.php
  * SugarFieldAddress translates and displays fields from a vardef definition into different formats
  * for EditViews and DetailViews.  A sample invocation from a Meta-Data file is as follows:
- * 
+ *
  *  array (
  * 	   'name' => 'primary_address_street',
  *	   'type' => 'address',
  *	   'displayParams'=>array('key'=>'primary'),
  *  ),
- * 
+ *
  * Where name is set to the field for ACL verification, type is set to 'address'
  * to override the default field type and the displayParams array includes the key
  * for the address field.  Assumptions are made that the vardefs.php contains address
  * elements with the corresponding names. There is the optional displayParam index
  * 'copy' that accepts as value the key of the other address fields.  In our
  * example we may enable copying from the primary address fields with:
- * 
+ *
  *  array (
  * 	   'name' => 'altaddress_street',
  *	   'type' => 'address',
  *	   'displayParams'=>array('key'=>'alt', 'copy'=>'primary'),
  *  ),
- * 
+ *
  */
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 class SugarFieldAddress extends SugarFieldBase
@@ -76,7 +76,7 @@ class SugarFieldAddress extends SugarFieldBase
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
         global $app_strings;
         if (!isset($displayParams['key'])) {
-            $GLOBALS['log']->debug($app_strings['ERR_ADDRESS_KEY_NOT_SPECIFIED']);	
+            $GLOBALS['log']->debug($app_strings['ERR_ADDRESS_KEY_NOT_SPECIFIED']);
             $this->ss->trigger_error($app_strings['ERR_ADDRESS_KEY_NOT_SPECIFIED']);
             return;
         }
@@ -92,10 +92,10 @@ class SugarFieldAddress extends SugarFieldBase
     
     function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
-        $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);        
+        $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
         global $app_strings;
         if (!isset($displayParams['key'])) {
-            $GLOBALS['log']->debug($app_strings['ERR_ADDRESS_KEY_NOT_SPECIFIED']);	
+            $GLOBALS['log']->debug($app_strings['ERR_ADDRESS_KEY_NOT_SPECIFIED']);
             $this->ss->trigger_error($app_strings['ERR_ADDRESS_KEY_NOT_SPECIFIED']);
             return;
         }
@@ -104,7 +104,7 @@ class SugarFieldAddress extends SugarFieldBase
         if (isset($app_strings['SMARTY_ADDRESS_EDITVIEW'])) {
             $tplCode = $app_strings['SMARTY_ADDRESS_EDITVIEW'];
             return $this->fetch($tplCode);
-        }       
+        }
 
         return $this->fetch($this->findTemplate('EditView'));
     }

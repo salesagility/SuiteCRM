@@ -1,14 +1,14 @@
 <?php
 $dashletData['OutboundEmailAccountsDashlet']['searchFields'] = array(
-  'date_entered' => 
+  'date_entered' =>
   array(
     'default' => '',
   ),
-  'date_modified' => 
+  'date_modified' =>
   array(
     'default' => '',
   ),
-  'assigned_user_id' => 
+  'assigned_user_id' =>
   array(
     'default' => '',
   ),
@@ -22,7 +22,7 @@ $dashletData['OutboundEmailAccountsDashlet']['searchFields'] = array(
   ),
 );
 $dashletData['OutboundEmailAccountsDashlet']['columns'] = array(
-  'name' => 
+  'name' =>
   array(
     'width' => '40%',
     'label' => 'LBL_LIST_NAME',
@@ -30,21 +30,21 @@ $dashletData['OutboundEmailAccountsDashlet']['columns'] = array(
     'default' => true,
     'name' => 'name',
   ),
-  'date_entered' => 
+  'date_entered' =>
   array(
     'width' => '15%',
     'label' => 'LBL_DATE_ENTERED',
     'default' => true,
     'name' => 'date_entered',
   ),
-  'date_modified' => 
+  'date_modified' =>
   array(
     'width' => '15%',
     'label' => 'LBL_DATE_MODIFIED',
     'name' => 'date_modified',
     'default' => false,
   ),
-  'created_by' => 
+  'created_by' =>
   array(
     'width' => '8%',
     'label' => 'LBL_CREATED',

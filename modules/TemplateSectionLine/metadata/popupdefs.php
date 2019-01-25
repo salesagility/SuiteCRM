@@ -14,7 +14,7 @@ $popupMeta = array(
   5 => 'description',
 ),
     'searchdefs' => array(
-  'name' => 
+  'name' =>
   array(
     'type' => 'name',
     'link' => true,
@@ -22,14 +22,14 @@ $popupMeta = array(
     'width' => '10%',
     'name' => 'name',
   ),
-  'grp' => 
+  'grp' =>
   array(
     'type' => 'varchar',
     'label' => 'LBL_GRP',
     'width' => '10%',
     'name' => 'grp',
   ),
-  'description' => 
+  'description' =>
   array(
     'type' => 'text',
     'label' => 'LBL_DESCRIPTION',
@@ -39,7 +39,7 @@ $popupMeta = array(
   ),
 ),
     'listviewdefs' => array(
-  'NAME' => 
+  'NAME' =>
   array(
     'type' => 'name',
     'link' => true,
@@ -47,14 +47,14 @@ $popupMeta = array(
     'width' => '10%',
     'default' => true,
   ),
-  'GRP' => 
+  'GRP' =>
   array(
     'type' => 'varchar',
     'label' => 'LBL_GRP',
     'width' => '10%',
     'default' => true,
   ),
-  'DESCRIPTION' => 
+  'DESCRIPTION' =>
   array(
     'type' => 'text',
     'label' => 'LBL_DESCRIPTION',

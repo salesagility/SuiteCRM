@@ -188,7 +188,7 @@ class M2MRelationship extends SugarRelationship
             $this->callAfterAdd($rhs, $lhs, $rhsLinkName);
 
             /* BEGIN - SECURITY GROUPS */
-        } //end normal 
+        } //end normal
         /* END - SECURITY GROUPS */
 
         return true;
@@ -293,7 +293,7 @@ class M2MRelationship extends SugarRelationship
                 }
             }
         } else {
-            /* END - SECURITY GROUPS */        
+            /* END - SECURITY GROUPS */
             if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName)) {
                 $GLOBALS['log']->fatal("could not load LHS $lhsLinkName");
                 return false;
@@ -338,7 +338,7 @@ class M2MRelationship extends SugarRelationship
                 }
             }
             /* BEGIN - SECURITY GROUPS */
-        } //end normal 
+        } //end normal
         /* END - SECURITY GROUPS */
 
         return true;

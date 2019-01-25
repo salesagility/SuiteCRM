@@ -3,7 +3,7 @@
 /**
  * @file
  * Class PdfParser
- * 
+ *
  * @author : Sebastien MALOT <sebastien@malot.fr>
  * @date : 2013-08-08
  *

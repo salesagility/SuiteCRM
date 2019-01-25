@@ -139,7 +139,7 @@ function initialize() {
   );
   var shape = {coord: [1, 1, 1, 37, 32, 37, 32, 1],type: 'poly'};
 <?php
-  } // empty image ?>
+  } // empty image?>
 
   var marker = new google.maps.Marker({
     position: latLng,

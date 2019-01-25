@@ -174,7 +174,7 @@ class json_config
                     }
                 }
             }
-        }		
+        }
         
         
         $module_arr['users_arr'] = array();

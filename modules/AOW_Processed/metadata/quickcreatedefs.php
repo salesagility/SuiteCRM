@@ -24,16 +24,16 @@
 
 
 $viewdefs['AOW_Processed']['QuickCreate'] = array(
-    'templateMeta' => array('maxColumns' => '2', 
+    'templateMeta' => array('maxColumns' => '2',
                             'widths' => array(
-                                            array('label' => '10', 'field' => '30'), 
+                                            array('label' => '10', 'field' => '30'),
                                             array('label' => '10', 'field' => '30')
-                                            ),                                                                                                                                    
+                                            ),
                                             ),
                                             
                                             
  'panels' =>array(
-  'default' => 
+  'default' =>
   array(
     
     array(

@@ -18,35 +18,35 @@ $popupMeta = array(
   7 => 'created_by',
 ),
     'searchdefs' => array(
-  'name' => 
+  'name' =>
   array(
     'name' => 'name',
     'width' => '10%',
   ),
-  'part_number' => 
+  'part_number' =>
   array(
     'name' => 'part_number',
     'width' => '10%',
   ),
-  'cost' => 
+  'cost' =>
   array(
     'name' => 'cost',
     'width' => '10%',
   ),
-  'price' => 
+  'price' =>
   array(
     'name' => 'price',
     'width' => '10%',
   ),
-  'created_by' => 
+  'created_by' =>
   array(
     'name' => 'created_by',
     'label' => 'LBL_CREATED',
     'type' => 'enum',
-    'function' => 
+    'function' =>
     array(
       'name' => 'get_user_array',
-      'params' => 
+      'params' =>
       array(
         0 => false,
       ),
@@ -55,7 +55,7 @@ $popupMeta = array(
   ),
 ),
     'listviewdefs' => array(
-  'NAME' => 
+  'NAME' =>
   array(
     'width' => '25%',
     'label' => 'LBL_NAME',
@@ -63,21 +63,21 @@ $popupMeta = array(
     'link' => true,
     'name' => 'name',
   ),
-  'PART_NUMBER' => 
+  'PART_NUMBER' =>
   array(
     'width' => '10%',
     'label' => 'LBL_PART_NUMBER',
     'default' => true,
     'name' => 'part_number',
   ),
-  'COST' => 
+  'COST' =>
   array(
     'width' => '10%',
     'label' => 'LBL_COST',
     'default' => true,
     'name' => 'cost',
   ),
-  'PRICE' => 
+  'PRICE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_PRICE',

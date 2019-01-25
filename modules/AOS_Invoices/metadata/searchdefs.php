@@ -5,7 +5,7 @@
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -38,15 +38,15 @@
                             'widths' => array('label' => '10', 'field' => '30'),
                            ),
                     'layout' => array(
-                                'basic_search' => 
+                                'basic_search' =>
                         array(
-                          'name' => 
+                          'name' =>
                           array(
                             'name' => 'name',
                             'default' => true,
                             'width' => '10%',
                           ),
-                          'current_user_only' => 
+                          'current_user_only' =>
                           array(
                             'name' => 'current_user_only',
                             'label' => 'LBL_CURRENT_USER_FILTER',

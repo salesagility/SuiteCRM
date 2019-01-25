@@ -104,7 +104,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
      /**
       * Retrieves display columns on list view of specified module
-      * 
+      *
       * @param string $module
       * @param array $request
       * @return array

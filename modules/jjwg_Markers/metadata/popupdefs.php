@@ -22,35 +22,35 @@ $popupMeta = array(
   9 => 'date_entered',
 ),
     'searchdefs' => array(
-  'name' => 
+  'name' =>
   array(
     'type' => 'name',
     'label' => 'LBL_NAME',
     'width' => '10%',
     'name' => 'name',
   ),
-  'city' => 
+  'city' =>
   array(
     'type' => 'varchar',
     'label' => 'LBL_CITY',
     'width' => '10%',
     'name' => 'city',
   ),
-  'state' => 
+  'state' =>
   array(
     'type' => 'varchar',
     'label' => 'LBL_STATE',
     'width' => '10%',
     'name' => 'state',
   ),
-  'country' => 
+  'country' =>
   array(
     'type' => 'varchar',
     'label' => 'LBL_COUNTRY',
     'width' => '10%',
     'name' => 'country',
   ),
-  'marker_image' => 
+  'marker_image' =>
   array(
     'type' => 'enum',
     'studio' => 'visible',
@@ -59,7 +59,7 @@ $popupMeta = array(
     'width' => '10%',
     'name' => 'marker_image',
   ),
-  'assigned_user_name' => 
+  'assigned_user_name' =>
   array(
     'link' => 'assigned_user_link',
     'type' => 'relate',
@@ -67,7 +67,7 @@ $popupMeta = array(
     'width' => '10%',
     'name' => 'assigned_user_name',
   ),
-  'date_entered' => 
+  'date_entered' =>
   array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
@@ -76,7 +76,7 @@ $popupMeta = array(
   ),
 ),
     'listviewdefs' => array(
-  'NAME' => 
+  'NAME' =>
   array(
     'type' => 'name',
     'label' => 'LBL_NAME',
@@ -84,7 +84,7 @@ $popupMeta = array(
     'default' => true,
     'name' => 'name',
   ),
-  'CITY' => 
+  'CITY' =>
   array(
     'type' => 'varchar',
     'label' => 'LBL_CITY',
@@ -92,7 +92,7 @@ $popupMeta = array(
     'default' => true,
     'name' => 'city',
   ),
-  'STATE' => 
+  'STATE' =>
   array(
     'type' => 'varchar',
     'label' => 'LBL_STATE',
@@ -100,7 +100,7 @@ $popupMeta = array(
     'default' => true,
     'name' => 'state',
   ),
-  'COUNTRY' => 
+  'COUNTRY' =>
   array(
     'type' => 'varchar',
     'label' => 'LBL_COUNTRY',
@@ -108,7 +108,7 @@ $popupMeta = array(
     'default' => true,
     'name' => 'country',
   ),
-  'MARKER_IMAGE' => 
+  'MARKER_IMAGE' =>
   array(
     'type' => 'enum',
     'default' => true,
@@ -117,7 +117,7 @@ $popupMeta = array(
     'sortable' => false,
     'width' => '10%',
   ),
-  'ASSIGNED_USER_NAME' => 
+  'ASSIGNED_USER_NAME' =>
   array(
     'link' => 'assigned_user_link',
     'type' => 'relate',

@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$searchFields['ProspectLists'] = 
+$searchFields['ProspectLists'] =
     array(
         'name' => array( 'query_type'=>'default'),
         'list_type' => array( 'query_type'=>'default'),

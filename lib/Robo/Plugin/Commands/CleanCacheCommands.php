@@ -58,4 +58,4 @@ class CleanCacheCommands extends \Robo\Tasks
         }
         $this->_cleanDir($toDelete);
     }
-} 
+}

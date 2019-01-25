@@ -1,7 +1,7 @@
 <?php
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
-} 
+}
 
 if (ACLController::checkAccess('jjwg_Maps', 'edit', true)) {
     $module_menu[]=array("index.php?module=jjwg_Maps&action=EditView&return_module=jjwg_Maps&return_action=index", $GLOBALS['mod_strings']['LNK_NEW_MAP'], "Create", 'jjwg_Maps');

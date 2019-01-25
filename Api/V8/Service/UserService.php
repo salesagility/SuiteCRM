@@ -92,7 +92,7 @@ class UserService
     }
 
     /**
-     * 
+     *
      * @param Request $request
      * @return DocumentResponse
      */

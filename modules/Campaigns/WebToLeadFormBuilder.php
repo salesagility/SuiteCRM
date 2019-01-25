@@ -256,7 +256,7 @@ HTML;
     // char strings
 
     /**
-     * 
+     *
      * @param string $fieldName
      * @param string $fieldLabel
      * @param bool $fieldRequired
@@ -301,7 +301,7 @@ HTML;
     // email
 
     /**
-     * 
+     *
      * @param string $fieldName
      * @param string $fieldRequired
      * @param string $fieldLabel
@@ -320,7 +320,7 @@ HTML;
     }
     
     /**
-     * 
+     *
      * @param string $fieldName
      * @return string
      */

@@ -1,36 +1,36 @@
 <?php
 $module_name='AM_TaskTemplates';
 $subpanel_layout = array(
-  'top_buttons' => 
+  'top_buttons' =>
   array(
-    0 => 
+    0 =>
     array(
       'widget_class' => 'SubPanelTopCreateButton',
     ),
-    1 => 
+    1 =>
     array(
       'widget_class' => 'SubPanelTopSelectButton',
       'popup_module' => 'AM_TaskTemplates',
     ),
   ),
   'where' => '',
-  'list_fields' => 
+  'list_fields' =>
   array(
-    'name' => 
+    'name' =>
     array(
       'vname' => 'LBL_NAME',
       'widget_class' => 'SubPanelDetailViewLink',
       'width' => '45%',
       'default' => true,
     ),
-    'duration' => 
+    'duration' =>
     array(
       'type' => 'int',
       'vname' => 'LBL_DURATION',
       'width' => '10%',
       'default' => true,
     ),
-    'priority' => 
+    'priority' =>
     array(
       'type' => 'enum',
       'default' => true,
@@ -38,7 +38,7 @@ $subpanel_layout = array(
       'vname' => 'LBL_PRIORITY',
       'width' => '10%',
     ),
-    'status' => 
+    'status' =>
     array(
       'type' => 'enum',
       'default' => true,
@@ -46,7 +46,7 @@ $subpanel_layout = array(
       'vname' => 'LBL_STATUS',
       'width' => '10%',
     ),
-    'relationship_type' => 
+    'relationship_type' =>
     array(
       'type' => 'enum',
       'default' => true,
@@ -54,13 +54,13 @@ $subpanel_layout = array(
       'vname' => 'LBL_RELATIONSHIP_TYPE',
       'width' => '10%',
     ),
-    'date_modified' => 
+    'date_modified' =>
     array(
       'vname' => 'LBL_DATE_MODIFIED',
       'width' => '45%',
       'default' => true,
     ),
-    'edit_button' => 
+    'edit_button' =>
     array(
       'vname' => 'LBL_EDIT_BUTTON',
       'widget_class' => 'SubPanelEditButton',
@@ -68,7 +68,7 @@ $subpanel_layout = array(
       'width' => '4%',
       'default' => true,
     ),
-    'remove_button' => 
+    'remove_button' =>
     array(
       'vname' => 'LBL_REMOVE',
       'widget_class' => 'SubPanelRemoveButton',

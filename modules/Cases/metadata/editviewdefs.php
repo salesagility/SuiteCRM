@@ -40,25 +40,25 @@
 
 $viewdefs ['Cases'] =
 array(
-  'EditView' => 
+  'EditView' =>
   array(
-    'templateMeta' => 
+    'templateMeta' =>
     array(
       'maxColumns' => '2',
-      'widths' => 
+      'widths' =>
       array(
-        0 => 
+        0 =>
         array(
           'label' => '10',
           'field' => '30',
         ),
-        1 => 
+        1 =>
         array(
           'label' => '10',
           'field' => '30',
         ),
       ),
-      'includes' => 
+      'includes' =>
       array(
           0 =>
               array(
@@ -74,35 +74,35 @@ array(
               ),
       ),
       'useTabs' => false,
-      'tabDefs' => 
+      'tabDefs' =>
       array(
-        'LBL_CASE_INFORMATION' => 
+        'LBL_CASE_INFORMATION' =>
         array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
-      'form' => 
+      'form' =>
       array(
         'enctype' => 'multipart/form-data',
       ),
     ),
-    'panels' => 
+    'panels' =>
     array(
-      'lbl_case_information' => 
+      'lbl_case_information' =>
       array(
-        0 => 
+        0 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'case_number',
             'type' => 'readonly',
           ),
           1 => 'priority',
         ),
-        1 => 
+        1 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'state',
             'comment' => 'The state of the case (i.e. open/closed)',
@@ -110,17 +110,17 @@ array(
           ),
           1 => 'status',
         ),
-        2 => 
+        2 =>
         array(
           0 => 'type',
           1 => 'account_name',
         ),
-        3 => 
+        3 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'name',
-            'displayParams' => 
+            'displayParams' =>
             array(
               //'size' => 75,
             ),
@@ -134,14 +134,14 @@ array(
         ),
         4 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'description',
           ),
         ),
         5 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'resolution',
             'nl2br' => true,
@@ -149,7 +149,7 @@ array(
         ),
         6 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'update_text',
             'studio' => 'visible',
@@ -165,7 +165,7 @@ array(
           ),
         8 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'case_update_form',
             'studio' => 'visible',

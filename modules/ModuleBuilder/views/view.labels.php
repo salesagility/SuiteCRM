@@ -174,8 +174,8 @@ class ViewLabels extends ViewModulefields
     // fixing bug #39749: Quick Create in Studio
     function getVariableMap($module)
     {
-        $variableMap = array(MB_EDITVIEW => 'EditView', 
-                             MB_DETAILVIEW => 'DetailView', 
+        $variableMap = array(MB_EDITVIEW => 'EditView',
+                             MB_DETAILVIEW => 'DetailView',
                              MB_QUICKCREATE => 'QuickCreate');
         
         $hideQuickCreateForModules = array('KBDocuments',

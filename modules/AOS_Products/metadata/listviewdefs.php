@@ -1,34 +1,34 @@
 <?php
-$listViewDefs ['AOS_Products'] = 
+$listViewDefs ['AOS_Products'] =
 array(
-  'NAME' => 
+  'NAME' =>
   array(
     'width' => '15%',
     'label' => 'LBL_NAME',
     'default' => true,
     'link' => true,
   ),
-  'PART_NUMBER' => 
+  'PART_NUMBER' =>
   array(
     'width' => '10%',
     'label' => 'LBL_PART_NUMBER',
     'default' => true,
   ),
-  'COST' => 
+  'COST' =>
   array(
     'width' => '10%',
     'label' => 'LBL_COST',
     'currency_format' => true,
     'default' => true,
   ),
-  'PRICE' => 
+  'PRICE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_PRICE',
     'currency_format' => true,
     'default' => true,
   ),
-  'AOS_PRODUCT_CATEGORY_NAME' => 
+  'AOS_PRODUCT_CATEGORY_NAME' =>
   array(
     'type' => 'relate',
     'studio' => 'visible',
@@ -42,7 +42,7 @@ array(
           'aos_product_category_id',
       ),
   ),
-  'CREATED_BY_NAME' => 
+  'CREATED_BY_NAME' =>
   array(
     'width' => '10%',
     'label' => 'LBL_CREATED',
@@ -51,7 +51,7 @@ array(
     'link' => true,
     'id' => 'CREATED_BY',
   ),
-  'DATE_ENTERED' => 
+  'DATE_ENTERED' =>
   array(
     'width' => '5%',
     'label' => 'LBL_DATE_ENTERED',

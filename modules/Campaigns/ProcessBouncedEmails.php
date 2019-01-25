@@ -119,7 +119,7 @@ function markEmailAddressInvalid($email_address)
 
 /**
  * Get the existing campaign log entry by tracker key.
- * 
+ *
  * @param string Target Key
  * @return array Campaign Log Row
  */
@@ -137,7 +137,7 @@ function getExistingCampaignLogEntry($identifier)
 
 /**
  * Scan the bounced email searching for a valid target identifier.
- * 
+ *
  * @param string Email Description
  * @return array Results including matches and identifier
  */
@@ -202,7 +202,7 @@ function campaign_process_bounced_emails(&$email, &$email_header)
                     $row_log=$targeted->db->fetchByAssoc($result_log);
 
                     if (empty($row_log)) {
-                        $return_id = createBouncedCampaignLogEntry($row, $email, $email_description);	
+                        $return_id = createBouncedCampaignLogEntry($row, $email, $email_description);
                         return true;
                     } else {
                         $GLOBALS['log']->debug("Warning: campaign log entry already exists for identifier $identifier");
@@ -217,7 +217,7 @@ function campaign_process_bounced_emails(&$email, &$email_header)
                 return false;
             }
         } else {
-            $GLOBALS['log']->info("Warning: skipping bounced email because it does not have the removeme link.");	
+            $GLOBALS['log']->info("Warning: skipping bounced email because it does not have the removeme link.");
             return false;
         }
     } else {

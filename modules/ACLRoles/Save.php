@@ -65,7 +65,7 @@ if (!empty($_REQUEST['name'])) {
         }
     }
 } else {
-    ob_clean();	
+    ob_clean();
     $flc_module = 'All';
     foreach ($_POST as $name=>$value) {
         if (substr_count($name, 'act_guid') > 0) {

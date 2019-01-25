@@ -1,6 +1,6 @@
 <?php
 $dictionary['securitygroups_records'] = array(
-    'table' => 'securitygroups_records', 
+    'table' => 'securitygroups_records',
     'fields' => array(
         array('name' =>'id', 'type' =>'char', 'len'=>'36', 'required'=>true, 'default'=>'')
       , array('name' =>'securitygroup_id', 'type' =>'char', 'len'=>'36')

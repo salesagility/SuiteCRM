@@ -2,9 +2,9 @@
 // created: 2017-03-16 13:41:06
 $dictionary["surveyquestionoptions_surveyquestionresponses"] = array(
   'true_relationship_type' => 'many-to-many',
-  'relationships' => 
+  'relationships' =>
   array(
-    'surveyquestionoptions_surveyquestionresponses' => 
+    'surveyquestionoptions_surveyquestionresponses' =>
     array(
       'lhs_module' => 'SurveyQuestionOptions',
       'lhs_table' => 'surveyquestionoptions',
@@ -19,20 +19,20 @@ $dictionary["surveyquestionoptions_surveyquestionresponses"] = array(
     ),
   ),
   'table' => 'surveyquestionoptions_surveyquestionresponses',
-  'fields' => 
+  'fields' =>
   array(
-    0 => 
+    0 =>
     array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
-    1 => 
+    1 =>
     array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
-    2 => 
+    2 =>
     array(
       'name' => 'deleted',
       'type' => 'bool',
@@ -40,35 +40,35 @@ $dictionary["surveyquestionoptions_surveyquestionresponses"] = array(
       'default' => '0',
       'required' => true,
     ),
-    3 => 
+    3 =>
     array(
       'name' => 'surveyq72c7options_ida',
       'type' => 'varchar',
       'len' => 36,
     ),
-    4 => 
+    4 =>
     array(
       'name' => 'surveyq10d4sponses_idb',
       'type' => 'varchar',
       'len' => 36,
     ),
   ),
-  'indices' => 
+  'indices' =>
   array(
-    0 => 
+    0 =>
     array(
       'name' => 'surveyquestionoptions_surveyquestionresponsesspk',
       'type' => 'primary',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'id',
       ),
     ),
-    1 => 
+    1 =>
     array(
       'name' => 'surveyquestionoptions_surveyquestionresponses_alt',
       'type' => 'alternate_key',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'surveyq72c7options_ida',
         1 => 'surveyq10d4sponses_idb',

@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$dictionary['prospect_list_campaigns'] = array( 
+$dictionary['prospect_list_campaigns'] = array(
 
     'table' => 'prospect_list_campaigns',
 
@@ -88,10 +88,10 @@ $dictionary['prospect_list_campaigns'] = array(
             'fields' => array('campaign_id')
         ),
         array(
-            'name' => 'idx_prospect_list_campaigns', 
-            'type'=>'alternate_key', 
+            'name' => 'idx_prospect_list_campaigns',
+            'type'=>'alternate_key',
             'fields'=>array('prospect_list_id','campaign_id')
-        ),		
+        ),
     ),
 
     'relationships' => array(

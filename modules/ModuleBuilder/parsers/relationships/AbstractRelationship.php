@@ -55,10 +55,10 @@ class AbstractRelationship
     /*
      * These are the elements that fully define any Relationship
      * Any subclass of AbstractRelationship uses an array with a subset of the following keys as metadata to describe the Relationship it will implement
-     * The base set of keys are those used in the Relationships table 
+     * The base set of keys are those used in the Relationships table
      * Defined as Public as MBRelationship uses these to read the _POST data
      */
-    public static $definitionKeys = array( 
+    public static $definitionKeys = array(
         // atttributes of this relationship - here in the definition so they are preserved across saves and loads
         'for_activities',
         'is_custom',
@@ -74,18 +74,18 @@ class AbstractRelationship
         'rhs_subpanel' , // subpanel FROM the rhs_module to display on the lhs_module detail view
         // keys from Relationships table
         'relationship_name' ,
-        'lhs_module' , 
-        'lhs_table' , 
-        'lhs_key' , 
-        'rhs_module' , 
-        'rhs_table' , 
-        'rhs_key' , 
-        'join_table' , 
-        'join_key_lhs' , 
-        'join_key_rhs' , 
-        'relationship_type' , 
-        'relationship_role_column' , 
-        'relationship_role_column_value' , 
+        'lhs_module' ,
+        'lhs_table' ,
+        'lhs_key' ,
+        'rhs_module' ,
+        'rhs_table' ,
+        'rhs_key' ,
+        'join_table' ,
+        'join_key_lhs' ,
+        'join_key_rhs' ,
+        'relationship_type' ,
+        'relationship_role_column' ,
+        'relationship_role_column_value' ,
         'reverse' ) ;
 
     /*
@@ -93,13 +93,13 @@ class AbstractRelationship
      * These two values define an additional condition on the relationship. If present, the value in relationship_role_column in the relationship table must equal relationship_role_column_value
      * Any update to the relationship made using a link field tied to the relationship (as is proper) will automatically (in Link.php) add in the relationship_role_column_value
      * The relationship table must of course contain a column with the name given in relationship_role_column
-     * 
+     *
      * relationship_role_column and relationship_role_column_value are here implemented in a slightly less optimized form than in the standard OOB application
      * In the OOB application, multiple relationships can, and do, share the same relationship table. Therefore, each variant of the relationship does not require its own table
      * Here for simplicity in implementation each relationship has its own unique table. Therefore, the relationship_role_column in these tables will only contain the value relationship_role_column_value
      * In the OOB relationships, the relationship_role_column will contain any of the relationship_role_column_values from the relationships that share the table
      * TODO: implement this optimization
-     * 
+     *
      */
     
     /*
@@ -443,7 +443,7 @@ class AbstractRelationship
                     $vardef [ 'rname' ] = 'kbdocument_name' ;
                     break ;
                 case 'leads' :
-                case 'contacts' : 
+                case 'contacts' :
                     // special handling as these modules lack a name column in the database; instead 'name' refers to a non-db field that concatenates first_name and last_name
                     // luckily, the relate field mechanism can handle this with an equivalent additional db_concat_fields entry
                     $vardef [ 'rname' ] = 'name' ;
@@ -602,7 +602,7 @@ class AbstractRelationship
      * Practically this means no longer than 25 characters as the smallest identifier length for our supported DBs is 30 chars for Oracle plus we add on at least four characters in some places (for indicies for example)
      * TODO: Ideally this should reside in DBHelper as it is such a common db function...
      * @param string $name Proposed name for the column
-     * @param string $ensureUnique 
+     * @param string $ensureUnique
      * @return string Valid column name trimmed to right length and with invalid characters removed
      */
     static function getValidDBName($name, $ensureUnique = true)

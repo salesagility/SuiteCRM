@@ -66,7 +66,7 @@ class AccountsTester extends \AcceptanceTester
     }
     
     /**
-     * 
+     *
      * @return Scenario
      */
     public function getPublicScenario()

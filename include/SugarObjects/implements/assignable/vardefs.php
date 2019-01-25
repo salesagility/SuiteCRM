@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -55,9 +55,9 @@ $vardefs = array(
             'dbType' => 'id',
             'audited'=>true,
             'comment' => 'User ID assigned to record',
-            'duplicate_merge'=>'disabled'           
+            'duplicate_merge'=>'disabled'
         ),
-     'assigned_user_name' => 
+     'assigned_user_name' =>
      array(
             'name' => 'assigned_user_name',
             'link'=>'assigned_user_link' ,
@@ -69,7 +69,7 @@ $vardefs = array(
             'table' => 'users',
             'id_name' => 'assigned_user_id',
             'module'=>'Users',
-            'duplicate_merge'=>'disabled' 
+            'duplicate_merge'=>'disabled'
      ),
               'assigned_user_link' =>
   array(
@@ -84,7 +84,7 @@ $vardefs = array(
     'duplicate_merge'=>'enabled',
     'rname' => 'user_name',
     'id_name' => 'assigned_user_id',
-    'table' => 'users',     
+    'table' => 'users',
   ),
 ),
 'relationships'=>array(

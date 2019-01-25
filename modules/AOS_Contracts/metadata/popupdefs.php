@@ -18,14 +18,14 @@ $popupMeta = array(
   6 => 'end_date',
 ),
     'searchdefs' => array(
-  'name' => 
+  'name' =>
   array(
     'type' => 'name',
     'label' => 'LBL_NAME',
     'width' => '10%',
     'name' => 'name',
   ),
-  'status' => 
+  'status' =>
   array(
     'type' => 'enum',
     'studio' => 'visible',
@@ -34,14 +34,14 @@ $popupMeta = array(
     'width' => '10%',
     'name' => 'status',
   ),
-  'start_date' => 
+  'start_date' =>
   array(
     'type' => 'date',
     'label' => 'LBL_START_DATE',
     'width' => '10%',
     'name' => 'start_date',
   ),
-  'end_date' => 
+  'end_date' =>
   array(
     'type' => 'date',
     'label' => 'LBL_END_DATE',

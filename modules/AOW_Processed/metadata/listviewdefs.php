@@ -1,7 +1,7 @@
 <?php
-$listViewDefs ['AOW_Processed'] = 
+$listViewDefs ['AOW_Processed'] =
 array(
-  'AOW_WORKFLOW' => 
+  'AOW_WORKFLOW' =>
   array(
     'type' => 'relate',
     'studio' => 'visible',
@@ -43,14 +43,14 @@ array(
     'label' => 'LBL_STATUS',
     'width' => '10%',
   ),
-  'DATE_ENTERED' => 
+  'DATE_ENTERED' =>
   array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '10%',
     'default' => true,
   ),
-  'DATE_MODIFIED' => 
+  'DATE_MODIFIED' =>
   array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_MODIFIED',

@@ -1,21 +1,21 @@
 <?php
 $dashletData['ProjectDashlet']['searchFields'] = array(
-  'date_entered' => 
+  'date_entered' =>
   array(
     'default' => '',
   ),
-  'date_modified' => 
+  'date_modified' =>
   array(
     'default' => '',
   ),
-  'assigned_user_id' => 
+  'assigned_user_id' =>
   array(
     'type' => 'assigned_user_name',
     'default' => 'Administrator',
   ),
 );
 $dashletData['ProjectDashlet']['columns'] = array(
-  'name' => 
+  'name' =>
   array(
     'width' => '30%',
     'label' => 'LBL_LIST_NAME',
@@ -23,7 +23,7 @@ $dashletData['ProjectDashlet']['columns'] = array(
     'default' => true,
     'name' => 'name',
   ),
-  'status' => 
+  'status' =>
   array(
     'type' => 'enum',
     'default' => true,
@@ -31,7 +31,7 @@ $dashletData['ProjectDashlet']['columns'] = array(
     'width' => '10%',
     'name' => 'status',
   ),
-  'estimated_start_date' => 
+  'estimated_start_date' =>
   array(
     'type' => 'date',
     'label' => 'LBL_DATE_START',
@@ -39,14 +39,14 @@ $dashletData['ProjectDashlet']['columns'] = array(
     'default' => true,
     'name' => 'estimated_start_date',
   ),
-  'assigned_user_name' => 
+  'assigned_user_name' =>
   array(
     'width' => '8%',
     'label' => 'LBL_LIST_ASSIGNED_USER',
     'name' => 'assigned_user_name',
     'default' => true,
   ),
-  'estimated_end_date' => 
+  'estimated_end_date' =>
   array(
     'type' => 'date',
     'label' => 'LBL_DATE_END',
@@ -54,21 +54,21 @@ $dashletData['ProjectDashlet']['columns'] = array(
     'default' => true,
     'name' => 'estimated_end_date',
   ),
-  'date_modified' => 
+  'date_modified' =>
   array(
     'width' => '15%',
     'label' => 'LBL_DATE_MODIFIED',
     'name' => 'date_modified',
     'default' => false,
   ),
-  'date_entered' => 
+  'date_entered' =>
   array(
     'width' => '15%',
     'label' => 'LBL_DATE_ENTERED',
     'default' => false,
     'name' => 'date_entered',
   ),
-  'created_by' => 
+  'created_by' =>
   array(
     'width' => '8%',
     'label' => 'LBL_CREATED',

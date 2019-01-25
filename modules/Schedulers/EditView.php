@@ -154,7 +154,7 @@ $start_at = 1;
 include_once('modules/Schedulers/_AddJobsHere.php');
 
 if (is_array($job_strings) && !empty($job_strings)) {
-    $job_function = "<option value=''>--</option>"; 
+    $job_function = "<option value=''>--</option>";
     foreach ($job_strings as $k => $function) {
         $job_function .= "<option value='function::".$function."'";
         if ($focus->job === "function::".$function) {
@@ -187,7 +187,7 @@ $mins_arr_unreq = $mins_arr;
 $hours_arr_unreq[''] = '--';
 $mins_arr_unreq[''] = '--';
 
-// explode crontab notation 
+// explode crontab notation
 if (!empty($focus->job_interval)) {
     $exInterval = explode("::", $focus->job_interval);
 } else {

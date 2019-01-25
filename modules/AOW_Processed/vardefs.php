@@ -28,7 +28,7 @@ $dictionary['AOW_Processed'] = array(
     'audited'=>false,
     'duplicate_merge'=>true,
     'fields'=>array(
-  'aow_workflow_id' => 
+  'aow_workflow_id' =>
   array(
     'required' => false,
     'name' => 'aow_workflow_id',
@@ -47,7 +47,7 @@ $dictionary['AOW_Processed'] = array(
     'len' => 36,
     'size' => '20',
   ),
-  'aow_workflow' => 
+  'aow_workflow' =>
   array(
     'required' => false,
     'source' => 'non-db',
@@ -130,7 +130,7 @@ $dictionary['AOW_Processed'] = array(
     'studio' => 'visible',
     'dependency' => false,
   ),
-  'status' => 
+  'status' =>
   array(
     'required' => false,
     'name' => 'status',

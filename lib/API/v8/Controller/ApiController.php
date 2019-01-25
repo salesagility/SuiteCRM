@@ -172,7 +172,7 @@ class ApiController implements LoggerAwareInterface
     }
     
     /**
-     * 
+     *
      * @param Request $request
      * @param \Exception $e
      * @param array $payload

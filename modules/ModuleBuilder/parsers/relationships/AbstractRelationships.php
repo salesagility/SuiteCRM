@@ -388,7 +388,7 @@ class AbstractRelationships
                 
             
             //Check for app strings
-            $GLOBALS [ 'log' ]->debug(get_class($this) . "->saveLabels(): saving the following to {$filename}" 
+            $GLOBALS [ 'log' ]->debug(get_class($this) . "->saveLabels(): saving the following to {$filename}"
                                       . print_r($definition, true)) ;
             if ($definition['module'] == 'application') {
                 $app_list_strings[$definition [ 'system_label' ]] = $definition [ 'display_label' ];
@@ -408,15 +408,15 @@ class AbstractRelationships
             
             
             foreach ($sugar_config['languages'] as $lk => $lv) {
-                $installDefs [ $definition [ 'module' ] . "_$lk" ] = array( 
-                    'from' => "{$installDefPrefix}/relationships/language/{$definition [ 'module' ]}.php" , 
-                    'to_module' => $definition [ 'module' ] , 
-                    'language' => $lk 
+                $installDefs [ $definition [ 'module' ] . "_$lk" ] = array(
+                    'from' => "{$installDefPrefix}/relationships/language/{$definition [ 'module' ]}.php" ,
+                    'to_module' => $definition [ 'module' ] ,
+                    'language' => $lk
                 ) ;
             }
             
-            /* do not use the following write_array_to_file method to write the label file - 
-             * module installer appends each of the label files together (as it does for all files) 
+            /* do not use the following write_array_to_file method to write the label file -
+             * module installer appends each of the label files together (as it does for all files)
              * into a combined label file and so the last $mod_strings is the only one received by the application */
             // write_array_to_file ( 'mod_strings', array ( $definition [ 'system_label' ] => $definition [ 'display_label' ] ), $filename, "a" ) ;
         }
@@ -522,9 +522,9 @@ class AbstractRelationships
             }
             file_put_contents($filename, $out);
             
-            $installDefs [ $moduleName ] = array( 
-                'from' => "{$installDefPrefix}/relationships/vardefs/{$relName}_{$moduleName}.php" , 
-                'to_module' => $moduleName 
+            $installDefs [ $moduleName ] = array(
+                'from' => "{$installDefPrefix}/relationships/vardefs/{$relName}_{$moduleName}.php" ,
+                'to_module' => $moduleName
             ) ;
         }
         

@@ -58,7 +58,7 @@ class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract
     
     /**
      *
-     * @var StateSaver 
+     * @var StateSaver
      */
     protected $state;
     
@@ -113,7 +113,7 @@ class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract
         $options = null;
         $results = new SearchResults($hits, $groupedByModule, $searchTime, $total, $scores, $options);
         $searchResultsController = new SearchResultsController($query, $results);
-        ob_start();        
+        ob_start();
         $searchResultsController->display();
         $content = ob_get_contents();
         ob_end_clean();
@@ -148,7 +148,7 @@ class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract
         $options = null;
         $results = new SearchResults($hits, $groupedByModule, $searchTime, $total, $scores, $options);
         $searchResultsController = new SearchResultsController($query, $results);
-        ob_start();        
+        ob_start();
         $searchResultsController->display();
         $content = ob_get_contents();
         ob_end_clean();
@@ -181,7 +181,7 @@ class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract
         $options = null;
         $results = new SearchResults($hits, $groupedByModule, $searchTime, $total, $scores, $options);
         $searchResultsController = new SearchResultsController($query, $results);
-        ob_start();        
+        ob_start();
         $searchResultsController->display();
         $content = ob_get_contents();
         ob_end_clean();
@@ -206,7 +206,7 @@ class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract
         $options = null;
         $results = new SearchResults($hits, $groupedByModule, $searchTime, $total, $scores, $options);
         $searchResultsController = new SearchResultsController($query, $results);
-        ob_start();        
+        ob_start();
         $searchResultsController->display();
         $content = ob_get_contents();
         ob_end_clean();

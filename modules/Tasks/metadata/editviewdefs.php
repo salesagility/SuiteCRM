@@ -38,19 +38,19 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$viewdefs ['Tasks'] = 
+$viewdefs ['Tasks'] =
 array(
-  'EditView' => 
+  'EditView' =>
   array(
-    'templateMeta' => 
+    'templateMeta' =>
     array(
-      'form' => 
+      'form' =>
       array(
-        'hidden' => 
+        'hidden' =>
         array(
            '<input type="hidden" name="isSaveAndNew" value="false">',
         ),
-        'buttons' => 
+        'buttons' =>
         array(
            'SAVE',
            'CANCEL',
@@ -61,7 +61,7 @@ array(
         ),
       ),
       'maxColumns' => '2',
-      'widths' => 
+      'widths' =>
       array(
          
         array(
@@ -76,16 +76,16 @@ array(
       ),
       'useTabs' => false,
     ),
-    'panels' => 
+    'panels' =>
     array(
-      'lbl_task_information' => 
+      'lbl_task_information' =>
       array(
          
         array(
            
           array(
             'name' => 'name',
-            'displayParams' => 
+            'displayParams' =>
             array(
               'required' => true,
             ),
@@ -93,7 +93,7 @@ array(
            
           array(
             'name' => 'status',
-            'displayParams' => 
+            'displayParams' =>
             array(
               'required' => true,
             ),
@@ -105,7 +105,7 @@ array(
           array(
             'name' => 'date_start',
             'type' => 'datetimecombo',
-            'displayParams' => 
+            'displayParams' =>
             array(
               'showNoneCheckbox' => true,
               'showFormats' => true,
@@ -123,7 +123,7 @@ array(
           array(
             'name' => 'date_due',
             'type' => 'datetimecombo',
-            'displayParams' => 
+            'displayParams' =>
             array(
               'showNoneCheckbox' => true,
               'showFormats' => true,
@@ -140,7 +140,7 @@ array(
            
           array(
             'name' => 'priority',
-            'displayParams' => 
+            'displayParams' =>
             array(
               'required' => true,
             ),

@@ -122,15 +122,15 @@ class User extends Person implements EmailInterface
     public $factor_auth_interface;
     
     /**
-     * Normally a bean returns ID from save() method if it was 
+     * Normally a bean returns ID from save() method if it was
      * success and false (or maybe null) is something went wrong.
-     * BUT (for some reason) if User bean saved properly except 
-     * the email addresses of it, this User::save() method also 
+     * BUT (for some reason) if User bean saved properly except
+     * the email addresses of it, this User::save() method also
      * return a false.
-     * It's a confusing ambiguous return value for caller method. 
-     * 
-     * To handle this issue when save method can not save email 
-     * addresses and return false it also set this variable to 
+     * It's a confusing ambiguous return value for caller method.
+     *
+     * To handle this issue when save method can not save email
+     * addresses and return false it also set this variable to
      * true.
      *
      * @var bool|null
@@ -587,17 +587,17 @@ class User extends Person implements EmailInterface
     }
 
     /**
-     * Normally a bean returns ID from save() method if it was 
+     * Normally a bean returns ID from save() method if it was
      * success and false (or maybe null) is something went wrong.
-     * BUT (for some reason) if User bean saved properly except 
-     * the email addresses of it, this User::save() method also 
+     * BUT (for some reason) if User bean saved properly except
+     * the email addresses of it, this User::save() method also
      * return a false.
-     * It's a confusing ambiguous return value for caller method. 
-     * 
-     * To handle this issue when save method can not save email 
+     * It's a confusing ambiguous return value for caller method.
+     *
+     * To handle this issue when save method can not save email
      * addresses and return false it also set the variable called
      * User::$lastSaveErrorIsEmailAddressSaveError to true.
-     * 
+     *
      * @global User $current_user
      * @global array $sugar_config
      * @global array $mod_strings

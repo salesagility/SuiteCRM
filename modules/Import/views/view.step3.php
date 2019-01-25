@@ -488,7 +488,7 @@ class ImportViewStep3 extends ImportView
             case '\t':
                 $delimiter = "\t";
                 break;
-        }       
+        }
         return $delimiter;
     }
 

@@ -62,7 +62,7 @@ $subpanel_layout = array(
             'width' => '70%',
             'sortable'=>false,
         ),
-/*		
+/*
         'edit_button'=>array(
             'vname' => 'LBL_EDIT_BUTTON',
             'widget_class' => 'SubPanelEditButton',
@@ -76,7 +76,7 @@ $subpanel_layout = array(
             'width' => '5%',
             'refresh_page'=>true,
         ),
-*/        
+*/
         
     ),
 );

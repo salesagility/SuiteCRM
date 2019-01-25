@@ -92,7 +92,7 @@ class AdministrationViewThemesettings extends SugarView
         parent::process();
     }
     
-    /** 
+    /**
      * display the form
      */
     public function display()
@@ -101,7 +101,7 @@ class AdministrationViewThemesettings extends SugarView
         
         if (!is_admin($current_user)) {
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
-        } 
+        }
             
         $enabled = array();
         foreach (SugarThemeRegistry::availableThemes() as $dir => $theme) {

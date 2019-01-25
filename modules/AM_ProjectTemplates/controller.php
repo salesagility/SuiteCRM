@@ -199,7 +199,7 @@ class AM_ProjectTemplatesController extends SugarController
                     $d += 1;
                 }
                 $enddate = $enddate->modify('+1 Days');
-            } 
+            }
             $enddate = $enddate->modify('-1 Days');//readjust it back to remove 1 additional day added
 
             //----------------------------------
@@ -223,7 +223,7 @@ class AM_ProjectTemplatesController extends SugarController
 
                 $startdate = $enddate;
                 //add one day to let the next task start on next day of it's finish.
-        $enddate_array[$count] = $enddate->modify('+1 Days')->format('Y-m-d'); //$end;		    
+        $enddate_array[$count] = $enddate->modify('+1 Days')->format('Y-m-d'); //$end;
                 $enddate = $end;
             }
             $project_task->save();
@@ -281,7 +281,7 @@ class AM_ProjectTemplatesController extends SugarController
             $end_date = Date('Y-m-d', strtotime("+ " . $duration . " days"));
         }
 
-        //------------------------------------------- ?>
+        //-------------------------------------------?>
 
         <script type="text/javascript">
             //Get the height if the #gantt div and add 18px

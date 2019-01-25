@@ -92,7 +92,7 @@ while ($row = $db->fetchByAssoc($result)) {
                     $selectedZone = lookupTimezone($prefs['timez'] + $hourAdjust);
                         
                     if (!empty($selectedZone)) {
-                        $newprefs['timezone'] = $selectedZone;   
+                        $newprefs['timezone'] = $selectedZone;
                         $newprefs['timez']  = $val;
                         $setTo = $selectedZone;
                         if (empty($prompt_users)) {
@@ -101,7 +101,7 @@ while ($row = $db->fetchByAssoc($result)) {
                             $newprefs['ut']=0;
                         }
                     } else {
-                        $newprefs['timezone'] = $serverTimeZone;   
+                        $newprefs['timezone'] = $serverTimeZone;
                         $newprefs['timez']  = $val;
                         $setTo = $serverTimeZone;
                         if (empty($prompt_users)) {

@@ -43,7 +43,7 @@ $dictionary['AOD_IndexEvent'] = array(
     'audited'=>true,
         'duplicate_merge'=>true,
         'fields'=>array(
-  'error' => 
+  'error' =>
   array(
     'required' => false,
     'name' => 'error',
@@ -63,7 +63,7 @@ $dictionary['AOD_IndexEvent'] = array(
     'len' => '255',
     'size' => '20',
   ),
-  'success' => 
+  'success' =>
   array(
     'required' => false,
     'name' => 'success',

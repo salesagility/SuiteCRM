@@ -1,19 +1,19 @@
 <?php
 $module_name = 'AOR_Scheduled_Reports';
 $_module_name = 'aor_scheduled_reports';
-$searchdefs [$module_name] = 
+$searchdefs [$module_name] =
 array(
-  'layout' => 
+  'layout' =>
   array(
-    'basic_search' => 
+    'basic_search' =>
     array(
-      'name' => 
+      'name' =>
       array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'current_user_only' => 
+      'current_user_only' =>
       array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
@@ -22,15 +22,15 @@ array(
         'width' => '10%',
       ),
     ),
-    'advanced_search' => 
+    'advanced_search' =>
     array(
-      'name' => 
+      'name' =>
       array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'current_user_only' => 
+      'current_user_only' =>
       array(
         'label' => 'LBL_CURRENT_USER_FILTER',
         'type' => 'bool',
@@ -38,7 +38,7 @@ array(
         'width' => '10%',
         'name' => 'current_user_only',
       ),
-      'email' => 
+      'email' =>
       array(
         'name' => 'email',
         'label' => 'LBL_ANY_EMAIL',
@@ -48,11 +48,11 @@ array(
       ),
     ),
   ),
-  'templateMeta' => 
+  'templateMeta' =>
   array(
     'maxColumns' => '3',
     'maxColumnsBasic' => '4',
-    'widths' => 
+    'widths' =>
     array(
       'label' => '10',
       'field' => '30',

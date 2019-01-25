@@ -61,10 +61,10 @@ class GoogleSync extends GoogleSyncBase
 
     /**
      * Gets the combined titles of a Meeting/Event pair for Logging
-     * 
+     *
      * @param Meeting $meeting The CRM Meeting
      * @param \Google_Service_Calendar_Event $event The Google Event
-     * 
+     *
      * @return string The combined title
      */
     protected function getTitle(Meeting $meeting = null, Google_Service_Calendar_Event $event = null)
@@ -86,11 +86,11 @@ class GoogleSync extends GoogleSyncBase
 
     /**
      * Helper method for doSync
-     * 
+     *
      * @param string $action The action to take with the two events
      * @param Meeting $meeting The CRM Meeting
      * @param \Google_Service_Calendar_Event $event The Google Event
-     * 
+     *
      * @return bool Success/Failure
      * @throws GoogleSyncException if $action is invalid.
      * @throws GoogleSyncException if something else fails.
@@ -253,8 +253,8 @@ class GoogleSync extends GoogleSyncBase
                 throw new GoogleSyncException('Unable to get User bean. ID was: ' . $row['id'], GoogleSyncException::UNABLE_TO_RETRIEVE_USER);
             }
                     
-            if ($tmp['notEmpty'] = !empty($user->getPreference('GoogleApiToken', 'GoogleSync')) && 
-                $tmp['decoded'] = json_decode(base64_decode($user->getPreference('GoogleApiToken', 'GoogleSync'))) && 
+            if ($tmp['notEmpty'] = !empty($user->getPreference('GoogleApiToken', 'GoogleSync')) &&
+                $tmp['decoded'] = json_decode(base64_decode($user->getPreference('GoogleApiToken', 'GoogleSync'))) &&
                 $tmp['syncPref'] = $user->getPreference('syncGCal', 'GoogleSync')
             ) {
                 if ($tmp['added'] = $this->addUser($user->id, $user->full_name)) {

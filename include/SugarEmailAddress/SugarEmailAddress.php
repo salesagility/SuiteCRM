@@ -194,9 +194,9 @@ class SugarEmailAddress extends SugarBean
     );
     
     /**
-     * For saveAtUserProfile() method to telling what 
+     * For saveAtUserProfile() method to telling what
      * went wrong at the last call.
-     * 
+     *
      * @var array
      */
     public $lastSaveAtUserProfileErrors = [];
@@ -277,13 +277,13 @@ class SugarEmailAddress extends SugarBean
      * returns:
      * true - success
      * false - error
-     * 
-     * Note: 
-     * This function could head to many errors but return 
+     *
+     * Note:
+     * This function could head to many errors but return
      * value is false in each case.
      * It is confusing because the ambiguous return value.
-     * This function also stores the error code(s) in 
-     * array SugarEmailAddress::$lastSaveAtUserProfileErrors 
+     * This function also stores the error code(s) in
+     * array SugarEmailAddress::$lastSaveAtUserProfileErrors
      *
      * @param array $request $_REQUEST
      * @return bool

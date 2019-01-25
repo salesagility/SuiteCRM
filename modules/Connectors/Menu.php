@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $mod_strings;
 global $current_user;
-$actions = array('ModifyProperties', 'ModifyDisplay', 
+$actions = array('ModifyProperties', 'ModifyDisplay',
 'ModifyMapping', 'ConnectorSettings');
 if (in_array($GLOBALS['action'], $actions)) {
     $module_menu[]=array("index.php?module=Connectors&action=ConnectorSettings", $mod_strings['LBL_ADMINISTRATION_MAIN'],"icon_Connectors");

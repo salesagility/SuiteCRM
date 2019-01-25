@@ -158,7 +158,7 @@ $dictionary['CampaignLog'] = array('audited'=>false,
             'name' => 'marketing_name',
             'type' => 'varchar',
             'len' => '255',
-            'source'=>'non-db',		
+            'source'=>'non-db',
         ),
           'campaign_name1' => array(
             'name' => 'campaign_name1',

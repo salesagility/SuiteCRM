@@ -91,6 +91,6 @@ $subpanel_layout = array(
             'widget_class' => 'SubPanelRemoveButton',
             'module' => 'Contacts',
             'width' => '5%',
-        ),		
+        ),
     ),
 );

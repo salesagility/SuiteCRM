@@ -86,7 +86,7 @@ class ImportViewStep1 extends ImportView
         return $returnArray;
     }
 
-    /** 
+    /**
      * @see SugarView::display()
      */
     public function display()

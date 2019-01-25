@@ -92,7 +92,7 @@ class SugarWidgetSubPanelTopButtonQuickCreate extends SugarWidgetSubPanelTopButt
                 }
             }
             
-            //Set the return_name form variable that will allow EditView2.php 
+            //Set the return_name form variable that will allow EditView2.php
             $additionalFormFields['return_name'] = $defines['focus']->name;
         }
         

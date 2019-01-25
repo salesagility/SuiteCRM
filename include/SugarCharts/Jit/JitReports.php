@@ -54,13 +54,13 @@ class JitReports extends Jit
     
     function calculateReportGroupTotal($dataset)
     {
-        $total = 0;				
+        $total = 0;
         foreach ($dataset as $value) {
             $total += $value['numerical_value'];
         }
         
         return $total;
-    }	
+    }
     
     /**
      * Method checks is our dataset from currency field or not
@@ -131,7 +131,7 @@ class JitReports extends Jit
                     }
                 }
             }
-        }     
+        }
         $super_set = array_unique($super_set);
 
         return $super_set;
@@ -139,10 +139,10 @@ class JitReports extends Jit
     
     function xmlDataReportSingleValue()
     {
-        $data = '';		
+        $data = '';
         foreach ($this->data_set as $key => $dataset) {
             $total = $this->calculateReportGroupTotal($dataset);
-            $this->checkYAxis($total);						
+            $this->checkYAxis($total);
 
             $data .= $this->tab('<group>', 2);
             $data .= $this->tabValue('title', $key, 3);
@@ -153,7 +153,7 @@ class JitReports extends Jit
             $data .= $this->tabValue('label', $key, 5);
             $data .= $this->tab('<link></link>', 5);
             $data .= $this->tab('</group>', 4);
-            $data .= $this->tab('</subgroups>', 3);				
+            $data .= $this->tab('</subgroups>', 3);
             $data .= $this->tab('</group>', 2);
         }
         return $data;
@@ -164,7 +164,7 @@ class JitReports extends Jit
         global $app_strings;
         $data = '';
         // correctly process the first row
-        $first = true;	
+        $first = true;
         foreach ($this->data_set as $key => $dataset) {
             $total = $this->calculateReportGroupTotal($dataset);
             $this->checkYAxis($total);
@@ -198,7 +198,7 @@ class JitReports extends Jit
                         }
                     }
                 }
-            }			
+            }
 
             if (!$first) {
                 $not_processed = array_diff($this->super_set, $this->processed_report_keys);
@@ -211,8 +211,8 @@ class JitReports extends Jit
                 }
             }
             
-            $data .= $this->tab('</subgroups>', 3);				
-            $data .= $this->tab('</group>', 2);				
+            $data .= $this->tab('</subgroups>', 3);
+            $data .= $this->tab('</group>', 2);
             $this->processed_report_keys = array();
             // we're done with the first row!
             //$first = false;
@@ -241,11 +241,11 @@ class JitReports extends Jit
         }
         
         return $data;
-    }	
+    }
         
     /**
      * wrapper function to return the html code containing the chart in a div
-     * 
+     *
      * @param 	string $name 	name of the div
      *			string $xmlFile	location of the XML file
      *			string $style	optional additional styles for the div
@@ -257,7 +257,7 @@ class JitReports extends Jit
             $name = "unsavedReport";
         }
         
-        parent::display($name, $xmlFile, $width, $height, $resize=false);			
+        parent::display($name, $xmlFile, $width, $height, $resize=false);
         
         return $this->ss->fetch('include/SugarCharts/Jit/tpls/chart.tpl');
     }

@@ -60,7 +60,7 @@ class ViewVcard extends SugarView
      */
     public function display()
     {
-        $vcard = new vCard();		
+        $vcard = new vCard();
         $vcard->loadContact($this->bean->id, $this->module);
         $vcard->saveVCard();
     }

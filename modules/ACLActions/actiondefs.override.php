@@ -16,24 +16,24 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
@@ -44,11 +44,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  if (!defined('ACL_ALLOW_NONE')) {
      define('ACL_ALLOW_ADMIN_DEV', 100);
      define('ACL_ALLOW_ADMIN', 99);
-     define('ACL_ALLOW_ALL', 90);                        
+     define('ACL_ALLOW_ALL', 90);
      define('ACL_ALLOW_ENABLED', 89);
-     /* BEGIN - SECURITY GROUPS */ 
+     /* BEGIN - SECURITY GROUPS */
      define('ACL_ALLOW_GROUP', 80); //securitygroup
-     /* END - SECURITY GROUPS */ 
+     /* END - SECURITY GROUPS */
      define('ACL_ALLOW_OWNER', 75);
      define('ACL_ALLOW_NORMAL', 1);
      define('ACL_ALLOW_DEFAULT', 0);
@@ -71,15 +71,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
     ACL_ALLOW_DEFAULT=>array('color'=>'#008000', 'label'=>'LBL_ACCESS_DEFAULT', 'text_color'=>'white'),
     ACL_ALLOW_DEV=>array('color'=>'#0000FF', 'label'=>'LBL_ACCESS_DEV', 'text_color'=>'white'),
     ACL_ALLOW_ADMIN_DEV=>array('color'=>'#0000FF', 'label'=>'LBL_ACCESS_ADMIN_DEV', 'text_color'=>'white'),
-    /* BEGIN - SECURITY GROUPS */ 
+    /* BEGIN - SECURITY GROUPS */
     ACL_ALLOW_GROUP=>array('color'=>'#0000A0', 'label'=>'LBL_ACCESS_GROUP', 'text_color'=>'white'), //securitygroup
-    /* END - SECURITY GROUPS */ 
+    /* END - SECURITY GROUPS */
     );
 /**
  * $GLOBALS['ACLActions
  * These are the actions for a given type. It includes the ACCESS Levels for that action and the label for that action. Every an object of the category (e.g. module) is added all associated actions are added for that object
  */
-/* BEGIN - SECURITY GROUPS */ 
+/* BEGIN - SECURITY GROUPS */
 $GLOBALS['ACLActions'] = array(
     'module'=>array('actions'=>
                         array(
@@ -139,4 +139,4 @@ $GLOBALS['ACLActions'] = array(
                     
                 ),),
 );
-/* END - SECURITY GROUPS */ 
+/* END - SECURITY GROUPS */

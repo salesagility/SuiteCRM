@@ -1,8 +1,8 @@
 <?php
 $module_name = 'Favorites';
-$listViewDefs [$module_name] = 
+$listViewDefs [$module_name] =
 array(
-  'NAME' => 
+  'NAME' =>
   array(
     'width' => '20%',
     'label' => 'LBL_NAME',
@@ -16,14 +16,14 @@ array(
     'width' => '15%',
     'default' => true,
   ),
-  'DATE_END' => 
+  'DATE_END' =>
   array(
     'type' => 'datetimecombo',
     'label' => 'LBL_DATE_END',
     'width' => '15%',
     'default' => true,
   ),
-  'FP_EVENT_LOCATIONS_FP_EVENTS_1_NAME' => 
+  'FP_EVENT_LOCATIONS_FP_EVENTS_1_NAME' =>
   array(
     'type' => 'relate',
     'link' => true,
@@ -32,7 +32,7 @@ array(
     'width' => '15%',
     'default' => true,
   ),
-  'BUDGET' => 
+  'BUDGET' =>
   array(
     'type' => 'currency',
     'label' => 'LBL_BUDGET',
@@ -40,7 +40,7 @@ array(
     'width' => '15%',
     'default' => true,
   ),
-  'ASSIGNED_USER_NAME' => 
+  'ASSIGNED_USER_NAME' =>
   array(
     'width' => '9%',
     'label' => 'LBL_ASSIGNED_TO_NAME',

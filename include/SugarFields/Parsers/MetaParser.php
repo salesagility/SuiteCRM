@@ -606,9 +606,9 @@ class MetaParser
 
         /*
         $contents = file_get_contents($htmlFilePath);
-        
+
         $javascript = $this->getJavascript($contents, true);
-        
+
         if(!empty($javascript)) {
         	$javascript = str_replace("'", "\\'", $javascript);
         	$header .= "\n 'javascript' => '" . $javascript . "',\n";

@@ -45,7 +45,7 @@ require_once('include/EditView/EditView2.php');
 class CalendarViewQuickEdit extends SugarView
 {
     var $ev;
-    protected $editable;	
+    protected $editable;
     
     public function preDisplay()
     {
@@ -87,8 +87,8 @@ class CalendarViewQuickEdit extends SugarView
         $this->ev->formName = "CalendarEditView";
         $this->ev->setup($module, $this->bean, $source, $tpl);
         $this->ev->defs['templateMeta']['form']['headerTpl'] = "modules/Calendar/tpls/editHeader.tpl";
-        $this->ev->defs['templateMeta']['form']['footerTpl'] = "modules/Calendar/tpls/empty.tpl";						
-        $this->ev->process(false, "CalendarEditView");		
+        $this->ev->defs['templateMeta']['form']['footerTpl'] = "modules/Calendar/tpls/empty.tpl";
+        $this->ev->process(false, "CalendarEditView");
         
         if (!empty($this->bean->id)) {
             require_once('include/json_config.php');
@@ -98,7 +98,7 @@ class CalendarViewQuickEdit extends SugarView
             $GRjavascript = $json_config->getFocusData($module, $this->bean->id);
         } else {
             $GRjavascript = "";
-        }	
+        }
     
         $json_arr = array(
                 'access' => 'yes',
@@ -113,7 +113,7 @@ class CalendarViewQuickEdit extends SugarView
             $json_arr = array_merge($json_arr, array("repeat" => $repeat_arr));
         }
             
-        ob_clean();		
+        ob_clean();
         echo json_encode($json_arr);
     }
 }

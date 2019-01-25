@@ -93,7 +93,7 @@ class ImportViewError extends SugarView
         }
     }
     
-    /** 
+    /**
      * @see SugarView::display()
      */
     public function display()

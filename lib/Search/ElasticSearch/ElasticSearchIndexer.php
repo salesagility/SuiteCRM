@@ -567,7 +567,7 @@ class ElasticSearchIndexer extends AbstractIndexer
     }
     
     /**
-     * 
+     *
      * @param bool $differential
      * @param int $searchdefs
      */

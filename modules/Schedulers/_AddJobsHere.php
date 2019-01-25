@@ -647,8 +647,8 @@ function pollMonitoredInboxesAOP()
                                     $userId = $assignManager->getNextAssignedUser();
                                     $GLOBALS['log']->debug('userId [ ' . $userId . ' ]');
                                     $validatior = new SuiteValidator();
-                                    if ((!isset($aopInboundEmailX->email) || !$aopInboundEmailX->email || 
-                                        !isset($aopInboundEmailX->email->id) || !$aopInboundEmailX->email->id) && 
+                                    if ((!isset($aopInboundEmailX->email) || !$aopInboundEmailX->email ||
+                                        !isset($aopInboundEmailX->email->id) || !$aopInboundEmailX->email->id) &&
                                         $validatior->isValidId($emailId)
                                     ) {
                                         $aopInboundEmailX->email = new Email();

@@ -80,12 +80,12 @@ class GoogleSyncHelper
 
     /**
      * Helper method for GoogleSync::pushPullSkip.
-     * 
+     *
      * Takes two calendar events, and extracts their last modified and sync times.
-     * 
+     *
      * @param Meeting $meeting Meeting Bean
      * @param \Google_Service_Calendar_Event $event Google_Service_Calendar_Event Object
-     * 
+     *
      * @return array key/value array with [sModified, $gModified, lastsync] keys
      */
     public function getTimeStrings(Meeting $meeting, Google_Service_Calendar_Event $event)
@@ -109,13 +109,13 @@ class GoogleSyncHelper
 
     /**
      * Helper method for GoogleSync::pushPullSkip.
-     * 
+     *
      * Takes two calendar events and the timeArray from getTimeStrings, and returns a push/pull[_delete] string.
-     * 
+     *
      * @param Meeting $meeting Meeting Bean
      * @param \Google_Service_Calendar_Event $event Google_Service_Calendar_Event Object
      * @param array timeArray from getTimeStrings
-     * 
+     *
      * @return string 'push(_delete)', 'pull(_delete)'
      */
     public function getNewestMeetingResponse(Meeting $meeting, Google_Service_Calendar_Event $event, array $timeArray)
@@ -135,14 +135,14 @@ class GoogleSyncHelper
 
     /**
     * Helper method for GoogleSync::pushPullSkip.
-    * 
+    *
     * Takes two calendar events and the timeArray from getTimeStrings, and returns bool (should we skip this record).
-    * 
+    *
     * @param Meeting $meeting Meeting Bean
     * @param \Google_Service_Calendar_Event $event Google_Service_Calendar_Event Object
     * @param array $timeArray from getTimeStrings
     * @param array $syncedList from GoogleSyncBase Class
-    * 
+    *
     * @return bool should we skip this record
     */
     public function isSkippable(Meeting $meeting, Google_Service_Calendar_Event $event, array $timeArray, array $syncedList)
@@ -169,12 +169,12 @@ class GoogleSyncHelper
 
     /**
      * Helper Method for GoogleSyncBase::updateSuitecrmMeetingEvent
-     * 
+     *
      * Creates reminders for event from google event reminders
-     * 
+     *
      * @param array $overrides Google Calendar Event Reminders (See Class Google_Service_Calendar_EventReminders)
      * @param string $meeting Meeting Bean
-     * 
+     *
      * @return array|bool Nested array of unsaved reminders and reminder_invitees, false on Failure
      */
     public function createSuitecrmReminders(array $overrides, Meeting $meeting)

@@ -18,35 +18,35 @@ $popupMeta = array(
   7 => 'assigned_user_name',
 ),
     'searchdefs' => array(
-  'name' => 
+  'name' =>
   array(
     'type' => 'name',
     'label' => 'LBL_NAME',
     'width' => '10%',
     'name' => 'name',
   ),
-  'lat' => 
+  'lat' =>
   array(
     'type' => 'decimal',
     'label' => 'LBL_LAT',
     'width' => '10%',
     'name' => 'lat',
   ),
-  'lng' => 
+  'lng' =>
   array(
     'type' => 'decimal',
     'label' => 'LBL_LNG',
     'width' => '10%',
     'name' => 'lng',
   ),
-  'date_entered' => 
+  'date_entered' =>
   array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '10%',
     'name' => 'date_entered',
   ),
-  'assigned_user_name' => 
+  'assigned_user_name' =>
   array(
     'link' => 'assigned_user_link',
     'type' => 'relate',
@@ -56,35 +56,35 @@ $popupMeta = array(
   ),
 ),
     'listviewdefs' => array(
-  'NAME' => 
+  'NAME' =>
   array(
     'type' => 'name',
     'label' => 'LBL_NAME',
     'width' => '10%',
     'default' => true,
   ),
-  'LAT' => 
+  'LAT' =>
   array(
     'type' => 'decimal',
     'label' => 'LBL_LAT',
     'width' => '10%',
     'default' => true,
   ),
-  'LNG' => 
+  'LNG' =>
   array(
     'type' => 'decimal',
     'label' => 'LBL_LNG',
     'width' => '10%',
     'default' => true,
   ),
-  'DATE_ENTERED' => 
+  'DATE_ENTERED' =>
   array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '10%',
     'default' => true,
   ),
-  'ASSIGNED_USER_NAME' => 
+  'ASSIGNED_USER_NAME' =>
   array(
     'link' => 'assigned_user_link',
     'type' => 'relate',

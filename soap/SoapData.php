@@ -53,7 +53,7 @@ $server->register(
 
 
 /**
- * Get a list of the relationship records that have been modified within a 
+ * Get a list of the relationship records that have been modified within a
  * specified date range.  This is used to perform a sync with a mobile client.
  * The results are paged.
  *
@@ -71,7 +71,7 @@ $server->register(
  * @param xsd:string $relationship_name
  * @param xsd:string $deletion_date
  * @param xsd:int $php_serialize
- * @return 
+ * @return
  */
 function sync_get_modified_relationships($session, $module_name, $related_module, $from_date, $to_date, $offset, $max_results, $deleted, $module_id = '', $select_fields = array(), $ids = array(), $relationship_name = '', $deletion_date = '', $php_serialize = 1)
 {
@@ -79,16 +79,16 @@ function sync_get_modified_relationships($session, $module_name, $related_module
     $error = new SoapError();
     $output_list = array();
     if (!validate_authenticated($session)) {
-        $error->set_error('invalid_login');	
+        $error->set_error('invalid_login');
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     if (empty($beanList[$module_name]) || empty($beanList[$related_module])) {
-        $error->set_error('no_module');	
+        $error->set_error('no_module');
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     global $current_user;
     if (!check_modules_access($current_user, $module_name, 'read') || !check_modules_access($current_user, $related_module, 'read')) {
-        $error->set_error('no_access');	
+        $error->set_error('no_access');
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     // Cast to integer
@@ -128,7 +128,7 @@ function sync_get_modified_relationships($session, $module_name, $related_module
     }
     if ($related_module == 'Meetings' || $related_module == 'Calls') {
         $query = string_format($query, array('m1'));
-    }	
+    }
     $results = retrieve_modified_relationships($module_name, $related_module, $query, $deleted, $offset, $max_results, $select_fields, $relationship_name);
 
     $list = $results['result'];

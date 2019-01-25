@@ -53,9 +53,9 @@ function getEmployeeStatusOptions($focus, $name = 'employee_status', $value = nu
     global $current_user, $app_list_strings;
     if (($view == 'EditView' || $view == 'MassUpdate') && is_admin($current_user)) {
         $employee_status  = "<select name='$name'";
-        if (!empty($sugar_config['default_user_name']) 
-            && $sugar_config['default_user_name'] == $focus->user_name 
-            && isset($sugar_config['lock_default_user_name']) 
+        if (!empty($sugar_config['default_user_name'])
+            && $sugar_config['default_user_name'] == $focus->user_name
+            && isset($sugar_config['lock_default_user_name'])
             && $sugar_config['lock_default_user_name']) {
             $employee_status .= " disabled ";
         }
@@ -80,7 +80,7 @@ function getMessengerTypeOptions($focus, $name = 'messenger_type', $value = null
         $messenger_type .= get_select_options_with_id($app_list_strings['messenger_type_dom'], $focus->messenger_type);
         $messenger_type .= '</select>';
         return $messenger_type;
-    } 
+    }
    
     return $app_list_strings['messenger_type_dom'][$focus->messenger_type];
 }

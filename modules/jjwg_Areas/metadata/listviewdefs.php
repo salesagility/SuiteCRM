@@ -1,36 +1,36 @@
 <?php
 $module_name = 'jjwg_Areas';
-$listViewDefs [$module_name] = 
+$listViewDefs [$module_name] =
 array(
-  'NAME' => 
+  'NAME' =>
   array(
     'width' => '32%',
     'label' => 'LBL_NAME',
     'default' => true,
     'link' => true,
   ),
-  'CITY' => 
+  'CITY' =>
   array(
     'type' => 'varchar',
     'label' => 'LBL_CITY',
     'width' => '10%',
     'default' => true,
   ),
-  'STATE' => 
+  'STATE' =>
   array(
     'type' => 'varchar',
     'label' => 'LBL_STATE',
     'width' => '10%',
     'default' => true,
   ),
-  'COUNTRY' => 
+  'COUNTRY' =>
   array(
     'type' => 'varchar',
     'label' => 'LBL_COUNTRY',
     'width' => '10%',
     'default' => true,
   ),
-  'ASSIGNED_USER_NAME' => 
+  'ASSIGNED_USER_NAME' =>
   array(
     'width' => '9%',
     'label' => 'LBL_ASSIGNED_TO_NAME',
@@ -38,7 +38,7 @@ array(
     'id' => 'ASSIGNED_USER_ID',
     'default' => true,
   ),
-  'MODIFIED_BY_NAME' => 
+  'MODIFIED_BY_NAME' =>
   array(
     'type' => 'relate',
     'link' => 'modified_user_link',
@@ -46,21 +46,21 @@ array(
     'width' => '10%',
     'default' => false,
   ),
-  'DATE_MODIFIED' => 
+  'DATE_MODIFIED' =>
   array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_MODIFIED',
     'width' => '10%',
     'default' => false,
   ),
-  'DATE_ENTERED' => 
+  'DATE_ENTERED' =>
   array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '10%',
     'default' => false,
   ),
-  'DESCRIPTION' => 
+  'DESCRIPTION' =>
   array(
     'type' => 'text',
     'label' => 'LBL_DESCRIPTION',
@@ -68,7 +68,7 @@ array(
     'width' => '10%',
     'default' => false,
   ),
-  'COORDINATES' => 
+  'COORDINATES' =>
   array(
     'type' => 'text',
     'studio' => 'visible',
@@ -77,7 +77,7 @@ array(
     'width' => '10%',
     'default' => false,
   ),
-  'CREATED_BY_NAME' => 
+  'CREATED_BY_NAME' =>
   array(
     'type' => 'relate',
     'link' => 'created_by_link',

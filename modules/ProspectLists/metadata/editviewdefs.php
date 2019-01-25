@@ -40,9 +40,9 @@
 
 $viewdefs['ProspectLists']['EditView'] = array(
     'templateMeta' => array('form'=>array('hidden'=>array('<input type="hidden" name="campaign_id" value="{$smarty.request.campaign_id}">')),
-                            'maxColumns' => '2', 
+                            'maxColumns' => '2',
                             'widths' => array(
-                                            array('label' => '10', 'field' => '30'), 
+                                            array('label' => '10', 'field' => '30'),
                                             array('label' => '10', 'field' => '30')
                                             ),
  'javascript' => '<script type="text/javascript">
@@ -67,7 +67,7 @@ function toggle_domain_name(list_type)  {ldelim}
 </script>',
 ),
  'panels' =>array(
-  'default' => 
+  'default' =>
   array(
     
     array(
@@ -82,7 +82,7 @@ function toggle_domain_name(list_type)  {ldelim}
     ),
     
   ),
-  'LBL_PANEL_ASSIGNMENT' => 
+  'LBL_PANEL_ASSIGNMENT' =>
       array(
         array(
           array(

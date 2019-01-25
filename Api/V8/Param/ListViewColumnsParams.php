@@ -64,7 +64,7 @@ class ListViewColumnsParams extends BaseParam
     }
 
     /**
-     * 
+     *
      * @param \Api\V8\Param\OptionsResolver $resolver
      */
     protected function configureParameters(OptionsResolver $resolver)

@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
             $temp_bean_list = $beanList;
             asort($temp_bean_list);
             $values= array_values($temp_bean_list);
-            $output= array_keys($temp_bean_list);  
+            $output= array_keys($temp_bean_list);
             $output_local = array();
             if ($current_language != 'en_us') {
                 foreach ($output as $temp_out) {
@@ -64,7 +64,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
             $checkbox_values=array(
                                      'clearTpls',
                                      'clearJsFiles',
-                                     'clearVardefs', 
+                                     'clearVardefs',
                                      'clearJsLangFiles',
                                      'clearDashlets',
                                      'clearSugarFeedCache',
@@ -76,7 +76,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                                      'clearPDFFontCache',
                                      //'repairDatabase'
                                      );
-            $checkbox_output = array(   $mod_strings['LBL_QR_CBOX_CLEARTPL'], 
+            $checkbox_output = array(   $mod_strings['LBL_QR_CBOX_CLEARTPL'],
                                         $mod_strings['LBL_QR_CBOX_CLEARJS'],
                                         $mod_strings['LBL_QR_CBOX_CLEARVARDEFS'],
                                         $mod_strings['LBL_QR_CBOX_CLEARJSLANG'],

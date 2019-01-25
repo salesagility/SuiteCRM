@@ -38,28 +38,28 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$listViewDefs ['Meetings'] = 
+$listViewDefs ['Meetings'] =
 array(
-  'SET_COMPLETE' => 
+  'SET_COMPLETE' =>
   array(
     'width' => '1%',
     'label' => 'LBL_LIST_CLOSE',
     'link' => true,
     'sortable' => false,
     'default' => true,
-    'related_fields' => 
+    'related_fields' =>
     array(
       0 => 'status',
     ),
   ),
-  'NAME' => 
+  'NAME' =>
   array(
     'width' => '40%',
     'label' => 'LBL_LIST_SUBJECT',
     'link' => true,
     'default' => true,
   ),
-  'CONTACT_NAME' => 
+  'CONTACT_NAME' =>
   array(
     'width' => '20%',
     'label' => 'LBL_LIST_CONTACT',
@@ -69,7 +69,7 @@ array(
     'default' => true,
     'ACLTag' => 'CONTACT',
   ),
-  'PARENT_NAME' => 
+  'PARENT_NAME' =>
   array(
     'width' => '20%',
     'label' => 'LBL_LIST_RELATED_TO',
@@ -79,24 +79,24 @@ array(
     'default' => true,
     'sortable' => false,
     'ACLTag' => 'PARENT',
-    'related_fields' => 
+    'related_fields' =>
     array(
       0 => 'parent_id',
       1 => 'parent_type',
     ),
   ),
-  'DATE_START' => 
+  'DATE_START' =>
   array(
     'width' => '15%',
     'label' => 'LBL_LIST_DATE',
     'link' => false,
     'default' => true,
-    'related_fields' => 
+    'related_fields' =>
     array(
       0 => 'time_start',
     ),
   ),
-  'ASSIGNED_USER_NAME' => 
+  'ASSIGNED_USER_NAME' =>
   array(
     'width' => '2%',
     'label' => 'LBL_LIST_ASSIGNED_TO_NAME',
@@ -104,14 +104,14 @@ array(
     'id' => 'ASSIGNED_USER_ID',
     'default' => true,
   ),
-  'DIRECTION' => 
+  'DIRECTION' =>
   array(
     'type' => 'enum',
     'label' => 'LBL_LIST_DIRECTION',
     'width' => '10%',
     'default' => false,
   ),
-  'STATUS' => 
+  'STATUS' =>
   array(
     'width' => '10%',
     'label' => 'LBL_LIST_STATUS',
@@ -122,5 +122,5 @@ array(
     'width' => '10%',
     'label' => 'LBL_DATE_ENTERED',
     'default' => true
-  ),  
+  ),
 );

@@ -51,24 +51,24 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint
     
     /**
      *
-     * @var bool 
+     * @var bool
      */
     protected $dieOk = false;
     
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $exitString;
 
     /**
-     * 
+     *
      * @var string
      */
     protected $redirectUrl;
     
     /**
-     * 
+     *
      * @param string $exitString
      */
     public function protectedDie($exitString)
@@ -78,7 +78,7 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint
     }
     
     /**
-     * 
+     *
      * @return bool
      */
     public function getDieOk()
@@ -87,7 +87,7 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint
     }
     
     /**
-     * 
+     *
      * @return string
      */
     public function getExitString()
@@ -96,7 +96,7 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint
     }
 
     /**
-     * 
+     *
      * @return string
      */
     public function getRedirectUrl()
@@ -105,7 +105,7 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint
     }
 
     /**
-     * 
+     *
      * @return string
      */
     public function redirect($url)

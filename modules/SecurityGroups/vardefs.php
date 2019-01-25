@@ -4,7 +4,7 @@ $dictionary['SecurityGroup'] = array(
     'table'=>'securitygroups',
     'audited'=>true,
     'fields'=>array(
-    'noninheritable' => 
+    'noninheritable' =>
     array(
         'name' => 'noninheritable',
         'vname' => 'LBL_NONINHERITABLE',
@@ -35,7 +35,7 @@ $dictionary['SecurityGroup'] = array(
         'relationship_fields'=>array('id' => 'securitygroup_noninherit_id', 'noninheritable' => 'securitygroup_noninheritable', 'primary_group' => 'securitygroup_primary_group'),
         'vname' => 'LBL_USER_NAME',
         'type' => 'relate',
-        'link' => 'users',         
+        'link' => 'users',
         'link_type' => 'relationship_info',
         'source' => 'non-db',
         'Importable' => false,

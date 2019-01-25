@@ -38,19 +38,19 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$searchdefs ['Tasks'] = 
+$searchdefs ['Tasks'] =
 array(
-  'layout' => 
+  'layout' =>
   array(
-    'basic_search' => 
+    'basic_search' =>
     array(
-      'name' => 
+      'name' =>
       array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-     'current_user_only' => 
+     'current_user_only' =>
       array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
@@ -62,15 +62,15 @@ array(
       array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
 
     ),
-    'advanced_search' => 
+    'advanced_search' =>
     array(
-      'name' => 
+      'name' =>
       array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'contact_name' => 
+      'contact_name' =>
       array(
         'name' => 'contact_name',
         'label' => 'LBL_CONTACT_NAME',
@@ -78,7 +78,7 @@ array(
         'default' => true,
         'width' => '10%',
       ),
-      'current_user_only' => 
+      'current_user_only' =>
       array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
@@ -86,13 +86,13 @@ array(
         'default' => true,
         'width' => '10%',
       ),
-      'status' => 
+      'status' =>
       array(
         'name' => 'status',
         'default' => true,
         'width' => '10%',
       ),
-      'parent_name' => 
+      'parent_name' =>
       array(
         'type' => 'parent',
         'label' => 'LBL_LIST_RELATED_TO',
@@ -100,15 +100,15 @@ array(
         'default' => true,
         'name' => 'parent_name',
       ),
-      'assigned_user_id' => 
+      'assigned_user_id' =>
       array(
         'name' => 'assigned_user_id',
         'type' => 'enum',
         'label' => 'LBL_ASSIGNED_TO',
-        'function' => 
+        'function' =>
         array(
           'name' => 'get_user_array',
-          'params' => 
+          'params' =>
           array(
             0 => false,
           ),
@@ -119,11 +119,11 @@ array(
       
     ),
   ),
-  'templateMeta' => 
+  'templateMeta' =>
   array(
     'maxColumns' => '3',
-    'maxColumnsBasic' => '4', 
-    'widths' => 
+    'maxColumnsBasic' => '4',
+    'widths' =>
     array(
       'label' => '10',
       'field' => '30',

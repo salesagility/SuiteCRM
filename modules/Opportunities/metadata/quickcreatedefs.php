@@ -49,21 +49,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 $viewdefs = array(
-  'Opportunities' => 
+  'Opportunities' =>
   array(
-    'QuickCreate' => 
+    'QuickCreate' =>
     array(
-      'templateMeta' => 
+      'templateMeta' =>
       array(
         'maxColumns' => '2',
-        'widths' => 
+        'widths' =>
         array(
-          0 => 
+          0 =>
           array(
             'label' => '10',
             'field' => '30',
           ),
-          1 => 
+          1 =>
           array(
             'label' => '10',
             'field' => '30',
@@ -71,9 +71,9 @@ $viewdefs = array(
         ),
         'javascript' => '{$PROBABILITY_SCRIPT}',
       ),
-      'panels' => 
+      'panels' =>
       array(
-        'DEFAULT' => 
+        'DEFAULT' =>
         array(
           array(
             array(
@@ -90,11 +90,11 @@ $viewdefs = array(
             ),
             array(
               'name' => 'opportunity_type',
-            ),            
+            ),
           ),
           array(
             'amount',
-            'date_closed'          
+            'date_closed'
           ),
           array(
              'next_step',

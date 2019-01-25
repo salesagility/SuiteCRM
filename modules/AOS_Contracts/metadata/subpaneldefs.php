@@ -8,7 +8,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -60,13 +60,13 @@ $layout_defs['AOS_Contracts'] = array(
             'sort_by' => 'id',
             'title_key' => 'AOS_Quotes',
             'get_subpanel_data' => 'aos_quotes_aos_contracts',
-            'top_buttons' => 
+            'top_buttons' =>
             array(
-                0 => 
+                0 =>
                 array(
                     'widget_class' => 'SubPanelTopCreateButton',
                 ),
-                1 => 
+                1 =>
                 array(
                     'widget_class' => 'SubPanelTopSelectButton',
                     'popup_module' => 'AOS_Quotes',

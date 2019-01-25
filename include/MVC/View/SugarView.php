@@ -1996,7 +1996,7 @@ EOHTML;
     {
         if (!is_array($array)) {
             throw new InvalidArgumentException('Sub-parameter should be an array to merging. ' . gettype($array) . ' given.', self::ERR_NOT_SUB_ARRAY);
-        }        
+        }
         foreach ($array as $key => $value) {
             // Renumber integer keys as array_merge_recursive() does. Note that PHP
             // automatically converts array keys that are integer strings (e.g., '1')
