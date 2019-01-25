@@ -40,7 +40,6 @@
 
 namespace SuiteCRM\Utility;
 
-
 class CurrentLanguage
 {
 

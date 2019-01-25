@@ -2,7 +2,6 @@
 
 namespace SuiteCRM\Robo\Plugin\Commands;
 
-
 /**
  * Class CleanCacheCommands
  *

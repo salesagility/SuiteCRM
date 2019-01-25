@@ -40,7 +40,6 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Resource;
 
-
 use Psr\Http\Message\ServerRequestInterface;
 use SuiteCRM\API\JsonApi\v1\Enumerator\RelationshipType;
 use SuiteCRM\API\JsonApi\v1\Links;
