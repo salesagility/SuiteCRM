@@ -149,11 +149,10 @@ class AOW_WorkFlow extends Basic
     function load_flow_beans(){
         global $beanList, $app_list_strings;
 
-        $app_list_strings['aow_moduleList'] = $app_list_strings['moduleList'];
-
-        if(!empty($app_list_strings['aow_moduleList'])){
-            foreach($app_list_strings['aow_moduleList'] as $mkey => $mvalue){
-                if(!isset($beanList[$mkey]) || str_begin($mkey, 'AOW_')){
+        if (!empty($app_list_strings['moduleList'])) {
+            $app_list_strings['aow_moduleList'] = $app_list_strings['moduleList'];
+            foreach ($app_list_strings['aow_moduleList'] as $mkey => $mvalue) {
+                if (!isset($beanList[$mkey]) || str_begin($mkey, 'AOW_')) {
                     unset($app_list_strings['aow_moduleList'][$mkey]);
                 }
             }
