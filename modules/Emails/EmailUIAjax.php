@@ -1149,6 +1149,7 @@ eoq;
                     echo "NOOP - not a Sugar Folder";
                 }
             }
+            // no break
         case "moveFolder":
             $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: moveFolder");
             if (isset($_REQUEST['folderId']) && !empty($_REQUEST['folderId']) && isset($_REQUEST['newParentId']) && !empty($_REQUEST['newParentId']) && $_REQUEST['newParentId'] != $_REQUEST['folderId']) {
@@ -1608,12 +1609,14 @@ eoq;
             }
             $email->et->removeContacts($removeIds);
 
+            // no break
         case "saveContactEdit":
             $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: saveContactEdit");
             if (isset($_REQUEST['args']) && !empty($_REQUEST['args'])) {
                 $email->et->saveContactEdit($_REQUEST['args']);
             }
         // flow into getUserContacts();
+        // no break
         case "addContact":
             $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: addContacts");
             $contacts = array();
@@ -1626,6 +1629,7 @@ eoq;
                 $email->et->setContacts($contacts);
             }
 
+            // no break
         case "addContactsMultiple":
             $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: addContacts");
             if (isset($_REQUEST['contactData'])) {
@@ -1636,6 +1640,7 @@ eoq;
                 }
             }
 
+            // no break
         case "getUserContacts":
             $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getUserContacts");
             $contacts = $email->et->getContacts();

@@ -312,6 +312,7 @@ EOJS;
                 $DashletsDialog->getDashlets('tools');
                 $dashletIndex = 'Tools';
                 $searchCategoryString = $app_strings['LBL_SEARCH_TOOLS'];
+                // no break
             default:
                 break;
         }

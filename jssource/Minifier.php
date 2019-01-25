@@ -203,6 +203,7 @@ class Minifier
 
                     // otherwise we treat the newline like a space
 
+                    // no break
                 case ' ':
                     if (self::isAlphaNumeric($this->b)) {
                         echo $this->a;
@@ -231,6 +232,7 @@ class Minifier
                                 break;
                             }
 
+                            // no break
                         default:
                             // check for some regex that breaks stuff
                             if ($this->a == '/' && ($this->b == '\'' || $this->b == '"')) {

@@ -58,4 +58,3 @@ $listViewDefs[$module_name] = array(
     ),
 
 );
-?>

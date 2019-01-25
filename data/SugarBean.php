@@ -580,6 +580,7 @@ class SugarBean
                         if (isset($this->$field)) {
                             break;
                         }
+                        // no break
                     default:
                         if (isset($value['default']) && $value['default'] !== '') {
                             $this->$field = htmlentities($value['default'], ENT_QUOTES, 'UTF-8');

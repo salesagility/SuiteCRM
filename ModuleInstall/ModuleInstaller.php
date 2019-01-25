@@ -2588,6 +2588,7 @@ class ModuleInstaller
                         }
                     }
                     $controller->set_system_tabs($currentTabs);
+                    // no break
                 default:
                     break;
             }

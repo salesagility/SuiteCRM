@@ -610,6 +610,7 @@ class ModuleScanner
                 switch ($token[0]) {
                     case '`':
                         $issues['backtick'] = translate('ML_INVALID_FUNCTION') . " '`'";
+                        // no break
                     case '(':
                         if ($checkFunction) {
                             $issues[] = $possibleIssue;
@@ -677,6 +678,7 @@ class ModuleScanner
                                 break;
                             }
                         }
+                        // no break
                     case T_VARIABLE:
                         $checkFunction = true;
                         $possibleIssue = translate('ML_INVALID_FUNCTION') . ' ' .  $token[1] . '()';

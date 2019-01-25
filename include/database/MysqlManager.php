@@ -649,6 +649,7 @@ class MysqlManager extends DBManager
 
                     return "DATE_FORMAT($string,$format)";
                 }
+                // no break
             case 'ifnull':
                 if (empty($additional_parameters) && !strstr($all_strings, ",")) {
                     $all_strings .= ",''";
