@@ -389,7 +389,7 @@ class ViewConvertLead extends SugarView
             $duplicateContacts = $contactForm->checkForDuplicates('Contacts');
 
             if (isset($duplicateContacts)) {
-                echo $contactForm->buildTableForm($duplicateContacts,  'Contacts');
+                echo $contactForm->buildTableForm($duplicateContacts, 'Contacts');
                 return;
             }
             $this->new_contact = true;
@@ -703,7 +703,7 @@ class ViewConvertLead extends SugarView
             $beanName = $beanList[$module];
             $activity = new $beanName();
             $query = "SELECT id FROM {$activity->table_name} WHERE parent_id = '{$lead->id}' AND parent_type = 'Leads' AND deleted = 0";
-            $result = $db->query($query,true);
+            $result = $db->query($query, true);
             while ($row = $db->fetchByAssoc($result)) {
                 $activity = new $beanName();
                 $activity->retrieve($row['id']);
@@ -775,7 +775,7 @@ class ViewConvertLead extends SugarView
             $newActivity->save();
             $newActivity->$rel->add($bean);
             if ($newActivity->module_dir == "Notes" && $newActivity->filename) {
-                UploadFile::duplicate_file($activity->id, $newActivity->id,  $newActivity->filename);
+                UploadFile::duplicate_file($activity->id, $newActivity->id, $newActivity->filename);
             }
         }
     }

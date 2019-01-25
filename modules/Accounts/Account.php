@@ -186,7 +186,7 @@ class Account extends Company implements EmailInterface
 
     function get_contacts()
     {
-        return $this->get_linked_beans('contacts','Contact');
+        return $this->get_linked_beans('contacts', 'Contact');
     }
 
 
@@ -199,7 +199,7 @@ class Account extends Company implements EmailInterface
             $where = " and id = '$case_id'";
         }
         $query = "UPDATE cases SET account_name = '', account_id = '' WHERE account_id = '$account_id' AND deleted = 0 " . $where;
-        $this->db->query($query,true,"Error clearing account to case relationship: ");
+        $this->db->query($query, true, "Error clearing account to case relationship: ");
     }
 
     /**
@@ -231,7 +231,7 @@ class Account extends Company implements EmailInterface
         //is empty then go ahead and fill it.
         if (empty($this->parent_name) && !empty($this->id)) {
             $query = "SELECT a1.name from accounts a1, accounts a2 where a1.id = a2.parent_id and a2.id = '$this->id' and a1.deleted=0";
-            $result = $this->db->query($query,true," Error filling in additional detail fields: ");
+            $result = $this->db->query($query, true, " Error filling in additional detail fields: ");
 
             // Get the id and the name.
             $row = $this->db->fetchByAssoc($result);

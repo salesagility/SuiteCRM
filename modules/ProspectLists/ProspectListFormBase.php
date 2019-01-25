@@ -93,7 +93,7 @@ EOQ;
         return $the_form;
     }
 
-    function getFormBody($prefix, $mod='',$formname='', $size='30',$script=true)
+    function getFormBody($prefix, $mod='', $formname='', $size='30', $script=true)
     {
         if (!ACLController::checkAccess('ProspectLists', 'edit', true)) {
             return '';
@@ -138,7 +138,7 @@ EOQ;
         return $form;
     }
 
-    function handleSave($prefix,$redirect=true, $useRequired=false)
+    function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         require_once('include/formbase.php');
     

@@ -46,7 +46,7 @@ require_once('include/ytree/Node.php');
 
 
 //function returns an array of objects of Node type.
-function get_node_data($params,$get_array=false)
+function get_node_data($params, $get_array=false)
 {
     $ret=array();
     $click_level=$params['TREE']['depth'];
@@ -56,7 +56,7 @@ function get_node_data($params,$get_array=false)
     if (isset($params['TREE']['caller']) and $params['TREE']['caller']=='Documents' ) {
         $href=false;
     }
-    $nodes=get_documents($cat_id,$subcat_id,$href);
+    $nodes=get_documents($cat_id, $subcat_id, $href);
     foreach ($nodes as $node) {
         $ret['nodes'][]=$node->get_definition();
     }
@@ -119,7 +119,7 @@ function get_node_data($params,$get_array=false)
      return $nodes;
  }
  
-function get_documents($cat_id, $subcat_id,$href=true)
+function get_documents($cat_id, $subcat_id, $href=true)
 {
     $nodes=array();
     $href_string = "javascript:select_document('doctree')";

@@ -137,14 +137,14 @@ $ids = array($current_user->id);
 $id_hash = '1';
 if (isset($ids)) {
     sort($ids);
-    $id_hash = crc32(implode('',$ids));
+    $id_hash = crc32(implode('', $ids));
     if ($id_hash < 0) {
         $id_hash = $id_hash * -1;
     }
 }
 $GLOBALS['log']->debug("ids is:");
 $GLOBALS['log']->debug($ids);
-$id_md5 = substr(md5($current_user->id),0,9);
+$id_md5 = substr(md5($current_user->id), 0, 9);
 $seps				= array("-", "/");
 $dates				= array($dateStartDisplay, $dateEndDisplay);
 $dateFileNameSafe	= str_replace($seps, "_", $dates);
@@ -153,10 +153,10 @@ $cache_file_name = sugar_cached("xml/").$current_user->getUserPrivGuid()."_".$th
 $GLOBALS['log']->debug("cache file name is: $cache_file_name");
 
 
-$tools='<div align="right"><a href="index.php?module='.$currentModule.'&action='. $action .'&mypbss_refresh=true" class="tabFormAdvLink">'.SugarThemeRegistry::current()->getImage('refresh','border="0" align="absmiddle"',null,null,'.gif',$mod_strings['LBL_REFRESH']).'&nbsp;'.$current_module_strings['LBL_REFRESH'].'</a>&nbsp;&nbsp;<a href="javascript: toggleDisplay(\'my_pipeline_edit\');" class="tabFormAdvLink">'.SugarThemeRegistry::current()->getImage('edit','border="0" align="absmiddle"',null,null,'.gif',$mod_strings['LBL_EDIT']).'&nbsp;'. $current_module_strings['LBL_EDIT'].'</a></div>';
+$tools='<div align="right"><a href="index.php?module='.$currentModule.'&action='. $action .'&mypbss_refresh=true" class="tabFormAdvLink">'.SugarThemeRegistry::current()->getImage('refresh', 'border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_REFRESH']).'&nbsp;'.$current_module_strings['LBL_REFRESH'].'</a>&nbsp;&nbsp;<a href="javascript: toggleDisplay(\'my_pipeline_edit\');" class="tabFormAdvLink">'.SugarThemeRegistry::current()->getImage('edit', 'border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_EDIT']).'&nbsp;'. $current_module_strings['LBL_EDIT'].'</a></div>';
 
 ?>
-	<?php echo get_form_header($mod_strings['LBL_PIPELINE_FORM_TITLE'], $tools , false);?>
+	<?php echo get_form_header($mod_strings['LBL_PIPELINE_FORM_TITLE'], $tools, false);?>
 
 <?php
     global $timedate;
@@ -182,7 +182,7 @@ $tools='<div align="right"><a href="index.php?module='.$currentModule.'&action='
 
 	<tr>
 	<td valign='top' nowrap><b><?php echo $current_module_strings['LBL_SALES_STAGES'];?></b></td>
-	<td valign='top' ><select name="mypbss_sales_stages[]" multiple size='3'><?php echo get_select_options_with_id($app_list_strings['sales_stage_dom'],$selected_datax); ?></select></td>
+	<td valign='top' ><select name="mypbss_sales_stages[]" multiple size='3'><?php echo get_select_options_with_id($app_list_strings['sales_stage_dom'], $selected_datax); ?></select></td>
 	</tr>
 
 <tr>
@@ -203,7 +203,7 @@ Calendar.setup ({
 
 <?php
 
-echo "<p align='center'>".gen_xml_pipeline_by_sales_stage($datax, $dateXml[0], $dateXml[1], $ids, $cache_file_name, $refresh,'hBarS',$current_module_strings)."</p>";
+echo "<p align='center'>".gen_xml_pipeline_by_sales_stage($datax, $dateXml[0], $dateXml[1], $ids, $cache_file_name, $refresh, 'hBarS', $current_module_strings)."</p>";
 echo "<P align='center'><span class='chartFootnote'>".$current_module_strings['LBL_PIPELINE_FORM_TITLE_DESC']."</span></P>";
 
 
@@ -275,7 +275,7 @@ function gen_xml_pipeline_by_sales_stage(
             foreach ($new_ids as $the_id=>$the_name) {
                 $id[] = "'".$the_id."'";
             }
-            $ids = join(",",$id);
+            $ids = join(",", $id);
             $where .= "opportunities.assigned_user_id IN ($ids) ";
         }
         //build the where clause for the query that matches $datax
@@ -285,13 +285,13 @@ function gen_xml_pipeline_by_sales_stage(
             foreach ($datax as $key=>$value) {
                 $dataxArr[] = "'".$key."'";
             }
-            $dataxArr = join(",",$dataxArr);
+            $dataxArr = join(",", $dataxArr);
             $where .= "AND opportunities.sales_stage IN	($dataxArr) ";
         }
 
         //build the where clause for the query that matches $date_start and $date_end
-        $where .= "	AND opportunities.date_closed >= ". db_convert("'".$date_start."'",'date'). "
-						AND opportunities.date_closed <= ".db_convert("'".$date_end."'",'date') ;
+        $where .= "	AND opportunities.date_closed >= ". db_convert("'".$date_start."'", 'date'). "
+						AND opportunities.date_closed <= ".db_convert("'".$date_end."'", 'date') ;
         $where .= "	AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
 
         //Now do the db queries
@@ -377,7 +377,7 @@ function gen_xml_pipeline_by_sales_stage(
         $i=0;
         asort($new_ids);
         foreach ($new_ids as $key=>$value) {
-            $color = generate_graphcolor($key,$i);
+            $color = generate_graphcolor($key, $i);
             $fileContents .= '          <mapping id="'.$key.'" name="'.$value.'" color="'.$color.'"/>'."\n";
             $i++;
         }
@@ -405,7 +405,7 @@ function gen_xml_pipeline_by_sales_stage(
         $width = "350";
         $height = "400";
     }
-    $return = create_chart($chart_size,$cache_file_name,$width,$height);
+    $return = create_chart($chart_size, $cache_file_name, $width, $height);
     return $return;
 }
 
@@ -464,7 +464,7 @@ function gen_xml_pipeline_by_sales_stage(
             foreach ($new_ids as $the_id=>$the_name) {
                 $id[] = "'".$the_id."'";
             }
-            $ids = join(",",$id);
+            $ids = join(",", $id);
             $where .= "opportunities.assigned_user_id IN ($ids) ";
         }
         //build the where clause for the query that matches $datax
@@ -474,13 +474,13 @@ function gen_xml_pipeline_by_sales_stage(
             foreach ($datax as $key=>$value) {
                 $dataxArr[] = "'".$key."'";
             }
-            $dataxArr = join(",",$dataxArr);
+            $dataxArr = join(",", $dataxArr);
             $where .= "AND opportunities.sales_stage IN	($dataxArr) ";
         }
 
         //build the where clause for the query that matches $date_start and $date_end
-        $where .= "	AND opportunities.date_closed >= ". db_convert("'".$date_start."'",'date'). "
-					AND opportunities.date_closed <= ".db_convert("'".$date_end."'",'date') ;
+        $where .= "	AND opportunities.date_closed >= ". db_convert("'".$date_start."'", 'date'). "
+					AND opportunities.date_closed <= ".db_convert("'".$date_end."'", 'date') ;
         $where .= "	AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
 
         //Now do the db queries

@@ -62,7 +62,7 @@ class ParserModifySubPanel extends ParserModifyListView
     var $available = array ( ) ;
     var $columns = array ( 'LBL_DEFAULT' => 'getDefaultFields' , 'LBL_HIDDEN' => 'getAvailableFields' ) ;
     
-    function init($module_name , $subPanelName)
+    function init($module_name, $subPanelName)
     {
         $GLOBALS [ 'log' ]->debug ( "in ParserModifySubPanel: module_name={$module_name} child_module={$subPanelName}" ) ;
         $this->moduleName = $module_name ;

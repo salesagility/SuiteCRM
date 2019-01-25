@@ -47,7 +47,7 @@ if (!isset($_SESSION['SHOW_DUPLICATES'])) {
 }
 // retrieve $_POST values out of the $_SESSION variable - placed in there by ContactFormBase to avoid the length limitations on URLs implicit with GETS
 //$GLOBALS['log']->debug('ShowDuplicates.php: _POST = '.print_r($_SESSION['SHOW_DUPLICATES'],true));
-parse_str($_SESSION['SHOW_DUPLICATES'],$_POST);
+parse_str($_SESSION['SHOW_DUPLICATES'], $_POST);
 $post = array_map("securexss", $_POST);
 foreach ($post as $k => $v) {
     $_POST[$k] = $v;
@@ -189,6 +189,6 @@ if (!empty($_POST['return_id'])) {
     $xtpl->assign('RETURN_ID', $_POST['return_id']);
 }
 
-$xtpl->assign('INPUT_FIELDS',$input);
+$xtpl->assign('INPUT_FIELDS', $input);
 $xtpl->parse('main');
 $xtpl->out('main');

@@ -54,7 +54,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *name and list of all prospects associated with this campaign..
  *
  */
-function get_message_scope_dom($campaign_id, $campaign_name,$db=null, $mod_strings=array())
+function get_message_scope_dom($campaign_id, $campaign_name, $db=null, $mod_strings=array())
 {
     if (empty($db)) {
         $db = DBManagerFactory::getInstance();
@@ -105,9 +105,9 @@ function get_campaign_mailboxes(&$emails, $get_name=true)
         if ($get_name) {
             $return_array[$row['id']] = $row['name'];
         } else {
-            $return_array[$row['id']]= InboundEmail::get_stored_options_static('from_name',$row['name'],$row['stored_options']);
+            $return_array[$row['id']]= InboundEmail::get_stored_options_static('from_name', $row['name'], $row['stored_options']);
         }
-        $emails[$row['id']]=InboundEmail::get_stored_options_static('from_addr','nobody@example.com',$row['stored_options']);
+        $emails[$row['id']]=InboundEmail::get_stored_options_static('from_addr', 'nobody@example.com', $row['stored_options']);
     }
 
     if (empty($return_array)) {
@@ -350,13 +350,13 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
      * @deprecated 62_Joneses - June 24, 2011
      * @see campaign_log_lead_or_contact_entry()
      */
-function campaign_log_lead_entry($campaign_id, $parent_bean,$child_bean,$activity_type)
+function campaign_log_lead_entry($campaign_id, $parent_bean, $child_bean, $activity_type)
 {
-    campaign_log_lead_or_contact_entry($campaign_id, $parent_bean,$child_bean,$activity_type);
+    campaign_log_lead_or_contact_entry($campaign_id, $parent_bean, $child_bean, $activity_type);
 }
 
 
-function campaign_log_lead_or_contact_entry($campaign_id, $parent_bean,$child_bean,$activity_type)
+function campaign_log_lead_or_contact_entry($campaign_id, $parent_bean, $child_bean, $activity_type)
 {
     global $timedate;
 
@@ -472,9 +472,9 @@ function get_subscription_lists($focus, $descriptions = false)
             //compare current user list id against newsletter id
             if ($news_list['prospect_list_id'] == $current_list['prospect_list_id']) {
                 //if id's match, user is subscribed to this list, check to see if this is an exempt list,
-                if (strpos($news_list['list_type'],  'exempt')!== false) {
+                if (strpos($news_list['list_type'], 'exempt')!== false) {
                     //this is an exempt list, so process
-                    if (array_key_exists($news_list['name'],$subs_arr)) {
+                    if (array_key_exists($news_list['name'], $subs_arr)) {
                         //first, add to unsubscribed array
                         $unsubs_arr[$news_list['name']] = $subs_arr[$news_list['name']];
                         //now remove from exempt subscription list
@@ -540,7 +540,7 @@ function get_subscription_lists_keyed($focus)
 
                 if ($news_list['list_type'] == 'exempt') {
                     //this is an exempt list, so process
-                    if (array_key_exists($news_list['name'],$subs_arr)) {
+                    if (array_key_exists($news_list['name'], $subs_arr)) {
                         //first, add to unsubscribed array
                         $unsubs_arr[$news_list['name']] = $subs_arr[$news_list['name']];
                         //now remove from exempt subscription list
@@ -555,7 +555,7 @@ function get_subscription_lists_keyed($focus)
                 } else {
                     //this list is not exempt, and user is subscribed, so add to subscribed array
                     //as long as this list is not in exempt array
-                    if (!array_key_exists($news_list['name'],$unsubs_arr)) {
+                    if (!array_key_exists($news_list['name'], $unsubs_arr)) {
                         $subs_arr[$news_list['name']] = $news_list_data;
                         $match = 'true';
                     }
@@ -645,7 +645,7 @@ function process_subscriptions($subscription_string_to_parse)
         //search through prospect lists for this campaign and identifiy the "unsubscription list"
         $exempt_id = '';
         foreach ($pl_arr as $subscription_list) {
-            if (strpos($subscription_list['list_type'],  'exempt')!== false) {
+            if (strpos($subscription_list['list_type'], 'exempt')!== false) {
                 $exempt_id = $subscription_list['id'];
             }
 
@@ -672,7 +672,7 @@ function process_subscriptions($subscription_string_to_parse)
                     }
                     //load realationships and delete user from unsubscription list
                     $exempt_subscription_list->load_relationship($relationship);
-                    $exempt_subscription_list->$relationship->delete($exempt_id,$focus->id);
+                    $exempt_subscription_list->$relationship->delete($exempt_id, $focus->id);
                 }
             }
         }
@@ -946,7 +946,7 @@ function process_subscriptions($subscription_string_to_parse)
              $result=DBManagerFactory::getInstance()->query($pl_query);
              $row=DBManagerFactory::getInstance()->fetchByAssoc($result);
              if (!empty($row)) {
-                 write_mail_merge_log_entry($campaign_id,$row);
+                 write_mail_merge_log_entry($campaign_id, $row);
              }
          }
      }
@@ -957,7 +957,7 @@ function process_subscriptions($subscription_string_to_parse)
  * @param string campaign_id Primary key of the campaign
  * @param array $pl_row A row of data from prospect_lists_prospects table.
  */
-function write_mail_merge_log_entry($campaign_id,$pl_row)
+function write_mail_merge_log_entry($campaign_id, $pl_row)
 {
 
     //Update the log entry if it exists.
@@ -979,8 +979,8 @@ function write_mail_merge_log_entry($campaign_id,$pl_row)
         $data['list_id']="'" .  DBManagerFactory::getInstance()->quote($pl_row['prospect_list_id']) . "'";
         $data['hits']=1;
         $data['deleted']=0;
-        $insert_query="INSERT into campaign_log (" . implode(",",array_keys($data)) . ")";
-        $insert_query.=" VALUES  (" . implode(",",array_values($data)) . ")";
+        $insert_query="INSERT into campaign_log (" . implode(",", array_keys($data)) . ")";
+        $insert_query.=" VALUES  (" . implode(",", array_values($data)) . ")";
         DBManagerFactory::getInstance()->query($insert_query);
     }
 }
@@ -1129,7 +1129,7 @@ function filterFieldsFromBeans($beans)
             }
 
 
-            $field_def['vname'] = preg_replace('/:$/','',translate($field_def['vname'], $b->module_dir));
+            $field_def['vname'] = preg_replace('/:$/', '', translate($field_def['vname'], $b->module_dir));
 
             //$cols_name = "{'".$field_def['vname']."'}";
             $col_arr = array();
@@ -1146,14 +1146,14 @@ function filterFieldsFromBeans($beans)
                 $col_arr[1]=$field_def['name'];
             }
             if (! in_array($cols_name, $formattedFields)) {
-                array_push($formattedFields,$col_arr);
+                array_push($formattedFields, $col_arr);
             }
         }
 
         $holder = new stdClass();
         $holder->name = $b->object_name;
         $holder->fields = $formattedFields;
-        $holder->moduleKnownAs = translate($b->module_name,'LBL_MODULE_NAME');
+        $holder->moduleKnownAs = translate($b->module_name, 'LBL_MODULE_NAME');
         $holder->moduleDir = $b->module_dir;
         $holder->moduleName = $b->module_name;
         $formattedBeans[] = $holder;

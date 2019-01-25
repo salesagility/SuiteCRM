@@ -54,7 +54,7 @@ class LeadsListViewSmarty extends ListViewSmarty
         global $sugar_config;
 
         $script = "";
-        if (ACLController::checkAccess($this->seed->module_dir,'export',true)) {
+        if (ACLController::checkAccess($this->seed->module_dir, 'export', true)) {
             if ($this->export) {
                 $script = parent::buildExportLink($id);
             }

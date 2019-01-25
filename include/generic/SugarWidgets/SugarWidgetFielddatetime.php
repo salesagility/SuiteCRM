@@ -212,7 +212,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
             $begin_parts = explode(' ', $begin);
             $date_parts=explode('-', $begin_parts[0]);
             $time_parts=explode(':', $begin_parts[1]);
-            $curr_timestamp=mktime($time_parts[0],$time_parts[1],0,$date_parts[1], $date_parts[2],$date_parts[0]);
+            $curr_timestamp=mktime($time_parts[0], $time_parts[1], 0, $date_parts[1], $date_parts[2], $date_parts[0]);
             return $curr_timestamp;
         }
     }
@@ -221,7 +221,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * @param int $days Adjust date by this number of days, negative values are valid.
      * @param time string falg for desired time value, start: minimum time, end: maximum time, default: current time
      */
-    function get_db_date($days,$time)
+    function get_db_date($days, $time)
     {
         global $timedate;
 
@@ -254,7 +254,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * @param string $begin start date value (in DB format)
      * @param string $end End date value (in DB format)
      */
-    function get_start_end_date_filter(& $layout_def, $begin,$end)
+    function get_start_end_date_filter(& $layout_def, $begin, $end)
     {
         if (isset ($layout_def['rel_field'])) {
             $field_name = $this->reporter->db->convert(
@@ -306,7 +306,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
     {
         $begin = $day->get_day_begin();
         $end = $day->get_day_end();
-        return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
     }
 
     function queryFilterTP_yesterday($layout_def)
@@ -334,7 +334,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $begin = $this->now()->get("-6 days")->get_day_begin();
         $end = $this->now()->get_day_end();
 
-        return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
     }
 
     function queryFilterTP_next_7_days($layout_def)
@@ -344,7 +344,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $begin = $this->now()->get_day_begin();
         $end = $this->now()->get("+6 days")->get_day_end();
 
-        return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
     }
 
     /**
@@ -357,7 +357,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $begin = $month->setTime(0, 0, 0);
         $end = clone($begin);
         $end->setDate($begin->year, $begin->month, $begin->days_in_month)->setTime(23, 59, 59);
-        return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
     }
 
     function queryFilterTP_last_month($layout_def)
@@ -392,7 +392,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         global $timedate;
         $begin = $this->now()->get("-29 days")->get_day_begin();
         $end = $this->now()->get_day_end();
-        return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
     }
 
     function queryFilterTP_next_30_days($layout_def)
@@ -400,7 +400,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         global $timedate;
         $begin = $this->now()->get_day_begin();
         $end = $this->now()->get("+29 days")->get_day_end();
-        return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
     }
 
     /**
@@ -481,7 +481,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $begin->setDate($begin->year-1, 1, 1)->setTime(0, 0);
         $end = clone $begin;
         $end->setDate($end->year, 12, 31)->setTime(23, 59, 59);
-        return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
     }
 
     function queryFilterTP_this_year($layout_def)
@@ -491,7 +491,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $begin->setDate($begin->year, 1, 1)->setTime(0, 0);
         $end = clone $begin;
         $end->setDate($end->year, 12, 31)->setTime(23, 59, 59);
-        return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
     }
 
     function queryFilterTP_next_year(& $layout_def)
@@ -501,7 +501,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $begin->setDate($begin->year+1, 1, 1)->setTime(0, 0);
         $end = clone $begin;
         $end->setDate($end->year, 12, 31)->setTime(23, 59, 59);
-        return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
     }
 
     function queryGroupBy($layout_def)
@@ -533,7 +533,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         global $timedate;
         $content = parent:: displayListPlain($layout_def);
         // awu: this if condition happens only in Reports where group by month comes back as YYYY-mm format
-        if (count(explode('-',$content)) == 2) {
+        if (count(explode('-', $content)) == 2) {
             return $content;
         // if date field
         } elseif (substr_count($layout_def['type'], 'date') > 0) {

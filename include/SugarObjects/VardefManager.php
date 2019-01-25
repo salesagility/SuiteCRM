@@ -175,7 +175,7 @@ class VardefManager
      * @param string $module the name of the module
      * @param string $object the name of the object
      */
-    static function saveCache($module,$object, $additonal_objects= array())
+    static function saveCache($module, $object, $additonal_objects= array())
     {
         if (empty($GLOBALS['dictionary'][$object])) {
             $object = BeanFactory::getObjectName($module);
@@ -194,7 +194,7 @@ class VardefManager
 
         // put the item in the sugar cache.
         $key = "VardefManager.$module.$object";
-        sugar_cache_put($key,$data);
+        sugar_cache_put($key, $data);
     }
 
     /**
@@ -455,7 +455,7 @@ class VardefManager
                 // now that we hae loaded the data from disk, put it in the cache.
                 if (!empty($GLOBALS['dictionary'][$object])) {
                     $GLOBALS['dictionary'][$object] = self::applyGlobalAccountRequirements($GLOBALS['dictionary'][$object]);
-                    sugar_cache_put($key,$GLOBALS['dictionary'][$object]);
+                    sugar_cache_put($key, $GLOBALS['dictionary'][$object]);
                 }
             }
         }

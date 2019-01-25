@@ -62,7 +62,7 @@ class ConfiguratorViewSugarpdfsettings extends SugarView
         global $mod_strings;
 
         return array(
-           "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
+           "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
            $mod_strings['LBL_PDFMODULE_NAME']
            );
     }
@@ -120,7 +120,7 @@ class ConfiguratorViewSugarpdfsettings extends SugarView
         echo getClassicModuleTitle(
                 "Administration",
                 array(
-                    "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
+                    "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
                    $mod_strings['LBL_PDFMODULE_NAME'],
                    ),
                 false
@@ -129,7 +129,7 @@ class ConfiguratorViewSugarpdfsettings extends SugarView
         $pdf_class = array("TCPDF"=>"TCPDF","EZPDF"=>"EZPDF");
 
         $this->ss->assign('APP_LIST', $app_list_strings);
-        $this->ss->assign("JAVASCRIPT",get_set_focus_js());
+        $this->ss->assign("JAVASCRIPT", get_set_focus_js());
         $this->ss->assign("SugarpdfSettings", $SugarpdfSettings);
         $this->ss->assign("pdf_enable_ezpdf", PDF_ENABLE_EZPDF);
         if (PDF_ENABLE_EZPDF == "0" && PDF_CLASS == "EZPDF") {

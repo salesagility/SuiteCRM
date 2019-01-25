@@ -77,7 +77,7 @@ class DropDownHelper
      * @param array dropdown
      * @return array Filtered dropdown list
      */
-    function filterDropDown($name,$dropdown)
+    function filterDropDown($name, $dropdown)
     {
         $results = array();
         switch ($name) {

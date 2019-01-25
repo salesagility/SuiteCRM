@@ -105,7 +105,7 @@ class UserSignature extends SugarBean
      */
     function create_export_query($order_by, $where, $show_deleted = 0)
     {
-        return $this->create_new_list_query($order_by, $where,array(),array(), $show_deleted);
+        return $this->create_new_list_query($order_by, $where, array(), array(), $show_deleted);
     }
 
     /**

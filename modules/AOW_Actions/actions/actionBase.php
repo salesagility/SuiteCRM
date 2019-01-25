@@ -52,7 +52,7 @@ class actionBase
         return array();
     }
 
-    function edit_display($line,SugarBean $bean = null, $params = array())
+    function edit_display($line, SugarBean $bean = null, $params = array())
     {
         return '';
     }

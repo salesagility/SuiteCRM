@@ -301,7 +301,7 @@ class CMISRepositoryWrapper
         //TODO: Review
         if (!($xmlnode instanceof DOMDocument)) {
             $xdoc=new DOMDocument();
-            $xnode = $xdoc->importNode($xmlnode,true);
+            $xnode = $xdoc->importNode($xmlnode, true);
             $xdoc->appendChild($xnode);
             $xpath = new DomXPath($xdoc);
         } else {
@@ -397,7 +397,7 @@ class CMISRepositoryWrapper
         if (isset($children_feed_l) && is_object($children_feed_l) && is_object($children_feed_l->item(0))) {
             $children_feed = $children_feed_l->item(0);
             $children_doc = new DOMDocument();
-            $xnode = $children_doc->importNode($children_feed,true); // Avoid Wrong Document Error
+            $xnode = $children_doc->importNode($children_feed, true); // Avoid Wrong Document Error
             $children_doc->appendChild($xnode);
             $retval->children = CMISRepositoryWrapper :: extractObjectFeedFromNode($children_doc);
         }
@@ -455,7 +455,7 @@ class CMISRepositoryWrapper
         if (is_object($children_feed_l) && is_object($children_feed_l->item(0))) {
             $children_feed = $children_feed_l->item(0);
             $children_doc = new DOMDocument();
-            $xnode = $children_doc->importNode($children_feed,true); // Avoid Wrong Document Error
+            $xnode = $children_doc->importNode($children_feed, true); // Avoid Wrong Document Error
             $children_doc->appendChild($xnode);
             $retval->children = CMISRepositoryWrapper :: extractTypeFeedFromNode($children_doc);
         }

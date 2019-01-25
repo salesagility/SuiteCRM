@@ -68,7 +68,7 @@ global $mod_strings;
     $campaign_focus = populateFromPost('', $campaign_focus);
 
     foreach ($camp_steps as $step) {
-        $campaign_focus =  populate_wizard_bean_from_request($campaign_focus,$step);
+        $campaign_focus =  populate_wizard_bean_from_request($campaign_focus, $step);
     }
 
     switch ($_REQUEST['currentstep']) {
@@ -111,7 +111,7 @@ global $mod_strings;
                         if (!empty($remove_trgt_string)) {
                             //load relationship and add to the list
                             $campaign_focus->load_relationship('prospectlists');
-                            $campaign_focus->prospectlists->delete($campaign_focus->id,$remove_trgt_string);
+                            $campaign_focus->prospectlists->delete($campaign_focus->id, $remove_trgt_string);
                         }
                     }
                 }
@@ -157,7 +157,7 @@ global $mod_strings;
                     if (!empty($remove_trkr_string)) {
                         //load relationship and add to the list
                         $campaign_focus->load_relationship('tracked_urls');
-                        $campaign_focus->tracked_urls->delete($campaign_focus->id,$remove_trkr_string);
+                        $campaign_focus->tracked_urls->delete($campaign_focus->id, $remove_trkr_string);
                     }
                 }
             }
@@ -268,7 +268,7 @@ global $mod_strings;
                         if (!empty($remove_trgt_string)) {
                             //load relationship and add to the list
                             $campaign_focus->load_relationship('prospectlists');
-                            $campaign_focus->prospectlists->delete($campaign_focus->id,$remove_trgt_string);
+                            $campaign_focus->prospectlists->delete($campaign_focus->id, $remove_trgt_string);
                         }
                     }
                 }
@@ -314,7 +314,7 @@ global $mod_strings;
                     if (!empty($remove_trkr_string)) {
                         //load relationship and add to the list
                         $campaign_focus->load_relationship('tracked_urls');
-                        $campaign_focus->tracked_urls->delete($campaign_focus->id,$remove_trkr_string);
+                        $campaign_focus->tracked_urls->delete($campaign_focus->id, $remove_trkr_string);
                     }
                 }
             }
@@ -399,7 +399,7 @@ global $mod_strings;
  * This function will populate the passed in bean with the post variables
  * that contain the specified prefix
  */
-function populate_wizard_bean_from_request($bean,$prefix)
+function populate_wizard_bean_from_request($bean, $prefix)
 {
     foreach ($_REQUEST as $key=> $val) {
         $key = trim($key);

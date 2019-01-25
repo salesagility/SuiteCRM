@@ -94,4 +94,4 @@ $dictionary['Reminder_Invitee'] = array(
 if (!class_exists('VardefManager')) {
     require_once 'include/SugarObjects/VardefManager.php';
 }
-VardefManager::createVardef('Reminders_Invitees','Reminder_Invitee', array('basic','assignable'));
+VardefManager::createVardef('Reminders_Invitees', 'Reminder_Invitee', array('basic','assignable'));

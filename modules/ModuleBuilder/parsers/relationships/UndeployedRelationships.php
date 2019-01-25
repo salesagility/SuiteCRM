@@ -318,7 +318,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
      * @param boolean $actionAdd True if we are to add; false if to remove
      * return null
      */
-    private function updateUndeployedLayout($relationship , $actionAdd = true)
+    private function updateUndeployedLayout($relationship, $actionAdd = true)
     {
         
         // many-to-many relationships don't have fields so if we have a many-to-many we can just skip this...
@@ -358,7 +358,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
      * @param array $layoutAdditions  An array of module => fieldname
      * return null
      */
-    protected function saveFieldsToLayouts($basepath , $dummy , $relationshipName , $layoutAdditions)
+    protected function saveFieldsToLayouts($basepath, $dummy, $relationshipName, $layoutAdditions)
     {
         require_once 'modules/ModuleBuilder/parsers/views/GridLayoutMetaDataParser.php' ;
         
@@ -368,7 +368,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
         
         $fieldsToAdd = array();
         foreach ( $layoutAdditions as $deployedModuleName => $fieldName ) {
-            if ( ! in_array( strtolower ( $deployedModuleName ) , $invalidModules ) ) {
+            if ( ! in_array( strtolower ( $deployedModuleName ), $invalidModules ) ) {
                 foreach ( array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view ) {
                     $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . ": adding $fieldName to $view layout for module $deployedModuleName" ) ;
                     $parsedName = self::parseDeployedModuleName ( $deployedModuleName ) ;

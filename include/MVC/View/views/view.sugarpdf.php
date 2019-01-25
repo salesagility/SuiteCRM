@@ -114,6 +114,6 @@ class ViewSugarpdf extends SugarView
     function display()
     {
         $this->sugarpdfBean->process();
-        $this->sugarpdfBean->Output($this->sugarpdfBean->fileName,'I');
+        $this->sugarpdfBean->Output($this->sugarpdfBean->fileName, 'I');
     }
 }

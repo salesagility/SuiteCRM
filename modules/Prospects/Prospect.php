@@ -182,7 +182,7 @@ class Prospect extends Person implements EmailInterface
     function converted_prospect($prospectid, $contactid, $accountid, $opportunityid)
     {
         $query = "UPDATE prospects set  contact_id=$contactid, account_id=$accountid, opportunity_id=$opportunityid where  id=$prospectid and deleted=0";
-        $this->db->query($query,true,"Error converting prospect: ");
+        $this->db->query($query, true, "Error converting prospect: ");
         //todo--status='Converted', converted='1',
     }
     function bean_implements($interface)

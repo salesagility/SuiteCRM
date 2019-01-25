@@ -128,7 +128,7 @@ class Task extends SugarBean
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
-        $contact_required = stristr($where,"contacts");
+        $contact_required = stristr($where, "contacts");
         if ($contact_required) {
             $query = "SELECT tasks.*, contacts.first_name, contacts.last_name, users.user_name as assigned_user_name ";
             $query .= $custom_join['select'];
@@ -215,7 +215,7 @@ class Task extends SugarBean
                 $query .= " from $parent->table_name where id = '$this->parent_id'";
             }
         }
-        $result = $this->db->query($query,true," Error filling in additional detail fields: ");
+        $result = $this->db->query($query, true, " Error filling in additional detail fields: ");
 
         // Get the id and the name.
         $row = $this->db->fetchByAssoc($result);
@@ -310,7 +310,7 @@ class Task extends SugarBean
             $task_fields['PARENT_MODULE'] = $this->parent_type;
         }
         if ($this->status != "Completed" && $this->status != "Deferred" ) {
-            $setCompleteUrl = "<b><a id='{$this->id}' class='list-view-data-icon' title='".translate('LBL_LIST_CLOSE','Tasks')."' onclick='SUGAR.util.closeActivityPanel.show(\"{$this->module_dir}\",\"{$this->id}\",\"Completed\",\"listview\",\"1\");'>";
+            $setCompleteUrl = "<b><a id='{$this->id}' class='list-view-data-icon' title='".translate('LBL_LIST_CLOSE', 'Tasks')."' onclick='SUGAR.util.closeActivityPanel.show(\"{$this->module_dir}\",\"{$this->id}\",\"Completed\",\"listview\",\"1\");'>";
             $task_fields['SET_COMPLETE'] = $setCompleteUrl . "<span class='suitepicon suitepicon-action-clear'></span></a></b>";
         }
 
@@ -384,7 +384,7 @@ class Task extends SugarBean
             else {
                 if (!empty($this->parent_type) && !empty($this->parent_id)) {
                     global $current_user;
-                    $parent_bean = BeanFactory::getBean($this->parent_type,$this->parent_id);
+                    $parent_bean = BeanFactory::getBean($this->parent_type, $this->parent_id);
                     if ($parent_bean !== false) {
                         $is_owner = $current_user->id == $parent_bean->assigned_user_id;
                     }
@@ -416,7 +416,7 @@ class Task extends SugarBean
             //contact_name_owner not being set for whatever reason so we need to figure this out
             else {
                 global $current_user;
-                $parent_bean = BeanFactory::getBean('Contacts',$this->contact_id);
+                $parent_bean = BeanFactory::getBean('Contacts', $this->contact_id);
                 if ($parent_bean !== false) {
                     $is_owner = $current_user->id == $parent_bean->assigned_user_id;
                 }

@@ -87,7 +87,7 @@ class ContactFormBase extends PersonFormBase
     }
 
 
-    function getWideFormBody($prefix, $mod='',$formname='',  $contact = '', $portal = true)
+    function getWideFormBody($prefix, $mod='', $formname='', $contact = '', $portal = true)
     {
         if (!ACLController::checkAccess('Contacts', 'edit', true)) {
             return '';
@@ -311,8 +311,8 @@ EOQ;
         $javascript = new javascript();
         $javascript->setFormName($formname);
         $javascript->setSugarBean($this->getContact());
-        $javascript->addField('email1','false',$prefix);
-        $javascript->addField('email2','false',$prefix);
+        $javascript->addField('email1', 'false', $prefix);
+        $javascript->addField('email2', 'false', $prefix);
         $javascript->addRequiredFields($prefix);
 
         $form .=$javascript->getScript();
@@ -376,7 +376,7 @@ EOQ;
         $javascript = new javascript();
         $javascript->setFormName($formname);
         $javascript->setSugarBean($this->getContact());
-        $javascript->addField('email1','false',$prefix);
+        $javascript->addField('email1', 'false', $prefix);
         $javascript->addRequiredFields($prefix);
 
         $form .=$javascript->getScript();
@@ -408,7 +408,7 @@ EOQ;
 			<input type="hidden" name="${prefix}module" value="Contacts">
 			<input type="hidden" name="${prefix}action" value="Save">
 EOQ;
-        $the_form .= $this->getFormBody($prefix,'Contacts', "${prefix}ContactSave");
+        $the_form .= $this->getFormBody($prefix, 'Contacts', "${prefix}ContactSave");
         $the_form .= <<<EOQ
 		<input title="$lbl_save_button_title" accessKey="$lbl_save_button_key" class="button" type="submit" name="${prefix}button" value="  $lbl_save_button_label  " >
 		</form>

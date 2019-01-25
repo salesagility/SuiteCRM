@@ -77,12 +77,12 @@ class EAPMController extends SugarController
             unset($_POST['password']);
         }
         parent::pre_save();
-        $this->api = ExternalAPIFactory::loadAPI($this->bean->application,true);
+        $this->api = ExternalAPIFactory::loadAPI($this->bean->application, true);
         if (empty($this->api)) {
             return $this->failed(translate('LBL_AUTH_UNSUPPORTED', $this->bean->module_dir));
         }
         if (empty($this->bean->id)) {
-            $eapmBean = EAPM::getLoginInfo($this->bean->application,true);
+            $eapmBean = EAPM::getLoginInfo($this->bean->application, true);
             if ($eapmBean) {
                 SugarApplication::appendErrorMessage(translate('LBL_APPLICATION_FOUND_NOTICE', $this->bean->module_dir));
                 $this->bean->id = $eapmBean->id;
@@ -145,7 +145,7 @@ class EAPMController extends SugarController
             return true;
         }
         if (empty($_REQUEST['oauth_error'])) {
-            $this->api = ExternalAPIFactory::loadAPI($this->bean->application,true);
+            $this->api = ExternalAPIFactory::loadAPI($this->bean->application, true);
             $reply = $this->api->checkLogin($this->bean);
             if ( !$reply['success'] ) {
                 return $this->failed(translate('LBL_AUTH_ERROR', $this->bean->module_dir));
@@ -176,7 +176,7 @@ class EAPMController extends SugarController
     protected function pre_QuickSave()
     {
         if (!empty($_REQUEST['application'])) {
-            $eapmBean = EAPM::getLoginInfo($_REQUEST['application'],true);
+            $eapmBean = EAPM::getLoginInfo($_REQUEST['application'], true);
             if (!$eapmBean) {
                 $this->bean->application = $_REQUEST['application'];
                 $this->bean->assigned_user_id = $GLOBALS['current_user']->id;
@@ -191,7 +191,7 @@ class EAPMController extends SugarController
     
     public function action_QuickSave()
     {
-        $this->api = ExternalAPIFactory::loadAPI($this->bean->application,true);
+        $this->api = ExternalAPIFactory::loadAPI($this->bean->application, true);
         $this->action_save();
 
         if ( $this->api->authMethod == 'oauth' ) {
@@ -239,7 +239,7 @@ class EAPMController extends SugarController
             return;
         }
 
-        if ( method_exists($api,'loadDocCache') ) {
+        if ( method_exists($api, 'loadDocCache') ) {
             $api->loadDocCache(true);
         }
 

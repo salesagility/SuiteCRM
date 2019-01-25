@@ -65,7 +65,7 @@ $state->pushPHPConfigOptions();
 
 error_reporting(E_ERROR);
 set_time_limit(0);
-set_upgrade_progress('layouts','in_progress');
+set_upgrade_progress('layouts', 'in_progress');
 
 //If the user has seleceted which modules they want to merge, perform the filtering and 
 //execute the merge.
@@ -73,13 +73,13 @@ if ( isset($_POST['layoutSelectedModules']) ) {
     logThis('Layout Commits examining modules to revert');
     
     $mergedModules = $_SESSION['sugarMergeRunResults'];
-    $selectedModules  = explode("^,^",$_POST['layoutSelectedModules']);
+    $selectedModules  = explode("^,^", $_POST['layoutSelectedModules']);
     logThis('Layout Commits, selected modules by user: ' . print_r($selectedModules, true));
     $rollBackList = array();
     $actualMergedList = array();
     
     foreach ( $mergedModules as $moduleKey => $layouts) {
-        if ( ! in_array($moduleKey , $selectedModules) ) {
+        if ( ! in_array($moduleKey, $selectedModules) ) {
             logThis("Adding $moduleKey module to rollback list.");
             $rollBackList[$moduleKey] = $layouts;
         } else {
@@ -129,7 +129,7 @@ $showCancel = false;
 $showRecheck = false;
 $showNext = true;
 
-set_upgrade_progress('layouts','done');
+set_upgrade_progress('layouts', 'done');
 
 $state->popErrorLevel();
 $state->popPHPConfigOptions();

@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class ACLJSController
 {
-    public function __construct($module,$form='', $is_owner=false)
+    public function __construct($module, $form='', $is_owner=false)
     {
         $this->module = $module;
         $this->is_owner = $is_owner;
@@ -55,7 +55,7 @@ class ACLJSController
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function ACLJSController($module,$form='', $is_owner=false)
+    public function ACLJSController($module, $form='', $is_owner=false)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -76,7 +76,7 @@ class ACLJSController
         $script = "<SCRIPT>\n//BEGIN ACL JAVASCRIPT\n";
 
         if ($action == 'DetailView') {
-            if (!ACLController::checkAccess($this->module,'edit', $this->is_owner)) {
+            if (!ACLController::checkAccess($this->module, 'edit', $this->is_owner)) {
                 $script .= <<<EOQ
 						if(typeof(document.DetailView) != 'undefined'){
 							if(typeof(document.DetailView.elements['Edit']) != 'undefined'){
@@ -88,7 +88,7 @@ class ACLJSController
 						}
 EOQ;
             }
-            if (!ACLController::checkAccess($this->module,'delete', $this->is_owner)) {
+            if (!ACLController::checkAccess($this->module, 'delete', $this->is_owner)) {
                 $script .= <<<EOQ
 						if(typeof(document.DetailView) != 'undefined'){
 							if(typeof(document.DetailView.elements['Delete']) != 'undefined'){

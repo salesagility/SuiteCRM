@@ -114,7 +114,7 @@ class UsersLastImport extends SugarBean
     public function mark_deleted_by_user_id($user_id)
     {
         $query = "DELETE FROM $this->table_name WHERE assigned_user_id = '$user_id'";
-        $this->db->query($query,true,"Error marking last imported records deleted: ");
+        $this->db->query($query, true, "Error marking last imported records deleted: ");
     }
 
     /**
@@ -135,7 +135,7 @@ class UsersLastImport extends SugarBean
         }
 
         while ( $row1 = $this->db->fetchByAssoc($result1)) {
-            $this->_deleteRecord($row1['bean_id'],$row1['bean_type']);
+            $this->_deleteRecord($row1['bean_id'], $row1['bean_type']);
         }
 
         return true;
@@ -159,7 +159,7 @@ class UsersLastImport extends SugarBean
         }
 
         while ( $row1 = $this->db->fetchByAssoc($result1)) {
-            $this->_deleteRecord($row1['bean_id'],$row1['bean_type']);
+            $this->_deleteRecord($row1['bean_id'], $row1['bean_type']);
         }
 
         return true;
@@ -171,7 +171,7 @@ class UsersLastImport extends SugarBean
      * @param $bean_id
      * @param $module
      */
-    protected function _deleteRecord($bean_id,$module)
+    protected function _deleteRecord($bean_id, $module)
     {
         static $focus;
 

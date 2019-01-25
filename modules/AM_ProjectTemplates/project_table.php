@@ -60,8 +60,8 @@ class AM_ProjectTemplatesTable
         $project_template = new AM_ProjectTemplates();
         $project_template->retrieve($project_template_id);
         //Get project resources (users & contacts)
-        $resources1 = $project_template->get_linked_beans('am_projecttemplates_users_1','User');
-        $resources2 = $project_template->get_linked_beans('am_projecttemplates_contacts_1','Contact');
+        $resources1 = $project_template->get_linked_beans('am_projecttemplates_users_1', 'User');
+        $resources2 = $project_template->get_linked_beans('am_projecttemplates_contacts_1', 'Contact');
         //Combine resources into array of objects
         $resource_array = array();
         foreach ($resources1 as $user) {

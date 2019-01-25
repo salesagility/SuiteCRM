@@ -91,5 +91,5 @@ function get_new_record_form()
 {
     require_once('modules/ProspectLists/ProspectListFormBase.php');
     $accountForm = new ProspectListFormBase();
-    return $accountForm->getForm('','ProspectLists');
+    return $accountForm->getForm('', 'ProspectLists');
 }

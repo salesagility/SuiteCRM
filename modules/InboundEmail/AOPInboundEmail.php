@@ -41,15 +41,15 @@ class AOPInboundEmail extends InboundEmail
             return $string;
         }
         $matches = array();
-        preg_match('/cid:([[:alnum:]-]*)/',$string,$matches);
+        preg_match('/cid:([[:alnum:]-]*)/', $string, $matches);
         if (!$matches) {
             return $string;
         }
         array_shift($matches);
         $matches = array_unique($matches);
         foreach ($matches as $match) {
-            if (in_array($match,$noteIds)) {
-                $string = str_replace('cid:'.$match,$sugar_config['site_url']."/index.php?entryPoint=download&id={$match}&type=Notes&",$string);
+            if (in_array($match, $noteIds)) {
+                $string = str_replace('cid:'.$match, $sugar_config['site_url']."/index.php?entryPoint=download&id={$match}&type=Notes&", $string);
             }
         }
         return $string;
@@ -70,13 +70,13 @@ class AOPInboundEmail extends InboundEmail
             $email->retrieve($email->id);
             $c = new aCase();
 
-            $notes = $email->get_linked_beans('notes','Notes');
+            $notes = $email->get_linked_beans('notes', 'Notes');
             $noteIds = array();
             foreach ($notes as $note) {
                 $noteIds[] = $note->id;
             }
             if ($email->description_html) {
-                $c->description = $this->processImageLinks(SugarCleaner::cleanHtml($email->description_html),$noteIds);
+                $c->description = $this->processImageLinks(SugarCleaner::cleanHtml($email->description_html), $noteIds);
             } else {
                 $c->description = $email->description;
             }
@@ -135,7 +135,7 @@ class AOPInboundEmail extends InboundEmail
                 $newNote->save();
                 $srcFile = "upload://{$note->id}";
                 $destFile = "upload://{$newNote->id}";
-                copy($srcFile,$destFile);
+                copy($srcFile, $destFile);
             }
 
             $c->email_id = $email->id;

@@ -110,9 +110,9 @@ class PopupSmarty extends ListViewSmarty
      */
     function processArrowVars()
     {
-        $pathParts = pathinfo(SugarThemeRegistry::current()->getImageURL('arrow.gif',false));
+        $pathParts = pathinfo(SugarThemeRegistry::current()->getImageURL('arrow.gif', false));
 
-        list($width,$height) = getimagesize($pathParts['dirname'].'/'.$pathParts['basename']);
+        list($width, $height) = getimagesize($pathParts['dirname'].'/'.$pathParts['basename']);
 
         $this->th->ss->assign('arrowExt', $pathParts['extension']);
         $this->th->ss->assign('arrowWidth', $width);
@@ -230,7 +230,7 @@ class PopupSmarty extends ListViewSmarty
             require_once('include/language/jsLanguage.php');
             jsLanguage::createAppStringsCache($GLOBALS['current_language']);
         }
-        $jsLang = getVersionedScript("cache/jsLanguage/{$GLOBALS['current_language']}.js",  $GLOBALS['sugar_config']['js_lang_version']);
+        $jsLang = getVersionedScript("cache/jsLanguage/{$GLOBALS['current_language']}.js", $GLOBALS['sugar_config']['js_lang_version']);
 
         $this->th->ss->assign('data', $this->data['data']);
         $this->data['pageData']['offsets']['lastOffsetOnPage'] = $this->data['pageData']['offsets']['current'] + count($this->data['data']);

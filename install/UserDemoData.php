@@ -134,7 +134,7 @@ class UserDemoData
         $u->emailAddress->addAddress("alias.".$email);
 
         // bug 15371 tyoung set a user preference so that Users/DetailView.php can find something without repeatedly querying the db in vain
-        $u->setPreference('max_tabs','7');
+        $u->setPreference('max_tabs', '7');
         $u->savePreferencesToDB();
 
         $u->save();

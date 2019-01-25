@@ -196,7 +196,7 @@ class SugarDateTime extends DateTime
     protected function _getStrings($name)
     {
         if (empty($this->_strings)) {
-            $this->_strings = return_mod_list_strings_language($GLOBALS['current_language'],"Calendar");
+            $this->_strings = return_mod_list_strings_language($GLOBALS['current_language'], "Calendar");
         }
         return $this->_strings[$name];
     }
@@ -321,7 +321,7 @@ class SugarDateTime extends DateTime
     {
         $newdate = clone $this;
         $newdate->setDate($this->year, $this->month, $this->day +
-            ($day_index - $this->day_of_week))->setTime(0,0);
+            ($day_index - $this->day_of_week))->setTime(0, 0);
         return $newdate;
     }
 
@@ -336,7 +336,7 @@ class SugarDateTime extends DateTime
     {
         $newdate = clone $this;
         $newdate->setDate($this->year, $month_index+1, 1);
-        $newdate->setDate($newdate->year, $newdate->month,  $newdate->days_in_month);
+        $newdate->setDate($newdate->year, $newdate->month, $newdate->days_in_month);
         $newdate->setTime(0, 0);
         return $newdate;
     }
@@ -459,7 +459,7 @@ class SugarDateTime extends DateTime
     {
         $newdate = clone $this;
         $newdate->setDate($year, 1, 1);
-        $newdate->setTime(0,0);
+        $newdate->setTime(0, 0);
         return $newdate;
     }
 

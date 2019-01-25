@@ -116,7 +116,7 @@ abstract class source
     public function loadMapping()
     {
         $mapping = array();
-        $dir = str_replace('_','/',get_class($this));
+        $dir = str_replace('_', '/', get_class($this));
         if (file_exists("custom/modules/Connectors/connectors/sources/{$dir}/mapping.php")) {
             require("custom/modules/Connectors/connectors/sources/{$dir}/mapping.php");
         } else {
@@ -139,7 +139,7 @@ abstract class source
     public function loadVardefs()
     {
         $class = get_class($this);
-        $dir = str_replace('_','/',$class);
+        $dir = str_replace('_', '/', $class);
         if (file_exists("custom/modules/Connectors/connectors/sources/{$dir}/vardefs.php")) {
             require("custom/modules/Connectors/connectors/sources/{$dir}/vardefs.php");
         } else {
@@ -184,7 +184,7 @@ abstract class source
             require_once('include/utils/encryption_utils.php');
             foreach ($this->_config['encrypt_properties'] as $name) {
                 if (!empty($this->_config['properties'][$name])) {
-                    $this->_config['properties'][$name] = blowfishEncode(blowfishGetKey('encrypt_field'),$this->_config['properties'][$name]);
+                    $this->_config['properties'][$name] = blowfishEncode(blowfishGetKey('encrypt_field'), $this->_config['properties'][$name]);
                 }
             }
         }
@@ -216,7 +216,7 @@ abstract class source
         if (!empty($this->_config['encrypt_properties']) && is_array($this->_config['encrypt_properties']) && !empty($this->_config['properties'])) {
             foreach ($this->_config['encrypt_properties'] as $name) {
                 if (!empty($this->_config['properties'][$name])) {
-                    $this->_config['properties'][$name] = blowfishDecode(blowfishGetKey('encrypt_field'),$this->_config['properties'][$name]);
+                    $this->_config['properties'][$name] = blowfishDecode(blowfishGetKey('encrypt_field'), $this->_config['properties'][$name]);
                 }
             }
         }
@@ -229,7 +229,7 @@ abstract class source
     public function loadConfig()
     {
         $config = array();
-        $dir = str_replace('_','/',get_class($this));
+        $dir = str_replace('_', '/', get_class($this));
         if (file_exists("modules/Connectors/connectors/sources/{$dir}/config.php")) {
             require("modules/Connectors/connectors/sources/{$dir}/config.php");
         }
@@ -267,7 +267,7 @@ abstract class source
     public function getOriginalMapping()
     {
         $mapping = array();
-        $dir = str_replace('_','/',get_class($this));
+        $dir = str_replace('_', '/', get_class($this));
         if (file_exists("modules/Connectors/connectors/sources/{$dir}/mapping.php")) {
             require("modules/Connectors/connectors/sources/{$dir}/mapping.php");
         } else {

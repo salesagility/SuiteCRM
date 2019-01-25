@@ -54,7 +54,7 @@ class SugarFieldInt extends SugarFieldBase
             return '';
         }
             
-        return format_number($rawField,0,0);
+        return format_number($rawField, 0, 0);
     }
 
     public function unformatField($formattedField, $vardef)
@@ -101,7 +101,7 @@ class SugarFieldInt extends SugarFieldBase
 
     public function unformatSearchRequest(&$inputData, &$field)
     {
-        $field['value'] = $this->unformatField($field['value'],$field);
+        $field['value'] = $this->unformatField($field['value'], $field);
     }
 
     function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
@@ -133,8 +133,8 @@ class SugarFieldInt extends SugarFieldBase
         $focus,
         ImportFieldSanitize $settings
         ) {
-        $value = str_replace($settings->num_grp_sep,"",$value);
-        if (!is_numeric($value) || strstr($value,".")) {
+        $value = str_replace($settings->num_grp_sep, "", $value);
+        if (!is_numeric($value) || strstr($value, ".")) {
             return false;
         }
         

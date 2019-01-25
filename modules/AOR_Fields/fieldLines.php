@@ -63,7 +63,7 @@ function display_field_lines($focus, $field, $value, $view)
                     $field_name = new AOR_Field();
                     $field_name->retrieve($row['id']);
                     $field_name->module_path = unserialize(base64_decode($field_name->module_path));
-                    $html .= "report_fields = \"".trim(preg_replace('/\s+/', ' ', getModuleFields(getRelatedModule($focus->report_module,$field_name->module_path[0]))))."\";";
+                    $html .= "report_fields = \"".trim(preg_replace('/\s+/', ' ', getModuleFields(getRelatedModule($focus->report_module, $field_name->module_path[0]))))."\";";
                     $field_item = json_encode($field_name->toArray());
                     $html .= "loadFieldLine(".$field_item.");";
                 }

@@ -167,7 +167,7 @@ class SubPanelTiles
                 foreach ($tabs as $tab) {
                     $displayTabs []= array('key'=>$tab, 'label'=>translate($this->subpanel_definitions->layout_defs['subpanel_setup'][$tab]['title_key']));
                 }
-                $sugarTab->setup(array(),array(),$displayTabs);
+                $sugarTab->setup(array(), array(), $displayTabs);
                 $sugarTab->display();
             }
         }
@@ -193,7 +193,7 @@ class SubPanelTiles
         $default_div_display = 'inline';
         if (!empty($sugar_config['hide_subpanels_on_login'])) {
             if (!isset($_SESSION['visited_details'][$this->focus->module_dir])) {
-                setcookie($this->focus->module_dir . '_divs', '',0,null,null,false,true);
+                setcookie($this->focus->module_dir . '_divs', '', 0, null, null, false, true);
                 unset($_COOKIE[$this->focus->module_dir . '_divs']);
                 $_SESSION['visited_details'][$this->focus->module_dir] = true;
             }
@@ -217,8 +217,8 @@ class SubPanelTiles
 
             if (!empty($usersLayout)) {
                 $availableTabs = $tabs ;
-                $tabs = array_intersect ( $usersLayout , $availableTabs ) ; // remove any tabs that have been removed since the user's layout was saved
-                foreach (array_diff ( $availableTabs , $usersLayout ) as $tab) {
+                $tabs = array_intersect ( $usersLayout, $availableTabs ) ; // remove any tabs that have been removed since the user's layout was saved
+                foreach (array_diff ( $availableTabs, $usersLayout ) as $tab) {
                     $tabs [] = $tab;
                 }
             }
@@ -255,7 +255,7 @@ class SubPanelTiles
                 // ignore when data source is a function
 
                 if (!isset($this->focus->field_defs[$thisPanel->_instance_properties['get_subpanel_data']])) {
-                    if (stripos($thisPanel->_instance_properties['get_subpanel_data'],'function:') === false) {
+                    if (stripos($thisPanel->_instance_properties['get_subpanel_data'], 'function:') === false) {
                         $GLOBALS['log']->fatal("Bad subpanel definition, it has incorrect value for get_subpanel_data property " .$tab);
                         continue;
                     }
@@ -412,7 +412,7 @@ class SubPanelTiles
         return $this->layout_manager;
     }
 
-    function get_buttons($thisPanel,$panel_query=null)
+    function get_buttons($thisPanel, $panel_query=null)
     {
         $subpanel_def = $thisPanel->get_buttons();
         $layout_manager = $this->getLayoutManager();

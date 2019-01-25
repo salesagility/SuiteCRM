@@ -89,4 +89,4 @@ $dictionary['OAuthKey'] = array('table' => 'oauth_consumer',
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('OAuthKeys','OAuthKey', array('basic','assignable'));
+VardefManager::createVardef('OAuthKeys', 'OAuthKey', array('basic','assignable'));

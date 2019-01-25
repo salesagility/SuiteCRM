@@ -100,7 +100,7 @@ class Release extends SugarBean
         return "$this->name";
     }
 
-    function get_releases($add_blank=false,$status='Active',$where='')
+    function get_releases($add_blank=false, $status='Active', $where='')
     {
         if ($where!='') {
             $query = "SELECT id, name FROM $this->table_name where ". $where ." and deleted=0 ";

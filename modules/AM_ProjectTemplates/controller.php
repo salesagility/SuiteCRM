@@ -121,7 +121,7 @@ class AM_ProjectTemplatesController extends SugarController
 
         //copy all resources from template to project
         $template->load_relationship('am_projecttemplates_users_1');
-        $template_users = $template->get_linked_beans('am_projecttemplates_users_1','User');
+        $template_users = $template->get_linked_beans('am_projecttemplates_users_1', 'User');
 
         $template->load_relationship('am_projecttemplates_contacts_1');
         $template_contacts = $template->get_linked_beans('am_projecttemplates_contacts_1', 'Contact');
@@ -168,7 +168,7 @@ class AM_ProjectTemplatesController extends SugarController
             $project_task->estimated_effort = $row['estimated_effort'];
             $project_task->utilization = $row['utilization'];
             
-            if ($copy_all == 0 && !in_array( $row['id'],$copy_tasks)) {
+            if ($copy_all == 0 && !in_array( $row['id'], $copy_tasks)) {
                 $project_task->assigned_user_id = null;
             } else {
                 $project_task->assigned_user_id = $row['assigned_user_id'];
@@ -265,7 +265,7 @@ class AM_ProjectTemplatesController extends SugarController
         
         //Get project tasks
         $project_template->load_relationship('am_tasktemplates_am_projecttemplates');
-        $tasks = $project_template->get_linked_beans('am_tasktemplates_am_projecttemplates','AM_TaskTemplates');
+        $tasks = $project_template->get_linked_beans('am_tasktemplates_am_projecttemplates', 'AM_TaskTemplates');
 
         //--- get the gantt chart start and end
 
@@ -377,9 +377,9 @@ class AM_ProjectTemplatesController extends SugarController
         $tid = count($tasks) + 1 ;
 
         if ($this->IsNullOrEmptyString($task_id)) {
-            $this->create_task($task_name,$start,$enddate,$project_id, $milestone_flag,$status, $tid, $predecessor, $rel_type, $duration,$duration_unit,$resource,$percent,$note,$actual_duration,$tid);
+            $this->create_task($task_name, $start, $enddate, $project_id, $milestone_flag, $status, $tid, $predecessor, $rel_type, $duration, $duration_unit, $resource, $percent, $note, $actual_duration, $tid);
         } else {
-            $this->update_task($task_id,$task_name,$start,$enddate,$project_id, $milestone_flag,$status, $predecessor, $rel_type, $duration,$duration_unit,$resource,$percent,$note,$actual_duration);
+            $this->update_task($task_id, $task_name, $start, $enddate, $project_id, $milestone_flag, $status, $predecessor, $rel_type, $duration, $duration_unit, $resource, $percent, $note, $actual_duration);
         }
     }
 
@@ -443,7 +443,7 @@ class AM_ProjectTemplatesController extends SugarController
 
         //Get tasks
         $project_template->load_relationship('am_tasktemplates_am_projecttemplates');
-        $tasks = $project_template->get_linked_beans('am_tasktemplates_am_projecttemplates','AM_TaskTemplates');
+        $tasks = $project_template->get_linked_beans('am_tasktemplates_am_projecttemplates', 'AM_TaskTemplates');
         echo '<option rel="0" value="0">'.$mod_strings["LBL_NONE"].'</option>';
         foreach ($tasks as $task) {
             echo '<option rel="'.$task->task_number.'" value="'.$task->task_number.'">'.$task->name.'</opion>';
@@ -452,7 +452,7 @@ class AM_ProjectTemplatesController extends SugarController
     }
 
 
-    function create_task($name, $start, $end, $project_id, $milestone_flag, $status, $project_task_id, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration,$order_number)
+    function create_task($name, $start, $end, $project_id, $milestone_flag, $status, $project_task_id, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description, $actual_duration, $order_number)
     {
         $task = new AM_TaskTemplates();
         $task->name = $name;
@@ -476,11 +476,11 @@ class AM_ProjectTemplatesController extends SugarController
         $project_template = new AM_ProjectTemplates();
         $project_template->retrieve($project_id);
         $project_template->load_relationship('am_tasktemplates_am_projecttemplates');
-        $project_template->get_linked_beans('am_tasktemplates_am_projecttemplates','AM_TaskTemplates');
+        $project_template->get_linked_beans('am_tasktemplates_am_projecttemplates', 'AM_TaskTemplates');
         $project_template->am_tasktemplates_am_projecttemplates->add($task_id);
     }
 
-    function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration)
+    function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description, $actual_duration)
     {
         $task = new AM_TaskTemplates();
 

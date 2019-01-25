@@ -102,7 +102,7 @@ class SugarCacheRedis extends SugarCacheAbstract
                 $this->_redis = new Redis();
                 $this->_host = SugarConfig::getInstance()->get('external_cache.redis.host', $this->_host);
                 $this->_port = SugarConfig::getInstance()->get('external_cache.redis.port', $this->_port);
-                if ( !$this->_redis->connect($this->_host,$this->_port) ) {
+                if ( !$this->_redis->connect($this->_host, $this->_port) ) {
                     return false;
                 }
             }
@@ -123,7 +123,7 @@ class SugarCacheRedis extends SugarCacheAbstract
         $value = serialize($value);
         $key = $this->_fixKeyName($key);
         
-        $this->_getRedisObject()->set($key,$value);
+        $this->_getRedisObject()->set($key, $value);
         $this->_getRedisObject()->expire($key, $this->_expireTimeout);
     }
     
@@ -171,6 +171,6 @@ class SugarCacheRedis extends SugarCacheAbstract
      */
     protected function _fixKeyName($key)
     {
-        return str_replace(' ','_',$key);
+        return str_replace(' ', '_', $key);
     }
 }

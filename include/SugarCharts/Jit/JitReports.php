@@ -145,14 +145,14 @@ class JitReports extends Jit
             $this->checkYAxis($total);						
 
             $data .= $this->tab('<group>', 2);
-            $data .= $this->tabValue('title',$key, 3);
+            $data .= $this->tabValue('title', $key, 3);
             $data .= $this->tab('<subgroups>', 3);
-            $data .= $this->tab('<group>',4);
-            $data .= $this->tabValue('title',$total,5);
-            $data .= $this->tabValue('value',$total,5);
-            $data .= $this->tabValue('label',$key,5);
-            $data .= $this->tab('<link></link>',5);
-            $data .= $this->tab('</group>',4);
+            $data .= $this->tab('<group>', 4);
+            $data .= $this->tabValue('title', $total, 5);
+            $data .= $this->tabValue('value', $total, 5);
+            $data .= $this->tabValue('label', $key, 5);
+            $data .= $this->tab('<link></link>', 5);
+            $data .= $this->tab('</group>', 4);
             $data .= $this->tab('</subgroups>', 3);				
             $data .= $this->tab('</group>', 2);
         }
@@ -170,8 +170,8 @@ class JitReports extends Jit
             $this->checkYAxis($total);
 
             $data .= $this->tab('<group>', 2);
-            $data .= $this->tabValue('title',$key, 3);
-            $data .= $this->tabValue('value',$total, 3);
+            $data .= $this->tabValue('title', $key, 3);
+            $data .= $this->tabValue('value', $total, 3);
 
             $label = $total;
             if ($this->isCurrencyReportGroupTotal($dataset)) {

@@ -197,7 +197,7 @@ class quicksearchQuery
                     if ($focus instanceof Person) {
                         $nameFormat = $locale->getLocaleFormatMacro($current_user);
 
-                        if (strpos($nameFormat,'l') > strpos($nameFormat,'f')) {
+                        if (strpos($nameFormat, 'l') > strpos($nameFormat, 'f')) {
                             array_push(
                                 $conditionArray,
                                 $db->concat($table, array('first_name','last_name')) . " like '$like'"
@@ -487,8 +487,8 @@ class quicksearchQuery
     protected function overrideContactId($result, $data, $args)
     {
         foreach ($args['field_list'] as $field) {
-            $result[$field] = (preg_match('/reports_to_id$/s',$field)
-                               || preg_match('/contact_id$/s',$field))
+            $result[$field] = (preg_match('/reports_to_id$/s', $field)
+                               || preg_match('/contact_id$/s', $field))
                 ? $data->id // "reports_to_id" to "id"
                 : $data->$field;
         }
@@ -550,7 +550,7 @@ class quicksearchQuery
         return (showFullName())
             // utils.php, if system is configured to show full name
             ? getUserArrayFromFullName($condition, true)
-            : get_user_array(false, 'Active', '', false, $condition,' AND portal_only=0 ',false);
+            : get_user_array(false, 'Active', '', false, $condition, ' AND portal_only=0 ', false);
     }
 
     /**

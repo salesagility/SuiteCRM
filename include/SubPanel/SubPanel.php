@@ -307,7 +307,7 @@ class SubPanel
         //end of bug# 40171
 
         mkdir_recursive($path, true);
-        write_array_to_file( $name, $override,$path.'/' . $filename .'.php');
+        write_array_to_file( $name, $override, $path.'/' . $filename .'.php');
 
         //save the override for the layoutdef
         //tyoung 10.12.07 pushed panel->name to lowercase to match case in subpaneldefs.php files -

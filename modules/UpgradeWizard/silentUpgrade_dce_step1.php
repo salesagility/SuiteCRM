@@ -45,7 +45,7 @@
 //// php.exe -f silentUpgrade.php [Path to Upgrade Package zip] [Path to Log file] [Path to Instance]
 //// See below the Usage for more details.
 /////////////////////////////////////////////////////////////////////////////////////////
-ini_set('memory_limit',-1);
+ini_set('memory_limit', -1);
 ///////////////////////////////////////////////////////////////////////////////
 ////	UTILITIES THAT MUST BE LOCAL :(
 function prepSystemForUpgradeSilent()
@@ -93,7 +93,7 @@ function clearCacheSU($thedir, $extension)
                      'group' => '',
              );
          ksort($sugar_config);
-         if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
+         if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config, 'config.php')) {
              //writing to the file
          }
      }
@@ -118,7 +118,7 @@ function checkLoggerSettings()
             ),
           );
         ksort($sugar_config);
-        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
+        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config, 'config.php')) {
             //writing to the file
         }
     }
@@ -145,7 +145,7 @@ function checkResourceSettings()
             'default_limit' => 1000,
           );
         ksort($sugar_config);
-        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
+        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config, 'config.php')) {
             //writing to the file
         }
     }
@@ -263,7 +263,7 @@ function addDefaultModuleRoles($defaultRoles = array())
     }
 }
 
-function verifyArguments($argv,$usage_dce,$usage_regular)
+function verifyArguments($argv, $usage_dce, $usage_regular)
 {
     $upgradeType = '';
     $cwd = getcwd(); // default to current, assumed to be in a valid SugarCRM root dir.
@@ -333,7 +333,7 @@ function verifyArguments($argv,$usage_dce,$usage_regular)
     return $upgradeType;
 }
 
-function upgradeDCEFiles($argv,$instanceUpgradePath)
+function upgradeDCEFiles($argv, $instanceUpgradePath)
 {
     //copy and update following files from upgrade package
     $upgradeTheseFiles = array('cron.php','download.php','index.php','install.php','soap.php','sugar_version.php','vcal_server.php');
@@ -344,7 +344,7 @@ function upgradeDCEFiles($argv,$instanceUpgradePath)
             if (!is_dir(dirname($destFile))) {
                 mkdir_recursive(dirname($destFile)); // make sure the directory exists
             }
-            copy_recursive($srcFile,$destFile);
+            copy_recursive($srcFile, $destFile);
             $_GET['TEMPLATE_PATH'] = $destFile;
             $_GET['CONVERT_FILE_ONLY'] = true;
             if (!class_exists('TemplateConverter')) {
@@ -445,7 +445,7 @@ define('DCE_INSTANCE', 'DCE_Instance');
 global $cwd;
 $cwd = getcwd(); // default to current, assumed to be in a valid SugarCRM root dir.
 
-$upgradeType = verifyArguments($argv,$usage_dce,$usage_regular);
+$upgradeType = verifyArguments($argv, $usage_dce, $usage_regular);
 
 ///////////////////////////////////////////////////////////////////////////////
 //////  Verify that all the arguments are appropriately placed////////////////
@@ -552,7 +552,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
             $error = validate_manifest($manifest);
             if (!empty($error)) {
                 $error = strip_tags(br2nl($error));
-                fwrite(STDERR,"\n{$error}\n\nFAILURE\n");
+                fwrite(STDERR, "\n{$error}\n\nFAILURE\n");
                 exit(1);
             }
         }
@@ -594,7 +594,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
             foreach ($customFiles as $file) {
                 $srcFile = clean_path($file);
                 //$targetFile = clean_path(getcwd() . '/' . $srcFile);
-                if (strpos($srcFile,".svn") !== false) {
+                if (strpos($srcFile, ".svn") !== false) {
                     //do nothing
                 } else {
                     $existsCustomFile = true;
@@ -609,15 +609,15 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
                 logThis("Stop and Exit Upgrade. There are customized files. Take a look in the upgrade log", $path);
                 exit(1);
             } else {
-                upgradeDCEFiles($argv,$instanceUpgradePath);
+                upgradeDCEFiles($argv, $instanceUpgradePath);
             }
         } else {
             //copy and update following files from upgrade package
-            upgradeDCEFiles($argv,$instanceUpgradePath);
+            upgradeDCEFiles($argv, $instanceUpgradePath);
         }
     } else {
         //copy and update following files from upgrade package
-        upgradeDCEFiles($argv,$instanceUpgradePath);
+        upgradeDCEFiles($argv, $instanceUpgradePath);
     }
 
     global $unzip_dir;

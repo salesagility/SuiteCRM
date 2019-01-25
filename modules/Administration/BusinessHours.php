@@ -18,7 +18,7 @@ require_once('modules/Configurator/Configurator.php');
 echo getClassicModuleTitle(
     "Administration",
     array(
-        "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
+        "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
         $mod_strings['LBL_BUSINESS_HOURS_DESC'],
     ),
     false
@@ -33,7 +33,7 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     foreach ($days as $day) {
         $bh = $businessHours->getOrCreate($day);
         $bh->day = $day;
-        $bh->open = array_key_exists("open_".$day,$_REQUEST) ? $_REQUEST["open_".$day] : false;
+        $bh->open = array_key_exists("open_".$day, $_REQUEST) ? $_REQUEST["open_".$day] : false;
         $bh->opening_hours = $_REQUEST["opening_time_".$day];
         $bh->closing_hours = $_REQUEST["closing_time_".$day];
         $bh->save();
@@ -65,7 +65,7 @@ $sugar_smarty->assign('MOD', $mod_strings);
 $sugar_smarty->assign('APP', $app_strings);
 $sugar_smarty->assign('APP_LIST', $app_list_strings);
 $sugar_smarty->assign('LANGUAGES', get_languages());
-$sugar_smarty->assign("JAVASCRIPT",get_set_focus_js());
+$sugar_smarty->assign("JAVASCRIPT", get_set_focus_js());
 $sugar_smarty->assign('error', $errors);
 
 $buttons =  <<<EOQ
@@ -79,7 +79,7 @@ $buttons =  <<<EOQ
                 &nbsp;<input title="{$mod_strings['LBL_CANCEL_BUTTON_TITLE']}"  onclick="document.location.href='index.php?module=Administration&action=index'" class="button"  type="button" name="cancel" value="  {$app_strings['LBL_CANCEL_BUTTON_LABEL']}  " >
 EOQ;
 
-$sugar_smarty->assign("BUTTONS",$buttons);
+$sugar_smarty->assign("BUTTONS", $buttons);
 
 $sugar_smarty->display('modules/Administration/BusinessHours.tpl');
 

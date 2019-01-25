@@ -127,13 +127,13 @@ class SugarMerge
         if (file_exists($searchDirectory)) {
             $dir = dir($searchDirectory);
             while ($e = $dir->read()) {
-                if (substr($e , 0, 1) != '.') {
+                if (substr($e, 0, 1) != '.') {
                     if (is_dir("{$searchDirectory}/{$e}/metadata")) {
 
                         //lets make sure that the directory matches the case of the module before we pass it in
                         global $moduleList;
                         //lets populate an array with the available modules, and make the key's lowercase
-                        $checkModList =  array_combine ($moduleList,$moduleList);
+                        $checkModList =  array_combine ($moduleList, $moduleList);
                         $checkModList = array_change_key_case($checkModList);
 
                         //now lets compare with the current directory.  This accounts for cases in which the directory was created in lowercase
@@ -143,14 +143,14 @@ class SugarMerge
                         }
 
                         if ( is_array($merge) ) {
-                            if ( in_array($e,$merge) ) {
-                                $this->merged[$e] = $this->mergeModule($e, true, $save,$logHistory );
+                            if ( in_array($e, $merge) ) {
+                                $this->merged[$e] = $this->mergeModule($e, true, $save, $logHistory );
                             } else {
                                 $GLOBALS['log']->debug("SugarMerge is skipping $e module as filter array passed in but module not specified for merge.");
                                 continue;
                             }
                         } else {
-                            $this->merged[$e] = $this->mergeModule($e, $merge, $save,$logHistory );
+                            $this->merged[$e] = $this->mergeModule($e, $merge, $save, $logHistory );
                         }
                     }
                 }
@@ -173,7 +173,7 @@ class SugarMerge
      * @param BOOLEAN $logHistory - do we wish to create history entries for any of the merges
      * @return ARRAY - an associative array of files that were either merged or have the potential to be merged depeneding if $merge and $save  are set to true
      */
-    function mergeModule($module, $merge = true, $save=true,$logHistory=true)
+    function mergeModule($module, $merge = true, $save=true, $logHistory=true)
     {
         $merged = array();
         $path = $this->original_path . 'modules/' . $module . '/metadata/';
@@ -200,7 +200,7 @@ class SugarMerge
      * @param STRING $save - should the merged file be saved to the custom directory
      * @return BOOLEAN - success or failure of the merge
      */
-    function mergeFile($module, $file, $save=true,$logHistory=true)
+    function mergeFile($module, $file, $save=true, $logHistory=true)
     {
         $path = $this->original_path . 'modules/' . $module . '/metadata/';
         $custom_path = $this->custom_path . 'modules/' . $module . '/metadata/';
@@ -211,7 +211,7 @@ class SugarMerge
         if (isset($this->mergeMapping[$file]) && file_exists("{$path}{$file}") && file_exists("{$custom_path}{$file}") && file_exists("{$new_path}{$file}")) {
             //Create a log entry of the custom file before it is merged
             if ($logHistory && $save) {
-                $this->createHistoryLog($module, "{$custom_path}{$file}",$file);
+                $this->createHistoryLog($module, "{$custom_path}{$file}", $file);
             }
             $this->mergeMapping[$file]->sugarMerge = $this;
             return $this->mergeMapping[$file]->merge($module, "{$path}{$file}", "{$new_path}{$file}", "{$custom_path}{$file}", $save);
@@ -227,7 +227,7 @@ class SugarMerge
      * @param STRING $file - name of the file
      * @param STRING $customFile - Path to the custom file that will be merged
      */
-    protected function createHistoryLog($module,$customFile,$file)
+    protected function createHistoryLog($module, $customFile, $file)
     {
         $historyPath = 'custom/' . MB_HISTORYMETADATALOCATION . "/modules/$module/metadata/$file";
         $history = new History($historyPath);

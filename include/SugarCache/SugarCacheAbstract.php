@@ -175,13 +175,13 @@ abstract class SugarCacheAbstract
         }
 
         if ( $ttl === null ) {
-            $this->_setExternal($this->_keyPrefix.$key,$value);
+            $this->_setExternal($this->_keyPrefix.$key, $value);
         } else {
             if ( $ttl > 0 ) {
                 //For BC reasons the setExternal signature will remain the same.
                 $previousExpireTimeout = $this->_expireTimeout;
                 $this->_expireTimeout = $ttl;
-                $this->_setExternal($this->_keyPrefix.$key,$value);
+                $this->_setExternal($this->_keyPrefix.$key, $value);
                 $this->_expireTimeout = $previousExpireTimeout;
             }
         }
@@ -258,7 +258,7 @@ abstract class SugarCacheAbstract
      */
     public function __toString()
     {
-        return strtolower(str_replace('SugarCache','',get_class($this)));
+        return strtolower(str_replace('SugarCache', '', get_class($this)));
     }
 
     /**
@@ -268,7 +268,7 @@ abstract class SugarCacheAbstract
      * @param string $key
      * @param mixed  $value
      */
-    abstract protected function _setExternal($key,$value);
+    abstract protected function _setExternal($key, $value);
 
     /**
      * Hook for the child implementations of the individual backends to provide thier own logic for

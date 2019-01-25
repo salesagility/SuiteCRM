@@ -93,9 +93,9 @@ class SugarFieldCurrency extends SugarFieldFloat
         $focus,
         ImportFieldSanitize $settings
         ) {
-        $value = str_replace($settings->currency_symbol,"",$value);
+        $value = str_replace($settings->currency_symbol, "", $value);
         
-        return $settings->float($value,$vardef,$focus);
+        return $settings->float($value, $vardef, $focus);
     }
 
     /**

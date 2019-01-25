@@ -51,7 +51,7 @@ class ViewModulefield extends SugarView
         global $mod_strings;
         
         return array(
-           translate('LBL_MODULE_NAME','Administration'),
+           translate('LBL_MODULE_NAME', 'Administration'),
            ModuleBuilderController::getModuleTitle(),
            );
     }
@@ -152,7 +152,7 @@ class ViewModulefield extends SugarView
             $objectName = BeanFactory::getObjectName($moduleName);
             $module = BeanFactory::getBean($moduleName);
 
-            VardefManager::loadVardef($moduleName, $objectName,true);
+            VardefManager::loadVardef($moduleName, $objectName, true);
             global $dictionary;
 
             // Fix for issue #1177 - when trying to add or edit fields in a module an error message is shown:
@@ -215,7 +215,7 @@ class ViewModulefield extends SugarView
             }
             $fv->ss->assign( 'allowAutoInc', $allowAutoInc);   
 
-            $GLOBALS['log']->warn('view.modulefield: hidelevel '.$fv->ss->get_template_vars('hideLevel')." ".print_r($vardef,true));
+            $GLOBALS['log']->warn('view.modulefield: hidelevel '.$fv->ss->get_template_vars('hideLevel')." ".print_r($vardef, true));
             if (!empty($vardef['vname'])) {
                 $fv->ss->assign('lbl_value', htmlentities(translate($vardef['vname'], $moduleName), ENT_QUOTES, 'UTF-8'));
             }
@@ -266,10 +266,10 @@ class ViewModulefield extends SugarView
 
             $fv->ss->assign('module', $module);
             $fv->ss->assign('package', $package);
-            $fv->ss->assign('MB','1');
+            $fv->ss->assign('MB', '1');
 
             if (isset($vardef['vname'])) {
-                $fv->ss->assign('lbl_value', htmlentities($module->getLabel('en_us',$vardef['vname']), ENT_QUOTES, 'UTF-8'));
+                $fv->ss->assign('lbl_value', htmlentities($module->getLabel('en_us', $vardef['vname']), ENT_QUOTES, 'UTF-8'));
             }
             if (empty($module->mbvardefs->vardefs['fields']['parent_name']) || (isset($vardef['type']) && $vardef['type'] == 'parent')) {
                 $field_types['parent'] = $GLOBALS['mod_strings']['parent'];
@@ -311,14 +311,14 @@ class ViewModulefield extends SugarView
             $fv->ss->assign('no_duplicate', true);
         }
 
-        $fv->ss->assign('action',$action);
+        $fv->ss->assign('action', $action);
         $fv->ss->assign('isClone', ($isClone ? 1 : 0));
         $fv->ss->assign("module_dd_fields", $enumFields);
         $json = getJSONobj();
 
         $fv->ss->assign('field_name_exceptions', $json->encode($field_name_exceptions));
         ksort($field_types);
-        $fv->ss->assign('field_types',$field_types);
+        $fv->ss->assign('field_types', $field_types);
 
 
         $fv->ss->assign('importable_options', $GLOBALS['app_list_strings']['custom_fields_importable_dom']);
@@ -338,9 +338,9 @@ class ViewModulefield extends SugarView
             }
         }
         
-        $fv->ss->assign('triggers',$triggers);
+        $fv->ss->assign('triggers', $triggers);
         $fv->ss->assign('existing_field_names', $json->encode($existing_field_names));
-        $fv->ss->assign('mod_strings',$GLOBALS['mod_strings']);
+        $fv->ss->assign('mod_strings', $GLOBALS['mod_strings']);
 
         // jchi #24880
         // end
@@ -370,7 +370,7 @@ class ViewModulefield extends SugarView
         $fv->ss->assign('is_update', $is_update);
 
         $body = $this->fetchTemplate($fv, 'modules/ModuleBuilder/tpls/MBModule/field.tpl');
-        $ac->addSection('east', translate('LBL_SECTION_FIELDEDITOR','ModuleBuilder'), $body );
+        $ac->addSection('east', translate('LBL_SECTION_FIELDEDITOR', 'ModuleBuilder'), $body );
         return $ac;
     }
 

@@ -154,7 +154,7 @@ class ActivitiesRelationship extends OneToManyRelationship
         return $vardefs ;
     }
 
-    protected function getLinkFieldDefinition($sourceModule , $relationshipName)
+    protected function getLinkFieldDefinition($sourceModule, $relationshipName)
     {
         $vardef = array ( ) ;
         $vardef [ 'name' ] = $relationshipName;

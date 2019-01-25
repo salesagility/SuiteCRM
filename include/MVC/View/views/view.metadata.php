@@ -49,7 +49,7 @@ class ViewMetadata extends SugarView
     
     
     
-    function displayCheckBoxes($name,$values, $selected =array(), $attr='')
+    function displayCheckBoxes($name, $values, $selected =array(), $attr='')
     {
         echo "<div $attr style='overflow:auto;float:left;width:200px;height:200px' >";
         foreach ($values as $value) {
@@ -59,7 +59,7 @@ class ViewMetadata extends SugarView
         echo "</div>";
     }
     
-    function displaySelect($name,$values, $selected ='', $attr='')
+    function displaySelect($name, $values, $selected ='', $attr='')
     {
         echo "<select name='$name' $attr>";
         foreach ($values as $value) {

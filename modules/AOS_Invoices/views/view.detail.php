@@ -61,7 +61,7 @@ class AOS_InvoicesViewDetail extends ViewDetail
 						</td>
 					</tr>';
             foreach ($templates as $template) {
-                $template = str_replace('^','',$template);
+                $template = str_replace('^', '', $template);
                 $js = "document.getElementById('popupDivBack_ara').style.display='none';document.getElementById('popupDiv_ara').style.display='none';var form=document.getElementById('popupForm');if(form!=null){form.templateID.value='".$template."';form.submit();}else{alert('Error!');}";
                 echo '<tr height="20">
 				<td width="17" valign="center"><a href="#" onclick="'.$js.'"><img src="themes/default/images/txt_image_inline.gif" width="16" height="16" /></a></td>

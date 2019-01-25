@@ -101,4 +101,4 @@ $dictionary['AOR_Chart'] = array(
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOR_Charts','AOR_Chart', array('basic'));
+VardefManager::createVardef('AOR_Charts', 'AOR_Chart', array('basic'));

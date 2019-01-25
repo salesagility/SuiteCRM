@@ -115,7 +115,7 @@ class ProspectFormBase
         } else {
             $form = '<table width="100%"><tr><td>'.$mod_strings['MSG_SHOW_DUPLICATES']. '</td></tr><tr><td height="20"></td></tr></table>';
         }
-        $form .= get_form_header($mod_strings['LBL_DUPLICATE'],"", '');
+        $form .= get_form_header($mod_strings['LBL_DUPLICATE'], "", '');
         $form .= "<table width='100%' cellpadding='0' cellspacing='0'>	<tr >	";
         if ($action != 'ShowDuplicates') {
             $form .= "<td > &nbsp;</td>";
@@ -167,7 +167,7 @@ class ProspectFormBase
         }
         return $form;
     }
-    function getWideFormBody($prefix, $mod='',$formname='',  $prospect = '')
+    function getWideFormBody($prefix, $mod='', $formname='', $prospect = '')
     {
         if (!ACLController::checkAccess('Prospects', 'edit', true)) {
             return '';
@@ -291,8 +291,8 @@ EOQ;
         $javascript = new javascript();
         $javascript->setFormName($formname);
         $javascript->setSugarBean(new Prospect());
-        $javascript->addField('email1','false',$prefix);
-        $javascript->addField('email2','false',$prefix);
+        $javascript->addField('email1', 'false', $prefix);
+        $javascript->addField('email2', 'false', $prefix);
         $javascript->addRequiredFields($prefix);
         $form .=$javascript->getScript();
         $mod_strings = $temp_strings;
@@ -353,7 +353,7 @@ EOQ;
         $javascript = new javascript();
         $javascript->setFormName($formname);
         $javascript->setSugarBean(new Prospect());
-        $javascript->addField('email1','false',$prefix);
+        $javascript->addField('email1', 'false', $prefix);
         $javascript->addRequiredFields($prefix);
 
         $form .=$javascript->getScript();
@@ -385,7 +385,7 @@ EOQ;
 			<input type="hidden" name="${prefix}module" value="Prospects">
 			<input type="hidden" name="${prefix}action" value="Save">
 EOQ;
-        $the_form .= $this->getFormBody($prefix,'Prospects', "${prefix}ProspectSave");
+        $the_form .= $this->getFormBody($prefix, 'Prospects', "${prefix}ProspectSave");
         $the_form .= <<<EOQ
 		<input title="$lbl_save_button_title" accessKey="$lbl_save_button_key" class="button" type="submit" name="${prefix}button" value="  $lbl_save_button_label  " >
 		</form>
@@ -398,7 +398,7 @@ EOQ;
     }
 
 
-    function handleSave($prefix,$redirect=true, $useRequired=false)
+    function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         global $theme;
     

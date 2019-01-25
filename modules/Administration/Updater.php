@@ -69,7 +69,7 @@ if (isset($_REQUEST['useraction']) && ($_REQUEST['useraction']=='Save' || $_REQU
 }
 
 echo getClassicModuleTitle(
-        "Administration", 
+        "Administration",
         array(
             "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
            $mod_strings['LBL_SUITE_UPDATE_TITLE'],

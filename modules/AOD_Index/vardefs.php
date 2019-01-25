@@ -93,4 +93,4 @@ $dictionary['AOD_Index'] = array(
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOD_Index','AOD_Index', array('basic','assignable'));
+VardefManager::createVardef('AOD_Index', 'AOD_Index', array('basic','assignable'));

@@ -101,7 +101,7 @@ class Chart_lead_source_by_outcome
         if (!empty($tempx) && sizeof($tempx) > 0) {
             foreach ($tempx as $key) {
                 $datax[$key] = $app_list_strings['lead_source_dom'][$key];
-                array_push($selected_datax,$key);
+                array_push($selected_datax, $key);
             }
         } else {
             $datax = $app_list_strings['lead_source_dom'];
@@ -129,14 +129,14 @@ class Chart_lead_source_by_outcome
         $id_hash = '1';
         if (isset($ids)) {
             sort($ids);
-            $id_hash = crc32(implode('',$ids));
+            $id_hash = crc32(implode('', $ids));
             if ($id_hash < 0) {
                 $id_hash = $id_hash * -1;
             }
         }
         $GLOBALS['log']->debug("ids is:");
         $GLOBALS['log']->debug($ids);
-        $id_md5 = substr(md5($current_user->id),0,9);
+        $id_md5 = substr(md5($current_user->id), 0, 9);
 
 
         $seps				= array("-", "/");
@@ -146,10 +146,10 @@ class Chart_lead_source_by_outcome
         $GLOBALS['log']->debug("cache file name is: $cache_file_name");
 
 
-        $tools='<div align="right"><a href="index.php?module='.$currentModule.'&action='. $action .'&lsbo_refresh=true" class="tabFormAdvLink">'.SugarThemeRegistry::current()->getImage('refresh','border="0" align="absmiddle"', null,null,'.gif',$mod_strings['LBL_REFRESH']).'&nbsp;'.$current_module_strings['LBL_REFRESH'].'</a>&nbsp;&nbsp;<a href="javascript: toggleDisplay(\'lsbo_edit\');" class="tabFormAdvLink">'.SugarThemeRegistry::current()->getImage('edit','border="0"  align="absmiddle"',null,null,'.gif',$mod_strings['LBL_EDIT']).'&nbsp;'. $current_module_strings['LBL_EDIT'].'</a>&nbsp;&nbsp;'.$extra_tools.'</div>'; ?>
+        $tools='<div align="right"><a href="index.php?module='.$currentModule.'&action='. $action .'&lsbo_refresh=true" class="tabFormAdvLink">'.SugarThemeRegistry::current()->getImage('refresh', 'border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_REFRESH']).'&nbsp;'.$current_module_strings['LBL_REFRESH'].'</a>&nbsp;&nbsp;<a href="javascript: toggleDisplay(\'lsbo_edit\');" class="tabFormAdvLink">'.SugarThemeRegistry::current()->getImage('edit', 'border="0"  align="absmiddle"', null, null, '.gif', $mod_strings['LBL_EDIT']).'&nbsp;'. $current_module_strings['LBL_EDIT'].'</a>&nbsp;&nbsp;'.$extra_tools.'</div>'; ?>
 
 <?php
-echo '<span onmouseover="this.style.cursor=\'move\'" id="chart_handle_' . $this->order . '">' . get_form_header($current_module_strings['LBL_LEAD_SOURCE_BY_OUTCOME'],$tools,false) . '</span>';
+echo '<span onmouseover="this.style.cursor=\'move\'" id="chart_handle_' . $this->order . '">' . get_form_header($current_module_strings['LBL_LEAD_SOURCE_BY_OUTCOME'], $tools, false) . '</span>';
 
         if (empty($_SESSION['lsbo_ids'])) {
             $_SESSION['lsbo_ids'] = "";
@@ -164,12 +164,12 @@ echo '<span onmouseover="this.style.cursor=\'move\'" id="chart_handle_' . $this-
 <table cellpadding="0" cellspacing="0" border="0" class="edit view" align="center">
 <tr>
 	<td valign='top' nowrap><b><?php echo $current_module_strings['LBL_LEAD_SOURCES']; ?></b></td>
-	<td valign='top'><select name="lsbo_lead_sources[]" multiple size='3'><?php echo get_select_options_with_id($app_list_strings['lead_source_dom'],$selected_datax); ?></select></td>
+	<td valign='top'><select name="lsbo_lead_sources[]" multiple size='3'><?php echo get_select_options_with_id($app_list_strings['lead_source_dom'], $selected_datax); ?></select></td>
 </tr>
 
 <tr>
 	<td valign='top' nowrap><b><?php echo $current_module_strings['LBL_USERS']; ?></b></td>
-	<td valign='top'><select name="lsbo_ids[]" multiple size='3'><?php echo get_select_options_with_id(get_user_array(false),$ids); ?></select></td>
+	<td valign='top'><select name="lsbo_ids[]" multiple size='3'><?php echo get_select_options_with_id(get_user_array(false), $ids); ?></select></td>
 </tr>
 
 <tr>
@@ -183,7 +183,7 @@ global $app_strings; ?>
 </p>
 <?php
 
-echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refresh,$current_module_strings)."</p>";
+echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refresh, $current_module_strings)."</p>";
         echo "<P align='center'><span class='chartFootnote'>".$current_module_strings['LBL_LEAD_SOURCE_BY_OUTCOME_DESC']."</span></P>";
 
 
@@ -243,7 +243,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
                 foreach ($user_id as $the_id) {
                     $id[] = "'".$the_id."'";
                 }
-                $ids = join(",",$id);
+                $ids = join(",", $id);
                 $where .= "opportunities.assigned_user_id IN ($ids) ";
             }
 
@@ -254,7 +254,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
                 foreach ($datay as $key=>$value) {
                     $datayArr[] = "'".$key."'";
                 }
-                $datayArr = join(",",$datayArr);
+                $datayArr = join(",", $datayArr);
                 $where .= "AND opportunities.lead_source IN	($datayArr) ";
             }
             $query = "SELECT lead_source,sales_stage,sum(amount_usdollar/1000) as total,count(*) as opp_count FROM opportunities ";
@@ -325,7 +325,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
                 $fileContents .= '          <dataRow title="'.$translation.'" endLabel="'.currency_format_number($leadSourceArr[$key]['row_total'], array('currency_symbol' => true)) . '">'."\n";
                 if (is_array($leadSourceArr[$key]['outcome'])) {
                     foreach ($leadSourceArr[$key]['outcome'] as $outcome=>$outcome_translation) {
-                        $fileContents .= '               <bar id="'.$outcome.'" totalSize="'.array_sum($leadSourceArr[$key][$outcome]['total']).'" altText="'.format_number(array_sum($leadSourceArr[$key][$outcome]['opp_count']),0,0).' '.$current_module_strings['LBL_OPPS_WORTH'].' '.currency_format_number(array_sum($leadSourceArr[$key][$outcome]['total']),array('currency_symbol' => true)).$current_module_strings['LBL_OPP_THOUSANDS'].' '.$current_module_strings['LBL_OPPS_OUTCOME'].' '.$outcome_translation.'" url="index.php?module=Opportunities&action=index&lead_source='.$key.'&sales_stage='.urlencode($outcome).'&query=true&searchFormTab=advanced_search"/>'."\n";
+                        $fileContents .= '               <bar id="'.$outcome.'" totalSize="'.array_sum($leadSourceArr[$key][$outcome]['total']).'" altText="'.format_number(array_sum($leadSourceArr[$key][$outcome]['opp_count']), 0, 0).' '.$current_module_strings['LBL_OPPS_WORTH'].' '.currency_format_number(array_sum($leadSourceArr[$key][$outcome]['total']), array('currency_symbol' => true)).$current_module_strings['LBL_OPP_THOUSANDS'].' '.$current_module_strings['LBL_OPPS_OUTCOME'].' '.$outcome_translation.'" url="index.php?module=Opportunities&action=index&lead_source='.$key.'&sales_stage='.urlencode($outcome).'&query=true&searchFormTab=advanced_search"/>'."\n";
                     }
                 }
                 $fileContents .= '          </dataRow>'."\n";
@@ -337,7 +337,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
             $i=0;
 
             foreach ($salesStages as $outcome=>$outcome_translation) {
-                $color = generate_graphcolor($outcome,$i);
+                $color = generate_graphcolor($outcome, $i);
                 $fileContents .= '          <mapping id="'.$outcome.'" name="'.$outcome_translation.'" color="'.$color.'"/>'."\n";
                 $i++;
             }
@@ -357,7 +357,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
 
             save_xml_file($cache_file_name, $fileContents);
         }
-        $return = create_chart('hBarF',$cache_file_name);
+        $return = create_chart('hBarF', $cache_file_name);
         return $return;
     }
 
@@ -388,7 +388,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
         if (!empty($tempx) && sizeof($tempx) > 0) {
             foreach ($tempx as $key) {
                 $datax[$key] = $app_list_strings['lead_source_dom'][$key];
-                array_push($selected_datax,$key);
+                array_push($selected_datax, $key);
             }
         } else {
             $datax = $app_list_strings['lead_source_dom'];
@@ -425,7 +425,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
             foreach ($user_id as $the_id) {
                 $id[] = "'".$the_id."'";
             }
-            $ids = join(",",$id);
+            $ids = join(",", $id);
             $where .= "opportunities.assigned_user_id IN ($ids) ";
         }
 
@@ -436,7 +436,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
             foreach ($datay as $key=>$value) {
                 $datayArr[] = "'".$key."'";
             }
-            $datayArr = join(",",$datayArr);
+            $datayArr = join(",", $datayArr);
             $where .= "AND opportunities.lead_source IN	($datayArr) ";
         }
         $query = "SELECT lead_source,sales_stage,sum(amount_usdollar/1000) as total,count(*) as opp_count FROM opportunities ";

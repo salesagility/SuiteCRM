@@ -283,7 +283,7 @@ class PackageManagerComm
     function getTermsAndConditions()
     {
         PackageManagerComm::initialize(false);
-        return $GLOBALS['SugarDepot']->call('depotTermsAndConditions',array());
+        return $GLOBALS['SugarDepot']->call('depotTermsAndConditions', array());
     }
 
     /**

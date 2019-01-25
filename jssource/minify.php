@@ -109,22 +109,22 @@ if (isset($_REQUEST['root_directory'])) {
     if (!empty($argv[2])) {
         if ($argv[2] == '-r') {
             //replace the compressed scripts with the backed up version
-            reverseScripts("$from/jssource/src_files",$from);
+            reverseScripts("$from/jssource/src_files", $from);
         } elseif ($argv[2] == '-m') {
             //replace the scripts, and then minify the scripts again
-            reverseScripts("$from/jssource/src_files",$from);
-            BackUpAndCompressScriptFiles($from,"",false,true);
+            reverseScripts("$from/jssource/src_files", $from);
+            BackUpAndCompressScriptFiles($from, "", false, true);
         } elseif ($argv[2] == '-c') {
             //replace the scripts, concatenate the files, and then minify the scripts again
-            reverseScripts("$from/jssource/src_files",$from);
-            BackUpAndCompressScriptFiles($from,"",false,true);
-            ConcatenateFiles($from,true);
+            reverseScripts("$from/jssource/src_files", $from);
+            BackUpAndCompressScriptFiles($from, "", false, true);
+            ConcatenateFiles($from, true);
         } elseif ($argv[2] == '-mo') {
             //do not replace the scriptsjust minify the existing scripts again
-            BackUpAndCompressScriptFiles($from,"",false,true);
+            BackUpAndCompressScriptFiles($from, "", false, true);
         } elseif ($argv[2] == '-co') {
             //concatenate the files only
-            ConcatenateFiles($from,true);
+            ConcatenateFiles($from, true);
         } elseif ($argv[2] == '-?') {
             die("
     Usage : minify <root path> [[-r]|[-m]|[-c]]
@@ -159,6 +159,6 @@ if (isset($_REQUEST['root_directory'])) {
         }
 
         BackUpAndCompressScriptFiles($from, '', true, true);
-        ConcatenateFiles($from,true);
+        ConcatenateFiles($from, true);
     }
 }

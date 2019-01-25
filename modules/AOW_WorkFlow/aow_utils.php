@@ -125,7 +125,7 @@ function getModuleFields(
     }
 }
 
-function getRelModuleFields($module, $rel_field, $view='EditView',$value = '')
+function getRelModuleFields($module, $rel_field, $view='EditView', $value = '')
 {
     global $beanList;
 
@@ -198,7 +198,7 @@ function getModuleTreeData($module)
                 $rel_module_label = isset($app_list_strings['moduleList'][$rel_module]) ? $app_list_strings['moduleList'][$rel_module] : $rel_module;
                 if (isset($arr['vname']) && $arr['vname'] != '') {
                     $label = $rel_module_label . ' : ' . translate($arr['vname'], $mod->module_dir);
-                    $module_label = trim(translate($arr['vname'],$mod->module_dir),':');
+                    $module_label = trim(translate($arr['vname'], $mod->module_dir), ':');
                 } else {
                     $label = $rel_module_label . ' : '. $name;
                     $module_label = $name;
@@ -210,8 +210,8 @@ function getModuleTreeData($module)
                     }
                 }
             } //End loop.
-            uasort($sort_fields,function ($a,$b) {
-                return strcmp($a['label'],$b['label']);
+            uasort($sort_fields, function ($a, $b) {
+                return strcmp($a['label'], $b['label']);
             });
 
             $fields = array_merge((array)$fields, (array)$sort_fields);
@@ -221,7 +221,7 @@ function getModuleTreeData($module)
     return json_encode($fields);
 }
 
-function getModuleRelationships($module, $view='EditView',$value = '')
+function getModuleRelationships($module, $view='EditView', $value = '')
 {
     global $beanList, $app_list_strings;
 
@@ -244,10 +244,10 @@ function getModuleRelationships($module, $view='EditView',$value = '')
                         $rel_module = $mod->$name->getRelatedModuleName();
                     }
                 }
-                if (!in_array($rel_module,$invalid_modules)) {
+                if (!in_array($rel_module, $invalid_modules)) {
                     $relModuleName = isset($app_list_strings['moduleList'][$rel_module]) ? $app_list_strings['moduleList'][$rel_module] : $rel_module;
                     if (isset($arr['vname']) && $arr['vname'] != '') {
-                        $sort_fields[$name] = $relModuleName.' : '.translate($arr['vname'],$mod->module_dir);
+                        $sort_fields[$name] = $relModuleName.' : '.translate($arr['vname'], $mod->module_dir);
                     } else {
                         $sort_fields[$name] = $relModuleName.' : '. $name;
                     }
@@ -330,7 +330,7 @@ function getModuleField(
     global $beanList;
 
     // use the mod_strings for this module
-    $mod_strings = return_module_language($current_language,$module);
+    $mod_strings = return_module_language($current_language, $module);
 
     // if aor condition
     if (strstr($aow_field, 'aor_conditions_value') !== false) {
@@ -529,7 +529,7 @@ function getModuleField(
     }
 
     // fill in function return values
-    if ( !in_array($fieldname,array('email1','email2')) ) {
+    if ( !in_array($fieldname, array('email1','email2')) ) {
         if (!empty($fieldlist[$fieldname]['function']['returns']) && $fieldlist[$fieldname]['function']['returns'] == 'html') {
             $function = $fieldlist[$fieldname]['function']['name'];
             // include various functions required in the various vardefs
@@ -564,7 +564,7 @@ function getModuleField(
 
         require_once("include/TemplateHandler/TemplateHandler.php");
         $template_handler = new TemplateHandler();
-        $quicksearch_js = $template_handler->createQuickSearchCode($fieldlist,$fieldlist,$view);
+        $quicksearch_js = $template_handler->createQuickSearchCode($fieldlist, $fieldlist, $view);
         $quicksearch_js = str_replace($fieldname, $aow_field.'_display', $quicksearch_js);
         $quicksearch_js = str_replace($fieldlist[$fieldname]['id_name'], $aow_field, $quicksearch_js);
 
@@ -722,7 +722,7 @@ function getDateField($module, $aow_field, $view, $value = null, $field_option =
     return $field;
 }
 
-function getDateFields($module, $view='EditView',$value = '', $field_option = true)
+function getDateFields($module, $view='EditView', $value = '', $field_option = true)
 {
     global $beanList, $app_list_strings;
 
@@ -738,7 +738,7 @@ function getDateFields($module, $view='EditView',$value = '', $field_option = tr
             foreach ($mod->field_defs as $name => $arr) {
                 if ($arr['type'] == 'date' || $arr['type'] == 'datetime' || $arr['type'] == 'datetimecombo') {
                     if (isset($arr['vname']) && $arr['vname'] != '') {
-                        $fields[$name] = translate($arr['vname'],$mod->module_dir);
+                        $fields[$name] = translate($arr['vname'], $mod->module_dir);
                     } else {
                         $fields[$name] = $name;
                     }
@@ -759,12 +759,12 @@ function getAssignField($aow_field, $view, $value)
 
     $value = json_decode(html_entity_decode_utf8($value), true);
 
-    $roles = get_bean_select_array(true, 'ACLRole','name', '','name',true);
+    $roles = get_bean_select_array(true, 'ACLRole', 'name', '', 'name', true);
 
     if (!file_exists('modules/SecurityGroups/SecurityGroup.php')) {
         unset($app_list_strings['aow_assign_options']['security_group']);
     } else {
-        $securityGroups = get_bean_select_array(true, 'SecurityGroup','name', '','name',true);
+        $securityGroups = get_bean_select_array(true, 'SecurityGroup', 'name', '', 'name', true);
     }
 
     $field = '';
@@ -898,7 +898,7 @@ function getRelatedEmailableFields($module)
                 if (isset($field['link'])) {
                     $checked_link[] = $field['link'];
                 }
-                if (!isset($field['module']) || !in_array($field['module'],$emailableModules) || (isset($field['dbType']) && $field['dbType'] == "id")) {
+                if (!isset($field['module']) || !in_array($field['module'], $emailableModules) || (isset($field['dbType']) && $field['dbType'] == "id")) {
                     continue;
                 }
                 $relEmailFields[$field['name']] = translate($field['module']) . ": "
@@ -906,7 +906,7 @@ function getRelatedEmailableFields($module)
             }
 
             foreach ($mod->get_linked_fields() as $field) {
-                if (!in_array($field['name'],$checked_link) && !in_array($field['relationship'],$checked_link)) {
+                if (!in_array($field['name'], $checked_link) && !in_array($field['relationship'], $checked_link)) {
                     if (isset($field['module']) && $field['module'] != '') {
                         $rel_module = $field['module'];
                     } else {
@@ -916,7 +916,7 @@ function getRelatedEmailableFields($module)
                         }
                     }
 
-                    if (in_array($rel_module,$emailableModules)) {
+                    if (in_array($rel_module, $emailableModules)) {
                         if (isset($field['vname']) && $field['vname'] != '') {
                             $relEmailFields[$field['name']] = $app_list_strings['moduleList'][$rel_module] . ' : ' . translate($field['vname'], $mod->module_dir);
                         } else {
@@ -951,7 +951,7 @@ function fixUpFormatting($module, $field, $value)
                 $value = '';
                 break;
             }
-            if ( ! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/',$value) ) {
+            if ( ! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/', $value) ) {
                 // This appears to be formatted in user date/time
                 $value = $timedate->to_db($value);
             }
@@ -964,7 +964,7 @@ function fixUpFormatting($module, $field, $value)
                 $value = '';
                 break;
             }
-            if ( ! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/',$value) ) {
+            if ( ! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $value) ) {
                 // This date appears to be formatted in the user's format
                 $value = $timedate->to_db_date($value, false);
             }
@@ -977,7 +977,7 @@ function fixUpFormatting($module, $field, $value)
                 $value = '';
                 break;
             }
-            if ( preg_match('/(am|pm)/i',$value) ) {
+            if ( preg_match('/(am|pm)/i', $value) ) {
                 // This time appears to be formatted in the user's format
                 $value = $timedate->fromUserTime($value)->format(TimeDate::DB_TIME_FORMAT);
             }

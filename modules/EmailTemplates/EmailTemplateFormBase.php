@@ -56,7 +56,7 @@ class EmailTemplateFormBase
     {
     }
 
-    function getFormBody($prefix, $mod='',$formname='', $size='30')
+    function getFormBody($prefix, $mod='', $formname='', $size='30')
     {
         global $mod_strings;
 
@@ -141,7 +141,7 @@ EOQ;
     }
 
 
-    function handleSave($prefix,$redirect=true, $useRequired=false, $useSiteURL = false, $entryPoint = 'download', $useUploadFolder = false)
+    function handleSave($prefix, $redirect=true, $useRequired=false, $useSiteURL = false, $entryPoint = 'download', $useUploadFolder = false)
     {
         require_once('include/formbase.php');
         require_once('include/upload_file.php');
@@ -284,10 +284,10 @@ EOQ;
                 $GLOBALS['log']->debug("Image {$file['name']} has already been processed.");
             }
 
-            $i=preg_replace("/email_attachment(.+)/",'$1',$key);
+            $i=preg_replace("/email_attachment(.+)/", '$1', $key);
             $upload_file = new UploadFile($key);
 
-            if (isset($_FILES[$key]) && $upload_file->confirm_upload() && preg_match("/^email_attachment/",$key)) {
+            if (isset($_FILES[$key]) && $upload_file->confirm_upload() && preg_match("/^email_attachment/", $key)) {
                 $note->filename = $upload_file->get_stored_file_name();
                 $note->file = $upload_file;
                 $note->name = $mod_strings['LBL_EMAIL_ATTACHMENT'].': '.$note->file->original_file_name;

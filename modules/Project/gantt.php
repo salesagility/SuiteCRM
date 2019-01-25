@@ -100,7 +100,7 @@ class Gantt
                 echo '</tr><tr>';
 
                 foreach ($days as $d) {
-                    echo '<td class="inner_td"><div class="cell_width">'.$this->substr_unicode($d,0,1).'</div></td>';//First letter of the days name shown
+                    echo '<td class="inner_td"><div class="cell_width">'.$this->substr_unicode($d, 0, 1).'</div></td>';//First letter of the days name shown
                 }
                 echo '</tr></table></td>';//end table containing the days in each month
                 $m++;

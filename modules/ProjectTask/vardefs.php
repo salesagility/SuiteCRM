@@ -498,6 +498,6 @@ array (
 ),
 );
 
-VardefManager::createVardef('ProjectTask','ProjectTask', array( 'security_groups',
+VardefManager::createVardef('ProjectTask', 'ProjectTask', array( 'security_groups',
 ));
 

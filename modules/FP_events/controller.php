@@ -400,7 +400,7 @@ class FP_eventsController extends SugarController
 
                 //get attachments
                 $attachmentBean = new Note();
-                $attachment_list = $attachmentBean->get_full_list('',"parent_type = 'Emails' AND parent_id = '".$event->invite_templates."'");
+                $attachment_list = $attachmentBean->get_full_list('', "parent_type = 'Emails' AND parent_id = '".$event->invite_templates."'");
 
                 $attachments = array();
 
@@ -457,7 +457,7 @@ class FP_eventsController extends SugarController
 
                 //get attachments
                 $attachmentBean = new Note();
-                $attachment_list = $attachmentBean->get_full_list('',"parent_type = 'Emails' AND parent_id = '".$event->invite_templates."'");
+                $attachment_list = $attachmentBean->get_full_list('', "parent_type = 'Emails' AND parent_id = '".$event->invite_templates."'");
 
                 $attachments = array();
 
@@ -513,7 +513,7 @@ class FP_eventsController extends SugarController
 
                 //get attachments
                 $attachmentBean = new Note();
-                $attachment_list = $attachmentBean->get_full_list('',"parent_type = 'Emails' AND parent_id = '".$event->invite_templates."'");
+                $attachment_list = $attachmentBean->get_full_list('', "parent_type = 'Emails' AND parent_id = '".$event->invite_templates."'");
 
                 $attachments = array();
 

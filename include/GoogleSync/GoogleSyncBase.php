@@ -761,7 +761,7 @@ class GoogleSyncBase
         $start = $event_remote->getStart();
         if (!$start) {
             throw new GoogleSyncException(
-                'GoogleSyncBase is trying to get "start" as Google_Service_Calendar_EventDateTime but it is not set', 
+                'GoogleSyncBase is trying to get "start" as Google_Service_Calendar_EventDateTime but it is not set',
                 GoogleSyncException::NO_REMOVE_EVENT_START_IS_NOT_SET);
         }
         if (!$start instanceof Google_Service_Calendar_EventDateTime) {
@@ -772,7 +772,7 @@ class GoogleSyncBase
         $starttime = strtotime($start->getDateTime());
         $endtime = strtotime($event_remote->getEnd()->getDateTime());
         if (!$starttime || !$endtime) { // Verify we have valid time objects (All day events will fail here.)
-            throw new GoogleSyncException('Unable to retrieve times from Google Event', 
+            throw new GoogleSyncException('Unable to retrieve times from Google Event',
                GoogleSyncException::GOOGLE_RECORD_PARSE_FAILURE);
         }
         $diff = abs($starttime - $endtime);

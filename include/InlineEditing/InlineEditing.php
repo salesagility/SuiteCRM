@@ -46,7 +46,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
 {
     global $current_language, $app_strings, $app_list_strings, $current_user, $beanFiles, $beanList;
 
-    $bean = BeanFactory::getBean($module,$id);
+    $bean = BeanFactory::getBean($module, $id);
 
     if (!checkAccess($bean)) {
         return false;
@@ -140,7 +140,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         // Remove all the copyright comments
         $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', $contents);
         // remove extra wrong javascript which breaks auto complete on flexi relationship parent fields
-        $contents = preg_replace("/<script language=\"javascript\">if\(typeof sqs_objects == \'undefined\'\){var sqs_objects = new Array;}sqs_objects\[\'EditView_parent_name\'\].*?<\/script>/","",$contents);
+        $contents = preg_replace("/<script language=\"javascript\">if\(typeof sqs_objects == \'undefined\'\){var sqs_objects = new Array;}sqs_objects\[\'EditView_parent_name\'\].*?<\/script>/", "", $contents);
 
 
         if ($view == 'EditView' && ($vardef['type'] == 'relate' || $vardef['type'] == 'parent')) {
@@ -439,7 +439,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             }
             // create utc date (as it's utc in db)
             // use the calculated datetime_format
-            $datetime = DateTime::createFromFormat($datetime_format, $value,new DateTimeZone('UTC'));
+            $datetime = DateTime::createFromFormat($datetime_format, $value, new DateTimeZone('UTC'));
 
             $value = $datetime->format($datetime_format);
         }
@@ -502,10 +502,10 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
         }
 
         if ($vardef['ext2']) {
-            $value .= getFieldValueFromModule($fieldName,$vardef['ext2'],$record);
+            $value .= getFieldValueFromModule($fieldName, $vardef['ext2'], $record);
         } else {
             if (!empty($vardef['rname']) || $vardef['name'] == "related_doc_name") {
-                $value .= getFieldValueFromModule($fieldName,$vardef['module'],$record);
+                $value .= getFieldValueFromModule($fieldName, $vardef['module'], $record);
             } else {
                 $value .= $name;
             }

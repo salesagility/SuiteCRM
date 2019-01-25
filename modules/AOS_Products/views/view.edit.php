@@ -34,7 +34,7 @@ class AOS_ProductsViewEdit extends ViewEdit
         isset($this->bean->product_image) ? $image = $this->bean->product_image : $image = '';
 
 
-        $temp = str_replace($sugar_config['site_url'].'/'.$sugar_config['upload_dir'],"", $image);
+        $temp = str_replace($sugar_config['site_url'].'/'.$sugar_config['upload_dir'], "", $image);
         $html = '<span id=\'new_attachment\' style=\'display:';
         if (!empty($this->bean->product_image)) {
             $html .= 'none';
@@ -50,7 +50,7 @@ class AOS_ProductsViewEdit extends ViewEdit
 		<input type=\'button\' class=\'button\' value=\''.$app_strings['LBL_REMOVE'].'\' onclick=\'deleteProductImage();\' >
 		</span>';
 
-        $this->ss->assign('PRODUCT_IMAGE',$html);
+        $this->ss->assign('PRODUCT_IMAGE', $html);
         parent::display();
     }
 }

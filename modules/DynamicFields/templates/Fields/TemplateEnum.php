@@ -61,7 +61,7 @@ class TemplateEnum extends TemplateText
             'action' => 'action' ,
             'visibility_grid' => 'visibility_grid',
         ) ;
-        $this->vardef_map = array_merge ( $this->vardef_map , $this->localVardefMap ) ;
+        $this->vardef_map = array_merge ( $this->vardef_map, $this->localVardefMap ) ;
     }
 
     function populateFromPost()

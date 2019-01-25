@@ -116,13 +116,13 @@ class ImportController extends SugarController
             $import_map = $import_map->retrieve($_REQUEST['import_map_id'], false);
 
             if ($_REQUEST['publish'] == 'yes') {
-                $result = $import_map->mark_published($current_user->id,true);
+                $result = $import_map->mark_published($current_user->id, true);
                 if (!$result) {
                     $results['message'] = $mod_strings['LBL_ERROR_UNABLE_TO_PUBLISH'];
                 }
             } elseif ( $_REQUEST['publish'] == 'no') {
                 // if you don't own this importmap, you do now, unless you have a map by the same name
-                $result = $import_map->mark_published($current_user->id,false);
+                $result = $import_map->mark_published($current_user->id, false);
                 if (!$result) {
                     $results['message'] = $mod_strings['LBL_ERROR_UNABLE_TO_UNPUBLISH'];
                 }
@@ -152,10 +152,10 @@ class ImportController extends SugarController
         $rows = $v->getSampleSet($importFile);
 
         $ss = new Sugar_Smarty();
-        $ss->assign("SAMPLE_ROWS",$rows);
-        $ss->assign("HAS_HEADER",$hasHeader);
-        $ss->assign("column_count",$v->getMaxColumnsInSampleSet($rows));
-        $ss->assign("MOD",$mod_strings);
+        $ss->assign("SAMPLE_ROWS", $rows);
+        $ss->assign("HAS_HEADER", $hasHeader);
+        $ss->assign("column_count", $v->getMaxColumnsInSampleSet($rows));
+        $ss->assign("MOD", $mod_strings);
         $ss->display('modules/Import/tpls/confirm_table.tpl');
         sugar_cleanup(true);
     }
@@ -173,7 +173,7 @@ class ImportController extends SugarController
 
         $if = new ImportFile($tableFilename, ",", '"', false, false);
         $if->setHeaderRow($has_header);
-        $lv = new ImportListView($if,array('offset'=> $offset), $tableID);
+        $lv = new ImportListView($if, array('offset'=> $offset), $tableID);
         $lv->display(false);
         
         sugar_cleanup(true);
@@ -247,7 +247,7 @@ class ImportController extends SugarController
     
     function action_GetControl()
     {
-        echo getControl($_REQUEST['import_module'],$_REQUEST['field_name']);
+        echo getControl($_REQUEST['import_module'], $_REQUEST['field_name']);
         exit;
     }
 

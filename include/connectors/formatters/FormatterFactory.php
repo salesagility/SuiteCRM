@@ -70,7 +70,7 @@ class FormatterFactory
             }
 
             //split the wrapper name to find the path to the file.
-            $dir = str_replace('_','/',$formatter_name);
+            $dir = str_replace('_', '/', $formatter_name);
             $parts = explode("/", $dir);
             $file = $parts[count($parts)-1];
 

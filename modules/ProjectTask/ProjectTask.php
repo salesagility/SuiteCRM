@@ -210,7 +210,7 @@ class ProjectTask extends SugarBean
         $return_value = '';
 
         $query  = "SELECT name, assigned_user_id FROM {$this->table_name} WHERE id='{$depends_on_id}'";
-        $result = $this->db->query($query,true," Error filling in additional detail fields: ");
+        $result = $this->db->query($query, true, " Error filling in additional detail fields: ");
         $row = $this->db->fetchByAssoc($result);
         if ($row != null) {
             $this->depends_on_name_owner = $row['assigned_user_id'];
@@ -226,7 +226,7 @@ class ProjectTask extends SugarBean
         $return_value = '';
 
         $query  = "SELECT name, assigned_user_id FROM project WHERE id='{$project_id}'";
-        $result = $this->db->query($query,true," Error filling in additional detail fields: ");
+        $result = $this->db->query($query, true, " Error filling in additional detail fields: ");
         $row = $this->db->fetchByAssoc($result);
         if ($row != null) {
             //$this->parent_name_owner = $row['assigned_user_id'];
@@ -244,7 +244,7 @@ class ProjectTask extends SugarBean
         $return_value = '';
 
         $query  = "SELECT name, assigned_user_id FROM project WHERE id='{$parent_id}'";
-        $result = $this->db->query($query,true," Error filling in additional detail fields: ");
+        $result = $this->db->query($query, true, " Error filling in additional detail fields: ");
         $row = $this->db->fetchByAssoc($result);
         if ($row != null) {
             $this->parent_name_owner = $row['assigned_user_id'];
@@ -305,7 +305,7 @@ class ProjectTask extends SugarBean
         if ( !isset($task_fields["LAST_NAME"]) ) {
             $task_fields["LAST_NAME"] = '';
         }
-        $task_fields['CONTACT_NAME']= $locale->getLocaleFormattedName($task_fields["FIRST_NAME"],$task_fields["LAST_NAME"]);
+        $task_fields['CONTACT_NAME']= $locale->getLocaleFormattedName($task_fields["FIRST_NAME"], $task_fields["LAST_NAME"]);
         $task_fields['TITLE'] = '';
         if (!empty($task_fields['CONTACT_NAME'])) {
             $task_fields['TITLE'] .= $current_module_strings['LBL_LIST_CONTACT'].": ".$task_fields['CONTACT_NAME'];
@@ -336,7 +336,7 @@ class ProjectTask extends SugarBean
             else {
                 if (!empty($this->parent_type) && !empty($this->parent_id)) {
                     global $current_user;
-                    $parent_bean = BeanFactory::getBean($this->parent_type,$this->parent_id);
+                    $parent_bean = BeanFactory::getBean($this->parent_type, $this->parent_id);
                     if ($parent_bean !== false) {
                         $is_owner = $current_user->id == $parent_bean->assigned_user_id;
                     }

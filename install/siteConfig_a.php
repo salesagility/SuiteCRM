@@ -90,8 +90,8 @@ if ( is_file("config.php") ) {
             $language_values[] = $value;
         }
 
-        $_SESSION['language_keys'] = urlencode(implode(",",$language_keys));
-        $_SESSION['language_values'] = urlencode(implode(",",$language_values));
+        $_SESSION['language_keys'] = urlencode(implode(",", $language_keys));
+        $_SESSION['language_values'] = urlencode(implode(",", $language_values));
     }
 }
 

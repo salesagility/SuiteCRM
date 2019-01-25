@@ -80,12 +80,12 @@ class LayoutManager
     }
 
 
-    function setAttribute($key,$value)
+    function setAttribute($key, $value)
     {
         $this->defs[$key] = $value;
     }
 
-    function setAttributePtr($key,&$value)
+    function setAttributePtr($key, &$value)
     {
         $this->defs[$key] = $value;
     }
@@ -363,7 +363,7 @@ class LayoutManager
         //#27426
         $fieldDef = $this->getFieldDef($widget_def);
         if (!empty($fieldDef) &&  !empty($fieldDef['type']) && strtolower(trim($fieldDef['type'])) == 'multienum') {
-            $widget_def['fields']  = sugarArrayMerge($widget_def['fields'] , $fieldDef);
+            $widget_def['fields']  = sugarArrayMerge($widget_def['fields'], $fieldDef);
             $widget_def['fields']['module']  = $label;
         }
         //end

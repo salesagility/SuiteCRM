@@ -103,7 +103,7 @@ class ModuleBuilder
      * @param $module
      * @return mixed
      */
-    function &getPackageModule($package , $module)
+    function &getPackageModule($package, $module)
     {
         $this->getPackage ( $package ) ;
         $this->packages [ $package ]->getModule ( $module ) ;

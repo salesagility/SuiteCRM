@@ -321,7 +321,7 @@ class Call extends SugarBean
         $query = "SELECT ";
         $query .= "
 			calls.*,";
-        if ( preg_match("/calls_users\.user_id/",$where)) {
+        if ( preg_match("/calls_users\.user_id/", $where)) {
             $query .= "calls_users.required,
 				calls_users.accept_status,";
         }
@@ -332,19 +332,19 @@ class Call extends SugarBean
 
         // this line will help generate a GMT-metric to compare to a locale's timezone
 
-        if ( preg_match("/contacts/",$where)) {
+        if ( preg_match("/contacts/", $where)) {
             $query .= ", contacts.first_name, contacts.last_name";
             $query .= ", contacts.assigned_user_id contact_name_owner";
         }
         $query .= " FROM calls ";
 
-        if ( preg_match("/contacts/",$where)) {
+        if ( preg_match("/contacts/", $where)) {
             $query .=	"LEFT JOIN calls_contacts
 	                    ON calls.id=calls_contacts.call_id
 	                    LEFT JOIN contacts
 	                    ON calls_contacts.contact_id=contacts.id ";
         }
-        if ( preg_match('/calls_users\.user_id/',$where)) {
+        if ( preg_match('/calls_users\.user_id/', $where)) {
             $query .= "LEFT JOIN calls_users
 			ON calls.id=calls_users.call_id and calls_users.deleted=0 ";
         }
@@ -426,7 +426,7 @@ class Call extends SugarBean
         if (!empty($this->contact_id)) {
             $query  = "SELECT first_name, last_name FROM contacts ";
             $query .= "WHERE id='$this->contact_id' AND deleted=0";
-            $result = $this->db->limitQuery($query,0,1,true," Error filling in additional detail fields: ");
+            $result = $this->db->limitQuery($query, 0, 1, true, " Error filling in additional detail fields: ");
 
             // Get the contact name.
             $row = $this->db->fetchByAssoc($result);
@@ -458,7 +458,7 @@ class Call extends SugarBean
 
         global $app_list_strings;
         $parent_types = $app_list_strings['record_type_display'];
-        $disabled_parent_types = ACLController::disabledModuleList($parent_types,false, 'list');
+        $disabled_parent_types = ACLController::disabledModuleList($parent_types, false, 'list');
         foreach ($disabled_parent_types as $disabled_parent_type) {
             if ($disabled_parent_type != $this->parent_type) {
                 unset($parent_types[$disabled_parent_type]);
@@ -663,12 +663,12 @@ class Call extends SugarBean
     }
 
 
-    function set_accept_status(&$user,$status)
+    function set_accept_status(&$user, $status)
     {
         if ( $user->object_name == 'User') {
             $relate_values = array('user_id'=>$user->id,'call_id'=>$this->id);
             $data_values = array('accept_status'=>$status);
-            $this->set_relationship($this->rel_users_table, $relate_values, true, true,$data_values);
+            $this->set_relationship($this->rel_users_table, $relate_values, true, true, $data_values);
             global $current_user;
 
             if ( $this->update_vcal ) {
@@ -678,12 +678,12 @@ class Call extends SugarBean
             if ( $user->object_name == 'Contact') {
                 $relate_values = array('contact_id'=>$user->id,'call_id'=>$this->id);
                 $data_values = array('accept_status'=>$status);
-                $this->set_relationship($this->rel_contacts_table, $relate_values, true, true,$data_values);
+                $this->set_relationship($this->rel_contacts_table, $relate_values, true, true, $data_values);
             } else {
                 if ( $user->object_name == 'Lead') {
                     $relate_values = array('lead_id'=>$user->id,'call_id'=>$this->id);
                     $data_values = array('accept_status'=>$status);
-                    $this->set_relationship($this->rel_leads_table, $relate_values, true, true,$data_values);
+                    $this->set_relationship($this->rel_leads_table, $relate_values, true, true, $data_values);
                 }
             }
         }
@@ -768,7 +768,7 @@ class Call extends SugarBean
             else {
                 if (!empty($this->parent_type) && !empty($this->parent_id)) {
                     global $current_user;
-                    $parent_bean = BeanFactory::getBean($this->parent_type,$this->parent_id);
+                    $parent_bean = BeanFactory::getBean($this->parent_type, $this->parent_id);
                     if ($parent_bean !== false) {
                         $is_owner = $current_user->id == $parent_bean->assigned_user_id;
                     }
@@ -800,7 +800,7 @@ class Call extends SugarBean
             //contact_name_owner not being set for whatever reason so we need to figure this out
             else {
                 global $current_user;
-                $parent_bean = BeanFactory::getBean('Contacts',$this->contact_id);
+                $parent_bean = BeanFactory::getBean('Contacts', $this->contact_id);
                 if ($parent_bean !== false) {
                     $is_owner = $current_user->id == $parent_bean->assigned_user_id;
                 }

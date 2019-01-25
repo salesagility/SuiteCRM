@@ -152,7 +152,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
             $id_list = '('.substr($id_list, 1).')';
         }
 
-        SugarVCR::store($this->lvde->seed->module_dir,  $crmEmailsQuery);
+        SugarVCR::store($this->lvde->seed->module_dir, $crmEmailsQuery);
         if ($count != 0) {
             //NOW HANDLE SECONDARY QUERIES
             if (!empty($ret_array['secondary_select'])) {
@@ -271,7 +271,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
         $pageData['ordering'] = $order;
         $pageData['ordering']['sortOrder'] = $this->lvde->getReverseSortOrder($pageData['ordering']['sortOrder']);
         //get url parameters as an array
-        $pageData['queries'] = $this->lvde->callGenerateQueries($pageData['ordering']['sortOrder'], $offset, $prevOffset, $nextOffset,  $endOffset, $totalCounted);
+        $pageData['queries'] = $this->lvde->callGenerateQueries($pageData['ordering']['sortOrder'], $offset, $prevOffset, $nextOffset, $endOffset, $totalCounted);
         //join url parameters from array to a string
         $pageData['urls'] = $this->lvde->callGenerateURLS($pageData['queries']);
         $pageData['offsets'] = array( 'current'=>$offset, 'next'=>$nextOffset, 'prev'=>$prevOffset, 'end'=>$endOffset, 'total'=>$totalCount, 'totalCounted'=>$totalCounted);

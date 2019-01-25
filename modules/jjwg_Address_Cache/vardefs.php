@@ -67,5 +67,5 @@ $dictionary['jjwg_Address_Cache'] = array(
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('jjwg_Address_Cache','jjwg_Address_Cache', array('basic','assignable'));
+VardefManager::createVardef('jjwg_Address_Cache', 'jjwg_Address_Cache', array('basic','assignable'));
 

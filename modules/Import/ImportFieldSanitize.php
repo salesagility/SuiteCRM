@@ -108,7 +108,7 @@ class ImportFieldSanitize
         
         $field = $sfh::getSugarField(ucfirst($name));
         if ( $field instanceof SugarFieldBase ) {
-            $value = $field->importSanitize($value,$vardef,$focus,$this);
+            $value = $field->importSanitize($value, $vardef, $focus, $this);
         }
         
         return $value;
@@ -164,7 +164,7 @@ class ImportFieldSanitize
             $sea = new SugarEmailAddress;
         }
         
-        if ( !empty($value) && !preg_match($sea->regex,$value) ) {
+        if ( !empty($value) && !preg_match($sea->regex, $value) ) {
             return false;
         }
 
@@ -193,7 +193,7 @@ class ImportFieldSanitize
 
 
         if ( !empty($value) && strtolower($value) != "all" ) {
-            $theList   = explode(",",$value);
+            $theList   = explode(",", $value);
             $isValid   = true;
             $bad_names = array();
             foreach ($theList as $eachItem) {

@@ -66,7 +66,7 @@ class ViewSearchView extends ViewListView
         global $mod_strings;
         
         return array(
-           translate('LBL_MODULE_NAME','Administration'),
+           translate('LBL_MODULE_NAME', 'Administration'),
            ModuleBuilderController::getModuleTitle(),
            );
     }
@@ -81,7 +81,7 @@ class ViewSearchView extends ViewListView
         ) {
         $packageName = (isset ( $_REQUEST [ 'view_package' ] )) ? $_REQUEST [ 'view_package' ] : '' ;
         require_once 'modules/ModuleBuilder/parsers/ParserFactory.php' ;
-        $parser = ParserFactory::getParser ( $this->editLayout , $this->editModule, $packageName ) ;
+        $parser = ParserFactory::getParser ( $this->editLayout, $this->editModule, $packageName ) ;
 
         $smarty = parent::constructSmarty ( $parser ) ;
         $smarty->assign ( 'action', 'searchViewSave' ) ;

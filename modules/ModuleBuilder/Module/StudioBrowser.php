@@ -40,9 +40,9 @@
 
 require_once 'modules/ModuleBuilder/Module/StudioModuleFactory.php' ;
 
-function cmp($a,$b)
+function cmp($a, $b)
 {
-    return strcasecmp($a,$b);
+    return strcasecmp($a, $b);
 }
 
 class StudioBrowser
@@ -84,7 +84,7 @@ class StudioBrowser
         foreach ($this->modules as $module) {
             $nodes[$module->name] = $module->getNodes();
         }
-        uksort($nodes,'cmp'); // bug 15103 - order is important - this array is later looped over by foreach to generate the module list
+        uksort($nodes, 'cmp'); // bug 15103 - order is important - this array is later looped over by foreach to generate the module list
         return $nodes;
     }
 }
