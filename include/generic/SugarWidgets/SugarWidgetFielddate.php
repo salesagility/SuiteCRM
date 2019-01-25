@@ -57,7 +57,7 @@ class SugarWidgetFieldDate extends SugarWidgetFieldDateTime
             }
         }
         $content = $this->displayListPlain($layout_def);
-		return $content;
+        return $content;
     }
 
     function queryFilterBefore($layout_def)
@@ -91,26 +91,26 @@ class SugarWidgetFieldDate extends SugarWidgetFieldDateTime
             $this->queryDateOp($column, $end, "<=", "date").")\n";
     }
 
-	function queryFilterTP_yesterday($layout_def)
-	{
-		global $timedate;
+    function queryFilterTP_yesterday($layout_def)
+    {
+        global $timedate;
         $layout_def['input_name0'] = $timedate->asDbDate($timedate->getNow(true)->get("-1 day"));
         return $this->queryFilterOn($layout_def);
-	}
+    }
 
-	function queryFilterTP_today($layout_def)
-	{
-		global $timedate;
+    function queryFilterTP_today($layout_def)
+    {
+        global $timedate;
         $layout_def['input_name0'] = $timedate->asDbDate($timedate->getNow(true));
         return $this->queryFilterOn($layout_def);
-	}
+    }
 
-	function queryFilterTP_tomorrow(& $layout_def)
-	{
-		global $timedate;
-		$layout_def['input_name0'] = $timedate->asDbDate($timedate->getNow(true)->get("+1 day"));
+    function queryFilterTP_tomorrow(& $layout_def)
+    {
+        global $timedate;
+        $layout_def['input_name0'] = $timedate->asDbDate($timedate->getNow(true)->get("+1 day"));
         return $this->queryFilterOn($layout_def);
-	}
+    }
 
     protected function queryMonth($layout_def, $month)
     {

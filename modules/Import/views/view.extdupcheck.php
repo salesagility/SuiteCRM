@@ -56,10 +56,10 @@ class ImportViewExtdupcheck extends ImportView
 {
     protected $pageTitleKey = 'LBL_STEP_DUP_TITLE';
 
- 	/**
+    /**
      * @see SugarView::display()
      */
- 	public function display()
+    public function display()
     {
         global $mod_strings, $app_strings, $current_user;
         global $sugar_config;
@@ -78,8 +78,8 @@ class ImportViewExtdupcheck extends ImportView
 
         $dupe_disabled =  array();
 
-        foreach($dupe_indexes as $dk=>$dv){
-                $dupe_disabled[] =  array("dupeVal" => $dk, "label" => $dv);
+        foreach ($dupe_indexes as $dk=>$dv) {
+            $dupe_disabled[] =  array("dupeVal" => $dk, "label" => $dv);
         }
 
 

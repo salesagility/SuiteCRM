@@ -50,18 +50,17 @@ class SugarModule
 
     public static function get(
         $moduleName
-        )
-    {
-        if ( !isset(self::$_instances[$moduleName]) )
+        ) {
+        if ( !isset(self::$_instances[$moduleName]) ) {
             self::$_instances[$moduleName] = new SugarModule($moduleName);
+        }
 
         return self::$_instances[$moduleName];
     }
 
     public function __construct(
         $moduleName
-        )
-    {
+        ) {
         $this->_moduleName = $moduleName;
     }
 
@@ -73,12 +72,12 @@ class SugarModule
      */
     public function moduleImplements(
         $template
-        )
-    {
+        ) {
         $focus = self::loadBean();
 
-        if ( !$focus )
+        if ( !$focus ) {
             return false;
+        }
 
         return is_a($focus,$template);
     }
@@ -112,12 +111,10 @@ class SugarModule
                 }
                 require_once($beanFiles[$bean]);
                 $focus = new $bean;
-            }
-            else {
+            } else {
                 return false;
             }
-        }
-        else {
+        } else {
             return false;
         }
 

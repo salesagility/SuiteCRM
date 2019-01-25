@@ -61,7 +61,6 @@ class UsersController extends SugarController
                 SugarApplication::redirect('index.php');
             } else {
                 SugarApplication::redirect("index.php?module=Users&record=" . $_REQUEST['record'] . "&action=DetailView"); //bug 48170]
-
             }
         }
     }

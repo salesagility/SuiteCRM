@@ -71,9 +71,9 @@ class GoogleSyncHelper
             return false;
         }
         if (empty($meeting) && $event->status !== 'cancelled' && $event->getStart()->getDateTime() !== null) { // We only pull if the Google Event is not deleted/cancelled and not an all day event.
-                return "pull";
+            return "pull";
         } elseif (empty($event) && $meeting->deleted == '0') {
-                return "push";
+            return "push";
         }
         return "skip";
     }
@@ -133,18 +133,18 @@ class GoogleSyncHelper
         return "push";
     }
 
-     /**
-     * Helper method for GoogleSync::pushPullSkip.
-     * 
-     * Takes two calendar events and the timeArray from getTimeStrings, and returns bool (should we skip this record).
-     * 
-     * @param Meeting $meeting Meeting Bean
-     * @param \Google_Service_Calendar_Event $event Google_Service_Calendar_Event Object
-     * @param array $timeArray from getTimeStrings
-     * @param array $syncedList from GoogleSyncBase Class
-     * 
-     * @return bool should we skip this record
-     */
+    /**
+    * Helper method for GoogleSync::pushPullSkip.
+    * 
+    * Takes two calendar events and the timeArray from getTimeStrings, and returns bool (should we skip this record).
+    * 
+    * @param Meeting $meeting Meeting Bean
+    * @param \Google_Service_Calendar_Event $event Google_Service_Calendar_Event Object
+    * @param array $timeArray from getTimeStrings
+    * @param array $syncedList from GoogleSyncBase Class
+    * 
+    * @return bool should we skip this record
+    */
     public function isSkippable(Meeting $meeting, Google_Service_Calendar_Event $event, array $timeArray, array $syncedList)
     {
         $ret = false;

@@ -97,7 +97,6 @@ class ListLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         $this->_fielddefs = $this->implementation->getFielddefs();
         $this->_standardizeFieldLabels($this->_fielddefs);
         $this->_viewdefs = array_change_key_case($this->implementation->getViewdefs()); // force to lower case so don't have problems with case mismatches later
-
     }
 
     /**
@@ -252,7 +251,6 @@ class ListLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                     }
                 }
             }
-
         }
 
         //Bug 32520. We need to dissalow currency_id fields on list views.
@@ -328,7 +326,7 @@ class ListLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                 //Check if the field was previously on the layout
                 if (isset ($this->_viewdefs[$fieldname])) {
                     $newViewdefs [$fieldname] = $this->_viewdefs[$fieldname];
-                    // print_r($this->_viewdefs[ $fieldname ]);
+                // print_r($this->_viewdefs[ $fieldname ]);
                 } //Next check if the original view def contained it
                 else {
                     if (isset($originalViewDefs[$fieldname])) {
@@ -481,5 +479,4 @@ class ListLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
             'currency_format' => true
         ));
     }
-
 }

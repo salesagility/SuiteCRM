@@ -55,5 +55,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SearchUserFriendlyException extends SearchException
 {
-
 }

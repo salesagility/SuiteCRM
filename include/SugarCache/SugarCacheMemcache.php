@@ -75,8 +75,9 @@ class SugarCacheMemcache extends SugarCacheAbstract
     {
         if ( extension_loaded('memcache')
                 && empty($GLOBALS['sugar_config']['external_cache_disabled_memcache'])
-                && $this->_getMemcacheObject() )
+                && $this->_getMemcacheObject() ) {
             return true;
+        }
 
         return false;
     }
@@ -102,7 +103,7 @@ class SugarCacheMemcache extends SugarCacheAbstract
             if ( !@$this->_memcache->connect($this->_host,$this->_port) ) {
                 return false;
             }
-            if($config->get('external_cache.memcache.disable_compression', false)) {
+            if ($config->get('external_cache.memcache.disable_compression', false)) {
                 $this->_memcache->setCompressThreshold($config->get('external_cache.memcache.min_compression', $this->min_compress));
             } else {
                 $this->_memcache->setCompressThreshold(0);
@@ -118,8 +119,7 @@ class SugarCacheMemcache extends SugarCacheAbstract
     protected function _setExternal(
         $key,
         $value
-        )
-    {
+        ) {
         $this->_getMemcacheObject()->set($key, $value, 0, $this->_expireTimeout);
     }
 
@@ -128,8 +128,7 @@ class SugarCacheMemcache extends SugarCacheAbstract
      */
     protected function _getExternal(
         $key
-        )
-    {
+        ) {
         $returnValue = $this->_getMemcacheObject()->get($key);
         if ( $returnValue === false ) {
             return null;
@@ -143,8 +142,7 @@ class SugarCacheMemcache extends SugarCacheAbstract
      */
     protected function _clearExternal(
         $key
-        )
-    {
+        ) {
         $this->_getMemcacheObject()->delete($key);
     }
 

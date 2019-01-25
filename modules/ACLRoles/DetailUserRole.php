@@ -59,23 +59,23 @@ if ( !is_admin($focus) ) {
     $categories = ACLAction::getUserActions($_REQUEST['record'],true);
     
     //clear out any removed tabs from user display
-    if(!$GLOBALS['current_user']->isAdminForModule('Users')){
+    if (!$GLOBALS['current_user']->isAdminForModule('Users')) {
         $tabs = $focus->getPreference('display_tabs');
         global $modInvisList;
-        if(!empty($tabs)){
-            foreach($categories as $key=>$value){
-                if(!in_array($key, $tabs) &&  !in_array($key, $modInvisList) ){
+        if (!empty($tabs)) {
+            foreach ($categories as $key=>$value) {
+                if (!in_array($key, $tabs) &&  !in_array($key, $modInvisList) ) {
                     unset($categories[$key]);
-                    
                 }
             }
-            
         }
     }
     
     $names = array();
     $names = ACLAction::setupCategoriesMatrix($categories);
-    if(!empty($names))$tdwidth = 100 / sizeof($names);
+    if (!empty($names)) {
+        $tdwidth = 100 / sizeof($names);
+    }
     $sugar_smarty->assign('APP', $app_list_strings);
     $sugar_smarty->assign('CATEGORIES', $categories);
     $sugar_smarty->assign('TDWIDTH', $tdwidth);

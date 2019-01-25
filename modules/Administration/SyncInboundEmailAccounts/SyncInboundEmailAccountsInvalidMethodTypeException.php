@@ -42,4 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class SyncInboundEmailAccountsInvalidMethodTypeException extends Exception {}
+class SyncInboundEmailAccountsInvalidMethodTypeException extends Exception
+{
+}

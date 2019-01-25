@@ -84,8 +84,8 @@ $GLOBALS['log']->fatal('TOTAL TIME .....'.$_SESSION['totalUpgradeTime']);
 
 
  if (!empty($response)) {
-    $json = getJSONobj();
-	print $json->encode($response);
+     $json = getJSONobj();
+     print $json->encode($response);
  }
 
 sugar_cleanup();

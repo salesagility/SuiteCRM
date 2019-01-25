@@ -122,7 +122,7 @@ class SearchResults
                 // if a search found a bean but suitecrm does not, it could happens 
                 // maybe the bean is deleted but elsasticsearch is not re-indexing yet.
                 // so at this point we trying to rebuild the index and try again to get bean:
-                if (!$obj) {                    
+                if (!$obj) {
                     ElasticSearch\ElasticSearchIndexer::repairElasticsearchIndex();
                     $obj = BeanFactory::getBean($module, $bean);
                 }

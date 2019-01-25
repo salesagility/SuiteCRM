@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetFieldURL extends SugarWidgetFieldVarchar
 {
- 	/* Display item as link
+    /* Display item as link
      * @param array $layout_def definition of field which we want to display as link
      * @return string html code
      */
@@ -53,5 +53,4 @@ class SugarWidgetFieldURL extends SugarWidgetFieldVarchar
         $urlValue = trim($this->_get_list_value($layout_def));
         return '<a target="_blank" href="' . $urlValue . '">' . $urlValue . "</a>";
     }
-    
 }

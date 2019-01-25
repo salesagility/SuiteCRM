@@ -204,8 +204,6 @@ class Contact extends Person implements EmailInterface
         }
         $custom_join = $this->getCustomJoin();
         $query .= $custom_join['join'];
-
-
     }
 
     function listviewACLHelper()
@@ -220,7 +218,6 @@ class Contact extends Person implements EmailInterface
             $array_assign['ACCOUNT'] = 'a';
         } else {
             $array_assign['ACCOUNT'] = 'span';
-
         }
 
         return $array_assign;
@@ -242,7 +239,6 @@ class Contact extends Person implements EmailInterface
         if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'ContactAddressPopup') {
             return $this->address_popup_create_new_list_query($order_by, $where, $filter, $params, $show_deleted,
                 $join_type, $return_array, $parentbean, $singleSelect, $ifListForExport);
-
         } else {
             //any other action goes to parent function in sugarbean
             if (strpos($order_by, 'sync_contact') !== false) {
@@ -254,8 +250,6 @@ class Contact extends Person implements EmailInterface
             return parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type,
                 $return_array, $parentbean, $singleSelect, $ifListForExport);
         }
-
-
     }
 
 
@@ -307,7 +301,7 @@ class Contact extends Person implements EmailInterface
         $where_auto = '1=1';
         if ($show_deleted == 0) {
             $where_auto = " $this->table_name.deleted=0 ";
-            //$where_auto .= " AND accounts.deleted=0  ";
+        //$where_auto .= " AND accounts.deleted=0  ";
         } elseif ($show_deleted == 1) {
             $where_auto = " $this->table_name.deleted=1 ";
         }
@@ -334,7 +328,6 @@ class Contact extends Person implements EmailInterface
         }
 
         return $ret_array['select'] . $ret_array['from'] . $ret_array['where'] . $ret_array['order_by'];
-
     }
 
 
@@ -454,15 +447,14 @@ class Contact extends Person implements EmailInterface
         }
         // Set campaign name if there is a campaign id
         if (!empty($this->campaign_id)) {
-
             $camp = new Campaign();
             $where = "campaigns.id='{$this->campaign_id}'";
             $campaign_list = $camp->get_full_list("campaigns.name", $where, true);
             if (!empty($campaign_list) && !empty($campaign_list[0]->name)) {
                 $this->campaign_name = $campaign_list[0]->name;
             }
-		}
-	}
+        }
+    }
 
     /**
      * loads the contacts_users relationship to populate a checkbox
@@ -475,13 +467,13 @@ class Contact extends Person implements EmailInterface
 
         $this->load_relationship("user_sync");
 
-        if(!isset($this->user_sync)) {
+        if (!isset($this->user_sync)) {
             $GLOBALS['log']->fatal('Contact::$user_sync is not set');
             $beanIDs = null;
-        } elseif(!is_object($this->user_sync)) {
+        } elseif (!is_object($this->user_sync)) {
             $GLOBALS['log']->fatal('Contact::$user_sync is not an object');
             $beanIDs = null;
-        } elseif(!method_exists($this->user_sync, 'get')) {
+        } elseif (!method_exists($this->user_sync, 'get')) {
             $GLOBALS['log']->fatal('Contact::$user_sync::get() is not a function');
             $beanIDs = null;
         } else {
@@ -495,7 +487,6 @@ class Contact extends Person implements EmailInterface
 
     function get_list_view_data($filter_fields = array())
     {
-
         $temp_array = parent::get_list_view_data();
 
         if ($filter_fields && !empty($filter_fields['sync_contact'])) {
@@ -616,7 +607,6 @@ class Contact extends Person implements EmailInterface
 
         // cache this object since we'll be reusing it a bunch
         if (!($focus_user instanceof User)) {
-
             $focus_user = new User();
         }
 
@@ -633,11 +623,11 @@ class Contact extends Person implements EmailInterface
             $sql = "SELECT id FROM users WHERE deleted=0 AND is_group=0 AND portal_only=0";
             $result = $this->db->query($sql);
             while ($hash = $this->db->fetchByAssoc($result)) {
-                if(!isset($this->user_sync)) {
+                if (!isset($this->user_sync)) {
                     $GLOBALS['log']->fatal('Contact::$user_sync is not set');
-                } elseif(!is_object($this->user_sync)) {
+                } elseif (!is_object($this->user_sync)) {
                     $GLOBALS['log']->fatal('Contact::$user_sync is not an object');
-                } elseif(!method_exists($this->user_sync, 'add')) {
+                } elseif (!method_exists($this->user_sync, 'add')) {
                     $GLOBALS['log']->fatal('Contact::$user_sync::add() is not a function');
                 } else {
                     $this->user_sync->add($hash['id']);
@@ -650,11 +640,11 @@ class Contact extends Person implements EmailInterface
                     || $focus_user->retrieve($eachItem)
                 ) {
                     // it is a user, add user
-                    if(!isset($this->user_sync)) {
+                    if (!isset($this->user_sync)) {
                         $GLOBALS['log']->fatal('Contact::$user_sync is not set');
-                    } elseif(!is_object($this->user_sync)) {
+                    } elseif (!is_object($this->user_sync)) {
                         $GLOBALS['log']->fatal('Contact::$user_sync is not an object');
-                    } elseif(!method_exists($this->user_sync, 'add')) {
+                    } elseif (!method_exists($this->user_sync, 'add')) {
                         $GLOBALS['log']->fatal('Contact::$user_sync::add() is not a function');
                     } else {
                         $this->user_sync->add($user_id ? $user_id : $focus_user->id);

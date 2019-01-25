@@ -49,11 +49,11 @@ class ViewRelationships extends SugarView
     /**
 	 * @see SugarView::_getModuleTitleParams()
 	 */
-	protected function _getModuleTitleParams($browserTitle = false)
-	{
-	    global $mod_strings;
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
 	    
-    	return array(
+        return array(
     	   translate('LBL_MODULE_NAME','Administration'),
     	   ModuleBuilderController::getModuleTitle(),
     	   );
@@ -70,10 +70,9 @@ class ViewRelationships extends SugarView
 
         $ajax = new AjaxCompose ( ) ;
         $json = getJSONobj () ;
-		$this->fromModuleBuilder = !empty ( $_REQUEST [ 'MB' ] ) || (!empty($_REQUEST['view_package']) && $_REQUEST['view_package'] != 'studio') ;
+        $this->fromModuleBuilder = !empty ( $_REQUEST [ 'MB' ] ) || (!empty($_REQUEST['view_package']) && $_REQUEST['view_package'] != 'studio') ;
         $smarty->assign('fromModuleBuilder', $this->fromModuleBuilder);
-        if (!$this->fromModuleBuilder)
-        {
+        if (!$this->fromModuleBuilder) {
             $smarty->assign ( 'view_package', '' ) ;
 
             $relationships = new DeployedRelationships ( $moduleName ) ;
@@ -90,15 +89,13 @@ class ViewRelationships extends SugarView
             $ajax->addCrumb ( $translatedModule, 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view_module=' . $moduleName . '")' ) ;
             $ajax->addCrumb ( translate('LBL_RELATIONSHIPS'), '' ) ;
             $ajax->addSection ( 'center', $moduleName . ' ' . translate('LBL_RELATIONSHIPS'), $this->fetchTemplate($smarty, 'modules/ModuleBuilder/tpls/studioRelationships.tpl'));
-
-        } else
-        {
+        } else {
             $smarty->assign ( 'view_package', $_REQUEST [ 'view_package' ] ) ;
 
             $mb = new ModuleBuilder ( ) ;
             $module = & $mb->getPackageModule ( $_REQUEST [ 'view_package' ], $_REQUEST [ 'view_module' ] ) ;
             $package = $mb->packages [ $_REQUEST [ 'view_package' ] ] ;
-			$package->loadModuleTitles();
+            $package->loadModuleTitles();
             $relationships = new UndeployedRelationships ( $module->getModuleDir () ) ;
             $ajaxRelationships = $this->getAjaxRelationships( $relationships ) ;
             $smarty->assign ( 'relationships', $json->encode ( $ajaxRelationships ) ) ;
@@ -122,14 +119,13 @@ class ViewRelationships extends SugarView
     function getAjaxRelationships ( $relationships )
     {
         $ajaxrels = array ( ) ;
-        foreach ( $relationships->getRelationshipList () as $relationshipName )
-        {
+        foreach ( $relationships->getRelationshipList () as $relationshipName ) {
             $rel = $relationships->get ( $relationshipName )->getDefinition () ;
             $rel [ 'lhs_module' ] = translate( $rel [ 'lhs_module' ] ) ;
             $rel [ 'rhs_module' ] = translate( $rel [ 'rhs_module' ] ) ;
             
             //#28668  , translate the relationship type before render it .
-            switch($rel['relationship_type']){
+            switch ($rel['relationship_type']) {
             	case 'one-to-one':
             	$rel['relationship_type']  = translate ( 'LBL_ONETOONE' );
             	break;
@@ -146,7 +142,7 @@ class ViewRelationships extends SugarView
             }
             $rel [ 'name' ] = $relationshipName ;
             if ($rel [ 'is_custom' ] && isset($rel [ 'from_studio' ]) && $rel [ 'from_studio' ]) {
-            	$rel [ 'name' ] = $relationshipName . "*";
+                $rel [ 'name' ] = $relationshipName . "*";
             }
             $ajaxrels [] = $rel ;
         }

@@ -64,10 +64,9 @@ $document = new Document();
 $document->retrieve($document_id);
 
 $items = array();
-foreach($item_ids as $key=>$value)
-{
-	$seed->retrieve($key);
-	$items[] = $seed;
+foreach ($item_ids as $key=>$value) {
+    $seed->retrieve($key);
+    $items[] = $seed;
 }
 
 $state = new \SuiteCRM\StateSaver();

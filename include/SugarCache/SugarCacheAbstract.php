@@ -98,10 +98,12 @@ abstract class SugarCacheAbstract
      */
     public function __construct()
     {
-        if ( isset($GLOBALS['sugar_config']['cache_expire_timeout']) )
+        if ( isset($GLOBALS['sugar_config']['cache_expire_timeout']) ) {
             $this->_expireTimeout = $GLOBALS['sugar_config']['cache_expire_timeout'];
-        if ( isset($GLOBALS['sugar_config']['unique_key']) )
+        }
+        if ( isset($GLOBALS['sugar_config']['unique_key']) ) {
             $this->_keyPrefix = $GLOBALS['sugar_config']['unique_key'];
+        }
     }
 
     /**
@@ -119,20 +121,19 @@ abstract class SugarCacheAbstract
      */
     public function __get($key)
     {
-        if ( SugarCache::$isCacheReset )
+        if ( SugarCache::$isCacheReset ) {
             return null;
+        }
 
         $this->_cacheRequests++;
         if ( !$this->useLocalStore || !isset($this->_localStore[$key]) ) {
             $this->_localStore[$key] = $this->_getExternal($this->_keyPrefix.$key);
             if ( isset($this->_localStore[$key]) ) {
                 $this->_cacheExternalHits++;
-            }
-            else {
+            } else {
                 $this->_cacheMisses++;
             }
-        }
-        elseif ( isset($this->_localStore[$key]) ) {
+        } elseif ( isset($this->_localStore[$key]) ) {
             $this->_cacheLocalHits++;
         }
 
@@ -152,7 +153,6 @@ abstract class SugarCacheAbstract
     public function __set( $key, $value)
     {
         $this->set($key, $value);
-
     }
 
     /**
@@ -165,28 +165,25 @@ abstract class SugarCacheAbstract
      */
     public function set($key, $value, $ttl = null)
     {
-        if ( is_null($value) )
-        {
+        if ( is_null($value) ) {
             $value = SugarCache::EXTERNAL_CACHE_NULL_VALUE;
         }
 
 
-        if ( $this->useLocalStore )
-        {
+        if ( $this->useLocalStore ) {
             $this->_localStore[$key] = $value;
         }
 
-        if( $ttl === NULL )
-        {
+        if ( $ttl === NULL ) {
             $this->_setExternal($this->_keyPrefix.$key,$value);
-        }
-        else if( $ttl > 0 )
-        {
-            //For BC reasons the setExternal signature will remain the same.
-            $previousExpireTimeout = $this->_expireTimeout;
-            $this->_expireTimeout = $ttl;
-            $this->_setExternal($this->_keyPrefix.$key,$value);
-            $this->_expireTimeout = $previousExpireTimeout;
+        } else {
+            if ( $ttl > 0 ) {
+                //For BC reasons the setExternal signature will remain the same.
+                $previousExpireTimeout = $this->_expireTimeout;
+                $this->_expireTimeout = $ttl;
+                $this->_setExternal($this->_keyPrefix.$key,$value);
+                $this->_expireTimeout = $previousExpireTimeout;
+            }
         }
     }
     /**

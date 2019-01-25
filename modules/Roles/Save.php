@@ -61,14 +61,11 @@ print_r($_POST);
 unset($_POST['id']);
 
 
-foreach($focus->column_fields as $field)
-{
-	if(isset($_POST[$field]))
-	{
-		$value = $_POST[$field];
-		$focus->$field = $value;
-
-	}
+foreach ($focus->column_fields as $field) {
+    if (isset($_POST[$field])) {
+        $value = $_POST[$field];
+        $focus->$field = $value;
+    }
 }
 
 
@@ -83,11 +80,19 @@ $focus->set_module_relationship($return_id, $disallow_modules, 0);
 
 
 
-if(isset($_POST['return_module']) && $_POST['return_module'] != "") $return_module = $_POST['return_module'];
-else $return_module = "Roles";
-if(isset($_POST['return_action']) && $_POST['return_action'] != "") $return_action = $_POST['return_action'];
-else $return_action = "DetailView";
-if(isset($_POST['return_id']) && $_POST['return_id'] != "") $return_id = $_POST['return_id'];
+if (isset($_POST['return_module']) && $_POST['return_module'] != "") {
+    $return_module = $_POST['return_module'];
+} else {
+    $return_module = "Roles";
+}
+if (isset($_POST['return_action']) && $_POST['return_action'] != "") {
+    $return_action = $_POST['return_action'];
+} else {
+    $return_action = "DetailView";
+}
+if (isset($_POST['return_id']) && $_POST['return_id'] != "") {
+    $return_id = $_POST['return_id'];
+}
 
 	$GLOBALS['log']->debug("Saved record with id of ".$return_id);
 	header("Location: index.php?action=$return_action&module=$return_module&record=$return_id");

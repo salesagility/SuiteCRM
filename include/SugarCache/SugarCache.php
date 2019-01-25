@@ -55,7 +55,9 @@ class SugarCache
      */
     public static $isCacheReset = false;
 
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     /**
      * initializes the cache in question
@@ -64,14 +66,15 @@ class SugarCache
     {
         $lastPriority = 1000;
         $locations = array('include/SugarCache','custom/include/SugarCache');
- 	    foreach ( $locations as $location ) {
+        foreach ( $locations as $location ) {
             if (is_dir($location) && $dir = opendir($location)) {
                 while (($file = readdir($dir)) !== false) {
                     if ($file == ".."
                             || $file == "."
                             || !is_file("$location/$file")
-                            )
+                            ) {
                         continue;
+                    }
                     require_once("$location/$file");
                     $cacheClass = basename($file, ".php");
                     if ( class_exists($cacheClass) && is_subclass_of($cacheClass,'SugarCacheAbstract') ) {
@@ -95,8 +98,9 @@ class SugarCache
      */
     public static function instance()
     {
-        if ( !is_subclass_of(self::$_cacheInstance,'SugarCacheAbstract') )
+        if ( !is_subclass_of(self::$_cacheInstance,'SugarCacheAbstract') ) {
             self::_init();
+        }
 
         return self::$_cacheInstance;
     }
@@ -145,8 +149,7 @@ class SugarCache
     public static function cleanFile( $file )
     {
         // APC
-        if ( function_exists('apc_delete_file') && ini_get('apc.stat') == 0 )
-        {
+        if ( function_exists('apc_delete_file') && ini_get('apc.stat') == 0 ) {
             apc_delete_file( $file );
         }
     }

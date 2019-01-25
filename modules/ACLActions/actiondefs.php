@@ -41,17 +41,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
- if(!defined('ACL_ALLOW_NONE')){   
- 	define('ACL_ALLOW_ADMIN_DEV', 100);
- 	define('ACL_ALLOW_ADMIN', 99);
- 	define('ACL_ALLOW_ALL', 90);                        
- 	define('ACL_ALLOW_ENABLED', 89);
- 	define('ACL_ALLOW_OWNER', 75);
- 	define('ACL_ALLOW_NORMAL', 1);
- 	define('ACL_ALLOW_DEFAULT', 0);
- 	define('ACL_ALLOW_DISABLED', -98);
- 	define('ACL_ALLOW_NONE', -99);
- 	define('ACL_ALLOW_DEV', 95);
+ if (!defined('ACL_ALLOW_NONE')) {
+     define('ACL_ALLOW_ADMIN_DEV', 100);
+     define('ACL_ALLOW_ADMIN', 99);
+     define('ACL_ALLOW_ALL', 90);                        
+     define('ACL_ALLOW_ENABLED', 89);
+     define('ACL_ALLOW_OWNER', 75);
+     define('ACL_ALLOW_NORMAL', 1);
+     define('ACL_ALLOW_DEFAULT', 0);
+     define('ACL_ALLOW_DISABLED', -98);
+     define('ACL_ALLOW_NONE', -99);
+     define('ACL_ALLOW_DEV', 95);
  }
  /**
   * $GLOBALS['ACLActionAccessLevels

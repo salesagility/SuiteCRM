@@ -2459,8 +2459,6 @@ function clear_register_value($category, $name)
 // this function cleans id's when being imported
 function convert_id($string)
 {
-
-
     $stateSaver = new SuiteCRM\StateSaver();
     $stateSaver->pushErrorLevel();
 
@@ -5563,7 +5561,8 @@ function isValidId($id)
     return $result;
 }
 
-function isValidEmailAddress($email, $message = 'Invalid email address given', $orEmpty = true, $logInvalid = 'error') {
+function isValidEmailAddress($email, $message = 'Invalid email address given', $orEmpty = true, $logInvalid = 'error')
+{
     if ($orEmpty && !$email) {
         return true;
     }

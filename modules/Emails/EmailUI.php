@@ -419,7 +419,8 @@ eoq;
      * @param string $text
      * @return string
      */
-    private function createEmailLink($module_name, $record_id, $name, $addr, $text) {
+    private function createEmailLink($module_name, $record_id, $name, $addr, $text)
+    {
         global $current_user;
 
         if ($current_user->getEmailClient() == 'sugar') {
@@ -480,7 +481,6 @@ eoq;
         if (!is_object($myBean)) {
             $GLOBALS['log']->warn('incorrect bean');
         } else {
-
             if (is_array($emailField)) {
                 $emailFields = $emailField;
             } else {
@@ -511,7 +511,6 @@ eoq;
                     $invalid = false;
 
                     if ($enableConfirmedOptIn === SugarEmailAddress::COI_STAT_DISABLED) {
-
                         $emailLink = $this->createEmailLink(
                             $myBean->module_name, $myBean->id, $myBean->name,
                             $myBean->{$emailField}, $myBean->{$emailField});
@@ -527,7 +526,6 @@ eoq;
                             $addresses = $myBean->emailAddress->addresses;
                             foreach ($addresses as $address) {
                                 if ($address['email_address'] === $myBean->{$emailField}) {
-
                                     if (!empty($myBean->id)) {
                                         $myBean->retrieve();
                                     }
@@ -556,7 +554,6 @@ eoq;
                                             $myBean->module_name, $myBean->id, $myBean->name,
                                             $myBean->{$emailField}, $emailText);
                                     } else {
-
                                         $emailText = '';
                                         if ($this->appendTick) {
                                             $emailText .= $email_tick;

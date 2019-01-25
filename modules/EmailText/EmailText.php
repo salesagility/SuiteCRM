@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class EmailText extends SugarBean
 {
-	var $disable_row_level_security = true;
+    var $disable_row_level_security = true;
     var $table_name = 'emails_text';
     var $module_name = "EmailText";
     var $module_dir = 'EmailText';

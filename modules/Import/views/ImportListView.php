@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  *
@@ -99,10 +101,11 @@ class ImportListView
         $this->dataSource = $dataSource;
         $this->headerColumns = $this->dataSource->getHeaderColumns();
 
-        if( !isset($params['offset']) )
+        if ( !isset($params['offset']) ) {
             throw new Exception("Missing required parameter offset for ImportListView");
-        else
+        } else {
             $this->dataSource->setCurrentOffset($params['offset']);
+        }
 
         $this->recordsPerPage = isset($params['totalRecords']) ? $params['totalRecords'] : ($sugar_config['list_max_entries_per_page'] + 0);
         $this->data = $this->dataSource->loadDataSet($this->recordsPerPage)->getDataSet();
@@ -132,10 +135,11 @@ class ImportListView
         $this->ss->assign('maxColumns', $this->maxColumns);
         $this->ss->assign('MOD', $mod_strings);
         $contents = $this->ss->fetch('modules/Import/tpls/listview.tpl');
-        if($return)
+        if ($return) {
             return $contents;
-        else
+        } else {
             echo $contents;
+        }
     }
 
     /**
@@ -146,10 +150,10 @@ class ImportListView
     protected function getMaxColumnsForDataSet()
     {
         $maxColumns = 0;
-        foreach($this->data as $data)
-        {
-            if(count($data) > $maxColumns)
+        foreach ($this->data as $data) {
+            if (count($data) > $maxColumns) {
                 $maxColumns = count($data);
+            }
         }
         return $maxColumns;
     }
@@ -173,9 +177,5 @@ class ImportListView
 
         $pageData = array('offsets' => $offsets);
         return $pageData;
-
     }
-
-
-
 }

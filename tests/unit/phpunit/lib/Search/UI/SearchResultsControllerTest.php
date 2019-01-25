@@ -53,7 +53,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author gyula
  */
-class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract {
+class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract
+{
     
     /**
      *
@@ -61,7 +62,8 @@ class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract {
      */
     protected $state;
     
-    protected function setUp() {
+    protected function setUp()
+    {
         parent::setUp();
                 
         $this->state = new StateSaver();
@@ -69,11 +71,10 @@ class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract {
         $this->state->pushTable('accounts_cstm');
         $this->state->pushTable('aod_indexevent');
         $this->state->pushGlobals();
-        
     }
     
-    protected function tearDown() {
-        
+    protected function tearDown()
+    {
         $this->state->popGlobals();
         $this->state->popTable('aod_indexevent');
         $this->state->popTable('accounts_cstm');
@@ -82,8 +83,8 @@ class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract {
         parent::tearDown();
     }
     
-    public function testDisplayFoundOnePage() {
-             
+    public function testDisplayFoundOnePage()
+    {
         $ids = [];
         for ($i=0; $i<15; $i++) {
             $account = BeanFactory::getBean('Accounts');
@@ -155,7 +156,8 @@ class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract {
         $this->assertContains('Page 2 of 2', $content);
     }
     
-    public function testDisplayFoundOne() {
+    public function testDisplayFoundOne()
+    {
         $account = BeanFactory::getBean('Accounts');
         $account->name = 'test account 1';
         $ok = $account->save();
@@ -186,7 +188,8 @@ class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract {
         $this->assertContains('test account 1', $content);
     }
     
-    public function testDisplayNotFound() {
+    public function testDisplayNotFound()
+    {
         $request = [
             'search-query-string' => 'test query string (not found)',
             'query_string' => 'test query string (not found) alt',
@@ -209,5 +212,4 @@ class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract {
         ob_end_clean();
         $this->assertContains('No results matching your search criteria. Try broadening your search.', $content);
     }
-    
 }

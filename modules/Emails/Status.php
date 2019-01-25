@@ -55,23 +55,21 @@ global $app_strings;
 
 $focus = new Email();
 
-if(!empty($_REQUEST['record'])) {
+if (!empty($_REQUEST['record'])) {
     $result = $focus->retrieve($_REQUEST['record']);
-    if($result == null)
-    {
-    	sugar_die($app_strings['ERROR_NO_RECORD']);
+    if ($result == null) {
+        sugar_die($app_strings['ERROR_NO_RECORD']);
     }
-}
-else {
-	header("Location: index.php?module=Emails&action=index");
+} else {
+    header("Location: index.php?module=Emails&action=index");
 }
 
 //needed when creating a new email with default values passed in
 if (isset($_REQUEST['contact_name']) && is_null($focus->contact_name)) {
-	$focus->contact_name = $_REQUEST['contact_name'];
+    $focus->contact_name = $_REQUEST['contact_name'];
 }
 if (isset($_REQUEST['contact_id']) && is_null($focus->contact_id)) {
-	$focus->contact_id = $_REQUEST['contact_id'];
+    $focus->contact_id = $_REQUEST['contact_id'];
 }
 echo getClassicModuleTitle($mod_strings['LBL_SEND'], array($mod_strings['LBL_SEND']), true);
 
@@ -85,10 +83,9 @@ $xtpl->assign("GRIDLINE", $gridline);
 $xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
 $xtpl->assign("ID", $focus->id);
 $xtpl->assign("PARENT_NAME", $focus->parent_name);
-if (isset($focus->parent_type))
-{
-	$xtpl->assign("PARENT_MODULE", $focus->parent_type);
-	$xtpl->assign("PARENT_TYPE", $app_list_strings['record_type_display'][$focus->parent_type]);
+if (isset($focus->parent_type)) {
+    $xtpl->assign("PARENT_MODULE", $focus->parent_type);
+    $xtpl->assign("PARENT_TYPE", $app_list_strings['record_type_display'][$focus->parent_type]);
 }
 $xtpl->assign("PARENT_ID", $focus->parent_id);
 $xtpl->assign("NAME", $focus->name);
@@ -101,9 +98,8 @@ if ($focus->status == 'sent') {
 }
 
 global $current_user;
-if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])){
-
-	$xtpl->assign("ADMIN_EDIT","<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$_REQUEST['record']. "'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDIT_LAYOUT'])."</a>");
+if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
+    $xtpl->assign("ADMIN_EDIT","<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$_REQUEST['record']. "'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDIT_LAYOUT'])."</a>");
 }
 
 // adding custom fields:

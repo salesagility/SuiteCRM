@@ -124,12 +124,12 @@ class EmailTemplate extends SugarBean
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function EmailTemplate(){
+    public function EmailTemplate()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -175,7 +175,6 @@ class EmailTemplate extends SugarBean
         foreach ($loopControl as $collectionKey => $beans) {
             $collection[$collectionKey] = array();
             foreach ($beans as $beankey => $bean) {
-
                 foreach ($bean->field_defs as $key => $field_def) {
                     if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) ||
                         ($field_def['type'] == 'assigned_user_name' || $field_def['type'] == 'link') ||
@@ -200,8 +199,9 @@ class EmailTemplate extends SugarBean
                             break;
                         }
                     }
-                    if ($dup)
+                    if ($dup) {
                         $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
+                    }
                 }
             }
         }
@@ -252,7 +252,6 @@ class EmailTemplate extends SugarBean
         foreach ($loopControl as $collectionKey => $beans) {
             $collection[$collectionKey] = array();
             foreach ($beans as $beankey => $bean) {
-
                 foreach ($bean->field_defs as $key => $field_def) {
                     if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) ||
                         ($field_def['type'] == 'assigned_user_name' || $field_def['type'] == 'link') ||
@@ -274,8 +273,9 @@ class EmailTemplate extends SugarBean
                             break;
                         }
                     }
-                    if ($dup)
+                    if ($dup) {
                         $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
+                    }
                 }
             }
         }
@@ -329,7 +329,7 @@ class EmailTemplate extends SugarBean
     {
     }
 
-//function all string that match the pattern {.} , also catches the list of found strings.
+    //function all string that match the pattern {.} , also catches the list of found strings.
     //the cache will get refreshed when the template bean instance changes.
     //The found url key patterns are replaced with name value pairs provided as function parameter. $tracked_urls.
     //$url_template is used to construct the url for the email message. the template should have place holder for 1 variable parameter, represented by %1
@@ -338,15 +338,15 @@ class EmailTemplate extends SugarBean
     function parse_tracker_urls($template_text_array, $url_template, $tracked_urls, $removeme_url_template)
     {
         global $beanFiles, $beanList, $app_list_strings, $sugar_config;
-        if (!isset($this->parsed_urls))
+        if (!isset($this->parsed_urls)) {
             $this->parsed_urls = array();
+        }
 
         $return_array = $template_text_array;
         if (count($tracked_urls) > 0) {
             //parse the template and find all the dynamic strings that need replacement.
             foreach ($template_text_array as $key => $template_text) {
                 if (!empty($template_text)) {
-
                     if (!isset($this->parsed_urls[$key]) || $this->parsed_urls[$key]['text'] != $template_text) {
                         // Fix for bug52014.
                         $template_text = urldecode($template_text);
@@ -420,8 +420,9 @@ class EmailTemplate extends SugarBean
             $user->retrieve($focus->assigned_user_id);
         }
 
-        if (!isset($this->parsed_entities))
+        if (!isset($this->parsed_entities)) {
             $this->parsed_entities = array();
+        }
 
         //parse the template and find all the dynamic strings that need replacement.
         // Bug #48111 It's strange why prefix for User module is contact_user (see self::generateFieldDefsJS method)
@@ -469,9 +470,9 @@ class EmailTemplate extends SugarBean
                 if (strpos($field_name, "user_") === 0) {
                     $userFieldName = substr($field_name, 5);
                     $value = $user->$userFieldName;
-                    //_pp($userFieldName."[{$value}]");
+                //_pp($userFieldName."[{$value}]");
                 } else {
-                    if(isset($focus->{$field_name})) {
+                    if (isset($focus->{$field_name})) {
                         $value = $focus->{$field_name};
                     } else {
                         $value = null;
@@ -534,7 +535,6 @@ class EmailTemplate extends SugarBean
                 if (!isset($fieldName)) {
                     LoggerManager::getLogger()->warn('Email Template / parse user level error: Field name not found');
                 } else {
-                    
                     if (!isset($user->$fieldName)) {
                         LoggerManager::getLogger()->warn('Email Template / parse user level error: User field not found. Field name was: "' . $fieldName . '"');
                         $userFieldName = null;
@@ -675,8 +675,6 @@ class EmailTemplate extends SugarBean
 
                 $fieldName = $field_def['name'];
                 if ($field_def['type'] == 'enum') {
-                    
-                    
                     if (!isset($contact->$fieldName)) {
                         LoggerManager::getLogger()->warn('Email Template / parse template bean error: Contact field not found. Field name was: "' . $fieldName . '"');
                         $contactFieldName = null;
@@ -714,9 +712,9 @@ class EmailTemplate extends SugarBean
         ////	LOAD FOCUS DATA INTO REPL_ARR
         if (!isset($focus->field_defs)) {
             LoggerManager::getLogger()->warn('Email Template / parse template bean error on load focus data into repl_arr: Focus field defs is undefined.');
-        } else { 
+        } else {
             foreach ($focus->field_defs as $field_def) {
-                if(!isset($field_def['name'])) {
+                if (!isset($field_def['name'])) {
                     LoggerManager::getLogger()->warn('Email Template / parse template bean error on load focus data into repl_arr: Focus field defs [name] is undefined.');
                 }
                 $fieldName = isset($field_def['name']) ? $field_def['name'] : null;
@@ -791,7 +789,6 @@ class EmailTemplate extends SugarBean
         foreach ($replacement as $key => $value) {
             // @see defect #48641
             if ('multienum' == $field_def['type']) {
-
                 $mVals = unencodeMultienum($value);
                 $translatedVals = array();
                 foreach ($mVals as $mVal) {
@@ -812,7 +809,6 @@ class EmailTemplate extends SugarBean
     function parse_template($string, &$bean_arr)
     {
         foreach ($bean_arr as $bean_name => $bean_id) {
-
             $focus = BeanFactory::getBean($bean_name,$bean_id);
 
             if ($bean_name == 'Leads' || $bean_name == 'Prospects') {
@@ -842,8 +838,9 @@ class EmailTemplate extends SugarBean
         $template = new EmailTemplate();
         $optionKey = $template->field_defs['type']['options'];
         $options = $GLOBALS['app_list_strings'][$optionKey];
-        if (!is_admin($GLOBALS['current_user']) && isset($options['workflow']))
+        if (!is_admin($GLOBALS['current_user']) && isset($options['workflow'])) {
             unset($options['workflow']);
+        }
 
         return $options;
     }
@@ -895,28 +892,31 @@ class EmailTemplate extends SugarBean
         $this->repairMozaikClears();
         $this->imageLinkReplaced = false;
         $this->repairEntryPointImages();
-        if($this->imageLinkReplaced) {
+        if ($this->imageLinkReplaced) {
             $this->save();
         }
         $this->addDomainToRelativeImagesSrc();
         return $ret;
     }
 
-    public function addDomainToRelativeImagesSrc() {
+    public function addDomainToRelativeImagesSrc()
+    {
         global $sugar_config;
         $domain = $sugar_config['site_url'] . '/';
         $ret = $this->body_html = preg_replace('/(&lt;img src=&quot;)(public\/[^.]*.(jpg|jpeg|png|gif|bmp))(&quot;)/', "$1" . $domain . "$2$4", $this->body_html);
         return $ret;
     }
 
-    private function repairMozaikClears() {
+    private function repairMozaikClears()
+    {
         // repair tinymce auto correction in mozaik clears
         $this->body_html = str_replace('&lt;div class=&quot;mozaik-clear&quot;&gt;&nbsp;&lt;br&gt;&lt;/div&gt;', '&lt;div class=&quot;mozaik-clear&quot;&gt;&lt;/div&gt;', $this->body_html);
     }
 
 
 
-    private function repairEntryPointImages() {
+    private function repairEntryPointImages()
+    {
         global $sugar_config;
 
         // repair the images url at entry points, change to a public direct link for remote email clients..
@@ -924,7 +924,7 @@ class EmailTemplate extends SugarBean
         $siteUrlQuoted = str_replace(array(':', '/'), array('\:', '\/'), $sugar_config['site_url']);
         $regex = '/&lt;img src=&quot;(' . $siteUrlQuoted . '\/index\.php\?entryPoint=download&type=Notes&id=([a-f0-9]{8}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{12})&filename=[^&]+)&quot;/';
 
-        if(preg_match($regex, $this->body_html, $match)) {
+        if (preg_match($regex, $this->body_html, $match)) {
             $splits = explode('.', $match[1]);
             $fileExtension = end($splits);
             $this->makePublicImage($match[2], $fileExtension);
@@ -933,30 +933,30 @@ class EmailTemplate extends SugarBean
             $this->imageLinkReplaced = true;
             $this->repairEntryPointImages();
         }
-
     }
 
-    private function makePublicImage($id, $ext = 'jpg') {
+    private function makePublicImage($id, $ext = 'jpg')
+    {
         $toFile = 'public/' . $id . '.' . $ext;
-        if(file_exists($toFile)) {
+        if (file_exists($toFile)) {
             return;
         }
         $fromFile = 'upload://' . $id;
-        if(!file_exists($fromFile)) {
+        if (!file_exists($fromFile)) {
             throw new Exception('file not found');
         }
-        if(!file_exists('public')) {
+        if (!file_exists('public')) {
             sugar_mkdir('public', 0777);
         }
         $fdata = file_get_contents($fromFile);
-        if(!file_put_contents($toFile, $fdata)) {
+        if (!file_put_contents($toFile, $fdata)) {
             throw new Exception('file write error');
         }
     }
 
-    public function getAttachments() {
+    public function getAttachments()
+    {
         return BeanFactory::getBean('Notes')->get_full_list('', "parent_id = '" . $this->id . "'");
     }
-
 }
 

@@ -57,5 +57,4 @@ class SearchResultsView extends View
     {
         parent::__construct(__DIR__ . '/templates/search.results.tpl');
     }
-
 }

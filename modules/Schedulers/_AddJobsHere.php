@@ -98,7 +98,6 @@ function refreshJobs()
  */
 function pollMonitoredInboxes()
 {
-
     $_bck_up = array('team_id' => $GLOBALS['current_user']->team_id, 'team_set_id' => $GLOBALS['current_user']->team_set_id);
     $GLOBALS['log']->info('----->Scheduler fired job of type pollMonitoredInboxes()');
     global $dictionary;
@@ -243,7 +242,6 @@ function pollMonitoredInboxes()
                     if ($ieX->isMailBoxTypeCreateCase() && $distributionMethod == 'roundRobin') {
                         $emailUI->setLastRobin($ieX, $lastRobin);
                     } // if
-
                 } // if
                 if ($isGroupFolderExists) {
                     $leaveMessagesOnMailServer = $ieX->get_stored_options("leaveMessagesOnMailServer", 0);
@@ -272,7 +270,6 @@ function pollMonitoredInboxes()
 function runMassEmailCampaign()
 {
     if (!class_exists('LoggerManager')) {
-
     }
     $GLOBALS['log'] = LoggerManager::getLogger('emailmandelivery');
     $GLOBALS['log']->debug('Called:runMassEmailCampaign');
@@ -311,7 +308,9 @@ function pruneDatabase()
             // find tables with deleted=1
             $columns = $db->get_columns($table);
             // no deleted - won't delete
-            if (empty($columns['deleted'])) continue;
+            if (empty($columns['deleted'])) {
+                continue;
+            }
 
             $custom_columns = array();
             if (array_search($table . '_cstm', $tables)) {
@@ -574,7 +573,6 @@ function pollMonitoredInboxesAOP()
     $GLOBALS['log']->debug('Just got Result from get all Inbounds of Inbound Emails');
 
     while ($inboundEmailRow = $aopInboundEmail->db->fetchByAssoc($sqlQueryResult)) {
-
         $GLOBALS['log']->debug('In while loop of Inbound Emails');
 
         $aopInboundEmailX = new AOPInboundEmail();
@@ -690,7 +688,6 @@ function pollMonitoredInboxesAOP()
                         $current++;
                     } // foreach
                     // update Inbound Account with last robin
-
                 } // if
 
                 if (!empty($isGroupFolderExists)) {
@@ -725,7 +722,7 @@ function aodIndexUnindexed()
     while ($total > 0) {
         $total = performLuceneIndexing();
         $sanityCount++;
-        if($sanityCount > 100){
+        if ($sanityCount > 100) {
             return true;
         }
     }
@@ -762,7 +759,7 @@ function performLuceneIndexing()
         $c = 0;
         while ($row = $db->fetchByAssoc($res)) {
             $suc = $index->index($beanModule, $row['id']);
-            if($suc){
+            if ($suc) {
                 $c++;
                 $total++;
             }
@@ -771,7 +768,6 @@ function performLuceneIndexing()
             $index->commit();
             $index->optimise();
         }
-
     }
     $index->optimise();
     return $total;

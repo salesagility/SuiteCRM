@@ -75,10 +75,9 @@ class ManyToManyRelationship extends AbstractRelationship
      * @return array    An array of subpanel definitions, keyed by module
      */
     function buildSubpanelDefinitions ()
-    {        
+    {
         $subpanelDefinitions = array ( ) ;
-        if (!$this->relationship_only)
-        {
+        if (!$this->relationship_only) {
             $subpanelDefinitions [ $this->rhs_module ] = $this->getSubpanelDefinition ( $this->relationship_name, $this->lhs_module, $this->lhs_subpanel, $this->getLeftModuleSystemLabel() ) ;
             $subpanelDefinitions [ $this->lhs_module ] = $this->getSubpanelDefinition ( $this->relationship_name, $this->rhs_module, $this->rhs_subpanel, $this->getRightModuleSystemLabel() ) ;
         }
@@ -106,8 +105,4 @@ class ManyToManyRelationship extends AbstractRelationship
     {
         return array( $this->lhs_module => $this->getRelationshipMetaData ( MB_MANYTOMANY ) ) ;
     }
-    
-
-
-
 }

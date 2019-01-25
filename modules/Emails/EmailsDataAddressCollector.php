@@ -676,7 +676,6 @@ class EmailsDataAddressCollector
     protected function fillDataAddressFromPersonal($dataAddresses)
     {
         foreach ($dataAddresses as $address => $userAddress) {
-
             if ($userAddress['type'] !== 'system') {
                 $emailInfo = $userAddress['attributes'];
                 $fromString = $this->addCurrentUserToEmailString($emailInfo['from']);

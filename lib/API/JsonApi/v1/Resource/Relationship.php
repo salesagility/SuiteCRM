@@ -72,26 +72,30 @@ class Relationship extends ResourceIdentifier
     /**
      * @param string $name
      */
-    public function setRelationshipName($name) {
+    public function setRelationshipName($name)
+    {
         $this->name = $name;
     }
 
     /**
      * @return string
      */
-    public function getRelationshipName() {
+    public function getRelationshipName()
+    {
         return $this->name;
     }
 
     /**
      * @return RelationshipType
      */
-    public function getRelationshipType() {
+    public function getRelationshipType()
+    {
         return $this->relationshipType;
     }
 
-    public function setRelationshipType($type = RelationshipType::TO_ONE) {
-        if($type !== RelationshipType::TO_ONE && $type !== RelationshipType::TO_MANY) {
+    public function setRelationshipType($type = RelationshipType::TO_ONE)
+    {
+        if ($type !== RelationshipType::TO_ONE && $type !== RelationshipType::TO_MANY) {
             throw new ApiException('[Relationship] [Unsupported Relationship Type] '. $type);
         }
         $this->relationshipType = $type;
@@ -103,7 +107,8 @@ class Relationship extends ResourceIdentifier
      * @throws ForbiddenException
      * @throws \SuiteCRM\API\v8\Exception\ApiException
      */
-    public function withResourceIdentifier(ResourceIdentifier $related) {
+    public function withResourceIdentifier(ResourceIdentifier $related)
+    {
         $this->withResourceObject($related);
         return clone $this;
     }
@@ -111,15 +116,18 @@ class Relationship extends ResourceIdentifier
     /**
      * @return array
      */
-    public function toJsonApiResponse() {
+    public function toJsonApiResponse()
+    {
         $payload = array();
-        if($this->getRelationshipType() === RelationshipType::TO_ONE) {
+        if ($this->getRelationshipType() === RelationshipType::TO_ONE) {
             $payload = $this->link->toJsonApiResponse();
-        } else if($this->getRelationshipType() === RelationshipType::TO_MANY) {
-            foreach ($this->link as $link) {
-                $response =  $link->toJsonApiResponse();
-                if(empty($response) === false) {
-                    $payload[] = $response;
+        } else {
+            if ($this->getRelationshipType() === RelationshipType::TO_MANY) {
+                foreach ($this->link as $link) {
+                    $response =  $link->toJsonApiResponse();
+                    if (empty($response) === false) {
+                        $payload[] = $response;
+                    }
                 }
             }
         }
@@ -133,7 +141,7 @@ class Relationship extends ResourceIdentifier
      */
     private function withResourceObject($related)
     {
-        if($this->getType() === null) {
+        if ($this->getType() === null) {
             $this->type = $related->getType();
         } elseif ($this->getType() !== $related->getType()) {
             throw new ForbiddenException('[Relationship] [Incompatible Resource Type] "'. $related->getType().'"');
@@ -152,7 +160,7 @@ class Relationship extends ResourceIdentifier
             );
         }
 
-        if($this->getType() === null) {
+        if ($this->getType() === null) {
             $this->type = $related->getType();
         } elseif ($this->getType() !== $related->getType()) {
             throw new ForbiddenException('[Relationship] [Incompatible Resource Type] "'. $related->getType().'"');

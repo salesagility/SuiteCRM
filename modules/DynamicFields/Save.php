@@ -46,22 +46,22 @@ require_once('modules/DynamicFields/DynamicField.php');
 
 $module = $_REQUEST['module_name'];
 $custom_fields = new DynamicField($module);
-if(!empty($module)){
-			$class_name = $beanList[$module];
-			$class_file = $class_name;
-			if($class_file == 'aCase'){
-				$class_file = 'Case';	
-			}
-			require_once("modules/$module/$class_file.php");
-			$mod = new $class_name();
-			$custom_fields->setup($mod);
-}else{
-	echo "\nNo Module Included Could Not Save";	
+if (!empty($module)) {
+    $class_name = $beanList[$module];
+    $class_file = $class_name;
+    if ($class_file == 'aCase') {
+        $class_file = 'Case';
+    }
+    require_once("modules/$module/$class_file.php");
+    $mod = new $class_name();
+    $custom_fields->setup($mod);
+} else {
+    echo "\nNo Module Included Could Not Save";
 }
 $name = $_REQUEST['field_label'];
 $options = '';
-if($_REQUEST['field_type'] == 'enum'){		
-	$options = $_REQUEST['options'];
+if ($_REQUEST['field_type'] == 'enum') {
+    $options = $_REQUEST['options'];
 }
 $default_value = '';
 

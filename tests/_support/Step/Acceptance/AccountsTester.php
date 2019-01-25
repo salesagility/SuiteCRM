@@ -69,7 +69,8 @@ class AccountsTester extends \AcceptanceTester
      * 
      * @return Scenario
      */
-    public function getPublicScenario() {
+    public function getPublicScenario()
+    {
         return $this->getScenario();
     }
 }

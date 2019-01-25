@@ -42,8 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 global $dictionary;
-if(empty($dictionary['User'])){
-	include('modules/Users/vardefs.php');
+if (empty($dictionary['User'])) {
+    include('modules/Users/vardefs.php');
 }
 $dictionary['Employee']=$dictionary['User'];
 //users of employees modules are not allowed to change the employee/user status.

@@ -48,5 +48,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SearchEngineNotFoundException extends SearchException
 {
-
 }

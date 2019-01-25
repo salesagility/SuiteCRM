@@ -76,8 +76,7 @@ class ViewImportvcardsave extends SugarView
 
             SugarApplication::redirect("index.php?action=DetailView&module={$_REQUEST['module']}&record=$record");
         } else {
-            switch ($_FILES['vcard']['error'])
-            {
+            switch ($_FILES['vcard']['error']) {
                 case UPLOAD_ERR_FORM_SIZE:
                     $redirect .= "&error=vcardErrorFilesize";
                 break;

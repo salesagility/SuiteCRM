@@ -197,8 +197,8 @@ function handleEmailMerge($focus, $name, $data)
     if (!is_array($existingData) || empty($existingData)) {
         return;
     }
-        //query email and retrieve existing email address 
-        $exEmailQuery = 'Select id, email_address from email_addresses where id in (';
+    //query email and retrieve existing email address 
+    $exEmailQuery = 'Select id, email_address from email_addresses where id in (';
     $first = true;
     foreach ($exData as $id) {
         if ($first) {
@@ -217,8 +217,8 @@ function handleEmailMerge($focus, $name, $data)
         $existingEmails[$row['id']] = $row['email_address'];
     }
 
-        //query email and retrieve email address to be linked.
-        $newEmailQuery = 'Select id, email_address from email_addresses where id in (';
+    //query email and retrieve email address to be linked.
+    $newEmailQuery = 'Select id, email_address from email_addresses where id in (';
     $first = true;
     foreach ($existingData as $id) {
         if ($first) {

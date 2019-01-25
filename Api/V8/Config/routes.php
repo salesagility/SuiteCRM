@@ -117,7 +117,6 @@ $app->group('', function () use ($app) {
         $app->group('/custom', function () use ($app) {
             $app = CustomLoader::loadCustomRoutes($app);
         });
-        
     })->add(new ResourceServerMiddleware($app->getContainer()->get(ResourceServer::class)));
 });
 

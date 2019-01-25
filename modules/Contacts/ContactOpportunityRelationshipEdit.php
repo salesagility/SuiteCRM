@@ -60,12 +60,12 @@ global $sugar_version, $sugar_config;
 
 $focus = new ContactOpportunityRelationship();
 
-if(isset($_REQUEST['record'])) {
+if (isset($_REQUEST['record'])) {
     $focus->retrieve($_REQUEST['record']);
 }
 
-if(isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {
-	$focus->id = "";
+if (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {
+    $focus->id = "";
 }
 
 // Prepopulate either side of the relationship if passed in.

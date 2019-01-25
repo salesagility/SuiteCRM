@@ -107,12 +107,12 @@ class Dashlet
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function Dashlet($id){
+    public function Dashlet($id)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id);
@@ -126,13 +126,12 @@ class Dashlet
      */
     public function setConfigureIcon()
     {
-        if($this->isConfigurable) {
+        if ($this->isConfigurable) {
             $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet"><a href="javascript:void(0)"  aria-label="'.translate('LBL_DASHLET_EDIT', 'Home').'" onclick="SUGAR.mySugar.configureDashlet(\''
                 . $this->id . '\'); return false;">'
                 . SugarThemeRegistry::current()->getImage('dashlet-header-edit','title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null,null,'.gif',translate('LBL_DASHLET_EDIT', 'Home')).'</a>'
                 . '';
-        }
-        else {
+        } else {
             $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet">';
         }
 
@@ -147,7 +146,7 @@ class Dashlet
     public function setRefreshIcon()
     {
         $additionalTitle = '';
-        if($this->isRefreshable) {
+        if ($this->isRefreshable) {
             $additionalTitle .= '<a href="javascript:void(0)" aria-label="'.translate('LBL_DASHLET_REFRESH', 'Home').'" onclick="SUGAR.mySugar.retrieveDashlet(\''
                 . $this->id . '\'); return false;">'
                 . SugarThemeRegistry::current()->getImage('dashlet-header-refresh','border="0" align="absmiddle" title="' . translate('LBL_DASHLET_REFRESH', 'Home') . '"',null,null,'.gif',translate('LBL_DASHLET_REFRESH', 'Home'))
@@ -203,7 +202,9 @@ class Dashlet
         $title .= $this->setDeleteIcon();
 
         $str = '<div ';
-        if(empty($sugar_config['lock_homepage']) || $sugar_config['lock_homepage'] == false) $str .= 'onmouseover="this.style.cursor = \'move\';" ';
+        if (empty($sugar_config['lock_homepage']) || $sugar_config['lock_homepage'] == false) {
+            $str .= 'onmouseover="this.style.cursor = \'move\';" ';
+        }
         $str .= 'id="dashlet_header_' . $this->id . '" class="hd"><div class="tl"></div><div class="hd-center">' . get_form_header($this->title, $title, false) . '</div><div class="tr"></div></div><div class="bd"><div class="ml"></div><div class="bd-center">';
 
 
@@ -249,7 +250,7 @@ class Dashlet
         $template->assign('REFRESH_ICON', $this->setRefreshIcon());
         $template->assign('DELETE_ICON',$this->setDeleteIcon());
         $moduleName = '';
-        if(!is_object($this->seedBean)) {
+        if (!is_object($this->seedBean)) {
             $GLOBALS['log']->warn('incorrect seed bean');
         } else {
             $moduleName = $this->seedBean->module_name;
@@ -340,7 +341,7 @@ class Dashlet
         if ( empty($dashletOffset) ) {
             $dashletOffset = 0;
             $module = $_REQUEST['module'];
-            if(isset($_REQUEST[$module.'2_'.strtoupper($this->seedBean->object_name).'_offset'])) {
+            if (isset($_REQUEST[$module.'2_'.strtoupper($this->seedBean->object_name).'_offset'])) {
                 $dashletOffset = $_REQUEST[$module.'2_'.strtoupper($this->seedBean->object_name).'_offset'];
             }
         }
@@ -368,18 +369,13 @@ class Dashlet
     {
         global $sugar_config;
 
-        if (empty($this->autoRefresh) || $this->autoRefresh == -1)
-        {
+        if (empty($this->autoRefresh) || $this->autoRefresh == -1) {
             $autoRefresh = 0;
-        }
-        elseif (!empty($sugar_config['dashlet_auto_refresh_min'])
+        } elseif (!empty($sugar_config['dashlet_auto_refresh_min'])
             && $this->autoRefresh > 0
-            && $sugar_config['dashlet_auto_refresh_min'] > $this->autoRefresh)
-        {
+            && $sugar_config['dashlet_auto_refresh_min'] > $this->autoRefresh) {
             $autoRefresh = $sugar_config['dashlet_auto_refresh_min'];
-        }
-        else
-        {
+        } else {
             $autoRefresh = $this->autoRefresh;
         }
 
@@ -407,22 +403,21 @@ class Dashlet
     {
         global $current_language, $dashletStrings;
 
-        if(!isset($dashletStrings[$dashletClassname])) {
+        if (!isset($dashletStrings[$dashletClassname])) {
             // load current language strings for current language, else default to english
-            if(is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')
+            if (is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')
                 || is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php') ) {
-                if(is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
+                if (is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
                     require($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php');
                 }
-                if(is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
+                if (is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
                     require('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php');
                 }
-            }
-            else {
-                if(is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php')) {
+            } else {
+                if (is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php')) {
                     require($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php');
                 }
-                if(is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php')) {
+                if (is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php')) {
                     require('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php');
                 }
             }
@@ -455,10 +450,11 @@ class Dashlet
         global $current_user;
 
         $dashletDefs = $current_user->getPreference('dashlets', 'Home'); // load user's dashlets config
-        if(isset($dashletDefs[$this->id]['options']))
+        if (isset($dashletDefs[$this->id]['options'])) {
             return $dashletDefs[$this->id]['options'];
-        else
+        } else {
             return array();
+        }
     }
 
     /**

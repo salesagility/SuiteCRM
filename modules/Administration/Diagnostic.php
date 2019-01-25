@@ -52,16 +52,16 @@ global $theme;
 
 global $current_user;
 
-if (!is_admin($current_user)) sugar_die("Unauthorized access to administration.");
-if (isset($GLOBALS['sugar_config']['hide_admin_diagnostics']) && $GLOBALS['sugar_config']['hide_admin_diagnostics'])
-{
+if (!is_admin($current_user)) {
+    sugar_die("Unauthorized access to administration.");
+}
+if (isset($GLOBALS['sugar_config']['hide_admin_diagnostics']) && $GLOBALS['sugar_config']['hide_admin_diagnostics']) {
     sugar_die("Unauthorized access to diagnostic tool.");
 }
 
 $db = DBManagerFactory::getInstance();
-if(empty($db)) {
-	
-	$db = DBManagerFactory::getInstance();
+if (empty($db)) {
+    $db = DBManagerFactory::getInstance();
 }
 
 echo getClassicModuleTitle(

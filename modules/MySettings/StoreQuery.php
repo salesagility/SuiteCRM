@@ -37,7 +37,9 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class StoreQuery
 {
@@ -73,24 +75,26 @@ class StoreQuery
                             if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && !preg_match('/^\[.*?\]$/', $value)) {
                                 $db_format = $timedate->to_db_date($value, false);
                                 $this->query[$key] = $db_format;
-                            } else if ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
-                                if (preg_match('/[^\d]/', $value)) {
-                                    require_once('modules/Currencies/Currency.php');
-                                    $this->query[$key] = unformat_number($value);
-                                    //Flag this value as having been unformatted
-                                    $this->query[$key . '_unformatted_number'] = true;
-                                    //If the type is of currency and there was a currency symbol (non-digit), save the symbol
-                                    if ($type == 'currency' && preg_match('/^([^\d])/', $value, $match)) {
-                                        $this->query[$key . '_currency_symbol'] = $match[1];
-                                    }
-                                } else {
-                                    //unset any flags
-                                    if (isset($this->query[$key . '_unformatted_number'])) {
-                                        unset($this->query[$key . '_unformatted_number']);
-                                    }
+                            } else {
+                                if ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
+                                    if (preg_match('/[^\d]/', $value)) {
+                                        require_once('modules/Currencies/Currency.php');
+                                        $this->query[$key] = unformat_number($value);
+                                        //Flag this value as having been unformatted
+                                        $this->query[$key . '_unformatted_number'] = true;
+                                        //If the type is of currency and there was a currency symbol (non-digit), save the symbol
+                                        if ($type == 'currency' && preg_match('/^([^\d])/', $value, $match)) {
+                                            $this->query[$key . '_currency_symbol'] = $match[1];
+                                        }
+                                    } else {
+                                        //unset any flags
+                                        if (isset($this->query[$key . '_unformatted_number'])) {
+                                            unset($this->query[$key . '_unformatted_number']);
+                                        }
 
-                                    if (isset($this->query[$key . '_currency_symbol'])) {
-                                        unset($this->query[$key . '_currency_symbol']);
+                                        if (isset($this->query[$key . '_currency_symbol'])) {
+                                            unset($this->query[$key . '_currency_symbol']);
+                                        }
                                     }
                                 }
                             }
@@ -144,11 +148,13 @@ class StoreQuery
 
                         if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && preg_match('/^\d{4}-\d{2}-\d{2}$/', $value) && !preg_match('/^\[.*?\]$/', $value)) {
                             $value = $timedate->to_display_date($value, false);
-                        } else if (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->query[$key . '_unformatted_number']) && preg_match('/^\d+$/', $value)) {
-                            require_once('modules/Currencies/Currency.php');
-                            $value = format_number($value);
-                            if ($type == 'currency' && isset($this->query[$key . '_currency_symbol'])) {
-                                $value = $this->query[$key . '_currency_symbol'] . $value;
+                        } else {
+                            if (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->query[$key . '_unformatted_number']) && preg_match('/^\d+$/', $value)) {
+                                require_once('modules/Currencies/Currency.php');
+                                $value = format_number($value);
+                                if ($type == 'currency' && isset($this->query[$key . '_currency_symbol'])) {
+                                    $value = $this->query[$key . '_currency_symbol'] . $value;
+                                }
                             }
                         }
                     }
@@ -157,7 +163,6 @@ class StoreQuery
                 // cn: bug 6546 storequery stomps correct value for 'module' in Activities
                 $_REQUEST[$key] = $value;
                 $_GET[$key] = $value;
-
             }
         }
     }
@@ -208,20 +213,21 @@ class StoreQuery
                     $this->query['query'] = true;
                 }
                 $this->saveQuery($name);
-
-            } else if ($saveType == 'all') {
-                // Bug 39580 - Added 'EmailTreeLayout','EmailGridWidths' to the list as these are added merely as side-effects of the fact that we store the entire
-                // $_REQUEST object which includes all cookies.  These are potentially quite long strings as well.
-                $blockVariables = array('mass', 'uid', 'massupdate', 'delete', 'merge', 'selectCount', 'current_query_by_page', 'EmailTreeLayout', 'EmailGridWidths');
-                if (isset($_REQUEST['use_store_query']) && $_REQUEST['use_stored_query']) {
-                    $this->query = array_merge(StoreQuery::getStoredQueryForUser($name), $_REQUEST);
-                } else {
-                    $this->query = $_REQUEST;
+            } else {
+                if ($saveType == 'all') {
+                    // Bug 39580 - Added 'EmailTreeLayout','EmailGridWidths' to the list as these are added merely as side-effects of the fact that we store the entire
+                    // $_REQUEST object which includes all cookies.  These are potentially quite long strings as well.
+                    $blockVariables = array('mass', 'uid', 'massupdate', 'delete', 'merge', 'selectCount', 'current_query_by_page', 'EmailTreeLayout', 'EmailGridWidths');
+                    if (isset($_REQUEST['use_store_query']) && $_REQUEST['use_stored_query']) {
+                        $this->query = array_merge(StoreQuery::getStoredQueryForUser($name), $_REQUEST);
+                    } else {
+                        $this->query = $_REQUEST;
+                    }
+                    foreach ($blockVariables as $block) {
+                        unset($this->query[$block]);
+                    }
+                    $this->saveQuery($name);
                 }
-                foreach ($blockVariables as $block) {
-                    unset($this->query[$block]);
-                }
-                $this->saveQuery($name);
             }
         }
     }
@@ -242,10 +248,11 @@ class StoreQuery
                     $this->query['query'] = true;
                 }
                 $this->saveQuery($name);
-
-            } else if ($saveType == 'all') {
-                $this->query = $_GET;
-                $this->saveQuery($name);
+            } else {
+                if ($saveType == 'all') {
+                    $this->query = $_GET;
+                    $this->saveQuery($name);
+                }
             }
         }
     }

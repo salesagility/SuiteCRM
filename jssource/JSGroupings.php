@@ -237,6 +237,6 @@
     /**
      * Check for custom additions to this code
      */
-    if(file_exists("custom/application/Ext/JSGroupings/jsgroups.ext.php")) {
+    if (file_exists("custom/application/Ext/JSGroupings/jsgroups.ext.php")) {
         require("custom/application/Ext/JSGroupings/jsgroups.ext.php");
     }

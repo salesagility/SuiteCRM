@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  *
@@ -41,16 +43,16 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 
 
-class ViewConnectorSettings extends SugarView 
+class ViewConnectorSettings extends SugarView
 {
- 	/**
+    /**
 	 * @see SugarView::_getModuleTitleParams()
 	 */
-	protected function _getModuleTitleParams($browserTitle = false)
-	{
-	    global $mod_strings;
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
 	    
-    	return array(
+        return array(
     	   "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
     	   $mod_strings['LBL_ADMINISTRATION_MAIN']
     	   );
@@ -59,7 +61,7 @@ class ViewConnectorSettings extends SugarView
     /**
 	 * @see SugarView::_getModuleTab()
 	 */
-	protected function _getModuleTab()
+    protected function _getModuleTab()
     {
         return 'Administration';
     }
@@ -67,15 +69,15 @@ class ViewConnectorSettings extends SugarView
     /**
 	 * @see SugarView::display()
 	 */
-	public function display() 
+    public function display()
     {
-		global $mod_strings, $app_strings;
+        global $mod_strings, $app_strings;
 		
-		echo $this->getModuleTitle(false);
+        echo $this->getModuleTitle(false);
 		
-		$this->ss->assign('mod', $mod_strings);
-		$this->ss->assign('app', $app_strings);
-		$this->ss->assign('IMG', 'themes/default/images/');
-		$this->ss->display($this->getCustomFilePathIfExists('modules/Connectors/tpls/administration.tpl'));
+        $this->ss->assign('mod', $mod_strings);
+        $this->ss->assign('app', $app_strings);
+        $this->ss->assign('IMG', 'themes/default/images/');
+        $this->ss->display($this->getCustomFilePathIfExists('modules/Connectors/tpls/administration.tpl'));
     }
 }

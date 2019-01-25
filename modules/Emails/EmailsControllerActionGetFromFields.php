@@ -50,7 +50,8 @@ require_once __DIR__ . '/EmailsDataAddressCollector.php';
  *
  * @author gyula
  */
-class EmailsControllerActionGetFromFields {
+class EmailsControllerActionGetFromFields
+{
 
     /**
      *
@@ -69,7 +70,8 @@ class EmailsControllerActionGetFromFields {
      * @param User $currentUser
      * @param EmailsDataAddressCollector $collector
      */
-    public function __construct(User $currentUser, EmailsDataAddressCollector $collector) {
+    public function __construct(User $currentUser, EmailsDataAddressCollector $collector)
+    {
         $this->currentUser = $currentUser;
         $this->collector = $collector;
     }
@@ -80,7 +82,8 @@ class EmailsControllerActionGetFromFields {
      * @param InboundEmail $ie
      * @return string JSON
      */
-    public function handleActionGetFromFields(Email $email, InboundEmail $ie) {
+    public function handleActionGetFromFields(Email $email, InboundEmail $ie)
+    {
         $email->email2init();
         $ie->email = $email;
         $ieAccounts = $ie->retrieveAllByGroupIdWithGroupAccounts($this->currentUser->id);
@@ -103,7 +106,8 @@ class EmailsControllerActionGetFromFields {
      * @param string|null $accountSignatures
      * @return array|null
      */
-    protected function getEmailSignatures($accountSignatures = null) {
+    protected function getEmailSignatures($accountSignatures = null)
+    {
         if ($accountSignatures != null) {
             $emailSignatures = unserialize(base64_decode($accountSignatures));
         } else {
@@ -118,7 +122,8 @@ class EmailsControllerActionGetFromFields {
      *
      * @return array
      */
-    protected function getDefaultSignatures() {
+    protected function getDefaultSignatures()
+    {
         $defaultEmailSignature = $this->currentUser->getDefaultSignature();
         if (empty($defaultEmailSignature)) {
             $defaultEmailSignature = array(
@@ -132,5 +137,4 @@ class EmailsControllerActionGetFromFields {
 
         return $defaultEmailSignature;
     }
-    
 }

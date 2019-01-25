@@ -68,5 +68,4 @@ class UsersViewQuickedit extends ViewQuickEdit
      * We will still take the DCMENUCANCEL and DCMENUFULLFORM buttons, but we inject our own Save button via the QuickEditFooter.tpl file
      */
     protected $defaultButtons = array('DCMENUCANCEL', 'DCMENUFULLFORM');
-
 }

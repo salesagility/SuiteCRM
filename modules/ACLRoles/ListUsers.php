@@ -41,11 +41,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if(!$GLOBALS['current_user']->isAdminForModule('Users')){
-	sugar_die('No Access');
+if (!$GLOBALS['current_user']->isAdminForModule('Users')) {
+    sugar_die('No Access');
 }
 $record = '';
-if(isset($_REQUEST['record'])) $record = $_REQUEST['record'];
+if (isset($_REQUEST['record'])) {
+    $record = $_REQUEST['record'];
+}
 ?>
 <form action="index.php" method="post" name="DetailView" id="form">
 
@@ -68,9 +70,9 @@ echo "<form action='index.php' name='Users'>
 <select name='record' onchange='document.Users.submit();'>";
 echo get_select_options_with_id($users, $record);
 echo "</select></form>";
-if(!empty($record)){
+if (!empty($record)) {
     $hideTeams = true; // to not show the teams subpanel in the following file
-	require_once('modules/ACLRoles/DetailUserRole.php');
+    require_once('modules/ACLRoles/DetailUserRole.php');
 }
 
 

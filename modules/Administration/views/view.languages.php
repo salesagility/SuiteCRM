@@ -54,11 +54,11 @@ class ViewLanguages extends SugarView
     /**
 	 * @see SugarView::_getModuleTitleParams()
 	 */
-	protected function _getModuleTitleParams($browserTitle = false)
-	{
-	    global $mod_strings;
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
 
-    	return array(
+        return array(
     	   "<a href='index.php?module=Administration&action=index'>".$mod_strings['LBL_MODULE_NAME']."</a>",
     	   $mod_strings['LBL_MANAGE_LANGUAGES']
     	   );
@@ -67,20 +67,20 @@ class ViewLanguages extends SugarView
     /**
 	 * @see SugarView::preDisplay()
 	 */
-	public function preDisplay()
-	{
-	    global $current_user;
+    public function preDisplay()
+    {
+        global $current_user;
 
-	    if (!is_admin($current_user)) {
-	        sugar_die("Unauthorized access to administration.");
+        if (!is_admin($current_user)) {
+            sugar_die("Unauthorized access to administration.");
         }
-	}
+    }
 
     /**
 	 * @see SugarView::display()
 	 */
-	public function display()
-	{
+    public function display()
+    {
         global $mod_strings;
         global $app_list_strings;
         global $app_strings;
@@ -89,15 +89,14 @@ class ViewLanguages extends SugarView
         $disabled = array();
         $disabled_list = array();
         if ( isset($sugar_config['disabled_languages'])) {
-            if(!is_array($sugar_config['disabled_languages'])){
+            if (!is_array($sugar_config['disabled_languages'])) {
                 $disabled_list = array_flip(explode(',', $sugar_config['disabled_languages']));
-            }else{
-                 $disabled_list = array_flip($sugar_config['disabled_languages']);
+            } else {
+                $disabled_list = array_flip($sugar_config['disabled_languages']);
             }
         }
-        foreach ($sugar_config['languages'] as $key=>$value)
-        {
-            if(isset($disabled_list[$key])) {
+        foreach ($sugar_config['languages'] as $key=>$value) {
+            if (isset($disabled_list[$key])) {
                 $disabled[] = array("module" => $key, 'label' => $value);
             } else {
                 $enabled[] = array("module" => $key, 'label' => $value);

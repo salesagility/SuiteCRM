@@ -25,43 +25,44 @@
 require_once 'include/MVC/View/views/view.detail.php';
 require_once 'modules/AOW_WorkFlow/aow_utils.php';
 require_once 'modules/AOR_Reports/aor_utils.php';
-class AOR_ReportsViewDetail extends ViewDetail {
-
-    private function getReportParameters(){
-        if(!$this->bean->id){
+class AOR_ReportsViewDetail extends ViewDetail
+{
+    private function getReportParameters()
+    {
+        if (!$this->bean->id) {
             return array();
         }
         $conditions = $this->bean->get_linked_beans('aor_conditions','AOR_Conditions', 'condition_order');
         $parameters = array();
-        foreach($conditions as $condition){
-            if(!$condition->parameter){
+        foreach ($conditions as $condition) {
+            if (!$condition->parameter) {
                 continue;
             }
             $condition->module_path = implode(":",unserialize(base64_decode($condition->module_path)));
-            if($condition->value_type == 'Date'){
+            if ($condition->value_type == 'Date') {
                 $condition->value = unserialize(base64_decode($condition->value));
             }
             $condition_item = $condition->toArray();
             $display = getDisplayForField($condition->module_path, $condition->field, $this->bean->report_module);
             $condition_item['module_path_display'] = $display['module'];
             $condition_item['field_label'] = $display['field'];
-            if(!empty($this->bean->user_parameters[$condition->id])){
+            if (!empty($this->bean->user_parameters[$condition->id])) {
                 $param = $this->bean->user_parameters[$condition->id];
                 $condition_item['operator'] = $param['operator'];
                 $condition_item['value_type'] = $param['type'];
                 $condition_item['value'] = $param['value'];
             }
-            if(isset($parameters[$condition_item['condition_order']])) {
+            if (isset($parameters[$condition_item['condition_order']])) {
                 $parameters[] = $condition_item;
-            }
-            else {
+            } else {
                 $parameters[$condition_item['condition_order']] = $condition_item;
             }
         }
         return $parameters;
     }
 
-    public function preDisplay() {
+    public function preDisplay()
+    {
         global $app_list_strings;
         parent::preDisplay();
 
@@ -152,9 +153,5 @@ EOD;
         echo $resizeGraphsPerRow;
         echo "<script> $(document).ready(function(){resizeGraphsPerRow();}); </script>";
         echo "<script> $(window).resize(function(){resizeGraphsPerRow();}); </script>";
-
     }
-
-
-
 }

@@ -50,15 +50,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('modules/Import/views/ImportView.php');
         
-class ImportViewUndo extends ImportView 
-{	
-
+class ImportViewUndo extends ImportView
+{
     protected $pageTitleKey = 'LBL_UNDO_LAST_IMPORT';
     
- 	/** 
+    /** 
      * @see SugarView::display()
      */
- 	public function display()
+    public function display()
     {
         global $mod_strings, $current_user, $current_language;
         

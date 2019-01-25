@@ -41,7 +41,8 @@
 
 class DocumentsController extends SugarController
 {
-    function action_Popup(){
+    function action_Popup()
+    {
         $this->view = 'popup';
     }
 }

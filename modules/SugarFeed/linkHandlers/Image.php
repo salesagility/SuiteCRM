@@ -43,8 +43,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('modules/SugarFeed/linkHandlers/Link.php');
 
-class FeedLinkHandlerImage extends FeedLinkHandlerLink {
-    function getDisplay(&$data) {
+class FeedLinkHandlerImage extends FeedLinkHandlerLink
+{
+    function getDisplay(&$data)
+    {
         $imageData = unserialize(base64_decode($data['LINK_URL']));
         if ( $imageData['width'] != 0 ) {
             $image_style = 'width: '.$imageData['width'].'px; height: '.$imageData['height'].'px; border: 0px;';
@@ -56,7 +58,8 @@ class FeedLinkHandlerImage extends FeedLinkHandlerLink {
         return '<div style="padding-left:10px"><!--not_in_theme!--><img src="'. $imageData['url']. '" style="'.$image_style.'"></div>';
     }
 
-    function handleInput($feed, $link_type, $link_url) {
+    function handleInput($feed, $link_type, $link_url)
+    {
         parent::handleInput($feed, $link_type, $link_url);
 
         // The FeedLinkHandlerLink class will help sort this url out for us

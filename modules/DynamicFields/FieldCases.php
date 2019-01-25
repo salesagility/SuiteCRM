@@ -70,9 +70,8 @@ require_once('modules/DynamicFields/templates/Fields/TemplateImage.php');
 require_once('modules/DynamicFields/templates/Fields/TemplateDecimal.php');
 function get_widget($type)
 {
-
-	$local_temp = null;
-	switch(strtolower($type)){
+    $local_temp = null;
+    switch (strtolower($type)) {
 			case 'char':
 			case 'varchar':
 			case 'varchar2':
@@ -131,25 +130,28 @@ function get_widget($type)
                         $local_temp = new TemplateImage(); break;
 			default:
 						$file = false;
-						if(file_exists('custom/modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php')){
-							$file  =	'custom/modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php';
-						}else if(file_exists('modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php')){
-							$file  =	'modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php';
+						if (file_exists('custom/modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php')) {
+						    $file  =	'custom/modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php';
+						} else {
+						    if (file_exists('modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php')) {
+						        $file  =	'modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php';
+						    }
 						}
-						if(!empty($file)){
-							require_once($file);
-							$class  = 'Template' . ucfirst($type) ;
-							$customClass = 'Custom' . $class;
-							if(class_exists($customClass)){
-								$local_temp = new $customClass();
-							}else{
-								$local_temp = new $class();
-							}
-							break;
-						}else{
-							$local_temp = new TemplateText(); break;
+						if (!empty($file)) {
+						    require_once($file);
+						    $class  = 'Template' . ucfirst($type) ;
+						    $customClass = 'Custom' . $class;
+						    if (class_exists($customClass)) {
+						        $local_temp = new $customClass();
+						    } else {
+						        $local_temp = new $class();
+						    }
+						    break;
+						} else {
+						    $local_temp = new TemplateText();
+						    break;
 						}
 	}
 
-	return $local_temp;
+    return $local_temp;
 }

@@ -50,12 +50,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 			$values= array_values($temp_bean_list);
 			$output= array_keys($temp_bean_list);  
 			$output_local = array();
-			if($current_language != 'en_us') {
-				foreach($output as $temp_out) {
-					$output_local[] = translate($temp_out);
-				}
+			if ($current_language != 'en_us') {
+			    foreach ($output as $temp_out) {
+			        $output_local[] = translate($temp_out);
+			    }
 			} else {
-				$output_local = $output;
+			    $output_local = $output;
 			}
 			//sort($output);
 			//sort($values);

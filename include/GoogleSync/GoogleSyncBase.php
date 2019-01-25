@@ -57,7 +57,7 @@ use SuiteCRM\Utility\SuiteValidator;
  */
 
 class GoogleSyncBase
-{    
+{
     /** @var User The SuiteCRM User Bean we're currently working with */
     protected $workingUser;
 
@@ -227,7 +227,7 @@ class GoogleSyncBase
                 $client->fetchAccessTokenWithRefreshToken($refreshToken);
                 // Save new token to user preference
                 $this->workingUser->setPreference('GoogleApiToken', base64_encode(json_encode($client->getAccessToken())), 'GoogleSync');
-                $this->workingUser->savePreferencesToDB();    
+                $this->workingUser->savePreferencesToDB();
             } elseif (empty($refreshToken)) {
                 throw new GoogleSyncException('Refresh token is missing', GoogleSyncException::NO_REFRESH_TOKEN);
             }
@@ -403,7 +403,6 @@ class GoogleSyncBase
         }
         
         return $results;
-
     }
 
     /**
@@ -445,7 +444,6 @@ class GoogleSyncBase
      */
     protected function getGoogleEventById($event_id)
     {
-
         if (empty($event_id)) {
             // If we didn't get passed an event id, throw an exception
             throw new GoogleSyncException('event ID is empty', GoogleSyncException::EVENT_ID_IS_EMPTY);
@@ -611,7 +609,6 @@ class GoogleSyncBase
      */
     protected function pullEvent(Google_Service_Calendar_Event $event_remote = null, Meeting $event_local = null)
     {
-        
         if (!$event_remote instanceof Google_Service_Calendar_Event) {
             throw new InvalidArgumentException('Argument 1 passed to GoogleSyncBase::pullEvent() must be an instance of Google_Service_Calendar_Event, ' . getType($event_local) . ' given.');
         }
@@ -652,7 +649,6 @@ class GoogleSyncBase
      */
     protected function delMeeting(Meeting $meeting = null)
     {
-        
         if (!$meeting instanceof Meeting) {
             throw new InvalidArgumentException('Argument 1 passed to GoogleSyncBase::delMeeting() must be an instance of Meeting, ' . getType($meeting) . ' given.');
         }
@@ -751,7 +747,6 @@ class GoogleSyncBase
      */
     protected function updateSuitecrmMeetingEvent(Meeting $event_local, Google_Service_Calendar_Event $event_remote)
     {
-
         $event_local->name = (string) $event_remote->getSummary();
 
         if (empty($event_local->name)) { // Google doesn't require titles on events.
@@ -806,11 +801,11 @@ class GoogleSyncBase
         $reminders = $nestedArray[0];
         $invitees = $nestedArray[1];
 
-        foreach($reminders as $reminder) {
+        foreach ($reminders as $reminder) {
             $reminder->save(false);
         }
 
-        foreach($invitees as $invitee) {
+        foreach ($invitees as $invitee) {
             $invitee->save(false);
         }
 

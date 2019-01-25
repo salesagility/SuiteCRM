@@ -94,10 +94,9 @@ function getDisplayForField($modulePath, $field, $reportModule)
 function requestToUserParameters($reportBean = null)
 {
     $params = array();
-    if(!empty($_REQUEST['parameter_id'])) {
+    if (!empty($_REQUEST['parameter_id'])) {
         $dateCount = 0;
         foreach ($_REQUEST['parameter_id'] as $key => $parameterId) {
-
             if ($_REQUEST['parameter_type'][$key] === 'Multi') {
                 $_REQUEST['parameter_value'][$key] = encodeMultienumValue(explode(',',
                     $_REQUEST['parameter_value'][$key]));

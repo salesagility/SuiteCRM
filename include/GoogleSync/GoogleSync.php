@@ -97,7 +97,6 @@ class GoogleSync extends GoogleSyncBase
      */
     protected function doAction($action, Meeting $meeting = null, Google_Service_Calendar_Event $event = null)
     {
-
         $title = $this->getTitle($meeting, $event);
 
         switch ($action) {

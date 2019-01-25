@@ -60,25 +60,25 @@ class ExternalAPIFactory
     public static function filterAPIList($apiFullList)
     {
         $filteredList = array();
-        foreach($apiFullList as $name => $data) {
-            if(isset($data['connector'])) {
-                if(ConnectorUtils::eapmEnabled($data['connector'])) {
-                     if(isset($data['authMethod']) && $data['authMethod'] == 'oauth'){
+        foreach ($apiFullList as $name => $data) {
+            if (isset($data['connector'])) {
+                if (ConnectorUtils::eapmEnabled($data['connector'])) {
+                    if (isset($data['authMethod']) && $data['authMethod'] == 'oauth') {
                         $connector = SourceFactory::getSource($data['connector'], false);
-                        if(!empty($connector) && $connector->propertyExists('oauth_consumer_key')
+                        if (!empty($connector) && $connector->propertyExists('oauth_consumer_key')
                             && $connector->isRequiredConfigFieldsSet()) {
-                                $filteredList[$name] = $data;
+                            $filteredList[$name] = $data;
                         }
-                     } elseif (isset($data['authMethod']) && $data['authMethod'] == 'oauth2') {
+                    } elseif (isset($data['authMethod']) && $data['authMethod'] == 'oauth2') {
                         $connector = SourceFactory::getSource($data['connector'], false);
                         if (!empty($connector) && $connector->isRequiredConfigFieldsSet()) {
                             $filteredList[$name] = $data;
                         }
-                     }else{
+                    } else {
                         $filteredList[$name] = $data;
-                     }
+                    }
                 }
-            }else {
+            } else {
                 $filteredList[$name] = $data;
             }
         }
@@ -91,7 +91,8 @@ class ExternalAPIFactory
      * @param bool $ignoreDisabled Should we ignore disabled status?
      * @return array
      */
-    public static function loadFullAPIList($forceRebuild=false, $ignoreDisabled = false) {
+    public static function loadFullAPIList($forceRebuild=false, $ignoreDisabled = false)
+    {
         if (inDeveloperMode()) {
             static $beenHereBefore = false;
             if ( !$beenHereBefore ) {
@@ -114,7 +115,7 @@ class ExternalAPIFactory
         $baseDirList = array('include/externalAPI/','custom/include/externalAPI/');
         foreach ( $baseDirList as $baseDir ) {
             $dirList = glob($baseDir.'*',GLOB_ONLYDIR);
-            foreach($dirList as $dir) {
+            foreach ($dirList as $dir) {
                 if ( $dir == $baseDir.'.' || $dir == $baseDir.'..' || $dir == $baseDir.'Base' ) {
                     continue;
                 }
@@ -149,7 +150,6 @@ class ExternalAPIFactory
             if ( isset($apiClass->supportMeetingPassword) && $apiClass->supportMeetingPassword == true ) {
                 $meetingPasswordList[$apiName] = $apiName;
             }
-
         }
 
         create_cache_directory('/include/');
@@ -169,7 +169,7 @@ class ExternalAPIFactory
             // Our meeting password list is different... we need to do something about this.
             require_once('modules/Administration/Common.php');
             $languages = get_languages();
-            foreach( $languages as $lang => $langLabel ) {
+            foreach ( $languages as $lang => $langLabel ) {
                 $contents = return_custom_app_list_strings_file_contents($lang);
                 $new_contents = replace_or_add_dropdown_type('extapi_meeting_password', $meetingPasswordList, $contents);
                 save_custom_app_list_strings_contents($new_contents, $lang);
@@ -179,10 +179,11 @@ class ExternalAPIFactory
         return $ignoreDisabled?$apiFullList:self::filterAPIList($apiFullList);
     }
 
-	/**
+    /**
  	* Clear API cache file
  	*/
-    public static function clearCache() {
+    public static function clearCache()
+    {
         $cached=sugar_cached('include/externalAPI.cache.php');
         if ( file_exists($cached) ) {
             unlink($cached);
@@ -242,7 +243,8 @@ class ExternalAPIFactory
      * @param bool $ignoreAuth Ignore API's demands for authentication (used to get a complete list of modules
      * @return API class
      */
-    public static function listAPI($module = '', $ignoreAuth = false) {
+    public static function listAPI($module = '', $ignoreAuth = false)
+    {
         $apiList = self::loadFullAPIList();
 
         if ( $module == '' && $ignoreAuth == true ) {
@@ -280,13 +282,14 @@ class ExternalAPIFactory
      * @param bool $addEmptyEntry Add empty entry?
      * @return array
      */
-     public static function getModuleDropDown($moduleName, $ignoreAuth = false, $addEmptyEntry = false) {
+    public static function getModuleDropDown($moduleName, $ignoreAuth = false, $addEmptyEntry = false)
+    {
         global $app_list_strings;
 
         $apiList = self::listAPI($moduleName,$ignoreAuth);
 
         $apiDropdown = array();
-        if($addEmptyEntry){
+        if ($addEmptyEntry) {
             $apiDropdown[''] = '';
         }
 
@@ -294,16 +297,15 @@ class ExternalAPIFactory
             $appStringTranslKey = 'eapm_list_' .strtolower($moduleName);
             if ( isset($app_list_strings[$appStringTranslKey]) && !empty($app_list_strings[$appStringTranslKey][$apiName]) ) {
                 $apiDropdown[$apiName] = $app_list_strings[$appStringTranslKey][$apiName];
-            }
-            else if ( !empty($app_list_strings['eapm_list'][$apiName]) ) {
-                $apiDropdown[$apiName] = $app_list_strings['eapm_list'][$apiName];
-            }
-            else {
-                $apiDropdown[$apiName] = $apiName;
+            } else {
+                if ( !empty($app_list_strings['eapm_list'][$apiName]) ) {
+                    $apiDropdown[$apiName] = $app_list_strings['eapm_list'][$apiName];
+                } else {
+                    $apiDropdown[$apiName] = $apiName;
+                }
             }
         }
 
         return $apiDropdown;
-
     }
 }

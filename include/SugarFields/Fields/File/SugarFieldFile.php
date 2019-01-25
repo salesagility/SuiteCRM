@@ -40,8 +40,10 @@
 
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 
-class SugarFieldFile extends SugarFieldBase {
-    private function fillInOptions(&$vardef,&$displayParams) {
+class SugarFieldFile extends SugarFieldBase
+{
+    private function fillInOptions(&$vardef,&$displayParams)
+    {
         if ( isset($vardef['allowEapm']) && $vardef['allowEapm'] == true ) {
             if ( empty($vardef['docType']) ) {
                 $vardef['docType'] = 'doc_type';
@@ -74,12 +76,14 @@ class SugarFieldFile extends SugarFieldBase {
     }
 
 
-	function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex) {
+    function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    {
         $this->fillInOptions($vardef,$displayParams);
         return parent::getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
     
-	function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex) {
+    function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    {
         $this->fillInOptions($vardef,$displayParams);
 
         $keys = $this->getAccessKey($vardef,'FILE',$vardef['module']);
@@ -93,31 +97,32 @@ class SugarFieldFile extends SugarFieldBase {
         return parent::getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
     
-    function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex) {
-    	return $this->getSmartyView($parentFieldArray, $vardef, $displayParams, $tabindex, 'SearchView');
+    function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    {
+        return $this->getSmartyView($parentFieldArray, $vardef, $displayParams, $tabindex, 'SearchView');
     }
     
-    public function save(&$bean, $params, $field, $vardef, $prefix = ''){
+    public function save(&$bean, $params, $field, $vardef, $prefix = '')
+    {
         $fakeDisplayParams = array();
         $this->fillInOptions($vardef,$fakeDisplayParams);
 
-		require_once('include/upload_file.php');
-		$upload_file = new UploadFile($prefix . $field . '_file');
+        require_once('include/upload_file.php');
+        $upload_file = new UploadFile($prefix . $field . '_file');
 
-		//remove file
-		if (isset($_REQUEST['remove_file_' . $field]) && $params['remove_file_' . $field] == 1) {
-			$upload_file->unlink_file($bean->$field);
-			$bean->$field="";
-		}
+        //remove file
+        if (isset($_REQUEST['remove_file_' . $field]) && $params['remove_file_' . $field] == 1) {
+            $upload_file->unlink_file($bean->$field);
+            $bean->$field="";
+        }
 		
-		$move=false;
-		if (isset($_FILES[$prefix . $field . '_file']) && $upload_file->confirm_upload())
-		{
-    		$bean->$field = $upload_file->get_stored_file_name();
-    		$bean->file_mime_type = $upload_file->mime_type;
-			$bean->file_ext = $upload_file->file_ext;
-			$move=true;
-		}
+        $move=false;
+        if (isset($_FILES[$prefix . $field . '_file']) && $upload_file->confirm_upload()) {
+            $bean->$field = $upload_file->get_stored_file_name();
+            $bean->file_mime_type = $upload_file->mime_type;
+            $bean->file_ext = $upload_file->file_ext;
+            $move=true;
+        }
 
         if (!empty($params['isDuplicate']) && $params['isDuplicate'] == 'true' ) {
             // This way of detecting duplicates is used in Notes
@@ -136,49 +141,53 @@ class SugarFieldFile extends SugarFieldBase {
                 $bean->file_mime_type = $upload_file->mime_type;
                 $bean->file_ext = $upload_file->file_ext;
                 $move=true;
-                
             }
-        } else if ( !$move && !empty($old_id) && isset($_REQUEST['uploadfile']) && !isset($_REQUEST[$prefix . $field . '_file']) ) {
-            // I think we are duplicating a backwards compatibility module.
-            $upload_file = new UploadFile('uploadfile');
+        } else {
+            if ( !$move && !empty($old_id) && isset($_REQUEST['uploadfile']) && !isset($_REQUEST[$prefix . $field . '_file']) ) {
+                // I think we are duplicating a backwards compatibility module.
+                $upload_file = new UploadFile('uploadfile');
+            }
         }
 
 
-        if (empty($bean->id)) { 
+        if (empty($bean->id)) {
             $bean->id = create_guid();
             $bean->new_with_id = true;
         }
 
-		if ($move) {
+        if ($move) {
             $upload_file->final_move($bean->id);
             $upload_file->upload_doc($bean, $bean->id, $params[$prefix . $vardef['docType']], $bean->$field, $upload_file->mime_type);
-        } else if ( ! empty($old_id) ) {
-            // It's a duplicate, I think
+        } else {
+            if ( ! empty($old_id) ) {
+                // It's a duplicate, I think
 
-            if ( empty($params[$prefix . $vardef['docUrl'] ]) ) {
-                $upload_file->duplicate_file($old_id, $bean->id, $bean->$field);
+                if ( empty($params[$prefix . $vardef['docUrl'] ]) ) {
+                    $upload_file->duplicate_file($old_id, $bean->id, $bean->$field);
+                } else {
+                    $docType = $vardef['docType'];
+                    $bean->$docType = $params[$prefix . $field . '_old_doctype'];
+                }
             } else {
-                $docType = $vardef['docType'];
-                $bean->$docType = $params[$prefix . $field . '_old_doctype'];
-            }
-		} else if ( !empty($params[$prefix . $field . '_remoteName']) ) {
-            // We aren't moving, we might need to do some remote linking
-            $displayParams = array();
-            $this->fillInOptions($vardef,$displayParams);
+                if ( !empty($params[$prefix . $field . '_remoteName']) ) {
+                    // We aren't moving, we might need to do some remote linking
+                    $displayParams = array();
+                    $this->fillInOptions($vardef,$displayParams);
             
-            if ( isset($params[$prefix . $vardef['docId']])
+                    if ( isset($params[$prefix . $vardef['docId']])
                  && ! empty($params[$prefix . $vardef['docId']])
                  && isset($params[$prefix . $vardef['docType']]) 
                  && ! empty($params[$prefix . $vardef['docType']])
                 ) {
-                $bean->$field = $params[$prefix . $field . '_remoteName'];
+                        $bean->$field = $params[$prefix . $field . '_remoteName'];
                 
-                require_once('include/utils/file_utils.php');
-                $extension = get_file_extension($bean->$field);
-                if(!empty($extension))
-                {
-                	$bean->file_ext = $extension;
-                	$bean->file_mime_type = get_mime_content_type_from_filename($bean->$field);
+                        require_once('include/utils/file_utils.php');
+                        $extension = get_file_extension($bean->$field);
+                        if (!empty($extension)) {
+                            $bean->file_ext = $extension;
+                            $bean->file_mime_type = get_mime_content_type_from_filename($bean->$field);
+                        }
+                    }
                 }
             }
         }

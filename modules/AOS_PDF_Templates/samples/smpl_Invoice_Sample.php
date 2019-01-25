@@ -2,14 +2,17 @@
 
 require_once __DIR__ . '/../TemplateSampleService.php';
 
-class smpl_Invoice_Sample{
-		function getType() {
-			return 'AOS_Invoices';
-		}
+class smpl_Invoice_Sample
+{
+    function getType()
+    {
+        return 'AOS_Invoices';
+    }
 		
-		function getBody() {
+    function getBody()
+    {
         global $locale;
-			return '<table style="width: 100%; font-family: Arial; text-align: center;" border="0" cellpadding="2" cellspacing="2">
+        return '<table style="width: 100%; font-family: Arial; text-align: center;" border="0" cellpadding="2" cellspacing="2">
 <tbody style="text-align: left;">
 <tr style="text-align: left;">
 <td style="text-align: left;">
@@ -124,15 +127,17 @@ class smpl_Invoice_Sample{
 </tbody>
 </table>
 <p>&nbsp;</p>';
-		}
+    }
 
-		function getHeader() {
-			return '';
-		}
+    function getHeader()
+    {
+        return '';
+    }
 
-		function getFooter() {
-		global $locale;
-			return '<table style="width: 100%; border: 0pt none; border-spacing: 0pt;">
+    function getFooter()
+    {
+        global $locale;
+        return '<table style="width: 100%; border: 0pt none; border-spacing: 0pt;">
 <tbody>
 <tr>
 <td>'.translate('LBL_PAGE','AOS_PDF_Templates').' {PAGENO}</td>
@@ -140,5 +145,5 @@ class smpl_Invoice_Sample{
 </tr>
 </tbody>
 </table>';
-		}
+    }
 }

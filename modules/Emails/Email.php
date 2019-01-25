@@ -3216,7 +3216,6 @@ class Email extends Basic
         $is_owner = false;
         $in_group = false; //SECURITY GROUPS
         if (!empty($this->parent_name)) {
-
             if (!empty($this->parent_name_owner)) {
                 global $current_user;
                 $is_owner = $current_user->id == $this->parent_name_owner;

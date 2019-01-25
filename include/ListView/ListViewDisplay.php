@@ -716,9 +716,9 @@ EOF;
         return $str;
     }
 
-     /**
-     * @return MassUpdate instance
-     */
+    /**
+    * @return MassUpdate instance
+    */
     protected function getMassUpdate()
     {
         return new MassUpdate();

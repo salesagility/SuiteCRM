@@ -70,7 +70,9 @@ if ( !empty($_REQUEST['process']) ) {
             }
             
             $active_modules = $_REQUEST['modules'];
-            if ( ! is_array($active_modules) ) { $active_modules = array(); }
+            if ( ! is_array($active_modules) ) {
+                $active_modules = array();
+            }
             
             foreach ( $active_modules as $name => $is_active ) {
                 $module = substr($name,7);
@@ -98,12 +100,14 @@ if ( !empty($_REQUEST['process']) ) {
 
         $admin->retrieveSettings(FALSE,TRUE);
         SugarFeed::flushBackendCache();
-    } else if ( $_REQUEST['process'] == 'deleteRecords' ) {
-        if ( ! isset($db) ) {
-            $db = DBManagerFactory::getInstance();
+    } else {
+        if ( $_REQUEST['process'] == 'deleteRecords' ) {
+            if ( ! isset($db) ) {
+                $db = DBManagerFactory::getInstance();
+            }
+            $db->query("UPDATE sugarfeed SET deleted = '1'");        
+            echo(translate('LBL_RECORDS_DELETED','SugarFeed'));
         }
-        $db->query("UPDATE sugarfeed SET deleted = '1'");        
-        echo(translate('LBL_RECORDS_DELETED','SugarFeed'));
     }
 
 
@@ -140,11 +144,9 @@ foreach ( $possible_feeds as $module ) {
         continue;
     } else {
         $currModule['label'] = $GLOBALS['app_list_strings']['moduleList'][$module];
-
     }
 
     $module_list[] = $currModule;
-
 }
 $sugar_smarty->assign('module_list',$module_list);
 $sugar_smarty->assign('user_feed_enabled',$userFeedEnabled);

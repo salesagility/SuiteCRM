@@ -44,8 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/Campaigns/utils.php');
 
 $GLOBALS['log']->debug('identifier from the image request is'.$_REQUEST['identifier']);
-if(!empty($_REQUEST['identifier'])) {
-	$keys=log_campaign_activity($_REQUEST['identifier'],'viewed');
+if (!empty($_REQUEST['identifier'])) {
+    $keys=log_campaign_activity($_REQUEST['identifier'],'viewed');
 }
 sugar_cleanup();
 Header("Content-Type: image/gif");

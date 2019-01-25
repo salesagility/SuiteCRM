@@ -54,7 +54,6 @@ global $current_user, $sugar_config, $current_language;
 $module_menu = Array();
 if ($GLOBALS['current_user']->isAdminForModule('Users')
 ) {
-
     $module_menu = Array(
         Array("index.php?module=Users&action=EditView&return_module=Users&return_action=DetailView", $mod_strings['LNK_NEW_USER'], "Create"),
         Array("index.php?module=Users&action=EditView&usertype=group&return_module=Users&return_action=DetailView", $mod_strings['LNK_NEW_GROUP_USER'], "Create_Group_User")
@@ -73,6 +72,4 @@ if (is_admin($current_user)) {
     $admin_mod_strings = return_module_language($current_language, 'Administration');
     $module_menu[] = Array("index.php?module=ACLRoles&action=index&return_module=SecurityGroups&return_action=ListView", $admin_mod_strings['LBL_MANAGE_ROLES_TITLE'], "Role_Management");
     $module_menu[] = Array("index.php?module=SecurityGroups&action=config&return_module=SecurityGroups&return_action=ListView", $admin_mod_strings['LBL_CONFIG_SECURITYGROUPS_TITLE'], "Security_Suite_Settings");
-
-
 }

@@ -42,14 +42,15 @@ use SuiteCRM\Search\SearchQuery;
 
 class SearchEngineMock extends SearchEngine
 {
-
     public function search(SearchQuery $query)
     {
-        if ($query->getSearchString() == 'foo')
+        if ($query->getSearchString() == 'foo') {
             return 'bar';
+        }
 
-        if ($query->getSearchString() == 'fooz')
+        if ($query->getSearchString() == 'fooz') {
             return 'barz';
+        }
 
         return false;
     }

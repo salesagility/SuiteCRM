@@ -55,25 +55,27 @@ if ( !empty($_REQUEST['user_id'])) {
         die("The user id doesn't exist");
     }
     $current_entity = $current_user;
-}
-else if ( ! empty($_REQUEST['contact_id'])) {
-    $current_entity = new Contact();
-    $current_entity->disable_row_level_security = true;
-    $result = $current_entity->retrieve($_REQUEST['contact_id']);
-    if($result == null) {
-        session_destroy();
-        sugar_cleanup();
-        die("The contact id doesn't exist");
-    }
-}
-else if ( ! empty($_REQUEST['lead_id'])) {
-    $current_entity = new Lead();
-    $current_entity->disable_row_level_security = true;
-    $result = $current_entity->retrieve($_REQUEST['lead_id']);
-    if($result == null) {
-        session_destroy();
-        sugar_cleanup();
-        die("The lead id doesn't exist");
+} else {
+    if ( ! empty($_REQUEST['contact_id'])) {
+        $current_entity = new Contact();
+        $current_entity->disable_row_level_security = true;
+        $result = $current_entity->retrieve($_REQUEST['contact_id']);
+        if ($result == null) {
+            session_destroy();
+            sugar_cleanup();
+            die("The contact id doesn't exist");
+        }
+    } else {
+        if ( ! empty($_REQUEST['lead_id'])) {
+            $current_entity = new Lead();
+            $current_entity->disable_row_level_security = true;
+            $result = $current_entity->retrieve($_REQUEST['lead_id']);
+            if ($result == null) {
+                session_destroy();
+                sugar_cleanup();
+                die("The lead id doesn't exist");
+            }
+        }
     }
 }
 
@@ -83,10 +85,10 @@ $focus = new $bean;
 $focus->disable_row_level_security = true;
 $result = $focus->retrieve($_REQUEST['record']);
 
-if($result == null) {
-	session_destroy();
-	sugar_cleanup();
-	die("The focus id doesn't exist");
+if ($result == null) {
+    session_destroy();
+    sugar_cleanup();
+    die("The focus id doesn't exist");
 }
 
 $focus->set_accept_status($current_entity,$_REQUEST['accept_status']);

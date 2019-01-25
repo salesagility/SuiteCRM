@@ -42,7 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-class TemplatePhone extends TemplateText{
+class TemplatePhone extends TemplateText
+{
     var $max_size = 25;
     var $type='phone';
     var $supports_unified_search = true;
@@ -54,20 +55,21 @@ class TemplatePhone extends TemplateText{
      * validate_usa_format vardef value.
      */
     function __construct()
-	{
-	}	
+    {
+    }	
 	
-	/**
-	 * get_field_def
-	 * 
-	 * @see parent::get_field_def
-	 * This method checks to see if the validate_usa_format key/value entry should be
-	 * added to the vardef entry representing the module
-	 */	
-    function get_field_def(){
-		$def = parent::get_field_def();
-		$def['dbType'] = 'varchar';
+    /**
+     * get_field_def
+     * 
+     * @see parent::get_field_def
+     * This method checks to see if the validate_usa_format key/value entry should be
+     * added to the vardef entry representing the module
+     */	
+    function get_field_def()
+    {
+        $def = parent::get_field_def();
+        $def['dbType'] = 'varchar';
 		
-		return $def;	
-	}
+        return $def;
+    }
 }

@@ -51,7 +51,6 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdisplayGetModulePopupPickerIfNoListviewsSearchDefs()
     {
-
         $view = new ViewPopup();
         $view->module = 'Audit'; // Confirms has no listview/searchdefs
 
@@ -92,7 +91,6 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdisplayGetCustomDefaultPopupPickerIdNoModulePopupPicker()
     {
-
         $view = new ViewPopup();
         $view->module = 'Accounts'; // Confirms has no Popup_picker
 

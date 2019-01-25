@@ -69,7 +69,6 @@ function is_user_admin($session)
         global $current_user;
 
         return is_admin($current_user);
-
     } else {
         return 0;
     }
@@ -170,7 +169,6 @@ function login($user_auth, $application)
     $GLOBALS['logic_hook']->call_custom_logic('Users', 'login_failed');
 
     return array('id' => -1, 'error' => $error);
-
 }
 
 //checks if the soap server and client are running on the same machine
@@ -210,7 +208,6 @@ function validate_authenticated($session_id)
         session_start();
 
         if (!empty($_SESSION['is_valid_session']) && is_valid_ip_address('ip_address') && $_SESSION['type'] == 'user') {
-
             global $current_user;
 
             $current_user = new User();
@@ -592,7 +589,6 @@ function get_entries($session, $module_name, $ids, $select_fields)
 
         if (empty($field_list)) {
             $field_list = get_field_list($seed);
-
         }
     }
 
@@ -654,7 +650,6 @@ function set_entry($session, $module_name, $name_value_list)
             } else {
                 break;
             }
-
         }
     }
     foreach ($name_value_list as $value) {
@@ -672,7 +667,6 @@ function set_entry($session, $module_name, $name_value_list)
     }
 
     return array('id' => $seed->id, 'error' => $error->get_soap_array());
-
 }
 
 $server->register(
@@ -725,7 +719,6 @@ $server->register(
  */
 function set_note_attachment($session, $note)
 {
-
     $error = new SoapError();
     if (!validate_authenticated($session)) {
         $error->set_error('invalid_login');
@@ -737,7 +730,6 @@ function set_note_attachment($session, $note)
     $ns = new NoteSoap();
 
     return array('id' => $ns->saveFile($note), 'error' => $error->get_soap_array());
-
 }
 
 $server->register(
@@ -792,7 +784,6 @@ function get_note_attachment($session, $id)
         'note_attachment' => array('id' => $id, 'filename' => $note->filename, 'file' => $file),
         'error' => $error->get_soap_array()
     );
-
 }
 
 $server->register(
@@ -849,17 +840,13 @@ function relate_note_to_module($session, $note_id, $module_name, $module_id)
     if ($module_name != 'Contacts') {
         $seed->parent_type = $module_name;
         $seed->parent_id = $module_id;
-
     } else {
-
         $seed->contact_id = $module_id;
-
     }
 
     $seed->save();
 
     return $error->get_soap_array();
-
 }
 
 $server->register(
@@ -1122,7 +1109,6 @@ function get_user_id($session)
         global $current_user;
 
         return $current_user->id;
-
     } else {
         return '-1';
     }
@@ -1241,7 +1227,6 @@ $server->register(
  */
 function get_server_version()
 {
-
     $admin = new Administration();
     $admin->retrieveSettings('info');
     if (isset($admin->settings['info_sugar_version'])) {
@@ -1249,7 +1234,6 @@ function get_server_version()
     } else {
         return '1.0';
     }
-
 }
 
 $server->register(
@@ -1515,7 +1499,6 @@ function handle_set_relationship($set_relationship_value, $session = '')
                 $pb->save();
 
                 return $error->get_soap_array();
-
             } elseif ($module1 == "ProductBundles" && $module2 == "Products") {
                 // And, well, similar things apply in this case
                 $pb_cls = $beanList[$module1];
@@ -1610,7 +1593,6 @@ $server->register(
  */
 function set_document_revision($session, $document_revision)
 {
-
     $error = new SoapError();
     if (!validate_authenticated($session)) {
         $error->set_error('invalid_login');
@@ -1622,7 +1604,6 @@ function set_document_revision($session, $document_revision)
     $dr = new DocumentSoap();
 
     return array('id' => $dr->saveFile($document_revision), 'error' => $error->get_soap_array());
-
 }
 
 $server->register(
@@ -1866,7 +1847,6 @@ function search_by_module($user_name, $password, $search_string, $modules, $offs
         'entry_list' => $output_list,
         'error' => $error->get_soap_array()
     );
-
 }//end function
 
 
@@ -2084,7 +2064,6 @@ function get_mailmerge_document2($session, $file_name, $fields)
             $pSeed = $seed1;
         }
         foreach ($ids as $key => $value) {
-
             if ($is_prospect_merge) {
                 $seed1 = $pSeed->retrieveTarget($key);
             } else {
@@ -2098,7 +2077,6 @@ function get_mailmerge_document2($session, $file_name, $fields)
                         //pull in the translated dom
                         $html .= '<td>' . $app_list_strings[$seed1->field_name_map[$master_field]['options']][$seed1->$master_field] . '</td>';
                     } elseif ($seed1->field_name_map[$master_field]['type'] == 'multienum') {
-
                         if (isset($app_list_strings[$seed1->field_name_map[$master_field]['options']])) {
                             $items = unencodeMultienum($seed1->$master_field);
                             $output = array();
@@ -2106,14 +2084,11 @@ function get_mailmerge_document2($session, $file_name, $fields)
                                 if (!empty($app_list_strings[$seed1->field_name_map[$master_field]['options']][$item])) {
                                     array_push($output,
                                         $app_list_strings[$seed1->field_name_map[$master_field]['options']][$item]);
-
                                 }
-
                             } // foreach
 
                             $encoded_output = encodeMultienumValue($output);
                             $html .= "<td>$encoded_output</td>";
-
                         }
                     } elseif ($seed1->field_name_map[$master_field]['type'] == 'currency') {
                         $amount_field = $seed1->$master_field;
@@ -2204,7 +2179,6 @@ function get_document_revision($session, $id)
 
         return array('id' => -1, 'error' => $error->get_soap_array());
     }
-
 }
 
 $server->register(
@@ -2431,9 +2405,7 @@ function handle_set_entries($module_name, $name_value_lists, $select_fields = fa
                         $val = array_search($val, $app_list_strings[$vardef['options']]);
                     }
                 }
-
             } elseif ($seed->field_name_map[$value['name']]['type'] == 'multienum') {
-
                 $vardef = $seed->field_name_map[$value['name']];
 
                 if (isset($app_list_strings[$vardef['options']]) && !isset($app_list_strings[$vardef['options']][$value])) {
@@ -2497,7 +2469,6 @@ function handle_set_entries($module_name, $name_value_lists, $select_fields = fa
                     $ids[] = $duplicate_id;//we have a conflict
                 }
             }
-
         } elseif ($module_name == 'Meetings' || $module_name == 'Calls') {
             //we are going to check if we have a meeting in the system
             //with the same outlook_id. If we do find one then we will grab that

@@ -23,9 +23,10 @@
  */
 
 
-class AOR_ChartsController extends SugarController {
-
-    protected function action_getImageMap() {
+class AOR_ChartsController extends SugarController
+{
+    protected function action_getImageMap()
+    {
         ob_start();
         global $current_user;
         if (!isset($_REQUEST['imageMapId'])) {
@@ -38,5 +39,4 @@ class AOR_ChartsController extends SugarController {
         ob_clean();
         $img->dumpImageMap($id,IMAGE_MAP_STORAGE_FILE,$id,$imageMapDir);
     }
-
 }

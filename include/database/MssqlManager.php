@@ -615,7 +615,6 @@ class MssqlManager extends DBManager
         }
 
         return $newSQL;
-
     }
 
 

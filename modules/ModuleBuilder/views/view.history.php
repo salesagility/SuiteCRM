@@ -50,25 +50,23 @@ class ViewHistory extends SugarView
     /**
 	 * @see SugarView::_getModuleTitleParams()
 	 */
-	protected function _getModuleTitleParams($browserTitle = false)
-	{
-	    global $mod_strings;
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
 	    
-    	return array(
+        return array(
     	   translate('LBL_MODULE_NAME','Administration'),
     	   ModuleBuilderController::getModuleTitle(),
     	   );
     }
 
-	function display ()
+    function display ()
     {
         $this->layout = strtolower ( $_REQUEST [ 'view' ] ) ;
         
         $subpanelName = null ;
-        if ((strtolower ( $this->layout ) == 'listview') && (!empty ( $_REQUEST [ 'subpanel' ] )))
-        {
+        if ((strtolower ( $this->layout ) == 'listview') && (!empty ( $_REQUEST [ 'subpanel' ] ))) {
             $subpanelName = $_REQUEST [ 'subpanel' ] ;
-            
         }
         
         $packageName = (isset ( $_REQUEST [ 'view_package' ] ) && (strtolower ( $_REQUEST [ 'view_package' ] ) != 'studio')) ? $_REQUEST [ 'view_package' ] : null ;
@@ -89,8 +87,7 @@ class ViewHistory extends SugarView
         $smarty->assign ( 'view_module', $this->module ) ;
         $smarty->assign ( 'view', $this->layout ) ;
         
-        if (! empty ( $_REQUEST [ 'subpanel' ] ))
-        {
+        if (! empty ( $_REQUEST [ 'subpanel' ] )) {
             $smarty->assign ( 'subpanel', $_REQUEST [ 'subpanel' ] ) ;
         }
         $stamps = array ( ) ;
@@ -100,17 +97,16 @@ class ViewHistory extends SugarView
         $count = $this->history->getCount();
         $ts = $this->history->getNth ( $page * $this->pageSize ) ;
         $snapshots = array ( ) ;
-        for ( $i = 0 ; $i <= $this->pageSize && $ts > 0 ; $i ++ )
-        {
+        for ( $i = 0 ; $i <= $this->pageSize && $ts > 0 ; $i ++ ) {
             $dbDate = $timedate->fromTimestamp($ts)->asDb();
             $displayTS = $timedate->to_display_date_time ( $dbDate ) ;
-            if ($page * $this->pageSize + $i + 1 == $count)
+            if ($page * $this->pageSize + $i + 1 == $count) {
                 $displayTS = translate("LBL_MB_DEFAULT_LAYOUT");
+            }
             $snapshots [ $ts ] = $displayTS ;
             $ts = $this->history->getNext () ;
         }
-        if (count ( $snapshots ) > $this->pageSize)
-        {
+        if (count ( $snapshots ) > $this->pageSize) {
             $smarty->assign ( 'nextPage', true ) ;
         }
         $snapshots = array_slice ( $snapshots, 0, $this->pageSize, true ) ;
@@ -124,14 +120,12 @@ class ViewHistory extends SugarView
     function preview ()
     {
         global $mod_strings ;
-        if (! isset ( $_REQUEST [ 'sid' ] ))
-        {
+        if (! isset ( $_REQUEST [ 'sid' ] )) {
             die ( 'SID Required' ) ;
         }
         $sid = $_REQUEST [ 'sid' ] ;
         $subpanel = '';
-        if (! empty ( $_REQUEST [ 'subpanel' ] ))
-        {
+        if (! empty ( $_REQUEST [ 'subpanel' ] )) {
             $subpanel = ',"' . $_REQUEST [ 'subpanel' ] . '"' ;
         }
         echo "<input type='button' name='close$sid' value='". translate ( 'LBL_BTN_CLOSE' )."' " . 
@@ -140,26 +134,27 @@ class ViewHistory extends SugarView
                 "class='button' onclick='ModuleBuilder.history.revert(\"$this->module\",\"{$this->layout}\",\"$sid\"$subpanel);' style='margin:5px;'>" ;
         $this->history->restoreByTimestamp ( $sid ) ;
         $view ;
-        if ($this->layout == 'listview')
-        {
+        if ($this->layout == 'listview') {
             require_once ("modules/ModuleBuilder/views/view.listview.php") ;
             $view = new ViewListView ( ) ;
-        } else if ($this->layout == 'basic_search' || $this->layout == 'advanced_search')
-        {
-            require_once ("modules/ModuleBuilder/views/view.searchview.php") ;
-            $view = new ViewSearchView ( ) ;
-        } else if ($this->layout == 'dashlet' || $this->layout == 'dashletsearch')
-        {
-        	require_once ("modules/ModuleBuilder/views/view.dashlet.php") ;
-        	$view = new ViewDashlet ( ) ;
-        }  else if ($this->layout == 'popuplist' || $this->layout == 'popupsearch')
-        {
-        	require_once ("modules/ModuleBuilder/views/view.popupview.php") ;
-        	$view = new ViewPopupview ( ) ;
-        } else
-        {
-            require_once ("modules/ModuleBuilder/views/view.layoutview.php") ;
-            $view = new ViewLayoutView ( ) ;
+        } else {
+            if ($this->layout == 'basic_search' || $this->layout == 'advanced_search') {
+                require_once ("modules/ModuleBuilder/views/view.searchview.php") ;
+                $view = new ViewSearchView ( ) ;
+            } else {
+                if ($this->layout == 'dashlet' || $this->layout == 'dashletsearch') {
+                    require_once ("modules/ModuleBuilder/views/view.dashlet.php") ;
+                    $view = new ViewDashlet ( ) ;
+                } else {
+                    if ($this->layout == 'popuplist' || $this->layout == 'popupsearch') {
+                        require_once ("modules/ModuleBuilder/views/view.popupview.php") ;
+                        $view = new ViewPopupview ( ) ;
+                    } else {
+                        require_once ("modules/ModuleBuilder/views/view.layoutview.php") ;
+                        $view = new ViewLayoutView ( ) ;
+                    }
+                }
+            }
         }
         
         $view->display ( true ) ;
@@ -168,20 +163,19 @@ class ViewHistory extends SugarView
 
     function restore ()
     {
-        if (! isset ( $_REQUEST [ 'sid' ] ))
-        {
+        if (! isset ( $_REQUEST [ 'sid' ] )) {
             die ( 'SID Required' ) ;
         }
         $sid = $_REQUEST [ 'sid' ] ;
         $this->history->restoreByTimestamp ( $sid ) ;
     }
 
-	/**
+    /**
  	 * Restores a layout to its current customized state. 
  	 * Called when leaving a restored layout without saving.
  	 */
-    function unrestore() 
+    function unrestore()
     {
-    	$this->history->undoRestore () ;
+        $this->history->undoRestore () ;
     }
 }

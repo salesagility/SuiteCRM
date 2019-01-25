@@ -123,12 +123,14 @@ class ViewAdminsettings extends SugarView
 
                 $admin->retrieveSettings(FALSE, TRUE);
                 SugarFeed::flushBackendCache();
-            } else if ($_REQUEST['process'] == 'deleteRecords') {
-                if (!isset($db)) {
-                    $db = DBManagerFactory::getInstance();
+            } else {
+                if ($_REQUEST['process'] == 'deleteRecords') {
+                    if (!isset($db)) {
+                        $db = DBManagerFactory::getInstance();
+                    }
+                    $db->query("UPDATE sugarfeed SET deleted = '1'");
+                    echo(translate('LBL_RECORDS_DELETED', 'SugarFeed'));
                 }
-                $db->query("UPDATE sugarfeed SET deleted = '1'");
-                echo(translate('LBL_RECORDS_DELETED', 'SugarFeed'));
             }
 
 
@@ -165,9 +167,7 @@ class ViewAdminsettings extends SugarView
                 $userFeedEnabled = $currModule['enabled'];
                 continue;
             } elseif ($module == 'Facebook' || $module == 'Twitter') {
-
                 $currModule['label'] = $module;
-
             } else {
                 $currModule['label'] = $GLOBALS['app_list_strings']['moduleList'][$module];
             }

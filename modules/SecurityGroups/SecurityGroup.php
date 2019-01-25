@@ -278,7 +278,6 @@ class SecurityGroup extends SecurityGroup_sugar
             $security_modules = $groupFocus->getSecurityModules();
 
             if (in_array($focus->module_dir, array_keys($security_modules))) {
-
                 $query = 'INSERT INTO securitygroups_records(id,securitygroup_id,record_id,module,date_modified,deleted) '
                     . 'SELECT DISTINCT ';
                 if ($focus->db->dbType == 'mysql') {
@@ -610,7 +609,6 @@ class SecurityGroup extends SecurityGroup_sugar
                 if (isset($app_list_strings['moduleList'][$row['rhs_module']])) {
                     $security_modules[$row['rhs_module']] = $app_list_strings['moduleList'][$row['rhs_module']];//rost fix
                 }
-
             } else {
                 if (in_array($row['lhs_module'], $module_blacklist)) {
                     continue;

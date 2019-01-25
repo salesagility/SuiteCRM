@@ -55,8 +55,7 @@ class TemplateAddress extends TemplateField
 
         require_once 'modules/ModuleBuilder/parsers/parser.label.php' ;
         $parser = new ParserLabel ( $df->getModuleName() , $df->getPackageName() ) ;
-        foreach ( array ( 'City' , 'State' , 'PostalCode' , 'Country' ) as $addressFieldName )
-        {
+        foreach ( array ( 'City' , 'State' , 'PostalCode' , 'Country' ) as $addressFieldName ) {
             $systemLabel = strtoupper( "LBL_" . $this->name . '_' . $addressFieldName );
             $parser->handleSave ( array( "label_" . $systemLabel => $this->label_value . ' ' . $addressFieldName ) , $GLOBALS [ 'current_language' ] ) ;
             $addressField = new TemplateField ( ) ;
@@ -66,7 +65,6 @@ class TemplateAddress extends TemplateField
             $addressField->save ( $df ) ;
         }
         // finally save the base street address field
-        parent::save($df);      
-        
+        parent::save($df);
     }
 }

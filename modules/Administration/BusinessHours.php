@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 global $current_user, $sugar_config;
 global $mod_strings;
@@ -7,7 +9,9 @@ global $app_list_strings;
 global $app_strings;
 global $theme;
 
-if (!is_admin($current_user)) sugar_die("Unauthorized access to administration.");
+if (!is_admin($current_user)) {
+    sugar_die("Unauthorized access to administration.");
+}
 
 require_once('modules/Configurator/Configurator.php');
 
@@ -25,8 +29,8 @@ $errors			= array();
 $days = array($mod_strings['LBL_MONDAY'],$mod_strings['LBL_TUESDAY'],$mod_strings['LBL_WEDNESDAY'],$mod_strings['LBL_THURSDAY'],$mod_strings['LBL_FRIDAY'],$mod_strings['LBL_SATURDAY'],$mod_strings['LBL_SUNDAY']);
 $businessHours = BeanFactory::getBean("AOBH_BusinessHours");
 
-if(isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
-    foreach($days as $day){
+if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
+    foreach ($days as $day) {
         $bh = $businessHours->getOrCreate($day);
         $bh->day = $day;
         $bh->open = array_key_exists("open_".$day,$_REQUEST) ? $_REQUEST["open_".$day] : false;
@@ -38,13 +42,13 @@ if(isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
 }
 
 $dayDropdowns = array();
-foreach($days as $day){
+foreach ($days as $day) {
     $drops = array();
     $bh = $businessHours->getBusinessHoursForDay($day);
-    if($bh){
+    if ($bh) {
         $bh = $bh[0];
         $drops['open'] = $bh->open;
-    }else{
+    } else {
         $drops['open'] = $day != $mod_strings['LBL_SATURDAY'] && $day != $mod_strings['LBL_SUNDAY'];
     }
     $hours = get_select_options_with_id($app_list_strings['business_hours_list'], ($bh ? $bh->opening_hours : 9));

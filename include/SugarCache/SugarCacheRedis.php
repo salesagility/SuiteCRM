@@ -71,13 +71,15 @@ class SugarCacheRedis extends SugarCacheAbstract
      */
     public function useBackend()
     {
-        if ( !parent::useBackend() )
+        if ( !parent::useBackend() ) {
             return false;
+        }
         
         if ( extension_loaded("redis")
                 && empty($GLOBALS['sugar_config']['external_cache_disabled_redis'])
-                && $this->_getRedisObject() )
+                && $this->_getRedisObject() ) {
             return true;
+        }
             
         return false;
     }
@@ -104,9 +106,7 @@ class SugarCacheRedis extends SugarCacheAbstract
                     return false;
                 }
             }
-        }
-        catch (RedisException $e)
-        {
+        } catch (RedisException $e) {
             return false;
         }
         
@@ -119,8 +119,7 @@ class SugarCacheRedis extends SugarCacheAbstract
     protected function _setExternal(
         $key,
         $value
-        )
-    {
+        ) {
         $value = serialize($value);
         $key = $this->_fixKeyName($key);
         
@@ -133,8 +132,7 @@ class SugarCacheRedis extends SugarCacheAbstract
      */
     protected function _getExternal(
         $key
-        )
-    {
+        ) {
         $key = $this->_fixKeyName($key);
         $returnValue = $this->_getRedisObject()->get($key);
         // return null if we don't get a cache hit
@@ -152,8 +150,7 @@ class SugarCacheRedis extends SugarCacheAbstract
      */
     protected function _clearExternal(
         $key
-        )
-    {
+        ) {
         $key = $this->_fixKeyName($key);
         $this->_getRedisObject()->delete($key);
     }

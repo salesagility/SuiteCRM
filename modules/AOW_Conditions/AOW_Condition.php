@@ -77,12 +77,12 @@ class AOW_Condition extends Basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOW_Condition(){
+    function AOW_Condition()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -96,7 +96,6 @@ class AOW_Condition extends Basic
 
     function save_lines($post_data, $parent, $key = '')
     {
-
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
         $field = $key . 'field';
@@ -133,12 +132,13 @@ class AOW_Condition extends Basic
                                         $post_data[$key . $field_name][$i] = encodeMultienumValue($post_data[$key . $field_name][$i]);
                                 }
                             }
-                        } else if ($field_name === 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
-                            $post_data[$key . $field_name][$i] = fixUpFormatting($_REQUEST['flow_module'], $condition->field, $post_data[$key . $field_name][$i]);
+                        } else {
+                            if ($field_name === 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
+                                $post_data[$key . $field_name][$i] = fixUpFormatting($_REQUEST['flow_module'], $condition->field, $post_data[$key . $field_name][$i]);
+                            }
                         }
                         $condition->$field_name = $post_data[$key . $field_name][$i];
                     }
-
                 }
                 if (trim($condition->field) != '') {
                     $condition->condition_order = ++$j;
@@ -148,6 +148,4 @@ class AOW_Condition extends Basic
             }
         }
     }
-
-
 }

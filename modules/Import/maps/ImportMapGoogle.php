@@ -47,7 +47,7 @@ require_once('modules/Import/maps/ImportMapOther.php');
 
 class ImportMapGoogle extends ImportMapOther
 {
-	/**
+    /**
      * String identifier for this import
      */
     public $name = 'google';
@@ -58,9 +58,9 @@ class ImportMapGoogle extends ImportMapOther
      * @param  string $module
      * @return array field mappings
      */
-	public function getMapping($module)
+    public function getMapping($module)
     {
-         $return_array = array(
+        $return_array = array(
              'first_name' => array('sugar_key' => 'first_name', 'sugar_label' => '', 'default_label' => 'Given Name'),
              'last_name' => array('sugar_key' => 'last_name', 'sugar_label' => '', 'default_label' => 'Family Name'),
              'birthday' => array('sugar_key' => 'birthdate', 'sugar_label' => '', 'default_label' => 'Birthday'),
@@ -92,8 +92,7 @@ class ImportMapGoogle extends ImportMapOther
              'team_name' => array('sugar_key' => 'team_name', 'sugar_help_key' => 'LBL_EXTERNAL_TEAM_TOOLTIP','sugar_label' => 'LBL_TEAMS', 'default_label' => 'Teams'),
             );
 
-        if($module == 'Users')
-        {
+        if ($module == 'Users') {
             $return_array['status'] =  array('sugar_key' => 'status', 'sugar_label' => '', 'default_label' => 'Status');
             $return_array['full_name'] =  array('sugar_key' => 'user_name', 'sugar_label' => '', 'default_label' => 'Full Name');
         }

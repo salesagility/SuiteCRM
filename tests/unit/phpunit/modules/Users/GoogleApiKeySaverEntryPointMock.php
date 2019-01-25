@@ -46,7 +46,8 @@ include_once __DIR__ . '/../../../../../modules/Users/GoogleApiKeySaverEntryPoin
  *
  * @author gyula
  */
-class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint {
+class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint
+{
     
     /**
      *
@@ -70,7 +71,8 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint {
      * 
      * @param string $exitString
      */
-    public function protectedDie($exitString) {
+    public function protectedDie($exitString)
+    {
         $this->dieOk = true;
         $this->exitString = $exitString;
     }
@@ -79,7 +81,8 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint {
      * 
      * @return bool
      */
-    public function getDieOk() {
+    public function getDieOk()
+    {
         return $this->dieOk;
     }
     
@@ -87,7 +90,8 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint {
      * 
      * @return string
      */
-    public function getExitString() {
+    public function getExitString()
+    {
         return $this->exitString;
     }
 
@@ -95,7 +99,8 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint {
      * 
      * @return string
      */
-    public function getRedirectUrl() {
+    public function getRedirectUrl()
+    {
         return $this->redirectUrl;
     }
 
@@ -103,8 +108,8 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint {
      * 
      * @return string
      */
-    public function redirect($url) {
+    public function redirect($url)
+    {
         $this->redirectUrl = $url;
-    } 
-    
+    }
 }
