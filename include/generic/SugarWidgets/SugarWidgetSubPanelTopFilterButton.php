@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-class SugarWidgetSubPanelTopFilterButton  extends SugarWidgetSubPanelTopButton
+class SugarWidgetSubPanelTopFilterButton extends SugarWidgetSubPanelTopButton
 {
     function display($defines, $additionalFormFields = NULL, $nonbutton = false)
     {
