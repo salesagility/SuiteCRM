@@ -34,7 +34,6 @@ class UsersCest
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
-
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
@@ -98,7 +97,7 @@ class UsersCest
         $I->click('Log In');
         $I->waitForElementNotVisible('#loginform', 120);
     }
-    
+  
     public function testEmailSettingsMailAccountAdd(AcceptanceTester $I, UsersTester $Users, WebDriverHelper $webDriverHelper)
     {
         $instanceUrl = $webDriverHelper->getInstanceURL();
@@ -115,7 +114,7 @@ class UsersCest
         $I->fillField('email_user', 'testuser_name');
         $I->fillField('email_password', 'testuser_pass');
         $I->click('Test Settings');
-        $I->wait(10);
+        $I->wait(20);
         $I->see('Connection completed successfully.');
     }
 

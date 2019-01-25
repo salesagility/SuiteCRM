@@ -58,7 +58,6 @@ before_script:
   - phpenv config-add travis.php.ini
   - sudo service apache2 restart
   # Install composer
-  - rm composer.lock
   - composer install
   - ./vendor/bin/codecept build
 
