@@ -99,4 +99,3 @@ $layout_defs['FP_events'] = array(
         ),
     ),
 );
-

@@ -832,4 +832,3 @@ $server->wsdl->addComplexType(
         'error' => array('name' =>'error', 'type'=>'tns:error_value'),
     )
 );
-

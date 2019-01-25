@@ -728,4 +728,3 @@ class Sugarpdf extends TCPDF
         return parent::Output($name, $dest);
     }
 }
-

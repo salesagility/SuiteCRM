@@ -400,4 +400,3 @@ class vCard
         return $beanId;
     }
 }
-

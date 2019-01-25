@@ -56,4 +56,3 @@ class HomeViewModulelistmenu extends ViewModulelistmenu
         $this->ss->display('include/MVC/View/tpls/modulelistmenu.tpl');
     }
 }
-

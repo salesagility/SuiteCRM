@@ -581,4 +581,3 @@ class UploadMultipleFiles
         return $path;
     }
 }
-

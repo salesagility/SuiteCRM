@@ -160,4 +160,3 @@ echo getClassicModuleTitle(
         false
         );
 $sugar_smarty->display('modules/SugarFeed/AdminSettings.tpl');
-

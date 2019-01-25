@@ -61,4 +61,3 @@ array(
     'sortable' => true,
   ),
 );
-

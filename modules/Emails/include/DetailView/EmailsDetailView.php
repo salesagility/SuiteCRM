@@ -108,4 +108,3 @@ class EmailsDetailView extends DetailView2
         return parent::display($showTitle, $ajaxSave);
     }
 }
-

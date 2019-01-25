@@ -116,4 +116,3 @@ class SugarFieldCurrency extends SugarFieldFloat
         return format_number($rawField, $precision, $precision);
     }
 }
-

@@ -188,4 +188,3 @@ class ViewAdminsettings extends SugarView
         $sugar_smarty->display('modules/SugarFeed/tpls/AdminSettings.tpl');
     }
 }
-

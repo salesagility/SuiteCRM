@@ -482,4 +482,3 @@ abstract class AbstractMetaDataImplementation
         return $this->module->key_name;
     }
 }
-

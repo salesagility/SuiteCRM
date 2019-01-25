@@ -129,4 +129,3 @@ class ViewEdit extends SugarView
         return $this->ev;
     }
 }
-

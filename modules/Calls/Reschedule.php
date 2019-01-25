@@ -59,4 +59,3 @@ $reschedule->call_id = $id;
 
 $call->save();
 $reschedule->save();//save call attempt history line
-

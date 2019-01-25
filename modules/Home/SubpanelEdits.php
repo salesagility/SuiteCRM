@@ -78,4 +78,3 @@ if (file_exists('modules/'. $_REQUEST['target_module'] . '/EditView.php')) {
         }
     }
 }
-

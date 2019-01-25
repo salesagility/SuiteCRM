@@ -218,4 +218,3 @@ $layout_defs['Delegates'] = array(
         ),
     ),
 );
-

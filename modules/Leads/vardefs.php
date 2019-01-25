@@ -662,4 +662,3 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
 
 VardefManager::createVardef('Leads', 'Lead', array('default', 'assignable', 'security_groups',
     'person'));
-

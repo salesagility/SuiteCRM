@@ -118,4 +118,3 @@ class AccountsViewDetail extends ViewDetail
         return $html;
     }
 }
-

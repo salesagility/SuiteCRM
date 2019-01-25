@@ -84,4 +84,3 @@ $dictionary['AddressBook'] = array('table' => 'address_book',
         ),
     ), /* end indices */
 );
-

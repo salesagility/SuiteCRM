@@ -446,4 +446,3 @@ class SugarThemeRegistry
         return $subThemes;
     }
 }
-

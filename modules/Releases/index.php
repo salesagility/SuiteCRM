@@ -164,4 +164,3 @@ if ($is_edit) {
     $javascript->addAllFields('');
     echo $javascript->getScript();
 }
-

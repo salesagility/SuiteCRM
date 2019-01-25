@@ -62,4 +62,3 @@ class ComposeView extends EditView
         parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
     }
 }
-

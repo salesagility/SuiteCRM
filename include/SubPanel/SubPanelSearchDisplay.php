@@ -74,4 +74,3 @@ if (!empty($_REQUEST['layout_def_key'])) {
 $subpanel_object = new SubPanel($module, $record, $subpanel, null, $layout_def_key, $collection);
 
 echo $subpanel_object->getSearchForm();
-

@@ -689,4 +689,3 @@ EOQ;
         return new Contact();
     }
 }
-

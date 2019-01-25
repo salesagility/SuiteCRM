@@ -119,4 +119,3 @@ $app->group('', function () use ($app) {
         });
     })->add(new ResourceServerMiddleware($app->getContainer()->get(ResourceServer::class)));
 });
-

@@ -298,4 +298,3 @@ if ($focus->type == 'draft') {
     $return_id = $_POST['return_id'];
 }
     header("Location: index.php?action=$return_action&module=$return_module&record=$return_id");
-

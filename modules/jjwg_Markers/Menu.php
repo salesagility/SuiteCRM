@@ -53,4 +53,3 @@
     if (ACLController::checkAccess('jjwg_Markers', 'import', true)) {
         $module_menu[]=array("index.php?module=jjwg_Markers&action=index", $mod_strings['LNK_IMPORT_JJWG_MARKERS'],"Import", 'jjwg_Markers');
     }
-

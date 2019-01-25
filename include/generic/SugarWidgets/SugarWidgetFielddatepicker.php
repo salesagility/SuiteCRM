@@ -67,4 +67,3 @@ EOHTML;
         return $str;
     }
 }
-

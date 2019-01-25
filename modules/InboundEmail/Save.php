@@ -423,4 +423,3 @@ function syncSugarFoldersWithBeanChanges($fieldName, $focus)
             break;
     }
 }
-

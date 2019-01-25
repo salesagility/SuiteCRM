@@ -240,5 +240,3 @@ if(deselectEl)
 EOJAVASCRIPT;
     }
 }
-
-

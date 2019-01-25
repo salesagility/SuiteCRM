@@ -314,4 +314,3 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
         return $dir;
     }
 }
-

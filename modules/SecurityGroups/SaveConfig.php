@@ -97,4 +97,3 @@ if (!empty($_REQUEST['remove_default_id'])) {
 }
 
 header("Location: index.php?action={$_POST['return_action']}&module={$_POST['return_module']}");
-

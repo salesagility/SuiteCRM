@@ -50,4 +50,3 @@
     if (ACLController::checkAccess('AOK_KnowledgeBase', 'list', true)) {
         $module_menu[]=array("index.php?module=AOK_KnowledgeBase&action=index", $mod_strings['LNK_LIST'],"List", 'AOK_KnowledgeBase');
     }
-

@@ -198,4 +198,3 @@ class JotPadDashlet extends Dashlet
                                        'savedText' => $optionsArray['savedText']));
     }
 }
-

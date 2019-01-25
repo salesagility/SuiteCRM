@@ -87,4 +87,3 @@ class HomeViewList extends ViewList
         }
     }
 }
-

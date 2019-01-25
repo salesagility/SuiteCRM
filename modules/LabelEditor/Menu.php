@@ -44,4 +44,3 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $module_menu = array();
-

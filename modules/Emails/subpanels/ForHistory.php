@@ -110,4 +110,3 @@ $subpanel_layout = array(
         ),
     ), // end list_fields
 );
-

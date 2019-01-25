@@ -125,4 +125,3 @@ $dictionary["documents_bugs"] = array(
     ),
   ),
 );
-

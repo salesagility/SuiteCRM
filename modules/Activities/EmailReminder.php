@@ -348,4 +348,3 @@ class EmailReminder
         return $emails;
     }
 }
-

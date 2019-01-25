@@ -170,4 +170,3 @@ class MeetingsQuickCreate extends QuickCreate
         $this->ss->assign('additionalScripts', $this->javascript->getScript(false));
     }
 }
-

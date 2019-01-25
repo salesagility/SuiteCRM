@@ -118,4 +118,3 @@ class SugarCronRemoteJobs extends SugarCronJobs
         }
     }
 }
-

@@ -100,4 +100,3 @@ class OauthTokensViewAuthorize extends SugarView
         }
     }
 }
-

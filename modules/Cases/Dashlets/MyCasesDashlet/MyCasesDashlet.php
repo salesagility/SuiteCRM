@@ -78,4 +78,3 @@ class MyCasesDashlet extends DashletGeneric
         self::__construct($id, $def);
     }
 }
-

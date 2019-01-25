@@ -56,4 +56,3 @@ class ContactsViewCloseContactAddressPopup extends ViewList
         parent::display();
     }
 }
-

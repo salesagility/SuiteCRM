@@ -48,4 +48,3 @@ if (isset($_REQUEST['record']) && !empty($_REQUEST['record'])) {
 }
 
 header("Location: index.php?module=Groups&action=index");
-

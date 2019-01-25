@@ -272,4 +272,3 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
         return array('currency_symbol' => $currency_symbol, 'currency_id' => $currency_id);
     }
 }
-

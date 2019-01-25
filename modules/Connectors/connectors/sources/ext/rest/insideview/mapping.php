@@ -56,4 +56,3 @@ $mapping = array(
     ),
   ),
 );
-

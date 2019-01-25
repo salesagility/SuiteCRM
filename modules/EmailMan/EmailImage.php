@@ -65,5 +65,3 @@ if (!empty($mime)) {
 
 
 readfile($location);
-
-

@@ -81,4 +81,3 @@ class MyContactsDashlet extends DashletGeneric
         self::__construct($id, $def);
     }
 }
-

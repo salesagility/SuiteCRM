@@ -134,4 +134,3 @@ function get_val_array($arr)
     }
     return $new;
 }
-

@@ -354,4 +354,3 @@ class javascript
         return empty($required) ? "false" : "true";
     }
 }
-

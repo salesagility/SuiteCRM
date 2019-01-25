@@ -392,4 +392,3 @@ $out = <<<EOQ
 </html>
 EOQ;
 echo $out;
-

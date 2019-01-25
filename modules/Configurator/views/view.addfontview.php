@@ -92,4 +92,3 @@ class ConfiguratorViewAddFontView extends SugarView
         $this->ss->display('modules/Configurator/tpls/addFontView.tpl');
     }
 }
-    

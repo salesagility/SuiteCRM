@@ -64,4 +64,3 @@ function get_body(&$ss, $vardef)
     //_ppd($ss->fetch('modules/DynamicFields/templates/Fields/Forms/url.tpl'));
     return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/url.tpl');
 }
-

@@ -511,4 +511,3 @@ class AM_ProjectTemplatesController extends SugarController
         return (!isset($question) || trim($question)==='');
     }
 }
-
