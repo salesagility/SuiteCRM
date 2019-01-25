@@ -141,24 +141,17 @@ class ListViewDataEmails extends ListViewData
      * @return InboundEmail
      * @throws SuiteException
      */
-    protected function getInboundEmail($currentUser, $folder)
-    {
+    protected function getInboundEmail($currentUser, $folder) {
+        $inboundEmailID = $currentUser->getPreference('defaultIEAccount', 'Emails');
         $id = $folder->getId();
         if (!empty($id)) {
-            $inboundEmailID = $id;
-        } else {
-            $inboundEmailID = $currentUser->getPreference('defaultIEAccount', 'Emails');
-        }
-
-        if (!$inboundEmailID) {
-            LoggerManager::getLogger()->warn('Unable to resolve inbound email ID.');
-            return false;
-        }
-
-        $isValidator = new SuiteValidator();
-        if ($inboundEmailID && !$isValidator->isValidId($inboundEmailID)) {
-            throw new SuiteException("Invalid Inbound Email ID" . ($inboundEmailID ? " ($inboundEmailID)" : ''));
-        }
+            $inboundEmailID = $folder->getId();
+    }
+        
+    $isValidator = new SuiteValidator();
+    if ($inboundEmailID && !$isValidator->isValidId($inboundEmailID)) {
+        throw new SuiteException("Invalid Inbound Email ID" . ($inboundEmailID ? " ($inboundEmailID)" : ''));
+    }
 
         /**
          * @var InboundEmail $inboundEmail
