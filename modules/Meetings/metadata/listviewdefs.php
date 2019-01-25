@@ -39,28 +39,28 @@
  */
 
 $listViewDefs ['Meetings'] = 
-array (
+array(
   'SET_COMPLETE' => 
-  array (
+  array(
     'width' => '1%',
     'label' => 'LBL_LIST_CLOSE',
     'link' => true,
     'sortable' => false,
     'default' => true,
     'related_fields' => 
-    array (
+    array(
       0 => 'status',
     ),
   ),
   'NAME' => 
-  array (
+  array(
     'width' => '40%',
     'label' => 'LBL_LIST_SUBJECT',
     'link' => true,
     'default' => true,
   ),
   'CONTACT_NAME' => 
-  array (
+  array(
     'width' => '20%',
     'label' => 'LBL_LIST_CONTACT',
     'link' => true,
@@ -70,7 +70,7 @@ array (
     'ACLTag' => 'CONTACT',
   ),
   'PARENT_NAME' => 
-  array (
+  array(
     'width' => '20%',
     'label' => 'LBL_LIST_RELATED_TO',
     'dynamic_module' => 'PARENT_TYPE',
@@ -80,24 +80,24 @@ array (
     'sortable' => false,
     'ACLTag' => 'PARENT',
     'related_fields' => 
-    array (
+    array(
       0 => 'parent_id',
       1 => 'parent_type',
     ),
   ),
   'DATE_START' => 
-  array (
+  array(
     'width' => '15%',
     'label' => 'LBL_LIST_DATE',
     'link' => false,
     'default' => true,
     'related_fields' => 
-    array (
+    array(
       0 => 'time_start',
     ),
   ),
   'ASSIGNED_USER_NAME' => 
-  array (
+  array(
     'width' => '2%',
     'label' => 'LBL_LIST_ASSIGNED_TO_NAME',
     'module' => 'Employees',
@@ -105,20 +105,20 @@ array (
     'default' => true,
   ),
   'DIRECTION' => 
-  array (
+  array(
     'type' => 'enum',
     'label' => 'LBL_LIST_DIRECTION',
     'width' => '10%',
     'default' => false,
   ),
   'STATUS' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_LIST_STATUS',
     'link' => false,
     'default' => false,
   ),
-  'DATE_ENTERED' => array (
+  'DATE_ENTERED' => array(
     'width' => '10%',
     'label' => 'LBL_DATE_ENTERED',
     'default' => true

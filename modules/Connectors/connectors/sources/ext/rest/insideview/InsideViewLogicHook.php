@@ -50,28 +50,28 @@ class InsideViewLogicHook
     protected function handleFieldMap($bean, $mapping)
     {
         $outArray = array();
-        foreach ( $mapping as $dest => $src ) {
+        foreach ($mapping as $dest => $src) {
             // Initialize it to an empty string, so it is always set
             $outArray[$dest] = '';
 
-            if ( is_array($src) ) {
+            if (is_array($src)) {
                 // The source can be any one of a number of fields
                 // we must go deeper.
-                foreach ( $src as $src2 ) {
-                    if ( isset($bean->$src2) ) {
+                foreach ($src as $src2) {
+                    if (isset($bean->$src2)) {
                         $outArray[$dest] = $bean->$src2;
                         break;
                     }
                 }
             } else {
-                if ( isset($bean->$src) ) {
+                if (isset($bean->$src)) {
                     $outArray[$dest] = $bean->$src;
                 }
             }
         }
 
         $outStr = '';
-        foreach ( $outArray as $k => $v ) {
+        foreach ($outArray as $k => $v) {
             $outStr .= $k.'='.rawurlencode(html_entity_decode($v, ENT_QUOTES)).'&';
         }
         
@@ -145,7 +145,7 @@ class InsideViewLogicHook
 
     public function showFrame($event, $args)
     {
-        if ( $GLOBALS['app']->controller->action != 'DetailView' ) {
+        if ($GLOBALS['app']->controller->action != 'DetailView') {
             return;
         }
         require_once('include/connectors/utils/ConnectorUtils.php');
@@ -160,7 +160,7 @@ class InsideViewLogicHook
         );
 
 
-        if ( $GLOBALS['current_user']->id != '1' ) {
+        if ($GLOBALS['current_user']->id != '1') {
             $extraUrl = $this->handleFieldMap($GLOBALS['current_user'], $userFieldMap);
         } else {
             // Need some extra code here for the '1' admin user
@@ -174,16 +174,16 @@ class InsideViewLogicHook
             .'&crm_session_id=&crm_version=v62&crm_deploy_id=3&crm_size=400&is_embed_version=true';
         
         // Use the per-module functions to build the frame
-        if ( is_a($bean, 'Account') ) {
+        if (is_a($bean, 'Account')) {
             $url = $this->getAccountFrameUrl($bean, $extraUrl);
         } else {
-            if ( is_a($bean, 'Contact') ) {
+            if (is_a($bean, 'Contact')) {
                 $url = $this->getContactFrameUrl($bean, $extraUrl);
             } else {
-                if ( is_a($bean, 'Lead') ) {
+                if (is_a($bean, 'Lead')) {
                     $url = $this->getLeadFrameUrl($bean, $extraUrl);
                 } else {
-                    if ( is_a($bean, 'Opportunity') ) {
+                    if (is_a($bean, 'Opportunity')) {
                         $url = $this->getOpportunityFrameUrl($bean, $extraUrl);
                     } else {
                         $url = '';
@@ -192,7 +192,7 @@ class InsideViewLogicHook
             }
         }
 
-        if ( $url != '' ) {
+        if ($url != '') {
             // Check if the user should be shown the frame or not
             $smarty = new Sugar_Smarty();
             $tplName = 'modules/Connectors/connectors/sources/ext/rest/insideview/tpls/InsideView.tpl';
@@ -209,7 +209,7 @@ class InsideViewLogicHook
             $smarty->assign('AJAX_URL', $url);
             $smarty->assign('APP', $GLOBALS['app_strings']);
 
-            if ( $GLOBALS['current_user']->getPreference('allowInsideView', 'Connectors') != 1 ) {
+            if ($GLOBALS['current_user']->getPreference('allowInsideView', 'Connectors') != 1) {
                 $smarty->assign('showInsideView', false);
             } else {
                 $smarty->assign('showInsideView', true);

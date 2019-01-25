@@ -100,7 +100,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
 
 
         global $sugar_config;
-        if (isset ($sugar_config['enable_inline_reports_edit']) && $sugar_config['enable_inline_reports_edit'] && !empty($record)) {
+        if (isset($sugar_config['enable_inline_reports_edit']) && $sugar_config['enable_inline_reports_edit'] && !empty($record)) {
             $div_id = "$module&$record&$name";
             $str = "<div id='$div_id'><a target='_blank' href=\"index.php?action=DetailView&module=$module&record=$record\">";
             $value = $this->displayListPlain($layout_def);
@@ -118,7 +118,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
 
     function _get_normal_column_select($layout_def)
     {
-        if ( isset($this->reporter->all_fields) ) {
+        if (isset($this->reporter->all_fields)) {
             $field_def = $this->reporter->all_fields[$layout_def['column_key']];
         } else {
             $field_def = array();
@@ -129,7 +129,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
         }
 
         //	 'fields' are the two fields to concatenate to create the name.
-        if ( ! empty($layout_def['table_alias'])) {
+        if (! empty($layout_def['table_alias'])) {
             $alias = $this->reporter->db->concat($layout_def['table_alias'], $field_def['fields']);
         } elseif (! empty($layout_def['name'])) {
             $alias = $layout_def['name'];
@@ -144,7 +144,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
     {
         global $locale, $current_user;
 
-        if ( isset($this->reporter->all_fields) ) {
+        if (isset($this->reporter->all_fields)) {
             $field_def = $this->reporter->all_fields[$layout_def['column_key']];
         } else {
             $field_def = array();
@@ -161,7 +161,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
             return parent::_get_column_select($layout_def);
         }
 
-        if ( ! empty($layout_def['table_alias'])) {
+        if (! empty($layout_def['table_alias'])) {
             $comps = preg_split("/([fl])/", $localeNameFormat, null, PREG_SPLIT_DELIM_CAPTURE);
             $name = array();
             foreach ($comps as $val) {
@@ -191,7 +191,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
         $layout_def['type'] = 'id';
         $input_name0 = $layout_def['input_name0'];
 
-        if ( is_array($layout_def['input_name0'])) {
+        if (is_array($layout_def['input_name0'])) {
             $input_name0 = $layout_def['input_name0'][0];
         }
         if ($input_name0 == 'Current User') {
@@ -209,7 +209,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
         $layout_def['type'] = 'id';
         $input_name0 = $layout_def['input_name0'];
 
-        if ( is_array($layout_def['input_name0'])) {
+        if (is_array($layout_def['input_name0'])) {
             $input_name0 = $layout_def['input_name0'][0];
         }
         if ($input_name0 == 'Current User') {

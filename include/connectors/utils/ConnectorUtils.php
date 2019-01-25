@@ -518,7 +518,7 @@ class ConnectorUtils
 
 
                     $viewdefs = array();
-                    if ( !file_exists($metadata_file) ) {
+                    if (!file_exists($metadata_file)) {
                         $GLOBALS['log']->info("Unable to update metadata file for module: {$module}");
                         continue;
                     } else {
@@ -665,7 +665,7 @@ class ConnectorUtils
                                 $viewdefs[$module]['DetailView']['panels'][$panel_id][$row_id][$field_id] = $field;
                             }
                         } else {
-                            $viewdefs[$module]['DetailView']['panels'][$panel_id][$row_id][$field_id] = array ('name'=>$field, 'displayParams'=>array('enableConnectors'=>true, 'module'=>$module, 'connectors' => array(0 => $source_id)));
+                            $viewdefs[$module]['DetailView']['panels'][$panel_id][$row_id][$field_id] = array('name'=>$field, 'displayParams'=>array('enableConnectors'=>true, 'module'=>$module, 'connectors' => array(0 => $source_id)));
                         }
                         return true;
                     }
@@ -703,7 +703,7 @@ class ConnectorUtils
                             $viewdefs[$module]['DetailView']['panels'][$panel_id][$row_id][$field_id] = $field;
                         }
                     } else {
-                        $viewdefs[$module]['DetailView']['panels'][$panel_id][$row_id][$field_id] = array ('name'=>$field, 'displayParams'=>array('enableConnectors'=>true, 'module'=>$module, 'connectors' => array(0 => $source_id)));
+                        $viewdefs[$module]['DetailView']['panels'][$panel_id][$row_id][$field_id] = array('name'=>$field, 'displayParams'=>array('enableConnectors'=>true, 'module'=>$module, 'connectors' => array(0 => $source_id)));
                     }
                     return true;
                 } //foreach

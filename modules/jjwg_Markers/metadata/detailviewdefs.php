@@ -1,15 +1,15 @@
 <?php
 $module_name = 'jjwg_Markers';
 $viewdefs [$module_name] = 
-array (
+array(
   'DetailView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'form' => 
-      array (
+      array(
         'buttons' => 
-        array (
+        array(
           0 => 'EDIT',
           1 => 'DUPLICATE',
           2 => 'DELETE',
@@ -19,14 +19,14 @@ array (
       ),
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
@@ -34,71 +34,71 @@ array (
       'useTabs' => false,
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'name',
           1 => 'assigned_user_name',
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'city',
             'label' => 'LBL_CITY',
           ),
           1 => 
-          array (
+          array(
             'name' => 'state',
             'label' => 'LBL_STATE',
           ),
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'country',
             'label' => 'LBL_COUNTRY',
           ),
           1 => 
-          array (
+          array(
             'name' => 'marker_image',
             'studio' => 'visible',
             'label' => 'LBL_MARKER_IMAGE',
           ),
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'jjwg_maps_lat',
             'label' => 'LBL_JJWG_MAPS_LAT',
           ),
           1 => 
-          array (
+          array(
             'name' => 'jjwg_maps_lng',
             'label' => 'LBL_JJWG_MAPS_LNG',
           ),
         ),
         4 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'date_entered',
             'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
             'label' => 'LBL_DATE_ENTERED',
           ),
           1 => 
-          array (
+          array(
             'name' => 'date_modified',
             'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
             'label' => 'LBL_DATE_MODIFIED',
           ),
         ),
         5 => 
-        array (
+        array(
           0 => 'description',
         ),
       ),

@@ -62,7 +62,7 @@ class ManyToManyRelationship extends AbstractRelationship
      */
     function __construct($definition)
     {
-        parent::__construct ( $definition ) ;
+        parent::__construct($definition) ;
     }
   
     /*
@@ -76,10 +76,10 @@ class ManyToManyRelationship extends AbstractRelationship
      */
     function buildSubpanelDefinitions()
     {
-        $subpanelDefinitions = array ( ) ;
+        $subpanelDefinitions = array( ) ;
         if (!$this->relationship_only) {
-            $subpanelDefinitions [ $this->rhs_module ] = $this->getSubpanelDefinition ( $this->relationship_name, $this->lhs_module, $this->lhs_subpanel, $this->getLeftModuleSystemLabel() ) ;
-            $subpanelDefinitions [ $this->lhs_module ] = $this->getSubpanelDefinition ( $this->relationship_name, $this->rhs_module, $this->rhs_subpanel, $this->getRightModuleSystemLabel() ) ;
+            $subpanelDefinitions [ $this->rhs_module ] = $this->getSubpanelDefinition($this->relationship_name, $this->lhs_module, $this->lhs_subpanel, $this->getLeftModuleSystemLabel()) ;
+            $subpanelDefinitions [ $this->lhs_module ] = $this->getSubpanelDefinition($this->relationship_name, $this->rhs_module, $this->rhs_subpanel, $this->getRightModuleSystemLabel()) ;
         }
         return $subpanelDefinitions ;
     }
@@ -90,11 +90,11 @@ class ManyToManyRelationship extends AbstractRelationship
      */
     function buildVardefs()
     {
-        $vardefs = array ( ) ;
-        $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition ( $this->lhs_module, $this->relationship_name, false,
-            'LBL_' . strtoupper ( $this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel() ) . '_TITLE' ) ;
-        $vardefs [ $this->lhs_module ] [] = $this->getLinkFieldDefinition ( $this->rhs_module, $this->relationship_name, false,
-            'LBL_' . strtoupper ( $this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()  ) . '_TITLE' ) ;
+        $vardefs = array( ) ;
+        $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition($this->lhs_module, $this->relationship_name, false,
+            'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel()) . '_TITLE') ;
+        $vardefs [ $this->lhs_module ] [] = $this->getLinkFieldDefinition($this->rhs_module, $this->relationship_name, false,
+            'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE') ;
         return $vardefs ;
     }
     
@@ -103,6 +103,6 @@ class ManyToManyRelationship extends AbstractRelationship
      */
     function buildRelationshipMetaData()
     {
-        return array( $this->lhs_module => $this->getRelationshipMetaData ( MB_MANYTOMANY ) ) ;
+        return array( $this->lhs_module => $this->getRelationshipMetaData(MB_MANYTOMANY) ) ;
     }
 }

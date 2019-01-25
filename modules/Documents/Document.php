@@ -276,14 +276,14 @@ class Document extends File
             //if file is not found then default image file will be used.
             global $img_name;
             global $img_name_bare;
-            if (!empty ($row['file_ext'])) {
+            if (!empty($row['file_ext'])) {
                 $img_name = SugarThemeRegistry::current()->getImageURL(strtolower($row['file_ext']) . "_image_inline.gif");
                 $img_name_bare = strtolower($row['file_ext']) . "_image_inline";
             }
         }
 
         //set default file name.
-        if (!empty ($img_name) && file_exists($img_name)) {
+        if (!empty($img_name) && file_exists($img_name)) {
             $img_name = $img_name_bare;
         } else {
             $img_name = "def_image_inline"; //todo change the default image.
@@ -305,7 +305,7 @@ class Document extends File
         }
 
         //get last_rev_by user name.
-        if (!empty ($row)) {
+        if (!empty($row)) {
             $this->last_rev_created_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name']);
 
             $this->last_rev_create_date = $timedate->to_display_date_time($this->db->fromConvert($row['rev_date'],

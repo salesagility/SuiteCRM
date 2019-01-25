@@ -52,8 +52,8 @@ require_once 'modules/ModuleBuilder/parsers/relationships/ManyToManyRelationship
 
 class MBRelationship
 {
-    public $relatableModules = array ( ) ; // required by MBModule
-    public $relationships = array ( ) ; // required by view.relationships.php; must be kept in sync with the implementation
+    public $relatableModules = array( ) ; // required by MBModule
+    public $relationships = array( ) ; // required by view.relationships.php; must be kept in sync with the implementation
 
 
     /*
@@ -64,7 +64,7 @@ class MBRelationship
      */
     function __construct($name, $path, $key_name)
     {
-        $this->implementation = new UndeployedRelationships ( $path ) ;
+        $this->implementation = new UndeployedRelationships($path) ;
         $this->moduleName = $key_name ;
         $this->path = $path ;
         $this->updateRelationshipVariable();
@@ -73,7 +73,7 @@ class MBRelationship
     function findRelatableModules()
     {
         // do not call findRelatableModules in the constructor as it leads to an infinite loop if the implementation calls getPackage() which loads the packages which loads the module which findsRelatableModules which...
-        $this->relatableModules = $this->implementation->findRelatableModules () ;
+        $this->relatableModules = $this->implementation->findRelatableModules() ;
     }
 
     /*
@@ -83,7 +83,7 @@ class MBRelationship
      */
     function addFromPost()
     {
-        return $this->implementation->addFromPost () ;
+        return $this->implementation->addFromPost() ;
     }
 
     /*
@@ -91,12 +91,12 @@ class MBRelationship
      */
     function getRelationshipList()
     {
-        return $this->implementation->getRelationshipList () ;
+        return $this->implementation->getRelationshipList() ;
     }
 
     function get($relationshipName)
     {
-        return $this->implementation->get ( $relationshipName ) ;
+        return $this->implementation->get($relationshipName) ;
     }
 
     /*
@@ -119,40 +119,40 @@ class MBRelationship
     function add($rel)
     {
         // convert old format definition to new format
-        if (! isset ( $rel [ 'lhs_module' ] )) {
+        if (! isset($rel [ 'lhs_module' ])) {
             $rel [ 'lhs_module' ] = $this->moduleName ;
         }
-        $definition = AbstractRelationships::convertFromOldFormat ( $rel ) ;
-        if (! isset ( $definition ['relationship_type'])) {
+        $definition = AbstractRelationships::convertFromOldFormat($rel) ;
+        if (! isset($definition ['relationship_type'])) {
             $definition ['relationship_type'] = 'many-to-many';
         }
         // get relationship object from RelationshipFactory
-        $relationship = RelationshipFactory::newRelationship ( $definition ) ;
+        $relationship = RelationshipFactory::newRelationship($definition) ;
         // add relationship to the set of relationships
-        $this->implementation->add ( $relationship ) ;
-        $this->updateRelationshipVariable () ;
+        $this->implementation->add($relationship) ;
+        $this->updateRelationshipVariable() ;
         return $relationship;
     }
 
     function delete($name)
     {
-        $this->implementation->delete ( $name ) ;
-        $this->updateRelationshipVariable () ;
+        $this->implementation->delete($name) ;
+        $this->updateRelationshipVariable() ;
     }
 
     function save()
     {
-        $this->implementation->save () ;
+        $this->implementation->save() ;
     }
 
     function build($path)
     {
-        $this->implementation->build () ;
+        $this->implementation->build() ;
     }
 
     function addInstallDefs(&$installDef)
     {
-        $this->implementation->addInstallDefs ( $installDef ) ;
+        $this->implementation->addInstallDefs($installDef) ;
     }
 
     /*
@@ -169,8 +169,8 @@ class MBRelationship
 
     private function updateRelationshipVariable()
     {
-        foreach ( $this->implementation->getRelationshipList () as $relationshipName ) {
-            $rel = $this->implementation->getOldFormat ( $relationshipName ) ;
+        foreach ($this->implementation->getRelationshipList() as $relationshipName) {
+            $rel = $this->implementation->getOldFormat($relationshipName) ;
             $this->relationships [ $relationshipName ] = $rel ;
         }
     }

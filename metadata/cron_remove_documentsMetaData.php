@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-$dictionary['cron_remove_documents'] = array (
+$dictionary['cron_remove_documents'] = array(
     'table' => 'cron_remove_documents',
     'fields' => array(
         array(

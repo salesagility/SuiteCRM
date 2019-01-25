@@ -93,7 +93,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         $current_user->retrieve($_REQUEST['assigned_user_id']);
     } 
 
-    if (isset($camp_data) && $camp_data != null ) {
+    if (isset($camp_data) && $camp_data != null) {
         $leadForm = new LeadFormBase();
         $lead = new Lead();
         $prefix = '';
@@ -169,11 +169,11 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
         //in case there are forms out there still using email_opt_out
         if (isset($_POST['webtolead_email_opt_out']) || isset($_POST['email_opt_out'])) {
-            if (isset ($lead->email1) && !empty($lead->email1)) {
+            if (isset($lead->email1) && !empty($lead->email1)) {
                 $sea = new SugarEmailAddress();
                 $sea->AddUpdateEmailAddress($lead->email1, 0, 1);
             }   
-            if (isset ($lead->email2) && !empty($lead->email2)) {
+            if (isset($lead->email2) && !empty($lead->email2)) {
                 $sea = new SugarEmailAddress();
                 $sea->AddUpdateEmailAddress($lead->email2, 0, 1);
             }

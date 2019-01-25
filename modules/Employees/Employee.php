@@ -179,10 +179,10 @@ class Employee extends Person
         $user_fields = parent::get_list_view_data();
 
         // Copy over the reports_to_name
-        if ( isset($GLOBALS['app_list_strings']['messenger_type_dom'][$this->messenger_type]) ) {
+        if (isset($GLOBALS['app_list_strings']['messenger_type_dom'][$this->messenger_type])) {
             $user_fields['MESSENGER_TYPE'] = $GLOBALS['app_list_strings']['messenger_type_dom'][$this->messenger_type];
         }
-        if ( isset($GLOBALS['app_list_strings']['employee_status_dom'][$this->employee_status]) ) {
+        if (isset($GLOBALS['app_list_strings']['employee_status_dom'][$this->employee_status])) {
             $user_fields['EMPLOYEE_STATUS'] = $GLOBALS['app_list_strings']['employee_status_dom'][$this->employee_status];
         }
         $user_fields['REPORTS_TO_NAME'] = $this->reports_to_name;

@@ -42,6 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 $searchFields['Roles'] = 
-    array (
+    array(
         'name' => array( 'query_type'=>'default'),
         );

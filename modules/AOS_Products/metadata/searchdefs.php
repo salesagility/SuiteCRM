@@ -1,56 +1,56 @@
 <?php
 $module_name = 'AOS_Products';
 $searchdefs [$module_name] = 
-array (
+array(
   'layout' => 
-  array (
+  array(
     'basic_search' => 
-    array (
+    array(
       0 => 'name',
       1 => 
-      array (
+      array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
         'type' => 'bool',
       ),
-        'favorites_only' => array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
+        'favorites_only' => array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
     ),
     'advanced_search' => 
-    array (
+    array(
       'name' => 
-      array (
+      array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
       'part_number' => 
-      array (
+      array(
         'name' => 'part_number',
         'default' => true,
         'width' => '10%',
       ),
       'cost' => 
-      array (
+      array(
         'name' => 'cost',
         'default' => true,
         'width' => '10%',
       ),
       'price' => 
-      array (
+      array(
         'name' => 'price',
         'default' => true,
         'width' => '10%',
       ),
       'created_by' => 
-      array (
+      array(
         'name' => 'created_by',
         'label' => 'LBL_CREATED',
         'type' => 'enum',
         'function' => 
-        array (
+        array(
           'name' => 'get_user_array',
           'params' => 
-          array (
+          array(
             0 => false,
           ),
         ),
@@ -60,10 +60,10 @@ array (
     ),
   ),
   'templateMeta' => 
-  array (
+  array(
     'maxColumns' => '3',
     'widths' => 
-    array (
+    array(
       'label' => '10',
       'field' => '30',
     ),

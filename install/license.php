@@ -42,7 +42,7 @@
 
 
 global $sugar_version, $js_custom_version;
-if ( !isset( $install_script ) || !$install_script ) {
+if (!isset($install_script) || !$install_script) {
     die('Unable to process script directly.');
 }
 

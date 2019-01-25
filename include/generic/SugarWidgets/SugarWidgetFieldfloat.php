@@ -48,7 +48,7 @@ class SugarWidgetFieldFloat extends SugarWidgetFieldInt
     {
         $vardef = $this->getVardef($layout_def);
 
-        if ( isset($vardef['precision']) ) {
+        if (isset($vardef['precision'])) {
             $precision = $vardef['precision'];
         } else {
             $precision = null;

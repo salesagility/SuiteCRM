@@ -1,15 +1,15 @@
 <?php
 // created: 2015-02-17 15:21:07
-$searchFields['FP_events'] = array (
+$searchFields['FP_events'] = array(
   'name' => 
-  array (
+  array(
     'query_type' => 'default',
   ),
   'current_user_only' => 
-  array (
+  array(
     'query_type' => 'default',
     'db_field' => 
-    array (
+    array(
       0 => 'assigned_user_id',
     ),
     'my_items' => true,
@@ -17,77 +17,77 @@ $searchFields['FP_events'] = array (
     'type' => 'bool',
   ),
   'assigned_user_id' => 
-  array (
+  array(
     'query_type' => 'default',
   ),
   'range_date_entered' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'start_range_date_entered' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'end_range_date_entered' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'range_date_modified' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'start_range_date_modified' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'end_range_date_modified' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'range_date_start' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'start_range_date_start' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'end_range_date_start' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'range_date_end' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'start_range_date_end' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'end_range_date_end' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,

@@ -82,10 +82,10 @@ if (!empty($_REQUEST['email_password'])) {
 
 $focus->protocol = $_REQUEST['protocol'];
 
-if ( isset($_REQUEST['is_create_case']) && $_REQUEST['is_create_case'] == 'on' ) {
+if (isset($_REQUEST['is_create_case']) && $_REQUEST['is_create_case'] == 'on') {
     $focus->mailbox_type = 'createcase';
 } else {
-    if ( empty($focus->mailbox_type) || $focus->mailbox_type == 'createcase' ) {
+    if (empty($focus->mailbox_type) || $focus->mailbox_type == 'createcase') {
         $focus->mailbox_type = 'pick';
     }
 }
@@ -100,7 +100,7 @@ if (empty($optimum)) {
 $delimiter = $focus->getSessionInboundDelimiterString($focus->server_url, $focus->email_user, $focus->port, $focus->protocol);
 
 //added check to ensure the $optimum['serial']) is not empty.
-if (is_array($optimum) && (count($optimum) > 0) && !empty( $optimum['serial'])) {
+if (is_array($optimum) && (count($optimum) > 0) && !empty($optimum['serial'])) {
     $focus->service = $optimum['serial'];
 } else {
     // no save
@@ -139,7 +139,7 @@ if (!$focus->isPop3Protocol()) {
     $stored_options['trashFolder'] = (isset($_REQUEST['trashFolder']) ? trim($_REQUEST['trashFolder']) : "");
     $stored_options['sentFolder'] = (isset($_REQUEST['sentFolder']) ? trim($_REQUEST['sentFolder']) : "");
 } // if
-if ( $focus->isMailBoxTypeCreateCase() || ($focus->mailbox_type == 'createcase' && empty($_REQUEST['id']) ) ) {
+if ($focus->isMailBoxTypeCreateCase() || ($focus->mailbox_type == 'createcase' && empty($_REQUEST['id']))) {
     $stored_options['distrib_method'] = (isset($_REQUEST['distrib_method'])) ? $_REQUEST['distrib_method'] : "";
     $stored_options['create_case_email_template'] = (isset($_REQUEST['create_case_template_id'])) ? $_REQUEST['create_case_template_id'] : "";
     switch ($stored_options['distrib_method']) {
@@ -172,8 +172,8 @@ if (!isset($focus->id)) {
 }
 
 
-if ( isset($_REQUEST['is_auto_import']) && $_REQUEST['is_auto_import'] == 'on' ) {
-    if ( empty($focus->groupfolder_id) ) {
+if (isset($_REQUEST['is_auto_import']) && $_REQUEST['is_auto_import'] == 'on') {
+    if (empty($focus->groupfolder_id)) {
         $groupFolderId = $focus->createAutoImportSugarFolder();
         $focus->groupfolder_id = $groupFolderId;
     }
@@ -181,7 +181,7 @@ if ( isset($_REQUEST['is_auto_import']) && $_REQUEST['is_auto_import'] == 'on' )
 } else {
     $focus->groupfolder_id = "";
     //If the user is turning the auto-import feature off then remove all previous subscriptions.
-    if ( !empty($focus->fetched_row['groupfolder_id'] ) ) {
+    if (!empty($focus->fetched_row['groupfolder_id'])) {
         $GLOBALS['log']->debug("Clearining all subscriptions to folder id: {$focus->fetched_row['groupfolder_id']}");
         $f = new SugarFolder();
         $f->clearSubscriptionsForFolder($focus->fetched_row['groupfolder_id']);
@@ -342,7 +342,7 @@ $monitor_fields = array('name', 'status',
 
 //Only sync IE accounts with a group folder.  Need to sync new records as team set assignment is processed
 //after save.
-if ( !empty($focus->groupfolder_id) ) {
+if (!empty($focus->groupfolder_id)) {
     foreach ($monitor_fields as $singleField) {
         //Check if the value is being changed during save.
         if ($focus->fetched_row[$singleField] != $focus->$singleField) {
@@ -416,7 +416,7 @@ function syncSugarFoldersWithBeanChanges($fieldName, $focus)
             if ($focus->status == 'Inactive') {
                 $f->clearSubscriptionsForFolder($focus->groupfolder_id);
             } else {
-                if ($focus->mailbox_type != 'bounce' ) {
+                if ($focus->mailbox_type != 'bounce') {
                     $f->addSubscriptionsToGroupFolder();
                 }
             }

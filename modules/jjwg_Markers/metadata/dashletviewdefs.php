@@ -1,33 +1,33 @@
 <?php
-$dashletData['jjwg_MarkersDashlet']['searchFields'] = array (
+$dashletData['jjwg_MarkersDashlet']['searchFields'] = array(
   'name' => 
-  array (
+  array(
     'default' => '',
   ),
   'city' => 
-  array (
+  array(
     'default' => '',
   ),
   'state' => 
-  array (
+  array(
     'default' => '',
   ),
   'country' => 
-  array (
+  array(
     'default' => '',
   ),
   'assigned_user_name' => 
-  array (
+  array(
     'default' => '',
   ),
   'date_entered' => 
-  array (
+  array(
     'default' => '',
   ),
 );
-$dashletData['jjwg_MarkersDashlet']['columns'] = array (
+$dashletData['jjwg_MarkersDashlet']['columns'] = array(
   'name' => 
-  array (
+  array(
     'width' => '40%',
     'label' => 'LBL_LIST_NAME',
     'link' => true,
@@ -35,7 +35,7 @@ $dashletData['jjwg_MarkersDashlet']['columns'] = array (
     'name' => 'name',
   ),
   'city' => 
-  array (
+  array(
     'type' => 'varchar',
     'label' => 'LBL_CITY',
     'width' => '10%',
@@ -43,7 +43,7 @@ $dashletData['jjwg_MarkersDashlet']['columns'] = array (
     'name' => 'city',
   ),
   'state' => 
-  array (
+  array(
     'type' => 'varchar',
     'label' => 'LBL_STATE',
     'width' => '10%',
@@ -51,7 +51,7 @@ $dashletData['jjwg_MarkersDashlet']['columns'] = array (
     'name' => 'state',
   ),
   'country' => 
-  array (
+  array(
     'type' => 'varchar',
     'label' => 'LBL_COUNTRY',
     'width' => '10%',
@@ -59,7 +59,7 @@ $dashletData['jjwg_MarkersDashlet']['columns'] = array (
     'name' => 'country',
   ),
   'marker_image' => 
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',
@@ -69,14 +69,14 @@ $dashletData['jjwg_MarkersDashlet']['columns'] = array (
     'name' => 'marker_image',
   ),
   'assigned_user_name' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_LIST_ASSIGNED_USER',
     'name' => 'assigned_user_name',
     'default' => true,
   ),
   'jjwg_maps_lng' => 
-  array (
+  array(
     'type' => 'decimal',
     'default' => false,
     'label' => 'LBL_JJWG_MAPS_LNG',
@@ -84,7 +84,7 @@ $dashletData['jjwg_MarkersDashlet']['columns'] = array (
     'name' => 'jjwg_maps_lng',
   ),
   'jjwg_maps_lat' => 
-  array (
+  array(
     'type' => 'decimal',
     'default' => false,
     'label' => 'LBL_JJWG_MAPS_LAT',
@@ -92,14 +92,14 @@ $dashletData['jjwg_MarkersDashlet']['columns'] = array (
     'name' => 'jjwg_maps_lat',
   ),
   'date_entered' => 
-  array (
+  array(
     'width' => '15%',
     'label' => 'LBL_DATE_ENTERED',
     'default' => false,
     'name' => 'date_entered',
   ),
   'created_by_name' => 
-  array (
+  array(
     'type' => 'relate',
     'link' => 'created_by_link',
     'label' => 'LBL_CREATED',
@@ -108,7 +108,7 @@ $dashletData['jjwg_MarkersDashlet']['columns'] = array (
     'name' => 'created_by_name',
   ),
   'modified_by_name' => 
-  array (
+  array(
     'type' => 'relate',
     'link' => 'modified_user_link',
     'label' => 'LBL_MODIFIED_NAME',
@@ -117,21 +117,21 @@ $dashletData['jjwg_MarkersDashlet']['columns'] = array (
     'name' => 'modified_by_name',
   ),
   'date_modified' => 
-  array (
+  array(
     'width' => '15%',
     'label' => 'LBL_DATE_MODIFIED',
     'name' => 'date_modified',
     'default' => false,
   ),
   'created_by' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_CREATED',
     'name' => 'created_by',
     'default' => false,
   ),
   'description' => 
-  array (
+  array(
     'type' => 'text',
     'label' => 'LBL_DESCRIPTION',
     'sortable' => false,

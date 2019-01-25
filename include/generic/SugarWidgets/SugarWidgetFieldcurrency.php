@@ -56,7 +56,7 @@ function get_currency()
         $global_currency_obj = new Currency();
         //  $global_currency_symbol = '$';
 
-        if ($current_user->getPreference('currency') ) {
+        if ($current_user->getPreference('currency')) {
             $global_currency_obj->retrieve($current_user->getPreference('currency'));
         } else {
             $global_currency_obj->retrieve('-99');
@@ -97,7 +97,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
         $currency_id = $locale->getPrecedentPreference('currency');
 
         // If it's not grouped, or if it's grouped around a system currency column, look up the currency symbol so we can display it next to the amount
-        if ( empty($layout_def['group_function']) || $this->isSystemCurrency($layout_def) ) {
+        if (empty($layout_def['group_function']) || $this->isSystemCurrency($layout_def)) {
             $c = $this->getCurrency($layout_def);
             if (!empty($c['currency_id']) && !empty($c['currency_symbol'])) {
                 $symbol = $c['currency_symbol'];
@@ -131,7 +131,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
             $div_id = $module ."&$record&$field_name";
             $str = "<div id='$div_id'>".$display;
             global $sugar_config;
-            if (isset ($sugar_config['enable_inline_reports_edit']) && $sugar_config['enable_inline_reports_edit']) {
+            if (isset($sugar_config['enable_inline_reports_edit']) && $sugar_config['enable_inline_reports_edit']) {
                 $str .= "&nbsp;" .SugarThemeRegistry::current()->getImage("edit_inline", "border='0' alt='Edit Layout' align='bottom' onClick='SUGAR.reportsInlineEdit.inlineEdit(\"$div_id\",\"$value\",\"$module\",\"$record\",\"$field_name\",\"$field_type\",\"$currency_id\",\"$symbol\");'");
             }
             $str .= "</div>";
@@ -211,8 +211,8 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
     function getCurrencyIdTable($layout_def)
     {
         // We need to fetch the currency id as well
-        if ( !$this->isSystemCurrency($layout_def) && empty($layout_def['group_function'])) {
-            if ( !empty($layout_def['table_alias']) ) {
+        if (!$this->isSystemCurrency($layout_def) && empty($layout_def['group_function'])) {
+            if (!empty($layout_def['table_alias'])) {
                 $table = $layout_def['table_alias'];
             } else {
                 $table = '';
@@ -255,7 +255,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
             $currency_id = $layout_def['currency_id'];
         } else {
             $key = strtoupper(isset($layout_def['varname']) ? $layout_def['varname'] : $this->_get_column_alias($layout_def));
-            if ( $this->isSystemCurrency($layout_def) ) {
+            if ($this->isSystemCurrency($layout_def)) {
                 $currency_id = '-99';
             } elseif (isset($layout_def['fields'][$key.'_CURRENCY'])) {
                 $currency_id = $layout_def['fields'][$key.'_CURRENCY'];

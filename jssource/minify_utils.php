@@ -175,7 +175,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                         $buffer .= "/* End of File $relpath */\n\n";
                         $num = fwrite($trgt_handle, $buffer);
 
-                        if ( $num=== false) {
+                        if ($num=== false) {
                             //log error, file did not get appended
                             echo "Error while concatenating file $loc to target file $trgt \n";
                         }
@@ -334,9 +334,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
                     $out = $lic_str . SugarMin::minify(file_get_contents($from_path));
                 }
 
-                if (function_exists('sugar_fopen') && $fh = @sugar_fopen( $to_path, 'w' ) ) {
-                    fputs( $fh, $out);
-                    fclose( $fh );
+                if (function_exists('sugar_fopen') && $fh = @sugar_fopen($to_path, 'w')) {
+                    fputs($fh, $out);
+                    fclose($fh);
                 } else {
                     file_put_contents($to_path, $out);
                 }
@@ -380,7 +380,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                   //make sure you go into directory tree and not out of tree
                 if ($dir!= '.' && $dir!= '..') {
                     //make recursive call to process this directory
-                    reverseScripts($from_path.'/'.$dir, $to_path );
+                    reverseScripts($from_path.'/'.$dir, $to_path);
                 }
             }
         }

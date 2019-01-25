@@ -92,7 +92,7 @@ class LayoutManager
 
     function getAttribute($key)
     {
-        if ( isset($this->defs[$key])) {
+        if (isset($this->defs[$key])) {
             return $this->defs[$key];
         } else {
             return null;
@@ -220,7 +220,7 @@ class LayoutManager
                 'access_key'=>'LBL_SELECT_BUTTON_KEY',
                 'form_value'=>'LBL_SELECT_REPORTS_BUTTON_LABEL',
                 'ACL'=>'edit',
-                'add_to_passthru_data'=>array (
+                'add_to_passthru_data'=>array(
                     'return_type'=>'report',
                 )
             ),
@@ -239,7 +239,7 @@ class LayoutManager
                 'access_key'=>'LBL_ADD_TO_PROSPECT_LIST_BUTTON_KEY',
                 'form_value'=>'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL',
                 'ACL'=>'edit',
-                'add_to_passthru_data'=>array (
+                'add_to_passthru_data'=>array(
                     'return_type'=>'addtoprospectlist',
                     'parent_module'=>'ProspectLists',
                     'parent_type'=>'ProspectList',
@@ -268,7 +268,7 @@ class LayoutManager
                     $widget_def['widget_class'] = 'Fielduser_name';
                 break;
                 default:
-                    if ( isset($widget_def['type']) ) {
+                    if (isset($widget_def['type'])) {
                         $widget_def['widget_class'] = 'Field' . $widget_def['type'];
                     } else {
                         $widget_def['widget_class'] = 'Field' . $this->DBHelper->getFieldType($widget_def);
@@ -343,7 +343,7 @@ class LayoutManager
                 $beanCache[$widget_def['module']] = new $GLOBALS['beanList'][$widget_def['module']]();
             }
             $bean = $beanCache[$widget_def['module']];
-            if (!empty($widget_def['name']) && !empty($bean->field_name_map) &&!empty($bean->field_name_map[$widget_def['name']]) ) {
+            if (!empty($widget_def['name']) && !empty($bean->field_name_map) &&!empty($bean->field_name_map[$widget_def['name']])) {
                 return $bean->field_name_map[$widget_def['name']];
             }
         }

@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$fields_array['Scheduler'] = array (
+$fields_array['Scheduler'] = array(
     'column_fields' => array(
         'id',
         'deleted',
@@ -73,8 +73,8 @@ $fields_array['Scheduler'] = array (
     ),
 );
 
-$fields_array['Job'] = array (
-    'column_fields' => array (
+$fields_array['Job'] = array(
+    'column_fields' => array(
         'id',
         'deleted',
         'date_entered',
@@ -83,12 +83,12 @@ $fields_array['Job'] = array (
         'execute_time',
         'status',
     ),
-    'list_fields' => array (
+    'list_fields' => array(
         'id',
         'job_id',
         'execute_time'
     ),
-    'required_fields' => array (
+    'required_fields' => array(
         'job_id' => 1,
         'execute_time' => 1
     )

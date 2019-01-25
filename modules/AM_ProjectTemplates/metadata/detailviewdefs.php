@@ -1,64 +1,64 @@
 <?php
 $module_name = 'AM_ProjectTemplates';
 $viewdefs [$module_name] = 
-array (
+array(
   'DetailView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'form' => 
-      array (
+      array(
         'buttons' => 
-        array (
+        array(
           0 => 'EDIT',
           1 => 'DUPLICATE',
           2 => 'DELETE',
           3 => 'FIND_DUPLICATES',
           4 =>
-              array (
+              array(
                     'customCode' => '<input title="{$APP.LBL_CREATE_PROJECT}" class="button" type="button" name="create_project" id="create_project" value="{$APP.LBL_CREATE_PROJECT}" onclick="confirmation(\'{$id}\')" />',
               ),
           5 => 
-              array (
+              array(
                 'customCode' => '<input title="{$APP.LBL_VIEW_GANTT_TITLE}" class="button" type="button" name="view_gantt" id="view_gantt" value="{$APP.LBL_GANTT_BUTTON_LABEL}" onclick="javascript:window.location.href=\'index.php?module=AM_ProjectTemplates&action=view_GanttChart&record={$id}\'"/>',
               ),
           6 => 
-          array (
+          array(
             'customCode' => '<input title="{$APP.LBL_VIEW_DETAIL}" class="button" type="button" name="view_detail" id="view_detail" value="{$APP.LBL_DETAIL_BUTTON_LABEL}" onclick="javascript:window.location.href=\'index.php?module=AM_ProjectTemplates&action=DetailView&record={$id}\'"/>',
           ),
         ),
       ),
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'includes' =>
-      array (
+      array(
           0 =>
-          array (
+          array(
            'file' => 'modules/AM_ProjectTemplates/create_project.js',
           ),
       ),
       'useTabs' => false,
       'tabDefs' => 
-      array (
+      array(
         'DEFAULT' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
         'LBL_PANEL_ASSIGNMENT' =>
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
@@ -66,33 +66,33 @@ array (
       'syncDetailEditViews' => true,
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'name',
           1 => 
-          array (
+          array(
             'name' => 'status',
             'studio' => 'visible',
             'label' => 'LBL_STATUS',
           ),
         ),
         1 => 
-        array (
+        array(
           0 => 'override_business_hours',
           1 => 
-          array (
+          array(
             'name' => 'priority',
             'studio' => 'visible',
             'label' => 'LBL_PRIORITY',
           ),
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO_NAME',
           ),

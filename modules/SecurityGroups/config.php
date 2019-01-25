@@ -40,7 +40,7 @@ $focus = new Administration();
 $focus->retrieveSettings(); //retrieve all admin settings.
 $GLOBALS['log']->info("SecuritySuite Configure Settings view");
 
-$xtpl=new XTemplate ('modules/SecurityGroups/config.html');
+$xtpl=new XTemplate('modules/SecurityGroups/config.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 

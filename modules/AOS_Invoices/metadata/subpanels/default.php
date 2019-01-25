@@ -1,42 +1,42 @@
 <?php
 $module_name='AOS_Invoices';
-$subpanel_layout = array (
+$subpanel_layout = array(
   'top_buttons' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'widget_class' => 'SubPanelTopCreateButton',
       ),
     1 => 
-    array (
+    array(
       'widget_class' => 'SubPanelTopSelectButton',
       'popup_module' => 'AOS_Invoices',
     ),
   ),
   'where' => '',
   'list_fields' => 
-  array (
+  array(
     'number' => 
-    array (
+    array(
       'width' => '5%',
       'vname' => 'LBL_LIST_NUM',
       'default' => true,
     ),
     'name' => 
-    array (
+    array(
       'vname' => 'LBL_NAME',
       'widget_class' => 'SubPanelDetailViewLink',
       'width' => '25%',
       'default' => true,
     ),
     'billing_account' => 
-    array (
+    array(
       'width' => '20%',
       'vname' => 'LBL_BILLING_ACCOUNT',
       'default' => true,
     ),
     'total_amount' =>
-    array (
+    array(
       'type' => 'currency',
       'vname' => 'LBL_GRAND_TOTAL',
       'currency_format' => true,
@@ -44,13 +44,13 @@ $subpanel_layout = array (
       'default' => true,
     ),
     'status' => 
-    array (
+    array(
       'width' => '15%',
       'vname' => 'LBL_STATUS',
       'default' => true,
     ),
     'assigned_user_name' => 
-    array (
+    array(
       'name' => 'assigned_user_name',
       'vname' => 'LBL_ASSIGNED_USER',
       'width' => '15%',
@@ -60,14 +60,14 @@ $subpanel_layout = array (
       'usage'=>'query_only',
     ),
     'edit_button' => 
-    array (
+    array(
       'widget_class' => 'SubPanelEditButton',
       'module' => 'AOS_Invoices',
       'width' => '4%',
       'default' => true,
     ),
     'remove_button' => 
-    array (
+    array(
       'widget_class' => 'SubPanelRemoveButton',
       'module' => 'AOS_Invoices',
       'width' => '5%',

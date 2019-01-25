@@ -177,10 +177,10 @@ class RSSDashlet extends Dashlet
         }
 
         $output = "<table class='edit view'>";
-        if ( isset($rssdoc->channel) ) {
-            foreach ( $rssdoc->channel as $channel ) {
-                if ( isset($channel->item ) ) {
-                    foreach ( $channel->item as $item ) {
+        if (isset($rssdoc->channel)) {
+            foreach ($rssdoc->channel as $channel) {
+                if (isset($channel->item)) {
+                    foreach ($channel->item as $item) {
                         $link = htmlspecialchars($item->link, ENT_QUOTES, 'UTF-8');
                         $title = htmlspecialchars($item->title, ENT_QUOTES, 'UTF-8');
                         $description = htmlspecialchars($item->description, ENT_QUOTES, 'UTF-8');
@@ -196,9 +196,9 @@ EOHTML;
                 }
             }
         } else {
-            foreach ( $rssdoc->entry as $entry ) {
+            foreach ($rssdoc->entry as $entry) {
                 $link = trim($entry->link);
-                if ( empty($link) ) {
+                if (empty($link)) {
                     $link = $entry->link[0]['href'];
                 }
                 $link = htmlspecialchars($link, ENT_QUOTES, 'UTF-8');

@@ -39,39 +39,39 @@
  */
 
 $searchdefs ['Tasks'] = 
-array (
+array(
   'layout' => 
-  array (
+  array(
     'basic_search' => 
-    array (
+    array(
       'name' => 
-      array (
+      array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
      'current_user_only' => 
-      array (
+      array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
         'type' => 'bool',
         'default' => true,
         'width' => '10%',
       ),
-      array ('name' => 'open_only', 'label' => 'LBL_OPEN_ITEMS', 'type' => 'bool', 'default' => false, 'width' => '10%'),
-      array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
+      array('name' => 'open_only', 'label' => 'LBL_OPEN_ITEMS', 'type' => 'bool', 'default' => false, 'width' => '10%'),
+      array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
 
     ),
     'advanced_search' => 
-    array (
+    array(
       'name' => 
-      array (
+      array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
       'contact_name' => 
-      array (
+      array(
         'name' => 'contact_name',
         'label' => 'LBL_CONTACT_NAME',
         'type' => 'name',
@@ -79,7 +79,7 @@ array (
         'width' => '10%',
       ),
       'current_user_only' => 
-      array (
+      array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
         'type' => 'bool',
@@ -87,13 +87,13 @@ array (
         'width' => '10%',
       ),
       'status' => 
-      array (
+      array(
         'name' => 'status',
         'default' => true,
         'width' => '10%',
       ),
       'parent_name' => 
-      array (
+      array(
         'type' => 'parent',
         'label' => 'LBL_LIST_RELATED_TO',
         'width' => '10%',
@@ -101,15 +101,15 @@ array (
         'name' => 'parent_name',
       ),
       'assigned_user_id' => 
-      array (
+      array(
         'name' => 'assigned_user_id',
         'type' => 'enum',
         'label' => 'LBL_ASSIGNED_TO',
         'function' => 
-        array (
+        array(
           'name' => 'get_user_array',
           'params' => 
-          array (
+          array(
             0 => false,
           ),
         ),
@@ -120,11 +120,11 @@ array (
     ),
   ),
   'templateMeta' => 
-  array (
+  array(
     'maxColumns' => '3',
     'maxColumnsBasic' => '4', 
     'widths' => 
-    array (
+    array(
       'label' => '10',
       'field' => '30',
     ),

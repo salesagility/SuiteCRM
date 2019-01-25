@@ -190,7 +190,7 @@ $help_url = get_help_button_url();
 //if this license print, then redirect and exit,
 if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'licensePrint') {
     include('install/licensePrint.php');
-    exit ();
+    exit();
 }
 
 if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") {
@@ -298,11 +298,11 @@ if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") 
         }
 
         $errors = '';
-        if ( isset($validation_errors) && is_array($validation_errors)) {
-            if ( count($validation_errors) > 0 ) {
+        if (isset($validation_errors) && is_array($validation_errors)) {
+            if (count($validation_errors) > 0) {
                 // $errors  = '<div id="errorMsgs">';
                 $errors .= '<p>'.$mod_strings['LBL_SITECFG_FIX_ERRORS'].'</p><ul>';
-                foreach ( $validation_errors as $error ) {
+                foreach ($validation_errors as $error) {
                     $errors .= '<li class="error">' . $error . '</li>';
                 }
                 $errors .= '</ul>'; //</div>';
@@ -381,7 +381,7 @@ if (!isset($_SESSION['oc_install']) || $_SESSION['oc_install'] == false) {
     }
 } else {
     if (is_readable('config.php')) {
-        require_once ('config.php');
+        require_once('config.php');
     }
 }
 
@@ -452,7 +452,7 @@ if (!empty($_REQUEST['goto'])) {
     }
 }
 // Add check here to see if a silent install config file exists; if so then launch silent installer
-elseif ( is_file('config_si.php') && empty($sugar_config['installer_locked'])) {
+elseif (is_file('config_si.php') && empty($sugar_config['installer_locked'])) {
     $langHeader = get_language_header();
 
     echo <<<EOHTML
@@ -694,7 +694,7 @@ EOQ;
                     //then try to convert again
                     if (isset($sugar_config['disc_client']) && $sugar_config['disc_client'] == true && isset($sugar_config['oc_converted']) && $sugar_config['oc_converted'] == false) {
                         header('Location: index.php?entryPoint=oc_convert&first_time=true');
-                        exit ();
+                        exit();
                     }
                 }
             }

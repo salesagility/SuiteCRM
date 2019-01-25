@@ -52,9 +52,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class StudioParser
 {
-    var $positions = array ();
-    var $rows = array ();
-    var $cols = array ();
+    var $positions = array();
+    var $rows = array();
+    var $cols = array();
     var $curFile = '';
     var $curText = '';
     var $form;
@@ -80,10 +80,10 @@ class StudioParser
 
     function getParsers($file)
     {
-        if (substr_count($file, 'DetailView.html') > 0 || substr_count($file, 'EditView.html' ) > 0) {
+        if (substr_count($file, 'DetailView.html') > 0 || substr_count($file, 'EditView.html') > 0) {
             return array('default'=>'StudioParser', array('StudioParser', 'StudioRowParser'));
         }
-        if (substr_count($file, 'ListView.html' ) > 0) {
+        if (substr_count($file, 'ListView.html') > 0) {
             return array('default'=>'XTPLListViewParser', array('XTPLListViewParser'));
         }
         return array('default'=>'StudioParser', array('StudioParser'));
@@ -140,12 +140,12 @@ class StudioParser
     }
     function positionCount($str)
     {
-        $result = array ();
+        $result = array();
         return preg_match_all("'<span[^>]*sugar=[\'\"]+([a-zA-Z\_]*)([0-9]+)([b]*)[\'\"]+[^>]*>(.*?)</span[ ]*sugar=[\'\"]+[a-zA-Z0-9\_]*[\'\"]+>'si", $str, $result, PREG_SET_ORDER)/2;
     }
     function rowCount($str)
     {
-        $result = array ();
+        $result = array();
         return preg_match_all("'(<tr[^>]*>)(.*?)(</tr[^>]*>)'si", $str, $result);
     }
 
@@ -177,7 +177,7 @@ EOQ;
 				<td valign='center' class='button' style='cursor:default' onmousedown='this.className="buttonOn";return false;' onmouseup='this.className="button"' onmouseout='this.className="button"' {$button['actionScript']} >
 EOQ;
             }
-            if ( !isset($button['image']) ) {
+            if (!isset($button['image'])) {
                 $text .= "{$button['text']}</td>";
             } else {
                 $text .= "{$button['image']}&nbsp;{$button['text']}</td>";
@@ -190,13 +190,13 @@ EOQ;
     function generateButtons()
     {
         global $mod_strings;
-        $imageSave = SugarThemeRegistry::current()->getImage( 'studio_save', '', null, null, '.gif', $mod_strings['LBL_SAVE']);
-        $imagePublish = SugarThemeRegistry::current()->getImage( 'studio_publish', '', null, null, '.gif', $mod_strings['LBL_PUBLISH']);
-        $imageHistory = SugarThemeRegistry::current()->getImage( 'studio_history', '', null, null, '.gif', $mod_strings['LBL_HISTORY']);
+        $imageSave = SugarThemeRegistry::current()->getImage('studio_save', '', null, null, '.gif', $mod_strings['LBL_SAVE']);
+        $imagePublish = SugarThemeRegistry::current()->getImage('studio_publish', '', null, null, '.gif', $mod_strings['LBL_PUBLISH']);
+        $imageHistory = SugarThemeRegistry::current()->getImage('studio_history', '', null, null, '.gif', $mod_strings['LBL_HISTORY']);
         $imageAddRows = SugarThemeRegistry::current()->getImage('studio_addRows', '', null, null, '.gif', $mod_strings['LBL_ADDROWS']);
         $imageUndo = SugarThemeRegistry::current()->getImage('studio_undo', '', null, null, '.gif', $mod_strings['LBL_UNDO']);
         $imageRedo = SugarThemeRegistry::current()->getImage('studio_redo', '', null, null, '.gif', $mod_strings['LBL_REDO']);
-        $imageAddField = SugarThemeRegistry::current()->getImage( 'studio_addField', '', null, null, '.gif', $mod_strings['LBL_ADDFIELD']);
+        $imageAddField = SugarThemeRegistry::current()->getImage('studio_addField', '', null, null, '.gif', $mod_strings['LBL_ADDFIELD']);
         $buttons = array();
 
         $buttons[] = array('image'=>$imageUndo,'text'=>$GLOBALS['mod_strings']['LBL_BTN_UNDO'],'actionScript'=>"onclick='jstransaction.undo()'" );
@@ -345,7 +345,7 @@ EOQ;
 
     function saveFile($file = '', $contents = false)
     {
-        if (empty ($file)) {
+        if (empty($file)) {
             $file = $this->curFile;
         }
 
@@ -391,7 +391,7 @@ EOQ;
      */
     function disableInputs($str)
     {
-        $match = array ("'(<input)([^>]*>)'si" => "\$1 disabled readonly $2",
+        $match = array("'(<input)([^>]*>)'si" => "\$1 disabled readonly $2",
     "'(<input)([^>]*?type[ ]*=[ ]*[\'\"]submit[\'\"])([^>]*>)'si" => "\$1 disabled readonly style=\"display:none\" $2",
      "'(<select)([^>]*)'si" => "\$1 disabled readonly $2",
         // "'<a .*>(.*)</a[^>]*>'siU"=>"\$1",
@@ -402,8 +402,8 @@ EOQ;
     function enableLabelEditor($str)
     {
         global $mod_strings;
-        $image = SugarThemeRegistry::current()->getImage( 'edit_inline', "onclick='studiojs.handleLabelClick(\"$2\", 1);' onmouseover='this.style.cursor=\"default\"'", null, null, '.gif', $mod_strings['LBL_EDIT']);
-        $match = array ("'>[^<]*\{(MOD.)([^\}]*)\}'si" => "$image<span id='label$2' onclick='studiojs.handleLabelClick(\"$2\", 2);' >{".'$1$2' . "}</span><span id='span$2' style='display:none'><input type='text' id='$2' name='$2' msi='label' value='{".'$1$2' . "}' onblur='studiojs.endLabelEdit(\"$2\")'></span>");
+        $image = SugarThemeRegistry::current()->getImage('edit_inline', "onclick='studiojs.handleLabelClick(\"$2\", 1);' onmouseover='this.style.cursor=\"default\"'", null, null, '.gif', $mod_strings['LBL_EDIT']);
+        $match = array("'>[^<]*\{(MOD.)([^\}]*)\}'si" => "$image<span id='label$2' onclick='studiojs.handleLabelClick(\"$2\", 2);' >{".'$1$2' . "}</span><span id='span$2' style='display:none'><input type='text' id='$2' name='$2' msi='label' value='{".'$1$2' . "}' onblur='studiojs.endLabelEdit(\"$2\")'></span>");
         $keys = array_keys($match);
         $matches = array();
         preg_match_all($keys[0], $str, $matches, PREG_SET_ORDER);
@@ -439,7 +439,7 @@ EOQ;
 
     function populateRequestFromBuffer($file)
     {
-        $results = array ();
+        $results = array();
         $temp = sugar_file_get_contents($file);
         preg_match_all("'name[\ ]*=[\ ]*[\']([^\']*)\''si", $buffer, $results);
         $res = $results[1];
@@ -479,7 +479,7 @@ EOQ;
         $form_string = "require_once('modules/".$module."/Forms.php');";
 
         if ($type == 'edit' || $type == 'detail') {
-            if (empty ($_REQUEST['record'])) {
+            if (empty($_REQUEST['record'])) {
                 $buffer = preg_replace('(\$xtpl[\ ]*=)', "\$focus->assign_display_fields('$module'); \$0", $buffer);
             } else {
                 $buffer = preg_replace('(\$xtpl[\ ]*=)', "\$focus->retrieve('".$_REQUEST['record']."');\n\$focus->assign_display_fields('$module');\n \$0", $buffer);
@@ -492,12 +492,12 @@ EOQ;
                 global $current_language, $beanFiles, $beanList;
                 $mods = return_module_language($current_language, 'DynamicLayout');
                 $class_name = $beanList[$module];
-                require_once ($beanFiles[$class_name]);
-                $mod = new $class_name ();
+                require_once($beanFiles[$class_name]);
+                $mod = new $class_name();
 
                 $this->populateRequestFromBuffer($file);
                 $mod->assign_display_fields($module);
-                $buffer = str_replace(array ('echo $lv->display();','$search_form->parse("advanced");', '$search_form->out("advanced");', '$search_form->parse("main");', '$search_form->out("main");'), '', $buffer);
+                $buffer = str_replace(array('echo $lv->display();','$search_form->parse("advanced");', '$search_form->out("advanced");', '$search_form->parse("main");', '$search_form->out("main");'), '', $buffer);
                 $buffer = str_replace('echo get_form_footer();', '$search_form->parse("main");'."\n".'$search_form->out("main");'."\necho '<br><b>".translate('LBL_ADVANCED', 'DynamicLayout')."</b><br>';".'$search_form->parse("advanced");'."\n".'$search_form->out("advanced");'."\n \$sugar_config['list_max_entries_per_page'] = 1;", $buffer);
             }
         } else {
@@ -617,7 +617,7 @@ EOQ;
         }
         $this->yahooSlotCount = $slotCount;
         $newView = $return_view.$view;
-        $newView = str_replace(array ('<span>', '</span>'), array ('', ''), $newView);
+        $newView = str_replace(array('<span>', '</span>'), array('', ''), $newView);
 
         return $newView;
     }

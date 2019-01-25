@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['SavedSearch'] = array ('column_fields' => array(
+$fields_array['SavedSearch'] = array('column_fields' => array(
         'id'
         ,'search_module'
         ,'name'

@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-require_once ('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
+require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 
 class ParserModifyLayoutView extends ModuleBuilderParser
 {
@@ -102,7 +102,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
 
         // get the fieldDefs from the bean
         $class = $GLOBALS ['beanList'] [$module];
-        require_once ($GLOBALS ['beanFiles'] [$class]);
+        require_once($GLOBALS ['beanFiles'] [$class]);
         $bean = new $class();
         $this->_fieldDefs = & $bean->field_defs;
 
@@ -124,14 +124,14 @@ class ParserModifyLayoutView extends ModuleBuilderParser
         // Available fields are those that are in the Model and the original layout definition, but not already shown in the View
         // So, because the formats of the two are different we brute force loop through View and unset the fields we find in a copy of Model
         $availableFields = $this->_getModelFields();
-        $GLOBALS['log']->debug( get_class($this)."->getAvailableFields(): _getModelFields returns: ".implode(",", array_keys($availableFields)));
+        $GLOBALS['log']->debug(get_class($this)."->getAvailableFields(): _getModelFields returns: ".implode(",", array_keys($availableFields)));
         if (! empty($this->_viewdefs)) {
             foreach ($this->_viewdefs ['panels'] as $panel) {
                 foreach ($panel as $row) {
                     foreach ($row as $fieldArray) { // fieldArray is an array('name'=>name,'label'=>label)
                         if (isset($fieldArray ['name'])) {
                             unset($availableFields [$fieldArray ['name']]);
-                            $GLOBALS['log']->debug( get_class($this)."->getAvailableFields(): removing ".$fieldArray ['name'] );
+                            $GLOBALS['log']->debug(get_class($this)."->getAvailableFields(): removing ".$fieldArray ['name']);
                         }
                     }
                 }
@@ -260,14 +260,14 @@ class ParserModifyLayoutView extends ModuleBuilderParser
                 foreach ($panel as $rowID => $row) {
                     // pad between fields on a row
                     foreach ($row as $colID => $col) {
-                        for ($i = $column + 1 ; $i < $colID ; $i ++ ) {
+                        for ($i = $column + 1 ; $i < $colID ; $i ++) {
                             $row [$i] = array('name' => '(empty)', 'label' => '(empty)');
                         }
                         $column = $colID;
                     }
                     // now pad out to the end of the row
                     if (($column + 1) < $this->maxColumns) { // last column is maxColumns-1
-                        for ($i = $column + 1 ; $i < $this->maxColumns ; $i ++ ) {
+                        for ($i = $column + 1 ; $i < $this->maxColumns ; $i ++) {
                             $row [$i] = array('name' => '(empty)', 'label' => '(empty)');
                         }
                     }
@@ -350,10 +350,10 @@ class ParserModifyLayoutView extends ModuleBuilderParser
                 $label = isset($def['vname']) ? $def['vname'] : $def['name'];
                 $modelFields [$field] = array('name' => $field, 'label' => $label);
             } else {
-                $GLOBALS['log']->debug( get_class($this)."->_getModelFields(): skipping $field from modelFields as it fails the test for inclusion");
+                $GLOBALS['log']->debug(get_class($this)."->_getModelFields(): skipping $field from modelFields as it fails the test for inclusion");
             }
         }
-        $GLOBALS['log']->debug( get_class($this)."->_getModelFields(): remaining entries in modelFields are: ".implode(",", array_keys($modelFields)));
+        $GLOBALS['log']->debug(get_class($this)."->_getModelFields(): remaining entries in modelFields are: ".implode(",", array_keys($modelFields)));
         return $modelFields;
     }
 
@@ -416,7 +416,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
         $origFieldDefs = array();
         $GLOBALS['log']->debug("Original File = ".$this->_originalFile);
         if (file_exists($this->_originalFile)) {
-            include ($this->_originalFile);
+            include($this->_originalFile);
             $origdefs = $viewdefs [$this->_module] [$this->_sourceView] ['panels'];
 //          $GLOBALS['log']->debug($origdefs);
             // Fix for a flexibility in the format of the panel sections - if only one panel, then we don't have a panel level defined, it goes straight into rows

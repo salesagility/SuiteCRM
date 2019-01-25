@@ -338,7 +338,7 @@ class Dashlet
     {
         global $sugar_config;
 
-        if ( empty($dashletOffset) ) {
+        if (empty($dashletOffset)) {
             $dashletOffset = 0;
             $module = $_REQUEST['module'];
             if (isset($_REQUEST[$module.'2_'.strtoupper($this->seedBean->object_name).'_offset'])) {
@@ -346,10 +346,10 @@ class Dashlet
             }
         }
 
-        if ( !$this->isRefreshable ) {
+        if (!$this->isRefreshable) {
             return '';
         }
-        if ( !empty($sugar_config['dashlet_auto_refresh_min']) && $sugar_config['dashlet_auto_refresh_min'] == -1 ) {
+        if (!empty($sugar_config['dashlet_auto_refresh_min']) && $sugar_config['dashlet_auto_refresh_min'] == -1) {
             return '';
         }
         $autoRefreshSS = new Sugar_Smarty();
@@ -358,7 +358,7 @@ class Dashlet
         $autoRefreshSS->assign('strippedDashletId', str_replace("-", "", $this->id)); //javascript doesn't like "-" in function names
         $autoRefreshSS->assign('dashletRefreshInterval', $this->getAutoRefresh());
         $tpl = 'include/Dashlets/DashletGenericAutoRefresh.tpl';
-        if ( $_REQUEST['action'] == "DynamicAction" ) {
+        if ($_REQUEST['action'] == "DynamicAction") {
             $tpl = 'include/Dashlets/DashletGenericAutoRefreshDynamic.tpl';
         }
 
@@ -406,7 +406,7 @@ class Dashlet
         if (!isset($dashletStrings[$dashletClassname])) {
             // load current language strings for current language, else default to english
             if (is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')
-                || is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php') ) {
+                || is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
                 if (is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
                     require($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php');
                 }
@@ -476,9 +476,9 @@ class Dashlet
     {
         $options = $GLOBALS['app_list_strings']['dashlet_auto_refresh_options'];
 
-        if ( isset($GLOBALS['sugar_config']['dashlet_auto_refresh_min']) ) {
-            foreach ( $options as $time => $desc ) {
-                if ( $time != -1 && $time < $GLOBALS['sugar_config']['dashlet_auto_refresh_min'] ) {
+        if (isset($GLOBALS['sugar_config']['dashlet_auto_refresh_min'])) {
+            foreach ($options as $time => $desc) {
+                if ($time != -1 && $time < $GLOBALS['sugar_config']['dashlet_auto_refresh_min']) {
                     unset($options[$time]);
                 }
             }
@@ -495,7 +495,7 @@ class Dashlet
     protected function isAutoRefreshable()
     {
         return $this->isRefreshable &&
-        ( isset($GLOBALS['sugar_config']['dashlet_auto_refresh_min']) ?
-            $GLOBALS['sugar_config']['dashlet_auto_refresh_min'] != -1 : true );
+        (isset($GLOBALS['sugar_config']['dashlet_auto_refresh_min']) ?
+            $GLOBALS['sugar_config']['dashlet_auto_refresh_min'] != -1 : true);
     }
 }

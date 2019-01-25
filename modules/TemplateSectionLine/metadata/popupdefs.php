@@ -1,21 +1,21 @@
 <?php
-$popupMeta = array (
+$popupMeta = array(
     'moduleMain' => 'TemplateSectionLine',
     'varName' => 'TemplateSectionLine',
     'orderBy' => 'templatesectionline.name',
-    'whereClauses' => array (
+    'whereClauses' => array(
   'name' => 'templatesectionline.name',
   'grp' => 'templatesectionline.grp',
   'description' => 'templatesectionline.description',
 ),
-    'searchInputs' => array (
+    'searchInputs' => array(
   1 => 'name',
   4 => 'grp',
   5 => 'description',
 ),
-    'searchdefs' => array (
+    'searchdefs' => array(
   'name' => 
-  array (
+  array(
     'type' => 'name',
     'link' => true,
     'label' => 'LBL_NAME',
@@ -23,14 +23,14 @@ $popupMeta = array (
     'name' => 'name',
   ),
   'grp' => 
-  array (
+  array(
     'type' => 'varchar',
     'label' => 'LBL_GRP',
     'width' => '10%',
     'name' => 'grp',
   ),
   'description' => 
-  array (
+  array(
     'type' => 'text',
     'label' => 'LBL_DESCRIPTION',
     'sortable' => false,
@@ -38,9 +38,9 @@ $popupMeta = array (
     'name' => 'description',
   ),
 ),
-    'listviewdefs' => array (
+    'listviewdefs' => array(
   'NAME' => 
-  array (
+  array(
     'type' => 'name',
     'link' => true,
     'label' => 'LBL_NAME',
@@ -48,14 +48,14 @@ $popupMeta = array (
     'default' => true,
   ),
   'GRP' => 
-  array (
+  array(
     'type' => 'varchar',
     'label' => 'LBL_GRP',
     'width' => '10%',
     'default' => true,
   ),
   'DESCRIPTION' => 
-  array (
+  array(
     'type' => 'text',
     'label' => 'LBL_DESCRIPTION',
     'sortable' => false,

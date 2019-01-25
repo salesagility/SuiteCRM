@@ -188,7 +188,7 @@ class VardefManager
 
         $out="<?php \n \$GLOBALS[\"dictionary\"][\"". $object . "\"]=" . var_export($data, true) .";";
         sugar_file_put_contents_atomic($file, $out);
-        if ( is_file($file) && is_readable($file)) {
+        if (is_file($file) && is_readable($file)) {
             include($file);
         }
 
@@ -293,7 +293,7 @@ class VardefManager
         //load custom fields into the vardef cache
         if ($cacheCustom) {
             require_once("modules/DynamicFields/DynamicField.php");
-            $df = new DynamicField ($module) ;
+            $df = new DynamicField($module) ;
             $df->buildCache($module, false);
         }
 

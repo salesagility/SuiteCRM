@@ -66,7 +66,7 @@ class DropDownBrowser
             }
         }
 
-        foreach ( self::$restrictedDropdowns as $restrictedDropdown ) {
+        foreach (self::$restrictedDropdowns as $restrictedDropdown) {
             unset($my_list_strings[$restrictedDropdown]);
         }
 

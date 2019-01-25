@@ -90,7 +90,7 @@ function compare($table_name, $db_indexes, $var_indexes)
         }
         //check for name match.
         //it should not occur for indexes of type primary or unique.
-        if ( $var_i_def['type'] != 'primary' and $var_i_def['type'] != 'unique' and $var_i_def['name'] != $sel_db_index['name']) {
+        if ($var_i_def['type'] != 'primary' and $var_i_def['type'] != 'unique' and $var_i_def['name'] != $sel_db_index['name']) {
             //rename index.
             $rename=DBManagerFactory::getInstance()->renameIndexDefs($sel_db_index, $var_i_def, $table_name);
             if (is_array($rename)) {
@@ -124,7 +124,7 @@ $drop_index=array();
 $change_index=array();
 
 global $current_user, $beanFiles, $dictionary, $sugar_config, $mod_strings;;
-include_once ('include/database/DBManager.php');
+include_once('include/database/DBManager.php');
 
 $db = &DBManagerFactory::getInstance();
 $processed_tables=array();

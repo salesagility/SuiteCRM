@@ -1,22 +1,22 @@
 <?php
-$dashletData['TemplateSectionLineDashlet']['searchFields'] = array (
+$dashletData['TemplateSectionLineDashlet']['searchFields'] = array(
   'date_entered' => 
-  array (
+  array(
     'default' => '',
   ),
   'date_modified' => 
-  array (
+  array(
     'default' => '',
   ),
   'assigned_user_id' => 
-  array (
+  array(
     'type' => 'assigned_user_name',
     'default' => 'Administrator',
   ),
 );
-$dashletData['TemplateSectionLineDashlet']['columns'] = array (
+$dashletData['TemplateSectionLineDashlet']['columns'] = array(
   'name' => 
-  array (
+  array(
     'width' => '40%',
     'label' => 'LBL_LIST_NAME',
     'link' => true,
@@ -24,14 +24,14 @@ $dashletData['TemplateSectionLineDashlet']['columns'] = array (
     'name' => 'name',
   ),
   'grp' => 
-  array (
+  array(
     'type' => 'varchar',
     'label' => 'LBL_GRP',
     'width' => '10%',
     'default' => true,
   ),
   'description' => 
-  array (
+  array(
     'type' => 'text',
     'label' => 'LBL_DESCRIPTION',
     'sortable' => false,

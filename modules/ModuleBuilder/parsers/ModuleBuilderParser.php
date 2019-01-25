@@ -88,7 +88,7 @@ class ModuleBuilderParser
             $this->_fatalError("ModuleBuilderParser: required viewdef file {$file} does not exist");
         }
         $GLOBALS['log']->info('ModuleBuilderParser->_loadFromFile(): file='.$file);
-        require ($file); // loads in a $viewdefs
+        require($file); // loads in a $viewdefs
 
         // Check to see if we have the module name set as a variable rather than embedded in the $viewdef array
         // If we do, then we have to preserve the module variable when we write the file back out
@@ -132,10 +132,10 @@ class ModuleBuilderParser
             unlink($file);
         }
 
-        mkdir_recursive ( dirname ( $file ) ) ;
+        mkdir_recursive(dirname($file)) ;
         $GLOBALS['log']->debug("ModuleBuilderParser->_writeFile(): file=".$file);
         $useVariables = (count($variables)>0);
-        if ( $fh = @sugar_fopen( $file, 'w' ) ) {
+        if ($fh = @sugar_fopen($file, 'w')) {
             $out = "<?php\n";
             if ($useVariables) {
                 // write out the $<variable>=<modulename> lines
@@ -156,7 +156,7 @@ class ModuleBuilderParser
                 }
             $viewVariable = $this->_defMap[strtolower($view)];
             $out .= "\$$viewVariable = ";
-            $out .= ($useVariables) ? "array (\n\$module_name =>\n".var_export_helper($defs) : var_export_helper( array($moduleName => $defs) );
+            $out .= ($useVariables) ? "array (\n\$module_name =>\n".var_export_helper($defs) : var_export_helper(array($moduleName => $defs));
 
             // tidy up the parenthesis
             if ($useVariables) {
@@ -165,8 +165,8 @@ class ModuleBuilderParser
             $out .= ";\n?>\n";
 
 //           $GLOBALS['log']->debug("parser.modifylayout.php->_writeFile(): out=".print_r($out,true));
-            fputs( $fh, $out);
-            fclose( $fh );
+            fputs($fh, $out);
+            fclose($fh);
         } else {
             $GLOBALS['log']->fatal("ModuleBuilderParser->_writeFile() Could not write new viewdef file ".$file);
         }

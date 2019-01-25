@@ -30,7 +30,7 @@ function display_condition_lines($focus, $field, $value, $view)
     $html = '';
 
     if (!is_file('cache/jsLanguage/AOW_Conditions/' . $GLOBALS['current_language'] . '.js')) {
-        require_once ('include/language/jsLanguage.php');
+        require_once('include/language/jsLanguage.php');
         jsLanguage::createModuleStringsCache('AOW_Conditions', $GLOBALS['current_language']);
     }
     $html .= '<script src="cache/jsLanguage/AOW_Conditions/'. $GLOBALS['current_language'] . '.js"></script>';

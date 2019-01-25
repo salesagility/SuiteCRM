@@ -1,7 +1,7 @@
 <?php
-$dictionary['securitygroups_records'] = array (
+$dictionary['securitygroups_records'] = array(
     'table' => 'securitygroups_records', 
-    'fields' => array (
+    'fields' => array(
         array('name' =>'id', 'type' =>'char', 'len'=>'36', 'required'=>true, 'default'=>'')
       , array('name' =>'securitygroup_id', 'type' =>'char', 'len'=>'36')
       , array('name' =>'record_id', 'type' =>'char', 'len'=>'36')
@@ -11,12 +11,12 @@ $dictionary['securitygroups_records'] = array (
       , array('name' =>'created_by', 'type' =>'char', 'len'=>'36')
       , array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'required'=>true, 'default'=>'0')
     ),
-    'indices' => array (
+    'indices' => array(
        array('name' =>'securitygroups_recordspk', 'type' =>'primary', 'fields'=>array('id')),
        array('name' =>'idx_securitygroups_records_mod', 'type' =>'index', 'fields'=>array( 'module', 'deleted', 'record_id', 'securitygroup_id')),
         array('name' =>'idx_securitygroups_records_del', 'type' =>'index', 'fields'=>array( 'deleted', 'record_id', 'module', 'securitygroup_id')),
     ),
-    'relationships' => array (
+    'relationships' => array(
     
         'securitygroups_accounts' => array(
             'lhs_module'=> 'SecurityGroups', 'lhs_table'=> 'securitygroups', 'lhs_key' => 'id',

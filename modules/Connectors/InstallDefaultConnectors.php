@@ -42,25 +42,25 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-$default_modules_sources = array (
+$default_modules_sources = array(
   'Accounts' =>
-  array (
+  array(
      'ext_rest_insideview' => 'ext_rest_insideview',
   ),
   'Contacts' =>
-  array (
+  array(
      'ext_rest_insideview' => 'ext_rest_insideview',
   ),
   'Leads' =>
-  array (
+  array(
      'ext_rest_insideview' => 'ext_rest_insideview',
   ),
   'Prospects' =>
-  array (
+  array(
 
   ),
   'Opportunities' =>
-  array (
+  array(
     'ext_rest_insideview' => 'ext_rest_insideview',
   ),
 );
@@ -92,7 +92,7 @@ if (file_exists('custom/modules/Connectors/metadata/display_config.php')) {
     }
 
     // Merge in the new connector default settings with the current settings
-    if ( isset($modules_sources) && is_array($modules_sources) ) {
+    if (isset($modules_sources) && is_array($modules_sources)) {
         foreach ($modules_sources as $module => $sources) {
             if (!empty($default_modules_sources[$module])) {
                 $merged = array_merge($modules_sources[$module], $default_modules_sources[$module]);

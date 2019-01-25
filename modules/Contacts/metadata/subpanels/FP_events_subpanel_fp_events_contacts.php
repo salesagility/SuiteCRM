@@ -1,9 +1,9 @@
 <?php
 // created: 2013-04-25 14:25:35
 global $app_strings;
-$subpanel_layout['list_fields'] = array (
+$subpanel_layout['list_fields'] = array(
   'checkbox' => 
-  array (
+  array(
     'vname' =>  "<ul id='selectLinkTop' class='clickMenu selectmenu SugarActionMenu' name=''>
                     <li class='sugar_action_button'>
                       <input class='checkallContacts' class='checkbox massall' type='checkbox' name='checkallContacts' style='float: left;margin: 2px 0 0 2px;' onclick=''>
@@ -23,7 +23,7 @@ $subpanel_layout['list_fields'] = array (
     'default' => true,
   ),
   'name' => 
-  array (
+  array(
     'name' => 'name',
     'vname' => 'LBL_LIST_NAME',
     'sort_by' => 'last_name',
@@ -34,7 +34,7 @@ $subpanel_layout['list_fields'] = array (
     'default' => true,
   ),
   'account_name' => 
-  array (
+  array(
     'name' => 'account_name',
     'module' => 'Accounts',
     'target_record_key' => 'account_id',
@@ -46,14 +46,14 @@ $subpanel_layout['list_fields'] = array (
     'default' => true,
   ),
   'phone_work' => 
-  array (
+  array(
     'name' => 'phone_work',
     'vname' => 'LBL_LIST_PHONE',
     'width' => '15%',
     'default' => true,
   ),
   'email1' => 
-  array (
+  array(
     'name' => 'email1',
     'vname' => 'LBL_LIST_EMAIL',
     'widget_class' => 'SubPanelEmailLink',
@@ -62,21 +62,21 @@ $subpanel_layout['list_fields'] = array (
     'default' => true,
   ),
   'event_status_name' => 
-  array (
+  array(
     'vname' => 'LBL_STATUS',
     'width' => '10%',
     'sortable' => false,
     'default' => true,
   ),
   'event_accept_status' => 
-  array (
+  array(
     'width' => '10%',
     'sortable' => false,
     'default' => true,
     'vname' => 'LBL_ACCEPT_STATUS',
   ),
    'edit_button' => 
-  array (
+  array(
     'vname' => 'LBL_EDIT_BUTTON',
     'widget_class' => 'SubPanelEditButton',
     'module' => 'Contacts',
@@ -84,7 +84,7 @@ $subpanel_layout['list_fields'] = array (
     'default' => true,
   ),
   'remove_button' => 
-  array (
+  array(
     'vname' => 'LBL_REMOVE',
     'widget_class' => 'SubPanelRemoveButton',
     'module' => 'Contacts',
@@ -92,38 +92,38 @@ $subpanel_layout['list_fields'] = array (
     'default' => true,
   ),
   'e_accept_status_fields' => 
-  array (
+  array(
     'usage' => 'query_only',
   ),
   'event_status_id' => 
-  array (
+  array(
     'usage' => 'query_only',
   ),
   'e_invite_status_fields' => 
-  array (
+  array(
     'usage' => 'query_only',
   ),
   'event_invite_id' => 
-  array (
+  array(
     'usage' => 'query_only',
   ),
   'first_name' => 
-  array (
+  array(
     'name' => 'first_name',
     'usage' => 'query_only',
   ),
   'last_name' => 
-  array (
+  array(
     'name' => 'last_name',
     'usage' => 'query_only',
   ),
   'salutation' => 
-  array (
+  array(
     'name' => 'salutation',
     'usage' => 'query_only',
   ),
   'account_id' => 
-  array (
+  array(
     'usage' => 'query_only',
   ),
 );

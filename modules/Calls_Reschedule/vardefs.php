@@ -42,9 +42,9 @@ $dictionary['Calls_Reschedule'] = array(
     'table'=>'calls_reschedule',
     'audited'=>true,
         'duplicate_merge'=>true,
-        'fields'=>array (
+        'fields'=>array(
   'reason' => 
-  array (
+  array(
     'required' => false,
     'name' => 'reason',
     'vname' => 'LBL_REASON',
@@ -67,7 +67,7 @@ $dictionary['Calls_Reschedule'] = array(
     'dependency' => false,
   ),
   'call_id' =>
-  array (
+  array(
     'required' => false,
     'name' => 'call_id',
     'vname' => '',
@@ -87,7 +87,7 @@ $dictionary['Calls_Reschedule'] = array(
     'size' => '20',
   ),
   'call_name' =>
-  array (
+  array(
     'required' => false,
     'source' => 'non-db',
     'name' => 'call_name',
@@ -114,7 +114,7 @@ $dictionary['Calls_Reschedule'] = array(
     'studio' => 'visible',
   ),
 ),
-    'relationships'=>array (
+    'relationships'=>array(
 ),
     'optimistic_locking'=>true,
         'unified_search'=>true,

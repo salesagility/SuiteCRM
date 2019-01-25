@@ -123,7 +123,7 @@ class CalendarDisplay
         $ss->assign('items_draggable', SugarConfig::getInstance()->get('calendar.items_draggable', true));
         $ss->assign('items_resizable', SugarConfig::getInstance()->get('calendar.items_resizable', true));
         $ss->assign('cells_per_day', $cal->cells_per_day);
-        $ss->assign('activityColors', json_encode($this->checkActivity($this->activity_colors) ) );
+        $ss->assign('activityColors', json_encode($this->checkActivity($this->activity_colors)));
         $ss->assign('dashlet', $cal->dashlet);
         $ss->assign('grid_start_ts', intval($cal->grid_start_ts));
         
@@ -228,12 +228,12 @@ class CalendarDisplay
         if (empty($activity)) {
             $activity = $this->activity_colors;
         }
-        $newActivities = unserialize( base64_decode($current_user->getPreference("CalendarActivities") ) );
+        $newActivities = unserialize(base64_decode($current_user->getPreference("CalendarActivities")));
         if ($newActivities) {
-            $activity = array_merge($activity, $newActivities );
+            $activity = array_merge($activity, $newActivities);
         }
         foreach ($activity as $key => $activityItem) {
-            if (isset($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($this->cal->activityList[ $key ]) ) {
+            if (isset($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($this->cal->activityList[ $key ])) {
                 $activity[ $key ]['label'] = $GLOBALS['app_list_strings']['moduleList'][ $key ];
             } else {
                 unset($activity[ $key ]);
@@ -243,7 +243,7 @@ class CalendarDisplay
             $this->activity_colors = $activity;
         }
         if (!empty($this->cal->activityList)) {
-            foreach ($this->cal->activityList as $key=>$value ) {
+            foreach ($this->cal->activityList as $key=>$value) {
                 if (isset($GLOBALS['beanList'][$key]) && !empty($GLOBALS['beanList'][$key]) && !isset($this->activity_colors[ $key ])) {
                     $this->activity_colors[ $key ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
                     $activity[ $key ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
@@ -279,7 +279,7 @@ class CalendarDisplay
             $pm = $match[2] == "pm" ? "%P" : "%p";
             $CALENDAR_FORMAT = $date_format . ' ' . $t23 . $time_separator . "%M" . $pm;
         }
-        $hours_arr = array ();
+        $hours_arr = array();
         $num_of_hours = 24;
         $start_at = 0;
         $TIME_MERIDIEM = "";
@@ -349,7 +349,7 @@ class CalendarDisplay
             $shared_calendar_separate = SugarConfig::getInstance()->get('calendar.calendar_display_shared_separate', true);
         }
         $ss->assign('week', $_REQUEST['week']);
-        $ss->assign('activity', $this->checkActivity($this->activity_colors) );
+        $ss->assign('activity', $this->checkActivity($this->activity_colors));
         $ss->assign('display_timeslots', $displayTimeslots);
         $ss->assign('shared_calendar_separate', $shared_calendar_separate);
         $ss->assign('show_calls', $this->cal->show_calls);
@@ -374,7 +374,7 @@ class CalendarDisplay
         global $current_user;
         $dateFormat = $current_user->getUserDateTimePreferences();
 
-        if ($view == 'month' || $view == 'sharedMonth' ) {
+        if ($view == 'month' || $view == 'sharedMonth') {
             for ($i=0; $i<strlen($dateFormat['date']); $i++) {
                 switch ($dateFormat['date']{$i}) {
                     case "Y":
@@ -554,7 +554,7 @@ class CalendarDisplay
             $tabs = $this->views;
             $tabs_params = array();
             foreach ($tabs as $key => $tab) {
-                if ( ($key != "basicDay") and ($key != "basicWeek") ) {
+                if (($key != "basicDay") and ($key != "basicWeek")) {
                     $tabs_params[$key]['title'] = $cal_strings["LBL_" . strtoupper($key)];
                     $tabs_params[$key]['id'] = $key . "-tab";
                     $tabs_params[$key]['link'] = "window.location.href='" . ajaxLink("index.php?module=Calendar&action=index&view=" . $key . $this->cal->date_time->get_date_str()) . "'";

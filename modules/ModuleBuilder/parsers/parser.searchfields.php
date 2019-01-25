@@ -41,8 +41,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once ('modules/ModuleBuilder/parsers/ModuleBuilderParser.php') ;
-require_once ('modules/ModuleBuilder/MB/MBPackage.php');
+require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php') ;
+require_once('modules/ModuleBuilder/MB/MBPackage.php');
 
 class ParserSearchFields extends ModuleBuilderParser
 {

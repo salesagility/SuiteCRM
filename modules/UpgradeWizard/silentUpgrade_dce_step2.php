@@ -72,7 +72,7 @@ function clearCacheSU($thedir, $extension)
      }
      global $sugar_config;
      if (!isset($sugar_config['default_permissions'])) {
-         $sugar_config['default_permissions'] = array (
+         $sugar_config['default_permissions'] = array(
                      'dir_mode' => 02770,
                      'file_mode' => 0660,
                      'user' => '',
@@ -91,10 +91,10 @@ function checkLoggerSettings()
     }
     global $sugar_config;
     if (!isset($sugar_config['logger'])) {
-        $sugar_config['logger'] =array (
+        $sugar_config['logger'] =array(
             'level'=>'fatal',
             'file' =>
-             array (
+             array(
               'ext' => '.log',
               'name' => 'sugarcrm',
               'dateFormat' => '%c',
@@ -118,10 +118,10 @@ function checkResourceSettings()
     global $sugar_config;
     if (!isset($sugar_config['resource_management'])) {
         $sugar_config['resource_management'] =
-          array (
+          array(
             'special_query_limit' => 50000,
             'special_query_modules' =>
-            array (
+            array(
               0 => 'Reports',
               1 => 'Export',
               2 => 'Import',
@@ -147,7 +147,7 @@ function createMissingRels()
         $result= DBManagerFactory::getInstance()->query($query, true);
         $a = null;
         $a = DBManagerFactory::getInstance()->fetchByAssoc($result);
-        if (!isset($a['id']) && empty($a['id']) ) {
+        if (!isset($a['id']) && empty($a['id'])) {
             $qRel = "INSERT INTO relationships (id,relationship_name, lhs_module, lhs_table, lhs_key, rhs_module, rhs_table, rhs_key, join_table, join_key_lhs, join_key_rhs, relationship_type, relationship_role_column, relationship_role_column_value, reverse, deleted)
 						VALUES ('{$guid}', '{$relObjName}_assigned_user','Users','users','id','{$relModName}','{$relObjName}','assigned_user_id',NULL,NULL,NULL,'one-to-many',NULL,NULL,'0','0')";
             DBManagerFactory::getInstance()->query($qRel);
@@ -158,7 +158,7 @@ function createMissingRels()
         $result= DBManagerFactory::getInstance()->query($query, true);
         $a = null;
         $a = DBManagerFactory::getInstance()->fetchByAssoc($result);
-        if (!isset($a['id']) && empty($a['id']) ) {
+        if (!isset($a['id']) && empty($a['id'])) {
             $qRel = "INSERT INTO relationships (id,relationship_name, lhs_module, lhs_table, lhs_key, rhs_module, rhs_table, rhs_key, join_table, join_key_lhs, join_key_rhs, relationship_type, relationship_role_column, relationship_role_column_value, reverse, deleted)
 						VALUES ('{$guid}', '{$relObjName}_modified_user','Users','users','id','{$relModName}','{$relObjName}','modified_user_id',NULL,NULL,NULL,'one-to-many',NULL,NULL,'0','0')";
             DBManagerFactory::getInstance()->query($qRel);
@@ -169,7 +169,7 @@ function createMissingRels()
         $result= DBManagerFactory::getInstance()->query($query, true);
         $a = null;
         $a = DBManagerFactory::getInstance()->fetchByAssoc($result);
-        if (!isset($a['id']) && empty($a['id']) ) {
+        if (!isset($a['id']) && empty($a['id'])) {
             $qRel = "INSERT INTO relationships (id,relationship_name, lhs_module, lhs_table, lhs_key, rhs_module, rhs_table, rhs_key, join_table, join_key_lhs, join_key_rhs, relationship_type, relationship_role_column, relationship_role_column_value, reverse, deleted)
 						VALUES ('{$guid}', '{$relObjName}_created_by','Users','users','id','{$relModName}','{$relObjName}','created_by',NULL,NULL,NULL,'one-to-many',NULL,NULL,'0','0')";
             DBManagerFactory::getInstance()->query($qRel);
@@ -188,7 +188,7 @@ function createMissingRels()
 function merge_passwordsetting($sugar_config, $sugar_version)
 {
     $passwordsetting_defaults = array(
-    'passwordsetting' => array (
+    'passwordsetting' => array(
         'SystemGeneratedPasswordON' => '',
         'generatepasswordtmpl' => '',
         'lostpasswordtmpl' => '',
@@ -205,14 +205,14 @@ function merge_passwordsetting($sugar_config, $sugar_version)
     );
 
 
-    $sugar_config = sugarArrayMerge($passwordsetting_defaults, $sugar_config );
+    $sugar_config = sugarArrayMerge($passwordsetting_defaults, $sugar_config);
 
     // need to override version with default no matter what
     $sugar_config['sugar_version'] = $sugar_version;
 
-    ksort( $sugar_config );
+    ksort($sugar_config);
 
-    if ( write_array_to_file( "sugar_config", $sugar_config, "config.php" ) ) {
+    if (write_array_to_file("sugar_config", $sugar_config, "config.php")) {
         return true;
     } else {
         return false;
@@ -463,7 +463,7 @@ $errors = array();
 if ($upgradeType == constant('DCE_INSTANCE')) {
     //$instanceUpgradePath = "{$argv[1]}/DCEUpgrade/{$zip_from_dir}";
     //$instanceUpgradePath = "{$argv[1]}";
-    include ("ini_setup.php");
+    include("ini_setup.php");
 
     //get new template path for use in later processing
     $dceupgrade_pos = strpos($argv[1], '/DCEUpgrade');
@@ -517,7 +517,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
     }
     //If Instance then the files will be accessed from Template/DCEUpgrade folder
     $zip_from_dir = '';
-    if ( isset( $manifest['copy_files']['from_dir'] ) && $manifest['copy_files']['from_dir'] != "" ) {
+    if (isset($manifest['copy_files']['from_dir']) && $manifest['copy_files']['from_dir'] != "") {
         $zip_from_dir   = $manifest['copy_files']['from_dir'];
     }
 
@@ -602,7 +602,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
         logThis('Set default_max_tabs to 7', $path);
         $sugar_config['default_max_tabs'] = '7';
 
-        if ( !write_array_to_file( "sugar_config", $sugar_config, "config.php" ) ) {
+        if (!write_array_to_file("sugar_config", $sugar_config, "config.php")) {
             logThis('*** ERROR: could not write config.php! - upgrade will fail!', $path);
             $errors[] = 'Could not write config.php!';
         }
@@ -640,7 +640,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
                 unset($GLOBALS['dictionary'][$bean]);
                 require_once($newtemplate_path . '/' . $file);
 
-                $focus = new $bean ();
+                $focus = new $bean();
                 if (empty($focus->table_name) || isset($repairedTables[$focus->table_name])) {
                     continue;
                 }
@@ -655,8 +655,8 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
             }
         }
 
-        unset ($dictionary);
-        include ($newtemplate_path.'/modules/TableDictionary.php');
+        unset($dictionary);
+        include($newtemplate_path.'/modules/TableDictionary.php');
         foreach ($dictionary as $meta) {
             $tablename = $meta['table'];
 
@@ -695,7 +695,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
         $tabs = $newTB->get_system_tabs();
 
         //add the new tabs to the array
-        foreach ($newModuleList as $nm ) {
+        foreach ($newModuleList as $nm) {
             $tabs[$nm] = $nm;
         }
 

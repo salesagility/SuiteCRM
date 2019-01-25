@@ -103,8 +103,8 @@ class ViewWizard extends SugarView
         $this->ss->assign('ADDRESS_POSTALCODE', $current_user->address_postalcode);
         $this->ss->assign('ADDRESS_COUNTRY', $current_user->address_country);
         $configurator = new Configurator();
-        if ( $configurator->config['passwordsetting']['SystemGeneratedPasswordON']
-                || $configurator->config['passwordsetting']['forgotpasswordON'] ) {
+        if ($configurator->config['passwordsetting']['SystemGeneratedPasswordON']
+                || $configurator->config['passwordsetting']['forgotpasswordON']) {
             $this->ss->assign('REQUIRED_EMAIL_ADDRESS', '1');
         } else {
             $this->ss->assign('REQUIRED_EMAIL_ADDRESS', '0');
@@ -126,7 +126,7 @@ class ViewWizard extends SugarView
 
         // set default settings
         $use_real_names = $current_user->getPreference('use_real_names');
-        if ( empty($use_real_names) ) {
+        if (empty($use_real_names)) {
             $current_user->setPreference('use_real_names', 'on');
         }
         $current_user->setPreference('reminder_time', 1800);
@@ -230,7 +230,7 @@ eoq;
         $mail_smtppass = "";
         $mail_smtpauth_req=true;
         if (!empty($mail_smtpserver) && !empty($mail_smtptype)) {
-            if ( !$systemOutboundEmail->isAllowUserAccessToSystemDefaultOutbound() ) {
+            if (!$systemOutboundEmail->isAllowUserAccessToSystemDefaultOutbound()) {
                 $mail_smtpauth_req = $systemOutboundEmail->mail_smtpauth_req;
                 $userOverrideOE = $systemOutboundEmail->getUsersMailerForSystemOverride($current_user->id);
                 if ($userOverrideOE != null) {
@@ -265,7 +265,7 @@ eoq;
     public function correctCurrenciesSymbolsSort($currenciesArray)
     {
         $baseCurrencyId = '-99';
-        $newCurrenciesArray = array ();
+        $newCurrenciesArray = array();
 
         $newCurrenciesArray[] = $currenciesArray[$baseCurrencyId]['symbol'];
         array_shift($currenciesArray);

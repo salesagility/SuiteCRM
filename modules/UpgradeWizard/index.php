@@ -142,7 +142,7 @@ if (isset($_REQUEST['delete_package']) && $_REQUEST['delete_package'] == 'true')
     }
 
     // delete file in upgrades/patch
-    $delete_me = 'upload://upgrades/patch/'.basename(urldecode( $_REQUEST['install_file'] ));
+    $delete_me = 'upload://upgrades/patch/'.basename(urldecode($_REQUEST['install_file']));
     if (is_file($delete_me) && !@unlink($delete_me)) {
         logThis('ERROR: could not delete: '.$delete_me);
         $error .= $mod_strings['ERR_UW_FILE_NOT_DELETED'].$delete_me.'<br>';
@@ -184,7 +184,7 @@ if (isset($_SESSION['Upgraded451Wizard']) && $_SESSION['Upgraded451Wizard']==tru
                 'end',
                 'cancel',
             ),
-            'desc' => array (
+            'desc' => array(
                 $license_title,
                 $mod_strings['LBL_UW_TITLE_PREFLIGHT'],
                 $mod_strings['LBL_UW_TITLE_COMMIT'],
@@ -204,7 +204,7 @@ if (isset($_SESSION['Upgraded451Wizard']) && $_SESSION['Upgraded451Wizard']==tru
                     'end',
                     'cancel',
             ),
-            'desc' => array (
+            'desc' => array(
                     $mod_strings['LBL_UW_TITLE_START'],
                     $mod_strings['LBL_UW_TITLE_SYSTEM_CHECK'],
                     $mod_strings['LBL_UW_TITLE_PREFLIGHT'],
@@ -231,7 +231,7 @@ if (isset($_SESSION['Upgraded451Wizard']) && $_SESSION['Upgraded451Wizard']==tru
                     'end',
                     'cancel',
             ),
-            'desc' => array (
+            'desc' => array(
                     $mod_strings['LBL_UW_TITLE_START'],
                     $mod_strings['LBL_UW_TITLE_SYSTEM_CHECK'],
                     $mod_strings['LBL_UPLOAD_UPGRADE'],
@@ -356,11 +356,11 @@ foreach ($installeds as $installed) {
 
         $view = 'default';
 
-        $target_manifest = remove_file_extension( $filename ) . "-manifest.php";
+        $target_manifest = remove_file_extension($filename) . "-manifest.php";
 
         // cn: bug 9174 - cleared out upgrade dirs, or corrupt entries in upgrade_history give us bad file paths
         if (is_file($target_manifest)) {
-            require_once(getUploadRelativeName($target_manifest) );
+            require_once(getUploadRelativeName($target_manifest));
             $name = empty($manifest['name']) ? $filename : $manifest['name'];
             $description = empty($manifest['description']) ? $mod_strings['LBL_UW_NONE'] : $manifest['description'];
 
@@ -368,9 +368,9 @@ foreach ($installeds as $installed) {
                 $manifest_copy_files_to_dir = isset($manifest['copy_files']['to_dir']) ? clean_path($manifest['copy_files']['to_dir']) : "";
                 $manifest_copy_files_from_dir = isset($manifest['copy_files']['from_dir']) ? clean_path($manifest['copy_files']['from_dir']) : "";
                 $manifest_icon = clean_path($manifest['icon']);
-                $icon = "<!--not_in_theme!--><img src=\"" . $manifest_copy_files_to_dir . ($manifest_copy_files_from_dir != "" ? substr($manifest_icon, strlen($manifest_copy_files_from_dir)+1) : $manifest_icon ) . "\">";
+                $icon = "<!--not_in_theme!--><img src=\"" . $manifest_copy_files_to_dir . ($manifest_copy_files_from_dir != "" ? substr($manifest_icon, strlen($manifest_copy_files_from_dir)+1) : $manifest_icon) . "\">";
             } else {
-                $icon = getImageForType( $manifest['type'] );
+                $icon = getImageForType($manifest['type']);
             }
 
             $uwHistory .= "<form action=\"index.php\" method=\"post\">\n".

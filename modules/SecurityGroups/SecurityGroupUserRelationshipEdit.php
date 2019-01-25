@@ -46,7 +46,7 @@ $quicksearch_js = $qsd->getQSScripts();
 $quicksearch_js .= '<script type="text/javascript" language="javascript">sqs_objects = ' . $json->encode($sqs_objects) . '</script>';
 echo $quicksearch_js;
 
-$xtpl=new XTemplate ('modules/SecurityGroups/SecurityGroupUserRelationshipEdit.html');
+$xtpl=new XTemplate('modules/SecurityGroups/SecurityGroupUserRelationshipEdit.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 

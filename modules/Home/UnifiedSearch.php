@@ -158,7 +158,7 @@ if ($queryString) {
 function getRecordSummary(SugarBean $bean)
 {
     global $listViewDefs;
-    if (!isset($listViewDefs) || !isset($listViewDefs[$bean->module_dir]) ) {
+    if (!isset($listViewDefs) || !isset($listViewDefs[$bean->module_dir])) {
         if (file_exists('custom/modules/'.$bean->module_dir.'/metadata/listviewdefs.php')) {
             require('custom/modules/'.$bean->module_dir.'/metadata/listviewdefs.php');
         } else {
@@ -167,7 +167,7 @@ function getRecordSummary(SugarBean $bean)
             }
         }
     }
-    if ( !isset($listViewDefs) || !isset($listViewDefs[$bean->module_dir]) ) {
+    if (!isset($listViewDefs) || !isset($listViewDefs[$bean->module_dir])) {
         return $bean->get_summary_text();
     }
     $summary = array();

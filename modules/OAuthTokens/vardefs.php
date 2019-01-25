@@ -44,9 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
     'comment' => 'OAuth tokens',
     'audited'=>false,
-    'fields' => array (
+    'fields' => array(
       'id' =>
-      array (
+      array(
         'name' => 'id',
         'vname' => 'LBL_ID',
         'type' => 'id',
@@ -55,7 +55,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
         'comment' => 'Unique identifier'
       ),
       'secret' =>
-      array (
+      array(
             'name' => 'secret',
             'vname' => 'LBL_SECRET',
             'type' => 'varchar',
@@ -64,7 +64,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
             'comment' => 'Secret key',
       ),
       'tstate' =>
-      array (
+      array(
             'name' => 'tstate',
             'vname' => 'LBL_TSTATE',
             'type' => 'enum',
@@ -75,14 +75,14 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
 
       ),
       'consumer' =>
-      array (
+      array(
             'name' => 'consumer',
             'type' => 'id',
             'required' => true,
             'comment' => 'Token related to the consumer',
       ),
       'token_ts' =>
-      array (
+      array(
             'name' => 'token_ts',
             'vname' => 'LBL_TOKEN_TS',
             'type' => 'long',
@@ -91,7 +91,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
             'function' => array('name' => 'displayDateFromTs', 'returns' => 'html', 'onListView' => true)
       ),
       'verify' =>
-      array (
+      array(
             'name' => 'verify',
             'vname' => 'LBL_VERIFY',
             'type' => 'varchar',
@@ -105,7 +105,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
 //            'comment' => 'Token auth data',
 //      ),
       'deleted' =>
-      array (
+      array(
         'name' => 'deleted',
         'vname' => 'LBL_DELETED',
         'type' => 'bool',
@@ -116,7 +116,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
         'comment' => 'Record deletion indicator'
       ),
     'callback_url' =>
-      array (
+      array(
             'name' => 'callback_url',
             'vname' => 'LBL_CALLBACK_URL',
             'type' => 'url',
@@ -125,7 +125,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
             'comment' => 'Callback URL for Authorization',
       ),
       'consumer_link' =>
-      array (
+      array(
         'name' => 'consumer_link',
         'type' => 'link',
         'relationship' => 'consumer_tokens',
@@ -136,7 +136,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
         'source'=>'non-db',
       ),
       'consumer_name' =>
-      array (
+      array(
             'name' => 'consumer_name',
             'link'=>'consumer_link' ,
             'vname' => 'LBL_CONSUMER',
@@ -150,7 +150,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
             'duplicate_merge'=>'disabled'
       ),
      'assigned_user_id' =>
-        array (
+        array(
             'name' => 'assigned_user_id',
             'rname' => 'user_name',
             'id_name' => 'assigned_user_id',
@@ -167,7 +167,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
             'duplicate_merge'=>'disabled'
         ),
      'assigned_user_name' =>
-     array (
+     array(
             'name' => 'assigned_user_name',
             'link'=>'assigned_user_link' ,
             'vname' => 'LBL_ASSIGNED_TO_NAME',
@@ -181,7 +181,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
             'duplicate_merge'=>'disabled'
      ),
      'assigned_user_link' =>
-      array (
+      array(
         'name' => 'assigned_user_link',
         'type' => 'link',
         'relationship' => 'oauthtokens_assigned_user',
@@ -196,7 +196,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
         'table' => 'users',
   ),
   ),
-    'indices' => array (
+    'indices' => array(
        'id'=>array('name' =>'oauthtokenpk', 'type' =>'primary', 'fields'=>array('id', 'deleted')),
        'state_ts'=>array('name' =>"oauth_state_ts", 'type' =>'index', 'fields'=>array('tstate','token_ts')),
        'consumer'=>array('name' =>"constoken_key", 'type' =>'index', 'fields'=>array('consumer')),

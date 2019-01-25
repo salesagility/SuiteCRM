@@ -82,8 +82,8 @@ class ProjectViewTemplatesDetail extends ViewDetail
      */
     protected function _displaySubPanels()
     {
-        require_once ('include/SubPanel/SubPanelTiles.php');
-        $subpanel = new SubPanelTiles( $this->bean, 'ProjectTemplates' );
-        echo $subpanel->display( true, true );
+        require_once('include/SubPanel/SubPanelTiles.php');
+        $subpanel = new SubPanelTiles($this->bean, 'ProjectTemplates');
+        echo $subpanel->display(true, true);
     }
 }

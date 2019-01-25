@@ -389,7 +389,7 @@ class AOW_WorkFlow extends Basic
             if ($data['type'] == 'relate' && isset($data['id_name'])) {
                 $condition->field = $data['id_name'];
             }
-            if (  (isset($data['source']) && $data['source'] == 'custom_fields')) {
+            if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                 $field = $table_alias.'_cstm.'.$condition->field;
                 $query = $this->build_flow_custom_query_join(
                     $table_alias,
@@ -419,7 +419,7 @@ class AOW_WorkFlow extends Basic
                     if ($data['type'] == 'relate' && isset($data['id_name'])) {
                         $condition->value = $data['id_name'];
                     }
-                    if (  (isset($data['source']) && $data['source'] == 'custom_fields')) {
+                    if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                         $value = $module->table_name.'_cstm.'.$condition->value;
                         $query = $this->build_flow_custom_query_join(
                                 $module->table_name,
@@ -493,7 +493,7 @@ class AOW_WorkFlow extends Basic
                                         $amount = 0-$amount;
                                     }
                                     $value = $businessHours->addBusinessHours($amount);
-                                    $value = "'".$timedate->asDb( $value )."'";
+                                    $value = "'".$timedate->asDb($value)."'";
                                     break;
                                 }
                                 //No business hours module found - fall through.
@@ -742,7 +742,7 @@ class AOW_WorkFlow extends Basic
                                         }
 
                                         $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($value));
-                                        $value = strtotime($timedate->asDbType( $value, $dateType ));
+                                        $value = strtotime($timedate->asDbType($value, $dateType));
                                         break;
                                     }
                                     //No business hours module found - fall through.

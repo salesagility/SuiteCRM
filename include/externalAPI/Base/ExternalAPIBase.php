@@ -39,8 +39,8 @@
  */
 
 
-require_once ('include/externalAPI/Base/ExternalAPIPlugin.php');
-require_once ('include/externalAPI/Base/ExternalOAuthAPIPlugin.php');
+require_once('include/externalAPI/Base/ExternalAPIPlugin.php');
+require_once('include/externalAPI/Base/ExternalOAuthAPIPlugin.php');
 require_once('include/connectors/sources/SourceFactory.php');
 
 /**
@@ -91,7 +91,7 @@ abstract class ExternalAPIBase implements ExternalAPIPlugin
             $this->loadEAPM($eapmBean);
         }
 
-        if ( !isset($this->eapmBean) ) {
+        if (!isset($this->eapmBean)) {
             return array('success' => false);
         }
 
@@ -100,11 +100,11 @@ abstract class ExternalAPIBase implements ExternalAPIPlugin
 
     public function quickCheckLogin()
     {
-        if ( !isset($this->eapmBean) ) {
+        if (!isset($this->eapmBean)) {
             return array('success' => false, 'errorMessage' => translate('LBL_ERR_NO_AUTHINFO', 'EAPM'));
         }
 
-        if ( $this->eapmBean->validated==0 ) {
+        if ($this->eapmBean->validated==0) {
             return array('success' => false, 'errorMessage' => translate('LBL_ERR_NO_AUTHINFO', 'EAPM'));
         }
 
@@ -143,7 +143,7 @@ abstract class ExternalAPIBase implements ExternalAPIPlugin
         $proxy_config = SugarModule::get('Administration')->loadBean();
         $proxy_config->retrieveSettings('proxy');
         
-        if ( !empty($proxy_config) && 
+        if (!empty($proxy_config) && 
             !empty($proxy_config->settings['proxy_on']) &&
             $proxy_config->settings['proxy_on'] == 1) {
             curl_setopt($ch, CURLOPT_PROXY, $proxy_config->settings['proxy_host']);
@@ -153,8 +153,8 @@ abstract class ExternalAPIBase implements ExternalAPIPlugin
             }
         }   
         
-        if ( ( is_array($postfields) && count($postfields) == 0 ) ||
-             empty($postfields) ) {
+        if ((is_array($postfields) && count($postfields) == 0) ||
+             empty($postfields)) {
             curl_setopt($ch, CURLOPT_POST, false);
         } else {
             curl_setopt($ch, CURLOPT_POST, true);
@@ -217,7 +217,7 @@ abstract class ExternalAPIBase implements ExternalAPIPlugin
     protected function formatCallbackURL($callback_url)
     {
         // This is a tweak so that we can automatically close windows if requested by the external account system
-        if (isset($_REQUEST['closeWhenDone']) && $_REQUEST['closeWhenDone'] == 1 ) {
+        if (isset($_REQUEST['closeWhenDone']) && $_REQUEST['closeWhenDone'] == 1) {
             $callback_url .= '&closeWhenDone=1';
         }
 
@@ -247,7 +247,7 @@ abstract class ExternalAPIBase implements ExternalAPIPlugin
     protected function getErrorStringFromCode($error_numb)
     {
         $language_key = $this->_appStringErrorPrefix . $error_numb;
-        if ( isset($GLOBALS['app_strings'][$language_key]) ) {
+        if (isset($GLOBALS['app_strings'][$language_key])) {
             return $GLOBALS['app_strings'][$language_key];
         } else {
             return $GLOBALS['app_strings']['ERR_EXTERNAL_API_SAVE_FAIL'];
@@ -261,6 +261,6 @@ abstract class ExternalAPIBase implements ExternalAPIPlugin
      */
     public function isMimeDetectionAvailable()
     {
-        return ( function_exists('mime_content_type') || function_exists( 'ext2mime' ) );
+        return (function_exists('mime_content_type') || function_exists('ext2mime'));
     }
 }

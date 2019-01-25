@@ -344,14 +344,14 @@ $dictionary['emails_text'] = array(
             'reportable'	=> false,
             'comment'		=> 'Email body in plain text',
         ),
-        'description_html' => array (
+        'description_html' => array(
             'name'			=> 'description_html',
             'vname'			=> 'LBL_HTML_BODY',
             'type'			=> 'longhtml',
             'reportable'	=> false,
             'comment'		=> 'Email body in HTML format',
         ),
-        'raw_source' => array (
+        'raw_source' => array(
             'name'			=> 'raw_source',
             'vname'			=> 'LBL_RAW',
             'type'			=> 'longtext',

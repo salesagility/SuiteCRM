@@ -1,16 +1,16 @@
 <?php
 $module_name = 'AM_ProjectTemplates';
 $listViewDefs [$module_name] = 
-array (
+array(
   'NAME' => 
-  array (
+  array(
     'width' => '32%',
     'label' => 'LBL_NAME',
     'default' => true,
     'link' => true,
   ),
   'STATUS' => 
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',
@@ -18,7 +18,7 @@ array (
     'width' => '10%',
   ),
   'PRIORITY' => 
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',
@@ -26,7 +26,7 @@ array (
     'width' => '10%',
   ),
   'ASSIGNED_USER_NAME' => 
-  array (
+  array(
     'width' => '9%',
     'label' => 'LBL_ASSIGNED_TO_NAME',
     'module' => 'Employees',

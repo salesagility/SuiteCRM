@@ -41,8 +41,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once ('modules/DynamicFields/templates/Fields/TemplateField.php') ;
-require_once ('modules/DynamicFields/templates/Fields/TemplateAddressCountry.php') ;
+require_once('modules/DynamicFields/templates/Fields/TemplateField.php') ;
+require_once('modules/DynamicFields/templates/Fields/TemplateAddressCountry.php') ;
 
 class TemplateAddress extends TemplateField
 {
@@ -54,15 +54,15 @@ class TemplateAddress extends TemplateField
         $this->type = 'varchar' ;
 
         require_once 'modules/ModuleBuilder/parsers/parser.label.php' ;
-        $parser = new ParserLabel ( $df->getModuleName(), $df->getPackageName() ) ;
-        foreach ( array ( 'City' , 'State' , 'PostalCode' , 'Country' ) as $addressFieldName ) {
-            $systemLabel = strtoupper( "LBL_" . $this->name . '_' . $addressFieldName );
-            $parser->handleSave ( array( "label_" . $systemLabel => $this->label_value . ' ' . $addressFieldName ), $GLOBALS [ 'current_language' ] ) ;
-            $addressField = new TemplateField ( ) ;
+        $parser = new ParserLabel($df->getModuleName(), $df->getPackageName()) ;
+        foreach (array( 'City' , 'State' , 'PostalCode' , 'Country' ) as $addressFieldName) {
+            $systemLabel = strtoupper("LBL_" . $this->name . '_' . $addressFieldName);
+            $parser->handleSave(array( "label_" . $systemLabel => $this->label_value . ' ' . $addressFieldName ), $GLOBALS [ 'current_language' ]) ;
+            $addressField = new TemplateField() ;
             $addressField->len = ($addressFieldName == 'PostalCode') ? 20 : 100 ;
-            $addressField->name = $this->name . '_' . strtolower ( $addressFieldName ) ;
+            $addressField->name = $this->name . '_' . strtolower($addressFieldName) ;
             $addressField->label = $addressField->vname = $systemLabel ;
-            $addressField->save ( $df ) ;
+            $addressField->save($df) ;
         }
         // finally save the base street address field
         parent::save($df);

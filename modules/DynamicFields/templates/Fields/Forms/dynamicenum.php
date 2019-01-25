@@ -46,13 +46,13 @@ function get_body(&$ss, $vardef)
 {
     $multi = false;
     $radio = false;
-    if (isset ($vardef['type']) && $vardef['type'] == 'multienum') {
+    if (isset($vardef['type']) && $vardef['type'] == 'multienum') {
         $multi = true;
     }
 
     $selected_options = "";
     if ($multi && !empty($vardef['default'])) {
-        $selected_options = unencodeMultienum( $vardef['default']);
+        $selected_options = unencodeMultienum($vardef['default']);
     } else {
         if (isset($vardef['default'])) {
             $selected_options = $vardef['default'];

@@ -164,7 +164,7 @@ class Project extends SugarBean
             }
             $new_rel_link = $new_rel_relname;
             //Try to find the link in this bean based on the relationship
-            foreach ( $this->field_defs as $key => $def ) {
+            foreach ($this->field_defs as $key => $def) {
                 if (isset($def['type']) && $def['type'] == 'link'
                 && isset($def['relationship']) && $def['relationship'] == $new_rel_relname) {
                     $new_rel_link = $key;

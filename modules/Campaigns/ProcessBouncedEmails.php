@@ -111,7 +111,7 @@ function markEmailAddressInvalid($email_address)
         return;
     }
     $sea = new SugarEmailAddress();
-    $rs = $sea->retrieve_by_string_fields( array('email_address_caps' => trim(strtoupper($email_address))) );
+    $rs = $sea->retrieve_by_string_fields(array('email_address_caps' => trim(strtoupper($email_address))));
     if ($rs != null) {
         $sea->AddUpdateEmailAddress($email_address, 1, 0, $rs->id);
     }
@@ -152,7 +152,7 @@ function checkBouncedEmailForIdentifier($email_description)
         $found = true;
         $GLOBALS['log']->debug("Found campaign identifier in header of email");
     } else {
-        if ( preg_match('/index.php\?entryPoint=removeme&identifier=[a-z0-9\-]*/', $email_description, $matches) ) {
+        if (preg_match('/index.php\?entryPoint=removeme&identifier=[a-z0-9\-]*/', $email_description, $matches)) {
             $identifiers = preg_split('/index.php\?entryPoint=removeme&identifier=/', $matches[0], -1, PREG_SPLIT_NO_EMPTY);
             $found = true;
             $GLOBALS['log']->debug("Found campaign identifier in body of email");

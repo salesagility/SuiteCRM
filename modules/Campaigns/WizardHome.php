@@ -126,11 +126,11 @@ if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
         
     
     
-    $ss->assign("CAMPAIGN_TBL", create_campaign_summary ($focus));
-    $ss->assign("TARGETS_TBL", create_target_summary ($focus));
+    $ss->assign("CAMPAIGN_TBL", create_campaign_summary($focus));
+    $ss->assign("TARGETS_TBL", create_target_summary($focus));
     if ($focus->campaign_type =='NewsLetter' || $focus->campaign_type =='Email') {
-        $ss->assign("MARKETING_TBL", create_marketing_summary ($focus));
-        $ss->assign("TRACKERS_TBL", create_tracker_summary ($focus));
+        $ss->assign("MARKETING_TBL", create_marketing_summary($focus));
+        $ss->assign("TRACKERS_TBL", create_tracker_summary($focus));
     }
     
     $camp_url = "index.php?action=WizardNewsletter&module=Campaigns&return_module=Campaigns&return_action=WizardHome";
@@ -157,13 +157,13 @@ if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
 
     //Create the html to fill in the wizard steps
     if ($focus->campaign_type == 'NewsLetter') {
-        $ss->assign('NAV_ITEMS', create_wiz_menu_items('newsletter', $mrkt_string, $camp_url, $summ_url ));
+        $ss->assign('NAV_ITEMS', create_wiz_menu_items('newsletter', $mrkt_string, $camp_url, $summ_url));
         $ss->assign("CAMPAIGN_DIAGNOSTIC_LINK", diagnose());
     } elseif ($focus->campaign_type == 'Email') {
-        $ss->assign('NAV_ITEMS', create_wiz_menu_items('email', $mrkt_string, $camp_url, $summ_url ));
+        $ss->assign('NAV_ITEMS', create_wiz_menu_items('email', $mrkt_string, $camp_url, $summ_url));
         $ss->assign("CAMPAIGN_DIAGNOSTIC_LINK", diagnose());
     } else {
-        $ss->assign('NAV_ITEMS', create_wiz_menu_items('general', $mrkt_string, $camp_url, $summ_url ));
+        $ss->assign('NAV_ITEMS', create_wiz_menu_items('general', $mrkt_string, $camp_url, $summ_url));
     }    
     
             
@@ -379,7 +379,7 @@ function create_marketing_summary($focus)
             
     
     
-            if ( $colorclass== "class='evenListRowS1'") {
+            if ($colorclass== "class='evenListRowS1'") {
                 $colorclass= "class='oddListRowS1'";
             } else {
                 $colorclass= "class='evenListRowS1'";
@@ -430,7 +430,7 @@ function create_target_summary($focus)
     if (count($pl_lists)>0) {
         $pl_focus = new ProspectList();
         foreach ($pl_lists as $pl_id) {
-            if ( $colorclass== "class='evenListRowS1'") {
+            if ($colorclass== "class='evenListRowS1'") {
                 $colorclass= "class='oddListRowS1'";
             } else {
                 $colorclass= "class='evenListRowS1'";
@@ -489,7 +489,7 @@ function create_tracker_summary($focus)
     
     if (count($trkr_lists)>0) {
         foreach ($trkr_lists as $trkr_id) {
-            if ( $colorclass== "class='evenListRowS1'") {
+            if ($colorclass== "class='evenListRowS1'") {
                 $colorclass= "class='oddListRowS1'";
             } else {
                 $colorclass= "class='evenListRowS1'";

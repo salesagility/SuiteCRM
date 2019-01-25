@@ -42,8 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'Inbound email parameters',
-    'fields' => array (
-        'id' => array (
+    'fields' => array(
+        'id' => array(
             'name' => 'id',
             'vname' => 'LBL_ID',
             'type' => 'id',
@@ -53,7 +53,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'reportable'=>false,
             'comment' => 'Unique identifier'
         ),
-        'deleted' => array (
+        'deleted' => array(
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
             'type' => 'bool',
@@ -62,21 +62,21 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'reportable'=>false,
             'comment' => 'Record deltion indicator'
         ),
-        'date_entered' => array (
+        'date_entered' => array(
             'name' => 'date_entered',
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
             'required' => true,
             'comment' => 'Date record created'
         ),
-        'date_modified' => array (
+        'date_modified' => array(
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
             'required' => true,
             'comment' => 'Date record last modified'
         ),
-        'modified_user_id' => array (
+        'modified_user_id' => array(
             'name' => 'modified_user_id',
             'rname' => 'user_name',
             'id_name' => 'modified_user_id',
@@ -88,7 +88,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'reportable'=>true,
             'comment' => 'User who last modified record'
         ),
-        'modified_user_id_link' => array (
+        'modified_user_id_link' => array(
             'name' => 'modified_user_id_link',
             'type' => 'link',
             'relationship' => 'inbound_email_modified_user_id',
@@ -98,7 +98,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'bean_name' => 'User',
             'source' => 'non-db',
         ),
-        'created_by' => array (
+        'created_by' => array(
             'name' => 'created_by',
             'rname' => 'user_name',
             'id_name' => 'modified_user_id',
@@ -109,7 +109,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'dbType' => 'id',
             'comment' => 'User who created record'
         ),
-        'created_by_link' => array (
+        'created_by_link' => array(
             'name' => 'created_by_link',
             'type' => 'link',
             'relationship' => 'inbound_email_created_by',
@@ -119,7 +119,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'bean_name' => 'User',
             'source' => 'non-db',
         ),
-        'name' => array (
+        'name' => array(
             'name' => 'name',
             'vname' => 'LBL_NAME',
             'type' => 'varchar',
@@ -128,7 +128,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'reportable' => false,
             'comment' => 'Name given to the inbound email mailbox'
         ),
-        'status' => array (
+        'status' => array(
             'name' => 'status',
             'vname' => 'LBL_STATUS',
             'type' => 'varchar',
@@ -138,7 +138,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'reportable' => false,
             'comment' => 'Status of the inbound email mailbox (ex: Active or Inactive)'
         ),
-        'server_url' => array (
+        'server_url' => array(
             'name' => 'server_url',
             'vname' => 'LBL_SERVER_URL',
             'type' => 'varchar',
@@ -148,7 +148,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'comment' => 'Mail server URL',
             'importable' => 'required',
         ),
-        'email_user' => array (
+        'email_user' => array(
             'name' => 'email_user',
             'vname' => 'LBL_LOGIN',
             'type' => 'varchar',
@@ -157,7 +157,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'reportable' => false,
             'comment' => 'User name allowed access to mail server'
         ),
-        'email_password' => array (
+        'email_password' => array(
             'name' => 'email_password',
             'vname' => 'LBL_PASSWORD',
             'type' => 'varchar',
@@ -166,17 +166,17 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'reportable' => false,
             'comment' => 'Password of user identified by email_user'
         ),
-        'port' => array (
+        'port' => array(
             'name' => 'port',
             'vname' => 'LBL_SERVER_TYPE',
             'type' => 'int',
             'len' => '5',
             'required' => true,
             'reportable' => false,
-            'validation' => array ('type' => 'range', 'min' => '110', 'max' => '65535'),
+            'validation' => array('type' => 'range', 'min' => '110', 'max' => '65535'),
             'comment' => 'Port used to access mail server'
         ),
-        'service' => array (
+        'service' => array(
             'name' => 'service',
             'vname' => 'LBL_SERVICE',
             'type' => 'varchar',
@@ -186,7 +186,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'comment' => '',
             'importable' => 'required',
         ),
-        'mailbox' => array (
+        'mailbox' => array(
             'name' => 'mailbox',
             'vname' => 'LBL_MAILBOX',
             'type' => 'text',
@@ -194,7 +194,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'reportable' => false,
             'comment' => ''
         ),
-        'delete_seen' => array (
+        'delete_seen' => array(
             'name' => 'delete_seen',
             'vname' => 'LBL_DELETE_SEEN',
             'type' => 'bool',
@@ -203,7 +203,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'massupdate' => '',
             'comment' => 'Delete email from server once read (seen)'
         ),
-        'mailbox_type' => array (
+        'mailbox_type' => array(
             'name' => 'mailbox_type',
             'vname' => 'LBL_MAILBOX_TYPE',
             'type' => 'varchar',
@@ -211,7 +211,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'reportable' => false,
             'comment' => ''
         ),
-        'template_id' => array (
+        'template_id' => array(
             'name' => 'template_id',
             'vname' => 'LBL_AUTOREPLY',
             'type' => 'id',
@@ -219,21 +219,21 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'reportable' => false,
             'comment' => 'Template used for auto-reply'
         ),
-        'stored_options' => array (
+        'stored_options' => array(
             'name' => 'stored_options',
             'vname' => 'LBL_STORED_OPTIONS',
             'type' => 'text',
             'reportable' => false,
             'comment' => ''
         ),
-        'group_id' => array (
+        'group_id' => array(
             'name' => 'group_id',
             'vname' => 'LBL_GROUP_ID',
             'type' => 'id',
             'reportable' => false,
             'comment' => 'Group ID (unused)'
         ),
-        'is_personal' => array (
+        'is_personal' => array(
             'name' => 'is_personal',
             'vname' => 'LBL_IS_PERSONAL',
             'type' => 'bool',
@@ -243,7 +243,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'massupdate' => '',
             'comment' => 'Personal account flag'
         ),
-        'groupfolder_id' => array (
+        'groupfolder_id' => array(
             'name' => 'groupfolder_id',
             'vname' => 'LBL_GROUPFOLDER_ID',
             'type' => 'id',
@@ -252,7 +252,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'comment' => 'Unique identifier'
         ),
     ), /* end fields() */
-    'indices' => array (
+    'indices' => array(
         array(
             'name' =>'inbound_emailpk',
             'type' =>'primary',
@@ -261,7 +261,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             )
         ),
     ), /* end indices */
-    'relationships' => array (
+    'relationships' => array(
         'inbound_email_created_by' => array(
             'lhs_module'=> 'Users',
             'lhs_table' => 'users',
@@ -271,7 +271,7 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'rhs_key' => 'created_by',
             'relationship_type' => 'one-to-one'
         ),
-        'inbound_email_modified_user_id' => array (
+        'inbound_email_modified_user_id' => array(
             'lhs_module' => 'Users',
             'lhs_table' => 'users',
             'lhs_key' => 'id',

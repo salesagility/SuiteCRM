@@ -42,9 +42,9 @@ $dictionary['AOD_Index'] = array(
     'table'=>'aod_index',
     'audited'=>true,
         'duplicate_merge'=>true,
-        'fields'=>array (
+        'fields'=>array(
   'last_optimised' => 
-  array (
+  array(
     'required' => false,
     'name' => 'last_optimised',
     'vname' => 'LBL_LAST_OPTIMISED',
@@ -65,7 +65,7 @@ $dictionary['AOD_Index'] = array(
     'dbType' => 'datetime',
   ),
   'location' => 
-  array (
+  array(
     'required' => false,
     'name' => 'location',
     'vname' => 'LBL_LOCATION',
@@ -85,7 +85,7 @@ $dictionary['AOD_Index'] = array(
     'size' => '20',
   ),
 ),
-    'relationships'=>array (
+    'relationships'=>array(
 ),
     'optimistic_locking'=>true,
         'unified_search'=>false,

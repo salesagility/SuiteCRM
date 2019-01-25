@@ -48,7 +48,7 @@ function upgrade_aos()
         );
 
         foreach ($old_files as $old_file) {
-            if ( file_exists($old_file)) {
+            if (file_exists($old_file)) {
                 create_custom_directory('bak_aos/'.$old_file);
                 sugar_rename($old_file, 'custom/bak_aos/'.$old_file);
             }

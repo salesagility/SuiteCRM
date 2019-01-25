@@ -1,8 +1,8 @@
 <?php
 $listViewDefs ['AOW_Processed'] = 
-array (
+array(
   'AOW_WORKFLOW' => 
-  array (
+  array(
     'type' => 'relate',
     'studio' => 'visible',
     'label' => 'LBL_AOW_WORKFLOW',
@@ -12,7 +12,7 @@ array (
     'default' => true,
   ),
   'PARENT_TYPE' =>
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',
@@ -20,7 +20,7 @@ array (
     'width' => '10%',
   ),
   'PARENT_NAME' =>
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_BEAN',
     'dynamic_module' => 'PARENT_TYPE',
@@ -30,13 +30,13 @@ array (
     'sortable' => false,
     'ACLTag' => 'PARENT',
     'related_fields' =>
-    array (
+    array(
         0 => 'parent_id',
         1 => 'parent_module',
     ),
   ),
   'STATUS' =>
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',
@@ -44,14 +44,14 @@ array (
     'width' => '10%',
   ),
   'DATE_ENTERED' => 
-  array (
+  array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '10%',
     'default' => true,
   ),
   'DATE_MODIFIED' => 
-  array (
+  array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_MODIFIED',
     'width' => '10%',

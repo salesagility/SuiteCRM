@@ -41,7 +41,7 @@ $module_name = 'AOS_Contracts';
                         'basic_search' => array(
                             'name', 
                             array('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),
-                            array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
+                            array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
 
                             ),
                         'advanced_search' => array(

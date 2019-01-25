@@ -1,46 +1,46 @@
 <?php
 $module_name = 'OutboundEmailAccounts';
 $viewdefs [$module_name] = 
-array (
+array(
   'QuickCreate' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'useTabs' => false,
       'tabDefs' => 
-      array (
+      array(
         'DEFAULT' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
         'LBL_EDITVIEW_PANEL1' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'name',
           //1 => 'assigned_user_name',
         ),
@@ -55,42 +55,42 @@ array (
 //        ),
       ),
       'lbl_editview_panel1' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'mail_smtpuser',
             'label' => 'LBL_USERNAME',
           ),
           1 => 
-          array (
+          array(
             'name' => 'password_change',
             'label' => 'LBL_PASSWORD',
           ),
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'mail_smtpserver',
             'label' => 'LBL_SMTP_SERVERNAME',
           ),
           1 => 
-          array (
+          array(
             'name' => 'mail_smtpport',
             'label' => 'LBL_SMTP_PORT',
           ),
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'mail_smtpauth_req',
             'label' => 'LBL_SMTP_AUTH',
           ),
           1 => 
-          array (
+          array(
             'name' => 'mail_smtpssl',
             'studio' => 'visible',
             'label' => 'LBL_SMTP_PROTOCOL',

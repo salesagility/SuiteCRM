@@ -113,7 +113,7 @@ class Task extends SugarBean
 
     function save($check_notify = false)
     {
-        if (empty($this->status) ) {
+        if (empty($this->status)) {
             $this->status = $this->getDefaultStatus();
         }
         return parent::save($check_notify);
@@ -191,7 +191,7 @@ class Task extends SugarBean
     {
         $this->parent_name = '';
         global $app_strings, $beanFiles, $beanList, $locale;
-        if ( ! isset($beanList[$this->parent_type])) {
+        if (! isset($beanList[$this->parent_type])) {
             $this->parent_name = '';
             return;
         }
@@ -262,7 +262,7 @@ class Task extends SugarBean
                 $taskClass = 'overdueTask';
             }
         } else {
-            if ( $dd	== $today ) {
+            if ($dd	== $today) {
                 $taskClass = 'todaysTask';
             }
         }
@@ -309,7 +309,7 @@ class Task extends SugarBean
         if (isset($this->parent_type)) {
             $task_fields['PARENT_MODULE'] = $this->parent_type;
         }
-        if ($this->status != "Completed" && $this->status != "Deferred" ) {
+        if ($this->status != "Completed" && $this->status != "Deferred") {
             $setCompleteUrl = "<b><a id='{$this->id}' class='list-view-data-icon' title='".translate('LBL_LIST_CLOSE', 'Tasks')."' onclick='SUGAR.util.closeActivityPanel.show(\"{$this->module_dir}\",\"{$this->id}\",\"Completed\",\"listview\",\"1\");'>";
             $task_fields['SET_COMPLETE'] = $setCompleteUrl . "<span class='suitepicon suitepicon-action-clear'></span></a></b>";
         }
@@ -430,7 +430,7 @@ class Task extends SugarBean
         /**
         if( ACLController::checkAccess('Contacts', 'view', $is_owner)){
         */
-        if ( ACLController::checkAccess('Contacts', 'view', $is_owner, 'module', $in_group)) {
+        if (ACLController::checkAccess('Contacts', 'view', $is_owner, 'module', $in_group)) {
             /* END - SECURITY GROUPS */
             $array_assign['CONTACT'] = 'a';
         } else {

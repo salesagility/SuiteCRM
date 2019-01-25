@@ -68,11 +68,11 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
          $rawurldecode = rawurldecode($list_value);
          $htmldecode = html_entity_decode($rawurldecode, ENT_QUOTES);
          $temp = $json->decode($htmldecode);
-         $dropdown = array () ;
+         $dropdown = array() ;
          // dropdown is received as an array of (name,value) pairs - now extract to name=>value format preserving order
          // we rely here on PHP to preserve the order of the received name=>value pairs - associative arrays in PHP are ordered
          if (is_array($temp)) {
-             foreach ( $temp as $item ) {
+             foreach ($temp as $item) {
                  $keytemp = SugarCleaner::stripTags(from_html($item [ 0 ]), false);
                  $valuetemp = SugarCleaner::stripTags(from_html($item [ 1 ]), false);
                  $dropdown[ $keytemp ] =  $valuetemp;
@@ -113,7 +113,7 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
                  //this is for handling moduleList and such where nothing should be deleted or anything but they can be renamed
                  foreach ($dropdown as $key=>$value) {
                      //only if the value has changed or does not exist do we want to add it this way
-                     if (!isset($my_list_strings[$dropdown_name][$key]) || strcmp($my_list_strings[$dropdown_name][$key], $value) != 0 ) {
+                     if (!isset($my_list_strings[$dropdown_name][$key]) || strcmp($my_list_strings[$dropdown_name][$key], $value) != 0) {
                          //clear out the old value
                          $pattern_match = '/\s*\$app_list_strings\s*\[\s*\''.$dropdown_name.'\'\s*\]\[\s*\''.$key.'\'\s*\]\s*=\s*[\'\"]{1}.*?[\'\"]{1};\s*/ism';
                          $contents = preg_replace($pattern_match, "\n", $contents);
@@ -194,7 +194,7 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
          //check for extra keys
          foreach ($sub as $key=>$value) {
              if (!isset($dom[$key])) {
-                 unset ($sub[$key]);
+                 unset($sub[$key]);
              }
          }
          //check for missing keys

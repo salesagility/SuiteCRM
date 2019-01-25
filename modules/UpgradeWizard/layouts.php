@@ -69,7 +69,7 @@ set_upgrade_progress('layouts', 'in_progress');
 
 //If the user has seleceted which modules they want to merge, perform the filtering and 
 //execute the merge.
-if ( isset($_POST['layoutSelectedModules']) ) {
+if (isset($_POST['layoutSelectedModules'])) {
     logThis('Layout Commits examining modules to revert');
     
     $mergedModules = $_SESSION['sugarMergeRunResults'];
@@ -78,8 +78,8 @@ if ( isset($_POST['layoutSelectedModules']) ) {
     $rollBackList = array();
     $actualMergedList = array();
     
-    foreach ( $mergedModules as $moduleKey => $layouts) {
-        if ( ! in_array($moduleKey, $selectedModules) ) {
+    foreach ($mergedModules as $moduleKey => $layouts) {
+        if (! in_array($moduleKey, $selectedModules)) {
             logThis("Adding $moduleKey module to rollback list.");
             $rollBackList[$moduleKey] = $layouts;
         } else {
@@ -169,8 +169,8 @@ function rollBackMergedModules($data)
                 $srcBackupFile = $srcFile . $backupFileSufix;
                 logThis('Layout Commits, rollBackMergedModules source file: ' . $srcDirectory);
                 logThis('Layout Commits, rollBackMergedModules backup file: ' . $srcBackupFile);
-                if ( file_exists($srcBackupFile) ) {
-                    if ( file_exists($srcFile) ) {
+                if (file_exists($srcBackupFile)) {
+                    if (file_exists($srcFile)) {
                         logThis('Layout Commits, rollBackMergedModules is removing file: ' . $srcFile);
                         @unlink($srcFile);
                     }
@@ -210,19 +210,19 @@ function formatLayoutMergeDataForDisplay($layoutMergeData)
     foreach ($layoutMergeData as $k => $v) {
         $layouts = array();
         foreach ($v as $layoutPath => $isMerge) {
-            if ( preg_match('/listviewdefs.php/i', $layoutPath) ) {
+            if (preg_match('/listviewdefs.php/i', $layoutPath)) {
                 $label = $module_builder_language['LBL_LISTVIEW'];
             } else {
-                if ( preg_match('/detailviewdefs.php/i', $layoutPath) ) {
+                if (preg_match('/detailviewdefs.php/i', $layoutPath)) {
                     $label = $module_builder_language['LBL_DETAILVIEW'];
                 } else {
-                    if ( preg_match('/editviewdefs.php/i', $layoutPath) ) {
+                    if (preg_match('/editviewdefs.php/i', $layoutPath)) {
                         $label = $module_builder_language['LBL_EDITVIEW'];
                     } else {
-                        if ( preg_match('/quickcreatedefs.php/i', $layoutPath) ) {
+                        if (preg_match('/quickcreatedefs.php/i', $layoutPath)) {
                             $label = $module_builder_language['LBL_QUICKCREATE'];
                         } else {
-                            if ( preg_match('/searchdefs.php/i', $layoutPath) ) {
+                            if (preg_match('/searchdefs.php/i', $layoutPath)) {
                                 $label = $module_builder_language['LBL_SEARCH_BUTTON'];
                             } else {
                                 continue;

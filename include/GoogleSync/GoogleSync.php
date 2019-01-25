@@ -72,13 +72,13 @@ class GoogleSync extends GoogleSyncBase
         $meetingTitle = isset($meeting) ? $meeting->name : null;
         $eventTitle = isset($event) ? $event->getSummary() : null;
 
-        if ( !empty($meetingTitle) && !empty($eventTitle) ) {
+        if (!empty($meetingTitle) && !empty($eventTitle)) {
             $title = $meetingTitle . " / " . $eventTitle;
         }
-        if ( empty($meetingTitle) || empty($eventTitle) ) {
+        if (empty($meetingTitle) || empty($eventTitle)) {
             $title = $meetingTitle . $eventTitle;
         }
-        if ( empty($meetingTitle) && empty($eventTitle) ) {
+        if (empty($meetingTitle) && empty($eventTitle)) {
             $title = "UNNAMED RECORD";
         }
         return $title;
@@ -148,7 +148,7 @@ class GoogleSync extends GoogleSyncBase
         // First, we look for SuiteCRM meetings that are not on Google
         foreach ($meetings as $meeting) {
             $gevent = null;
-            if ( !empty($meeting->gsync_id) ) {
+            if (!empty($meeting->gsync_id)) {
                 $gevent = $this->getGoogleEventById($meeting->gsync_id);
             }
             $action = $this->pushPullSkip($meeting, $gevent);

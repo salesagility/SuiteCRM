@@ -26,11 +26,11 @@ class SecurityGroupMessage extends Basic
 
 
     var $additional_column_fields = array();
-    var $field_defs = array (
+    var $field_defs = array(
        'id'=>array('name' =>'id', 'type' =>'char', 'len'=>'36', 'default'=>'')
       , 'name'=>array('name' =>'name', 'type' =>'varchar', 'len'=>'255', )
-      , 'date_entered'=>array ('name' => 'date_entered','type' => 'datetime')
-      , 'date_modified'=>array ('name' => 'date_modified','type' => 'datetime')
+      , 'date_entered'=>array('name' => 'date_entered','type' => 'datetime')
+      , 'date_modified'=>array('name' => 'date_modified','type' => 'datetime')
       , 'modified_user_id'=>array('name' =>'modified_user_id', 'type' =>'char', 'len'=>'36',)
       , 'created_by'=>array('name' =>'created_by', 'type' =>'char', 'len'=>'36',)
       , 'description'=>array('name' =>'description', 'type' =>'text', 'len'=>'',)
@@ -81,7 +81,7 @@ class SecurityGroupMessage extends Basic
         }
 
         if (is_admin($GLOBALS['current_user']) || $data['CREATED_BY'] == $GLOBALS['current_user']->id || $group_owner) {
-            $delete = SugarThemeRegistry::current()->getImage( 'delete_inline', 'width="12" height="12" border="0" align="absmiddle" style="vertical-align: bottom;" onclick=\'Message.deleteMessage("'. $data['ID'] . '", "{this.id}")\'', null, null, '.gif', '');
+            $delete = SugarThemeRegistry::current()->getImage('delete_inline', 'width="12" height="12" border="0" align="absmiddle" style="vertical-align: bottom;" onclick=\'Message.deleteMessage("'. $data['ID'] . '", "{this.id}")\'', null, null, '.gif', '');
         }
 
         $username = "";
@@ -131,15 +131,15 @@ class SecurityGroupMessage extends Basic
         $start = array();
         preg_match('/(\d+)\-(\d+)\-(\d+) (\d+)\:(\d+)\:(\d+)/', $startDate, $start);
         $end = gmdate('Y-m-d H:i:s');
-        $start_time = gmmktime($start[4], $start[5], $start[6], $start[2], $start[3], $start[1] );
+        $start_time = gmmktime($start[4], $start[5], $start[6], $start[2], $start[3], $start[1]);
         $seconds = time()- $start_time;
         $minutes =   $seconds/60;
         $seconds = $seconds % 60;
-        $hours = floor( $minutes / 60);
+        $hours = floor($minutes / 60);
         $minutes = $minutes % 60;
-        $days = floor( $hours / 24);
+        $days = floor($hours / 24);
         $hours = $hours % 24;
-        $weeks = floor( $days / 7);
+        $weeks = floor($days / 7);
         $days = $days % 7;
         $result = '';
         if ($weeks == 1) {
@@ -172,7 +172,7 @@ class SecurityGroupMessage extends Basic
                             }
                         }
                         if ($hours == 0 && $minutes == 0) {
-                            if ($seconds == 1 ) {
+                            if ($seconds == 1) {
                                 $result = $seconds . ' ' . translate('LBL_TIME_SECOND', 'SugarFeed');
                             } else {
                                 $result = $seconds . ' ' . translate('LBL_TIME_SECONDS', 'SugarFeed');

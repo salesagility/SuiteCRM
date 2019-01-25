@@ -88,7 +88,7 @@ class History implements HistoryInterface
 
         $this->_basename = basename($this->_previewFilename);
         $this->_dirname = dirname($this->_previewFilename);
-        $this->_historyLimit = isset ($GLOBALS ['sugar_config'] ['studio_max_history']) ? $GLOBALS ['sugar_config'] ['studio_max_history'] : 50;
+        $this->_historyLimit = isset($GLOBALS ['sugar_config'] ['studio_max_history']) ? $GLOBALS ['sugar_config'] ['studio_max_history'] : 50;
 
         // create the history directory if it does not already exist
         if (!is_dir($this->_dirname)) {

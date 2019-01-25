@@ -168,7 +168,7 @@ class Localization
             } elseif (!empty($current_user)) {
                 $emailSettings = $current_user->getPreference('emailSettings', 'Emails');
             }
-            if ( isset($emailSettings['defaultOutboundCharset']) ) {
+            if (isset($emailSettings['defaultOutboundCharset'])) {
                 $userPref = $emailSettings['defaultOutboundCharset'];
             }
         }
@@ -655,7 +655,7 @@ eoq;
         global $current_user;
         global $app_list_strings;
 
-        if ( $user == null ) {
+        if ($user == null) {
             $user = $current_user;
         }
 
@@ -840,7 +840,7 @@ eoq;
      */
     public function detectCharset($str, $strict=false)
     {
-        if ( function_exists('mb_convert_encoding') ) {
+        if (function_exists('mb_convert_encoding')) {
             return mb_detect_encoding($str, 'ASCII,JIS,UTF-8,EUC-JP,SJIS,ISO-8859-1', $strict);
         }
 

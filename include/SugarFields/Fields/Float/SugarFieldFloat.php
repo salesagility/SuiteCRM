@@ -48,11 +48,11 @@ class SugarFieldFloat extends SugarFieldInt
     {
         // A null precision uses the user prefs / system prefs by default
         $precision = null;
-        if ( isset($vardef['precision']) ) {
+        if (isset($vardef['precision'])) {
             $precision = $vardef['precision'];
         }
         
-        if ( $rawField === '' || $rawField === null ) {
+        if ($rawField === '' || $rawField === null) {
             return '';
         }
 
@@ -61,7 +61,7 @@ class SugarFieldFloat extends SugarFieldInt
     
     public function unformatField($formattedField, $vardef)
     {
-        if ( $formattedField === '' || $formattedField === null ) {
+        if ($formattedField === '' || $formattedField === null) {
             return '';
         }
         return (float)unformat_number($formattedField);
@@ -78,10 +78,10 @@ class SugarFieldFloat extends SugarFieldInt
         ) {
         $value = str_replace($settings->num_grp_sep, "", $value);
         $dec_sep = $settings->dec_sep;
-        if ( $dec_sep != '.' ) {
+        if ($dec_sep != '.') {
             $value = str_replace($dec_sep, ".", $value);
         }
-        if ( !is_numeric($value) ) {
+        if (!is_numeric($value)) {
             return false;
         }
         

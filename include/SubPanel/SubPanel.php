@@ -307,7 +307,7 @@ class SubPanel
         //end of bug# 40171
 
         mkdir_recursive($path, true);
-        write_array_to_file( $name, $override, $path.'/' . $filename .'.php');
+        write_array_to_file($name, $override, $path.'/' . $filename .'.php');
 
         //save the override for the layoutdef
         //tyoung 10.12.07 pushed panel->name to lowercase to match case in subpaneldefs.php files -
@@ -420,7 +420,7 @@ class SubPanel
 
         $where_clauses = $searchForm->generateSearchWhere(true, $seed->module_dir);
 
-        if (count($where_clauses) > 0 ) {
+        if (count($where_clauses) > 0) {
             $this->search_query = '('. implode(' ) AND ( ', $where_clauses) . ')';
         }
         $GLOBALS['log']->info("Subpanel Where Clause: $this->search_query");
@@ -433,7 +433,7 @@ class SubPanel
 
         if (isset($subpanel_defs['searchdefs'])) {
             $searchdefs[$module]['layout']['basic_search'] = $subpanel_defs['searchdefs'];
-            $searchdefs[$module]['templateMeta'] = array ('maxColumns' => 3, 'maxColumnsBasic' => 4, 'widths' => array ( 'label' => 10, 'field' => 30 )) ;
+            $searchdefs[$module]['templateMeta'] = array('maxColumns' => 3, 'maxColumnsBasic' => 4, 'widths' => array( 'label' => 10, 'field' => 30 )) ;
             return $searchdefs;
         }
 

@@ -2,79 +2,79 @@
 $module_name = 'AOR_Scheduled_Reports';
 $_object_name = 'aor_scheduled_reports';
 $viewdefs [$module_name] = 
-array (
+array(
   'QuickCreate' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'form' => 
-      array (
+      array(
         'buttons' => 
-        array (
+        array(
           0 => 'SAVE',
           1 => 'CANCEL',
         ),
       ),
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'includes' => 
-      array (
+      array(
       ),
       'useTabs' => false,
       'tabDefs' => 
-      array (
+      array(
         'LBL_SCHEDULED_REPORTS_INFORMATION' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
     'panels' => 
-    array (
+    array(
       'lbl_scheduled_reports_information' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'name',
             'displayParams' => 
-            array (
+            array(
               'required' => true,
             ),
           ),
           1 => 'status',
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'aor_report_name',
           ),
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'schedule',
             'label' => 'LBL_SCHEDULE',
           ),
         ),
         3 => 
-        array (
+        array(
           0 => 'email1',
         ),
       ),

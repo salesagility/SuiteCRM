@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 $searchFields['Users'] = 
-    array (
+    array(
         'user_name' => array( 'query_type'=>'default'),
         'first_name' => array( 'query_type'=>'default'),
         'last_name'=> array('query_type'=>'default'),

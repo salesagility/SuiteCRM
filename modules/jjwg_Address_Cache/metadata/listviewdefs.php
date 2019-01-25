@@ -1,37 +1,37 @@
 <?php
 $module_name = 'jjwg_Address_Cache';
 $listViewDefs [$module_name] = 
-array (
+array(
   'NAME' => 
-  array (
+  array(
     'width' => '32%',
     'label' => 'LBL_NAME',
     'default' => true,
     'link' => true,
   ),
   'LAT' => 
-  array (
+  array(
     'type' => 'decimal',
     'label' => 'LBL_LAT',
     'width' => '10%',
     'default' => true,
   ),
   'LNG' => 
-  array (
+  array(
     'type' => 'decimal',
     'label' => 'LBL_LNG',
     'width' => '10%',
     'default' => true,
   ),
   'DATE_ENTERED' => 
-  array (
+  array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '10%',
     'default' => true,
   ),
   'ASSIGNED_USER_NAME' => 
-  array (
+  array(
     'width' => '9%',
     'label' => 'LBL_ASSIGNED_TO_NAME',
     'module' => 'Employees',
@@ -39,7 +39,7 @@ array (
     'default' => true,
   ),
   'MODIFIED_BY_NAME' => 
-  array (
+  array(
     'type' => 'relate',
     'link' => 'modified_user_link',
     'label' => 'LBL_MODIFIED_NAME',
@@ -47,14 +47,14 @@ array (
     'default' => false,
   ),
   'DATE_MODIFIED' => 
-  array (
+  array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_MODIFIED',
     'width' => '10%',
     'default' => false,
   ),
   'CREATED_BY_NAME' => 
-  array (
+  array(
     'type' => 'relate',
     'link' => 'created_by_link',
     'label' => 'LBL_CREATED',

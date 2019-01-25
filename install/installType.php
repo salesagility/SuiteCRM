@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-if ( !isset( $install_script ) || !$install_script ) {
+if (!isset($install_script) || !$install_script) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 // $mod_strings come from calling page.
@@ -53,7 +53,7 @@ $langDropDown = get_select_options_with_id($supportedLanguages, $current_languag
 
 
 
-if ( !isset($_SESSION['licenseKey_submitted']) || !$_SESSION['licenseKey_submitted'] ) {
+if (!isset($_SESSION['licenseKey_submitted']) || !$_SESSION['licenseKey_submitted']) {
     $_SESSION['setup_license_key_users']        = 0;
     $_SESSION['setup_license_key_expire_date']  = "";
     $_SESSION['setup_license_key']              = "";

@@ -250,7 +250,7 @@ class ViewModulefields extends SugarView
                 if ($def['studio'] == 'visible') {
                     return true;
                 }
-                if ($def['studio'] == 'hidden' || $def['studio'] == 'false' || !$def['studio'] ) {
+                if ($def['studio'] == 'hidden' || $def['studio'] == 'false' || !$def['studio']) {
                     return false;
                 }
             }

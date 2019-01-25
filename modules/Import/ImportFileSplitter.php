@@ -81,7 +81,7 @@ class ImportFileSplitter
         $recordThreshold = 1000
         ) {
         // sanitize crazy values to the default value
-        if ( !is_int($recordThreshold) || $recordThreshold < 1 ) {
+        if (!is_int($recordThreshold) || $recordThreshold < 1) {
             //if this is not an int but is still a
             //string representation of a number, then cast to an int
             if (!is_int($recordThreshold) && is_numeric($recordThreshold)) {
@@ -103,7 +103,7 @@ class ImportFileSplitter
      */
     public function fileExists()
     {
-        if ( !is_file($this->_sourceFile) || !is_readable($this->_sourceFile)) {
+        if (!is_file($this->_sourceFile) || !is_readable($this->_sourceFile)) {
             return false;
         }
 
@@ -130,15 +130,15 @@ class ImportFileSplitter
         $fw = sugar_fopen("{$this->_sourceFile}-{$filecount}", "w");
         $count = 0;
         // skip first row if we have a header row
-        if ( $has_header && $importFile->getNextRow() ) {
+        if ($has_header && $importFile->getNextRow()) {
             // mark as duplicate to stick header row in the dupes file
             $importFile->markRowAsDuplicate();
             // same for error records file
             $importFile->writeErrorRecord();
         }
-        while ( $row = $importFile->getNextRow() ) {
+        while ($row = $importFile->getNextRow()) {
             // after $this->_recordThreshold rows, close this import file and goto the next one
-            if ( $count >= $this->_recordThreshold ) {
+            if ($count >= $this->_recordThreshold) {
                 fclose($fw);
                 $filecount++;
                 $fw = sugar_fopen("{$this->_sourceFile}-{$filecount}", "w");
@@ -171,7 +171,7 @@ class ImportFileSplitter
      */
     public function getRecordCount()
     {
-        if ( !isset($this->_recordCount) ) {
+        if (!isset($this->_recordCount)) {
             return false;
         }
 
@@ -185,7 +185,7 @@ class ImportFileSplitter
      */
     public function getFileCount()
     {
-        if ( !isset($this->_fileCount) ) {
+        if (!isset($this->_fileCount)) {
             return false;
         }
 
@@ -202,7 +202,7 @@ class ImportFileSplitter
     public function getSplitFileName(
         $filenumber = 0
         ) {
-        if ( $filenumber >= $this->getFileCount()) {
+        if ($filenumber >= $this->getFileCount()) {
             return false;
         }
 

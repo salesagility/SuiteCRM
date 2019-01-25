@@ -212,7 +212,7 @@ class Call extends SugarBean
                 $old_record->retrieve($this->id);
                 $old_assigned_user_id = $old_record->assigned_user_id;
             }
-            if ((empty($this->id) && isset($_REQUEST['assigned_user_id']) && !empty($_REQUEST['assigned_user_id']) && $GLOBALS['current_user']->id != $_REQUEST['assigned_user_id']) || (isset($old_assigned_user_id) && !empty($old_assigned_user_id) && isset($_REQUEST['assigned_user_id']) && !empty($_REQUEST['assigned_user_id']) && $old_assigned_user_id != $_REQUEST['assigned_user_id']) ) {
+            if ((empty($this->id) && isset($_REQUEST['assigned_user_id']) && !empty($_REQUEST['assigned_user_id']) && $GLOBALS['current_user']->id != $_REQUEST['assigned_user_id']) || (isset($old_assigned_user_id) && !empty($old_assigned_user_id) && isset($_REQUEST['assigned_user_id']) && !empty($_REQUEST['assigned_user_id']) && $old_assigned_user_id != $_REQUEST['assigned_user_id'])) {
                 $this->special_notification = true;
                 if (!isset($GLOBALS['resavingRelatedBeans']) || $GLOBALS['resavingRelatedBeans'] == false) {
                     $check_notify = true;
@@ -222,7 +222,7 @@ class Call extends SugarBean
                 }
             }
         }
-        if (empty($this->status) ) {
+        if (empty($this->status)) {
             $this->status = $this->getDefaultStatus();
         }
 
@@ -321,7 +321,7 @@ class Call extends SugarBean
         $query = "SELECT ";
         $query .= "
 			calls.*,";
-        if ( preg_match("/calls_users\.user_id/", $where)) {
+        if (preg_match("/calls_users\.user_id/", $where)) {
             $query .= "calls_users.required,
 				calls_users.accept_status,";
         }
@@ -332,19 +332,19 @@ class Call extends SugarBean
 
         // this line will help generate a GMT-metric to compare to a locale's timezone
 
-        if ( preg_match("/contacts/", $where)) {
+        if (preg_match("/contacts/", $where)) {
             $query .= ", contacts.first_name, contacts.last_name";
             $query .= ", contacts.assigned_user_id contact_name_owner";
         }
         $query .= " FROM calls ";
 
-        if ( preg_match("/contacts/", $where)) {
+        if (preg_match("/contacts/", $where)) {
             $query .=	"LEFT JOIN calls_contacts
 	                    ON calls.id=calls_contacts.call_id
 	                    LEFT JOIN contacts
 	                    ON calls_contacts.contact_id=contacts.id ";
         }
-        if ( preg_match('/calls_users\.user_id/', $where)) {
+        if (preg_match('/calls_users\.user_id/', $where)) {
             $query .= "LEFT JOIN calls_users
 			ON calls.id=calls_users.call_id and calls_users.deleted=0 ";
         }
@@ -471,9 +471,9 @@ class Call extends SugarBean
             $this->reminder_time = -1;
         }
 
-        if ( empty($this->id) ) {
+        if (empty($this->id)) {
             $reminder_t = $GLOBALS['current_user']->getPreference('reminder_time');
-            if ( isset($reminder_t) ) {
+            if (isset($reminder_t)) {
                 $this->reminder_time = $reminder_t;
             }
         }
@@ -490,7 +490,7 @@ class Call extends SugarBean
         }
         $this->email_reminder_checked = $this->email_reminder_time == -1 ? false : true;
 
-        if (isset ($_REQUEST['parent_type']) && empty($this->parent_type)) {
+        if (isset($_REQUEST['parent_type']) && empty($this->parent_type)) {
             $this->parent_type = $_REQUEST['parent_type'];
         } elseif (is_null($this->parent_type)) {
             $this->parent_type = $app_list_strings['record_type_default_key'];
@@ -531,7 +531,7 @@ class Call extends SugarBean
         }
         $mergeTime = isset($call_fields['DATE_START']) ? $call_fields['DATE_START'] : null; //$timedate->merge_date_time($call_fields['DATE_START'], $call_fields['TIME_START']);
         $date_db = $timedate->to_db($mergeTime);
-        if ( $date_db	< $today) {
+        if ($date_db	< $today) {
             if ($call_fields['STATUS']=='Held' || $call_fields['STATUS']=='Not Held') {
                 $call_fields['DATE_START']= "<font>".$call_fields['DATE_START']."</font>";
             } else {
@@ -587,10 +587,10 @@ class Call extends SugarBean
         $calldate = $timedate->fromDb($call->date_start);
         $xOffset = $timedate->asUser($calldate, $notifyUser).' '.$timedate->userTimezoneSuffix($calldate, $notifyUser);
 
-        if ( strtolower(get_class($call->current_notify_user)) == 'contact' ) {
+        if (strtolower(get_class($call->current_notify_user)) == 'contact') {
             $xtpl->assign("ACCEPT_URL", $sugar_config['site_url'].
                   '/index.php?entryPoint=acceptDecline&module=Calls&contact_id='.$call->current_notify_user->id.'&record='.$call->id);
-        } elseif ( strtolower(get_class($call->current_notify_user)) == 'lead' ) {
+        } elseif (strtolower(get_class($call->current_notify_user)) == 'lead') {
             $xtpl->assign("ACCEPT_URL", $sugar_config['site_url'].
                   '/index.php?entryPoint=acceptDecline&module=Calls&lead_id='.$call->current_notify_user->id.'&record='.$call->id);
         } else {
@@ -665,22 +665,22 @@ class Call extends SugarBean
 
     function set_accept_status(&$user, $status)
     {
-        if ( $user->object_name == 'User') {
+        if ($user->object_name == 'User') {
             $relate_values = array('user_id'=>$user->id,'call_id'=>$this->id);
             $data_values = array('accept_status'=>$status);
             $this->set_relationship($this->rel_users_table, $relate_values, true, true, $data_values);
             global $current_user;
 
-            if ( $this->update_vcal ) {
+            if ($this->update_vcal) {
                 vCal::cache_sugar_vcal($user);
             }
         } else {
-            if ( $user->object_name == 'Contact') {
+            if ($user->object_name == 'Contact') {
                 $relate_values = array('contact_id'=>$user->id,'call_id'=>$this->id);
                 $data_values = array('accept_status'=>$status);
                 $this->set_relationship($this->rel_contacts_table, $relate_values, true, true, $data_values);
             } else {
-                if ( $user->object_name == 'Lead') {
+                if ($user->object_name == 'Lead') {
                     $relate_values = array('lead_id'=>$user->id,'call_id'=>$this->id);
                     $data_values = array('accept_status'=>$status);
                     $this->set_relationship($this->rel_leads_table, $relate_values, true, true, $data_values);
@@ -813,7 +813,7 @@ class Call extends SugarBean
         /**
         if( ACLController::checkAccess('Contacts', 'view', $is_owner)){
         */
-        if ( ACLController::checkAccess('Contacts', 'view', $is_owner, 'module', $in_group)) {
+        if (ACLController::checkAccess('Contacts', 'view', $is_owner, 'module', $in_group)) {
             /* END - SECURITY GROUPS */
             $array_assign['CONTACT'] = 'a';
         } else {

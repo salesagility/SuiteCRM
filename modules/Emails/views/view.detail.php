@@ -40,7 +40,7 @@
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-    die ('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
 require_once 'modules/Emails/include/DetailView/EmailsDetailView.php';

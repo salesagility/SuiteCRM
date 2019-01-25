@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['User'] = array (
+$fields_array['User'] = array(
     'column_fields' => array(
         'id',
         'full_name',

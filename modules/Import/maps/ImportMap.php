@@ -110,7 +110,7 @@ class ImportMap extends SugarBean
     public function getMapping()
     {
         $mapping_arr = array();
-        if ( !empty($this->content) ) {
+        if (!empty($this->content)) {
             $pairs = explode("&", $this->content);
             foreach ($pairs as $pair) {
                 list($name, $value) = explode("=", $pair);
@@ -129,7 +129,7 @@ class ImportMap extends SugarBean
     public function setMapping(
         $mapping_arr
         ) {
-        $output = array ();
+        $output = array();
         foreach ($mapping_arr as $key => $item) {
             $output[] = "$key=$item";
         }
@@ -144,7 +144,7 @@ class ImportMap extends SugarBean
     public function getDefaultValues()
     {
         $defa_arr = array();
-        if ( !empty($this->default_values) ) {
+        if (!empty($this->default_values)) {
             $pairs = explode("&", $this->default_values);
             foreach ($pairs as $pair) {
                 list($name, $value) = explode("=", $pair);
@@ -163,7 +163,7 @@ class ImportMap extends SugarBean
     public function setDefaultValues(
         $defa_arr
         ) {
-        $output = array ();
+        $output = array();
         foreach ($defa_arr as $key => $item) {
             $output[] = "$key=$item";
         }
@@ -177,11 +177,11 @@ class ImportMap extends SugarBean
     {
         $returnVal = parent::retrieve($id, $encode, $deleted);
 
-        if ( !($returnVal instanceof $this) ) {
+        if (!($returnVal instanceof $this)) {
             return $returnVal;
         }
 
-        if ( $this->source == 'tab' && $this->delimiter == '' ) {
+        if ($this->source == 'tab' && $this->delimiter == '') {
             $this->delimiter = "\t";
         }
 
@@ -226,7 +226,7 @@ class ImportMap extends SugarBean
 
         // Bug 23354 - Make sure enclosure gets saved as an empty string if
         // it is an empty string, instead of as a null
-        if ( strlen($enclosure) <= 0 ) {
+        if (strlen($enclosure) <= 0) {
             $enclosure = ' ';
         }
 
@@ -243,7 +243,7 @@ class ImportMap extends SugarBean
         parent::save();
 
         // Bug 29365 - The enclosure character isn't saved correctly if it's a tab using MssqlManager, so resave it
-        if ( $enclosure == '\\t' && $this->db instanceof MssqlManager ) {
+        if ($enclosure == '\\t' && $this->db instanceof MssqlManager) {
             $this->enclosure = $enclosure;
             parent::save();
         }
@@ -262,11 +262,11 @@ class ImportMap extends SugarBean
         ) {
         global $current_user;
 
-        if ( !is_admin($current_user) ) {
+        if (!is_admin($current_user)) {
             $other_map = new ImportMap();
             $other_map->retrieve_by_string_fields(array('id'=> $id), false);
 
-            if ( $other_map->assigned_user_id != $current_user->id ) {
+            if ($other_map->assigned_user_id != $current_user->id) {
                 return false;
             }
         }
@@ -287,7 +287,7 @@ class ImportMap extends SugarBean
         ) {
         global $current_user;
 
-        if ( !is_admin($current_user) ) {
+        if (!is_admin($current_user)) {
             return false;
         }
 
@@ -313,7 +313,7 @@ class ImportMap extends SugarBean
         $other_map->retrieve_by_string_fields($query_arr, false);
 
         // if we find this other map, quit
-        if ( isset($other_map->id) ) {
+        if (isset($other_map->id)) {
             return false;
         }
 
@@ -344,7 +344,7 @@ class ImportMap extends SugarBean
         $result = $this->db->query($query, true, " Error: ");
         $obj_arr = array();
 
-        while ($row = $this->db->fetchByAssoc($result, false) ) {
+        while ($row = $this->db->fetchByAssoc($result, false)) {
             $focus = new ImportMap();
 
             foreach ($this->column_fields as $field) {

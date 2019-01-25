@@ -41,9 +41,9 @@
 $dictionary['SugarFeed'] = array(
     'table'=>'sugarfeed',
     'audited'=>false,
-    'fields'=>array (
+    'fields'=>array(
      'name' => 
-  array (
+  array(
     'name' => 'name',
     'type' => 'name',
     'dbType' => 'varchar',
@@ -57,7 +57,7 @@ $dictionary['SugarFeed'] = array(
                             //property value is case insensitive.
   ),
    'description' => 
-  array (
+  array(
     'name' => 'description',
     'type' => 'name',
     'dbType' => 'text',
@@ -72,7 +72,7 @@ $dictionary['SugarFeed'] = array(
   ),
   
     'related_module' => 
-  array (
+  array(
     'name' => 'related_module',
     'type' => 'varchar',
     'vname' => 'LBL_NAME',
@@ -85,7 +85,7 @@ $dictionary['SugarFeed'] = array(
                             //property value is case insensitive.
   ),
    'related_id' => 
-  array (
+  array(
     'name' => 'related_id',
     'type' => 'id',
     'vname' => 'LBL_NAME',
@@ -97,7 +97,7 @@ $dictionary['SugarFeed'] = array(
                             //property value is case insensitive.
   ),
      'link_url' => 
-  array (
+  array(
     'name' => 'link_url',
     'type' => 'varchar',
     'vname' => 'LBL_NAME',
@@ -110,7 +110,7 @@ $dictionary['SugarFeed'] = array(
                             //property value is case insensitive.
   ),
      'link_type' => 
-  array (
+  array(
     'name' => 'link_type',
     'type' => 'varchar',
     'vname' => 'LBL_NAME',
@@ -124,10 +124,10 @@ $dictionary['SugarFeed'] = array(
   ),
      
 ),
-    'relationships'=>array (
+    'relationships'=>array(
     ),
 
-    'indices' => array (
+    'indices' => array(
         array('name' => 'sgrfeed_date', 
               'type'=>'index',
               'fields'=>array('date_entered',

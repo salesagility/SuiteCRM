@@ -127,7 +127,7 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
         $cell = $this->displayListPlain($layout_def);
         $str = $cell;
         global $sugar_config;
-        if (isset ($sugar_config['enable_inline_reports_edit']) && $sugar_config['enable_inline_reports_edit']) {
+        if (isset($sugar_config['enable_inline_reports_edit']) && $sugar_config['enable_inline_reports_edit']) {
             $module = $this->reporter->all_fields[$layout_def['column_key']]['module'];
             $name = $layout_def['name'];
             $layout_def['name'] = 'id';
@@ -161,7 +161,7 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
             }
         }
 
-        if (!empty($layout_def['table_key'] ) &&( empty ($field_def['fields']) || empty ($field_def['fields'][0]) || empty ($field_def['fields'][1]))) {
+        if (!empty($layout_def['table_key']) &&(empty($field_def['fields']) || empty($field_def['fields'][0]) || empty($field_def['fields'][1]))) {
             $value = $this->_get_list_value($layout_def);
         } else {
             if (!empty($layout_def['name']) && !empty($layout_def['fields'])) {
@@ -193,7 +193,7 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
             foreach ($value as $val) {
                 $returnVal = translate($field_def['options'], $field_def['module'], $val);
                 if (!is_array($returnVal)) {
-                    array_push( $cell, translate($field_def['options'], $field_def['module'], $val));
+                    array_push($cell, translate($field_def['options'], $field_def['module'], $val));
                 }
             }
             $cell = implode(", ", $cell);
@@ -204,7 +204,7 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
     public function queryOrderBy($layout_def)
     {
         $field_def = $this->reporter->all_fields[$layout_def['column_key']];
-        if (!empty ($field_def['sort_on'])) {
+        if (!empty($field_def['sort_on'])) {
             $order_by = $layout_def['table_alias'].".".$field_def['sort_on'];
         } else {
             $order_by = $this->_get_column_select($layout_def);
@@ -221,7 +221,7 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
             require_once($beanFiles[$bean_name]);
             $list = $field_def['function']();
         }
-        if (empty ($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a') {
+        if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a') {
             $order_dir = "ASC";
         } else {
             $order_dir = "DESC";
@@ -234,7 +234,7 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
         global $app_list_strings;
 
         if (!empty($layout_def['remove_blank']) && $layout_def['remove_blank']) {
-            if ( isset($layout_def['options']) &&  is_array($layout_def['options']) ) {
+            if (isset($layout_def['options']) &&  is_array($layout_def['options'])) {
                 $ops = $layout_def['options'];
             } elseif (isset($layout_def['options']) && isset($app_list_strings[$layout_def['options']])) {
                 $ops = $app_list_strings[$layout_def['options']];

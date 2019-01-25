@@ -256,7 +256,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      */
     function get_start_end_date_filter(& $layout_def, $begin, $end)
     {
-        if (isset ($layout_def['rel_field'])) {
+        if (isset($layout_def['rel_field'])) {
             $field_name = $this->reporter->db->convert(
                 $this->reporter->db->convert($this->_get_column_select($layout_def), 'date_format', '%Y-%m-%d'),
                 "CONCAT",
@@ -507,10 +507,10 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
     function queryGroupBy($layout_def)
     {
         // i guess qualifier and column_function are the same..
-        if (!empty ($layout_def['qualifier'])) {
+        if (!empty($layout_def['qualifier'])) {
             $func_name = 'queryGroupBy'.$layout_def['qualifier'];
             if (method_exists($this, $func_name)) {
-                return $this-> $func_name ($layout_def)." \n";
+                return $this-> $func_name($layout_def)." \n";
             }
         }
         return parent :: queryGroupBy($layout_def)." \n";
@@ -518,10 +518,10 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
 
     function queryOrderBy($layout_def)
     {
-        if (!empty ($layout_def['qualifier'])) {
+        if (!empty($layout_def['qualifier'])) {
             $func_name ='queryOrderBy'.$layout_def['qualifier'];
             if (method_exists($this, $func_name)) {
-                return $this-> $func_name ($layout_def)."\n";
+                return $this-> $func_name($layout_def)."\n";
             }
         }
         $order_by = parent :: queryOrderBy($layout_def)."\n";
@@ -564,10 +564,10 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
     {
         global $timedate;
         // i guess qualifier and column_function are the same..
-        if (!empty ($layout_def['column_function'])) {
+        if (!empty($layout_def['column_function'])) {
             $func_name = 'displayList'.$layout_def['column_function'];
             if (method_exists($this, $func_name)) {
-                return $this-> $func_name ($layout_def);
+                return $this-> $func_name($layout_def);
             }
         }
         $content = parent :: displayListPlain($layout_def);
@@ -577,10 +577,10 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
     function querySelect(& $layout_def)
     {
         // i guess qualifier and column_function are the same..
-        if (!empty ($layout_def['column_function'])) {
+        if (!empty($layout_def['column_function'])) {
             $func_name = 'querySelect'.$layout_def['column_function'];
             if (method_exists($this, $func_name)) {
-                return $this-> $func_name ($layout_def)." \n";
+                return $this-> $func_name($layout_def)." \n";
             }
         }
         return parent :: querySelect($layout_def)." \n";

@@ -234,7 +234,7 @@ class MBLanguage
             foreach ($values as $key=>$array) {
                 if ($duplicate) {
                     //keep the original when duplicating
-                    $appFile .= override_value_to_string_recursive2 ('app_list_strings', $key, $array);
+                    $appFile .= override_value_to_string_recursive2('app_list_strings', $key, $array);
                 }
                 $okey = $key;
                 if ($key_changed) {
@@ -245,7 +245,7 @@ class MBLanguage
                 }
                 // if we aren't duplicating or the key has changed let's add it
                 if (!$duplicate || $okey != $key) {
-                    $appFile .= override_value_to_string_recursive2 ('app_list_strings', $key, $array);
+                    $appFile .= override_value_to_string_recursive2('app_list_strings', $key, $array);
                 }
             }
 

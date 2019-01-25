@@ -156,7 +156,7 @@ class SugarHtml
                 $out .= is_array($dom) ? self::createHtml($dom) : $dom;
             }
         } else {
-            if ( isset($dom_tree['tag']) ) {
+            if (isset($dom_tree['tag'])) {
                 $tagName = $dom_tree['tag'];
                 $self_closing = $dom_tree['self_closing'];
                 unset($dom_tree['tag']);
@@ -181,7 +181,7 @@ class SugarHtml
                     $out .= self::createCloseTag($tagName);
                 }
             } else {
-                if ( isset($dom_tree['smarty']) ) { //dom contains smarty function
+                if (isset($dom_tree['smarty'])) { //dom contains smarty function
                     $count = 0;
                     foreach ($dom_tree['smarty'] as $blocks) {
                         $template = $blocks['template'];
@@ -386,7 +386,7 @@ class SugarHtml
                 $clauses[$queue++] = $clauses[$seq];
             }
 
-            if ( $seq > 0 && substr(ltrim($clauses[$seq - 1]), 0, 3) == '/if') {
+            if ($seq > 0 && substr(ltrim($clauses[$seq - 1]), 0, 3) == '/if') {
                 $count--;
             }
         }
@@ -402,7 +402,7 @@ class SugarHtml
                     $smarty_template['template'] .= '{'.$clause.'}';
                 }
             } else {
-                if ( !empty($clause) ) {
+                if (!empty($clause)) {
                     $key = '[CONTENT'.($seq++).']';
                     $smarty_template['template'] .= $key;
                     $params = array();
@@ -436,7 +436,7 @@ class SugarHtml
         $code = rtrim($code);
         for ($i = 0; $i < strlen($code) ; $i ++) {
             $char = $code[$i];
-            if ( !$smarty_encoded && ($char == self::SINGLE_QUOTE || $char == self::DOUBLE_QUOTE) ) {
+            if (!$smarty_encoded && ($char == self::SINGLE_QUOTE || $char == self::DOUBLE_QUOTE)) {
                 if (empty($quote_type)) {
                     $quote_encoded = true;
                     $quote_type = $char;
@@ -462,15 +462,15 @@ class SugarHtml
                     }
                 }
             } else {
-                if ( $quote_encoded && $char == self::SMARTY_TAG_BEGIN ) {
+                if ($quote_encoded && $char == self::SMARTY_TAG_BEGIN) {
                     $smarty_encoded = true;
                     array_push($cache, $char);
                 } else {
-                    if ( $quote_encoded && $char == self::SMARTY_TAG_END ) {
+                    if ($quote_encoded && $char == self::SMARTY_TAG_END) {
                         $smarty_encoded = false;
                         array_push($cache, $char);
                     } else {
-                        if ( !$quote_encoded && $char == ' ' ) {
+                        if (!$quote_encoded && $char == ' ') {
                             if (!empty($cache)) {
                                 $string = implode('', $cache);
                                 if (empty($var_name)) {
@@ -486,7 +486,7 @@ class SugarHtml
                                 $cache = array();
                             }
                         } else {
-                            if ( !$quote_encoded && $char == self::ASSIGN_SIGN ) {
+                            if (!$quote_encoded && $char == self::ASSIGN_SIGN) {
                                 if (!empty($var_name)) {
                                     $output[$var_name] = '';
                                 }
@@ -497,10 +497,10 @@ class SugarHtml
                                 $var_assign = true;
                                 $cache = array();
                             } else {
-                                if ( !$quote_encoded && $char == self::SMARTY_TAG_BEGIN) {
+                                if (!$quote_encoded && $char == self::SMARTY_TAG_BEGIN) {
                                     self::parseSmartyTag($code, $output, $i, true);
                                 } else {
-                                    if ( !$quote_encoded && $char == self::HTML_TAG_END ) {
+                                    if (!$quote_encoded && $char == self::HTML_TAG_END) {
                                         break;
                                     } else {
                                         array_push($cache, $char);

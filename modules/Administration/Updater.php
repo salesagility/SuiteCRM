@@ -48,7 +48,7 @@ global $mod_strings;
 global $current_user;
 global $sugar_config;
 
-$xtpl=new XTemplate ('modules/Administration/Updater.html');
+$xtpl=new XTemplate('modules/Administration/Updater.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 
@@ -98,7 +98,7 @@ $has_updates= false;
 if (!empty($license->settings['license_latest_versions'])) {
     $encodedVersions = $license->settings['license_latest_versions'];
 
-    $versions = unserialize(base64_decode( $encodedVersions));
+    $versions = unserialize(base64_decode($encodedVersions));
     include('sugar_version.php');
     if (!empty($versions)) {
         foreach ($versions as $version) {

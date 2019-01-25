@@ -49,13 +49,13 @@ function display_conflict_between_objects($object_1, $object_2, $field_defs, $mo
     $object2_row= '<tr class="evenListRowS1"><td><b>' . $mod_strings['LBL_IN_DATABASE'] . '</b></td>';
     $exists = false;
 
-    foreach ( $field_defs as  $name=>$ignore) {
+    foreach ($field_defs as  $name=>$ignore) {
         $value = $object_1[$name];
         // FIXME: Replace the comparison here with a function from SugarWidgets
-        if ( !is_scalar($value) || $name == 'team_name' ) {
+        if (!is_scalar($value) || $name == 'team_name') {
             continue;
         }
-        if ( $value != $object_2->$name && !($object_2->$name instanceof Link)) {
+        if ($value != $object_2->$name && !($object_2->$name instanceof Link)) {
             $title .= '<td ><b>&nbsp;' . translate($field_defs[$name]['vname'], $module_dir). '</b></td>';
             $object1_row .= '<td>&nbsp;' . $value. '</td>';
             $object2_row .= '<td>&nbsp;' . $object_2->$name . '</td>';

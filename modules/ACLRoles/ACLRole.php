@@ -121,7 +121,7 @@ class ACLRole extends SugarBean
         $result = DBManagerFactory::getInstance()->query($query);
         $user_roles = array();
 
-        while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result) ) {
+        while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
             $role = new ACLRole();
             $role->populateFromRow($row);
             if ($getAsNameArray) {
@@ -157,7 +157,7 @@ class ACLRole extends SugarBean
             $result = DBManagerFactory::getInstance()->query($query);
             $user_roles = array();
 
-            while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result) ) {
+            while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
                 $user_roles[] = $row['name'];
             }
 
@@ -183,7 +183,7 @@ class ACLRole extends SugarBean
         $result = $db->query($query);
         $roles = array();
 
-        while ($row = $db->fetchByAssoc($result) ) {
+        while ($row = $db->fetchByAssoc($result)) {
             $role = new ACLRole();
             $role->populateFromRow($row);
             if ($returnAsArray) {
@@ -223,7 +223,7 @@ class ACLRole extends SugarBean
         $result = $db->query($query);
         $role_actions = array();
 
-        while ($row = $db->fetchByAssoc($result) ) {
+        while ($row = $db->fetchByAssoc($result)) {
             $action = new ACLAction();
             $action->populateFromRow($row);
             if (!empty($row['access_override'])) {

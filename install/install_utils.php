@@ -122,7 +122,7 @@ function commitLanguagePack($uninstall=false)
     $zipFile        = urldecode($_REQUEST['zipFile']);
     $version        = "";
     $show_files     = true;
-    $unzip_dir      = mk_temp_dir( $base_tmp_upgrade_dir );
+    $unzip_dir      = mk_temp_dir($base_tmp_upgrade_dir);
     $zip_from_dir   = ".";
     $zip_to_dir     = ".";
     $zip_force_copy = array();
@@ -134,7 +134,7 @@ function commitLanguagePack($uninstall=false)
     // unzip lang pack to temp dir
     if (isset($zipFile) && !empty($zipFile)) {
         if (is_file($zipFile)) {
-            unzip( $zipFile, $unzip_dir );
+            unzip($zipFile, $unzip_dir);
         } else {
             echo $mod_strings['ERR_LANG_MISSING_FILE'].$zipFile;
             die(); // no point going any further
@@ -145,16 +145,16 @@ function commitLanguagePack($uninstall=false)
     if (isset($manifest) && !empty($manifest)) {
         if (is_file($manifest)) {
             include($manifest);
-            if ( isset( $manifest['copy_files']['from_dir'] ) && $manifest['copy_files']['from_dir'] != "" ) {
+            if (isset($manifest['copy_files']['from_dir']) && $manifest['copy_files']['from_dir'] != "") {
                 $zip_from_dir   = $manifest['copy_files']['from_dir'];
             }
-            if ( isset( $manifest['copy_files']['to_dir'] ) && $manifest['copy_files']['to_dir'] != "" ) {
+            if (isset($manifest['copy_files']['to_dir']) && $manifest['copy_files']['to_dir'] != "") {
                 $zip_to_dir     = $manifest['copy_files']['to_dir'];
             }
-            if ( isset( $manifest['copy_files']['force_copy'] ) && $manifest['copy_files']['force_copy'] != "" ) {
+            if (isset($manifest['copy_files']['force_copy']) && $manifest['copy_files']['force_copy'] != "") {
                 $zip_force_copy     = $manifest['copy_files']['force_copy'];
             }
-            if ( isset( $manifest['version'] ) ) {
+            if (isset($manifest['version'])) {
                 $version    = $manifest['version'];
             }
         } else {
@@ -164,22 +164,22 @@ function commitLanguagePack($uninstall=false)
 
 
     // find name of language pack: find single file in include/language/xx_xx.lang.php
-    $d = dir( "$unzip_dir/$zip_from_dir/include/language" );
-    while ( $f = $d->read() ) {
-        if ( $f == "." || $f == ".." ) {
+    $d = dir("$unzip_dir/$zip_from_dir/include/language");
+    while ($f = $d->read()) {
+        if ($f == "." || $f == "..") {
             continue;
         } else {
-            if ( preg_match("/(.*)\.lang\.php\$/", $f, $match) ) {
+            if (preg_match("/(.*)\.lang\.php\$/", $f, $match)) {
                 $new_lang_name = $match[1];
             }
         }
     }
-    if ( $new_lang_name == "" ) {
-        die( $mod_strings['ERR_LANG_NO_LANG_FILE'].$zipFile );
+    if ($new_lang_name == "") {
+        die($mod_strings['ERR_LANG_NO_LANG_FILE'].$zipFile);
     }
-    $new_lang_desc = getLanguagePackName( "$unzip_dir/$zip_from_dir/include/language/$new_lang_name.lang.php" );
-    if ( $new_lang_desc == "" ) {
-        die( "No language pack description found at include/language/$new_lang_name.lang.php inside $install_file." );
+    $new_lang_desc = getLanguagePackName("$unzip_dir/$zip_from_dir/include/language/$new_lang_name.lang.php");
+    if ($new_lang_desc == "") {
+        die("No language pack description found at include/language/$new_lang_name.lang.php inside $install_file.");
     }
     // add language to available languages
     $sugar_config['languages'][$new_lang_name] = ($new_lang_desc);
@@ -213,8 +213,8 @@ function commitLanguagePack($uninstall=false)
             // remove language from config
             $new_langs = array();
             $old_langs = $sugar_config['languages'];
-            foreach ( $old_langs as $key => $value ) {
-                if ( $key != $removedLang ) {
+            foreach ($old_langs as $key => $value) {
+                if ($key != $removedLang) {
                     $new_langs += array( $key => $value );
                 }
             }
@@ -268,17 +268,17 @@ function commitPatch($unlink = false, $type = 'patch')
                 continue;
             }
             // handle manifest.php
-            $target_manifest = remove_file_extension( $file ) . '-manifest.php';
+            $target_manifest = remove_file_extension($file) . '-manifest.php';
 
             include($target_manifest);
 
-            $unzip_dir = mk_temp_dir( $base_tmp_upgrade_dir );
-            unzip($file, $unzip_dir );
+            $unzip_dir = mk_temp_dir($base_tmp_upgrade_dir);
+            unzip($file, $unzip_dir);
             if (file_exists("$unzip_dir/scripts/pre_install.php")) {
                 require_once("$unzip_dir/scripts/pre_install.php");
                 pre_install();
             }
-            if ( isset( $manifest['copy_files']['from_dir'] ) && $manifest['copy_files']['from_dir'] != "" ) {
+            if (isset($manifest['copy_files']['from_dir']) && $manifest['copy_files']['from_dir'] != "") {
                 $zip_from_dir   = $manifest['copy_files']['from_dir'];
             }
             $source = "$unzip_dir/$zip_from_dir";
@@ -349,7 +349,7 @@ function commitModules($unlink = false, $type = 'module')
             }
             if ($can_install) {
                 // handle manifest.php
-                $target_manifest = remove_file_extension( $file ) . '-manifest.php';
+                $target_manifest = remove_file_extension($file) . '-manifest.php';
                 if ($type == 'langpack') {
                     $_REQUEST['manifest'] = $target_manifest;
                     $_REQUEST['zipFile'] = $file;
@@ -358,8 +358,8 @@ function commitModules($unlink = false, $type = 'module')
                 }
                 include($target_manifest);
 
-                $unzip_dir = mk_temp_dir( $base_tmp_upgrade_dir );
-                unzip($file, $unzip_dir );
+                $unzip_dir = mk_temp_dir($base_tmp_upgrade_dir);
+                unzip($file, $unzip_dir);
                 $_REQUEST['install_file'] = $file;
                 $mi->install($unzip_dir);
                 $new_upgrade = new UpgradeHistory();
@@ -463,7 +463,7 @@ function writeSugarConfig($sugar_config)
         var_export($sugar_config, true) .
         ";\n?>\n";
     if (is_writable('config.php')) {
-        write_array_to_file( "sugar_config", $sugar_config, "config.php");
+        write_array_to_file("sugar_config", $sugar_config, "config.php");
     }
 }
 
@@ -478,8 +478,8 @@ function uninstallLangPack()
     // remove language from config
     $new_langs = array();
     $old_langs = $sugar_config['languages'];
-    foreach ( $old_langs as $key => $value ) {
-        if ( $key != $_REQUEST['new_lang_name'] ) {
+    foreach ($old_langs as $key => $value) {
+        if ($key != $_REQUEST['new_lang_name']) {
             $new_langs += array( $key => $value );
         }
     }
@@ -491,14 +491,14 @@ function uninstallLangPack()
 /**
  * retrieves the name of the language
  */
-if ( !function_exists('getLanguagePackName') ) {
+if (!function_exists('getLanguagePackName')) {
     function getLanguagePackName($the_file)
     {
-        require_once( "$the_file" );
-        if ( isset( $app_list_strings["language_pack_name"] ) ) {
-            return( $app_list_strings["language_pack_name"] );
+        require_once("$the_file");
+        if (isset($app_list_strings["language_pack_name"])) {
+            return($app_list_strings["language_pack_name"]);
         }
-        return( "" );
+        return("");
     }
 }
 
@@ -525,7 +525,7 @@ function getInstalledLangPacks($showButtons=true)
         if (count($_SESSION['INSTALLED_LANG_PACKS'] > 0)) {
             foreach ($_SESSION['INSTALLED_LANG_PACKS'] as $file) {
                 // handle manifest.php
-                $target_manifest = remove_file_extension( $file ) . '-manifest.php';
+                $target_manifest = remove_file_extension($file) . '-manifest.php';
                 include($target_manifest);
 
                 $name = empty($manifest['name']) ? $file : $manifest['name'];
@@ -759,7 +759,7 @@ function handleSugarConfig()
     echo "<b>{$mod_strings['LBL_PERFORM_CONFIG_PHP']} (config.php)</b><br>";
     ///////////////////////////////////////////////////////////////////////////////
     ////    $sugar_config SETTINGS
-    if ( is_file('config.php') ) {
+    if (is_file('config.php')) {
         $is_writable = is_writable('config.php');
         // require is needed here (config.php is sometimes require'd from install.php)
         require('config.php');
@@ -853,7 +853,7 @@ function handleSugarConfig()
     /*nsingh(bug 22402): Consolidate logger settings under $config['logger'] as liked by the new logger! If log4pphp exists,
         these settings will be overwritten by those in log4php.properties when the user access admin->system settings.*/
     $sugar_config['logger']	=
-        array ('level'=>$setup_site_log_level,
+        array('level'=>$setup_site_log_level,
             'file' => array(
                 'ext' => '.log',
                 'name' => 'suitecrm',
@@ -869,15 +869,15 @@ function handleSugarConfig()
     $sugar_config['tmp_dir']                        = $cache_dir.'xml/';
     $sugar_config['upload_dir']                 = 'upload/';
 //    $sugar_config['use_php_code_json']              = returnPhpJsonStatus(); // true on error
-    if ( isset($_SESSION['setup_site_sugarbeet_anonymous_stats']) ) {
+    if (isset($_SESSION['setup_site_sugarbeet_anonymous_stats'])) {
         $sugar_config['sugarbeet']      = $_SESSION['setup_site_sugarbeet_anonymous_stats'];
     }
     $sugar_config['demoData'] = $_SESSION['demoData'];
-    if ( isset( $setup_site_guid ) ) {
+    if (isset($setup_site_guid)) {
         $sugar_config['unique_key'] = $setup_site_guid;
     }
     if (empty($sugar_config['unique_key'])) {
-        $sugar_config['unique_key'] = md5( create_guid() );
+        $sugar_config['unique_key'] = md5(create_guid());
     }
     // add installed langs to config
     // entry in upgrade_history comes AFTER table creation
@@ -907,7 +907,7 @@ function handleSugarConfig()
         '$sugar_config = ' .
         var_export($sugar_config, true) .
         ";\n?>\n";
-    if ($is_writable && write_array_to_file( "sugar_config", $sugar_config, "config.php")) {
+    if ($is_writable && write_array_to_file("sugar_config", $sugar_config, "config.php")) {
         // was 'Done'
     } else {
         echo 'failed<br>';
@@ -1072,7 +1072,7 @@ EOQ;
  */
 function handleWebConfig()
 {
-    if ( !isset($_SERVER['IIS_UrlRewriteModule']) ) {
+    if (!isset($_SERVER['IIS_UrlRewriteModule'])) {
         return;
     }
 
@@ -1083,13 +1083,13 @@ function handleWebConfig()
     // Bug 36968 - Fallback to using $sugar_config values when we are not calling this from the installer
     if (empty($setup_site_log_file)) {
         $setup_site_log_file = $sugar_config['log_file'];
-        if ( empty($sugar_config['log_file']) ) {
+        if (empty($sugar_config['log_file'])) {
             $setup_site_log_file = 'suitecrm.log';
         }
     }
     if (empty($setup_site_log_dir)) {
         $setup_site_log_dir = $sugar_config['log_dir'];
-        if ( empty($sugar_config['log_dir']) ) {
+        if (empty($sugar_config['log_dir'])) {
             $setup_site_log_dir = '.';
         }
     }
@@ -1173,7 +1173,7 @@ function drop_table_install(&$focus)
 
     $result = $db->tableExists($focus->table_name);
 
-    if ( $result ) {
+    if ($result) {
         $focus->drop_tables();
         $GLOBALS['log']->info("Dropped old ".$focus->table_name." table.");
         return 1;
@@ -1230,12 +1230,12 @@ function create_default_users()
     $GLOBALS['current_user'] = $user;
 
 
-    if ( $create_default_user ) {
+    if ($create_default_user) {
         $default_user = new User();
         $default_user->last_name = $sugar_config['default_user_name'];
         $default_user->user_name = $sugar_config['default_user_name'];
         $default_user->status = 'Active';
-        if ( isset($sugar_config['default_user_is_admin']) && $sugar_config['default_user_is_admin'] ) {
+        if (isset($sugar_config['default_user_is_admin']) && $sugar_config['default_user_is_admin']) {
             $default_user->is_admin = true;
         }
         $default_user->user_hash = User::getPasswordHash($sugar_config['default_password']);
@@ -1293,7 +1293,7 @@ function insert_default_settings()
 
 
 
-    $db->query( "INSERT INTO config (category, name, value) VALUES ( 'system', 'skypeout_on', '1')" );
+    $db->query("INSERT INTO config (category, name, value) VALUES ( 'system', 'skypeout_on', '1')");
 }
 
 
@@ -1414,11 +1414,11 @@ function recursive_is_writable($start_file)
 // one place for form validation/conversion to boolean
 function get_boolean_from_request($field)
 {
-    if ( !isset($_REQUEST[$field]) ) {
-        return( false );
+    if (!isset($_REQUEST[$field])) {
+        return(false);
     }
 
-    if ( ($_REQUEST[$field] == 'on') || ($_REQUEST[$field] == 'yes') ) {
+    if (($_REQUEST[$field] == 'on') || ($_REQUEST[$field] == 'yes')) {
         return(true);
     } else {
         return(false);
@@ -1436,36 +1436,36 @@ function stripslashes_checkstrings($value)
 
 function print_debug_array($name, $debug_array)
 {
-    ksort( $debug_array );
+    ksort($debug_array);
 
-    print( "$name vars:\n" );
-    print( "(\n" );
+    print("$name vars:\n");
+    print("(\n");
 
-    foreach ( $debug_array as $key => $value ) {
-        if ( stristr( $key, "password" ) ) {
+    foreach ($debug_array as $key => $value) {
+        if (stristr($key, "password")) {
             $value = "WAS SET";
         }
-        print( "    [$key] => $value\n" );
+        print("    [$key] => $value\n");
     }
 
-    print( ")\n" );
+    print(")\n");
 }
 
 function print_debug_comment()
 {
-    if ( !empty($_REQUEST['debug']) ) {
+    if (!empty($_REQUEST['debug'])) {
         $_SESSION['debug'] = $_REQUEST['debug'];
     }
 
-    if ( !empty($_SESSION['debug']) && ($_SESSION['debug'] == 'true') ) {
-        print( "<!-- debug is on (to turn off, hit any page with 'debug=false' as a URL parameter.\n" );
+    if (!empty($_SESSION['debug']) && ($_SESSION['debug'] == 'true')) {
+        print("<!-- debug is on (to turn off, hit any page with 'debug=false' as a URL parameter.\n");
 
-        print_debug_array( "Session", $_SESSION );
-        print_debug_array( "Request", $_REQUEST );
-        print_debug_array( "Post", $_POST );
-        print_debug_array( "Get", $_GET );
+        print_debug_array("Session", $_SESSION);
+        print_debug_array("Request", $_REQUEST);
+        print_debug_array("Post", $_POST);
+        print_debug_array("Get", $_GET);
 
-        print_r( "-->\n" );
+        print_r("-->\n");
     }
 }
 
@@ -1558,15 +1558,15 @@ function pullSilentInstallVarsIntoSession()
     global $mod_strings;
     global $sugar_config;
 
-    if ( file_exists('config_si.php') ) {
+    if (file_exists('config_si.php')) {
         require_once('config_si.php');
     } else {
-        if ( empty($sugar_config_si) ) {
-            die( $mod_strings['ERR_SI_NO_CONFIG'] );
+        if (empty($sugar_config_si)) {
+            die($mod_strings['ERR_SI_NO_CONFIG']);
         }
     }
 
-    $config_subset = array (
+    $config_subset = array(
         'setup_site_url'                => isset($sugar_config['site_url']) ? $sugar_config['site_url'] : '',
         'setup_db_host_name'            => isset($sugar_config['dbconfig']['db_host_name']) ? $sugar_config['dbconfig']['db_host_name'] : '',
         'setup_db_host_instance'        => isset($sugar_config['dbconfig']['db_host_instance']) ? $sugar_config['dbconfig']['db_host_instance'] : '',
@@ -1578,7 +1578,7 @@ function pullSilentInstallVarsIntoSession()
         'setup_db_options'              => !empty($sugar_config['dbconfigoptions']) ? $sugar_config['dbconfigoptions'] : array(),
     );
     // third array of values derived from above values
-    $derived = array (
+    $derived = array(
         'setup_site_admin_password_retype'      => $sugar_config_si['setup_site_admin_password'],
         'setup_db_sugarsales_password_retype'   => $config_subset['setup_db_sugarsales_password'],
     );
@@ -1591,14 +1591,14 @@ function pullSilentInstallVarsIntoSession()
         'export_delimiter', 'cache_dir', 'setup_db_options',
         'setup_fts_type', 'setup_fts_host', 'setup_fts_port', 'setup_fts_index_settings'. 'setup_fts_transport');
     copyFromArray($sugar_config_si, $needles, $derived);
-    $all_config_vars = array_merge( $config_subset, $sugar_config_si, $derived );
+    $all_config_vars = array_merge($config_subset, $sugar_config_si, $derived);
 
     // bug 16860 tyoung -  trim leading and trailing whitespace from license_key
     if (isset($all_config_vars['setup_license_key'])) {
         $all_config_vars['setup_license_key'] = trim($all_config_vars['setup_license_key']);
     }
 
-    foreach ( $all_config_vars as $key => $value ) {
+    foreach ($all_config_vars as $key => $value) {
         $_SESSION[$key] = $value;
     }
 }
@@ -1635,7 +1635,7 @@ function langPackFinalMove($file)
     //."upgrades/langpack/"
     $destination = $sugar_config['upload_dir'].$file->stored_file_name;
     if (!move_uploaded_file($_FILES[$file->field_name]['tmp_name'], $destination)) {
-        die ("ERROR: can't move_uploaded_file to $destination. You should try making the directory writable by the webserver");
+        die("ERROR: can't move_uploaded_file to $destination. You should try making the directory writable by the webserver");
     }
     return true;
 }
@@ -1729,11 +1729,11 @@ function getLangPacks($display_commit = true, $types = array('langpack'), $notic
 
     // duh, new installs won't have the upgrade folders
     if (!is_dir($base_upgrade_dir)) {
-        mkdir_recursive( $base_upgrade_dir);
+        mkdir_recursive($base_upgrade_dir);
     }
     $subdirs = array('full', 'langpack', 'module', 'patch', 'theme', 'temp');
-    foreach ( $subdirs as $subdir ) {
-        mkdir_recursive( "$base_upgrade_dir/$subdir" );
+    foreach ($subdirs as $subdir) {
+        mkdir_recursive("$base_upgrade_dir/$subdir");
     }
 
     $files = findAllFiles($base_upgrade_dir, $files);
@@ -1751,8 +1751,8 @@ function getLangPacks($display_commit = true, $types = array('langpack'), $notic
         }
 
         // handle manifest.php
-        $target_manifest = remove_file_extension( $file ) . '-manifest.php';
-        $license_file = remove_file_extension( $file ) . '-license.txt';
+        $target_manifest = remove_file_extension($file) . '-manifest.php';
+        $license_file = remove_file_extension($file) . '-license.txt';
         include($target_manifest);
 
         if (!empty($types)) {
@@ -1810,7 +1810,7 @@ function getLangPacks($display_commit = true, $types = array('langpack'), $notic
     }//rof
     $_SESSION['hidden_input'] = $hidden_input;
 
-    if (count($files) > 0 ) {
+    if (count($files) > 0) {
         $ret .= "</tr><td colspan=7>";
         $ret .= "<form name='commit' action='install.php' method='POST'>
                     <input type='hidden' name='current_step' value='{$next_step}'>
@@ -1826,23 +1826,23 @@ function getLangPacks($display_commit = true, $types = array('langpack'), $notic
     return $ret;
 }
 
-if ( !function_exists('extractFile') ) {
+if (!function_exists('extractFile')) {
     function extractFile($zip_file, $file_in_zip, $base_tmp_upgrade_dir)
     {
-        $my_zip_dir = mk_temp_dir( $base_tmp_upgrade_dir );
-        unzip_file( $zip_file, $file_in_zip, $my_zip_dir );
-        return( "$my_zip_dir/$file_in_zip" );
+        $my_zip_dir = mk_temp_dir($base_tmp_upgrade_dir);
+        unzip_file($zip_file, $file_in_zip, $my_zip_dir);
+        return("$my_zip_dir/$file_in_zip");
     }
 }
 
-if ( !function_exists('extractManifest') ) {
+if (!function_exists('extractManifest')) {
     function extractManifest($zip_file, $base_tmp_upgrade_dir)
     {
-        return( extractFile( $zip_file, "manifest.php", $base_tmp_upgrade_dir ) );
+        return(extractFile($zip_file, "manifest.php", $base_tmp_upgrade_dir));
     }
 }
 
-if ( !function_exists('unlinkTempFiles') ) {
+if (!function_exists('unlinkTempFiles')) {
     function unlinkTempFiles($manifest='', $zipFile='')
     {
         global $sugar_config;
@@ -1870,7 +1870,7 @@ function langPackUnpack($unpack_type, $full_file)
 
     $manifest = array();
     if (!empty($full_file)) {
-        $base_filename = pathinfo(urldecode($full_file), PATHINFO_FILENAME );
+        $base_filename = pathinfo(urldecode($full_file), PATHINFO_FILENAME);
     } else {
         return "Empty filename supplied";
     }
@@ -1885,24 +1885,24 @@ function langPackUnpack($unpack_type, $full_file)
         }
         copy($manifest_file, $base_upgrade_dir.'/'.$unpack_type.'/'.$base_filename."-manifest.php");
 
-        require_once( $manifest_file );
-        validate_manifest( $manifest );
+        require_once($manifest_file);
+        validate_manifest($manifest);
         $upgrade_zip_type = $manifest['type'];
 
-        mkdir_recursive( "$base_upgrade_dir/$upgrade_zip_type" );
+        mkdir_recursive("$base_upgrade_dir/$upgrade_zip_type");
         $target_path = "$base_upgrade_dir/$upgrade_zip_type/$base_filename";
         $target_manifest = $target_path . "-manifest.php";
 
-        if ( isset($manifest['icon']) && $manifest['icon'] != "" ) {
-            $icon_location = extractFile( $full_file, $manifest['icon'], $base_tmp_upgrade_dir );
-            $path_parts = pathinfo( $icon_location );
-            copy( $icon_location, $target_path . "-icon." . $path_parts['extension'] );
+        if (isset($manifest['icon']) && $manifest['icon'] != "") {
+            $icon_location = extractFile($full_file, $manifest['icon'], $base_tmp_upgrade_dir);
+            $path_parts = pathinfo($icon_location);
+            copy($icon_location, $target_path . "-icon." . $path_parts['extension']);
         }
 
         // move file from uploads to cache
         // FIXME: where should it be?
-        if ( copy( $full_file, $target_path.".zip" ) ) {
-            copy( $manifest_file, $target_manifest );
+        if (copy($full_file, $target_path.".zip")) {
+            copy($manifest_file, $target_manifest);
             unlink($full_file); // remove tempFile
             return "The file $base_filename has been uploaded.<br>\n";
         } else {
@@ -1915,7 +1915,7 @@ function langPackUnpack($unpack_type, $full_file)
     unlinkTempFiles($manifest_file, '');
 }
 
-if ( !function_exists('validate_manifest') ) {
+if (!function_exists('validate_manifest')) {
     function validate_manifest($manifest)
     {
         // takes a manifest.php manifest array and validates contents
@@ -1924,30 +1924,30 @@ if ( !function_exists('validate_manifest') ) {
         global $sugar_flavor;
         global $mod_strings;
 
-        if ( !isset($manifest['type']) ) {
+        if (!isset($manifest['type'])) {
             die($mod_strings['ERROR_MANIFEST_TYPE']);
         }
         $type = $manifest['type'];
-        if ( getInstallType( "/$type/" ) == "" ) {
-            die($mod_strings['ERROR_PACKAGE_TYPE']. ": '" . $type . "'." );
+        if (getInstallType("/$type/") == "") {
+            die($mod_strings['ERROR_PACKAGE_TYPE']. ": '" . $type . "'.");
         }
 
         return true; // making this a bit more relaxed since we updated the language extraction and merge capabilities
     }
 }
 
-if ( !function_exists('getInstallType') ) {
+if (!function_exists('getInstallType')) {
     function getInstallType($type_string)
     {
         // detect file type
         $subdirs = array('full', 'langpack', 'module', 'patch', 'theme', 'temp');
-        foreach ( $subdirs as $subdir ) {
-            if ( preg_match( "#/$subdir/#", $type_string ) ) {
-                return( $subdir );
+        foreach ($subdirs as $subdir) {
+            if (preg_match("#/$subdir/#", $type_string)) {
+                return($subdir);
             }
         }
         // return empty if no match
-        return( "" );
+        return("");
     }
 }
 
@@ -2146,7 +2146,7 @@ function create_db_user_creds($numChars=10)
     srand((double)microtime()*1000000);
     $password="";
     for ($i=0;$i<$numChars;$i++) {  // loop and create password
-        $password = $password . substr ($charBKT, rand() % strlen($charBKT), 1);
+        $password = $password . substr($charBKT, rand() % strlen($charBKT), 1);
     }
 
     return $password;
@@ -2190,7 +2190,7 @@ function enableSugarFeeds()
     $admin = new Administration();
     $admin->saveSetting('sugarfeed', 'enabled', '1');
 
-    foreach ( SugarFeed::getAllFeedModules() as $module ) {
+    foreach (SugarFeed::getAllFeedModules() as $module) {
         SugarFeed::activateModuleFeed($module);
     }
 
@@ -2214,7 +2214,7 @@ function enableInsideViewConnector()
 {
     // Load up the existing mapping and hand it to the InsideView connector to have it setup the correct logic hooks
     $mapFile = 'modules/Connectors/connectors/sources/ext/rest/insideview/mapping.php';
-    if ( file_exists('custom/'.$mapFile) ) {
+    if (file_exists('custom/'.$mapFile)) {
         require('custom/'.$mapFile);
     } else {
         require($mapFile);

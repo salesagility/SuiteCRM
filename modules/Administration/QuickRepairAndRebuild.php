@@ -165,7 +165,7 @@ class RepairAndClear
                     if (isset($beanFiles[$bean_name]) && file_exists($beanFiles[$bean_name])) {
                         require_once($beanFiles[$bean_name]);
                         $GLOBALS['reload_vardefs'] = true;
-                        $focus = new $bean_name ();
+                        $focus = new $bean_name();
                         #30273
                         if ($focus->disable_vardefs == false) {
                             include('modules/' . $focus->module_dir . '/vardefs.php');
@@ -184,10 +184,10 @@ class RepairAndClear
                 if ($this->show_output) {
                     echo "<script type=\"text/javascript\">document.getElementById('rdloading').style.display = \"none\";</script>";
                 }
-                if (isset ($sql) && !empty ($sql)) {
+                if (isset($sql) && !empty($sql)) {
                     $qry_str = "";
                     foreach (explode("\n", $sql) as $line) {
-                        if (!empty ($line) && substr($line, -2) != "*/") {
+                        if (!empty($line) && substr($line, -2) != "*/") {
                             $line .= ";";
                         }
 
@@ -283,8 +283,8 @@ class RepairAndClear
         if ($this->show_output) {
             echo "<h3>{$mod_strings['LBL_QR_CLEARTEMPLATE']}</h3>";
         }
-        if (!in_array( translate('LBL_ALL_MODULES'), (array)$this->module_list) && !empty($this->module_list)) {
-            foreach ($this->module_list as $module_name_singular ) {
+        if (!in_array(translate('LBL_ALL_MODULES'), (array)$this->module_list) && !empty($this->module_list)) {
+            foreach ($this->module_list as $module_name_singular) {
                 $this->_clearCache(sugar_cached('modules/').$this->_getModuleNamePlural($module_name_singular), '.tpl');
             }
         } else {
@@ -297,8 +297,8 @@ class RepairAndClear
         if ($this->show_output) {
             echo "<h3>{$mod_strings['LBL_QR_CLEARVADEFS']}</h3>";
         }
-        if (!empty($this->module_list) && is_array($this->module_list) && !in_array( translate('LBL_ALL_MODULES'), $this->module_list)) {
-            foreach ($this->module_list as $module_name_singular ) {
+        if (!empty($this->module_list) && is_array($this->module_list) && !in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
+            foreach ($this->module_list as $module_name_singular) {
                 $this->_clearCache(sugar_cached('modules/').$this->_getModuleNamePlural($module_name_singular), 'vardefs.php');
             }
         } else {
@@ -312,8 +312,8 @@ class RepairAndClear
             echo "<h3>{$mod_strings['LBL_QR_CLEARJS']}</h3>";
         }
 
-        if (!in_array( translate('LBL_ALL_MODULES'), $this->module_list) && !empty($this->module_list)) {
-            foreach ($this->module_list as $module_name_singular ) {
+        if (!in_array(translate('LBL_ALL_MODULES'), $this->module_list) && !empty($this->module_list)) {
+            foreach ($this->module_list as $module_name_singular) {
                 $this->_clearCache(sugar_cached('modules/').$this->_getModuleNamePlural($module_name_singular), '.js');
             }
         } else {
@@ -326,8 +326,8 @@ class RepairAndClear
         if ($this->show_output) {
             echo "<h3>{$mod_strings['LBL_QR_CLEARJSLANG']}</h3>";
         }
-        if (!in_array(translate('LBL_ALL_MODULES'), $this->module_list ) && !empty($this->module_list)) {
-            foreach ($this->module_list as $module_name_singular ) {
+        if (!in_array(translate('LBL_ALL_MODULES'), $this->module_list) && !empty($this->module_list)) {
+            foreach ($this->module_list as $module_name_singular) {
                 $this->_clearCache(sugar_cached('jsLanguage/').$this->_getModuleNamePlural($module_name_singular), '.js');
             }
         } else {
@@ -345,8 +345,8 @@ class RepairAndClear
             echo "<h3>{$mod_strings['LBL_QR_CLEARLANG']}</h3>";
         }
         //clear cache using the list $module_list_from_cache
-        if ( !empty($this->module_list) && is_array($this->module_list) ) {
-            if ( in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
+        if (!empty($this->module_list) && is_array($this->module_list)) {
+            if (in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
                 LanguageManager::clearLanguageCache();
             } else { //use the modules selected thrut the select list.
                 foreach ($this->module_list as $module_name) {
@@ -378,7 +378,7 @@ class RepairAndClear
         $search_dir=sugar_cached('');
         $src_file = $search_dir . 'modules/unified_search_modules.php';
         if (file_exists($src_file)) {
-            unlink( "$src_file" );
+            unlink("$src_file");
         }
     }
     public function clearExternalAPICache()
@@ -401,9 +401,9 @@ class RepairAndClear
             echo "<h3> {$mod_strings['LBL_QR_REBUILDAUDIT']}</h3>";
         }
 
-        if (!in_array( translate('LBL_ALL_MODULES'), $this->module_list) && !empty($this->module_list)) {
+        if (!in_array(translate('LBL_ALL_MODULES'), $this->module_list) && !empty($this->module_list)) {
             foreach ($this->module_list as $bean_name) {
-                if ( isset($beanFiles[$bean_name]) && file_exists($beanFiles[$bean_name])) {
+                if (isset($beanFiles[$bean_name]) && file_exists($beanFiles[$bean_name])) {
                     require_once($beanFiles[$bean_name]);
                     $this->_rebuildAuditTablesHelper(new $bean_name());
                 }
@@ -411,7 +411,7 @@ class RepairAndClear
         } else {
             if (in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
                 foreach ($beanFiles as $bean => $file) {
-                    if ( file_exists($file)) {
+                    if (file_exists($file)) {
                         require_once($file);
                         $this->_rebuildAuditTablesHelper(new $bean());
                     }
@@ -428,7 +428,7 @@ class RepairAndClear
         global $mod_strings;
 
         // skip if not a SugarBean object
-        if ( !($focus instanceof SugarBean) ) {
+        if (!($focus instanceof SugarBean)) {
             return;
         }
 

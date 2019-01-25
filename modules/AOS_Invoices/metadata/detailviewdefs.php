@@ -2,187 +2,187 @@
 $module_name = 'AOS_Invoices';
 $_object_name = 'aos_invoices';
 $viewdefs [$module_name] = 
-array (
+array(
   'DetailView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'form' => 
-      array (
+      array(
         'buttons' => 
-        array (
+        array(
           0 => 'EDIT',
           1 => 'DUPLICATE',
           2 => 'DELETE',
           3 => 'FIND_DUPLICATES',
           4 => 
-          array (
+          array(
             'customCode' => '<input type="button" class="button" onClick="showPopup(\'pdf\');" value="{$MOD.LBL_PRINT_AS_PDF}">',
           ),
           5 => 
-          array (
+          array(
             'customCode' => '<input type="button" class="button" onClick="showPopup(\'emailpdf\');" value="{$MOD.LBL_EMAIL_PDF}">',
           ),
           6 => 
-          array (
+          array(
             'customCode' => '<input type="button" class="button" onClick="showPopup(\'email\');" value="{$MOD.LBL_EMAIL_INVOICE}">',
           ),
         ),
       ),
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'useTabs' => true,
       'tabDefs' => 
-      array (
+      array(
         'LBL_PANEL_OVERVIEW' =>
-        array (
+        array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
         'LBL_INVOICE_TO' =>
-        array (
+        array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
         'LBL_LINE_ITEMS' => 
-        array (
+        array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
         'LBL_PANEL_ASSIGNMENT' =>
-        array (
+        array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
     'panels' => 
-    array (
+    array(
       'LBL_PANEL_OVERVIEW' =>
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'name',
             'label' => 'LBL_NAME',
           ),
           1 => 
-          array (
+          array(
             'name' => 'number',
             'label' => 'LBL_INVOICE_NUMBER',
           ),
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'quote_number',
             'label' => 'LBL_QUOTE_NUMBER',
           ),
           1 => 
-          array (
+          array(
             'name' => 'quote_date',
             'label' => 'LBL_QUOTE_DATE',
           ),
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'due_date',
             'label' => 'LBL_DUE_DATE',
           ),
           1 => 
-          array (
+          array(
             'name' => 'invoice_date',
             'label' => 'LBL_INVOICE_DATE',
           ),
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO_NAME',
           ),
           1 => 
-          array (
+          array(
             'name' => 'status',
             'label' => 'LBL_STATUS',
           ),
         ),
         4 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'description',
             'label' => 'LBL_DESCRIPTION',
           ),
         ),
       ),
       'LBL_INVOICE_TO' =>
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'billing_account',
             'label' => 'LBL_BILLING_ACCOUNT',
           ),
           1 => '',
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'billing_contact',
             'label' => 'LBL_BILLING_CONTACT',
           ),
           1 => '',
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'billing_address_street',
             'label' => 'LBL_BILLING_ADDRESS',
             'type' => 'address',
             'displayParams' => 
-            array (
+            array(
               'key' => 'billing',
             ),
           ),
           1 => 
-          array (
+          array(
             'name' => 'shipping_address_street',
             'label' => 'LBL_SHIPPING_ADDRESS',
             'type' => 'address',
             'displayParams' => 
-            array (
+            array(
               'key' => 'shipping',
             ),
           ),
         ),
       ),
       'lbl_line_items' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'currency_id',
             'studio' => 'visible',
             'label' => 'LBL_CURRENCY',
@@ -190,85 +190,85 @@ array (
             1 => '',
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'line_items',
             'label' => 'LBL_LINE_ITEMS',
           ),
         ),
         2 => 
-        array (
+        array(
           0 => '',
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'total_amt',
             'label' => 'LBL_TOTAL_AMT',
           ),
         ),
         4 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'discount_amount',
             'label' => 'LBL_DISCOUNT_AMOUNT',
           ),
         ),
         5 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'subtotal_amount',
             'label' => 'LBL_SUBTOTAL_AMOUNT',
           ),
         ),
         6 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'shipping_amount',
             'label' => 'LBL_SHIPPING_AMOUNT',
           ),
         ),
         7 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'shipping_tax_amt',
             'label' => 'LBL_SHIPPING_TAX_AMT',
           ),
         ),
         8 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'tax_amount',
             'label' => 'LBL_TAX_AMOUNT',
           ),
         ),
         9 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'total_amount',
             'label' => 'LBL_GRAND_TOTAL',
           ),
         ),
       ),
       'LBL_PANEL_ASSIGNMENT' =>
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
               'name' => 'date_entered',
               'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
           ),
           1 => 
-          array (
+          array(
               'name' => 'date_modified',
               'label' => 'LBL_DATE_MODIFIED',
               'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',

@@ -1,23 +1,23 @@
 <?php
 $module_name='OutboundEmailAccounts';
-$subpanel_layout = array (
+$subpanel_layout = array(
   'top_buttons' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'widget_class' => 'SubPanelTopCreateButton',
     ),
     1 => 
-    array (
+    array(
       'widget_class' => 'SubPanelTopSelectButton',
       'popup_module' => 'OutboundEmailAccount',
     ),
   ),
   'where' => '',
   'list_fields' => 
-  array (
+  array(
     'name' => 
-    array (
+    array(
       'vname' => 'LBL_NAME',
       'widget_class' => 'SubPanelDetailViewLink',
       'width' => '45%',
@@ -32,13 +32,13 @@ $subpanel_layout = array (
 //      'default' => true,
 //    ),
     'date_modified' => 
-    array (
+    array(
       'vname' => 'LBL_DATE_MODIFIED',
       'width' => '45%',
       'default' => true,
     ),
     'edit_button' => 
-    array (
+    array(
       'vname' => 'LBL_EDIT_BUTTON',
       'widget_class' => 'SubPanelEditButton',
       'module' => 'OutboundEmailAccount',
@@ -46,7 +46,7 @@ $subpanel_layout = array (
       'default' => true,
     ),
     'remove_button' => 
-    array (
+    array(
       'vname' => 'LBL_REMOVE',
       'widget_class' => 'SubPanelRemoveButton',
       'module' => 'OutboundEmailAccount',
@@ -54,14 +54,14 @@ $subpanel_layout = array (
       'default' => true,
     ),
     'mail_smtpuser' =>
-    array (
+    array(
       'type' => 'varchar',
       'vname' => 'LBL_USERNAME',
       'width' => '10%',
       'default' => true,
     ),
     'mail_smtpserver' =>
-    array (
+    array(
       'type' => 'varchar',
       'vname' => 'LBL_SMTP_SERVERNAME',
       'width' => '10%',

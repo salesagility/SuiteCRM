@@ -1,9 +1,9 @@
 <?php
 $module_name = 'TemplateSectionLine';
 $listViewDefs [$module_name] = 
-array (
+array(
   'NAME' => 
-  array (
+  array(
     'width' => '32%',
     'label' => 'LBL_NAME',
     'default' => true,

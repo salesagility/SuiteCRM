@@ -104,7 +104,7 @@ function override_value_to_string_recursive($key_names, $array_name, $value, $ev
 
 function override_recursive_helper($key_names, $array_name, $value)
 {
-    if ( empty( $key_names ) ) {
+    if (empty($key_names)) {
         return "=".var_export_helper($value, true).";";
     } else {
         $key = array_shift($key_names);
@@ -197,7 +197,7 @@ function object_to_array_recursive($obj)
     {
         //if _ is at position zero, that is invalid.
         if (strrpos($key, "_")) {
-            list ($key, $remkey) = explode('_', $key, 2);
+            list($key, $remkey) = explode('_', $key, 2);
             if (!isset($array[$key]) || !is_array($array[$key])) {
                 $array[$key] = array();
             }

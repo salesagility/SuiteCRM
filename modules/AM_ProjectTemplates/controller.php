@@ -168,7 +168,7 @@ class AM_ProjectTemplatesController extends SugarController
             $project_task->estimated_effort = $row['estimated_effort'];
             $project_task->utilization = $row['utilization'];
             
-            if ($copy_all == 0 && !in_array( $row['id'], $copy_tasks)) {
+            if ($copy_all == 0 && !in_array($row['id'], $copy_tasks)) {
                 $project_task->assigned_user_id = null;
             } else {
                 $project_task->assigned_user_id = $row['assigned_user_id'];
@@ -195,7 +195,7 @@ class AM_ProjectTemplatesController extends SugarController
             while ($duration > $d) {
                 $day = $enddate->format('l');
 
-                if ($bhours[$day] != 0 ) {
+                if ($bhours[$day] != 0) {
                     $d += 1;
                 }
                 $enddate = $enddate->modify('+1 Days');

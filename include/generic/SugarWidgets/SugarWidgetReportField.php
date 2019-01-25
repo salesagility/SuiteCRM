@@ -101,7 +101,7 @@ class SugarWidgetReportField extends SugarWidgetField
         $func_name = 'display'.$context;
 
 
-        if ( ! empty($context) && method_exists($obj, $func_name)) {
+        if (! empty($context) && method_exists($obj, $func_name)) {
             return  $obj->$func_name($layout_def);
         } else {
             return 'display not found:'.$func_name;
@@ -111,15 +111,15 @@ class SugarWidgetReportField extends SugarWidgetField
     function _get_column_select_special($layout_def)
     {
         $alias = '';
-        if ( ! empty($layout_def['table_alias'])) {
+        if (! empty($layout_def['table_alias'])) {
             $alias = $layout_def['table_alias'];
         }
 
-        if ($layout_def['name'] == 'weighted_sum' ) {
+        if ($layout_def['name'] == 'weighted_sum') {
             return sprintf("SUM(%s * %s * 0.01)", $this->reporter->db->convert("$alias.probability", "IFNULL", array(0)),
             $this->reporter->db->convert("$alias.amount_usdollar", "IFNULL", array(0)));
         }
-        if ($layout_def['name'] == 'weighted_amount' ) {
+        if ($layout_def['name'] == 'weighted_amount') {
             return sprintf("AVG(%s * %s * 0.01)", $this->reporter->db->convert("$alias.probability", "IFNULL", array(0)),
             $this->reporter->db->convert("$alias.amount_usdollar", "IFNULL", array(0)));
         }
@@ -132,7 +132,7 @@ class SugarWidgetReportField extends SugarWidgetField
             $reportAlias = array();
         }
 
-        if ( ! empty($layout_def['table_alias'])) {
+        if (! empty($layout_def['table_alias'])) {
             $alias = $layout_def['table_alias'].".".$layout_def['name'];
         } else {
             if (! empty($layout_def['name'])) {
@@ -142,7 +142,7 @@ class SugarWidgetReportField extends SugarWidgetField
             }
         }
 
-        if ( ! empty($layout_def['group_function']) ) {
+        if (! empty($layout_def['group_function'])) {
             if ($layout_def['name'] == 'weighted_sum' || $layout_def['name'] == 'weighted_amount') {
                 $alias = $this->_get_column_select_special($layout_def);
                 $reportAlias[$alias] = $layout_def;
@@ -216,7 +216,7 @@ class SugarWidgetReportField extends SugarWidgetField
             $order_by = $this->reporter->db->convert($order_by, 'text2char', array(10000)); // array(10000) is for db2 only
         }
 
-        if ( empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a') {
+        if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a') {
             return $order_by." ASC";
         } else {
             return $order_by." DESC";
@@ -244,15 +244,15 @@ class SugarWidgetReportField extends SugarWidgetField
 
 
         $sort_by ='';
-        if ( ! empty($layout_def['table_key']) && ! empty($layout_def['name']) ) {
+        if (! empty($layout_def['table_key']) && ! empty($layout_def['name'])) {
             if (! empty($layout_def['group_function']) && $layout_def['group_function'] == 'count') {
                 $sort_by = $layout_def['table_key'].":".'count';
             } else {
                 $sort_by = $layout_def['table_key'].":".$layout_def['name'];
-                if ( ! empty($layout_def['column_function'])) {
+                if (! empty($layout_def['column_function'])) {
                     $sort_by .= ':'.$layout_def['column_function'];
                 } else {
-                    if ( ! empty($layout_def['group_function']) ) {
+                    if (! empty($layout_def['group_function'])) {
                         $sort_by .= ':'.$layout_def['group_function'];
                     }
                 }
@@ -286,7 +286,7 @@ class SugarWidgetReportField extends SugarWidgetField
         $context = $this->layout_manager->getAttribute('context');
         $func_name = 'query'.$context;
 
-        if ( ! empty($context) && method_exists($obj, $func_name)) {
+        if (! empty($context) && method_exists($obj, $func_name)) {
             return  $obj->$func_name($layout_def);
         } else {
             return '';
@@ -303,27 +303,27 @@ class SugarWidgetReportField extends SugarWidgetField
 
         // Bug: 44605
         // this comment is being added to trigger the upgrade package
-        if ( ! empty($layout_def['group_function']) && $layout_def['group_function']=='count') {
+        if (! empty($layout_def['group_function']) && $layout_def['group_function']=='count') {
             return $layout_def['table_alias'] . '__count';
         }
 
-        if ( ! empty($layout_def['table_alias'])) {
+        if (! empty($layout_def['table_alias'])) {
             array_push($alias_arr, $layout_def['table_alias']);
         }
 
-        if ( ! empty($layout_def['group_function']) && $layout_def['group_function'] != 'weighted_amount' && $layout_def['group_function'] != 'weighted_sum') {
+        if (! empty($layout_def['group_function']) && $layout_def['group_function'] != 'weighted_amount' && $layout_def['group_function'] != 'weighted_sum') {
             array_push($alias_arr, $layout_def['group_function']);
         } else {
-            if ( ! empty($layout_def['column_function'])) {
+            if (! empty($layout_def['column_function'])) {
                 array_push($alias_arr, $layout_def['column_function']);
             } else {
-                if ( ! empty($layout_def['qualifier'])) {
+                if (! empty($layout_def['qualifier'])) {
                     array_push($alias_arr, $layout_def['qualifier']);
                 }
             }
         }
 
-        if ( ! empty($layout_def['name'])) {
+        if (! empty($layout_def['name'])) {
             array_push($alias_arr, $layout_def['name']);
         }
 
@@ -333,12 +333,12 @@ class SugarWidgetReportField extends SugarWidgetField
 
         $short_alias = $this->getTruncatedColumnAlias($alias);
 
-        if ( empty($used_aliases[$short_alias])) {
+        if (empty($used_aliases[$short_alias])) {
             $alias_map[$alias] = $short_alias;
             $used_aliases[$short_alias] = 1;
             return $short_alias;
         } else {
-            if ( ! empty($alias_map[$alias]) ) {
+            if (! empty($alias_map[$alias])) {
                 return $alias_map[$alias];
             } else {
                 $alias_map[$alias] = $short_alias.'_'.$used_aliases[$short_alias];

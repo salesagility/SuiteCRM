@@ -1,12 +1,12 @@
 <?php
 // created: 2013-04-24 10:38:41
-$dictionary["fp_events_fp_event_locations_1"] = array (
+$dictionary["fp_events_fp_event_locations_1"] = array(
   'true_relationship_type' => 'many-to-many',
   'from_studio' => true,
   'relationships' => 
-  array (
+  array(
     'fp_events_fp_event_locations_1' => 
-    array (
+    array(
       'lhs_module' => 'FP_events',
       'lhs_table' => 'fp_events',
       'lhs_key' => 'id',
@@ -21,20 +21,20 @@ $dictionary["fp_events_fp_event_locations_1"] = array (
   ),
   'table' => 'fp_events_fp_event_locations_1_c',
   'fields' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
     1 => 
-    array (
+    array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
     2 => 
-    array (
+    array(
       'name' => 'deleted',
       'type' => 'bool',
       'len' => '1',
@@ -42,35 +42,35 @@ $dictionary["fp_events_fp_event_locations_1"] = array (
       'required' => true,
     ),
     3 => 
-    array (
+    array(
       'name' => 'fp_events_fp_event_locations_1fp_events_ida',
       'type' => 'varchar',
       'len' => 36,
     ),
     4 => 
-    array (
+    array(
       'name' => 'fp_events_fp_event_locations_1fp_event_locations_idb',
       'type' => 'varchar',
       'len' => 36,
     ),
   ),
   'indices' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'name' => 'fp_events_fp_event_locations_1spk',
       'type' => 'primary',
       'fields' => 
-      array (
+      array(
         0 => 'id',
       ),
     ),
     1 => 
-    array (
+    array(
       'name' => 'fp_events_fp_event_locations_1_alt',
       'type' => 'alternate_key',
       'fields' => 
-      array (
+      array(
         0 => 'fp_events_fp_event_locations_1fp_events_ida',
         1 => 'fp_events_fp_event_locations_1fp_event_locations_idb',
       ),

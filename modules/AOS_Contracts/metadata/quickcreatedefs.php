@@ -1,21 +1,21 @@
 <?php
 $module_name = 'AOS_Contracts';
 $viewdefs [$module_name] = 
-array (
+array(
   'QuickCreate' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
@@ -24,94 +24,94 @@ array (
       'syncDetailEditViews' => false,
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'name',
           1 => 
-          array (
+          array(
             'name' => 'status',
             'studio' => 'visible',
             'label' => 'LBL_STATUS',
           ),
         ),
         1 => 
-        array (
+        array(
           0 => '',
           1 => 
-          array (
+          array(
             'name' => 'start_date',
             'label' => 'LBL_START_DATE',
           ),
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'reference_code',
             'label' => 'LBL_REFERENCE_CODE ',
           ),
           1 => 
-          array (
+          array(
             'name' => 'end_date',
             'label' => 'LBL_END_DATE',
           ),
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'aos_contrac_accounts_name',
             'label' => 'LBL_AOS_CONTRACTS_ACCOUNTS_FROM_ACCOUNTS_TITLE',
           ),
           1 => 
-          array (
+          array(
             'name' => 'renewal_reminder_date',
             'label' => 'LBL_RENEWAL_REMINDER_DATE',
           ),
         ),
         4 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'aos_contracrtunities_name',
             'label' => 'LBL_AOS_CONTRACTS_OPPORTUNITIES_FROM_OPPORTUNITIES_TITLE',
           ),
           1 => '',
         ),
         5 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'customer_signed_date',
             'label' => 'LBL_CUSTOMER_SIGNED_DATE',
           ),
           1 => 
-          array (
+          array(
             'name' => 'company_signed_date',
             'label' => 'LBL_COMPANY_SIGNED_DATE',
           ),
         ),
         6 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'contract_type',
             'studio' => 'visible',
             'label' => 'LBL_CONTRACT_TYPE',
           ),
           1 => 
-          array (
+          array(
             'name' => 'rminder',
             'label' => 'LBL_RMINDER',
           ),
         ),
         7 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'description',
             'comment' => 'Full text of the note',
             'label' => 'LBL_DESCRIPTION',

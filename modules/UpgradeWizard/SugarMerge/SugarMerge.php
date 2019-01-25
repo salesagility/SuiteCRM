@@ -133,7 +133,7 @@ class SugarMerge
                         //lets make sure that the directory matches the case of the module before we pass it in
                         global $moduleList;
                         //lets populate an array with the available modules, and make the key's lowercase
-                        $checkModList =  array_combine ($moduleList, $moduleList);
+                        $checkModList =  array_combine($moduleList, $moduleList);
                         $checkModList = array_change_key_case($checkModList);
 
                         //now lets compare with the current directory.  This accounts for cases in which the directory was created in lowercase
@@ -142,15 +142,15 @@ class SugarMerge
                             $e = $checkModList[strtolower($e)];
                         }
 
-                        if ( is_array($merge) ) {
-                            if ( in_array($e, $merge) ) {
-                                $this->merged[$e] = $this->mergeModule($e, true, $save, $logHistory );
+                        if (is_array($merge)) {
+                            if (in_array($e, $merge)) {
+                                $this->merged[$e] = $this->mergeModule($e, true, $save, $logHistory);
                             } else {
                                 $GLOBALS['log']->debug("SugarMerge is skipping $e module as filter array passed in but module not specified for merge.");
                                 continue;
                             }
                         } else {
-                            $this->merged[$e] = $this->mergeModule($e, $merge, $save, $logHistory );
+                            $this->merged[$e] = $this->mergeModule($e, $merge, $save, $logHistory);
                         }
                     }
                 }

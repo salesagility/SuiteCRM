@@ -41,9 +41,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$dictionary['InboundEmail_cacheTimestamp'] = array ('table' => 'inbound_email_cache_ts',
-    'fields' => array (
-        'id' => array (
+$dictionary['InboundEmail_cacheTimestamp'] = array('table' => 'inbound_email_cache_ts',
+    'fields' => array(
+        'id' => array(
             'name' => 'id',
             'vname' => 'LBL_ID',
             'type' => 'varchar',
@@ -58,7 +58,7 @@ $dictionary['InboundEmail_cacheTimestamp'] = array ('table' => 'inbound_email_ca
             'required'	=> true,
         ),
     ),
-    'indices' => array (
+    'indices' => array(
         array(
             'name' => 'ie_cachetimestamppk',
             'type' =>'primary',
@@ -67,6 +67,6 @@ $dictionary['InboundEmail_cacheTimestamp'] = array ('table' => 'inbound_email_ca
             )
         ),
     ), /* end indices */
-    'relationships' => array (
+    'relationships' => array(
     ), /* end relationships */
 );

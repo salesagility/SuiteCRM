@@ -61,7 +61,7 @@ class ViewDropdown extends SugarView
         $smarty = $this->generateSmarty();
         
         if (isset($_REQUEST['refreshTree'])) {
-            require_once ('modules/ModuleBuilder/Module/DropDownTree.php');
+            require_once('modules/ModuleBuilder/Module/DropDownTree.php');
             $mbt = new DropDownTree();
             $ajax->addSection('west', $mbt->getName(), $mbt->fetchNodes());
             $smarty->assign('refreshTree', true);
@@ -69,11 +69,11 @@ class ViewDropdown extends SugarView
 
         global $mod_strings;
 
-        $smarty->assign('deleteImage', SugarThemeRegistry::current()->getImage( 'delete_inline', '', null, null, '.gif', $mod_strings['LBL_MB_DELETE']));
-        $smarty->assign('editImage', SugarThemeRegistry::current()->getImage( 'edit_inline', '', null, null, '.gif', $mod_strings['LBL_EDIT'], true, '.gif'));
+        $smarty->assign('deleteImage', SugarThemeRegistry::current()->getImage('delete_inline', '', null, null, '.gif', $mod_strings['LBL_MB_DELETE']));
+        $smarty->assign('editImage', SugarThemeRegistry::current()->getImage('edit_inline', '', null, null, '.gif', $mod_strings['LBL_EDIT'], true, '.gif'));
         $smarty->assign('action', 'savedropdown');
         $body = $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/dropdown.tpl');
-        $ajax->addSection('east2', $mod_strings['LBL_SECTION_DROPDOWNED'], $body );
+        $ajax->addSection('east2', $mod_strings['LBL_SECTION_DROPDOWNED'], $body);
         echo $ajax->getJavascript();
     }
     
@@ -85,7 +85,7 @@ class ViewDropdown extends SugarView
         $package_name = 'studio';
         $package_strings = array();
         $new =false;
-        $my_list_strings = return_app_list_strings_language( $selected_lang ) ;
+        $my_list_strings = return_app_list_strings_language($selected_lang) ;
         //		$my_list_strings = $GLOBALS['app_list_strings'];
 
         $smarty = new Sugar_Smarty();
@@ -105,7 +105,7 @@ class ViewDropdown extends SugarView
             
             $vardef = (!empty($module->mbvardefs->fields[$_REQUEST['dropdown_name']]))? $module->mbvardefs->fields[$_REQUEST['dropdown_name']]: array();
             $module->mblanguage->generateAppStrings(false) ;
-            $my_list_strings = array_merge( $my_list_strings, $module->mblanguage->appListStrings[$selected_lang.'.lang.php'] );
+            $my_list_strings = array_merge($my_list_strings, $module->mblanguage->appListStrings[$selected_lang.'.lang.php']);
             $smarty->assign('module_name', $module->name);
         }
 
@@ -134,7 +134,7 @@ class ViewDropdown extends SugarView
             // handle the case where we've saved a dropdown in one language, and now attempt to edit it for another language. The $name exists, but $my_list_strings[$name] doesn't
             // for now, we just treat it as if it was new. A better approach might be to use the first language version as a template for future languages
             if (!isset($my_list_strings[$name])) {
-                $my_list_strings[$name] = array () ;
+                $my_list_strings[$name] = array() ;
             }
  
             $selected_dropdown = (!empty($vardef['options']) && !empty($my_list_strings[$vardef['options']])) ? $my_list_strings[$vardef['options']] : $my_list_strings[$name];

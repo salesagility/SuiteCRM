@@ -120,25 +120,25 @@ class SubPanelTilesTabs extends SubPanelTiles
         // for use when constructing the module by module tabs, not the subpanel tabs, as we move away from using module names to represent
         // subpanels, and use unique subpanel IDs instead.
 
-        $moduleNames = array () ;
-        foreach ( $tabs as $subpanelID ) {
+        $moduleNames = array() ;
+        foreach ($tabs as $subpanelID) {
             // Bug #44344 : Custom relationships under same module only show once in subpanel tabs
             // use object property instead new object to have ability run unit test (can override subpanel_definitions)
-            $subpanel =  $this->subpanel_definitions->load_subpanel( $subpanelID );
+            $subpanel =  $this->subpanel_definitions->load_subpanel($subpanelID);
             if ($subpanel !== false) {
                 $moduleNames [ $subpanelID ] = $subpanel->get_module_name() ;
             }
         }
 
-        $groups =  array () ;
-        $found = array () ;
+        $groups =  array() ;
+        $found = array() ;
 
-        foreach ( $GLOBALS['tabStructure'] as $mainTab => $subModules) {
-            foreach ( $subModules['modules'] as $key => $subModule ) {
-                foreach ( $tabs as $subpanelID ) {
-                    if (isset($moduleNames[ $subpanelID ] ) && strcasecmp( $subModule, $moduleNames[ $subpanelID ] ) === 0) {
+        foreach ($GLOBALS['tabStructure'] as $mainTab => $subModules) {
+            foreach ($subModules['modules'] as $key => $subModule) {
+                foreach ($tabs as $subpanelID) {
+                    if (isset($moduleNames[ $subpanelID ]) && strcasecmp($subModule, $moduleNames[ $subpanelID ]) === 0) {
                         // Bug #44344 : Custom relationships under same module only show once in subpanel tabs
-                        $groups [ translate ( $mainTab ) ] [ 'modules' ] [] = $subpanelID ;
+                        $groups [ translate($mainTab) ] [ 'modules' ] [] = $subpanelID ;
                         $found [ $subpanelID ] = true ;
                     }
                 }
@@ -147,9 +147,9 @@ class SubPanelTilesTabs extends SubPanelTiles
 
         // Put all the remaining subpanels into the 'Other' tab.
 
-        foreach ( $tabs as $subpanelID ) {
-            if ( ! isset ( $found [ $subpanelID ] ) ) {
-                $groups [ translate ('LBL_TABGROUP_OTHER') ]['modules'] [] = $subpanelID ;
+        foreach ($tabs as $subpanelID) {
+            if (! isset($found [ $subpanelID ])) {
+                $groups [ translate('LBL_TABGROUP_OTHER') ]['modules'] [] = $subpanelID ;
             }
         }
 
@@ -214,7 +214,7 @@ class SubPanelTilesTabs extends SubPanelTiles
                     $relevantTabs = SubPanelTilesTabs::applyUserCustomLayoutToTabs($tabs, $key);
 
                     $sugarTabs[$key] = array(
-                             'label'=>( !empty($tab['label']) ? $tab['label']: $key ),
+                             'label'=>(!empty($tab['label']) ? $tab['label']: $key),
                              'type'=>$selected
                     );
 
@@ -241,7 +241,7 @@ class SubPanelTilesTabs extends SubPanelTiles
                 $retTabs = array_intersect($tabs, array_map('strtolower', $groups[$selectedGroup]['modules']));
             }
 
-            if (!empty($sugarTabs) || !empty($otherTabs) ) {
+            if (!empty($sugarTabs) || !empty($otherTabs)) {
                 $sugarTab->setup($sugarTabs, $otherTabs, $displayTabs, $selectedGroup);
                 $sugarTab->display();
             }

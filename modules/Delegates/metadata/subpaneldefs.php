@@ -15,7 +15,7 @@ $layout_defs['Delegates'] = array(
             'Contacts' => array(
                 'columns' => array(
                     'checkbox' => 
-                      array (
+                      array(
                         'vname' => '<ul id="selectLinkTop" class="clickMenu selectmenu SugarActionMenu" name="">
 					                    <li class="sugar_action_button">
 					                      <input class="checkallContacts" class="checkbox massall" type="checkbox" name="checkallContacts" style="float: left;margin: 2px 0 0 2px;" onclick="">
@@ -35,7 +35,7 @@ $layout_defs['Delegates'] = array(
                         'default' => true,
                       ),
                     'name' => 
-                      array (
+                      array(
                         'name' => 'name',
                         'vname' => 'LBL_LIST_NAME',
                         'sort_by' => 'last_name',
@@ -46,7 +46,7 @@ $layout_defs['Delegates'] = array(
                         'default' => true,
                       ),
                       'account_name' => 
-                      array (
+                      array(
                         'name' => 'account_name',
                         'module' => 'Accounts',
                         'target_record_key' => 'account_id',
@@ -58,14 +58,14 @@ $layout_defs['Delegates'] = array(
                         'default' => true,
                       ),
                     'phone_work' => 
-                      array (
+                      array(
                         'name' => 'phone_work',
                         'vname' => 'LBL_LIST_PHONE',
                         'width' => '15%',
                         'default' => true,
                       ),
                       'email1' => 
-                      array (
+                      array(
                         'name' => 'email1',
                         'vname' => 'LBL_LIST_EMAIL',
                         'widget_class' => 'SubPanelEmailLink',
@@ -74,14 +74,14 @@ $layout_defs['Delegates'] = array(
                         'default' => true,
                       ),
                       'event_status_name' => 
-                      array (
+                      array(
                         'vname' => 'LBL_STATUS_EVENT',
                         'width' => '10%',
                         'sortable' => false,
                         'default' => true,
                       ),
                       'event_accept_status' => 
-                      array (
+                      array(
                         'width' => '10%',
                         'sortable' => false,
                         'default' => true,
@@ -100,7 +100,7 @@ $layout_defs['Delegates'] = array(
                         'width' => '2%',
                     ),
                     'name' => 
-                      array (
+                      array(
                         'name' => 'name',
                         'vname' => 'LBL_LIST_NAME',
                         'sort_by' => 'last_name',
@@ -111,7 +111,7 @@ $layout_defs['Delegates'] = array(
                         'default' => true,
                       ),
                       'account_name' => 
-                      array (
+                      array(
                         'name' => 'account_name',
                         'module' => 'Accounts',
                         'target_record_key' => 'account_id',
@@ -123,14 +123,14 @@ $layout_defs['Delegates'] = array(
                         'default' => true,
                       ),
                     'phone_work' => 
-                      array (
+                      array(
                         'name' => 'phone_work',
                         'vname' => 'LBL_LIST_PHONE',
                         'width' => '15%',
                         'default' => true,
                       ),
                       'email1' => 
-                      array (
+                      array(
                         'name' => 'email1',
                         'vname' => 'LBL_LIST_EMAIL',
                         'widget_class' => 'SubPanelEmailLink',
@@ -139,14 +139,14 @@ $layout_defs['Delegates'] = array(
                         'default' => true,
                       ),
                       'event_status_name' => 
-                      array (
+                      array(
                         'vname' => 'LBL_STATUS',
                         'width' => '10%',
                         'sortable' => false,
                         'default' => true,
                       ),
                       'event_accept_status' => 
-                      array (
+                      array(
                         'width' => '10%',
                         'sortable' => false,
                         'default' => true,
@@ -159,7 +159,7 @@ $layout_defs['Delegates'] = array(
             'Prospects' => array(
                 'columns' => array(
                     'name' => 
-                      array (
+                      array(
                         'name' => 'name',
                         'vname' => 'LBL_LIST_NAME',
                         'sort_by' => 'last_name',
@@ -170,7 +170,7 @@ $layout_defs['Delegates'] = array(
                         'default' => true,
                       ),
                       'account_name' => 
-                      array (
+                      array(
                         'name' => 'account_name',
                         'module' => 'Accounts',
                         'target_record_key' => 'account_id',
@@ -182,14 +182,14 @@ $layout_defs['Delegates'] = array(
                         'default' => true,
                       ),
                     'phone_work' => 
-                      array (
+                      array(
                         'name' => 'phone_work',
                         'vname' => 'LBL_LIST_PHONE',
                         'width' => '15%',
                         'default' => true,
                       ),
                       'email1' => 
-                      array (
+                      array(
                         'name' => 'email1',
                         'vname' => 'LBL_LIST_EMAIL',
                         'widget_class' => 'SubPanelEmailLink',
@@ -198,14 +198,14 @@ $layout_defs['Delegates'] = array(
                         'default' => true,
                       ),
                       'event_status_name' => 
-                      array (
+                      array(
                         'vname' => 'LBL_STATUS',
                         'width' => '10%',
                         'sortable' => false,
                         'default' => true,
                       ),
                       'event_accept_status' => 
-                      array (
+                      array(
                         'width' => '10%',
                         'sortable' => false,
                         'default' => true,

@@ -1,12 +1,12 @@
 <?php
 // created: 2013-04-30 14:55:07
-$dictionary["fp_events_prospects_1"] = array (
+$dictionary["fp_events_prospects_1"] = array(
   'true_relationship_type' => 'many-to-many',
   'from_studio' => true,
   'relationships' => 
-  array (
+  array(
     'fp_events_prospects_1' => 
-    array (
+    array(
       'lhs_module' => 'FP_events',
       'lhs_table' => 'fp_events',
       'lhs_key' => 'id',
@@ -21,20 +21,20 @@ $dictionary["fp_events_prospects_1"] = array (
   ),
   'table' => 'fp_events_prospects_1_c',
   'fields' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
     1 => 
-    array (
+    array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
     2 => 
-    array (
+    array(
       'name' => 'deleted',
       'type' => 'bool',
       'len' => '1',
@@ -42,33 +42,33 @@ $dictionary["fp_events_prospects_1"] = array (
       'required' => true,
     ),
     3 => 
-    array (
+    array(
       'name' => 'fp_events_prospects_1fp_events_ida',
       'type' => 'varchar',
       'len' => 36,
     ),
     4 => 
-    array (
+    array(
       'name' => 'fp_events_prospects_1prospects_idb',
       'type' => 'varchar',
       'len' => 36,
     ),
     5 =>
-    array (
+    array(
       'name' => 'invite_status',
       'type' => 'varchar',
       'len'=>'25',
       'default'=>'Not Invited',
     ),
     6 =>
-    array (
+    array(
       'name' => 'accept_status',
       'type' => 'varchar',
       'len'=>'25',
       'default'=>'No Response',
     ),
     7 => 
-    array (
+    array(
       'name' => 'email_responded',
       'type' => 'int',
       'len' => '2',
@@ -76,22 +76,22 @@ $dictionary["fp_events_prospects_1"] = array (
    ),
   ),
   'indices' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'name' => 'fp_events_prospects_1spk',
       'type' => 'primary',
       'fields' => 
-      array (
+      array(
         0 => 'id',
       ),
     ),
     1 => 
-    array (
+    array(
       'name' => 'fp_events_prospects_1_alt',
       'type' => 'alternate_key',
       'fields' => 
-      array (
+      array(
         0 => 'fp_events_prospects_1fp_events_ida',
         1 => 'fp_events_prospects_1prospects_idb',
       ),

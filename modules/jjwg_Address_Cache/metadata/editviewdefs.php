@@ -1,21 +1,21 @@
 <?php
 $module_name = 'jjwg_Address_Cache';
 $viewdefs [$module_name] = 
-array (
+array(
   'EditView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
@@ -23,31 +23,31 @@ array (
       'useTabs' => false,
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'name',
             'label' => 'LBL_NAME',
           ),
           1 => 
-          array (
+          array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO_NAME',
           ),
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'lat',
             'label' => 'LBL_LAT',
           ),
           1 => 
-          array (
+          array(
             'name' => 'lng',
             'label' => 'LBL_LNG',
           ),

@@ -208,7 +208,7 @@ $hours1 = '<select id="date_start_hours" name="date_start_hours" class="datetime
 
 //Generate the options for the hours select box when sugar's time/date settings are set to 24 hours
 for ($i=0;$i<=23; $i++) {
-    if ($i < 10 ) {
+    if ($i < 10) {
         $val = '0'.$i;
     } else {
         $val = $i;
@@ -228,7 +228,7 @@ $hours2 = '<select id="date_start_hours" name="date_start_hours" class="datetime
 
 //Generate the options for the hours select box when sugar's time/date settings are set to am/pm
 for ($i=1;$i<=12; $i++) {
-    if ($i < 10 ) {
+    if ($i < 10) {
         $val = '0'.$i;
     } else {
         $val = $i;

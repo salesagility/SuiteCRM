@@ -44,11 +44,11 @@
                             'widths' => array('label' => '10', 'field' => '30'),
                            ),
                       'layout' =>
-                      array (
+                      array(
                         'basic_search' =>
-                        array (
+                        array(
                           'name' =>
-                          array (
+                          array(
                             'name' => 'name',
                             'default' => true,
                             'width' => '10%',

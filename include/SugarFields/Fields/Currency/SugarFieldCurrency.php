@@ -110,7 +110,7 @@ class SugarFieldCurrency extends SugarFieldFloat
         // for currency fields, use the user or system precision, not the precision in the vardef
         //this is achived by passing in $precision as null
         $precision = null;
-        if ( $rawField === '' || $rawField === null ) {
+        if ($rawField === '' || $rawField === null) {
             return '';
         }
         return format_number($rawField, $precision, $precision);

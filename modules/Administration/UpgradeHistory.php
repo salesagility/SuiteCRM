@@ -72,7 +72,7 @@ class UpgradeHistory extends SugarBean
 
     function delete()
     {
-        $this->db->query( "delete from " . $this->table_name . " where id = " . $this->db->quoted($this->id));
+        $this->db->query("delete from " . $this->table_name . " where id = " . $this->db->quoted($this->id));
     }
 
     public function __construct()
@@ -174,13 +174,13 @@ class UpgradeHistory extends SugarBean
 
     function getList($query)
     {
-        return( parent::build_related_list( $query, $this ) );
+        return(parent::build_related_list($query, $this));
     }
 
     function findByMd5($var_md5)
     {
         $query = "SELECT id FROM " . $this->table_name . " where md5sum = '$var_md5'";
-        return( parent::build_related_list( $query, $this ) );
+        return(parent::build_related_list($query, $this));
     }
 
     function UninstallAvailable($patch_list, $patch_to_check)
@@ -231,9 +231,9 @@ class UpgradeHistory extends SugarBean
         } elseif (is_dir($check_path)) {
             $status = false;
 
-            $d = dir( $check_path );
-            while ( $f = $d->read() ) {
-                if ( $f == "." || $f == ".." ) {
+            $d = dir($check_path);
+            while ($f = $d->read()) {
+                if ($f == "." || $f == "..") {
                     continue;
                 }
 
@@ -245,7 +245,7 @@ class UpgradeHistory extends SugarBean
             }
 
             $d->close();
-            return( $status );
+            return($status);
         }
 
         return false;

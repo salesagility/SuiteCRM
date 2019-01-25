@@ -387,7 +387,7 @@ class ProjectController extends SugarController
         $project_where = "";
         $project_user_where = "";
         $project_contact_where = "";
-        if ( count($projects) > 1 || $projects[0] != '' ) {
+        if (count($projects) > 1 || $projects[0] != '') {
             $project_where = " AND project_id IN( '" . implode("','", $projects) . "' )";
             $project_user_where = " AND project_users_1project_ida IN( '" . implode("','", $projects) . "' )";
             $project_contact_where = " AND project_contacts_1project_ida IN( '" . implode("','", $projects) . "' )";
@@ -417,11 +417,11 @@ class ProjectController extends SugarController
 							  WHERE project_contacts_1_c.deleted =0 " . $contacts_where  . $project_contact_where;
 
 
-        if ( $users[0] != 'none'  && $contacts[0] != 'none' ) {
+        if ($users[0] != 'none'  && $contacts[0] != 'none') {
             $resource_query = $users_resource_query . '  UNION ' . $contacts_resource_query;
-        } elseif ( $users[0] == 'none') {
+        } elseif ($users[0] == 'none') {
             $resource_query = $contacts_resource_query;
-        } elseif ( $contacts[0] == 'none') {
+        } elseif ($contacts[0] == 'none') {
             $resource_query = $users_resource_query ;
         } else {
             $resource_query = "SELECT '0' as id, ' ' as first_name, ' ' as last_name, 'project_users_1_c' AS type";
@@ -491,13 +491,13 @@ class ProjectController extends SugarController
 
         $projects = explode(",", $_REQUEST['projects']);
         $project_where = "";
-        if ( count($projects) > 1 || $projects[0] != '' ) {
+        if (count($projects) > 1 || $projects[0] != '') {
             $project_where = " AND project_id IN( '" . implode("','", $projects) . "' )";
         }	    
 
         $Task = BeanFactory::getBean('ProjectTask');
         
-        $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$resource_id."' AND ( ( project_task.date_start BETWEEN '".$start_date."'  AND '".$end_date."' ) OR ( project_task.date_finish BETWEEN '".$start_date."' AND '".$end_date."' ) OR ( '".$start_date."' BETWEEN project_task.date_start  AND project_task.date_finish ) OR ( '".$end_date."' BETWEEN project_task.date_start AND project_task.date_finish ) ) AND (project_id is not null AND project_id <> '') " . $project_where );
+        $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$resource_id."' AND ( ( project_task.date_start BETWEEN '".$start_date."'  AND '".$end_date."' ) OR ( project_task.date_finish BETWEEN '".$start_date."' AND '".$end_date."' ) OR ( '".$start_date."' BETWEEN project_task.date_start  AND project_task.date_finish ) OR ( '".$end_date."' BETWEEN project_task.date_start AND project_task.date_finish ) ) AND (project_id is not null AND project_id <> '') " . $project_where);
 
         echo '<table class="qtip_table">';
         echo '<tr><th>'.$mod_strings['LBL_TOOLTIP_PROJECT_NAME'].'</th><th>'.$mod_strings['LBL_TOOLTIP_TASK_NAME'].'</th><th>'.$mod_strings['LBL_TOOLTIP_TASK_DURATION'].'</th></tr>';

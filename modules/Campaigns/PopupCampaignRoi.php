@@ -68,7 +68,7 @@ global $theme;
 
 $GLOBALS['log']->info("Campaign detail view");
 
-$xtpl=new XTemplate ('modules/Campaigns/PopupCampaignRoi.html');
+$xtpl=new XTemplate('modules/Campaigns/PopupCampaignRoi.html');
 
 //_pp($_REQUEST['id']);
 $campaign_id=$_REQUEST['id'];
@@ -108,13 +108,13 @@ $opp_query1  = "select camp.name, camp.actual_cost,camp.budget,camp.expected_rev
     $currency  = new Currency();
 if (isset($focus->currency_id) && !empty($focus->currency_id)) {
     $currency->retrieve($focus->currency_id);
-    if ( $currency->deleted != 1) {
-        $xtpl->assign("CURRENCY", $currency->iso4217 .' '.$currency->symbol );
+    if ($currency->deleted != 1) {
+        $xtpl->assign("CURRENCY", $currency->iso4217 .' '.$currency->symbol);
     } else {
-        $xtpl->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
+        $xtpl->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
     }
 } else {
-    $xtpl->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
+    $xtpl->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
 }
 
 global $current_user;

@@ -206,7 +206,7 @@ function getModuleTreeData($module)
                 $sort_fields[$name] = array('label'=>$label,'type'=>'relationship','module' => $rel_module,'module_label'=>$module_label);
                 if ($arr['type'] == 'relate' && isset($arr['id_name']) && $arr['id_name'] != '') {
                     if (isset($fields[$arr['id_name']])) {
-                        unset( $fields[$arr['id_name']]);
+                        unset($fields[$arr['id_name']]);
                     }
                 }
             } //End loop.
@@ -253,7 +253,7 @@ function getModuleRelationships($module, $view='EditView', $value = '')
                     }
                     if ($arr['type'] == 'relate' && isset($arr['id_name']) && $arr['id_name'] != '') {
                         if (isset($fields[$arr['id_name']])) {
-                            unset( $fields[$arr['id_name']]);
+                            unset($fields[$arr['id_name']]);
                         }
                     }
                 }
@@ -359,10 +359,10 @@ function getModuleField(
 
     $displayParams = array();
 
-    if ( !is_file($file)
+    if (!is_file($file)
         || inDeveloperMode()
-        || !empty($_SESSION['developerMode']) ) {
-        if ( !isset($vardef) ) {
+        || !empty($_SESSION['developerMode'])) {
+        if (!isset($vardef)) {
             require_once($beanFiles[$beanList[$module]]);
             $focus = new $beanList[$module];
             $vardef = $focus->getFieldDefinition($fieldname);
@@ -380,7 +380,7 @@ function getModuleField(
         //$displayParams['formName'] = 'EditView';
 
         // if this is the id relation field, then don't have a pop-up selector.
-        if ( $vardef['type'] == 'relate' && $vardef['id_name'] == $vardef['name']) {
+        if ($vardef['type'] == 'relate' && $vardef['id_name'] == $vardef['name']) {
             $vardef['type'] = 'varchar';
         }
 
@@ -390,23 +390,23 @@ function getModuleField(
 
         //$vardef['precision'] = $locale->getPrecedentPreference('default_currency_significant_digits', $current_user);
 
-        if ( $vardef['type'] == 'datetime') {
+        if ($vardef['type'] == 'datetime') {
             $vardef['type'] = 'datetimecombo';
         }
-        if ( $vardef['type'] == 'datetimecombo') {
+        if ($vardef['type'] == 'datetimecombo') {
             $displayParams['originalFieldName'] = $aow_field;
             // Replace the square brackets by a deliberately complex alias to avoid JS conflicts
             $displayParams['idName'] = createBracketVariableAlias($aow_field);
         }
 
         // trim down textbox display
-        if ( $vardef['type'] == 'text' ) {
+        if ($vardef['type'] == 'text') {
             $vardef['rows'] = 2;
             $vardef['cols'] = 32;
         }
 
         // create the dropdowns for the parent type fields
-        if ( $vardef['type'] == 'parent_type' ) {
+        if ($vardef['type'] == 'parent_type') {
             $vardef['type'] = 'enum';
         }
 
@@ -421,14 +421,14 @@ function getModuleField(
         }
 
         //check for $alt_type
-        if ( $alt_type != '' ) {
+        if ($alt_type != '') {
             $vardef['type'] = $alt_type;
         }
 
         // remove the special text entry field function 'getEmailAddressWidget'
-        if ( isset($vardef['function'])
-            && ( $vardef['function'] == 'getEmailAddressWidget'
-                || $vardef['function']['name'] == 'getEmailAddressWidget' ) ) {
+        if (isset($vardef['function'])
+            && ($vardef['function'] == 'getEmailAddressWidget'
+                || $vardef['function']['name'] == 'getEmailAddressWidget')) {
             unset($vardef['function']);
         }
 
@@ -503,16 +503,16 @@ function getModuleField(
 
     // populate the fieldlist from the vardefs
     $fieldlist = array();
-    if ( !isset($focus) || !($focus instanceof SugarBean) ) {
+    if (!isset($focus) || !($focus instanceof SugarBean)) {
         require_once($beanFiles[$beanList[$module]]);
     }
     $focus = new $beanList[$module];
     // create the dropdowns for the parent type fields
     $vardefFields = $focus->getFieldDefinitions();
-    if (isset($vardefFields[$fieldname]['type']) && $vardefFields[$fieldname]['type'] == 'parent_type' ) {
+    if (isset($vardefFields[$fieldname]['type']) && $vardefFields[$fieldname]['type'] == 'parent_type') {
         $focus->field_defs[$fieldname]['options'] = $focus->field_defs[$vardefFields[$fieldname]['group']]['options'];
     }
-    foreach ( $vardefFields as $name => $properties ) {
+    foreach ($vardefFields as $name => $properties) {
         $fieldlist[$name] = $properties;
         // fill in enums
         if (isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($app_list_strings[$fieldlist[$name]['options']])) {
@@ -529,11 +529,11 @@ function getModuleField(
     }
 
     // fill in function return values
-    if ( !in_array($fieldname, array('email1','email2')) ) {
+    if (!in_array($fieldname, array('email1','email2'))) {
         if (!empty($fieldlist[$fieldname]['function']['returns']) && $fieldlist[$fieldname]['function']['returns'] == 'html') {
             $function = $fieldlist[$fieldname]['function']['name'];
             // include various functions required in the various vardefs
-            if ( isset($fieldlist[$fieldname]['function']['include']) && is_file($fieldlist[$fieldname]['function']['include'])) {
+            if (isset($fieldlist[$fieldname]['function']['include']) && is_file($fieldlist[$fieldname]['function']['include'])) {
                 require_once($fieldlist[$fieldname]['function']['include']);
             }
             $_REQUEST[$fieldname] = $value;
@@ -559,7 +559,7 @@ function getModuleField(
     }
 
     $quicksearch_js = '';
-    if (isset( $fieldlist[$fieldname]['id_name'] ) && $fieldlist[$fieldname]['id_name'] != '' && $fieldlist[$fieldname]['id_name'] != $fieldlist[$fieldname]['name']) {
+    if (isset($fieldlist[$fieldname]['id_name']) && $fieldlist[$fieldname]['id_name'] != '' && $fieldlist[$fieldname]['id_name'] != $fieldlist[$fieldname]['name']) {
         $rel_value = $value;
 
         require_once("include/TemplateHandler/TemplateHandler.php");
@@ -592,7 +592,7 @@ function getModuleField(
         $fieldlist[$fieldlist[$fieldname]['id_name']]['name'] = $aow_field;
         $fieldlist[$fieldname]['name'] = $aow_field.'_display';
     } else {
-        if (isset( $fieldlist[$fieldname]['type'] ) && $view == 'DetailView' && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')) {
+        if (isset($fieldlist[$fieldname]['type']) && $view == 'DetailView' && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')) {
             $value = $focus->convertField($value, $fieldlist[$fieldname]);
             if (!empty($params['date_format']) && isset($params['date_format'])) {
                 $convert_format = "Y-m-d H:i:s";
@@ -609,7 +609,7 @@ function getModuleField(
             }
             $fieldlist[$fieldname]['name'] = $aow_field;
         } else {
-            if (isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')) {
+            if (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')) {
                 $value = $focus->convertField($value, $fieldlist[$fieldname]);
                 $displayValue = $timedate->to_display_date_time($value);
                 $fieldlist[$fieldname]['value'] = $fieldlist[$aow_field]['value'] = $displayValue;
@@ -621,7 +621,7 @@ function getModuleField(
         }
     }
 
-    if (isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' ) {
+    if (isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime') {
         $fieldlist[$aow_field]['aliasId'] = createBracketVariableAlias($aow_field);
         $fieldlist[$aow_field]['originalId'] = $aow_field;
     }
@@ -951,7 +951,7 @@ function fixUpFormatting($module, $field, $value)
                 $value = '';
                 break;
             }
-            if ( ! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/', $value) ) {
+            if (! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/', $value)) {
                 // This appears to be formatted in user date/time
                 $value = $timedate->to_db($value);
             }
@@ -964,7 +964,7 @@ function fixUpFormatting($module, $field, $value)
                 $value = '';
                 break;
             }
-            if ( ! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $value) ) {
+            if (! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $value)) {
                 // This date appears to be formatted in the user's format
                 $value = $timedate->to_db_date($value, false);
             }
@@ -977,7 +977,7 @@ function fixUpFormatting($module, $field, $value)
                 $value = '';
                 break;
             }
-            if ( preg_match('/(am|pm)/i', $value) ) {
+            if (preg_match('/(am|pm)/i', $value)) {
                 // This time appears to be formatted in the user's format
                 $value = $timedate->fromUserTime($value)->format(TimeDate::DB_TIME_FORMAT);
             }
@@ -986,10 +986,10 @@ function fixUpFormatting($module, $field, $value)
         case 'decimal':
         case 'currency':
         case 'float':
-            if ( $value === '' || $value == null || $value == 'NULL') {
+            if ($value === '' || $value == null || $value == 'NULL') {
                 continue;
             }
-            if ( is_string($value) ) {
+            if (is_string($value)) {
                 $value = (float)unformat_number($value);
             }
             break;
@@ -999,10 +999,10 @@ function fixUpFormatting($module, $field, $value)
         case 'short':
         case 'tinyint':
         case 'int':
-            if ( $value === '' || $value == null || $value == 'NULL') {
+            if ($value === '' || $value == null || $value == 'NULL') {
                 continue;
             }
-            if ( is_string($value) ) {
+            if (is_string($value)) {
                 $value = (int)unformat_number($value);
             }
             break;

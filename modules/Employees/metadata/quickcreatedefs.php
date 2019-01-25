@@ -49,7 +49,7 @@ $viewdefs['Employees']['QuickCreate'] = array(
                                 'footerTpl'=>'modules/Users/tpls/EditViewFooter.tpl',
                             ),
                       ),
-    'panels' => array (
+    'panels' => array(
         'LBL_EMPLOYEE_INFORMATION' => array(
             array(
                 array(

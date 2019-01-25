@@ -99,7 +99,7 @@ echo getClassicModuleTitle($focus->module_dir, $params, true);
 
 $GLOBALS['log']->info("EmailTemplate detail view");
 
-$xtpl=new XTemplate ('modules/EmailTemplates/DetailView.html');
+$xtpl=new XTemplate('modules/EmailTemplates/DetailView.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 $buttons = array(
@@ -165,7 +165,7 @@ if (!empty($focus->body)) {
 } else {
     $xtpl->assign('ALT_CHECKED', '');
 }
-if ( $focus->published == 'on') {
+if ($focus->published == 'on') {
     $xtpl->assign("PUBLISHED", "CHECKED");
 }
 

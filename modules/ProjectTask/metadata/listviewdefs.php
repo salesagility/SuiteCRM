@@ -1,8 +1,8 @@
 <?php
 $listViewDefs ['ProjectTask'] = 
-array (
+array(
   'NAME' => 
-  array (
+  array(
     'width' => '40%',
     'label' => 'LBL_LIST_NAME',
     'link' => true,
@@ -10,7 +10,7 @@ array (
     'sortable' => true,
   ),
   'PROJECT_NAME' => 
-  array (
+  array(
     'width' => '25%',
     'label' => 'LBL_PROJECT_NAME',
     'id' => 'PROJECT_ID',
@@ -20,26 +20,26 @@ array (
     'module' => 'Project',
     'ACLTag' => 'PROJECT',
     'related_fields' => 
-    array (
+    array(
       0 => 'project_id',
     ),
   ),
   'DATE_START' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_DATE_START',
     'default' => true,
     'sortable' => true,
   ),
   'DATE_FINISH' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_DATE_FINISH',
     'default' => true,
     'sortable' => true,
   ),
   'ASSIGNED_USER_NAME' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_LIST_ASSIGNED_USER_ID',
     'module' => 'Employees',
@@ -47,14 +47,14 @@ array (
     'default' => true,
   ),
   'PRIORITY' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_LIST_PRIORITY',
     'default' => true,
     'sortable' => true,
   ),
   'PERCENT_COMPLETE' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_LIST_PERCENT_COMPLETE',
     'default' => true,

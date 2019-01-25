@@ -41,9 +41,9 @@
 $dictionary['EAPM'] = array(
     'table'=>'eapm',
     'audited'=>false,
-    'fields'=>array (
+    'fields'=>array(
   'password' =>
-  array (
+  array(
     'required' => true,
     'name' => 'password',
     'vname' => 'LBL_PASSWORD',
@@ -61,7 +61,7 @@ $dictionary['EAPM'] = array(
     'write_only' => true,
   ),
   'url' =>
-  array (
+  array(
     'required' => true,
     'name' => 'url',
     'vname' => 'LBL_URL',
@@ -78,7 +78,7 @@ $dictionary['EAPM'] = array(
     'size' => '20',
   ),
   'application' =>
-  array (
+  array(
     'required' => true,
     'name' => 'application',
     'vname' => 'LBL_APPLICATION',
@@ -98,7 +98,7 @@ $dictionary['EAPM'] = array(
     'default' => 'webex',
   ),
   'name' =>
-  array (
+  array(
     'name' => 'name',
     'vname' => 'LBL_NAME',
     'type' => 'name',
@@ -117,7 +117,7 @@ $dictionary['EAPM'] = array(
     'size' => '20',
   ),
       'api_data' =>
-      array (
+      array(
         'name' => 'api_data',
         'vname' => 'LBL_API_DATA',
         'type' => 'text',
@@ -189,7 +189,7 @@ $dictionary['EAPM'] = array(
       ),
 
 ),
-    'relationships'=>array (
+    'relationships'=>array(
     ),
     'indices' => array(
         array(

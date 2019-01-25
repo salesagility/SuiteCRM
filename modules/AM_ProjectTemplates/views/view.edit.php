@@ -60,7 +60,7 @@ class AM_ProjectTemplatesViewEdit extends ViewEdit
 
         $json = getJSONobj();
         $json_config = new json_config();
-        if (isset($this->bean->json_id) && !empty ($this->bean->json_id)) {
+        if (isset($this->bean->json_id) && !empty($this->bean->json_id)) {
             $javascript = $json_config->get_static_json_server(false, true, 'AM_ProjectTemplates', $this->bean->json_id);
         } else {
             $this->bean->json_id = $this->bean->id;

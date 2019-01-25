@@ -40,7 +40,7 @@
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-    die ('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
 
@@ -135,7 +135,7 @@ class EmailsViewCompose extends ViewEdit
      */
     public function getEditView()
     {
-        $a = dirname( dirname(__FILE__) ) . '/include/ComposeView/ComposeView.php';
+        $a = dirname(dirname(__FILE__)) . '/include/ComposeView/ComposeView.php';
         require_once 'modules/Emails/include/ComposeView/ComposeView.php';
         return new ComposeView();
     }

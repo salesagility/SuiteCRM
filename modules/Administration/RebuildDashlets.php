@@ -55,7 +55,7 @@ if (is_admin($current_user)) {
 
     $dc = new DashletCacheBuilder();
     $dc->buildCache();
-    if ( !$silent ) {
+    if (!$silent) {
         echo '<br><br><br><br>' . $mod_strings['LBL_REBUILD_DASHLETS_DESC_SUCCESS'];
     }
 } else {

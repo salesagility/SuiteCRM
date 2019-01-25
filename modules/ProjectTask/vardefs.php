@@ -233,7 +233,7 @@ $dictionary['ProjectTask'] = array('audited'=>true,
             'reportable'=>true,
         ),
         'modified_by_name' =>
-      array (
+      array(
         'name' => 'modified_by_name',
         'vname' => 'LBL_MODIFIED_NAME',
         'type' => 'relate',
@@ -264,7 +264,7 @@ $dictionary['ProjectTask'] = array('audited'=>true,
             'reportable'=>true,
         ),
         'created_by_name' =>
-      array (
+      array(
         'name' => 'created_by_name',
         'vname' => 'LBL_CREATED',
         'type' => 'relate',
@@ -343,7 +343,7 @@ $dictionary['ProjectTask'] = array('audited'=>true,
             'source'=>'non-db'),
 
         'notes' =>
-        array (
+        array(
             'name' => 'notes',
             'type' => 'link',
             'relationship' => 'project_tasks_notes',
@@ -351,7 +351,7 @@ $dictionary['ProjectTask'] = array('audited'=>true,
                 'vname'=>'LBL_NOTES',
         ),
         'tasks' =>
-            array (
+            array(
             'name' => 'tasks',
             'type' => 'link',
             'relationship' => 'project_tasks_tasks',
@@ -359,7 +359,7 @@ $dictionary['ProjectTask'] = array('audited'=>true,
                 'vname'=>'LBL_TASKS',
         ),
         'meetings' =>
-            array (
+            array(
             'name' => 'meetings',
             'type' => 'link',
             'relationship' => 'project_tasks_meetings',
@@ -367,7 +367,7 @@ $dictionary['ProjectTask'] = array('audited'=>true,
                 'vname'=>'LBL_MEETINGS',
         ),
         'calls' =>
-            array (
+            array(
             'name' => 'calls',
             'type' => 'link',
             'relationship' => 'project_tasks_calls',
@@ -376,7 +376,7 @@ $dictionary['ProjectTask'] = array('audited'=>true,
         ),
 
         'emails' =>
-            array (
+            array(
             'name' => 'emails',
             'type' => 'link',
             'relationship' => 'emails_project_task_rel',/* reldef in emails */
@@ -384,7 +384,7 @@ $dictionary['ProjectTask'] = array('audited'=>true,
                 'vname'=>'LBL_EMAILS',
         ),
         'projects' =>
-            array (
+            array(
             'name' => 'projects',
             'type' => 'link',
             'relationship' => 'projects_project_tasks',
@@ -392,7 +392,7 @@ $dictionary['ProjectTask'] = array('audited'=>true,
                 'vname'=>'LBL_LIST_PARENT_NAME',
         ),
   'created_by_link' =>
-  array (
+  array(
         'name' => 'created_by_link',
     'type' => 'link',
     'relationship' => 'project_tasks_created_by',
@@ -403,7 +403,7 @@ $dictionary['ProjectTask'] = array('audited'=>true,
     'source'=>'non-db',
   ),
   'modified_user_link' =>
-  array (
+  array(
         'name' => 'modified_user_link',
     'type' => 'link',
     'relationship' => 'project_tasks_modified_user',
@@ -414,7 +414,7 @@ $dictionary['ProjectTask'] = array('audited'=>true,
     'source'=>'non-db',
   ),
   'project_name_link' =>
-  array (
+  array(
     'name' => 'project_name_link',
     'type' => 'link',
     'relationship' => 'projects_project_tasks',
@@ -425,7 +425,7 @@ $dictionary['ProjectTask'] = array('audited'=>true,
     'source'=>'non-db',
   ),
   'assigned_user_link' =>
-  array (
+  array(
         'name' => 'assigned_user_link',
     'type' => 'link',
     'relationship' => 'project_tasks_assigned_user',
@@ -436,7 +436,7 @@ $dictionary['ProjectTask'] = array('audited'=>true,
     'source'=>'non-db',
   ),
 'assigned_user_name' =>
-array (
+array(
     'name' => 'assigned_user_name',
     'rname' => 'user_name',
     'id_name' => 'assigned_user_id',
@@ -459,7 +459,7 @@ array (
         ),
     ),
 
- 'relationships' => array (
+ 'relationships' => array(
     'project_tasks_notes' => array('lhs_module'=> 'ProjectTask', 'lhs_table'=> 'project_task', 'lhs_key' => 'id',
                               'rhs_module'=> 'Notes', 'rhs_table'=> 'notes', 'rhs_key' => 'parent_id',
                               'relationship_type'=>'one-to-many', 'relationship_role_column'=>'parent_type',
