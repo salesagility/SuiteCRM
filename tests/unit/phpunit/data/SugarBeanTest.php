@@ -33,13 +33,16 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
     protected function setUp()
     {
+        echo "[-- parent setup calling.. --]\n";
         parent::setUp();
+        echo "[-- state saving --]\n";
         $this->fieldDefsStore();
         $this->getStateSaver()->pushTable('tracker');
         $this->getStateSaver()->pushTable('aod_index');
         $this->getStateSaver()->pushTable('users');
         $this->getStateSaver()->pushTable('contacts_cstm');
         $this->getStateSaver()->pushGlobals();
+        echo "[-- state saved --]\n";
         
         // these tests assume that only admin user are in the database so we should delete everything else
         $query = "delete from users where id != 1";
@@ -56,12 +59,14 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
     protected function tearDown()
     {
+        echo "[-- state restoring --]\n";
         $this->getStateSaver()->popGlobals();
         $this->getStateSaver()->popTable('contacts_cstm');
         $this->getStateSaver()->popTable('users');
         $this->getStateSaver()->popTable('aod_index');
         $this->getStateSaver()->popTable('tracker');
         $this->fieldDefsRestore();
+        echo "[-- state restored --]\n";
         parent::tearDown();
     }
 
@@ -113,7 +118,6 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         }
         return $object;
     }
-
     /**
      * @see SugarBean::__construct()
      */
@@ -2342,10 +2346,15 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         //self::markTestIncomplete('need to implement');
     }
 
+    
+    public static function exitFunction() {
+        // do not exit;
+    }
+    
     /**
      * @see SugarBean::save()
      */
-    public function testSave()
+    public function testSaveQuick()
     {
         // save state
 //
@@ -2363,14 +2372,14 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         // test
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
+        $bean->exitAtRedirect = false;
         $results = $bean->save();
-        $this->assertTrue(!$results);
-        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
-        $this->assertSame(
-                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $this->assertNull($results, "should not give a result as it's not verified or password was incorrect");
+        $this->assertNull($bean->lastSaveErrorIsEmailAddressSaveError, "should not give a lastSaveErrorIsEmailAddressSaveError as it's not verified or password was incorrect and a save should fails");
+        $this->assertEquals([], $bean->emailAddress->lastSaveAtUserProfileErrors, "should not give a lastSaveAtUserProfileErrors as it's not verified or password was incorrect and a save should fails");
+        
         $isValidator = new SuiteValidator();
-        self::assertTrue($isValidator->isValidId($bean->id));
+        self::assertFalse($isValidator->isValidId($bean->id), "bean ID should not be a valid ID because the save should faild previously as User was not verified or password was incorrect");
 
         self::assertEquals($current_user->id, $bean->modified_user_id);
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
@@ -2385,13 +2394,13 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         // test
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
+        $bean->exitAtRedirect = false;
         $bean->new_with_id = true;
         $results = $bean->save();
-        $this->assertTrue(!$results);
-        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
-        $this->assertSame(
-                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $this->assertNull($results, "should not give a result as it's not verified or password was incorrect");
+        $this->assertNull($bean->lastSaveErrorIsEmailAddressSaveError, "should not give a lastSaveErrorIsEmailAddressSaveError as it's not verified or password was incorrect and a save should fails");
+        $this->assertEquals([], $bean->emailAddress->lastSaveAtUserProfileErrors, "should not give a lastSaveAtUserProfileErrors as it's not verified or password was incorrect and a save should fails");
+        
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($results));
 
@@ -2404,7 +2413,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
         self::assertFalse($isValidator->isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
-        self::assertEquals(false, $bean->new_with_id);
+        self::assertEquals(true, $bean->new_with_id, "It should be a new User with ID");
         self::assertEquals($bean->modified_by_name, $bean->old_modified_by_name);
 
         // test
@@ -2414,6 +2423,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $bean->modified_by_name = 'testing';
         $results = null;
         try {
+            $bean->exitAtRedirect = false;
             $results = $bean->save();
             $this->assertTrue(false);
         } catch (Exception $e) {
@@ -2425,7 +2435,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($bean->id));
 
-        self::assertEquals(true, $bean->in_save);
+        self::assertEquals(false, $bean->in_save, "It should already saved OR should failing the save as as it's not verified or password was incorrect");
         
         self::assertEquals($current_user->id, $bean->modified_user_id);
         
@@ -2443,12 +2453,12 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $bean = BeanFactory::getBean('Users');
         $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
+        $bean->exitAtRedirect = false;
         $results = $bean->save();
         $this->assertTrue(!$results);
-        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
-        $this->assertSame(
-                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $this->assertNull($bean->lastSaveErrorIsEmailAddressSaveError, "should not having lastSaveErrorIsEmailAddressSaveError as a saving failed because it's should not veryfied or password was incorrect");
+        $this->assertEquals([], $bean->emailAddress->lastSaveAtUserProfileErrors, "should not give a lastSaveAtUserProfileErrors as it's not verified or password was incorrect and a save should fails");
+        
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($bean->id));
 
@@ -2470,6 +2480,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         // test
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
+        $bean->exitAtRedirect = false;
         $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
         $bean->field_defs = array(
@@ -2484,10 +2495,9 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $bean->email_addresses_non_primary = array(true);
         $results = $bean->save();
         $this->assertTrue(!$results);
-        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
-        $this->assertSame(
-                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $this->assertNull($bean->lastSaveErrorIsEmailAddressSaveError, "should not having lastSaveErrorIsEmailAddressSaveError as a saving failed because it's should not veryfied or password was incorrect");
+        $this->assertEquals([], $bean->emailAddress->lastSaveAtUserProfileErrors, "should not give a lastSaveAtUserProfileErrors as it's not verified or password was incorrect and a save should fails");
+        
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($bean->id));
 
@@ -2509,6 +2519,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         // test
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
+        $bean->exitAtRedirect = false;
         $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
         $bean->field_defs = array(
@@ -2523,10 +2534,9 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $bean->email_addresses_non_primary = array(true);
         $results = $bean->save();
         $this->assertTrue(!$results);
-        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
-        $this->assertSame(
-                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $this->assertNull($bean->lastSaveErrorIsEmailAddressSaveError, "should not having lastSaveErrorIsEmailAddressSaveError as a saving failed because it's should not veryfied or password was incorrect");
+        $this->assertEquals([], $bean->emailAddress->lastSaveAtUserProfileErrors, "should not give a lastSaveAtUserProfileErrors as it's not verified or password was incorrect and a save should fails");
+        
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($bean->id));
 
@@ -2549,6 +2559,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         // test
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
+        $bean->exitAtRedirect = false;
         $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
         $bean->field_defs = array(
@@ -2563,10 +2574,9 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $bean->email_addresses_non_primary = array(true);
         $results = $bean->save();
         $this->assertTrue(!$results);
-        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
-        $this->assertSame(
-                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $this->assertNull($bean->lastSaveErrorIsEmailAddressSaveError, "should not having lastSaveErrorIsEmailAddressSaveError as a saving failed because it's should not veryfied or password was incorrect");
+        $this->assertEquals([], $bean->emailAddress->lastSaveAtUserProfileErrors, "should not give a lastSaveAtUserProfileErrors as it's not verified or password was incorrect and a save should fails");
+        
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($bean->id));
 

@@ -585,6 +585,8 @@ class User extends Person implements EmailInterface
 
         return "1<>1";
     }
+    
+    public $exitAtRedirect = true;
 
     /**
      * Normally a bean returns ID from save() method if it was
@@ -672,7 +674,7 @@ class User extends Person implements EmailInterface
 
         if (!$this->verify_data()) {
             SugarApplication::appendErrorMessage($this->error_string);
-            SugarApplication::redirect('Location: index.php?action=Error&module=Users');
+            return SugarApplication::redirect('Location: index.php?action=Error&module=Users', $this->exitAtRedirect);
         }
 
 
@@ -700,11 +702,11 @@ class User extends Person implements EmailInterface
             if (!$this->change_password($_POST['old_password'], $_POST['new_password'])) {
                 if (isset($_POST['page']) && $_POST['page'] === 'EditView') {
                     SugarApplication::appendErrorMessage($this->error_string);
-                    SugarApplication::redirect("Location: index.php?action=EditView&module=Users&record=" . $_POST['record']);
+                    SugarApplication::redirect("Location: index.php?action=EditView&module=Users&record=" . $_POST['record'], $this->exitAtRedirect);
                 }
                 if (isset($_POST['page']) && $_POST['page'] === 'Change') {
                     SugarApplication::appendErrorMessage($this->error_string);
-                    SugarApplication::redirect("Location: index.php?action=ChangePassword&module=Users&record=" . $_POST['record']);
+                    SugarApplication::redirect("Location: index.php?action=ChangePassword&module=Users&record=" . $_POST['record'], $this->exitAtRedirect);
                 }
             }
         }

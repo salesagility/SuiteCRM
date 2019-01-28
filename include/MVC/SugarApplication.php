@@ -615,7 +615,7 @@ class SugarApplication {
     function endSession() {
         session_destroy();
     }
-
+    
     /**
      * Redirect to another URL
      *
@@ -623,7 +623,7 @@ class SugarApplication {
      * @param	string	$url	The URL to redirect to
      */
     static function redirect(
-    $url
+    $url, $exitByDefault = true
     ) {
         /*
          * If the headers have been sent, then we cannot send an additional location header
@@ -651,7 +651,9 @@ class SugarApplication {
                 header("Location: " . $url);
             }
         }
-        exit();
+        if ($exitByDefault) {
+            exit();
+        }
     }
 
     /**
