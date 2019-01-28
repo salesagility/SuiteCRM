@@ -35,6 +35,10 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
         parent::setUp();
         $this->fieldDefsStore();
+        $this->getStateSaver()->pushTable('tracker');
+        $this->getStateSaver()->pushTable('aod_index');
+        $this->getStateSaver()->pushTable('users');
+        $this->getStateSaver()->pushTable('contacts_cstm');
         $this->getStateSaver()->pushGlobals();
         
         // these tests assume that only admin user are in the database so we should delete everything else
@@ -53,6 +57,10 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     protected function tearDown()
     {
         $this->getStateSaver()->popGlobals();
+        $this->getStateSaver()->popTable('contacts_cstm');
+        $this->getStateSaver()->popTable('users');
+        $this->getStateSaver()->popTable('aod_index');
+        $this->getStateSaver()->popTable('tracker');
         $this->fieldDefsRestore();
         parent::tearDown();
     }
@@ -957,11 +965,11 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
 //        self::markTestIncomplete('environment dependency');
 
-        // save state
-
-        $state = new StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
+//        // save state
+//
+//        $state = new StateSaver();
+//        $state->pushTable('aod_index');
+//        $state->pushTable('tracker');
 
         // test
         global $sugar_config;
@@ -1305,10 +1313,10 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
             DBManagerFactory::getInstance()->query($query);
         }
         
-        // clean up
-        
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
+//        // clean up
+//        
+//        $state->popTable('tracker');
+//        $state->popTable('aod_index');
     }
 
 
@@ -2340,12 +2348,13 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     public function testSave()
     {
         // save state
-
-        $state = new StateSaver();
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-        $state->pushTable('users');
-        $state->pushTable('contacts_cstm');
+//
+//        $state = new StateSaver();
+//        $state->pushTable('tracker');
+//        $state->pushTable('aod_index');
+//        $state->pushTable('users');
+//        $state->pushTable('contacts_cstm');
+//        $state->pushGlobals();
 
         // test
         
@@ -2622,11 +2631,12 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses WHERE email_address LIKE 'testbean1@email.com'");
         
         // clean up
-        
-        $state->popTable('contacts_cstm');
-        $state->popTable('users');
-        $state->popTable('aod_index');
-        $state->popTable('tracker');
+//        
+//        $state->popGlobals();
+//        $state->popTable('contacts_cstm');
+//        $state->popTable('users');
+//        $state->popTable('aod_index');
+//        $state->popTable('tracker');
     }
 
     /**
