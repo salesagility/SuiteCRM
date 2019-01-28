@@ -672,8 +672,7 @@ class User extends Person implements EmailInterface
 
         if (!$this->verify_data()) {
             SugarApplication::appendErrorMessage($this->error_string);
-            header('Location: index.php?action=Error&module=Users');
-            exit;
+            SugarApplication::redirect('Location: index.php?action=Error&module=Users');
         }
 
 
@@ -701,13 +700,11 @@ class User extends Person implements EmailInterface
             if (!$this->change_password($_POST['old_password'], $_POST['new_password'])) {
                 if (isset($_POST['page']) && $_POST['page'] === 'EditView') {
                     SugarApplication::appendErrorMessage($this->error_string);
-                    header("Location: index.php?action=EditView&module=Users&record=" . $_POST['record']);
-                    exit;
+                    SugarApplication::redirect("Location: index.php?action=EditView&module=Users&record=" . $_POST['record']);
                 }
                 if (isset($_POST['page']) && $_POST['page'] === 'Change') {
                     SugarApplication::appendErrorMessage($this->error_string);
-                    header("Location: index.php?action=ChangePassword&module=Users&record=" . $_POST['record']);
-                    exit;
+                    SugarApplication::redirect("Location: index.php?action=ChangePassword&module=Users&record=" . $_POST['record']);
                 }
             }
         }
