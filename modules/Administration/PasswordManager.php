@@ -156,9 +156,9 @@ $sugar_smarty->assign("settings", $focus->settings);
 
 $sugar_smarty->assign('saml_enabled_checked', false);
 
-if(!function_exists('mcrypt_cbc')){
+if(!function_exists('openssl_encrypt')){
 	$sugar_smarty->assign("LDAP_ENC_KEY_READONLY", 'readonly');
-	$sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LDAP_ENC_KEY_NO_FUNC_DESC']);
+	$sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LDAP_ENC_KEY_NO_FUNC_OPENSSL_DESC']);
 }else{
 	$sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LBL_LDAP_ENC_KEY_DESC']);
 }
