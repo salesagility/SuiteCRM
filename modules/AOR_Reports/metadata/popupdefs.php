@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /**
  * Advanced OpenReports, SugarCRM Reporting.
  * @package Advanced OpenReports for SugarCRM
@@ -26,11 +24,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 $popupMeta = array('moduleMain' => 'AOR_Reports',
-                        'varName' => 'AOR_Report',
-                        'orderBy' => 'aor_reports.name',
-                        'whereClauses' =>
-                            array('name' => 'aor_reports.name',
-                                ),
-                            'searchInputs'=> array('aor_reports_number', 'name', 'priority','status'),
-                            
-                        );
+						'varName' => 'AOR_Report',
+						'orderBy' => 'aor_reports.name',
+						'whereClauses' => 
+							array('name' => 'aor_reports.name', 
+								),
+						    'searchInputs'=> array('aor_reports_number', 'name', 'priority','status'),
+							
+						);

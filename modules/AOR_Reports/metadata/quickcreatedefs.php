@@ -23,19 +23,19 @@
  */
 
 $viewdefs['AOR_Reports']['QuickCreate'] = array(
-    'templateMeta' => array('maxColumns' => '2',
+    'templateMeta' => array('maxColumns' => '2', 
                             'widths' => array(
-                                            array('label' => '10', 'field' => '30'),
+                                            array('label' => '10', 'field' => '30'), 
                                             array('label' => '10', 'field' => '30')
-                                            ),
+                                            ),                                                                                                                                    
                                             ),
                                             
                                             
- 'panels' =>array(
-  'default' =>
-  array(
+ 'panels' =>array (
+  'default' => 
+  array (
     
-    array(
+    array (
       'name',
       'assigned_user_name',
     ),

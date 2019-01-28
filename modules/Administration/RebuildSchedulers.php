@@ -43,12 +43,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 echo getClassicModuleTitle('Administration', array($mod_strings['LBL_REBUILD_SCHEDULERS_TITLE']), false);
 
-if (isset($_REQUEST['perform_rebuild']) && $_REQUEST['perform_rebuild'] == 'true') {
-    require_once('install/install_utils.php');
-    $focus = new Scheduler();
-    $focus->rebuildDefaultSchedulers();
-    
-    $admin_mod_strings = return_module_language($current_language, 'Administration'); ?>
+if(isset($_REQUEST['perform_rebuild']) && $_REQUEST['perform_rebuild'] == 'true') {
+	
+	require_once('install/install_utils.php');
+	$focus = new Scheduler();
+	$focus->rebuildDefaultSchedulers();
+	
+$admin_mod_strings = return_module_language($current_language, 'Administration');	
+?>
 <table cellspacing="{CELLSPACING}" class="otherview">
 	<tr> 
 		<td scope="row" width="35%"><?php echo $admin_mod_strings['LBL_REBUILD_SCHEDULERS_DESC_SUCCESS']; ?></td>
@@ -57,7 +59,7 @@ if (isset($_REQUEST['perform_rebuild']) && $_REQUEST['perform_rebuild'] == 'true
 </table>
 <?php
 } else {
-        ?>	
+?>	
 <p>
 <form name="RebuildSchedulers" method="post" action="index.php">
 <input type="hidden" name="module" value="Administration">
@@ -77,5 +79,5 @@ if (isset($_REQUEST['perform_rebuild']) && $_REQUEST['perform_rebuild'] == 'true
 </form>
 </p>
 <?php
-    }
+}
 ?>

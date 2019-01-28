@@ -80,7 +80,7 @@ foreach ($beanFiles as $bean => $file) {
     if (file_exists($file)) {
         require_once $file;
         unset($GLOBALS['dictionary'][$bean]);
-        $focus = new $bean();
+        $focus = new $bean ();
         if (($focus instanceof SugarBean)) {
             if (!isset($repairedTables[$focus->table_name])) {
                 $sql = DBManagerFactory::getInstance()->repairTable($focus, true);

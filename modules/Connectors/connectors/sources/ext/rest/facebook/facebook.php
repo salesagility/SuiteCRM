@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /**
  *
@@ -43,9 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/connectors/sources/ext/rest/rest.php');
 
@@ -65,6 +61,8 @@ class ext_rest_facebook extends ext_rest
         $this->allowedModuleList = array('Accounts' => $app_list_strings['moduleList']['Accounts'],
             'Contacts' => $app_list_strings['moduleList']['Contacts'],
             'Leads' => $app_list_strings['moduleList']['Leads']);
+
+
     }
 
     /**
@@ -80,8 +78,9 @@ class ext_rest_facebook extends ext_rest
         foreach ($moduleList as $module) {
             if (!in_array($module, $this->allowedModuleList)) {
                 continue;
+            } else {
+                $outModuleList[$module] = $module;
             }
-            $outModuleList[$module] = $module;
         }
         return $outModuleList;
     }

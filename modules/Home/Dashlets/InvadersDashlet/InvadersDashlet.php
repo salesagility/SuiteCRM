@@ -45,10 +45,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/Dashlets/Dashlet.php');
 
 
-class InvadersDashlet extends Dashlet
-{
-    public $savedText; // users's saved text
-    public $height = '100'; // height of the pad
+class InvadersDashlet extends Dashlet {
+    var $savedText; // users's saved text
+    var $height = '100'; // height of the pad
 
     /**
      * Constructor
@@ -57,13 +56,11 @@ class InvadersDashlet extends Dashlet
      * @param guid $id id for the current dashlet (assigned from Home module)
      * @param array $def options saved for this dashlet
      */
-    public function __construct($id, $def)
-    {
+    function __construct($id, $def) {
         $this->loadLanguage('InvadersDashlet'); // load the language strings here
 
-        if (!empty($def['height'])) { // set a default height if none is set
+        if(!empty($def['height'])) // set a default height if none is set
             $this->height = $def['height'];
-        }
 
         parent::__construct($id); // call parent constructor
 
@@ -71,22 +68,19 @@ class InvadersDashlet extends Dashlet
         $this->hasScript = true;  // dashlet has javascript attached to it
 
         // if no custom title, use default
-        if (empty($def['title'])) {
-            $this->title = $this->dashletStrings['LBL_TITLE'];
-        } else {
-            $this->title = $def['title'];
-        }
+        if(empty($def['title'])) $this->title = $this->dashletStrings['LBL_TITLE'];
+        else $this->title = $def['title'];
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function InvadersDashlet($id, $def)
-    {
+    function InvadersDashlet($id, $def){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $def);
@@ -98,8 +92,7 @@ class InvadersDashlet extends Dashlet
      *
      * @return string html to display dashlet
      */
-    public function display()
-    {
+    function display() {
         $ss = new Sugar_Smarty();
         $ss->assign('id', $this->id);
         $ss->assign('height', $this->height);
@@ -114,8 +107,7 @@ class InvadersDashlet extends Dashlet
      *
      * @return string javascript to use with this dashlet
      */
-    public function displayScript()
-    {
+    function displayScript() {
         $ss = new Sugar_Smarty();
         $ss->assign('id', $this->id);
         $ss->assign('dashletStrings', $this->dashletStrings);
@@ -129,8 +121,7 @@ class InvadersDashlet extends Dashlet
      *
      * @return string html to display form
      */
-    public function displayOptions()
-    {
+    function displayOptions() {
         global $app_strings;
 
         $ss = new Sugar_Smarty();
@@ -151,19 +142,14 @@ class InvadersDashlet extends Dashlet
      * @param array $req $_REQUEST
      * @return array filtered options to save
      */
-    public function saveOptions($req)
-    {
+    function saveOptions($req) {
         global $sugar_config, $timedate, $current_user, $theme;
         $options = array();
         $options['title'] = $_REQUEST['title'];
-        if (is_numeric($_REQUEST['height'])) {
-            if ($_REQUEST['height'] > 0 && $_REQUEST['height'] <= 300) {
-                $options['height'] = $_REQUEST['height'];
-            } elseif ($_REQUEST['height'] > 300) {
-                $options['height'] = '300';
-            } else {
-                $options['height'] = '100';
-            }
+        if(is_numeric($_REQUEST['height'])) {
+            if($_REQUEST['height'] > 0 && $_REQUEST['height'] <= 300) $options['height'] = $_REQUEST['height'];
+            elseif($_REQUEST['height'] > 300) $options['height'] = '300';
+            else $options['height'] = '100';
         }
 
 //        $options['savedText'] = br2nl($this->savedText);
@@ -176,14 +162,15 @@ class InvadersDashlet extends Dashlet
      * Used to save text on textarea blur. Accessed via Home/CallMethodDashlet.php
      * This is an example of how to to call a custom method via ajax
      */
-    public function saveText()
-    {
-        if (isset($_REQUEST['savedText'])) {
+    function saveText() {
+        if(isset($_REQUEST['savedText'])) {
             $optionsArray = $this->loadOptions();
 //            _pp($_REQUEST['savedText']);
             $optionsArray['savedText'] = nl2br($_REQUEST['savedText']);
             $this->storeOptions($optionsArray);
-        } else {
+
+        }
+        else {
             $optionsArray['savedText'] = '';
         }
         $json = getJSONobj();
@@ -191,3 +178,4 @@ class InvadersDashlet extends Dashlet
                                        'savedText' => $optionsArray['savedText']));
     }
 }
+

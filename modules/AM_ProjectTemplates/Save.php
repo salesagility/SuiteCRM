@@ -53,9 +53,9 @@ global $current_user;
 $sugarbean = new AM_ProjectTemplates();
 $sugarbean = populateFromPost('', $sugarbean);
 
-$sugarbean->save($check_notify);
+$sugarbean->save(null);
 $return_id = $sugarbean->id;
 
 //customize default retrun view to make it to redirect to GanttChart view
 $_REQUEST['return_url'] = "index.php?module=AM_ProjectTemplates&action=view_GanttChart&record=" . $return_id;
-handleRedirect($return_id, 'AM_ProjectTemplates');
+handleRedirect($return_id,'AM_ProjectTemplates');

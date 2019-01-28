@@ -58,6 +58,7 @@ function get_field_list($value, $translate = true)
     $list = array();
 
     if (!empty($value->field_defs)) {
+
         foreach ($value->field_defs as $var) {
             if (isset($var['source']) && ($var['source'] != 'db' && $var['source'] != 'custom_fields') && $var['name'] != 'email1' && $var['name'] != 'email2' && (!isset($var['type']) || $var['type'] != 'relate')) {
                 continue;
@@ -103,6 +104,7 @@ function get_field_list($value, $translate = true)
     } //if
 
     if (isset($value->module_dir) && $value->module_dir == 'Bugs') {
+
         $seedRelease = new Release();
         $options = $seedRelease->get_releases(true, "Active");
         $options_ret = array();
@@ -168,6 +170,7 @@ function new_get_field_list($value, $translate = true)
     $link_fields = array();
 
     if (!empty($value->field_defs)) {
+
         foreach ($value->field_defs as $var) {
             if (isset($var['source']) && ($var['source'] != 'db' && $var['source'] != 'non-db' && $var['source'] != 'custom_fields') && $var['name'] != 'email1' && $var['name'] != 'email2' && (!isset($var['type']) || $var['type'] != 'relate')) {
                 continue;
@@ -207,10 +210,8 @@ function new_get_field_list($value, $translate = true)
                 $link_fields[$var['name']] = $entry;
             } else {
                 if ($translate) {
-                    $entry['label'] = isset($var['vname']) ? translate(
-                        $var['vname'],
-                        $value->module_dir
-                    ) : $var['name'];
+                    $entry['label'] = isset($var['vname']) ? translate($var['vname'],
+                        $value->module_dir) : $var['name'];
                 } else {
                     $entry['label'] = isset($var['vname']) ? $var['vname'] : $var['name'];
                 }
@@ -225,6 +226,7 @@ function new_get_field_list($value, $translate = true)
     } //if
 
     if ($value->module_dir == 'Bugs') {
+
         $seedRelease = new Release();
         $options = $seedRelease->get_releases(true, "Active");
         $options_ret = array();
@@ -264,12 +266,8 @@ function new_get_field_list($value, $translate = true)
 function setFaultObject($errorObject)
 {
     global $soap_server_object;
-    $soap_server_object->fault(
-        $errorObject->getFaultCode(),
-        $errorObject->getName(),
-        '',
-        $errorObject->getDescription()
-    );
+    $soap_server_object->fault($errorObject->getFaultCode(), $errorObject->getName(), '',
+        $errorObject->getDescription());
 } // fn
 
 function checkSessionAndModuleAccess(
@@ -363,6 +361,7 @@ function get_user_module_list($user)
     }
 
     return $modules;
+
 }
 
 function check_modules_access($user, $module_name, $action = 'write')
@@ -377,10 +376,8 @@ function check_modules_access($user, $module_name, $action = 'write')
             }
 
             return false;
-        } elseif ($action == 'write' && strcmp(
-            strtolower($module_name),
-                'users'
-        ) == 0 && !$user->isAdminForModule($module_name)
+        } elseif ($action == 'write' && strcmp(strtolower($module_name),
+                'users') == 0 && !$user->isAdminForModule($module_name)
         ) {
             //rrs bug: 46000 - If the client is trying to write to the Users module and is not an admin then we need to stop them
             return false;
@@ -390,6 +387,7 @@ function check_modules_access($user, $module_name, $action = 'write')
     }
 
     return false;
+
 }
 
 function get_name_value_list($value, $returnDomValue = false)
@@ -408,7 +406,9 @@ function get_name_value_list($value, $returnDomValue = false)
         }
         foreach ($value->field_defs as $var) {
             if (isset($var['source']) && ($var['source'] != 'db' && $var['source'] != 'custom_fields') && $var['name'] != 'email1' && $var['name'] != 'email2' && (!isset($var['type']) || $var['type'] != 'relate')) {
+
                 if ($value->module_dir == 'Emails' && (($var['name'] == 'description') || ($var['name'] == 'description_html') || ($var['name'] == 'from_addr_name') || ($var['name'] == 'reply_to_addr') || ($var['name'] == 'to_addrs_names') || ($var['name'] == 'cc_addrs_names') || ($var['name'] == 'bcc_addrs_names') || ($var['name'] == 'raw_source'))) {
+
                 } else {
                     continue;
                 }
@@ -433,6 +433,7 @@ function get_name_value_list($value, $returnDomValue = false)
     }
 
     return $list;
+
 }
 
 function filter_fields($value, $fields)
@@ -448,6 +449,7 @@ function filter_fields($value, $fields)
         if (isset($value->field_defs[$field])) {
             $var = $value->field_defs[$field];
             if (isset($var['source']) && ($var['source'] != 'db' && $var['source'] != 'custom_fields') && $var['name'] != 'email1' && $var['name'] != 'email2' && (!isset($var['type']) || $var['type'] != 'relate')) {
+
                 continue;
             }
         } // if
@@ -494,6 +496,7 @@ function get_name_value_list_for_fields($value, $fields)
     } // if
 
     return $list;
+
 } // fn
 
 
@@ -501,10 +504,12 @@ function array_get_name_value_list($array)
 {
     $list = array();
     foreach ($array as $name => $value) {
+
         $list[$name] = get_name_value($name, $value);
     }
 
     return $list;
+
 }
 
 function array_get_name_value_lists($array)
@@ -545,7 +550,8 @@ function name_value_lists_get_array($list)
 
 function array_get_return_value($array, $module)
 {
-    return array(
+
+    return Array(
         'id' => $array['id'],
         'module_name' => $module,
         'name_value_list' => array_get_name_value_list($array)
@@ -561,7 +567,7 @@ function get_return_value_for_fields($value, $module, $fields)
     }
     $value = clean_sensitive_data($value->field_defs, $value);
 
-    return array(
+    return Array(
         'id' => $value->id,
         'module_name' => $module,
         'name_value_list' => get_name_value_list_for_fields($value, $fields)
@@ -606,9 +612,10 @@ function getRelationshipResults($bean, $link_field_name, $link_module_fields)
         }
 
         return array('rows' => $list, 'fields_set_on_rows' => $filterFields);
-    }
-    return false;
-    // else
+    } else {
+        return false;
+    } // else
+
 } // fn
 
 function get_return_value_for_link_fields($bean, $module, $link_name_to_value_fields_array)
@@ -692,8 +699,9 @@ function new_handle_set_relationship($module_name, $module_id, $link_field_name,
         $mod->$link_field_name->add($related_ids);
 
         return true;
+    } else {
+        return false;
     }
-    return false;
 }
 
 function new_handle_set_entries($module_name, $name_value_lists, $select_fields = false)
@@ -816,10 +824,11 @@ function new_handle_set_entries($module_name, $name_value_lists, $select_fields 
         return array(
             'name_value_lists' => $ret_values,
         );
-    }
-    return array(
+    } else {
+        return array(
             'ids' => $ids,
         );
+    }
 }
 
 function get_return_value($value, $module, $returnDomValue = false)
@@ -831,7 +840,7 @@ function get_return_value($value, $module, $returnDomValue = false)
     }
     $value = clean_sensitive_data($value->field_defs, $value);
 
-    return array(
+    return Array(
         'id' => $value->id,
         'module_name' => $module,
         'name_value_list' => get_name_value_list($value, $returnDomValue)
@@ -873,7 +882,7 @@ function new_get_return_module_fields($value, $module, $translate = true)
     $module_name = $module;
     $result = new_get_field_list($value, $translate);
 
-    return array(
+    return Array(
         'module_name' => $module,
         'module_fields' => $result['module_fields'],
         'link_fields' => $result['link_fields'],
@@ -885,7 +894,7 @@ function get_return_module_fields($value, $module, $error, $translate = true)
     global $module_name;
     $module_name = $module;
 
-    return array(
+    return Array(
         'module_name' => $module,
         'module_fields' => get_field_list($value, $translate),
         'error' => get_name_value_list($value)
@@ -894,7 +903,7 @@ function get_return_module_fields($value, $module, $error, $translate = true)
 
 function get_return_error_value($error_num, $error_name, $error_description)
 {
-    return array(
+    return Array(
         'number' => $error_num,
         'name' => $error_name,
         'description' => $error_description
@@ -917,6 +926,7 @@ function filter_field_list(&$field_list, $select_fields, $module_name)
  */
 function filter_return_list(&$output_list, $select_fields, $module_name)
 {
+
     for ($sug = 0; $sug < sizeof($output_list); $sug++) {
         if ($module_name == 'Contacts') {
             global $invalid_contact_fields;
@@ -924,6 +934,7 @@ function filter_return_list(&$output_list, $select_fields, $module_name)
                 foreach ($invalid_contact_fields as $name => $val) {
                     unset($output_list[$sug]['field_list'][$name]);
                     unset($output_list[$sug]['name_value_list'][$name]);
+
                 }
             }
         }
@@ -1025,6 +1036,7 @@ function add_create_account($seed)
 
 function check_for_duplicate_contacts($seed)
 {
+
     if (isset($seed->id)) {
         return null;
     }
@@ -1041,48 +1053,44 @@ function check_for_duplicate_contacts($seed)
         $contacts = array_merge($contacts, $contacts2);
         if (count($contacts) == 0) {
             return null;
-        }
-        foreach ($contacts as $contact) {
-            if (!empty($trimmed_last) && strcmp($trimmed_last, $contact->last_name) == 0) {
-                if ((!empty($trimmed_email) || !empty($trimmed_email2)) && (strcmp(
-                        $trimmed_email,
-                                $contact->email1
-                    ) == 0 || strcmp(
-                                    $trimmed_email,
-                                $contact->email2
-                                ) == 0 || strcmp(
-                                    $trimmed_email2,
-                                $contact->email
-                                ) == 0 || strcmp($trimmed_email2, $contact->email2) == 0)
+        } else {
+            foreach ($contacts as $contact) {
+                if (!empty($trimmed_last) && strcmp($trimmed_last, $contact->last_name) == 0) {
+                    if ((!empty($trimmed_email) || !empty($trimmed_email2)) && (strcmp($trimmed_email,
+                                $contact->email1) == 0 || strcmp($trimmed_email,
+                                $contact->email2) == 0 || strcmp($trimmed_email2,
+                                $contact->email) == 0 || strcmp($trimmed_email2, $contact->email2) == 0)
                     ) {
-                    //bug: 39234 - check if the account names are the same
-                    //if the incoming contact's account_name is empty OR it is not empty and is the same
-                    //as an existing contact's account name, then find the match.
-                    $contact->load_relationship('accounts');
-                    if (empty($seed->account_name) || strcmp($seed->account_name, $contact->account_name) == 0) {
-                        $GLOBALS['log']->info('End: SoapHelperWebServices->check_for_duplicate_contacts - duplicte found ' . $contact->id);
+                        //bug: 39234 - check if the account names are the same
+                        //if the incoming contact's account_name is empty OR it is not empty and is the same
+                        //as an existing contact's account name, then find the match.
+                        $contact->load_relationship('accounts');
+                        if (empty($seed->account_name) || strcmp($seed->account_name, $contact->account_name) == 0) {
+                            $GLOBALS['log']->info('End: SoapHelperWebServices->check_for_duplicate_contacts - duplicte found ' . $contact->id);
 
-                        return $contact->id;
+                            return $contact->id;
+                        }
                     }
                 }
             }
+
+            return null;
         }
+    } else {
+        //This section of code is executed if no emails are supplied in the $seed instance
 
-        return null;
-    }
-    //This section of code is executed if no emails are supplied in the $seed instance
-
-    //This query is looking for the id of Contact records that do not have a primary email address based on the matching
-    //first and last name and the record being not deleted.  If any such records are found we will take the first one and assume
-    //that it is the duplicate record
-    $query = "SELECT c.id as id FROM contacts c
+        //This query is looking for the id of Contact records that do not have a primary email address based on the matching
+        //first and last name and the record being not deleted.  If any such records are found we will take the first one and assume
+        //that it is the duplicate record
+        $query = "SELECT c.id as id FROM contacts c
 LEFT OUTER JOIN email_addr_bean_rel eabr ON eabr.bean_id = c.id
 WHERE c.first_name = '{$trimmed_first}' AND c.last_name = '{$trimmed_last}' AND c.deleted = 0 AND eabr.id IS NULL";
 
-    //Apply the limit query filter to this since we only need the first record
-    $result = DBManagerFactory::getInstance()->getOne($query);
+        //Apply the limit query filter to this since we only need the first record
+        $result = DBManagerFactory::getInstance()->getOne($query);
 
-    return !empty($result) ? $result : null;
+        return !empty($result) ? $result : null;
+    }
 }
 
 /*
@@ -1107,8 +1115,9 @@ function is_server_version_greater($left, $right)
         return is_server_version_greater($left, $right);
     } elseif ($left[0] < $right[0]) {
         return true;
+    } else {
+        return false;
     }
-    return false;
 }
 
 function getFile($zip_file, $file_in_zip)
@@ -1138,6 +1147,7 @@ if (!function_exists("get_encoded")) {
     function get_decoded($object)
     {
         return unserialize(base64_decode($object));
+
     }
 
     /**
@@ -1151,6 +1161,7 @@ if (!function_exists("get_encoded")) {
     function decrypt_string($string)
     {
         if (function_exists('openssl_decrypt')) {
+
             $focus = new Administration();
             $focus->retrieveSettings();
             $key = '';
@@ -1165,9 +1176,11 @@ if (!function_exists("get_encoded")) {
             $iv = "password";
 
             return openssl_decrypt($buffer, OPENSSL_CIPHER_3DES, $key, OPENSSL_ZERO_PADDING, $iv);
+        } else {
+            return $string;
         }
-        return $string;
     }
+
 }
 
 function canViewPath($path, $base)
@@ -1208,3 +1221,4 @@ function apply_values($seed, $dataValues, $firstSync)
 }
 
 /*END HELPER*/
+

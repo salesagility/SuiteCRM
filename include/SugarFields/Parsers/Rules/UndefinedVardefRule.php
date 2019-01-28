@@ -53,27 +53,28 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
-class UndefinedVardefRule extends BaseRule
-{
-    public function __construct()
-    {
-    }
+class UndefinedVardefRule extends BaseRule {
+
+function __construct() {
+
+}
 
 
-    public function parsePanels($panels, $view)
-    {
-        foreach ($panels as $name=>$panel) {
-            foreach ($panel as $rowCount=>$row) {
-                foreach ($row as $key=>$column) {
-                    if (is_array($column) && isset($column['name']) && empty($column['name'])) {
-                        $panels[$name][$rowCount][$key] = '';
-                    } elseif (!is_array($column) && isset($column['name']) && empty($column['name'])) {
-                        $panels[$name][$rowCount][$key] = '';
-                    }
-                } //foreach
-            } //foreach
-        } //foreach
+function parsePanels($panels, $view) {
+
+   foreach($panels as $name=>$panel) {
+   	  foreach($panel as $rowCount=>$row) {
+   	  	 foreach($row as $key=>$column) {
+   	  	 	if(is_array($column) && isset($column['name']) && empty($column['name'])) {
+	           $panels[$name][$rowCount][$key] = '';
+   	  	 	} else if(!is_array($column) && isset($column['name']) && empty($column['name'])) {
+   	  	 	   $panels[$name][$rowCount][$key] = '';
+   	  	 	}
+   	  	 } //foreach
+   	  } //foreach
+   } //foreach
 
    return $panels;
-    }
+}
+
 }

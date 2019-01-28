@@ -31,8 +31,8 @@ class HTMLPurifier_Lexer_PEARSax3 extends HTMLPurifier_Lexer
     private $parent_handler;
     private $stack = array();
 
-    public function tokenizeHTML($string, $config, $context)
-    {
+    public function tokenizeHTML($string, $config, $context) {
+
         $this->tokens = array();
         $this->last_token_was_empty = false;
 
@@ -42,7 +42,7 @@ class HTMLPurifier_Lexer_PEARSax3 extends HTMLPurifier_Lexer
 
         $parser = new XML_HTMLSax3();
         $parser->set_object($this);
-        $parser->set_element_handler('openHandler', 'closeHandler');
+        $parser->set_element_handler('openHandler','closeHandler');
         $parser->set_data_handler('dataHandler');
         $parser->set_escape_handler('escapeHandler');
 
@@ -54,13 +54,13 @@ class HTMLPurifier_Lexer_PEARSax3 extends HTMLPurifier_Lexer
         restore_error_handler();
 
         return $this->tokens;
+
     }
 
     /**
      * Open tag event handler, interface is defined by PEAR package.
      */
-    public function openHandler(&$parser, $name, $attrs, $closed)
-    {
+    public function openHandler(&$parser, $name, $attrs, $closed) {
         // entities are not resolved in attrs
         foreach ($attrs as $key => $attr) {
             $attrs[$key] = $this->parseData($attr);
@@ -78,8 +78,7 @@ class HTMLPurifier_Lexer_PEARSax3 extends HTMLPurifier_Lexer
     /**
      * Close tag event handler, interface is defined by PEAR package.
      */
-    public function closeHandler(&$parser, $name)
-    {
+    public function closeHandler(&$parser, $name) {
         // HTMLSax3 seems to always send empty tags an extra close tag
         // check and ignore if you see it:
         // [TESTME] to make sure it doesn't overreach
@@ -88,17 +87,14 @@ class HTMLPurifier_Lexer_PEARSax3 extends HTMLPurifier_Lexer
             return true;
         }
         $this->tokens[] = new HTMLPurifier_Token_End($name);
-        if (!empty($this->stack)) {
-            array_pop($this->stack);
-        }
+        if (!empty($this->stack)) array_pop($this->stack);
         return true;
     }
 
     /**
      * Data event handler, interface is defined by PEAR package.
      */
-    public function dataHandler(&$parser, $data)
-    {
+    public function dataHandler(&$parser, $data) {
         $this->last_token_was_empty = false;
         $this->tokens[] = new HTMLPurifier_Token_Text($data);
         return true;
@@ -107,8 +103,7 @@ class HTMLPurifier_Lexer_PEARSax3 extends HTMLPurifier_Lexer
     /**
      * Escaped text handler, interface is defined by PEAR package.
      */
-    public function escapeHandler(&$parser, $data)
-    {
+    public function escapeHandler(&$parser, $data) {
         if (strpos($data, '--') === 0) {
             // remove trailing and leading double-dashes
             $data = substr($data, 2);
@@ -134,13 +129,11 @@ class HTMLPurifier_Lexer_PEARSax3 extends HTMLPurifier_Lexer
     /**
      * An error handler that mutes strict errors
      */
-    public function muteStrictErrorHandler($errno, $errstr, $errfile=null, $errline=null, $errcontext=null)
-    {
-        if ($errno == E_STRICT) {
-            return;
-        }
+    public function muteStrictErrorHandler($errno, $errstr, $errfile=null, $errline=null, $errcontext=null) {
+        if ($errno == E_STRICT) return;
         return call_user_func($this->parent_handler, $errno, $errstr, $errfile, $errline, $errcontext);
     }
+
 }
 
 // vim: et sw=4 sts=4

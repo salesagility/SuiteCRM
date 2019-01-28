@@ -203,7 +203,7 @@ class ViewConfig extends SugarView
 
         $configurator = new Configurator();
 
-        $email_templates_arr = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name', true);
+        $email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name', '','name',true);
         if (empty($email_templates_arr)) {
             throw new RuntimeException('System Email templates are missing');
         }

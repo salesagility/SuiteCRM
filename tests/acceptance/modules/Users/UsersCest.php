@@ -3,7 +3,7 @@
 use Faker\Factory;
 use Faker\Generator;
 use Helper\WebDriverHelper;
-use Step\Acceptance\Accounts;
+use Step\Acceptance\AccountsTester;
 use Step\Acceptance\DetailView;
 use Step\Acceptance\EditView;
 use Step\Acceptance\ListView;
@@ -33,7 +33,7 @@ class UsersCest
         $this->fakeDataSeed = rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
-    
+
     public function testEmailSettingsMailAccountAdd(AcceptanceTester $I, UsersTester $Users, WebDriverHelper $webDriverHelper)
     {
         $instanceUrl = $webDriverHelper->getInstanceURL();
@@ -50,7 +50,7 @@ class UsersCest
         $I->fillField('email_user', 'testuser_name');
         $I->fillField('email_password', 'testuser_pass');
         $I->click('Test Settings');
-        $I->wait(10);
+        $I->wait(20);
         $I->see('Connection completed successfully.');
     }
 
@@ -60,7 +60,7 @@ class UsersCest
         UsersTester $Users,
         ListView $listView,
         EditView $EditView,
-        Accounts $accounts,
+        AccountsTester $accounts,
         WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('View the collapsed subpanel hints on Accounts');

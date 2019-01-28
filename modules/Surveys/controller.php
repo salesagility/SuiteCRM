@@ -6,8 +6,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SurveysController extends SugarController
 {
-    public function action_Reports()
+
+    function action_Reports()
     {
         $this->view = 'Reports';
     }
+
 }

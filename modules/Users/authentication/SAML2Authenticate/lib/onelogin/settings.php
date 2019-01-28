@@ -43,23 +43,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $spBase = $GLOBALS['sugar_config']['site_url'].'/index.php?action=Login&module=Users';
-$settingsInfo = array(
-    'sp' => array(
+$settingsInfo = array (
+    'sp' => array (
         'entityId' => $spBase,
-        'assertionConsumerService' => array(
+        'assertionConsumerService' => array (
             'url' => $spBase,
         ),
-        'singleLogoutService' => array(
+        'singleLogoutService' => array (
             'url' => $spBase,
         ),
         'NameIDFormat' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
     ),
-    'idp' => array(
+    'idp' => array (
         'entityId' => $spBase,
-        'singleSignOnService' => array(
+        'singleSignOnService' => array (
             'url' => isset($GLOBALS['sugar_config']['SAML_loginurl']) ? $GLOBALS['sugar_config']['SAML_loginurl'] : '',
         ),
-        'singleLogoutService' => array(
+        'singleLogoutService' => array (
             'url' => isset($GLOBALS['sugar_config']['SAML_logouturl']) ? $GLOBALS['sugar_config']['SAML_logouturl'] : '',
         ),
         'x509cert' => isset($GLOBALS['sugar_config']['SAML_X509Cert']) ? $GLOBALS['sugar_config']['SAML_X509Cert'] : '',

@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = array (
     'LBL_MODULE_NAME' => 'OAuth2 Tokens',
     'LBL_MODULE_TITLE' => 'OAuth2 Tokens',
     'LBL_MODULE_ID'=> 'OAuth2 Tokens',

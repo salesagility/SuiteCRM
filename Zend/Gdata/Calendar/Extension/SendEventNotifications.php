@@ -84,9 +84,11 @@ class Zend_Gdata_Calendar_Extension_SendEventNotifications extends Zend_Gdata_Ex
         case 'value':
             if ($attribute->nodeValue == "true") {
                 $this->_value = true;
-            } elseif ($attribute->nodeValue == "false") {
+            }
+            else if ($attribute->nodeValue == "false") {
                 $this->_value = false;
-            } else {
+            }
+            else {
                 throw new Zend_Gdata_App_InvalidArgumentException("Expected 'true' or 'false' for gCal:selected#value.");
             }
             break;
@@ -125,4 +127,6 @@ class Zend_Gdata_Calendar_Extension_SendEventNotifications extends Zend_Gdata_Ex
     {
         return $this->getValue();
     }
+
 }
+

@@ -159,3 +159,4 @@ $searchFields['Contacts'] =
         ),
         //Range Search Support
     );
+

@@ -24,10 +24,10 @@
 
 
  $metafiles['AOW_Processed'] = array(
-    'detailviewdefs'  => 	'modules/AOW_Processed/metadata/detailviewdefs.php',
-    'editviewdefs'    => 	'modules/AOW_Processed/metadata/editviewdefs.php',
-    'listviewdefs'    => 	'modules/AOW_Processed/metadata/listviewdefs.php',
-    'searchdefs'      =>    'modules/AOW_Processed/metadata/searchdefs.php',
-    'popupdefs'	      =>    'modules/AOW_Processed/metadata/popupdefs.php',
-    'searchfields'	  =>    'modules/AOW_Processed/metadata/SearchFields.php',
+	'detailviewdefs'  => 	'modules/AOW_Processed/metadata/detailviewdefs.php', 	
+	'editviewdefs'    => 	'modules/AOW_Processed/metadata/editviewdefs.php',
+ 	'listviewdefs'    => 	'modules/AOW_Processed/metadata/listviewdefs.php',
+ 	'searchdefs'      =>    'modules/AOW_Processed/metadata/searchdefs.php',
+ 	'popupdefs'	      =>    'modules/AOW_Processed/metadata/popupdefs.php',
+ 	'searchfields'	  =>    'modules/AOW_Processed/metadata/SearchFields.php',
  );

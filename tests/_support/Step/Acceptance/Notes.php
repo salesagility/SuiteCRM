@@ -9,7 +9,7 @@ class Notes extends \AcceptanceTester
      */
     public function gotoNotes()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Notes');
     }
 }

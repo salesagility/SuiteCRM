@@ -51,4 +51,5 @@ class IdAlreadyExistsException extends ApiException
     const MSG_PREFIX = '[IdAlreadyExists]';
     const DEFAULT_CODE = 8060;
     const HTTP_STATUS = 403;
+    
 }

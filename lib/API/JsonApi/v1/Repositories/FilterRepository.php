@@ -84,20 +84,20 @@ class FilterRepository
         /** @var OperatorInterface[] $filterOperators */
         // Parse Filters from request
         $queries = $request->getQueryParams();
-        if (empty($queries)) {
+        if(empty($queries)) {
             return array();
         }
 
         $response = array();
-        if (isset($queries['filter'])) {
+        if(isset($queries['filter'])) {
             /** @var array $filters */
             $filters = $queries['filter'];
 
-            if (is_array($filters)) {
+            if(is_array($filters)) {
                 foreach ($filters as $filterKey => $filter) {
                     $response = array_merge($response, $this->filterParser->parseFilter($filterKey, $filter, $args));
                 }
-            } elseif (is_string($filters)) {
+            } else if(is_string($filters)) {
                 $response = array($filters);
             } else {
                 throw new BadRequestException('[JsonApi][v1][Repositories][FilterRepository][filter type is invalid]');

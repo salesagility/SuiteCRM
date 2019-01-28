@@ -79,6 +79,8 @@ SuiteCRM.kdev4
 vendor/
 public/
 
+.php_cs.cache
+
 
 #Ignore bower_components
 bower_components/
@@ -99,7 +101,6 @@ browserstack.err
 cache/
 custom/**/
 .sass-cache/
-.php_cs.cache
 
 # Ignore testing environment
 build/tmp/
@@ -107,3 +108,6 @@ build/tmp/
 # IMAP testing
 fakeImapResource
 include/Imap/ImapTestSettings.txt
+
+# Ignore php-cs-fixer cache
+.php_cs.cache

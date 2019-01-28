@@ -129,13 +129,13 @@ class Zend_Search_Lucene_Search_QueryToken
 
         switch ($tokenCategory) {
             case self::TC_WORD:
-                if (strtolower($tokenText) == 'and') {
+                if (  strtolower($tokenText) == 'and') {
                     $this->type = self::TT_AND_LEXEME;
-                } elseif (strtolower($tokenText) == 'or') {
+                } else if (strtolower($tokenText) == 'or') {
                     $this->type = self::TT_OR_LEXEME;
-                } elseif (strtolower($tokenText) == 'not') {
+                } else if (strtolower($tokenText) == 'not') {
                     $this->type = self::TT_NOT_LEXEME;
-                } elseif (strtolower($tokenText) == 'to') {
+                } else if (strtolower($tokenText) == 'to') {
                     $this->type = self::TT_TO_LEXEME;
                 } else {
                     $this->type = self::TT_WORD;
@@ -217,7 +217,6 @@ class Zend_Search_Lucene_Search_QueryToken
             case self::TC_NUMBER:
                 $this->type = self::TT_NUMBER;
 
-                // no break
             default:
                 require_once 'Zend/Search/Lucene/Exception.php';
                 throw new Zend_Search_Lucene_Exception('Unrecognized lexeme type: \'' . $tokenCategory . '\'');

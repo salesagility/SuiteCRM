@@ -159,10 +159,8 @@ class Zend_Oauth_Http_AccessToken extends Zend_Oauth_Http
                 $httpClient = $this->getRequestSchemePostBodyClient($params);
                 break;
             case Zend_Oauth::REQUEST_SCHEME_QUERYSTRING:
-                $httpClient = $this->getRequestSchemeQueryStringClient(
-                    $params,
-                    $this->_consumer->getAccessTokenUrl()
-                );
+                $httpClient = $this->getRequestSchemeQueryStringClient($params,
+                    $this->_consumer->getAccessTokenUrl());
                 break;
         }
         return $httpClient->request();

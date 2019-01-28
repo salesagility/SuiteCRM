@@ -5,14 +5,14 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     protected $stateSaver;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->stateSaver = new SuiteCRM\StateSaver();
         $this->stateSaver->pushTable('email_addresses');
     }
     
-    public function tearDown()
+    protected function tearDown()
     {
         $this->stateSaver->popTable('email_addresses');
         parent::tearDown();
