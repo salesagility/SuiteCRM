@@ -33,16 +33,13 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
     protected function setUp()
     {
-        echo "[-- parent setup calling.. --]\n";
         parent::setUp();
-        echo "[-- state saving --]\n";
         $this->fieldDefsStore();
         $this->getStateSaver()->pushTable('tracker');
         $this->getStateSaver()->pushTable('aod_index');
         $this->getStateSaver()->pushTable('users');
         $this->getStateSaver()->pushTable('contacts_cstm');
         $this->getStateSaver()->pushGlobals();
-        echo "[-- state saved --]\n";
         
         // these tests assume that only admin user are in the database so we should delete everything else
         $query = "delete from users where id != 1";
@@ -59,14 +56,12 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
     protected function tearDown()
     {
-        echo "[-- state restoring --]\n";
         $this->getStateSaver()->popGlobals();
         $this->getStateSaver()->popTable('contacts_cstm');
         $this->getStateSaver()->popTable('users');
         $this->getStateSaver()->popTable('aod_index');
         $this->getStateSaver()->popTable('tracker');
         $this->fieldDefsRestore();
-        echo "[-- state restored --]\n";
         parent::tearDown();
     }
 
