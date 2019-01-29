@@ -33,7 +33,7 @@ class UsersCest
         $this->fakeDataSeed = rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
-
+  
     public function testEmailSettingsMailAccountAdd(AcceptanceTester $I, UsersTester $Users, WebDriverHelper $webDriverHelper)
     {
         $instanceUrl = $webDriverHelper->getInstanceURL();

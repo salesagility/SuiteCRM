@@ -615,7 +615,7 @@ class SugarApplication {
     function endSession() {
         session_destroy();
     }
-
+    
     /**
      * Redirect to another URL
      *
@@ -651,7 +651,9 @@ class SugarApplication {
                 header("Location: " . $url);
             }
         }
-        exit();
+        if (!defined('SUITE_PHPUNIT_RUNNER')) {
+            exit();
+        }
     }
 
     /**
