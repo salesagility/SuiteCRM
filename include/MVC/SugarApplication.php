@@ -623,7 +623,7 @@ class SugarApplication {
      * @param	string	$url	The URL to redirect to
      */
     static function redirect(
-    $url, $exitByDefault = true
+    $url
     ) {
         /*
          * If the headers have been sent, then we cannot send an additional location header
@@ -651,7 +651,7 @@ class SugarApplication {
                 header("Location: " . $url);
             }
         }
-        if ($exitByDefault) {
+        if (!defined('SUITE_PHPUNIT_RUNNER')) {
             exit();
         }
     }
