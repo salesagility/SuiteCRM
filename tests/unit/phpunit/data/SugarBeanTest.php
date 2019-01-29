@@ -2367,7 +2367,6 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         // test
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
-        $bean->exitAtRedirect = false;
         $results = $bean->save();
         $this->assertFalse(!!$results, "should not give a result as it's not verified or password was incorrect");
         $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError, "should give a lastSaveErrorIsEmailAddressSaveError as it's not verified or password was incorrect and a save should fails");
@@ -2389,7 +2388,6 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         // test
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
-        $bean->exitAtRedirect = false;
         $bean->new_with_id = true;
         $results = $bean->save();
         $this->assertNull($results, "should not give a result as it's not verified or password was incorrect");
@@ -2418,7 +2416,6 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $bean->modified_by_name = 'testing';
         $results = null;
         try {
-            $bean->exitAtRedirect = false;
             $results = $bean->save();
             $this->assertTrue(false);
         } catch (Exception $e) {
@@ -2448,7 +2445,6 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $bean = BeanFactory::getBean('Users');
         $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
-        $bean->exitAtRedirect = false;
         $results = $bean->save();
         $this->assertTrue(!$results);
         $this->assertNull($bean->lastSaveErrorIsEmailAddressSaveError, "should not having lastSaveErrorIsEmailAddressSaveError as a saving failed because it's should not veryfied or password was incorrect");
@@ -2475,7 +2471,6 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         // test
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
-        $bean->exitAtRedirect = false;
         $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
         $bean->field_defs = array(
@@ -2514,7 +2509,6 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         // test
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
-        $bean->exitAtRedirect = false;
         $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
         $bean->field_defs = array(
@@ -2554,7 +2548,6 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         // test
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
-        $bean->exitAtRedirect = false;
         $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
         $bean->field_defs = array(
