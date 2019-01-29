@@ -555,18 +555,22 @@ class MysqlManager extends DBManager
         }
 
 	// cn: using direct calls to prevent this from spamming the Logs
-        $charset = $this->getOption('charset');
+        $charset = $this->getCharset();
 
-        if(!empty($charset)) {
-            mysql_query("SET CHARACTER SET $charset", $this->database);
+	if(!empty($charset)) {
+	    if(!mysqli_query($this->database, "SET CHARACTER SET $charset")) {
+	       sugar_die($GLOBALS['app_strings']['ERR_DB_FAIL']); 
+	    }
 
             $names = "SET NAMES '$charset'";
-            $collation = $this->getOption('collation');
+            $collation = $this->getCollation();
 
-            if (!empty($collation)) {
+	    if (!empty($collation)) {
                 $names .= " COLLATE '$collation'";
             }
-            mysql_query($names, $this->database);
+	    if(!mysqli_query($this->database, $names)) {
+	       sugar_die($GLOBALS['app_strings']['ERR_DB_FAIL']); 
+	    }
         }
 
         if (!$this->checkError('Could Not Connect:', $dieOnError)) {
@@ -1171,7 +1175,7 @@ class MysqlManager extends DBManager
             $collation = $this->getDefaultCollation();
         }
 
-        return $collation;
+        return $this->quote($collation);
     }
 
     /**
@@ -1185,7 +1189,7 @@ class MysqlManager extends DBManager
             $charset = $this->getDefaultCharset();
         }
 
-        return $charset;
+        return $this->quote($charset);
     }
 
     /**

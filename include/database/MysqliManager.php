@@ -348,8 +348,8 @@ class MysqliManager extends MysqlManager
         }
 
         // cn: using direct calls to prevent this from spamming the Logs
-        $collation = $this->getOption('collation');
-        $charset = $this->getOption('charset');
+        $collation = $this->getCollation();
+        $charset   = $this->getCharset();
 
         if (!empty($collation) && !empty($charset)) {
             $names = "SET NAMES '$charset' COLLATE '$collation'";
