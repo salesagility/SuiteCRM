@@ -225,7 +225,7 @@ function validate_user($user_name, $password){
 		$current_user = $user;
         login_success();
 		return true;
-	}else if(function_exists('mcrypt_cbc')){
+    } elseif (function_exists('openssl_decrypt')) {
 		$password = decrypt_string($password);
 		if($authController->login($user_name, $password) && isset($_SESSION['authenticated_user_id'])){
 			$user->retrieve($_SESSION['authenticated_user_id']);
