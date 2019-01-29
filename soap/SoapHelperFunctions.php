@@ -1175,9 +1175,7 @@ if (!function_exists("get_encoded")) {
             $key = substr(md5($key), 0, 24);
             $iv = "password";
 
-            return openssl_decrypt($buffer, OPENSSL_CIPHER_3DES, $key, OPENSSL_ZERO_PADDING, $iv);
-        } else {
-            return $string;
+            return openssl_decrypt(pack("H*", $buffer), 'des-ede3-cbc', $key, OPENSSL_NO_PADDING, $iv);
         }
     }
 
