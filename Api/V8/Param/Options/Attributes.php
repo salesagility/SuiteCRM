@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Attributes extends BaseOption
 {
-    const REGEX_FIELD_PATTERN = '/[^\w-,\s\]/';
 
     /**
      * @inheritdoc
@@ -22,11 +21,7 @@ class Attributes extends BaseOption
             ->setDefined('attributes')
             ->setAllowedTypes('attributes', 'array')
             ->setAllowedValues('attributes', $this->validatorFactory->createClosureForIterator([
-                new Assert\NotBlank(),
-                new Assert\Regex([
-                    'pattern' => self::REGEX_FIELD_PATTERN,
-                    'match' => false,
-                ]),
+                new Assert\NotBlank()
             ]))
             ->setNormalizer('attributes', function (Options $options, $values) {
                 $bean = $this->beanManager->newBeanSafe($options->offsetGet('type'));
