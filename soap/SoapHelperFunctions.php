@@ -1156,7 +1156,7 @@ if (!function_exists("get_encoded")) {
      *
      * @param $string - the string to decrypt
      *
-     * @return a decrypted string if we can decrypt, the original string otherwise
+     * @return string decrypted string if we can decrypt, the original string otherwise
      */
     function decrypt_string($string)
     {

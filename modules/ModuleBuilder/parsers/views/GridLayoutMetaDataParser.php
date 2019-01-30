@@ -614,10 +614,9 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
 
                         $newRow [$colID - $offset] = $fieldname;
                         continue;
-                    } else {
-                        if (!isset($fieldDefinitions[$fieldname])) {
-                            continue;
-                        }
+                    }
+                    if (!isset($fieldDefinitions[$fieldname]) && $fieldname != $this->FILLER['name']) {
+                        continue;
                     }
 
                     //Replace (filler) with the empty string

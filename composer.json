@@ -35,7 +35,8 @@
     "symfony/options-resolver": "^3.4",
     "symfony/validator": "^3.4",
     "symfony/yaml": "^3.4",
-    "phpmailer/phpmailer": "^6.0"
+    "phpmailer/phpmailer": "^6.0",
+    "soundasleep/html2text": "~0.5"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
