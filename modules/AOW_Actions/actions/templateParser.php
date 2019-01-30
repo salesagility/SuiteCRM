@@ -70,3 +70,4 @@ class aowTemplateParser extends templateParser
 			return $string;
 		}
 	}
+}
