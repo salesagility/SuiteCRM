@@ -1214,7 +1214,6 @@ class SoapHelperWebServices
             }
             if (empty($key)) {
                 $GLOBALS['log']->info('End: SoapHelperWebServices->decrypt_string - empty key');
-
                 return $string;
             } // if
             $buffer = $string;

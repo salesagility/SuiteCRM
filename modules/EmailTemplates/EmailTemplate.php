@@ -307,15 +307,16 @@ class EmailTemplate extends SugarBean
         if (empty($this->body) && !empty($this->body_html)) {
             global $sugar_config;
 
-            $bodyCleanup = html_entity_decode($this->body_html, ENT_COMPAT, $sugar_config['default_charset']);
+            $bodyCleanup = $this->body_html;
+
+            $bodyCleanup = html_entity_decode($bodyCleanup, ENT_COMPAT, $sugar_config['default_charset']);
 
             // Template contents should contains at least one
             // white space character at after the variable names
             // to recognise it when parsing and replacing variables
+            $bodyCleanup = preg_replace('/(\$\w+\b)([^\s\/&"\'])/', '$1 $2', $bodyCleanup);
 
-            $bodyCleanup = preg_replace('/(\$\w+\b)([^\s])/', '$1 $2', $bodyCleanup);
-
-            $bodyCleanup = strip_tags($bodyCleanup);
+            $bodyCleanup = Html2Text\Html2Text::convert($bodyCleanup, true);
 
             $this->body = $bodyCleanup;
         }

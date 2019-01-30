@@ -8,11 +8,11 @@
   "config": {
     "vendor-dir": "vendor",
     "platform": {
-      "php": "5.6.0"
+      "php": "5.5.9"
     }
   },
   "require": {
-    "php": ">=5.6.0",
+    "php": ">=5.5.9",
     "ext-json": "*",
     "ext-gd": "*",
     "ext-curl": "*",
@@ -35,7 +35,8 @@
     "symfony/options-resolver": "^3.4",
     "symfony/validator": "^3.4",
     "symfony/yaml": "^3.4",
-    "phpmailer/phpmailer": "^6.0"
+    "phpmailer/phpmailer": "^6.0",
+    "soundasleep/html2text": "~0.5"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
