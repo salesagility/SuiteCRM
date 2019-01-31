@@ -675,7 +675,9 @@ class User extends Person implements EmailInterface
             }
         }
 
-        $this->saveFormPreferences();
+        if (isset($_POST['module']) && $_POST['module'] == 'Users' && isset($_POST['action']) && $_POST['action'] == 'Save') {
+            $this->saveFormPreferences();
+        }
 
         $this->savePreferencesToDB();
 
