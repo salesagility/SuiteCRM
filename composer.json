@@ -30,7 +30,8 @@
     "symfony/validator": "^3.4",
     "ezyang/htmlpurifier": "^4.10",
     "leafo/scssphp": "^0.7.7",
-    "soundasleep/html2text": "~0.5"
+    "soundasleep/html2text": "~0.5",
+    "consolidation/robo": "^1.4"
   },
   "require-dev": {
     "mikey179/vfsStream": "1.6.*",
@@ -38,7 +39,6 @@
     "fzaninotto/Faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
     "browserstack/browserstack-local": "dev-master",
-    "consolidation/robo": "^1.0.0",
     "mockery/mockery": "^0.9.9",
     "symfony/yaml": "^3.4",
     "flow/jsonpath": "^0.4"
