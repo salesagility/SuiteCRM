@@ -1130,14 +1130,14 @@ class ListView
             echo 'cached';
         } else {
             $response = SugarBean::get_union_related_list(
-                $sugarbean, 
-                $this->sortby, 
-                $this->sort_order, 
-                $this->query_where, 
-                $current_offset, 
-                -1, 
-                $this->records_per_page, 
-                $this->query_limit, 
+                $sugarbean,
+                $this->sortby,
+                $this->sort_order,
+                $this->query_where,
+                $current_offset,
+                -1,
+                $this->records_per_page,
+                $this->query_limit,
                 $subpanel_def
             );
             $this->response =& $response;

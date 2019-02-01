@@ -25,8 +25,8 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $current_user = new User();
     }
 
-    public function tearDown() {
-
+    public function tearDown()
+    {
         $this->state->popTable('tracker');
         $this->state->popTable('tasks');
         $this->state->popTable('aod_indexevent');
@@ -56,9 +56,6 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        
-
-
         $task = new Task();
 
         $task->name = 'test';
@@ -107,7 +104,6 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_list_fields()
     {
-        
         $task = new Task();
 
         //execute the method and test if it works and does not throws an exception.
@@ -119,15 +115,10 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->markTestIncomplete('method has no implementation');
-
     }
 
     public function testfill_in_additional_detail_fields()
     {
-        
-
-        
-        
         $task = new Task();
         $task->contact_id = 1;
 
@@ -226,13 +217,11 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
-        
         $task = new Task();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $task->listviewACLHelper();
         $this->assertSame($expected, $actual);
-
     }
 
     public function testgetDefaultStatus()

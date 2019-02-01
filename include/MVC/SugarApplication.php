@@ -110,7 +110,7 @@ class SugarApplication
         $this->loadDisplaySettings();
         $this->loadGlobals();
         $this->setupResourceManagement($module);
-        $this->controller->execute();        
+        $this->controller->execute();
         sugar_cleanup();
     }
 

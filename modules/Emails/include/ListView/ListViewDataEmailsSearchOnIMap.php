@@ -134,11 +134,11 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         if (isset($emailServerEmails['data']) && is_array($emailServerEmails['data'])) {
             $emailServerEmailsData = $emailServerEmails['data'];
         } else {
-            if (!isset($emailServerEmails['data'])) {	
-                LoggerManager::getLogger()->warn('server email data is not set for seearch');	
+            if (!isset($emailServerEmails['data'])) {
+                LoggerManager::getLogger()->warn('server email data is not set for seearch');
             } elseif (!is_array($emailServerEmails['data'])) {
-                LoggerManager::getLogger()->warn('server email data should be an array, ' . gettype($emailServerEmails['data']) . ' given.');	
-            }	
+                LoggerManager::getLogger()->warn('server email data should be an array, ' . gettype($emailServerEmails['data']) . ' given.');
+            }
         }
 
         if ($inboundEmail) {

@@ -254,7 +254,7 @@ class AOR_Chart extends Basic
     }
 
     /**
-     * 
+     *
      * @param type $labels
      * @return boolean Returns TRUE if colours successfully changed. FALSE on error and using colour defaults.
      */

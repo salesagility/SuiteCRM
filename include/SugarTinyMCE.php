@@ -167,14 +167,14 @@ function load_mce() {
         }
     } else {
 eoq;
-    $exTargets = explode(",", $targets);
-    foreach($exTargets as $instance) {
-$ret .=<<<eoq
+        $exTargets = explode(",", $targets);
+        foreach ($exTargets as $instance) {
+            $ret .=<<<eoq
     document.getElementById('$instance').style.width = '100%';
     document.getElementById('$instance').style.height = '100px';
 eoq;
-}
-$ret .=<<<eoq
+        }
+        $ret .=<<<eoq
     }
 }
 -->

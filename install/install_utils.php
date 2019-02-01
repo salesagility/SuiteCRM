@@ -1035,11 +1035,14 @@ EOQ;
         $fp = fopen($htaccess_file, 'r');
         $skip = false;
         while ($line = fgets($fp)) {
-
             if (preg_match("/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
-            if(!$skip)$contents .= $line;
+                if (!$skip) {
+                    $contents .= $line;
+                }
                 $skip = true;
-            if(preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line))$skip = false;
+                if (preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
+                    $skip = false;
+                }
             }
             if (!$skip) {
                 $contents .= $line;
