@@ -765,14 +765,13 @@ EOHTML;
                 if ((!is_null($width) && $sp['width'] == $width) || (is_null($width)) &&
                     (!is_null($height) && $sp['height'] == $height) || (is_null($height))) {
                     $other_attributes .= ' data-orig="'.$imageName.'"';
-
                     if ($sprite = $this->getSprite($sp['class'], $other_attributes, $alt)) {
-                        return $sprite;
+                        return $imageJSONEncode ? json_encode($sprite) : $sprite;
                     }
                 }
             }
         }
-
+      
         // img caching
         if (empty($cached_results[$imageName])) {
             $imageURL = $this->getImageURL($imageName, false);
