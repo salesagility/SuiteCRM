@@ -565,8 +565,7 @@ class AOR_Report extends Basic
                 $action = $_REQUEST['action'];
                 if ($action == 'DownloadPDF') {
                     $pdf_style = "background: #333 !important; color: #fff !important; margin-bottom: 0px;";
-                }
-
+                }				
                 $html .= '<div class="panel panel-default">
                             <div class="panel-heading" style="' . $pdf_style . '">
                                 <a class="" role="button" data-toggle="collapse" href="#detailpanel_report_group_' . $groupValue . '" aria-expanded="false">
@@ -582,12 +581,10 @@ class AOR_Report extends Basic
                 else {
                     $html .= '</div>';
                 }
-
-
                 $html .= $this->build_report_html($offset, $links, $groupValue, create_guid(), $extra);
                 $html .= ($action == 'downloadPDF') ? '' : '</div></div></div>';
-                // End
-
+                // End				
+				
             }
         }
 
@@ -827,7 +824,7 @@ class AOR_Report extends Basic
             $row_class = $row_class == 'oddListRowS1' ? 'evenListRowS1' : 'oddListRowS1';
         }
         $html .= "</tbody></table>";
-
+		
         $html .= $this->getTotalHTML($fields, $totals);
 
         $html .= '</div>';
@@ -1005,6 +1002,109 @@ class AOR_Report extends Basic
 
         return $html;
     }
+	
+	// Start of my code
+	function getTotalCSV($fields,$totals) 
+	{
+        global $app_list_strings;
+        $currency = new Currency();
+        $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
+			
+		$field = new AOR_Field();
+        $field->retrieve($row['id']);
+		
+		$showTotal = false;
+        $csv = "";
+        $delimiter = getDelimiter(); 
+
+        foreach($fields as $label => $field){
+            if(!$field['display']){
+                continue;
+            }
+            if($field['total'] && isset($totals[$label]))
+			{
+                $type = $field['total'];
+                $total = $this->calculateTotal($type, $totals[$label]);
+				
+                // Customise display based on the field type
+                $moduleBean = BeanFactory::newBean(isset($field['module']) ? $field['module'] : null);
+				if (!is_object($moduleBean)) {
+                    LoggerManager::getLogger()->warn('Unable to create new module bean when trying to build report html. Module bean was: ' . (isset($field['module']) ? $field['module'] : 'NULL'));
+                    $moduleBeanFieldDefs = null;
+                } elseif (!isset($moduleBean->field_defs)) {
+                    LoggerManager::getLogger()->warn('File definition not found for module when trying to build report html. Module bean was: ' . get_class($moduleBean));
+                    $moduleBeanFieldDefs = null;
+                } else {
+                    $moduleBeanFieldDefs = $moduleBean->field_defs;
+                }
+                $fieldDefinition = $moduleBeanFieldDefs[isset($field['field']) ? $field['field'] : null];
+                // $fieldDefinitionType = $fieldDefinition['type'];
+                switch($fieldDefinitionType) 
+				{
+                    case "currency":
+                        // Customise based on type of function
+                        switch($type){
+                            case 'SUM':
+                            case 'AVG':
+                                if ($currency->id == -99) {
+                                    $total = $currency->symbol . format_number($total, null, null);
+                                } else {
+                                    $total = $currency->symbol . format_number($total, null, null,
+                                            array('convert' => true));
+                                }
+                                break;
+                            case 'COUNT':
+                            default:
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
+                }				
+				$fieldTotal = null;
+				
+				if (!isset($field['total'])) 
+				{
+					LoggerManager::getLogger()->warn('AOR_Report problem: field[total] is not set for getTotalHTML()');
+				} 
+				else 
+				{
+					$fieldTotal = $field['total'];
+				}
+
+				$appListStringsAorTotalOptionsFieldTotal = null;
+				if (!isset($app_list_strings['aor_total_options'][$fieldTotal])) 
+				{
+					LoggerManager::getLogger()->warn('AOR_Report problem: app_list_strings[aor_total_options][fieldTotal] is not set for getTotalHTML()');
+				} 
+				else 
+				{
+					$appListStringsAorTotalOptionsFieldTotal = $app_list_strings['aor_total_options'][$fieldTotal];
+				}
+
+				if ($fieldTotal) 
+				{
+					$showTotal = true;
+					// $field['label'] not work so I use $label
+					$label = preg_replace('/[0-9]+/', '', $label);
+					$label = str_replace('_', ' ', $label);
+					$totalLabel = $label . ' ' . $appListStringsAorTotalOptionsFieldTotal;
+					$csv .= $this->encloseForCSV($totalLabel);
+					$csv .= $delimiter;
+				}
+				
+				if (!$showTotal) 
+				{
+					return '';
+				}
+                $csv .= $this->encloseForCSV($currency->symbol.' '.$total); // J'ai ajouter $currency->symbol pour avoir le signe €
+                $csv .= $delimiter;
+				$total = null;
+            }
+        }
+        return $csv;
+    }
+	//FIN AJOUT FONCTION ICI
 
     function calculateTotal($type, $totals)
     {
@@ -1027,7 +1127,7 @@ class AOR_Report extends Basic
 
     function build_report_csv()
     {
-        global $beanList;
+        global $beanList, $timedate, $app_list_strings;
         ini_set('zlib.output_compression', 'Off');
 
         ob_start();
@@ -1042,8 +1142,8 @@ class AOR_Report extends Basic
 
         $fields = array();
         $i = 0;
-        while ($row = $this->db->fetchByAssoc($result)) {
-
+        while ($row = $this->db->fetchByAssoc($result)) 
+		{
             $field = new AOR_Field();
             $field->retrieve($row['id']);
 
@@ -1068,39 +1168,174 @@ class AOR_Report extends Basic
             $fields[$label]['module'] = $field_module;
             $fields[$label]['alias'] = $field_alias;
             $fields[$label]['params'] = $field->format;
-
+			//Ajout ICI
+			$fields[$label]['total'] = $field->total;
+			
+			//Colonne
             if ($field->display) {
                 $csv .= $this->encloseForCSV($field->label);
                 $csv .= $delimiter;
-            }
-            ++$i;
+            }		
+			++$i;
         }
-
         // Remove last delimiter of the line
-        if ($field->display) {
+        if ($field->display) 
+		{
             $csv = substr($csv, 0, strlen($csv) - strlen($delimiter));
         }
 
         $sql = $this->build_report_query();
         $result = $this->db->query($sql);
+		$totals = array();
 
-        while ($row = $this->db->fetchByAssoc($result,false)) {
-            $csv .= "\r\n";
-            foreach ($fields as $name => $att) {
-                $currency_id = isset($row[$att['alias'] . '_currency_id']) ? $row[$att['alias'] . '_currency_id'] : '';
-                if ($att['display']) {
-                    if ($att['function'] != '' || $att['params'] != '') {
-                        $csv .= $this->encloseForCSV($row[$name]);
-                    } else {
-                        $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'],
-                            $att['field'], 'DetailView', $row[$name], '', $currency_id))));
-                    }
-                    $csv .= $delimiter;
-                }
-            }
-            // Remove last delimiter of the line
-            $csv = substr($csv, 0, strlen($csv) - strlen($delimiter));
-        }
+					
+		$query = '';
+		$query_array = array();
+		$module = new $beanList[$this->report_module]();
+
+		$sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND group_display = 1 AND deleted = 0 ORDER BY field_order ASC";
+		$field_id = $this->db->getOne($sql);
+
+		if (!$field_id) {
+			$query_array['select'][] = $module->table_name . ".id AS '" . $module->table_name . "_id'";
+		}
+
+		if ($field_id != '' && empty($subgroup)) 
+			{
+				$field = new AOR_Field();
+				$field->retrieve($field_id);
+
+				$field_label = str_replace(' ', '_', $field->label);
+
+				$path = unserialize(base64_decode($field->module_path));
+
+				$field_module = $module;
+				$table_alias = $field_module->table_name;
+				if (!empty($path[0]) && $path[0] != $module->module_dir) 
+				{
+					foreach ($path as $rel) 
+					{
+						$new_field_module = new $beanList[getRelatedModule($field_module->module_dir, $rel)];
+						$oldAlias = $table_alias;
+						$table_alias = $table_alias . ":" . $rel;
+
+						$query_array = $this->build_report_query_join($rel, $table_alias, $oldAlias, $field_module,
+							'relationship', $query_array, $new_field_module);
+						$field_module = $new_field_module;
+					}
+				}
+
+				$data = $field_module->field_defs[$field->field];
+
+				if ($data['type'] == 'relate' && isset($data['id_name'])) {
+					$field->field = $data['id_name'];
+				}
+
+				if ($data['type'] == 'currency' && !stripos($field->field,
+						'_USD') && isset($field_module->field_defs['currency_id'])
+				) {
+					if ((isset($field_module->field_defs['currency_id']['source']) && $field_module->field_defs['currency_id']['source'] == 'custom_fields')) {
+						$query_array['select'][$table_alias . '_currency_id'] = $table_alias . '_cstm' . ".currency_id AS '" . $table_alias . "_currency_id'";
+					} else {
+						$query_array['select'][$table_alias . '_currency_id'] = $table_alias . ".currency_id AS '" . $table_alias . "_currency_id'";
+					}
+				}
+
+				if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
+					$select_field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $field->field;
+					// Fix for #1251 - added a missing parameter to the function call
+					$query_array = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
+						$table_alias, $field_module, 'custom', $query_array);
+				} else {
+					$select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
+				}
+
+				if ($field->sort_by != '') {
+					$query_array['sort_by'][] = $field_label . ' ' . $field->sort_by;
+				}
+
+				if ($field->format && in_array($data['type'], array('date', 'datetime', 'datetimecombo'))) {
+					if (in_array($data['type'], array('datetime', 'datetimecombo'))) {
+						$select_field = $this->db->convert($select_field, 'add_tz_offset');
+					}
+					$select_field = $this->db->convert($select_field, 'date_format',
+						array($timedate->getCalFormat($field->format)));
+				}
+
+				if ($field->field_function != null) {
+					$select_field = $field->field_function . '(' . $select_field . ')';
+				}
+
+				if ($field->group_by == 1) {
+					$query_array['group_by'][] = $select_field;
+				}
+
+				$query_array['select'][] = $select_field . " AS '" . $field_label . "'";
+				if (isset($extra['select']) && $extra['select']) {
+					foreach ($extra['select'] as $selectField => $selectAlias) {
+						if ($selectAlias) {
+							$query_array['select'][] = $selectField . " AS " . $selectAlias;
+						} else {
+							$query_array['select'][] = $selectField;
+						}
+					}
+				}
+				$query_array['where'][] = $select_field . " IS NOT NULL AND ";
+				if (isset($extra['where']) && $extra['where']) {
+					$query_array['where'][] = implode(' AND ', $extra['where']) . ' AND ';
+				}
+
+				$query_array = $this->build_report_query_where($query_array);
+
+				foreach ($query_array['select'] as $select) {
+					$query .= ($query == '' ? 'SELECT ' : ', ') . $select;
+				}
+
+				$query .= ' FROM ' . $module->table_name . ' ';
+
+				if (isset($query_array['join'])) {
+					foreach ($query_array['join'] as $join) {
+						$query .= $join;
+					}
+				}
+				if (isset($query_array['where'])) {
+					$query_where = '';
+					foreach ($query_array['where'] as $where) {
+						$query_where .= ($query_where == '' ? 'WHERE ' : ' ') . $where;
+					}
+
+					$query_where = $this->queryWhereRepair($query_where);
+
+					$query .= ' ' . $query_where;
+				}
+
+				if (isset($query_array['group_by'])) {
+					$query_group_by = '';
+					foreach ($query_array['group_by'] as $group_by) {
+						$query_group_by .= ($query_group_by == '' ? 'GROUP BY ' : ', ') . $group_by;
+					}
+					$query .= ' ' . $query_group_by;
+				}
+
+				if (isset($query_array['sort_by'])) {
+					$query_sort_by = '';
+					foreach ($query_array['sort_by'] as $sort_by) {
+						$query_sort_by .= ($query_sort_by == '' ? 'ORDER BY ' : ', ') . $sort_by;
+					}
+					$query .= ' ' . $query_sort_by;
+				}
+				$result = $this->db->query($query);
+
+				while ($row = $this->db->fetchByAssoc($result)) 
+				{
+					$field_label = str_replace(' ', '_', $field->label);
+					$groupValue = $row[$field_label];
+					$groupDisplay = $this->getModuleFieldByGroupValue($beanList, $groupValue);							
+
+								
+					$csv .= $this->build_report_csv_perso($offset, $groupValue, create_guid(), $extra, $fields);
+				}
+			}
 
         $csv = $GLOBALS['locale']->translateCharset($csv, 'UTF-8', $GLOBALS['locale']->getExportCharset());
 
@@ -1116,12 +1351,93 @@ class AOR_Report extends Basic
         if (!empty($sugar_config['export_excel_compatible'])) {
             $csv = chr(255) . chr(254) . mb_convert_encoding($csv, 'UTF-16LE', 'UTF-8');
         }
+
         print $csv;
 
         sugar_cleanup(true);
     }
+	
+	//Moi function perso
+	function build_report_csv_perso($offset = -1, $group_value = '', $tableIdentifier = '', $extra = array(), $fields)
+	{
+		global $beanList, $sugar_config;
+		$csv = '';
+		$delimiter = getDelimiter();
+		$sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND deleted = 0 ORDER BY field_order ASC";
+        $result = $this->db->query($sql);
 
+        $_group_value = $this->db->quote($group_value);
+        $report_sql = $this->build_report_query($_group_value, $extra);
 
+        // Fix for issue 1232 - items listed in a single report, should adhere to the same standard as ListView items.
+        if ($sugar_config['list_max_entries_per_page'] != '') {
+            $max_rows = $sugar_config['list_max_entries_per_page'];
+        } else {
+            $max_rows = 20;
+        }
+
+        // See if the report actually has any fields, if not we don't want to run any queries since we can't show anything
+        $fieldCount = count($this->getReportFields());
+        if(!$fieldCount){
+            $GLOBALS['log']->info('Running report "' . $this->name . '" with 0 fields');
+        }
+
+        $total_rows = 0;
+        if($fieldCount){
+            $count_sql = explode('ORDER BY', $report_sql);
+            $count_query = 'SELECT count(*) c FROM (' . $count_sql[0] . ') as n';
+
+            // We have a count query.  Run it and get the results.
+            $result = $this->db->query($count_query);
+            $assoc = $this->db->fetchByAssoc($result);
+            if (!empty($assoc['c'])) {
+                $total_rows = $assoc['c'];
+            }
+        }
+
+        if($fieldCount){
+            if ($offset >= 0) {
+                $result = $this->db->limitQuery($report_sql, $offset, $max_rows);
+            } else {
+                $result = $this->db->query($report_sql);
+            }
+        }
+		
+        $totals = array();
+        while ($row = $this->db->fetchByAssoc($result)) 
+		{
+			$csv .= "\r\n";	
+            foreach ($fields as $name => $att) 
+			{		
+                $currency_id = isset($row[$att['alias'] . '_currency_id']) ? $row[$att['alias'] . '_currency_id'] : '';
+                if ($att['display']) 
+				{				
+                    if ($att['function'] != '' || $att['params'] != '' || $att['total'] != '') 
+					{
+						// Fix le € du cumul
+						$csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name], '', $currency_id ))));
+                    }
+					if($att['total'])
+					{						
+						// unset($totals);
+						$totals[$name][] = $row[$name];
+						
+					}
+					else
+					{
+                        $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name], '', $currency_id ))));
+                    }
+					$csv .= $delimiter;	
+                }
+            }		
+			
+		}
+		$csv .= $this->getTotalCSV($fields,$totals);
+		// Remove last delimiter of the line
+        $csv = substr($csv, 0, strlen($csv) - strlen($delimiter));
+		return $csv;
+	}
+	// End of my code
     function build_report_query($group_value = '', $extra = array())
     {
         global $beanList;
