@@ -756,21 +756,20 @@ EOHTML;
 					(!is_null($height) && $sp['height'] == $height) || (is_null($height)) )
 				{
                     $other_attributes .= ' data-orig="'.$imageName.'"';
+                    if ($sprite = $this->getSprite($sp['class'], $other_attributes, $alt)) {
+                        return $imageJSONEncode ? json_encode($sprite) : $sprite;
+                    }
+                }
+            }
+        }
 
-                     if($sprite = $this->getSprite($sp['class'], $other_attributes, $alt))
-                     {
-                         return $sprite;
-                     }
-				}
-			}
-		}
-
-		// img caching
-		if(empty($cached_results[$imageName])) {
-			$imageURL = $this->getImageURL($imageName,false);
-			if ( empty($imageURL) )
-				return false;
-            if(strpos($imageURL, '.svg', strlen($imageURL)-4)){
+        // img caching
+        if (empty($cached_results[$imageName])) {
+            $imageURL = $this->getImageURL($imageName, false);
+            if (empty($imageURL)) {
+                return false;
+            }
+            if (strpos($imageURL, '.svg', strlen($imageURL)-4)) {
                 $cached_results[$imageName] = file_get_contents($imageURL);
             } else {
                 $cached_results[$imageName] = '<img src="'.getJSPath($imageURL).'" ';
