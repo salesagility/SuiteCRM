@@ -148,12 +148,12 @@ class ListViewDataEmails extends ListViewData
         $id = $folder->getId();
         if (!empty($id)) {
             $inboundEmailID = $folder->getId();
-    }
+        }
 
-    $isValidator = new SuiteValidator();
-    if ($inboundEmailID && !$isValidator->isValidId($inboundEmailID)) {
-        throw new SuiteException("Invalid Inbound Email ID" . ($inboundEmailID ? " ($inboundEmailID)" : ''));
-    }
+        $isValidator = new SuiteValidator();
+        if ($inboundEmailID && !$isValidator->isValidId($inboundEmailID)) {
+            throw new SuiteException("Invalid Inbound Email ID" . ($inboundEmailID ? " ($inboundEmailID)" : ''));
+        }
 
         /**
          * @var InboundEmail $inboundEmail

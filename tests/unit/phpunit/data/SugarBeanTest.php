@@ -1318,7 +1318,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         }
         
 //        // clean up
-//        
+//
 //        $state->popTable('tracker');
 //        $state->popTable('aod_index');
     }
@@ -2347,7 +2347,8 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     }
 
     
-    public static function exitFunction() {
+    public static function exitFunction()
+    {
         // do not exit;
     }
     
@@ -2634,7 +2635,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses WHERE email_address LIKE 'testbean1@email.com'");
         
         // clean up
-//        
+//
 //        $state->popGlobals();
 //        $state->popTable('contacts_cstm');
 //        $state->popTable('users');
