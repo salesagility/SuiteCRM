@@ -113,11 +113,9 @@ $app->group('', function () use ($app) {
             )
             ->add($paramsMiddlewareFactory->bind(DeleteRelationShipParams::class));
         
-        // add custom routes        
+        // add custom routes
         $app->group('/custom', function () use ($app) {
             $app = CustomLoader::loadCustomRoutes($app);
         });
-        
     })->add(new ResourceServerMiddleware($app->getContainer()->get(ResourceServer::class)));
 });
-

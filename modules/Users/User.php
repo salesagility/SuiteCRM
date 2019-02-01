@@ -706,9 +706,9 @@ class User extends Person implements EmailInterface
         return $this->id;
     }
 
-    public function saveFormPreferences(){
+    public function saveFormPreferences()
+    {
         if (!$this->is_group && !$this->portal_only) {
-
             require_once('modules/MySettings/TabController.php');
 
             global $current_user;
@@ -729,10 +729,11 @@ class User extends Person implements EmailInterface
             $this->portal_only = 0;
 
             if ((isset($_POST['is_admin']) && ($_POST['is_admin'] == 'on' || $_POST['is_admin'] == '1')) ||
-              (isset($_POST['UserType']) && $_POST['UserType'] == "Administrator"))
+              (isset($_POST['UserType']) && $_POST['UserType'] == "Administrator")) {
                 $this->is_admin = 1;
-            elseif (isset($_POST['is_admin']) && empty($_POST['is_admin']))
+            } elseif (isset($_POST['is_admin']) && empty($_POST['is_admin'])) {
                 $this->is_admin = 0;
+            }
 
             if (isset($_POST['mailmerge_on']) && !empty($_POST['mailmerge_on'])) {
                 $this->setPreference('mailmerge_on', 'on', 0, 'global');
@@ -755,7 +756,7 @@ class User extends Person implements EmailInterface
             if (isset($_POST['use_group_tabs'])) {
                 $this->setPreference('navigation_paradigm', $_POST['use_group_tabs'], 0, 'global');
             } else {
-                $this->setPreference('navigation_paradigm', $GLOBALS['sugar_config']['default_navigation_paradigm'] , 0, 'global');
+                $this->setPreference('navigation_paradigm', $GLOBALS['sugar_config']['default_navigation_paradigm'], 0, 'global');
             }
 
             if (isset($_POST['sort_modules_by_name'])) {
@@ -788,8 +789,9 @@ class User extends Person implements EmailInterface
             }
 
             $tabs = new TabController();
-            if (isset($_POST['display_tabs']))
+            if (isset($_POST['display_tabs'])) {
                 $tabs->set_user_tabs($DISPLAY_ARR['display_tabs'], $this, 'display');
+            }
             if (isset($HIDE_ARR['hide_tabs'])) {
                 $tabs->set_user_tabs($HIDE_ARR['hide_tabs'], $this, 'hide');
             } else {
@@ -822,48 +824,68 @@ class User extends Person implements EmailInterface
                 $this->setPreference('email_reminder_checked', $_POST['email_reminder_checked'], 0, 'global');
             }
 
-            if (isset($_POST['timezone']))
+            if (isset($_POST['timezone'])) {
                 $this->setPreference('timezone', $_POST['timezone'], 0, 'global');
-            if (isset($_POST['ut']))
+            }
+            if (isset($_POST['ut'])) {
                 $this->setPreference('ut', '0', 0, 'global');
-            else
+            } else {
                 $this->setPreference('ut', '1', 0, 'global');
-            if (isset($_POST['currency']))
+            }
+            if (isset($_POST['currency'])) {
                 $this->setPreference('currency', $_POST['currency'], 0, 'global');
-            if (isset($_POST['default_currency_significant_digits']))
+            }
+            if (isset($_POST['default_currency_significant_digits'])) {
                 $this->setPreference('default_currency_significant_digits', $_POST['default_currency_significant_digits'], 0, 'global');
-            if (isset($_POST['num_grp_sep']))
+            }
+            if (isset($_POST['num_grp_sep'])) {
                 $this->setPreference('num_grp_sep', $_POST['num_grp_sep'], 0, 'global');
-            if (isset($_POST['dec_sep']))
+            }
+            if (isset($_POST['dec_sep'])) {
                 $this->setPreference('dec_sep', $_POST['dec_sep'], 0, 'global');
-            if (isset($_POST['fdow']))
+            }
+            if (isset($_POST['fdow'])) {
                 $this->setPreference('fdow', $_POST['fdow'], 0, 'global');
-            if (isset($_POST['dateformat']))
+            }
+            if (isset($_POST['dateformat'])) {
                 $this->setPreference('datef', $_POST['dateformat'], 0, 'global');
-            if (isset($_POST['timeformat']))
+            }
+            if (isset($_POST['timeformat'])) {
                 $this->setPreference('timef', $_POST['timeformat'], 0, 'global');
-            if (isset($_POST['timezone']))
+            }
+            if (isset($_POST['timezone'])) {
                 $this->setPreference('timezone', $_POST['timezone'], 0, 'global');
-            if (isset($_POST['mail_fromname']))
+            }
+            if (isset($_POST['mail_fromname'])) {
                 $this->setPreference('mail_fromname', $_POST['mail_fromname'], 0, 'global');
-            if (isset($_POST['mail_fromaddress']))
+            }
+            if (isset($_POST['mail_fromaddress'])) {
                 $this->setPreference('mail_fromaddress', $_POST['mail_fromaddress'], 0, 'global');
-            if (isset($_POST['mail_sendtype']))
+            }
+            if (isset($_POST['mail_sendtype'])) {
                 $this->setPreference('mail_sendtype', $_POST['mail_sendtype'], 0, 'global');
-            if (isset($_POST['mail_smtpserver']))
+            }
+            if (isset($_POST['mail_smtpserver'])) {
                 $this->setPreference('mail_smtpserver', $_POST['mail_smtpserver'], 0, 'global');
-            if (isset($_POST['mail_smtpport']))
+            }
+            if (isset($_POST['mail_smtpport'])) {
                 $this->setPreference('mail_smtpport', $_POST['mail_smtpport'], 0, 'global');
-            if (isset($_POST['mail_smtpuser']))
+            }
+            if (isset($_POST['mail_smtpuser'])) {
                 $this->setPreference('mail_smtpuser', $_POST['mail_smtpuser'], 0, 'global');
-            if (isset($_POST['mail_smtppass']))
+            }
+            if (isset($_POST['mail_smtppass'])) {
                 $this->setPreference('mail_smtppass', $_POST['mail_smtppass'], 0, 'global');
-            if (isset($_POST['default_locale_name_format']))
+            }
+            if (isset($_POST['default_locale_name_format'])) {
                 $this->setPreference('default_locale_name_format', $_POST['default_locale_name_format'], 0, 'global');
-            if (isset($_POST['export_delimiter']))
+            }
+            if (isset($_POST['export_delimiter'])) {
                 $this->setPreference('export_delimiter', $_POST['export_delimiter'], 0, 'global');
-            if (isset($_POST['default_export_charset']))
+            }
+            if (isset($_POST['default_export_charset'])) {
                 $this->setPreference('default_export_charset', $_POST['default_export_charset'], 0, 'global');
+            }
             if (isset($_POST['use_real_names'])) {
                 $this->setPreference('use_real_names', 'on', 0, 'global');
             } elseif (!isset($_POST['use_real_names']) && !isset($_POST['from_dcmenu'])) {
@@ -894,31 +916,38 @@ class User extends Person implements EmailInterface
             ///////////////////////////////////////////////////////////////////////////
             ///////////////////////////////////////////////////////////////////////////
             ////	SIGNATURES
-            if (isset($_POST['signature_id']))
+            if (isset($_POST['signature_id'])) {
                 $this->setPreference('signature_default', $_POST['signature_id'], 0, 'global');
+            }
 
-            if (isset($_POST['signature_prepend']))
+            if (isset($_POST['signature_prepend'])) {
                 $this->setPreference('signature_prepend', $_POST['signature_prepend'], 0, 'global');
+            }
             ////	END SIGNATURES
             ///////////////////////////////////////////////////////////////////////////
 
 
-            if (isset($_POST['email_link_type']))
+            if (isset($_POST['email_link_type'])) {
                 $this->setPreference('email_link_type', $_REQUEST['email_link_type']);
-            if (isset($_POST['editor_type']))
+            }
+            if (isset($_POST['editor_type'])) {
                 $this->setPreference('editor_type', $_REQUEST['editor_type']);
+            }
             if (isset($_REQUEST['email_show_counts'])) {
                 $this->setPreference('email_show_counts', $_REQUEST['email_show_counts'], 0, 'global');
             } else {
                 $this->setPreference('email_show_counts', 0, 0, 'global');
             }
-            if (isset($_REQUEST['email_editor_option']))
+            if (isset($_REQUEST['email_editor_option'])) {
                 $this->setPreference('email_editor_option', $_REQUEST['email_editor_option'], 0, 'global');
-            if (isset($_REQUEST['default_email_charset']))
+            }
+            if (isset($_REQUEST['default_email_charset'])) {
                 $this->setPreference('default_email_charset', $_REQUEST['default_email_charset'], 0, 'global');
+            }
 
-            if (isset($_POST['calendar_publish_key']))
+            if (isset($_POST['calendar_publish_key'])) {
                 $this->setPreference('calendar_publish_key', $_POST['calendar_publish_key'], 0, 'global');
+            }
             if (isset($_POST['subtheme'])) {
                 $this->setPreference('subtheme', $_POST['subtheme'], 0, 'global');
             }
@@ -1194,7 +1223,7 @@ EOQ;
         if (!empty($where)) {
             $query .= " AND $where";
         }
-	$query .= " AND deleted=0";
+        $query .= " AND deleted=0";
         $result = $db->limitQuery($query, 0, 1, false);
         if (!empty($result)) {
             $row = $db->fetchByAssoc($result);
@@ -1792,7 +1821,8 @@ EOQ;
      *
      * @return string
      */
-    public function getEmailClient() {
+    public function getEmailClient()
+    {
         global $sugar_config;
 
         if (!isset($sugar_config['email_default_client'])) {

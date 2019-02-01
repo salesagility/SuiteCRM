@@ -353,7 +353,8 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
     /**
      * @return LoggerInterface
      */
-    public function getLogger() {
+    public function getLogger()
+    {
         if (!$this->logger) {
             $this->setLogger(new Logger());
         }

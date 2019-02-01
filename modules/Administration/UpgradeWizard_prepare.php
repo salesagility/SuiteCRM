@@ -397,7 +397,7 @@ if ($show_files == true) {
               <div style="text-align: left; cursor: hand; cursor: pointer; text-decoration: underline;" onclick=\'document.getElementById("all_text").style.display=""; toggleDisplay("more");\'>'
          .SugarThemeRegistry::current()->getImage('basic_search', '', null, null, ".gif", $mod_strings['LBL_BASIC_SEARCH']).$mod_strings['LBL_UW_HIDE_DETAILS'].'</div><br>';
     echo '<input type="checkbox" checked onclick="toggle_these(' . count($new_studio_mod_files) . ',' . count($new_files) . ', this)"> '.$mod_strings['LBL_UW_CHECK_ALL'];
-	echo '<ul>';
+    echo '<ul>';
     foreach ($new_sugar_mod_files as $the_file) {
         $highlight_start = "";
         $highlight_end = "";

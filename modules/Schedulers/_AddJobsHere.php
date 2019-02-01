@@ -1,6 +1,7 @@
 <?php
 
 use SuiteCRM\Utility\SuiteValidator;
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -558,7 +559,6 @@ function pollMonitoredInboxesAOP()
     $GLOBALS['log']->debug('Just got Result from get all Inbounds of Inbound Emails');
 
     while ($inboundEmailRow = $aopInboundEmail->db->fetchByAssoc($sqlQueryResult)) {
-
         $GLOBALS['log']->debug('In while loop of Inbound Emails');
 
         $aopInboundEmailX = new AOPInboundEmail();
@@ -633,8 +633,8 @@ function pollMonitoredInboxesAOP()
                                     $userId = $assignManager->getNextAssignedUser();
                                     $GLOBALS['log']->debug('userId [ ' . $userId . ' ]');
                                     $validatior = new SuiteValidator();
-                                    if ((!isset($aopInboundEmailX->email) || !$aopInboundEmailX->email || 
-                                        !isset($aopInboundEmailX->email->id) || !$aopInboundEmailX->email->id) && 
+                                    if ((!isset($aopInboundEmailX->email) || !$aopInboundEmailX->email ||
+                                        !isset($aopInboundEmailX->email->id) || !$aopInboundEmailX->email->id) &&
                                         $validatior->isValidId($emailId)
                                     ) {
                                         $aopInboundEmailX->email = new Email();

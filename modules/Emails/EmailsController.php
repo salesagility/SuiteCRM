@@ -51,7 +51,6 @@ include_once __DIR__ . '/EmailsControllerActionGetFromFields.php';
 
 class EmailsController extends SugarController
 {
-    
     const ERR_INVALID_INBOUND_EMAIL_TYPE = 100;
     const ERR_STORED_OUTBOUND_EMAIL_NOT_SET = 101;
     const ERR_STORED_OUTBOUND_EMAIL_ID_IS_INVALID = 102;
