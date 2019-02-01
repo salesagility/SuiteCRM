@@ -152,9 +152,8 @@ class AOW_WorkFlow extends Basic
     {
         global $beanList, $app_list_strings;
 
-        $app_list_strings['aow_moduleList'] = $app_list_strings['moduleList'];
-
-        if (!empty($app_list_strings['aow_moduleList'])) {
+        if (!empty($app_list_strings['moduleList'])) {
+            $app_list_strings['aow_moduleList'] = $app_list_strings['moduleList'];
             foreach ($app_list_strings['aow_moduleList'] as $mkey => $mvalue) {
                 if (!isset($beanList[$mkey]) || str_begin($mkey, 'AOW_')) {
                     unset($app_list_strings['aow_moduleList'][$mkey]);
@@ -448,6 +447,14 @@ class AOW_WorkFlow extends Basic
                         } else {
                             $value = 'UTC_TIMESTAMP()';
                         }
+                    } elseif (isset($params[0]) && $params[0] == 'today') {
+                        if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
+                            //$field =
+                            $value  = 'CAST(GETDATE() AS DATE)';
+                        } else {
+                            $field = 'DATE('.$field.')';
+                            $value = 'Curdate()';
+                        }
                     } else {
                         if (isset($params[0]) && $params[0] == 'today') {
                             if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
@@ -717,6 +724,10 @@ class AOW_WorkFlow extends Basic
                         $dateType = 'datetime';
                         if ($params[0] == 'now') {
                             $value = date('Y-m-d H:i:s');
+                        } elseif ($params[0] == 'today') {
+                            $dateType = 'date';
+                            $value = date('Y-m-d');
+                            $field = strtotime(date('Y-m-d', $field));
                         } else {
                             if ($params[0] == 'today') {
                                 $dateType = 'date';
@@ -791,10 +802,8 @@ class AOW_WorkFlow extends Basic
                     default:
                         if (in_array($data['type'], $dateFields) && trim($value) != '') {
                             $value = strtotime($value);
-                        } else {
-                            if ($data['type'] == 'bool' && (!boolval($value) || strtolower($value) == 'false')) {
-                                $value = 0;
-                            }
+                        } elseif ($data['type'] == 'bool' && (!boolval($value) || strtolower($value) == 'false')) {
+                            $value = 0;
                         }
                         break;
                 }
@@ -918,6 +927,8 @@ class AOW_WorkFlow extends Basic
 
                 if (file_exists('custom/modules/AOW_Actions/actions/'.$action_name.'.php')) {
                     require_once('custom/modules/AOW_Actions/actions/'.$action_name.'.php');
+                } elseif (file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')) {
+                    require_once('modules/AOW_Actions/actions/'.$action_name.'.php');
                 } else {
                     if (file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')) {
                         require_once('modules/AOW_Actions/actions/'.$action_name.'.php');

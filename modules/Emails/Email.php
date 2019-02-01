@@ -4730,7 +4730,7 @@ eoq;
 
             if (
                 $emailAddress !== null
-                && $emailAddress->getConfirmedOptInState() != EmailAddress::COI_STAT_CONFIRMED_OPT_IN
+                && $emailAddress->getConfirmedOptInState() === EmailAddress::COI_STAT_CONFIRMED_OPT_IN
                 && empty($emailAddress->confirm_opt_in_sent_date)
             ) {
                 $ret = $this->sendOptInEmail($emailAddress);

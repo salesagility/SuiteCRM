@@ -1151,7 +1151,7 @@ if (!function_exists("get_encoded")) {
      *
      * @param $string - the string to decrypt
      *
-     * @return a decrypted string if we can decrypt, the original string otherwise
+     * @return string decrypted string if we can decrypt, the original string otherwise
      */
     function decrypt_string($string)
     {
@@ -1169,9 +1169,7 @@ if (!function_exists("get_encoded")) {
             $key = substr(md5($key), 0, 24);
             $iv = "password";
 
-            return openssl_decrypt($buffer, OPENSSL_CIPHER_3DES, $key, OPENSSL_ZERO_PADDING, $iv);
-        } else {
-            return $string;
+            return openssl_decrypt(pack("H*", $buffer), 'des-ede3-cbc', $key, OPENSSL_NO_PADDING, $iv);
         }
     }
 }
