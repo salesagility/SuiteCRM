@@ -75,7 +75,7 @@
 	<tr>
 		<td  valign="top" scope="row">{$APP.LBL_ASSIGNED_TO}</td>
 		<td  valign="top">{$ASSIGNED_TO}</td>
-		<td  scope="row">{$MOD.LBL_DATE_SENT}</td>
+		<td  scope="row">{$MOD.LBL_DATE_SENT_RECEIVED}</td>
 		<td  colspan="3">{$DATE_START} {$TIME_START}</td>
 	</tr>
 	<tr>

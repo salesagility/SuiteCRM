@@ -54,6 +54,7 @@ require_once 'Zend/Gdata/Extension/Who.php';
  */
 class Zend_Gdata_Gapps_EmailListRecipientEntry extends Zend_Gdata_Entry
 {
+
     protected $_entryClassName = 'Zend_Gdata_Gapps_EmailListRecipientEntry';
 
     /**
@@ -106,7 +107,7 @@ class Zend_Gdata_Gapps_EmailListRecipientEntry extends Zend_Gdata_Entry
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
 
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gd') . ':' . 'who':
+            case $this->lookupNamespace('gd') . ':' . 'who';
                 $who = new Zend_Gdata_Extension_Who();
                 $who->transferFromDOM($child);
                 $this->_who = $who;
@@ -141,4 +142,5 @@ class Zend_Gdata_Gapps_EmailListRecipientEntry extends Zend_Gdata_Entry
         $this->_who = $value;
         return $this;
     }
+
 }

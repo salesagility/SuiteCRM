@@ -270,13 +270,14 @@ function display_single_update(AOP_Case_Updates $update)
             $html .= '</div></div>';
 
             return $html;
-        } /*if standard update*/
-        $html = "<div id='lessmargin'><div id='caseStyleUser'>" . getUpdateDisplayHead($update);
-        $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
-        $html .= nl2br(html_entity_decode($update->description));
-        $html .= '</div></div></div>';
+        } /*if standard update*/ else {
+            $html = "<div id='lessmargin'><div id='caseStyleUser'>" . getUpdateDisplayHead($update);
+            $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
+            $html .= nl2br(html_entity_decode($update->description));
+            $html .= '</div></div></div>';
 
-        return $html;
+            return $html;
+        }
     }
 
     /*if contact user*/

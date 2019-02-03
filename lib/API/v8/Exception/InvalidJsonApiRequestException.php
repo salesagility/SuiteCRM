@@ -52,4 +52,5 @@ class InvalidJsonApiRequestException extends ApiException
     const DEFAULT_CODE = 8010;
     const HTTP_STATUS = 400;
     const DETAIL_TEXT_LABEL = 'LBL_INVALID_JSON_API_REQUEST_EXCEPTION_DETAIL';
+
 }

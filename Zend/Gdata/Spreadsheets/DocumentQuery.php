@@ -44,6 +44,7 @@ require_once('Zend/Gdata/Query.php');
  */
 class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
 {
+
     const SPREADSHEETS_FEED_URI = 'http://spreadsheets.google.com/feeds';
 
     protected $_defaultFeedUri = self::SPREADSHEETS_FEED_URI;
@@ -258,7 +259,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
             if ($this->_spreadsheetKey != null) {
                 $uri .= '/'.$this->_spreadsheetKey;
             }
-        } elseif ($this->_documentType == 'worksheets') {
+        } else if ($this->_documentType == 'worksheets') {
             if ($this->_spreadsheetKey != null) {
                 $uri .= '/'.$this->_spreadsheetKey;
             } else {
@@ -283,4 +284,5 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     {
         return parent::getQueryString();
     }
+
 }

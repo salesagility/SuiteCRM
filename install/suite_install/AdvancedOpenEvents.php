@@ -1,7 +1,6 @@
 <?php
 
-function install_aoe()
-{
+function install_aoe() {
     require_once('modules/Administration/Administration.php');
     require_once('modules/EmailTemplates/EmailTemplate.php');
 

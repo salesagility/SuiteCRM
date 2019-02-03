@@ -44,30 +44,31 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/json_config.php');
 
-class AM_ProjectTemplatesViewEdit extends ViewEdit
-{
-    public function __construct()
+class AM_ProjectTemplatesViewEdit extends ViewEdit {
+
+    function __construct()
     {
         parent::__construct();
     }
 
-    public function display()
-    {
-        global $json;
+ 	function display() {
 
-        $this->bean->is_template = 0;
+	 	global $json;
+
+		$this->bean->is_template = 0;
         $this->ev->ss->assign("is_template", 0);
 
         $json = getJSONobj();
         $json_config = new json_config();
-        if (isset($this->bean->json_id) && !empty($this->bean->json_id)) {
-            $javascript = $json_config->get_static_json_server(false, true, 'AM_ProjectTemplates', $this->bean->json_id);
-        } else {
-            $this->bean->json_id = $this->bean->id;
-            $javascript = $json_config->get_static_json_server(false, true, 'AM_ProjectTemplates', $this->bean->id);
-        }
-        $this->ss->assign('JSON_CONFIG_JAVASCRIPT', $javascript);
+		if (isset($this->bean->json_id) && !empty ($this->bean->json_id)) {
+			$javascript = $json_config->get_static_json_server(false, true, 'AM_ProjectTemplates', $this->bean->json_id);
+		} else {
+			$this->bean->json_id = $this->bean->id;
+			$javascript = $json_config->get_static_json_server(false, true, 'AM_ProjectTemplates', $this->bean->id);
+		}
+ 		$this->ss->assign('JSON_CONFIG_JAVASCRIPT', $javascript);
 
-        parent::display();
-    }
+ 		parent::display();
+
+ 	}
 }

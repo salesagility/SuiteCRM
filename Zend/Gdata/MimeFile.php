@@ -60,6 +60,7 @@ class Zend_Gdata_MimeFile
      */
     public function read($bytesRequested)
     {
-        return fread($this->_fileHandle, $bytesRequested);
+      return fread($this->_fileHandle, $bytesRequested);
     }
+
 }

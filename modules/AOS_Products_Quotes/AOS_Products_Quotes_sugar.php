@@ -40,51 +40,51 @@
  */
 class AOS_Products_Quotes_sugar extends Basic
 {
-    public $new_schema = true;
-    public $module_dir = 'AOS_Products_Quotes';
-    public $object_name = 'AOS_Products_Quotes';
-    public $table_name = 'aos_products_quotes';
-    public $tracker_visibility = false;
-    public $importable = true;
+    var $new_schema = true;
+    var $module_dir = 'AOS_Products_Quotes';
+    var $object_name = 'AOS_Products_Quotes';
+    var $table_name = 'aos_products_quotes';
+    var $tracker_visibility = false;
+    var $importable = true;
 
-    public $disable_row_level_security = true; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
+    var $disable_row_level_security = true; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
 
-    public $id;
-    public $name;
-    public $date_entered;
-    public $date_modified;
-    public $modified_user_id;
-    public $modified_by_name;
-    public $created_by;
-    public $created_by_name;
-    public $description;
-    public $deleted;
-    public $created_by_link;
-    public $modified_user_link;
-    public $assigned_user_id;
-    public $assigned_user_name;
-    public $assigned_user_link;
-    public $product_qty;
-    public $product_cost_price;
-    public $product_list_price;
-    public $product_discount;
-    public $product_discount_amount;
-    public $product_unit_price;
-    public $vat_amt;
-    public $product_total_price;
-    public $discount;
-    public $vat;
-    public $parent_name;
-    public $parent_type;
-    public $parent_id;
-    public $product_id;
-    public $product;
-    public $group_id;
-    public $number;
-    public $currency_id;
+    var $id;
+    var $name;
+    var $date_entered;
+    var $date_modified;
+    var $modified_user_id;
+    var $modified_by_name;
+    var $created_by;
+    var $created_by_name;
+    var $description;
+    var $deleted;
+    var $created_by_link;
+    var $modified_user_link;
+    var $assigned_user_id;
+    var $assigned_user_name;
+    var $assigned_user_link;
+    var $product_qty;
+    var $product_cost_price;
+    var $product_list_price;
+    var $product_discount;
+    var $product_discount_amount;
+    var $product_unit_price;
+    var $vat_amt;
+    var $product_total_price;
+    var $discount;
+    var $vat;
+    var $parent_name;
+    var $parent_type;
+    var $parent_id;
+    var $product_id;
+    var $product;
+    var $group_id;
+    var $number;
+    var $currency_id;
 
 
-    public function __construct()
+    function __construct()
     {
         parent::__construct();
     }
@@ -92,19 +92,19 @@ class AOS_Products_Quotes_sugar extends Basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function AOS_Products_Quotes_sugar()
-    {
+    function AOS_Products_Quotes_sugar(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    public function bean_implements($interface)
+    function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL':
@@ -112,4 +112,5 @@ class AOS_Products_Quotes_sugar extends Basic
         }
         return false;
     }
+
 }

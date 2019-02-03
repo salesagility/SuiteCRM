@@ -24,7 +24,8 @@
 
 class AOR_Chart extends Basic
 {
-    public $colours = "['#1f78b4','#a6cee3','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928','#144c73','#6caed1','#8acf4e','#20641c','#f8514f','#9e1214','#fc9d24','#b35900','#a880bb','#442763','#ffff4d','#733a1a']";
+    const COLOUR_DEFAULTS = "['#1f78b4','#a6cee3','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928','#144c73','#6caed1','#8acf4e','#20641c','#f8514f','#9e1214','#fc9d24','#b35900','#a880bb','#442763','#ffff4d','#733a1a']";
+    public $colours;
     public $new_schema = true;
     public $module_dir = 'AOR_Charts';
     public $object_name = 'AOR_Chart';
@@ -55,6 +56,7 @@ class AOR_Chart extends Basic
     public function __construct()
     {
         parent::__construct();
+        $this->colours = self::COLOUR_DEFAULTS;
     }
 
     /**
@@ -251,6 +253,26 @@ class AOR_Chart extends Basic
         return '';
     }
 
+    /**
+     *
+     * @param type $labels
+     * @return boolean Returns TRUE if colours successfully changed. FALSE on error and using colour defaults.
+     */
+    private function generateChartColoursFromLabels($labels)
+    {
+        if (is_array($labels) && count($labels) > 1) {
+            $colours = [];
+            foreach ($labels as $onelabel) {
+                $hash = md5($onelabel);
+                $colours[] = substr($hash, 0, 6);
+            }
+            $this->colours = "['#" . implode($colours, "','#") . "']";
+            return true;
+        }
+        LoggerManager::getLogger()->warn('Incorrect labels given. Using default colours in charts.');
+        $this->colours = self::COLOUR_DEFAULTS;
+        return false;
+    }
 
     private function buildChartHTMLRGraph(array $reportData, array $fields, AOR_Field $mainGroupField = null)
     {
@@ -272,46 +294,52 @@ class AOR_Chart extends Basic
 
         switch ($this->type) {
             /*
-             //Polar was not implemented for the previous library (it is not in the getValidChartTypes method)
-            case 'polar':
-                $chartFunction = 'PolarArea';
-                $data = $this->getPolarChartData($reportData, $xName,$yName);
-                $config = $this->getPolarChartConfig();
-                break;
-            */
+              //Polar was not implemented for the previous library (it is not in the getValidChartTypes method)
+              case 'polar':
+              $chartFunction = 'PolarArea';
+              $data = $this->getPolarChartData($reportData, $xName,$yName);
+              $config = $this->getPolarChartConfig();
+              break;
+             */
             case 'radar':
                 $chartFunction = 'Radar';
                 $data = $this->getRGraphBarChartData($reportData, $xName, $yName);
+                $valid = $this->generateChartColoursFromLabels($data['labels']);
                 $config = $this->getRadarChartConfig();
                 $chart = $this->getRGraphRadarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth);
                 break;
             case 'pie':
                 $chartFunction = 'Pie';
                 $data = $this->getRGraphBarChartData($reportData, $xName, $yName);
+                $valid = $this->generateChartColoursFromLabels($data['labels']);
                 $config = $this->getPieChartConfig();
                 $chart = $this->getRGraphPieChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth);
                 break;
             case 'line':
                 $chartFunction = 'Line';
                 $data = $this->getRGraphBarChartData($reportData, $xName, $yName);
+                $valid = $this->generateChartColoursFromLabels($data['labels']);
                 $config = $this->getLineChartConfig();
                 $chart = $this->getRGraphLineChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth);
                 break;
             case 'rose':
                 $chartFunction = 'Rose';
                 $data = $this->getRGraphBarChartData($reportData, $xName, $yName);
+                $valid = $this->generateChartColoursFromLabels($data['labels']);
                 $config = $this->getRoseChartConfig();
                 $chart = $this->getRGraphRoseChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth);
                 break;
             case 'grouped_bar':
                 $chartFunction = 'Grouped bar';
                 $data = $this->getRGraphGroupedBarChartData($reportData, $xName, $yName, $mainGroupField);
+                $valid = $this->generateChartColoursFromLabels($data['labels']);
                 $config = $this->getGroupedBarChartConfig();
                 $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth, true);
                 break;
             case 'stacked_bar':
                 $chartFunction = 'Stacked bar';
                 $data = $this->getRGraphGroupedBarChartData($reportData, $xName, $yName, $mainGroupField);
+                $valid = $this->generateChartColoursFromLabels($data['labels']);
                 $config = $this->getStackedBarChartConfig();
                 $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth, false);
                 break;
@@ -319,9 +347,15 @@ class AOR_Chart extends Basic
             default:
                 $chartFunction = 'Bar';
                 $data = $this->getRGraphBarChartData($reportData, $xName, $yName);
+                $valid = $this->generateChartColoursFromLabels($data['labels']);
                 $config = $this->getBarChartConfig();
                 $chart = $this->getRGraphBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth);
                 break;
+        }
+
+        if (!$valid) {
+            // exception
+            LoggerManager::getLogger()->error("Invalid char data labels detected for chart type: $this->type");
         }
 
         return $chart;

@@ -42,16 +42,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-class TemplateParentType extends TemplateText
-{
-    public $max_size = 25;
-    public $type='parent_type';
+class TemplateParentType extends TemplateText{
+    var $max_size = 25;
+    var $type='parent_type';
     
-    public function get_field_def()
-    {
-        $def = parent::get_field_def();
-        $def['dbType'] = 'varchar';
-        $def['studio'] = 'hidden';
-        return $def;
-    }
+    function get_field_def(){
+		$def = parent::get_field_def();
+		$def['dbType'] = 'varchar';
+		$def['studio'] = 'hidden';
+		return $def;	
+	}
+
 }

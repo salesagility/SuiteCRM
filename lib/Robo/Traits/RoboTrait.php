@@ -38,7 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 namespace SuiteCRM\Robo\Traits;
-
 require_once dirname(__DIR__) . '/config.php';
 
 /**

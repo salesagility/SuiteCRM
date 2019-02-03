@@ -75,9 +75,8 @@ class LikeOperator extends Operator implements OperatorInterface
      */
     public function isValid($operator)
     {
-        if (!is_string($operator)) {
-            throw new InvalidArgumentException(
-                '[JsonApi][v1][Filters][Operators][Strings]'.
+        if(!is_string($operator)) {
+            throw new InvalidArgumentException('[JsonApi][v1][Filters][Operators][Strings]'.
                 '[LikeOperator][isValid][expected type to be string] $operator'
             );
         }

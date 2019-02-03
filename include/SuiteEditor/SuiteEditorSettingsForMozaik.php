@@ -61,4 +61,5 @@ class SuiteEditorSettingsForMozaik extends SuiteEditorSettingsForTinyMCE
      * @var string
      */
     public $group = '';
+
 }

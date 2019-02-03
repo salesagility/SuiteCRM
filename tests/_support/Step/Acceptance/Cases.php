@@ -9,7 +9,7 @@ class Cases extends \AcceptanceTester
      */
     public function gotoCases()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Cases');
     }
 

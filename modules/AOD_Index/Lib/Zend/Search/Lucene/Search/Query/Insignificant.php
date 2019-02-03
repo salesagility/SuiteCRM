@@ -136,3 +136,4 @@ class Zend_Search_Lucene_Search_Query_Insignificant extends Zend_Search_Lucene_S
         return '<InsignificantQuery>';
     }
 }
+

@@ -1,18 +1,18 @@
 <?php
 
-$advancedSettings = array(
+$advancedSettings = array (
 
-    // Compression settings
+    // Compression settings 
     // Handle if the getRequest/getResponse methods will return the Request/Response deflated.
     // But if we provide a $deflate boolean parameter to the getRequest or getResponse
     // method it will have priority over the compression settings.
-    'compress' => array(
+    'compress' => array (
         'requests' => true,
         'responses' => true
     ),
 
     // Security settings
-    'security' => array(
+    'security' => array (
 
         /** signatures and encryptions offered */
 
@@ -102,19 +102,19 @@ $advancedSettings = array(
     ),
 
     // Contact information template, it is recommended to suply a technical and support contacts
-    'contactPerson' => array(
-        'technical' => array(
+    'contactPerson' => array (
+        'technical' => array (
             'givenName' => '',
             'emailAddress' => ''
         ),
-        'support' => array(
+        'support' => array (
             'givenName' => '',
             'emailAddress' => ''
         ),
     ),
 
     // Organization information template, the info in en_US lang is recomended, add more if required
-    'organization' => array(
+    'organization' => array (
         'en-US' => array(
             'name' => '',
             'displayname' => '',

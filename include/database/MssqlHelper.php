@@ -64,3 +64,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
 final class MssqlHelper
 {
 }
+

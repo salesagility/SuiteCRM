@@ -42,8 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 require_once('modules/DynamicFields/templates/Fields/TemplateField.php');
-class TemplateId extends TemplateField
-{
-    public $type='id';
-    public $len = 36 ;
+class TemplateId extends TemplateField{
+    var $type='id';
+    var $len = 36 ;
+    
+    
 }

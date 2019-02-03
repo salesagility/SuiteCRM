@@ -61,14 +61,14 @@ class UsersController extends SugarController
                 SugarApplication::redirect('index.php');
             } else {
                 SugarApplication::redirect("index.php?module=Users&record=" . $_REQUEST['record'] . "&action=DetailView"); //bug 48170]
+
             }
         }
     }
 
     protected function action_delete()
     {
-        if ($_REQUEST['record'] != $GLOBALS['current_user']->id && (
-            $GLOBALS['current_user']->isAdminForModule('Users')
+        if ($_REQUEST['record'] != $GLOBALS['current_user']->id && ($GLOBALS['current_user']->isAdminForModule('Users')
             )
         ) {
             $u = new User();
@@ -113,7 +113,6 @@ class UsersController extends SugarController
         // save and redirect to new view
         $_REQUEST['return_module'] = 'Home';
         $_REQUEST['return_action'] = 'index';
-        require('modules/Users/Save.php');
     }
 
     protected function action_saveftsmodules()
@@ -122,14 +121,6 @@ class UsersController extends SugarController
         $GLOBALS['current_user']->setPreference('fts_disabled_modules', $_REQUEST['disabled_modules']);
     }
 
-    /**
-     * action "save" (with a lower case S that is for OSX users ;-)
-     * @see SugarController::action_save()
-     */
-    public function action_save()
-    {
-        require 'modules/Users/Save.php';
-    }
 
     protected function action_editview()
     {
@@ -146,4 +137,5 @@ class UsersController extends SugarController
             SugarApplication::redirect("index.php?module=Home&action=index");
         }
     }
-}
+}	
+

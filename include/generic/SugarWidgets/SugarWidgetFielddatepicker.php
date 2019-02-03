@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetFieldDatePicker extends SugarWidgetFieldDateTime
 {
-    public function displayInput($layout_def)
+	function displayInput($layout_def)
     {
         global $timedate;
 
@@ -67,3 +67,4 @@ EOHTML;
         return $str;
     }
 }
+

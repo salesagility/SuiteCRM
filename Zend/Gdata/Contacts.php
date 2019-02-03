@@ -61,6 +61,7 @@ require_once 'Zend/Gdata/Contacts/ListEntry.php';
  */
 class Zend_Gdata_Contacts extends Zend_Gdata
 {
+
     const CONTACT_FEED_URI = 'https://www.google.com/m8/feeds/contacts/default/full';
     const AUTH_SERVICE_NAME = 'cp';
     const DEFAULT_MAJOR_PROTOCOL_VERSION = 3;
@@ -102,7 +103,7 @@ class Zend_Gdata_Contacts extends Zend_Gdata
         $query = new Zend_Gdata_Query(self::CONTACT_FEED_URI);
         $query->maxResults = $this->maxResults;
         $query->startIndex = $this->startIndex;
-        return parent::getFeed($query, 'Zend_Gdata_Contacts_ListFeed');
+        return parent::getFeed($query,'Zend_Gdata_Contacts_ListFeed');
     }
 
     /**
@@ -113,12 +114,12 @@ class Zend_Gdata_Contacts extends Zend_Gdata
      */
     public function getContactEntry($entryID)
     {
-        return parent::getEntry($entryID, 'Zend_Gdata_Contacts_ListEntry');
+        return parent::getEntry($entryID,'Zend_Gdata_Contacts_ListEntry');
     }
 
     /**
      * Set the max results that the feed should return.
-     *
+     * 
      * @param  $maxResults
      * @return void
      */
@@ -137,4 +138,6 @@ class Zend_Gdata_Contacts extends Zend_Gdata
     {
         $this->startIndex = $value;
     }
+
 }
+ 

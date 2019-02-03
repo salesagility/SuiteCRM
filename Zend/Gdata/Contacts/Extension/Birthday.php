@@ -45,6 +45,7 @@ require_once 'Zend/Gdata/Extension.php';
 
 class Zend_Gdata_Contacts_Extension_Birthday extends Zend_Gdata_Extension
 {
+
     protected $_rootNamespace = 'gd';
     protected $_rootElement = 'birthday';
     protected $_value = null;
@@ -61,7 +62,8 @@ class Zend_Gdata_Contacts_Extension_Birthday extends Zend_Gdata_Extension
     protected function takeChildFromDOM($child)
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
-        switch ($absoluteNodeName) {
+        switch ($absoluteNodeName)
+        {
             default:
                 parent::takeChildFromDOM($child);
                 break;
@@ -90,3 +92,4 @@ class Zend_Gdata_Contacts_Extension_Birthday extends Zend_Gdata_Extension
         return $this->_value;
     }
 }
+ 

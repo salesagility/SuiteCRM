@@ -47,6 +47,7 @@ require_once 'Zend/Gdata/Media/Extension/MediaGroup.php';
  */
 class Zend_Gdata_Media_Entry extends Zend_Gdata_Entry
 {
+
     protected $_entryClassName = 'Zend_Gdata_Media_Entry';
 
     /**
@@ -128,4 +129,6 @@ class Zend_Gdata_Media_Entry extends Zend_Gdata_Entry
         $this->_mediaGroup = $mediaGroup;
         return $this;
     }
+
+
 }

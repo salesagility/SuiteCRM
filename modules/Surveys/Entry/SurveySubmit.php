@@ -35,6 +35,7 @@ EOF;
     }
 
     return false;
+
 }
 
 function processSurvey(Surveys $survey, $trackerId, $contactId, $request)
@@ -129,7 +130,6 @@ function processSurvey(Surveys $survey, $trackerId, $contactId, $request)
                     $response->happiness = 0;
                     $response->happiness_text .= $question->name . " - " . $userResponse . "<br>";
                 }
-                // no break
             case "Rating":
             case "Scale":
             case "Text":
@@ -148,7 +148,8 @@ function processSurvey(Surveys $survey, $trackerId, $contactId, $request)
 
 function do404()
 {
-    header("HTTP/1.0 404 Not Found"); ?>
+    header("HTTP/1.0 404 Not Found");
+    ?>
     <html>
     <head></head>
     <body><h1>Page not found</h1></body>

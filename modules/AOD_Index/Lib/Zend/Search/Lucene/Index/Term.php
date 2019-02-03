@@ -24,7 +24,7 @@
 /**
  * A Term represents a word from text.  This is the unit of search.  It is
  * composed of two elements, the text of the word, as a string, and the name of
- * the field that the text occured in, an interned string.
+ * the field that the text occurred in, an interned string.
  *
  * Note that terms may represent more than words from text fields, but also
  * things like dates, email addresses, urls, etc.
@@ -87,9 +87,9 @@ class Zend_Search_Lucene_Index_Term
             $charBytes = 1;
             if ((ord($str[$prefixBytes]) & 0xC0) == 0xC0) {
                 $charBytes++;
-                if (ord($str[$prefixBytes]) & 0x20) {
+                if (ord($str[$prefixBytes]) & 0x20 ) {
                     $charBytes++;
-                    if (ord($str[$prefixBytes]) & 0x10) {
+                    if (ord($str[$prefixBytes]) & 0x10 ) {
                         $charBytes++;
                     }
                 }
@@ -121,9 +121,9 @@ class Zend_Search_Lucene_Index_Term
             $charBytes = 1;
             if ((ord($str[$bytes]) & 0xC0) == 0xC0) {
                 $charBytes++;
-                if (ord($str[$bytes]) & 0x20) {
+                if (ord($str[$bytes]) & 0x20 ) {
                     $charBytes++;
-                    if (ord($str[$bytes]) & 0x10) {
+                    if (ord($str[$bytes]) & 0x10 ) {
                         $charBytes++;
                     }
                 }
@@ -141,3 +141,4 @@ class Zend_Search_Lucene_Index_Term
         return $chars;
     }
 }
+

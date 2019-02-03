@@ -107,3 +107,4 @@ class Zend_Search_Lucene_Search_QueryHit
         return $this->_index;
     }
 }
+

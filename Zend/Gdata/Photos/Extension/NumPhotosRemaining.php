@@ -43,6 +43,7 @@ require_once 'Zend/Gdata/Photos.php';
  */
 class Zend_Gdata_Photos_Extension_NumPhotosRemaining extends Zend_Gdata_Extension
 {
+
     protected $_rootNamespace = 'gphoto';
     protected $_rootElement = 'numphotosremaining';
 
@@ -57,4 +58,5 @@ class Zend_Gdata_Photos_Extension_NumPhotosRemaining extends Zend_Gdata_Extensio
         parent::__construct();
         $this->setText($text);
     }
+
 }

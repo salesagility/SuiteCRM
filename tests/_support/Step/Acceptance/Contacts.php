@@ -9,7 +9,7 @@ class Contacts extends \AcceptanceTester
      */
     public function gotoContacts()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Contacts');
     }
 

@@ -43,27 +43,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $suicide = true;
-if (isset($install_script)) {
-    if ($install_script) {
-        $suicide = false;
-    }
+if(isset($install_script)) {
+	if($install_script) {
+		$suicide = false;
+	}
 }
 
-if ($suicide) {
-    // mysterious suicide note
-    die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
+if($suicide) {
+   // mysterious suicide note
+   die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 
 
 if (!isset($_POST['confirm']) || !$_POST['confirm']) {
-    include("sugar_version.php"); // provide $sugar_flavor
-    global $sugar_config;
-    $ik = '';
-    if (isset($sugar_config['unique_key']) && !empty($sugar_config['unique_key'])) {
+	include("sugar_version.php"); // provide $sugar_flavor
+       global $sugar_config;
+        $ik = '';
+       if(isset($sugar_config['unique_key']) && !empty($sugar_config['unique_key']) ){
         $ik = $sugar_config['unique_key'];
-    }
+       }
 } else {
-    $notConfirmed = $mod_strings['LBL_REG_CONF_3'];
+	$notConfirmed = $mod_strings['LBL_REG_CONF_3'];
 }
 
 

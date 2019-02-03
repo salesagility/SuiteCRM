@@ -54,5 +54,8 @@ include_once 'modules/Administration/SyncInboundEmailAccounts/SyncInboundEmailAc
 include_once 'modules/Administration/SyncInboundEmailAccounts/SyncInboundEmailAccountsException.php';
 include_once 'modules/Administration/SyncInboundEmailAccounts/SyncInboundEmailAccountsSubActionHandler.php';
 include_once 'modules/Administration/SyncInboundEmailAccounts/SyncInboundEmailAccountsPage.php';
+include_once __DIR__ . '/../../include/Imap/ImapHandlerFactory.php';
 
-new SyncInboundEmailAccountsPage(get_defined_vars());
+$imapFactory = new ImapHandlerFactory();
+$imap = $imapFactory->getImapHandler();
+new SyncInboundEmailAccountsPage(get_defined_vars(), $imap);

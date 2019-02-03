@@ -152,9 +152,8 @@ class AOW_WorkFlow extends Basic
     {
         global $beanList, $app_list_strings;
 
-        $app_list_strings['aow_moduleList'] = $app_list_strings['moduleList'];
-
-        if (!empty($app_list_strings['aow_moduleList'])) {
+        if (!empty($app_list_strings['moduleList'])) {
+            $app_list_strings['aow_moduleList'] = $app_list_strings['moduleList'];
             foreach ($app_list_strings['aow_moduleList'] as $mkey => $mvalue) {
                 if (!isset($beanList[$mkey]) || str_begin($mkey, 'AOW_')) {
                     unset($app_list_strings['aow_moduleList'][$mkey]);
@@ -439,7 +438,6 @@ class AOW_WorkFlow extends Basic
                     $params = @unserialize(base64_decode($condition->value));
                     if ($params === false) {
                         LoggerManager::getLogger()->error('Unserializable data given');
-                    } else {
                         $params = [null];
                     }
 
