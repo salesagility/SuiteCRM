@@ -51,14 +51,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-if (!empty($_REQUEST['mtime'])) {
-    $mTime = $_REQUEST['mtime'];
-    $file = $_SESSION['MAILMERGE_TEMP_FILE_'.$mTime];
-    $rtfFile = 'sugartokendoc'.$mTime.'.doc';
-    unlink($file);
-    if (file_exists($rtfFile)) {
-        unlink($rtfFile);
-    }
+if(!empty($_REQUEST['mtime']))
+{
+	$mTime = $_REQUEST['mtime'];
+	$file = $_SESSION['MAILMERGE_TEMP_FILE_'.$mTime];
+	$rtfFile = 'sugartokendoc'.$mTime.'.doc';
+	unlink($file);
+	if(file_exists($rtfFile)){
+		unlink($rtfFile);
+	}
 }
 
 header("Location: index.php?module=MailMerge");

@@ -63,6 +63,7 @@ require_once 'Zend/Gdata/App/Extension/Category.php';
  */
 class Zend_Gdata_Photos_CommentEntry extends Zend_Gdata_Entry
 {
+
     protected $_entryClassName = 'Zend_Gdata_Photos_CommentEntry';
 
     /**
@@ -94,8 +95,7 @@ class Zend_Gdata_Photos_CommentEntry extends Zend_Gdata_Entry
 
         $category = new Zend_Gdata_App_Extension_Category(
             'http://schemas.google.com/photos/2007#comment',
-            'http://schemas.google.com/g/2005#kind'
-        );
+            'http://schemas.google.com/g/2005#kind');
         $this->setCategory(array($category));
     }
 
@@ -131,12 +131,12 @@ class Zend_Gdata_Photos_CommentEntry extends Zend_Gdata_Entry
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
 
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gphoto') . ':' . 'id':
+            case $this->lookupNamespace('gphoto') . ':' . 'id';
                 $id = new Zend_Gdata_Photos_Extension_Id();
                 $id->transferFromDOM($child);
                 $this->_gphotoId = $id;
                 break;
-            case $this->lookupNamespace('gphoto') . ':' . 'photoid':
+            case $this->lookupNamespace('gphoto') . ':' . 'photoid';
                 $photoid = new Zend_Gdata_Photos_Extension_PhotoId();
                 $photoid->transferFromDOM($child);
                 $this->_gphotoPhotoId = $photoid;

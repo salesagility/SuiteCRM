@@ -54,7 +54,7 @@ foreach($unifile AS $line) {
 	  $rangename = '';
 	  continue;
 	}
-	elseif (preg_match('/^([12]{0,1}[0-9A-Za-z]{4});<(.*?), Last>/',$line,$m)) { 
+	else if (preg_match('/^([12]{0,1}[0-9A-Za-z]{4});<(.*?), Last>/',$line,$m)) { 
 	  if ($rangename && $rangename == $m[2]) {
 		$endrange = hexdec($m[1]);
 		for ($i=$startrange;$i<=$endrange; $i++) {
@@ -63,11 +63,11 @@ foreach($unifile AS $line) {
 	  }
 	  $rangename = '';
 	}
-	elseif (preg_match('/^([12]{0,1}[0-9A-Za-z]{4});<(.*?), First>/',$line,$m)) { 
+	else if (preg_match('/^([12]{0,1}[0-9A-Za-z]{4});<(.*?), First>/',$line,$m)) { 
 	  $startrange = hexdec($m[1]);
 	  $rangename = $m[2];
 	}
-	elseif (preg_match('/^([12]{0,1}[0-9A-Za-z]{4});/',$line,$m)) { 
+	else if (preg_match('/^([12]{0,1}[0-9A-Za-z]{4});/',$line,$m)) { 
 	  $unichars[hexdec($m[1])] = hexdec($m[1]);
 	  $rangename = '';
 	}
@@ -188,17 +188,17 @@ for ($urgp = 0; $urgp < $nofgroups; $urgp++) {
 					$fullcovers[$urk][] = $fname;
 					$html .= '<td style="background-color: #00FF00;"></td>'; 
 				}
-				elseif ($pc>1) { 
+				else if ($pc>1) { 
 					$fullcovers[$urk][] = $fname;
 					$html .= '<td style="background-color: #00FF00;">'.$str.'</td>'; 
 				}
-				elseif ($pc>=0.9) { 
+				else if ($pc>=0.9) { 
 					$html .= '<td style="background-color: #AAFFAA;">'.$str.'</td>'; 
 					$nearlycovers[$urk][] = $fname;
 				}
-				elseif ($pc>0.75) { $html .= '<td style="background-color: #00FFAA;">'.$str.'</td>'; }
-				elseif ($pc>0.5) { $html .= '<td style="background-color: #AAAAFF;">'.$str.'</td>'; }
-				elseif ($pc>0.25) { $html .= '<td style="background-color: #FFFFAA;">'.$str.'</td>'; }
+				else if ($pc>0.75) { $html .= '<td style="background-color: #00FFAA;">'.$str.'</td>'; }
+				else if ($pc>0.5) { $html .= '<td style="background-color: #AAAAFF;">'.$str.'</td>'; }
+				else if ($pc>0.25) { $html .= '<td style="background-color: #FFFFAA;">'.$str.'</td>'; }
 				else { $html .= '<td style="background-color: #FFAAAA;">'.$str.'</td>'; }
 			}
 			else { $html .= '<td style="background-color: #555555;">(0/0)</td>'; }
@@ -235,7 +235,7 @@ foreach($unicode_ranges AS $urk => $ur) {
 	$arr = $fullcovers[$urk];
 	$narr = $nearlycovers[$urk];
 	if (is_array($arr)) { $html .= '<td>'. implode(', ',$arr). '</td></tr>'; }
-	elseif (is_array($narr)) { $html .= '<td style="background-color: #AAAAAA;">'. implode(', ',$narr). ' (>90%)</td></tr>'; }
+	else if (is_array($narr)) { $html .= '<td style="background-color: #AAAAAA;">'. implode(', ',$narr). ' (>90%)</td></tr>'; }
 	else { $html .= '<td style="background-color: #555555;"> </td></tr>'; }
 }
 $html.= '</table>';

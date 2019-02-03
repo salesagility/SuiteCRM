@@ -9,7 +9,7 @@ class Projects extends \AcceptanceTester
      */
     public function gotoProjects()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Projects');
     }
 

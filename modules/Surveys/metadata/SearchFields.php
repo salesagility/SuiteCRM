@@ -84,3 +84,4 @@ $searchFields[$module_name] = array(
     ),
     //Range Search Support
 );
+?>

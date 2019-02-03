@@ -43,8 +43,7 @@
  * External API based on Oauth
  * @api
  */
-interface ExternalOAuthAPIPlugin
-{
+interface ExternalOAuthAPIPlugin {
     /**
      * Get OAuth parameters, to create OAuth client
      * @return array

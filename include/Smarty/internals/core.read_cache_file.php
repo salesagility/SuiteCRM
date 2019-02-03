@@ -34,10 +34,8 @@ function smarty_core_read_cache_file(&$params, &$smarty)
 
     if (!empty($smarty->cache_handler_func)) {
         // use cache_handler function
-        call_user_func_array(
-            $smarty->cache_handler_func,
-                             array('read', &$smarty, &$params['results'], $params['tpl_file'], $params['cache_id'], $params['compile_id'], null)
-        );
+        call_user_func_array($smarty->cache_handler_func,
+                             array('read', &$smarty, &$params['results'], $params['tpl_file'], $params['cache_id'], $params['compile_id'], null));
     } else {
         // use local cache file
         $_auto_id = $smarty->_get_auto_id($params['cache_id'], $params['compile_id']);
@@ -56,7 +54,7 @@ function smarty_core_read_cache_file(&$params, &$smarty)
     $_cache_info = unserialize(substr($_contents, $_info_start, $_info_len));
     $params['results'] = substr($_contents, $_info_start + $_info_len);
 
-    if ($smarty->caching == 2 && isset($_cache_info['expires'])) {
+    if ($smarty->caching == 2 && isset ($_cache_info['expires'])){
         // caching by expiration time
         if ($_cache_info['expires'] > -1 && (time() > $_cache_info['expires'])) {
             // cache expired, regenerate
@@ -99,3 +97,5 @@ function smarty_core_read_cache_file(&$params, &$smarty)
 }
 
 /* vim: set expandtab: */
+
+?>

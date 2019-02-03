@@ -56,12 +56,12 @@ if (!defined('PHP_VERSION_ID')) {
 
 if (empty($GLOBALS['installing']) && !file_exists('config.php')) {
     header('Location: install.php');
-    exit();
+    throw new Exception('SuiteCRM is not installed. Entry point needs an installed SuiteCRM, please install first.');
 }
 
 $BASE_DIR = realpath(dirname(__DIR__));
 $autoloader = $BASE_DIR.'/vendor/autoload.php';
-if (file_exists($autoloader)) {
+if(file_exists($autoloader)) {
     require_once $autoloader;
 } else {
     die('Composer autoloader not found. please run "composer install"');

@@ -64,6 +64,7 @@ function install_aop()
     write_array_to_file('sugar_config', $sugar_config, 'config.php');
 
     installAOPHooks();
+
 }
 
 /**
@@ -161,11 +162,8 @@ function installAOPHooks()
     );
 
     foreach ($hooks as $hook) {
-        check_logic_hook_file(
-            $hook['module'],
-            $hook['hook'],
-            array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function'])
-        );
+        check_logic_hook_file($hook['module'], $hook['hook'],
+            array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']));
     }
 }
 

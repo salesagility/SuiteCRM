@@ -1,8 +1,7 @@
 <?php
 
-if (!defined('sugarEntry') || !sugarEntry) {
+if (!defined('sugarEntry') || !sugarEntry)
     die('Not A Valid Entry Point');
-}
 
 $module_name = 'jjwg_Areas';
 $searchFields[$module_name] = array(

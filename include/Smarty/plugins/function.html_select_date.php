@@ -37,9 +37,9 @@
  */
 function smarty_function_html_select_date($params, &$smarty)
 {
-    require_once $smarty->_get_plugin_filepath('shared', 'escape_special_chars');
-    require_once $smarty->_get_plugin_filepath('shared', 'make_timestamp');
-    require_once $smarty->_get_plugin_filepath('function', 'html_options');
+    require_once $smarty->_get_plugin_filepath('shared','escape_special_chars');
+    require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
+    require_once $smarty->_get_plugin_filepath('function','html_options');
     /* Default values. */
     $prefix          = "Date_";
     $start_year      = strftime("%Y");
@@ -124,7 +124,7 @@ function smarty_function_html_select_date($params, &$smarty)
                 break;
 
             default:
-                if (!is_array($_value)) {
+                if(!is_array($_value)) {
                     $extra_attrs .= ' '.$_key.'="'.smarty_function_escape_special_chars($_value).'"';
                 } else {
                     $smarty->trigger_error("html_select_date: extra attribute '$_key' cannot be an array", E_USER_NOTICE);
@@ -168,7 +168,7 @@ function smarty_function_html_select_date($params, &$smarty)
             // force start year to include given date if not explicitly set
             $start_year = $time[0];
         }
-        if ($end_year < $time[0] && !isset($params['end_year'])) {
+        if($end_year < $time[0] && !isset($params['end_year'])) {
             // force end year to include given date if not explicitly set
             $end_year = $time[0];
         }
@@ -180,10 +180,10 @@ function smarty_function_html_select_date($params, &$smarty)
 
     $field_separator_count = -1;
     if ($display_months) {
-        $field_separator_count++;
+    	$field_separator_count++;
         $month_names = array();
         $month_values = array();
-        if (isset($month_empty)) {
+        if(isset($month_empty)) {
             $month_names[''] = $month_empty;
             $month_values[''] = '';
         }
@@ -193,34 +193,32 @@ function smarty_function_html_select_date($params, &$smarty)
         }
 
         $month_result .= '<select name=';
-        if (null !== $field_array) {
+        if (null !== $field_array){
             $month_result .= '"' . $field_array . '[' . $prefix . 'Month]"';
         } else {
             $month_result .= '"' . $prefix . 'Month"';
         }
-        if (null !== $month_size) {
+        if (null !== $month_size){
             $month_result .= ' size="' . $month_size . '"';
         }
-        if (null !== $month_extra) {
+        if (null !== $month_extra){
             $month_result .= ' ' . $month_extra;
         }
-        if (null !== $all_extra) {
+        if (null !== $all_extra){
             $month_result .= ' ' . $all_extra;
         }
         $month_result .= $extra_attrs . '>'."\n";
 
-        $month_result .= smarty_function_html_options(
-            array('output'     => $month_names,
+        $month_result .= smarty_function_html_options(array('output'     => $month_names,
                                                             'values'     => $month_values,
                                                             'selected'   => (int)$time[1] ? strftime($month_value_format, mktime(0, 0, 0, (int)$time[1], 1, 2000)) : '',
                                                             'print_result' => false),
-                                                      $smarty
-        );
+                                                      $smarty);
         $month_result .= '</select>';
     }
 
     if ($display_days) {
-        $field_separator_count++;
+    	$field_separator_count++;
         $days = array();
         if (isset($day_empty)) {
             $days[''] = $day_empty;
@@ -232,44 +230,42 @@ function smarty_function_html_select_date($params, &$smarty)
         }
 
         $day_result .= '<select name=';
-        if (null !== $field_array) {
+        if (null !== $field_array){
             $day_result .= '"' . $field_array . '[' . $prefix . 'Day]"';
         } else {
             $day_result .= '"' . $prefix . 'Day"';
         }
-        if (null !== $day_size) {
+        if (null !== $day_size){
             $day_result .= ' size="' . $day_size . '"';
         }
-        if (null !== $all_extra) {
+        if (null !== $all_extra){
             $day_result .= ' ' . $all_extra;
         }
-        if (null !== $day_extra) {
+        if (null !== $day_extra){
             $day_result .= ' ' . $day_extra;
         }
         $day_result .= $extra_attrs . '>'."\n";
-        $day_result .= smarty_function_html_options(
-            array('output'     => $days,
+        $day_result .= smarty_function_html_options(array('output'     => $days,
                                                           'values'     => $day_values,
                                                           'selected'   => $time[2],
                                                           'print_result' => false),
-                                                    $smarty
-        );
+                                                    $smarty);
         $day_result .= '</select>';
     }
 
     if ($display_years) {
-        $field_separator_count++;
-        if (null !== $field_array) {
+    	$field_separator_count++;
+        if (null !== $field_array){
             $year_name = $field_array . '[' . $prefix . 'Year]';
         } else {
             $year_name = $prefix . 'Year';
         }
         if ($year_as_text) {
             $year_result .= '<input type="text" name="' . $year_name . '" value="' . $time[0] . '" size="4" maxlength="4"';
-            if (null !== $all_extra) {
+            if (null !== $all_extra){
                 $year_result .= ' ' . $all_extra;
             }
-            if (null !== $year_extra) {
+            if (null !== $year_extra){
                 $year_result .= ' ' . $year_extra;
             }
             $year_result .= ' />';
@@ -281,36 +277,34 @@ function smarty_function_html_select_date($params, &$smarty)
                 sort($years, SORT_NUMERIC);
             }
             $yearvals = $years;
-            if (isset($year_empty)) {
+            if(isset($year_empty)) {
                 array_unshift($years, $year_empty);
                 array_unshift($yearvals, '');
             }
             $year_result .= '<select name="' . $year_name . '"';
-            if (null !== $year_size) {
+            if (null !== $year_size){
                 $year_result .= ' size="' . $year_size . '"';
             }
-            if (null !== $all_extra) {
+            if (null !== $all_extra){
                 $year_result .= ' ' . $all_extra;
             }
-            if (null !== $year_extra) {
+            if (null !== $year_extra){
                 $year_result .= ' ' . $year_extra;
             }
             $year_result .= $extra_attrs . '>'."\n";
-            $year_result .= smarty_function_html_options(
-                array('output' => $years,
+            $year_result .= smarty_function_html_options(array('output' => $years,
                                                                'values' => $yearvals,
                                                                'selected'   => $time[0],
                                                                'print_result' => false),
-                                                         $smarty
-            );
+                                                         $smarty);
             $year_result .= '</select>';
         }
     }
 
     // Loop thru the field_order field
-    for ($i = 0; $i <= 2; $i++) {
+    for ($i = 0; $i <= 2; $i++){
         $c = substr($field_order, $i, 1);
-        switch ($c) {
+        switch ($c){
             case 'D':
                 $html_result .= $day_result;
                 break;
@@ -324,7 +318,7 @@ function smarty_function_html_select_date($params, &$smarty)
                 break;
         }
         // Add the field seperator
-        if ($i < $field_separator_count) {
+        if($i < $field_separator_count) {
             $html_result .= $field_separator;
         }
     }
@@ -333,3 +327,5 @@ function smarty_function_html_select_date($params, &$smarty)
 }
 
 /* vim: set expandtab: */
+
+?>

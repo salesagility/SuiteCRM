@@ -118,7 +118,7 @@ class File extends Basic
         }
 
         //set default file name.
-        if (!empty($img_name) && file_exists($img_name)) {
+        if (!empty ($img_name) && file_exists($img_name)) {
             $img_name = $img_name_bare;
         } else {
             $img_name = 'def_image_inline'; //todo change the default image.

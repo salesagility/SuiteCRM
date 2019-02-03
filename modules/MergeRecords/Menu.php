@@ -47,6 +47,6 @@
  ********************************************************************************/
 
 global $mod_strings, $app_strings;
-$module_menu = array(
+$module_menu = Array(
 //Nothing here yet
 );

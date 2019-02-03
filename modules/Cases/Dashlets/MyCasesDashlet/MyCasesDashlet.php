@@ -47,18 +47,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/Dashlets/DashletGeneric.php');
 
 
-class MyCasesDashlet extends DashletGeneric
-{
-    public function __construct($id, $def = null)
-    {
+class MyCasesDashlet extends DashletGeneric {
+    function __construct($id, $def = null) {
         global $current_user, $app_strings;
-        require('modules/Cases/Dashlets/MyCasesDashlet/MyCasesDashlet.data.php');
+		require('modules/Cases/Dashlets/MyCasesDashlet/MyCasesDashlet.data.php');
 
         parent::__construct($id, $def);
 
-        if (empty($def['title'])) {
-            $this->title = translate('LBL_LIST_MY_CASES', 'Cases');
-        }
+        if(empty($def['title'])) $this->title = translate('LBL_LIST_MY_CASES', 'Cases');
         $this->searchFields = $dashletData['MyCasesDashlet']['searchFields'];
         $this->columns = $dashletData['MyCasesDashlet']['columns'];
         $this->seedBean = new aCase();
@@ -67,14 +63,16 @@ class MyCasesDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function MyCasesDashlet($id, $def = null)
-    {
+    function MyCasesDashlet($id, $def = null){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $def);
     }
+
 }
+

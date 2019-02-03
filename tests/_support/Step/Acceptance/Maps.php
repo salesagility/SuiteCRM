@@ -9,7 +9,7 @@ class Maps extends \AcceptanceTester
      */
     public function gotoMaps()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Maps');
     }
 

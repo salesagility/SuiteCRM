@@ -55,9 +55,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $focus = new Role();
 
-if (!isset($_REQUEST['record'])) {
-    sugar_die("A record number must be specified to delete the role.");
-}
+if(!isset($_REQUEST['record']))
+	sugar_die("A record number must be specified to delete the role.");
 
 $focus->mark_deleted($_REQUEST['record']);
 

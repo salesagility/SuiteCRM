@@ -41,9 +41,10 @@
 
 function loadParentView($type)
 {
-    if (file_exists('custom/include/MVC/View/views/view.'.$type.'.php')) {
+    if(file_exists('custom/include/MVC/View/views/view.'.$type.'.php'))
+    {
         require_once('custom/include/MVC/View/views/view.'.$type.'.php');
-    } elseif (file_exists('include/MVC/View/views/view.'.$type.'.php')) {
+    } else if(file_exists('include/MVC/View/views/view.'.$type.'.php')) {
         require_once('include/MVC/View/views/view.'.$type.'.php');
     }
 }
@@ -51,7 +52,8 @@ function loadParentView($type)
 
 function getPrintLink()
 {
-    if (isset($_REQUEST['action']) && $_REQUEST['action'] == "ajaxui") {
+    if (isset($_REQUEST['action']) && $_REQUEST['action'] == "ajaxui")
+    {
         return "javascript:SUGAR.ajaxUI.print();";
     }
     $requestString = null;
@@ -65,8 +67,7 @@ function getPrintLink()
 }
 
 
-function ajaxBannedModules()
-{
+function ajaxBannedModules(){
     $bannedModules = array(
         'Calendar',
         'Emails',
@@ -111,10 +112,10 @@ function ajaxBannedModules()
         'Surveys',
     );
 
-    if (!empty($GLOBALS['sugar_config']['addAjaxBannedModules'])) {
+    if(!empty($GLOBALS['sugar_config']['addAjaxBannedModules'])){
         $bannedModules = array_merge($bannedModules, $GLOBALS['sugar_config']['addAjaxBannedModules']);
     }
-    if (!empty($GLOBALS['sugar_config']['overrideAjaxBannedModules'])) {
+    if(!empty($GLOBALS['sugar_config']['overrideAjaxBannedModules'])){
         $bannedModules = $GLOBALS['sugar_config']['overrideAjaxBannedModules'];
     }
 
@@ -130,14 +131,18 @@ function ajaxLink($url)
     preg_match('/module=([^&]*)/i', $url, $match);
     preg_match('/^javascript/i', $url, $javascriptMatch);
 
-    if (!empty($sugar_config['disableAjaxUI'])) {
+    if(!empty($sugar_config['disableAjaxUI'])){
         return $url;
-    } elseif (isset($match[1]) && in_array($match[1], ajaxBannedModules())) {
+    }
+    else if(isset($match[1]) && in_array($match[1], ajaxBannedModules())){
         return $url;
     }
     //Don't modify javascript calls.
-    elseif (isset($javascriptMatch[0])) {
-        return $url;
+    else if (isset($javascriptMatch[0])) {
+    	return $url;
     }
-    return "?action=ajaxui#ajaxUILoc=" . urlencode($url);
+    else
+    {
+        return "?action=ajaxui#ajaxUILoc=" . urlencode($url);
+    }
 }

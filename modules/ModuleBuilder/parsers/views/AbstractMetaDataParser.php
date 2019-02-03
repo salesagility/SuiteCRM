@@ -136,7 +136,7 @@ abstract class AbstractMetaDataParser
     public static function validField($def, $view = '')
     {
         //Studio invisible fields should always be hidden
-        if (isset($def['studio'])) {
+        if (isset ($def['studio'])) {
             if (is_array($def ['studio'])) {
                 if (!empty($view) && isset($def ['studio'][$view])) {
                     return $def ['studio'][$view] !== false && $def ['studio'][$view] !== 'false' && $def ['studio'][$view] !== 'hidden';
@@ -153,14 +153,14 @@ abstract class AbstractMetaDataParser
         return
             (
                 (
-                    (empty($def ['source']) || $def ['source'] === 'db' || $def ['source'] === 'custom_fields')
+                    (empty ($def ['source']) || $def ['source'] === 'db' || $def ['source'] === 'custom_fields')
                     && isset($def ['type']) && $def ['type'] !== 'id' && $def ['type'] !== 'parent_type'
-                    && (empty($def ['dbType']) || $def ['dbType'] !== 'id')
-                    && (isset($def ['name']) && strcmp($def ['name'], 'deleted') != 0)
+                    && (empty ($def ['dbType']) || $def ['dbType'] !== 'id')
+                    && (isset ($def ['name']) && strcmp($def ['name'], 'deleted') != 0)
                 ) // db and custom fields that aren't ID fields
                 ||
                 // exclude fields named *_name regardless of their type...just convention
-                (isset($def ['name']) && substr($def ['name'], -5) === '_name'));
+                (isset ($def ['name']) && substr($def ['name'], -5) === '_name'));
     }
 
     /**
@@ -169,8 +169,8 @@ abstract class AbstractMetaDataParser
     protected function _standardizeFieldLabels(&$fielddefs)
     {
         foreach ($fielddefs as $key => $def) {
-            if (!isset($def ['label'])) {
-                $fielddefs [$key] ['label'] = (isset($def ['vname'])) ? $def ['vname'] : $key;
+            if (!isset ($def ['label'])) {
+                $fielddefs [$key] ['label'] = (isset ($def ['vname'])) ? $def ['vname'] : $key;
             }
         }
     }
@@ -211,9 +211,10 @@ abstract class AbstractMetaDataParser
             $str = strtolower($val);
 
             return ($str !== '0' && $str !== 'false' && $str !== '');
+        } else {
+            // For non-string types, juse use PHP's normal boolean conversion
+            return ($val === true);
         }
-        // For non-string types, juse use PHP's normal boolean conversion
-        return ($val === true);
     }
 
     /**

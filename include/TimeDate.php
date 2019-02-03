@@ -420,11 +420,12 @@ class TimeDate
 
         if (!empty($cachedValue)) {
             return $cachedValue;
-        }
-        $value = $this->merge_date_time($this->get_date_format($user), $this->get_time_format($user));
-        sugar_cache_put($cacheKey, $value, 0);
+        } else {
+            $value = $this->merge_date_time($this->get_date_format($user), $this->get_time_format($user));
+            sugar_cache_put($cacheKey, $value, 0);
 
-        return $value;
+            return $value;
+        }
     }
 
     /**
@@ -875,11 +876,8 @@ class TimeDate
     public function fromUserDate($date, $convert_tz = false, User $user = null)
     {
         try {
-            return SugarDateTime::createFromFormat(
-                $this->get_date_format($user),
-                $date,
-                $convert_tz ? $this->_getUserTZ($user) : self::$gmtTimezone
-            );
+            return SugarDateTime::createFromFormat($this->get_date_format($user), $date,
+                $convert_tz ? $this->_getUserTZ($user) : self::$gmtTimezone);
         } catch (Exception $e) {
             $uf = $this->get_date_format($user);
             $GLOBALS['log']->error("fromUserDate: Conversion of $date from user format $uf failed: {$e->getMessage()}");
@@ -1009,14 +1007,8 @@ class TimeDate
      */
     public function to_display_date_time($date, $meridiem = true, $convert_tz = true, $user = null)
     {
-        return $this->_convert(
-            $date,
-            self::DB_DATETIME_FORMAT,
-            self::$gmtTimezone,
-            $this->get_date_time_format($user),
-            $convert_tz ? $this->_getUserTZ($user) : self::$gmtTimezone,
-            true
-        );
+        return $this->_convert($date, self::DB_DATETIME_FORMAT, self::$gmtTimezone, $this->get_date_time_format($user),
+            $convert_tz ? $this->_getUserTZ($user) : self::$gmtTimezone, true);
     }
 
     /**
@@ -1036,13 +1028,9 @@ class TimeDate
             $date = $this->expandTime($date, self::DB_DATETIME_FORMAT, self::$gmtTimezone);
         }
 
-        return $this->_convert(
-            $date,
-            $convert_tz ? self::DB_DATETIME_FORMAT : self::DB_TIME_FORMAT,
-            self::$gmtTimezone,
-            $this->get_time_format(),
-            $convert_tz ? $this->_getUserTZ() : self::$gmtTimezone
-        );
+        return $this->_convert($date,
+            $convert_tz ? self::DB_DATETIME_FORMAT : self::DB_TIME_FORMAT, self::$gmtTimezone,
+            $this->get_time_format(), $convert_tz ? $this->_getUserTZ() : self::$gmtTimezone);
     }
 
     /**
@@ -1084,14 +1072,9 @@ class TimeDate
      */
     public function to_display_date($date, $convert_tz = true)
     {
-        return $this->_convert(
-            $date,
-            self::DB_DATETIME_FORMAT,
-            self::$gmtTimezone,
-            $this->get_date_format(),
-            $convert_tz ? $this->_getUserTZ() : self::$gmtTimezone,
-            true
-        );
+        return $this->_convert($date,
+            self::DB_DATETIME_FORMAT, self::$gmtTimezone,
+            $this->get_date_format(), $convert_tz ? $this->_getUserTZ() : self::$gmtTimezone, true);
     }
 
     /**
@@ -1146,14 +1129,10 @@ class TimeDate
      */
     public function to_db($date)
     {
-        return $this->_convert(
-            $date,
-            $this->get_date_time_format(),
-            $this->_getUserTZ(),
-            $this->get_db_date_time_format(),
-            self::$gmtTimezone,
-            true
-        );
+        return $this->_convert($date,
+            $this->get_date_time_format(), $this->_getUserTZ(),
+            $this->get_db_date_time_format(), self::$gmtTimezone,
+            true);
     }
 
     /**
@@ -1167,14 +1146,9 @@ class TimeDate
      */
     public function to_db_date($date, $convert_tz = true)
     {
-        return $this->_convert(
-            $date,
-            $this->get_date_time_format(),
-            $convert_tz ? $this->_getUserTZ() : self::$gmtTimezone,
-            self::DB_DATE_FORMAT,
-            self::$gmtTimezone,
-            true
-        );
+        return $this->_convert($date,
+            $this->get_date_time_format(), $convert_tz ? $this->_getUserTZ() : self::$gmtTimezone,
+            self::DB_DATE_FORMAT, self::$gmtTimezone, true);
     }
 
     /**
@@ -1196,13 +1170,10 @@ class TimeDate
             $date = $this->expandTime($date, $format, $tz);
         }
 
-        return $this->_convert(
-            $date,
+        return $this->_convert($date,
             $convert_tz ? $format : $this->get_time_format(),
             $tz,
-            self::DB_TIME_FORMAT,
-            self::$gmtTimezone
-        );
+            self::DB_TIME_FORMAT, self::$gmtTimezone);
     }
 
     /**
@@ -1216,11 +1187,8 @@ class TimeDate
     public function to_db_date_time($date, $time)
     {
         try {
-            $phpdate = SugarDateTime::createFromFormat(
-                $this->get_date_time_format(),
-                $this->merge_date_time($date, $time),
-                self::$gmtTimezone
-            );
+            $phpdate = SugarDateTime::createFromFormat($this->get_date_time_format(),
+                $this->merge_date_time($date, $time), self::$gmtTimezone);
             if ($phpdate == false) {
                 return array('', '');
             }
@@ -1555,13 +1523,8 @@ class TimeDate
             $name = $translated;
         }
 
-        return sprintf(
-            "%s (GMT%+2d:%02d)%s",
-            str_replace('_', ' ', $name),
-            $off / 3600,
-            (abs($off) / 60) % 60,
-            ""
-        );//$now->format('I')==1?"(+DST)":"");
+        return sprintf("%s (GMT%+2d:%02d)%s", str_replace('_', ' ', $name), $off / 3600, (abs($off) / 60) % 60,
+            "");//$now->format('I')==1?"(+DST)":"");
     }
 
 
@@ -1577,8 +1540,9 @@ class TimeDate
     {
         if ($a[0] == $b[0]) {
             return strcmp($a[1], $b[1]);
+        } else {
+            return $a[0] < $b[0] ? -1 : 1;
         }
-        return $a[0] < $b[0] ? -1 : 1;
     }
 
     /**
@@ -1756,8 +1720,9 @@ class TimeDate
         }
         if ($daystart) {
             return $now->get_day_begin();
+        } else {
+            return $now->get_day_end();
         }
-        return $now->get_day_end();
     }
 
     /**

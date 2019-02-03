@@ -57,90 +57,97 @@ class ParserFactory
      * @return AbstractMetaDataParser
      */
 
-    public static function getParser($view, $moduleName, $packageName = null, $subpanelName = null)
+    public static function getParser ( $view , $moduleName , $packageName = null , $subpanelName = null )
     {
-        $GLOBALS [ 'log' ]->info("ParserFactory->getParser($view,$moduleName,$packageName,$subpanelName )") ;
-        $sm = null;
-        $lView = strtolower($view);
-        if (empty($packageName) || ($packageName == 'studio')) {
+        $GLOBALS [ 'log' ]->info ( "ParserFactory->getParser($view,$moduleName,$packageName,$subpanelName )" ) ;
+		$sm = null;
+        $lView = strtolower ( $view );
+        if ( empty ( $packageName ) || ( $packageName == 'studio' ) )
+        {
             $packageName = null ;
             //For studio modules, check for view parser overrides
             $parser = self::checkForStudioParserOverride($view, $moduleName, $packageName);
-            if ($parser) {
-                return $parser;
-            }
+            if ($parser) return $parser;
             $sm = StudioModuleFactory::getStudioModule($moduleName);
             //If we didn't find a specofic parser, see if there is a view to type mapping
-            foreach ($sm->sources as $file => $def) {
-                if (!empty($def['view']) && $def['view'] == $view && !empty($def['type'])) {
+            foreach($sm->sources as $file => $def)
+            {
+                if (!empty($def['view']) && $def['view'] == $view && !empty($def['type']))
+                {
                     $lView = strtolower($def['type']);
                     break;
                 }
             }
         }
 
-        switch ($lView) {
-            case MB_EDITVIEW:
-            case MB_DETAILVIEW:
-            case MB_QUICKCREATE:
+        switch ( $lView)
+        {
+            case MB_EDITVIEW :
+            case MB_DETAILVIEW :
+            case MB_QUICKCREATE :
                 require_once 'modules/ModuleBuilder/parsers/views/GridLayoutMetaDataParser.php' ;
-                return new GridLayoutMetaDataParser($view, $moduleName, $packageName) ;
-            case MB_BASICSEARCH:
-            case MB_ADVANCEDSEARCH:
+                return new GridLayoutMetaDataParser ( $view, $moduleName, $packageName ) ;
+            case MB_BASICSEARCH :
+            case MB_ADVANCEDSEARCH :
                 require_once 'modules/ModuleBuilder/parsers/views/SearchViewMetaDataParser.php' ;
-                return new SearchViewMetaDataParser($view, $moduleName, $packageName) ;
-            case MB_LISTVIEW:
-                if ($subpanelName == null) {
+                return new SearchViewMetaDataParser ( $view, $moduleName, $packageName ) ;
+            case MB_LISTVIEW :
+                if ($subpanelName == null)
+                {
                     require_once 'modules/ModuleBuilder/parsers/views/ListLayoutMetaDataParser.php' ;
-                    return new ListLayoutMetaDataParser(MB_LISTVIEW, $moduleName, $packageName) ;
-                }
+                    return new ListLayoutMetaDataParser ( MB_LISTVIEW, $moduleName, $packageName ) ;
+                } else
+                {
                     require_once 'modules/ModuleBuilder/parsers/views/SubpanelMetaDataParser.php' ;
-                    return new SubpanelMetaDataParser($subpanelName, $moduleName, $packageName) ;
-                
-            case MB_DASHLET:
-            case MB_DASHLETSEARCH:
-                require_once 'modules/ModuleBuilder/parsers/views/DashletMetaDataParser.php' ;
-                return new DashletMetaDataParser($view, $moduleName, $packageName);
-            case MB_POPUPLIST:
-            case MB_POPUPSEARCH:
-                require_once 'modules/ModuleBuilder/parsers/views/PopupMetaDataParser.php' ;
-                return new PopupMetaDataParser($view, $moduleName, $packageName);
-            case MB_LABEL:
-                require_once 'modules/ModuleBuilder/parsers/parser.label.php' ;
-                return new ParserLabel($moduleName, $packageName) ;
-            case MB_VISIBILITY:
-                require_once 'modules/ModuleBuilder/parsers/parser.visibility.php' ;
-                return new ParserVisibility($moduleName, $packageName) ;
-            default:
-                $parser = self::checkForParserClass($view, $moduleName, $packageName);
-                if ($parser) {
-                    return $parser;
+                    return new SubpanelMetaDataParser ( $subpanelName, $moduleName, $packageName ) ;
                 }
+            case MB_DASHLET :
+            case MB_DASHLETSEARCH :
+                require_once 'modules/ModuleBuilder/parsers/views/DashletMetaDataParser.php' ;
+                return new DashletMetaDataParser($view, $moduleName, $packageName  );
+            case MB_POPUPLIST :
+            case MB_POPUPSEARCH :
+                require_once 'modules/ModuleBuilder/parsers/views/PopupMetaDataParser.php' ;
+                return new PopupMetaDataParser($view, $moduleName, $packageName  );
+            case MB_LABEL :
+                require_once 'modules/ModuleBuilder/parsers/parser.label.php' ;
+                return new ParserLabel ( $moduleName, $packageName ) ;
+            case MB_VISIBILITY :
+                require_once 'modules/ModuleBuilder/parsers/parser.visibility.php' ;
+                return new ParserVisibility ( $moduleName, $packageName ) ;
+            default :
+                $parser = self::checkForParserClass($view, $moduleName, $packageName);
+                if ($parser)
+                    return $parser;
 
         }
 
-        $GLOBALS [ 'log' ]->fatal("ParserFactory: cannot create ModuleBuilder Parser $view") ;
+        $GLOBALS [ 'log' ]->fatal ("ParserFactory: cannot create ModuleBuilder Parser $view" ) ;
+
     }
 
     protected static function checkForParserClass($view, $moduleName, $packageName, $nameOverride = false)
     {
         $prefix = '';
-        if (!is_null($packageName)) {
+        if(!is_null ( $packageName )){
             $prefix = empty($packageName) ? 'build' :'modify';
         }
         $fileNames = array(
-            "custom/modules/$moduleName/parsers/parser." . strtolower($prefix . $view) . ".php",
-            "modules/$moduleName/parsers/parser." . strtolower($prefix . $view) . ".php",
-            "custom/modules/ModuleBuilder/parsers/parser." . strtolower($prefix . $view) . ".php",
-            "modules/ModuleBuilder/parsers/parser." . strtolower($prefix . $view) . ".php",
+            "custom/modules/$moduleName/parsers/parser." . strtolower ( $prefix . $view ) . ".php",
+            "modules/$moduleName/parsers/parser." . strtolower ( $prefix . $view ) . ".php",
+            "custom/modules/ModuleBuilder/parsers/parser." . strtolower ( $prefix . $view ) . ".php",
+            "modules/ModuleBuilder/parsers/parser." . strtolower ( $prefix . $view ) . ".php",
         );
-        foreach ($fileNames as $fileName) {
-            if (file_exists($fileName)) {
+        foreach($fileNames as $fileName)
+        {
+            if (file_exists ( $fileName ))
+            {
                 require_once $fileName ;
-                $class = 'Parser' . $prefix . ucfirst($view) ;
-                if (class_exists($class)) {
-                    $GLOBALS [ 'log' ]->debug('Using ModuleBuilder Parser ' . $fileName) ;
-                    $parser = new $class() ;
+                $class = 'Parser' . $prefix . ucfirst ( $view ) ;
+                if (class_exists ( $class ))
+                {
+                    $GLOBALS [ 'log' ]->debug ( 'Using ModuleBuilder Parser ' . $fileName ) ;
+                    $parser = new $class ( ) ;
                     return $parser ;
                 }
             }
@@ -158,25 +165,25 @@ class ParserFactory
     {
         require_once('modules/ModuleBuilder/Module/StudioModuleFactory.php');
         $sm = StudioModuleFactory::getStudioModule($moduleName);
-        foreach ($sm->sources as $file => $def) {
-            if (!empty($def['view']) && $def['view'] == strtolower($view) && !empty($def['parser'])) {
+        foreach($sm->sources as $file => $def)
+        {
+            if (!empty($def['view']) && $def['view'] == strtolower($view) && !empty($def['parser']))
+            {
                 $pName = $def['parser'];
                 $path = "modules/ModuleBuilder/parsers/views/{$pName}.php";
-                if (file_exists("custom/$path")) {
+                if (file_exists("custom/$path"))
                     require_once("custom/$path");
-                } elseif (file_exists($path)) {
+                else if (file_exists($path))
                     require_once($path);
-                }
-                if (class_exists($pName)) {
+                if (class_exists ( $pName ))
                     return new $pName($view, $moduleName, $packageName);
-                }
                 //If it wasn't defined directly, check for a generic parser name for the view
                 $parser = self::checkForParserClass($view, $moduleName, $packageName);
-                if ($parser) {
+                if ($parser)
                     return $parser;
-                }
             }
         }
         return false;
     }
+
 }

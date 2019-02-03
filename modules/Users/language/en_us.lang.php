@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -607,7 +607,7 @@ $mod_strings = array(
     'LBL_EMAIL_FLAGGED' => 'Flagged:',
     'LBL_EMAIL_REPLY_TO_STATUS' => 'Reply To Status:',
     'LBL_TYPE' => 'Type:',
-    //#20680 EmailTemplate Ext.Message.show;
+    //#20680 EmialTemplate Ext.Message.show;
     'LBL_EMAILTEMPLATE_MESSAGE_SHOW_TITLE' => 'Please check!',
     'LBL_EMAILTEMPLATE_MESSAGE_SHOW_MSG' => 'Selecting this template will overwrite any data already entered within the email body. Do you wish to continue?',
     'LBL_EMAILTEMPLATE_MESSAGE_CLEAR_MSG' => 'Selecting "--None--" will clear any data already entered within the email body. Do you wish to continue?',
@@ -682,4 +682,12 @@ $mod_strings = array(
     'ERR_USER_FACTOR_SMTP_REQUIRED' => 'SMTP server settings required first.',
     'ERR_USER_FACTOR_CHANGE_DISABLED' => 'Current user is not able to change two factor authentication settings.',
     'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
+    // for Google Token/Synchronization settings
+    'LBL_GOOGLE_API_SETTINGS' => 'Google Account Synchronization',
+    'LBL_GOOGLE_API_TOKEN' => 'Google API Token',
+    'LBL_GOOGLE_API_TOKEN_HELP' => 'Use this to authorize SuiteCRM to access your Google Calendar. This is required for synchronization. Don\'t forget to check the "Enable Calendar Sync" checkbox when done.',
+    'LBL_GOOGLE_API_TOKEN_BTN' => 'Get Token',
+    'LBL_GSYNC_CAL' => 'Enable Calendar Sync',
+    // END Google Token/Synchronization settings
+
 ); // END STRINGS DEFS

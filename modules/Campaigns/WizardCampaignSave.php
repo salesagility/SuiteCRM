@@ -43,12 +43,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $db = DBManagerFactory::getInstance();
 
-function getTemplateValidationMessages($templateId)
-{
+function getTemplateValidationMessages($templateId) {
     $msgs = array();
-    if (!$templateId) {
+    if(!$templateId) {
         $msgs[] = 'LBL_NO_SELECTED_TEMPLATE';
-    } else {
+    }
+    else {
         $template = new EmailTemplate();
         $template->retrieve($templateId);
         if (!$template->subject) {
@@ -67,10 +67,11 @@ function getTemplateValidationMessages($templateId)
 $campaignId = $db->quote($_POST['campaignId']);
 $marketingId = $db->quote($_POST['marketingId']);
 $func = isset($_REQUEST['func']) ? $_REQUEST['func'] : null;
-if ($func == 'getTemplateValidation') {
+if($func == 'getTemplateValidation') {
     if (!empty($_POST['templateId'])) {
         $templateId = $db->quote($_POST['templateId']);
-    } else {
+    }
+    else {
         if (!$marketingId) {
             if (!empty($_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId']) && $func != 'createEmailMarketing') {
                 $marketingId = $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'];
@@ -85,11 +86,12 @@ if ($func == 'getTemplateValidation') {
     $return['marketingValidationMessages'] = $marketing->validate();
 
     echo json_encode($return);
-} else {
+}
+else {
     if (!$marketingId) {
         if (!empty($_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId']) && $func != 'createEmailMarketing') {
             $marketingId = $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'];
-        } elseif ($func != 'createEmailMarketing') {
+        } else if($func != 'createEmailMarketing') {
             $marketing = new EmailMarketing();
             $marketing->save();
             $marketingId = $marketing->id;
@@ -99,8 +101,8 @@ if ($func == 'getTemplateValidation') {
         $templateId = $db->quote($_POST['templateId']);
     }
 
-    //$campaign = new Campaign();
-    //$campaign->retrieve($campaignId);
+//$campaign = new Campaign();
+//$campaign->retrieve($campaignId);
 
     $marketing = new EmailMarketing();
     $marketing->retrieve($marketingId);
@@ -108,7 +110,7 @@ if ($func == 'getTemplateValidation') {
     if (!empty($_POST['templateId'])) {
         $marketing->template_id = $templateId;
     }
-    if ($func != 'createEmailMarketing') {
+    if($func != 'createEmailMarketing') {
         $marketing->save();
     }
 

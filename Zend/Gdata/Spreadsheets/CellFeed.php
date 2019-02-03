@@ -101,12 +101,12 @@ class Zend_Gdata_Spreadsheets_CellFeed extends Zend_Gdata_Feed
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gs') . ':' . 'rowCount':
+            case $this->lookupNamespace('gs') . ':' . 'rowCount';
                 $rowCount = new Zend_Gdata_Spreadsheets_Extension_RowCount();
                 $rowCount->transferFromDOM($child);
                 $this->_rowCount = $rowCount;
                 break;
-            case $this->lookupNamespace('gs') . ':' . 'colCount':
+            case $this->lookupNamespace('gs') . ':' . 'colCount';
                 $colCount = new Zend_Gdata_Spreadsheets_Extension_ColCount();
                 $colCount->transferFromDOM($child);
                 $this->_colCount = $colCount;
@@ -154,4 +154,5 @@ class Zend_Gdata_Spreadsheets_CellFeed extends Zend_Gdata_Feed
         $this->_colCount = $colCount;
         return $this;
     }
+
 }

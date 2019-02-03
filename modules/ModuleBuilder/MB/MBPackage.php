@@ -97,6 +97,7 @@ class MBPackage
         global $app_list_strings;
         $packLangFilePath = $this->getPackageDir() . '/language/application/' . $language . '.lang.php';
         if (file_exists($packLangFilePath)) {
+
             require($packLangFilePath);
         }
     }
@@ -239,6 +240,7 @@ class MBPackage
         }
 
         return "\n" . '$installdefs = ' . var_export_helper($installdefs) . ';';
+
     }
 
     /**
@@ -309,10 +311,12 @@ class MBPackage
             rmdir_recursive($path);
         }
         if (mkdir_recursive($path)) {
+
             $manifest = $this->getManifest() . $this->buildInstall($path);
             $fp = sugar_fopen($this->getBuildDir() . '/manifest.php', 'w');
             fwrite($fp, $manifest);
             fclose($fp);
+
         }
         if (file_exists('modules/ModuleBuilder/MB/LICENSE.txt')) {
             copy('modules/ModuleBuilder/MB/LICENSE.txt', $this->getBuildDir() . '/LICENSE.txt');
@@ -401,6 +405,7 @@ class MBPackage
                 $this->modules[$module]->save();
             }
         }
+
     }
 
     /**
@@ -429,6 +434,7 @@ class MBPackage
         }
 
         return false;
+
     }
 
     /**
@@ -602,12 +608,12 @@ class MBPackage
         }
 
         $recursiveIterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($path . $generalPath),
-            RecursiveIteratorIterator::SELF_FIRST
+            new RecursiveDirectoryIterator($path . $generalPath), RecursiveIteratorIterator::SELF_FIRST
         );
 
         /* @var $fInfo SplFileInfo */
         foreach (new RegexIterator($recursiveIterator, "/\.php$/i") as $fInfo) {
+
             $newPath = substr($fInfo->getPathname(), strrpos($fInfo->getPathname(), $generalPath));
 
             $installdefs['copy'][] = array(
@@ -624,6 +630,7 @@ class MBPackage
      */
     public function getColumnsName()
     {
+
         $meta = new FieldsMetaData();
         $arr = array();
         foreach ($meta->getFieldDefinitions() as $key => $value) {
@@ -644,6 +651,7 @@ class MBPackage
      */
     public function exportCustom($modules, $export = true, $clean = true)
     {
+
         $path = $this->getBuildDir();
         if ($clean && file_exists($path)) {
             rmdir_recursive($path);
@@ -909,12 +917,12 @@ class MBPackage
         }
 
         $recursiveIterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($extPath),
-            RecursiveIteratorIterator::SELF_FIRST
+            new RecursiveDirectoryIterator($extPath), RecursiveIteratorIterator::SELF_FIRST
         );
 
         /* @var $fileInfo SplFileInfo */
         foreach ($recursiveIterator as $fileInfo) {
+
             if ($fileInfo->isFile() && !in_array($fileInfo->getPathname(), $result)) {
                 //get the filename in lowercase for easier comparison
                 $fn = $fileInfo->getFilename();
@@ -1023,6 +1031,7 @@ class MBPackage
         );
 
         return "\n" . '$installdefs = ' . var_export_helper($installdefs) . ';';
+
     }
 
     /**
@@ -1128,6 +1137,7 @@ class MBPackage
         $metadataOnly = false,
         $exportedModulesFilter = array()
     ) {
+
         $path =
             $metadataOnly ? 'custom' . DIRECTORY_SEPARATOR . 'metadata' . DIRECTORY_SEPARATOR :
                 'custom' . DIRECTORY_SEPARATOR;
@@ -1145,8 +1155,7 @@ class MBPackage
         }
 
         $recursiveIterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($path),
-            RecursiveIteratorIterator::SELF_FIRST
+            new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST
         );
 
         /**
@@ -1155,6 +1164,7 @@ class MBPackage
         foreach ($recursiveIterator as $fileInfo) {
             if ($fileInfo->isFile() && !in_array($fileInfo->getPathname(), $result)) {
                 foreach ($relationships as $k => $v) {
+
                     if (strpos($fileInfo->getFilename(), $k) !== false) {   //filter by modules being exported
                         if ($this->filterExportedRelationshipFile(
                             $fileInfo->getFilename(),
@@ -1180,4 +1190,5 @@ class MBPackage
     {
         return rmdir_recursive($this->getBuildDir());
     }
+
 }
