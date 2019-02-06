@@ -21,10 +21,6 @@ class Attributes extends BaseOption
             ->setAllowedTypes('attributes', 'array')
             ->setAllowedValues('attributes', $this->validatorFactory->createClosureForIterator([
                 new Assert\NotBlank(),
-                new Assert\Regex([
-                    'pattern' => Fields::REGEX_FIELD_PATTERN,
-                    'match' => false,
-                ]),
             ]))
             ->setNormalizer('attributes', function (Options $options, $values) {
                 $bean = $this->beanManager->newBeanSafe($options->offsetGet('type'));
