@@ -31,7 +31,6 @@ before_install:
   - unzip -o chromedriver_linux64.zip
   - ./chromedriver --url-base=/wd/hub &
   # Lint PHP
-  - CHANGED_FILES=($(git diff --name-only $TRAVIS_COMMIT_RANGE))
   - for file in $(git diff --name-status HEAD~1 HEAD | egrep "^[ACMR].*\.php$" | cut -c 3-); do php -l $file; done
 
 install:
