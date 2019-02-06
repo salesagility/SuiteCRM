@@ -32,11 +32,7 @@ before_install:
   - ./chromedriver --url-base=/wd/hub &
   # Lint PHP
   - CHANGED_FILES=($(git diff --name-only $TRAVIS_COMMIT_RANGE))
-  - echo $CHANGED_FILES
-  - for file in $CHANGED_FILES; do
-    echo $file;
-    if find . -name "*.php" ! -path "./vendor/*" -exec php -l $file \; | grep -v "No syntax errors detected"; then exit 1; fi;
-    done
+  - for file in $(git diff --name-status HEAD~1 HEAD | egrep "^[ACMR].*\.php$" | cut -c 3-); do php -l $file; done
 
 install:
   - phpenv config-add travis.php.ini
