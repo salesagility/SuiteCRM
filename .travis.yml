@@ -31,7 +31,12 @@ before_install:
   - unzip -o chromedriver_linux64.zip
   - ./chromedriver --url-base=/wd/hub &
   # Lint PHP
-  - if find . -name "*.php" ! -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors detected"; then exit 1; fi
+  - CHANGED_FILES=($(git diff --name-only $TRAVIS_COMMIT_RANGE))
+  - echo $CHANGED_FILES
+  - for file in $CHANGED_FILES; do
+    echo $file;
+    if find . -name "*.php" ! -path "./vendor/*" -exec php -l $file \; | grep -v "No syntax errors detected"; then exit 1; fi;
+    done
 
 install:
   - phpenv config-add travis.php.ini
