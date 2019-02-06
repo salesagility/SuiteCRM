@@ -85,5 +85,4 @@ else
 {
 	sugar_cleanup();
 }
-
 exit;
