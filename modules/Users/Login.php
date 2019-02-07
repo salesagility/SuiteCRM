@@ -172,13 +172,14 @@ if (
     !empty($admin->settings['captcha_public_key'])
 ) {
 
+    if ((isset($_SERVER['HTTPS']) && 'on' === $_SERVER['HTTPS']) || (isset($_SERVER['SERVER_PORT']) && 443 === $_SERVER['SERVER_PORT']) ) { $protocol = 'https'; } else { $protocol = 'http'; }
     $captcha_privatekey = $admin->settings['captcha_private_key'];
     $captcha_publickey = $admin->settings['captcha_public_key'];
     $captcha_js .=
         "<script type='text/javascript' src='" .
         getJSPath('cache/include/javascript/sugar_grp1_yui.js') . "'></script><script type='text/javascript' src='" .
         getJSPath('cache/include/javascript/sugar_grp_yui2.js') . "'></script>
-			<script type='text/javascript' src='http://www.google.com/recaptcha/api/js/recaptcha_ajax.js'></script>
+			<script type='text/javascript' src='$protocol://www.google.com/recaptcha/api/js/recaptcha_ajax.js'></script>
 			<script>
 			function initCaptcha(){
 			Recaptcha.create('$captcha_publickey' ,'captchaImage',{theme:'custom'});
