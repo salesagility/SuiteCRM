@@ -57,18 +57,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  */
-function get_validate_record_js () {
-global $mod_strings;
-global $app_strings;
+function get_validate_record_js()
+{
+    global $mod_strings;
+    global $app_strings;
 
-$lbl_last_name = $mod_strings['LBL_LIST_LAST_NAME'];
-$lbl_employee_name = $mod_strings['LBL_LIST_EMPLOYEE_NAME'];
-$err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
-$err_invalid_email_address = $app_strings['ERR_INVALID_EMAIL_ADDRESS'];
-$err_self_reporting = $app_strings['ERR_SELF_REPORTING'];
-$sqs_no_match = $app_strings['ERR_SQS_NO_MATCH'] . ' : ' . $mod_strings['LBL_LIST_REPORTS_TO_NAME'];
+    $lbl_last_name = $mod_strings['LBL_LIST_LAST_NAME'];
+    $lbl_employee_name = $mod_strings['LBL_LIST_EMPLOYEE_NAME'];
+    $err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
+    $err_invalid_email_address = $app_strings['ERR_INVALID_EMAIL_ADDRESS'];
+    $err_self_reporting = $app_strings['ERR_SELF_REPORTING'];
+    $sqs_no_match = $app_strings['ERR_SQS_NO_MATCH'] . ' : ' . $mod_strings['LBL_LIST_REPORTS_TO_NAME'];
 
-$the_script  = <<<EOQ
+    $the_script  = <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 function verify_data(form) {
@@ -107,12 +108,12 @@ function verify_data(form) {
 
 EOQ;
 
-return $the_script;
+    return $the_script;
 }
 
 function get_chooser_js()
 {
-$the_script  = <<<EOQ
+    $the_script  = <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 <!--  to hide script contents from old browsers
@@ -138,6 +139,5 @@ document.EditView.display_tabs_def.value = display_tabs_def;
 </script>
 EOQ;
 
-return $the_script;
+    return $the_script;
 }
-

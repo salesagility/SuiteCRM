@@ -58,19 +58,16 @@ $focus = new ContactOpportunityRelationship();
 
 $focus->retrieve($_REQUEST['record']);
 
-foreach($focus->column_fields as $field)
-{
-	safe_map($field, $focus, true);
+foreach ($focus->column_fields as $field) {
+    safe_map($field, $focus, true);
 }
 
-foreach($focus->additional_column_fields as $field)
-{
-	safe_map($field, $focus, true);
+foreach ($focus->additional_column_fields as $field) {
+    safe_map($field, $focus, true);
 }
 
 // send them to the edit screen.
-if(isset($_REQUEST['record']) && $_REQUEST['record'] != "")
-{
+if (isset($_REQUEST['record']) && $_REQUEST['record'] != "") {
     $recordID = $_REQUEST['record'];
 }
 

@@ -456,23 +456,33 @@ class AOW_WorkFlow extends Basic
                             $value = 'Curdate()';
                         }
                     } else {
-                        $data = null;
-                        if (isset($module->field_defs[$params[0]])) {
-                            $data = $module->field_defs[$params[0]];
+                        if (isset($params[0]) && $params[0] == 'today') {
+                            if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
+                                //$field =
+                                $value  = 'CAST(GETDATE() AS DATE)';
+                            } else {
+                                $field = 'DATE('.$field.')';
+                                $value = 'Curdate()';
+                            }
                         } else {
-                            LoggerManager::getLogger()->warn('Filed def data is missing: ' . get_class($module) . '::$field_defs[' . $params[0] . ']');
-                        }
+                            $data = null;
+                            if (isset($module->field_defs[$params[0]])) {
+                                $data = $module->field_defs[$params[0]];
+                            } else {
+                                LoggerManager::getLogger()->warn('Filed def data is missing: ' . get_class($module) . '::$field_defs[' . $params[0] . ']');
+                            }
 
-                        if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
-                            $value = $module->table_name.'_cstm.'.$params[0];
-                            $query = $this->build_flow_custom_query_join(
+                            if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
+                                $value = $module->table_name.'_cstm.'.$params[0];
+                                $query = $this->build_flow_custom_query_join(
                                     $module->table_name,
                                 $module->table_name.'_cstm',
                                     $module,
                                 $query
                             );
-                        } else {
-                            $value = $module->table_name.'.'.$params[0];
+                            } else {
+                                $value = $module->table_name.'.'.$params[0];
+                            }
                         }
                     }
 
@@ -719,8 +729,14 @@ class AOW_WorkFlow extends Basic
                             $value = date('Y-m-d');
                             $field = strtotime(date('Y-m-d', $field));
                         } else {
-                            $fieldName = $params[0];
-                            $value = $condition_bean->$fieldName;
+                            if ($params[0] == 'today') {
+                                $dateType = 'date';
+                                $value = date('Y-m-d');
+                                $field = strtotime(date('Y-m-d', $field));
+                            } else {
+                                $fieldName = $params[0];
+                                $value = $condition_bean->$fieldName;
+                            }
                         }
 
                         if ($params[1] != 'now') {
@@ -914,7 +930,11 @@ class AOW_WorkFlow extends Basic
                 } elseif (file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')) {
                     require_once('modules/AOW_Actions/actions/'.$action_name.'.php');
                 } else {
-                    return false;
+                    if (file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')) {
+                        require_once('modules/AOW_Actions/actions/'.$action_name.'.php');
+                    } else {
+                        return false;
+                    }
                 }
 
                 $custom_action_name = "custom" . $action_name;

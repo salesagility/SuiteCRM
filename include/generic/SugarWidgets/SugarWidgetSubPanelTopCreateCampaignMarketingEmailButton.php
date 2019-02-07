@@ -43,9 +43,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelTopCreateCampaignMarketingEmailButton extends SugarWidgetSubPanelTopButton
 {
-
-    public function display($layout_def, $additionalFormFields = null, $nonbutton = false) {
-
+    public function display($layout_def, $additionalFormFields = null, $nonbutton = false)
+    {
         global $app_strings;
 
         $id = $layout_def['focus']->id;
@@ -57,5 +56,4 @@ class SugarWidgetSubPanelTopCreateCampaignMarketingEmailButton extends SugarWidg
 
         return '<a onclick="location.href=\'' . $href . '\';">' . $label . '</a>';
     }
-
 }

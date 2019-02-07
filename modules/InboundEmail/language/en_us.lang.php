@@ -167,4 +167,3 @@ $mod_strings = array(
     'LBL_STORED_OPTIONS' => 'Stored Options',
     'LBL_GROUP_ID' => 'Group ID',
 );
-

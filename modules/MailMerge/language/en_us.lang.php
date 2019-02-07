@@ -76,4 +76,3 @@ $mod_strings = array(
     'LBL_RELATED_INFO_SELECTION' => 'Use the selections below to identify the related information you would like to display in your merged document. Skip this step if your template document contains no related information.',
 
 );
-

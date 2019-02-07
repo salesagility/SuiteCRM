@@ -53,7 +53,6 @@ require_once __DIR__ . '/InboundEmailMock.php';
  */
 class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
 {
-    
     public function testClearLastError()
     {
         $handler = new NonGmailSentFolderHandler();
@@ -87,7 +86,7 @@ class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
         $handler = new NonGmailSentFolderHandler();
         $ret = $handler->storeInSentFolder(new InboundEmail(), null);
         $this->assertFalse($ret);
-        $this->assertEquals(NonGmailSentFolderHandler::ERR_NO_IE_FOUND, $handler->getLastError());        
+        $this->assertEquals(NonGmailSentFolderHandler::ERR_NO_IE_FOUND, $handler->getLastError());
     }
     
     public function storeInSentFolderIsPop3()
@@ -102,7 +101,7 @@ class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
     }
     
     public function storeInSentFolderIsGmail()
-    {        
+    {
         $handler = new NonGmailSentFolderHandler();
         $ie = new InboundEmail();
         $ie->id = '123';
@@ -115,7 +114,7 @@ class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
     }
     
     public function storeInSentFolderOk()
-    {        
+    {
         $handler = new NonGmailSentFolderHandler();
         $ie = new InboundEmail();
         $ie->id = '123';
@@ -148,7 +147,7 @@ class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
     }
     
     public function testGetProblemOfStoringInNonGmailSentFolderIsPop3()
-    {        
+    {
         $handler = new NonGmailSentFolderHandlerMock();
         $ie = new InboundEmail();
         $mail = new SugarPHPMailer();
@@ -159,7 +158,7 @@ class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
     }
     
     public function testGetProblemOfStoringInNonGmailSentFolderIsGmail()
-    {    
+    {
         $handler = new NonGmailSentFolderHandlerMock();
         $ie = new InboundEmail();
         $mail = new SugarPHPMailer();

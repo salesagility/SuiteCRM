@@ -52,11 +52,11 @@ require_once('modules/Import/maps/ImportMapOther.php');
 
 class ImportMapCsv extends ImportMapOther
 {
-	/**
+    /**
      * String identifier for this import
      */
     public $name = 'csv';
-	/**
+    /**
      * Field delimiter
      */
     public $delimiter = ',';

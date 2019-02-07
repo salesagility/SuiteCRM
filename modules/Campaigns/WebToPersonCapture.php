@@ -215,7 +215,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 if (stristr($optInEmailField, '_default') !== false) {
                     $emailField = str_replace('_default', '', $optInEmailField);
 
-                    if(!in_array($emailField, $optInEmailFields)) {
+                    if (!in_array($emailField, $optInEmailFields)) {
                         $optedOut[] = $emailField;
                     }
 
@@ -230,7 +230,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                     $sea = new EmailAddress();
                     $emailId = $sea->AddUpdateEmailAddress($person->$optInEmailField);
                     if ($sea->retrieve($emailId)) {
-                        if(in_array($optInEmailField, $optedOut)) {
+                        if (in_array($optInEmailField, $optedOut)) {
                             $sea->resetOptIn();
                             continue;
                         } else {
@@ -238,20 +238,20 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                         }
 
                         $configurator = new Configurator();
-                        if($configurator->isConfirmOptInEnabled()) {
+                        if ($configurator->isConfirmOptInEnabled()) {
                             $emailman = new EmailMan();
                             $now = TimeDate::getInstance()->nowDb();
                             
-                            if(!$emailman->sendOptInEmail($sea, $person->module_name, $person->id)) {
+                            if (!$emailman->sendOptInEmail($sea, $person->module_name, $person->id)) {
                                 $errors[] = 'Confirm Opt In email sending failed, please check email address is correct: ' . $sea->email_address;
                                 $sea->confirm_opt_in_fail_date = $now;
                             } else {
                                 $sea->confirm_opt_in_sent_date = $now;
                             }
                         }
-                        if($configurator->isOptInEnabled()) {
+                        if ($configurator->isOptInEnabled()) {
                             $date = TimeDate::getInstance()->nowDb();
-                            $date_test = $timedate->to_display_date($date,false);
+                            $date_test = $timedate->to_display_date($date, false);
                             $person->lawful_basis = '^consent^';
                             $person->date_reviewed = $date_test;
                             $person->lawful_basis_source = 'website';
@@ -339,15 +339,13 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             if (isset($mod_strings['LBL_THANKS_FOR_SUBMITTING'])) {
                 echo $mod_strings['LBL_THANKS_FOR_SUBMITTING'];
             } else {
-
-                if(isset($errors) && $errors) {
+                if (isset($errors) && $errors) {
                     $log = LoggerManager::getLogger();
                     $log->error('Success but some error occurred: ' . implode(', ', $errors));
                 }
                 
                 //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
                 echo $app_strings['LBL_THANKS_FOR_SUBMITTING'];
-
             }
             header($_SERVER['SERVER_PROTOCOL'].'201', true, 201);
         }

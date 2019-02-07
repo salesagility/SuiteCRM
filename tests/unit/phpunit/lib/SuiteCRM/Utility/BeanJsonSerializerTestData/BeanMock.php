@@ -61,6 +61,4 @@ class BeanMock extends \SugarBean
     {
         echo "load_relationships() has been called on the mocked class!";
     }
-
-
 }

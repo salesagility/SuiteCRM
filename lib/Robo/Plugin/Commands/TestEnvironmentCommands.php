@@ -64,8 +64,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
             'instance_client_id' => '',
             'instance_client_secret' => '',
         ]
-    )
-    {
+    ) {
         $this->say('Configure Test Environment');
 
         // Database
@@ -129,7 +128,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
         $url = $this->getChromeWebDriverUrl();
         $basePath = $os->toOsPath($paths->getProjectPath().'/build/tmp/');
 
-        if(!file_exists($basePath)) {
+        if (!file_exists($basePath)) {
             if (mkdir($basePath, 0777, true) === false) {
                 throw  new \RuntimeException('Unable to create file structure ' . $basePath);
             }
@@ -138,7 +137,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
         $zipPath = $basePath . DIRECTORY_SEPARATOR . 'webdriver.zip';
         $unzippedPath = $basePath . DIRECTORY_SEPARATOR . 'webdriver';
 
-        if (!file_exists($unzippedPath)){
+        if (!file_exists($unzippedPath)) {
             $this->download($url, $zipPath);
             $this->unzip($zipPath, $unzippedPath);
         }
@@ -355,10 +354,10 @@ class TestEnvironmentCommands extends \Robo\Tasks
     private function download($url, $toPath)
     {
         $contents = file_get_contents($url, false);
-        if($contents === false) {
+        if ($contents === false) {
             throw new \RuntimeException('Unable to download ' . $url);
         }
-        if(file_put_contents($toPath, $contents) === false) {
+        if (file_put_contents($toPath, $contents) === false) {
             throw new \RuntimeException('Unable to write to ' . $toPath);
         }
     }

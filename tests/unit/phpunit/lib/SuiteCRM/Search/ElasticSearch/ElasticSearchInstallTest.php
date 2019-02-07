@@ -90,7 +90,7 @@ class ElasticSearchInstallTest extends SearchTestAbstract
     public function testSchedulerPresent()
     {
 //        self::markTestIncomplete('environment dependency');
-//        
+//
 //        $scheduler = new Scheduler();
 //
 //        $jobs = $scheduler->getJobsList();
