@@ -52,7 +52,7 @@ class CodingStandardCommands extends \Robo\Tasks
     /**
      * Configure environment.
      */
-    public function configurePHPCSFixer()
+    public function styleConfigurePHPCSFixer()
     {
         $this->say('Configure PHPCSFixer');
 
@@ -67,13 +67,39 @@ class CodingStandardCommands extends \Robo\Tasks
     }
 
     /**
-     * A tool to automatically fix PHP coding standards issues.
+     * A tool to automatically fix all PHP coding standards issues.
      */
-    public function phpCSFixer()
+    public function stylePHPCSFixer()
     {
         $this->say('Coding Standards: PSR2');
 
         $paths = new Paths();
         $this->_exec('php vendor/bin/php-cs-fixer fix --path-mode=intersection ' . $paths->getProjectPath() . ' --verbose --show-progress=run-in --config=' . $paths->getProjectPath() . '/.php_cs.dist');
+    }
+
+    /**
+     * A tool to automatically fix all PHP coding standards issues in modified files.
+     */
+    public function stylePHPCSFixerModified()
+    {
+        $this->say('Coding Standards: PSR2');
+
+        $paths = new Paths();
+        $collection = $this->collectionBuilder();
+
+        $collection->taskTmpFile()
+            ->filename('diff.txt')
+            ->getPath();
+        $this->_exec('git diff --name-only --staged >> diff.txt');
+        $this->_exec('git diff --name-only >> diff.txt');
+
+        $lines = file('diff.txt', FILE_IGNORE_NEW_LINES);
+
+        if (file_exists('diff.txt')) {
+            foreach ($lines as $line) {
+                $this->_exec('php vendor/bin/php-cs-fixer fix --path-mode=intersection ' . $paths->getProjectPath() . '/' . $line);
+            }
+        }
+        $collection->run();
     }
 }
