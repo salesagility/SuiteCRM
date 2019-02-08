@@ -87,7 +87,6 @@ echo <<<EOF
 <script type="text/javascript">
 $(document).ready(function(){
     $(".open_check").change(function(){
-      debugger;
         var thisElem = $(this);
 
         var day = thisElem.data("day");
