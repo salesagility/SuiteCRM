@@ -68,7 +68,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetCustomersPurchasedProductsQuery()
     {
 //        self::markTestIncomplete('environment dependency');
-//        
+//
 //        $aosProducts = new AOS_Products();
 //        $aosProducts->id = 1;
 //

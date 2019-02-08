@@ -42,7 +42,6 @@ use SuiteCRM\Search\SearchTestAbstract;
 
 class SearchQueryTest extends SearchTestAbstract
 {
-
     public function testFromString()
     {
         $searchString = 'hello test';
@@ -91,7 +90,8 @@ class SearchQueryTest extends SearchTestAbstract
         self::assertEquals($expected, $query->getSearchString());
     }
 
-    public function testReplace(){
+    public function testReplace()
+    {
         $string = '-HELLO_WOR-LD-';
         $expString = 'HELLO_WORLD';
 

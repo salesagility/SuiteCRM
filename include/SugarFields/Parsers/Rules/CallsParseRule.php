@@ -44,46 +44,47 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SugarFields/Parsers/Rules/ActivitiesParseRule.php');
 
-class CallsParseRule extends ActivitiesParseRule {
-
-function __construct() {
-
-}
+class CallsParseRule extends ActivitiesParseRule
+{
+    public function __construct()
+    {
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function CallsParseRule(){
+    public function CallsParseRule()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-function preParse($panels, $view) {
-   $panels = parent::preParse($panels, $view);
-   if($view == 'EditView') {
-	   foreach($panels as $name=>$panel) {
-	   	  foreach($panel as $rowCount=>$row) {
-	   	  	 foreach($row as $key=>$column) {
-				if($this->matches($column, '/^direction$/si')) {
-	   	  	 	   $panels[$name][$rowCount][$key] = 'status';
-				}
-	   	  	 } //foreach
-	   	  } //foreach
-	   } //foreach
-   } //if
+    public function preParse($panels, $view)
+    {
+        $panels = parent::preParse($panels, $view);
+        if ($view == 'EditView') {
+            foreach ($panels as $name=>$panel) {
+                foreach ($panel as $rowCount=>$row) {
+                    foreach ($row as $key=>$column) {
+                        if ($this->matches($column, '/^direction$/si')) {
+                            $panels[$name][$rowCount][$key] = 'status';
+                        }
+                    } //foreach
+                } //foreach
+            } //foreach
+        } //if
    return $panels;
-}
+    }
 
-function parsePanels($panels, $view) {
-   $panels = parent::parsePanels($panels, $view);
-   return $panels;
-}
-
+    public function parsePanels($panels, $view)
+    {
+        $panels = parent::parsePanels($panels, $view);
+        return $panels;
+    }
 }

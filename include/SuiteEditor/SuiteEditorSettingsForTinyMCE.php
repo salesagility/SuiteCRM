@@ -61,5 +61,4 @@ class SuiteEditorSettingsForTinyMCE extends SuiteEditorSettingsForDirectHTML
      * @var string
      */
     public $tinyMCESetup = '{}';
-
 }

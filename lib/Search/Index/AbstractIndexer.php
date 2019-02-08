@@ -102,7 +102,7 @@ abstract class AbstractIndexer
      * @see AbstractIndexer:getModulesToIndex
      * @return void
      */
-    public abstract function index();
+    abstract public function index();
 
     /**
      * Indexes a single module.
@@ -117,7 +117,7 @@ abstract class AbstractIndexer
      *
      * @return void
      */
-    public abstract function indexModule($module);
+    abstract public function indexModule($module);
 
     /**
      * Indexes a single bean.
@@ -126,7 +126,7 @@ abstract class AbstractIndexer
      *
      * @return void
      */
-    public abstract function indexBean(\SugarBean $bean);
+    abstract public function indexBean(\SugarBean $bean);
 
     /**
      * Indexes an array of SugarBeans.
@@ -138,7 +138,7 @@ abstract class AbstractIndexer
      *
      * @return void
      */
-    public abstract function indexBeans($module, array $beans);
+    abstract public function indexBeans($module, array $beans);
 
     /**
      * Removes a bean from the index.
@@ -147,7 +147,7 @@ abstract class AbstractIndexer
      *
      * @return void
      */
-    public abstract function removeBean(\SugarBean $bean);
+    abstract public function removeBean(\SugarBean $bean);
 
     /**
      * Removes an array of beans from the index.
@@ -156,14 +156,14 @@ abstract class AbstractIndexer
      *
      * @return void
      */
-    public abstract function removeBeans(array $beans);
+    abstract public function removeBeans(array $beans);
 
     /**
      * Deletes all the records from the index.
      *
      * @return void
      */
-    public abstract function removeIndex();
+    abstract public function removeIndex();
 
     /**
      * Returns whether the next indexing should be performed differentially or not.

@@ -41,8 +41,6 @@ namespace SuiteCRM\Test;
 
 use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
 
-
-
 class AbstractDocumentifierMock extends \SuiteCRM\Search\Index\Documentify\AbstractDocumentifier
 {
     /**
@@ -52,9 +50,8 @@ class AbstractDocumentifierMock extends \SuiteCRM\Search\Index\Documentify\Abstr
      *
      * @return array
      */
-    public function documentify(\SugarBean $bean){
+    public function documentify(\SugarBean $bean)
+    {
         parent::documentify($bean);
     }
-
-
 }

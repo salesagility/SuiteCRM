@@ -349,4 +349,3 @@ $dictionary['AOS_Products'] = array(
 );
 require_once('include/SugarObjects/VardefManager.php');
 VardefManager::createVardef('AOS_Products', 'AOS_Products', array('basic', 'assignable', 'security_groups'));
-

@@ -42,13 +42,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
  
-function get_body(&$ss, $vardef){
-	$vars = $ss->get_template_vars();
-	$fields = $vars['module']->mbvardefs->vardefs['fields'];
-	$fieldOptions = array();
-	foreach($fields as $id=>$def) {
-		$fieldOptions[$id] = $def['name'];
-	}
-	$ss->assign('fieldOpts', $fieldOptions);
-	return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/iframe.tpl');
- }
+function get_body(&$ss, $vardef)
+{
+    $vars = $ss->get_template_vars();
+    $fields = $vars['module']->mbvardefs->vardefs['fields'];
+    $fieldOptions = array();
+    foreach ($fields as $id=>$def) {
+        $fieldOptions[$id] = $def['name'];
+    }
+    $ss->assign('fieldOpts', $fieldOptions);
+    return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/iframe.tpl');
+}

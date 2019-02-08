@@ -202,7 +202,6 @@ class EmailTemplateParser
      */
     public function getSurvey()
     {
-
         if ($this->survey === null) {
             $this->survey = \BeanFactory::getBean('Surveys', $this->campaign->survey_id);
         }

@@ -568,15 +568,15 @@ class SugarView
             );
             $ss->assign("CURRENT_USER_ID", $current_user->id);
 
-	    // get the last viewed records
-	    $favorites = BeanFactory::getBean('Favorites');
-	    $favorite_records = $favorites->getCurrentUserSidebarFavorites();
-	    $ss->assign("favoriteRecords", $favorite_records);
- 	    
-	    $tracker = BeanFactory::getBean('Trackers');
-	    $history = $tracker->get_recently_viewed($current_user->id);
-	    $ss->assign("recentRecords", $this->processRecentRecords($history));
-	}
+            // get the last viewed records
+            $favorites = BeanFactory::getBean('Favorites');
+            $favorite_records = $favorites->getCurrentUserSidebarFavorites();
+            $ss->assign("favoriteRecords", $favorite_records);
+        
+            $tracker = BeanFactory::getBean('Trackers');
+            $history = $tracker->get_recently_viewed($current_user->id);
+            $ss->assign("recentRecords", $this->processRecentRecords($history));
+        }
 
         $bakModStrings = $mod_strings;
         if (isset($_SESSION["authenticated_user_id"])) {
@@ -722,8 +722,10 @@ class SugarView
             }
 
             foreach ($groupTabs as $key => $tabGroup) {
-                if (count($topTabs) >= $max_tabs - 1 && $key !== $app_strings['LBL_TABGROUP_ALL'] && in_array($tabGroup['modules'][$moduleTab],
-                        $tabGroup['extra'])
+                if (count($topTabs) >= $max_tabs - 1 && $key !== $app_strings['LBL_TABGROUP_ALL'] && in_array(
+                    $tabGroup['modules'][$moduleTab],
+                        $tabGroup['extra']
+                )
                 ) {
                     unset($groupTabs[$key]['modules'][$moduleTab]);
                 }
@@ -1996,7 +1998,7 @@ EOHTML;
     {
         if (!is_array($array)) {
             throw new InvalidArgumentException('Sub-parameter should be an array to merging. ' . gettype($array) . ' given.', self::ERR_NOT_SUB_ARRAY);
-        }        
+        }
         foreach ($array as $key => $value) {
             // Renumber integer keys as array_merge_recursive() does. Note that PHP
             // automatically converts array keys that are integer strings (e.g., '1')
