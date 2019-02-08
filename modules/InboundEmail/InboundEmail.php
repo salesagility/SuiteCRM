@@ -2838,7 +2838,7 @@ class InboundEmail extends SugarBean
 
             $stored_options = array();
 
-            if($oe->id != ""){
+            if($oe->id != "" && !empty(trim($oe->smtp_from_addr))){
                 $stored_options['from_name'] = trim($oe->smtp_from_name);
                 $stored_options['from_addr'] = trim($oe->smtp_from_addr);
                 isValidEmailAddress($stored_options['from_addr']);

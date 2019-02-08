@@ -65,6 +65,22 @@
             </td>
         </tr>
         <tr>
+            <td valign="top" scope="row" width="15%" NOWRAP>
+                {$app_strings.LBL_EMAIL_SETTINGS_FROM_NAME}:
+            </td>
+            <td valign="top" width="35%">
+                <input id='from_name' name='from_name' type="text" size="30">
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" scope="row" width="15%" NOWRAP>
+                {$app_strings.LBL_EMAIL_SETTINGS_FROM_ADDR}:
+            </td>
+            <td valign="top" width="35%">
+                <input id='from_addr' name='from_addr' type="text" size="30">
+            </td>
+        </tr>
+        <tr>
             <td valign="top" scope="row">
                 {$ie_mod_strings.LBL_LOGIN}: <span class="required">{$app_strings.LBL_REQUIRED_SYMBOL}</span>&nbsp;
             </td>
