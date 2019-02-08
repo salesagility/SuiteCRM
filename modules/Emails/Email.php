@@ -4730,12 +4730,12 @@ eoq;
 
             if (
                 $emailAddress !== null
-                && $emailAddress->getConfirmedOptInState() === EmailAddress::COI_STAT_CONFIRMED_OPT_IN
-                && empty($emailAddress->confirm_opt_in_sent_date)
+                && $emailAddress->confirm_opt_in_sent_date === null
+                && $emailAddress->email_address !== null && $emailAddress->getConfirmedOptInState() === EmailAddress::COI_STAT_CONFIRMED_OPT_IN
             ) {
                 $ret = $this->sendOptInEmail($emailAddress);
                 if (!$ret) {
-                    LoggerManager::getLogger()->error('Error sending opt-in email to: ' . $emailAddress);
+                    LoggerManager::getLogger()->error('Error sending opt-in email to: ' . $emailAddress->email_address);
                 }
             }
         }
