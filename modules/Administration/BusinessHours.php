@@ -33,7 +33,7 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     foreach ($days as $day) {
         $bh = $businessHours->getOrCreate($day);
         $bh->day = $day;
-        $bh->open = array_key_exists("open_".$day, $_REQUEST) ? $_REQUEST["open_".$day] : false;
+        $bh->open_status = array_key_exists("open_status_".$day,$_REQUEST) ? $_REQUEST["open_status_".$day] : false;
         $bh->opening_hours = $_REQUEST["opening_time_".$day];
         $bh->closing_hours = $_REQUEST["closing_time_".$day];
         $bh->save();
@@ -47,9 +47,9 @@ foreach ($days as $day) {
     $bh = $businessHours->getBusinessHoursForDay($day);
     if ($bh) {
         $bh = $bh[0];
-        $drops['open'] = $bh->open;
+        $drops['open_status'] = $bh->open_status;
     } else {
-        $drops['open'] = $day != $mod_strings['LBL_SATURDAY'] && $day != $mod_strings['LBL_SUNDAY'];
+        $drops['open_status'] = $day != $mod_strings['LBL_SATURDAY'] && $day != $mod_strings['LBL_SUNDAY'];
     }
     $hours = get_select_options_with_id($app_list_strings['business_hours_list'], ($bh ? $bh->opening_hours : 9));
     $drops['opening'] = $hours;
