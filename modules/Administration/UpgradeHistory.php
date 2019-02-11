@@ -202,10 +202,10 @@ class UpgradeHistory extends SugarBean
 
             //we will only resort to checking the files if we cannot find the unique_keys
             //or the unique_keys do not match
-            $patch_to_check_backup_path    = clean_path(remove_file_extension(from_html($patch_to_check->filename))).'-restore';
-            $more_recent_patch_backup_path = clean_path(remove_file_extension(from_html($more_recent_patch->filename))).'-restore';
-            $patch_to_check_timestamp = TimeDate::getInstance()->fromUser($patch_to_check->date_entered)->getTimestamp();
-            $more_resent_patch_timestamp = TimeDate::getInstance()->fromUser($more_recent_patch->date_entered)->getTimestamp();
+            $patch_to_check_backup_path = clean_path(remove_file_extension(from_html($patch_to_check->filename))) . '-restore';
+            $more_recent_patch_backup_path = clean_path(remove_file_extension(from_html($more_recent_patch->filename))) . '-restore';
+            $patch_to_check_timestamp = !empty($patch_to_check->date_entered) ? TimeDate::getInstance()->fromUser($patch_to_check->date_entered)->getTimestamp() : null;
+            $more_resent_patch_timestamp = !empty($more_recent_patch->date_entered) ? TimeDate::getInstance()->fromUser($more_recent_patch->date_entered)->getTimestamp() : null;
             if (
                 $this->foundConflict($patch_to_check_backup_path, $more_recent_patch_backup_path) &&
                 ($more_resent_patch_timestamp >= $patch_to_check_timestamp)
