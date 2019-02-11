@@ -3777,78 +3777,61 @@ class InboundEmail extends SugarBean {
 	   return $result;
 
     }
-	/**
-	 * saves the actual binary file of a given attachment
-	 * @param object attach Note object that is attached to the binary file
-	 * @param string msgNo Message Number on IMAP/POP3 server
-	 * @param string thisBc Breadcrumb to navigate email structure to find the content
-	 * @param object part IMAP standard object that contains the "parts" of this section of email
-	 * @param bool $forDisplay
-	 */
-	function saveAttachmentBinaries($attach, $msgNo, $thisBc, $part, $forDisplay) {
-		// decide where to place the file temporarily
 
-		if(isset($attach->id) && strpos($attach->id, "..") !== false && isset($this->id) && strpos($this->id, "..") !== false){
-			die("Directory navigation attack denied.");
-		}
+    /**
+     * @param $attach object Note object that is attached to the binary file
+     * @param $msgNo string Message Number on IMAP/POP3 server
+     * @param $thisBc string Breadcrumb to navigate email structure to find the content
+     * @param $part object IMAP standard object that contains the "parts" of this section of email
+     * @param $forDisplay
+     * @return bool|void
+     */
+    public function saveAttachmentBinaries($attach, $msgNo, $thisBc, $part, $forDisplay)
+    {
+        if (isset($attach->id) &&
+            strpos($attach->id, '..') !== false &&
+            isset($this->id) &&
+            strpos($this->id, '..') !== false
+        ) {
+            die('Directory navigation attack denied.');
+        }
+        $uploadDir = $forDisplay ? "{$this->EmailCachePath}/{$this->id}/attachments/" : "upload://";
+        $fileName = htmlspecialchars($attach->id);
+        if (!file_exists($uploadDir . $fileName)) {
+            if (!is_resource($this->conn)) {
+                LoggerManager::getLogger()->fatal('Inbound Email Connection is not valid resource for saving attachment binaries.');
 
-		$uploadDir = ($forDisplay) ? "{$this->EmailCachePath}/{$this->id}/attachments/" : "upload://";
+                return false;
+            }
 
-		// decide what name to save file as
-		$fileName = htmlspecialchars($attach->id);
+            if (null === $this->conn) {
+                LoggerManager::getLogger()->warn('InboundEmail::saveAttachmentBinaries: connection is null');
+                $msgPartRaw = null;
+            } else {
+                $msgPartRaw = imap_fetchbody($this->conn, $msgNo, $thisBc);
+            }
+            // deal with attachment encoding and decode the text string
+            $msgPart = $this->handleTranserEncoding($msgPartRaw, $part->encoding);
+            if (file_put_contents($uploadDir . $fileName, $msgPart)) {
+                $GLOBALS['log']->debug('InboundEmail saved attachment file: ' . $attach->filename);
+            } else {
+                $GLOBALS['log']->debug('InboundEmail could not create attachment file: ' . $attach->filename . " - temp file target: [ {$uploadDir}{$fileName} ]");
 
-		// download the attachment if we didn't do it yet
-		if(!file_exists($uploadDir.$fileName)) {
-                    
-                    if (null === $this->conn) {
-                        LoggerManager::getLogger()->warn('InboundEmail::saveAttachmentBinaries: connection is null');
-                        $msgPartRaw = null;
-                    } else {
-			$msgPartRaw = imap_fetchbody($this->conn, $msgNo, $thisBc);
-                    }
-                    
-    		// deal with attachment encoding and decode the text string
-                    
-                    $partEncoding = null;
-                    if (isset($part->encoding)) {
-                        $partEncoding = $part->encoding;
-                    } else {
-                        LoggerManager::getLogger()->warn('InboundEmail::saveAttachmentBinaries: part encoding is not set');
-                    }
-                    
-			$msgPart = $this->handleTranserEncoding($msgPartRaw, $partEncoding);
-
-                        $file = $uploadDir.$fileName;
-                        if (!file_exists($file)) {
-                            LoggerManager::getLogger()->warn('InboundEmail::saveAttachmentBinaries: file not found: ' . $file);
-                        } elseif(file_put_contents($file, $msgPart)) {
-				$GLOBALS['log']->debug('InboundEmail saved attachment file: '.$attach->filename);
-			} else {
-                $GLOBALS['log']->debug('InboundEmail could not create attachment file: '.$attach->filename ." - temp file target: [ {$uploadDir}{$fileName} ]");
                 return;
-			}
-		}
-
-		$this->tempAttachment[$fileName] = urldecode($attach->filename);
-		// if all was successful, feel for inline and cache Note ID for display:
-                
-                $partType = null;
-                if (!isset($part->type)) {
-                    LoggerManager::getLogger()->warn('InboundEmail::saveAttachmentBinaries: part type is not set');
-                } else {
-                    $partType = $part->type;
-                }
-                
-		if((strtolower($part->disposition) == 'inline' && in_array($part->subtype, $this->imageTypes))
-		    || ($partType == 5)) {
-		    if(copy($uploadDir.$fileName, sugar_cached("images/{$fileName}.").strtolower($part->subtype))) {
-			    $id = substr($part->id, 1, -1); //strip <> around
-			    $this->inlineImages[$id] = $attach->id.".".strtolower($part->subtype);
-			} else {
-				$GLOBALS['log']->debug('InboundEmail could not copy '.$uploadDir.$fileName.' to cache');
-			}
-		}
-	}
+            }
+        }
+        $this->tempAttachment[$fileName] = urldecode($attach->filename);
+        if ((strtolower($part->disposition) === 'inline' && in_array($part->subtype, $this->imageTypes, false))
+            || ($part->type == 5)
+        ) {
+            if (copy($uploadDir . $fileName, sugar_cached("images/{$fileName}.") . strtolower($part->subtype))) {
+                $id = substr($part->id, 1, -1); //strip <> around
+                $this->inlineImages[$id] = $attach->id . "." . strtolower($part->subtype);
+            } else {
+                $GLOBALS['log']->debug('InboundEmail could not copy ' . $uploadDir . $fileName . ' to cache');
+            }
+        }
+    }
 
 	/**
 	 * decodes a string based on its associated encoding
