@@ -278,12 +278,15 @@ class SecurityGroup extends SecurityGroup_sugar
 
             if (in_array($focus->module_dir, array_keys($security_modules))) {
                 $query = 'INSERT INTO securitygroups_records(id,securitygroup_id,record_id,module,date_modified,deleted) '
-                    . 'SELECT DISTINCT ';
+			. 'SELECT DISTINCT ';
+		/*
                 if ($focus->db->dbType == 'mysql') {
                     $query .= ' uuid() ';
                 } elseif ($focus->db->dbType == 'mssql') {
                     $query .= ' lower(newid()) ';
-                }
+		}
+		 */
+		$query .= "'" . create_guid() . "' " ;
                 $currentUserId = isset($current_user->id) ? $current_user->id : null;
                 $query .= ",u.securitygroup_id,'$focus->id','$focus->module_dir',"
                     . $focus->db->convert('', 'today') . ',0 '
