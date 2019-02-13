@@ -495,41 +495,29 @@ class SugarFeed extends Basic {
 
     }
 
-	static function getTimeLapse($startDate)
+    /**
+     * @param $startDate
+     * @return string
+     */
+	public static function getTimeLapse($startDate)
 	{
-            
-            $timedate = null;
-            if (isset($GLOBALS['timedate'])) {
-                $timedate = $GLOBALS['timedate'];
-            } else {
-                LoggerManager::getLogger()->warn('Timedate is not set for SugarFeed time lapse');
-            }
-            
-            $now = null;
-            if ($timedate instanceof TimeDate) {
-                $now = $timedate->getNow();
-                $fromUser = $timedate->fromUser($startDate);
-            } else {
-                LoggerManager::getLogger()->warn('Timedate is not a Timedate. Imposible to get "now" for SugarFeed time laps');
-            }
-            
-            $tsLeft = null;
-            if (isset($now->ts)) {
-                $tsLeft = $now->ts;
-            } else {
-                LoggerManager::getLogger()->warn('No current timestamp info');
-            }
-            
-            $tsRight = null;
-            if (isset($fromUser->ts)) {
-                $tsRight = $fromUser->ts;
-            } else {
-                LoggerManager::getLogger()->warn('No fromUser timestamp info');
-            }
-            
-            
-		$seconds = $tsLeft - $tsRight;
-		$minutes =   $seconds/60;
+        global $timedate;
+
+        if ($timedate instanceof TimeDate) {
+            $nowTs = $timedate->getNow()->ts;
+        } else {
+            LoggerManager::getLogger()->warn('Timedate is not a Timedate. Impossible to get "now" for SugarFeed time laps');
+        }
+
+        if (null !== ($userStartDate = $timedate->fromUser($startDate))) {
+            $userStartDateTs = $userStartDate->ts;
+        } else {
+            LoggerManager::getLogger()->warn('Invalid $startDate');
+            return '';
+        }
+
+        $seconds = $nowTs - $userStartDateTs;
+        $minutes =   $seconds/60;
 		$seconds = $seconds % 60;
 		$hours = floor( $minutes / 60);
 		$minutes = $minutes % 60;
