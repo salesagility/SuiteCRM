@@ -430,8 +430,9 @@ class AOR_Report extends Basic
         if (!$field_id) {
             $query_array['select'][] = $module->table_name . ".id AS '" . $module->table_name . "_id'";
         }
-
-        if ($field_id != '' && empty($subgroup)) {
+		
+        if ($field_id != '' && empty($subgroup)) 
+		{
             $field = new AOR_Field();
             $field->retrieve($field_id);
 
@@ -1249,12 +1250,13 @@ class AOR_Report extends Basic
 		{
             $csv = substr($csv, 0, strlen($csv) - strlen($delimiter));
         }
+		
 
         $sql = $this->build_report_query();
         $result = $this->db->query($sql);
 		$totals = array();
 
-					
+				
 		$query = '';
 		$query_array = array();
 		$module = new $beanList[$this->report_module]();
@@ -1265,7 +1267,8 @@ class AOR_Report extends Basic
 		if (!$field_id) {
 			$query_array['select'][] = $module->table_name . ".id AS '" . $module->table_name . "_id'";
 		}
-
+			
+		//field_id est nul dans CHIFFRE AFFAIRES PAR ENTREPRISE ? - 78485149-27c4-f1ef-9d13-5c360055a770
 		if ($field_id != '' && empty($subgroup)) 
 			{
 				$field = new AOR_Field();
@@ -1285,8 +1288,7 @@ class AOR_Report extends Basic
 						$oldAlias = $table_alias;
 						$table_alias = $table_alias . ":" . $rel;
 
-						$query_array = $this->build_report_query_join($rel, $table_alias, $oldAlias, $field_module,
-							'relationship', $query_array, $new_field_module);
+						$query_array = $this->build_report_query_join($rel, $table_alias, $oldAlias, $field_module, 'relationship', $query_array, $new_field_module);
 						$field_module = $new_field_module;
 					}
 				}
@@ -1391,7 +1393,7 @@ class AOR_Report extends Basic
 					$query .= ' ' . $query_sort_by;
 				}
 				$result = $this->db->query($query);
-
+				
 				while ($row = $this->db->fetchByAssoc($result)) 
 				{
 					$field_label = str_replace(' ', '_', $field->label);
@@ -1401,6 +1403,10 @@ class AOR_Report extends Basic
 								
 					$csv .= $this->build_report_csv_perso($offset, $groupValue, create_guid(), $extra, $fields);
 				}
+			}
+			else //Si $field_id est null
+			{
+				$csv .= $this->build_report_csv_perso($offset, $subgroup, create_guid(), $extra, $fields);
 			}
 			
 			
@@ -1510,14 +1516,17 @@ class AOR_Report extends Basic
                     if ($att['function'] != '' || $att['params'] != '' || $att['total'] != '') 
 					{
 						// Fix le € du cumul
-						$csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name], '', $currency_id ))));
+						if($att['total'])
+						{
+							$csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name], '', $currency_id ))));
+							// unset($totals);
+							$totals[$name][] = $row[$name];
+						}
+						else
+						{
+							$csv .= $this->encloseForCSV($row[$name]);
+						}
                     }
-					if($att['total'])
-					{						
-						// unset($totals);
-						$totals[$name][] = $row[$name];
-						
-					}
 					else
 					{
                         $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name], '', $currency_id ))));
