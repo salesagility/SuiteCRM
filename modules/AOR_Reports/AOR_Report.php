@@ -50,6 +50,7 @@ class AOR_Report extends Basic
     var $table_name = 'aor_reports';
     var $importable = true;
     var $disable_row_level_security = true;
+	
 
     var $id;
     var $name;
@@ -67,7 +68,7 @@ class AOR_Report extends Basic
     var $assigned_user_name;
     var $assigned_user_link;
     var $report_module;
-
+	
     function __construct()
     {
         parent::__construct();
@@ -75,6 +76,7 @@ class AOR_Report extends Basic
         require_once('modules/AOW_WorkFlow/aow_utils.php');
         require_once('modules/AOR_Reports/aor_utils.php');
     }
+
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
@@ -413,6 +415,9 @@ class AOR_Report extends Basic
     function build_group_report($offset = -1, $links = true, $extra = array(), $subgroup = '')
     {
         global $beanList, $timedate, $app_strings;
+		//ICI Try declare ma list
+		global $TotalLabelArray;
+		global $GrandTotal;
 
         $html = '';
         $query = '';
@@ -565,7 +570,8 @@ class AOR_Report extends Basic
                 $action = $_REQUEST['action'];
                 if ($action == 'DownloadPDF') {
                     $pdf_style = "background: #333 !important; color: #fff !important; margin-bottom: 0px;";
-                }				
+                }
+
                 $html .= '<div class="panel panel-default">
                             <div class="panel-heading" style="' . $pdf_style . '">
                                 <a class="" role="button" data-toggle="collapse" href="#detailpanel_report_group_' . $groupValue . '" aria-expanded="false">
@@ -581,17 +587,39 @@ class AOR_Report extends Basic
                 else {
                     $html .= '</div>';
                 }
+
+
                 $html .= $this->build_report_html($offset, $links, $groupValue, create_guid(), $extra);
                 $html .= ($action == 'downloadPDF') ? '' : '</div></div></div>';
-                // End				
+                // End
 				
+
             }
         }
 
         if ($html == '') {
             $html = $this->build_report_html($offset, $links, $subgroup, create_guid(), $extra);
         }
-
+		//ICI Ajout Grand Total
+		//$currency pour avoir le signe €
+		$currency = new Currency();
+        $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
+		
+		$html .= '<table><thead class="fc-head"><tr>';
+		//Ajout des labels
+		foreach ($TotalLabelArray as $valuecourant)
+		{
+			$html .= '<th style="padding-right: 30px">'.$valuecourant.'</th>';
+		}
+		$html .= '</tr></thead>';
+		$html .= '<tbody><tr class="oddListRowS1">';
+		//Ajout des totaux
+		foreach ($GrandTotal as $valuecourant)
+		{
+			$html .= '<td style="text-align: center;">'. $currency->symbol . ' ' . $valuecourant.'</td>';
+		}
+		$html .='</tr></tbody></table>';
+		//Fin Ajout Grand Total
         return $html;
 
     }
@@ -601,6 +629,10 @@ class AOR_Report extends Basic
     {
 
         global $beanList, $sugar_config;
+		//ICI declare mes list -> TotalLabelArray : liste des Label (Cumul annuel ect..) / GrandTotal : Liste des totaux 
+		global $TotalLabelArray;
+		global $GrandTotal;
+
 
         $_group_value = $this->db->quote($group_value);
 
@@ -824,11 +856,32 @@ class AOR_Report extends Basic
             $row_class = $row_class == 'oddListRowS1' ? 'evenListRowS1' : 'oddListRowS1';
         }
         $html .= "</tbody></table>";
-		
+
         $html .= $this->getTotalHTML($fields, $totals);
 
         $html .= '</div>';
-
+		
+		//Ici Grand Total
+		foreach ($fields as $label => $field) 
+		{
+            if ($field['total'] && isset($totals[$label])) 
+			{
+				//Check Label, si pas dans la liste on le met
+				if(!in_array($field['label'] .' Grand Total', $TotalLabelArray))
+				{
+					//Ajout du Label Courrant dans la list
+					$TotalLabelArray[] = $field['label'] .' Grand Total';
+				}
+			}
+			//Ajout Valeur pour Grand Total : $field['label'] = le label courant, pour avoir un grand total par champ.
+			foreach ($totals[$label] as $valuecourant)
+			{
+				//Ajout de la valeur courante dans la liste en fonction du label
+				$GrandTotal[$field['label']] = $GrandTotal[$field['label']] + $valuecourant;
+			}
+		}
+		//Fin Grand Total
+		
         $html .= "    <script type=\"text/javascript\">
                             groupedReportToggler = {
 
@@ -941,7 +994,7 @@ class AOR_Report extends Basic
                 $totalLabel = $field['label'] . ' ' . $appListStringsAorTotalOptionsFieldTotal;
                 $html .= "<th>{$totalLabel}</th>";
             } else {
-                $html .= '<th></th>';
+                // $html .= '<th></th>'; -> Moi sert a rien fait juste pleins de balise vide ...
             }
         }
         $html .= '</tr></thead>';
@@ -992,18 +1045,24 @@ class AOR_Report extends Basic
                     default:
                         break;
                 }
-                $html .= '<td>' . $total . '</td>';
-            } else {
-                $html .= '<td></td>';
+				//Ici ajout class
+				$ClassLabel = $field['label'] . $appListStringsAorTotalOptionsFieldTotal;
+				$ClassLabel = preg_replace('/\s+/', '', $ClassLabel);
+                $html .= '<td class="' . $ClassLabel . '">' . $total . '</td>';				
+            } 
+			else 
+			{
+                // $html .= '<td></td>'; -> Moi sert a rien fait juste pleins de balise vide ...
             }
         }
         $html .= '</tr>';
         $html .= '</tbody></table>';
-
+		
         return $html;
+        
     }
-	
-	// Start of my code
+
+	// ICI Start of my code
 	function getTotalCSV($fields,$totals) 
 	{
         global $app_list_strings;
@@ -1097,14 +1156,17 @@ class AOR_Report extends Basic
 				{
 					return '';
 				}
+				$total = str_replace('.', ',', $total); // Change . en , pour faire des sommes 
                 $csv .= $this->encloseForCSV($currency->symbol.' '.$total); // J'ai ajouter $currency->symbol pour avoir le signe €
                 $csv .= $delimiter;
 				$total = null;
+
             }
         }
         return $csv;
     }
 	//FIN AJOUT FONCTION ICI
+
 
     function calculateTotal($type, $totals)
     {
@@ -1128,6 +1190,10 @@ class AOR_Report extends Basic
     function build_report_csv()
     {
         global $beanList, $timedate, $app_list_strings;
+		//ICI declare mes list -> TotalLabelArrayCSV : liste des Label (Cumul annuel ect..) / GrandTotalCSV : Liste des totaux 
+		global $TotalLabelArrayCSV;
+		global $GrandTotalCSV;
+		
         ini_set('zlib.output_compression', 'Off');
 
         ob_start();
@@ -1336,6 +1402,31 @@ class AOR_Report extends Basic
 					$csv .= $this->build_report_csv_perso($offset, $groupValue, create_guid(), $extra, $fields);
 				}
 			}
+			
+			
+		//ICI Ajout Grand Total
+		//$currency pour avoir le signe €
+		$currency = new Currency();
+        $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
+		
+		$csv .= "\r\n";
+		$csv .= "\r\n";
+		//Ajout des labels
+		foreach ($TotalLabelArrayCSV as $valuecourant)
+		{	
+			$valuecourant = preg_replace('/[0-9]+/', '', $valuecourant);
+			$valuecourant = str_replace('_', ' ', $valuecourant);
+			$csv .= $this->encloseForCSV($valuecourant);
+			$csv .= $delimiter;	
+		}
+		$csv .= "\r\n";
+		//Ajout des totaux
+		foreach ($GrandTotalCSV as $valuecourant)
+		{
+			$csv .= $this->encloseForCSV($currency->symbol . ' ' . $valuecourant);
+			$csv .= $delimiter;	
+		}
+		//Fin Ajout Grand Total
 
         $csv = $GLOBALS['locale']->translateCharset($csv, 'UTF-8', $GLOBALS['locale']->getExportCharset());
 
@@ -1361,6 +1452,10 @@ class AOR_Report extends Basic
 	function build_report_csv_perso($offset = -1, $group_value = '', $tableIdentifier = '', $extra = array(), $fields)
 	{
 		global $beanList, $sugar_config;
+		//ICI declare mes list -> TotalLabelArrayCSV : liste des Label (Cumul annuel ect..) / GrandTotalCSV : Liste des totaux 
+		global $TotalLabelArrayCSV;
+		global $GrandTotalCSV;
+		
 		$csv = '';
 		$delimiter = getDelimiter();
 		$sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND deleted = 0 ORDER BY field_order ASC";
@@ -1429,15 +1524,44 @@ class AOR_Report extends Basic
                     }
 					$csv .= $delimiter;	
                 }
-            }		
-			
+            }	
 		}
+		
+		
 		$csv .= $this->getTotalCSV($fields,$totals);
+		
+
+		//Ici Grand TotalLabelArray
+		foreach ($fields as $name => $att) 
+		{
+            if ($att['total'] && isset($totals[$name])) 
+			{
+				//Check Label, si pas dans la liste on le met
+				if(!in_array($name .' Grand Total', $TotalLabelArrayCSV))
+				{
+					//Ajout du Label Courrant dans la list
+					$TotalLabelArrayCSV[] = $name .' Grand Total';
+				}
+			}
+			//Ajout Valeur pour Grand Total : $att['label'] = le label courant, pour avoir un grand total par champ.
+			foreach ($totals[$name] as $valuecourant)
+			{
+				//Ajout de la valeur courante dans la liste en fonction du label
+				$GrandTotalCSV[$att['field']] = $GrandTotalCSV[$att['field']] + $valuecourant;
+			}
+		}
+		//Fin Grand Total	
+
+		
+		
+		
 		// Remove last delimiter of the line
         $csv = substr($csv, 0, strlen($csv) - strlen($delimiter));
 		return $csv;
 	}
 	// End of my code
+
+
     function build_report_query($group_value = '', $extra = array())
     {
         global $beanList;
