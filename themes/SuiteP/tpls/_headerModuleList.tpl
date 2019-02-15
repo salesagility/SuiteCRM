@@ -275,7 +275,7 @@
                         {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
                         <li class="topnav {if $smarty.foreach.groupList.last}all{/if}">
                             <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">
-                            <a href="#" id="grouptab_{$smarty.foreach.groupList.index}" class="dropdown-toggle grouptab"
+                            <a href="#" id="grouptab_{$smarty.foreach.groupList.index}" class="grouptab"
                                data-toggle="dropdown">{$group}</a>
                             <span class="notCurrentTabRight">&nbsp;</span>
                             <ul class="dropdown-menu" role="menu" {if $smarty.foreach.groupList.last} class="All"{/if}>
@@ -725,10 +725,10 @@
     <div id='sidebar_container' class="container-fluid sidebar_container">
 
         <a id="buttontoggle" class="buttontoggle"><span></span></a>
-                
+
              <div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
              class="sidebar">
-                
+
                 <div id="actionMenuSidebar" class="actionMenuSidebar">
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                         {if $name == $MODULE_TAB}
@@ -755,7 +755,7 @@
                         {/if}
                     {/foreach}
                 </div>
-                
+
                 <div id="recentlyViewedSidebar" class="recentlyViewedSidebar">
                     {if is_array($recentRecords) && count($recentRecords) > 0}
                     <h2 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h2>
