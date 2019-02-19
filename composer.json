@@ -31,7 +31,8 @@
     "ezyang/htmlpurifier": "^4.10",
     "leafo/scssphp": "^0.7.7",
     "soundasleep/html2text": "~0.5",
-    "consolidation/robo": "^1.4"
+    "consolidation/robo": "^1.4",
+    "wikimedia/composer-merge-plugin": "v1.4.1"
   },
   "require-dev": {
     "mikey179/vfsstream": "1.6.*",
@@ -61,5 +62,18 @@
       "Api/"
     ]
   },
-  "extra": {}
+  "extra": {
+      "merge-plugin": {
+          "include": [
+              "composer.ext.json"
+          ],
+          "recurse": true,
+          "replace": false,
+          "ignore-duplicates": false,
+          "merge-dev": true,
+          "merge-extra": false,
+          "merge-extra-deep": false,
+          "merge-scripts": false
+      }
+  }
 }
