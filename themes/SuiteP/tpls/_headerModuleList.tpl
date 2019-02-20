@@ -400,19 +400,21 @@
                             </li>
                         {/if}
                     {/foreach}
-                    <li class="topnav overflow-toggle-menu">
-                        <span class="notCurrentTabLeft">&nbsp;</span>
-                        <span class="dropdown-toggle headerlinks notCurrentTab"><a href="#">{$APP.LBL_MORE}</a></span>
-                        <span class="notCurrentTabRight">&nbsp;</span>
-                        <ul id="overflow-menu" class="dropdown-menu" role="menu">
-                            <!--nav items without actions -->
-                            {foreach from=$modules.extra item=submodulename key=submodule}
-                                <li class="topnav without-actions">
-                                    <span class=" notCurrentTab"> <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a> </span>
-                                </li>
-                            {/foreach}
-                        </ul>
-                    </li>
+                    {if count($moduleExtraMenu) > 0}
+                        <li class="topnav overflow-toggle-menu">
+                            <span class="notCurrentTabLeft">&nbsp;</span>
+                            <span class="dropdown-toggle headerlinks notCurrentTab"><a href="#">{$APP.LBL_MORE}</a></span>
+                            <span class="notCurrentTabRight">&nbsp;</span>
+                            <ul id="overflow-menu" class="dropdown-menu" role="menu">
+                                <!--nav items without actions -->
+                                {foreach from=$modules.extra item=submodulename key=submodule}
+                                    <li class="topnav without-actions">
+                                        <span class=" notCurrentTab"> <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a> </span>
+                                    </li>
+                                {/foreach}
+                            </ul>
+                        </li>
+                    {/if}
                 </ul>
                 <div class="hidden hidden-actions"></div>
                 {* Hide nav items when the window size is too small to display them *}
@@ -448,9 +450,11 @@
                                 $navItems.splice(-1,1);
                             }
 
-                            navItemMoreLeft = $('.navbar-horizontal-fluid .overflow-toggle-menu').offset().left;
-                            navOverflowWidth = $('#overflow-menu').width();
-                            offset = navItemMoreLeft + navItemMoreWidth - navOverflowWidth;
+                            if(typeof $navItemMoreLeft !== "undefined") {
+                                navItemMoreLeft = $('.navbar-horizontal-fluid .overflow-toggle-menu').offset().left;
+                                navOverflowWidth = $('#overflow-menu').width();
+                                offset = navItemMoreLeft + navItemMoreWidth - navOverflowWidth;
+                            }
                         };
                         $(window).resize(windowResize);
                         windowResize();
@@ -731,13 +735,13 @@
     <div id='sidebar_container' class="container-fluid sidebar_container">
 
         <a id="buttontoggle" class="buttontoggle"><span></span></a>
-                
+
         <!--<div class="row">-->
             <!--<div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
                  class="col-sm-3 col-md-2 sidebar">-->
              <div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
              class="sidebar">
-                
+
                 <div id="actionMenuSidebar" class="actionMenuSidebar">
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                         {if $name == $MODULE_TAB}
@@ -761,7 +765,7 @@
                         {/if}
                     {/foreach}
                 </div>
-                
+
                 <div id="recentlyViewedSidebar" class="recentlyViewedSidebar">
                 {if count($recentRecords) > 0}
                     <h2 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h2>
@@ -780,7 +784,7 @@
                         {/foreach}
                     </ul>
                 </div>
-     
+
                 <div id="favoritesSidebar" class="favoritesSidebar">
                 {if count($favoriteRecords) > 0}
                     <h2 class="recent_h3">{$APP.LBL_FAVORITES}</h2>

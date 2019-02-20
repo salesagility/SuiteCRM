@@ -16,6 +16,9 @@ before_script:
   - composer install --no-interaction
   - \[ -f "config_si.php" \] || cp tests/travis_config_si.php config_si.php
   - php tests/testinstall.php
+  # Lint PHP
+  - for file in $(git diff --name-status HEAD~1 HEAD | egrep "^[ACMR].*\.php$" | cut -c 3-); do php -l $file; done
+
 script:
   - cd tests
   - ../vendor/bin/phpunit
