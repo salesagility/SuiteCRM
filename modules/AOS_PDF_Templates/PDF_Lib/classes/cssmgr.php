@@ -1252,7 +1252,6 @@ function MergeCSS($inherit,$tag,$attr) {
 	//===============================================
 	// STYLESHEET TAG e.g. h1  p  div  table
 	if (isset($this->CSS[$tag]) && $this->CSS[$tag]) {
-
 		$zp = $this->CSS[$tag];
 		if ($tag=='TD' || $tag=='TH')  { $this->setBorderDominance($zp, 9); }	// *TABLES*	// *TABLES-ADVANCED-BORDERS*
         //Necessary in order to display the checkbox correctly
