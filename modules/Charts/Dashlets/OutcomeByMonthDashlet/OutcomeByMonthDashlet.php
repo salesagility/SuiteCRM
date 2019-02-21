@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -62,17 +65,18 @@ class OutcomeByMonthDashlet extends DashletGenericChart
     public function __construct(
         $id,
         array $options = null
-    )
-    {
+    ) {
         global $timedate;
 
-        if(empty($options['obm_date_start']))
+        if (empty($options['obm_date_start'])) {
             $options['obm_date_start'] = $timedate->nowDbDate();
+        }
 
-        if(empty($options['obm_date_end']))
+        if (empty($options['obm_date_end'])) {
             $options['obm_date_end'] = $timedate->asDbDate($timedate->getNow()->modify("+6 months"));
+        }
 
-        parent::__construct($id,$options);
+        parent::__construct($id, $options);
     }
 
     /**
@@ -80,8 +84,9 @@ class OutcomeByMonthDashlet extends DashletGenericChart
      */
     public function displayOptions()
     {
-        if (!isset($this->obm_ids) || count($this->obm_ids) == 0)
+        if (!isset($this->obm_ids) || count($this->obm_ids) == 0) {
             $this->_searchFields['obm_ids']['input_name0'] = array_keys(get_user_array(false));
+        }
 
         return parent::displayOptions();
     }
@@ -92,8 +97,7 @@ class OutcomeByMonthDashlet extends DashletGenericChart
     public function display()
     {
         $currency_symbol = $GLOBALS['sugar_config']['default_currency_symbol'];
-        if ($GLOBALS['current_user']->getPreference('currency')){
-
+        if ($GLOBALS['current_user']->getPreference('currency')) {
             $currency = new Currency();
             $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
             $currency_symbol = $currency->symbol;
@@ -109,7 +113,7 @@ class OutcomeByMonthDashlet extends DashletGenericChart
         $data = $this->getChartData($this->constructQuery());
 
         //I have taken out the sort as this will throw off the labels we have calculated
-        $data = $this->sortData($data,'m', false, 'sales_stage', true, true);
+        $data = $this->sortData($data, 'm', false, 'sales_stage', true, true);
 
         $chartReadyData = $this->prepareChartData($data, $currency_symbol, $thousands_symbol);
         $canvasId = 'rGraphOutcomeByMonth'.uniqid();
@@ -129,8 +133,7 @@ class OutcomeByMonthDashlet extends DashletGenericChart
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
 
 
-        if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1)
-        {
+        if (!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1) {
             return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
         }
 
@@ -233,7 +236,6 @@ class OutcomeByMonthDashlet extends DashletGenericChart
 </script>
 EOD;
         return $chart;
-
     }
 
     /**
@@ -242,21 +244,22 @@ EOD;
     protected function constructQuery()
     {
         $query = "SELECT sales_stage,".
-            db_convert('opportunities.date_closed','date_format',array("'%Y-%m'"),array("'YYYY-MM'"))." as m, ".
+            db_convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))." as m, ".
             "sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ";
-        $query .= " WHERE opportunities.date_closed >= ".db_convert("'".$this->obm_date_start."'",'date') .
-            " AND opportunities.date_closed <= ".db_convert("'".$this->obm_date_end."'",'date') .
+        $query .= " WHERE opportunities.date_closed >= ".db_convert("'".$this->obm_date_start."'", 'date') .
+            " AND opportunities.date_closed <= ".db_convert("'".$this->obm_date_end."'", 'date') .
             " AND opportunities.deleted=0";
-        if (count($this->obm_ids) > 0)
-            $query .= " AND opportunities.assigned_user_id IN ('" . implode("','",$this->obm_ids) . "')";
+        if (count($this->obm_ids) > 0) {
+            $query .= " AND opportunities.assigned_user_id IN ('" . implode("','", $this->obm_ids) . "')";
+        }
         $query .= " GROUP BY sales_stage,".
-            db_convert('opportunities.date_closed','date_format',array("'%Y-%m'"),array("'YYYY-MM'")) .
+            db_convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'")) .
             " ORDER BY m";
 
         return $query;
     }
 
-    protected function prepareChartData($data,$currency_symbol, $thousands_symbol)
+    protected function prepareChartData($data, $currency_symbol, $thousands_symbol)
     {
         //Use the  lead_source to categorise the data for the charts
         $chart['labels'] = array();
@@ -265,18 +268,17 @@ EOD;
         $chart['key'] = array();
         $chart['tooltips']= array();
 
-        foreach($data as $i)
-        {
+        foreach ($data as $i) {
             $key = $i["m"];
             $stage = $i["sales_stage"];
             $stage_dom_option = $i["sales_stage_dom_option"];
-            if(!in_array($key,$chart['labels']))
-            {
+            if (!in_array($key, $chart['labels'])) {
                 $chart['labels'][] = $key;
                 $chart['data'][] = array();
             }
-            if(!in_array($stage,$chart['key']))
+            if (!in_array($stage, $chart['key'])) {
                 $chart['key'][] = $stage;
+            }
 
             $formattedFloat = (float)number_format((float)$i["total"], 2, '.', '');
             $chart['data'][count($chart['data'])-1][] = $formattedFloat;

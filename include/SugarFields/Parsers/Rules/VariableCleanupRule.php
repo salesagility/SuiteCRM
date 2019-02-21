@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 /**
@@ -50,58 +53,67 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
-class VariableCleanupRule extends BaseRule {
+class VariableCleanupRule extends BaseRule
+{
+    public function __construct()
+    {
+    }
 
-function __construct() {
+    public function parsePanels($panels, $view)
+    {
+        if ($view == 'DetailView') {
+            foreach ($panels as $name=>$panel) {
+                foreach ($panel as $rowCount=>$row) {
+                    foreach ($row as $key=>$column) {
+                        //This converts variable ended with "_c_checked" to just "_c" (for checkboxes in DetailView)
+                        if (!is_array($column) && isset($column) && preg_match('/(.*?)_c_checked$/s', $column, $matches)) {
+                            if (count($matches) == 2) {
+                                $panels[$name][$rowCount][$key] = $matches[1] . "_c";
+                            }
+                        } else {
+                            if ($this->matches($column, '/^parent_id$/si')) {
+                                $panels[$name][$rowCount][$key] = '';
+                            } else {
+                                if ($this->matches($column, '/^assigned_user_id$/si')) {
+                                    $panels[$name][$rowCount][$key] = '';
+                                }
+                            }
+                        }
+                    } //foreach
+                } //foreach
+            } //foreach
+        } else {
+            if ($view == 'EditView') {
+                foreach ($panels as $name=>$panel) {
+                    foreach ($panel as $rowCount=>$row) {
+                        foreach ($row as $key=>$column) {
+                            if ($this->matches($column, '/^(.*?)_c\[\]$/s')) {
+                                //This converts multienum variables named with [] suffix back to normal and removes custom code
+                                $val = $this->getMatch($column, '/^(.*?)_c\[\]$/s');
+                                $panels[$name][$rowCount][$key] = $val[1] . '_c';
+                            } else {
+                                if ($this->matches($column, '/^parent_id$/si')) {
+                                    //Remove parent_id field (replaced with parent_name from master copy)
+                                    $panels[$name][$rowCount][$key] = '';
+                                } else {
+                                    if ($this->matches($column, '/^assigned_user_id$/si')) {
+                                        //Remove assigned_user_id field (replaced with assigned_user_name from master copy)
+                                        $panels[$name][$rowCount][$key] = '';
+                                    } else {
+                                        if ($this->matches($column, '/^RADIOOPTIONS_/si')) {
+                                            //This converts radioenum variables
+                                            $val = $this->getMatch($column, '/^RADIOOPTIONS_(.*)?$/si');
+                                            $panels[$name][$rowCount][$key] = $val[1];
+                                        }
+                                    }
+                                }
+                            }
+                        } //foreach
+                    } //foreach
+                } //foreach
+            }
+        }
 
-}
-
-function parsePanels($panels, $view) {
-
-   if($view == 'DetailView') {
-		foreach($panels as $name=>$panel) {
-	   	  foreach($panel as $rowCount=>$row) {
-	   	  	 foreach($row as $key=>$column) {
-	   	  	 	//This converts variable ended with "_c_checked" to just "_c" (for checkboxes in DetailView)
-				if(!is_array($column) && isset($column) && preg_match('/(.*?)_c_checked$/s', $column, $matches)) {
-	   	  	 	   if(count($matches) == 2) {
-	   	  	 	      $panels[$name][$rowCount][$key] = $matches[1] . "_c";
-	   	  	 	   }
-	   	  	 	} else if($this->matches($column, '/^parent_id$/si')) {
-	   	  	 		  $panels[$name][$rowCount][$key] = '';
-				} else if($this->matches($column, '/^assigned_user_id$/si')) {
-	   	  	 	   $panels[$name][$rowCount][$key] = '';
-	   	  	 	}
-	   	  	 } //foreach
-	   	  } //foreach
-	   } //foreach
-
-   } else if ($view == 'EditView') {
-
-		foreach($panels as $name=>$panel) {
-	   	  foreach($panel as $rowCount=>$row) {
-	   	  	 foreach($row as $key=>$column) {
-	   	  	 	if($this->matches($column, '/^(.*?)_c\[\]$/s')) {
-	   	  	 	   //This converts multienum variables named with [] suffix back to normal and removes custom code
-	   	  	 	   $val = $this->getMatch($column, '/^(.*?)_c\[\]$/s');
-	   	  	 	   $panels[$name][$rowCount][$key] = $val[1] . '_c';
-	   	  	 	} else if($this->matches($column, '/^parent_id$/si')) {
-	   	  	 	   //Remove parent_id field (replaced with parent_name from master copy)
-	   	  	 	   $panels[$name][$rowCount][$key] = '';
-	   	  	 	} else if($this->matches($column, '/^assigned_user_id$/si')) {
-	   	  	 	   //Remove assigned_user_id field (replaced with assigned_user_name from master copy)
-	   	  	 	   $panels[$name][$rowCount][$key] = '';
-	   	  	 	} else if($this->matches($column, '/^RADIOOPTIONS_/si')) {
-	   	  	 	   //This converts radioenum variables
-	   	  	 	   $val = $this->getMatch($column, '/^RADIOOPTIONS_(.*)?$/si');
-	   	  	 	   $panels[$name][$rowCount][$key] = $val[1];
-	   	  	 	}
-	   	  	 } //foreach
-	   	  } //foreach
-	   } //foreach
-   }
-
-   return $panels;
-}
-
+        return $panels;
+    }
 }

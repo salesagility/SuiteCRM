@@ -81,7 +81,7 @@ class ByIdFilter implements ByIdFilterInterpreter
         /** @var array $identifiers */
         $identifiers = $filterStructure['[id]'];
         foreach ($identifiers as $id) {
-            if(empty($id)) {
+            if (empty($id)) {
                 continue;
             }
 

@@ -266,6 +266,12 @@ function showSubPanel(child_field, url, force_load, layout_def_key) {
     force_load = false;
   }
 
+  function checkRefreshPage(url) {
+    if (typeof(url) != 'undefined' && url != null && url.indexOf('refresh_page=1') > 0) {
+      document.location.reload();
+    }
+  }
+
   if (force_load || typeof( child_field_loaded[child_field] ) == 'undefined') {
     request_map[request_id] = child_field;
     if (typeof (url) == 'undefined' || url == null) {
@@ -304,6 +310,8 @@ function showSubPanel(child_field, url, force_load, layout_def_key) {
           $('#whole_subpanel_' + child_field + ' .table-responsive').footable();
         }
         request_id++;
+
+        checkRefreshPage(url);
       }
     });
 
@@ -319,11 +327,9 @@ function showSubPanel(child_field, url, force_load, layout_def_key) {
     }
 
     current_child_field = child_field;
-  }
-  if (typeof(url) != 'undefined' && url != null && url.indexOf('refresh_page=1') > 0) {
-    document.location.reload();
-  }
 
+    checkRefreshPage(url);
+  }
 }
 
 function toggleSubpanelCookie(tab) {
@@ -850,3 +856,22 @@ SUGAR.subpanelUtils.menu = function () {
     }
   };
 }();
+
+
+$(function () {
+    $('.subPanelCountHint.incomplete').each(function (i, e) {
+        var module = $(e).attr('data-module');
+        var subpanel = $(e).attr('data-subpanel');
+        var record = $(e).attr('data-record');
+        $.get('index.php?sugar_body_only=1&module=' + module + '&subpanel=' + subpanel + '&action=SubPanelViewer&inline=1&record=' + record + '&layout_def_key=&inline=1&ajaxSubpanel=true&countOnly=1', function (resp, success) {
+            if (!success) {
+                console.error('Subpanel Row Count loading error');
+            } else {
+                $(e).html(resp);
+                if (resp && resp != '0') {
+                    $(e).closest('.collapsed').addClass('collapsed-override');
+                }
+            }
+        });
+    });
+});

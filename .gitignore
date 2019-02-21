@@ -6,6 +6,7 @@ cache/*
 upload/*
 !upload/index.html
 # Ignore some files and directories from the custom directory.
+custom/
 custom/history/*
 custom/blowfish/*
 custom/modulebuilder/*
@@ -78,6 +79,9 @@ SuiteCRM.kdev4
 vendor/
 public/
 
+.php_cs.cache
+
+
 #Ignore bower_components
 bower_components/
 node_modules/
@@ -97,7 +101,13 @@ browserstack.err
 cache/
 custom/**/
 .sass-cache/
-.php_cs.cache
 
 # Ignore testing environment
 build/tmp/
+
+# IMAP testing
+fakeImapResource
+include/Imap/ImapTestSettings.txt
+
+# Ignore php-cs-fixer cache
+.php_cs.cache

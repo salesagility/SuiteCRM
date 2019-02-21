@@ -46,18 +46,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
      * ListView for the subpanel- list of many objects
      * @api
      */
-    class ListViewSubPanel extends ListView {
-
+    class ListViewSubPanel extends ListView
+    {
         protected $smartyTemplate;
         protected $smartyTemplatePath;
 
-        public function __construct() {
-
+        public function __construct()
+        {
             $this->smartyTemplate = new Sugar_Smarty();
             parent::__construct();
         }
 
-        public function initNewSmartyTemplate($templatePath, $modString, $imagePath = null) {
+        public function initNewSmartyTemplate($templatePath, $modString, $imagePath = null)
+        {
 
             // validate path is a .tpl file
             $path_parts = pathinfo($templatePath);
@@ -82,26 +83,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
             }
         }
 
-        public function getSmartyTemplate() {
-
+        public function getSmartyTemplate()
+        {
             return $this->smartyTemplate;
         }
 
-        public function setSmartyTemplate($template) {
-
+        public function setSmartyTemplate($template)
+        {
             $this->smartyTemplate = $template;
         }
 
-        public function smartyTemplateAssign($name, $value) {
-
+        public function smartyTemplateAssign($name, $value)
+        {
             if (!isset($this->smartyTemplate)) {
                 $this->createSmartyTemplate();
             }
             $this->smartyTemplate->assign($name, $value);
         }
 
-        public function createSmartyTemplate() {
-
+        public function createSmartyTemplate()
+        {
             if (!isset($this->smartyTemplate)) {
                 if (isset($this->smartyTemplatePath)) {
                     $this->smartyTemplate = new Sugar_Smarty($this->smartyTemplatePath);
@@ -112,15 +113,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
                     $this->smartyTemplate->assign("THEME", $this->local_theme);
                     $this->smartyTemplate->assign("IMAGE_PATH", $this->local_image_path);
                     $this->smartyTemplate->assign("MODULE_NAME", $this->local_current_module);
-                }
-                else {
+                } else {
                     $GLOBALS['log']->error("NO SMARTY TEMPLATE PATH DEFINED CANNOT CREATE SMARTY TEMPLATE");
                 }
             }
         }
 
-        public function setCurrentModule($currentModule) {
-
+        public function setCurrentModule($currentModule)
+        {
             unset($this->local_current_module);
             $this->local_current_module = $currentModule;
             if (isset($this->smartyTemplate)) {
@@ -129,8 +129,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
         }
 
 
-        public function process_dynamic_listview($source_module, $sugarbean, $subpanel_def) {
-
+        public function process_dynamic_listview($source_module, $sugarbean, $subpanel_def, $countOnly = false)
+        {
             $this->source_module = $source_module;
             $this->subpanel_module = $subpanel_def->name;
             if (!isset($this->smartyTemplate)) {
@@ -139,15 +139,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
             $html_var = $this->subpanel_module . "_CELL";
 
-            $list_data = $this->processUnionBeans($sugarbean, $subpanel_def, $html_var);
+            $list_data = $this->processUnionBeans($sugarbean, $subpanel_def, $html_var, $countOnly);
+            
+            if ($countOnly) {
+                return $list_data;
+            }
 
             $list = $list_data['list'];
             $parent_data = $list_data['parent_data'];
 
             if ($subpanel_def->isCollection()) {
                 $thepanel = $subpanel_def->get_header_panel_def();
-            }
-            else {
+            } else {
                 $thepanel = $subpanel_def;
             }
 
@@ -166,9 +169,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
             }
         }
 
-        public function process_dynamic_listview_header($source_module, $subpanel_def, $html_var = 'CELL') {
-
-
+        public function process_dynamic_listview_header($source_module, $subpanel_def, $html_var = 'CELL')
+        {
             $layout_manager = $this->getLayoutManager();
             $layout_manager->setAttribute('order_by_link', $this->processOrderBy($html_var));
             $layout_manager->setAttribute('context', 'HeaderCell');
@@ -212,15 +214,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
                         if (!isset($count)) {
                             $count = 0;
-                        }
-                        else {
+                        } else {
                             $count++;
                         }
 
                         if ($col_count == 0 || $column_name == 'name') {
                             $footable = 'data-toggle="true"';
-                        }
-                        else {
+                        } else {
                             $footable = 'data-hide="phone"';
                             if ($col_count > 2) {
                                 $footable = 'data-hide="phone,phonelandscape"';
@@ -229,9 +229,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                                 $footable = 'data-hide="phone,phonelandscape,tablet"';
                             }
                         }
-
-                    }
-                    else {
+                    } else {
                         $buttons = true;
                     }
                 }
@@ -241,8 +239,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
             $this->smartyTemplate->assign('HEADER_CELLS', $widget_contents);
         }
 
-        public function process_dynamic_listview_rows($data, $parent_data, $smartyTemplateSection, $html_varName, $subpanel_def) {
-
+        public function process_dynamic_listview_rows($data, $parent_data, $smartyTemplateSection, $html_varName, $subpanel_def)
+        {
             global $subpanel_item_count;
             global $odd_bg;
             global $even_bg;
@@ -272,8 +270,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
             $subpanel_list = array();
             if ($subpanel_def->isCollection()) {
                 $subpanel_list = $subpanel_def->sub_subpanels;
-            }
-            else {
+            } else {
                 $subpanel_list[] = $subpanel_def;
             }
 
@@ -291,7 +288,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 }
             }
 
-            foreach($data as $aVal => $aItem) {
+            foreach ($data as $aVal => $aItem) {
                 $widget_contents[$aVal] = array();
                 $subpanel_item_count++;
                 $aItem->check_date_relationships_load();
@@ -302,7 +299,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 $aItem->call_custom_logic("process_record");
 
                 if (isset($parent_data[$aItem->id])) {
-
                     $aItem->parent_name = $parent_data[$aItem->id]['parent_name'];
                     if (!empty($parent_data[$aItem->id]['parent_name_owner'])) {
                         $aItem->parent_name_owner = $parent_data[$aItem->id]['parent_name_owner'];
@@ -312,9 +308,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 $fields = $aItem->get_list_view_data();
                 if (isset($processed_ids[$aItem->id])) {
                     continue;
-
-                }
-                else {
+                } else {
                     $processed_ids[$aItem->id] = 1;
                 }
 
@@ -325,8 +319,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 if ($this->shouldProcess) {
                     if ($aItem->ACLAccess('EditView')) {
                         $widget_contents[$aVal][0] = "<input type='checkbox' class='checkbox' name='mass[]' value='" . $fields['ID'] . "' />";
-                    }
-                    else {
+                    } else {
                         $widget_contents[$aVal][0] = '';
                     }
 //                    if ($aItem->ACLAccess('DetailView')) {
@@ -336,7 +329,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 //                        $this->smartyTemplate->assign('TAG_NAME', 'span');
 //                    }
                     $this->smartyTemplate->assign('CHECKALL', "<input type='checkbox'  title='" . $GLOBALS['app_strings']['LBL_SELECT_ALL_TITLE'] . "' class='checkbox' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' />");
-
                 }
                 $oddRow = !$oddRow;
 
@@ -353,8 +345,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 //the sub-panel and panel in the bean being processed.
                 if ($subpanel_def->isCollection()) {
                     $thepanel = $subpanel_def->sub_subpanels[$aItem->panel_name];
-                }
-                else {
+                } else {
                     $thepanel = $subpanel_def;
                 }
 
@@ -368,8 +359,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 global $current_user;
                 if (is_admin($current_user)) {
                     $aclaccess_is_owner = true;
-                }
-                else {
+                } else {
                     $aclaccess_is_owner = $aItem->isOwner($current_user->id);
                 }
 
@@ -409,38 +399,31 @@ if (!defined('sugarEntry') || !sugarEntry) {
                         //for collections such as Activities where you have a field in only one object and wish to show it in the subpanel list
                         $count++;
                         $widget_contents[$aVal][$field_name] = '&nbsp;';
-
-                    }
-                    else {
+                    } else {
                         if ($usage != 'query_only') {
                             $list_field['name'] = $field_name;
 
                             $module_field = $field_name . '_mod';
                             $owner_field = $field_name . '_owner';
                             if (!empty($aItem->$module_field)) {
-
                                 $list_field['owner_id'] = $aItem->$owner_field;
                                 $list_field['owner_module'] = $aItem->$module_field;
-
-                            }
-                            else {
+                            } else {
                                 $list_field['owner_id'] = false;
                                 $list_field['owner_module'] = false;
                             }
                             if (isset($list_field['alias'])) {
-                                 $list_field['name'] = $list_field['alias'];
-                            	// Clone field def from origin field def to alias field def
-                            	$alias_field_def = $aItem->field_defs[$field_name];
-                            	$alias_field_def['name'] = $list_field['alias'];
-                            	// Add alias field def into bean to can render field in subpanel
-                            	$aItem->field_defs[$list_field['alias']] = $alias_field_def;
-                            	if(!isset($fields[strtoupper($list_field['alias'])]) || empty($fields[strtoupper($list_field['alias'])])) {
-                                	global $timedate;
-                                	$fields[strtoupper($list_field['alias'])] = (!empty($aItem->$field_name)) ? $aItem->$field_name : $timedate->to_display_date_time($aItem->{$list_field['alias']});
-                            	}
-
-                            }
-                            else {
+                                $list_field['name'] = $list_field['alias'];
+                                // Clone field def from origin field def to alias field def
+                                $alias_field_def = $aItem->field_defs[$field_name];
+                                $alias_field_def['name'] = $list_field['alias'];
+                                // Add alias field def into bean to can render field in subpanel
+                                $aItem->field_defs[$list_field['alias']] = $alias_field_def;
+                                if (!isset($fields[strtoupper($list_field['alias'])]) || empty($fields[strtoupper($list_field['alias'])])) {
+                                    global $timedate;
+                                    $fields[strtoupper($list_field['alias'])] = (!empty($aItem->$field_name)) ? $aItem->$field_name : $timedate->to_display_date_time($aItem->{$list_field['alias']});
+                                }
+                            } else {
                                 $list_field['name'] = $field_name;
                             }
                             $list_field['fields'] = $fields;
@@ -458,15 +441,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
                                 if (isset($vardef['type'])) {
                                     $fieldType = isset($vardef['custom_type']) ? $vardef['custom_type'] : $vardef['type'];
                                     $tmpField = SugarFieldHandler::getSugarField($fieldType, true);
-                                }
-                                else {
+                                } else {
                                     $tmpField = null;
                                 }
 
                                 if ($tmpField != null) {
                                     $widget_contents[$aVal][$field_name] = SugarFieldHandler::displaySmarty($list_field['fields'], $vardef, 'ListView', $list_field);
-                                }
-                                else {
+                                } else {
                                     // No SugarField for this particular type
                                     // Use the old, icky, SugarWidget for now
                                     $widget_contents[$aVal][$field_name] = $layout_manager->widgetDisplay($list_field);
@@ -483,17 +464,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
                                     //vardef source is non db, assign the field name to varname for processing of column.
                                     if (!empty($vardef['source']) && $vardef['source'] == 'non-db') {
                                         $list_field['varname'] = $field_name;
-
                                     }
                                     $widget_contents[$aVal][$field_name] = $layout_manager->widgetDisplay($list_field);
-                                }
-                                else {
+                                } else {
                                     if (isset($list_field['widget_class']) && $list_field['widget_class'] == 'SubPanelEmailLink') {
-
                                         if (isset($list_field['fields']['EMAIL1_LINK'])) {
                                             $widget_contents[$aVal][$field_name] = $list_field['fields']['EMAIL1_LINK'];
-                                        }
-                                        else {
+                                        } else {
                                             $widget_contents[$aVal][$field_name] = $layout_manager->widgetDisplay($list_field);
                                         }
                                     }
@@ -503,8 +480,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                                 if (empty($widget_contents)) {
                                     $widget_contents[$aVal][$field_name] = '&nbsp;';
                                 }
-                            }
-                            else {
+                            } else {
                                 // This handles the edit and remove buttons and icon widget
                                 if (isset($list_field['widget_class']) && $list_field['widget_class'] == "SubPanelIcon") {
                                     $count++;
@@ -513,23 +489,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
                                     if (empty($widget_contents[$aVal][$field_name])) {
                                         $widget_contents[$aVal][$field_name] = '&nbsp;';
                                     }
-                                }
-                                elseif (preg_match("/button/i", $list_field['name'])) {
+                                } elseif (preg_match("/button/i", $list_field['name'])) {
                                     if ((($list_field['name'] === 'edit_button' && $field_acl['EditView']) || ($list_field['name'] === 'close_button' && $field_acl['EditView']) || ($list_field['name'] === 'remove_button' && $field_acl['Delete'])) && '' != ($_content = $layout_manager->widgetDisplay($list_field))) {
                                         $button_contents[$aVal][] = $_content;
                                         unset($_content);
-                                    }
-                                    else {
+                                    } else {
                                         $doNotProcessTheseActions = array("edit_button", "close_button","remove_button");
-                                        if(!in_array($list_field['name'],$doNotProcessTheseActions) && '' != ($_content = $layout_manager->widgetDisplay($list_field))){
+                                        if (!in_array($list_field['name'], $doNotProcessTheseActions) && '' != ($_content = $layout_manager->widgetDisplay($list_field))) {
                                             $button_contents[$aVal][] = $_content;
                                             unset($_content);
-                                        }else{
+                                        } else {
                                             $button_contents[$aVal][] = '';
                                         }
                                     }
-                                }
-                                else {
+                                } else {
                                     $count++;
 //                                    $this->smartyTemplate->assign('CLASS', "");
                                     $widget_contents[$aVal][$field_name] = $layout_manager->widgetDisplay($list_field);
@@ -539,7 +512,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
                                     }
                                 }
                             }
-
                         }
                     }
                 }
@@ -553,19 +525,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
             $this->smartyTemplate->assign('ROWS_BUTTONS', $button_contents);
         }
 
-        public function processListNavigation($smartyTemplateSection, $html_varName, $current_offset, $next_offset, $previous_offset, $row_count, $sugarbean = null, $subpanel_def = null, $col_count = 20) {
-
+        public function processListNavigation($smartyTemplateSection, $html_varName, $current_offset, $next_offset, $previous_offset, $row_count, $sugarbean = null, $subpanel_def = null, $col_count = 20)
+        {
             global $export_module;
             global $sugar_config;
             global $current_user;
             global $currentModule;
             global $app_strings;
 
-            if(!isset($current_offset) || empty($current_offset))
-	    {
-  		$current_offset=0;
-	    }
-	    $start_record = $current_offset + 1;
+            if (!isset($current_offset) || empty($current_offset)) {
+                $current_offset=0;
+            }
+            $start_record = $current_offset + 1;
 
             if (!is_numeric($col_count)) {
                 $col_count = 20;
@@ -583,8 +554,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
             // Determine the start location of the last page
             if ($row_count == 0) {
                 $number_pages = 0;
-            }
-            else {
+            } else {
                 $number_pages = floor(($row_count - 1) / $this->records_per_page);
             }
 
@@ -623,7 +593,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
                     $select_entire_list = ($massUpdateRun) ? 0 : (isset($_POST['select_entire_list']) ? $_POST['select_entire_list'] : (isset($_REQUEST['select_entire_list']) ? htmlspecialchars($_REQUEST['select_entire_list']) : 0));
 
                     echo "<textarea style='display: none' name='uid'>{$uids}</textarea>\n" . "<input type='hidden' name='select_entire_list' value='{$select_entire_list}'>\n" . "<input type='hidden' name='{$moduleString}' value='0'>\n" . "<input type='hidden' name='{$moduleStringOrder}' value='0'>\n";
-
                 }
 
 
@@ -632,22 +601,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 if (0 == $current_offset) {
                     $start_link = "<button type='button' name='listViewStartButton' title='{$this->local_app_strings['LNK_LIST_START']}' class='button' disabled><span class='suitepicon suitepicon-action-first'></span></button>";
                     $previous_link = "<button type='button' name='listViewPrevButton' title='{$this->local_app_strings['LNK_LIST_PREVIOUS']}' class='button' disabled><span class='suitepicon suitepicon-action-left'></span></button>";
-                }
-                else {
+                } else {
                     if ($this->multi_select_popup) {// nav links for multiselect popup, submit form to save checks.
                         $start_link = "<button type='button' class='button' name='listViewStartButton' title='{$this->local_app_strings['LNK_LIST_START']}' onClick='javascript:save_checks(0, \"{$moduleString}\");'><span class='suitepicon suitepicon-action-first'></span></button>";
                         $previous_link = "<button type='button' class='button' name='listViewPrevButton' title='{$this->local_app_strings['LNK_LIST_PREVIOUS']}' onClick='javascript:save_checks($previous_offset, \"{$moduleString}\");'><span class='suitepicon suitepicon-action-left'></span></button>";
-                    }
-                    elseif ($this->shouldProcess) {
+                    } elseif ($this->shouldProcess) {
                         $start_link = "<button type='button' class='button' name='listViewStartButton' title='{$this->local_app_strings['LNK_LIST_START']}' onClick='location.href=\"$start_URL\"; sListView.save_checks(0, \"{$moduleString}\");'><span class='suitepicon suitepicon-action-first'></span></button>";
                         $previous_link = "<button type='button' class='button' name='listViewPrevButton' title='{$this->local_app_strings['LNK_LIST_PREVIOUS']}' onClick='location.href=\"$previous_URL\"; sListView.save_checks($previous_offset, \"{$moduleString}\");'><span class='suitepicon suitepicon-action-left'></span></button>";
-                    }
-                    else {
+                    } else {
                         $onClick = '';
                         if (0 != preg_match('/javascript.*/', $start_URL)) {
                             $onClick = "\"$start_URL;\"";
-                        }
-                        else {
+                        } else {
                             $onClick = "'location.href=\"$start_URL\";'";
                         }
                         $start_link = "<button type='button' class='button' name='listViewStartButton' title='{$this->local_app_strings['LNK_LIST_START']}' onClick=" . $onClick . "><span class='suitepicon suitepicon-action-first'></span></button>";
@@ -655,8 +620,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                         $onClick = '';
                         if (0 != preg_match('/javascript.*/', $previous_URL)) {
                             $onClick = "\"$previous_URL;\"";
-                        }
-                        else {
+                        } else {
                             $onClick = "'location.href=\"$previous_URL\";'";
                         }
                         $previous_link = "<button type='button' class='button' name='listViewPrevButton' title='{$this->local_app_strings['LNK_LIST_PREVIOUS']}' onClick=" . $onClick . "><span class='suitepicon suitepicon-action-left'></span></button>";
@@ -666,25 +630,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 if ($last_offset <= $current_offset) {
                     $end_link = "<button type='button' name='listViewEndButton' title='{$this->local_app_strings['LNK_LIST_END']}' class='button' disabled><span class='suitepicon suitepicon-action-last'></span></button>";
                     $next_link = "<button type='button' name='listViewNextButton' title='{$this->local_app_strings['LNK_LIST_NEXT']}' class='button' disabled><span class='suitepicon suitepicon-action-right'></span></button>";
-                }
-                else {
+                } else {
                     if ($this->multi_select_popup) { // nav links for multiselect popup, submit form to save checks.
                         $end_link = "<button type='button' name='listViewEndButton' class='button' title='{$this->local_app_strings['LNK_LIST_END']}' onClick='javascript:save_checks($last_offset, \"{$moduleString}\");'><span class='suitepicon suitepicon-action-last'></span></button>";
                         if (!empty($sugar_config['disable_count_query'])) {
                             $end_link = '';
                         }
                         $next_link = "<button type='button' name='listViewNextButton' title='{$this->local_app_strings['LNK_LIST_NEXT']}' class='button' onClick='javascript:save_checks($next_offset, \"{$moduleString}\");'><span class='suitepicon suitepicon-action-right'></span></button>";
-                    }
-                    elseif ($this->shouldProcess) {
+                    } elseif ($this->shouldProcess) {
                         $end_link = "<button type='button' name='listViewEndButton' class='button' title='{$this->local_app_strings['LNK_LIST_END']}' onClick='location.href=\"$end_URL\"; sListView.save_checks(\"end\", \"{$moduleString}\");'><span class='suitepicon suitepicon-action-last'></span></button>";
                         $next_link = "<button type='button' name='listViewNextButton' class='button' title='{$this->local_app_strings['LNK_LIST_NEXT']}' onClick='location.href=\"$next_URL\"; sListView.save_checks($next_offset, \"{$moduleString}\");'><span class='suitepicon suitepicon-action-right'></span></button>";
-                    }
-                    else {
+                    } else {
                         $onClick = '';
                         if (0 != preg_match('/javascript.*/', $next_URL)) {
                             $onClick = "\"$next_URL;\"";
-                        }
-                        else {
+                        } else {
                             $onClick = "'location.href=\"$next_URL\";'";
                         }
                         $next_link = "<button type='button' name='listViewNextButton' class='button' title='{$this->local_app_strings['LNK_LIST_NEXT']}' onClick=" . $onClick . "><span class='suitepicon suitepicon-action-right'></span></button>";
@@ -692,12 +652,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
                         $onClick = '';
                         if (0 != preg_match('/javascript.*/', $end_URL)) {
                             $onClick = "\"$end_URL;\"";
-                        }
-                        else {
+                        } else {
                             $onClick = "'location.href=\"$end_URL\";'";
                         }
                         $end_link = "<button type='button' name='listViewEndButton' class='button' title='{$this->local_app_strings['LNK_LIST_END']}' onClick=" . $onClick . "><span class='suitepicon suitepicon-action-last'></span></button>";
-
                     }
                 }
 
@@ -731,8 +689,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                         $this->show_plus = true;
                         $total = $pageTotal;
                         $total_label = $total . '+';
-                    }
-                    else {
+                    } else {
                         $this->show_plus = false;
                         $total_label = $total;
                     }
@@ -747,9 +704,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                     $select_link = smarty_function_sugar_action_menu(array(
                         'class' => 'clickMenu selectmenu', 'id' => 'selectLink', 'buttons' => $menuItems, 'flat' => false,
                     ), $this->smartyTemplate);
-
-                }
-                else {
+                } else {
                     $select_link = "&nbsp;";
                 }
 
@@ -757,8 +712,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
                 if ($this->show_delete_button) {
                     $delete_link = '<input class="button" type="button" id="delete_button" name="Delete" value="' . $this->local_app_strings['LBL_DELETE_BUTTON_LABEL'] . '" onclick="return sListView.send_mass_update(\'selected\',\'' . $this->local_app_strings['LBL_LISTVIEW_NO_SELECTED'] . '\', 1)">';
-                }
-                else {
+                } else {
                     $delete_link = '&nbsp;';
                 }
 
@@ -766,7 +720,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 $admin->retrieveSettings('system');
 
                 $user_merge = $current_user->getPreference('mailmerge_on');
-                if($user_merge == 'on' && isset($admin->settings['system_mailmerge_on']) && $admin->settings['system_mailmerge_on']) {
+                if ($user_merge == 'on' && isset($admin->settings['system_mailmerge_on']) && $admin->settings['system_mailmerge_on']) {
                     echo "<script>
                 function mailmerge_dialog(el) {
                    	var \$dialog = \$('<div></div>')
@@ -799,8 +753,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                     }
                     $export_link = "&nbsp;";
                     $merge_link = "&nbsp;";
-                }
-                elseif ($_REQUEST['module'] != "Accounts" && $_REQUEST['module'] != "Cases" && $_REQUEST['module'] != "Contacts" && $_REQUEST['module'] != "Leads" && $_REQUEST['module'] != "Opportunities") {
+                } elseif ($_REQUEST['module'] != "Accounts" && $_REQUEST['module'] != "Cases" && $_REQUEST['module'] != "Contacts" && $_REQUEST['module'] != "Leads" && $_REQUEST['module'] != "Opportunities") {
                     $merge_link = "&nbsp;";
                 }
 
@@ -824,20 +777,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
                         //attempt to get the query to recreate this subpanel
                         if (!empty($this->response)) {
                             $response =& $this->response;
-                        }
-                        else {
+                        } else {
                             $response = SugarBean::get_union_related_list($sugarbean, $this->sortby, $this->sort_order, $this->query_where, $current_offset, -1, $this->records_per_page, $this->query_limit, $subpanel_def);
                             $this->response = $response;
                         }
                         //if query is present, then pass it in as parameter
                         if (isset($response['query']) && !empty($response['query'])) {
                             $html_text .= $subpanelTiles->get_buttons($subpanel_def, $response['query']);
-                        }
-                        else {
+                        } else {
                             $html_text .= $subpanelTiles->get_buttons($subpanel_def);
                         }
-                    }
-                    else {
+                    } else {
                         $html_text .= "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td align=\"left\"  nowrap>$select_link&nbsp;$export_link&nbsp;$delete_link&nbsp;$selected_objects_span";
                     }
                     $html_text .= "</td>\n<td nowrap align=\"right\">" . $start_link . "&nbsp;&nbsp;" . $previous_link . "&nbsp;&nbsp;<span class='pageNumbers'>(" . $start_record . " - " . $end_record . " " . $this->local_app_strings['LBL_LIST_OF'] . " " . $row_count . ")</span>&nbsp;&nbsp;" . $next_link . "&nbsp;&nbsp;" . $end_link . "</td></tr></table>\n";
@@ -853,8 +803,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
             }
         } // end processListNavigation
 
-        public function processOrderBy($html_varName) {
-
+        public function processOrderBy($html_varName)
+        {
             if (!isset($this->base_URL)) {
                 $this->base_URL = $_SERVER['PHP_SELF'];
 
@@ -888,12 +838,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
                     if ($this->base_URL == "/index.php") {
                         $this->base_URL .= "?";
-                    }
-                    else {
+                    } else {
                         if ($fullRequestString == substr($this->baseURL, '-' . strlen($fullRequestString))) {
                             $this->base_URL = preg_replace("/&" . $key . "\=.*/", "", $this->base_URL);
-                        }
-                        else {
+                        } else {
                             $this->base_URL = preg_replace("/&" . $key . "\=.*?&/", "&", $this->base_URL);
                         }
                         $this->base_URL .= "&";
@@ -911,8 +859,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 $this->smartyTemplate->assign("ORDER_BY", $sort_URL_base);
 
                 return $sort_URL_base;
-            }
-            else {
+            } else {
                 return '';
             }
         }

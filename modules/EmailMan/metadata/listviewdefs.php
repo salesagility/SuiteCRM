@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,48 +37,48 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
 
 $listViewDefs['EmailMan'] = array(
     'CAMPAIGN_NAME' => array(
-        'width' => '10', 
-        'label' => 'LBL_LIST_CAMPAIGN', 
+        'width' => '10',
+        'label' => 'LBL_LIST_CAMPAIGN',
         'link' => true,
-		'customCode' => '<a href="index.php?module=Campaigns&action=DetailView&record={$CAMPAIGN_ID}">{$CAMPAIGN_NAME}</a>',
+        'customCode' => '<a href="index.php?module=Campaigns&action=DetailView&record={$CAMPAIGN_ID}">{$CAMPAIGN_NAME}</a>',
         'default' => true),
     'RECIPIENT_NAME' => array(
-		'sortable' => false,
-        'width' => '10', 
+        'sortable' => false,
+        'width' => '10',
         'label' => 'LBL_LIST_RECIPIENT_NAME',
-		'customCode' => '<a href="index.php?module={$RELATED_TYPE}&action=DetailView&record={$RELATED_ID}">{$RECIPIENT_NAME}</a>', 
+        'customCode' => '<a href="index.php?module={$RELATED_TYPE}&action=DetailView&record={$RELATED_ID}">{$RECIPIENT_NAME}</a>',
         'default' => true),
     'RECIPIENT_EMAIL' => array(
-		'sortable' => false,
-        'width' => '10', 
+        'sortable' => false,
+        'width' => '10',
         'label' => 'LBL_LIST_RECIPIENT_EMAIL',
-		'customCode' => '{$RECIPIENT_EMAIL}</a>',
+        'customCode' => '{$RECIPIENT_EMAIL}</a>',
         'default' => true),
     'MESSAGE_NAME' => array(
-		'sortable' => false,
-        'width' => '10', 
+        'sortable' => false,
+        'width' => '10',
         'label' => 'LBL_LIST_MESSAGE_NAME',
-		'customCode' => '<a href="index.php?module=EmailMarketing&action=DetailView&record={$MARKETING_ID}">{$MESSAGE_NAME}</a>',
+        'customCode' => '<a href="index.php?module=EmailMarketing&action=DetailView&record={$MARKETING_ID}">{$MESSAGE_NAME}</a>',
         'default' => true),
     'SEND_DATE_TIME' => array(
-        'width' => '10', 
-        'label' => 'LBL_LIST_SEND_DATE_TIME', 
+        'width' => '10',
+        'label' => 'LBL_LIST_SEND_DATE_TIME',
         'default' => true),
     'SEND_ATTEMPTS' => array(
-        'width' => '10', 
-        'label' => 'LBL_LIST_SEND_ATTEMPTS', 
+        'width' => '10',
+        'label' => 'LBL_LIST_SEND_ATTEMPTS',
         'default' => true),
     'IN_QUEUE' => array(
-        'width' => '10', 
-        'label' => 'LBL_LIST_IN_QUEUE', 
+        'width' => '10',
+        'label' => 'LBL_LIST_IN_QUEUE',
         'default' => true),
 );

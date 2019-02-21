@@ -1,11 +1,14 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+
+use SuiteCRM\Utility\SuiteValidator;
+
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +37,13 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * Set up an array of Jobs with the appropriate metadata
@@ -74,7 +80,8 @@ $job_strings = array(
     14 => 'cleanJobQueue',
     15 => 'removeDocumentsFromFS',
     16 => 'trimSugarFeeds',
-
+    17 => 'syncGoogleCalendar',
+    18 => 'runElasticSearchIndexerScheduler',
 );
 
 /**
@@ -92,7 +99,6 @@ function refreshJobs()
  */
 function pollMonitoredInboxes()
 {
-
     $_bck_up = array('team_id' => $GLOBALS['current_user']->team_id, 'team_set_id' => $GLOBALS['current_user']->team_set_id);
     $GLOBALS['log']->info('----->Scheduler fired job of type pollMonitoredInboxes()');
     global $dictionary;
@@ -109,7 +115,7 @@ function pollMonitoredInboxes()
     while ($a = $ie->db->fetchByAssoc($r)) {
         $GLOBALS['log']->debug('In while loop of Inbound Emails');
         $ieX = new InboundEmail();
-        $ieX->retrieve($a['id']);;
+        $ieX->retrieve($a['id']);
         $mailboxes = $ieX->mailboxarray;
         foreach ($mailboxes as $mbox) {
             $ieX->mailbox = $mbox;
@@ -131,13 +137,15 @@ function pollMonitoredInboxes()
                 if (!$ieX->isPop3Protocol()) {
                     $newMsgs = $ieX->getNewMessageIds();
                 }
+
+                $isGroupFolderExists = false;
+
                 if (is_array($newMsgs)) {
                     $current = 1;
                     $total = count($newMsgs);
                     require_once("include/SugarFolders/SugarFolders.php");
                     $sugarFolder = new SugarFolder();
                     $groupFolderId = $ieX->groupfolder_id;
-                    $isGroupFolderExists = false;
                     $users = array();
                     if ($groupFolderId != null && $groupFolderId != "") {
                         $sugarFolder->retrieve($groupFolderId);
@@ -159,12 +167,12 @@ function pollMonitoredInboxes()
                         if ($ieX->isPop3Protocol()) {
                             $uid = $msgNoToUIDL[$msgNo];
                         } else {
-                            $uid = imap_uid($ieX->conn, $msgNo);
+                            $uid = $ieX->getImap()->getUid($msgNo);
                         } // else
                         if ($isGroupFolderExists) {
                             if ($ieX->returnImportedEmail($msgNo, $uid)) {
                                 // add to folder
-                                $sugarFolder->addBean($ieX->email);
+                                $sugarFolder->addBean($ieX);
                                 if ($ieX->isPop3Protocol()) {
                                     $messagesToDelete[] = $msgNo;
                                 } else {
@@ -212,14 +220,17 @@ function pollMonitoredInboxes()
                                  which has caseid in message*/
                                 $ieX->getMessagesInEmailCache($msgNo, $uid);
                                 $email = new Email();
-                                $header = imap_headerinfo($ieX->conn, $msgNo);
+                                $header = $ieX->getImap()->getHeaderInfo($msgNo);
                                 $email->name = $ieX->handleMimeHeaderDecode($header->subject);
                                 $email->from_addr = $ieX->convertImapToSugarEmailAddress($header->from);
+                                isValidEmailAddress($email->from_addr);
                                 $email->reply_to_email = $ieX->convertImapToSugarEmailAddress($header->reply_to);
                                 if (!empty($email->reply_to_email)) {
                                     $contactAddr = $email->reply_to_email;
+                                    isValidEmailAddress($contactAddr);
                                 } else {
                                     $contactAddr = $email->from_addr;
+                                    isValidEmailAddress($contactAddr);
                                 }
                                 $mailBoxType = $ieX->mailbox_type;
                                 $ieX->handleAutoresponse($email, $contactAddr);
@@ -232,7 +243,6 @@ function pollMonitoredInboxes()
                     if ($ieX->isMailBoxTypeCreateCase() && $distributionMethod == 'roundRobin') {
                         $emailUI->setLastRobin($ieX, $lastRobin);
                     } // if
-
                 } // if
                 if ($isGroupFolderExists) {
                     $leaveMessagesOnMailServer = $ieX->get_stored_options("leaveMessagesOnMailServer", 0);
@@ -249,8 +259,8 @@ function pollMonitoredInboxes()
                 // cn: bug 9171 - continue while
             } // else
         } // foreach
-        imap_expunge($ieX->conn);
-        imap_close($ieX->conn, CL_EXPUNGE);
+        $ieX->getImap()->expunge();
+        $ieX->getImap()->close(CL_EXPUNGE);
     } // while;
     return true;
 }
@@ -261,7 +271,6 @@ function pollMonitoredInboxes()
 function runMassEmailCampaign()
 {
     if (!class_exists('LoggerManager')) {
-
     }
     $GLOBALS['log'] = LoggerManager::getLogger('emailmandelivery');
     $GLOBALS['log']->debug('Called:runMassEmailCampaign');
@@ -300,7 +309,9 @@ function pruneDatabase()
             // find tables with deleted=1
             $columns = $db->get_columns($table);
             // no deleted - won't delete
-            if (empty($columns['deleted'])) continue;
+            if (empty($columns['deleted'])) {
+                continue;
+            }
 
             $custom_columns = array();
             if (array_search($table . '_cstm', $tables)) {
@@ -510,6 +521,20 @@ function trimSugarFeeds()
 }
 
 
+/**
+ * + * Job 17
+ * + * this will sync the Google Calendars of users who are configured to do so
+ * + */
+function syncGoogleCalendar()
+{
+    global $sugar_config;
+    require_once 'include/GoogleSync/GoogleSync.php';
+    $googleSync = new GoogleSync($sugar_config);
+    $googleSync->syncAllUsers();
+
+    return true;
+}
+
 function cleanJobQueue($job)
 {
     $td = TimeDate::getInstance();
@@ -540,27 +565,37 @@ function pollMonitoredInboxesAOP()
 
     require_once('modules/Configurator/Configurator.php');
     $aopInboundEmail = new AOPInboundEmail();
+
     $sqlQueryResult = $aopInboundEmail->db->query(
-        'SELECT id, name FROM inbound_email WHERE is_personal = 0 AND deleted=0 AND status=\'Active\''.
+        'SELECT id, name FROM inbound_email WHERE is_personal = 0 AND deleted=0 AND status=\'Active\'' .
         ' AND mailbox_type != \'bounce\''
     );
+
     $GLOBALS['log']->debug('Just got Result from get all Inbounds of Inbound Emails');
 
     while ($inboundEmailRow = $aopInboundEmail->db->fetchByAssoc($sqlQueryResult)) {
         $GLOBALS['log']->debug('In while loop of Inbound Emails');
+
         $aopInboundEmailX = new AOPInboundEmail();
-        $aopInboundEmailX->retrieve($inboundEmailRow['id']);
+
+        if (!$aopInboundEmailX->retrieve($inboundEmailRow['id']) || !$aopInboundEmailX->id) {
+            throw new Exception('Error retrieving AOP Inbound Email: ' . $inboundEmailRow['id']);
+        }
+
         $mailboxes = $aopInboundEmailX->mailboxarray;
+
         foreach ($mailboxes as $mbox) {
             $aopInboundEmailX->mailbox = $mbox;
             $newMsgs = array();
             $msgNoToUIDL = array();
             $connectToMailServer = false;
+
             if ($aopInboundEmailX->isPop3Protocol()) {
                 $msgNoToUIDL = $aopInboundEmailX->getPop3NewMessagesToDownloadForCron();
                 // get all the keys which are msgnos;
                 $newMsgs = array_keys($msgNoToUIDL);
             }
+
             if ($aopInboundEmailX->connectMailserver() == 'true') {
                 $connectToMailServer = true;
             } // if
@@ -568,9 +603,11 @@ function pollMonitoredInboxesAOP()
             $GLOBALS['log']->debug('Trying to connect to mailserver for [ ' . $inboundEmailRow['name'] . ' ]');
             if ($connectToMailServer) {
                 $GLOBALS['log']->debug('Connected to mailserver');
+
                 if (!$aopInboundEmailX->isPop3Protocol()) {
                     $newMsgs = $aopInboundEmailX->getNewMessageIds();
                 }
+
                 if (is_array($newMsgs)) {
                     $current = 1;
                     $total = count($newMsgs);
@@ -593,12 +630,15 @@ function pollMonitoredInboxesAOP()
                         if ($aopInboundEmailX->isPop3Protocol()) {
                             $uid = $msgNoToUIDL[$msgNo];
                         } else {
-                            $uid = imap_uid($aopInboundEmailX->conn, $msgNo);
+                            $uid = $aopInboundEmailX->getImap()->getUid($msgNo);
                         } // else
                         if ($isGroupFolderExists) {
-                            if ($aopInboundEmailX->returnImportedEmail($msgNo, $uid)) {
+                            $emailId = $aopInboundEmailX->returnImportedEmail($msgNo, $uid, false, true, $isGroupFolderExists);
+
+                            if (!empty($emailId)) {
                                 // add to folder
-                                $sugarFolder->addBean($aopInboundEmailX->email);
+
+                                $sugarFolder->addBean($aopInboundEmailX);
                                 if ($aopInboundEmailX->isPop3Protocol()) {
                                     $messagesToDelete[] = $msgNo;
                                 } else {
@@ -607,6 +647,16 @@ function pollMonitoredInboxesAOP()
                                 if ($aopInboundEmailX->isMailBoxTypeCreateCase()) {
                                     $userId = $assignManager->getNextAssignedUser();
                                     $GLOBALS['log']->debug('userId [ ' . $userId . ' ]');
+                                    $validatior = new SuiteValidator();
+                                    if ((!isset($aopInboundEmailX->email) || !$aopInboundEmailX->email ||
+                                        !isset($aopInboundEmailX->email->id) || !$aopInboundEmailX->email->id) &&
+                                        $validatior->isValidId($emailId)
+                                    ) {
+                                        $aopInboundEmailX->email = new Email();
+                                        if (!$aopInboundEmailX->email->retrieve($emailId)) {
+                                            throw new Exception('Email retrieving error to handle case create, email id was: ' . $emailId);
+                                        }
+                                    }
                                     $aopInboundEmailX->handleCreateCase($aopInboundEmailX->email, $userId);
                                 } // if
                             } // if
@@ -619,14 +669,17 @@ function pollMonitoredInboxesAOP()
 
                                 $aopInboundEmailX->getMessagesInEmailCache($msgNo, $uid);
                                 $email = new Email();
-                                $header = imap_headerinfo($aopInboundEmailX->conn, $msgNo);
+                                $header = $aopInboundEmailX->getImap()->getHeaderInfo($msgNo);
                                 $email->name = $aopInboundEmailX->handleMimeHeaderDecode($header->subject);
                                 $email->from_addr = $aopInboundEmailX->convertImapToSugarEmailAddress($header->from);
+                                isValidEmailAddress($email->from_addr);
                                 $email->reply_to_email = $aopInboundEmailX->convertImapToSugarEmailAddress($header->reply_to);
                                 if (!empty($email->reply_to_email)) {
                                     $contactAddr = $email->reply_to_email;
+                                    isValidEmailAddress($contactAddr);
                                 } else {
                                     $contactAddr = $email->from_addr;
+                                    isValidEmailAddress($contactAddr);
                                 }
                                 $mailBoxType = $aopInboundEmailX->mailbox_type;
                                 $aopInboundEmailX->handleAutoresponse($email, $contactAddr);
@@ -636,9 +689,9 @@ function pollMonitoredInboxesAOP()
                         $current++;
                     } // foreach
                     // update Inbound Account with last robin
-
                 } // if
-                if ($isGroupFolderExists) {
+
+                if (!empty($isGroupFolderExists)) {
                     $leaveMessagesOnMailServer = $aopInboundEmailX->get_stored_options("leaveMessagesOnMailServer", 0);
                     if (!$leaveMessagesOnMailServer) {
                         if ($aopInboundEmailX->isPop3Protocol()) {
@@ -653,8 +706,8 @@ function pollMonitoredInboxesAOP()
                 // cn: bug 9171 - continue while
             } // else
         } // foreach
-        imap_expunge($aopInboundEmailX->conn);
-        imap_close($aopInboundEmailX->conn, CL_EXPUNGE);
+        $aopInboundEmailX->getImap()->expunge();
+        $aopInboundEmailX->getImap()->close(CL_EXPUNGE);
     } // while
     return true;
 }
@@ -670,7 +723,7 @@ function aodIndexUnindexed()
     while ($total > 0) {
         $total = performLuceneIndexing();
         $sanityCount++;
-        if($sanityCount > 100){
+        if ($sanityCount > 100) {
             return true;
         }
     }
@@ -687,7 +740,9 @@ function aodOptimiseIndex()
 
 function performLuceneIndexing()
 {
-    global $db, $sugar_config;
+    global $sugar_config;
+    $db = DBManagerFactory::getInstance();
+    
     if (empty($sugar_config['aod']['enable_aod'])) {
         return;
     }
@@ -705,7 +760,7 @@ function performLuceneIndexing()
         $c = 0;
         while ($row = $db->fetchByAssoc($res)) {
             $suc = $index->index($beanModule, $row['id']);
-            if($suc){
+            if ($suc) {
                 $c++;
                 $total++;
             }
@@ -714,7 +769,6 @@ function performLuceneIndexing()
             $index->commit();
             $index->optimise();
         }
-
     }
     $index->optimise();
     return $total;
@@ -725,8 +779,16 @@ function aorRunScheduledReports()
     require_once 'include/SugarQueue/SugarJobQueue.php';
     $date = new DateTime();//Ensure we check all schedules at the same instant
     foreach (BeanFactory::getBean('AOR_Scheduled_Reports')->get_full_list() as $scheduledReport) {
-
-        if ($scheduledReport->status == 'active' && $scheduledReport->shouldRun($date)) {
+        if ($scheduledReport->status != 'active') {
+            continue;
+        }
+        try {
+            $shouldRun = $scheduledReport->shouldRun($date);
+        } catch (Exception $ex) {
+            LoggerManager::getLogger()->warn('aorRunScheduledReports: id: ' . $scheduledReport->id . ' got exception. code: ' . $ex->getCode() . ', message: ' . $ex->getMessage());
+            $shouldRun = false;
+        }
+        if ($shouldRun) {
             if (empty($scheduledReport->aor_report_id)) {
                 continue;
             }
@@ -739,7 +801,7 @@ function aorRunScheduledReports()
             $jq->submitJob($job);
         }
     }
-    return true;  
+    return true;
 }
 
 function processAOW_Workflow()
@@ -784,7 +846,7 @@ class AORScheduledReportJob implements RunnableSchedulerJob
             font-weight: normal;
             color: black;
             padding: 10px 8px;
-            border-bottom: 2px solid black};
+            border-bottom: 2px solid black;
         }
         .list td
         {
@@ -799,6 +861,7 @@ EOF;
         $mail->setMailerForSystem();
         $mail->IsHTML(true);
         $mail->From = $defaults['email'];
+        isValidEmailAddress($mail->From);
         $mail->FromName = $defaults['name'];
         $mail->Subject = from_html($bean->name);
         $mail->Body = $html;
@@ -814,6 +877,11 @@ EOF;
         $bean->save();
         return true;
     }
+}
+
+function runElasticSearchIndexerScheduler($data)
+{
+    return \SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer::schedulerJob(json_decode($data));
 }
 
 if (file_exists('custom/modules/Schedulers/_AddJobsHere.php')) {

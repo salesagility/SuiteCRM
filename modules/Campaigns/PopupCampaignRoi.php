@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -65,7 +68,7 @@ global $theme;
 
 $GLOBALS['log']->info("Campaign detail view");
 
-$xtpl=new XTemplate ('modules/Campaigns/PopupCampaignRoi.html');
+$xtpl=new XTemplate('modules/Campaigns/PopupCampaignRoi.html');
 
 //_pp($_REQUEST['id']);
 $campaign_id=$_REQUEST['id'];
@@ -81,45 +84,42 @@ $opp_query1  = "select camp.name, camp.actual_cost,camp.budget,camp.expected_rev
             $opp_data1=$campaign->db->fetchByAssoc($opp_result1);
  //get the click-throughs
  $query_click = "SELECT count(*) hits ";
-			$query_click.= " FROM campaign_log ";
-			$query_click.= " WHERE campaign_id = '$campaign_id' AND activity_type='link' AND related_type='CampaignTrackers' AND archived=0 AND deleted=0";
+            $query_click.= " FROM campaign_log ";
+            $query_click.= " WHERE campaign_id = '$campaign_id' AND activity_type='link' AND related_type='CampaignTrackers' AND archived=0 AND deleted=0";
 
             //if $marketing id is specified, then lets filter the chart by the value
-            if (!empty($marketing_id)){
+            if (!empty($marketing_id)) {
                 $query_click.= " AND marketing_id ='$marketing_id'";
             }
 
-			$query_click.= " GROUP BY  activity_type, target_type";
-			$query_click.= " ORDER BY  activity_type, target_type";
-			$result = $campaign->db->query($query_click);
+            $query_click.= " GROUP BY  activity_type, target_type";
+            $query_click.= " ORDER BY  activity_type, target_type";
+            $result = $campaign->db->query($query_click);
 
 
   $xtpl->assign("OPP_COUNT", $opp_data1['opp_count']);
-  $xtpl->assign("ACTUAL_COST",$opp_data1['actual_cost']);
-  $xtpl->assign("PLANNED_BUDGET",$opp_data1['budget']);
-  $xtpl->assign("EXPECTED_REVENUE",$opp_data1['expected_revenue']);
+  $xtpl->assign("ACTUAL_COST", $opp_data1['actual_cost']);
+  $xtpl->assign("PLANNED_BUDGET", $opp_data1['budget']);
+  $xtpl->assign("EXPECTED_REVENUE", $opp_data1['expected_revenue']);
 
 
 
 
-	$currency  = new Currency();
-if(isset($focus->currency_id) && !empty($focus->currency_id))
-{
-	$currency->retrieve($focus->currency_id);
-	if( $currency->deleted != 1){
-		$xtpl->assign("CURRENCY", $currency->iso4217 .' '.$currency->symbol );
-	}else $xtpl->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
-}else{
-
-	$xtpl->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
-
+    $currency  = new Currency();
+if (isset($focus->currency_id) && !empty($focus->currency_id)) {
+    $currency->retrieve($focus->currency_id);
+    if ($currency->deleted != 1) {
+        $xtpl->assign("CURRENCY", $currency->iso4217 .' '.$currency->symbol);
+    } else {
+        $xtpl->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
+    }
+} else {
+    $xtpl->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
 }
 
 global $current_user;
-if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])){
-
-	$xtpl->assign("ADMIN_EDIT","<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$_REQUEST['record']. "'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDIT_LAYOUT'])."</a>");
-
+if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
+    $xtpl->assign("ADMIN_EDIT", "<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$_REQUEST['record']. "'>".SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDIT_LAYOUT'])."</a>");
 }
 
 //$detailView->processListNavigation($xtpl, "CAMPAIGN", $offset, $focus->is_AuditEnabled());
@@ -182,12 +182,13 @@ $chart= new campaign_charts();
     //if marketing id has been selected, then set "latest_marketing_id" to the selected value
     //latest marketing id will be passed in to filter the charts and subpanels
 
-    if(!empty($selected_marketing_id)){$latest_marketing_id = $selected_marketing_id;}
-    if(empty($latest_marketing_id) ||  $latest_marketing_id === 'all'){
-        $xtpl->assign("MY_CHART_ROI", $chart->campaign_response_roi_popup($app_list_strings['roi_type_dom'],$app_list_strings['roi_type_dom'],$campaign_id,sugar_cached("xml/") . $cache_file_name_roi,true));
-    }else{
-
-    $xtpl->assign("MY_CHART_ROI", $chart->campaign_response_roi_popup($app_list_strings['roi_type_dom'],$app_list_strings['roi_type_dom'],$campaign_id,sugar_cached("xml/") .$cache_file_name_roi,true));
+    if (!empty($selected_marketing_id)) {
+        $latest_marketing_id = $selected_marketing_id;
+    }
+    if (empty($latest_marketing_id) ||  $latest_marketing_id === 'all') {
+        $xtpl->assign("MY_CHART_ROI", $chart->campaign_response_roi_popup($app_list_strings['roi_type_dom'], $app_list_strings['roi_type_dom'], $campaign_id, sugar_cached("xml/") . $cache_file_name_roi, true));
+    } else {
+        $xtpl->assign("MY_CHART_ROI", $chart->campaign_response_roi_popup($app_list_strings['roi_type_dom'], $app_list_strings['roi_type_dom'], $campaign_id, sugar_cached("xml/") .$cache_file_name_roi, true));
     }
 
 //$output_html .= ob_get_contents();

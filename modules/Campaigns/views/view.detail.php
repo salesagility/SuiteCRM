@@ -1,12 +1,15 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +20,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +38,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -52,25 +55,24 @@ require_once('include/json_config.php');
 
 require_once('include/MVC/View/views/view.detail.php');
 
-class CampaignsViewDetail extends ViewDetail {
-
- 	function __construct(){
-
+class CampaignsViewDetail extends ViewDetail
+{
+    public function __construct()
+    {
         parent::__construct();
         //turn off normal display of subpanels
         $this->options['show_subpanels'] = false;
-
- 	}
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function CampaignsViewDetail(){
+    public function CampaignsViewDetail()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -78,21 +80,22 @@ class CampaignsViewDetail extends ViewDetail {
 
 
 
-    function preDisplay(){
+    public function preDisplay()
+    {
         global $mod_strings;
-        if (isset($this->bean->campaign_type) && strtolower($this->bean->campaign_type) == 'newsletter'){
+        if (isset($this->bean->campaign_type) && strtolower($this->bean->campaign_type) == 'newsletter') {
             $mod_strings['LBL_MODULE_NAME'] = $mod_strings['LBL_NEWSLETTERS'];
         }
         parent::preDisplay();
         $this->options['show_subpanels'] = false;
-
     }
 
- 	function display() {
- 	    global $app_list_strings;
- 	    $this->ss->assign('APP_LIST', $app_list_strings);
+    public function display()
+    {
+        global $app_list_strings;
+        $this->ss->assign('APP_LIST', $app_list_strings);
 
-        if (isset($_REQUEST['mode']) && $_REQUEST['mode']=='set_target'){
+        if (isset($_REQUEST['mode']) && $_REQUEST['mode']=='set_target') {
             require_once('modules/Campaigns/utils.php');
             //call function to create campaign logs
             $mess = track_campaign_prospects($this->bean);
@@ -102,31 +105,29 @@ class CampaignsViewDetail extends ViewDetail {
             window.setTimeout('ajax_C_LOG_Status.hideStatus()', 1500);
             window.setTimeout(\"ajax_C_LOG_Status.showStatus('".$mess."')\",2000);
             window.setTimeout('ajax_C_LOG_Status.hideStatus()', 5000); ";
-            $this->ss->assign("MSG_SCRIPT",$confirm_msg);
-
+            $this->ss->assign("MSG_SCRIPT", $confirm_msg);
         }
 
-	    if (($this->bean->campaign_type == 'Email') || ($this->bean->campaign_type == 'NewsLetter' )) {
-	    	$this->ss->assign("ADD_BUTTON_STATE", "submit");
-	        $this->ss->assign("TARGET_BUTTON_STATE", "hidden");
-	    } else {
-	    	$this->ss->assign("ADD_BUTTON_STATE", "hidden");
-	    	$this->ss->assign("DISABLE_LINK", "display:none");
-	        $this->ss->assign("TARGET_BUTTON_STATE", "submit");
-	    }
+        if (($this->bean->campaign_type == 'Email') || ($this->bean->campaign_type == 'NewsLetter')) {
+            $this->ss->assign("ADD_BUTTON_STATE", "submit");
+            $this->ss->assign("TARGET_BUTTON_STATE", "hidden");
+        } else {
+            $this->ss->assign("ADD_BUTTON_STATE", "hidden");
+            $this->ss->assign("DISABLE_LINK", "display:none");
+            $this->ss->assign("TARGET_BUTTON_STATE", "submit");
+        }
 
-	    $currency = new Currency();
-	    if(isset($this->bean->currency_id) && !empty($this->bean->currency_id))
-	    {
-	    	$currency->retrieve($this->bean->currency_id);
-	    	if( $currency->deleted != 1){
-	    		$this->ss->assign('CURRENCY', $currency->iso4217 .' '.$currency->symbol);
-	    	}else {
-	    	    $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
-	    	}
-	    }else{
-	    	$this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
-	    }
+        $currency = new Currency();
+        if (isset($this->bean->currency_id) && !empty($this->bean->currency_id)) {
+            $currency->retrieve($this->bean->currency_id);
+            if ($currency->deleted != 1) {
+                $this->ss->assign('CURRENCY', $currency->iso4217 .' '.$currency->symbol);
+            } else {
+                $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
+            }
+        } else {
+            $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
+        }
 
         parent::display();
 
@@ -142,7 +143,7 @@ class CampaignsViewDetail extends ViewDetail {
             foreach ($alltabs as $key=>$name) {
                 if ($name != 'prospectlists' && $name!='emailmarketing' && $name != 'tracked_urls'
                 /* BEGIN - SECURITY GROUPS */
-                	&& $name != 'securitygroups'
+                    && $name != 'securitygroups'
                 /* END - SECURITY GROUPS */
                 ) {
                     //exclude subpanels that are not prospectlists, emailmarketing, or tracked urls
@@ -150,7 +151,7 @@ class CampaignsViewDetail extends ViewDetail {
                 }
             }
             //only show email marketing subpanel for email/newsletter campaigns
-            if ($this->bean->campaign_type != 'Email' && $this->bean->campaign_type != 'NewsLetter' ) {
+            if ($this->bean->campaign_type != 'Email' && $this->bean->campaign_type != 'NewsLetter') {
                 //exclude emailmarketing subpanel if not on an email or newsletter campaign
                 $subpanel->subpanel_definitions->exclude_tab('emailmarketing');
                 // Bug #49893  - 20120120 - Captivea (ybi) - Remove trackers subpanels if not on an email/newsletter campaign (useless subpannl)
@@ -159,6 +160,5 @@ class CampaignsViewDetail extends ViewDetail {
         }
         //show filtered subpanel list
         echo $subpanel->display();
-
     }
 }

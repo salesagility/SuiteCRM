@@ -1,12 +1,15 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +20,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,38 +38,41 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('include/MVC/View/SugarView.php');
-class ConfiguratorViewAddFontResult extends SugarView {
-   var $log="";
+class ConfiguratorViewAddFontResult extends SugarView
+{
+    public $log="";
     /**
      * display the form
      */
-    public function display(){
+    public function display()
+    {
         global $mod_strings, $app_list_strings, $app_strings, $current_user;
-        if(!is_admin($current_user)){
-           sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
+        if (!is_admin($current_user)) {
+            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
         $error = $this->addFont();
 
-        $this->ss->assign("MODULE_TITLE",
+        $this->ss->assign(
+            "MODULE_TITLE",
             getClassicModuleTitle(
                 $mod_strings['LBL_MODULE_ID'],
                 array($mod_strings['LBL_ADDFONTRESULT_TITLE']),
                 false
                 )
             );
-        if($error){
+        if ($error) {
             $this->ss->assign("error", $this->log);
-        }else{
+        } else {
             $this->ss->assign("info", $this->log);
         }
         $this->ss->assign("MOD", $mod_strings);
         $this->ss->assign("APP", $app_strings);
-//display
+        //display
         $this->ss->display('modules/Configurator/tpls/addFontResult.tpl');
     }
 
@@ -74,22 +80,23 @@ class ConfiguratorViewAddFontResult extends SugarView {
      * This method prepares the received data and call the addFont method of the fontManager
      * @return boolean true on success
      */
-    private function addFont(){
+    private function addFont()
+    {
         $this->log="";
         $error=false;
         $files = array("pdf_metric_file","pdf_font_file");
-        foreach($files as $k){
+        foreach ($files as $k) {
             // handle uploaded file
             $uploadFile = new UploadFile($k);
-            if (isset($_FILES[$k]) && $uploadFile->confirm_upload()){
+            if (isset($_FILES[$k]) && $uploadFile->confirm_upload()) {
                 $uploadFile->final_move(basename($_FILES[$k]['name']));
                 $uploadFileNames[$k] = $uploadFile->get_upload_path(basename($_FILES[$k]['name']));
-            }else{
+            } else {
                 $this->log = translate('ERR_PDF_NO_UPLOAD', "Configurator");
                 $error=true;
             }
         }
-        if(!$error){
+        if (!$error) {
             require_once('include/Sugarpdf/FontManager.php');
             $fontManager = new FontManager();
             $error = $fontManager->addFont(
@@ -102,8 +109,8 @@ class ConfiguratorViewAddFontResult extends SugarView {
                 $_REQUEST['pdf_style_list']
             );
             $this->log .= $fontManager->log;
-            if($error){
-                $this->log .= implode("\n",$fontManager->errors);
+            if ($error) {
+                $this->log .= implode("\n", $fontManager->errors);
             }
         }
         return $error;

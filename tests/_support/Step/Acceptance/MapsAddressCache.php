@@ -9,7 +9,7 @@ class MapsAddressCache extends \AcceptanceTester
      */
     public function gotoMapsAddressCache()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Maps - Address Cache');
     }
 
