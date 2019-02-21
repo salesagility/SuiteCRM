@@ -1,0 +1,12 @@
+[
+  {
+    "host": "foo.com",
+    "port": "9200",
+    "scheme": "https",
+    "user": "username",
+    "pass": "password!#$?*abc"
+  },
+  {
+    "host": "localhost"
+  }
+]

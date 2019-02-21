@@ -25,40 +25,40 @@
  $module_name = 'AOS_Quotes';
  $_module_name = 'aos_quotes';
   $searchdefs[$module_name] = array(
-					'templateMeta' => array(
-							'maxColumns' => '3',
+                    'templateMeta' => array(
+                            'maxColumns' => '3',
                             'widths' => array('label' => '10', 'field' => '30'),
                            ),
                     'layout' => array(
-							    'basic_search' => 
-					    array (
-					      'name' => 
-					      array (
-					        'name' => 'name',
-					        'default' => true,
-					        'width' => '10%',
-					      ),
-					      'current_user_only' => 
-					      array (
-					        'name' => 'current_user_only',
-					        'label' => 'LBL_CURRENT_USER_FILTER',
-					        'type' => 'bool',
-					        'default' => true,
-					        'width' => '10%',
-					      ),
-                            'favorites_only' => array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
+                                'basic_search' =>
+                        array(
+                          'name' =>
+                          array(
+                            'name' => 'name',
+                            'default' => true,
+                            'width' => '10%',
+                          ),
+                          'current_user_only' =>
+                          array(
+                            'name' => 'current_user_only',
+                            'label' => 'LBL_CURRENT_USER_FILTER',
+                            'type' => 'bool',
+                            'default' => true,
+                            'width' => '10%',
+                          ),
+                            'favorites_only' => array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
 
-					    ),
-						'advanced_search' => array(
-							'name',
-							'billing_contact',
-							'billing_account',
-							'number',
-							'total_amount',
-							'expiration',
-							'stage',
-							'term',
-							array('name' => 'assigned_user_id', 'type' => 'enum', 'label' => 'LBL_ASSIGNED_TO', 'function' => array('name' => 'get_user_array', 'params' => array(false))),
-						),
-					),
- 			   );
+                        ),
+                        'advanced_search' => array(
+                            'name',
+                            'billing_contact',
+                            'billing_account',
+                            'number',
+                            'total_amount',
+                            'expiration',
+                            'stage',
+                            'term',
+                            array('name' => 'assigned_user_id', 'type' => 'enum', 'label' => 'LBL_ASSIGNED_TO', 'function' => array('name' => 'get_user_array', 'params' => array(false))),
+                        ),
+                    ),
+               );

@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -46,22 +49,22 @@ global $current_user;
 $dashletData['MyMeetingsDashlet']['searchFields'] = array('name'             => array('default' => ''),
                                                           'status'           => array('default' => array('Planned')),
                                                           'date_start'       => array('default' => ''),
-                                                          'date_entered'     => array('default' => ''),                                                         
+                                                          'date_entered'     => array('default' => ''),
 
 
-                                                          'assigned_user_id' => array('type'    => 'assigned_user_name', 
+                                                          'assigned_user_id' => array('type'    => 'assigned_user_name',
                                                                                       'default' => $current_user->name,
-																					  'label'   => 'LBL_ASSIGNED_TO'),);
-$dashletData['MyMeetingsDashlet']['columns'] = array('set_complete' => array('width'    => '1', 
+                                                                                      'label'   => 'LBL_ASSIGNED_TO'),);
+$dashletData['MyMeetingsDashlet']['columns'] = array('set_complete' => array('width'    => '1',
                                                                              'label'    => 'LBL_LIST_CLOSE',
                                                                              'default'  => true,
                                                                              'sortable' => false,
                                                                              'related_fields' => array('status','recurring_source')),
-                                                   'name' => array('width'   => '40', 
+                                                   'name' => array('width'   => '40',
                                                                    'label'   => 'LBL_SUBJECT',
                                                                    'link'    => true,
                                                                    'default' => true),
-                                                   'parent_name' => array('width' => '29', 
+                                                   'parent_name' => array('width' => '29',
                                                                           'label' => 'LBL_LIST_RELATED_TO',
                                                                           'sortable' => false,
                                                                           'dynamic_module' => 'PARENT_TYPE',
@@ -69,28 +72,28 @@ $dashletData['MyMeetingsDashlet']['columns'] = array('set_complete' => array('wi
                                                                           'id' => 'PARENT_ID',
                                                                           'ACLTag' => 'PARENT',
                                                                           'related_fields' => array('parent_id', 'parent_type'),
-																		  'default' => true),
-                                                   'duration' => array('width'    => '15', 
+                                                                          'default' => true),
+                                                   'duration' => array('width'    => '15',
                                                                        'label'    => 'LBL_DURATION',
                                                                        'sortable' => false,
                                                                        'related_fields' => array('duration_hours', 'duration_minutes')),
-                                                   'date_start' => array('width'   => '15', 
+                                                   'date_start' => array('width'   => '15',
                                                                          'label'   => 'LBL_DATE',
                                                                          'default' => true,
                                                                          'related_fields' => array('time_start')),
-											   'set_accept_links'=> array('width'    => '10', 
-																		   'label'    => 'LBL_ACCEPT_THIS',
-																		   'sortable' => false,
-																		   'default' => true,
-																		   'related_fields' => array('status')),
-                                                   'status' => array('width'   => '8', 
+                                               'set_accept_links'=> array('width'    => '10',
+                                                                           'label'    => 'LBL_ACCEPT_THIS',
+                                                                           'sortable' => false,
+                                                                           'default' => true,
+                                                                           'related_fields' => array('status')),
+                                                   'status' => array('width'   => '8',
                                                                      'label'   => 'LBL_STATUS'),
-                                                   'date_entered' => array('width'   => '15', 
+                                                   'date_entered' => array('width'   => '15',
                                                                            'label'   => 'LBL_DATE_ENTERED'),
-                                                   'date_modified' => array('width'   => '15', 
-                                                                           'label'   => 'LBL_DATE_MODIFIED'),    
-                                                   'created_by' => array('width'   => '8', 
+                                                   'date_modified' => array('width'   => '15',
+                                                                           'label'   => 'LBL_DATE_MODIFIED'),
+                                                   'created_by' => array('width'   => '8',
                                                                          'label'   => 'LBL_CREATED'),
-                                                   'assigned_user_name' => array('width'   => '8', 
+                                                   'assigned_user_name' => array('width'   => '8',
                                                                                  'label'   => 'LBL_LIST_ASSIGNED_USER'),
                                                                          );

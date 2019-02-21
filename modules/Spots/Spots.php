@@ -1,10 +1,11 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 class Spots extends Basic
 {
@@ -151,10 +152,10 @@ class Spots extends Basic
      *
      * @return string is the config file with the label values in place of the key names
      */
-     public function replaceKeyValueWithLabel($config)
+    public function replaceKeyValueWithLabel($config)
     {
         //Strings are loaded this way as the dashlet mod_strings was set to Home
-       $spotStrings = return_module_language($GLOBALS['current_language'], 'Spots');
+        $spotStrings = return_module_language($GLOBALS['current_language'], 'Spots');
 
         $jsonConfig = json_decode($config, true);
         if (isset($jsonConfig['cols']) && count($jsonConfig['cols']) > 0) {
@@ -176,9 +177,7 @@ class Spots extends Basic
                 $jsonConfig['exclusions'][$newKey] = $jsonConfig['exclusions'][$key];
                 unset($jsonConfig['exclusions'][$key]);
             }
-        }
-        elseif(isset($jsonConfig['exclusions']) && count($jsonConfig['exclusions']) == 0)
-        {
+        } elseif (isset($jsonConfig['exclusions']) && count($jsonConfig['exclusions']) == 0) {
             $jsonConfig['exclusions'] = new stdClass();
         }
 
@@ -188,9 +187,7 @@ class Spots extends Basic
                 $jsonConfig['inclusions'][$newKey] = $jsonConfig['inclusions'][$key];
                 unset($jsonConfig['inclusions'][$key]);
             }
-        }
-        elseif(isset($jsonConfig['inclusions']) && count($jsonConfig['inclusions']) == 0)
-        {
+        } elseif (isset($jsonConfig['inclusions']) && count($jsonConfig['inclusions']) == 0) {
             $jsonConfig['inclusions'] = new stdClass();
         }
 
@@ -200,9 +197,7 @@ class Spots extends Basic
                 $jsonConfig['inclusionsInfo'][$newKey] = $jsonConfig['inclusionsInfo'][$key];
                 unset($jsonConfig['inclusionsInfo'][$key]);
             }
-        }
-        elseif(isset($jsonConfig['inclusionsInfo']) && count($jsonConfig['inclusionsInfo']) == 0)
-        {
+        } elseif (isset($jsonConfig['inclusionsInfo']) && count($jsonConfig['inclusionsInfo']) == 0) {
             $jsonConfig['inclusionsInfo'] = new stdClass();
         }
 

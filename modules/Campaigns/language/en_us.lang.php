@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -88,7 +88,7 @@ $mod_strings = array(
     'LNL_NEW_CAMPAIGN_WIZARD' => 'Create Campaign',
     'LNK_CAMPAIGN_LIST' => 'View Campaigns',
     'LNK_IMPORT_CAMPAIGNS' => 'Import Campaigns',
-	'LNK_NEW_PROSPECT' => 'Create Target',
+    'LNK_NEW_PROSPECT' => 'Create Target',
     'LNK_PROSPECT_LIST' => 'View Targets',
     'LNK_NEW_PROSPECT_LIST' => 'Create Target List',
     'LNK_PROSPECT_LIST_LIST' => 'View Target Lists',
@@ -413,7 +413,7 @@ $mod_strings = array(
     'LBL_UPDATE_TEMPLATE' => 'Update template',
     'LBL_ATTACHMENTS' => 'Attachments',
     'ERR_MISSING_REQUIRED_FIELDS' => 'Missing required field',
-    'LBL_SUGAR_DOCUMENT' => 'Document',
+    'LBL_SUITE_DOCUMENT' => 'Document',
     'LBL_EMAIL_ATTACHMENT' => 'Email Attachment',
     'LBL_PROCESS_BOUNCED_EMAILS' => 'Process Bounced Emails',
     'LBL_PROCESS_CAMPAIGN_EMAILS' => 'Process Campaign Emails',
@@ -463,6 +463,6 @@ $mod_strings = array(
     'LBL_EMAIL_MARKETING' => 'Email Marketing',
     'LBL_QUEUE_ITEMS' => 'Queue Items',
     'LBL_PROSPECT_LISTS' => 'Prospect Lists',
-	'LBL_SURVEYRESPONSES_CAMPAIGNS_FROM_SURVEYRESPONSES_TITLE' => 'Survey Responses',
-	'LBL_CAMPAIGN_SURVEY' => "Survey",
+    'LBL_SURVEYRESPONSES_CAMPAIGNS_FROM_SURVEYRESPONSES_TITLE' => 'Survey Responses',
+    'LBL_CAMPAIGN_SURVEY' => "Survey",
 );

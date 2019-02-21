@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
@@ -46,7 +46,7 @@ global $sugar_config, $current_user;
 
 $bean = BeanFactory::getBean($_REQUEST['module']);
 
-if(!$bean){
+if (!$bean) {
     sugar_die("Invalid Module");
 }
 
@@ -69,9 +69,9 @@ if (isset($_REQUEST['current_post']) && $_REQUEST['current_post'] != '') {
 }
 
 
-$template = BeanFactory::getBean('AOS_PDF_Templates',$_REQUEST['templateID']);
+$template = BeanFactory::getBean('AOS_PDF_Templates', $_REQUEST['templateID']);
 
-if(!$template){
+if (!$template) {
     sugar_die("Invalid Template");
 }
 
@@ -117,11 +117,13 @@ foreach ($recordIds as $recordId) {
     );
 
     $text = preg_replace($search, $replace, $template->description);
-    $text = preg_replace_callback('/\{DATE\s+(.*?)\}/',
+    $text = preg_replace_callback(
+        '/\{DATE\s+(.*?)\}/',
         function ($matches) {
             return date($matches[1]);
         },
-        $text);
+        $text
+    );
     $header = preg_replace($search, $replace, $template->pdfheader);
     $footer = preg_replace($search, $replace, $template->pdffooter);
 
@@ -164,7 +166,6 @@ foreach ($recordIds as $recordId) {
         $pdf->writeHTML($printable);
 
         rename($sugar_config['upload_dir'] . 'nfile.pdf', $sugar_config['upload_dir'] . $note->id);
-
     } catch (mPDF_exception $e) {
         echo $e;
     }

@@ -1,12 +1,14 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
-    die ( 'Not A Valid Entry Point' ) ;
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +19,7 @@ if (! defined ( 'sugarEntry' ) || ! sugarEntry)
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,24 +37,22 @@ if (! defined ( 'sugarEntry' ) || ! sugarEntry)
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-require_once ('modules/ModuleBuilder/parsers/ModuleBuilderParser.php') ;
-require_once ('modules/ModuleBuilder/MB/MBPackage.php');
+require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php') ;
+require_once('modules/ModuleBuilder/MB/MBPackage.php');
 
 class ParserSearchFields extends ModuleBuilderParser
 {
+    public $searchFields;
+    public $packageKey;
 
-	var $searchFields;
-	var $packageKey;
-
-    function __construct ($moduleName, $packageName='')
+    public function __construct($moduleName, $packageName='')
     {
         $this->moduleName = $moduleName;
-        if (!empty($packageName))
-        {
+        if (!empty($packageName)) {
             $this->packageName = $packageName;
             $mbPackage = new MBPackage($this->packageName);
             $this->packageKey = $mbPackage->key;
@@ -64,75 +64,69 @@ class ParserSearchFields extends ModuleBuilderParser
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ParserSearchFields($moduleName, $packageName=''){
+    public function ParserSearchFields($moduleName, $packageName='')
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($moduleName, $packageName);
     }
 
-    function addSearchField($name, $searchField)
+    public function addSearchField($name, $searchField)
     {
-    	if(empty($name) || empty($searchField) || !is_array($searchField))
-    	{
-    		return;
-    	}
+        if (empty($name) || empty($searchField) || !is_array($searchField)) {
+            return;
+        }
 
-    	$key = isset($this->packageKey) ? $this->packageKey . '_' . $this->moduleName : $this->moduleName;
+        $key = isset($this->packageKey) ? $this->packageKey . '_' . $this->moduleName : $this->moduleName;
         $this->searchFields[$key][$name] = $searchField;
     }
 
-    function removeSearchField($name)
+    public function removeSearchField($name)
     {
+        $key = isset($this->packageKey) ? $this->packageKey . '_' . $this->moduleName : $this->moduleName;
 
-    	$key = isset($this->packageKey) ? $this->packageKey . '_' . $this->moduleName : $this->moduleName;
-
-    	if(isset($this->searchFields[$key][$name]))
-    	{
-    		unset($this->searchFields[$key][$name]);
-    	}
+        if (isset($this->searchFields[$key][$name])) {
+            unset($this->searchFields[$key][$name]);
+        }
     }
 
-    function getSearchFields()
+    public function getSearchFields()
     {
-    	$searchFields = array();
-        if (!empty($this->packageName) && file_exists("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php")) //we are in Module builder
-        {
-			include("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php");
-        } else if(file_exists("custom/modules/{$this->moduleName}/metadata/SearchFields.php")) {
-			include("custom/modules/{$this->moduleName}/metadata/SearchFields.php");
-        } else if(file_exists("modules/{$this->moduleName}/metadata/SearchFields.php")) {
-			include("modules/{$this->moduleName}/metadata/SearchFields.php");
+        $searchFields = array();
+        if (!empty($this->packageName) && file_exists("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php")) { //we are in Module builder
+            include("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php");
+        } else {
+            if (file_exists("custom/modules/{$this->moduleName}/metadata/SearchFields.php")) {
+                include("custom/modules/{$this->moduleName}/metadata/SearchFields.php");
+            } else {
+                if (file_exists("modules/{$this->moduleName}/metadata/SearchFields.php")) {
+                    include("modules/{$this->moduleName}/metadata/SearchFields.php");
+                }
+            }
         }
 
         return $searchFields;
     }
 
-    function saveSearchFields ($searchFields)
+    public function saveSearchFields($searchFields)
     {
-        if (!empty($this->packageName)) //we are in Module builder
-        {
-			$header = file_get_contents('modules/ModuleBuilder/MB/header.php');
-            if(!file_exists("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php"))
-            {
-               mkdir_recursive("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata");
+        if (!empty($this->packageName)) { //we are in Module builder
+            $header = file_get_contents('modules/ModuleBuilder/MB/header.php');
+            if (!file_exists("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php")) {
+                mkdir_recursive("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata");
             }
-			write_array_to_file("searchFields['{$this->packageKey}_{$this->moduleName}']", $searchFields["{$this->packageKey}_{$this->moduleName}"], "custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php", 'w', $header);
+            write_array_to_file("searchFields['{$this->packageKey}_{$this->moduleName}']", $searchFields["{$this->packageKey}_{$this->moduleName}"], "custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php", 'w', $header);
         } else {
-			$header = file_get_contents('modules/ModuleBuilder/MB/header.php');
-            if(!file_exists("custom/modules/{$this->moduleName}/metadata/SearchFields.php"))
-            {
-               mkdir_recursive("custom/modules/{$this->moduleName}/metadata");
+            $header = file_get_contents('modules/ModuleBuilder/MB/header.php');
+            if (!file_exists("custom/modules/{$this->moduleName}/metadata/SearchFields.php")) {
+                mkdir_recursive("custom/modules/{$this->moduleName}/metadata");
             }
-			write_array_to_file("searchFields['{$this->moduleName}']", $searchFields[$this->moduleName], "custom/modules/{$this->moduleName}/metadata/SearchFields.php", 'w', $header);
+            write_array_to_file("searchFields['{$this->moduleName}']", $searchFields[$this->moduleName], "custom/modules/{$this->moduleName}/metadata/SearchFields.php", 'w', $header);
         }
         $this->searchFields = $searchFields;
     }
-
-
-
 }

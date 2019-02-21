@@ -1,12 +1,15 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +20,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,41 +38,41 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 class AdministrationViewGlobalsearchsettings extends SugarView
 {
- 	/**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
-	protected function _getModuleTitleParams($browserTitle = false)
-	{
-	    global $mod_strings;
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
 
-    	return array(
-    	   "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
-    	   $mod_strings['LBL_GLOBAL_SEARCH_SETTINGS']
-    	   );
+        return array(
+           "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
+           $mod_strings['LBL_GLOBAL_SEARCH_SETTINGS']
+           );
     }
 
     /**
-	 * @see SugarView::_getModuleTab()
-	 */
-	protected function _getModuleTab()
+     * @see SugarView::_getModuleTab()
+     */
+    protected function _getModuleTab()
     {
         return 'Administration';
     }
 
     /**
-	 * @see SugarView::display()
-	 */
-	public function display()
+     * @see SugarView::display()
+     */
+    public function display()
     {
-    	require_once('modules/Home/UnifiedSearchAdvanced.php');
-		$usa = new UnifiedSearchAdvanced();
+        require_once('modules/Home/UnifiedSearchAdvanced.php');
+        $usa = new UnifiedSearchAdvanced();
         global $mod_strings, $app_strings, $app_list_strings;
 
         $sugar_smarty = new Sugar_Smarty();
@@ -82,23 +85,21 @@ class AdministrationViewGlobalsearchsettings extends SugarView
         $sugar_smarty->assign('enabled_modules', json_encode($modules['enabled']));
         $sugar_smarty->assign('disabled_modules', json_encode($modules['disabled']));
         $tpl = 'modules/Administration/templates/GlobalSearchSettings.tpl';
-        if(file_exists('custom/' . $tpl))
-        {
-           $tpl = 'custom/' . $tpl;
+        if (file_exists('custom/' . $tpl)) {
+            $tpl = 'custom/' . $tpl;
         }
         echo $sugar_smarty->fetch($tpl);
-
     }
-/*
-    protected function isFTSConnectionValid()
-    {
-        require_once('include/SugarSearchEngine/SugarSearchEngineFactory.php');
-        $searchEngine = SugarSearchEngineFactory::getInstance();
-        $result = $searchEngine->getServerStatus();
-        if($result['valid'])
-            return TRUE;
-        else
-            return FALSE;
-    }
-	*/
+    /*
+        protected function isFTSConnectionValid()
+        {
+            require_once('include/SugarSearchEngine/SugarSearchEngineFactory.php');
+            $searchEngine = SugarSearchEngineFactory::getInstance();
+            $result = $searchEngine->getServerStatus();
+            if($result['valid'])
+                return TRUE;
+            else
+                return FALSE;
+        }
+    	*/
 }
