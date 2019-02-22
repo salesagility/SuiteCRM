@@ -96,7 +96,7 @@ class UsersController extends SugarController
 
     protected function action_saveuserwizard()
     {
-        global $current_user, $sugar_config;
+        global $current_user;
 
         // set all of these default parameters since the Users save action will undo the defaults otherwise
         $_POST['record'] = $current_user->id;
@@ -111,8 +111,8 @@ class UsersController extends SugarController
         $_POST['user_theme'] = (string)SugarThemeRegistry::getDefault();
 
         // save and redirect to new view
-        $_REQUEST['return_module'] = 'Home';
-        $_REQUEST['return_action'] = 'index';
+        $current_user->save();
+        SugarApplication::redirect('index.php?module=Home&action=index');
     }
 
     protected function action_saveftsmodules()
