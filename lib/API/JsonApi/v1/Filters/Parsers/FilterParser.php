@@ -279,7 +279,7 @@ class FilterParser
                 }
 
                 $parsedValues = $operatorsArray;
-                $diff = $this->removeOperators($value, $operators);
+                $diff = $this->removeOperators($value, $operatorsArray);
                 if (empty($diff) === false) {
                     // add operands to the end or data structure
                     $parsedValues[] = $diff;
@@ -339,10 +339,9 @@ class FilterParser
      * @param $operators
      * @return mixed
      */
-    private function removeOperators($string, $operators)
+    private function removeOperators($string, $operatorsArray)
     {
-        $operatorArray = explode('*', str_replace(']][[', ']]*[[', $operators));
-        foreach ($operatorArray as $operator) {
+        foreach ($operatorsArray as $operator) {
             $string = str_replace($operator, '', $string);
         }
         return $string;
