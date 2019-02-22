@@ -669,9 +669,8 @@ class SugarApplication {
 
     /**
      * Add an error message for the user
-     *
-     * @access	public
      * @param string $error_message
+     * @throws Exception
      */
     public static function appendErrorMessage($error_message)
     {
@@ -680,7 +679,8 @@ class SugarApplication {
 
     /**
      * picking up the messages from the session and clearing session storage array
-     * @return array messages
+     * @return array
+     * @throws Exception
      */
     public static function getErrorMessages()
     {
@@ -689,9 +689,8 @@ class SugarApplication {
 
     /**
      * Storing messages into session
-     *
-     * @access	public
      * @param string $message
+     * @throws Exception
      */
     public static function appendSuccessMessage($message)
     {
@@ -700,28 +699,29 @@ class SugarApplication {
 
     /**
      * picking up the messages from the session and clearing session storage array
-     * @return array messages
+     * @return array
+     * @throws Exception
      */
-    public static function getSuccessMessages() {
-        $messages = self::getMessages('user_success_message');
-        return $messages;
+    public static function getSuccessMessages()
+    {
+        return self::getMessages('user_success_message');
     }
 
 
     /**
-     * Set a message which reflects the status of the performed operation.
-     *
-     * @param string  $type    the type of the message. Values allowed:
+     * @param string $type the type of the message. Values allowed:
      *                         error, info, alert, okay, warning.
-     * @param string  $message the message to be displayed to the user.
+     *
+     * @param string $message the message to be displayed to the user.
      *                         For consistency with other messages, it should begin
      *                         with a capital letter and end with a period.
-     * @param boolean $repeat  if this is FALSE and the message is already set, then
+     *
+     * @param bool $repeat if this is FALSE and the message is already set, then
      *                         the message won't be repeated.
      *
-     * @return none
+     * @throws Exception
      */
-    public static function appendMessage($type = 'info', $message, $repeat = true)
+    public static function appendMessage($type = 'info', $message = '', $repeat = true)
     {
 
         if (!empty($message)) {
@@ -732,8 +732,8 @@ class SugarApplication {
             ) {
                 $_SESSION['suite_messages'][$type] = array();
             }
-            if (($repeat)
-                || (!in_array($message, $_SESSION['suite_messages'][$type]))
+            if ($repeat
+                || (!in_array($message, $_SESSION['suite_messages'][$type], false))
             ) {
                 $_SESSION['suite_messages'][$type][] = $message;
             }
@@ -744,17 +744,18 @@ class SugarApplication {
     /**
      * Return all messages that have been set.
      *
-     * @param string  $type        optional, values allowed: error, info, alert, okay
+     * @param string $type optional, values allowed: error, info, alert, okay
      *                             and warning.
      * @param boolean $clear_queue optional, set to FALSE if you do not want to clear
      *                             the messages queue
      *
-     * @return associative array, the key is the message type, the value an array of
+     * @return array the key is the message type, the value an array of
      * messages.
      * If the $type parameter is passed, you get only that type, or an empty array if
      * there are no such messages.
      * If $type is not passed, all message types are returned, or an empty array if
      * none exist.
+     * @throws Exception
      */
     public static function getMessages($type = null, $clear_queue = true)
     {
@@ -762,7 +763,7 @@ class SugarApplication {
         self::validateMessageType($type);
         self::_appendOldMessageTypes();
 
-        if (isset($_SESSION['suite_messages']) && isset($type)) {
+        if (isset($_SESSION['suite_messages'], $type)) {
             if (isset($_SESSION['suite_messages'][$type])) {
                 $messages[$type] = $_SESSION['suite_messages'][$type];
                 self::_clearQueue($clear_queue);
@@ -774,7 +775,8 @@ class SugarApplication {
             $messages = $_SESSION['suite_messages'];
             self::_clearQueue($clear_queue);
         }
-        return($messages);
+
+        return $messages;
     }
 
     /**
@@ -786,7 +788,6 @@ class SugarApplication {
      *
      * @throws Exception message type should be valid
      *
-     * @return none
      */
     protected static function validateMessageType($type)
     {
@@ -799,7 +800,7 @@ class SugarApplication {
             'user_success_message',
         );
 
-        if (!in_array($type, $types) && $type !== null) {
+        if ($type !== null && !in_array($type, $types, false)) {
             throw new Exception('Incorrect application message type: ' . $type);
         }
     }
@@ -807,32 +808,27 @@ class SugarApplication {
     /**
      * Clear messages Queue
      *
-     * @param boolean $clear_queue optional, set to FALSE if you do not want to clear
+     * @param bool $clear_queue optional, set to FALSE if you do not want to clear
      *                             the messages queue
      *
-     * @return none
      */
     private static function _clearQueue($clear_queue = true)
     {
         if ($clear_queue) {
-            unset($_SESSION['suite_messages']);
-            unset($_SESSION['user_error_message']);
-            unset($_SESSION['user_success_message']);
+            unset($_SESSION['suite_messages'], $_SESSION['user_error_message'], $_SESSION['user_success_message']);
         }
     }
 
-
     /**
-     * Append old messages types seted throught $_SESSION
-     *
-     * @return none
+     * Append old messages types set through $_SESSION
+     * @throws Exception
      */
     private static function _appendOldMessageTypes()
     {
         if (isset($_SESSION['user_error_message'])) {
             if (is_string($_SESSION['user_error_message'])) {
                 self::appendMessage('error', $_SESSION['user_error_message']);
-            } else if (is_array($_SESSION['user_error_message'])) {
+            } elseif (is_array($_SESSION['user_error_message'])) {
                 foreach ($_SESSION['user_error_message'] as $msg) {
                     self::appendMessage('error', $msg);
                 }
@@ -842,7 +838,7 @@ class SugarApplication {
         if (isset($_SESSION['user_success_message'])) {
             if (is_string($_SESSION['user_success_message'])) {
                 self::appendMessage('okay', $_SESSION['user_success_message']);
-            } else if (is_array($_SESSION['user_success_message'])) {
+            } elseif (is_array($_SESSION['user_success_message'])) {
                 foreach ($_SESSION['user_success_message'] as $msg) {
                     self::appendMessage('okay', $msg);
                 }
