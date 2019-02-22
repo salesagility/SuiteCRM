@@ -47,23 +47,6 @@ require_once dirname(__DIR__) . '/Base/SugarFieldBase.php';
 
 class SugarFieldEmailBody extends SugarFieldBase
 {
-    /**
-     * @param array $vardef
-     * @return mixed
-     */
-    private function getVardefValue($vardef)
-    {
-        if (empty($vardef['value'])) {
-            if (!empty($vardef['default'])) {
-                return $vardef['default'];
-            } elseif (!empty($vardef['default_value'])) {
-                return $vardef['default_value'];
-            }
-        }
-
-        return utf8_decode($vardef['value']);
-    }
-    //----------------------------------------------------------
 
     /**
      * @param string $parentFieldArray

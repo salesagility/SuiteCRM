@@ -256,62 +256,6 @@ class M2MRelationship extends SugarRelationship
             return false;
         }
         
-<<<<<<< HEAD
-    	/* BEGIN - SECURITY GROUPS */
-    	//Need to hijack this as security groups will not contain a link on the module side
-    	//due to the way the module works. Plus it would remove the relative ease of adding custom module support
-    	
-    	if(get_class($lhs) == 'SecurityGroup' || get_class($rhs) == 'SecurityGroup') {
-			$dataToRemove = array(
-				$this->def['join_key_lhs'] => $lhs->id,
-				$this->def['join_key_rhs'] => $rhs->id
-			);
-
-
-              if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes")
-              {
-                  if (get_class($lhs) != 'SecurityGroup' && (!empty($lhs->$lhsLinkName) || $lhs->load_relationship($lhsLinkName)) && $lhs->$lhsLinkName instanceof Link2)
-                  {
-                      $lhs->$lhsLinkName->load();
-                      $this->callBeforeDelete($lhs, $rhs, $lhsLinkName);
-                  }
-
-                  if (get_class($rhs) != 'SecurityGroup' && (!empty($rhs->$rhsLinkName) || $rhs->load_relationship($rhsLinkName)) && $rhs->$rhsLinkName instanceof Link2)
-                  {
-                      $rhs->$rhsLinkName->load();
-                      $this->callBeforeDelete($rhs, $lhs, $rhsLinkName);
-                  }
-              }
-
-			$this->removeRow($dataToRemove);
-			
-			if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes")
-			{
-				if (get_class($lhs) != 'SecurityGroup' && $lhs->$lhsLinkName instanceof Link2)
-				{
-					$lhs->$lhsLinkName->load();
-					$this->callAfterDelete($lhs, $rhs, $lhsLinkName);
-				}
-
-				if (get_class($rhs) != 'SecurityGroup' && $rhs->$rhsLinkName instanceof Link2)
-				{
-					$rhs->$rhsLinkName->load();
-					$this->callAfterDelete($rhs, $lhs, $rhsLinkName);
-				}
-			}
-		} else {
-    	/* END - SECURITY GROUPS */        
-        if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName))
-        {
-            $GLOBALS['log']->fatal("could not load LHS $lhsLinkName");
-            return false;
-        }
-        if (empty($rhs->$rhsLinkName) && !$rhs->load_relationship($rhsLinkName))
-        {
-            $GLOBALS['log']->fatal("could not load RHS $rhsLinkName");
-            return false;
-        }
-=======
         /* BEGIN - SECURITY GROUPS */
         //Need to hijack this as security groups will not contain a link on the module side
         //due to the way the module works. Plus it would remove the relative ease of adding custom module support
@@ -328,7 +272,6 @@ class M2MRelationship extends SugarRelationship
                     $lhs->$lhsLinkName->load();
                     $this->callBeforeDelete($lhs, $rhs, $lhsLinkName);
                 }
->>>>>>> master-salesagility_SuiteCRM
 
                 if (get_class($rhs) != 'SecurityGroup' && $rhs->$rhsLinkName instanceof Link2) {
                     $rhs->$rhsLinkName->load();
