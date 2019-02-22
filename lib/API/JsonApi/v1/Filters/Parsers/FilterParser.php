@@ -279,7 +279,7 @@ class FilterParser
                 }
 
                 $parsedValues = $operatorsArray;
-                $diff = $this->stringDifference($value, $operators);
+                $diff = $this->removeOperators($value, $operators);
                 if (empty($diff) === false) {
                     // add operands to the end or data structure
                     $parsedValues[] = $diff;
@@ -335,16 +335,17 @@ class FilterParser
     }
 
     /**
-     * @param string $a
-     * @param string $b
-     * @return string
+     * @param $string
+     * @param $operators
+     * @return mixed
      */
-    private function stringDifference($a, $b)
+    private function removeOperators($string, $operators)
     {
-        $aArray = str_split($a);
-        $bArray = str_split($b);
-        $arrayDiff = array_diff($aArray, $bArray);
-        return implode('', $arrayDiff);
+        $operatorArray = explode('*', str_replace(']][[', ']]*[[', $operators));
+        foreach ($operatorArray as $operator) {
+            $string = str_replace($operator, '', $string);
+        }
+        return $string;
     }
 
     /**
