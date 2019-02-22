@@ -44,7 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 use InvalidArgumentException;
+use LoggerManager;
 use SugarBean;
+use SuiteCRM\Search\Exceptions\SearchException;
 use SuiteCRM\Utility\SuiteLogger;
 use Throwable;
 
@@ -99,6 +101,8 @@ class ElasticSearchHooks
     {
         try {
             $this->reIndex($bean);
+        } catch (SearchException $exception) {
+            $this->handleError($exception);
         } catch (\Exception $exception) {
             $this->handleError($exception);
         } catch (\Throwable $throwable) {
@@ -114,20 +118,25 @@ class ElasticSearchHooks
     private function reIndex(SugarBean $bean)
     {
         if (ElasticSearchIndexer::isEnabled() === false) {
-            return;
+            throw new SearchException(
+                'Elasticsearch trying to re-indexing a bean but indexer is disabled in configuration.',
+                SearchException::ES_DISABLED
+            );
         }
 
         $this->bean = $bean;
 
         $this->getIndexer();
 
-        if ($this->isBlacklisted()) {
-            return;
+        if (!$this->isBlacklisted()) {
+            $this->correctAction();
+            $this->performAction($bean);
+        } else {
+            LoggerManager::getLogger()->warn(
+                'Elasticsearch trying to re-indexing a bean but this module is blacklisted: ' .
+                $bean->module_name
+            );
         }
-
-        $this->correctAction();
-
-        $this->performAction($bean);
     }
 
     /**

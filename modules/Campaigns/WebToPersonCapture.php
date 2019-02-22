@@ -125,7 +125,6 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         $optInPrefix = 'opt_in_';
 
         if (!empty($person)) {
-
             $filteredFieldsFromPersonBean = filterFieldsFromBeans(array($person));
             $possiblePersonCaptureFields = array('campaign_id', 'assigned_user_id');
             foreach ($filteredFieldsFromPersonBean[0]->fields as $field) {
@@ -340,15 +339,15 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             if (isset($mod_strings['LBL_THANKS_FOR_SUBMITTING'])) {
                 echo $mod_strings['LBL_THANKS_FOR_SUBMITTING'];
             } else {
-                
+
                 if(isset($errors) && $errors) {
                     $log = LoggerManager::getLogger();
-                    $log->error('Success but some error occured: ' . implode(', ', $errors)); 
+                    $log->error('Success but some error occurred: ' . implode(', ', $errors));
                 }
                 
                 //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
                 echo $app_strings['LBL_THANKS_FOR_SUBMITTING'];
-                
+
             }
             header($_SERVER['SERVER_PROTOCOL'].'201', true, 201);
         }

@@ -118,12 +118,7 @@ class ElasticSearchCommands extends \Robo\Tasks
     {
         $this->bootstrap();
 
-        $indexer = new ElasticSearchIndexer();
-        $indexer->setDifferentialIndexing($differential);
-        if ($searchdefs) {
-            $indexer->setDocumentifier(new SearchDefsDocumentifier());
-        }
-        $indexer->index();
+        ElasticSearchIndexer::repairElasticsearchIndex($differential, $searchdefs);
     }
 
     /**
