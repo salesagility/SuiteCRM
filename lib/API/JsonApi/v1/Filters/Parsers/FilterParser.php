@@ -335,9 +335,9 @@ class FilterParser
     }
 
     /**
-     * @param $string
-     * @param $operators
-     * @return mixed
+     * @param string $string
+     * @param string[] $operatorsArray
+     * @return string
      */
     private function removeOperators($string, $operatorsArray)
     {
