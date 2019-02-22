@@ -110,8 +110,10 @@ class UsersController extends SugarController
         $_POST['receive_notifications'] = $current_user->receive_notifications;
         $_POST['user_theme'] = (string)SugarThemeRegistry::getDefault();
 
+        $focus = new User();
+        $focus->retrieve($_POST['record']);
+        $focus->save();
         // save and redirect to new view
-        $current_user->save();
         SugarApplication::redirect('index.php?module=Home&action=index');
     }
 
