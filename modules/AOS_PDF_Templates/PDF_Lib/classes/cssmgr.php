@@ -1254,7 +1254,6 @@ function MergeCSS($inherit,$tag,$attr) {
 	if (isset($this->CSS[$tag]) && $this->CSS[$tag]) {
         $zp = $this->CSS[$tag];
         if ($tag=='TD' || $tag=='TH')  { $this->setBorderDominance($zp, 9); }	// *TABLES*	// *TABLES-ADVANCED-BORDERS*
-        //Necessary in order to display the checkbox correctly
         if (is_array($zp)) {
             $p = array_merge($p,$zp);
     	    $this->_mergeBorders($p,$zp);
