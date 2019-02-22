@@ -98,7 +98,7 @@ class PersonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // test when source does not exist
         try {
-            $person->setLawfulBasis('','Test Invalid Sources');
+            $person->setLawfulBasis('', 'Test Invalid Sources');
             $this->assertTrue(false);
         } catch (InvalidArgumentException $ex) {
             $this->assertEquals('invalid lawful basis source', $ex->getMessage());

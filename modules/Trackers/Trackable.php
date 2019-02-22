@@ -42,7 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-interface Trackable {
+interface Trackable
+{
     public function getMetrics();
     public function getStores();
 }

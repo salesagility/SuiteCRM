@@ -41,8 +41,8 @@ class ParamsMiddleware
             $response->setStatus(400);
             $msg = $exception->getMessage();
             $dbg = "\nCode:" . $exception->getCode() .
-                "\n" . $exception->getFile() . ':' . $exception->getLine() . 
-                "\nTrace:\n" . $exception->getTraceAsString() . 
+                "\n" . $exception->getFile() . ':' . $exception->getLine() .
+                "\nTrace:\n" . $exception->getTraceAsString() .
                 "\n";
             LoggerManager::getLogger()->fatal("API Exception detected:\nMessage was: $msg\nException details:\n$dbg");
             $response->setDetail($msg);

@@ -41,6 +41,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-    print( "<html><body>" );
-    print( "Down for maintenance." );
-    print( "</body></html>" );
+    print("<html><body>");
+    print("Down for maintenance.");
+    print("</body></html>");

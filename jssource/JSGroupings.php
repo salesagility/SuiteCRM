@@ -66,8 +66,8 @@
                 'include/javascript/phpjs/htmlentities.js' => 'include/javascript/sugar_grp1.js',
                'include/EditView/Panels.js'   => 'include/javascript/sugar_grp1.js',
             ),
-			//jquery libraries
-			$sugar_grp_jquery = array(
+            //jquery libraries
+            $sugar_grp_jquery = array(
                 //jquery
                 'include/javascript/jquery/jquery-min.js'             => 'include/javascript/sugar_grp1_jquery.js',
                 //bootstrap
@@ -93,7 +93,7 @@
                 'include/javascript/jquery/jquery.ui.touch-punch.min.js'              => 'include/javascript/sugar_grp1_jquery.js',
                 'jssource/src_files/include/javascript/message-box.js'              => 'include/javascript/sugar_grp1_jquery.js',
                 'jssource/src_files/include/javascript/EmailsComposeViewModal.js'              => 'include/javascript/sugar_grp1_jquery.js',
-			),
+            ),
            $sugar_field_grp = array(
                'include/SugarFields/Fields/Collection/SugarFieldCollection.js' => 'include/javascript/sugar_field_grp.js',
                'include/SugarFields/Fields/Datetimecombo/Datetimecombo.js' => 'include/javascript/sugar_field_grp.js',
@@ -152,29 +152,29 @@
            ),
 
             $sugar_grp_yui_widgets = array(
-			//sugar_grp1_yui must be laoded before sugar_grp_yui_widgets
+            //sugar_grp1_yui must be laoded before sugar_grp_yui_widgets
             'include/javascript/yui/build/datatable/datatable-min.js'   => 'include/javascript/sugar_grp_yui_widgets.js',
             'include/javascript/yui/build/treeview/treeview-min.js'     => 'include/javascript/sugar_grp_yui_widgets.js',
-			'include/javascript/yui/build/button/button-min.js'         => 'include/javascript/sugar_grp_yui_widgets.js',
+            'include/javascript/yui/build/button/button-min.js'         => 'include/javascript/sugar_grp_yui_widgets.js',
             'include/javascript/yui/build/calendar/calendar-min.js'     => 'include/javascript/sugar_grp_yui_widgets.js',
-			'include/javascript/sugarwidgets/SugarYUIWidgets.js'        => 'include/javascript/sugar_grp_yui_widgets.js',
+            'include/javascript/sugarwidgets/SugarYUIWidgets.js'        => 'include/javascript/sugar_grp_yui_widgets.js',
             // Include any Sugar overrides done to YUI libs for bugfixes
             'include/javascript/sugar_yui_overrides.js'   => 'include/javascript/sugar_grp_yui_widgets.js',
             ),
 
-			$sugar_grp_yui_widgets_css = array(
-				"include/javascript/yui/build/fonts/fonts-min.css" => 'include/javascript/sugar_grp_yui_widgets.css',
-				"include/javascript/yui/build/treeview/assets/skins/sam/treeview.css"
-					=> 'include/javascript/sugar_grp_yui_widgets.css',
-				"include/javascript/yui/build/datatable/assets/skins/sam/datatable.css"
-					=> 'include/javascript/sugar_grp_yui_widgets.css',
-				"include/javascript/yui/build/container/assets/skins/sam/container.css"
-					=> 'include/javascript/sugar_grp_yui_widgets.css',
+            $sugar_grp_yui_widgets_css = array(
+                "include/javascript/yui/build/fonts/fonts-min.css" => 'include/javascript/sugar_grp_yui_widgets.css',
+                "include/javascript/yui/build/treeview/assets/skins/sam/treeview.css"
+                    => 'include/javascript/sugar_grp_yui_widgets.css',
+                "include/javascript/yui/build/datatable/assets/skins/sam/datatable.css"
+                    => 'include/javascript/sugar_grp_yui_widgets.css',
+                "include/javascript/yui/build/container/assets/skins/sam/container.css"
+                    => 'include/javascript/sugar_grp_yui_widgets.css',
                 "include/javascript/yui/build/button/assets/skins/sam/button.css"
-					=> 'include/javascript/sugar_grp_yui_widgets.css',
-				"include/javascript/yui/build/calendar/assets/skins/sam/calendar.css"
-					=> 'include/javascript/sugar_grp_yui_widgets.css',
-			),
+                    => 'include/javascript/sugar_grp_yui_widgets.css',
+                "include/javascript/yui/build/calendar/assets/skins/sam/calendar.css"
+                    => 'include/javascript/sugar_grp_yui_widgets.css',
+            ),
 
             $sugar_grp_yui2 = array(
             //YUI combination 2
@@ -221,15 +221,15 @@
                 'include/javascript/jsclass_async.js'   => 'include/javascript/sugar_grp_jsolait.js',
                 'modules/Meetings/jsclass_scheduler.js'   => 'include/javascript/sugar_grp_jsolait.js',
             ),
-			$sugar_grp_project = array(
+            $sugar_grp_project = array(
                 'include/javascript/jsclass_base.js'    => 'include/javascript/sugar_grp_project.js',
                 'include/javascript/jsclass_async.js'   => 'include/javascript/sugar_grp_project.js',
-				'modules/Project/jsclass_scheduler.js'   => 'include/javascript/sugar_grp_project.js',
+                'modules/Project/jsclass_scheduler.js'   => 'include/javascript/sugar_grp_project.js',
             ),
-			$sugar_grp_project_template = array(
+            $sugar_grp_project_template = array(
                 'include/javascript/jsclass_base.js'    => 'include/javascript/sugar_grp_project_template.js',
                 'include/javascript/jsclass_async.js'   => 'include/javascript/sugar_grp_project_template.js',
-				'modules/AM_ProjectTemplates/jsclass_scheduler.js'   => 'include/javascript/sugar_grp_project_template.js',
+                'modules/AM_ProjectTemplates/jsclass_scheduler.js'   => 'include/javascript/sugar_grp_project_template.js',
             ),
 
         );
@@ -237,6 +237,6 @@
     /**
      * Check for custom additions to this code
      */
-    if(file_exists("custom/application/Ext/JSGroupings/jsgroups.ext.php")) {
+    if (file_exists("custom/application/Ext/JSGroupings/jsgroups.ext.php")) {
         require("custom/application/Ext/JSGroupings/jsgroups.ext.php");
     }

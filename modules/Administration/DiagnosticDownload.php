@@ -45,15 +45,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $current_user;
 
 
-if (!is_admin($current_user)) sugar_die("Unauthorized access to administration.");
-if (isset($GLOBALS['sugar_config']['hide_admin_diagnostics']) && $GLOBALS['sugar_config']['hide_admin_diagnostics'])
-{
+if (!is_admin($current_user)) {
+    sugar_die("Unauthorized access to administration.");
+}
+if (isset($GLOBALS['sugar_config']['hide_admin_diagnostics']) && $GLOBALS['sugar_config']['hide_admin_diagnostics']) {
     sugar_die("Unauthorized access to diagnostic tool.");
 }
 
-if(!isset($_REQUEST['guid']) || !isset($_REQUEST['time']))
-{
-	die('Did not receive a filename to download');
+if (!isset($_REQUEST['guid']) || !isset($_REQUEST['time'])) {
+    die('Did not receive a filename to download');
 }
 $time = str_replace(array('.', '/', '\\'), '', $_REQUEST['time']);
 $guid = str_replace(array('.', '/', '\\'), '', $_REQUEST['guid']);

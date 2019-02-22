@@ -187,7 +187,7 @@ abstract class AbstractMetaDataImplementation
 
         $variables = array();
         foreach ($moduleVariables as $name) {
-            if (isset ($$name)) {
+            if (isset($$name)) {
                 $variables [$name] = $$name;
             }
         }
@@ -216,11 +216,11 @@ abstract class AbstractMetaDataImplementation
         // Now tidy up the module name in the viewdef array
         // MB created definitions store the defs under packagename_modulename and later methods that expect to find them under modulename will fail
 
-        if (isset ($variables ['module_name'])) {
+        if (isset($variables ['module_name'])) {
             $mbName = $variables ['module_name'];
             if ($mbName != $this->_moduleName) {
                 $defs [$this->_moduleName] = $defs [$mbName];
-                unset ($defs [$mbName]);
+                unset($defs [$mbName]);
             }
         }
         $this->_variables = $variables;
@@ -270,21 +270,37 @@ abstract class AbstractMetaDataImplementation
                 //If there are no defs for this view, grab them from the non-popup view
                 if ($view == MB_POPUPLIST) {
                     $this->_view = MB_LISTVIEW;
-                    $defs = $this->_loadFromFile($this->getFileName(MB_LISTVIEW, $this->_moduleName, null,
-                        MB_CUSTOMMETADATALOCATION));
+                    $defs = $this->_loadFromFile($this->getFileName(
+                        MB_LISTVIEW,
+                        $this->_moduleName,
+                        null,
+                        MB_CUSTOMMETADATALOCATION
+                    ));
                     if ($defs == null) {
-                        $defs = $this->_loadFromFile($this->getFileName(MB_LISTVIEW, $this->_moduleName, null,
-                            MB_BASEMETADATALOCATION));
+                        $defs = $this->_loadFromFile($this->getFileName(
+                            MB_LISTVIEW,
+                            $this->_moduleName,
+                            null,
+                            MB_BASEMETADATALOCATION
+                        ));
                     }
                     $this->_view = $view;
                 } else {
                     if ($view == MB_POPUPSEARCH) {
                         $this->_view = MB_ADVANCEDSEARCH;
-                        $defs = $this->_loadFromFile($this->getFileName(MB_ADVANCEDSEARCH, $this->_moduleName, null,
-                            MB_CUSTOMMETADATALOCATION));
+                        $defs = $this->_loadFromFile($this->getFileName(
+                            MB_ADVANCEDSEARCH,
+                            $this->_moduleName,
+                            null,
+                            MB_CUSTOMMETADATALOCATION
+                        ));
                         if ($defs == null) {
-                            $defs = $this->_loadFromFile($this->getFileName(MB_ADVANCEDSEARCH, $this->_moduleName, null,
-                                MB_BASEMETADATALOCATION));
+                            $defs = $this->_loadFromFile($this->getFileName(
+                                MB_ADVANCEDSEARCH,
+                                $this->_moduleName,
+                                null,
+                                MB_BASEMETADATALOCATION
+                            ));
                         }
 
                         if (isset($defs['layout']) && isset($defs['layout']['advanced_search'])) {
@@ -394,30 +410,27 @@ abstract class AbstractMetaDataImplementation
     protected function _mergeFielddefs(&$fielddefs, $layout)
     {
         foreach ($layout as $key => $def) {
-
             if ((string)$key == 'templateMeta') {
                 continue;
             }
 
             if (is_array($def)) {
-                if (isset ($def ['name']) && !is_array($def ['name'])) // found a 'name' definition, that is not the definition of a field called name :)
-                {
+                if (isset($def ['name']) && !is_array($def ['name'])) { // found a 'name' definition, that is not the definition of a field called name :)
                     // if this is a module field, then merge in the definition,
                     // otherwise this is a new field defined in the layout, so just take the definition
                     $fielddefs [$def ['name']] =
-                        (isset ($fielddefs [$def ['name']])) ? array_merge($fielddefs [$def ['name']], $def) : $def;
+                        (isset($fielddefs [$def ['name']])) ? array_merge($fielddefs [$def ['name']], $def) : $def;
                 } else {
                     // dealing with a listlayout which lacks 'name' keys, but which does have 'label' keys
-                    if (isset ($def ['label']) || isset ($def ['vname']) || isset($def ['widget_class'])) {
+                    if (isset($def ['label']) || isset($def ['vname']) || isset($def ['widget_class'])) {
                         $key = strtolower($key);
-                        $fielddefs [$key] = (isset ($fielddefs [$key])) ? array_merge($fielddefs [$key], $def) : $def;
+                        $fielddefs [$key] = (isset($fielddefs [$key])) ? array_merge($fielddefs [$key], $def) : $def;
                     } else {
                         $this->_mergeFielddefs($fielddefs, $def);
                     }
                 }
             }
         }
-
     }
 
     /**
@@ -443,7 +456,6 @@ abstract class AbstractMetaDataImplementation
      */
     public function getFileNameInPackage($view, $moduleName, $packageName, $type = MB_BASEMETADATALOCATION)
     {
-
         $type = strtolower($type);
 
         // BEGIN ASSERTIONS
@@ -469,23 +481,20 @@ abstract class AbstractMetaDataImplementation
         );
 
         switch ($type) {
-            case MB_HISTORYMETADATALOCATION :
+            case MB_HISTORYMETADATALOCATION:
                 return 'custom/history/modulebuilder/packages/' . $packageName . '/modules/'
                     . $moduleName . '/metadata/' . $filenames [$view] . '.php';
-            default :
+            default:
                 // get the module again, all so we can call this method statically
                 // without relying on the module stored in the class variables
-                $mb = new ModuleBuilder ();
+                $mb = new ModuleBuilder();
                 $module = &$mb->getPackageModule($packageName, $moduleName);
                 return $module->getModuleDir() . '/metadata/' . $filenames [$view] . '.php';
         }
-
     }
 
     public function getModuleDir()
     {
         return $this->module->key_name;
     }
-
 }
-

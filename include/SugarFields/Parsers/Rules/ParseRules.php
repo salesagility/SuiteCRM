@@ -50,26 +50,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
  * @author Collin Lee
  */
-class ParseRules {
+class ParseRules
+{
+    public function __construct()
+    {
+    }
 
-function __construct() {
-
-}
-
-/**
- * getRules
- * Return Array of rules to run
- *
- */
-function getRules() {
-    $rules = array();
-    $rules[] = array("class"=>"UndefinedVardefRule", "file"=>"include/SugarFields/Parsers/Rules/UndefinedVardefRule.php");
-    $rules[] = array("class"=>"VariableCleanupRule", "file"=>"include/SugarFields/Parsers/Rules/VariableCleanupRule.php");
-    $rules[] = array("class"=>"VariableSubstitutionRule", "file"=>"include/SugarFields/Parsers/Rules/VariableSubstitutionRule.php");
-    $rules[] = array("class"=>"AddressRule", "file"=>"include/SugarFields/Parsers/Rules/AddressRule.php");
-    $rules[] = array("class"=>"EmailAddressRule", "file"=>"include/SugarFields/Parsers/Rules/EmailAddressRule.php");
-    $rules[] = array("class"=>"EmptyRowRule", "file"=>"include/SugarFields/Parsers/Rules/EmptyRowRule.php");
-    return $rules;
-}
-
+    /**
+     * getRules
+     * Return Array of rules to run
+     *
+     */
+    public function getRules()
+    {
+        $rules = array();
+        $rules[] = array("class"=>"UndefinedVardefRule", "file"=>"include/SugarFields/Parsers/Rules/UndefinedVardefRule.php");
+        $rules[] = array("class"=>"VariableCleanupRule", "file"=>"include/SugarFields/Parsers/Rules/VariableCleanupRule.php");
+        $rules[] = array("class"=>"VariableSubstitutionRule", "file"=>"include/SugarFields/Parsers/Rules/VariableSubstitutionRule.php");
+        $rules[] = array("class"=>"AddressRule", "file"=>"include/SugarFields/Parsers/Rules/AddressRule.php");
+        $rules[] = array("class"=>"EmailAddressRule", "file"=>"include/SugarFields/Parsers/Rules/EmailAddressRule.php");
+        $rules[] = array("class"=>"EmptyRowRule", "file"=>"include/SugarFields/Parsers/Rules/EmptyRowRule.php");
+        return $rules;
+    }
 }

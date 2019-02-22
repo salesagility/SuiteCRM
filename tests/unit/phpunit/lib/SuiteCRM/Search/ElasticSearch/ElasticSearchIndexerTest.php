@@ -546,7 +546,6 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
 
     public function testCreateIndexWithBody()
     {
-
         $index = 'test';
         $body = ["mappings" => ['my_type' => ['_source' => ['enabled' => true]]]];
         $params = ['index' => $index, 'body' => $body];

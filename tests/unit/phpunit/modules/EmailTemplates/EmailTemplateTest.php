@@ -128,6 +128,45 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('some html text', $emailTemplate->body);
     }
 
+    public function testfill_in_additional_detail_fields_body_to_text()
+    {
+        // simple examples
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->body_html = htmlentities('<h1>Hello</h1><br><a href="https://suitecrm.com">text</b>');
+        $emailTemplate->fill_in_additional_detail_fields();
+        $this->assertEquals("Hello\n\n[text](https://suitecrm.com)", $emailTemplate->body);
+
+        // entities and tags
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->body_html = htmlentities('&#60;a&#62;<b>');
+        $emailTemplate->fill_in_additional_detail_fields();
+        $this->assertEquals("<a>", $emailTemplate->body);
+
+        // invalid html
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->body_html = htmlentities('foo<bar');
+        $emailTemplate->fill_in_additional_detail_fields();
+        $this->assertEquals("foo", $emailTemplate->body);
+
+        // variables
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->body_html = htmlentities('Hello <b>$foo</b>bar');
+        $emailTemplate->fill_in_additional_detail_fields();
+        $this->assertEquals('Hello $foo bar', $emailTemplate->body);
+
+        // variables in URLs (opt-in confirmation emails etc)
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->body_html = htmlentities('<a href="$url/index.php?foo=$bar&quux=$baz">text</a>');
+        $emailTemplate->fill_in_additional_detail_fields();
+        $this->assertEquals('[text]($url/index.php?foo=$bar&quux=$baz)', $emailTemplate->body);
+
+        // decoding latin-1 html
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->body_html = htmlentities('<meta charset="ISO-8859-1">' . "\xe4", ENT_QUOTES, "ISO-8859-1");
+        $emailTemplate->fill_in_additional_detail_fields();
+        $this->assertEquals("\xc3\xa4", $emailTemplate->body);
+    }
+
     public function testfill_in_additional_parent_fields()
     {
         $state = new SuiteCRM\StateSaver();

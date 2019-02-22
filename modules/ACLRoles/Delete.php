@@ -43,8 +43,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $role = new ACLRole();
-if(isset($_REQUEST['record'])){
-	$role->mark_deleted($_REQUEST['record']);
+if (isset($_REQUEST['record'])) {
+    $role->mark_deleted($_REQUEST['record']);
 }
 require_once('include/formbase.php');
 handleRedirect();

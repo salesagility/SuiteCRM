@@ -50,34 +50,34 @@ if (!defined('sugarEntry') || !sugarEntry) {
 // EmailTemplate is used to store email email_template information.
 class EmailTemplate extends SugarBean
 {
-    var $field_name_map = array();
+    public $field_name_map = array();
     // Stored fields
-    var $id;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $created_by;
-    var $created_by_name;
-    var $modified_by_name;
-    var $assigned_user_id;
-    var $assigned_user_name;
-    var $name;
-    var $published;
-    var $description;
-    var $body;
-    var $body_html;
-    var $subject;
-    var $attachments;
-    var $from_name;
-    var $from_address;
-    var $table_name = "email_templates";
-    var $object_name = "EmailTemplate";
-    var $module_dir = "EmailTemplates";
-    var $new_schema = true;
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $created_by;
+    public $created_by_name;
+    public $modified_by_name;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $name;
+    public $published;
+    public $description;
+    public $body;
+    public $body_html;
+    public $subject;
+    public $attachments;
+    public $from_name;
+    public $from_address;
+    public $table_name = "email_templates";
+    public $object_name = "EmailTemplate";
+    public $module_dir = "EmailTemplates";
+    public $new_schema = true;
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = array();
+    public $additional_column_fields = array();
     // add fields here that would not make sense in an email template
-    var $badFields = array(
+    public $badFields = array(
         'account_description',
         'contact_id',
         'lead_id',
@@ -124,12 +124,12 @@ class EmailTemplate extends SugarBean
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function EmailTemplate(){
+    public function EmailTemplate()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -140,7 +140,7 @@ class EmailTemplate extends SugarBean
      * Generates the extended field_defs for creating macros
      * @return array
      */
-    function generateFieldDefsJS()
+    public function generateFieldDefsJS()
     {
         global $current_user;
 
@@ -175,7 +175,6 @@ class EmailTemplate extends SugarBean
         foreach ($loopControl as $collectionKey => $beans) {
             $collection[$collectionKey] = array();
             foreach ($beans as $beankey => $bean) {
-
                 foreach ($bean->field_defs as $key => $field_def) {
                     if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) ||
                         ($field_def['type'] == 'assigned_user_name' || $field_def['type'] == 'link') ||
@@ -200,8 +199,9 @@ class EmailTemplate extends SugarBean
                             break;
                         }
                     }
-                    if ($dup)
+                    if ($dup) {
                         $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
+                    }
                 }
             }
         }
@@ -213,7 +213,7 @@ class EmailTemplate extends SugarBean
         return $ret;
     }
 
-    function generateFieldDefsJS2()
+    public function generateFieldDefsJS2()
     {
         global $current_user;
 
@@ -252,7 +252,6 @@ class EmailTemplate extends SugarBean
         foreach ($loopControl as $collectionKey => $beans) {
             $collection[$collectionKey] = array();
             foreach ($beans as $beankey => $bean) {
-
                 foreach ($bean->field_defs as $key => $field_def) {
                     if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) ||
                         ($field_def['type'] == 'assigned_user_name' || $field_def['type'] == 'link') ||
@@ -274,8 +273,9 @@ class EmailTemplate extends SugarBean
                             break;
                         }
                     }
-                    if ($dup)
+                    if ($dup) {
                         $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
+                    }
                 }
             }
         }
@@ -287,35 +287,36 @@ class EmailTemplate extends SugarBean
         return $ret;
     }
 
-    function get_summary_text()
+    public function get_summary_text()
     {
         return "$this->name";
     }
 
-    function create_export_query($order_by, $where)
+    public function create_export_query($order_by, $where)
     {
         return $this->create_new_list_query($order_by, $where);
     }
 
-    function fill_in_additional_list_fields()
+    public function fill_in_additional_list_fields()
     {
         $this->fill_in_additional_parent_fields();
     }
 
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
         if (empty($this->body) && !empty($this->body_html)) {
             global $sugar_config;
 
-            $bodyCleanup = html_entity_decode($this->body_html, ENT_COMPAT, $sugar_config['default_charset']);
+            $bodyCleanup = $this->body_html;
+
+            $bodyCleanup = html_entity_decode($bodyCleanup, ENT_COMPAT, $sugar_config['default_charset']);
 
             // Template contents should contains at least one
             // white space character at after the variable names
             // to recognise it when parsing and replacing variables
+            $bodyCleanup = preg_replace('/(\$\w+\b)([^\s\/&"\'])/', '$1 $2', $bodyCleanup);
 
-            $bodyCleanup = preg_replace('/(\$\w+\b)([^\s])/', '$1 $2', $bodyCleanup);
-
-            $bodyCleanup = strip_tags($bodyCleanup);
+            $bodyCleanup = Html2Text\Html2Text::convert($bodyCleanup, true);
 
             $this->body = $bodyCleanup;
         }
@@ -325,28 +326,28 @@ class EmailTemplate extends SugarBean
         $this->fill_in_additional_parent_fields();
     }
 
-    function fill_in_additional_parent_fields()
+    public function fill_in_additional_parent_fields()
     {
     }
 
-//function all string that match the pattern {.} , also catches the list of found strings.
+    //function all string that match the pattern {.} , also catches the list of found strings.
     //the cache will get refreshed when the template bean instance changes.
     //The found url key patterns are replaced with name value pairs provided as function parameter. $tracked_urls.
     //$url_template is used to construct the url for the email message. the template should have place holder for 1 variable parameter, represented by %1
     //$template_text_array is a list of text strings that need to be searched. usually the subject, html body and text body of the email message.
     //$removeme_url_template, if the url has is_optout property checked then use this template.
-    function parse_tracker_urls($template_text_array, $url_template, $tracked_urls, $removeme_url_template)
+    public function parse_tracker_urls($template_text_array, $url_template, $tracked_urls, $removeme_url_template)
     {
         global $beanFiles, $beanList, $app_list_strings, $sugar_config;
-        if (!isset($this->parsed_urls))
+        if (!isset($this->parsed_urls)) {
             $this->parsed_urls = array();
+        }
 
         $return_array = $template_text_array;
         if (count($tracked_urls) > 0) {
             //parse the template and find all the dynamic strings that need replacement.
             foreach ($template_text_array as $key => $template_text) {
                 if (!empty($template_text)) {
-
                     if (!isset($this->parsed_urls[$key]) || $this->parsed_urls[$key]['text'] != $template_text) {
                         // Fix for bug52014.
                         $template_text = urldecode($template_text);
@@ -410,7 +411,7 @@ class EmailTemplate extends SugarBean
         return array($result);
     }
 
-    function parse_email_template($template_text_array, $focus_name, $focus, &$macro_nv)
+    public function parse_email_template($template_text_array, $focus_name, $focus, &$macro_nv)
     {
         global $beanList, $app_list_strings;
 
@@ -420,8 +421,9 @@ class EmailTemplate extends SugarBean
             $user->retrieve($focus->assigned_user_id);
         }
 
-        if (!isset($this->parsed_entities))
+        if (!isset($this->parsed_entities)) {
             $this->parsed_entities = array();
+        }
 
         //parse the template and find all the dynamic strings that need replacement.
         // Bug #48111 It's strange why prefix for User module is contact_user (see self::generateFieldDefsJS method)
@@ -469,9 +471,9 @@ class EmailTemplate extends SugarBean
                 if (strpos($field_name, "user_") === 0) {
                     $userFieldName = substr($field_name, 5);
                     $value = $user->$userFieldName;
-                    //_pp($userFieldName."[{$value}]");
+                //_pp($userFieldName."[{$value}]");
                 } else {
-                    if(isset($focus->{$field_name})) {
+                    if (isset($focus->{$field_name})) {
                         $value = $focus->{$field_name};
                     } else {
                         $value = null;
@@ -506,10 +508,10 @@ class EmailTemplate extends SugarBean
      * @param string $value
      * @return string
      */
-    function _convertToType($type, $value)
+    public function _convertToType($type, $value)
     {
         switch ($type) {
-            case 'currency' :
+            case 'currency':
                 return currency_format_number($value);
             default:
                 return $value;
@@ -522,7 +524,7 @@ class EmailTemplate extends SugarBean
      * @param object $user
      * @return array
      */
-    function _parseUserValues($repl_arr, &$user)
+    public function _parseUserValues($repl_arr, &$user)
     {
         foreach ($user->field_defs as $field_def) {
             if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) || $field_def['type'] == 'assigned_user_name') {
@@ -534,7 +536,6 @@ class EmailTemplate extends SugarBean
                 if (!isset($fieldName)) {
                     LoggerManager::getLogger()->warn('Email Template / parse user level error: Field name not found');
                 } else {
-                    
                     if (!isset($user->$fieldName)) {
                         LoggerManager::getLogger()->warn('Email Template / parse user level error: User field not found. Field name was: "' . $fieldName . '"');
                         $userFieldName = null;
@@ -564,7 +565,7 @@ class EmailTemplate extends SugarBean
     }
 
 
-    function parse_template_bean($string, $bean_name, &$focus)
+    public function parse_template_bean($string, $bean_name, &$focus)
     {
         global $current_user;
         global $beanList;
@@ -675,8 +676,6 @@ class EmailTemplate extends SugarBean
 
                 $fieldName = $field_def['name'];
                 if ($field_def['type'] == 'enum') {
-                    
-                    
                     if (!isset($contact->$fieldName)) {
                         LoggerManager::getLogger()->warn('Email Template / parse template bean error: Contact field not found. Field name was: "' . $fieldName . '"');
                         $contactFieldName = null;
@@ -714,9 +713,9 @@ class EmailTemplate extends SugarBean
         ////	LOAD FOCUS DATA INTO REPL_ARR
         if (!isset($focus->field_defs)) {
             LoggerManager::getLogger()->warn('Email Template / parse template bean error on load focus data into repl_arr: Focus field defs is undefined.');
-        } else { 
+        } else {
             foreach ($focus->field_defs as $field_def) {
-                if(!isset($field_def['name'])) {
+                if (!isset($field_def['name'])) {
                     LoggerManager::getLogger()->warn('Email Template / parse template bean error on load focus data into repl_arr: Focus field defs [name] is undefined.');
                 }
                 $fieldName = isset($field_def['name']) ? $field_def['name'] : null;
@@ -791,7 +790,6 @@ class EmailTemplate extends SugarBean
         foreach ($replacement as $key => $value) {
             // @see defect #48641
             if ('multienum' == $field_def['type']) {
-
                 $mVals = unencodeMultienum($value);
                 $translatedVals = array();
                 foreach ($mVals as $mVal) {
@@ -809,11 +807,10 @@ class EmailTemplate extends SugarBean
         return $data;
     }
 
-    function parse_template($string, &$bean_arr)
+    public function parse_template($string, &$bean_arr)
     {
         foreach ($bean_arr as $bean_name => $bean_id) {
-
-            $focus = BeanFactory::getBean($bean_name,$bean_id);
+            $focus = BeanFactory::getBean($bean_name, $bean_id);
 
             if ($bean_name == 'Leads' || $bean_name == 'Prospects') {
                 $bean_name = 'Contacts';
@@ -828,7 +825,7 @@ class EmailTemplate extends SugarBean
         return $string;
     }
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL':
@@ -837,18 +834,19 @@ class EmailTemplate extends SugarBean
         return false;
     }
 
-    static function getTypeOptionsForSearch()
+    public static function getTypeOptionsForSearch()
     {
         $template = new EmailTemplate();
         $optionKey = $template->field_defs['type']['options'];
         $options = $GLOBALS['app_list_strings'][$optionKey];
-        if (!is_admin($GLOBALS['current_user']) && isset($options['workflow']))
+        if (!is_admin($GLOBALS['current_user']) && isset($options['workflow'])) {
             unset($options['workflow']);
+        }
 
         return $options;
     }
 
-    function is_used_by_email_marketing()
+    public function is_used_by_email_marketing()
     {
         $query = "select id from email_marketing where template_id='$this->id' and deleted=0";
         $result = $this->db->query($query);
@@ -883,7 +881,7 @@ class EmailTemplate extends SugarBean
         return $this->storedVariables[$text[0]];
     }
 
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
         $this->repairMozaikClears();
         return parent::save($check_notify);
@@ -895,28 +893,31 @@ class EmailTemplate extends SugarBean
         $this->repairMozaikClears();
         $this->imageLinkReplaced = false;
         $this->repairEntryPointImages();
-        if($this->imageLinkReplaced) {
+        if ($this->imageLinkReplaced) {
             $this->save();
         }
         $this->addDomainToRelativeImagesSrc();
         return $ret;
     }
 
-    public function addDomainToRelativeImagesSrc() {
+    public function addDomainToRelativeImagesSrc()
+    {
         global $sugar_config;
         $domain = $sugar_config['site_url'] . '/';
         $ret = $this->body_html = preg_replace('/(&lt;img src=&quot;)(public\/[^.]*.(jpg|jpeg|png|gif|bmp))(&quot;)/', "$1" . $domain . "$2$4", $this->body_html);
         return $ret;
     }
 
-    private function repairMozaikClears() {
+    private function repairMozaikClears()
+    {
         // repair tinymce auto correction in mozaik clears
         $this->body_html = str_replace('&lt;div class=&quot;mozaik-clear&quot;&gt;&nbsp;&lt;br&gt;&lt;/div&gt;', '&lt;div class=&quot;mozaik-clear&quot;&gt;&lt;/div&gt;', $this->body_html);
     }
 
 
 
-    private function repairEntryPointImages() {
+    private function repairEntryPointImages()
+    {
         global $sugar_config;
 
         // repair the images url at entry points, change to a public direct link for remote email clients..
@@ -924,7 +925,7 @@ class EmailTemplate extends SugarBean
         $siteUrlQuoted = str_replace(array(':', '/'), array('\:', '\/'), $sugar_config['site_url']);
         $regex = '/&lt;img src=&quot;(' . $siteUrlQuoted . '\/index\.php\?entryPoint=download&type=Notes&id=([a-f0-9]{8}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{12})&filename=[^&]+)&quot;/';
 
-        if(preg_match($regex, $this->body_html, $match)) {
+        if (preg_match($regex, $this->body_html, $match)) {
             $splits = explode('.', $match[1]);
             $fileExtension = end($splits);
             $this->makePublicImage($match[2], $fileExtension);
@@ -933,30 +934,29 @@ class EmailTemplate extends SugarBean
             $this->imageLinkReplaced = true;
             $this->repairEntryPointImages();
         }
-
     }
 
-    private function makePublicImage($id, $ext = 'jpg') {
+    private function makePublicImage($id, $ext = 'jpg')
+    {
         $toFile = 'public/' . $id . '.' . $ext;
-        if(file_exists($toFile)) {
+        if (file_exists($toFile)) {
             return;
         }
         $fromFile = 'upload://' . $id;
-        if(!file_exists($fromFile)) {
+        if (!file_exists($fromFile)) {
             throw new Exception('file not found');
         }
-        if(!file_exists('public')) {
+        if (!file_exists('public')) {
             sugar_mkdir('public', 0777);
         }
         $fdata = file_get_contents($fromFile);
-        if(!file_put_contents($toFile, $fdata)) {
+        if (!file_put_contents($toFile, $fdata)) {
             throw new Exception('file write error');
         }
     }
 
-    public function getAttachments() {
+    public function getAttachments()
+    {
         return BeanFactory::getBean('Notes')->get_full_list('', "parent_id = '" . $this->id . "'");
     }
-
 }
-

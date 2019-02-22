@@ -44,8 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $subpanel_layout = array(
-	//Removed button because this layout def is a component of
-	//the activities sub-panel.
+    //Removed button because this layout def is a component of
+    //the activities sub-panel.
 
     'where' => "(meetings.status !='Held' AND meetings.status !='Not Held')",
     

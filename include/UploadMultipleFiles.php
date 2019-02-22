@@ -305,7 +305,6 @@ class UploadMultipleFiles
      */
     public function getMimeSoap($filename)
     {
-
         if (function_exists('ext2mime')) {
             $mime = ext2mime($filename);
         } else {
@@ -313,7 +312,6 @@ class UploadMultipleFiles
         }
 
         return $mime;
-
     }
 
     /**
@@ -509,12 +507,10 @@ class UploadMultipleFiles
                 $error_message = isset($result['errorMessage']) ? $result['errorMessage'] :
                     $GLOBALS['app_strings']['ERR_EXTERNAL_API_SAVE_FAIL'];
                 SugarApplication::appendMessage('error', $error_message);
-
             } else {
                 unlink($new_destination);
             }
         }
-
     }
 
     /**
@@ -581,4 +577,3 @@ class UploadMultipleFiles
         return $path;
     }
 }
-

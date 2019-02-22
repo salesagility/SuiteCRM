@@ -46,7 +46,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        $state->pushGlobals();
 //
 //        // test
-//        
+//
 //        global $sugar_config;
 //
 //        $user = new User();
@@ -56,7 +56,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //
 //        //test setPreference method
 //        $userPreference->setPreference('test', 'test val', 'test_category');
-//        
+//
 //        if (!isset($_SESSION[$user->user_name.'_PREFERENCES']['test_category']['test'])) {
 //            LoggerManager::getLogger()->warn('no session');
 //            $result = null;
@@ -64,7 +64,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        } else {
 //            $result = $_SESSION[$user->user_name.'_PREFERENCES']['test_category']['test'];
 //        }
-//        
+//
 //        $this->assertEquals('test val', $result);
 //
 //        //test getPreference method
@@ -73,9 +73,9 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //
 //        $result = $userPreference->getPreference('chartEngine');
 //        $this->assertEquals($sugar_config['chartEngine'], $result);
-//        
+//
 //        // clean up
-//        
+//
 //        $state->popTable('aod_index');
 //        $state->popGlobals();
     }
@@ -161,7 +161,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        $state->pushGlobals();
 //
 //        // test
-//        
+//
 //        $user = new User();
 //        $user->retrieve('1');
 //
@@ -176,7 +176,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //                'assigned_user_id' => $user->id,
 //                'category' => 'test_category',
 //        ));
-//        
+//
 //        //$this->assertFalse(isset($result->id));
 //
 //        //reset the preferences and verify that it is deleted
@@ -186,9 +186,9 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //                'category' => 'test_category',
 //        ));
 //        $this->assertEquals(null, $result);
-//        
+//
 //        // clean up
-//        
+//
 //        $state->popGlobals();
 //        $state->popTable('tracker');
 //        $state->popTable('aod_index');

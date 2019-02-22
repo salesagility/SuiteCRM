@@ -2,7 +2,6 @@
 
 namespace SuiteCRM\Robo\Plugin\Commands;
 
-
 /**
  * Class CleanCacheCommands
  *
@@ -59,4 +58,4 @@ class CleanCacheCommands extends \Robo\Tasks
         }
         $this->_cleanDir($toDelete);
     }
-} 
+}

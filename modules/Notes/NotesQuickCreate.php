@@ -46,17 +46,18 @@ require_once('include/EditView/QuickCreate.php');
 
 
 
-class NotesQuickCreate extends QuickCreate {
+class NotesQuickCreate extends QuickCreate
+{
+    public $javascript;
     
-    var $javascript;
-    
-    function process() {
+    public function process()
+    {
         global $current_user, $timedate, $app_list_strings, $current_language, $mod_strings;
         $mod_strings = return_module_language($current_language, 'Notes');
         
         parent::process();
 
-        if($this->viaAJAX) { // override for ajax call
+        if ($this->viaAJAX) { // override for ajax call
             $this->ss->assign('saveOnclick', "onclick='if(check_form(\"notesQuickCreate\")) return SUGAR.subpanelUtils.inlineSave(this.form.id, \"history\"); else return false;'");
             $this->ss->assign('cancelOnclick', "onclick='return SUGAR.subpanelUtils.cancelCreate(\"subpanel_history\")';");
         }
@@ -71,5 +72,5 @@ class NotesQuickCreate extends QuickCreate {
         $this->javascript->addAllFields('');
 
         $this->ss->assign('additionalScripts', $this->javascript->getScript(false));
-    }   
+    }
 }
