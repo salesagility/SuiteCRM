@@ -168,5 +168,9 @@ class UsersCest
         $I->click('#next_tab_finish');
         $I->click('save');
         $I->wait(10);
+
+        $administration->logout();
+        $I->loginAsAdmin();
+        $I->saveSessionSnapshot('login');
     }
 }
