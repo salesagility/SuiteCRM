@@ -106,7 +106,7 @@ class templateParser
 
         foreach ($repl_arr as $name => $value) {
             if (strpos($name, 'product_discount') !== false || strpos($name, 'quotes_discount') !== false) {
-                if ($value != '' && $value != '0.00') {
+                if ($value !== '' && is_string($value)) {
                     if ($isValidator->isPercentageField($repl_arr['aos_products_quotes_discount'])) {
                         $sep = get_number_seperators();
                         $value = rtrim(
