@@ -55,13 +55,13 @@
 {literal}
 <style type='text/css'>
 .slot {
-	border-width:1px;border-color:#999999;border-style:solid;padding:0px 1px 0px 1px;margin:2px;cursor:move;
+	border-width:1px;border-color:#999999;border-style:solid;padding:0 1px 0 1px;margin:2px;cursor:move;
 
 }
 
 
 .slotSub {
-	border-width:1px;border-color:#006600;border-style:solid;padding:0px 1px 0px 1px;margin:2px;cursor:move;
+	border-width:1px;border-color:#006600;border-style:solid;padding:0 1px 0 1px;margin:2px;cursor:move;
 
 }
 .slotB {
@@ -91,8 +91,8 @@ div.noBullet li, .nobullet
 
 ul#trash
 {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
 }
 
 .tdContainer{

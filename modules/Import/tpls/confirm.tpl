@@ -173,7 +173,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"><div class="hr" style="margin-top: 0px;"></div></td>
+            <td colspan="2"><div class="hr" style="margin-top: 0;"></div></td>
         </tr>
         <tr>
             <td colspan="2" scope="col"><h3><label for="external_source">{$MOD.LBL_THIRD_PARTY_CSV_SOURCES}</label>&nbsp;{sugar_help text=$MOD.LBL_THIRD_PARTY_CSV_SOURCES_HELP}</h3></td>

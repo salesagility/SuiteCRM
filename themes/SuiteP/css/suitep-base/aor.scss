@@ -97,7 +97,7 @@
           .button {
             padding: 6px 6px 18px 6px;
             line-height: 10px;
-            height: 0px;
+            height: 0;
             font-size: 32px;
           }
         }
@@ -135,7 +135,7 @@
           .button {
             padding: 6px 6px 18px 6px;
             line-height: 10px;
-            height: 0px;
+            height: 0;
             font-size: 32px;
           }
         }
@@ -185,7 +185,7 @@
             margin-right: 4px;
             padding: 6px 6px 18px 6px;
             line-height: 10px;
-            height: 0px;
+            height: 0;
             font-size: 32px;
           }
         }
@@ -244,7 +244,7 @@
 
 #detailpanel_report {
   .list-view-rounded-corners {
-    margin: 0px;
+    margin: 0;
   }
 
   .list-view-rounded-corners > table th:first-of-type {

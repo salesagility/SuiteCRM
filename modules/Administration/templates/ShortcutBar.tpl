@@ -69,7 +69,7 @@
 		</tr>
 	</table>
 	<div class='add_table' style='margin-bottom:5px'>
-		<table id="ConfigureTabs" class="themeSettings edit view" style='margin-bottom:0px;' border="0" cellspacing="0" cellpadding="0">
+		<table id="ConfigureTabs" class="themeSettings edit view" style='margin-bottom:0;' border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td width='1%'>
 					<div id="enabled_div"></div>	

@@ -53,20 +53,20 @@ color: #C60C30;
 {
     background-image: none;
     vertical-align: middle;
-	margin-top: 0px;
+	margin-top: 0;
 	height: auto;
 	padding: 0;
 	float: none;
-	border: 0px none;
+	border: 0 none;
 }
 
 .dashletPanelMenu .bd .screen {
 	background-color: transparent;
     display: none;
     width: 820px;
-	margin: 0px;
-	padding: 0px; 
-	border: 0px none;
+	margin: 0;
+	padding: 0;
+	border: 0 none;
 }
 
 .edit td[scope="row"] 
@@ -116,7 +116,7 @@ div.screen div.edit.view th h2
 }
 
 .dashletPanelMenu .bd .bd-center {
-padding-top: 0px;
+padding-top: 0;
 }
 
 .edit, .detail, .detail > table {
@@ -160,7 +160,7 @@ border: none;
 }
 
 .yui-button {
-border-width: 0px;
+border-width: 0;
 }
 
 .yui-radio-button-checked button, .yui-checkbox-button-checked button {
@@ -172,6 +172,6 @@ div.screen .view td a
 {
     font-size: 14px;
 }
-.userWizWelcome {margin: 10px -30px 0pt 0pt; width: 770px;}
+.userWizWelcome {margin: 10px -30px 0 0; width: 770px;}
 
 #userWizFrame {width: 770px; height: 325px; border: none;}

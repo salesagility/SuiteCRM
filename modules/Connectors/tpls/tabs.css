@@ -69,7 +69,7 @@ div.enabled_workarea, div.disabled_workarea {
 
 
 div.datasource_content {
-	padding: 0px;
+	padding: 0;
 }
 
 
@@ -97,9 +97,9 @@ ul.draglist {
 
 li.noBullet2 {
     position: relative;
-    margin: 0px;
+    margin: 0;
     cursor: pointer;
-    padding:0px;
+    padding:0;
 	background: #FFFFFF;    
     /* border:1px solid #7EA6B2; */ 
 }

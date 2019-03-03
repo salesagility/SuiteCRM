@@ -67,7 +67,7 @@ td.charmap, #charmap a {width:18px; height:18px; color:#000; border:1px solid #A
 .tabs ul {margin:0; padding:0; list-style:none;}
 .tabs li {float:left; border: 1px solid black; border-bottom:0; margin:0 2px 0 0; padding:0 0 0 10px; line-height:17px; height:18px; display:block; cursor:pointer;}
 .tabs li.current {font-weight: bold; margin-right:2px;}
-.tabs span {float:left; display:block; padding:0px 10px 0 0;}
+.tabs span {float:left; display:block; padding:0 10px 0 0;}
 .tabs a {text-decoration:none; font-family:Verdana, Arial; font-size:10px;}
 .tabs a:link, .tabs a:visited, .tabs a:hover {color:black;}
 
@@ -95,7 +95,7 @@ h3 {font-size:14px;}
 #plugintable {width:96%; margin-top:10px;}
 #pluginscontainer {height:290px; overflow:auto;}
 #colorpicker #preview {display:inline-block; padding-left:40px; height:14px; border:1px solid black; margin-left:5px; margin-right: 5px}
-#colorpicker #previewblock {position: relative; top: -3px; padding-left:5px; padding-top: 0px; display:inline}
+#colorpicker #previewblock {position: relative; top: -3px; padding-left:5px; padding-top: 0; display:inline}
 #colorpicker #preview_wrapper { text-align:center; padding-top:4px; white-space: nowrap}
 #colorpicker #colors {float:left; border:1px solid gray; cursor:crosshair;}
 #colorpicker #light {border:1px solid gray; margin-left:5px; float:left;width:15px; height:150px; cursor:crosshair;}

@@ -462,7 +462,7 @@ ul.progression {
 
 .progression li {
   color: $campaign-progression-color;
-  border-radius: 0px;
+  border-radius: 0;
   display: inline-block;
   padding: 5px 20px 5px 20px;
   margin-right: 16px;
@@ -481,7 +481,7 @@ ul.progression {
   width: 0;
   position: absolute;
   border-color: transparent;
-  border-radius: 0px;
+  border-radius: 0;
 }
 
 .progression li::before {

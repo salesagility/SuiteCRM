@@ -78,7 +78,7 @@
 	{literal}
 	<style type='text/css'>
 		.wizard { padding: 5px; text-align:center; font-weight:bold}
-		.title{ color:#990033; font-weight:bold; padding: 0px 5px 0px 0px; font-size: 20pt}
+		.title{ color:#990033; font-weight:bold; padding: 0 5px 0 0; font-size: 20pt}
 		.backButton {position:absolute; left:10px; top:35px}
 	</style>
     {/literal}

@@ -165,7 +165,7 @@ version: 2.9.0
 
 /* Dialog YUI Button disabled state */
 .yui-skin-sam .yui-dialog .ft span.yui-button-disabled {
-    background-position:0pt -1500px;
+    background-position:0 -1500px;
     border-color:#ccc;
 }
 

@@ -62,7 +62,7 @@ if (!empty($return_module)) {
     $cancel_location = "index.php?module=Users&action=index";
 }
 
-echo "<h2 class='moduleTitle' style=\"margin-bottom:0px;\">{$mod_strings_users['LBL_REASS_SCRIPT_TITLE']}</h2>";
+echo "<h2 class='moduleTitle' style=\"margin-bottom:0;\">{$mod_strings_users['LBL_REASS_SCRIPT_TITLE']}</h2>";
 
 // Include Metadata for processing
 require_once("modules/Users/metadata/reassignScriptMetadata.php");
@@ -189,7 +189,7 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
         //Leon bug 20739
         $t_mod_strings=return_module_language($GLOBALS['current_language'], $modFilter);
         echo "<div id=\"reassign_{$GLOBALS['beanList'][$modFilter]}\" style=\"display:$display\">\n";
-        echo "<h5 style=\"padding-left:0px; margin-bottom:4px;\">{$app_list_strings['moduleList'][$modFilter]} ", " {$mod_strings_users['LBL_REASS_FILTERS']}</h5>\n";
+        echo "<h5 style=\"padding-left:0; margin-bottom:4px;\">{$app_list_strings['moduleList'][$modFilter]} ", " {$mod_strings_users['LBL_REASS_FILTERS']}</h5>\n";
         foreach ($fieldArray['fields'] as $meta) {
             $multi = "";
             $name = (!empty($meta['name']) ? $meta['name'] : "");

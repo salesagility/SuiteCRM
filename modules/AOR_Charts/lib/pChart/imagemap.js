@@ -127,7 +127,7 @@ if(document.all)
 
    var HTML = "<div style='border:2px solid #606060'><div style='background-color: #000000; font-family: tahoma; font-size: 11px; color: #ffffff; padding: 4px;'><b>"+Title+" &nbsp;</b></div>";
    HTML    += "<div style='background-color: #808080; border-top: 2px solid #606060; font-family: tahoma; font-size: 10px; color: #ffffff; padding: 2px;'>";
-   HTML    += "<table style='border: 0px; padding: 0px; margin: 0px;'><tr valign='top'><td style='padding-top: 4px;'><table style='background-color: "+Color+"; border: 1px solid #000000; width: 9px; height: 9px;  padding: 0px; margin: 0px; margin-right: 2px;'><tr><td></td></tr></table></td><td>"+Message+"</td></tr></table>";
+   HTML    += "<table style='border: 0; padding: 0; margin: 0;'><tr valign='top'><td style='padding-top: 4px;'><table style='background-color: "+Color+"; border: 1px solid #000000; width: 9px; height: 9px;  padding: 0; margin: 0; margin-right: 2px;'><tr><td></td></tr></table></td><td>"+Message+"</td></tr></table>";
    HTML    += "</div></div>";
 
    element.innerHTML = HTML;
@@ -169,7 +169,8 @@ if(document.all)
   }
 
  /* Fade general functions */
- function fadeIn(TooltipDivID)  { currentTimerMode = 1; initialiseTimer(TooltipDivID); } function fadeOut(TooltipDivID) { currentTimerMode = 2; initialiseTimer(TooltipDivID); } function initialiseTimer(TooltipDivID)
+ function fadeIn(TooltipDivID)  { currentTimerMode = 1; initialiseTimer(TooltipDivID); }
+ function fadeOut(TooltipDivID) { currentTimerMode = 2; initialiseTimer(TooltipDivID); } function initialiseTimer(TooltipDivID)
   { if ( timerID == null ) { timerID = setInterval("fade('"+TooltipDivID+"')",timerInterval); } }
 
 

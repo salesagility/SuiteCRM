@@ -193,7 +193,7 @@ function generatePicker() {
 	var el = document.getElementById('light'), h = '', i;
 
 	for (i = 0; i < detail; i++){
-		h += '<div id="gs'+i+'" style="background-color:#000000; width:15px; height:3px; border-style:none; border-width:0px;"'
+		h += '<div id="gs'+i+'" style="background-color:#000000; width:15px; height:3px; border-style:none; border-width:0;"'
 		+ ' onclick="changeFinalColor(this.style.backgroundColor)"'
 		+ ' onmousedown="isMouseDown = true; return false;"'
 		+ ' onmouseup="isMouseDown = false;"'

@@ -20,7 +20,7 @@ version: 2.9.0
 .yui-skin-sam .yui-toolbar-container .yui-button button,
 .yui-skin-sam .yui-toolbar-container .yui-button a,
 .yui-skin-sam .yui-toolbar-container .yui-button a:visited {
-    font-size: 0px;
+    font-size: 0;
 }
 .yui-skin-sam .yui-toolbar-container .yui-toolbar-select button,
 .yui-skin-sam .yui-toolbar-container .yui-toolbar-select a,
@@ -151,7 +151,7 @@ version: 2.9.0
     height: 100%;
     width: 100%;
     overflow: hidden;
-    font-size: 0px;
+    font-size: 0;
 }
 
 /* Setup the disabled state of a button */
@@ -246,7 +246,7 @@ version: 2.9.0
 }
 /* Style the editable iframe to hide it */
 .yui-editor-container iframe {
-    border: 0px;
+    border: 0;
     padding: 0;
     margin: 0;
     zoom: 1;
@@ -269,7 +269,7 @@ version: 2.9.0
 /* Setup some padding around the h3 */
 .yui-editor-panel .hd h3 {
     font-weight: bold;
-    padding: 0.25em 0pt 0.25em 0.25em;
+    padding: 0.25em 0 0.25em 0.25em;
     margin: 0;
 }
 
@@ -399,7 +399,7 @@ version: 2.9.0
     _top: -5px;
     width: 24px;
     text-indent: 52px;
-    font-size: 0%;
+    font-size: 0;
 }
 /* Border Type solid */
 .yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-solid {
@@ -415,8 +415,8 @@ version: 2.9.0
 }
 /* Border Size 0 */
 .yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-0 {
-    *top: 0px;
-    text-indent: 0px;
+    *top: 0;
+    text-indent: 0;
     font-size: 75%;
 }
 /* Border Size 1 */
@@ -454,14 +454,14 @@ version: 2.9.0
 /* Border Size menu styles */
 .yui-toolbar-bordersize-menu .yuimenuitemlabel, .yui-toolbar-bordertype-menu .yuimenuitemlabel, 
 .yui-toolbar-bordersize-menu .yuimenuitemlabel, .yui-toolbar-bordertype-menu .yuimenuitemlabel:hover {
-    margin:0px 3px 7px 17px;
+    margin:0 3px 7px 17px;
 }
 /* Border Size menu styles - Checked */
 .yui-toolbar-bordersize-menu .yuimenuitemlabel .checkedindicator, .yui-toolbar-bordertype-menu .yuimenuitemlabel .checkedindicator {
     position: absolute;
     left: -12px;
     *top: 14px;
-    *left: 0px;
+    *left: 0;
 }
 
 /* Border Size 1 - Menu Item */

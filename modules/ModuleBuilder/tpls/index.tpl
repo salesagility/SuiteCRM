@@ -41,7 +41,7 @@
 *}
 <iframe id="yui-history-iframe" src="index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png" title="index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png"></iframe>
 <input id="yui-history-field" type="hidden"> 
-<div class='ytheme-gray' id='mblayout' style="position:relative; height:0px; overflow:visible;">
+<div class='ytheme-gray' id='mblayout' style="position:relative; height:0; overflow:visible;">
 </div>
 <div id='mbcenter'>
 <div id='mbtabs'></div>

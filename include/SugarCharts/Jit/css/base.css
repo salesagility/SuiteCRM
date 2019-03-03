@@ -78,7 +78,7 @@ float: left;
 }
 
 .legend table td.label {
-padding: 0px 20px 5px 0px;
+padding: 0 20px 5px 0;
 text-align: left;
 }
 /*TOOLTIPS*/

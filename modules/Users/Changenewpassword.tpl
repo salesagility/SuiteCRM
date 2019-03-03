@@ -72,13 +72,13 @@ table.tabForm td
 
 p 
 {
-    MARGIN-TOP: 0px;
+    MARGIN-TOP: 0;
     MARGIN-BOTTOM: 10px;
 }
     
 form 
 {
-    margin: 0px;
+    margin: 0;
 }
     
 #recaptcha_image 

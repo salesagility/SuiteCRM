@@ -227,8 +227,8 @@ PLEASE NOTE:
     z-index:6;
     height:12px;
     width:12px;
-    margin:0px;
-    padding:0px;
+    margin:0;
+    padding:0;
     background:url(close12_1.gif) no-repeat;
     cursor:pointer;
     visibility:inherit;

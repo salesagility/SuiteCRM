@@ -76,7 +76,7 @@
 	<tr style='padding-top: 10px;'>
 		<td colspan='8' nowrap'>
 		<div id='inlineGlobalSearch' class='add_table' {if $SHOWGSDIV != 'yes'}style="display:none;"{/if}>
-		<table id="GlobalSearchSettings" class="GlobalSearchSettings edit view" style='margin-bottom:0px;' border="0" cellspacing="0" cellpadding="0">
+		<table id="GlobalSearchSettings" class="GlobalSearchSettings edit view" style='margin-bottom:0;' border="0" cellspacing="0" cellpadding="0">
 		    <tr>
 		    	<td colspan="2">
 		    	{sugar_translate label="LBL_SELECT_MODULES_TITLE" module="Administration"}

@@ -24,11 +24,11 @@ div#searchResults {
 
 /** Reminders **/
 #EditView #reminder_view input[type="button"].add-btn {
-  padding: 0px 20px 20px 32px;
+  padding: 0 20px 20px 32px;
 }
 
 #EditView #reminder_view input[type="button"].remove-btn {
-  padding: 0px 32px 20px 20px;
+  padding: 0 32px 20px 20px;
 }
 
 /** Schedule Bar **/
@@ -1387,17 +1387,17 @@ td.edit.view td[align=right] {
 }
 
 #tab_accounts #ieSelect > table {
-  padding: 0pt;
+  padding: 0;
   border-collapse: collapse;
 }
 
 #ieAccount > table {
-  padding: 0pt;
+  padding: 0;
   border-collapse: collapse;
 }
 
 #ieAccount > table td table {
-  padding: 0pt;
+  padding: 0;
   border-collapse: collapse;
 }
 
@@ -2062,7 +2062,7 @@ ul.clickMenu li a {
 }
 
 ul.clickMenu li a.clearSearchIcon {
-  margin: 3px 0px 0px 8px;
+  margin: 3px 0 0 8px;
 }
 
 ul.clickMenu li.single a {
@@ -4420,24 +4420,24 @@ td.inlineEditActive {
   }
 
   .edit-view-pagination .btn-pagination.button {
-    margin-left: 0px;
-    margin-right: 0px;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .edit-view-pagination .glyphicon-chevron-left {
-    margin-right: 0px;
+    margin-right: 0;
   }
 
   .edit-view-pagination.glyphicon-chevron-right {
-    margin-left: 0px;
+    margin-left: 0;
   }
 
   .edit-view-pagination .glyphicon-chevron-left {
-    margin-right: 0px;
+    margin-right: 0;
   }
 
   .edit-view-pagination .glyphicon-chevron-right {
-    margin-left: 0px;
+    margin-left: 0;
   }
 }
 
@@ -4825,8 +4825,8 @@ object {
 
   .edit-view-mobile-pagination .btn-pagination.button {
     font-size: 8px;
-    margin-left: 0px;
-    margin-right: 0px;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .edit-view-pagination-mobile-container {

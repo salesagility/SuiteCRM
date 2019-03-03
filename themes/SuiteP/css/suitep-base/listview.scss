@@ -550,7 +550,7 @@ a.listViewTdToolsS1 {
 
 #selectLinkTop .selectActionsDisabled {
   min-width: 32px;
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 .paginationActionButtons .clickMenu .massall {
@@ -723,7 +723,7 @@ a.listViewTdToolsS1 {
 
 #massassign_form .tabForm {
   background-color: transparent;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 #mass_update_table {
@@ -1339,7 +1339,7 @@ a.listViewTdToolsS1 {
 
 form#MassAssign_SecurityGroups {
   background-color: $mass-assign-bg;
-  padding: 0px 20px 0px 20px;
+  padding: 0 20px 0 20px;
   margin: 10px 0 20px 0;
   border-radius: 3px;
   float: left;
@@ -1356,7 +1356,7 @@ form#MassAssign_SecurityGroups {
 }
 
 #mass_update_table tbody tr td {
-  padding-bottom: 0px;
+  padding-bottom: 0;
 }
 
 /*** Search (ListView) ***/
@@ -1419,7 +1419,7 @@ form#MassAssign_SecurityGroups {
   background-color: $panel-border-bg;
   border-radius: 3px;
   font-size: 13px;
-  padding: 5px 0px 0px 30px;
+  padding: 5px 0 0 30px;
 }
 
 select#saved_search_select {
@@ -1896,7 +1896,7 @@ div.qtip.qtip-default {
     padding-right: 30px;
   }
   .list tr.pagination-unique td {
-    padding: 0px;
+    padding: 0;
   }
 }
 
@@ -1916,7 +1916,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
-  padding: 0px 1px 3px 1px;
+  padding: 0 1px 3px 1px;
   line-height: 0.8;
 }
 
@@ -2152,13 +2152,13 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
 
 .popupBody .checkbox .popupBody input[type=checkbox] {
   display: block;
-  margin-top: 0px;
+  margin-top: 0;
   float: left;
 }
 
 .popupBody input[type=checkbox] {
   display: block;
-  margin-top: 0px;
+  margin-top: 0;
   margin-top: 5px;
   margin-left: 4px;
   float: left;
@@ -2398,13 +2398,13 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
 
 .inbound-email .checkbox .inbound-email input[type=checkbox] {
   display: block;
-  margin-top: 0px;
+  margin-top: 0;
   float: left;
 }
 
 .inbound-email input[type=checkbox] {
   display: block;
-  margin-top: 0px;
+  margin-top: 0;
   margin-top: 5px;
   margin-left: 4px;
   float: left;
@@ -2690,26 +2690,26 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
 
 /* PAGINATION */
 .list tr.pagination-unique td {
-  padding: 0px;
+  padding: 0;
 }
 
 .list tr.pagination-unique td table.paginationTable tr {
-  padding: 0px;
+  padding: 0;
 }
 
 .list tr.pagination-unique td table.paginationTable td.paginationActionButtons {
   background-color: $list-view-toolbar-bg;
-  padding: 5px 0px 5px 0px;
+  padding: 5px 0 5px 0;
 }
 
 .list tr.pagination-unique td table.paginationTable td.paginationChangeButtons {
   background-color: $dashlet-toolbar-bg;
-  padding: 5px 5px 5px 0px;
+  padding: 5px 5px 5px 0;
 }
 
 listViewLinkButton {
   min-height: 16px;
-  line-height: 0px;
+  line-height: 0;
   position: relative;
   padding: 1px;
 }
@@ -2800,17 +2800,17 @@ ul.clickMenu {
 
 .listViewLinkButton {
   min-width: 32px;
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 .listViewLinkButton .sugar_action_button {
   min-width: 32px;
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 .listViewLinkButton .selectActionsDisabled {
   min-width: 32px;
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 ul.clickMenu li ul.subnav {
@@ -2955,56 +2955,56 @@ tr.pagination-unique {
 }
 
 table.subpanel-table ul.subpanel > a {
-  padding: 0px;
+  padding: 0;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
 }
 
 #actionLinkTop li.sugar_action_button {
-  padding: 0px;
+  padding: 0;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
 }
 
 .action-link-top li.sugar_action_button {
-  padding: 0px;
+  padding: 0;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
 }
 
 #actionLinkBottom li.sugar_action_button {
-  padding: 0px;
+  padding: 0;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
 }
 
 .action-link-bottom li.sugar_action_button {
-  padding: 0px;
+  padding: 0;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
 }
 
 table.subpanel-table li.sugar_action_button {
-  padding: 0px;
+  padding: 0;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
 }
 
 .listViewLinkButton li.sugar_action_button {
-  padding: 0px;
+  padding: 0;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
 }
 
 #selectLinkTop li.sugar_action_button {
-  padding: 0px;
+  padding: 0;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
@@ -3017,7 +3017,7 @@ table.subpanel-table li.sugar_action_button {
 }
 
 #selectLinkBottom li.sugar_action_button {
-  padding: 0px;
+  padding: 0;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
@@ -3030,7 +3030,7 @@ table.subpanel-table li.sugar_action_button {
 }
 
 table.subpanel-table .pagination .sugar_action_button {
-  padding: 0px;
+  padding: 0;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
@@ -3151,13 +3151,13 @@ table.subpanel-table .pagination .sugar_action_button.hover > form > a {
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
-  line-height: 0px;
+  line-height: 0;
   padding: 1px;
   vertical-align: top;
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
-  padding: 0px;
+  padding: 0;
   background-color: $list-view-action-button-bg; /* ??? #94A6B5; */
   border: 1px solid transparent;
   border-radius: $border-radius-base;
@@ -3540,7 +3540,7 @@ ul.clickMenu > li > span.searchAppliedAlert {
 }
 
 .listViewEmpty .clearSearchIcon {
-  margin: 3px 0px 0px 8px;
+  margin: 3px 0 0 8px;
 }
 
 .emptyResults{

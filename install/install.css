@@ -39,7 +39,7 @@
 
  /* SuiteCRM Installation CSS*/
 body {
-	margin: 0px 0px 0px 0px;
+	margin: 0 0 0 0;
 	background-color : #f7f7f7 ;
 	color : #333333;
     font-family: Arial, Helvetica, sans-serif;
@@ -95,7 +95,7 @@ h5 {
 }
 	
 p {
-    margin-top: 0px;
+    margin-top: 0;
     margin-bottom: 10px
 }
 
@@ -153,7 +153,7 @@ textarea {
 	}
 	
 .checkbox {
-	border:0px;
+	border:0;
 	background-color: transparent;
 	}
 	
@@ -168,7 +168,7 @@ textarea {
     line-height:15px;
     text-decoration:none;
     text-align:center;
-    text-shadow:1px 1px 0px #810e05;
+    text-shadow:1px 1px 0 #810e05;
     cursor:pointer;
     padding: 0 10px 0 10px;
     transition: all 0.5s ease;
@@ -191,7 +191,7 @@ textarea {
     line-height:15px;
     text-decoration:none;
     text-align:center;
-    text-shadow:1px 1px 0px #810e05;
+    text-shadow:1px 1px 0 #810e05;
     cursor:pointer;
     padding: 0 10px 0 10px;
     transition: all 0.5s ease;
@@ -242,7 +242,7 @@ ul.tablist li {
 
 ul.tablist li a {
     padding: 4px 8px;
-    margin: 0px;
+    margin: 0;
     border-top: 1px solid #ccc;
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #999;
@@ -535,7 +535,7 @@ input[type=password] {
     width: 45%; /* Account for margins + border values */
     float: left;
     padding: 5px 15px;
-    margin: 0px 5px 5px 5px;
+    margin: 0 5px 5px 5px;
 }
 /*
 .syscred {
@@ -598,9 +598,9 @@ input[type=password] {
     border: 1px solid #B41C4F;
     background: white;
     padding: 10px 20px;
-    -webkit-box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0 5px 20px 0 rgba(0,0,0,0.75);
+    -moz-box-shadow: 0 5px 20px 0 rgba(0,0,0,0.75);
+    box-shadow: 0 5px 20px 0 rgba(0,0,0,0.75);
     z-index: 1001;
 }
 .form_section .formrow label i:hover .tooltip {
@@ -640,7 +640,7 @@ MEDIA QUERIES
     .sitecred {
         width: 41%;
         padding: 1% 4%;
-        margin: 0px 0px 5px 5px;
+        margin: 0 0 5px 5px;
         float: right;
     }
 
@@ -664,7 +664,7 @@ MEDIA QUERIES
     .sitecred {
         width: auto;
         float: none;
-        margin-left: 0px;
+        margin-left: 0;
     }
 
     .syscred {

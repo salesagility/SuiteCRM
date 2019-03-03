@@ -94,7 +94,7 @@
     <table border="0" cellpadding="30" id="importTable" style="width:60% !important;">
     <tr>
         <td  width="40%" colspan="2">
-           <table id="DupeCheck" class="themeSettings edit view noBorder" style='margin-bottom:0px;' border="0" cellspacing="10" cellpadding="0"  width = '100%'>
+           <table id="DupeCheck" class="themeSettings edit view noBorder" style='margin-bottom:0;' border="0" cellspacing="10" cellpadding="0"  width = '100%'>
                 <tr>
                     <td align="right">
                         <div id="enabled_div" class="enabled_tab_workarea">

@@ -45,7 +45,7 @@
 <!-- BEGIN: main -->
 <div class="dashletPanelMenu" style="width: 500px; margin: 20px auto;">
 <div class="hd"><div class="tl"></div><div class="hd-center"></div><div class="tr"></div></div>
-<div class="bd" style="padding-top: 0px; padding-bottom: 0;">
+<div class="bd" style="padding-top: 0; padding-bottom: 0;">
 <div class="ml"></div>
 <div class="bd-center">
 <form name="EditView" method="POST" action="index.php?module=Users&action=SaveTimezone&SaveTimezone=True">

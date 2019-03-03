@@ -60,7 +60,7 @@ div.playArea {ldelim}
     <img id="shot"   style="position: absolute; top:245px; display: none"
         src="modules/Home/Dashlets/InvadersDashlet/sprites/cube.png" width="16px" height="16px"/>
     
-    <div id="aliens" style="position: absolute; left:0px; width:172px;">
+    <div id="aliens" style="position: absolute; left:0; width:172px;">
 		<table cellpadding="0" cellspacing="2"><tbody>
 		<tr>
 			<td id="a00" width="32" height="14">&nbsp;</td>

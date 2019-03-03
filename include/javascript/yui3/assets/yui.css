@@ -362,7 +362,7 @@ span.desc {text-transform:uppercase;font-size:77%;font-family:verdana;display:bl
 .sidebar .mod .bd {padding:10px;}
 .sidebar .mod .ft {padding:0 10px 10px 10px;}
 
-a#pdf-all {padding-left:16px;background:url(../assets/download-arrow.png) no-repeat 0 0px;}
+a#pdf-all {padding-left:16px;background:url(../assets/download-arrow.png) no-repeat 0 0;}
 
 .box3 {border:1px solid #D9D9D9;background-color:#F5F5F5;}
 	.box3 .hd {background-color:#999;}
@@ -373,7 +373,7 @@ a#pdf-all {padding-left:16px;background:url(../assets/download-arrow.png) no-rep
 	.box3 .bd {border:1px solid #fff;border-bottom-width:0;}
 	.box3 .ft {border:1px solid #fff;border-top-width:0;}
 	/* for cheatsheet download tracking*/
-	.box3 a#pdf-all {padding-left:16px;background:url(../assets/download-arrow.png) no-repeat 0 0px;}
+	.box3 a#pdf-all {padding-left:16px;background:url(../assets/download-arrow.png) no-repeat 0 0;}
 
 	.box4 {border:1px solid #D9D9D9;background:url(../assets/gradient-mod.png) repeat-x 0 0;}
 		.box4 h4 {color:#89B31F;}
@@ -482,7 +482,7 @@ table.auto {width:auto;}
 #topAreaR{float:right;color:#9f9f9f;font-size:85%;padding:6px 0 0 0;display:block;}
 #topAreaR ul li{float:left; margin-left:8px; padding-left:8px; border-left:1px solid #dfdfdf;}
 #topAreaR ul li.first{margin-left:0; border-left:0;}
-#topAreaR strong{margin-left:0px;font-weight:bold;margin-right:40px;}
+#topAreaR strong{margin-left:0;font-weight:bold;margin-right:40px;}
 
 #ydnNav{float:left;padding:.4em 0;}
 #ydnNav .yuimenubaritemlabel {float:left;color:#fff;font-weight:bold;text-transform:uppercase;text-decoration:none;}
@@ -659,8 +659,8 @@ div.wideimage {margin-bottom:1em;}
     position: absolute;
     top: 0;
     left: 0;
-    height: 0px;
-    width: 0px;
+    height: 0;
+    width: 0;
     background-color: red;
 }
 

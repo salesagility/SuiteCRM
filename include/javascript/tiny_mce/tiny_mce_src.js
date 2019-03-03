@@ -9691,7 +9691,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 			rng = t.getRng();
 			id = dom.uniqueId();
 			collapsed = tinyMCE.activeEditor.selection.isCollapsed();
-			styles = 'overflow:hidden;line-height:0px';
+			styles = 'overflow:hidden;line-height:0';
 
 			// Explorer method
 			if (rng.duplicate || rng.item) {

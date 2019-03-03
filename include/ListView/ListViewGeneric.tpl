@@ -122,7 +122,7 @@
                 </td>
             {/if}
             {if !empty($quickViewLinks)}
-                <td class='td_alt' width='1%' style="padding: 0px;">&nbsp;</td>
+                <td class='td_alt' width='1%' style="padding: 0;">&nbsp;</td>
             {/if}
             {counter start=0 name="colCounter" print=false assign="colCounter"}
             {assign var='datahide' value="phone"}

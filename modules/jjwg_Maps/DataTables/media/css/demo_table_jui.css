@@ -66,7 +66,7 @@
 }
 
 table.display thead th {
-	padding: 3px 0px 3px 10px;
+	padding: 3px 0 3px 10px;
 	cursor: pointer;
 	* cursor: hand;
 }
@@ -114,7 +114,7 @@ table.display thead th div.DataTables_sort_wrapper span {
 
 .dataTables_processing {
 	position: absolute;
-	top: 0px;
+	top: 0;
 	left: 50%;
 	width: 250px;
 	margin-left: -125px;
@@ -159,7 +159,7 @@ table.display {
 }
 
 table.display tfoot th {
-	padding: 3px 0px 3px 10px;
+	padding: 3px 0 3px 10px;
 	font-weight: bold;
 	font-weight: normal;
 }

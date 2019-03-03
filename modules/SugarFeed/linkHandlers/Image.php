@@ -49,7 +49,7 @@ class FeedLinkHandlerImage extends FeedLinkHandlerLink
     {
         $imageData = unserialize(base64_decode($data['LINK_URL']));
         if ($imageData['width'] != 0) {
-            $image_style = 'width: '.$imageData['width'].'px; height: '.$imageData['height'].'px; border: 0px;';
+            $image_style = 'width: '.$imageData['width'].'px; height: '.$imageData['height'].'px; border: 0;';
         } else {
             // Unknown width/height
             // Set it to a max width of 425 px, and include a tweak so that IE 6 can actually handle it.

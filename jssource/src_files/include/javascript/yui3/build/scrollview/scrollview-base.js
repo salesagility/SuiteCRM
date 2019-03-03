@@ -210,7 +210,7 @@ Y.ScrollView = Y.extend(ScrollView, Y.Widget, {
             };
 
             if (NATIVE_TRANSITIONS) {
-                transition.transform = 'translate3D('+ xMove +'px,'+ yMove +'px, 0px)';
+                transition.transform = 'translate3D('+ xMove +'px,'+ yMove +'px, 0)';
             } else {
                 if (xSet) { transition.left = xMove + PX; }
                 if (ySet) { transition.top = yMove + PX; }
@@ -225,7 +225,7 @@ Y.ScrollView = Y.extend(ScrollView, Y.Widget, {
 
         } else {
             if (NATIVE_TRANSITIONS) {
-                cb.setStyle('transform', 'translate3D('+ xMove +'px,'+ yMove +'px, 0px)');
+                cb.setStyle('transform', 'translate3D('+ xMove +'px,'+ yMove +'px, 0)');
             } else {
                 if (xSet) { cb.setStyle(LEFT, xMove + PX); }
                 if (ySet) { cb.setStyle(TOP, yMove + PX); }

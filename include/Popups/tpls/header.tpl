@@ -99,7 +99,7 @@ function clearAll() {
 <input type="button" name="showAdd" class="button" value="{$popupMeta.create.createButton}" onclick="toggleDisplay('addform');" />
 </div>
 {{/if}}
-<div id='addform' style='display:none;position:relative;z-index:2;left:0px;top:0px;'>
+<div id='addform' style='display:none;position:relative;z-index:2;left:0;top:0;'>
 <form name="form_QuickCreate_{$module}" id="form_QuickCreate_{$module}" {*onsubmit="return check_form('form_popupQuickCreate{$module}');"*} method="post" action="index.php">
 {$ADDFORMHEADER}
 <table cellpadding="0" cellspacing="0" border="0" width="100%" class="edit view">

@@ -72,7 +72,7 @@
        style="fill:#ffffff;stroke:#a1b1be;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;fill-opacity:1;stroke-linejoin:round" />
     <g
        transform="matrix(0.80735872,0.80735872,-0.80735872,0.80735872,37.221733,-6.3704057)"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:100%;letter-spacing:0px;word-spacing:0px;fill:#f08377;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:100%;letter-spacing:0;word-spacing:0;fill:#f08377;fill-opacity:1;stroke:none;font-family:Sans"
        id="text3782">
       <path
          d="m 25.330518,-12.791652 0,10.2343753 10.195312,0 0,4.609375 -10.195312,0 0,10.2343747 -4.648438,0 0,-10.2343747 -10.195312,0 0,-4.609375 10.195312,0 0,-10.2343753 4.648438,0"
@@ -96,7 +96,7 @@
        style="fill:#f6f6f6;stroke:#a1b1be;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;fill-opacity:1;stroke-linejoin:round" />
     <g
        id="g4354"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:100%;letter-spacing:0px;word-spacing:0px;fill:#f08377;fill-opacity:0.33333334;stroke:none;font-family:Sans"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:100%;letter-spacing:0;word-spacing:0;fill:#f08377;fill-opacity:0.33333334;stroke:none;font-family:Sans"
        transform="matrix(0.80735872,0.80735872,-0.80735872,0.80735872,111.60165,-6.0704057)">
       <path
          inkscape:connector-curvature="0"

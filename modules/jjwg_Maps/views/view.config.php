@@ -59,11 +59,11 @@ class Jjwg_MapsViewConfig extends SugarView
 
         <p>&nbsp;</p>
 
-        <p style="margin: 15px 0px 15px 0px; font-size: 1.7em;"><strong><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_TITLE']; ?></strong></p>
+        <p style="margin: 15px 0 15px 0; font-size: 1.7em;"><strong><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_TITLE']; ?></strong></p>
 
         <?php if (!empty($_REQUEST['config_save_notice'])) {
             ?>
-            <p style="margin: 15px 0px 15px 0px; font-size: 1.5em;"><strong><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_SAVED']; ?></strong></p>
+            <p style="margin: 15px 0 15px 0; font-size: 1.5em;"><strong><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_SAVED']; ?></strong></p>
         <?php
         } ?>
 
@@ -740,7 +740,7 @@ class Jjwg_MapsViewConfig extends SugarView
 </form>
 
 
-        <p style="margin: 25px 0px 15px 0px; font-size: 1em; width: 700px;">
+        <p style="margin: 25px 0 15px 0; font-size: 1em; width: 700px;">
             <?php echo $GLOBALS['mod_strings']['LBL_CONFIG_CUSTOM_CONTROLLER_DESC']; ?>
         </p>
 

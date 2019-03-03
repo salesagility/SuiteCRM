@@ -937,7 +937,7 @@ span.yui-carousel-first-button-disabled {
 .yui-panel-container .container-close {
   overflow: visible;
   text-decoration: none;
-  text-indent: 0em;
+  text-indent: 0;
 }
 
 .mask {
@@ -1231,7 +1231,7 @@ th.yui-dt-hidden .yui-dt-liner,td.yui-dt-hidden .yui-dt-liner,th.yui-dt-hidden .
   font-style: italic;
   font-weight: normal;
   color: #000000;
-  padding: 1em 0pt;
+  padding: 1em 0;
   line-height: 1;
   text-align: center;
 }
@@ -1775,7 +1775,7 @@ a.yui-dt-page {
 
 .yui-editor-panel .hd h3 {
   font-weight: bold;
-  padding: 0.25em 0pt 0.25em 0.25em;
+  padding: 0.25em 0 0.25em 0.25em;
   margin: 0;
 }
 
@@ -4383,7 +4383,7 @@ a.yuimenuitemlabel:hover {
 
 .yui-editor-panel .hd h3 {
   font-weight: bold;
-  padding: 0.25em 0pt 0.25em 0.25em;
+  padding: 0.25em 0 0.25em 0.25em;
   margin: 0;
 }
 

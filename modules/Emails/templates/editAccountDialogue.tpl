@@ -232,7 +232,7 @@
         </tr>
 
         <tr>
-            <td style="padding: 0px !important;" colspan="2">&nbsp;</td>
+            <td style="padding: 0 !important;" colspan="2">&nbsp;</td>
         </tr>
 
         <tr style="padding-bottom: 25px;padding-top:15px;">

@@ -528,11 +528,11 @@ class ImportViewStep3 extends ImportView
                     border: none !important;
                     background-image: none !important;
                     background-color: transparent;
-                    padding: 0px;
+                    padding: 0;
                 }
 
                 #importNotes ul{
-                	margin: 0px;
+                	margin: 0;
                 	margin-top: 10px;
                 	padding-left: 20px;
                 }

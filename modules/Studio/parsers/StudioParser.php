@@ -531,7 +531,7 @@ EOQ;
         return<<<EOQ
 		<style type='text/css'>
 		.slot {
-		border-width:1px;border-color:#999999;border-style:solid;padding:0px 1px 0px 1px;margin:2px;cursor:move;
+		border-width:1px;border-color:#999999;border-style:solid;padding:0 1px 0 1px;margin:2px;cursor:move;
 
 	}
 

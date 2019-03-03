@@ -17007,7 +17007,7 @@ define("tinymce/dom/BookmarkManager", [
 			rng = selection.getRng();
 			id = dom.uniqueId();
 			collapsed = selection.isCollapsed();
-			styles = 'overflow:hidden;line-height:0px';
+			styles = 'overflow:hidden;line-height:0';
 
 			// Explorer method
 			if (rng.duplicate || rng.item) {

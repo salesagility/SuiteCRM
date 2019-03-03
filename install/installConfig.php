@@ -157,7 +157,7 @@ EOQ;
     private function getForm($mod_strings, $name, $id, $errs, $items, $controlls, $scripts, $next_step)
     {
         $out = <<<EOQ
-            <iframe id="upload_target" name="upload_target" src="install.php?sugar_body_only=1&uploadLogoFrame=1" style="width:0;height:0;border:0px solid #fff;"></iframe>
+            <iframe id="upload_target" name="upload_target" src="install.php?sugar_body_only=1&uploadLogoFrame=1" style="width:0;height:0;border:0 solid #fff;"></iframe>
             <form action="install.php" method="post" name="$name" id="$id" enctype="multipart/form-data">
                 <input type="hidden" name="current_step" value="{$next_step}">
                 <div id="install_content">

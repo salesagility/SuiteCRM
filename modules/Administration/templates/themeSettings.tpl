@@ -55,7 +55,7 @@
 	</table>
 
 	<div class='listViewBody' style='margin-bottom:5px'>
-		<table id="themeSettings" class="list view" style='margin-bottom:0px;' border="0" cellspacing="0" cellpadding="0">
+		<table id="themeSettings" class="list view" style='margin-bottom:0;' border="0" cellspacing="0" cellpadding="0">
 			<thead>
 				<tr>
 					<th data-toggle="true">{$MOD.LBL_UW_TYPE_THEME}</th>

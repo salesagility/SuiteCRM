@@ -43,7 +43,7 @@
  */
 -->
 
-<body style="margin: 0px;">
+<body style="margin: 0;">
 <?php
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -135,7 +135,7 @@ $body =  implode('<br>', $founders) . "<br><br><b>Developers:</b><br>" . implode
 </script>
 <div style="width: 300px; height: 400px; text-align: center; border:0; padding: 5px;">
 <div id='daddydiv' style="position:relative;width=100%;height:350px;overflow:hidden">
-<div id='NOTICEBODY' style="position:absolute;left:0px;top:0px;width:100%;z-index: 1; text-align: left;">
+<div id='NOTICEBODY' style="position:absolute;left:0;top:0;width:100%;z-index: 1; text-align: left;">
 <?php echo $body; ?>
 </div>
 </div>

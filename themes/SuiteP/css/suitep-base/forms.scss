@@ -516,7 +516,7 @@ fieldset[disabled] .btn-primary.active {
 }
 
 [data-workflow-action-parameter] input.sqsEnabled {
-  margin-top: 0px;
+  margin-top: 0;
   width: 50%;
 }
 
@@ -1061,8 +1061,8 @@ input[type=reset]{
 }
 
 input[type=submit] {
-  margin-bottom: 0px;
-  margin-right: 0px;
+  margin-bottom: 0;
+  margin-right: 0;
 }
 
 .button {
@@ -1658,7 +1658,7 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 
 .emailaddresses button {
   background-color: $danger-btn-bg;
-  border: 0px solid transparent;
+  border: 0 solid transparent;
   border-radius: $border-radius-base;
 }
 
@@ -1721,7 +1721,7 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 
 .email-address-add-line-container .email-address-add-button:hover {
   background-color: $danger-btn-bg-hover;
-  border: 0px solid $danger-btn-bg-hover;
+  border: 0 solid $danger-btn-bg-hover;
 }
 
 /* override bootstrap (Needs to be stacked) */

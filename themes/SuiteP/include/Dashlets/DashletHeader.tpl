@@ -9,7 +9,7 @@
                        <span>{$DASHLET_TITLE}</span>
                     </h3>
                 </td>
-                <td style="padding-right: 0px;" nowrap="" width="1%">
+                <td style="padding-right: 0;" nowrap="" width="1%">
                     <div class="dashletToolSet">
                         <a href="javascript:void(0)" title="{$DASHLET_BUTTON_ARIA_EDIT}" aria-label="{$DASHLET_BUTTON_ARIA_EDIT}" onclick="SUGAR.mySugar.configureDashlet('{$DASHLET_ID}'); return false;">
                             <span class="suitepicon suitepicon-action-edit"></span>

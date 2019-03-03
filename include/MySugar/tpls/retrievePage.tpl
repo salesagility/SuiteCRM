@@ -41,7 +41,7 @@
 
 *}
 
-<table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-top: 0px none; margin-bottom: 4px;">
+<table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-top: 0 none; margin-bottom: 4px;">
 <tr>
 <td>
 <!-- BEGIN PAGE RENDERING -->

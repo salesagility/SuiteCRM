@@ -21,7 +21,7 @@ body {
 	border-bottom-width:1px;
 	border-bottom-color:#333333;
 	/* Use this to suppress the horizontal line under the heading */
-	/* border-bottom: 0px solid #000000; */
+	/* border-bottom: 0 solid #000000; */
 }
 table {
 	font-family: "Verdana";

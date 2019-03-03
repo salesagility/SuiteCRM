@@ -11,7 +11,7 @@ table.dataTable {
 }
 
 table.dataTable thead th {
-	padding: 3px 0px 3px 10px;
+	padding: 3px 0 3px 10px;
 	cursor: pointer;
 	*cursor: hand;
 }

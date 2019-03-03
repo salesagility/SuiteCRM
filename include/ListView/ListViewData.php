@@ -652,7 +652,7 @@ class ListViewData
             $results['string'] = $app_strings['LBL_NONE'];
         }
         $close = false;
-        $extra = "<img alt='{$app_strings['LBL_INFOINLINE']}' style='padding: 0px 5px 0px 2px' border='0' onclick=\"SUGAR.util.getStaticAdditionalDetails(this,'";
+        $extra = "<img alt='{$app_strings['LBL_INFOINLINE']}' style='padding: 0 5px 0 2px' border='0' onclick=\"SUGAR.util.getStaticAdditionalDetails(this,'";
 
         $extra .= str_replace(array("\rn", "\r", "\n"), array('','','<br />'), $results['string']) ;
         $extra .= "','<div style=\'float:left\'>{$app_strings['LBL_ADDITIONAL_DETAILS']}</div><div style=\'float: right\'>";

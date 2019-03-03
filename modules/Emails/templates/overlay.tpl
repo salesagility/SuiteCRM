@@ -39,7 +39,7 @@
  */
 
 *}
-<div id="SUGAR.email2.e2overlay" style="visibility:hidden; position:absolute; top:0px; background-color:#fff;">
+<div id="SUGAR.email2.e2overlay" style="visibility:hidden; position:absolute; top:0; background-color:#fff;">
 	<div class="ydlg-hd" id="overlayTitle"></div>
 	<div class="ydlg-bd" id="overlayBody"></div>
 </div>

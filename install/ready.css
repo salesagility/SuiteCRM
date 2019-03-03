@@ -48,7 +48,7 @@ a:hover {
     line-height:15px;
     text-decoration:none;
     text-align:center;
-    text-shadow:1px 1px 0px #810e05;
+    text-shadow:1px 1px 0 #810e05;
     cursor:pointer;
     padding: 0 10px 0 10px;
     transition: all 0.5s ease;

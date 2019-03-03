@@ -279,24 +279,24 @@
                                 <table cellpadding=0 cellspacing=0><input id='whatnext' name='whatnext' type="hidden" value='finish' />
                                     {if $IS_ADMIN}
                                         <tr><td><img src=include/images/start.png style="margin-right: 5px;"></td><td><a onclick='document.UserWizard.whatnext.value="finish";document.UserWizard.submit()' href="#" ><b> {$MOD.LBL_WIZARD_FINISH2}  </b></a><br> {$MOD.LBL_WIZARD_FINISH2DESC}</td></tr>
-                                        <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
+                                        <tr><td colspan=2><hr style="margin: 5px 0;"></td></tr>
                                         <tr><td><img src=include/images/import.png style="margin-right: 5px;"></td><td><a onclick='document.UserWizard.whatnext.value="import";document.UserWizard.submit()' href="#" ><b> {$MOD.LBL_WIZARD_FINISH3} </b></a><br> {$MOD.LBL_WIZARD_FINISH4}</td></tr>
-                                        <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
+                                        <tr><td colspan=2><hr style="margin: 5px 0;"></td></tr>
                                         <tr><td><img src=include/images/create_users.png style="margin-right: 5px;"></td><td><a onclick='document.UserWizard.whatnext.value="users";document.UserWizard.submit()' href="#"  ><b> {$MOD.LBL_WIZARD_FINISH5} </b></a><br>{$MOD.LBL_WIZARD_FINISH6}</td></tr>
-                                        <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
+                                        <tr><td colspan=2><hr style="margin: 5px 0;"></td></tr>
                                         <tr><td><img src=include/images/settings.png style="margin-right: 5px;"></td><td><a  onclick='document.UserWizard.whatnext.value="settings";document.UserWizard.submit()' href="#" ><b> {$MOD.LBL_WIZARD_FINISH7} </b></a><br>{$MOD.LBL_WIZARD_FINISH8}</td></tr>
-                                        <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
+                                        <tr><td colspan=2><hr style="margin: 5px 0;"></td></tr>
                                         <tr><td><img src=include/images/configure.png style="margin-right: 5px;"></td><td><a onclick='document.UserWizard.whatnext.value="studio";document.UserWizard.submit()' href="#"  ><b> {$MOD.LBL_WIZARD_FINISH9} </b></a><br>{$MOD.LBL_WIZARD_FINISH10}</td></tr>
-                                        <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
+                                        <tr><td colspan=2><hr style="margin: 5px 0;"></td></tr>
                                         <tr><td><img src=include/images/university.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/suitecrm/forum/suite-forum" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
-                                        <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
+                                        <tr><td colspan=2><hr style="margin: 5px 0;"></td></tr>
                                     {else}
                                         <tr><td><img src=include/images/university2.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/suitecrm/forum/suite-forum" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
-                                        <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
+                                        <tr><td colspan=2><hr style="margin: 5px 0;"></td></tr>
                                         <tr><td><img src=include/images/docs.png style="margin-right: 5px;"></td><td><a href="https://docs.suitecrm.com/user/" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH14} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH15}</td></tr>
-                                        <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
+                                        <tr><td colspan=2><hr style="margin: 5px 0;"></td></tr>
                                         <tr><td><img src=include/images/forums.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/suitecrm/forum/suite-forum" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH18} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH19}</td></tr>
-                                        <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
+                                        <tr><td colspan=2><hr style="margin: 5px 0;"></td></tr>
                                     {/if}
                                 </table>
                             </td>

@@ -65,7 +65,7 @@
         {sugar_action_menu buttons=$BUTTONS class="fancymenu" flat=true}
 
     <div class='add_table' style='margin-bottom:5px'>
-        <table id="ConfigureSubs" class="themeSettings edit view" style='margin-bottom:0px;' border="0" cellspacing="0" cellpadding="0">
+        <table id="ConfigureSubs" class="themeSettings edit view" style='margin-bottom:0;' border="0" cellspacing="0" cellpadding="0">
             <tr>
                 <td><span><b>{$MOD.LBL_ALREADY_SUBSCRIBED_HEADER}</b></span></td>
                 <td><span><b>{$MOD.LBL_UNSUBSCRIBED_HEADER}</b>{sugar_help text=$MOD.LBL_UNSUBSCRIBED_HEADER_EXPL }

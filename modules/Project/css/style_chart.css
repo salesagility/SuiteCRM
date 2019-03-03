@@ -21,7 +21,7 @@
 /*Resource chart specific styles*/
 #wrapper_chart {
 
-    padding-right:0px;
+    padding-right:0;
     height:auto;
 }
 
@@ -31,7 +31,7 @@
    display: none;
 }
 #header_table_chart {
-    border: 0px solid #DDDDDD;
+    border: 0 solid #DDDDDD;
     border-bottom: 0;
     font-size: 13px;
     line-height: 20px;
@@ -74,7 +74,7 @@
     font-size:12px;
 }
 .main_table th, td {
-    padding: 0px;
+    padding: 0;
     overflow: hidden;
     width: 24px;
 }
@@ -136,7 +136,7 @@
     border-collapse: collapse;
 }
 .task_row {
-    border-top: 0px solid #DDDDDD;
+    border-top: 0 solid #DDDDDD;
 }
 .inner_td {
     text-align:center;
@@ -287,13 +287,13 @@
 
 .qtip_table th {
     text-align: left;
-    padding: 2px 10px 2px 0px;
+    padding: 2px 10px 2px 0;
     border-bottom: 1px solid #3f6219;
     white-space: nowrap;
 }
 
 .qtip_table td {
-    padding: 2px 10px 2px 0px;
+    padding: 2px 10px 2px 0;
     white-space: nowrap;
 }
 

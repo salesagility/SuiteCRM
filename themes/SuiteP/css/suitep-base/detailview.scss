@@ -114,11 +114,11 @@ p.msg {
 }
 
 .mobile-pagination .glyphicon-chevron-left {
-  margin-right: 0px;
+  margin-right: 0;
 }
 
 .mobile-pagination .glyphicon-chevron-right {
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 @media (max-width: 750px) {
@@ -192,19 +192,19 @@ p.msg {
   }
 
   .nav-tabs > li.tab-inline-pagination .glyphicon-chevron-left {
-    margin-right: 0px;
+    margin-right: 0;
   }
 
   .nav-tabs > li.tab-inline-pagination .glyphicon-chevron-right {
-    margin-left: 0px;
+    margin-left: 0;
   }
 
   .mobile-pagination .glyphicon-chevron-left {
-    margin-right: 0px;
+    margin-right: 0;
   }
 
   .mobile-pagination .glyphicon-chevron-right {
-    margin-left: 0px;
+    margin-left: 0;
   }
 }
 

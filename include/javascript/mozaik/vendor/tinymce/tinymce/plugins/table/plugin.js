@@ -3302,8 +3302,8 @@ define("tinymce/tableplugin/ResizeBars", [
 			blocker.setAttribute('style', 'margin: 0; ' +
 						'padding: 0; ' +
 						'position: fixed; ' +
-						'left: 0px; ' +
-						'top: 0px; ' +
+						'left: 0; ' +
+						'top: 0; ' +
 						'height: 100%; ' +
 						'width: 100%;');
 			blocker.setAttribute('data-mce-bogus', 'all');

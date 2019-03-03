@@ -39,7 +39,7 @@ class Jjwg_MarkersViewMarker_Detail_Map extends SugarView
   <link rel="stylesheet" type="text/css" href="cache/themes/<?php echo $GLOBALS['theme']; ?>/css/style.css" />
   <style type="text/css">
     html { height: 100% }
-    body { height: 100%; margin: 0px; padding: 0px }
+    body { height: 100%; margin: 0; padding: 0 }
     #mapCanvas {
       width: 700px;
       height: 500px;

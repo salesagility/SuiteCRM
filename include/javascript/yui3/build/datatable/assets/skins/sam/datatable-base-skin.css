@@ -20,7 +20,7 @@ build: 3167
     font-weight:normal;
     font-style:italic;
     line-height:1;
-    padding:1em 0pt;
+    padding:1em 0;
     text-align:center;
 }
 
@@ -47,7 +47,7 @@ build: 3167
     margin:0;padding:0;
     padding:4px 10px 4px 10px; /* cell padding */
 	overflow:visible; /*to make ths where the title is really long work*/
-	border:0px solid black;
+	border:0 solid black;
 }
 .yui3-skin-sam .yui3-datatable-coltarget {
     width: 5px;

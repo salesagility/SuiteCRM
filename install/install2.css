@@ -49,7 +49,7 @@ a:hover {
     line-height:15px;
     text-decoration:none;
     text-align:center;
-    text-shadow:1px 1px 0px #810e05;
+    text-shadow:1px 1px 0 #810e05;
     cursor:pointer;
     padding: 0 10px 0 10px;
     transition: all 0.5s ease;
@@ -147,9 +147,9 @@ a:hover {
     margin: 20px;
     /* min-height: 800px; */
 
-    -webkit-box-shadow: 0px 14px 57px -14px rgba(0,0,0,0.46);
-    -moz-box-shadow: 0px 14px 57px -14px rgba(0,0,0,0.46);
-    box-shadow: 0px 14px 57px -14px rgba(0,0,0,0.46);
+    -webkit-box-shadow: 0 14px 57px -14px rgba(0,0,0,0.46);
+    -moz-box-shadow: 0 14px 57px -14px rgba(0,0,0,0.46);
+    box-shadow: 0 14px 57px -14px rgba(0,0,0,0.46);
 }
 
 /* install controlls*/
@@ -251,7 +251,7 @@ input[type=password] {
     width: 45%; /* Account for margins + border values */
     float: left;
     padding: 5px 15px;
-    margin: 0px 5px 5px 5px;
+    margin: 0 5px 5px 5px;
 }
 
 
@@ -304,7 +304,7 @@ ul.tablist li {
 
 ul.tablist li a {
     padding: 4px 8px;
-    margin: 0px;
+    margin: 0;
     border-top: 1px solid #ccc;
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #999;
@@ -408,9 +408,9 @@ label i .tooltip,
     border: 1px solid #B41C4F;
     background: white;
     padding: 10px 20px;
-    -webkit-box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0 5px 20px 0 rgba(0,0,0,0.75);
+    -moz-box-shadow: 0 5px 20px 0 rgba(0,0,0,0.75);
+    box-shadow: 0 5px 20px 0 rgba(0,0,0,0.75);
     z-index: 1001;
 }
 .form_section .formrow label i:hover .tooltip,

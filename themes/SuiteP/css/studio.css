@@ -6,37 +6,37 @@
 #exportcustom h3 {
   font-size: 14px;
   font-weight: bold;
-  padding-left: 0px;
+  padding-left: 0;
   margin: 3px; }
 
 #layoutEditor h4 {
   font-size: 14px;
   font-weight: bold;
-  padding-left: 0px;
+  padding-left: 0;
   margin: 3px; }
 
 #layoutEditor h3 {
   font-size: 14px;
   font-weight: bold;
-  padding-left: 0px;
+  padding-left: 0;
   margin: 3px; }
 
 #layoutEditor h2 {
   font-size: 14px;
   font-weight: bold;
-  padding-left: 0px;
+  padding-left: 0;
   margin: 3px; }
 
 #layoutEditor h1 {
   font-size: 14px;
   font-weight: bold;
-  padding-left: 0px;
+  padding-left: 0;
   margin: 3px; }
 
 .panel_name {
   font-size: 14px;
   font-weight: bold;
-  padding-left: 0px;
+  padding-left: 0;
   margin: 3px; }
 
 .panel_name {
@@ -100,7 +100,7 @@
   margin: 2px 2px 10px 2px; }
 
 #layoutEditor .le_panel .le_row {
-  padding: 5px 0px 5px 15px;
+  padding: 5px 0 5px 15px;
   margin: 5px 5px;
   clear: both; }
 

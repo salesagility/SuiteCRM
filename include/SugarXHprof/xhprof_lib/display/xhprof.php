@@ -579,7 +579,7 @@ function profiler_report(
     '  <dt>Tip</dt>' .
     '  <dd>Click a function name below to drill down.</dd>' .
     '</dl>' .
-    '<div style="clear: both; margin: 3em 0em;"></div>';
+    '<div style="clear: both; margin: 3em 0;"></div>';
 
     // data tables
     if (!empty($rep_symbol)) {

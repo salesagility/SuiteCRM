@@ -48,13 +48,13 @@
 
 <h2>{$package->title}</h2>
 <table class='mbTable' >
-	<tr><td></td><td><input style="padding-bottom:0px;" type='button' name='savebtn' value='{$mod_strings.LBL_BTN_SAVE}' class='button' onclick="document.CreatePackage.action.value='SavePackage';ModuleBuilder.handleSave('CreatePackage');">&nbsp;
+	<tr><td></td><td><input style="padding-bottom:0;" type='button' name='savebtn' value='{$mod_strings.LBL_BTN_SAVE}' class='button' onclick="document.CreatePackage.action.value='SavePackage';ModuleBuilder.handleSave('CreatePackage');">&nbsp;
 		{if !empty($package->name)}
-			<input style="padding-bottom:0px;" type='button' name='duplicatebtn' value='{$mod_strings.LBL_BTN_DUPLICATE}' class='button' onclick="document.CreatePackage.action.value='SavePackage';document.CreatePackage.duplicate.value=1;ModuleBuilder.handleSave('CreatePackage');">
-            &nbsp;<input style="padding-bottom:0px;" type='button' name='deploybtn' value='{$mod_strings.LBL_BTN_DEPLOY}' class='button' onclick="ModuleBuilder.packageDeploy('CreatePackage', {$package_already_deployed});">
-			&nbsp;<input style="padding-bottom:0px;" type='button' name='publishbtn' value='{$mod_strings.LBL_BTN_PUBLISH}' class='button' onclick="ModuleBuilder.packagePublish('CreatePackage');">
-			&nbsp;<input style="padding-bottom:0px;" type='button' name='exportbtn' value='{$mod_strings.LBL_BTN_EXP}' class='button' onclick="ModuleBuilder.packageExport('CreatePackage');">
-			&nbsp;<input style="padding-bottom:0px;" type='button' name='deletebtn' value='{$mod_strings.LBL_BTN_DELETE}' class='button' onclick="ModuleBuilder.packageDelete('{$package->name}');">{/if}</td></tr>
+			<input style="padding-bottom:0;" type='button' name='duplicatebtn' value='{$mod_strings.LBL_BTN_DUPLICATE}' class='button' onclick="document.CreatePackage.action.value='SavePackage';document.CreatePackage.duplicate.value=1;ModuleBuilder.handleSave('CreatePackage');">
+            &nbsp;<input style="padding-bottom:0;" type='button' name='deploybtn' value='{$mod_strings.LBL_BTN_DEPLOY}' class='button' onclick="ModuleBuilder.packageDeploy('CreatePackage', {$package_already_deployed});">
+			&nbsp;<input style="padding-bottom:0;" type='button' name='publishbtn' value='{$mod_strings.LBL_BTN_PUBLISH}' class='button' onclick="ModuleBuilder.packagePublish('CreatePackage');">
+			&nbsp;<input style="padding-bottom:0;" type='button' name='exportbtn' value='{$mod_strings.LBL_BTN_EXP}' class='button' onclick="ModuleBuilder.packageExport('CreatePackage');">
+			&nbsp;<input style="padding-bottom:0;" type='button' name='deletebtn' value='{$mod_strings.LBL_BTN_DELETE}' class='button' onclick="ModuleBuilder.packageDelete('{$package->name}');">{/if}</td></tr>
 	<tr>
 		<td height='100%'>&nbsp;</td><td>&nbsp;</td>
 	</tr>

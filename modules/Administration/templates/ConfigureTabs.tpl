@@ -65,7 +65,7 @@
 	</table>
 	
 	<div class='add_table' style='margin-bottom:5px'>
-		<table id="ConfigureTabs" class="themeSettings edit view" style='margin-bottom:0px;' border="0" cellspacing="0" cellpadding="0">
+		<table id="ConfigureTabs" class="themeSettings edit view" style='margin-bottom:0;' border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td colspan="2">
 				    <input type='checkbox' name='user_edit_tabs' value=1 class='checkbox' {if !empty($user_can_edit)}CHECKED{/if}>&nbsp;
@@ -87,7 +87,7 @@
 	</div>
 	
 	<div class='add_subpanels' style='margin-bottom:5px'>
-		<table id="ConfigureSubPanels" class="themeSettings edit view" style='margin-bottom:0px;' border="0" cellspacing="0" cellpadding="0">
+		<table id="ConfigureSubPanels" class="themeSettings edit view" style='margin-bottom:0;' border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td width='1%'>
 					<div id="enabled_subpanels_div"></div>	

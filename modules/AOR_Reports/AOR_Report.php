@@ -590,7 +590,7 @@ class AOR_Report extends Basic
                 $pdf_style = "";
                 $action = $_REQUEST['action'];
                 if ($action == 'DownloadPDF') {
-                    $pdf_style = "background: #333 !important; color: #fff !important; margin-bottom: 0px;";
+                    $pdf_style = "background: #333 !important; color: #fff !important; margin-bottom: 0;";
                 }
 
                 $html .= '<div class="panel panel-default">
@@ -661,7 +661,7 @@ class AOR_Report extends Basic
         $report_style = '';
         $thead_style = '';
         if ((isset($_REQUEST['action']) ? $_REQUEST['action'] : null) == 'DownloadPDF') {
-            $report_style = 'margin-top: 0px;';
+            $report_style = 'margin-top: 0;';
             $thead_style = 'background: #919798; color: #fff';
         }
         $html = '<div class="list-view-rounded-corners" style="' . $report_style . '">';

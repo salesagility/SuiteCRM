@@ -65,7 +65,7 @@
 .remoteFolder, a.remoteFolder,
 .remoteFolderUnseen, a.remoteFolderUnseen,
 .remoteFolderGroupUnseen, a.remoteFolderGroupUnseen {
-    padding-left: 0px;
+    padding-left: 0;
     text-decoration: none;
 }
 
@@ -256,12 +256,12 @@
 }
 
 table.list {
-    margin: 0px;
+    margin: 0;
 }
 
 .view, table.view {
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 li.yuimenuitem-disabled {
@@ -301,7 +301,7 @@ div #rollover {
 }
 
 #settingsDialog .bd, #settingsDialog .yui-content, #contactsDialogue .bd {
-    padding: 0px;
+    padding: 0;
 }
 
 #_blank, #listBottom, #displayEmailFramePreview {
@@ -327,8 +327,8 @@ div #rollover {
 }
 
 #searchTable {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
 }
 
 #peopleTableSearchRow td {
@@ -409,7 +409,7 @@ td.yui-dt-col-bean_id {
 }
 
 .pagination .yui-pg-first, .pagination .yui-pg-previous, .pagination .yui-pg-next, .yui-pg-last, .pagination .yui-pg-current, .pagination .yui-pg-pages, .pagination .yui-pg-page {
-    padding: 0px;
+    padding: 0;
 }
 
 #settingsDialog .yui-content {
@@ -421,13 +421,13 @@ td.yui-dt-col-bean_id {
 #settingsDialog table.view {
     padding-top: 10px;
     padding-bottom: 10px;
-    border: 0px;
+    border: 0;
     border-bottom: 1px solid #CCCCCC;
 }
 
 #settingsDialog h4 {
     text-align: left;
-    padding-left: 0px;
+    padding-left: 0;
 }
 
 button img {
@@ -464,7 +464,7 @@ button img {
 }
 
 div#content {
-    padding-bottom: 0px;
+    padding-bottom: 0;
 }
 
 .yui-cstm-cntrd-liner {

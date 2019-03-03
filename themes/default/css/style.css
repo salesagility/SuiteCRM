@@ -40,7 +40,7 @@
  
 #ajaxStatusDiv 
 {
-    background: none repeat scroll 0% 0% rgb(255, 255, 255); 
+    background: none repeat scroll 0 0 rgb(255, 255, 255);
     color: rgb(198, 12, 48); 
     position: fixed;
     opacity: 0.8;

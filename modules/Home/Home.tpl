@@ -84,7 +84,7 @@ var moduleName = 'Home';
 
 <div id="pageContainer">
 	<div id="pageNum_{$activePage}_div">
-<table width="100%" cellspacing="0" cellpadding="0" border="0" class="subpanelTabForm" style="border-top: 0px none; margin-bottom: 4px;">
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="subpanelTabForm" style="border-top: 0 none; margin-bottom: 4px;">
  	<tr>
  		{if $numCols > 2}
 	 	<td>

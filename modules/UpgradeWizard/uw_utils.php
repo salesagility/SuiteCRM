@@ -2489,7 +2489,7 @@ function testThis2($dir, $id=0, $hide=false)
 
     $doHide = ($hide) ? 'none' : '';
     $out = "<div id='{$id}' style='display:{$doHide};'>";
-    $out .= "<table cellpadding='1' cellspacing='0' style='border:0px solid #ccc'>\n";
+    $out .= "<table cellpadding='1' cellspacing='0' style='border:0 solid #ccc'>\n";
 
     while ($file = readdir($dh)) {
         if ($file == '.' || $file == '..' || $file == 'CVS' || $file == '.cvsignore') {

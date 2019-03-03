@@ -41,7 +41,7 @@ SUGAR.email2.templates['viewPrintable'] = '<html>' +
 '<body onload="javascript:window.print();">' + 
 '<style>' + 
 'body {' + 
-'	margin: 0px;' + 
+'	margin: 0;' +
 '	font-family: helvetica, impact, sans-serif;' +
 '	font-size : 12pt;' +
 '} ' +

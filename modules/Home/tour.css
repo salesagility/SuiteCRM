@@ -44,7 +44,7 @@ body
 }
 
 form {
-	margin: 0px;	
+	margin: 0;
 }
 li {
 	line-height: 15px;	
@@ -61,7 +61,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
 #dcmenutop {
-	height: 0px;	
+	height: 0;
 }
 
 .list tr.pagination,
@@ -99,7 +99,7 @@ padding-top: 9px;
 
 .modal-footer .btn-invisible {
     float: left;
-    margin-left: 0px;
+    margin-left: 0;
 }
 .modal-body   {
     font-size: 16px;
@@ -123,12 +123,12 @@ padding-top: 9px;
 }
 
 h3.popover-title {
-	margin-bottom: 0px;	
+	margin-bottom: 0;
 }
 #tour {
     width: auto;
     margin: 0;
-    left: 0px;
+    left: 0;
 }
 
 #tourEnd .modal-body p, 
@@ -163,7 +163,7 @@ i.icon-arrow-up:before {
 }
 
 .pointer.down {
-    background-position: 0px -109px;
+    background-position: 0 -109px;
 }
 
 
@@ -176,7 +176,7 @@ i.icon-arrow-up:before {
     -o-transform:rotate(-45deg); /* Opera */
     width: 93px\0/;
     height: 95px\0/;
-    background:transparent url('../../include/images/tour/arrow_ie.png') no-repeat 0px 100px\0/;
+    background:transparent url('../../include/images/tour/arrow_ie.png') no-repeat 0 100px\0/;
     height: 110px \0/IE9;
 
 }
@@ -190,7 +190,7 @@ i.icon-arrow-up:before {
     -o-transform:rotate(45deg); /* Opera */
     background-image:  url('../../include/images/tour/arrow_ie.png')\0/;
     background-repeat: no-repeat\0/;
-    background-position: 0px -280px\0/;
+    background-position: 0 -280px\0/;
     width: 93px\0/;
     height: 95px\0/;
     height: 110px \0/IE9;
@@ -205,7 +205,7 @@ i.icon-arrow-up:before {
     -o-transform:rotate(-45deg); /* Opera */
     background-image:  url(../../include/images/tour/arrow_ie.png)\0/;
     background-repeat: no-repeat\0/;
-    background-position: 0px -280px\0/;
+    background-position: 0 -280px\0/;
     width: 93px\0/;
     height: 95px\0/;
     height: 110px \0/IE9;
@@ -219,7 +219,7 @@ i.icon-arrow-up:before {
     -o-transform:rotate(45deg); /* Opera */
     background-image:  url(../../include/images/tour/arrow_ie.png)\0/;
     background-repeat: no-repeat\0/;
-    background-position: 0px 280px\0/;
+    background-position: 0 280px\0/;
     width: 93px\0/;
     height: 95px\0/;
     height: 110px \0/IE9;
@@ -238,7 +238,7 @@ i.icon-arrow-up:before {
 }
 
 .rtl .modal ul {
-    margin: 0 25px 9px 0px;
+    margin: 0 25px 9px 0;
 }
 
 .rtl .modal .close {

@@ -835,7 +835,7 @@ class AORScheduledReportJob implements RunnableSchedulerJob
         }
         .list td
         {
-            padding: 9px 8px 0px 8px;
+            padding: 9px 8px 0 8px;
         }
         </style>
 EOF;

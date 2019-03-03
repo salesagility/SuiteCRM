@@ -88,7 +88,7 @@ YAHOO.util.Connect.asyncRequest('POST', 'index.php', callback, "module=Meetings&
 		</th>
 		{/if}
 		{if !empty($quickViewLinks)}
-		<th scope='col' width='1%' style="padding: 0px;">&nbsp;</th>
+		<th scope='col' width='1%' style="padding: 0;">&nbsp;</th>
 		{/if}
 		{counter start=0 name="colCounter" print=false assign="colCounter"}
 		{foreach from=$displayColumns key=colHeader item=params}

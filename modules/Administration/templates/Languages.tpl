@@ -67,7 +67,7 @@
 	</table>
 
 	<div class='add_table' style='margin-bottom:5px'>
-		<table id="ConfigureLangs" class="themeSettings edit view" style='margin-bottom:0px;' border="0" cellspacing="0" cellpadding="0">
+		<table id="ConfigureLangs" class="themeSettings edit view" style='margin-bottom:0;' border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td width='1%'>
 					<div id="enabled_div" class="enabled_tab_workarea">

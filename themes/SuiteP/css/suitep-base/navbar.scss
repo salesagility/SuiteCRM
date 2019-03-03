@@ -758,7 +758,7 @@
   background-color: $navbar-search-bg;
   color: $navbar-search-text-color;
   padding: 12px 12px 12px 12px;
-  border: 0px solid transparent;
+  border: 0 solid transparent;
   border-radius: 3px;
   letter-spacing: 1px;
   line-height: normal;
@@ -993,8 +993,8 @@
 
 .quickcreatetop .dropdown-toggle:hover {
   text-decoration: none;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .quickcreatetop .dropdown-menu li a:hover {
@@ -1683,7 +1683,7 @@
 
   .quickcreatetop .dropdown-menu {
     background-position: 80px 2px;
-    padding: 0px 0px 0px 0px;
+    padding: 0 0 0 0;
   }
 
   .quickcreatetop .dropdown-menu:hover {
@@ -1745,7 +1745,7 @@
   }
 
   .navbar-search {
-    margin-right: 0px;
+    margin-right: 0;
   }
   #Icon_5_ {
     fill: $navbar-menu-link-color;
