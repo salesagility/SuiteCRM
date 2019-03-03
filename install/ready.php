@@ -283,7 +283,9 @@ if (is_windows()) {
         $webServerUser = '<web_server_user>';
     }
     $cronString = '<p><b>'.$mod_strings_scheduler['LBL_CRON_INSTRUCTIONS_LINUX'].'</b><br> '.$mod_strings_scheduler['LBL_CRON_LINUX_DESC1']. '<br>
-                        <span style=\\' .$webServerUser. '</span;><br> ' .$mod_strings_scheduler['LBL_CRON_LINUX_DESC2']. '.realpath('./').'; php -f cron.php > /dev/null 2>&1
+                        <span style=\'background-color:#dfdfdf\'>sudo crontab -e -u '.$webServerUser.'</span><br> '.$mod_strings_scheduler['LBL_CRON_LINUX_DESC2'].'<br>
+						<span style=\'background-color:#dfdfdf\'>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;
+						cd '.realpath('./').'; php -f cron.php > /dev/null 2>&1
 						</span><br>'.$mod_strings_scheduler['LBL_CRON_LINUX_DESC3'].'
                         <br><br><hr><br>'.$error.'</p>
               ';
