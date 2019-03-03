@@ -56,12 +56,11 @@ class CodingStandardCommands extends \Robo\Tasks
     {
         $this->say('Configure PHPCSFixer');
 
-        if ($this->_exec('which composer') === null) {
+        if ($this->_exec('composer show') === null) {
             throw new Exception('Could not find composer');
         }
 
         $this->taskComposerConfig()->set('bin-dir', 'vendor/bin/')->run();
-
         $this->taskComposerRequire()->dependency('friendsofphp/php-cs-fixer')->dev()->run();
         $this->taskComposerInstall()->dev()->run();
     }
