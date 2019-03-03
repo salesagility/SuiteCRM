@@ -156,7 +156,7 @@ EOQ;
 $checked = '';
 //if(!empty($_SESSION['setup_site_sugarbeet_anonymous_stats'])) $checked = 'checked=""';
 $out .= "
-   <tr style='display:none'><td></td>
+   <tr style='display:none;'><td></td>
        <td><input type='checkbox' class='checkbox' name='setup_site_sugarbeet_anonymous_stats' value='yes' $checked /></td>
        <td><b>{$mod_strings['LBL_SITECFG_ANONSTATS']}</b><br><i>{$mod_strings['LBL_SITECFG_ANONSTATS_DIRECTIONS']}</i></td></tr>
 
@@ -164,7 +164,7 @@ $out .= "
 $checked = '';
 //if(!empty($_SESSION['setup_site_sugarbeet_automatic_checks'])) $checked = 'checked=""';
 $out .= <<<EOQ
-   <tr style='display:none'><td></td>
+   <tr style='display:none;'><td></td>
        <td><input type="checkbox" class="checkbox" name="setup_site_sugarbeet_automatic_checks" value="yes" /></td>
        <td><b>{$mod_strings['LBL_SITECFG_SUITE_UP']}</b><br><i>{$mod_strings['LBL_SITECFG_SUITE_UP_DIRECTIONS']}</i><br>&nbsp;</td></tr>
    <tbody id="setup_site_session_section_pre">
@@ -178,7 +178,7 @@ $out .= <<<EOQ
    <tr><td></td>
        <td style="text-align : right;"><span class="required">*</span></td>
        <td align="left">
-	       <div><div style="width:200px;float:left"><b>{$mod_strings['LBL_SITECFG_SESSION_PATH']}</b></div>
+	       <div><div style="width:200px;float:left;"><b>{$mod_strings['LBL_SITECFG_SESSION_PATH']}</b></div>
 	               <input type="text" name="setup_site_session_path" size='40' value="{$_SESSION['setup_site_session_path']}" /></td>
 	       </div>
        </td>
@@ -195,7 +195,7 @@ $out .= <<<EOQ
    <tr><td></td>
        <td style="text-align : right;" ><span class="required">*</span></td>
        <td align="left">
-       <div><div style="width:200px;float:left"><b>{$mod_strings['LBL_SITECFG_LOG_DIR']}</b></div>
+       <div><div style="width:200px;float:left;"><b>{$mod_strings['LBL_SITECFG_LOG_DIR']}</b></div>
             <input type="text" name="setup_site_log_dir" size='30' value="{$_SESSION['setup_site_log_dir']}" />
        </div>
    </tr>
@@ -211,7 +211,7 @@ $out .= <<<EOQ
    <tr><td></td>
        <td style="text-align : right;"><span class="required">*</span></td>
        <td align="left">
-	       <div><div style="width:200px;float:left"><b>{$mod_strings['LBL_SITECFG_APP_ID']}</b></div>
+	       <div><div style="width:200px;float:left;"><b>{$mod_strings['LBL_SITECFG_APP_ID']}</b></div>
 	               <input type="text" name="setup_site_guid" size='30' value="{$_SESSION['setup_site_guid']}" />
 	       </div>
        </td>

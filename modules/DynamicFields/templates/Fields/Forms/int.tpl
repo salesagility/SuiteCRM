@@ -114,7 +114,7 @@ formsWithFieldLogic=null;
 -->
 *}
 {if !empty($vardef.auto_increment) }
-<tr id="autoinc_start_wrap" {if empty($vardef.auto_increment) }style="display:none" {/if}>
+<tr id="autoinc_start_wrap" {if empty($vardef.auto_increment) }style="display:none;" {/if}>
     <td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_AUTOINC_NEXT"}:</td>
     <td>
         <input type='hidden' name='auto_increment' id='auto_increment' value='true'>

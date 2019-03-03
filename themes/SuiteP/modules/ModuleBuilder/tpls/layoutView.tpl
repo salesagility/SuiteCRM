@@ -120,7 +120,7 @@
     </div>
 </div>
 
-<div id='panels' style='float:left; overflow-y:auto; overflow-x:hidden'>
+<div id='panels' style='float:left; overflow-y:auto; overflow-x:hidden;'>
 
 <h3>{$layouttitle}</h3>
 {counter name='idCounter' assign='idCounter' start='1'}

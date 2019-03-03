@@ -38,8 +38,10 @@ class Jjwg_AreasViewArea_Detail_Map extends SugarView
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
   <link rel="stylesheet" type="text/css" href="cache/themes/<?php echo $GLOBALS['theme']; ?>/css/style.css" />
   <style type="text/css">
-    html { height: 100% }
-    body { height: 100%; margin: 0; padding: 0 }
+    html { height: 100%;
+    }
+    body { height: 100%; margin: 0; padding: 0;
+    }
     #mapCanvas {
       width: 700px;
       height: 500px;

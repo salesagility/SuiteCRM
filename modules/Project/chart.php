@@ -130,11 +130,11 @@ class chart
               <table id="header_table_chart" border="0" cellpadding="0" cellspacing="0" width="100%">
                   <tr>
                       <td scope="row_label" nowrap="nowrap" >
-                          <label for="projects">'.$mod_strings["LBL_PROJECTS_SEARCH"].'</label>
+                          <label for="projects">'.$mod_strings["LBL_PROJECTS_SEARCH"]. '</label>
                       </td>
                       <td scope="row_val" nowrap="nowrap" >
-                          <select id="projects" name="projects" multiple size="6" style="width: 250px" >
-                          <option value="">'.$mod_strings["LBL_ALL_PROJECTS"].'</option>';
+                          <select id="projects" name="projects" multiple size="6" style="width: 250px;" >
+                          <option value="">' .$mod_strings["LBL_ALL_PROJECTS"].'</option>';
 
         //From the query above, populates the select box
         foreach ($project_list as $project) {
@@ -155,10 +155,10 @@ class chart
 
         echo '</td>
               <td scope="row_label" nowrap="nowrap" >
-                  <label for="users">'.$mod_strings["LBL_USERS_SEARCH"].'</label>
+                  <label for="users">'.$mod_strings["LBL_USERS_SEARCH"]. '</label>
               </td>
               <td scope="row_val" nowrap="nowrap" >
-                  <select id="users" name="users" multiple size="6" style="width: 250px" >
+                  <select id="users" name="users" multiple size="6" style="width: 250px;" >
                   <option ' . ($sel_users[0] == ''? "selected='selected'" : "") . ' value="">'.$mod_strings['LBL_ALL_USERS'].'</option>
                   <option ' . ($sel_users[0] == 'none'? "selected='selected'" : "") . ' value="none">None</option>';
 
@@ -183,10 +183,10 @@ class chart
 
         echo '</td>
               <td scope="row_label" nowrap="nowrap" >
-                  <label for="contacts">'.$mod_strings["LBL_CONTACTS_SEARCH"].'</label>
+                  <label for="contacts">'.$mod_strings["LBL_CONTACTS_SEARCH"]. '</label>
               </td>
               <td scope="row_val" nowrap="nowrap" >
-                  <select id="contacts" name="contacts" multiple size="6" style="width: 250px" >
+                  <select id="contacts" name="contacts" multiple size="6" style="width: 250px;" >
                   <option ' . ($sel_contacts[0] == ''? "selected='selected'" : "") . ' value="">'.$mod_strings['LBL_ALL_CONTACTS'].'</option>
                   <option ' . ($sel_contacts[0] == 'none'? "selected='selected'" : "") . ' value="none">None</option>';
 
@@ -214,10 +214,10 @@ class chart
         echo '</td></tr>';
         echo '<tr>
                   <td scope="row_label" nowrap="nowrap" >
-                      <label for="chart_type">'.$mod_strings["LBL_CHART_TYPE"].'</label>
+                      <label for="chart_type">'.$mod_strings["LBL_CHART_TYPE"]. '</label>
                   </td>
                   <td scope="row_val" nowrap="nowrap" >
-                      <select id="chart_type" name="chart_type" style="width: 250px">';
+                      <select id="chart_type" name="chart_type" style="width: 250px;">';
         echo '<option '. ($chart_type == "weekly" ? "selected" : "") .'  value="weekly">'.$mod_strings['LBL_CHART_WEEKLY'].'</option>';
         echo '<option '. ($chart_type == "monthly" ? "selected" : "") .'  value="monthly">'.$mod_strings['LBL_CHART_MONTHLY'].'</option>';
         echo '<option '. ($chart_type == "quarterly" ? "selected" : "") .'  value="quarterly">'.$mod_strings['LBL_CHART_QUARTERLY'].'</option>';

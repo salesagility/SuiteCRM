@@ -2489,7 +2489,7 @@ function testThis2($dir, $id=0, $hide=false)
 
     $doHide = ($hide) ? 'none' : '';
     $out = "<div id='{$id}' style='display:{$doHide};'>";
-    $out .= "<table cellpadding='1' cellspacing='0' style='border:0 solid #ccc'>\n";
+    $out .= "<table cellpadding='1' cellspacing='0' style='border:0 solid #ccc;'>\n";
 
     while ($file = readdir($dh)) {
         if ($file == '.' || $file == '..' || $file == 'CVS' || $file == '.cvsignore') {
@@ -2555,7 +2555,7 @@ function testThis3(&$files, $id, $hide, $previousPath = '')
     $display = ($hide) ? 'none' : '';
     $ret = <<<eoq
 	<div id="{$id}" style="display:{$display}">
-	<table cellpadding='1' cellspacing='0' border='0' style='border:1px solid #ccc'>
+	<table cellpadding='1' cellspacing='0' border='0' style='border:1px solid #ccc;'>
 		{$out}
 	</table>
 	</div>

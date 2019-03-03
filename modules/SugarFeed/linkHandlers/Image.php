@@ -55,7 +55,7 @@ class FeedLinkHandlerImage extends FeedLinkHandlerLink
             // Set it to a max width of 425 px, and include a tweak so that IE 6 can actually handle it.
             $image_style = 'width: expression(this.scrollWidth > 425 ? \'425px\':\'auto\'); max-width: 425px;';
         }
-        return '<div style="padding-left:10px"><!--not_in_theme!--><img src="'. $imageData['url']. '" style="'.$image_style.'"></div>';
+        return '<div style="padding-left:10px;"><!--not_in_theme!--><img src="' . $imageData['url']. '" style="'.$image_style. ';"></div>';
     }
 
     public function handleInput($feed, $link_type, $link_url)

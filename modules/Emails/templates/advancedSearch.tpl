@@ -65,7 +65,7 @@
         <td>&nbsp;</td>
     </tr>
 	<tr class="toggleClass yui-hidden">
-		<td class="advancedSearchTD" style="padding-bottom: 2px">
+		<td class="advancedSearchTD" style="padding-bottom: 2px;">
 			{$app_strings.LBL_EMAIL_SEARCH_DATE_FROM}:&nbsp;<i>({$dateFormatExample})</i><br/>
 			<input name='searchDateFrom' id='searchDateFrom' onblur="parseDate(this, '{$dateFormat}');" maxlength='10' size='11' value="" type="text">&nbsp;
 			<span id="searchDateFrom_trigger" class="suitepicon suitepicon-module-calendar" alt="$app_strings.LBL_ENTER_DATE"></span>

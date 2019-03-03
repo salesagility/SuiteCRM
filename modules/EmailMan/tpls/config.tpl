@@ -182,7 +182,7 @@ function change_state(radiobutton) {
 											<td width="20%" scope="row"><span id="mail_smtppass_label">{$MOD.LBL_MAIL_SMTPPASS}</span> <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
 											<td width="30%" >
 												<input type="password" id="mail_smtppass" name="mail_smtppass" size="25" maxlength="255" tabindex='1'>
-												<a href="javascript:void(0)" id='mail_smtppass_link' onClick="SUGAR.util.setEmailPasswordEdit('mail_smtppass')" style="display: none">{$APP.LBL_CHANGE_PASSWORD}</a>
+												<a href="javascript:void(0)" id='mail_smtppass_link' onClick="SUGAR.util.setEmailPasswordEdit('mail_smtppass')" style="display: none;">{$APP.LBL_CHANGE_PASSWORD}</a>
 											</td>
 											<td width="20%">&nbsp;</td>
 											<td width="30%">&nbsp;</td>

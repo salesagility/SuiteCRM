@@ -170,10 +170,10 @@
         <span class='white-space'>
             &nbsp;&nbsp;&nbsp;{if $SAVED_SEARCHES_OPTIONS}|&nbsp;&nbsp;&nbsp;<b>{$APP.LBL_SAVED_FILTER_SHORTCUT}</b>&nbsp;
             {$SAVED_SEARCHES_OPTIONS} {/if}
-            <span id='go_btn_span' style='display:none'><input tabindex='2' title='go_select' id='go_select'
-                                                               onclick='SUGAR.searchForm.clear_form(this.form);'
-                                                               class='button' type='button' name='go_select'
-                                                               value=' {$APP.LBL_GO_BUTTON_LABEL} '/></span>
+            <span id='go_btn_span' style='display:none;'><input tabindex='2' title='go_select' id='go_select'
+                                                                onclick='SUGAR.searchForm.clear_form(this.form);'
+                                                                class='button' type='button' name='go_select'
+                                                                value=' {$APP.LBL_GO_BUTTON_LABEL} '/></span>
         </span>
             </td>
             <td class="help">

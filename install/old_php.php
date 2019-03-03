@@ -126,7 +126,7 @@ $out = <<<EOQ
 	    <div id='sysCheckMsg'></div>
 	    <div style="clear:both;"></div>
 	</div>
-	<div id="checkingDiv" style="display:none">
+	<div id="checkingDiv" style="display:none;">
             <p><img src='install/processing.gif' alt="{$mod_strings['LBL_LICENSE_CHECKING']}"> <br>{$mod_strings['LBL_LICENSE_CHECKING']}</p>
     </div>
 	<footer id="install_footer">

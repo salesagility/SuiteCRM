@@ -85,7 +85,7 @@
 											{/if}
 										</tr>
 										<tr>
-											<td colspan="2" id="SystemGeneratedPassword_warning" scope="row" style='display:{$smtp_warning}';>
+											<td colspan="2" id="SystemGeneratedPassword_warning" scope="row" style='display:{$smtp_warning};' ;>
 											<i>{if $SMTP_SERVER_NOT_SET}&nbsp;&nbsp;&nbsp;&nbsp;{$MOD.ERR_SMTP_SERVER_NOT_SET}<br>{/if}
 											&nbsp;&nbsp;&nbsp;&nbsp;{$MOD.LBL_EMAIL_ADDRESS_REQUIRED_FOR_FEATURE}</i>
 										</td>
@@ -130,7 +130,7 @@
 														{if ($config.passwordsetting.systexpirationtype ) == '30'}
 															{assign var='smonths' value='SELECTED'}
 														{/if}
-															<input type='text' maxlength="3" and style="width:2em"  name='passwordsetting_systexpirationtime' value='{$config.passwordsetting.systexpirationtime}'>
+															<input type='text' maxlength="3" and style="width:2em;" name='passwordsetting_systexpirationtime' value='{$config.passwordsetting.systexpirationtime}'>
 															<SELECT  NAME="passwordsetting_systexpirationtype">
 																<OPTION VALUE='1' {$sdays}>{$MOD.LBL_DAYS}
 																<OPTION VALUE='7' {$sweeks}>{$MOD.LBL_WEEKS}
@@ -140,7 +140,7 @@
 														<td colspan='2' width='40%'>
 															<input type="radio" name="passwordsetting_systexpiration"  id="required_sys_pwd_exp_login" value='2' {$systexplogin} onclick="form.passwordsetting_systexpirationtime.value='';">
 															{$MOD.LBL_PASSWORD_EXP_AFTER}
-															<input type='text' maxlength="3" and style="width:2em"  name='passwordsetting_systexpirationlogin' value="{$config.passwordsetting.systexpirationlogin}">
+															<input type='text' maxlength="3" and style="width:2em;" name='passwordsetting_systexpirationlogin' value="{$config.passwordsetting.systexpirationlogin}">
 															{$MOD.LBL_PASSWORD_LOGINS}
 														</td>
 													</tr>
@@ -179,7 +179,7 @@
 												{assign var='smtp_warning_2' value='none'}
 											{/if}
 										</tr>
-										<tr><td colspan="4" id="SystemGeneratedPassword_warning2" scope="row" style='display:{$smtp_warning_2}';>
+										<tr><td colspan="4" id="SystemGeneratedPassword_warning2" scope="row" style='display:{$smtp_warning_2};' ;>
 											<i>{if $SMTP_SERVER_NOT_SET}&nbsp;&nbsp;&nbsp;&nbsp;{$MOD.ERR_SMTP_SERVER_NOT_SET}<br>{/if}
 											&nbsp;&nbsp;&nbsp;&nbsp;{$MOD.LBL_EMAIL_ADDRESS_REQUIRED_FOR_FEATURE}</i>
 											</td>
@@ -217,7 +217,7 @@
 														{if ($config.passwordsetting.linkexpirationtype ) == '1440'}
 															{assign var='lmonths' value='SELECTED'}
 														{/if}
-															<input type='text' maxlength="3" and style="width:2em" name='passwordsetting_linkexpirationtime'  value='{$config.passwordsetting.linkexpirationtime}'>
+															<input type='text' maxlength="3" and style="width:2em;" name='passwordsetting_linkexpirationtime' value='{$config.passwordsetting.linkexpirationtime}'>
 															<SELECT   NAME="passwordsetting_linkexpirationtype">
 																<OPTION VALUE='1' {$ldays}>{$MOD.LBL_MINUTES}
 																<OPTION VALUE='60' {$lweeks}>{$MOD.LBL_HOURS}
@@ -243,7 +243,7 @@
 									<table width="100%" border="0" cellspacing="0" cellpadding="0">
 										<tr>
 											<td colspan="4">
-												<div id="captcha_config_display" style="display:{$CAPTCHA_CONFIG_DISPLAY}">
+												<div id="captcha_config_display" style="display:{$CAPTCHA_CONFIG_DISPLAY};">
 													<table width="100%" cellpadding="0" cellspacing="0">
 													<tr>
 														<td width="10%" scope="row">{$MOD.LBL_PUBLIC_KEY}<span class="required">*</span></td>
@@ -341,7 +341,7 @@
 												</td><td valign='middle'><input name="system_ldap_enabled" id="system_ldap_enabled" class="checkbox"  type="checkbox" {$system_ldap_enabled_checked} onclick='toggleDisplay("ldap_display");enableDisablePasswordTable("system_ldap_enabled");'></td><td>&nbsp;</td><td>&nbsp;</td></tr>
 											<tr>
 												<td colspan='4'>
-													<table  cellspacing='0' cellpadding='1' id='ldap_display' style='display:{$ldap_display}' width='100%'>
+													<table cellspacing='0' cellpadding='1' id='ldap_display' style='display:{$ldap_display};' width='100%'>
 														<tr>
 															<td width='25%' scope="row" valign='top' nowrap>{$MOD.LBL_LDAP_SERVER_HOSTNAME} {sugar_help text=$MOD.LBL_LDAP_SERVER_HOSTNAME_DESC}</td>{$settings.proxy_host}
 															<td width='25%' align="left"  valign='top'><input name="ldap_hostname" size='25' type="text" value="{$settings.ldap_hostname}"></td>
@@ -378,7 +378,7 @@
 														<tr>
 															<td></td>
 															<td colspan='3'>
-																<span id='ldap_group' style='display:{$ldap_group_display}'>
+																<span id='ldap_group' style='display:{$ldap_group_display};'>
 																	<table width='100%'>
 																		<tr>
 																			<td  width='25%' scope="row" valign='top'nowrap>{$MOD.LBL_LDAP_GROUP_DN} {sugar_help text=$MOD.LBL_LDAP_GROUP_DN_DESC}</td>
@@ -425,7 +425,7 @@
 														<tr>
 															<td></td>
 															<td colspan='3'>
-															<span id='ldap_authentication' style='display:{$ldap_authentication_display}'>
+															<span id='ldap_authentication' style='display:{$ldap_authentication_display};'>
 																<table width='100%' >
 																	<tr>
 																		<td width='25%' scope="row" valign='top'nowrap>{$MOD.LBL_LDAP_ADMIN_USER} {sugar_help text=$MOD.LBL_LDAP_ADMIN_USER_DESC}</td>
@@ -493,7 +493,7 @@
                                     </td><td>&nbsp;</td><td>&nbsp;</td></tr>
                                  <tr>
                                     <td colspan='4'>
-                                       <table  cellspacing='0' cellpadding='1' id='saml_display' style='display:{$saml_display}' width='100%'>
+                                       <table cellspacing='0' cellpadding='1' id='saml_display' style='display:{$saml_display};' width='100%'>
                                             <tr>
                                              <td scope="row" valign='middle' nowrap>{$MOD.LBL_SAML_LOGIN_URL} {sugar_help text=$MOD.LBL_SAML_LOGIN_URL_DESC}</td>
                                              <td align="left"  valign='middle'><input name="SAML_loginurl" size='35' type="text" value="{$config.SAML_loginurl}"></td>
@@ -506,7 +506,7 @@
 										   </tr>
                                           <tr>
                                              <td width='25%' scope="row" valign='top' nowrap>{$MOD.LBL_SAML_CERT} {sugar_help text=$MOD.LBL_SAML_CERT_DESC}</td>{$settings.proxy_host}
-                                             <td width='25%' align="left"  valign='top'><textarea style='height:200px;width:600px' name="SAML_X509Cert" >{$config.SAML_X509Cert}</textarea></td>
+                                             <td width='25%' align="left"  valign='top'><textarea style='height:200px;width:600px;' name="SAML_X509Cert" >{$config.SAML_X509Cert}</textarea></td>
 
                                           </tr>
 

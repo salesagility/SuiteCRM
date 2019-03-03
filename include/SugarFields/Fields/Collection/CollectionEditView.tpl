@@ -53,7 +53,7 @@
 {if !empty($vardef.required)}
 <input type="hidden" id="{$vardef.name}_field" name="{$vardef.name}_field" value="{$vardef.name}_table">
 {/if}
-<table name='{$displayParams.formName}_{$vardef.name}_table' id='{$displayParams.formName}_{$vardef.name}_table' style="border-spacing: 0pt;">
+<table name='{$displayParams.formName}_{$vardef.name}_table' id='{$displayParams.formName}_{$vardef.name}_table' style="border-spacing: 0;">
         {include file=$cacheRowFile}
         <td valign='top'>
         </td>

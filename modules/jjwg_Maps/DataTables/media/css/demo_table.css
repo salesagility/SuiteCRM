@@ -320,7 +320,7 @@ td.details {
 }
 
 .paging_full_numbers a:active {
-	outline: none
+	outline: none;
 }
 
 .paging_full_numbers a:hover {

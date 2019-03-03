@@ -215,5 +215,5 @@ Event.onDOMReady(YAHOO.example.DDApp.init, YAHOO.example.DDApp, true);
 {/literal}
 </script>
 {else}
-<table id="{$source_id}" class="sources_table" border="0" cellspacing="1" cellpadding="1" style="display: none"></table>
+<table id="{$source_id}" class="sources_table" border="0" cellspacing="1" cellpadding="1" style="display: none;"></table>
 {/if}

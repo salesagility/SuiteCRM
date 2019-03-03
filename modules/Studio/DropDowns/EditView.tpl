@@ -122,7 +122,7 @@
 {foreach from=$dropdown item="value" key="key"}
 
 <tr><td>
-<span id='slot{$rowCounter}' class='slot' style='cursor: move'>
+<span id='slot{$rowCounter}' class='slot' style='cursor: move;'>
     <span id='slot{$rowCounter}_key'>{$key}</span>
 </span>
 </td><td>
@@ -135,7 +135,7 @@
     <span onclick='prepChangeDropDownValue({$rowCounter}, document.getElementById("slot{$rowCounter}_value"));'>{$editImage}</span>
         &nbsp;
     <span id ='slot{$rowCounter}_value' onclick='prepChangeDropDownValue({$rowCounter}, this);'>{$value.lang}</span>
-    <span id='slot{$rowCounter}_textspan' style='display:none'>
+    <span id='slot{$rowCounter}_textspan' style='display:none;'>
         <input id='slot{$rowCounter}_text' value='' type='text'  onchange='setDropDownValue({$rowCounter}, this.value, true)' >
         {$value.user_lang}
     </span>
@@ -365,7 +365,7 @@
 {/literal}
 
 
-<div id='logDiv' style='display:none'>
+<div id='logDiv' style='display:none;'>
 </div>
 
 {/if}

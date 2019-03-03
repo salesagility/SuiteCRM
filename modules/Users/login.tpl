@@ -61,10 +61,10 @@
                                     <form action="index.php" method="post" name="DetailView" id="form" onsubmit="return document.getElementById('cant_login').value == ''" autocomplete="off">
                                         <table cellpadding="0" cellspacing="2" border="0" align="center" width="100%">
                                             <td scope="row" colspan="2">
-						    	    <span class="error" id="browser_warning" style="display:none">
+						    	    <span class="error" id="browser_warning" style="display:none;">
 						    	        {sugar_translate label="WARN_BROWSER_VERSION_WARNING"}
 						    	    </span>
-						    	    <span class="error" id="ie_compatibility_mode_warning" style="display:none">
+						    	    <span class="error" id="ie_compatibility_mode_warning" style="display:none;">
 						    	        {sugar_translate label="WARN_BROWSER_IE_COMPATIBILITY_MODE_WARNING"}
 						    	    </span>
                                             </td>
@@ -100,7 +100,7 @@
                                             {if !empty($SELECT_LANGUAGE)}
                                                 <tr>
                                                     <td scope="row">{sugar_translate module="Users" label="LBL_LANGUAGE"}:</td>
-                                                    <td><select style='width: 152px' name='login_language' onchange="switchLanguage(this.value)">{$SELECT_LANGUAGE}</select></td>
+                                                    <td><select style='width: 152px;' name='login_language' onchange="switchLanguage(this.value)">{$SELECT_LANGUAGE}</select></td>
                                                 </tr>
                                             {/if}
                                             <tr>
@@ -135,7 +135,7 @@
                                     <div  style="cursor: hand; cursor: pointer; display:{$DISPLAY_FORGOT_PASSWORD_FEATURE};" onclick='toggleDisplay("forgot_password_dialog");'>
                                         <a href='javascript:void(0)'><IMG src="{sugar_getimagepath file='advanced_search.gif'}" border="0" alt="Hide Options" id="forgot_password_dialog_options">{sugar_translate module="Users" label="LBL_LOGIN_FORGOT_PASSWORD"}</a>
                                     </div>
-                                    <div id="forgot_password_dialog" style="display:none" >
+                                    <div id="forgot_password_dialog" style="display:none;" >
                                         <input type="hidden" name="entryPoint" value="GeneratePassword">
                                         <table cellpadding="0" cellspacing="2" border="0" align="center" width="100%" >
                                             <tr>
@@ -154,7 +154,7 @@
                                             {$CAPTCHA}
                                             <tr>
                                                 <td scope="row" width="30%"><div id='wait_pwd_generation'></div></td>
-                                                <td width="70%"><input title="Email Temp Password" class="button" type="button" style="display:inline" onclick="validateAndSubmit(); return document.getElementById('cant_login').value == ''" id="generate_pwd_button" name="fp_login" value="{sugar_translate module="Users" label="LBL_LOGIN_SUBMIT"}" autocomplete="off"></td>
+                                                <td width="70%"><input title="Email Temp Password" class="button" type="button" style="display:inline;" onclick="validateAndSubmit(); return document.getElementById('cant_login').value == ''" id="generate_pwd_button" name="fp_login" value="{sugar_translate module="Users" label="LBL_LOGIN_SUBMIT"}" autocomplete="off"></td>
                                             </tr>
                                         </table>
                                     </div>

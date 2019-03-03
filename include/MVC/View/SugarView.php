@@ -1046,7 +1046,7 @@ EOHTML;
         // not reasonably feasible for technical reasons, the Appropriate
         // Legal Notices must display the words "Powered by SugarCRM".
         $attribLinkImg =
-            "<img style='margin-top: 2px' border='0' width='120' height='34' src='include/images/poweredby_sugarcrm_65.png' alt='Powered By SugarCRM'>\n";
+            "<img style='margin-top: 2px;' border='0' width='120' height='34' src='include/images/poweredby_sugarcrm_65.png' alt='Powered By SugarCRM'>\n";
 
         // handle resizing of the company logo correctly on the fly
         $companyLogoURL = $themeObject->getImageURL('company_logo.png');

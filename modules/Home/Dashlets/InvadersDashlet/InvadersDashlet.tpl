@@ -55,9 +55,9 @@ div.playArea {ldelim}
 </style>
 <div align="center">
 <div class="playArea">
-    <img id="player" style="position: absolute; top:270px; left:134px"
+    <img id="player" style="position: absolute; top:270px; left:134px;"
         src="modules/Home/Dashlets/InvadersDashlet/sprites/player.png" width="32px" height="32px"/>
-    <img id="shot"   style="position: absolute; top:245px; display: none"
+    <img id="shot"   style="position: absolute; top:245px; display: none;"
         src="modules/Home/Dashlets/InvadersDashlet/sprites/cube.png" width="16px" height="16px"/>
     
     <div id="aliens" style="position: absolute; left:0; width:172px;">

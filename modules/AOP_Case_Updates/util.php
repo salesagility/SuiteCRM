@@ -60,7 +60,7 @@ function getAOPAssignField($assignField, $value)
         if (isset($value[0]) && $value[0] === 'security_group') {
             $display = '';
         }
-        $field .= "<select type='text' style='display:$display' name='$assignField" . '[1]' . "' id='$assignField" . '[1]' . "' title='' tabindex='116'>" . get_select_options_with_id($securityGroups, isset($value[1]) ? $value[1] : null) . '</select>&nbsp;&nbsp;';
+        $field .= "<select type='text' style='display:$display;' name='$assignField" . '[1]' . "' id='$assignField" . '[1]' . "' title='' tabindex='116'>" . get_select_options_with_id($securityGroups, isset($value[1]) ? $value[1] : null) . '</select>&nbsp;&nbsp;';
     }
     $display = 'none';
     if (isset($value[0]) && ($value[0] === 'role' || $value[0] === 'security_group')) {

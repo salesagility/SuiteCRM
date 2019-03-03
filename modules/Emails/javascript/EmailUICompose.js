@@ -1816,7 +1816,7 @@ SE.composeLayout = {
         var out = "<div id='templateAttachmentCup" + idx + index + "'>" +
 				// remove button
 				"<img src='index.php?entryPoint=getImage&themeName=" + SUGAR.themes.theme_name + "&imageName=minus.gif' " +
-					"style='cursor:pointer' align='absmiddle' onclick='SUGAR.email2.composeLayout.deleteTemplateAttachmentField(\"" +
+					"style='cursor:pointer;' align='absmiddle' onclick='SUGAR.email2.composeLayout.deleteTemplateAttachmentField(\"" +
 					idx + "\",\"" + index + "\");'/>" +
 				// file icon
 				"<img src='index.php?entryPoint=getImage&themeName=" + SUGAR.themes.theme_name + "&imageName=attachment.gif' " + "align='absmiddle' />" +

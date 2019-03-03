@@ -112,7 +112,7 @@
      <div class="hr"></div>
     <span><strong><label for="save_map_as">{$MOD.LBL_SAVE_MAPPING_AS}</label></strong> {sugar_help text=$MOD.LBL_SAVE_MAPPING_HELP}</span>
             <span >
-                <input type="text" name="save_map_as" id="save_map_as" value="" style="width: 20em" maxlength="254">
+                <input type="text" name="save_map_as" id="save_map_as" value="" style="width: 20em;" maxlength="254">
             </span>
     </div>
 <br />

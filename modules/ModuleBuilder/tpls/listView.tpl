@@ -137,7 +137,7 @@ studiotabs.reset();
                 {if empty($hideKeys)}<td>[{$key}]</td>{/if}
                 <td align="right" colspan="2" class="percentage">
 					{if $view|substr:-6 == "search" }
-					<span style="display:none" id='subslot{$modCounter}width'>{$value.width}</span>	<span style="display:none">%</span>
+					<span style="display:none;" id='subslot{$modCounter}width'>{$value.width}</span>	<span style="display:none;">%</span>
 					{else}
 					<span id='subslot{$modCounter}width'>{$value.width}</span> <span>%</span>
 					{/if}
@@ -227,7 +227,7 @@ ModuleBuilder.MBpackage = '{$view_package}';
 
 
 
-<div id='logDiv' style='display:none'>
+<div id='logDiv' style='display:none;'>
 </div>
 
 {$additionalFormData}

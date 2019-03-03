@@ -46,7 +46,7 @@ class FeedLinkHandlerLink
 {
     public function getDisplay(&$data)
     {
-        return '<div style="padding-left:10px"><a href="' . $data['LINK_URL'] . '" target="_blank">' .$data['LINK_URL'] .'</a></div>';
+        return '<div style="padding-left:10px;"><a href="' . $data['LINK_URL'] . '" target="_blank">' .$data['LINK_URL'] .'</a></div>';
     }
 
     public function handleInput($feed, $link_type, $link_url)

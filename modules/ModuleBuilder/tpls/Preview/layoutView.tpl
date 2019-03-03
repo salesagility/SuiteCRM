@@ -51,7 +51,7 @@
 <div id='toolbox' style='display:none;'>
 </div>
 
-<div id='panels' style='float:left; overflow-y:auto; overflow-x:hidden'>
+<div id='panels' style='float:left; overflow-y:auto; overflow-x:hidden;'>
 
 <h3>{$layouttitle}</h3>
 {foreach from=$layout item='panel' key='panelid'}

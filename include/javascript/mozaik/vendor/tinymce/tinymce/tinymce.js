@@ -41436,7 +41436,7 @@ define("tinymce/ui/ColorPicker", [
 						'<div class="' + prefix + 'colorpicker-h-chunk" style="' +
 							'height:' + (100 / l) + '%;' +
 							gradientPrefix + stopsList[i] + ',endColorstr=' + stopsList[i + 1] + ');' +
-							'-ms-' + gradientPrefix + stopsList[i] + ',endColorstr=' + stopsList[i + 1] + ')' +
+							'-ms-' + gradientPrefix + stopsList[i] + ',endColorstr=' + stopsList[i + 1] + ';)' +
 						'"></div>'
 					);
 				}

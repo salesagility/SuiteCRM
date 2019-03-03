@@ -96,7 +96,7 @@ class SecurityGroupMessage extends Basic
 
         $data['NAME'] = $data['DESCRIPTION'];
         $data['NAME'] =  '<div class="list view" style="padding:5px;border:none;">' . html_entity_decode($data['NAME']);
-        $data['NAME'] .= '<div class="byLineBox" style="padding-top: 2px"><span class="byLineLeft">'.$username.' ['.$securitygroup_name.']';
+        $data['NAME'] .= '<div class="byLineBox" style="padding-top: 2px;"><span class="byLineLeft">' .$username.' ['.$securitygroup_name.']';
         $data['NAME'] .= '&nbsp;</span><span style="cursor: pointer;" class="byLineRight"> '.  $this->getTimeLapse($data['DATE_ENTERED']) . ' &nbsp;' .$delete. '</span></div>';
         return  $data ;
     }

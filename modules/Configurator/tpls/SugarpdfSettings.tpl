@@ -60,7 +60,7 @@
     <tr>
     <td>
 
-    <table width="100%" border="0" cellspacing="0" cellpadding="0"  class="edit view" {if $pdf_enable_ezpdf=="0"}style="display:none"{/if}>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0"  class="edit view" {if $pdf_enable_ezpdf=="0"}style="display:none;"{/if}>
         <tr>
            <td scope="row" style="text-align: center;">{html_radios name="sugarpdf_pdf_class" options=$pdf_class selected=$selected_pdf_class separator='    ' onchange='processPDFClass()'}</td>
         </tr>

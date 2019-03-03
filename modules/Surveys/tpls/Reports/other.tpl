@@ -1,5 +1,5 @@
 <div>
-    <table id="{$question.id}List" style="display: none; width:33%" class="table table-bordered">
+    <table id="{$question.id}List" style="display: none; width:33%;" class="table table-bordered">
         <tr>
             <th>
                 {$mod.LBL_RESPONSE_ANSWER}

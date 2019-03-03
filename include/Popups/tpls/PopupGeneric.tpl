@@ -113,7 +113,7 @@
 		<tr height='20'>
 			{if $prerow}
 				<td nowrap="nowrap" width="43px" class="selectCol td_alt">
-				<div style="width:43px">
+				<div style="width:43px;">
 					{sugar_action_menu id=$link_select_id params=$selectLink}
 				</div>
 				</td>
@@ -123,7 +123,7 @@
 			{foreach from=$displayColumns key=colHeader item=params}
 				{if $colCounter == '0'}<th scope='col' width='{$params.width}%' data-toggle="true">
 				{else}<th scope='col' width='{$params.width}%' data-hide="phone,tablet">{/if}
-					<div style='white-space: normal; width:100%; text-align:{$params.align|default:'left'}'>
+					<div style='white-space: normal; width:100%; text-align:{$params.align|default:'left'};'>
 	                {if $params.sortable|default:true}
                                 <a href="{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}" onclick='sListView.save_checks(0, "{$moduleString}");' class='listViewThLinkS1'>{sugar_translate label=$params.label module=$pageData.bean.moduleDir}&nbsp;&nbsp;
 						{if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}

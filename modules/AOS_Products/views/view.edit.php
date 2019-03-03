@@ -39,9 +39,7 @@ class AOS_ProductsViewEdit extends ViewEdit
         if (!empty($this->bean->product_image)) {
             $html .= 'none';
         }
-        $html .= '\'><input name="uploadimage" tabindex="3" type="file" size="60"/>
-        	</span>
-		<span id=\'old_attachment\' style=\'display:';
+        $html .= 'display:;';
         if (empty($image)) {
             $html .= 'none';
         }

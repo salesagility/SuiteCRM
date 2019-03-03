@@ -44,13 +44,13 @@
 
 *}
 
-<div align='center' style='background:lightgray'>
-<h3 style='color:red'>Possible Cross Site Request Forgery (XSRF) Attack Detected</h3>
+<div align='center' style='background:lightgray;'>
+<h3 style='color:red;'>Possible Cross Site Request Forgery (XSRF) Attack Detected</h3>
 <h4>If you think this is a mistake please ask your administrator to add the following site to the acceptable referer list</h4>
 <h3>{$host}</h3>
 <h4><a href='javascript:void(0);' onclick='document.getElementById("directions").style.display="";'>Click here for directions to add this site to the acceptable referer list</a></h4>
 </div>
-<div id='directions' style='display:none'>
+<div id='directions' style='display:none;'>
 	<h3>Directions:</h3>
 	<ol>
 		<li>On your file system go to the root of your SugarCRM instance

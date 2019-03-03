@@ -49,11 +49,11 @@
       <td nowrap="nowrap"><span id='more_img_{$id}'>{$more_img}</span><span id='less_img_{$id}' style="display:none;">{$less_img}</span> <b>{$user_name}</b>&nbsp;</td>
       <td style="padding-right: 5px;"><input id="text" name="text" type="text" size='25' maxlength='100' value="" title="{sugar_translate label='LBL_POST_TITLE' module='SugarFeed'} {$user_name} "/></td>
       <td nowrap="nowrap">
-      <input type="submit" value="{$LBL_POST}" class="button" style="vertical-align:top" onclick="SugarFeed.pushUserFeed('{$id}'); return false;"></td>
+      <input type="submit" value="{$LBL_POST}" class="button" style="vertical-align:top;" onclick="SugarFeed.pushUserFeed('{$id}'); return false;"></td>
         <td>{$facebook}</td>
     </tr>
 </table>
-<div id='more_{$id}' style='display:none;padding-top:5px'>
+<div id='more_{$id}' style='display:none;padding-top:5px;'>
 <table>
 <tr>
     <td>{html_options name='link_type' options=$link_types}</td>
@@ -74,7 +74,7 @@
       <td nowrap="nowrap"><b>{$user_name}</b>&nbsp;</td>
       <td style="padding-right: 5px;"><input id="text" name="text" type="text" size='25' maxlength='100' value="" /></td>
       <td nowrap="nowrap">
-      <input type="submit" value="{$LBL_POST}" class="button" style="vertical-align:top" onclick="SugarFeed.replyToFeed('{$id}'); return false;"></td>
+      <input type="submit" value="{$LBL_POST}" class="button" style="vertical-align:top;" onclick="SugarFeed.replyToFeed('{$id}'); return false;"></td>
     </tr>
 </table>
 </div>

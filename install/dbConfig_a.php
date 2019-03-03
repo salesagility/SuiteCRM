@@ -98,7 +98,7 @@ $out =<<<EOQ
 EOQ;
 $out .= '<body onload="document.getElementById(\'button_next2\').focus();">';
 
-$out2 =<<<EOQ2
+$out2 = <<<EOQ2
 <!--SuiteCRM installer-->
 <div id="install_container">
     <div id="install_box">
@@ -111,7 +111,7 @@ $out2 =<<<EOQ2
             <input type='hidden' name='setup_db_drop_tables' id='setup_db_drop_tables' value=''>
             <input type="hidden" id="hidden_goto" name="goto" value="{$mod_strings['LBL_BACK']}" />
             <h2>{$mod_strings['LBL_DBCONF_TITLE']}</h2>
-            <div id="errorMsgs" style="display:none"></div>
+            <div id="errorMsgs" style="display:none;"></div>
             <div class="required">{$mod_strings['LBL_REQUIRED']}</div>
             <hr>
             <h3>{$mod_strings['LBL_DBCONF_TITLE_NAME']}</h3>
@@ -198,13 +198,13 @@ if ($db->supports("create_user")) {
     $setup_db_sugarsales_user = urldecode($_SESSION['setup_db_sugarsales_user']);
     $setup_db_sugarsales_password_retype = urldecode($_SESSION['setup_db_sugarsales_password_retype']);
 
-    $out2 .=<<<EOQ2
+    $out2 .= <<<EOQ2
 <br>
     <hr>
 <br>
 {$mod_strings['LBL_DBCONFIG_SECURITY']}
 <div class='install_block'><label><b>{$mod_strings['LBL_DBCONF_SUITE_DB_USER']}</b></label>$dbUSRDD
-    <span id='connection_user_div' style="display:none">
+    <span id='connection_user_div' style="display:none;">
         <span class="required">*</span>
             <label><b>{$mod_strings['LBL_DBCONF_SUITE_DB_USER']}</b></label>
             <input type="text" name="setup_db_sugarsales_user" value="{$_SESSION['setup_db_sugarsales_user']}" />

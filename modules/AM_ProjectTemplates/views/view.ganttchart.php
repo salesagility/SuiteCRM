@@ -196,8 +196,8 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
                                 addToValidate("project_form", "p_name", "name", true,"'.$mod_strings['LBL_PROJECT_NAME'].'" );
                                 addToValidate("project_form", "start_date", "date", false,"'.$mod_strings['LBL_START_DATE'].'" );
                             </script>
-							 <label for="copy_all_tasks">'.$mod_strings['LBL_COPY_ALL_TASKS'].':</label>&nbsp;
-                             <input type="checkbox" style="position: relative; vertical-align:middle" id="copy_all_tasks" name="copy_all_tasks" value="1" title="" />&nbsp;
+							 <label for="copy_all_tasks">'.$mod_strings['LBL_COPY_ALL_TASKS']. ':</label>&nbsp;
+                             <input type="checkbox" style="position: relative; vertical-align:middle;" id="copy_all_tasks" name="copy_all_tasks" value="1" title="" />&nbsp;
 							 <span style="position: relative;"  id="copy_all_tasks_help"><span class="suitepicon suitepicon-action-info"></span>
 							 </span>
 							<script type="text/javascript">

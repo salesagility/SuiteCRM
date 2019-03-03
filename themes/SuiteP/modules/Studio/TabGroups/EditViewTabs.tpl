@@ -61,9 +61,9 @@
 <p>{$MOD.LBL_GROUP_TAB_WELCOME}</p>
 
 <table cellspacing=2>
-<button class='button' style='cursor:default' onmousedown='this.className="buttonOn";return false;'
-            onmouseup='this.className="button"' onmouseout='this.className="button"'
-            onclick='studiotabs.generateForm("edittabs");document.edittabs.submit()'>
+<button class='button' style='cursor:default;' onmousedown='this.className="buttonOn";return false;'
+        onmouseup='this.className="button"' onmouseout='this.className="button"'
+        onclick='studiotabs.generateForm("edittabs");document.edittabs.submit()'>
             {$MOD.LBL_BTN_SAVEPUBLISH}</button>
 </table>
 <p />
@@ -119,7 +119,7 @@ subtabModules['modSlot{$modCounter}'] = '{$value.label}'</script>
 {if $tab.label != $otherLabel }
 	<span onclick='studiotabs.deleteTabGroup({$tabCounter})'>{$deleteImage}</span>
 {/if}
-</span></h2><input type='hidden' name='tablabelid_{$tabCounter}' id='tablabelid_{$tabCounter}'  value='{$tab.label}'><input type='text' name='tablabel_{$tabCounter}' id='tablabel_{$tabCounter}' style='display:none' value='{$tab.labelValue}' onblur='studiotabs.editTabGroupLabel({$tabCounter}, true)'>
+</span></h2><input type='hidden' name='tablabelid_{$tabCounter}' id='tablabelid_{$tabCounter}'  value='{$tab.label}'><input type='text' name='tablabel_{$tabCounter}' id='tablabel_{$tabCounter}' style='display:none;' value='{$tab.labelValue}' onblur='studiotabs.editTabGroupLabel({$tabCounter}, true)'>
 <ul id='ul{$tabCounter}' class='listContainer'>
 {counter start=0 name="subtabCounter" print=false assign="subtabCounter"}
 {foreach from=$tab.modules key='list' item='name'}

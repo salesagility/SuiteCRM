@@ -715,7 +715,7 @@ EOF;
         $uids = empty($_REQUEST['uid']) || $massUpdateRun ? '' : $_REQUEST['uid'];
         $select_entire_list = ($massUpdateRun) ? 0 : (isset($_POST['select_entire_list']) ? $_POST['select_entire_list'] : (isset($_REQUEST['select_entire_list']) ? $_REQUEST['select_entire_list'] : 0));
 
-        $str .= "<textarea style='display: none' name='uid'>{$uids}</textarea>\n" .
+        $str .= "<textarea style='display: none;' name='uid'>{$uids}</textarea>\n" .
                 "<input type='hidden' name='select_entire_list' value='{$select_entire_list}'>\n".
                 "<input type='hidden' name='{$this->moduleString}' value='0'>\n".
                 "<input type='hidden' name='show_plus' value='{$this->show_plus}'>\n";

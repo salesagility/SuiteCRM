@@ -49,7 +49,7 @@
 </script>
 <tr>
 <td colspan="4">
-<table style="border-spacing: 0pt;">
+<table style="border-spacing: 0;">
 	<tr>
 		<td  valign="top" NOWRAP>
 			<table cellpadding="0" cellspacing="0" border="0" id="{$module}emailAddressesTable{$index}" class="emailaddresses">

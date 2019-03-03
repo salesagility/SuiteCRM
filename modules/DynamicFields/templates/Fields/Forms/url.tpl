@@ -62,7 +62,7 @@
 	{/if}
 	</td>
 </tr>
-<tr id='fieldListHelper' {if !$vardef.gen}style="display:none"{/if}>
+<tr id='fieldListHelper' {if !$vardef.gen}style="display:none;"{/if}>
 	<td></td>
 	<td>{html_options name="flo" id="fieldListOptions" options=$fieldOpts}
 		<input type='button' class='button' value="{sugar_translate module='DynamicFields' label='LBL_INSERT_FIELD'}" onclick="

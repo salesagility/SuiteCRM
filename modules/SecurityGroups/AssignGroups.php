@@ -265,7 +265,7 @@ function send_massassign(mode, no_record_txt, start_string, end_string, del) {
 			<input type='hidden' name='module' value='SecurityGroups' />
 			<input type='hidden' name='return_action' value='${action}' />
 			<input type='hidden' name='return_module' value='${module}' />
-			<textarea style='display: none' name='uid'></textarea>
+			<textarea style='display: none;' name='uid'></textarea>
 
 
 		<div id='massassign_form'>$form_header

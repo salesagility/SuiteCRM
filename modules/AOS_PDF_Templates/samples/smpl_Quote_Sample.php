@@ -27,16 +27,16 @@ class smpl_Quote_Sample
 </tr>
 <tr style="text-align: left;">
 <td style="text-align: left;">
-<h1>'.strtoupper(translate('LBL_PDF_NAME', 'AOS_Quotes')).'</h1>
+<h1>'.strtoupper(translate('LBL_PDF_NAME', 'AOS_Quotes')). '</h1>
 </td>
 </tr>
 </tbody>
 </table>
 <p style="font-family: Arial; text-align: center;">&nbsp;</p>
-<table style="text-align: center; width: 100%; border: 0pt none; border-spacing: 0pt;">
+<table style="text-align: center; width: 100%; border: 0 none; border-spacing: 0;">
 <tbody style="text-align: left;">
 <tr style="text-align: left;">
-<td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;">'.translate('LBL_PREPARED_FOR', 'AOS_PDF_Templates').'</td>
+<td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;">' .translate('LBL_PREPARED_FOR', 'AOS_PDF_Templates').'</td>
 <td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;">'.translate('LBL_PREPARED_BY', 'AOS_PDF_Templates').'</td>
 </tr>
 <tr style="text-align: left;">
@@ -55,7 +55,7 @@ class smpl_Quote_Sample
 </tr>
 <tr style="text-align: left;">
 <td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;">'.translate('LBL_QUOTE_NUMBER', 'AOS_Quotes').'</td>
-<td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;">'.translate('LBL_TERM', 'AOS_Quotes').'</td>
+<td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;">'.translate('LBL_TERM', 'AOS_Quotes'). '</td>
 </tr>
 <tr style="text-align: left;">
 <td style="padding: 2px 6px; border-style: solid; border-width: 0.5px; width: 50%; vertical-align: top; text-align: left;"><div>$aos_quotes_number</div></td>
@@ -64,10 +64,10 @@ class smpl_Quote_Sample
 </tbody>
 </table>
 <p>&nbsp;</p>
-<table repeat_header="1" style="width: 100%; border: 0pt none; border-spacing: 0pt;">
+<table repeat_header="1" style="width: 100%; border: 0 none; border-spacing: 0;">
 <tbody>
 <tr>
-<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_PRODUCT_QUANITY', 'AOS_Quotes').'</td>
+<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">' .translate('LBL_PRODUCT_QUANITY', 'AOS_Quotes').'</td>
 <td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_PRODUCT_NAME', 'AOS_Quotes').'</td>
 <td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_DESCRIPTION', 'AOS_Products').'</td>
 <td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_LIST_PRICE', 'AOS_Quotes').'</td>
@@ -137,10 +137,10 @@ class smpl_Quote_Sample
     public function getFooter()
     {
         global $locale;
-        return '<table style="width: 100%; border: 0pt none; border-spacing: 0pt;">
+        return '<table style="width: 100%; border: 0 none; border-spacing: 0;">
 <tbody>
 <tr>
-<td>'.translate('LBL_PAGE', 'AOS_PDF_Templates').' {PAGENO}</td>
+<td>' .translate('LBL_PAGE', 'AOS_PDF_Templates').' {PAGENO}</td>
 <td style="text-align: right;">{DATE '.$locale->getPrecedentPreference('default_date_format').'}</td>
 </tr>
 </tbody>

@@ -152,7 +152,7 @@ class ConnectorsController extends SugarController
         $retArray = array();
 
         $retArray['body'] = !empty($str) ? str_replace(array("\rn", "\r", "\n"), array('','','<br />'), $str) : $GLOBALS['mod_strings']['ERROR_NO_ADDITIONAL_DETAIL'];
-        $retArray['caption'] = "<div style='float:left'>{$GLOBALS['app_strings']['LBL_ADDITIONAL_DETAILS']}</div>";
+        $retArray['caption'] = "<div style='float:left;'>{$GLOBALS['app_strings']['LBL_ADDITIONAL_DETAILS']}</div>";
         $retArray['width'] = (empty($results['width']) ? '300' : $results['width']);
         $retArray['theme'] = $theme;
         echo 'result = ' . $json->encode($retArray);

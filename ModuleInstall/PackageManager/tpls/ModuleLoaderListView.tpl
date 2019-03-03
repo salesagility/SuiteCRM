@@ -80,7 +80,7 @@
 			{/foreach}
 			<td scope='row' align='left' valign='top'><a class="listViewTdToolsS1" onclick="PackageManager.select_package('{$package_id}')" valign='top'>Select</a></td>
 	    	</tr>
-	    	<tr><td colspan="5"><table id='release_table_{$package_id}' style='display:none'>
+	    	<tr><td colspan="5"><table id='release_table_{$package_id}' style='display:none;'>
 	    	{foreach name=releaseIteration from=$package.releases key=release_id item=release}
 		    	<tr id='release_tr_{$release_id}' height='20' class='{$_rowColor}S1'>
 				{counter start=0 name="colCounter" print=false assign="colCounter"}

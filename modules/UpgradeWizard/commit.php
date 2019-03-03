@@ -603,7 +603,7 @@ $uwMain = <<<eoq
 		{$old_schema_opt}
 	</td></tr>
 </table>
-<div id="upgradeDiv" style="display:none">
+<div id="upgradeDiv" style="display:none;">
     <table cellspacing="0" cellpadding="0" border="0">
         <tr><td>
            <p><!--not_in_theme!--><img src='modules/UpgradeWizard/processing.gif' alt='Processing'> <br></p>

@@ -94,16 +94,7 @@ class formLetter
 					<td scope="row" align="left"><b><a href="#" onclick="document.getElementById(\'popupDiv_ara\').style.display=\'none\';sListView.send_form(true, \'' . $_REQUEST['module'] .
                     '\', \'index.php?templateID=' . $templateid . '&entryPoint=formLetter\',\'' . $app_strings['LBL_LISTVIEW_NO_SELECTED'] . '\');document.getElementById(\'popupDivBack_ara\').style.display=\'none\';">' . $template . '</a></b></td></tr>';
             }
-            echo '<tr style="height:10px;"><tr><tr><td colspan="2"><button style=" display: block;margin-left: auto;margin-right: auto" onclick="document.getElementById(\'popupDivBack_ara\').style.display=\'none\';document.getElementById(\'popupDiv_ara\').style.display=\'none\';return false;">Cancel</button></td></tr>
-			</table>
-				</div>
-				<div id="popupDivBack_ara" onclick="this.style.display=\'none\';document.getElementById(\'popupDiv_ara\').style.display=\'none\';" style="top:0;left:0;position:fixed;height:100%;width:100%;background:#000000;opacity:0.5;display:none;vertical-align:middle;text-align:center;z-index:9998;">
-				</div>
-				<script>
-					function showPopup(){
-					if(sugarListView.get_checks_count() < 1)
-					{
-						alert(\'' . $app_strings['LBL_LISTVIEW_NO_SELECTED'] . '\');
+            echo ' . $app_strings['LBL_LISTVIEW_NO_SELECTED'] . '\');
 					}
 					else
 					{
@@ -150,26 +141,10 @@ class formLetter
             }
             echo '		<input type="hidden" name="templateID" value="" />
 				<input type="hidden" name="module" value="' . $module . '" />
-				<input type="hidden" name="uid" value="' . $_REQUEST['record'] . '" />
-				</form>
-				<tr style="height:10px;"><tr><tr><td colspan="2"><button style=" display: block;margin-left: auto;margin-right: auto" onclick="document.getElementById(\'popupDivBack_ara\').style.display=\'none\';document.getElementById(\'popupDiv_ara\').style.display=\'none\';return false;">Cancel</button></td></tr>
-				</table>
-				</div>
-				
-				<div id="popupDivBack_ara" onclick="this.style.display=\'none\';document.getElementById(\'popupDiv_ara\').style.display=\'none\';" style="top:0;left:0;position:fixed;height:100%;width:100%;background:#000000;opacity:0.5;display:none;vertical-align:middle;text-align:center;z-index:9998;">
-				</div>
-				<script>
-					function showPopup(){
-						var ppd=document.getElementById(\'popupDivBack_ara\');
-						var ppd2=document.getElementById(\'popupDiv_ara\');
-						if(ppd!=null && ppd2!=null){
-							ppd.style.display=\'block\';
-							ppd2.style.display=\'block\';
-						}else{
-							alert(\'Error!\');
+				<input type="hidden" name="uid" value="' . $_REQUEST['record'] . ');
 						}
 					}
-				</script>';
+				</script>\'';
         } else {
             echo '<script>
 				function showPopup(){

@@ -107,7 +107,7 @@ if (version_compare(phpversion(), '5.2.0') >=0) {
         if (count($errors['manual']) > 0) {
             $preserveFiles = array();
 
-            $diffs =<<<eoq
+            $diffs = <<<eoq
 			<script type="text/javascript" language="Javascript">
 				function preflightToggleAll(cb) {
 					var checkAll = false;
@@ -147,7 +147,7 @@ if (version_compare(phpversion(), '5.2.0') >=0) {
 
 			<form name='diffs' id='diffs'>
 			<p><a href='javascript:void(0); toggleNwFiles("diffsHide");'>{$mod_strings['LBL_UW_SHOW_DIFFS']}</a></p>
-			<div id='diffsHide' style='display:none'>
+			<div id='diffsHide' style='display:none;'>
 				<table cellpadding='0' cellspacing='0' border='0'>
 					<tr>
 						<td valign='top' colspan='2'>
@@ -299,7 +299,7 @@ eoq;
         if (!empty($sqlErrors)) {
             $stop = true;
             $out = "<b class='error'>{$mod_strings['ERR_UW_PREFLIGHT_ERRORS']}:</b> ";
-            $out .= "<a href='javascript:void(0);toggleNwFiles(\"sqlErrors\");'>{$mod_strings['LBL_UW_SHOW_SQL_ERRORS']}</a><div id='sqlErrors' style='display:none'>";
+            $out .= ");'>{$mod_strings['LBL_UW_SHOW_SQL_ERRORS']}</a><div id='sqlErrors' style='display:none;'>";
             foreach ($sqlErrors as $sqlError) {
                 $out .= "<br><span class='error'>{$sqlError}</span>";
             }
@@ -325,7 +325,7 @@ eoq;
     $style_for_dif = empty($diffs)?'style=\'display:none\'':'';
     $style_for_schemaChange = empty($schema)?'style=\'display:none\'':'';
 
-    $final =<<<eoq
+    $final = <<<eoq
 <table cellpadding="3" cellspacing="0" border="0">
     <tr {$style_for_out}>
         <td colspan="2" align="left" valign="top">
@@ -362,7 +362,7 @@ eoq;
                 <option value="manual">{$mod_strings['LBL_UW_DB_CHOICE2']}</option>
             </select>
             </div>
-            <div id='show_sql_run' style='display:none'>
+            <div id='show_sql_run' style='display:none;'>
                 <input type='checkbox' name='sql_run' id='sql_run' onmousedown='checkSqlStatus(true);'> {$mod_strings['LBL_UW_SQL_RUN']}
             </div>
         </td>
@@ -371,9 +371,9 @@ eoq;
 
 eoq;
 
-    $form5 =<<<eoq5
+    $form5 = <<<eoq5
 <br>
-<div id="upgradeDiv" style="display:none">
+<div id="upgradeDiv" style="display:none;">
     <table cellspacing="0" cellpadding="0" border="0">
         <tr><td>
            <p><!--not_in_theme!--><img src='modules/UpgradeWizard/processing.gif' alt='Processing'></p>

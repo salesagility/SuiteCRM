@@ -57,7 +57,7 @@
 <input type='hidden' name='skip_modules' value=''>
 <input type='hidden' id='showGSDiv' name='showGSDiv' value='{$SHOWGSDIV}'>
 	<table width='600' border='0' cellspacing='1'>
-	<tr style='padding-bottom: 10px'>
+	<tr style='padding-bottom: 10px;'>
 		<td class="submitButtons" colspan='8' nowrap>
 			<input id='searchFieldMain' title="{$LBL_SEARCH}" class='searchField' type='text' size='80' name='query_string' value='{$query_string}'>
 		    <input type="submit" title="{$LBL_SEARCH_BUTTON_TITLE}" class="button primary" value="{$LBL_SEARCH_BUTTON_LABEL}">&nbsp;

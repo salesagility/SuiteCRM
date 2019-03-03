@@ -99,7 +99,7 @@ class TemplateRadioEnum extends TemplateEnum
         $help = (!empty($this->help))?"title='". translate($this->help, $this->bean->module_dir) . "'": '';
         foreach ($keyvalues as $key=>$displayText) {
             $selected = ($value == $key)?'checked': '';
-            $radiooptions .= "<input type='radio' id='{$this->name}{$key}' name='$this->name'  $help value='$key' $selected><span onclick='document.getElementById(\"{$this->name}{$key}\").checked = true' style='cursor:default' onmousedown='return false;'>$displayText</span><br>\n";
+            $radiooptions .= ").checked = true' style='cursor:default;' onmousedown='return false;'>$displayText</span><br>\n";
         }
         return $radiooptions;
     }

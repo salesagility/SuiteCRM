@@ -78,7 +78,7 @@
 		    	<input name="reminder_checked" type="hidden" value="0">
 		    	<input name="reminder_checked" id="reminder_checked" onclick="toggleReminder(this,'reminder');" type="checkbox" class="checkbox" value="1" {$REMINDER_CHECKED}>
 		    	<div style="display: inline-block; width: 111px;">{$MOD.LBL_REMINDER_POPUP}</div>
-		    	<div id="reminder_list" style="display: {$REMINDER_TIME_DISPLAY}">
+		    	<div id="reminder_list" style="display:{$REMINDER_TIME_DISPLAY}; ">
 		    		<select tabindex="{$REMINDER_TABINDEX}" name="reminder_time">
 					{html_options options=$REMINDER_TIME_OPTIONS selected=$REMINDER_TIME}
 				</select>
@@ -89,7 +89,7 @@
 		   	<input name="email_reminder_checked" type="hidden" value="0">
 		    	<input name="email_reminder_checked" id="email_reminder_checked" onclick="toggleReminder(this,'email_reminder');" type="checkbox" class="checkbox" value="1" {$EMAIL_REMINDER_CHECKED}>
 		    	<div style="display: inline-block; width: 111px;">{$MOD.LBL_REMINDER_EMAIL_ALL_INVITEES}</div>
-		    	<div id="email_reminder_list" style="display: {$EMAIL_REMINDER_TIME_DISPLAY}">
+		    	<div id="email_reminder_list" style="display:{$EMAIL_REMINDER_TIME_DISPLAY}; ">
 		    		<select tabindex="{$REMINDER_TABINDEX}" name="email_reminder_time">
 					{html_options options=$EMAIL_REMINDER_TIME_OPTIONS selected=$EMAIL_REMINDER_TIME}
 				</select>

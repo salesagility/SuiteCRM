@@ -51,10 +51,10 @@ class ViewMetadata extends SugarView
     
     public function displayCheckBoxes($name, $values, $selected =array(), $attr='')
     {
-        echo "<div $attr style='overflow:auto;float:left;width:200px;height:200px' >";
+        echo "<div $attr style='overflow:auto;float:left;width:200px;height:200px;' >";
         foreach ($values as $value) {
             $checked = in_array($value, $selected)? " checked=checked ": " ";
-            echo "<div style='padding:2px'><input type='checkbox' name='$name' value='$value' $checked> $value</div>";
+            echo "<div style='padding:2px;'><input type='checkbox' name='$name' value='$value' $checked> $value</div>";
         }
         echo "</div>";
     }
@@ -73,10 +73,10 @@ class ViewMetadata extends SugarView
     
     public function displayTextBoxes($values, $attr='')
     {
-        echo "<div $attr style='overflow:auto;float:left;width:400px;height:200px' >";
+        echo "<div $attr style='overflow:auto;float:left;width:400px;height:200px;' >";
         foreach ($values as $value) {
             $postvalue = !empty($_POST[$value])? $_POST[$value]: '';
-            echo "<div style='padding:2px;width:150px;float:left'>$value</div>  <input type='text' name='$value' value='$postvalue'> ";
+            echo "<div style='padding:2px;width:150px;float:left;'>$value</div>  <input type='text' name='$value' value='$postvalue'> ";
         }
         echo "</div>";
     }
@@ -132,7 +132,7 @@ class ViewMetadata extends SugarView
  		</script>
  		
 EOQ;
-        echo "<div width='100%'></div><div><div style='float:left'>";
+        echo "<div width='100%'></div><div><div style='float:left;'>";
         switch ($do) {
             case 'Modules':
                 $this->printValue(VardefBrowser::findVardefs($modules));
@@ -153,9 +153,9 @@ EOQ;
             default:
                 echo <<<EOQ
  				<div style='border:1px solid;width:100%;text-align:center;-moz-border-radius: 5px;border-radius: 5px;'>
- 					<h2 style='text-decoration: line-through'>All you ever wanted to know about Vardefs in 30 minutes</h2>
- 					<h2 style='text-decoration: line-through'>All you ever wanted to know about Vardef Fields and Relationships in 30 minutes</h1>
- 					<h2 style='text-decoration: line-through'>All you ever wanted to know about Vardef Fields in 30 minutes</h2>
+ 					<h2 style='text-decoration: line-through;'>All you ever wanted to know about Vardefs in 30 minutes</h2>
+ 					<h2 style='text-decoration: line-through;'>All you ever wanted to know about Vardef Fields and Relationships in 30 minutes</h1>
+ 					<h2 style='text-decoration: line-through;'>All you ever wanted to know about Vardef Fields in 30 minutes</h2>
  					<h2 >Something about Vardefs in 30 minutes</h2>
  				</div>
  				
@@ -240,7 +240,7 @@ EOQ;
                     
             
         }
-        echo "</div><div style='float:right'>Help Text</div></div>";
+        echo "</div><div style='float:right;'>Help Text</div></div>";
         
         
         //$this->printValue(VardefBrowser::findFieldsWithAttributes(array('type'=>'id'), $modules));

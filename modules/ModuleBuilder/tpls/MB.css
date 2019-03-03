@@ -42,11 +42,11 @@ button, .button {
 }
 
 .mbTable {
-    width: 100%
+    width: 100%;
 }
 
 .mbTd {
-    vertical-align: top
+    vertical-align: top;
 }
 
 .mbLBL {
@@ -84,21 +84,21 @@ button, .button {
 }
 
 .wizardButton TD:hover {
-    cursor: pointer
+    cursor: pointer;
 }
 
 .wizardButtonDown TD {
-    cursor: pointer
+    cursor: pointer;
 }
 
 a.studiolink {
     font-weight: normal;
     text-decoration: none;
-    text-align: center
+    text-align: center;
 }
 
 div.bodywrapper {
-    padding: 4px 4px 4px 4px
+    padding: 4px 4px 4px 4px;
 }
 
 img.left_icon {

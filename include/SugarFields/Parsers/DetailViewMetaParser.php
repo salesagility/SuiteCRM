@@ -92,7 +92,8 @@ class DetailViewMetaParser extends MetaParser
         if ($moduleDir == 'Notes') {
             $contents = str_replace('{PAGINATION}<tr><td>', '{PAGINATION}', $contents);
             $contents = str_replace('</td></tr></table><script>', '</table><script>', $contents);
-            $contents = str_replace("<tr><div id='portal_flag_row' name='portal_flag_row' style='display:none'>", "<div id='portal_flag_row' name='portal_flag_row' style='display:none'>", $contents);
+            $contents = str_replace("<tr><div id='portal_flag_row' name='portal_flag_row' style='display:none;'>",
+                "<div id='portal_flag_row' name='portal_flag_row' style='display:none;'>", $contents);
         }
 
         $contents = $this->fixDuplicateTrTags($contents);

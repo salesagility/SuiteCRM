@@ -96,7 +96,7 @@
 				<i class="icon-arrow-right icon-lg" style="float: right; position: relative; right: -72px; top: -26px;"></i>
 			</p>
 			</div>
-			<div style="float: left">
+			<div style="float: left;">
 				<img src="include/images/tour/profile_link.png" width="168" height="247">
 			</div>
 		</div>

@@ -20,7 +20,7 @@
                     </div>
 
                     <!--subpanel-body -->
-                    <div cookie_name="{$subpanel_tabs_properties.$i.cookie_name}" id="subpanel_{$subpanel_tab}" style="display:{$subpanel_tabs_properties.$i.div_display}">
+                    <div cookie_name="{$subpanel_tabs_properties.$i.cookie_name}" id="subpanel_{$subpanel_tab}" style="display:{$subpanel_tabs_properties.$i.div_display};">
 
                         <script>document.getElementById("subpanel_{$subpanel_tab}" ).cookie_name="{$subpanel_tabs_properties.$i.cookie_name}";</script>
 

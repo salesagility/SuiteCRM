@@ -348,7 +348,7 @@ var AjaxObject = {
         } else {
 
             var dialogBody =
-                "<div style='padding: 10px'>" +
+                "<div style='padding: 10px;'>" +
                     "<div class='well'>" + responseObject.errorMessage + "</div>" +
                     "<div >" +
                        "<button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#fullSmtpLog' aria-expanded='false' aria-controls='fullSmtpLog'>" +
@@ -446,7 +446,7 @@ var AjaxObject = {
       "<div id='email_attachment_bucket" + idx + index + "'>" +
       // remove button
       "<img src='index.php?entryPoint=getImage&themeName=" + SUGAR.themes.theme_name + "&imageName=minus.gif' " +
-      "style='cursor:pointer' align='absmiddle' onclick='SUGAR.email2.composeLayout.deleteUploadAttachment(\"" +
+      "style='cursor:pointer;' align='absmiddle' onclick='SUGAR.email2.composeLayout.deleteUploadAttachment(\"" +
       idx + index + "\",\"" + ret.guid + ret.name + "\");'/>" +
       // file icon
       "<img src='index.php?entryPoint=getImage&themeName=" + SUGAR.themes.theme_name + "&imageName=attachment.gif' " +

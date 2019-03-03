@@ -127,7 +127,7 @@
 </div>
 <div class=""
       id="create{{$module}}"
-       {if !$def.required || !empty($def.select)}style="display:none"{/if}>
+       {if !$def.required || !empty($def.select)}style="display:none;"{/if}>
     {{assign var='rowCount' value=0}}
     {{foreach name=rowIteration from=$panel key=row item=rowData}}
     {{assign var='columnsInRow' value=$rowData|@count}}

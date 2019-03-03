@@ -55,7 +55,7 @@
 
 	</tr>
 </table>
-<div id="table" style="visibility:visible">
+<div id="table" style="visibility:visible;">
 <table id="maintable" width="430" border="0" cellspacing="0" cellpadding="0" class="edit view">
 <tr>
 	<td scope="row"><span>{$MOD.LBL_DIAGNOSTIC_CONFIGPHP}</span></td>

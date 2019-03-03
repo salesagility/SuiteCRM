@@ -188,7 +188,7 @@ class ViewPopup extends SugarView
             $massUpdateData = '';
             if (isset($_REQUEST['mass'])) {
                 foreach (array_unique($_REQUEST['mass']) as $record) {
-                    $massUpdateData .= "<input style='display: none' checked type='checkbox' name='mass[]' value='$record'>\n";
+                    $massUpdateData .= "<input style='display: none;' checked type='checkbox' name='mass[]' value='$record'>\n";
                 }
             }
             $popup->massUpdateData = $massUpdateData;

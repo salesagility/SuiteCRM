@@ -127,7 +127,7 @@ function disableReturnSubmission(e) {
                 </td>
                 <td  width='35%'>
                     <div id="container_upload"></div>
-                    <input type='text' id='company_logo' name='company_logo' style="display:none" />
+                    <input type='text' id='company_logo' name='company_logo' style="display:none;" />
                 </td>
             </tr>
             <tr>
@@ -423,7 +423,7 @@ addToValidate('ConfigureSettings', 'system_name', 'varchar', true,'System Name' 
 </script>
 </form>
 
-<div id='upload_panel' style="display:none">
+<div id='upload_panel' style="display:none;">
     <form id="upload_form" name="upload_form" method="POST" action='index.php' enctype="multipart/form-data">
         <input type="file" id="my_file_company" name="file_1" size="20" onchange="uploadCheck(false)"/>
         {sugar_getimage name="sqsWait" ext=".gif" alt=$mod_strings.LBL_LOADING other_attributes='id="loading_img_company" style="display:none" '}

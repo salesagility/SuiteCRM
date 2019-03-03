@@ -282,9 +282,8 @@ function commitAjaxPostInstall($persistence)
     }
 
     logThis('Starting post_install()...');
-    $postInstallResults = "<b>{$mod_strings['LBL_UW_COMMIT_POSTINSTALL_RESULTS']}</b><br />
-							<a href='javascript:toggleNwFiles(\"postInstallResults\");'>{$mod_strings['LBL_UW_SHOW']}</a><br />
-							<div id='postInstallResults' style='display:none'>";
+    $postInstallResults = ");'>{$mod_strings['LBL_UW_SHOW']}</a><br />
+							<div id='postInstallResults' style='display:none;'>";
     $file = $persistence['unzip_dir']. "/" . constant('SUGARCRM_POST_INSTALL_FILE');
     if (is_file($file)) {
         include($file);
@@ -470,7 +469,7 @@ function preflightCheckJsonGetDiff($persistence)
     if (count($persistence['manual']) > 0) {
         $preserveFiles = array();
 
-        $diffs =<<<eoq
+        $diffs = <<<eoq
 			<script type="text/javascript" language="Javascript">
 				function preflightToggleAll(cb) {
 					var checkAll = false;
@@ -510,7 +509,7 @@ function preflightCheckJsonGetDiff($persistence)
 
 			<form name='diffs' id='diffs'>
 			<p><a href='javascript:void(0); toggleNwFiles("diffsHide");'>{$mod_strings['LBL_UW_SHOW_DIFFS']}</a></p>
-			<div id='diffsHide' style='display:none'>
+			<div id='diffsHide' style='display:none;'>
 				<table cellpadding='0' cellspacing='0' border='0'>
 					<tr>
 						<td valign='top' colspan='2'>
@@ -694,7 +693,7 @@ function preflightCheckJsonGetSchemaErrors($persistence)
 
     if (isset($persistence['sql_errors']) && count($persistence['sql_errors'] > 0)) {
         $out = "<b class='error'>{$mod_strings['ERR_UW_PREFLIGHT_ERRORS']}:</b> ";
-        $out .= "<a href='javascript:void(0);toggleNwFiles(\"sqlErrors\");'>{$mod_strings['LBL_UW_SHOW_SQL_ERRORS']}</a><div id='sqlErrors' style='display:none'>";
+        $out .= ");'>{$mod_strings['LBL_UW_SHOW_SQL_ERRORS']}</a><div id='sqlErrors' style='display:none;'>";
         foreach ($persistence['sql_errors'] as $sqlError) {
             $out .= "<br><span class='error'>{$sqlError}</span>";
         }

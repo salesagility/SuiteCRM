@@ -75,7 +75,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            <button style=" display: block;margin-left: auto;margin-right: auto" onclick="document.getElementById('popupDivBack_ara').style.display='none';document.getElementById('popupDiv_ara').style.display='none';return false;">
+            <button style=" display: block;margin-left: auto;margin-right: auto;" onclick="document.getElementById('popupDivBack_ara').style.display='none';document.getElementById('popupDiv_ara').style.display='none';return false;">
                 Cancel
             </button>
         </td>

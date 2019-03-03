@@ -55,7 +55,7 @@
 <input class='button' name = 'renameModBtn' id = "renameModBtn" type='button' value='{$mod_strings.LBL_BTN_RENAME_MODULE}'
        onclick='document.location.href = "index.php?action=wizard&module=Studio&wizard=StudioWizard&option=RenameTabs"'>
 {/if}
-<div style="float: right">
+<div style="float: right;">
             {html_options name='labels' options=$labels_choice selected=$labels_current onchange='this.form.action.value="EditLabels";ModuleBuilder.handleSave("editlabels")'}
             </div>
 <hr >
@@ -63,7 +63,7 @@
 
 <table class='mbLBL'>
     <tr>
-        <td align="right" style="padding: 0 1em 0 0">
+        <td align="right" style="padding: 0 1em 0 0;">
             {$mod_strings.LBL_LANGUAGE}
         </td>
         <td align='left'>
@@ -72,7 +72,7 @@
 	</tr>
     {foreach from=$MOD_LABELS item='label' key='key'}
     <tr>
-        <td align="right" style="padding: 0 1em 0 0">{$key}:</td>
+        <td align="right" style="padding: 0 1em 0 0;">{$key}:</td>
         <td><input type='hidden' name='label_{$key}' id='label_{$key}' value='no_change'><input id='input_{$key}' onchange='document.getElementById("label_{$key}").value = this.value; ModuleBuilder.state.isDirty=true;' value='{$label}' size='60'></td>
     </tr>
     {/foreach}

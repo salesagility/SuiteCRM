@@ -39,7 +39,7 @@
  */
 
 *}
-<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000"></div>
+<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 {literal}
 <script>
 addForm('popup_form');

@@ -110,17 +110,17 @@ EOQ;
         $add_icon = SugarThemeRegistry::current()->getImage("plus_inline", 'style="margin-left:4px;margin-right:4px;" border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_MAXIMIZE']);
         $min_icon = SugarThemeRegistry::current()->getImage("minus_inline", 'style="margin-left:4px;margin-right:4px;"  border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_MINIMIZE']);
         $del_icon = SugarThemeRegistry::current()->getImage("delete_inline", 'style="margin-left:4px;margin-right:4px;" border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_MINIMIZE']);
-        $html .=<<<EOQ
+        $html .= <<<EOQ
 		              <br><br><table  cellpadding="0" cellspacing="0" border="1" width="100%"   id='s_field_delete'>
 							<tr><td colspan='2' align='center'>
 					       $del_icon <br>Drag Fields Here To Delete
 						</td></tr></table>
-					<div id="s_fields_MSIlink" style="display:none">
+					<div id="s_fields_MSIlink" style="display:none;">
 						<a href="#" onclick="toggleDisplay('s_fields_MSI');">
 							 $add_icon {$mod_strings['LBL_VIEW_SUITE_FIELDS']}
 						</a>
 					</div>
-					<div id="s_fields_MSI" style="display:inline">
+					<div id="s_fields_MSI" style="display:inline;">
 
 						<table  cellpadding="0" cellspacing="0" border="0" width="100%" id="studio_fields">
 							<tr><td colspan='2'>

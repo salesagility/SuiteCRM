@@ -48,7 +48,7 @@
 
 {if !empty($values.secondaries)}
     <a href="javascript:collection['{$vardef.name}'].js_more_detail('{$values.primary.id}')" id='more_{$values.primary.id}' class="utilsLink">{sugar_getimage name="advanced_search" ext=".gif" width="8" height="8" alt=$app_strings.LBL_HIDE_SHOW other_attributes='border="0" id="more_img_{$values.primary.id}" '}</a>
-    <div id='more_div_{$values.primary.id}' style="display:none">
+    <div id='more_div_{$values.primary.id}' style="display:none;">
     {foreach item=secondary_field from=$values.secondaries}
         <br><a href="index.php?module={$module}&action=DetailView&record={$secondary_field.id}">
         {$secondary_field.name}

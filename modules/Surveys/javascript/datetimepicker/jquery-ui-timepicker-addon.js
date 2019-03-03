@@ -405,7 +405,7 @@
 								'<dd class="ui_tpicker_' + litem + (show ? '' : noDisplay) + '"><div class="ui_tpicker_' + litem + '_slider' + (show ? '' : noDisplay) + '"></div>';
 
 					if (show && o[litem + 'Grid'] > 0) {
-						html += '<div style="padding-left: 1px"><table class="ui-tpicker-grid-label"><tr>';
+						html += '<div style="padding-left: 1px;"><table class="ui-tpicker-grid-label"><tr>';
 
 						if (litem === 'hour') {
 							for (var h = o[litem + 'Min']; h <= max[litem]; h += parseInt(o[litem + 'Grid'], 10)) {

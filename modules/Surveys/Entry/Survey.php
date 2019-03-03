@@ -285,20 +285,20 @@ function displayMatrixField($survey, $question, $options)
     $matrixOptions = $survey->getMatrixOptions();
     echo "<table width='75%'>";
     echo "<tr>";
-    echo "<th style='width:25%'></th>";
+    echo "<th style='width:25%;'></th>";
     foreach ($matrixOptions as $matrixOption) {
-        echo "<th style='width:25%'>";
+        echo "<th style='width:25%;'>";
         echo $matrixOption;
         echo "</th>";
     }
 
     foreach ($options as $option) {
         echo "<tr>";
-        echo "<td style='width:25%'>";
+        echo "<td style='width:25%;'>";
         echo $option['name'];
         echo "</td>";
         foreach ($matrixOptions as $x => $matrixOption) {
-            echo "<td style='width:25%'><input  id='question" .
+            echo "<td style='width:25%;'><input  id='question" .
                  $question->id .
                  "' name='question[" .
                  $question->id .

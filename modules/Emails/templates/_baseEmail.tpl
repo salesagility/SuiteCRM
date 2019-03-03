@@ -119,7 +119,7 @@
 
     <!-- Hidden Content -->
     <div class="yui-hidden">
-        <div id="searchTab" style="padding:5px">
+        <div id="searchTab" style="padding:5px;">
             {include file="modules/Emails/templates/advancedSearch.tpl"}
         </div>
         <div id="settings">

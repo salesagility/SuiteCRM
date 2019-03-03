@@ -47,7 +47,7 @@ $mpdf->percentSubset = 0;
 
 // This generates a .mtx.php file if not already generated
 $mpdf->WriteHTML('<style>td { border: 0.1mm solid #555555; } body { font-weight: normal; }</style>');
-$mpdf->WriteHTML('<h3 style="font-family:'.$font.'">'.strtoupper($font).'</h3>');	// Separate Paragraphs  defined by font
+$mpdf->WriteHTML('<h3 style="font-family:'.$font. ';">' .strtoupper($font).'</h3>');	// Separate Paragraphs  defined by font
 $html = '';
 //==============================================================
 //==============================================================
@@ -102,8 +102,8 @@ $justfinishedblankinvalid = false;
 	  $lastrange  = $range ;
     // create HTML content
     $html .= '<table cellpadding="2" cellspacing="0" style="font-family:'.$font.';text-align:center; border-collapse: collapse; ">';
-    $html .= '<tr><td colspan="18" style="font-family:helvetica;font-weight:bold">'.strtoupper($font).'</td></tr>';
-    $html .= '<tr><td colspan="18" style="font-family:helvetica;font-size:8pt;font-weight:bold">'.strtoupper($range).' (U+'.$rangestart .'-U+'.$rangeend.')</td></tr>';
+    $html .= '<tr><td colspan="18" style="font-family:helvetica;font-weight:bold;">' .strtoupper($font).'</td></tr>';
+    $html .= '<tr><td colspan="18" style="font-family:helvetica;font-size:8pt;font-weight:bold;">' .strtoupper($range).' (U+'.$rangestart .'-U+'.$rangeend.')</td></tr>';
     $html .= '<tr><td></td>';
 
     $html .= '<td></td>';
@@ -155,7 +155,7 @@ $justfinishedblankinvalid = false;
 				$html .= '</tr></table><br />';
 				$mpdf->WriteHTML($html); $html = '';
 				$html .= '<table cellpadding="2" cellspacing="0" style="font-family:'.$font.';text-align:center; border-collapse: collapse; ">';
-    				$html .= '<tr><td colspan="18" style="font-family:helvetica;font-size:8pt;font-weight:bold">'.strtoupper($range).' (U+'.$rangestart.'-U+'.$rangeend.')</td></tr>';
+    				$html .= '<tr><td colspan="18" style="font-family:helvetica;font-size:8pt;font-weight:bold;">' .strtoupper($range).' (U+'.$rangestart.'-U+'.$rangeend.')</td></tr>';
 				$html .= '<tr><td></td>';
     				$html .= '<td></td>';
 				for ($k = 0; $k < 16; $k++) {
@@ -184,7 +184,7 @@ $justfinishedblankinvalid = false;
 			$html .= '</tr></table><br />';
 			$mpdf->WriteHTML($html); $html = '';
 			$html .= '<table cellpadding="2" cellspacing="0" style="font-family:'.$font.';text-align:center; border-collapse: collapse; ">';
-    			$html .= '<tr><td colspan="18" style="font-family:helvetica;font-size:8pt;font-weight:bold">'.strtoupper($range).' (U+'.$rangestart.'-U+'.$rangeend.')</td></tr>';
+    			$html .= '<tr><td colspan="18" style="font-family:helvetica;font-size:8pt;font-weight:bold;">' .strtoupper($range).' (U+'.$rangestart.'-U+'.$rangeend.')</td></tr>';
 			$html .= '<tr><td></td>';
     			$html .= '<td></td>';
 			for ($k = 0; $k < 16; $k++) {

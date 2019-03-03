@@ -288,7 +288,7 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
     require_once('modules/Notes/NoteFormBase.php');
     $noteForm = new NoteFormBase();
     $postform = "<h5 class='dataLabel'><input class='checkbox' type='checkbox' name='newcontactnote' onclick='toggleDisplay(\"contactnote\");'> ${mod_strings['LNK_NEW_NOTE']}</h5>";
-    $postform .= '<div id="contactnote" style="display:none">'.$noteForm->getFormBody('ContactNotes', 'Notes', 'BusinessCard', 85).'</div>';
+    $postform .= '<div id="contactnote" style="display:none;">' .$noteForm->getFormBody('ContactNotes', 'Notes', 'BusinessCard', 85).'</div>';
 
     $xtpl->assign('POSTFORM', $postform);
     $xtpl->parse("main.form");
@@ -320,16 +320,16 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
 				   </script>';
 
     $selectAccountButton = $quicksearch_js;
-    $selectAccountButton .= "<div id='newaccountdivlink' style='display:inline' class='dataLabel'>{$mod_strings['LNK_SELECT_ACCOUNT']}:&nbsp;<input class='sqsEnabled' name='display_account_name' id='display_account_name' type=\"text\" value=\"\"><input name='selectedAccount' id='selectedAccount' type=\"hidden\" value=''>&nbsp;<input type='button' title=\"{$app_strings['LBL_SELECT_BUTTON_TITLE']}\"  type=\"button\"  class=\"button\" value='{$app_strings['LBL_SELECT_BUTTON_LABEL']}' name=btn1 LANGUAGE=javascript onclick='open_popup(\"Accounts\", 600, 400, \"\", true, false, $encoded_contact_popup_request_data);'/> <input type='button' title=\"{$app_strings['LBL_CLEAR_BUTTON_TITLE']}\" accessKey=\"{$app_strings['LBL_CLEAR_BUTTON_KEY']}\" type=\"button\"  class=\"button\" value='{$app_strings['LBL_CLEAR_BUTTON_LABEL']}' name=btn1 LANGUAGE=javascript onclick='document.forms[\"BusinessCard\"].selectedAccount.value=\"\";document.forms[\"BusinessCard\"].display_account_name.value=\"\"; '><br><b>{$app_strings['LBL_OR']}</b></div><br><br>";
+    $selectAccountButton .= "; '><br><b>{$app_strings['LBL_OR']}</b></div><br><br>";
     $xtpl->assign('FORMHEADER', get_form_header($mod_strings['LNK_NEW_ACCOUNT'], '', ''));
     require_once('modules/Accounts/AccountFormBase.php');
     $accountForm = new AccountFormBase();
     $xtpl->assign('CLASS', 'evenListRow');
-    $xtpl->assign('FORMBODY', $selectAccountButton."<slot class='dataLabel'><input class='checkbox' type='checkbox' name='newaccount' onclick='document.forms[\"BusinessCard\"].selectedAccount.value=\"\";document.forms[\"BusinessCard\"].display_account_name.value=\"\";toggleDisplay(\"newaccountdiv\");'>&nbsp;".$mod_strings['LNK_NEW_ACCOUNT']."</span>&nbsp;<div id='newaccountdiv' style='display:none'>".$accountForm->getWideFormBody('Accounts', 'Accounts', 'BusinessCard', ''));
+    $xtpl->assign('FORMBODY', $selectAccountButton."<slot class='dataLabel'><input class='checkbox' type='checkbox' name='newaccount' onclick='document.forms[\"BusinessCard\"].selectedAccount.value=\"\";document.forms[\"BusinessCard\"].display_account_name.value=\"\";toggleDisplay(\"newaccountdiv\");'>&nbsp;".$mod_strings['LNK_NEW_ACCOUNT']. "</span>&nbsp;<div id='newaccountdiv' style='display:none;'>" .$accountForm->getWideFormBody('Accounts', 'Accounts', 'BusinessCard', ''));
     require_once('modules/Notes/NoteFormBase.php');
     $noteForm = new NoteFormBase();
     $postform = "<div id='accountnotelink'><p><a href='javascript:toggleDisplay(\"accountnote\");'>${mod_strings['LNK_NEW_NOTE']}</a></p></div>";
-    $postform .= '<div id="accountnote" style="display:none">'.$noteForm->getFormBody('AccountNotes', 'Notes', 'BusinessCard', 85).'</div>';
+    $postform .= '<div id="accountnote" style="display:none;">' .$noteForm->getFormBody('AccountNotes', 'Notes', 'BusinessCard', 85).'</div>';
     $xtpl->assign('POSTFORM', $postform);
     $xtpl->parse("main.headlessform");
 
@@ -338,11 +338,11 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
     require_once('modules/Opportunities/OpportunityFormBase.php');
     $oppForm = new OpportunityFormBase();
     $xtpl->assign('CLASS', 'evenListRow');
-    $xtpl->assign('FORMBODY', "<slot class='dataLabel'><input class='checkbox' type='checkbox' name='newopportunity' onclick='toggleDisplay(\"newoppdiv\");'>&nbsp;".$mod_strings['LNK_NEW_OPPORTUNITY']."</span><div id='newoppdiv' style='display:none'>".$oppForm->getWideFormBody('Opportunities', 'Opportunities', 'BusinessCard', '', false));
+    $xtpl->assign('FORMBODY', "<slot class='dataLabel'><input class='checkbox' type='checkbox' name='newopportunity' onclick='toggleDisplay(\"newoppdiv\");'>&nbsp;".$mod_strings['LNK_NEW_OPPORTUNITY']. "</span><div id='newoppdiv' style='display:none;'>" .$oppForm->getWideFormBody('Opportunities', 'Opportunities', 'BusinessCard', '', false));
     require_once('modules/Notes/NoteFormBase.php');
     $noteForm = new NoteFormBase();
     $postform = "<div id='oppnotelink'><a href='javascript:toggleDisplay(\"oppnote\");'>${mod_strings['LNK_NEW_NOTE']}</a></div>";
-    $postform .= '<div id="oppnote" style="display:none">'.$noteForm->getFormBody('OpportunityNotes', 'Notes', 'BusinessCard', 85).'</div><br>';
+    $postform .= '<div id="oppnote" style="display:none;">' .$noteForm->getFormBody('OpportunityNotes', 'Notes', 'BusinessCard', 85).'</div><br>';
     $xtpl->assign('POSTFORM', $postform);
     $xtpl->parse("main.headlessform");
 
@@ -350,7 +350,7 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
     $xtpl->assign('FORMHEADER', $mod_strings['LNK_NEW_APPOINTMENT']);
     require_once('modules/Calls/CallFormBase.php');
     $callForm = new CallFormBase();
-    $xtpl->assign('FORMBODY', "<input class='checkbox' type='checkbox' name='newappointment' onclick='toggleDisplay(\"newappointmentdiv\");'>&nbsp;".$mod_strings['LNK_NEW_APPOINTMENT']."<div id='newappointmentdiv' style='display:none'>".$callForm->getWideFormBody('Appointments', 'Calls', 85));
+    $xtpl->assign('FORMBODY', "<input class='checkbox' type='checkbox' name='newappointment' onclick='toggleDisplay(\"newappointmentdiv\");'>&nbsp;".$mod_strings['LNK_NEW_APPOINTMENT']. "<div id='newappointmentdiv' style='display:none;'>" .$callForm->getWideFormBody('Appointments', 'Calls', 85));
     $xtpl->assign('POSTFORM', '');
     $xtpl->parse("main.headlessform");
     $xtpl->parse("main.saveend");

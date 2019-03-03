@@ -387,7 +387,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
      */
     public function applyColour($stringToHighlight, $colour)
     {
-        return '<b style="color:black;background-color:' . $colour . '">' . $stringToHighlight . '</b>';
+        return '<b style="color:black;background-color:' . $colour . ';">' . $stringToHighlight . '</b>';
     }
 
     /**

@@ -1,4 +1,4 @@
-<table style="width: 25%" class="table table-bordered">
+<table style="width: 25%;" class="table table-bordered">
     <tr>
         <th>{$mod.LBL_RESPONSE_ANSWER}</th>
         <th>{$mod.LBL_RESPONSE_COUNT}</th>

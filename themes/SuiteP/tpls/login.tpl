@@ -66,10 +66,10 @@
         <form class="form-signin" role="form" action="index.php" method="post" name="DetailView" id="form"
               onsubmit="return document.getElementById('cant_login').value == ''" autocomplete="off">
             <div class="companylogo">{$LOGIN_IMAGE}</div>
-        <span class="error" id="browser_warning" style="display:none">
+        <span class="error" id="browser_warning" style="display:none;">
             {sugar_translate label="WARN_BROWSER_VERSION_WARNING"}
         </span>
-		<span class="error" id="ie_compatibility_mode_warning" style="display:none">
+		<span class="error" id="ie_compatibility_mode_warning" style="display:none;">
 		{sugar_translate label="WARN_BROWSER_IE_COMPATIBILITY_MODE_WARNING"}
 		</span>
             {if $LOGIN_ERROR !=''}
@@ -117,7 +117,7 @@
         </form>
         
         <form class="form-signin passform" role="form" action="index.php" method="post" name="DetailView" id="form" name="fp_form" id="fp_form" autocomplete="off">
-            <div id="forgot_password_dialog" style="display:none">
+            <div id="forgot_password_dialog" style="display:none;">
                 <input type="hidden" name="entryPoint" value="GeneratePassword">
                 <div id="generate_success" class='error' style="display:inline;"></div>
                 <br>
@@ -136,7 +136,7 @@
                 <br>
                 {$CAPTCHA}
                 <div id='wait_pwd_generation'></div>
-                <input title="Email Temp Password" class="button  btn-block" type="button" style="display:inline"
+                <input title="Email Temp Password" class="button  btn-block" type="button" style="display:inline;"
                        onclick="validateAndSubmit(); return document.getElementById('cant_login').value == ''"
                        id="generate_pwd_button" name="fp_login"
                        value="{sugar_translate module="Users" label="LBL_LOGIN_SUBMIT"}" autocomplete="off">

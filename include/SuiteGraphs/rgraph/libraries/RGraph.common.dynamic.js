@@ -7,7 +7,7 @@
     * |                                                                                |
     * | RGraph is dual licensed under the Open Source GPL (General Public License)     |
     * | v2.0 license and a commercial license which means that you're not bound by     |
-    * | the terms of the GPL. The commercial license is just £99 (GBP) and you can     |
+    * | the terms of the GPL. The commercial license is just ï¿½99 (GBP) and you can     |
     * | read about it here:                                                            |
     * |                      http://www.rgraph.net/license                             |
     * o--------------------------------------------------------------------------------o
@@ -1088,7 +1088,7 @@
                     div.style.top  = canvasXY[1] + gutterTop + 3 + 'px';
                 }
 
-                div.innerHTML = '<span style="color: #666">' + prop['chart.crosshairs.coords.labels.x'] + ':</span> ' + xCoord + '<br><span style="color: #666">' + prop['chart.crosshairs.coords.labels.y'] + ':</span> ' + yCoord;
+                div.innerHTML = '<span style="color: #666;">' + prop['chart.crosshairs.coords.labels.x'] + ':</span> ' + xCoord + '<br><span style="color: #666;">' + prop['chart.crosshairs.coords.labels.y'] + ':</span> ' + yCoord;
 
                 obj.canvas.addEventListener('mouseout', RGraph.HideCrosshairCoords, false);
 

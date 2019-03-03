@@ -126,7 +126,7 @@ sqs_objects['{{$form_name}}_{$selectFields.{{$module}}}'] = {ldelim}
 {{/if}}
 </td></tr></table>
 </h4>
-<table width="100%" border="0" cellspacing="1" cellpadding="0"  class="{$def.templateMeta.panelClass|default:'edit view'}" id ="create{{$module}}" {if !$def.required || !empty($def.select)}style="display:none"{/if}>
+<table width="100%" border="0" cellspacing="1" cellpadding="0"  class="{$def.templateMeta.panelClass|default:'edit view'}" id ="create{{$module}}" {if !$def.required || !empty($def.select)}style="display:none;"{/if}>
 {{assign var='rowCount' value=0}}
 {{foreach name=rowIteration from=$panel key=row item=rowData}}
     <tr>

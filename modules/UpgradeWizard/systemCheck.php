@@ -238,7 +238,7 @@ $_SESSION['step'][$steps['files'][$_REQUEST['step']]] = ($stop) ? 'failed' : 'su
 ///////////////////////////////////////////////////////////////////////////////
 ////	OUTPUT
 
-$uwMain =<<<eoq
+$uwMain = <<<eoq
 <style>
 .stop {
 	color: #cc0000;
@@ -284,7 +284,7 @@ $uwMain =<<<eoq
 		</td>
 	</tr>
 </table>
-<div id="upgradeDiv" style="display:none">
+<div id="upgradeDiv" style="display:none;">
     <table border="0" cellspacing="0" cellpadding="0">
         <tr><td>
            <p><!--not_in_theme!--><img src='modules/UpgradeWizard/processing.gif' alt='Processing'> <br></p>

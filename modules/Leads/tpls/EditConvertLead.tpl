@@ -56,7 +56,7 @@
 {/if}
 <input type='button' name='saveLayout' value='{sugar_translate label="LBL_BTN_SAVE" module="ModuleBuilder"}'
     class='button' onclick='ModuleBuilder.saveConvertLeadLayout();' style="margin-bottom:5px;">
-<img class="spacer" src="include/images/blank.gif" style="width:50px;height:5px"/>
+<img class="spacer" src="include/images/blank.gif" style="width:50px;height:5px;"/>
 {html_options name="convertSelectNewModule" id="convertSelectNewModule" options=$availibleModules}
 <input type='button' name='addModule' value='{sugar_translate label="LBL_CONVERT_ADD_MODULE"}'
     class='button' onclick='ModuleBuilder.addConvertLeadLayout();' style="margin-bottom:5px;">

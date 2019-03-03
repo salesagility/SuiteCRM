@@ -48,7 +48,7 @@
 <style>
 
 .link {
-    text-decoration:underline
+    text-decoration:underline;
 }
 </style>
 {/literal}

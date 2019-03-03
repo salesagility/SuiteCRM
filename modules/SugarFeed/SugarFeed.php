@@ -429,7 +429,7 @@ class SugarFeed extends Basic
         }
 
         $data['NAME'] .= $dataDescription;
-        $data['NAME'] =  '<div style="padding:3px">' . html_entity_decode($data['NAME']);
+        $data['NAME'] =  '<div style="padding:3px;">' . html_entity_decode($data['NAME']);
         if (!empty($data['LINK_URL'])) {
             $linkClass = SugarFeed::getLinkClass($data['LINK_TYPE']);
             if ($linkClass !== false) {

@@ -77,9 +77,12 @@
 <div style="float:left; left:-100px; display: hidden;">&nbsp;
 	{literal}
 	<style type='text/css'>
-		.wizard { padding: 5px; text-align:center; font-weight:bold}
-		.title{ color:#990033; font-weight:bold; padding: 0 5px 0 0; font-size: 20pt}
-		.backButton {position:absolute; left:10px; top:35px}
+		.wizard { padding: 5px; text-align:center; font-weight:bold;
+        }
+		.title{ color:#990033; font-weight:bold; padding: 0 5px 0 0; font-size: 20pt;
+        }
+		.backButton {position:absolute; left:10px; top:35px;
+        }
 	</style>
     {/literal}
 

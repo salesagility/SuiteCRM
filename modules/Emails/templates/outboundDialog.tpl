@@ -131,7 +131,7 @@
                                 <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtppass_label">{sugar_translate module='Emails' label='LBL_MAIL_SMTPPASS'}</span> <span class="required">{$app_strings.LBL_REQUIRED_SYMBOL}</span></td>
                                 <td width="30%" ><slot>
                                 <input type="password" id="mail_smtppass" name="mail_smtppass" size="25" maxlength="255" abindex='1'>
-                                <a href="javascript:void(0)" id='mail_smtppass_link' onClick="SUGAR.util.setEmailPasswordEdit('mail_smtppass')" style="display: none">{$app_strings.LBL_CHANGE_PASSWORD}</a>
+                                <a href="javascript:void(0)" id='mail_smtppass_link' onClick="SUGAR.util.setEmailPasswordEdit('mail_smtppass')" style="display: none;">{$app_strings.LBL_CHANGE_PASSWORD}</a>
                                 </slot></td>
                                 <td >&nbsp;</td>
                                 <td >&nbsp;</td>

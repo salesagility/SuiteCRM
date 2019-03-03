@@ -43,7 +43,7 @@
 *}
 
 
-<div style='width: 500px'>
+<div style='width: 500px;'>
 <form name='configure_{$id}' action="index.php" method="post" onSubmit='return SUGAR.dashlets.postForm("configure_{$id}", SUGAR.mySugar.uncoverPage);'>
 <input type='hidden' name='id' value='{$id}'>
 <input type='hidden' name='module' id='cal_module' value='Home'>

@@ -183,7 +183,7 @@
     </div><!-- /.modal -->
 
     <!-- fix errors in mysugar.js -->
-    <div style="visibility: collapse">
+    <div style="visibility: collapse;">
         <div id="dashletsDialog"></div>
         <div id="dashletsDialog_c"></div>
     </div>

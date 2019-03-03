@@ -84,7 +84,7 @@
             <td  scope="row"></td>
             <td></td>
         </tr>
-        <tr id="cidInfo" style="display:none">
+        <tr id="cidInfo" style="display:none;">
             <td  scope="row">{$MOD.LBL_FONT_LIST_CIDINFO}: <span class="required">*</span>{sugar_help text=$MOD.LBL_FONT_LIST_CIDINFO_INFO} </td>
             <td>
                 <textarea name='pdf_cidinfo' rows="4" cols="80" id="pdf_cidinfo"></textarea>

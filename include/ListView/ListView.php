@@ -531,7 +531,7 @@ class ListView
                     // bug#51275: smarty widget to help provide the action menu functionality as it is currently sprinkled throughout the app with html
                     require_once('include/Smarty/plugins/function.sugar_action_menu.php');
                     $tempid = create_guid();
-                    array_unshift($button_contents, "<div style='display: inline' id='$tempid'>" . array_shift($button_contents) . "</div>");
+                    array_unshift($button_contents, "<div style='display: inline;' id='$tempid'>" . array_shift($button_contents) . "</div>");
                     $action_button = smarty_function_sugar_action_menu(array(
                     'id' => $tempid,
                     'buttons' => $button_contents,
@@ -1296,7 +1296,7 @@ class ListView
                 $uids = empty($_REQUEST['uid']) || $massUpdateRun ? '' : $_REQUEST['uid'];
                 $select_entire_list = ($massUpdateRun) ? 0 : (isset($_POST['select_entire_list']) ? $_POST['select_entire_list'] : (isset($_REQUEST['select_entire_list']) ? htmlspecialchars($_REQUEST['select_entire_list']) : 0));
 
-                echo "<textarea style='display: none' name='uid'>{$uids}</textarea>\n" .
+                echo "<textarea style='display: none;' name='uid'>{$uids}</textarea>\n" .
                     "<input type='hidden' name='select_entire_list' value='{$select_entire_list}'>\n".
                     "<input type='hidden' name='{$moduleString}' value='0'>\n".
                     "<input type='hidden' name='{$moduleStringOrder}' value='0'>\n";

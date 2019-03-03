@@ -47,7 +47,7 @@
 
     </div>
 {/if}
-<div style="padding: 10px">
+<div style="padding: 10px;">
     {$chartHTML}
 </div>
 

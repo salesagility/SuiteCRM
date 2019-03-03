@@ -85,7 +85,7 @@
 			<select  id="template_id" name='template_id' tabindex='2' onchange="show_edit_template_link(this);">{EMAIL_TEMPLATE_OPTIONS}</select>
 			&nbsp;
 			<A href="javascript:open_email_template_form()"   >{MOD.LBL_CREATE_EMAIL_TEMPLATE}</A>
-			<span name='edit_template' id='edit_template' style="{EDIT_TEMPLATE}">&nbsp;<A href="javascript:edit_email_template_form()"   >{MOD.LBL_EDIT_EMAIL_TEMPLATE}</A>
+			<span name='edit_template' id='edit_template' style="{EDIT_TEMPLATE;}">&nbsp;<A href="javascript:edit_email_template_form()"   >{MOD.LBL_EDIT_EMAIL_TEMPLATE}</A>
 			</span>		
 		</span>
 	</td>
@@ -98,7 +98,7 @@
 	</tr>
     <tr>
         <td scope="row"><span>{MOD.LBL_FROM_MAILBOX_NAME}</span></td>
-        <td ><span><select  id='inbound_email_id' tabindex='1' onchange='set_from_email_and_name(this);' name='inbound_email_id'>{MAILBOXES}</select>&nbsp;<SPAN id='from_email' style="font-style:italic">{DEFAULT_FROM_EMAIL}</SPAN></span></td>
+        <td ><span><select  id='inbound_email_id' tabindex='1' onchange='set_from_email_and_name(this);' name='inbound_email_id'>{MAILBOXES}</select>&nbsp;<SPAN id='from_email' style="font-style:italic;">{DEFAULT_FROM_EMAIL}</SPAN></span></td>
         <td scope="row"><span>&nbsp;</span></td>
         <td class="datafield"><span>&nbsp;</span></td>
     </tr>

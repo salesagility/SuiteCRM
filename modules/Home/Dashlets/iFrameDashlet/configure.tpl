@@ -42,7 +42,7 @@
 *}
 
 
-<div style='width:100%'>
+<div style='width:100%;'>
 <form name='configure_{$id}' action="index.php" method="post" onSubmit='return SUGAR.dashlets.postForm("configure_{$id}", SUGAR.mySugar.uncoverPage);'>
 <input type='hidden' name='id' value='{$id}'>
 <input type='hidden' name='module' value='Home'>

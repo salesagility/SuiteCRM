@@ -200,7 +200,7 @@ EOQ;
 
         if (isset($_REQUEST['mass'])) {
             foreach (array_unique($_REQUEST['mass']) as $record) {
-                $button .= "<input style='display: none' checked type='checkbox' name='mass[]' value='$record'>\n";
+                $button .= "<input style='display: none;' checked type='checkbox' name='mass[]' value='$record'>\n";
             }
         }
 

@@ -174,7 +174,7 @@ EOQ;
 EOQ;
             } else {
                 $text .= <<<EOQ
-				<td valign='center' class='button' style='cursor:default' onmousedown='this.className="buttonOn";return false;' onmouseup='this.className="button"' onmouseout='this.className="button"' {$button['actionScript']} >
+				<td valign='center' class='button' style='cursor:default;' onmousedown='this.className="buttonOn";return false;' onmouseup='this.className="button"' onmouseout='this.className="button"' {$button['actionScript']} >
 EOQ;
             }
             if (!isset($button['image'])) {
@@ -405,7 +405,7 @@ EOQ;
     {
         global $mod_strings;
         $image = SugarThemeRegistry::current()->getImage('edit_inline', "onclick='studiojs.handleLabelClick(\"$2\", 1);' onmouseover='this.style.cursor=\"default\"'", null, null, '.gif', $mod_strings['LBL_EDIT']);
-        $match = array("'>[^<]*\{(MOD.)([^\}]*)\}'si" => "$image<span id='label$2' onclick='studiojs.handleLabelClick(\"$2\", 2);' >{".'$1$2' . "}</span><span id='span$2' style='display:none'><input type='text' id='$2' name='$2' msi='label' value='{".'$1$2' . "}' onblur='studiojs.endLabelEdit(\"$2\")'></span>");
+        $match = array("'>[^<]*\{(MOD.)([^\}]*)\}'si" => "$image<span id='label$2' onclick='studiojs.handleLabelClick(\"$2\", 2);' >{".'$1$2' . "}</span><span id='span$2' style='display:none;'><input type='text' id='$2' name='$2' msi='label' value='{" .'$1$2' . "}' onblur='studiojs.endLabelEdit(\"$2\")'></span>");
         $keys = array_keys($match);
         $matches = array();
         preg_match_all($keys[0], $str, $matches, PREG_SET_ORDER);
@@ -421,7 +421,7 @@ EOQ;
     public function writeToCache($file, $view, $preview_file=false)
     {
         if (!is_writable($file)) {
-            echo "<br><span style='color:red'>Warning: $file is not writeable. Please make sure it is writeable before continuing</span><br><br>";
+            echo "<br><span style='color:red;'>Warning: $file is not writeable. Please make sure it is writeable before continuing</span><br><br>";
         }
 
         if (!$preview_file) {
@@ -611,7 +611,7 @@ EOQ;
 
             $explode = explode($slot[0], $view, 2);
             $style = '';
-            $explode[0] .= "<div id = 'slot$displayCount'  $class style='cursor: move$style'>";
+            $explode[0] .= "<div id = 'slot$displayCount'  $class style='cursor: move$style;'>";
             $explode[1] = "</div>".$explode[1];
             $return_view .= $explode[0].$slot[4];
             $view = $explode[1];

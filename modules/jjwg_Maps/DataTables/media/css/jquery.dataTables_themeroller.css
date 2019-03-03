@@ -157,7 +157,7 @@ table.dataTable tr.even td.sorting_3 { background-color: #F9F9FF; }
 
 /* Full number pagination */
 .paging_full_numbers a:active {
-	outline: none
+	outline: none;
 }
 .paging_full_numbers a:hover {
 	text-decoration: none;

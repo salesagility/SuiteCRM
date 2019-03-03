@@ -79,7 +79,7 @@
         </td>
     </tr>
 </table>
-<div style="height:10px">&nbsp;</div>
+<div style="height:10px;">&nbsp;</div>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class='edit view' >
 <tr>
     <td>
@@ -270,7 +270,7 @@
 {/literal}
 
 
-<div id='logDiv' style='display:none'>
+<div id='logDiv' style='display:none;'>
 </div>
 
 <input type='hidden' name='use_push' value='1'>

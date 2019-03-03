@@ -66,7 +66,7 @@
 								</tr>
 								<tr><td>&nbsp;</td></tr>
 								<tr>
-									<td style="padding-bottom: 5px">
+									<td style="padding-bottom: 5px;">
 										<input id="outbound_email_add_button" title="{$app_strings.LBL_EMAIL_FOLDERS_ADD}" type='button'
 											   class="button" onClick='SUGAR.email2.accounts.showAddSmtp();' name="button" value="{$mod_strings.LBL_ADD_OUTBOUND_ACCOUNT}">
 									</td>

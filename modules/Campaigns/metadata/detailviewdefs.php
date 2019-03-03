@@ -211,8 +211,8 @@ array(
           1 =>
           array(
             'name' => 'frequency',
-            'customCode' => '{if $fields.campaign_type.value == "NewsLetter"}<div style=\'none\' id=\'freq_field\'>{$APP_LIST.newsletter_frequency_dom[$fields.frequency.value]}</div>{/if}&nbsp;',
-            'customLabel' => '{if $fields.campaign_type.value == "NewsLetter"}<div style=\'none\' id=\'freq_label\'>{$MOD.LBL_CAMPAIGN_FREQUENCY}</div>{/if}&nbsp;',
+            'customCode' => '>{$APP_LIST.newsletter_frequency_dom[$fields.frequency.value]}</div>{/if}&nbsp;',
+            'customLabel' => '>{$MOD.LBL_CAMPAIGN_FREQUENCY}</div>{/if}&nbsp;',
           ),
         ),
         3 =>

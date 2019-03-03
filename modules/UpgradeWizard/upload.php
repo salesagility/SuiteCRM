@@ -362,9 +362,9 @@ $form3 =<<<eoq2
 }
 </script>
 eoq2;
-$form5 =<<<eoq5
+$form5 = <<<eoq5
 <br>
-<div id="upgradeDiv" style="display:none">
+<div id="upgradeDiv" style="display:none;">
     <table cellspacing="0" cellpadding="0" border="0">
         <tr><td>
            <p><!--not_in_theme!--><img src='modules/UpgradeWizard/processing.gif' alt='Processing'></p>

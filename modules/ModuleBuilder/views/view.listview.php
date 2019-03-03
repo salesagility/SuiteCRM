@@ -311,7 +311,7 @@ class ViewListView extends SugarView
 EOQ;
             } else {
                 $text .= <<<EOQ
-	          <td><input name={$button['name']} id={$button['id']} class="button" type="button" valign='center' style='cursor:default'  {$button['actionScript']}
+	          <td><input name={$button['name']} id={$button['id']} class="button" type="button" valign='center' style='cursor:default;'  {$button['actionScript']}
 EOQ;
             }
             $text .= "value=\"{$button['text']}\"/></td>" ;

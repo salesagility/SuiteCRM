@@ -73,7 +73,7 @@
 		</tr>
 	</table>
 
-	<div class='add_table' style='margin-bottom:5px'>
+	<div class='add_table' style='margin-bottom:5px;'>
 		<table id="GlobalSearchSettings" class="GlobalSearchSettings edit view" style='margin-bottom:0;' border="0" cellspacing="0" cellpadding="0">
 		    <tr>
 				<td width='1%'>
@@ -99,7 +99,7 @@
 <div id='selectFTSModules' class="yui-hidden">
     <div style="background-color: white; padding: 20px;">
         <div id='selectFTSModulesTable' ></div>
-        <div style="padding-top: 10px"><input type="checkbox" name="clearDataOnIndex" id="clearDataOnIndex" >&nbsp;{$MOD.LBL_DELETE_FTS_DATA}</div>
+        <div style="padding-top: 10px;"><input type="checkbox" name="clearDataOnIndex" id="clearDataOnIndex" >&nbsp;{$MOD.LBL_DELETE_FTS_DATA}</div>
     </div>
 </div>
 <script type="text/javascript">

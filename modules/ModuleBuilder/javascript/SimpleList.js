@@ -127,7 +127,7 @@ if(typeof(SimpleList) == 'undefined'){
             html += "["+YAHOO.lang.escapeHTML(drop_value.value)+"]";
         }
         html += "</span>";
-        html += "<span class='fieldValue' id='span_edit_"+liObj.id+"' style='display:none'>";
+        html += "<span class='fieldValue' id='span_edit_"+liObj.id+"' style='display:none;'>";
         html += "<input type='text' id='input_"+liObj.id+"' value=\""+YAHOO.lang.escapeHTML(drop_value.value)+"\" onchange='SimpleList.setDropDownValue(\""+liObj.id+"\", unescape(this.value), true)' >";
         html += "</span>";
         html += "</td><td align='right'><a href='javascript:void(0)' onclick='SimpleList.editDropDownValue(\""+liObj.id+"\", true)'>"+SimpleList.editImage+"</a>";

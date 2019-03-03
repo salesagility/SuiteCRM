@@ -704,7 +704,7 @@ class SearchForm
             $str .= "   <span class='white-space'>
                         &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<b>{$app_strings['LBL_SAVED_FILTER_SHORTCUT']}</b>&nbsp;
                         {$SAVED_SEARCHES_OPTIONS}
-                        <span id='go_btn_span' style='display:none'><input tabindex='2' title='go_select' id='go_select'  onclick='SUGAR.searchForm.clear_form(this.form);' class='button' type='button' name='go_select' value=' {$app_strings['LBL_GO_BUTTON_LABEL']} '/></span>
+                        <span id='go_btn_span' style='display:none;'><input tabindex='2' title='go_select' id='go_select'  onclick='SUGAR.searchForm.clear_form(this.form);' class='button' type='button' name='go_select' value=' {$app_strings['LBL_GO_BUTTON_LABEL']} '/></span>
                     </span>
                     </form>";
         }

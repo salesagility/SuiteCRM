@@ -116,7 +116,7 @@
 </div>
 
 
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top: 8px">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top: 8px;">
 <tr>
 <td class="buttons">
 {if $bean->aclAccess("save")}

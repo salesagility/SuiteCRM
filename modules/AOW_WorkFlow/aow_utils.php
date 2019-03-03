@@ -707,7 +707,7 @@ function getDateField($module, $aow_field, $view, $value = null, $field_option =
             $display = '';
         }
         $field .= "<input  type='text' style='display:$display' name='$aow_field".'[2]'."' id='$aow_field".'[2]'."' title='' value='$value[2]' tabindex='116'>&nbsp;";
-        $field .= "<select type='text' style='display:$display' name='$aow_field".'[3]'."' id='$aow_field".'[3]'."' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_date_type_list'], $value[3]) ."</select>";
+        $field .= "<select type='text' style='display:$display;' name='$aow_field" .'[3]'."' id='$aow_field".'[3]'."' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_date_type_list'], $value[3]) ."</select>";
     } else {
         $field = getDateFields($module, $view, $value[0], $field_option).' '.$app_list_strings['aow_date_operator'][$value[1]];
         if ($value[1] == 'plus' || $value[1] == 'minus') {
@@ -772,13 +772,13 @@ function getAssignField($aow_field, $view, $value)
             if ($value[0] == 'security_group') {
                 $display = '';
             }
-            $field .= "<select type='text' style='display:$display' name='$aow_field".'[1]'."' id='$aow_field".'[1]'."' title='' tabindex='116'>". get_select_options_with_id($securityGroups, $value[1]) ."</select>&nbsp;&nbsp;";
+            $field .= "<select type='text' style='display:$display;' name='$aow_field" .'[1]'."' id='$aow_field".'[1]'."' title='' tabindex='116'>". get_select_options_with_id($securityGroups, $value[1]) ."</select>&nbsp;&nbsp;";
         }
         $display = 'none';
         if ($value[0] == 'role' || $value[0] == 'security_group') {
             $display = '';
         }
-        $field .= "<select type='text' style='display:$display' name='$aow_field".'[2]'."' id='$aow_field".'[2]'."' title='' tabindex='116'>". get_select_options_with_id($roles, $value[2]) ."</select>&nbsp;&nbsp;";
+        $field .= "<select type='text' style='display:$display;' name='$aow_field" .'[2]'."' id='$aow_field".'[2]'."' title='' tabindex='116'>". get_select_options_with_id($roles, $value[2]) ."</select>&nbsp;&nbsp;";
     } else {
         $field = $app_list_strings['aow_assign_options'][$value[1]];
     }

@@ -122,7 +122,7 @@
                     <td  scope='row' valign='top'>
                         {$params.label}
                     </td>
-                    <td  valign='top' style='padding-bottom: 5px'>
+                    <td  valign='top' style='padding-bottom: 5px;'>
                         {$params.input}
                     </td>
                     {if ($smarty.foreach.searchIteration.iteration is even) and $smarty.foreach.searchIteration.iteration != $smarty.foreach.searchIteration.last}                        </tr>

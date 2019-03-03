@@ -106,10 +106,10 @@
 	</tr>
 	<tr>
 		<td valign="top" valign="top" scope="row">{$MOD.LBL_BODY}</td>
-		<td colspan="3"  style="background-color: #ffffff; color: #000000" >
-			<div id="html_div" style="background-color: #ffffff;padding: 5px">{$DESCRIPTION_HTML}</div>
+		<td colspan="3"  style="background-color: #ffffff; color: #000000;" >
+			<div id="html_div" style="background-color: #ffffff;padding: 5px;">{$DESCRIPTION_HTML}</div>
 			<input id='toggle_textarea_elem' onclick="toggle_textarea();" type="checkbox" name="toggle_html"/> <label for='toggle_textarea_elem'>{$MOD.LBL_SHOW_ALT_TEXT}</label><br>
-			<div id="text_div" style="display: none;background-color: #ffffff;padding: 5px">{$DESCRIPTION}</div>
+			<div id="text_div" style="display: none;background-color: #ffffff;padding: 5px;">{$DESCRIPTION}</div>
 			<script type="text/javascript" language="Javascript">
 				var plainOnly = {$SHOW_PLAINTEXT};
 				{literal}

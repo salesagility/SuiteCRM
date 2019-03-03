@@ -72,7 +72,7 @@ $formSel input[type="radio"] {width: 18px; min-width: auto;}
 $formSel div.col {display: block; float: left; width: 330px; padding: 10px 20px;}
 $formSel div.clear {display: block; float: none; clear: both; height: 0; overflow: hidden;}
 $formSel div.center {text-align: center;}
-$formSel div.buttons {padding: 10px 0; border-top: 1px solid #ccc; background-color: #f7f7f7}
+$formSel div.buttons {padding: 10px 0; border-top: 1px solid #ccc; background-color: #f7f7f7;}
 $formSel label {display: block; float: left; width: 160px; font-weight: bold;}
 $formSel span.required {color: #FF0000;}
 </style>

@@ -60,7 +60,7 @@ div.resultsTable {
 	<p>{$MOD.LBL_SUMMARY}</p>
 </h2>
 <br/>
-<span style="font-size: 14px">
+<span style="font-size: 14px;">
 {if $createdCount > 0}
 <b>{$createdCount}</b>&nbsp;{$MOD.LBL_SUCCESSFULLY_IMPORTED}<br />
 {/if}
@@ -104,7 +104,7 @@ div.resultsTable {
         <td nowrap id="tabListContainerTD">
             <div id="tabListContainer" class="yui-module yui-scroll">
                 <div class="yui-hd">
-                    <span class="yui-scroll-controls" style="visibility:hidden">
+                    <span class="yui-scroll-controls" style="visibility:hidden;">
                         <a title="scroll left" class="yui-scrollup"><em>scroll left</em></a>
                         <a title="scroll right" class="yui-scrolldown"><em>scroll right</em></a>
                     </span>
@@ -147,7 +147,7 @@ div.resultsTable {
                     </ul>
                 </div>
             </div>
-            <div id="addPage" style="visibility: hidden">
+            <div id="addPage" style="visibility: hidden;">
                 <a href='javascript:void(0)' id="add_page"></a>
             </div>
         </td>
@@ -157,7 +157,7 @@ div.resultsTable {
     </tr>
 </table>
 
-<div style='width:100%'>
+<div style='width:100%;'>
     <div id="pageNumIW_0_div">{$RESULTS_TABLE}</div>
     <div id="pageNumIW_1_div" style="display:none;" ><br/>
         {if $dupeCount > 0}

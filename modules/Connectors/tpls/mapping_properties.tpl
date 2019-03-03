@@ -56,7 +56,7 @@
 <td colspan="2">
 {foreach from=$data.field_keys key=field_id item=field}
 {if $field_id != 'id'}
-<div id="{$source_id}:{$module}:{$field}_div" style="width:500px; display:block; cursor:pointer">
+<div id="{$source_id}:{$module}:{$field}_div" style="width:500px; display:block; cursor:pointer;">
 <table border="0" cellpadding="1" cellspacing="1">
 <tr>
 <td width="150px">

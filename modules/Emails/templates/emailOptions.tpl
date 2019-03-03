@@ -54,7 +54,7 @@
                 {$NEW_EMAIL}
             </div>
         </div>
-        <div id="email_options_link_type" style='display:{$HIDE_FOR_GROUP_AND_PORTAL}'>
+        <div id="email_options_link_type" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};'>
             <div scope="row" >
                 {$MOD.LBL_EMAIL_LINK_TYPE}:&nbsp;{sugar_help text=$MOD.LBL_EMAIL_LINK_TYPE_HELP WIDTH=450}
             </div>

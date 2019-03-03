@@ -166,8 +166,8 @@ function ConvertItems(id)  {ldelim}
           1 =>
           array(
             'name' => 'frequency',
-            'customCode' => '<div style=\'none\' id=\'freq_field\'>{html_options name="frequency" options=$fields.frequency.options selected=$fields.frequency.value}</div></TD>',
-            'customLabel' => '<div style=\'none\' id=\'freq_label\'>{$MOD.LBL_CAMPAIGN_FREQUENCY}</div>',
+            'customCode' => '>{html_options name="frequency" options=$fields.frequency.options selected=$fields.frequency.value}</div></TD>',
+            'customLabel' => '>{$MOD.LBL_CAMPAIGN_FREQUENCY}</div>',
           ),
         ),
         3 =>

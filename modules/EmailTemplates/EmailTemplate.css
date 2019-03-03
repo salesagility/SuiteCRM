@@ -60,7 +60,8 @@ div:nth-of-type(odd).template-container {
     margin-top: 10px;
 }
 
-.template-panel-container, .template-panel-container:after{clear:both}
+.template-panel-container, .template-panel-container:after{clear:both;
+}
 .template-panel-container {
     background: #fff;
 }
@@ -95,7 +96,7 @@ div:nth-of-type(odd).template-container {
     margin-right: 6px;
     border-right: 1px solid rgb(211, 211, 211);
     display: inline;
-    content: '&nbsp;'
+    content: '&nbsp;';
 }
 
 .clear-block {

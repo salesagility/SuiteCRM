@@ -38,7 +38,7 @@
  */
 div.workarea {
     padding: 10px;
-    float: left
+    float: left;
 }
 
 ul.draglist {
@@ -86,5 +86,5 @@ li.list2 {
 }
 
 #user_actions {
-    float: right
+    float: right;
 }

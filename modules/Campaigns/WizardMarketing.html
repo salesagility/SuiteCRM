@@ -468,7 +468,9 @@
 					<div class="clear">&nbsp;</div>
 					<div><label class="wizard-step-info">{$MOD.LBL_PLEASE_SELECT_OPTION}</label></div>
 					<style>
-						{literal}
+						{literal
+                        ;
+                        }
 						ul.template_option_list {list-style-type: none; padding-left: 0; margin-bottom: 8px;}
 						ul.template_option_list input {position: relative; top: -6px;}
 						ul.template_option_list label {font-weight: normal;}
@@ -1199,7 +1201,7 @@
 	<div id='step3' data="summary-page" class="template-panel step3">
 		<div class="template-panel-container panel">
 			<div class="template-container-full">
-				<h4 class="header-4" style="border-bottom: solid 1px #eee;padding-bottom: 8px">{$MOD.LBL_SUMMARY}</h4>
+				<h4 class="header-4" style="border-bottom: solid 1px #eee;padding-bottom: 8px;">{$MOD.LBL_SUMMARY}</h4>
 				<div class="clear">&nbsp;</div>
 				{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
 					<div class="form-group">
@@ -1304,7 +1306,7 @@
 		</div>
 		<div class="template-panel-container panel-toolbar ">
 			<div class="template-container-full">
-				<h4 class="header-4" style="border-bottom: solid 1px #eee;padding-bottom: 8px">{$MOD.LBL_CAMPAIGN_CHECKLIST}</h4>
+				<h4 class="header-4" style="border-bottom: solid 1px #eee;padding-bottom: 8px;">{$MOD.LBL_CAMPAIGN_CHECKLIST}</h4>
 				<div class="clear">&nbsp;</div>
 				<div style="margin-bottom: 16px;">
 					{if $WARNING_MESSAGE}

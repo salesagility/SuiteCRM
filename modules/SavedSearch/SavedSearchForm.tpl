@@ -43,7 +43,7 @@
 
 
 *}
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-top: 0 none; margin-bottom: 4px">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-top: 0 none; margin-bottom: 4px;">
     <tr valign='top'>
         <td width='34%' align='left' rowspan='4' colspan='2' {if $orderBySelectOnly}style="display:none;"{/if}>
             <input id='displayColumnsDef' type='hidden' name='displayColumns'>
@@ -66,12 +66,12 @@
             <div><input id='sort_order_desc_radio' type='radio' name='sortOrder' value='DESC'
                         {if $selectedSortOrder == 'DESC'}checked{/if}>&nbsp;<span
                         onclick='document.getElementById("sort_order_desc_radio").checked = true'
-                        style="cursor: pointer; cursor: hand">{$MOD.LBL_DESCENDING}</span></div>
+                        style="cursor: pointer; cursor: hand;">{$MOD.LBL_DESCENDING}</span></div>
 
             <div><input id='sort_order_asc_radio' type='radio' name='sortOrder' value='ASC'
                         {if $selectedSortOrder == 'ASC'}checked{/if}>&nbsp;<span
                         onclick='document.getElementById("sort_order_asc_radio").checked = true'
-                        style="cursor: pointer; cursor: hand">{$MOD.LBL_ASCENDING}</span>
+                        style="cursor: pointer; cursor: hand;">{$MOD.LBL_ASCENDING}</span>
             </div>
         </td>
     </tr>

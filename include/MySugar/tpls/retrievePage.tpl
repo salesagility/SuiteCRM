@@ -72,7 +72,7 @@
 	{foreach from=$columns key=colNum item=data}
 	<td valign='top' width={$data.width}>
 		<ul class='noBullet' id='col_{$selectedPage}_{$colNum}'>
-			<li id='page_{$selectedPage}_hidden{$hiddenCounter}b' style='height: 5px' class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
+			<li id='page_{$selectedPage}_hidden{$hiddenCounter}b' style='height: 5px;' class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
 	        {foreach from=$data.dashlets key=id item=dashlet}		
 			<li class='noBullet' id='dashlet_{$id}'>
 				<div id='dashlet_entire_{$id}' class='dashletPanel'>
@@ -83,7 +83,7 @@
 			    </div>
 			</li>
 			{/foreach}
-			<li id='page_{$selectedPage}_hidden{$hiddenCounter}' style='height: 5px' class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
+			<li id='page_{$selectedPage}_hidden{$hiddenCounter}' style='height: 5px;' class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
 		</ul>
 	</td>
 	{counter}

@@ -94,7 +94,7 @@
                                 </div>
                             </li>
                         {/foreach}
-                        <li id='page_{$activePage}_hidden{$hiddenCounter}' style='height: 5px' class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
+                        <li id='page_{$activePage}_hidden{$hiddenCounter}' style='height: 5px;' class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
                     </ul>
                 </td>
                 {counter}

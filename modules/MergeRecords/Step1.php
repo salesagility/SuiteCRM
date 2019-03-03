@@ -181,8 +181,8 @@ function addFieldRow($colName, $colLabel, $colValue)
 
     $LBL_REMOVE = translate('LBL_REMOVE');
     $deleteInlineImage = SugarThemeRegistry::current()->getImageURL('delete_inline.gif');
-    $snippet=<<<EOQ
-    <span id=filter_{$colName} style='visibility:visible' value="{$colLabel}" valueId="{$colName}">
+    $snippet= <<<EOQ
+    <span id=filter_{$colName} style='visibility:visible;' value="{$colLabel}" valueId="{$colName}">
         <table width='100%' border='0' cellpadding='0'>
             <tr>
                 <td width='2%'><a class="listViewTdToolsS1" href="javascript:remove_filter('filter_{$colName}')"><!--not_in_theme!--><img src='{$deleteInlineImage}' align='absmiddle' alt='{$LBL_REMOVE}' border='0' height='12' width='12'>&nbsp;</a></td>

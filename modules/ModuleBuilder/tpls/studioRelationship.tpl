@@ -54,7 +54,7 @@
 {/if}
 <table style="width:100%;" class="relform">
 	<tr>
-		<td colspan='2' style="padding:5px 5px 15px 5px">
+		<td colspan='2' style="padding:5px 5px 15px 5px;">
 			{if !$rel.readonly}
 				{if empty($view_package)}
 				<input type='button' name='saverelbtn' value='{$mod_strings.LBL_BTN_SAVEPUBLISH}' onclick='if(check_form("relform"))

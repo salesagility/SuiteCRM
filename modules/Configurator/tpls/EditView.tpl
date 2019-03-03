@@ -154,7 +154,7 @@
         </td>
         <td  width='35%'>
             <div id="container_upload"></div>
-            <input type='text' id='company_logo' name='company_logo' style="display:none">
+            <input type='text' id='company_logo' name='company_logo' style="display:none;">
         </td>
     </tr>
     <tr>
@@ -247,7 +247,7 @@
 	<td width="75%" align="left"  valign='middle' colspan='3'><input type='hidden' name='proxy_on' value='0'><input name="proxy_on" id="proxy_on" value="1" class="checkbox" tabindex='1' type="checkbox" {$proxy_on_checked} onclick='toggleDisplay_2("proxy_config_display")'></td>
 	</tr><tr>
 	<td colspan="4">
-	<div id="proxy_config_display" style='display:{$PROXY_CONFIG_DISPLAY}'>
+	<div id="proxy_config_display" style='display:{$PROXY_CONFIG_DISPLAY};'>
 		<table width="100%" cellpadding="0" cellspacing="1"><tr>
 		<td width="15%" scope="row">{$MOD.LBL_PROXY_HOST}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
 		<td width="35%" ><input type="text" id="proxy_host" name="proxy_host" size="25"  value="{$settings.proxy_host}" tabindex='1' ></td>
@@ -263,7 +263,7 @@
 		<td width="35%" align="left"  valign='middle' ><input type='hidden' name='proxy_auth' value='0'><input id="proxy_auth" name="proxy_auth" value="1" class="checkbox" tabindex='1' type="checkbox" {$proxy_auth_checked} onclick='toggleDisplay_2("proxy_auth_display")'> </td>
 		</tr></table>
 
-		<div id="proxy_auth_display" style='display:{$PROXY_AUTH_DISPLAY}'>
+		<div id="proxy_auth_display" style='display:{$PROXY_AUTH_DISPLAY};'>
 
 		<table width="100%" cellpadding="0" cellspacing="1"><tr>
 		<td width="15%" scope="row">{$MOD.LBL_PROXY_USERNAME}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
@@ -415,7 +415,7 @@
 {$JAVASCRIPT}
 
 </form>
-<div id='upload_panel' style="display:none">
+<div id='upload_panel' style="display:none;">
     <form id="upload_form" name="upload_form" method="POST" action='index.php' enctype="multipart/form-data">
         <input type="file" id="my_file_company" name="file_1" size="20" onchange="uploadCheck(false)"/>
         {sugar_getimage name="sqsWait" ext=".gif" alt=$mod_strings.LBL_LOADING other_attributes='id="loading_img_company" style="display:none" '}

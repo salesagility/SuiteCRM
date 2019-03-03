@@ -226,12 +226,12 @@ foreach($unicode_ranges AS $urk => $ur) {
 	$rangestart = $ur['starthex'];
 	$rangeend = $ur['endhex'];
 	$ext = $ext2 = '';
-	if ($ur['combining']) { $ext = 'background-color:#DDDDFF;'; $ext2 = '<br /><span style="color:#AA0000">Special positioning required</span>'; }
-	if ($ur['vertical']) { $ext = 'background-color:#FFDDDD;'; $ext2 = '<br /><span style="color:#AA0000">Vertical positioning required</span>'; }
-	if ($ur['special']) { $ext = 'background-color:#FFDDDD;'; $ext2 = '<br /><span style="color:#AA0000">Special processing required</span>'; }
+	if ($ur['combining']) { $ext = 'background-color:#DDDDFF;'; $ext2 = '<br /><span style="color:#AA0000;">Special positioning required</span>'; }
+	if ($ur['vertical']) { $ext = 'background-color:#FFDDDD;'; $ext2 = '<br /><span style="color:#AA0000;">Vertical positioning required</span>'; }
+	if ($ur['special']) { $ext = 'background-color:#FFDDDD;'; $ext2 = '<br /><span style="color:#AA0000;">Special processing required</span>'; }
 
 
-	$html .= '<tr><td style="font-family:helvetica;font-size:8pt;font-weight:bold;'.$ext.'">'.strtoupper($range).' (U+'.$rangestart .'-U+'.$rangeend.')'.$ext2.'</td>';
+	$html .= '<tr><td style="font-family:helvetica;font-size:8pt;font-weight:bold;'.$ext. ';">' .strtoupper($range).' (U+'.$rangestart .'-U+'.$rangeend.')'.$ext2.'</td>';
 	$arr = $fullcovers[$urk];
 	$narr = $nearlycovers[$urk];
 	if (is_array($arr)) { $html .= '<td>'. implode(', ',$arr). '</td></tr>'; }

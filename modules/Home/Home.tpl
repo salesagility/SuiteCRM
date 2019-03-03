@@ -118,7 +118,7 @@ var moduleName = 'Home';
 		{foreach from=$columns key=colNum item=data}
 		<td valign='top' width='{$data.width}'>
 			<ul class='noBullet' id='col_{$activePage}_{$colNum}'>
-				<li id='page_{$activePage}_hidden{$hiddenCounter}b' style='height: 5px' class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
+				<li id='page_{$activePage}_hidden{$hiddenCounter}b' style='height: 5px;' class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
 		        {foreach from=$data.dashlets key=id item=dashlet}
 				<li class='noBullet' id='dashlet_{$id}'>
 					<div id='dashlet_entire_{$id}'>
@@ -127,7 +127,7 @@ var moduleName = 'Home';
 					</div>
 				</li>
 				{/foreach}
-				<li id='page_{$activePage}_hidden{$hiddenCounter}' style='height: 5px' class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
+				<li id='page_{$activePage}_hidden{$hiddenCounter}' style='height: 5px;' class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
 			</ul>
 		</td>
 		{counter}

@@ -47,8 +47,8 @@
 .chartContainer {
 	float: left;
 	margin:auto;
-	width: 100%
-	}
+	width: 100%;
+}
 	
 .chartContainer .scrollBars {
 	overflow: auto;

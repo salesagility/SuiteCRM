@@ -188,7 +188,7 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
         $display = (!empty($fieldArray['display_default']) && $fieldArray['display_default'] == true ? "block" : "none");
         //Leon bug 20739
         $t_mod_strings=return_module_language($GLOBALS['current_language'], $modFilter);
-        echo "<div id=\"reassign_{$GLOBALS['beanList'][$modFilter]}\" style=\"display:$display\">\n";
+        echo ">\n";
         echo "<h5 style=\"padding-left:0; margin-bottom:4px;\">{$app_list_strings['moduleList'][$modFilter]} ", " {$mod_strings_users['LBL_REASS_FILTERS']}</h5>\n";
         foreach ($fieldArray['fields'] as $meta) {
             $multi = "";

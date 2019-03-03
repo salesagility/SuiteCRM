@@ -123,7 +123,7 @@ YAHOO.util.Event.onDOMReady(SourceTabs.init);
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
 <tr><td>
 <div>
-<div id="container" style="height: 465px">
+<div id="container" style="height: 465px;">
 </div>
 </div>
 </td></tr>

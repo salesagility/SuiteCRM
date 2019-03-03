@@ -655,7 +655,7 @@ class ListViewData
         $extra = "<img alt='{$app_strings['LBL_INFOINLINE']}' style='padding: 0 5px 0 2px' border='0' onclick=\"SUGAR.util.getStaticAdditionalDetails(this,'";
 
         $extra .= str_replace(array("\rn", "\r", "\n"), array('','','<br />'), $results['string']) ;
-        $extra .= "','<div style=\'float:left\'>{$app_strings['LBL_ADDITIONAL_DETAILS']}</div><div style=\'float: right\'>";
+        $extra .= "','<div style=\'float:left\';>{$app_strings['LBL_ADDITIONAL_DETAILS']}</div><div style=\'float:; right\'>";
 
         if ($editAccess && !empty($results['editLink'])) {
             $extra .=  "<a title=\'{$app_strings['LBL_EDIT_BUTTON']}\' href={$results['editLink']}><span class=\'suitepicon suitepicon-action-edit\'></span></a>";

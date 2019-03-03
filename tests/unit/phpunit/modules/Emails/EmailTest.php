@@ -864,12 +864,7 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
     {
         $email = new Email();
 
-        $expected = "<div><input	title=\"\"
-						class=\"button\"
-						type=\"button\" name=\"button\"
-						onClick=\"window.location='index.php?module=Emails&action=Grab';\"
-						style=\"margin-bottom:2px\"
-						value=\"    \"></div>";
+        $expected = "></div>\"";
         $actual = $email->pickOneButton();
         $this->assertSame($expected, $actual);
     }
@@ -1310,22 +1305,12 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $email = new Email();
 
         //test with empty string
-        $expected = "<div><input	title=\"\"
-						class=\"button\"
-						type=\"button\" name=\"button\"
-						onClick=\"window.location='index.php?module=Emails&action=Check&type=';\"
-						style=\"margin-bottom:2px\"
-						value=\"    \"></div>";
+        $expected = "></div>\"";
         $actual = $email->checkInbox('');
         $this->assertSame($expected, $actual);
 
         //test with valid string
-        $expected = "<div><input	title=\"\"
-						class=\"button\"
-						type=\"button\" name=\"button\"
-						onClick=\"window.location='index.php?module=Emails&action=Check&type=test';\"
-						style=\"margin-bottom:2px\"
-						value=\"    \"></div>";
+        $expected = "></div>\"";
         $actual = $email->checkInbox('test');
         $this->assertSame($expected, $actual);
     }

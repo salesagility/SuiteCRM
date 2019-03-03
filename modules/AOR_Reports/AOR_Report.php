@@ -594,7 +594,7 @@ class AOR_Report extends Basic
                 }
 
                 $html .= '<div class="panel panel-default">
-                            <div class="panel-heading" style="' . $pdf_style . '">
+                            <div class="panel-heading" style="' . $pdf_style . ';">
                                 <a class="" role="button" data-toggle="collapse" href="#detailpanel_report_group_' . $groupValue . '" aria-expanded="false">
                                     <div class="col-xs-10 col-sm-11 col-md-11">
                                         ' . $groupDisplay . '
@@ -763,7 +763,7 @@ class AOR_Report extends Basic
                     <span class='suitepicon suitepicon-action-left'></span>
                 </button>";
             }
-            $html .= '</td><td style="vertical-align:middle" nowrap="nowrap" width="1%" class="paginationActionButtons">';
+            $html .= '</td><td style="vertical-align:middle;" nowrap="nowrap" width="1%" class="paginationActionButtons">';
             $html .= ' <div class="pageNumbers">(' . $start . ' - ' . $end . ' of ' . $total_rows . ')</div>';
             $html .= '</td><td nowrap="nowrap" align="right" class="paginationActionButtons" width="1%">';
             if ($next_offset < $total_rows) {

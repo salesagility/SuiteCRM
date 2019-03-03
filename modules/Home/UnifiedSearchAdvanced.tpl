@@ -61,16 +61,16 @@
 <table width='600' class='edit view' border='0' cellpadding='0' cellspacing='1'>
 {foreach from=$MODULES_TO_SEARCH name=m key=module item=info}
 {if $smarty.foreach.m.first}
-	<tr style='padding: 0 0 0 0; margin: 0 0 0 0'>
+	<tr style='padding: 0 0 0 0; margin: 0 0 0 0;'>
 {/if}
-	<td width='1' style='border: none; padding: 0 10px 0 0; margin: 0 0 0 0'>
+	<td width='1' style='border: none; padding: 0 10px 0 0; margin: 0 0 0 0;'>
 		<input class='checkbox' id='cb_{$module}' type='checkbox' name='search_mod_{$module}' value='true' {if $info.checked}checked{/if}>
 	</td>
-	<td style='border: none; padding: 0 0 0 0; margin: 0 0 0 0; cursor: hand; cursor: pointer' onclick="document.getElementById('cb_{$module}').checked = !document.getElementById('cb_{$module}').checked;">
+	<td style='border: none; padding: 0 0 0 0; margin: 0 0 0 0; cursor: hand; cursor: pointer;' onclick="document.getElementById('cb_{$module}').checked = !document.getElementById('cb_{$module}').checked;">
 		{$info.translated}
 	</td>
 {if $smarty.foreach.m.index % 2 == 1}
-	</tr><tr style='padding: 0 0 0 0; margin: 0 0 0 0'>
+	</tr><tr style='padding: 0 0 0 0; margin: 0 0 0 0;'>
 {/if}
 {/foreach}
 </tr>

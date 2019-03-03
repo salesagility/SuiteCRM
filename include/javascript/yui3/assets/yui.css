@@ -50,7 +50,8 @@ a:visited, a:visited code {color:#639;}
 a:active, a:active code {color: #f00;}
 
 h1 a { color:#E76300; }
-h1 a:visited {color:#E76300}
+h1 a:visited {color:#E76300;
+}
 
 #logo_pane { display: none; }
 
@@ -59,11 +60,16 @@ h1 a:visited {color:#E76300}
 /*#bd ul li {margin-bottom:1em;}*/
 #bd ul li ul {margin-top:0;margin-bottom:0;}
 #bd ol {}
-#bd ol li p { margin-left:0}
-#bd ol li ol {list-style:lower-alpha}
-#bd ol li ol li {margin-bottom:1em}
-#bd ol li ol li ol{list-style:lower-roman}
-#bd ol li ol li ol li {margin-bottom:1em}
+#bd ol li p { margin-left:0;
+}
+#bd ol li ol {list-style:lower-alpha;
+}
+#bd ol li ol li {margin-bottom:1em;
+}
+#bd ol li ol li ol{list-style:lower-roman;
+}
+#bd ol li ol li ol li {margin-bottom:1em;
+}
 
 #bd p.errormessage {background:url(http://l.yimg.com/a/i/us/search/gr/alertbubble.gif) 0 0 no-repeat; padding-left:30px; margin:2em 2em 2em 1em; font-weight:bold;}
 
@@ -75,8 +81,10 @@ h3.methods { border-top:none; margin-top:0; margin-bottom:.2em; font-size: 100%;
 .screenshot {border:thin solid #999999; margin:8px;}
 
 
-#ft {  margin-top:4em }
-#ft p { padding-bottom:2em; margin:0; text-align:center; font-size:80%; line-height:1.4em}
+#ft {  margin-top:4em;
+}
+#ft p { padding-bottom:2em; margin:0; text-align:center; font-size:80%; line-height:1.4em;
+}
 #ft p.first { padding:1em 0 0 0; margin:0; }
 
 #pagetitle {background:#fff url(../assets/gradient-mod.png) repeat-x;border-color:#D9D9D9;margin-bottom:10px;clear:both;}
@@ -89,7 +97,8 @@ h3.methods { border-top:none; margin-top:0; margin-bottom:.2em; font-size: 100%;
 html>body #ygunav {overflow:hidden;}
 #ygunav strong {font-family:verdana;}
 #ygunav p {display:inline;margin:0;padding:0;}
-#ygunav p em {float:left;text-align:left;font-style:normal; padding-top:.7em}
+#ygunav p em {float:left;text-align:left;font-style:normal; padding-top:.7em;
+}
 * html #ygunav p em {margin-top:1px;}
 #ygunav p em i {visibility:hidden;}
 #ygunav a {color:#000;}
@@ -102,7 +111,8 @@ html>body #ygunav {overflow:hidden;}
 
 #bd ol.getstarted { margin:0; padding:0; }
 #bd ol.getstarted li { font-weight:bold; color:#668AA8; margin-bottom:1em; padding-left:20px; list-style-type:none;}
-#bd ol.getstarted li p { color:#000; font-weight:normal; margin:0 0 0 20px; padding:0 }
+#bd ol.getstarted li p { color:#000; font-weight:normal; margin:0 0 0 20px; padding:0;
+}
 
 code {font-family:"Courier New", monospace; font-size: 100%;color:inherit;}
 p code {color:#000;}
@@ -174,7 +184,8 @@ img.icon-rss {display:inline;border:none !important;position:relative;top:2px;le
 #loggerDiv.yui-log .yui-log-ft .yui-log-categoryfilters {margin-top:.5em;clear:right;}
 #loggerDiv.yui-log .yui-log-ft .yui-log-sourcefilters {margin-top:.5em;border:none; clear:both;}
 #loggerDiv.yui-log .yui-log-btns {margin-top:.2em;padding:.2em;background: url(bg_hd.gif) 0 0 repeat-x #CECCCC; text-align:right; float:none; position:static;}
-#loggerDiv.yui-log .yui-log-filtergrp {margin-right:.3em; float:left; display:block}
+#loggerDiv.yui-log .yui-log-filtergrp {margin-right:.3em; float:left; display:block;
+}
 #loggerDiv.yui-log .yui-log-ft {margin-top:.3em;margin-bottom:.3em; font-family:verdana; zoom:1;}
 /*bug in Safari when this is applied to .yui-log-ft:*/
 #loggerDiv.yui-log:after {content:'.';visibility:hidden;clear:both;height:0;display:block;}
@@ -473,7 +484,8 @@ table.auto {width:auto;}
 #breadcrumbs a{text-decoration:none;color:#2288bb;}
 #breadcrumbs a:hover{height:2em;float:left;text-decoration:underline;}
 #bcSep{float:left;width:1.5em;height:1.5em;background:url('http://l.yimg.com/a/i/ydn/bcsep.gif')no-repeat;position:relative;bottom:3px;margin-right:.5em;}
-#bcItem{float:left;margin:0 .5em 0 0}
+#bcItem{float:left;margin:0 .5em 0 0;
+}
 #breadcrumbs a.bcOn{color:#888;}
 #topAreaL{float:left;color:#9f9f9f;font-size:85%;padding:6px 0 0 0;width:500px;}
 #topAreaL ul li{float:left;margin-left:8px;padding-left:8px;border-left:1px solid #dfdfdf;}

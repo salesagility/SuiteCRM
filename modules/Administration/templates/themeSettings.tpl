@@ -54,7 +54,7 @@
 		</tr>
 	</table>
 
-	<div class='listViewBody' style='margin-bottom:5px'>
+	<div class='listViewBody' style='margin-bottom:5px;'>
 		<table id="themeSettings" class="list view" style='margin-bottom:0;' border="0" cellspacing="0" cellpadding="0">
 			<thead>
 				<tr>

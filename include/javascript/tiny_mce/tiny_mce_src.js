@@ -12933,7 +12933,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 
 			// IE 8 quick fix, needed to propertly generate a hit area for anchors
 			if (dom.stdMode)
-				h += '<td style="position: relative">' + co.renderHTML() + '</td>';
+				h += '<td style="position: relative;">' + co.renderHTML() + '</td>';
 			else
 				h += '<td>' + co.renderHTML() + '</td>';
 

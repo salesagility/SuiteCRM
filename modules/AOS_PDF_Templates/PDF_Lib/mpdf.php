@@ -13489,7 +13489,7 @@ function WriteFixedPosHTML($html='',$x, $y, $w, $h, $overflow='visible', $boundi
 		if (isset($p['COLOR'])) { $css .= 'color: '.strtolower($p['COLOR']).'; '; }
 		if (isset($p['Z-INDEX'])) { $css .= 'z-index: '.$p['Z-INDEX'].'; '; }	// mPDF 5.6.01
 		if ($css) {
-			$html = '<div style="'.$css.'">'.$html.'</div>';
+			$html = '<div style="'.$css. ';">' .$html.'</div>';
 		}
 		// Copy over (only) the properties to set for border and background
 		$pb = array();
@@ -30646,7 +30646,7 @@ function purify_utf8($html,$lo=true) {
 				$err .= '[[#'.ord(substr($html,$pos,1)).']]';
 				$pos++;
 			}
-			echo '<span style="color:red; font-weight:bold">'.$err.'</span>';
+			echo '<span style="color:red; font-weight:bold;">' .$err.'</span>';
 			$html = substr($html, $pos);
 		}
 		echo $html;

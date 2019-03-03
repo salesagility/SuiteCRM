@@ -1111,7 +1111,7 @@ class EmailMan extends SugarBean
                 //END
                 //do not add the default remove me link if the campaign has a trackerurl of the opotout link
                 if ($this->has_optout_links == false) {
-                    $mail->Body .= "<br /><span style='font-size:0.8em'>{$mod_strings['TXT_REMOVE_ME']} <a href='" . $this->tracking_url . "index.php?entryPoint=removeme&identifier={$this->getTargetId()}'>{$mod_strings['TXT_REMOVE_ME_CLICK']}</a></span>";
+                    $mail->Body .= "<br /><span style='font-size:0.8em;'>{$mod_strings['TXT_REMOVE_ME']} <a href='" . $this->tracking_url . "index.php?entryPoint=removeme&identifier={$this->getTargetId()}'>{$mod_strings['TXT_REMOVE_ME_CLICK']}</a></span>";
                 }
                 // cn: bug 11979 - adding single quote to comform with HTML email RFC
                 $mail->Body .= "<br /><img alt='' height='1' width='1' src='{$this->tracking_url}index.php?entryPoint=image&identifier={$this->getTargetId()}' />";

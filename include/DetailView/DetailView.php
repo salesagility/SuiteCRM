@@ -279,7 +279,7 @@ class DetailView extends ListView
         $pre_html_text = "";
         $pre_html_text .= "<tr class='pagination'>\n";
         $pre_html_text .= "<td COLSPAN=\"20\">\n";
-        $pre_html_text .= "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td style=\"text-align: left\" >&nbsp;".$audit_link."</td>\n";
+        $pre_html_text .= " >&nbsp;" .$audit_link."</td>\n";
 
 
 

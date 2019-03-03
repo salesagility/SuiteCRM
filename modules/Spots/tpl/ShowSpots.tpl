@@ -119,4 +119,4 @@
 </script>
 {/literal}
 
-<div id="output" style="overflow: auto"></div>
+<div id="output" style="overflow: auto;"></div>

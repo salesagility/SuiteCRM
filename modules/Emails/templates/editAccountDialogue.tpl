@@ -83,7 +83,7 @@
                        onclick="SUGAR.email2.accounts.ieAccountError(SUGAR.email2.accounts.normalStyle);">
                 <a href="javascript:void(0)" id='email_password_link'
                    onClick="SUGAR.util.setEmailPasswordEdit('email_password')"
-                   style="display: none">{$app_strings.LBL_CHANGE_PASSWORD}</a>
+                   style="display: none;">{$app_strings.LBL_CHANGE_PASSWORD}</a>
             </td>
         </tr>
 

@@ -56,7 +56,7 @@ $checked = (isset($_SESSION['setup_license_accept']) && !empty($_SESSION['setup_
 require_once("install/install_utils.php");
 $license_file = getLicenseContents("LICENSE.txt");
 $langHeader = get_language_header();
-$out =<<<EOQ
+$out = <<<EOQ
 <!DOCTYPE HTML>
 <html {$langHeader}>
 <head>
@@ -200,7 +200,7 @@ function callSysCheck(){
     }
 
 </script>
-           <div id="checkingDiv" style="display:none">
+           <div id="checkingDiv" style="display:none;">
                     <p><img src='install/processing.gif' alt="{$mod_strings['LBL_LICENSE_CHECKING']}"> <br>{$mod_strings['LBL_LICENSE_CHECKING']}</p>
             </div>
             </div>

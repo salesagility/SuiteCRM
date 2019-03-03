@@ -508,9 +508,9 @@ class ImportViewStep3 extends ImportView
     {
         return <<<EOCSS
             <style>
-                textarea { width: 20em }
+                textarea { width: 20em; }
 				.detail tr td[scope="row"] {
-					text-align:left
+					text-align:left;
 				}
                 span.collapse{
                     background: transparent url('index.php?entryPoint=getImage&themeName=Sugar&themeName=Sugar&imageName=sugar-yui-sprites.png') no-repeat 0 -90px;

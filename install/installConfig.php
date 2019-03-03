@@ -267,9 +267,9 @@ EOQ;
                 <input type="radio" class="checkbox" name="setup_db_type" id="setup_db_type" value="$type" {$checked[$type]} onclick="onDBTypeClick(this);//document.getElementById('ociMsg').style.display='$oci'"/>{$mod_strings[$driver->label]}<br>
 EOQ;
         }
-        $out_dbtypesel.=<<<EOQ
+        $out_dbtypesel.= <<<EOQ
         </div>
-            <div name="ociMsg" id="ociMsg" style="display:none"></div>
+            <div name="ociMsg" id="ociMsg" style="display:none;"></div>
     <!-- </div> -->
 EOQ;
 
@@ -386,7 +386,7 @@ FORM;
         $dbUSRDD
     </div>
     <div class="clear"></div>
-    <span id='connection_user_div' style="display:none">
+    <span id='connection_user_div' style="display:none;">
         <div class="formrow">
             <label>{$mod_strings['LBL_DBCONF_SUITE_DB_USER']} <span class="required">*</span></label>
             <input type="text" name="setup_db_sugarsales_user" maxlength="16" value="{$_SESSION['setup_db_sugarsales_user']}" />
@@ -996,7 +996,7 @@ EOQ2;
 
                 <div class="formrow" id="current_logo_row">
                     <label>{$mod_strings['CURRENT_LOGO']} <i>i<div class="tooltip">{$mod_strings['CURRENT_LOGO_HELP']}</div></i> </label>
-                    <img height="100" src="$currentLogoLink" alt="Company Logo" style="max-height: 100px; max-width: 230px; float:left; $hiddenLogo" />
+                    <img height="100" src="$currentLogoLink" alt="Company Logo" style="max-height: 100px; max-width: 230px; float:left; $hiddenLogo;" />
                 </div>
 
                 <div class="clear"></div>
@@ -1131,7 +1131,7 @@ EOQ;
         $checked = '';
         //if(!empty($_SESSION['setup_site_sugarbeet_anonymous_stats'])) $checked = 'checked=""';
         $out .= "
-   <tr style='display:none'><td></td>
+   <tr style='display:none;'><td></td>
        <td><input type='checkbox' class='checkbox' name='setup_site_sugarbeet_anonymous_stats' value='yes' $checked /></td>
        <td><b>{$mod_strings['LBL_SITECFG_ANONSTATS']}</b><br><i>{$mod_strings['LBL_SITECFG_ANONSTATS_DIRECTIONS']}</i></td></tr>
 
@@ -1139,7 +1139,7 @@ EOQ;
         $checked = '';
         //if(!empty($_SESSION['setup_site_sugarbeet_automatic_checks'])) $checked = 'checked=""';
         $out .= <<<EOQ
-   <tr style='display:none'><td></td>
+   <tr style='display:none;'><td></td>
        <td><input type="checkbox" class="checkbox" name="setup_site_sugarbeet_automatic_checks" value="yes" /></td>
        <td><b>{$mod_strings['LBL_SITECFG_SUITE_UP']}</b><br><i>{$mod_strings['LBL_SITECFG_SUITE_UP_DIRECTIONS']}</i><br>&nbsp;</td></tr>
    <tbody id="setup_site_session_section_pre">
@@ -1153,7 +1153,7 @@ EOQ;
    <tr><td></td>
        <td style="text-align : right;"></td>
        <td align="left">
-	       <div><div style="width:200px;float:left">{$mod_strings['LBL_SITECFG_SESSION_PATH']} <span class="required">*</span></div>
+	       <div><div style="width:200px;float:left;">{$mod_strings['LBL_SITECFG_SESSION_PATH']} <span class="required">*</span></div>
 	               <input type="text" name="setup_site_session_path" size='40' value="{$_SESSION['setup_site_session_path']}" /></td>
 	       </div>
        </td>
@@ -1170,7 +1170,7 @@ EOQ;
    <tr><td></td>
        <td style="text-align : right;" ></td>
        <td align="left">
-       <div><div style="width:200px;float:left">{$mod_strings['LBL_SITECFG_LOG_DIR']} <span class="required">*</span></div>
+       <div><div style="width:200px;float:left;">{$mod_strings['LBL_SITECFG_LOG_DIR']} <span class="required">*</span></div>
             <input type="text" name="setup_site_log_dir" size='30' value="{$_SESSION['setup_site_log_dir']}" />
        </div>
    </tr>
@@ -1186,7 +1186,7 @@ EOQ;
    <tr><td></td>
        <td style="text-align : right;"></td>
        <td align="left">
-	       <div><div style="width:200px;float:left">{$mod_strings['LBL_SITECFG_APP_ID']} <span class="required">*</span></div>
+	       <div><div style="width:200px;float:left;">{$mod_strings['LBL_SITECFG_APP_ID']} <span class="required">*</span></div>
 	               <input type="text" name="setup_site_guid" size='30' value="{$_SESSION['setup_site_guid']}" />
 	       </div>
        </td>

@@ -150,7 +150,7 @@ class ModuleInstaller
                 $current_step++;
                 display_progress_bar('install', $current_step, $total_steps);
                 echo '<div id ="displayLoglink" ><a href="#" onclick="document.getElementById(\'displayLog\').style.display=\'\'">'
-                        .$app_strings['LBL_DISPLAY_LOG'].'</a> </div><div id="displayLog" style="display:none">';
+                        .$app_strings['LBL_DISPLAY_LOG']. '</a> </div><div id="displayLog" style="display:none;">';
             }
 
             include($this->base_dir . '/manifest.php');
@@ -1639,7 +1639,7 @@ class ModuleInstaller
             if (!$this->silent) {
                 $current_step++;
                 display_progress_bar('install', $current_step, $total_steps);
-                echo '<div id ="displayLoglink" ><a href="#" onclick="toggleDisplay(\'displayLog\')">'.$app_strings['LBL_DISPLAY_LOG'].'</a> </div><div id="displayLog" style="display:none">';
+                echo '<div id ="displayLoglink" ><a href="#" onclick="toggleDisplay(\'displayLog\')">'.$app_strings['LBL_DISPLAY_LOG']. '</a> </div><div id="displayLog" style="display:none;">';
             }
 
             global $moduleList;
@@ -2213,7 +2213,7 @@ class ModuleInstaller
             if (!$this->silent) {
                 $current_step++;
                 display_progress_bar('install', $current_step, $total_steps);
-                echo '<div id ="displayLoglink" ><a href="#" onclick="toggleDisplay(\'displayLog\')">'.$app_strings['LBL_DISPLAY_LOG'].'</a> </div><div id="displayLog" style="display:none">';
+                echo '<div id ="displayLoglink" ><a href="#" onclick="toggleDisplay(\'displayLog\')">'.$app_strings['LBL_DISPLAY_LOG']. '</a> </div><div id="displayLog" style="display:none;">';
             }
 
             require_once($this->base_dir . '/manifest.php');
@@ -2282,7 +2282,7 @@ class ModuleInstaller
             if (!$this->silent) {
                 $current_step++;
                 display_progress_bar('install', $current_step, $total_steps);
-                echo '<div id ="displayLoglink" ><a href="#" onclick="toggleDisplay(\'displayLog\')">'.$app_strings['LBL_DISPLAY_LOG'].'</a> </div><div id="displayLog" style="display:none">';
+                echo '<div id ="displayLoglink" ><a href="#" onclick="toggleDisplay(\'displayLog\')">'.$app_strings['LBL_DISPLAY_LOG']. '</a> </div><div id="displayLog" style="display:none;">';
             }
 
             require_once($this->base_dir . '/manifest.php');

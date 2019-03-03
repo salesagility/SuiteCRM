@@ -2188,11 +2188,8 @@ class Email extends Basic
     {
         global $theme;
         global $mod_strings;
-        $out = '<div><input	title="' . $mod_strings['LBL_BUTTON_GRAB_TITLE'] . '"
-						class="button"
-						type="button" name="button"
-						onClick="window.location=\'index.php?module=Emails&action=Grab\';"
-						style="margin-bottom:2px"
+        $out = '<div><input	title="' . $mod_strings['LBL_BUTTON_GRAB_TITLE'] . ';"
+						style="margin-bottom:2px;"
 						value="  ' . $mod_strings['LBL_BUTTON_GRAB'] . '  "></div>';
 
         return $out;
@@ -4142,7 +4139,7 @@ eoq;
 
         $userTable = '<table cellpadding="0" cellspacing="0" border="0">';
         $userTable .= '<tr><td colspan="2"><b>' . $mod_strings['LBL_USER_SELECT'] . '</b></td></tr>';
-        $userTable .= '<tr><td><input type="checkbox" style="border:0 solid #000000" onClick="toggleAll(this); setCheckMark(); checkDeps(this.form);"></td> <td>' . $mod_strings['LBL_TOGGLE_ALL'] . '</td></tr>';
+        $userTable .= '<tr><td><input type="checkbox" style="border:0 solid #000000;" onClick="toggleAll(this); setCheckMark(); checkDeps(this.form);"></td> <td>' . $mod_strings['LBL_TOGGLE_ALL'] . '</td></tr>';
         $userTable .= '<tr><td colspan="2"><select style="visibility:hidden;" name="users[]" id="userSelect" multiple size="12">';
 
         while ($a = $this->db->fetchByAssoc($r)) {
@@ -4235,7 +4232,7 @@ eoq;
 					</tr>
 					<tr>';
         //<td valign="middle" height="30"  colspan="'.$colspan.'" id="hiddenhead" onClick="hideUserSelect();" onMouseOver="this.style.border = \'outset red 1px\';" onMouseOut="this.style.border = \'inset white 0\';this.style.borderBottom = \'inset red 1px\';">
-        $out .= '		<td style="padding:5px" class="oddListRowS1" bgcolor="#fdfdfd" valign="top" align="left" style="left:0;top:0;">
+        $out .= '		<td style="padding:5px;" class="oddListRowS1" bgcolor="#fdfdfd" valign="top" align="left" style="left:0;top:0;">
 							' . $userTable . '
 						</td>
 					</tr>
@@ -4258,9 +4255,7 @@ eoq;
         $out = '<div><input	title="' . $mod_strings['LBL_BUTTON_CHECK_TITLE'] . '"
 						class="button"
 						type="button" name="button"
-						onClick="window.location=\'index.php?module=Emails&action=Check&type=' . $type . '\';"
-						style="margin-bottom:2px"
-						value="  ' . $mod_strings['LBL_BUTTON_CHECK'] . '  "></div>';
+						onClick="window.location=\'index.php?module=Emails&action=Check&type=' . $type . ' . $mod_strings['LBL_BUTTON_CHECK'] . '  "></div>';
 
         return $out;
     }

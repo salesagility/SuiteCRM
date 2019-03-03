@@ -941,19 +941,19 @@ function clear_email_addresses() {
 function quick_create_overlib(id, theme, el) {
 
 		var $dialog = $('<div></div>')
-		.html('<a style=\'width: 150px\' class=\'menuItem\' onmouseover=\'hiliteItem(this,"yes");\' onmouseout=\'unhiliteItem(this);\' href=\'index.php?module=Cases&action=EditView&inbound_email_id=' + id + '\'>' +
-            "<img border='0' src='index.php?entryPoint=getImage&themeName="+SUGAR.themes.theme_name+"&imageName=Cases.gif' style='margin-right:5px'>" + SUGAR.language.get('Emails', 'LBL_LIST_CASE') + '</a>' +
-            "<a style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' href='index.php?module=Leads&action=EditView&inbound_email_id=" + id + "'>" +
-                    "<img border='0' src='index.php?entryPoint=getImage&themeName="+SUGAR.themes.theme_name+"&imageName=Leads.gif' style='margin-right:5px'>"
+		.html('<a style=\'width: 150px;\' class=\'menuItem\' onmouseover=\'hiliteItem(this,"yes");\' onmouseout=\'unhiliteItem(this);\' href=\'index.php?module=Cases&action=EditView&inbound_email_id=' + id + '\'>' +
+            "<img border='0' src='index.php?entryPoint=getImage&themeName="+SUGAR.themes.theme_name+"&imageName=Cases.gif' style='margin-right:5px;'>" + SUGAR.language.get('Emails', 'LBL_LIST_CASE') + '</a>' +
+            "<a style='width: 150px;' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' href='index.php?module=Leads&action=EditView&inbound_email_id=" + id + "'>" +
+                    "<img border='0' src='index.php?entryPoint=getImage&themeName="+SUGAR.themes.theme_name+"&imageName=Leads.gif' style='margin-right:5px;'>"
                     + SUGAR.language.get('Emails', 'LBL_LIST_LEAD') + "</a>" +
-             "<a style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' href='index.php?module=Contacts&action=EditView&inbound_email_id=" + id + "'>" +
-                    "<img border='0' src='index.php?entryPoint=getImage&themeName="+SUGAR.themes.theme_name+"&imageName=Contacts.gif' style='margin-right:5px'>"
+             "<a style='width: 150px;' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' href='index.php?module=Contacts&action=EditView&inbound_email_id=" + id + "'>" +
+                    "<img border='0' src='index.php?entryPoint=getImage&themeName="+SUGAR.themes.theme_name+"&imageName=Contacts.gif' style='margin-right:5px;'>"
                     + SUGAR.language.get('Emails', 'LBL_LIST_CONTACT') + "</a>" +
-             "<a style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' href='index.php?module=Bugs&action=EditView&inbound_email_id=" + id + "'>"+
-                    "<img border='0' src='index.php?entryPoint=getImage&themeName="+SUGAR.themes.theme_name+"&imageName=Bugs.gif' style='margin-right:5px'>"
+             "<a style='width: 150px;' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' href='index.php?module=Bugs&action=EditView&inbound_email_id=" + id + "'>"+
+                    "<img border='0' src='index.php?entryPoint=getImage&themeName="+SUGAR.themes.theme_name+"&imageName=Bugs.gif' style='margin-right:5px;'>"
                     + SUGAR.language.get('Emails', 'LBL_LIST_BUG') + "</a>" +
-             "<a style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' href='index.php?module=Tasks&action=EditView&inbound_email_id=" + id + "'>" +
-                    "<img border='0' src='index.php?entryPoint=getImage&themeName="+SUGAR.themes.theme_name+"&imageName=Tasks.gif' style='margin-right:5px'>"
+             "<a style='width: 150px;' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' href='index.php?module=Tasks&action=EditView&inbound_email_id=" + id + "'>" +
+                    "<img border='0' src='index.php?entryPoint=getImage&themeName="+SUGAR.themes.theme_name+"&imageName=Tasks.gif' style='margin-right:5px;'>"
                    + SUGAR.language.get('Emails', 'LBL_LIST_TASK') + "</a>"
                    )
 		.dialog({

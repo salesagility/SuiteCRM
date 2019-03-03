@@ -74,7 +74,7 @@
 		{if $rowCounter % 2 == 0}
 		<tr>
 		{/if}
-			<td width="50%" align="left"><a id="{$module.id}_icon" href="javascript:void(0)" onclick="{$module.onclick}" style="text-decoration:none">
+			<td width="50%" align="left"><a id="{$module.id}_icon" href="javascript:void(0)" onclick="{$module.onclick}" style="text-decoration:none;">
 					<span class="suitepicon suitepicon-module-{$module.module_name|lower|replace:'_':'-'}"></span>
 					<span id="mbLBLL" class="mbLBLL">{$module.title}</span></a><br /></td>
 		{if $rowCounter % 2 == 1}
@@ -129,14 +129,14 @@
 	    <tr>
 	        <td scope="row">{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}</td>
 	        <td>
-				<input type="text" id="web_address" value="http://" style="width: 400px"   title="{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}"/>
+				<input type="text" id="web_address" value="http://" style="width: 400px;" title="{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}"/>
 				<input type="button" name="create" value="{$APP.LBL_ADD_BUTTON}" onclick="return SUGAR.mySugar.addDashlet('iFrameDashlet', 'web', document.getElementById('web_address').value);" />
 			</td>
         </tr>
 		<tr>
 			<td scope="row">{sugar_translate label='LBL_RSS_TITLE' module='Home'}</td>
 			<td>
-				<input type="text" id="rss_address" value="http://" style="width: 400px"  title="{sugar_translate label='LBL_RSS_TITLE' module='Home'}" />
+				<input type="text" id="rss_address" value="http://" style="width: 400px;" title="{sugar_translate label='LBL_RSS_TITLE' module='Home'}" />
 				<input type="button" name="create" value="{$APP.LBL_ADD_BUTTON}" onclick="return SUGAR.mySugar.addDashlet('RSSDashlet', 'web', document.getElementById('rss_address').value);" />
 			</td>
 		</tr>

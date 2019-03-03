@@ -60,7 +60,7 @@
                 {$NEW_EMAIL}
             </td>
         </tr>
-        <tr id="email_options_link_type" style='display:{$HIDE_FOR_GROUP_AND_PORTAL}'>
+        <tr id="email_options_link_type" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};'>
             <td scope="row" width="17%">
                 {$MOD.LBL_EMAIL_LINK_TYPE}:&nbsp;{sugar_help text=$MOD.LBL_EMAIL_LINK_TYPE_HELP WIDTH=450}
             </td>
@@ -103,7 +103,7 @@
                             </tr>
                         </table>
                         <!-- hide field if user is admin that is not editing themselves -->
-                        <div id='generate_password_old_password' {if ($IS_ADMIN && !$ADMIN_EDIT_SELF)} style='display:none' {/if}>
+                        <div id='generate_password_old_password' {if ($IS_ADMIN && !$ADMIN_EDIT_SELF)} style='display:none;' {/if}>
 
                             <table width='100%' cellspacing='0' cellpadding='0' border='0'>
                                 <tr>
@@ -188,7 +188,7 @@
 </div>
 {if $SHOW_THEMES}
     <div class="user-tab-content">
-        <div id="themepicker" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">
+        <div id="themepicker" style="display:{$HIDE_FOR_GROUP_AND_PORTAL};">
             <table class="edit view" border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tbody>
                 <tr>
@@ -196,7 +196,7 @@
                 </tr>
                 <tr>
                     <td width="17%">
-                        <select name="user_theme" tabindex='366' size="20" id="user_theme_picker" style="width: 100%">
+                        <select name="user_theme" tabindex='366' size="20" id="user_theme_picker" style="width: 100%;">
                             {$THEMES}
                         </select>
                     </td>
@@ -212,7 +212,7 @@
     </div>
 {/if}
 <div class="user-tab-content">
-    <div id="settings" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">
+    <div id="settings" style="display:{$HIDE_FOR_GROUP_AND_PORTAL};">
         <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 
             <tr>
@@ -295,7 +295,7 @@
             <!--{/if}-->
         </table>
     </div>
-    <div id="locale" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">
+    <div id="locale" style="display:{$HIDE_FOR_GROUP_AND_PORTAL};">
         <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
             <tr>
                 <th width="100%" align="left" scope="row" colspan="4">
@@ -412,7 +412,7 @@
             </tr>
         </table>
     </div>
-    <div id="calendar_options" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">
+    <div id="calendar_options" style="display:{$HIDE_FOR_GROUP_AND_PORTAL};">
         <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
             <tr>
                 <th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_CALENDAR_OPTIONS}</h4></th>
@@ -435,21 +435,21 @@
                     </slot>
                 </td>
                 <td colspan=2><span class="calendar_publish_ok">{$CALENDAR_PUBLISH_URL}</span><span
-                            class="calendar_publish_none" style="display: none">{$MOD.LBL_NO_KEY}</span></td>
+                            class="calendar_publish_none" style="display: none;">{$MOD.LBL_NO_KEY}</span></td>
             </tr>
             <tr>
                 <td width="17%" scope="row">
                     <slot>{$MOD.LBL_SEARCH_URL|strip_semicolon}:</slot>
                 </td>
                 <td colspan=2><span class="calendar_publish_ok">{$CALENDAR_SEARCH_URL}</span><span
-                            class="calendar_publish_none" style="display: none">{$MOD.LBL_NO_KEY}</span></td>
+                            class="calendar_publish_none" style="display: none;">{$MOD.LBL_NO_KEY}</span></td>
             </tr>
             <tr>
                 <td width="15%" scope="row">
                     <slot>{$MOD.LBL_ICAL_PUB_URL|strip_semicolon}: {sugar_help text=$MOD.LBL_ICAL_PUB_URL_HELP}</slot>
                 </td>
                 <td colspan=2><span class="calendar_publish_ok">{$CALENDAR_ICAL_URL}</span><span
-                            class="calendar_publish_none" style="display: none">{$MOD.LBL_NO_KEY}</span></td>
+                            class="calendar_publish_none" style="display: none;">{$MOD.LBL_NO_KEY}</span></td>
             </tr>
             <tr>
                 <td width="17%" scope="row">
@@ -466,11 +466,11 @@
 </div>
 {if $ID}
     <div id="eapm_area" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};' class="user-tab-content">
-        <div style="text-align:center; width: 100%">{sugar_getimage name="loading"}</div>
+        <div style="text-align:center; width: 100%;">{sugar_getimage name="loading"}</div>
     </div>
 {/if}
 <div class="user-tab-content">
-    <div id="subthemes" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">
+    <div id="subthemes" style="display:{$HIDE_FOR_GROUP_AND_PORTAL};">
         <table class="edit view" border="0" cellpadding="0" cellspacing="0" width="100%">
             <tbody>
                 <tr>

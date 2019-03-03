@@ -1353,7 +1353,7 @@ table td .btn-toolbar {
   line-height: inherit;
   vertical-align: baseline;
   background-image: none;
-  background-position: 0% 0%;
+  background-position: 0 0;
   background-repeat: repeat;
 }
 li[class^="icon-"],
@@ -4206,7 +4206,7 @@ a.thumbnail:hover {
   border-radius: 4px;
 }
 .progress .bar {
-  width: 0%;
+  width: 0;
   height: 18px;
   color: #ffffff;
   font-size: 12px;
