@@ -5,5 +5,3 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $suitecrm_version = '7.10.14';
 $suitecrm_timestamp = '2019-02-20-17:00:00';
-
-$travis = 'test';
