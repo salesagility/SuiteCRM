@@ -80,7 +80,7 @@ EOQ;
         $sugar_body_only = $_REQUEST['sugar_body_only'];
     }
     foreach ($the_strings as $key=>$value) {
-        echo "<tr><td><span class='dataLabel'>$value</span><br><span style='font-size: 9;'>$key</span><br><input name='$key' value='$value' size='40'></td></tr>";
+        echo "<tr><td><span class='dataLabel'>$value</span><br><span style='font-size: 9px;'>$key</span><br><input name='$key' value='$value' size='40'></td></tr>";
     }
     echo '</table>';
     echo <<<EOQ

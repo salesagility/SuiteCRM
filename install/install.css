@@ -300,9 +300,9 @@ a.other{
 #install_box {
     width: 960px !important;
     min-width: 50% !important;
-    height:600 !important;
+    height:600px !important;
     min-height:600px !important;
-    max-height:600 !important;
+    max-height:600px !important;
     line-height: 1.4em;
     background:#ffffff;
     border:1px solid #cccccc;

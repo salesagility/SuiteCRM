@@ -843,7 +843,7 @@ class wsdl extends nusoap_base
 			padding-top: 10px; padding-bottom: 10px;}
 		    .hidden {
 			position: absolute; visibility: hidden; z-index: 200; left: 250px; top: 100px;
-			font-family: arial; overflow: hidden; width: 600;
+			font-family: arial; overflow: hidden; width: 600px;
 			padding: 20px; font-size: 10px; background-color: #999999;
 			layer-background-color:#FFFFFF; }
 		    a,a:active  { color: charcoal; font-weight: bold; }

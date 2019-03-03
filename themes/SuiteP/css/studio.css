@@ -181,7 +181,7 @@ body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
 #exportcustom > table > tbody > tr > .mbLBL {
   line-height: 20px; }
 
-#popup_form_id > table > tbody > tr > .mbLBL
+#popup_form_id > table > tbody > tr > .mbLBL,
 .relform td {
   padding-bottom: 8px;
   padding-left: 8px; }

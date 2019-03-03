@@ -70,10 +70,10 @@
 }
 .listContainer
 {
-	margin-left: 4;
-	padding-left: 4;
-	margin-right: 4;
-	padding-right: 4;
+	margin-left: 4px;
+	padding-left: 4px;
+	margin-right: 4px;
+	padding-right: 4px;
 	list-style-type: none;
 }
 
@@ -97,7 +97,7 @@ ul#trash
 
 .tdContainer{
 	border: thin solid gray;
-	padding: 10;
+	padding: 10px;
 }
 
 span.error:empty{
