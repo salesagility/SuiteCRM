@@ -975,7 +975,7 @@ function fixUpFormatting($module, $field, $value)
         case 'currency':
         case 'float':
             if ($value === '' || $value == null || $value == 'NULL') {
-                continue;
+                break;
             }
             if (is_string($value)) {
                 $value = (float)unformat_number($value);
@@ -988,7 +988,7 @@ function fixUpFormatting($module, $field, $value)
         case 'tinyint':
         case 'int':
             if ($value === '' || $value == null || $value == 'NULL') {
-                continue;
+                break;
             }
             if (is_string($value)) {
                 $value = (int)unformat_number($value);
