@@ -49,9 +49,10 @@ include_once __DIR__ . '/GoogleApiKeySaverEntryPointMock.php';
 use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
 use SuiteCRM\StateSaver;
 
-class GoogleApiKeySaverEntryPointTest extends StateCheckerPHPUnitTestCaseAbstract {
-    
-    public function testHandleRequestError() {
+class GoogleApiKeySaverEntryPointTest extends StateCheckerPHPUnitTestCaseAbstract
+{
+    public function testHandleRequestError()
+    {
         $user = BeanFactory::getBean('Users');
         $cfg['site_url'] = 'http://foo/bar.org';
         $cfg['google_auth_json'] = base64_encode('{"web":{"client_id":"UNIT_TEST_client_id","project_id":"UNIT_TEST_project_id","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://www.googleapis.com/oauth2/v3/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"UNIT_TEST_client_secret","redirect_uris":["http://www.example.com/index.php?entryPoint=saveGoogleApiKey"]}}');
@@ -74,7 +75,8 @@ class GoogleApiKeySaverEntryPointTest extends StateCheckerPHPUnitTestCaseAbstrac
 </html>', $exitString);
     }
 
-    public function testHandleRequestGetnew() {
+    public function testHandleRequestGetnew()
+    {
         $user = BeanFactory::getBean('Users');
         $cfg['site_url'] = 'http://foo/bar.org';
         $cfg['google_auth_json'] = base64_encode('{"web":{"client_id":"UNIT_TEST_client_id","project_id":"UNIT_TEST_project_id","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://www.googleapis.com/oauth2/v3/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"UNIT_TEST_client_secret","redirect_uris":["http://www.example.com/index.php?entryPoint=saveGoogleApiKey"]}}');
@@ -86,7 +88,8 @@ class GoogleApiKeySaverEntryPointTest extends StateCheckerPHPUnitTestCaseAbstrac
         $this->assertEquals($expected, $redirectString);
     }
 
-    public function testHandleRequestCode() {
+    public function testHandleRequestCode()
+    {
         $state = new StateSaver();
         $state->pushGlobals();
         $state->pushTable('users');
@@ -105,7 +108,8 @@ class GoogleApiKeySaverEntryPointTest extends StateCheckerPHPUnitTestCaseAbstrac
         try {
             $epMock = new GoogleApiKeySaverEntryPointMock($user, $cfg, $client, $request);
             $this->assertTrue(false, "This should have thrown an exception");
-        } catch (Exception $e) {}
+        } catch (Exception $e) {
+        }
         $this->assertEquals(10, $e->getCode());
         
         $state->popTable('tracker');
@@ -114,7 +118,8 @@ class GoogleApiKeySaverEntryPointTest extends StateCheckerPHPUnitTestCaseAbstrac
         $state->popGlobals();
     }
 
-    public function testHandleRequestSetInvalid() {
+    public function testHandleRequestSetInvalid()
+    {
         $state = new StateSaver();
         $state->pushGlobals();
         $state->pushTable('users');
@@ -142,7 +147,8 @@ class GoogleApiKeySaverEntryPointTest extends StateCheckerPHPUnitTestCaseAbstrac
     }
 
 
-    public function testHandleRequestUnknown() {
+    public function testHandleRequestUnknown()
+    {
         $state = new StateSaver();
         $state->pushGlobals();
         $state->pushTable('users');

@@ -122,7 +122,7 @@ class ResourceServer
         $user = $this->getUserFromRequest($request);
 
         // validate user is still active
-        if($user->status === 'Inactive') {
+        if ($user->status === 'Inactive') {
             throw new NotAllowedException('[User Not Active]', ExceptionCode::API_USER_NOT_ACTIVE);
         }
 

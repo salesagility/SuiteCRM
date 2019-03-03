@@ -42,8 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class updateEndDate
 {
-// logic hook is used to update "project end date" when task "end date" exceeds project end date
-    function update(&$bean, $event, $arguments)
+    // logic hook is used to update "project end date" when task "end date" exceeds project end date
+    public function update(&$bean, $event, $arguments)
     {
         if (!empty($bean->project_id)) {
             global $current_user, $timedate;

@@ -296,7 +296,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgenerateMD5array()
     {
 //        self::markTestIncomplete('environment dependency');
-//        
+//
 //        //execute the method and test if it returns expected values
 //
 //        $expected = array(

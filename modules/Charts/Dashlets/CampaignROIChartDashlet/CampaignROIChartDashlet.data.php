@@ -51,4 +51,3 @@ $dashletData['CampaignROIChartDashlet']['searchFields'] = array(
                 'type'  => 'enum',
             )
         );
-

@@ -51,33 +51,32 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  */
 require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
-class EmailAuthenticate extends SugarAuthenticate {
-	var $userAuthenticateClass = 'EmailAuthenticateUser';
-	var $authenticationDir = 'EmailAuthenticate';
-	/**
-	 * Constructs EmailAuthenticate
-	 * This will load the user authentication class
-	 *
-	 * @return EmailAuthenticate
-	 */
-	function __construct(){
-
-		parent::__construct();
-	}
+class EmailAuthenticate extends SugarAuthenticate
+{
+    public $userAuthenticateClass = 'EmailAuthenticateUser';
+    public $authenticationDir = 'EmailAuthenticate';
+    /**
+     * Constructs EmailAuthenticate
+     * This will load the user authentication class
+     *
+     * @return EmailAuthenticate
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function EmailAuthenticate(){
+    public function EmailAuthenticate()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
-
-
 }

@@ -30,10 +30,10 @@ class Attributes extends BaseOption
                 $bean = $this->beanManager->newBeanSafe($options->offsetGet('type'));
                 
                 foreach ($values as $attribute => $value) {
-                    $invalidProperty = 
-                        !property_exists($bean, $attribute) && 
+                    $invalidProperty =
+                        !property_exists($bean, $attribute) &&
                         !array_key_exists($attribute, $bean->field_defs) &&
-                        !array_key_exists($attribute, $bean->field_name_map); 
+                        !array_key_exists($attribute, $bean->field_name_map);
                     if ($invalidProperty) {
                         throw new OutOfBoundsException(sprintf(
                             'Property %s in %s module is invalid',

@@ -24,7 +24,8 @@ class SugarViewTest extends StateCheckerPHPUnitTestCaseAbstract
 //        $current_user = new User();
     }
     
-    protected function tearDown() {
+    protected function tearDown()
+    {
         $this->state->popGlobals();
         
         parent::tearDown();

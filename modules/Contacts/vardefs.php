@@ -850,4 +850,3 @@ $dictionary['Contact'] = array('table' => 'contacts', 'audited' => true,
 
 VardefManager::createVardef('Contacts', 'Contact', array('default', 'assignable', 'security_groups',
     'person'));
-

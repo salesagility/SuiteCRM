@@ -48,10 +48,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelEditRoleButton extends SugarWidgetField
 {
-	function displayHeaderCell($layout_def)
-	{
-		return '&nbsp;';
-	}
+    public function displayHeaderCell($layout_def)
+    {
+        return '&nbsp;';
+    }
 
     public function displayList($layout_def)
     {
@@ -70,9 +70,9 @@ class SugarWidgetSubPanelEditRoleButton extends SugarWidgetField
         if ($layout_def['ListView']) {
             return '<a href="' . $href . '"'
             . "id=\"$unique_id\""
-			. 'class="listViewTdToolsS1">' . $app_strings['LNK_EDIT'] .'</a>&nbsp;';
-	}else{
-		return '';
-	}
-	}
+            . 'class="listViewTdToolsS1">' . $app_strings['LNK_EDIT'] .'</a>&nbsp;';
+        } else {
+            return '';
+        }
+    }
 }

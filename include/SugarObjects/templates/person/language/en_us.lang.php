@@ -100,5 +100,3 @@ $mod_strings = array(
     'LBL_CONSENT' => 'Consent',
     //End Lawful Basis labels
 );
-
-
