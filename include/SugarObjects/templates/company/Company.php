@@ -192,7 +192,7 @@ class Company extends Basic
 
         $where_auto = " $table.deleted=0 ";
 
-        if ($where !== '') {
+        if (!empty($where)) {
             $query .= "WHERE ($where) AND " . $where_auto;
         } else {
             $query .= 'WHERE ' . $where_auto;
@@ -205,5 +205,4 @@ class Company extends Basic
 
         return $query;
     }
-
 }

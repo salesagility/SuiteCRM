@@ -139,8 +139,7 @@ class SugarFolder
         $bean_list         = null,
         $sugar_config      = null,
         $current_language  = null
-    )
-    {
+    ) {
         $this->currentUser     = $current_user;
         $this->appStrings      = $app_strings;
         $this->modStrings      = $mod_strings;
@@ -550,7 +549,6 @@ class SugarFolder
         $email = new Email(); //Needed for email specific functions.
 
         while ($a = $this->db->fetchByAssoc($r)) {
-
             $temp = array();
             $temp['flagged']   = (is_null($a['flagged']) || $a['flagged'] == '0') ? '' : 1;
             $temp['status']    = (is_null($a['reply_to_status']) || $a['reply_to_status'] == '0') ? '' : 1;
@@ -713,7 +711,6 @@ class SugarFolder
         $found = array();
 
         while ($a = $this->db->fetchByAssoc($res)) {
-
             if (!empty($a['folder_type']) &&
                 $a['folder_type'] !== $myArchiveTypeString
             ) {
@@ -852,11 +849,11 @@ class SugarFolder
      * @param array $folders - array of folders table rows
      * @return array
      */
-    private function removeDeletedFolders($folders) {
-
+    private function removeDeletedFolders($folders)
+    {
         $ret = array();
 
-        foreach($folders as $folder) {
+        foreach ($folders as $folder) {
             $correct = false;
 
             if (!$folder['id']) {
@@ -869,7 +866,7 @@ class SugarFolder
                 $correct = true;
             }
 
-            if($correct) {
+            if ($correct) {
                 $ret[] = $folder;
             }
         }
@@ -1252,9 +1249,7 @@ class SugarFolder
             // if parent_id is set, update parent's has_child flag
             $query3 = "UPDATE `folders` SET `has_child` = 1 WHERE `id` = " . $this->db->quoted($this->parent_folder);
             $r3 = $this->db->query($query3);
-
         } else {
-
             $query = "UPDATE `folders` SET " .
                 "`name` = " . $this->db->quoted($this->name) . ", " .
                 "`parent_folder` = " . $this->db->quoted($this->parent_folder) . ", " .

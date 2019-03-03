@@ -49,14 +49,15 @@ require_once('include/Sugarpdf/Sugarpdf.php');
  * You have to extend this class, set the templateLocation to your smarty template
  * location and assign the Smarty variables ($this->ss->assign()) in the overriden
  * preDisplay method (don't forget to call the parent).
- * 
+ *
  * @author bsoufflet
  *
  */
-class SugarpdfSmarty extends Sugarpdf{
+class SugarpdfSmarty extends Sugarpdf
+{
     
     /**
-     * 
+     *
      * @var String
      */
     protected $templateLocation = "";
@@ -75,14 +76,16 @@ class SugarpdfSmarty extends Sugarpdf{
     protected $smartyCell = false;
     protected $smartyAlign = "";
     
-    function preDisplay(){
+    public function preDisplay()
+    {
         parent::preDisplay();
         $this->print_header = false;
         $this->print_footer = false;
         $this->_initSmartyInstance();
     }
     
-    function display(){
+    public function display()
+    {
         //turn off all error reporting so that PHP warnings don't munge the PDF code
         $state = new \SuiteCRM\StateSaver();
         $state->pushPHPConfigOptions();
@@ -93,14 +96,14 @@ class SugarpdfSmarty extends Sugarpdf{
         error_reporting(E_ALL);
         set_time_limit(1800);
         
-        //Create new page           
+        //Create new page
         $this->AddPage();
-        $this->SetFont(PDF_FONT_NAME_MAIN,'',8);
+        $this->SetFont(PDF_FONT_NAME_MAIN, '', 8);
         
-        if(!empty($this->templateLocation)){
+        if (!empty($this->templateLocation)) {
             $str = $this->ss->fetch($this->templateLocation);
             $this->writeHTML($str, $this->smartyLn, $this->smartyFill, $this->smartyReseth, $this->smartyCell, $this->smartyAlign);
-        }else{
+        } else {
             $this->Error('The class SugarpdfSmarty has to be extended and you have to set a location for the Smarty template.');
         }
         
@@ -112,13 +115,13 @@ class SugarpdfSmarty extends Sugarpdf{
     /**
      * Init the Sugar_Smarty object.
      */
-    private function _initSmartyInstance(){
-        if ( !($this->ss instanceof Sugar_Smarty) ) {
+    private function _initSmartyInstance()
+    {
+        if (!($this->ss instanceof Sugar_Smarty)) {
             require_once('include/Sugar_Smarty.php');
             $this->ss = new Sugar_Smarty();
             $this->ss->assign('MOD', $GLOBALS['mod_strings']);
             $this->ss->assign('APP', $GLOBALS['app_strings']);
         }
     }
-    
 }

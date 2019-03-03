@@ -49,7 +49,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-if(empty($fields_array['User'])){
-	include('modules/Users/field_arrays.php');
+if (empty($fields_array['User'])) {
+    include('modules/Users/field_arrays.php');
 }
 $fields_array['Employee']=$fields_array['User'];

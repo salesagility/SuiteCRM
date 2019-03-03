@@ -89,9 +89,9 @@ $dictionary['AOBH_BusinessHours'] = array(
             'studio' => 'visible',
             'dependency' => false,
         ),
-        'open' => array(
+        'open_status' => array(
             'required' => false,
-            'name' => 'open',
+            'name' => 'open_status',
             'vname' => 'LBL_OPEN',
             'type' => 'bool',
         ),

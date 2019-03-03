@@ -48,7 +48,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
  
-interface Store {
+interface Store
+{
 
     /**
      * flush
@@ -56,5 +57,4 @@ interface Store {
      * @param $monitor An instance of Monitor
      */
     public function flush($monitor);
-
 }

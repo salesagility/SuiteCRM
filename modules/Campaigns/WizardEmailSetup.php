@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,22 +38,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
-
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
-/*************** general UI Stuff ****************/
-
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+       die('Not A Valid Entry Point');
+}
 
 global $mod_strings,$app_list_strings,$app_strings,$current_user;
 
+require_once __DIR__ . "/../../include/Imap/ImapHandlerFactory.php";
 
 if (!is_admin($current_user)&& !is_admin_for_module($GLOBALS['current_user'], 'Campaigns')) {
     sugar_die("Unauthorized access to administration.");
@@ -112,25 +100,25 @@ $protocol = filterInboundEmailPopSelection($app_list_strings['dom_email_server_t
 $ss->assign('PROTOCOL', get_select_options_with_id($protocol, ''));
 if (isset($focus->settings['massemailer_campaign_emails_per_run']) && !empty($focus->settings['massemailer_campaign_emails_per_run'])) {
     $ss->assign("EMAILS_PER_RUN", $focus->settings['massemailer_campaign_emails_per_run']);
-} else  {
+} else {
     $ss->assign("EMAILS_PER_RUN", 500);
 }
 
 if (!isset($focus->settings['massemailer_tracking_entities_location_type']) or empty($focus->settings['massemailer_tracking_entities_location_type']) or $focus->settings['massemailer_tracking_entities_location_type']=='1') {
     $ss->assign("DEFAULT_CHECKED", "checked");
     $ss->assign("TRACKING_ENTRIES_LOCATION_STATE", "disabled");
-    $ss->assign("TRACKING_ENTRIES_LOCATION",$mod_strings['TRACKING_ENTRIES_LOCATION_DEFAULT_VALUE']);
-} else  {
+    $ss->assign("TRACKING_ENTRIES_LOCATION", $mod_strings['TRACKING_ENTRIES_LOCATION_DEFAULT_VALUE']);
+} else {
     $ss->assign("USERDEFINED_CHECKED", "checked");
-    $ss->assign("TRACKING_ENTRIES_LOCATION",$focus->settings["massemailer_tracking_entities_location"]);
+    $ss->assign("TRACKING_ENTRIES_LOCATION", $focus->settings["massemailer_tracking_entities_location"]);
 }
 
-$ss->assign("SITEURL",$sugar_config['site_url']);
+$ss->assign("SITEURL", $sugar_config['site_url']);
 
 // Change the default campaign to not store a copy of each message.
 if (!empty($focus->settings['massemailer_email_copy']) and $focus->settings['massemailer_email_copy']=='1') {
     $ss->assign("YES_CHECKED", "checked='checked'");
-} else  {
+} else {
     $ss->assign("NO_CHECKED", "checked='checked'");
 }
 
@@ -140,24 +128,25 @@ $ss->assign("MAIL_SSL_OPTIONS", get_select_options_with_id($app_list_strings['em
 /*********** New Mail Box UI DIV Stuff ****************/
 $mbox_qry = "select * from inbound_email where deleted ='0' and mailbox_type = 'bounce'";
 $mbox_res = $focus->db->query($mbox_qry);
-while ($mbox_row = $focus->db->fetchByAssoc($mbox_res)){$mbox[] = $mbox_row;}
+while ($mbox_row = $focus->db->fetchByAssoc($mbox_res)) {
+    $mbox[] = $mbox_row;
+}
 $mbox_msg = ' ';
 $need_mbox = '';
 
 $mboxTable = "<table class='list view' width='100%' border='0' cellspacing='1' cellpadding='1'>";
-if(isset($mbox) && count($mbox)>0){
+if (isset($mbox) && count($mbox)>0) {
     $mboxTable .= "<tr><td colspan='5'><b>" .count($mbox) ." ". $mod_strings['LBL_MAILBOX_CHECK_WIZ_GOOD']." </b>.</td></tr>";
-        $mboxTable .= "<tr class='listViewHRS1'><td width='20%'><b>".$mod_strings['LBL_MAILBOX_NAME']."</b></td>"
+    $mboxTable .= "<tr class='listViewHRS1'><td width='20%'><b>".$mod_strings['LBL_MAILBOX_NAME']."</b></td>"
                    .  " <td width='20%'><b>".$mod_strings['LBL_LOGIN']."</b></td>"
                    .  " <td width='20%'><b>".$mod_strings['LBL_MAILBOX']."</b></td>"
                    .  " <td width='20%'><b>".$mod_strings['LBL_SERVER_URL']."</b></td>"
                    .  " <td width='20%'><b>".$mod_strings['LBL_LIST_STATUS']."</b></td></tr>";
     $colorclass=' ';
-    foreach($mbox as $details){
-
-     if( $colorclass == "class='evenListRowS1'"){
+    foreach ($mbox as $details) {
+        if ($colorclass == "class='evenListRowS1'") {
             $colorclass= "class='oddListRowS1'";
-        }else{
+        } else {
             $colorclass= "class='evenListRowS1'";
         }
         
@@ -168,16 +157,16 @@ if(isset($mbox) && count($mbox)>0){
         $mboxTable .= "<td>".$details['server_url']."</td>";
         $mboxTable .= "<td>".$details['status']."</td></tr>";
     }
-
-
-}else{
-$need_mbox = 'checked';
-$mboxTable .= "<tr><td colspan='5'><b>".$mod_strings['LBL_MAILBOX_CHECK_WIZ_BAD']." </b>.</td></tr>";
+} else {
+    $need_mbox = 'checked';
+    $mboxTable .= "<tr><td colspan='5'><b>".$mod_strings['LBL_MAILBOX_CHECK_WIZ_BAD']." </b>.</td></tr>";
 }
 $mboxTable .= "</table>";
 $ss->assign("MAILBOXES_DETECTED_MESSAGE", $mboxTable);
 $ss->assign("MBOX_NEEDED", $need_mbox);
 $ss->assign('ROLLOVER', $email->rolloverStyle);
+
+
 
 $imapFactory = new ImapHandlerFactory();
 $imap = $imapFactory->getImapHandler();
@@ -420,7 +409,7 @@ if (!$imap->isAvailable()) {
 </script>
 EOQ;
 
-if(isset($_REQUEST['error'])){
+if (isset($_REQUEST['error'])) {
     //if there is an error flagged, then we are coming here after a save where there was an error detected
     //on an inbound email save.  Display error to user so they are aware.
     $errorString = "<div class='error'>".$mod_strings['ERR_NO_OPTS_SAVED']."  <a href='index.php?module=InboundEmail&action=index'>".$mod_strings['ERR_REVIEW_EMAIL_SETTINGS']."</a></div>";

@@ -49,12 +49,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $app_strings, $current_user;
 global $sugar_config, $sugar_version, $sugar_flavor, $server_unique_key, $current_language, $action;
 
- if(!isset($global_control_links)){
- 	$global_control_links = array();
-	$sub_menu = array();
+ if (!isset($global_control_links)) {
+     $global_control_links = array();
+     $sub_menu = array();
  }
-if(isset( $sugar_config['disc_client']) && $sugar_config['disc_client']){
-	require_once('modules/Sync/headermenu.php');
+if (isset($sugar_config['disc_client']) && $sugar_config['disc_client']) {
+    require_once('modules/Sync/headermenu.php');
 }
 
 
@@ -65,11 +65,13 @@ $global_control_links['employees'] = array(
 if (
         is_admin($current_user)
 
-        ) $global_control_links['admin'] = array(
+        ) {
+    $global_control_links['admin'] = array(
 
 'linkinfo' => array($app_strings['LBL_ADMIN'] => 'index.php?module=Administration&action=index'),
 'submenu' => ''
 );
+}
 $global_control_links['training'] = array(
 'linkinfo' => array($app_strings['LBL_TRAINING'] => 'javascript:void(window.open(\'https://suitecrm.com/suitecrm/forum/suite-forum\'))'),
 'submenu' => ''

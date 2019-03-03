@@ -75,7 +75,7 @@ class ListViewController extends BaseController
     }
     
     /**
-     * 
+     *
      * @param Request $request
      * @param Response $response
      * @param array $args

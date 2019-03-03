@@ -47,4 +47,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 $_REQUEST['edit']='true';
-include ("modules/Releases/index.php");
+include("modules/Releases/index.php");

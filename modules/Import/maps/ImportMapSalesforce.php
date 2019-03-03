@@ -52,11 +52,11 @@ require_once('modules/Import/maps/ImportMapOther.php');
 
 class ImportMapSalesforce extends ImportMapOther
 {
-	/**
+    /**
      * String identifier for this import
      */
     public $name = 'salesforce';
-	/**
+    /**
      * Field delimiter
      */
     public $delimiter = ',';
@@ -64,21 +64,20 @@ class ImportMapSalesforce extends ImportMapOther
      * Field enclosure
      */
     public $enclosure = '"';
-	/**
+    /**
      * Do we have a header?
      */
     public $has_header = true;
 
-	/**
+    /**
      * Gets the default mapping for a module
      *
      * @param  string $module
      * @return array field mappings
      */
-	public function getMapping(
+    public function getMapping(
         $module
-        )
-    {
+        ) {
         $return_array = parent::getMapping($module);
         switch ($module) {
         case 'Contacts':
@@ -153,15 +152,13 @@ class ImportMapSalesforce extends ImportMapOther
             return $return_array;
         }
     }
-	
-	/**
-	* @see ImportMapOther::getIgnoredFields()
+    
+    /**
+    * @see ImportMapOther::getIgnoredFields()
      */
-	public function getIgnoredFields(
-		$module
-		)
-	{
-		return array_merge(parent::getIgnoredFields($module),array('id'));
-	}
+    public function getIgnoredFields(
+        $module
+        ) {
+        return array_merge(parent::getIgnoredFields($module), array('id'));
+    }
 }
-

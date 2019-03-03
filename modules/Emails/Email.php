@@ -491,7 +491,9 @@ class Email extends Basic
         if (null !== $this->lastSaveAndStoreInSentError) {
             throw new EmailException(
                 'Last Error for method SaveAndStoreInSentFolder() already set but never checked: ' .
-                $this->lastSaveAndStoreInSentError, self::UNHANDLED_LAST_ERROR);
+                $this->lastSaveAndStoreInSentError,
+                self::UNHANDLED_LAST_ERROR
+            );
         }
         $this->lastSaveAndStoreInSentError = $err;
     }
@@ -1233,7 +1235,7 @@ class Email extends Basic
 
                     $filename = $docRev->filename;
                     $docGUID = preg_replace('/[^a-z0-9\-]/', "", $docRev->id);
-                    $fileLocation = "upload://{$docGUID}";
+                    $fileLocation = "upload/{$docGUID}";
                     $mime_type = $docRev->file_mime_type;
                     $mail->AddAttachment(
                         $fileLocation,
@@ -1252,7 +1254,7 @@ class Email extends Basic
                         $note->name = $filename;
                         $note->filename = $filename;
                         $note->file_mime_type = $mime_type;
-                        $dest = "upload://{$note->id}";
+                        $dest = "upload/{$note->id}";
                         if (!copy($fileLocation, $dest)) {
                             $GLOBALS['log']->debug("EMAIL 2.0: could not copy SugarDocument revision file $fileLocation => $dest");
                         }
@@ -1274,7 +1276,7 @@ class Email extends Basic
                     if (!empty($note->id)) {
                         $filename = $note->filename;
                         $noteGUID = preg_replace('/[^a-z0-9\-]/', "", $note->id);
-                        $fileLocation = "upload://{$noteGUID}";
+                        $fileLocation = "upload/{$noteGUID}";
                         $mime_type = $note->file_mime_type;
                         if (!$note->embed_flag) {
                             $mail->AddAttachment($fileLocation, $filename, 'base64', $mime_type);
@@ -2909,8 +2911,8 @@ class Email extends Basic
         InboundEmail $ie = null,
         Email $tempEmail = null,
         $check_notify = false,
-        $options = "\\Seen")
-    {
+        $options = "\\Seen"
+    ) {
         global $mod_strings, $app_strings;
         global $current_user;
         global $sugar_config;
@@ -3031,11 +3033,11 @@ class Email extends Basic
                 $mime_type = 'text/plain';
                 if ($note->object_name == 'Note') {
                     if (!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) { // brandy-new file upload/attachment
-                        $file_location = "file://" . $note->file->temp_file_location;
+                        $file_location = "file/" . $note->file->temp_file_location;
                         $filename = $note->file->original_file_name;
                         $mime_type = $note->file->mime_type;
                     } else { // attachment coming from template/forward
-                        $file_location = "upload://{$note->id}";
+                        $file_location = "upload/{$note->id}";
                         // cn: bug 9723 - documents from EmailTemplates sent with Doc Name, not file name.
                         $filename = !empty($note->filename) ? $note->filename : $note->name;
                         $mime_type = $note->file_mime_type;
@@ -3044,7 +3046,7 @@ class Email extends Basic
                     $filePathName = $note->id;
                     // cn: bug 9723 - Emails with documents send GUID instead of Doc name
                     $filename = $note->getDocumentRevisionNameForDisplay();
-                    $file_location = "upload://$note->id";
+                    $file_location = "upload/$note->id";
                     $mime_type = $note->file_mime_type;
                 }
 
@@ -3147,8 +3149,8 @@ class Email extends Basic
         SugarPHPMailer $mail,
         NonGmailSentFolderHandler $nonGmailSentFolder,
         $check_notify = false,
-        $options = "\\Seen")
-    {
+        $options = "\\Seen"
+    ) {
         $ieMailId = null;
         if (!$ie) {
             $ie = new InboundEmail();
@@ -3181,8 +3183,8 @@ class Email extends Basic
         InboundEmail $ie,
         NonGmailSentFolderHandler $nonGmailSentFolder = null,
         $check_notify = false,
-        $options = "\\Seen")
-    {
+        $options = "\\Seen"
+    ) {
         $ieMailId = $this->save($check_notify);
         if ($ieMailId) {
             // mark SEEN (STORE MAIL IN SENT BOX)
@@ -3216,7 +3218,6 @@ class Email extends Basic
         $is_owner = false;
         $in_group = false; //SECURITY GROUPS
         if (!empty($this->parent_name)) {
-
             if (!empty($this->parent_name_owner)) {
                 global $current_user;
                 $is_owner = $current_user->id == $this->parent_name_owner;
@@ -4548,7 +4549,7 @@ eoq;
 
             $bean->to_addrs_arr[] = array(
                 'email' => $email,
-                'display' => mb_encode_mimeheader($display, 'UTF-8', 'Q')
+                'display' => $display
             );
         }
 
@@ -4729,12 +4730,12 @@ eoq;
 
             if (
                 $emailAddress !== null
-                && $emailAddress->getConfirmedOptInState() != EmailAddress::COI_STAT_CONFIRMED_OPT_IN
-                && empty($emailAddress->confirm_opt_in_sent_date)
+                && $emailAddress->confirm_opt_in_sent_date === null
+                && $emailAddress->email_address !== null && $emailAddress->getConfirmedOptInState() === EmailAddress::COI_STAT_CONFIRMED_OPT_IN
             ) {
                 $ret = $this->sendOptInEmail($emailAddress);
                 if (!$ret) {
-                    LoggerManager::getLogger()->error('Error sending opt-in email to: ' . $emailAddress);
+                    LoggerManager::getLogger()->error('Error sending opt-in email to: ' . $emailAddress->email_address);
                 }
             }
         }
