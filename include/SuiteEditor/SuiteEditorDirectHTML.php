@@ -59,7 +59,8 @@ class SuiteEditorDirectHTML implements SuiteEditorInterface
      *
      * @param SuiteEditorSettings $settings
      */
-    public function setup(SuiteEditorSettings $settings = null) {
+    public function setup(SuiteEditorSettings $settings = null)
+    {
         $this->settings = $settings;
     }
 
@@ -68,10 +69,10 @@ class SuiteEditorDirectHTML implements SuiteEditorInterface
      *
      * @return mixed
      */
-    public function getHtml() {
+    public function getHtml()
+    {
         $smarty = new Sugar_Smarty();
         $smarty->assign((array)$this->settings);
         return $smarty->fetch(get_custom_file_if_exists('include/SuiteEditor/tpls/SuiteEditorDirectHTML.tpl'));
     }
-
 }

@@ -55,18 +55,20 @@ function displaySubjectField($focus, $field, $value, $view)
     $result = '';
     $bean = $focus;
 
-    if(empty($view)) {
+    if (empty($view)) {
         return $result;
     }
 
-    if(strtolower($field) !== 'subject') {
+    if (strtolower($field) !== 'subject') {
         return $result;
     }
 
-    if(is_object($focus)) {
+    if (is_object($focus)) {
         $focus = get_object_vars($focus);
-    } else if(is_array($focus)) {
-        $focus = array_change_key_case($focus, CASE_LOWER);
+    } else {
+        if (is_array($focus)) {
+            $focus = array_change_key_case($focus, CASE_LOWER);
+        }
     }
 
 

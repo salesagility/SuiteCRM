@@ -42,7 +42,6 @@ use SuiteCRM\Utility\BeanJsonSerializerTestData\BeanMock;
 
 class BeanJsonSerializerTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-
     public function testToArrayContact()
     {
         $mockBean = new BeanMock(__DIR__ . '/BeanJsonSerializerTestData/ContactBean.json');

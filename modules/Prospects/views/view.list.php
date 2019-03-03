@@ -1,4 +1,4 @@
-<?php 
+<?php
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -45,14 +45,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/MVC/View/views/view.list.php');
 require_once('modules/Prospects/ProspectsListViewSmarty.php');
 
-class ProspectsViewList extends ViewList {
-	
-	function LeadsViewList(){
-		parent::__construct();
-	}
-	
-	function preDisplay(){
-		$this->lv = new ProspectsListViewSmarty();
-		$this->lv->targetList = true;
-	}
+class ProspectsViewList extends ViewList
+{
+    public function LeadsViewList()
+    {
+        parent::__construct();
+    }
+    
+    public function preDisplay()
+    {
+        $this->lv = new ProspectsListViewSmarty();
+        $this->lv->targetList = true;
+    }
 }

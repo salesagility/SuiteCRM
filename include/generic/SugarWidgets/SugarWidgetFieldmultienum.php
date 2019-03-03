@@ -43,13 +43,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
-	public function queryFilternot_one_of($layout_def) {
-		$arr = array ();
-		foreach ($layout_def['input_name0'] as $value) {
-			array_push($arr, "'".DBManagerFactory::getInstance()->quote($value)."'");
-		}
-	    $reporter = $this->layout_manager->getAttribute("reporter");
+class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum
+{
+    public function queryFilternot_one_of($layout_def)
+    {
+        $arr = array();
+        foreach ($layout_def['input_name0'] as $value) {
+            array_push($arr, "'".DBManagerFactory::getInstance()->quote($value)."'");
+        }
+        $reporter = $this->layout_manager->getAttribute("reporter");
 
         $col_name = $this->_get_column_select($layout_def) . " NOT LIKE " ;
         $arr_count = count($arr);
@@ -71,33 +73,35 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
         //Fix for inaccurate filtering of contacts in Contacts dashlet on multiselects.
         $arr = array();
         foreach ($layout_def['input_name0'] as $value) {
-            if($value != ""){
+            if ($value != "") {
                 array_push($arr, "'".DBManagerFactory::getInstance()->quote($value)."'");
-            }else{
+            } else {
                 array_push($arr, "'^^'");
             }
         }
-	    $reporter = $this->layout_manager->getAttribute("reporter");
+        $reporter = $this->layout_manager->getAttribute("reporter");
 
-    	$col_name = $this->_get_column_select($layout_def) . " LIKE " ;
-    	$arr_count = count($arr);
-    	$query = "";
-    	foreach($arr as $key=>$val) {
-    		$query .= $col_name;
-			$value = preg_replace("/^'/", "'%", $val, 1);
-			$value = preg_replace("/'$/", "%'", $value, 1);
-			$query .= $value;
-			if ($key != ($arr_count - 1))
-    			$query.= " OR " ;	
-    	}
-		return '('.$query.')';        
-	}
+        $col_name = $this->_get_column_select($layout_def) . " LIKE " ;
+        $arr_count = count($arr);
+        $query = "";
+        foreach ($arr as $key=>$val) {
+            $query .= $col_name;
+            $value = preg_replace("/^'/", "'%", $val, 1);
+            $value = preg_replace("/'$/", "%'", $value, 1);
+            $query .= $value;
+            if ($key != ($arr_count - 1)) {
+                $query.= " OR " ;
+            }
+        }
+        return '('.$query.')';
+    }
 
-	public function queryFilteris($layout_def) {
-		$input_name0 = $layout_def['input_name0'];
-		if (is_array($layout_def['input_name0'])) {
-			$input_name0 = $layout_def['input_name0'][0];
-		}
+    public function queryFilteris($layout_def)
+    {
+        $input_name0 = $layout_def['input_name0'];
+        if (is_array($layout_def['input_name0'])) {
+            $input_name0 = $layout_def['input_name0'][0];
+        }
 
         // Bug 40022
         // IS filter doesn't add the carets (^) to multienum custom field values
@@ -106,11 +110,12 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
         return $this->_get_column_select($layout_def)." = ".$this->reporter->db->quoted($input_name0)."\n";
     }
 
-	public function queryFilteris_not($layout_def) {
-		$input_name0 = $layout_def['input_name0'];
-		if (is_array($layout_def['input_name0'])) {
-			$input_name0 = $layout_def['input_name0'][0];
-		}
+    public function queryFilteris_not($layout_def)
+    {
+        $input_name0 = $layout_def['input_name0'];
+        if (is_array($layout_def['input_name0'])) {
+            $input_name0 = $layout_def['input_name0'][0];
+        }
 
         // Bug 50549
         // IS NOT filter doesn't add the carets (^) to multienum custom field values
@@ -125,7 +130,8 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
      * @param  $layout_def
      * @return string
      */
-    public function queryOrderBy($layout_def) {
+    public function queryOrderBy($layout_def)
+    {
         return SugarWidgetReportField::queryOrderBy($layout_def);
     }
     
@@ -135,13 +141,13 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
      * @param string $value value to be escaped
      * @return string
      */
-    private function encodeMultienumCustom($layout_def, $value) {
-    	$field_def = $this->reporter->getFieldDefFromLayoutDef($layout_def);
-    	// Check if it is a custom field
-		if (!empty($field_def['source']) && ($field_def['source'] == 'custom_fields' || ($field_def['source'] == 'non-db' && !empty($field_def['ext2']) && !empty($field_def['id']))) && !empty($field_def['real_table']))
-		{
-			$value = encodeMultienumValue(array($value)); 
-		}
-		return $value;
+    private function encodeMultienumCustom($layout_def, $value)
+    {
+        $field_def = $this->reporter->getFieldDefFromLayoutDef($layout_def);
+        // Check if it is a custom field
+        if (!empty($field_def['source']) && ($field_def['source'] == 'custom_fields' || ($field_def['source'] == 'non-db' && !empty($field_def['ext2']) && !empty($field_def['id']))) && !empty($field_def['real_table'])) {
+            $value = encodeMultienumValue(array($value));
+        }
+        return $value;
     }
 }

@@ -199,7 +199,13 @@ class SearchResultsController extends Controller
     {
         $label = isset($fieldValue['label']) ?
             LangText::get(
-                $fieldValue['label'], null, LangText::USING_ALL_STRINGS, true, true, $bean->module_name) :
+                $fieldValue['label'],
+                null,
+                LangText::USING_ALL_STRINGS,
+                true,
+                true,
+                $bean->module_name
+            ) :
             null;
         if (!$label) {
             $label = isset($fieldDef['vname']) ?

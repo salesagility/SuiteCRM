@@ -48,28 +48,26 @@ require_once('include/EditView/SugarVCR.php');
  * Data set for ListView
  * @api
  */
-class ProjectListViewData extends ListViewData{
+class ProjectListViewData extends ListViewData
+{
 
 
-	/**
-	 * generates the additional details span to be retrieved via ajax
-	 *
-	 * @param GUID id id of the record
-	 * @return array string to attach to field
-	 */
-	function getAdditionalDetailsAjax($id)
+    /**
+     * generates the additional details span to be retrieved via ajax
+     *
+     * @param GUID id id of the record
+     * @return array string to attach to field
+     */
+    public function getAdditionalDetailsAjax($id)
     {
         global $app_strings;
 
         $jscalendarImage = '<span class="suitepicon suitepicon-action-info"></span>';
-		$jsdetailviewImage = '<span class="suitepicon suitepicon-action-view-record"></span>';
+        $jsdetailviewImage = '<span class="suitepicon suitepicon-action-view-record"></span>';
 
         $extra = "<span id='adspan_" . $id . "' "
                 . "onclick=\"lvg_dtails('$id')\" "
                 . "title=\"".$app_strings['LBL_ADDITIONAL_DETAILS']."\" "
-				. " style='position: relative;'><!--not_in_theme!--><span class=\"suitepicon suitepicon-module-calendar\"></span></span>";
-
-   
-	}
-
+                . " style='position: relative;'><!--not_in_theme!--><span class=\"suitepicon suitepicon-module-calendar\"></span></span>";
+    }
 }

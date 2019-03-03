@@ -47,10 +47,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author gyula
  */
-class EmailValidatorException extends Exception {
-    
+class EmailValidatorException extends Exception
+{
     const EMAIL_IS_NOT_SET = 1;
     const PREG_MATCH_ERROR_AT_FROMADDRNAME = 2;
     const EMAIL_ISNT_EMAILOBJ = 3;
-    
 }

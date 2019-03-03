@@ -54,7 +54,8 @@ require_once __DIR__ . '/../../../../../modules/Emails/EmailFromValidator.php';
 class EmailFromValidatorTest extends StateCheckerPHPUnitTestCaseAbstract
 {
     // TODO: !@# Needs more test...
-    public function testValidateWrongFromAddr() {
+    public function testValidateWrongFromAddr()
+    {
         $email = new Email();
         $validator = new EmailFromValidator();
         
@@ -157,7 +158,6 @@ class EmailFromValidatorTest extends StateCheckerPHPUnitTestCaseAbstract
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM,
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID,
         ], $errors);
-        
     }
     
     public function testValidateOk()

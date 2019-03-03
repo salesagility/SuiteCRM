@@ -40,7 +40,7 @@
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-    die ('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
 
@@ -104,11 +104,10 @@ class EmailsViewDetailNonImported extends ViewDetail
                 foreach ($slots as $slot) {
                     $fields = $slot;
                     foreach ($fields as $field) {
-                        if(isset($field['name'])) {
+                        if (isset($field['name'])) {
                             $fields_in_definition[] = $field['name'];
                         }
                     }
-
                 }
             }
 

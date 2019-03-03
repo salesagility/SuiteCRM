@@ -74,7 +74,7 @@ class UserPreferencesController extends BaseController
     }
     
     /**
-     * 
+     *
      * @param Request $request
      * @param Response $response
      * @param array $args

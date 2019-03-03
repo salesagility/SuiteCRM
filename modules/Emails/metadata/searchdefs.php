@@ -77,12 +77,12 @@ $searchdefs[$module_name] = array(
                 'type' => 'enum',
                 'function' => array('name' => 'get_user_array', 'params' => array(false))
             ),
-            'category_id' => array (
+            'category_id' => array(
                 'name' => 'category_id',
                 'default' => true,
                 'width' => '10%',
             ),
-            'parent_name' => array (
+            'parent_name' => array(
                 'name' => 'parent_name',
                 'default' => true,
                 'width' => '10%',

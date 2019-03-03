@@ -41,12 +41,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if(isset($_REQUEST['record']) && !empty($_REQUEST['record'])) {
-	
-	$focus = new Group();
-	$focus->retrieve($_REQUEST['record']);
-	$focus->mark_deleted($focus->id);
+if (isset($_REQUEST['record']) && !empty($_REQUEST['record'])) {
+    $focus = new Group();
+    $focus->retrieve($_REQUEST['record']);
+    $focus->mark_deleted($focus->id);
 }
 
 header("Location: index.php?module=Groups&action=index");
-
