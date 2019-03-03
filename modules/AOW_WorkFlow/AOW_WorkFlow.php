@@ -263,6 +263,40 @@ class AOW_WorkFlow extends Basic
         return null;
     }
 
+
+    /**
+     * @deprecated since v7.8.21; use build_flow_custom_query_join or build_flow_relationship_query_join
+     * @param $name
+     * @param SugarBean $module
+     * @param $type
+     * @param array $query
+     * @return array
+     */
+    function build_flow_query_join($name, SugarBean $module, $type, $query = array())
+    {
+        if (!isset($query['join'][$name])) {
+            switch ($type) {
+                case 'custom':
+                    $query['join'][$name] = 'LEFT JOIN ' . $module->get_custom_table_name() . ' ' . $name . ' ON ' . $module->table_name . '.id = ' . $name . '.id_c ';
+                    break;
+                case 'relationship':
+                    if ($module->load_relationship($name)) {
+                        $params['join_type'] = 'LEFT JOIN';
+                        $params['join_table_alias'] = $name;
+                        $join = $module->$name->getJoin($params, true);
+
+                        $query['join'][$name] = $join['join'];
+                        $query['select'][] = $join['select'] . " AS '" . $name . "_id'";
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return $query;
+    }
+
     function build_flow_custom_query_join($name, $custom_name, SugarBean $module,
             $query = array()) {
         if(!isset($query['join'][$custom_name])) {
