@@ -47,10 +47,8 @@ use SuiteCRM\LangText;
  */
 class BadRequestException extends ApiException
 {
-    
     const MSG_PREFIX = '[BadRequest]';
     const DEFAULT_CODE = 8020;
     const HTTP_STATUS = 400;
     const DETAIL_TEXT_LABEL = 'LBL_BAD_REQUEST_EXCEPTION_DETAIL';
-
 }

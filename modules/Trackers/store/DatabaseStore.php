@@ -56,39 +56,43 @@ require_once('modules/Trackers/store/Store.php');
  * the configured database instance as defined in DBManagerFactory::getInstance() method
  *
  */
-class DatabaseStore implements Store {
+class DatabaseStore implements Store
+{
+    public function flush($monitor)
+    {
+        $metrics = $monitor->getMetrics();
+        $columns = array();
+        $values = array();
+        foreach ($metrics as $name=>$metric) {
+            if (!empty($monitor->$name)) {
+                $columns[] = $name;
+                if ($metrics[$name]->_type == 'int') {
+                    $values[] = intval($monitor->$name);
+                } else {
+                    if ($metrics[$name]->_type == 'double') {
+                        $values[] = floatval($monitor->$name);
+                    } else {
+                        if ($metrics[$name]->_type == 'datetime') {
+                            $values[] = DBManagerFactory::getInstance()->convert(DBManagerFactory::getInstance()->quoted($monitor->$name), "datetime");
+                        } else {
+                            $values[] = DBManagerFactory::getInstance()->quoted($monitor->$name);
+                        }
+                    }
+                }
+            }
+        } //foreach
 
-    public function flush($monitor) {
+        if (empty($values)) {
+            return;
+        }
 
-       $metrics = $monitor->getMetrics();
-       $columns = array();
-       $values = array();
-       foreach($metrics as $name=>$metric) {
-       	  if(!empty($monitor->$name)) {
-       	  	 $columns[] = $name;
-       	  	 if($metrics[$name]->_type == 'int') {
-       	  	    $values[] = intval($monitor->$name);
-       	  	 } else if($metrics[$name]->_type == 'double') {
-                $values[] = floatval($monitor->$name);
-             } else if ($metrics[$name]->_type == 'datetime') {
-             	$values[] = DBManagerFactory::getInstance()->convert(DBManagerFactory::getInstance()->quoted($monitor->$name), "datetime");
-       	  	 } else {
-                $values[] = DBManagerFactory::getInstance()->quoted($monitor->$name);
-             }
-       	  }
-       } //foreach
+        $id = DBManagerFactory::getInstance()->getAutoIncrementSQL($monitor->table_name, 'id');
+        if (!empty($id)) {
+            $columns[] = 'id';
+            $values[] = $id;
+        }
 
-       if(empty($values)) {
-       	  return;
-       }
-
-       $id = DBManagerFactory::getInstance()->getAutoIncrementSQL($monitor->table_name,'id');
-       if(!empty($id)) {
-       	  $columns[] = 'id';
-       	  $values[] = $id;
-       }
-
-       $query = "INSERT INTO $monitor->table_name (" .implode("," , $columns). " ) VALUES ( ". implode("," , $values). ')';
-	   DBManagerFactory::getInstance()->query($query);
+        $query = "INSERT INTO $monitor->table_name (" .implode(",", $columns). " ) VALUES ( ". implode(",", $values). ')';
+        DBManagerFactory::getInstance()->query($query);
     }
 }

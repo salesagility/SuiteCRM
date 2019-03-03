@@ -46,11 +46,12 @@ require_once('include/EditView/QuickCreate.php');
 
 
 
-class OpportunitiesQuickCreate extends QuickCreate {
+class OpportunitiesQuickCreate extends QuickCreate
+{
+    public $javascript;
     
-    var $javascript;
-    
-    function process() {
+    public function process()
+    {
         global $current_user, $timedate, $app_list_strings, $current_language, $mod_strings;
         $mod_strings = return_module_language($current_language, 'Opportunities');
         
@@ -65,9 +66,9 @@ class OpportunitiesQuickCreate extends QuickCreate {
   
         $this->ss->assign("SALES_STAGE_OPTIONS", get_select_options_with_id($app_list_strings['sales_stage_dom'], ''));
         $this->ss->assign("LEAD_SOURCE_OPTIONS", get_select_options_with_id($app_list_strings['lead_source_dom'], ''));
-        $this->ss->assign('prob_array', $json->encode($app_list_strings['sales_probability_dom']));        
+        $this->ss->assign('prob_array', $json->encode($app_list_strings['sales_probability_dom']));
         
-        if($this->viaAJAX) { // override for ajax call
+        if ($this->viaAJAX) { // override for ajax call
             $this->ss->assign('saveOnclick', "onclick='if(check_form(\"opportunitiesQuickCreate\")) return SUGAR.subpanelUtils.inlineSave(this.form.id, \"opportunities\"); else return false;'");
             $this->ss->assign('cancelOnclick', "onclick='return SUGAR.subpanelUtils.cancelCreate(\"subpanel_opportunities\")';");
         }
@@ -82,5 +83,5 @@ class OpportunitiesQuickCreate extends QuickCreate {
         $this->javascript->addAllFields('');
 
         $this->ss->assign('additionalScripts', $this->javascript->getScript(false));
-    }   
+    }
 }

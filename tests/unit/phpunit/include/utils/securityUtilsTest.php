@@ -15,11 +15,11 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testquery_module_access_list()
     {
 //        self::markTestIncomplete('Test fails only in travis and php 7, Test has environment specific issue.');
-//        
+//
 //        $state = new SuiteCRM\StateSaver();
 //        $state->pushGlobals();
 //        $state->pushTable('aod_indexevent');
-//        
+//
 //        //execute the method and test it it returns expected contents
 //
 //        $user = new User('1');
@@ -65,9 +65,9 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //
 //        $actual = query_module_access_list($user);
 //        $this->assertSame($expected, $actual);
-//        
+//
 //        // clean up
-//        
+//
 //        $state->popTable('aod_indexevent');
 //        $state->popGlobals();
     }
@@ -103,7 +103,7 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testget_user_disallowed_modules()
     {
 //        self::markTestIncomplete('Test fails only in travis and php7, Test has environment specific issue.');
-//        
+//
 //        //execute the method and test it it returns expected contents
 //
 //        $expected = array(

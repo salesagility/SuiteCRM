@@ -196,5 +196,3 @@ if ($configurator->isConfirmOptInEnabled() || $configurator->isOptInEnabled()) {
             'width' => '10%',
         );
 }
-
-

@@ -45,7 +45,7 @@ require_once('include/MVC/View/views/view.edit.php');
 
 class AOK_KnowledgeBaseViewEdit extends ViewEdit
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -53,33 +53,35 @@ class AOK_KnowledgeBaseViewEdit extends ViewEdit
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOK_KnowledgeBaseViewEdit(){
+    public function AOK_KnowledgeBaseViewEdit()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-	public function preDisplay() {
-		global $current_user;
-		parent::preDisplay();
-		$this->bean->author = $current_user->name;
-		$this->bean->user_id_c = $current_user->id;
-	}
+    public function preDisplay()
+    {
+        global $current_user;
+        parent::preDisplay();
+        $this->bean->author = $current_user->name;
+        $this->bean->user_id_c = $current_user->id;
+    }
 
-	function display()
+    public function display()
     {
         parent::display();
         $this->displayTMCE();
     }
 
 
-    function displayTMCE(){
+    public function displayTMCE()
+    {
         require_once("include/SugarTinyMCE.php");
         global $locale;
 
@@ -121,6 +123,4 @@ class AOK_KnowledgeBaseViewEdit extends ViewEdit
 JS;
         echo $js;
     }
-
-
 }

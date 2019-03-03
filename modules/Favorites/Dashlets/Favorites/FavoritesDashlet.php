@@ -52,14 +52,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/Favorites/Favorites.php');
 
-class FavoritesDashlet extends DashletGeneric {
-    function __construct($id, $def = null) {
-		global $current_user, $app_strings;
-		require('modules/Favorites/metadata/dashletviewdefs.php');
+class FavoritesDashlet extends DashletGeneric
+{
+    public function __construct($id, $def = null)
+    {
+        global $current_user, $app_strings;
+        require('modules/Favorites/metadata/dashletviewdefs.php');
 
         parent::__construct($id, $def);
 
-        if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'Favorites');
+        if (empty($def['title'])) {
+            $this->title = translate('LBL_HOMEPAGE_TITLE', 'Favorites');
+        }
 
         $this->searchFields = $dashletData['FavoritesDashlet']['searchFields'];
         $this->columns = $dashletData['FavoritesDashlet']['columns'];
@@ -70,15 +74,14 @@ class FavoritesDashlet extends DashletGeneric {
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function FavoritesDashlet($id, $def = null){
+    public function FavoritesDashlet($id, $def = null)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $def);
     }
-
 }

@@ -45,9 +45,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $dictionary['ACLAction'] = array('table' => 'acl_actions', 'comment' => 'Determine the allowable actions available to users'
-                               ,'fields' => array (
+                               ,'fields' => array(
   'id' =>
-  array (
+  array(
     'name' => 'id',
     'vname' => 'LBL_ID',
     'required'=>true,
@@ -56,7 +56,7 @@ $dictionary['ACLAction'] = array('table' => 'acl_actions', 'comment' => 'Determi
     'comment' => 'Unique identifier'
   ),
    'date_entered' =>
-  array (
+  array(
     'name' => 'date_entered',
     'vname' => 'LBL_DATE_ENTERED',
     'type' => 'datetime',
@@ -64,7 +64,7 @@ $dictionary['ACLAction'] = array('table' => 'acl_actions', 'comment' => 'Determi
     'comment' => 'Date record created'
   ),
   'date_modified' =>
-  array (
+  array(
     'name' => 'date_modified',
     'vname' => 'LBL_DATE_MODIFIED',
     'type' => 'datetime',
@@ -72,7 +72,7 @@ $dictionary['ACLAction'] = array('table' => 'acl_actions', 'comment' => 'Determi
     'comment' => 'Date record last modified'
   ),
     'modified_user_id' =>
-  array (
+  array(
     'name' => 'modified_user_id',
     'rname' => 'user_name',
     'id_name' => 'modified_user_id',
@@ -87,7 +87,7 @@ $dictionary['ACLAction'] = array('table' => 'acl_actions', 'comment' => 'Determi
     'comment' => 'User who last modified record'
   ),
     'created_by' =>
-  array (
+  array(
     'name' => 'created_by',
     'rname' => 'user_name',
     'id_name' => 'created_by',
@@ -100,7 +100,7 @@ $dictionary['ACLAction'] = array('table' => 'acl_actions', 'comment' => 'Determi
     'comment' => 'User ID who created record'
   ),
    'name' =>
-  array (
+  array(
     'name' => 'name',
     'type' => 'varchar',
     'vname' => 'LBL_NAME',
@@ -108,25 +108,25 @@ $dictionary['ACLAction'] = array('table' => 'acl_actions', 'comment' => 'Determi
     'comment' => 'Name of the allowable action (view, list, delete, edit)'
   ),
    'category' =>
-  array (
+  array(
     'name' => 'category',
     'vname' => 'LBL_CATEGORY',
     'type' => 'varchar',
-	'len' =>100,
+    'len' =>100,
     'reportable'=>true,
     'comment' => 'Category of the allowable action (usually the name of a module)'
   ),
     'acltype' =>
-  array (
+  array(
     'name' => 'acltype',
     'vname' => 'LBL_TYPE',
     'type' => 'varchar',
-	'len' =>100,
+    'len' =>100,
     'reportable'=>true,
     'comment' => 'Specifier for Category, usually "module"'
   ),
   'aclaccess' =>
-  array (
+  array(
     'name' => 'aclaccess',
     'vname' => 'LBL_ACCESS',
     'type' => 'int',
@@ -135,7 +135,7 @@ $dictionary['ACLAction'] = array('table' => 'acl_actions', 'comment' => 'Determi
     'comment' => 'Number specifying access priority; highest access "wins"'
   ),
   'deleted' =>
-  array (
+  array(
     'name' => 'deleted',
     'vname' => 'LBL_DELETED',
     'type' => 'bool',
@@ -143,15 +143,15 @@ $dictionary['ACLAction'] = array('table' => 'acl_actions', 'comment' => 'Determi
     'comment' => 'Record deletion indicator'
   ),
   'roles' =>
-  array (
-  	'name' => 'roles',
+  array(
+    'name' => 'roles',
     'type' => 'link',
     'relationship' => 'acl_roles_actions',
     'source'=>'non-db',
-	'vname'=>'LBL_USERS',
+    'vname'=>'LBL_USERS',
   ),
 ),
-'indices' => array (
+'indices' => array(
        array('name' =>'aclactionid', 'type' =>'primary', 'fields'=>array('id')),
        array('name' =>'idx_aclaction_id_del', 'type' =>'index', 'fields'=>array('id', 'deleted')),
        array('name' =>'idx_category_name', 'type' =>'index', 'fields'=>array('category', 'name')),                                                   )

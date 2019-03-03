@@ -44,21 +44,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
-class ContactsParseRule extends BaseRule {
-
-function __construct() {
-
-}
+class ContactsParseRule extends BaseRule
+{
+    public function __construct()
+    {
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ContactsParseRule(){
+    public function ContactsParseRule()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -66,37 +66,36 @@ function __construct() {
 
 
 
-function preParse($panels, $view) {
+    public function preParse($panels, $view)
+    {
+        if ($view == 'DetailView') {
+            foreach ($panels as $name=>$panel) {
+                foreach ($panel as $rowCount=>$row) {
+                    foreach ($row as $key=>$column) {
+                        if ($this->matches($column, '/^(last_)?name$/')) {
+                            $panels[$name][$rowCount][$key] = 'full_name';
+                        }
+                    } //foreach
+                } //foreach
+            } //foreach
+        }
 
-	if($view == 'DetailView') {
-		foreach($panels as $name=>$panel) {
-		   	  foreach($panel as $rowCount=>$row) {
-		   	  	 foreach($row as $key=>$column) {
-		   	  	 	if($this->matches($column, '/^(last_)?name$/')) {
-		   	  	 	   $panels[$name][$rowCount][$key] = 'full_name';
-		   	  	 	}
-				} //foreach
-		   	} //foreach
-	    } //foreach
-	}
+        return $panels;
+    }
 
-	return $panels;
-}
-
-function parsePanels(& $panels, $view) {
-
-       if($view == 'EditView') {
-		   foreach($panels as $name=>$panel) {
-		   	  foreach($panel as $rowCount=>$row) {
-		   	  	 foreach($row as $key=>$column) {
-					if($this->matches($column, '/portal_password1/si')) {
-		   	  	 	   $panels[$name][$rowCount][$key] = array('name'=>'portal_password1', 'type'=>'password', 'customCode'=>'<input id="portal_password1" name="portal_password1" type="password" size="32" maxlength="32" value="{$fields.portal_password.value}">', 'label'=>'LBL_PORTAL_PASSWORD');
-					}
-		   	  	 } //foreach
-		   	  } //foreach
-		   } //foreach
-       }
-	   return $panels;
-}
-
+    public function parsePanels(& $panels, $view)
+    {
+        if ($view == 'EditView') {
+            foreach ($panels as $name=>$panel) {
+                foreach ($panel as $rowCount=>$row) {
+                    foreach ($row as $key=>$column) {
+                        if ($this->matches($column, '/portal_password1/si')) {
+                            $panels[$name][$rowCount][$key] = array('name'=>'portal_password1', 'type'=>'password', 'customCode'=>'<input id="portal_password1" name="portal_password1" type="password" size="32" maxlength="32" value="{$fields.portal_password.value}">', 'label'=>'LBL_PORTAL_PASSWORD');
+                        }
+                    } //foreach
+                } //foreach
+            } //foreach
+        }
+        return $panels;
+    }
 }

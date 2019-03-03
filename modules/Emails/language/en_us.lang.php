@@ -410,4 +410,3 @@ $mod_strings = array(
     'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME' => 'From address and name pair does not match to from-name.',
     'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME' => 'From address and name pair does not match to from name.',
 );
-

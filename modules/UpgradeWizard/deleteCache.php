@@ -54,36 +54,36 @@ $json = getJSONobj();
 
 //Clean modules from cache
 $cachedir = sugar_cached("modules");
-if(is_dir($cachedir)){
-	$allModFiles = array();
-	$allModFiles = findAllFiles($cachedir,$allModFiles);
-   foreach($allModFiles as $file){
-       	if(file_exists($file)){
-			unlink($file);
-       	}
-   }
+if (is_dir($cachedir)) {
+    $allModFiles = array();
+    $allModFiles = findAllFiles($cachedir, $allModFiles);
+    foreach ($allModFiles as $file) {
+        if (file_exists($file)) {
+            unlink($file);
+        }
+    }
 }
 //Clean jsLanguage from cache
 $cachedir = sugar_cached("jsLanguage");
-if(is_dir($cachedir)){
-	$allModFiles = array();
-	$allModFiles = findAllFiles($cachedir,$allModFiles);
-   foreach($allModFiles as $file){
-	   	if(file_exists($file)){
-			unlink($file);
-	   	}
-	}
+if (is_dir($cachedir)) {
+    $allModFiles = array();
+    $allModFiles = findAllFiles($cachedir, $allModFiles);
+    foreach ($allModFiles as $file) {
+        if (file_exists($file)) {
+            unlink($file);
+        }
+    }
 }
 //Clean smarty from cache
 $cachedir = sugar_cached("smarty");
-if(is_dir($cachedir)){
-	$allModFiles = array();
-	$allModFiles = findAllFiles($cachedir,$allModFiles);
-   foreach($allModFiles as $file){
-       	if(file_exists($file)){
-			unlink($file);
-       	}
-   }
+if (is_dir($cachedir)) {
+    $allModFiles = array();
+    $allModFiles = findAllFiles($cachedir, $allModFiles);
+    foreach ($allModFiles as $file) {
+        if (file_exists($file)) {
+            unlink($file);
+        }
+    }
 }
 
 $response = '';
@@ -91,10 +91,10 @@ $response = '';
 //$GLOBALS['log']->fatal('file size loaded '.filesize($file_name));
 /*
 if($allModFiles != null){
-	foreach($allModFiles as $f){
-		$GLOBALS['log']->fatal('file name '.$f);
-		$response .= $f;
-	}
+    foreach($allModFiles as $f){
+        $GLOBALS['log']->fatal('file name '.$f);
+        $response .= $f;
+    }
 }
 */
 if (!empty($response)) {

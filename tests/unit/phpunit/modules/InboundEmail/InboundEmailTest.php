@@ -1647,23 +1647,23 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcheckEmailOneMailbox()
     {
 //        $this->markTestIncomplete('this test failing only on php 7.2');
-//        
+//
 //        // save state
-//        
+//
 //        $state = $this->storeStateAll();
-//        
+//
 //        // test
-//        
-//        
+//
+//
 //        $inboundEmail = new InboundEmail();
 //
 //        $inboundEmail->mailbox = 'INBOX,OUTBOX';
 //
 //        $result = $inboundEmail->checkEmailOneMailbox('INBOX');
 //        $this->assertEquals(1, $result);
-//        
+//
 //        // clean up
-//        
+//
 //        $this->restoreStateAll($state);
     }
 
@@ -2821,7 +2821,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetMessageText()
     {
 //        $this->markTestIncomplete('Exception: PHPUnit_Framework_Error_Notice: Undefined variable: structure');
-//        
+//
 ////
 ////        //unset and reconnect Db to resolve mysqli fetch exeception
 ////        $db = DBManagerFactory::getInstance();
@@ -3495,14 +3495,14 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetSystemSettingsForm()
     {
 //        $this->markTestIncomplete("It should be an acceptance test");
-//                
+//
 //        // save state
-//        
+//
 //        $state = $this->storeStateAll();
-//        
+//
 //        // test
-//        
-//        
+//
+//
 //        $inboundEmail = new InboundEmail();
 //
 //        $expected = "<form action=\"index.php\" method=\"post\" name=\"Macro\" id=\"form\">
@@ -3546,9 +3546,9 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        $result = $inboundEmail->getSystemSettingsForm();
 //
 //        $this->assertSame($expected, $result);
-//        
+//
 //        // clean up
-//        
+//
 //        $this->restoreStateAll($state);
     }
 
@@ -3926,12 +3926,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 //        $this->markTestIncomplete('Propably an error level changed in the code?');
 //        // save state
-//        
+//
 //        $state = $this->storeStateAll();
-//        
+//
 //        // test
-//        
-//        
+//
+//
 //        $inboundEmail = new InboundEmail();
 //
 //        $inboundEmail->id = 1;
@@ -3943,9 +3943,9 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        } catch (Exception $e) {
 //            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
 //        }
-//        
+//
 //        // clean up
-//        
+//
 //        $this->restoreStateAll($state);
     }
 
@@ -3953,12 +3953,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 //        $this->markTestIncomplete('Propably an error level changed in the code?');
 //        // save state
-//        
+//
 //        $state = $this->storeStateAll();
-//        
+//
 //        // test
-//        
-//        
+//
+//
 //        $inboundEmail = new InboundEmail();
 //
 //        $inboundEmail->id = 1;
@@ -3968,9 +3968,9 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //
 //        $result = $inboundEmail->moveEmails(1, 'INBOX', 2, 'TRASH', array(1));
 //        $this->assertEquals(false, $result);
-//        
+//
 //        // clean up
-//        
+//
 //        $this->restoreStateAll($state);
     }
 
@@ -3978,12 +3978,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 //        $this->markTestIncomplete('Propably an error level changed in the code?');
 //        // save state
-//        
+//
 //        $state = $this->storeStateAll();
-//        
+//
 //        // test
-//        
-//        
+//
+//
 //        $inboundEmail = new InboundEmail();
 //
 //        $inboundEmail->compoundMessageId = 'cmid';
@@ -3995,31 +3995,31 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        //test with true
 //        $result = $inboundEmail->getTempFilename(true);
 //        $this->assertEquals('cmid', $result);
-//        
+//
 //        // clean up
-//        
+//
 //        $this->restoreStateAll($state);
     }
 
     public function testdeleteMessageOnMailServer()
     {
 //        $this->markTestIncomplete('Deprecated way to check imap');
-//        
+//
 //        // save state
-//        
+//
 //        $state = $this->storeStateAll();
-//        
+//
 //        // test
-//        
-//        
+//
+//
 //        $inboundEmail = new InboundEmail();
 //
 //        $result = $inboundEmail->deleteMessageOnMailServer('1');
 //
 //        $this->assertEquals(false, $result);
-//        
+//
 //        // clean up
-//        
+//
 //        $this->restoreStateAll($state);
     }
 
@@ -4101,14 +4101,14 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsetEmailForDisplay()
     {
 //        $this->markTestIncomplete('Deprecated pop3 test');
-//        
+//
 //        // save state
-//        
+//
 //        $state = $this->storeStateAll();
-//        
+//
 //        // test
-//        
-//        
+//
+//
 //        $inboundEmail = new InboundEmail();
 //
 //        $result = $inboundEmail->setEmailForDisplay('');
@@ -4122,9 +4122,9 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        //test with pop3 protocol and all parameters true
 //        $result = $inboundEmail->setEmailForDisplay('1', true, true, true);
 //        $this->assertEquals('error', $result);
-//        
+//
 //        // clean up
-//        
+//
 //        $this->restoreStateAll($state);
     }
 
@@ -4257,7 +4257,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreateUserSubscriptionsForGroupAccount()
     {
 //        $this->markTestIncomplete("Fatal error: Class 'Team' not found");
-//        
+//
 ////
 ////
 ////        //unset and reconnect Db to resolve mysqli fetch exeception

@@ -287,7 +287,8 @@ class ModuleController extends ApiController
                 if ($datetime === false) {
                     throw new ApiException(
                         '[ModulesController] [Unable to convert datetime field to ISO 8601] "date_modified"',
-                        ExceptionCode::API_DATE_CONVERTION_SUGARBEAN);
+                        ExceptionCode::API_DATE_CONVERTION_SUGARBEAN
+                    );
                 }
 
                 $payload['included'][] = array(
@@ -383,7 +384,6 @@ class ModuleController extends ApiController
                 'current' => $currentOffset,
                 'count' => $lastOffset
             );
-
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($req, $e, isset($payload) ? $payload : []);
         }
@@ -439,24 +439,26 @@ class ModuleController extends ApiController
                 throw $exception;
             }
 
-        if (
+            if (
             isset($body['data']['id'])
             && !empty($body['data']['id'])
         ) {
                 $beanID = $body['data']['id'];
                 $isValidator = new SuiteValidator();
-                if (!$isValidator->isValidId($beanID)) {                    
+                if (!$isValidator->isValidId($beanID)) {
                     throw new InvalidArgumentException(sprintf('Bean id %s is invalid', $beanID));
                 }
 
-            $bean = \BeanFactory::getBean($moduleName, $beanID);
+                $bean = \BeanFactory::getBean($moduleName, $beanID);
 
-            if ($bean instanceof SugarBean) {
-                throw new IdAlreadyExistsException(sprintf(
-                    'Bean id %s already exists in %s module', $beanID, $moduleName
+                if ($bean instanceof SugarBean) {
+                    throw new IdAlreadyExistsException(sprintf(
+                    'Bean id %s already exists in %s module',
+                        $beanID,
+                        $moduleName
                 ), ExceptionCode::API_ID_ALREADY_EXISTS);
+                }
             }
-        }
 
             // Handle Request
             /** @var SuiteBeanResource $resource */
@@ -465,15 +467,15 @@ class ModuleController extends ApiController
                 ->fromJsonApiRequest($body['data'])
                 ->toSugarBean();
 
-        if (!$sugarBean->ACLAccess('save')) {
-            throw new NotAllowedException();
-        }
+            if (!$sugarBean->ACLAccess('save')) {
+                throw new NotAllowedException();
+            }
 
-        /** @var Links $links */
-        $links = $this->containers->get('Links');
-        $self = $config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $sugarBean->id;
-        $links = $links->withSelf($self);
-        $selectFields = $req->getParam('fields');
+            /** @var Links $links */
+            $links = $this->containers->get('Links');
+            $self = $config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $sugarBean->id;
+            $links = $links->withSelf($self);
+            $selectFields = $req->getParam('fields');
 
             /** @var SuiteBeanResource $resource */
             $sugarBeanResource = $sugarBeanResource->fromSugarBean($sugarBean);
@@ -486,7 +488,6 @@ class ModuleController extends ApiController
             }
             $payload['links'] = $links->toJsonApiResponse();
             $res = $res->withStatus(201);
-
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($req, $e, isset($payload) ? $payload : []);
         }
@@ -507,19 +508,21 @@ class ModuleController extends ApiController
         try {
             if (isset($query['include'])) {
                 throw new BadRequestException(
-                    '[ModuleController] [include query param is not implemented]', ExceptionCode::API_NOT_IMPLEMENTED
+                    '[ModuleController] [include query param is not implemented]',
+                    ExceptionCode::API_NOT_IMPLEMENTED
                 );
             }
 
             if (isset($query['filter'])) {
                 throw new BadRequestException(
-                    '[ModuleController] [filter query param is not implemented]', ExceptionCode::API_NOT_IMPLEMENTED
+                    '[ModuleController] [filter query param is not implemented]',
+                    ExceptionCode::API_NOT_IMPLEMENTED
                 );
             }
 
             $this->negotiatedJsonApiContent($req, $res);
             $res = $res->withStatus(202);
-            if(!isset($args['module'])) {
+            if (!isset($args['module'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "module" index to describe module name.');
             }
             $moduleName = $args['module'];
@@ -542,14 +545,14 @@ class ModuleController extends ApiController
                 throw $exception;
             }
 
-        if (!$sugarBean->ACLAccess('view')) {
-            throw new NotAllowedException();
-        }
+            if (!$sugarBean->ACLAccess('view')) {
+                throw new NotAllowedException();
+            }
 
-        // Handle Request
-        /** @var SuiteBeanResource $resource */
-        $resource = $this->containers->get('SuiteBeanResource');
-        $resource = $resource->fromSugarBean($sugarBean);
+            // Handle Request
+            /** @var SuiteBeanResource $resource */
+            $resource = $this->containers->get('SuiteBeanResource');
+            $resource = $resource->fromSugarBean($sugarBean);
 
             // filter fields
             $selectFields = $req->getParam('fields');
@@ -561,7 +564,6 @@ class ModuleController extends ApiController
             }
 
             $res = $res->withStatus(200);
-
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($req, $e, isset($payload) ? $payload : []);
         }
@@ -619,9 +621,9 @@ class ModuleController extends ApiController
                 throw $exception;
             }
 
-        if (!$sugarBean->ACLAccess('save')) {
-            throw new NotAllowedException();
-        }
+            if (!$sugarBean->ACLAccess('save')) {
+                throw new NotAllowedException();
+            }
 
             /** @var Resource $resource */
             $resource = $this->containers->get('Resource');
@@ -649,7 +651,6 @@ class ModuleController extends ApiController
             }
 
             $res = $res->withStatus(200);
-
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($req, $e, isset($payload) ? $payload : []);
         }
@@ -670,7 +671,7 @@ class ModuleController extends ApiController
         try {
             $this->negotiatedJsonApiContent($req, $res);
             $res = $res->withStatus(202);
-            if(!isset($args['module'])) {
+            if (!isset($args['module'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "module" index to describe module name.');
             }
             $moduleName = $args['module'];
@@ -691,12 +692,12 @@ class ModuleController extends ApiController
                 throw $exception;
             }
 
-        if (!$sugarBean->ACLAccess('delete')) {
-            throw new NotAllowedException();
-        }
+            if (!$sugarBean->ACLAccess('delete')) {
+                throw new NotAllowedException();
+            }
 
-        // Handle Request
-        $sugarBean->deleted = 1;
+            // Handle Request
+            $sugarBean->deleted = 1;
 
             if (empty($sugarBean->save())) {
                 throw new ApiException('[Unable to delete record]');
@@ -706,7 +707,6 @@ class ModuleController extends ApiController
                 'status' => 200
             );
             $res = $res->withStatus(200);
-
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($req, $e, isset($payload) ? $payload : []);
         }
@@ -726,7 +726,7 @@ class ModuleController extends ApiController
     public function getModuleMetaLanguage(Request $req, Response $res, array $args)
     {
         try {
-            if(!isset($args['module'])) {
+            if (!isset($args['module'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "module" index to describe module name.');
             }
             $this->negotiatedJsonApiContent($req, $res);
@@ -736,7 +736,6 @@ class ModuleController extends ApiController
             $moduleLanguageStrings = $moduleLanguage->getModuleLanguageStrings($currentLanguage, $args['module']);
 
             $payload['meta'][$args['module']]['language'] = $moduleLanguageStrings;
-
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($req, $e, isset($payload) ? $payload : []);
         }
@@ -765,7 +764,6 @@ class ModuleController extends ApiController
 
             $payload['meta']['application']['language'] =
                 $applicationLanguage->getApplicationLanguageStrings($currentLanguage);
-
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($req, $e, isset($payload) ? $payload : []);
         }
@@ -785,14 +783,13 @@ class ModuleController extends ApiController
     public function getModuleMetaAttributes(Request $req, Response $res, array $args)
     {
         try {
-            if(!isset($args['module'])) {
+            if (!isset($args['module'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "module" index to describe module name.');
             }
 
             $this->negotiatedJsonApiContent($req, $res);
 
             $payload['meta'][$args['module']]['attributes'] = BeanFactory::getBean($args['module'])->field_defs;
-
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($req, $e, isset($payload) ? $payload : []);
         }
@@ -831,7 +828,7 @@ class ModuleController extends ApiController
     public function getModuleMetaMenu(Request $req, Response $res, array $args)
     {
         try {
-            if(!isset($args['module'])) {
+            if (!isset($args['module'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "module" index to describe module name.');
             }
             $this->negotiatedJsonApiContent($req, $res);
@@ -857,7 +854,6 @@ class ModuleController extends ApiController
             }
 
             $payload['meta'][$args['module']]['menu'] = $results;
-
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($req, $e, isset($payload) ? $payload : []);
         }
@@ -875,7 +871,7 @@ class ModuleController extends ApiController
     public function getModuleRecordsViewed(Request $req, Response $res, array $args)
     {
         try {
-            if(!isset($args['module'])) {
+            if (!isset($args['module'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "module" index to describe module name.');
             }
             $this->negotiatedJsonApiContent($req, $res);
@@ -918,7 +914,6 @@ class ModuleController extends ApiController
                     )
                 );
             }
-
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($req, $e, isset($payload) ? $payload : []);
         }
@@ -936,7 +931,7 @@ class ModuleController extends ApiController
     public function getModuleFavorites(Request $req, Response $res, array $args)
     {
         try {
-            if(!isset($args['module'])) {
+            if (!isset($args['module'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "module" index to describe module name.');
             }
             $this->negotiatedJsonApiContent($req, $res);
@@ -945,7 +940,6 @@ class ModuleController extends ApiController
             /** @var Favorites $favoritesBean */
             $favoritesBean = BeanFactory::newBean('Favorites');
             $payload['data'] = $favoritesBean->getCurrentUserFavoritesForModule($args['module']);
-
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($req, $e, isset($payload) ? $payload : []);
         }
@@ -965,10 +959,10 @@ class ModuleController extends ApiController
     public function getModuleMetaLayout(Request $req, Response $res, array $args)
     {
         try {
-            if(!isset($args['module'])) {
+            if (!isset($args['module'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "module" index to describe module name.');
             }
-            if(!isset($args['view'])) {
+            if (!isset($args['view'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "view" index.');
             }
             $this->negotiatedJsonApiContent($req, $res);
@@ -994,7 +988,6 @@ class ModuleController extends ApiController
             }
 
             $payload['meta'][$args['module']]['view'][$args['view']] = $viewdefs;
-
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($req, $e, isset($payload) ? $payload : []);
         }
@@ -1014,13 +1007,13 @@ class ModuleController extends ApiController
     public function getModuleRelationship(Request $req, Response $res, array $args)
     {
         try {
-            if(!isset($args['module'])) {
+            if (!isset($args['module'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "module" index to describe module name.');
             }
-            if(!isset($args['id'])) {
+            if (!isset($args['id'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "id" index.');
             }
-            if(!isset($args['link'])) {
+            if (!isset($args['link'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "link" index.');
             }
 
@@ -1048,16 +1041,16 @@ class ModuleController extends ApiController
                 );
             }
 
-        if (!$sugarBean->ACLAccess('view')) {
-            throw new NotFoundException('[Record]');
-        }
+            if (!$sugarBean->ACLAccess('view')) {
+                throw new NotFoundException('[Record]');
+            }
 
-        if ($sugarBean->load_relationship($args['link']) === false) {
-            throw new NotFoundException(
+            if ($sugarBean->load_relationship($args['link']) === false) {
+                throw new NotFoundException(
                 '[ModuleController] [Relationship does not exist] ' . $args['link'],
                 ExceptionCode::API_RELATIONSHIP_NOT_FOUND
             );
-        }
+            }
 
             $relationshipType = $sugarBean->{$args['link']}->focus->{$args['link']}->relationship->type;
 
@@ -1066,13 +1059,13 @@ class ModuleController extends ApiController
 
             $sugarBeanRelationshipType = $sugarBeanRelationship->getType();
 
-            switch($sugarBeanRelationshipType) {
+            switch ($sugarBeanRelationshipType) {
                 case 'one':
                     // to one
                     $relatedIds = $sugarBean->{$args['link']}->get();
                     $relatedDefinition = $sugarBean->{$args['link']}->focus->{$args['link']}->relationship->def;
 
-                    if(!isset($relatedDefinition['lhs_module'])) {
+                    if (!isset($relatedDefinition['lhs_module'])) {
                         throw new \Exception('Related definition should contains a "lhs_module" index.');
                     }
 
@@ -1087,7 +1080,8 @@ class ModuleController extends ApiController
                         $data['links'] = $links
                             ->withHref(
                                 $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.
-                                $relatedDefinition['lhs_module'].'/'.$id)
+                                $relatedDefinition['lhs_module'].'/'.$id
+                            )
                             ->toJsonApiResponse();
 
                         $payload['data'] = $data;
@@ -1105,8 +1099,7 @@ class ModuleController extends ApiController
                     $relatedDefinition = $sugarBean->field_defs[$args['link']];
                     $relatedType = $sugarBeanRelationship->getRelatedModuleName();
                     foreach ($related['rows'] as $row) {
-
-                        if(!isset($row['id'])) {
+                        if (!isset($row['id'])) {
                             throw new \Exception('Related definition should contains "id" index.');
                         }
 
@@ -1129,7 +1122,8 @@ class ModuleController extends ApiController
                         $data['links'] = $links
                             ->withHref(
                                 $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.
-                                $args['module'] . '/' . $row['id'])
+                                $args['module'] . '/' . $row['id']
+                            )
                             ->toJsonApiResponse();
 
                         $data['meta'] = $meta;
@@ -1150,9 +1144,9 @@ class ModuleController extends ApiController
             $payload['links'] = $links
                 ->withSelf(
                     $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.
-                    $args['module'].'/'.$args['id'].'/relationships/'.$args['link'])
+                    $args['module'].'/'.$args['id'].'/relationships/'.$args['link']
+                )
                 ->toJsonApiResponse();
-
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($req, $e, isset($payload) ? $payload : []);
         }
@@ -1172,14 +1166,13 @@ class ModuleController extends ApiController
     public function createModuleRelationship(Request $req, Response $res, array $args)
     {
         try {
-
-            if(!isset($args['module'])) {
+            if (!isset($args['module'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "module" index to describe module name.');
             }
-            if(!isset($args['id'])) {
+            if (!isset($args['id'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "id" index.');
             }
-            if(!isset($args['link'])) {
+            if (!isset($args['link'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "link" index.');
             }
 
@@ -1207,12 +1200,12 @@ class ModuleController extends ApiController
                 );
             }
 
-        if (!$sugarBean->ACLAccess('save')) {
-            throw new NotAllowedException('[Record]');
-        }
+            if (!$sugarBean->ACLAccess('save')) {
+                throw new NotAllowedException('[Record]');
+            }
 
-        /** @var Link2 $sugarBeanRelationship */
-        $sugarBeanRelationship = $sugarBean->{$args['link']};
+            /** @var Link2 $sugarBeanRelationship */
+            $sugarBeanRelationship = $sugarBean->{$args['link']};
 
             $requestPayload = json_decode($req->getBody(), true);
 
@@ -1231,10 +1224,10 @@ class ModuleController extends ApiController
                 $sugarBeanRelationshipTypeFromSugarBeanLink
             );
 
-            switch($sugarBeanRelationshipTypeFromSugarBeanLink) {
+            switch ($sugarBeanRelationshipTypeFromSugarBeanLink) {
                 case RelationshipType::TO_MANY:
 
-                    if(!isset($requestPayload['data'])) {
+                    if (!isset($requestPayload['data'])) {
                         throw new \InvalidArgumentException('Requested payload should contains a "data" attribute.');
                     }
 
@@ -1249,8 +1242,7 @@ class ModuleController extends ApiController
                     }
 
                     foreach ($data as $link) {
-
-                        if(!isset($link['id'])) {
+                        if (!isset($link['id'])) {
                             throw new \InvalidArgumentException('Arguments array should contains a "id" index.');
                         }
                         $links[] = $link['id'];
@@ -1275,7 +1267,7 @@ class ModuleController extends ApiController
                             );
                         }
 
-                        if(!isset($link['type'])) {
+                        if (!isset($link['type'])) {
                             throw new \InvalidArgumentException('Arguments array should contains a "type" index.');
                         }
                         $relationship = $relationship
@@ -1295,7 +1287,7 @@ class ModuleController extends ApiController
                 case RelationshipType::TO_ONE:
                     $resourceIdentifier = $this->containers->get('ResourceIdentifier');
 
-                    if(!isset($requestPayload['data']['id'])) {
+                    if (!isset($requestPayload['data']['id'])) {
                         throw new \InvalidArgumentException('Requested payload date should contains an "id".');
                     }
 
@@ -1305,7 +1297,7 @@ class ModuleController extends ApiController
                                 $resourceIdentifier
                             );
                     } else {
-                        if(!isset($requestPayload['data']['type'])) {
+                        if (!isset($requestPayload['data']['type'])) {
                             throw new \InvalidArgumentException('Requested payload date should contains a "type".');
                         }
                         $relationship = $relationship
@@ -1341,7 +1333,6 @@ class ModuleController extends ApiController
             $sugarBean->retrieve($sugarBeanResource->getId());
 
             $responsePayload['data'] = $relationship->toJsonApiResponse();
-
         } catch (\Exception $e) {
             $responsePayload = $this->handleExceptionIntoPayloadError($req, $e, isset($responsePayload) ? $responsePayload : []);
         }
@@ -1363,14 +1354,13 @@ class ModuleController extends ApiController
     public function updateModuleRelationship(Request $req, Response $res, array $args)
     {
         try {
-
-            if(!isset($args['module'])) {
+            if (!isset($args['module'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "module" index to describe module name.');
             }
-            if(!isset($args['id'])) {
+            if (!isset($args['id'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "id" index.');
             }
-            if(!isset($args['link'])) {
+            if (!isset($args['link'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "link" index.');
             }
 
@@ -1398,12 +1388,12 @@ class ModuleController extends ApiController
                 );
             }
 
-        if (!$sugarBean->ACLAccess('save')) {
-            throw new NotAllowedException('[Record]');
-        }
+            if (!$sugarBean->ACLAccess('save')) {
+                throw new NotAllowedException('[Record]');
+            }
 
-        /** @var \Link2 $sugarBeanRelationship */
-        $sugarBeanRelationship = $sugarBean->{$args['link']};
+            /** @var \Link2 $sugarBeanRelationship */
+            $sugarBeanRelationship = $sugarBean->{$args['link']};
 
             $requestPayload = json_decode($req->getBody(), true);
 
@@ -1419,12 +1409,11 @@ class ModuleController extends ApiController
                 SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship)
             );
 
-            if(!isset($requestPayload['data'])) {
+            if (!isset($requestPayload['data'])) {
                 throw new \InvalidArgumentException('Request Payload should contains a "data"');
             }
 
             if (SugarBeanRelationshipType::fromSugarBeanLink($sugarBeanRelationship) === RelationshipType::TO_MANY) {
-
                 $data = $requestPayload['data'];
                 // if a single ResourceIdentifier has been posted
                 if (!isset($data[0])) {
@@ -1473,11 +1462,10 @@ class ModuleController extends ApiController
                             $resourceIdentifier
                         );
                 } else {
-
-                    if(!isset($requestPayload['data']['id'])) {
+                    if (!isset($requestPayload['data']['id'])) {
                         throw new \InvalidArgumentException('Request Payload "data" should contains an "id"');
                     }
-                    if(!isset($requestPayload['data']['type'])) {
+                    if (!isset($requestPayload['data']['type'])) {
                         throw new \InvalidArgumentException('Request Payload "data" should contains an "type"');
                     }
                     $relationship = $relationship
@@ -1501,7 +1489,6 @@ class ModuleController extends ApiController
 
             $responsePayload = array();
             $responsePayload['data'] = $sugarBeanResource->getRelationshipByName($args['link']);
-
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($req, $e, isset($payload) ? $payload : []);
         }
@@ -1521,14 +1508,13 @@ class ModuleController extends ApiController
     public function deleteModuleRelationship(Request $req, Response $res, array $args)
     {
         try {
-
-            if(!isset($args['module'])) {
+            if (!isset($args['module'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "module" index to describe module name.');
             }
-            if(!isset($args['id'])) {
+            if (!isset($args['id'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "id" index.');
             }
-            if(!isset($args['link'])) {
+            if (!isset($args['link'])) {
                 throw new \InvalidArgumentException('Arguments array should contains a "link" index.');
             }
 
@@ -1556,8 +1542,8 @@ class ModuleController extends ApiController
                 );
             }
 
-        /** @var \Link2 $sugarBeanRelationship */
-        $sugarBeanRelationship = $sugarBean->{$args['link']};
+            /** @var \Link2 $sugarBeanRelationship */
+            $sugarBeanRelationship = $sugarBean->{$args['link']};
 
             $requestPayload = json_decode($req->getBody(), true);
 
@@ -1594,7 +1580,7 @@ class ModuleController extends ApiController
                 if (empty($requestPayload['data'])) {
                     $sugarBeanRelationship->getRelationshipObject()->removeAll($sugarBeanRelationship);
                 } else {
-                    if(!isset($requestPayload['data']['id'])) {
+                    if (!isset($requestPayload['data']['id'])) {
                         throw new \InvalidArgumentException('Requested payload date should contains a "id".');
                     }
                     $sugarBeanRelationship->remove($requestPayload['data']['id']);
@@ -1605,7 +1591,6 @@ class ModuleController extends ApiController
 
             $responsePayload = array();
             $responsePayload['data'] = array();
-
         } catch (\Exception $e) {
             $responsePayload = $this->handleExceptionIntoPayloadError($req, $e, isset($responsePayload) ? $responsePayload : []);
         }

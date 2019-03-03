@@ -20,11 +20,13 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     
     protected $fieldDefsStore = [];
     
-    protected function getTouchedModules() {
+    protected function getTouchedModules()
+    {
         return ['Users', 'Contacts', 'AM_ProjectTemplates_sugar', 'AOBH_BusinessHours'];
     }
     
-    protected function getStateSaver() {
+    protected function getStateSaver()
+    {
         if (!isset($this->state)) {
             $this->state = new StateSaver();
         }
@@ -35,6 +37,10 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
         parent::setUp();
         $this->fieldDefsStore();
+        $this->getStateSaver()->pushTable('tracker');
+        $this->getStateSaver()->pushTable('aod_index');
+        $this->getStateSaver()->pushTable('users');
+        $this->getStateSaver()->pushTable('contacts_cstm');
         $this->getStateSaver()->pushGlobals();
         
         // these tests assume that only admin user are in the database so we should delete everything else
@@ -53,6 +59,10 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     protected function tearDown()
     {
         $this->getStateSaver()->popGlobals();
+        $this->getStateSaver()->popTable('contacts_cstm');
+        $this->getStateSaver()->popTable('users');
+        $this->getStateSaver()->popTable('aod_index');
+        $this->getStateSaver()->popTable('tracker');
         $this->fieldDefsRestore();
         parent::tearDown();
     }
@@ -79,7 +89,8 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         }
     }
     
-    protected function fieldDefsStoreBean($module, $key = 'base') {
+    protected function fieldDefsStoreBean($module, $key = 'base')
+    {
         $object = $this->getModuleBean($module);
         if (isset($this->fieldDefsStore[$key][$module])) {
             throw new Exception('Field definition already stored for module ' . $module . ' at key ' . $key);
@@ -87,7 +98,8 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->fieldDefsStore[$key][$module] = $object->field_defs;
     }
     
-    protected function fieldDefsRestoreBean($module, $key = 'base') {
+    protected function fieldDefsRestoreBean($module, $key = 'base')
+    {
         $object = $this->getModuleBean($module);
         if (!isset($this->fieldDefsStore[$key][$module])) {
             throw new Exception('Field definition is not stored for module ' . $module . ' at key ' . $key);
@@ -95,7 +107,8 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $object->field_defs = $this->fieldDefsStore[$key][$module];
     }
     
-    protected function getModuleBean($module) {
+    protected function getModuleBean($module)
+    {
         $object = BeanFactory::getBean($module);
         if (!$object) {
             if (!class_exists($module)) {
@@ -105,7 +118,6 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         }
         return $object;
     }
-
     /**
      * @see SugarBean::__construct()
      */
@@ -188,7 +200,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
         // test
 
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         self::assertInstanceOf(DBManager::class, $bean->db);
         self::assertEquals('Users', $bean->module_name);
@@ -798,19 +810,19 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
      * @todo need more test coverage and less function complexity
      */
     public function testGetUnionRelatedList()
-    {        
+    {
         $request = $_REQUEST;
         self::assertFalse(isset($_SESSION));
         
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $results = SugarBean::get_union_related_list(null);
 //        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
         self::assertEquals(null, $results);
 
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $_SESSION['show_deleted'] = 1;
         $results = SugarBean::get_union_related_list(null);
 //        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
@@ -957,11 +969,11 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
 //        self::markTestIncomplete('environment dependency');
 
-        // save state
-
-        $state = new StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
+//        // save state
+//
+//        $state = new StateSaver();
+//        $state->pushTable('aod_index');
+//        $state->pushTable('tracker');
 
         // test
         global $sugar_config;
@@ -975,7 +987,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $tableAodIndex = $rows;
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
@@ -1007,7 +1019,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
@@ -1036,7 +1048,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
@@ -1064,7 +1076,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
@@ -1092,7 +1104,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
@@ -1119,7 +1131,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
@@ -1147,7 +1159,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
@@ -1174,7 +1186,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact1';
         $bean->save();
@@ -1193,7 +1205,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact1';
         $bean->save();
@@ -1211,7 +1223,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
 //
 //        // test
-//////        $GLOBALS['log']->reset();
+        //////        $GLOBALS['log']->reset();
 //        $bean = new SugarBeanMock();
 //        try {
 //            $results = $bean->process_union_list_query(null, 'DISTINCT', null);
@@ -1220,7 +1232,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //            self::assertTrue(true);
 //            self::assertEquals(1, $e->getCode());
 //        }
-////        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
+        ////        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
 //        self::assertEquals(array(), $results['parent_data']);
 //        self::assertEquals(10, $results['next_offset']);
 //        self::assertEquals(-10, $results['previous_offset']);
@@ -1232,10 +1244,10 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
 
 //        // test
-//////        $GLOBALS['log']->reset();
+        //////        $GLOBALS['log']->reset();
 //        $bean = new SugarBeanMock();
 //        $results = $bean->process_union_list_query(null, null, null);
-////        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
+        ////        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
 //        self::assertEquals(array(), $results['parent_data']);
 //        self::assertEquals(10, $results['next_offset']);
 //        self::assertEquals(-10, $results['previous_offset']);
@@ -1247,7 +1259,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->retrieve('test_contact1');
         $results = $bean->process_union_list_query(null, /** @lang sql */
@@ -1265,7 +1277,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
         // test
         $sugar_config['disable_count_query'] = 1;
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
@@ -1305,10 +1317,10 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
             DBManagerFactory::getInstance()->query($query);
         }
         
-        // clean up
-        
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
+//        // clean up
+//
+//        $state->popTable('tracker');
+//        $state->popTable('aod_index');
     }
 
 
@@ -1325,7 +1337,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testRetrieveParentFields()
     {
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
 //
 //        // test
 //        $bean = new SugarBeanMock();
@@ -1449,7 +1461,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testGetAuditEnabledFieldDefinitions()
     {
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
 //
 //        // test
 //        $bean = new SugarBeanMock();
@@ -1548,14 +1560,14 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
 //        $bean = new SugarBeanMock();
 //        $result = $bean->isOwner(null);
 //        self::assertTrue($result);
 //        self::assertEquals('', $bean->id);
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_1';
         $result = $bean->isOwner(null);
@@ -1564,7 +1576,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_1';
         $bean->fetched_row['assigned_user_id'] = 1;
@@ -1574,7 +1586,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_1';
         $bean->fetched_row['assigned_user_id'] = 1;
@@ -1584,7 +1596,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_1';
         $bean->assigned_user_id = 1;
@@ -1594,7 +1606,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_1';
         $bean->assigned_user_id = 1;
@@ -1604,7 +1616,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_1';
         $bean->created_by = 1;
@@ -1621,7 +1633,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $result = $bean->get_custom_table_name();
         self::assertEquals('contacts_cstm', $result);
@@ -1634,20 +1646,20 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     public function testGetTableName()
     {
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
 //        $bean = new SugarBeanMock();
 //        $result = $bean->getTableName();
 //        self::assertEquals('', $result);
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
 //        $bean = new SugarBeanMock();
 //        unset($bean->table_name);
 //        $result = $bean->getTableName();
 //        self::assertEquals('', $result);
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $result = $bean->getTableName();
         self::assertEquals('contacts', $result);
@@ -1661,7 +1673,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $result = $bean->getObjectName();
         self::assertEquals('Contact', $result);
@@ -1669,7 +1681,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         unset($bean->table_name);
         $result = $bean->getObjectName();
@@ -1677,7 +1689,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         unset($bean->object_name);
         $result = $bean->getObjectName();
@@ -1685,7 +1697,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->object_name = false;
         $result = $bean->getObjectName();
@@ -1700,7 +1712,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->object_name = false;
         $results = $bean->getIndices();
@@ -1708,7 +1720,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->getIndices();
         self::assertEquals(array(
@@ -1779,7 +1791,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->getPrimaryFieldDefinition();
         self::assertEquals(array(
@@ -1794,7 +1806,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         unset($bean->field_defs['id']);
         $results = $bean->getPrimaryFieldDefinition();
@@ -1828,7 +1840,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
-////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->reset();
 //        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->getFieldDefinition(null);
@@ -1880,7 +1892,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
         // test
 //        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->getFieldValue(null);
         self::assertFalse($results);
@@ -1918,8 +1930,8 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->unPopulateDefaultValues();
@@ -1930,26 +1942,26 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(null, $bean->jjwg_maps_lat_c);
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals(null, $bean->jjwg_maps_lng_c);
-////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs = false;
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->unPopulateDefaultValues();
         self::assertEquals(null, $results);
-////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->unPopulateDefaultValues();
         self::assertEquals(null, $results);
-////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
     }
 
     /**
@@ -1959,12 +1971,12 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $clone = clone $bean;
         self::assertEquals($bean, $clone);
-////        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
+        ////        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
 //
 //        // test
 ////        $GLOBALS['log']->reset();
@@ -1995,35 +2007,35 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs = array();
         $results = $bean->get_linked_fields();
         self::assertEquals(array(), $results);
-////        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
+        ////        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs = array(1);
         $results = $bean->get_linked_fields();
         self::assertEquals(array(), $results);
-////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs = array(array(1));
         $results = $bean->get_linked_fields();
         self::assertEquals(array(), $results);
-////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs = array(array('type' => 'link'));
         $results = $bean->get_linked_fields();
@@ -2032,7 +2044,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
                 'type' => 'link',
             ),
         ), $results);
-////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
     }
 
     /**
@@ -2057,45 +2069,45 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->load_relationship(null);
         self::assertEquals(false, $results);
-////        self::assertCount(1, $GLOBALS['log']->calls['error']);
-////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(1, $GLOBALS['log']->calls['error']);
+        ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->load_relationship('test');
         self::assertEquals(false, $results);
-////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs['testKey'] = 'testValue';
         $results = $bean->load_relationship('testKey');
         self::assertEquals(false, $results);
-////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs['testKey'] = 'testValue';
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->testKey = new Link2('test', $bean);
         $results = $bean->load_relationship('testKey');
         self::assertEquals(true, $results);
-////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs['testKey'] = array('type' => 'link');
         /** @noinspection PhpUndefinedFieldInspection */
@@ -2104,11 +2116,11 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(false, $results);
         /** @noinspection MissingIssetImplementationInspection */
         self::assertNotTrue(isset($bean->testKey));
-////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs['testKey'] = array(
             'type' => 'link',
@@ -2121,11 +2133,11 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(false, $results);
         /** @noinspection MissingIssetImplementationInspection */
         self::assertNotTrue(isset($bean->testKey));
-////        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs['testKey'] = array(
             'type' => 'link',
@@ -2138,11 +2150,11 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(true, $results);
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('testValue', $bean->testKey);
-////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs['testKey'] = array(
             'type' => 'link',
@@ -2155,12 +2167,12 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(true, $results);
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('testValue', $bean->testKey);
-////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 //
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs['testKey'] = array(
             'type' => 'link',
@@ -2174,7 +2186,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(false, $results);
         /** @noinspection MissingIssetImplementationInspection */
         self::assertNotTrue(isset($bean->testKey));
-////        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
     }
 
     /**
@@ -2227,13 +2239,13 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
 //
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs = array();
         $results = $bean->get_import_required_fields();
         self::assertEquals(array(), $results);
-////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
     }
 
     /**
@@ -2242,13 +2254,13 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     public function testGetImportableFields()
     {
 //        // test
-////        $GLOBALS['log']->reset();
-////        $GLOBALS['log']->fatal('test');
+        ////        $GLOBALS['log']->reset();
+        ////        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs = array();
         $results = $bean->get_importable_fields();
         self::assertEquals(array(), $results);
-////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+        ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
     }
 
 
@@ -2334,18 +2346,25 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         //self::markTestIncomplete('need to implement');
     }
 
+    
+    public static function exitFunction()
+    {
+        // do not exit;
+    }
+    
     /**
      * @see SugarBean::save()
      */
-    public function testSave()
+    public function testSaveQuick()
     {
         // save state
-
-        $state = new StateSaver();
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-        $state->pushTable('users');
-        $state->pushTable('contacts_cstm');
+//
+//        $state = new StateSaver();
+//        $state->pushTable('tracker');
+//        $state->pushTable('aod_index');
+//        $state->pushTable('users');
+//        $state->pushTable('contacts_cstm');
+//        $state->pushGlobals();
 
         // test
         
@@ -2355,13 +2374,12 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         $results = $bean->save();
-        $this->assertTrue(!$results);
-        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
-        $this->assertSame(
-                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $this->assertFalse(!!$results, "should not give a result as it's not verified or password was incorrect");
+        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError, "should give a lastSaveErrorIsEmailAddressSaveError as it's not verified or password was incorrect and a save should fails");
+        $this->assertEquals([0 => 1], $bean->emailAddress->lastSaveAtUserProfileErrors, "should give a lastSaveAtUserProfileErrors as it's not verified or password was incorrect and a save should fails");
+        
         $isValidator = new SuiteValidator();
-        self::assertTrue($isValidator->isValidId($bean->id));
+        self::assertTrue($isValidator->isValidId($bean->id), "bean ID should be a valid ID");
 
         self::assertEquals($current_user->id, $bean->modified_user_id);
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
@@ -2378,11 +2396,10 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $bean = BeanFactory::getBean('Users');
         $bean->new_with_id = true;
         $results = $bean->save();
-        $this->assertTrue(!$results);
-        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
-        $this->assertSame(
-                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $this->assertNull($results, "should not give a result as it's not verified or password was incorrect");
+        $this->assertNull($bean->lastSaveErrorIsEmailAddressSaveError, "should not give a lastSaveErrorIsEmailAddressSaveError as it's not verified or password was incorrect and a save should fails");
+        $this->assertEquals([], $bean->emailAddress->lastSaveAtUserProfileErrors, "should not give a lastSaveAtUserProfileErrors as it's not verified or password was incorrect and a save should fails");
+        
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($results));
 
@@ -2395,7 +2412,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
         self::assertFalse($isValidator->isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
-        self::assertEquals(false, $bean->new_with_id);
+        self::assertEquals(true, $bean->new_with_id, "It should be a new User with ID");
         self::assertEquals($bean->modified_by_name, $bean->old_modified_by_name);
 
         // test
@@ -2416,7 +2433,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($bean->id));
 
-        self::assertEquals(true, $bean->in_save);
+        self::assertEquals(false, $bean->in_save, "It should already saved OR should failing the save as as it's not verified or password was incorrect");
         
         self::assertEquals($current_user->id, $bean->modified_user_id);
         
@@ -2436,10 +2453,9 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $bean->modified_by_name = 'testing';
         $results = $bean->save();
         $this->assertTrue(!$results);
-        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
-        $this->assertSame(
-                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $this->assertNull($bean->lastSaveErrorIsEmailAddressSaveError, "should not having lastSaveErrorIsEmailAddressSaveError as a saving failed because it's should not veryfied or password was incorrect");
+        $this->assertEquals([], $bean->emailAddress->lastSaveAtUserProfileErrors, "should not give a lastSaveAtUserProfileErrors as it's not verified or password was incorrect and a save should fails");
+        
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($bean->id));
 
@@ -2475,10 +2491,9 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $bean->email_addresses_non_primary = array(true);
         $results = $bean->save();
         $this->assertTrue(!$results);
-        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
-        $this->assertSame(
-                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $this->assertNull($bean->lastSaveErrorIsEmailAddressSaveError, "should not having lastSaveErrorIsEmailAddressSaveError as a saving failed because it's should not veryfied or password was incorrect");
+        $this->assertEquals([], $bean->emailAddress->lastSaveAtUserProfileErrors, "should not give a lastSaveAtUserProfileErrors as it's not verified or password was incorrect and a save should fails");
+        
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($bean->id));
 
@@ -2514,10 +2529,9 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $bean->email_addresses_non_primary = array(true);
         $results = $bean->save();
         $this->assertTrue(!$results);
-        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
-        $this->assertSame(
-                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $this->assertNull($bean->lastSaveErrorIsEmailAddressSaveError, "should not having lastSaveErrorIsEmailAddressSaveError as a saving failed because it's should not veryfied or password was incorrect");
+        $this->assertEquals([], $bean->emailAddress->lastSaveAtUserProfileErrors, "should not give a lastSaveAtUserProfileErrors as it's not verified or password was incorrect and a save should fails");
+        
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($bean->id));
 
@@ -2554,10 +2568,9 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $bean->email_addresses_non_primary = array(true);
         $results = $bean->save();
         $this->assertTrue(!$results);
-        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
-        $this->assertSame(
-                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
-                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $this->assertNull($bean->lastSaveErrorIsEmailAddressSaveError, "should not having lastSaveErrorIsEmailAddressSaveError as a saving failed because it's should not veryfied or password was incorrect");
+        $this->assertEquals([], $bean->emailAddress->lastSaveAtUserProfileErrors, "should not give a lastSaveAtUserProfileErrors as it's not verified or password was incorrect and a save should fails");
+        
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($bean->id));
 
@@ -2622,11 +2635,12 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses WHERE email_address LIKE 'testbean1@email.com'");
         
         // clean up
-        
-        $state->popTable('contacts_cstm');
-        $state->popTable('users');
-        $state->popTable('aod_index');
-        $state->popTable('tracker');
+//
+//        $state->popGlobals();
+//        $state->popTable('contacts_cstm');
+//        $state->popTable('users');
+//        $state->popTable('aod_index');
+//        $state->popTable('tracker');
     }
 
     /**

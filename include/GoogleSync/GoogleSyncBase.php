@@ -57,7 +57,7 @@ use SuiteCRM\Utility\SuiteValidator;
  */
 
 class GoogleSyncBase
-{    
+{
     /** @var User The SuiteCRM User Bean we're currently working with */
     protected $workingUser;
 
@@ -87,7 +87,7 @@ class GoogleSyncBase
 
     /**
      * Class Constructor
-     * 
+     *
      * @param array $sugarConfig - using $sugar_config as a dependency
      */
     public function __construct($sugarConfig)
@@ -227,7 +227,7 @@ class GoogleSyncBase
                 $client->fetchAccessTokenWithRefreshToken($refreshToken);
                 // Save new token to user preference
                 $this->workingUser->setPreference('GoogleApiToken', base64_encode(json_encode($client->getAccessToken())), 'GoogleSync');
-                $this->workingUser->savePreferencesToDB();    
+                $this->workingUser->savePreferencesToDB();
             } elseif (empty($refreshToken)) {
                 throw new GoogleSyncException('Refresh token is missing', GoogleSyncException::NO_REFRESH_TOKEN);
             }
@@ -237,9 +237,9 @@ class GoogleSyncBase
 
     /**
      * Initialize Service for User
-     * 
+     *
      * @param string $id The SuiteCRM user id
-     * 
+     *
      * @return bool Success/Failure
      * @throws GoogleSyncException if $id is invalid
      * @throws GoogleSyncException if unable to retrive the user
@@ -353,7 +353,7 @@ class GoogleSyncBase
      * find the id of the 'SuiteCRM' calendar ... in the future, this will return the calendar of the users choosing.
      *
      * @param Google_Service_Calendar_CalendarList $calendarList
-     * 
+     *
      * @return string|null Matching Google Calendar ID or null.
      */
     protected function getSuiteCRMCalendar(Google_Service_Calendar_CalendarList $calendarList)
@@ -403,7 +403,6 @@ class GoogleSyncBase
         }
         
         return $results;
-
     }
 
     /**
@@ -445,7 +444,6 @@ class GoogleSyncBase
      */
     protected function getGoogleEventById($event_id)
     {
-
         if (empty($event_id)) {
             // If we didn't get passed an event id, throw an exception
             throw new GoogleSyncException('event ID is empty', GoogleSyncException::EVENT_ID_IS_EMPTY);
@@ -611,7 +609,6 @@ class GoogleSyncBase
      */
     protected function pullEvent(Google_Service_Calendar_Event $event_remote = null, Meeting $event_local = null)
     {
-        
         if (!$event_remote instanceof Google_Service_Calendar_Event) {
             throw new InvalidArgumentException('Argument 1 passed to GoogleSyncBase::pullEvent() must be an instance of Google_Service_Calendar_Event, ' . getType($event_local) . ' given.');
         }
@@ -652,7 +649,6 @@ class GoogleSyncBase
      */
     protected function delMeeting(Meeting $meeting = null)
     {
-        
         if (!$meeting instanceof Meeting) {
             throw new InvalidArgumentException('Argument 1 passed to GoogleSyncBase::delMeeting() must be an instance of Meeting, ' . getType($meeting) . ' given.');
         }
@@ -751,7 +747,6 @@ class GoogleSyncBase
      */
     protected function updateSuitecrmMeetingEvent(Meeting $event_local, Google_Service_Calendar_Event $event_remote)
     {
-
         $event_local->name = (string) $event_remote->getSummary();
 
         if (empty($event_local->name)) { // Google doesn't require titles on events.
@@ -766,19 +761,24 @@ class GoogleSyncBase
         $start = $event_remote->getStart();
         if (!$start) {
             throw new GoogleSyncException(
-                'GoogleSyncBase is trying to get "start" as Google_Service_Calendar_EventDateTime but it is not set', 
-                GoogleSyncException::NO_REMOVE_EVENT_START_IS_NOT_SET);
+                'GoogleSyncBase is trying to get "start" as Google_Service_Calendar_EventDateTime but it is not set',
+                GoogleSyncException::NO_REMOVE_EVENT_START_IS_NOT_SET
+            );
         }
         if (!$start instanceof Google_Service_Calendar_EventDateTime) {
             throw new GoogleSyncException(
-                'GoogleSyncBase is trying to get "start" as Google_Service_Calendar_EventDateTime but it is incorrect, ' . 
-                gettype($start) . ' given.', GoogleSyncException::NO_REMOVE_EVENT_START_IS_INCORRECT);
+                'GoogleSyncBase is trying to get "start" as Google_Service_Calendar_EventDateTime but it is incorrect, ' .
+                gettype($start) . ' given.',
+                GoogleSyncException::NO_REMOVE_EVENT_START_IS_INCORRECT
+            );
         }
         $starttime = strtotime($start->getDateTime());
         $endtime = strtotime($event_remote->getEnd()->getDateTime());
         if (!$starttime || !$endtime) { // Verify we have valid time objects (All day events will fail here.)
-            throw new GoogleSyncException('Unable to retrieve times from Google Event', 
-               GoogleSyncException::GOOGLE_RECORD_PARSE_FAILURE);
+            throw new GoogleSyncException(
+                'Unable to retrieve times from Google Event',
+               GoogleSyncException::GOOGLE_RECORD_PARSE_FAILURE
+            );
         }
         $diff = abs($starttime - $endtime);
         $tmins = $diff / 60;
@@ -806,11 +806,11 @@ class GoogleSyncBase
         $reminders = $nestedArray[0];
         $invitees = $nestedArray[1];
 
-        foreach($reminders as $reminder) {
+        foreach ($reminders as $reminder) {
             $reminder->save(false);
         }
 
-        foreach($invitees as $invitee) {
+        foreach ($invitees as $invitee) {
             $invitee->save(false);
         }
 
@@ -872,7 +872,8 @@ class GoogleSyncBase
         // Copy over popup reminders
         $event_local_id = $this->db->quoted($event_local->id);
         $reminders_local = BeanFactory::getBean('Reminders')->get_full_list(
-                "", "reminders.related_event_module = 'Meetings'" .
+                "",
+            "reminders.related_event_module = 'Meetings'" .
                 " AND reminders.related_event_module_id = $event_local_id" .
                 " AND popup = '1'"
         );

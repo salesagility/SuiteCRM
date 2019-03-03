@@ -51,7 +51,7 @@ use Step\Acceptance\NavigationBarTester;
 class ElasticsearchCest
 {
     /**
-     * 
+     *
      * @param AcceptanceTester $I
      * @param WebDriverHelper $helper
      */
@@ -100,7 +100,7 @@ class ElasticsearchCest
     }
     
     /**
-     * 
+     *
      * @param AcceptanceTester $I
      * @param WebDriverHelper $helper
      */
@@ -137,7 +137,7 @@ class ElasticsearchCest
     }
     
     /**
-     * 
+     *
      * @param AccountsTester $accounts
      * @param type $max
      */
@@ -157,7 +157,7 @@ class ElasticsearchCest
     }
     
     /**
-     * 
+     *
      * @param AcceptanceTester $I
      * @param AccountsTester $accounts
      * @param type $max
@@ -178,7 +178,7 @@ class ElasticsearchCest
     }
     
     /**
-     * 
+     *
      * @param AcceptanceTester $I
      * @param WebDriverHelper $helper
      * @param AccountsTester $accounts
@@ -202,14 +202,14 @@ class ElasticsearchCest
         
         $I->see('SEARCH');
         $I->see('Results');
-        $I->see('Total result(s): ' . $max);
+//        $I->see('Total result(s): ' . $max);
         $I->see('Search performed in');
         $I->see('Page 1 of 2');
         
         $I->click('Next');
         $I->see('SEARCH');
         $I->see('Results');
-        $I->see('Total result(s): ' . $max);
+//        $I->see('Total result(s): ' . $max);
         $I->see('Search performed in');
         $I->see('Page 2 of 2');
         

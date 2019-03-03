@@ -22,33 +22,33 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
-$listViewDefs ['AOW_WorkFlow'] = 
-array (
-  'NAME' => 
-  array (
+$listViewDefs ['AOW_WorkFlow'] =
+array(
+  'NAME' =>
+  array(
     'width' => '15%',
     'label' => 'LBL_NAME',
     'default' => true,
     'link' => true,
   ),
-  'FLOW_MODULE' => 
-  array (
+  'FLOW_MODULE' =>
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',
     'label' => 'LBL_FLOW_MODULE',
     'width' => '15%',
   ),
-  'STATUS' => 
-  array (
+  'STATUS' =>
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',
     'label' => 'LBL_STATUS',
     'width' => '15%',
   ),
-  'ASSIGNED_USER_NAME' => 
-  array (
+  'ASSIGNED_USER_NAME' =>
+  array(
     'width' => '15%',
     'label' => 'LBL_ASSIGNED_TO_NAME',
     'module' => 'Employees',
@@ -56,14 +56,14 @@ array (
     'default' => true,
   ),
   'DATE_ENTERED' =>
-  array (
+  array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '15%',
     'default' => true,
   ),
   'DATE_MODIFIED' =>
-  array (
+  array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_MODIFIED',
     'width' => '10%',
