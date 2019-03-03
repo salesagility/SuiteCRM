@@ -6926,25 +6926,25 @@ class wsdl extends nusoap_base
         $b = '
 		<html><head><title>NuSOAP: '.$this->serviceName.'</title>
 		<style type="text/css">
-		    body    { font-family: arial; color: #000000; background-color: #ffffff; margin: 0 0 0 0; }
-		    p       { font-family: arial; color: #000000; margin-top: 0; margin-bottom: 12px; }
+		    body    { font-family: arial; color: #000000; background-color: #ffffff; margin: 0px 0px 0px 0px; }
+		    p       { font-family: arial; color: #000000; margin-top: 0px; margin-bottom: 12px; }
 		    pre { background-color: silver; padding: 5px; font-family: Courier New; font-size: x-small; color: #000000;}
 		    ul      { margin-top: 10px; margin-left: 20px; }
 		    li      { list-style-type: none; margin-top: 10px; color: #000000; }
 		    .content{
-			margin-left: 0; padding-bottom: 2em; }
+			margin-left: 0px; padding-bottom: 2em; }
 		    .nav {
 			padding-top: 10px; padding-bottom: 10px; padding-left: 15px; font-size: .70em;
-			margin-top: 10px; margin-left: 0; color: #000000;
+			margin-top: 10px; margin-left: 0px; color: #000000;
 			background-color: #ccccff; width: 20%; margin-left: 20px; margin-top: 20px; }
 		    .title {
 			font-family: arial; font-size: 26px; color: #ffffff;
 			background-color: #999999; width: 100%;
-			margin-left: 0; margin-right: 0;
+			margin-left: 0px; margin-right: 0px;
 			padding-top: 10px; padding-bottom: 10px;}
 		    .hidden {
 			position: absolute; visibility: hidden; z-index: 200; left: 250px; top: 100px;
-			font-family: arial; overflow: hidden; width: 600px;
+			font-family: arial; overflow: hidden; width: 600;
 			padding: 20px; font-size: 10px; background-color: #999999;
 			layer-background-color:#FFFFFF; }
 		    a,a:active  { color: charcoal; font-weight: bold; }

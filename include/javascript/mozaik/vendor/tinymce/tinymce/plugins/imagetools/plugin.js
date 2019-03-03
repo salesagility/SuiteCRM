@@ -1377,14 +1377,14 @@ define("tinymce/imagetoolsplugin/CropRect", [
 
 			Tools.each(blockers, function(blocker) {
 				$('#' + id, containerElm).append(
-					'<div id="' + id + '-' + blocker + '"class="' + prefix + 'croprect-block" style="display: none;" data-mce-bogus="all">'
+					'<div id="' + id + '-' + blocker + '"class="' + prefix + 'croprect-block" style="display: none" data-mce-bogus="all">'
 				);
 			});
 
 			Tools.each(handles, function(handle) {
 				$('#' + id, containerElm).append(
 					'<div id="' + id + '-' + handle.name + '" class="' + prefix +
-						'croprect-handle ' + prefix + 'croprect-handle-' + handle.name + '" style="display: none;" data-mce-bogus="all">'
+						'croprect-handle ' + prefix + 'croprect-handle-' + handle.name + '" style="display: none" data-mce-bogus="all">'
 				);
 			});
 

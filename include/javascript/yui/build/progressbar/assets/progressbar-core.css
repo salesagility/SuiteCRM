@@ -73,7 +73,7 @@ version: 2.9.0
 }
 
 .yui-pb-ltr .yui-pb-bar {
-	_position:static;
+	_position:static
 }
 
 .yui-pb-rtl .yui-pb-bar {

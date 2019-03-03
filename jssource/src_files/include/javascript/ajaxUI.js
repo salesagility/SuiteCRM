@@ -116,7 +116,7 @@ SUGAR.ajaxUI = {
             }
             var panel = SUGAR.ajaxUI.errorPanel;
             panel.setHeader(SUGAR.language.get('app_strings','ERR_AJAX_LOAD')) ;
-            panel.setBody('<iframe id="ajaxErrorFrame" style="width:780px;height:550px;border:none;marginheight=;"0" marginwidth="0" frameborder="0""></iframe>');
+            panel.setBody('<iframe id="ajaxErrorFrame" style="width:780px;height:550px;border:none;marginheight="0" marginwidth="0" frameborder="0""></iframe>');
             panel.setFooter(SUGAR.language.get('app_strings','ERR_AJAX_LOAD_FOOTER')) ;
             panel.render(document.body);
             SUGAR.util.doWhen(

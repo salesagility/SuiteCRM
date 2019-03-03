@@ -48,14 +48,14 @@ version: 2.9.0
 }
  
 .yui-skin-sam span.yui-carousel-first-button {
-    background-position: 0 -550px;
+    background-position: 0px -550px;
     margin-left: -100px;
     margin-right: 50px;
    *margin: 5px 5px 5px -90px;
 }
  
 .yui-skin-sam .yui-carousel-vertical span.yui-carousel-first-button {
-    background-position: 0 -750px;
+    background-position: 0px -750px;
 }
  
 .yui-skin-sam span.yui-carousel-first-button-disabled {

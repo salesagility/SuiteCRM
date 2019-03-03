@@ -9,7 +9,7 @@
 	<script type="text/javascript" src="js/advlink.js"></script>
 	<link href="css/advlink.css" rel="stylesheet" type="text/css" />
 </head>
-<body id="advlink" style="display: none;" role="application" onload="javascript:mcTabs.displayTab('general_tab','general_panel', true);" aria-labelledby="app_label">
+<body id="advlink" style="display: none" role="application" onload="javascript:mcTabs.displayTab('general_tab','general_panel', true);" aria-labelledby="app_label">
 	<span class="mceVoiceLabel" id="app_label" style="display:none;">{#advlink_dlg.title}</span>
 	<form onsubmit="insertAction();return false;" action="#">
 		<div class="tabs" role="presentation">
@@ -90,18 +90,18 @@
 						<tr role="group" aria-labelledby="popup_size_label">
 							<td class="nowrap"><label id="popup_size_label">{#advlink_dlg.popup_size}</label>&nbsp;</td>
 							<td class="nowrap">
-								<span style="display:none;" id="width_voiceLabel">{#advlink_dlg.width}</span>
+								<span style="display:none" id="width_voiceLabel">{#advlink_dlg.width}</span>
 								<input type="text" id="popupwidth" name="popupwidth" value="" onchange="buildOnClick();" aria-labelledby="width_voiceLabel" /> x
-								<span style="display:none;" id="height_voiceLabel">{#advlink_dlg.height}</span>
+								<span style="display:none" id="height_voiceLabel">{#advlink_dlg.height}</span>
 								<input type="text" id="popupheight" name="popupheight" value="" onchange="buildOnClick();" aria-labelledby="height_voiceLabel" /> px
 							</td>
 						</tr>
 						<tr role="group" aria-labelledby="popup_position_label center_hint">
 							<td class="nowrap" id="labelleft"><label id="popup_position_label">{#advlink_dlg.popup_position}</label>&nbsp;</td>
 							<td class="nowrap">
-								<span style="display:none;" id="x_voiceLabel">X</span>
+								<span style="display:none" id="x_voiceLabel">X</span>
 								<input type="text" id="popupleft" name="popupleft" value="" onchange="buildOnClick();" aria-labelledby="x_voiceLabel" /> /                                
-								<span style="display:none;" id="y_voiceLabel">Y</span>
+								<span style="display:none" id="y_voiceLabel">Y</span>
 								<input type="text" id="popuptop" name="popuptop" value="" onchange="buildOnClick();" aria-labelledby="y_voiceLabel" /> <span id="center_hint">(c /c = center)</span>
 							</td>
 						</tr>

@@ -254,7 +254,7 @@ YUI.add('exec-command', function(Y) {
                                 sel.anchorNode.setStyle('color', val);
                                 n = sel.anchorNode;
                             } else {
-                                n = this.command('inserthtml', '<span style="color:; ' + val + '">' + inst.Selection.CURSOR + '</span>');
+                                n = this.command('inserthtml', '<span style="color: ' + val + '">' + inst.Selection.CURSOR + '</span>');
                                 sel.focusCursor(true, true);
                             }
                             return n;
@@ -289,7 +289,7 @@ YUI.add('exec-command', function(Y) {
                                 sel.anchorNode.setStyle('backgroundColor', val);
                                 n = sel.anchorNode;
                             } else {
-                                n = this.command('inserthtml', '<span style="background-color:; ' + val + '">' + inst.Selection.CURSOR + '</span>');
+                                n = this.command('inserthtml', '<span style="background-color: ' + val + '">' + inst.Selection.CURSOR + '</span>');
                                 sel.focusCursor(true, true);
                             }
                             return n;

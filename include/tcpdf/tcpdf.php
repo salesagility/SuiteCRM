@@ -11197,8 +11197,8 @@ if (!class_exists('TCPDF', false)) {
             $html = preg_replace('/[\s]+<\/(table|tr|td|th|ul|ol|li)>/', '</\\1>', $html);
             $html = preg_replace('/[\s]+<(tr|td|th|ul|ol|li|br)/', '<\\1', $html);
             $html = preg_replace('/<\/(table|tr|td|th|blockquote|dd|div|dt|h1|h2|h3|h4|h5|h6|hr|li|ol|ul|p)>[\s]+</', '</\\1><', $html);
-            $html = preg_replace('/<\/(td|th)>/', '<marker style="font-size:0;"/></\\1>', $html);
-            $html = preg_replace('/<\/table>([\s]*)<marker style="font-size:0;"\/>/', '</table>', $html);
+            $html = preg_replace('/<\/(td|th)>/', '<marker style="font-size:0"/></\\1>', $html);
+            $html = preg_replace('/<\/table>([\s]*)<marker style="font-size:0"\/>/', '</table>', $html);
             $html = preg_replace('/<img/', ' <img', $html);
             $html = preg_replace('/<img([^\>]*)>/xi', '<img\\1><span></span>', $html);
             $html = preg_replace('/<xre/', '<pre', $html); // restore pre tag

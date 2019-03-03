@@ -17006,7 +17006,7 @@ define("tinymce/dom/BookmarkManager", [
 			rng = selection.getRng();
 			id = dom.uniqueId();
 			collapsed = selection.isCollapsed();
-			styles = 'overflow:hidden;line-height:0';
+			styles = 'overflow:hidden;line-height:0px';
 
 			// Explorer method
 			if (rng.duplicate || rng.item) {
@@ -41436,7 +41436,7 @@ define("tinymce/ui/ColorPicker", [
 						'<div class="' + prefix + 'colorpicker-h-chunk" style="' +
 							'height:' + (100 / l) + '%;' +
 							gradientPrefix + stopsList[i] + ',endColorstr=' + stopsList[i + 1] + ');' +
-							'-ms-' + gradientPrefix + stopsList[i] + ',endColorstr=' + stopsList[i + 1] + ';)' +
+							'-ms-' + gradientPrefix + stopsList[i] + ',endColorstr=' + stopsList[i + 1] + ')' +
 						'"></div>'
 					);
 				}

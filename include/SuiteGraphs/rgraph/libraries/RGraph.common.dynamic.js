@@ -1088,7 +1088,7 @@
                     div.style.top  = canvasXY[1] + gutterTop + 3 + 'px';
                 }
 
-                div.innerHTML = '<span style="color: #666;">' + prop['chart.crosshairs.coords.labels.x'] + ':</span> ' + xCoord + '<br><span style="color: #666;">' + prop['chart.crosshairs.coords.labels.y'] + ':</span> ' + yCoord;
+                div.innerHTML = '<span style="color: #666">' + prop['chart.crosshairs.coords.labels.x'] + ':</span> ' + xCoord + '<br><span style="color: #666">' + prop['chart.crosshairs.coords.labels.y'] + ':</span> ' + yCoord;
 
                 obj.canvas.addEventListener('mouseout', RGraph.HideCrosshairCoords, false);
 

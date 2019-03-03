@@ -1467,7 +1467,7 @@ var Dom = YAHOO.util.Dom,
             var html = '';
             for (var i in this._colorData) {
                 if (Lang.hasOwnProperty(this._colorData, i)) {
-                    html += '<a style="background-color:; ' + i + '" href="#">' + i.replace('#', '') + '</a>';
+                    html += '<a style="background-color: ' + i + '" href="#">' + i.replace('#', '') + '</a>';
                 }
             }
             html += '<span><em>X</em><strong></strong></span>';
@@ -5094,7 +5094,7 @@ var Dom = YAHOO.util.Dom,
             * @type String
             */            
             this.setAttributeConfig('html', {
-                value: attr.html || '<html><head><title>{TITLE}</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><base href="' + this._baseHREF + '"><style>{CSS;}</style><style>{HIDDEN_CSS;}</style><style>{EXTRA_CSS;}</style></head><body onload="document.body._rteLoaded = true;">{CONTENT}</body></html>',
+                value: attr.html || '<html><head><title>{TITLE}</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><base href="' + this._baseHREF + '"><style>{CSS}</style><style>{HIDDEN_CSS}</style><style>{EXTRA_CSS}</style></head><body onload="document.body._rteLoaded = true;">{CONTENT}</body></html>',
                 writeOnce: true
             });
 

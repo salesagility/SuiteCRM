@@ -138,7 +138,7 @@ body.yui-layout {
     right: 2px;
     top: 2px;
     width: 17px;
-    font-size: 0;
+    font-size: 0px;
 }
 
 .yui-layout .yui-layout-wrap {

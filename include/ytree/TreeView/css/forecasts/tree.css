@@ -4,39 +4,31 @@
 .ygtvtn { background: url(../../img/folders/tn.gif) 0 0 no-repeat; width:17px; height:22px; }
 
 /* first or middle sibling, collapsable */
-.ygtvtm { background: url(../../img/folders/tm.gif) 0 0 no-repeat; width:34px; height:22px; cursor:pointer;
-}
+.ygtvtm { background: url(../../img/folders/tm.gif) 0 0 no-repeat; width:34px; height:22px; cursor:pointer }
 
 /* first or middle sibling, collapsable, hover */
-.ygtvtmh { background: url(../../img/folders/tmh.gif) 0 0 no-repeat; width:34px; height:22px; cursor:pointer;
-}
+.ygtvtmh { background: url(../../img/folders/tmh.gif) 0 0 no-repeat; width:34px; height:22px; cursor:pointer }
 
 /* first or middle sibling, expandable */
-.ygtvtp { background: url(../../img/folders/tp.gif) 0 0 no-repeat; width:34px; height:22px; cursor:pointer;
-}
+.ygtvtp { background: url(../../img/folders/tp.gif) 0 0 no-repeat; width:34px; height:22px; cursor:pointer }
 
 /* first or middle sibling, expandable, hover */
-.ygtvtph { background: url(../../img/folders/tph.gif) 0 0 no-repeat; width:34px; height:22px; cursor:pointer;
-}
+.ygtvtph { background: url(../../img/folders/tph.gif) 0 0 no-repeat; width:34px; height:22px; cursor:pointer }
 
 /* last sibling, no children */
 .ygtvln { background: url(../../img/folders/ln.gif) 0 0 no-repeat; width:17px; height:22px; }
 
 /* Last sibling, collapsable */
-.ygtvlm { background: url(../../img/folders/lm.gif) 0 0 no-repeat; width:34px; height:22px; cursor:pointer;
-}
+.ygtvlm { background: url(../../img/folders/lm.gif) 0 0 no-repeat; width:34px; height:22px; cursor:pointer }
 
 /* Last sibling, collapsable, hover */
-.ygtvlmh { background: url(../../img/folders/lmh.gif) 0 0 no-repeat; width:34px; height:22px; cursor:pointer;
-}
+.ygtvlmh { background: url(../../img/folders/lmh.gif) 0 0 no-repeat; width:34px; height:22px; cursor:pointer }
 
 /* Last sibling, expandable */
-.ygtvlp { background: url(../../img/folders/lp.gif) 0 0 no-repeat; width:34px; height:22px; cursor:pointer;
-}
+.ygtvlp { background: url(../../img/folders/lp.gif) 0 0 no-repeat; width:34px; height:22px; cursor:pointer }
 
 /* Last sibling, expandable, hover */
-.ygtvlph { background: url(../../img/folders/lph.gif) 0 0 no-repeat; width:34px; height:22px; cursor:pointer;
-}
+.ygtvlph { background: url(../../img/folders/lph.gif) 0 0 no-repeat; width:34px; height:22px; cursor:pointer }
 
 /* Loading icon */
 .ygtvloading { background: url(../../img/folders/loading.gif) 0 0 no-repeat; width:16px; height:22px; }

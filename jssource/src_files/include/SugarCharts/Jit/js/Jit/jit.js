@@ -2841,7 +2841,7 @@ Extras.Classes.Navigation = new Class({
  	<canvas id="infovis-canvas" width=900 height=500
  	style="position:absolute; top:0; left:0; width:900px; height:500px;" />
  	<div id="infovis-label"
- 	style="overflow:visible; position:absolute; top:0; left:0; width:900px; height:0">
+ 	style="overflow:visible; position:absolute; top:0; left:0; width:900px; height:0px">
  	</div>
  	</div>
  </div>

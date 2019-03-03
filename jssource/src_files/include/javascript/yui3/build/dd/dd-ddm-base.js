@@ -241,7 +241,7 @@ YUI.add('dd-ddm-base', function(Y) {
         * @private
         * @method cssSizestoObject
         * @description Helper method to use to set the gutter from the attribute setter.
-        * @param {String} gutter CSS style string for gutter: '5 0' (sets top and bottom to 5px, left and right to 0), '1 2 3 4' (top 1px, right 2px, bottom 3px, left 4px)
+        * @param {String} gutter CSS style string for gutter: '5 0' (sets top and bottom to 5px, left and right to 0px), '1 2 3 4' (top 1px, right 2px, bottom 3px, left 4px)
         * @return {Object} The gutter Object Literal.
         */
         cssSizestoObject: function(gutter) {

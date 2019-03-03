@@ -20,7 +20,7 @@ build: 3167
     font-weight:normal;
     font-style:italic;
     line-height:1;
-    padding:1em 0;
+    padding:1em 0pt;
     text-align:center;
 }
 
@@ -47,7 +47,7 @@ build: 3167
     margin:0;padding:0;
     padding:4px 10px 4px 10px; /* cell padding */
 	overflow:visible; /*to make ths where the title is really long work*/
-	border:0 solid black;
+	border:0px solid black;
 }
 .yui3-skin-sam .yui3-datatable-coltarget {
     width: 5px;
@@ -125,7 +125,7 @@ tbody .yui3-datatable-editable {
     background:url(../../../../assets/skins/sam/sprite.png) repeat-x 0 -1400px;
     background-color: #5584E0;
     border:1px solid #304369;
-    color:#FFF;
+    color:#FFF
 }
 .yui3-datatable-editor .yui3-datatable-button button:hover {
     background:url(../../../../assets/skins/sam/sprite.png) repeat-x 0 -1300px;
@@ -236,7 +236,7 @@ tbody .yui3-datatable-editable {
     border:1px solid #CBCBCB;
     padding:2px 6px;
     text-decoration:none;
-    background-color:#fff;
+    background-color:#fff
 }
 .yui3-skin-sam .yui3-datatable-selected {
     border:1px solid #fff;

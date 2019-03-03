@@ -9691,7 +9691,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 			rng = t.getRng();
 			id = dom.uniqueId();
 			collapsed = tinyMCE.activeEditor.selection.isCollapsed();
-			styles = 'overflow:hidden;line-height:0';
+			styles = 'overflow:hidden;line-height:0px';
 
 			// Explorer method
 			if (rng.duplicate || rng.item) {
@@ -12933,7 +12933,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 
 			// IE 8 quick fix, needed to propertly generate a hit area for anchors
 			if (dom.stdMode)
-				h += '<td style="position: relative;">' + co.renderHTML() + '</td>';
+				h += '<td style="position: relative">' + co.renderHTML() + '</td>';
 			else
 				h += '<td>' + co.renderHTML() + '</td>';
 

@@ -10,7 +10,7 @@
 	<script type="text/javascript" src="js/cell.js"></script>
 	<link href="css/cell.css" rel="stylesheet" type="text/css" />
 </head>
-<body id="tablecell" style="display: none;" role="application">
+<body id="tablecell" style="display: none" role="application">
 	<form onsubmit="updateAction();return false;" action="#">
 		<div class="tabs">
 			<ul>
@@ -95,7 +95,7 @@
 					<table role="presentation" border="0" cellpadding="0" cellspacing="4">
 						<tr>
 							<td class="column1"><label for="id">{#table_dlg.id}</label></td>
-							<td><input id="id" name="id" type="text" value="" style="width: 200px;" /></td>
+							<td><input id="id" name="id" type="text" value="" style="width: 200px" /></td>
 						</tr>
 
 						<tr>
@@ -106,7 +106,7 @@
 						<tr>
 							<td class="column1"><label for="dir">{#table_dlg.langdir}</label></td>
 							<td>
-								<select id="dir" name="dir" style="width: 200px;">
+								<select id="dir" name="dir" style="width: 200px">
 										<option value="">{#not_set}</option>
 										<option value="ltr">{#table_dlg.ltr}</option>
 										<option value="rtl">{#table_dlg.rtl}</option>
@@ -117,7 +117,7 @@
 						<tr>
 							<td class="column1"><label for="lang">{#table_dlg.langcode}</label></td>
 							<td>
-								<input id="lang" name="lang" type="text" value="" style="width: 200px;" />
+								<input id="lang" name="lang" type="text" value="" style="width: 200px" />
 							</td>
 						</tr>
 
@@ -126,7 +126,7 @@
 							<td>
 								<table role="presentation" border="0" cellpadding="0" cellspacing="0">
 									<tr>
-										<td><input id="backgroundimage" name="backgroundimage" type="text" value="" style="width: 200px;" onchange="changedBackgroundImage();" /></td>
+										<td><input id="backgroundimage" name="backgroundimage" type="text" value="" style="width: 200px" onchange="changedBackgroundImage();" /></td>
 										<td id="backgroundimagebrowsercontainer">&nbsp;</td>
 									</tr>
 								</table>

@@ -19,7 +19,7 @@ version: 2.9.0
     font-weight:normal;
     font-style:italic;
     line-height:1;
-    padding:1em 0;
+    padding:1em 0pt;
     text-align:center;
 }
 
@@ -122,7 +122,7 @@ tbody .yui-dt-editable {
     background:url(../../../../assets/skins/sam/sprite.png) repeat-x 0 -1400px;
     background-color: #5584E0;
     border:1px solid #304369;
-    color:#FFF;
+    color:#FFF
 }
 .yui-dt-editor .yui-dt-button button:hover {
     background:url(../../../../assets/skins/sam/sprite.png) repeat-x 0 -1300px;
@@ -232,7 +232,7 @@ tbody .yui-dt-editable {
     border:1px solid #CBCBCB;
     padding:2px 6px;
     text-decoration:none;
-    background-color:#fff;
+    background-color:#fff
 }
 .yui-skin-sam .yui-dt-selected {
     border:1px solid #fff;

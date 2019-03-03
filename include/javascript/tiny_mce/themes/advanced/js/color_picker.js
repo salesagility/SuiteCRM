@@ -193,7 +193,7 @@ function generatePicker() {
 	var el = document.getElementById('light'), h = '', i;
 
 	for (i = 0; i < detail; i++){
-		h += '<div id="gs'+i+'" style="background-color:#000000; width:15px; height:3px; border-style:none; border-width:0;"'
+		h += '<div id="gs'+i+'" style="background-color:#000000; width:15px; height:3px; border-style:none; border-width:0px;"'
 		+ ' onclick="changeFinalColor(this.style.backgroundColor)"'
 		+ ' onmousedown="isMouseDown = true; return false;"'
 		+ ' onmouseup="isMouseDown = false;"'
@@ -254,7 +254,7 @@ function generateNamedColors() {
 
 	for (n in named) {
 		v = named[n];
-		h += '<a href="javascript:insertAction();" role="option" tabindex="-1" aria-labelledby="named_colors_' + i + '" onfocus="showColor(\'' + n + '\',\'' + v + '\');" onmouseover="showColor(\'' + n + '\',\'' + v + '\');" style="background-color:; ' + n + '">';
+		h += '<a href="javascript:insertAction();" role="option" tabindex="-1" aria-labelledby="named_colors_' + i + '" onfocus="showColor(\'' + n + '\',\'' + v + '\');" onmouseover="showColor(\'' + n + '\',\'' + v + '\');" style="background-color: ' + n + '">';
 		if (tinyMCEPopup.editor.forcedHighContrastMode) {
 			h += '<canvas class="mceColorSwatch" height="10" width="10" data-color="' + colors[i] + '"></canvas>';
 		}

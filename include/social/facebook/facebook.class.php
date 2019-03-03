@@ -73,7 +73,7 @@ class facebook_helper
 
     public function photo_status($story)
     {
-        $string .= "<div style=' margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc;'>";
+        $string .= "<div style=' margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc'>";
         $string .= '<div style="padding: 3px; width: 100%;">' .$story['from']['name'] . '</div>';
         $string .= '<img src=https://graph.facebook.com/' . $story['from']['id'] . '/picture>';
         $string .= '<img src=https://graph.facebook.com/' . $story['to']['id'] . '/picture>';
@@ -87,7 +87,7 @@ class facebook_helper
     {
         $to_name = $this->get_to($story);
 
-        $string .= "<div style=' margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc;'>";
+        $string .= "<div style=' margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc'>";
         $string .= '<div style="padding: 3px; width: 100%;">' .$story['from']['name'] . '</div>';
 
         if ($story['status_type'] == 'approved_friend') {
@@ -109,7 +109,7 @@ class facebook_helper
     }
     public function link_type($story)
     {
-        $string .= "<div style='margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc;'>";
+        $string .= "<div style='margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc'>";
         $string .= '<div style="padding: 3px; width: 100%;">' . $story['message'] . '</div>';
 
         $string .= '<a style="padding: 5px; float:left;" href="' . $story['link'] . '"><img style=float:left; src="' . $story['picture'] . '"/></a>';
@@ -122,7 +122,7 @@ class facebook_helper
     public function video_type($story)
     {
         $string = '';
-        $string .= "<div style=' margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc;'>";
+        $string .= "<div style=' margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc'>";
         $string .= '<div style="padding: 3px; width: 100%;">' . $story['from']['name'] .' Shared a video with '. $story['message'] . '</div>';
 
         $string .= '<a style="padding: 5px; float:left;" href="' . $story['link'] . '"><img style=float:left; src="' . $story['picture'] . '"/></a>';

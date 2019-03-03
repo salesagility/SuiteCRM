@@ -3,7 +3,7 @@
 // By Jay Salvat - http://markitup.jaysalvat.com/
 // ------------------------------------------------------------------*/
 .markItUp * {
-	margin:0; padding:0;
+	margin:0px; padding:0px;
 	outline:none;
 }
 .markItUp a:link,
@@ -60,13 +60,13 @@
 	margin-right:5px;
 }
 .markItUpHeader ul .markItUpDropMenu li {
-	margin-right:0;
+	margin-right:0px;
 }
 /* next rows of buttons */
 .markItUpHeader ul ul {
 	display:none;
 	position:absolute;
-	top:18px; left:0;
+	top:18px; left:0px;	
 	background:#FFF;
 	border:1px solid #000;
 }
@@ -86,7 +86,7 @@
 }
 .markItUpHeader ul ul .markItUpSeparator {
 	width:auto; height:1px;
-	margin:0;
+	margin:0px;
 }
 /* next rows of buttons */
 .markItUpHeader ul ul ul {
@@ -102,11 +102,11 @@
 	text-indent:-10000px;
 	background-repeat:no-repeat;
 	padding:3px;
-	margin:0;
+	margin:0px;
 }
 .markItUpHeader ul ul a {
 	display:block;
-	padding-left:0;
+	padding-left:0px;
 	text-indent:0;
 	width:120px; 
 	padding:5px 5px 5px 25px;

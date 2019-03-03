@@ -27,7 +27,7 @@ build: 3167
 
 .yui3-scrollview-scrollbar .yui3-scrollview-child { 
     position: absolute;
-    right: 0;
+    right: 0px;
     display: block;
     width: 100%;
     height: 4px;

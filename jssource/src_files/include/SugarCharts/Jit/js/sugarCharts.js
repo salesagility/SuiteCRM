@@ -227,7 +227,7 @@ function loadSugarChart(chartId, jsonFilename, css, chartConfig) {
               table += '<td width=\'16\' valign=\'top\'>';
               if (legend["name"][j] != undefined) {
                 table += '<div class=\'query-color\' style=\'background-color:'
-                  + legend["color"][j] + ';\'>&nbsp;</div>';
+                  + legend["color"][j] + '\'>&nbsp;</div>';
               }
 
               table += '</td>';
@@ -396,7 +396,7 @@ function loadSugarChart(chartId, jsonFilename, css, chartConfig) {
               table += '<td width=\'16\' valign=\'top\'>';
               if (legend["name"][j] != undefined) {
                 table += '<div class=\'query-color\' style=\'background-color:'
-                  + legend["color"][j] + ';\'>&nbsp;</div>';
+                  + legend["color"][j] + '\'>&nbsp;</div>';
               }
 
               table += '</td>';
@@ -536,7 +536,7 @@ function loadSugarChart(chartId, jsonFilename, css, chartConfig) {
               table += '<td width=\'16\' valign=\'top\'>';
               if (legend["name"][j] != undefined) {
                 table += '<div class=\'query-color\' style=\'background-color:'
-                  + legend["color"][j] + ';\'>&nbsp;</div>';
+                  + legend["color"][j] + '\'>&nbsp;</div>';
               }
 
               table += '</td>';
@@ -697,7 +697,7 @@ function loadSugarChart(chartId, jsonFilename, css, chartConfig) {
               table += '<td width=\'16\' valign=\'top\'>';
               if (legend["name"][j] != undefined) {
                 table += '<div class=\'query-color\' style=\'background-color:'
-                  + legend["color"][j] + ';\'>&nbsp;</div>';
+                  + legend["color"][j] + '\'>&nbsp;</div>';
               }
 
               table += '</td>';
@@ -835,7 +835,7 @@ function loadSugarChart(chartId, jsonFilename, css, chartConfig) {
               table += '<td width=\'16\' valign=\'top\'>';
               if (legend["name"][j] != undefined) {
                 table += '<div class=\'query-color\' style=\'background-color:'
-                  + legend["color"][j] + ';\'>&nbsp;</div>';
+                  + legend["color"][j] + '\'>&nbsp;</div>';
               }
 
               table += '</td>';

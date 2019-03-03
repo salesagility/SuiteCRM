@@ -102,7 +102,7 @@ if (Y.UA.ie && !Y.HistoryBase.nativeHashChange) {
             // now get slightly degraded history support.
 
             iframe = GlobalEnv._iframe = Y.Node.getDOMNode(Y.Node.create(
-                '<iframe src="javascript:0" style="display:none;" height="0" width="0" tabindex="-1" title="empty"/>'
+                '<iframe src="javascript:0" style="display:none" height="0" width="0" tabindex="-1" title="empty"/>'
             ));
 
             // Append the iframe to the documentElement rather than the body.

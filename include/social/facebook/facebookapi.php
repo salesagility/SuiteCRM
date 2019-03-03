@@ -21,9 +21,9 @@ if ($user) {
 } else {
     $log = '<a href="' . $loginUrl .'">Login with Facebook</a>';
 }
-$html .= "<div style='height:400px;overflow:scroll;'><table width='100%'>";
+$html .= "<div style='height:400px;overflow:scroll'><table width='100%'>";
 $html .= "<tr><th><h3>Facebook Feed</h3></th></tr>";
-$html .= "<tr><td style='padding:5px;'><img src=https://graph.facebook.com/" . $different_user['username'] . "/picture>";
+$html .= "<tr><td style='padding:5px'><img src=https://graph.facebook.com/" . $different_user['username'] . "/picture>";
 $html .= "<b style='margin-left:5px; font-size:20px;'>".$different_user['first_name'] .  " " . $different_user['last_name'] . "</b></td></tr>";
 $html .= "</table>";
 

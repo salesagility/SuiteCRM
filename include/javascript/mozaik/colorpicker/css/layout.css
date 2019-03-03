@@ -79,11 +79,11 @@ h1 {
 .navigationTabs li a.active {
 	background-color: #fff;
 	border: 1px solid #ccc;
-	border-bottom: 0 solid;
+	border-bottom: 0px solid;
 }
 .tabsContent {
 	border: 1px solid #ccc;
-	border-top: 0 solid;
+	border-top: 0px solid;
 	width: 698px;
 	overflow: hidden;
 }

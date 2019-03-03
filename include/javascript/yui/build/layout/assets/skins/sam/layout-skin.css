@@ -191,7 +191,7 @@ version: 2.9.0
     height: 16px;
     width: 6px;
     top: 45%;
-    left: 0;
+    left: 0px;
     display: block;
     background: transparent url(layout_sprite.png) no-repeat 0 -5px;
 }

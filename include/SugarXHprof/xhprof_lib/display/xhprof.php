@@ -579,7 +579,7 @@ function profiler_report(
     '  <dt>Tip</dt>' .
     '  <dd>Click a function name below to drill down.</dd>' .
     '</dl>' .
-    '<div style="clear: both; margin: 3em 0;"></div>';
+    '<div style="clear: both; margin: 3em 0em;"></div>';
 
     // data tables
     if (!empty($rep_symbol)) {
@@ -841,7 +841,7 @@ function print_flat_data($url_params, $title, $flat_data, $sort, $run1, $run2, $
 
     // let's print the display all link at the bottom as well...
     if ($display_link) {
-        echo '<div style="text-align: left; padding: 2em;">' . $display_link . '</div>';
+        echo '<div style="text-align: left; padding: 2em">' . $display_link . '</div>';
     }
 }
 
@@ -928,13 +928,13 @@ function full_report($url_params, $symbol_tab, $sort, $run1, $run2)
         print('<table cellpadding=2 cellspacing=1 width="30%" '
           .'bgcolor="#bdc7d8" align=center>' . "\n");
         echo "<tr>";
-        echo "<th style='text-align:right;'>Overall Summary</th>";
+        echo "<th style='text-align:right'>Overall Summary</th>";
         echo "<th></th>";
         echo "</tr>";
 
         foreach ($metrics as $metric) {
             echo "<tr>";
-            echo "<td style='text-align:right; font-weight:bold;'>Total "
+            echo "<td style='text-align:right; font-weight:bold'>Total "
             . str_replace("<br>", " ", stat_description($metric)) . ":</td>";
             echo "<td>" . number_format($totals[$metric]) .  " "
            . $possible_metrics[$metric][1] . "</td>";
@@ -943,7 +943,7 @@ function full_report($url_params, $symbol_tab, $sort, $run1, $run2)
 
         if ($display_calls) {
             echo "<tr>";
-            echo "<td style='text-align:right; font-weight:bold;'>Number of Function Calls:</td>";
+            echo "<td style='text-align:right; font-weight:bold'>Number of Function Calls:</td>";
             echo "<td>" . number_format($totals['ct']) . "</td>";
             echo "</tr>";
         }
@@ -987,8 +987,8 @@ function full_report($url_params, $symbol_tab, $sort, $run1, $run2)
             $title = "Total Diff Report: '
                .'Sorted by absolute value of regression/improvement in $desc";
         } else {
-            $title = "Top 100 <i style='color:red;'>Regressions</i>/"
-               . "<i style='color:green;'>Improvements</i>: "
+            $title = "Top 100 <i style='color:red'>Regressions</i>/"
+               . "<i style='color:green'>Improvements</i>: "
                . "Sorted by $desc Diff";
         }
     } else {
@@ -1165,7 +1165,7 @@ function symbol_report(
 
     if ($diff_mode) {
         $diff_text = "<b>Diff</b>";
-        $regr_impr = "<i style='color:red;'>Regression</i>/<i style='color:green;'>Improvement</i>";
+        $regr_impr = "<i style='color:red'>Regression</i>/<i style='color:green'>Improvement</i>";
     } else {
         $diff_text = "";
         $regr_impr = "";
@@ -1317,7 +1317,7 @@ function symbol_report(
     print("</tr>");
 
     print("<tr bgcolor='#ffffff'>");
-    print("<td style='text-align:right;color:blue;'>"
+    print("<td style='text-align:right;color:blue'>"
         ."Exclusive Metrics $diff_text for Current Function</td>");
 
     if ($display_calls) {

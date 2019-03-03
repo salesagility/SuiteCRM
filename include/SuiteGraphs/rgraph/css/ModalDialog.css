@@ -18,8 +18,8 @@
     */
     .modalBg {
         position: absolute;
-        top: 0;
-        left: 0;
+        top: 0px;
+        left: 0px;
         filter: Alpha(Opacity=50);
         -moz-opacity: 0.5;
         background-color: #ddd;
@@ -31,8 +31,8 @@
 
     .modalDialog {
         position: absolute;
-        top: 0;
-        left: 0;
+        top: 0px;
+        left: 0px;
         visibility: hidden;
         z-index: 101;
         background-color: white;
@@ -48,13 +48,13 @@
 
     .modalDialog .modalDialogHeader {
         margin:0;
-        padding: 0;
+        padding: 0px;
         color: #333;
         font-weight: bold;
         background-color: #ccc;
         border: 1px solid #989898;
         position: absolute;
-        top: 0;
+        top: 0px;
         left: -1px;
         height: 7px;
         border-radius: 5px;
@@ -69,8 +69,8 @@
     .modalShadow {
         position: absolute;
         background-color: black;
-        top: 0;
-        left: 0;
+        top: 0px;
+        left: 0px;
         z-index: 99;
         top: expression(document.body.clientHeight / 2 - this.offsetHeight / 2);
         left: expression(document.body.clientWidth / 2 - this.offsetWidth / 2);

@@ -5,7 +5,7 @@ var PasteWordDialog = {
 		var ed = tinyMCEPopup.editor, el = document.getElementById('iframecontainer'), ifr, doc, css, cssHTML = '';
 
 		// Create iframe
-		el.innerHTML = '<iframe id="iframe" src="javascript:\'\';" frameBorder="0" style="border: 1px solid gray;"></iframe>';
+		el.innerHTML = '<iframe id="iframe" src="javascript:\'\';" frameBorder="0" style="border: 1px solid gray"></iframe>';
 		ifr = document.getElementById('iframe');
 		doc = ifr.contentWindow.document;
 

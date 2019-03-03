@@ -141,7 +141,7 @@ version: 2.9.0
     padding-left: 35px;
     height: 20px;
     text-decoration: none;
-    font-size: 0;
+    font-size: 0px;
     line-height: 2;
     display: block;
     color: #000;
@@ -181,7 +181,7 @@ version: 2.9.0
 }
 /* IE needs a little help positioning the first child */
 .yui-skin-sam .yui-toolbar-container .yui-button .first-child {
-    *left: 0;
+    *left: 0px;
 }
 
 /* Font Family Drop Down */
@@ -446,7 +446,7 @@ version: 2.9.0
     background: url( editor-sprite.gif ) no-repeat 0 -1144px;
     overflow: hidden;
     right: -2px;
-    top: 0;
+    top: 0px;
     height: 20px;
 }
 /* Fix the color menu background if it's inside a Property Editor */
