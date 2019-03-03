@@ -297,26 +297,45 @@ class AOW_WorkFlow extends Basic
         return $query;
     }
 
-    function build_flow_custom_query_join($name, $custom_name, SugarBean $module,
-            $query = array()) {
-        if(!isset($query['join'][$custom_name])) {
-            $query['join'][$custom_name] = 'LEFT JOIN '.$module->get_custom_table_name()
-                    .' '.$custom_name.' ON '.$name.'.id = '. $custom_name.'.id_c ';
+    /**
+     * @param $name
+     * @param $custom_name
+     * @param SugarBean $module
+     * @param array $query
+     * @return array
+     */
+    function build_flow_custom_query_join(
+        $name,
+        $custom_name,
+        SugarBean $module,
+        $query = array()
+    ) {
+        if (!isset($query['join'][$custom_name])) {
+            $query['join'][$custom_name] = 'LEFT JOIN ' . $module->get_custom_table_name()
+                . ' ' . $custom_name . ' ON ' . $name . '.id = ' . $custom_name . '.id_c ';
         }
+
         return $query;
     }
 
-    function build_flow_relationship_query_join($name, SugarBean $module,
-            $query = array()) {
-        if(!isset($query['join'][$name])) {
-            if($module->load_relationship($name)) {
+    /**
+     * @param $name
+     * @param SugarBean $module
+     * @param array $query
+     * @return array
+     */
+    function build_flow_relationship_query_join(
+        $name,
+        SugarBean $module,
+        $query = []
+    ) {
+        if (!isset($query['join'][$name]) && $module->load_relationship($name)) {
                 $params['join_type'] = 'LEFT JOIN';
                 $params['join_table_alias'] = $name;
                 $join = $module->$name->getJoin($params, true);
 
                 $query['join'][$name] = $join['join'];
-                $query['select'][] = $join['select']." AS '".$name."_id'";
-            }
+                $query['select'][] = $join['select'] . " AS '" . $name . "_id'";
         }
         return $query;
     }
