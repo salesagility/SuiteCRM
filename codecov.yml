@@ -12,6 +12,7 @@ coverage:
     patch: yes
     changes: no
     target: 0%
+    threshhold: 100%
 
 parsers:
   gcov:
