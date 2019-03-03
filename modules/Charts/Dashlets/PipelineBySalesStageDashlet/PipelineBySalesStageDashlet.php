@@ -328,8 +328,8 @@ EOD;
                         count(*) AS opp_count,
                         sum((amount_usdollar*".$conversion_rate.")/1000) AS total
                     FROM users,opportunities  ";
-        $query .= " WHERE opportunities.date_closed >= ". db_convert("'".$this->pbss_date_start."'",'date').
-            " AND opportunities.date_closed <= ".db_convert("'".$this->pbss_date_end."'",'date') .
+        $query .= " WHERE opportunities.date_closed >= ". db_convert("'".$this->pbss_date_start."'", 'date').
+            " AND opportunities.date_closed <= ".db_convert("'".$this->pbss_date_end."'", 'date') .
             " AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
         $query .= " GROUP BY opportunities.sales_stage";
         return $query;

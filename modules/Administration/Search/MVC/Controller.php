@@ -50,5 +50,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 abstract class Controller extends BaseController
 {
-
 }

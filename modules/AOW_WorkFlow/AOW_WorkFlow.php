@@ -73,7 +73,8 @@ class AOW_WorkFlow extends Basic
      * @param $key name of SQL operator
      * @return mixed SQL operator or false if $key not found
      */
-    private function getSQLOperator($key) {
+    private function getSQLOperator($key)
+    {
         $sqlOperatorList['Equal_To'] = '=';
         $sqlOperatorList['Not_Equal_To'] = '!=';
         $sqlOperatorList['Greater_Than'] = '>';
@@ -84,7 +85,7 @@ class AOW_WorkFlow extends Basic
         $sqlOperatorList['Starts_With'] = 'LIKE';
         $sqlOperatorList['Ends_With'] = 'LIKE';
         $sqlOperatorList['is_null'] = 'IS NULL';
-        if(!isset($sqlOperatorList[$key])) {
+        if (!isset($sqlOperatorList[$key])) {
             return false;
         }
         return $sqlOperatorList[$key];
@@ -95,7 +96,8 @@ class AOW_WorkFlow extends Basic
      * @param $key name of SQL operator
      * @return bool true if operator exists otherwise false
      */
-    private function isSQLOperator($key) {
+    private function isSQLOperator($key)
+    {
         return $this->getSQLOperator($key) ? true : false;
     }
 
@@ -126,7 +128,7 @@ class AOW_WorkFlow extends Basic
         return false;
     }
 
-    function save($check_notify = false)
+    public function save($check_notify = false)
     {
         if (empty($this->id) || (isset($_POST['duplicateSave']) && $_POST['duplicateSave'] == 'true')) {
             unset($_POST['aow_conditions_id']);
@@ -146,14 +148,14 @@ class AOW_WorkFlow extends Basic
         return $return_id;
     }
 
-    function load_flow_beans(){
+    public function load_flow_beans()
+    {
         global $beanList, $app_list_strings;
 
-        $app_list_strings['aow_moduleList'] = $app_list_strings['moduleList'];
-
-        if(!empty($app_list_strings['aow_moduleList'])){
-            foreach($app_list_strings['aow_moduleList'] as $mkey => $mvalue){
-                if(!isset($beanList[$mkey]) || str_begin($mkey, 'AOW_')){
+        if (!empty($app_list_strings['moduleList'])) {
+            $app_list_strings['aow_moduleList'] = $app_list_strings['moduleList'];
+            foreach ($app_list_strings['aow_moduleList'] as $mkey => $mvalue) {
+                if (!isset($beanList[$mkey]) || str_begin($mkey, 'AOW_')) {
                     unset($app_list_strings['aow_moduleList'][$mkey]);
                 }
             }
@@ -168,8 +170,9 @@ class AOW_WorkFlow extends Basic
      * Select and run all active flows
      * @return bool
      */
-	public function run_flows()
-		{$flows = AOW_WorkFlow::get_full_list(''," aow_workflow.status = 'Active'  AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'In_Scheduler' OR aow_workflow.run_when = 'Create') ");
+    public function run_flows()
+    {
+        $flows = AOW_WorkFlow::get_full_list('', " aow_workflow.status = 'Active'  AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'In_Scheduler' OR aow_workflow.run_when = 'Create') ");
 
         if (empty($flows)) {
             LoggerManager::getLogger()->warn('There is no any workflow to run');
@@ -185,11 +188,11 @@ class AOW_WorkFlow extends Basic
     /**
      * Retrieve the beans to actioned and run the actions
      */
-    function run_flow(){
+    public function run_flow()
+    {
         $beans = $this->get_flow_beans();
-        if(!empty($beans)){
-
-            foreach($beans as $bean){
+        if (!empty($beans)) {
+            foreach ($beans as $bean) {
                 $bean->retrieve($bean->id);
                 $this->run_actions($bean);
             }
@@ -202,7 +205,6 @@ class AOW_WorkFlow extends Basic
     public function run_bean_flows(SugarBean $bean)
     {
         if (!defined('SUGARCRM_IS_INSTALLING') && (!isset($_REQUEST['module']) || $_REQUEST['module'] != 'Import')) {
-
             $query = "SELECT id FROM aow_workflow WHERE aow_workflow.flow_module = '" . $bean->module_dir . "' AND aow_workflow.status = 'Active' AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'On_Save' OR aow_workflow.run_when = 'Create') AND aow_workflow.deleted = 0 ";
 
             $result = $this->db->query($query, false);
@@ -221,7 +223,8 @@ class AOW_WorkFlow extends Basic
     /**
      * Use the condition statements and processed table to build query to retrieve beans to be actioned
      */
-    function get_flow_beans(){
+    public function get_flow_beans()
+    {
         global $beanList;
 
         $flowModule = null;
@@ -240,29 +243,27 @@ class AOW_WorkFlow extends Basic
             $query_array['select'][] = $module->table_name.".id AS id";
             $query_array = $this->build_flow_query_where($query_array);
 
-            if(!empty($query_array)){
-                foreach ($query_array['select'] as $select){
+            if (!empty($query_array)) {
+                foreach ($query_array['select'] as $select) {
                     $query .=  ($query == '' ? 'SELECT ' : ', ').$select;
                 }
 
                 $query .= ' FROM '.$module->table_name.' ';
 
-                if(isset($query_array['join'])){
-                    foreach ($query_array['join'] as $join){
+                if (isset($query_array['join'])) {
+                    foreach ($query_array['join'] as $join) {
                         $query .= $join;
                     }
                 }
-                if(isset($query_array['where'])){
+                if (isset($query_array['where'])) {
                     $query_where = '';
-                    foreach ($query_array['where'] as $where){
+                    foreach ($query_array['where'] as $where) {
                         $query_where .=  ($query_where == '' ? 'WHERE ' : ' AND ').$where;
                     }
                     $query .= ' '.$query_where;
                 }
                 return $module->process_full_list_query($query);
             }
-
-
         }
         return null;
     }
@@ -294,12 +295,12 @@ class AOW_WorkFlow extends Basic
                 $query['join'][$name] = $join['join'];
                 $query['select'][] = $join['select']." AS '".$name."_id'";
             }
-
         }
         return $query;
     }
 
-    function build_flow_query_where($query = array()){
+    public function build_flow_query_where($query = array())
+    {
         global $beanList;
 
         $flowModule = null;
@@ -318,34 +319,34 @@ class AOW_WorkFlow extends Basic
             while ($row = $this->db->fetchByAssoc($result)) {
                 $condition = new AOW_Condition();
                 $condition->retrieve($row['id']);
-                $query = $this->build_query_where($condition,$module,$query);
-                if(empty($query)){
+                $query = $this->build_query_where($condition, $module, $query);
+                if (empty($query)) {
                     return $query;
                 }
             }
-            if($this->flow_run_on){
-                switch($this->flow_run_on){
+            if ($this->flow_run_on) {
+                switch ($this->flow_run_on) {
 
                     case'New_Records':
-                        if($module->table_name === 'campaign_log'){
+                        if ($module->table_name === 'campaign_log') {
                             $query['where'][] = $module->table_name . '.' . 'activity_date' . ' > ' . "'" . $this->activity_date . "'";
                         } else {
                             $query['where'][] = $module->table_name . '.' . 'date_entered' . ' > ' . "'" . $this->date_entered . "'";
                         }
-                        Break;
+                        break;
 
                     case'Modified_Records':
-                        if($module->table_name === 'campaign_log'){
+                        if ($module->table_name === 'campaign_log') {
                             $query['where'][] = $module->table_name . '.' . 'date_modified' . ' > ' . "'" . $this->activity_date . "'" . ' AND ' . $module->table_name . '.' . 'activity_date' . ' <> ' . $module->table_name . '.' . 'date_modified';
                         } else {
                             $query['where'][] = $module->table_name . '.' . 'date_modified' . ' > ' . "'" . $this->date_entered . "'" . ' AND ' . $module->table_name . '.' . 'date_entered' . ' <> ' . $module->table_name . '.' . 'date_modified';
                         }
-                        Break;
+                        break;
 
                 }
             }
 
-            if(!$this->multiple_runs){
+            if (!$this->multiple_runs) {
                 if (!isset($query['where'])) {
                     LoggerManager::getLogger()->warn('Undefined index: where');
                     $query['where'] = [];
@@ -360,7 +361,8 @@ class AOW_WorkFlow extends Basic
         return $query;
     }
 
-    function build_query_where(AOW_Condition $condition, $module, $query = array()){
+    public function build_query_where(AOW_Condition $condition, $module, $query = array())
+    {
         global $beanList, $app_list_strings, $sugar_config, $timedate;
         $path = unserialize(base64_decode($condition->module_path));
 
@@ -378,15 +380,15 @@ class AOW_WorkFlow extends Basic
             }
         }
 
-        if($this->isSQLOperator($condition->operator)){
+        if ($this->isSQLOperator($condition->operator)) {
             $where_set = false;
 
             $data = $condition_module->field_defs[$condition->field];
 
-            if($data['type'] == 'relate' && isset($data['id_name'])) {
+            if ($data['type'] == 'relate' && isset($data['id_name'])) {
                 $condition->field = $data['id_name'];
             }
-            if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
+            if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                 $field = $table_alias.'_cstm.'.$condition->field;
                 $query = $this->build_flow_custom_query_join(
                     $table_alias,
@@ -398,12 +400,12 @@ class AOW_WorkFlow extends Basic
                 $field = $table_alias.'.'.$condition->field;
             }
 
-            if($condition->operator == 'is_null'){
+            if ($condition->operator == 'is_null') {
                 $query['where'][] = '('.$field.' '.$this->getSQLOperator($condition->operator).' OR '.$field.' '.$this->getSQLOperator('Equal_To')." '')";
                 return $query;
             }
 
-            switch($condition->value_type) {
+            switch ($condition->value_type) {
                 case 'Field':
 
                     $data = null;
@@ -413,10 +415,10 @@ class AOW_WorkFlow extends Basic
                         LoggerManager::getLogger()->warn('Undefined field def for condition value in module: ' . get_class($module) . '::field_defs[' . $condition->value . ']');
                     }
 
-                    if($data['type'] == 'relate' && isset($data['id_name'])) {
+                    if ($data['type'] == 'relate' && isset($data['id_name'])) {
                         $condition->value = $data['id_name'];
                     }
-                    if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
+                    if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                         $value = $module->table_name.'_cstm.'.$condition->value;
                         $query = $this->build_flow_custom_query_join(
                                 $module->table_name,
@@ -445,8 +447,8 @@ class AOW_WorkFlow extends Basic
                         } else {
                             $value = 'UTC_TIMESTAMP()';
                         }
-                    } else if(isset($params[0]) && $params[0] == 'today'){
-                        if($sugar_config['dbconfig']['db_type'] == 'mssql'){
+                    } elseif (isset($params[0]) && $params[0] == 'today') {
+                        if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
                             //$field =
                             $value  = 'CAST(GETDATE() AS DATE)';
                         } else {
@@ -454,47 +456,58 @@ class AOW_WorkFlow extends Basic
                             $value = 'Curdate()';
                         }
                     } else {
-                        $data = null;
-                        if (isset($module->field_defs[$params[0]])) {
-                            $data = $module->field_defs[$params[0]];
+                        if (isset($params[0]) && $params[0] == 'today') {
+                            if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
+                                //$field =
+                                $value  = 'CAST(GETDATE() AS DATE)';
+                            } else {
+                                $field = 'DATE('.$field.')';
+                                $value = 'Curdate()';
+                            }
                         } else {
-                            LoggerManager::getLogger()->warn('Filed def data is missing: ' . get_class($module) . '::$field_defs[' . $params[0] . ']');
-                        }
+                            $data = null;
+                            if (isset($module->field_defs[$params[0]])) {
+                                $data = $module->field_defs[$params[0]];
+                            } else {
+                                LoggerManager::getLogger()->warn('Filed def data is missing: ' . get_class($module) . '::$field_defs[' . $params[0] . ']');
+                            }
 
-                        if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
-                            $value = $module->table_name.'_cstm.'.$params[0];
-                            $query = $this->build_flow_custom_query_join(
+                            if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
+                                $value = $module->table_name.'_cstm.'.$params[0];
+                                $query = $this->build_flow_custom_query_join(
                                     $module->table_name,
                                 $module->table_name.'_cstm',
                                     $module,
                                 $query
                             );
-                        } else {
-                            $value = $module->table_name.'.'.$params[0];
+                            } else {
+                                $value = $module->table_name.'.'.$params[0];
+                            }
                         }
                     }
 
-                    if($params[1] != 'now'){
-                        switch($params[3]) {
-                            case 'business_hours';
-                                if(file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php') && $params[0] == 'now'){
+                    if ($params[1] != 'now') {
+                        switch ($params[3]) {
+                            case 'business_hours':
+                                if (file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php') && $params[0] == 'now') {
                                     require_once('modules/AOBH_BusinessHours/AOBH_BusinessHours.php');
 
                                     $businessHours = new AOBH_BusinessHours();
 
                                     $amount = $params[2];
 
-                                    if($params[1] != "plus"){
+                                    if ($params[1] != "plus") {
                                         $amount = 0-$amount;
                                     }
                                     $value = $businessHours->addBusinessHours($amount);
-                                    $value = "'".$timedate->asDb( $value )."'";
+                                    $value = "'".$timedate->asDb($value)."'";
                                     break;
                                 }
                                 //No business hours module found - fall through.
                                 $params[3] = 'hour';
+                                // no break
                             default:
-                                if($sugar_config['dbconfig']['db_type'] == 'mssql'){
+                                if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
                                     $value = "DATEADD(".$params[3].",  ".$app_list_strings['aow_date_operator'][$params[1]]." $params[2], $value)";
                                 } else {
                                     if (!isset($params)) {
@@ -522,20 +535,25 @@ class AOW_WorkFlow extends Basic
 
                 case 'Multi':
                     $sep = ' AND ';
-                    if($condition->operator == 'Equal_To') $sep = ' OR ';
+                    if ($condition->operator == 'Equal_To') {
+                        $sep = ' OR ';
+                    }
                     $multi_values = unencodeMultienum($condition->value);
-                    if(!empty($multi_values)){
+                    if (!empty($multi_values)) {
                         $value = '(';
-                        if($data['type'] == 'multienum'){
+                        if ($data['type'] == 'multienum') {
                             $multi_operator =  $condition->operator == 'Equal_To' ? 'LIKE' : 'NOT LIKE';
-                            foreach($multi_values as $multi_value){
-                                if($value != '(') $value .= $sep;
+                            foreach ($multi_values as $multi_value) {
+                                if ($value != '(') {
+                                    $value .= $sep;
+                                }
                                 $value .= $field." $multi_operator '%^".$multi_value."^%'";
                             }
-                        }
-                        else {
-                            foreach($multi_values as $multi_value){
-                                if($value != '(') $value .= $sep;
+                        } else {
+                            foreach ($multi_values as $multi_value) {
+                                if ($value != '(') {
+                                    $value .= $sep;
+                                }
                                 $value .= $field.' '.$this->getSQLOperator($condition->operator)." '".$multi_value."'";
                             }
                         }
@@ -563,7 +581,7 @@ class AOW_WorkFlow extends Basic
             }
 
             //handle like conditions
-            Switch($condition->operator) {
+            switch ($condition->operator) {
                 case 'Contains':
                     $value = "CONCAT('%', ".$value." ,'%')";
                     break;
@@ -576,18 +594,20 @@ class AOW_WorkFlow extends Basic
             }
 
 
-            if(!$where_set) $query['where'][] = $field.' '.$this->getSQLOperator($condition->operator).' '.$value;
+            if (!$where_set) {
+                $query['where'][] = $field.' '.$this->getSQLOperator($condition->operator).' '.$value;
+            }
         }
 
         return $query;
-
     }
 
     /**
      * @param SugarBean $bean
      * @return bool
      */
-    public function check_valid_bean(SugarBean $bean){
+    public function check_valid_bean(SugarBean $bean)
+    {
         global $app_list_strings, $timedate;
 
         if (!$this->multiple_runs) {
@@ -605,7 +625,6 @@ class AOW_WorkFlow extends Basic
         }
 
         if ($this->flow_run_on) {
-
             $dateEntered = $timedate->fromUserType($this->date_entered, 'datetime')
                 ?: $timedate->fromDbType($this->date_entered, 'datetime');
             $beanDateEntered = $timedate->fromUserType($bean->date_entered, 'datetime')
@@ -618,14 +637,14 @@ class AOW_WorkFlow extends Basic
                     if (!empty($bean->fetched_row) || $beanDateEntered < $dateEntered) {
                         return false;
                     }
-                    Break;
+                    break;
 
                 case'Modified_Records':
                     if (empty($bean->fetched_row) ||
                         ($beanDateModified < $dateEntered && $beanDateModified !== $beanDateEntered)) {
                         return false;
                     }
-                    Break;
+                    break;
             }
         }
 
@@ -642,7 +661,7 @@ class AOW_WorkFlow extends Basic
 
             $condition_bean = $bean;
 
-            if(isset($path[0]) && $path[0] != $bean->module_dir){
+            if (isset($path[0]) && $path[0] != $bean->module_dir) {
                 $query_array = $this->build_query_where($condition, $condition_bean, $query_array);
                 continue;
             }
@@ -651,30 +670,29 @@ class AOW_WorkFlow extends Basic
             $value = $condition->value;
 
             $dateFields = array('date','datetime', 'datetimecombo');
-            if($this->isSQLOperator($condition->operator)){
-
+            if ($this->isSQLOperator($condition->operator)) {
                 $data = $condition_bean->field_defs[$field];
 
-                if($data['type'] === 'relate' && isset($data['id_name'])) {
+                if ($data['type'] === 'relate' && isset($data['id_name'])) {
                     $field = $data['id_name'];
                     $condition->field = $data['id_name'];
                 }
                 $field = $condition_bean->$field;
 
-                if(in_array($data['type'],$dateFields)) {
+                if (in_array($data['type'], $dateFields)) {
                     $field = strtotime($field);
                 }
 
-                switch($condition->value_type) {
+                switch ($condition->value_type) {
                     case 'Field':
                         $data = $condition_bean->field_defs[$value];
 
-                        if($data['type'] === 'relate' && isset($data['id_name'])) {
+                        if ($data['type'] === 'relate' && isset($data['id_name'])) {
                             $value = $data['id_name'];
                         }
                         $value = $condition_bean->$value;
 
-                        if(in_array($data['type'],$dateFields)) {
+                        if (in_array($data['type'], $dateFields)) {
                             $value = strtotime($value);
                         }
 
@@ -687,14 +705,14 @@ class AOW_WorkFlow extends Basic
                         } else {
                             $value = $condition_bean->fetched_row[$condition->field];
                         }
-                        if(in_array($data['type'],$dateFields)) {
+                        if (in_array($data['type'], $dateFields)) {
                             $value = strtotime($value);
                         }
-                        switch($condition->operator) {
-                            case 'Not_Equal_To';
+                        switch ($condition->operator) {
+                            case 'Not_Equal_To':
                                 $condition->operator = 'Equal_To';
                                 break;
-                            case 'Equal_To';
+                            case 'Equal_To':
                             default:
                                 $condition->operator = 'Not_Equal_To';
                                 break;
@@ -704,39 +722,48 @@ class AOW_WorkFlow extends Basic
                     case 'Date':
                         $params =  unserialize(base64_decode($value));
                         $dateType = 'datetime';
-                        if($params[0] == 'now'){
+                        if ($params[0] == 'now') {
                             $value = date('Y-m-d H:i:s');
-                        } else if($params[0] == 'today'){
+                        } elseif ($params[0] == 'today') {
                             $dateType = 'date';
                             $value = date('Y-m-d');
                             $field = strtotime(date('Y-m-d', $field));
                         } else {
-                            $fieldName = $params[0];
-                            $value = $condition_bean->$fieldName;
+                            if ($params[0] == 'today') {
+                                $dateType = 'date';
+                                $value = date('Y-m-d');
+                                $field = strtotime(date('Y-m-d', $field));
+                            } else {
+                                $fieldName = $params[0];
+                                $value = $condition_bean->$fieldName;
+                            }
                         }
 
-                        if($params[1] != 'now'){
-                            switch($params[3]) {
-                                case 'business_hours';
-                                    if(file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php')){
+                        if ($params[1] != 'now') {
+                            switch ($params[3]) {
+                                case 'business_hours':
+                                    if (file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php')) {
                                         require_once('modules/AOBH_BusinessHours/AOBH_BusinessHours.php');
 
                                         $businessHours = new AOBH_BusinessHours();
 
                                         $amount = $params[2];
-                                        if($params[1] != "plus"){
+                                        if ($params[1] != "plus") {
                                             $amount = 0-$amount;
                                         }
 
                                         $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($value));
-                                        $value = strtotime($timedate->asDbType( $value, $dateType ));
+                                        $value = strtotime($timedate->asDbType($value, $dateType));
                                         break;
                                     }
                                     //No business hours module found - fall through.
                                     $params[3] = 'hours';
+                                    // no break
                                 default:
                                     $value = strtotime($value.' '.$app_list_strings['aow_date_operator'][$params[1]]." $params[2] ".$params[3]);
-                                    if($dateType == 'date') $value = strtotime(date('Y-m-d', $value));
+                                    if ($dateType == 'date') {
+                                        $value = strtotime(date('Y-m-d', $value));
+                                    }
                                     break;
                             }
                         } else {
@@ -747,95 +774,100 @@ class AOW_WorkFlow extends Basic
                     case 'Multi':
 
                         $value = unencodeMultienum($value);
-                        if($data['type'] == 'multienum') $field = unencodeMultienum($field);
-                        switch($condition->operator) {
-                            case 'Not_Equal_To';
+                        if ($data['type'] == 'multienum') {
+                            $field = unencodeMultienum($field);
+                        }
+                        switch ($condition->operator) {
+                            case 'Not_Equal_To':
                                 $condition->operator = 'Not_One_of';
                                 break;
-                            case 'Equal_To';
+                            case 'Equal_To':
                             default:
                                 $condition->operator = 'One_of';
                                 break;
                         }
                         break;
                     case 'SecurityGroup':
-                        if(file_exists('modules/SecurityGroups/SecurityGroup.php')){
+                        if (file_exists('modules/SecurityGroups/SecurityGroup.php')) {
                             $sg_module = $condition_bean->module_dir;
-                            if(isset($data['module']) && $data['module'] != ''){
+                            if (isset($data['module']) && $data['module'] != '') {
                                 $sg_module = $data['module'];
                             }
                             $value = $this->check_in_group($field, $sg_module, $value);
                             $field = true;
-                        break;
+                            break;
                         }
+                        // no break
                     case 'Value':
                     default:
-                        if(in_array($data['type'],$dateFields) && trim($value) != '') {
+                        if (in_array($data['type'], $dateFields) && trim($value) != '') {
                             $value = strtotime($value);
-                        } else if ($data['type'] == 'bool' && (!boolval($value) || strtolower($value) == 'false')){
+                        } elseif ($data['type'] == 'bool' && (!boolval($value) || strtolower($value) == 'false')) {
                             $value = 0;
                         }
                         break;
                 }
 
-                if(!($this->compare_condition($field, $value, $condition->operator))){
+                if (!($this->compare_condition($field, $value, $condition->operator))) {
                     return false;
                 }
-
             }
         }
 
-        if(isset($query_array['where'])){
-
+        if (isset($query_array['where'])) {
             $query = 'SELECT '.$bean->table_name.'.id AS id FROM '.$bean->table_name.' ';
 
-            if(isset($query_array['join'])){
-                foreach ($query_array['join'] as $join){
+            if (isset($query_array['join'])) {
+                foreach ($query_array['join'] as $join) {
                     $query .= $join;
                 }
             }
             $query_where = '';
             $query_array['where'][] = $bean->table_name.'.id = '."'".$bean->id."'";
-            foreach ($query_array['where'] as $where){
+            foreach ($query_array['where'] as $where) {
                 $query_where .=  ($query_where == '' ? 'WHERE ' : ' AND ').$where;
             }
             $query .= ' '.$query_where;
 
             $rel_check = $bean->db->getOne($query);
 
-            if($rel_check == ''){
+            if ($rel_check == '') {
                 return false;
             }
-
         }
 
         return true;
     }
 
-    function compare_condition($var1, $var2, $operator = 'Equal_To'){
+    public function compare_condition($var1, $var2, $operator = 'Equal_To')
+    {
         switch ($operator) {
             case "Not_Equal_To": return $var1 != $var2;
             case "Greater_Than":  return $var1 >  $var2;
             case "Less_Than":  return $var1 <  $var2;
             case "Greater_Than_or_Equal_To": return $var1 >= $var2;
             case "Less_Than_or_Equal_To": return $var1 <= $var2;
-            case "Contains" : return strpos($var1,$var2);
-            case "Starts_With" : return strrpos($var1,$var2, -strlen($var1));
-            case "Ends_With" : return strpos($var1,$var2,strlen($var1) - strlen($var2));
+            case "Contains": return strpos($var1, $var2);
+            case "Starts_With": return strrpos($var1, $var2, -strlen($var1));
+            case "Ends_With": return strpos($var1, $var2, strlen($var1) - strlen($var2));
             case "is_null": return $var1 == '';
             case "One_of":
-                if(is_array($var1)){
-                    foreach($var1 as $var){
-                        if(in_array($var,$var2)) return true;
+                if (is_array($var1)) {
+                    foreach ($var1 as $var) {
+                        if (in_array($var, $var2)) {
+                            return true;
+                        }
                     }
                     return false;
                 }
                     return in_array($var1, $var2);
 
             case "Not_One_of":
-                if(is_array($var1)){
-                    foreach($var1 as $var){
-                        if(in_array($var,$var2)) return false;
+                if (is_array($var1)) {
+                    foreach ($var1 as $var) {
+                        if (in_array($var, $var2)) {
+                            return false;
+                        }
                     }
                     return true;
                 }
@@ -846,25 +878,30 @@ class AOW_WorkFlow extends Basic
         }
     }
 
-    function check_in_group($bean_id, $module, $group){
+    public function check_in_group($bean_id, $module, $group)
+    {
         $sql = "SELECT id FROM securitygroups_records WHERE record_id = '".$bean_id."' AND module = '".$module."' AND securitygroup_id = '".$group."' AND deleted=0";
-        if($module == 'Users')  $sql = "SELECT id FROM securitygroups_users WHERE user_id = '".$bean_id."' AND securitygroup_id = '".$group."' AND deleted=0";
+        if ($module == 'Users') {
+            $sql = "SELECT id FROM securitygroups_users WHERE user_id = '".$bean_id."' AND securitygroup_id = '".$group."' AND deleted=0";
+        }
         $id = $this->db->getOne($sql);
-        if($id != '') return true;
+        if ($id != '') {
+            return true;
+        }
         return false;
     }
 
     /**
      * Run the actions against the passed $bean
      */
-    function run_actions(SugarBean &$bean, $in_save = false){
-
+    public function run_actions(SugarBean &$bean, $in_save = false)
+    {
         require_once('modules/AOW_Processed/AOW_Processed.php');
         $processed = new AOW_Processed();
-        if(!$this->multiple_runs){
+        if (!$this->multiple_runs) {
             $processed->retrieve_by_string_fields(array('aow_workflow_id' => $this->id,'parent_id' => $bean->id));
 
-            if($processed->status == 'Complete'){
+            if ($processed->status == 'Complete') {
                 //should not have gotten this far, so return
                 return true;
             }
@@ -885,40 +922,44 @@ class AOW_WorkFlow extends Basic
             $action = new AOW_Action();
             $action->retrieve($row['id']);
 
-            if($this->multiple_runs || !$processed->db->getOne("select id from aow_processed_aow_actions where aow_processed_id = '".$processed->id."' AND aow_action_id = '".$action->id."' AND status = 'Complete'")){
+            if ($this->multiple_runs || !$processed->db->getOne("select id from aow_processed_aow_actions where aow_processed_id = '".$processed->id."' AND aow_action_id = '".$action->id."' AND status = 'Complete'")) {
                 $action_name = 'action'.$action->action;
 
-                if(file_exists('custom/modules/AOW_Actions/actions/'.$action_name.'.php')){
+                if (file_exists('custom/modules/AOW_Actions/actions/'.$action_name.'.php')) {
                     require_once('custom/modules/AOW_Actions/actions/'.$action_name.'.php');
-                } else if(file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')){
+                } elseif (file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')) {
                     require_once('modules/AOW_Actions/actions/'.$action_name.'.php');
                 } else {
-                    return false;
+                    if (file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')) {
+                        require_once('modules/AOW_Actions/actions/'.$action_name.'.php');
+                    } else {
+                        return false;
+                    }
                 }
 
                 $custom_action_name = "custom" . $action_name;
-                if(class_exists($custom_action_name)){
+                if (class_exists($custom_action_name)) {
                     $action_name = $custom_action_name;
                 }
 
 
                 $flow_action = new $action_name($action->id);
-                if(!$flow_action->run_action($bean, unserialize(base64_decode($action->parameters)), $in_save)){
+                if (!$flow_action->run_action($bean, unserialize(base64_decode($action->parameters)), $in_save)) {
                     $pass = false;
                     $processed->aow_actions->add($action->id, array('status' => 'Failed'));
                 } else {
                     $processed->aow_actions->add($action->id, array('status' => 'Complete'));
                 }
             }
-
         }
 
-        if($pass) $processed->status = 'Complete';
-        else $processed->status = 'Failed';
+        if ($pass) {
+            $processed->status = 'Complete';
+        } else {
+            $processed->status = 'Failed';
+        }
         $processed->save(false);
 
         return $pass;
     }
-
-
 }

@@ -44,27 +44,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/DynamicFields/FieldCases.php');
 require_once('modules/DynamicFields/DynamicField.php');
  $db = DBManagerFactory::getInstance();
- if(!isset($db)){
- 	$db = DBManagerFactory::getInstance();
+ if (!isset($db)) {
+     $db = DBManagerFactory::getInstance();
  }
- $result = $db->query( 'SELECT * FROM fields_meta_data WHERE deleted = 0 ORDER BY custom_module');
+ $result = $db->query('SELECT * FROM fields_meta_data WHERE deleted = 0 ORDER BY custom_module');
  $modules = array();
  /*
   * get the real field_meta_data
   */
- while($row = $db->fetchByAssoc($result)){
- 	$the_modules = $row['custom_module'];
- 	if(!isset($modules[$the_modules])){
- 		$modules[$the_modules] = array();	
- 	}
- 	$modules[$the_modules][$row['name']] = $row['name'];
+ while ($row = $db->fetchByAssoc($result)) {
+     $the_modules = $row['custom_module'];
+     if (!isset($modules[$the_modules])) {
+         $modules[$the_modules] = array();
+     }
+     $modules[$the_modules][$row['name']] = $row['name'];
  }
 
  $simulate = false;
- if(!isset($_REQUEST['run'])){
- 	$simulate = true;
- 	echo "SIMULATION MODE - NO CHANGES WILL BE MADE EXCEPT CLEARING CACHE";
- }	
+ if (!isset($_REQUEST['run'])) {
+     $simulate = true;
+     echo "SIMULATION MODE - NO CHANGES WILL BE MADE EXCEPT CLEARING CACHE";
+ }
 
  foreach ($modules as $the_module=>$fields) {
      if (isset($beanList[$the_module])) {

@@ -43,7 +43,6 @@ use SuiteCRM\Search\SearchTestAbstract;
 
 class SearchDefsDocumentifierTest extends SearchTestAbstract
 {
-
     public function testGetFieldsToIndex()
     {
         $documentifier = new SearchDefsDocumentifier();

@@ -44,8 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class formLetter
 {
-
-    static function LVSmarty()
+    public static function LVSmarty()
     {
         global $app_strings, $sugar_config;
         if (preg_match('/^6\./', $sugar_config['sugar_version'])) {
@@ -59,7 +58,7 @@ class formLetter
         return $script;
     }
 
-    static function getModuleTemplates($module)
+    public static function getModuleTemplates($module)
     {
         $db = DBManagerFactory::getInstance();
         $templates = array();
@@ -73,7 +72,7 @@ class formLetter
         return $templates;
     }
 
-    static function LVPopupHtml($module)
+    public static function LVPopupHtml($module)
     {
         global $app_strings;
 
@@ -128,7 +127,7 @@ class formLetter
         }
     }
 
-    static function DVPopupHtml($module)
+    public static function DVPopupHtml($module)
     {
         global $app_strings;
 
@@ -180,4 +179,3 @@ class formLetter
         }
     }
 }
-

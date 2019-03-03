@@ -359,7 +359,7 @@ class UserViewHelper
         $this->ss->assign("USER_THEME_FONT", $this->bean->getPreference('user_theme_font'));
         $this->ss->assign("USER_THEME", $user_theme);
 
-// Build a list of themes that support group modules
+        // Build a list of themes that support group modules
         $this->ss->assign("DISPLAY_GROUP_TAB", 'none');
 
         $selectedTheme = $user_theme;
@@ -486,7 +486,7 @@ class UserViewHelper
 
     /**
      * Set Google Auth variables
-     * 
+     *
      * @param array $sugar_config
      */
     protected function setGoogleAuthVariables($sugar_config)

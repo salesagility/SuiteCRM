@@ -39,9 +39,9 @@
  */
 
 $viewdefs['Employees']['QuickCreate'] = array(
-    'templateMeta' => array('maxColumns' => '2', 
+    'templateMeta' => array('maxColumns' => '2',
                             'widths' => array(
-                                array('label' => '10', 'field' => '30'), 
+                                array('label' => '10', 'field' => '30'),
                                 array('label' => '10', 'field' => '30')
                             ),
                             'form' => array(
@@ -49,7 +49,7 @@ $viewdefs['Employees']['QuickCreate'] = array(
                                 'footerTpl'=>'modules/Users/tpls/EditViewFooter.tpl',
                             ),
                       ),
-    'panels' => array (
+    'panels' => array(
         'LBL_EMPLOYEE_INFORMATION' => array(
             array(
                 array(

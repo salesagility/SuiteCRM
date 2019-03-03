@@ -70,7 +70,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testfireUrl()
     {
 //        self::markTestIncomplete('environment dependency: curl_setopt(): CURLOPT_DNS_USE_GLOBAL_CACHE cannot be activated when thread safety is enabled ');
-//        
+//
 //        $schedulersJob = new SchedulersJob();
 //
 //        //test with invalid param
@@ -186,11 +186,11 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testonFailureRetry()
     {
 //        $state = new SuiteCRM\StateSaver();
-//        
-//        
-//        
-//        
-//        
+//
+//
+//
+//
+//
 //        $schedulersJob = new SchedulersJob();
 //
 //        //execute the method and test if it works and does not throws an exception.
@@ -202,18 +202,18 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        }
 //
 //        $this->markTestIncomplete('method has no implementation: logic hooks not defined');
-//        
+//
         // clean up
     }
 
     public function testOnFinalFailure()
     {
 //        $state = new SuiteCRM\StateSaver();
-//        
-//        
+//
+//
 //        //
-//        
-//        
+//
+//
 //        $schedulersJob = new SchedulersJob();
 //
 //        //execute the method and test if it works and does not throws an exception.

@@ -102,4 +102,3 @@ $mod_strings = array(
     'LBL_BUG_INFORMATION' => 'OVERVIEW',
 
 );
-

@@ -9,6 +9,9 @@ $sugar_config['suitecrm_version'] = $suitecrm_version;
 $sugar_config['sugar_version'] = $sugar_version;
 $sugar_config['sugarbeet'] = false;
 $sugar_config['enable_action_menu'] = true;
+$sugar_config['search']['controller'] = 'UnifiedSearch';
+$sugar_config['search']['defaultEngine'] = 'BasicSearchEngine';
+$sugar_config['imap_test'] = false;
 
 ksort($sugar_config);
 write_array_to_file('sugar_config', $sugar_config, 'config.php');
@@ -55,4 +58,4 @@ setSystemEmailTemplatesDefaultConfig();
 require_once('modules/Administration/QuickRepairAndRebuild.php');
 $actions = array('clearAll');
 $randc = new RepairAndClear();
-$randc->repairAndClearAll($actions, array(translate('LBL_ALL_MODULES')), true,false);
+$randc->repairAndClearAll($actions, array(translate('LBL_ALL_MODULES')), true, false);

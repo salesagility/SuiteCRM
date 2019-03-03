@@ -52,14 +52,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/OutboundEmailAccounts/OutboundEmailAccounts.php');
 
-class OutboundEmailAccountsDashlet extends DashletGeneric {
-    function __construct($id, $def = null) {
-		global $current_user, $app_strings;
-		require('modules/OutboundEmailAccounts/metadata/dashletviewdefs.php');
+class OutboundEmailAccountsDashlet extends DashletGeneric
+{
+    public function __construct($id, $def = null)
+    {
+        global $current_user, $app_strings;
+        require('modules/OutboundEmailAccounts/metadata/dashletviewdefs.php');
 
         parent::__construct($id, $def);
 
-        if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'OutboundEmailAccounts');
+        if (empty($def['title'])) {
+            $this->title = translate('LBL_HOMEPAGE_TITLE', 'OutboundEmailAccounts');
+        }
 
         $this->searchFields = $dashletData['OutboundEmailAccountsDashlet']['searchFields'];
         $this->columns = $dashletData['OutboundEmailAccountsDashlet']['columns'];

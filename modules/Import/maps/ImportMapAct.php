@@ -56,7 +56,7 @@ class ImportMapAct extends ImportMapOther
      * String identifier for this import
      */
     public $name = 'act';
-	/**
+    /**
      * Field delimiter
      */
     public $delimiter = ',';
@@ -64,7 +64,7 @@ class ImportMapAct extends ImportMapOther
      * Field enclosure
      */
     public $enclosure = '"';
-	/**
+    /**
      * Do we have a header?
      */
     public $has_header = true;
@@ -75,10 +75,9 @@ class ImportMapAct extends ImportMapOther
      * @param  string $module
      * @return array field mappings
      */
-	public function getMapping(
+    public function getMapping(
         $module
-        )
-    {
+        ) {
         $return_array = parent::getMapping($module);
         switch ($module) {
         case 'Contacts':
