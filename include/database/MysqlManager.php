@@ -555,13 +555,13 @@ class MysqlManager extends DBManager
         }
 
 	// cn: using direct calls to prevent this from spamming the Logs
-        $charset = $this->getOption('charset');
+        $charset = $this->getCharset();
 
         if(!empty($charset)) {
             mysql_query("SET CHARACTER SET $charset", $this->database);
 
             $names = "SET NAMES '$charset'";
-            $collation = $this->getOption('collation');
+            $collation = $this->getCollation();
 
             if (!empty($collation)) {
                 $names .= " COLLATE '$collation'";
@@ -1173,7 +1173,7 @@ class MysqlManager extends DBManager
             $collation = $this->getDefaultCollation();
         }
 
-        return $collation;
+        return $this->quote($collation);
     }
 
     /**
@@ -1187,7 +1187,7 @@ class MysqlManager extends DBManager
             $charset = $this->getDefaultCharset();
         }
 
-        return $charset;
+        return $this->quote($charset);
     }
 
     /**
