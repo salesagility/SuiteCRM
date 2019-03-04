@@ -9,6 +9,9 @@
     "vendor-dir": "vendor",
     "platform": {
       "php": "5.6.0"
+    },
+    "preferred-install": {
+      "elasticsearch/elasticsearch": "dist"
     }
   },
   "require": {
@@ -49,7 +52,11 @@
     "mockery/mockery": "^1.1.0",
     "flow/jsonpath": "^0.4"
   },
-  "scripts": {},
+  "scripts": {
+    "post-package-install": [
+      "rm -R vendor/elasticsearch/elasticsearch/tests/Elasticsearch/Tests "
+    ]
+  },
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
