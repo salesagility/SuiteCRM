@@ -53,7 +53,7 @@
     "flow/jsonpath": "^0.4"
   },
   "scripts": {
-    "post-package-install": [
+    "post-install-cmd": [
       "rm -R vendor/elasticsearch/elasticsearch/tests/Elasticsearch/Tests "
     ]
   },
