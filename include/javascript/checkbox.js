@@ -228,31 +228,31 @@ function select_targets() {
   $('#details_popup_div').remove();
   $('.modal-backdrop').remove();
   var selectDelegatesPopup = '';
-            
-    selectDelegatesPopup += '<div id="details_popup_div" class="modal fade" style="display: none;">';
-       selectDelegatesPopup += '<div class="modal-dialog modal-sm">';//
-          selectDelegatesPopup += '<div class="modal-content">';
-             selectDelegatesPopup += '<div class="modal-header">';
-                selectDelegatesPopup += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
-                selectDelegatesPopup += '<h4 class="modal-title">'+SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES')+'</h4>';
-             selectDelegatesPopup += '</div>';
-             selectDelegatesPopup += '<div class="modal-body">';
-                selectDelegatesPopup += '<div style="padding: 5px 5px; overflow: auto; height: auto;">';
-                      selectDelegatesPopup += '<table width="100%" class="list view table-responsive" cellspacing="0" cellpadding="0" border="0">';
-                         selectDelegatesPopup += '<tbody>';
-                                selectDelegatesPopup += "<tr class='oddListRowS1'><td style='padding: 2px;text-align:left;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;text-align:left;'><b><a href='#' onclick='handle_targetlists();return false;'>" + SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_TARGET_LIST') + "</a></b></td></tr>";
-                                selectDelegatesPopup += "<tr class='evenListRowS1'><td style='padding: 2px;text-align:left;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;text-align:left;'><strong><a href='#' onclick='handle_targets();return false;'>" + SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_TARGETS') + "</a></strong></td></tr>";
-                                selectDelegatesPopup += "<tr class='oddListRowS1'><td style='padding: 2px;text-align:left;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;text-align:left;'><strong><a href='#' onclick='handle_contacts();return false;'>" + SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_CONTACTS') + "</a></strong></td></tr>";
-                                selectDelegatesPopup += "<tr class='evenListRowS1'><td style='padding: 2px;text-align:left;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;text-align:left;'><strong><a href='#' onclick='handle_leads();return false;'>" + SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_LEADS') + "</a></strong></td></tr>";
-                        selectDelegatesPopup += '</tbody></table>';
-                selectDelegatesPopup += '</div>';
-             selectDelegatesPopup += '</div>';
-             selectDelegatesPopup += '<div class="modal-footer">&nbsp;<button type="button" class="btn btn-primary" data-dismiss="modal">'+SUGAR.language.get('app_strings','LBL_CANCEL_BUTTON_LABEL')+'</button></div>';
-          selectDelegatesPopup += '</div>';
-       selectDelegatesPopup += '</div>';
-    selectDelegatesPopup += '</div>';
-    $("body").append(selectDelegatesPopup);
-    $('#details_popup_div').modal('show',{backdrop: 'static'});
+
+  selectDelegatesPopup += '<div id="details_popup_div" class="modal fade" style="display: none;">';
+  selectDelegatesPopup += '<div class="modal-dialog modal-sm">';//
+  selectDelegatesPopup += '<div class="modal-content">';
+  selectDelegatesPopup += '<div class="modal-header">';
+  selectDelegatesPopup += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
+  selectDelegatesPopup += '<h4 class="modal-title">' + SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES') + '</h4>';
+  selectDelegatesPopup += '</div>';
+  selectDelegatesPopup += '<div class="modal-body">';
+  selectDelegatesPopup += '<div style="padding: 5px 5px; overflow: auto; height: auto;">';
+  selectDelegatesPopup += '<table width="100%" class="list view table-responsive" cellspacing="0" cellpadding="0" border="0">';
+  selectDelegatesPopup += '<tbody>';
+  selectDelegatesPopup += "<tr class='oddListRowS1'><td style='padding: 2px;text-align:left;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;text-align:left;'><b><a href='#' onclick='handle_targetlists();return false;'>" + SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_TARGET_LIST') + "</a></b></td></tr>";
+  selectDelegatesPopup += "<tr class='evenListRowS1'><td style='padding: 2px;text-align:left;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;text-align:left;'><strong><a href='#' onclick='handle_targets();return false;'>" + SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_TARGETS') + "</a></strong></td></tr>";
+  selectDelegatesPopup += "<tr class='oddListRowS1'><td style='padding: 2px;text-align:left;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;text-align:left;'><strong><a href='#' onclick='handle_contacts();return false;'>" + SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_CONTACTS') + "</a></strong></td></tr>";
+  selectDelegatesPopup += "<tr class='evenListRowS1'><td style='padding: 2px;text-align:left;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;text-align:left;'><strong><a href='#' onclick='handle_leads();return false;'>" + SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_LEADS') + "</a></strong></td></tr>";
+  selectDelegatesPopup += '</tbody></table>';
+  selectDelegatesPopup += '</div>';
+  selectDelegatesPopup += '</div>';
+  selectDelegatesPopup += '<div class="modal-footer">&nbsp;<button type="button" class="btn btn-primary" data-dismiss="modal">' + SUGAR.language.get('app_strings', 'LBL_CANCEL_BUTTON_LABEL') + '</button></div>';
+  selectDelegatesPopup += '</div>';
+  selectDelegatesPopup += '</div>';
+  selectDelegatesPopup += '</div>';
+  $("body").append(selectDelegatesPopup);
+  $('#details_popup_div').modal('show', {backdrop: 'static'});
 }
 
 //open target list pop-up window
@@ -335,72 +335,70 @@ function manage_delegates() {
   var ids = $("#custom_hidden_1").val();
   var manageDelegatesPopup = '';
   var manageDelegatesPopupBody = '';
-            
-    manageDelegatesPopup += '<div id="details_popup_div" class="modal fade" style="display: none;">';
-       manageDelegatesPopup += '<div class="modal-dialog modal-sm">';//
-          manageDelegatesPopup += '<div class="modal-content">';
-             manageDelegatesPopup += '<div class="modal-header">';
-                manageDelegatesPopup += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
-                manageDelegatesPopup += '<h4 class="modal-title">'+SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES')+'</h4>';
-             manageDelegatesPopup += '</div>';
-             manageDelegatesPopup += '<div class="modal-body">';
+
+  manageDelegatesPopup += '<div id="details_popup_div" class="modal fade" style="display: none;">';
+  manageDelegatesPopup += '<div class="modal-dialog modal-sm">';//
+  manageDelegatesPopup += '<div class="modal-content">';
+  manageDelegatesPopup += '<div class="modal-header">';
+  manageDelegatesPopup += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
+  manageDelegatesPopup += '<h4 class="modal-title">' + SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES') + '</h4>';
+  manageDelegatesPopup += '</div>';
+  manageDelegatesPopup += '<div class="modal-body">';
 
   if (ids != '') {
     manageDelegatesPopupBody += '<div style="padding: 5px 5px; overflow: auto; height: auto;">';
-          manageDelegatesPopupBody += '<table width="100%" class="list view table-responsive" cellspacing="0" cellpadding="0" border="0">';
-             manageDelegatesPopupBody += '<tbody>';
-                    manageDelegatesPopupBody += "<tr class='oddListRowS1'><td style='padding: 2px;text-align:right;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;'><b><a href='#' onclick='handle_invited();return false;'>" + SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES_INVITED') + "</a></b></td></tr>";
-                    manageDelegatesPopupBody += "<tr class='evenListRowS1'><td style='padding: 2px;text-align:right;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;'><strong><a href='#' onclick='handle_not_invited();return false;'>" + SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES_NOT_INVITED') + "</a></strong></td></tr>";
-                    manageDelegatesPopupBody += "<tr class='oddListRowS1'><td style='padding: 2px;text-align:right;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;'><strong><a href='#' onclick='handle_attended();return false;'>" + SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES_ATTENDED') + "</a></strong></td></tr>";
-                    manageDelegatesPopupBody += "<tr class='evenListRowS1'><td style='padding: 2px;text-align:right;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;'><strong><a href='#' onclick='handle_not_attended();return false;'>" + SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES_NOT_ATTENDED') + "</a></strong></td></tr>";
-            manageDelegatesPopupBody += '</tbody></table>';
+    manageDelegatesPopupBody += '<table width="100%" class="list view table-responsive" cellspacing="0" cellpadding="0" border="0">';
+    manageDelegatesPopupBody += '<tbody>';
+    manageDelegatesPopupBody += "<tr class='oddListRowS1'><td style='padding: 2px;text-align:right;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;'><b><a href='#' onclick='handle_invited();return false;'>" + SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES_INVITED') + "</a></b></td></tr>";
+    manageDelegatesPopupBody += "<tr class='evenListRowS1'><td style='padding: 2px;text-align:right;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;'><strong><a href='#' onclick='handle_not_invited();return false;'>" + SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES_NOT_INVITED') + "</a></strong></td></tr>";
+    manageDelegatesPopupBody += "<tr class='oddListRowS1'><td style='padding: 2px;text-align:right;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;'><strong><a href='#' onclick='handle_attended();return false;'>" + SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES_ATTENDED') + "</a></strong></td></tr>";
+    manageDelegatesPopupBody += "<tr class='evenListRowS1'><td style='padding: 2px;text-align:right;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;'><strong><a href='#' onclick='handle_not_attended();return false;'>" + SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES_NOT_ATTENDED') + "</a></strong></td></tr>";
+    manageDelegatesPopupBody += '</tbody></table>';
     manageDelegatesPopupBody += '</div>';
-  }
-  else { //if no delegates are checked show error message
+  } else { //if no delegates are checked show error message
     manageDelegatesPopupBody += '<div style="padding: 5px 5px; overflow: auto; height: auto;">';
-          manageDelegatesPopupBody += '<table width="100%" class="list view table default" cellspacing="0" cellpadding="0" border="0">';
-             manageDelegatesPopupBody += '<tbody>';
-                    manageDelegatesPopupBody += "<tr><td style='padding: 2px;text-align:center;color:#FF0000;' width='17'>"+ SUGAR.language.get('FP_events', 'LBL_MANAGE_POPUP_ERROR') +"</td></tr>";
-            manageDelegatesPopupBody += '</tbody></table>';
+    manageDelegatesPopupBody += '<table width="100%" class="list view table default" cellspacing="0" cellpadding="0" border="0">';
+    manageDelegatesPopupBody += '<tbody>';
+    manageDelegatesPopupBody += "<tr><td style='padding: 2px;text-align:center;color:#FF0000;' width='17'>" + SUGAR.language.get('FP_events', 'LBL_MANAGE_POPUP_ERROR') + "</td></tr>";
+    manageDelegatesPopupBody += '</tbody></table>';
     manageDelegatesPopupBody += '</div>';
   }
   manageDelegatesPopup += '</div>';
-             manageDelegatesPopup += '<div class="modal-footer">&nbsp;<button type="button" class="btn btn-primary" data-dismiss="modal">'+SUGAR.language.get('app_strings','LBL_CANCEL_BUTTON_LABEL')+'</button></div>';
-          manageDelegatesPopup += '</div>';
-       manageDelegatesPopup += '</div>';
+  manageDelegatesPopup += '<div class="modal-footer">&nbsp;<button type="button" class="btn btn-primary" data-dismiss="modal">' + SUGAR.language.get('app_strings', 'LBL_CANCEL_BUTTON_LABEL') + '</button></div>';
+  manageDelegatesPopup += '</div>';
+  manageDelegatesPopup += '</div>';
   manageDelegatesPopup += '</div>';
   $("body").append(manageDelegatesPopup);
   $('#details_popup_div .modal-body').html(manageDelegatesPopupBody);
-  $('#details_popup_div').modal('show',{backdrop: 'static'});
+  $('#details_popup_div').modal('show', {backdrop: 'static'});
 }
 
-function showNoCheck()
-{
-    $('#details_popup_div').remove();
-    $("#no_check").remove();
-    $('.modal-backdrop').remove();
-    var manageDelegatesHandleErrorPopup = '';
-    manageDelegatesHandleErrorPopup += '<div id="no_check" class="modal fade" style="display: none;">';
-       manageDelegatesHandleErrorPopup += '<div class="modal-dialog modal-sm">';
-          manageDelegatesHandleErrorPopup += '<div class="modal-content">';
-             manageDelegatesHandleErrorPopup += '<div class="modal-header">';
-                manageDelegatesHandleErrorPopup += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
-                manageDelegatesHandleErrorPopup += '<h4 class="modal-title">'+SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES')+'</h4>';
-             manageDelegatesHandleErrorPopup += '</div>';
-             manageDelegatesHandleErrorPopup += '<div class="modal-body">';
-                manageDelegatesHandleErrorPopup += '<div style="padding: 5px 5px; overflow: auto; height: auto;">';
-                      manageDelegatesHandleErrorPopup += '<table width="100%" class="list view table-responsive" cellspacing="0" cellpadding="0" border="0">';
-                         manageDelegatesHandleErrorPopup += '<tbody>';
-                                manageDelegatesHandleErrorPopup += "<tr><td style='padding: 2px;text-align:center;color:#FF0000;' width='17'>"+ SUGAR.language.get('FP_events', 'LBL_MANAGE_POPUP_ERROR') +"</td></tr>";
-                        manageDelegatesHandleErrorPopup += '</tbody></table>';
-                manageDelegatesHandleErrorPopup += '</div>';
-             manageDelegatesHandleErrorPopup += '</div>';
-             manageDelegatesHandleErrorPopup += '<div class="modal-footer">&nbsp;<button type="button" class="btn btn-primary" data-dismiss="modal">'+SUGAR.language.get('app_strings','LBL_CANCEL_BUTTON_LABEL')+'</button></div>';
-          manageDelegatesHandleErrorPopup += '</div>';
-       manageDelegatesHandleErrorPopup += '</div>';
-    manageDelegatesHandleErrorPopup += '</div>';
-    $("body").append(manageDelegatesHandleErrorPopup);
-    $('#no_check').modal('show',{backdrop: 'static'});
+function showNoCheck() {
+  $('#details_popup_div').remove();
+  $("#no_check").remove();
+  $('.modal-backdrop').remove();
+  var manageDelegatesHandleErrorPopup = '';
+  manageDelegatesHandleErrorPopup += '<div id="no_check" class="modal fade" style="display: none;">';
+  manageDelegatesHandleErrorPopup += '<div class="modal-dialog modal-sm">';
+  manageDelegatesHandleErrorPopup += '<div class="modal-content">';
+  manageDelegatesHandleErrorPopup += '<div class="modal-header">';
+  manageDelegatesHandleErrorPopup += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
+  manageDelegatesHandleErrorPopup += '<h4 class="modal-title">' + SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES') + '</h4>';
+  manageDelegatesHandleErrorPopup += '</div>';
+  manageDelegatesHandleErrorPopup += '<div class="modal-body">';
+  manageDelegatesHandleErrorPopup += '<div style="padding: 5px 5px; overflow: auto; height: auto;">';
+  manageDelegatesHandleErrorPopup += '<table width="100%" class="list view table-responsive" cellspacing="0" cellpadding="0" border="0">';
+  manageDelegatesHandleErrorPopup += '<tbody>';
+  manageDelegatesHandleErrorPopup += "<tr><td style='padding: 2px;text-align:center;color:#FF0000;' width='17'>" + SUGAR.language.get('FP_events', 'LBL_MANAGE_POPUP_ERROR') + "</td></tr>";
+  manageDelegatesHandleErrorPopup += '</tbody></table>';
+  manageDelegatesHandleErrorPopup += '</div>';
+  manageDelegatesHandleErrorPopup += '</div>';
+  manageDelegatesHandleErrorPopup += '<div class="modal-footer">&nbsp;<button type="button" class="btn btn-primary" data-dismiss="modal">' + SUGAR.language.get('app_strings', 'LBL_CANCEL_BUTTON_LABEL') + '</button></div>';
+  manageDelegatesHandleErrorPopup += '</div>';
+  manageDelegatesHandleErrorPopup += '</div>';
+  manageDelegatesHandleErrorPopup += '</div>';
+  $("body").append(manageDelegatesHandleErrorPopup);
+  $('#no_check').modal('show', {backdrop: 'static'});
 }
 
 function handle_invited() {
@@ -511,44 +509,43 @@ function manage_acceptances() {
   $('#details_popup_div').remove();
   $('.modal-backdrop').remove();
   var ids = $("#custom_hidden_1").val();
-  
+
   var manageAcceptancePopup = '';
   var manageAcceptancePopupBody = '';
-            
-    manageAcceptancePopup += '<div id="details_popup_div" class="modal fade" style="display: none;">';
-       manageAcceptancePopup += '<div class="modal-dialog modal-sm" style="width: 350px;">';//
-          manageAcceptancePopup += '<div class="modal-content">';
-             manageAcceptancePopup += '<div class="modal-header">';
-                manageAcceptancePopup += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
-                manageAcceptancePopup += '<h4 class="modal-title">'+SUGAR.language.get('FP_events', 'LBL_MANAGE_ACCEPTANCES')+'</h4>';
-             manageAcceptancePopup += '</div>';
-             manageAcceptancePopup += '<div class="modal-body">';
+
+  manageAcceptancePopup += '<div id="details_popup_div" class="modal fade" style="display: none;">';
+  manageAcceptancePopup += '<div class="modal-dialog modal-sm" style="width: 350px;">';//
+  manageAcceptancePopup += '<div class="modal-content">';
+  manageAcceptancePopup += '<div class="modal-header">';
+  manageAcceptancePopup += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
+  manageAcceptancePopup += '<h4 class="modal-title">' + SUGAR.language.get('FP_events', 'LBL_MANAGE_ACCEPTANCES') + '</h4>';
+  manageAcceptancePopup += '</div>';
+  manageAcceptancePopup += '<div class="modal-body">';
 
   if (ids != '') {
-        manageAcceptancePopupBody += '<div style="padding: 5px 5px; overflow: auto; height: auto;">';
-          manageAcceptancePopupBody += '<table width="100%" class="list view table-responsive" cellspacing="0" cellpadding="0" border="0">';
-             manageAcceptancePopupBody += '<tbody>';
-                    manageAcceptancePopupBody += "<tr class='oddListRowS1'><td style='padding: 2px;text-align:right;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;'><b><a id='MarkAsAcceptedForm' onclick='handle_accepted();return false;' href='#'>" + SUGAR.language.get('FP_events', 'LBL_MANAGE_ACCEPTANCES_ACCEPTED') + "</a></b></td></tr>";
-                    manageAcceptancePopupBody += "<tr class='evenListRowS1'><td style='padding: 2px;text-align:right;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;'><strong><a id='MarkAsDeclinedForm' onclick='handle_declined();return false;' href='#'>" + SUGAR.language.get('FP_events', 'LBL_MANAGE_ACCEPTANCES_DECLINED') + "</a></strong></td></tr>";
-            manageAcceptancePopupBody += '</tbody></table>';
+    manageAcceptancePopupBody += '<div style="padding: 5px 5px; overflow: auto; height: auto;">';
+    manageAcceptancePopupBody += '<table width="100%" class="list view table-responsive" cellspacing="0" cellpadding="0" border="0">';
+    manageAcceptancePopupBody += '<tbody>';
+    manageAcceptancePopupBody += "<tr class='oddListRowS1'><td style='padding: 2px;text-align:right;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;'><b><a id='MarkAsAcceptedForm' onclick='handle_accepted();return false;' href='#'>" + SUGAR.language.get('FP_events', 'LBL_MANAGE_ACCEPTANCES_ACCEPTED') + "</a></b></td></tr>";
+    manageAcceptancePopupBody += "<tr class='evenListRowS1'><td style='padding: 2px;text-align:right;' width='17'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 120%;'><strong><a id='MarkAsDeclinedForm' onclick='handle_declined();return false;' href='#'>" + SUGAR.language.get('FP_events', 'LBL_MANAGE_ACCEPTANCES_DECLINED') + "</a></strong></td></tr>";
+    manageAcceptancePopupBody += '</tbody></table>';
     manageAcceptancePopupBody += '</div>';
-  }
-  else { //if no delegates are check show error message
-        manageAcceptancePopupBody += '<div style="padding: 5px 5px; overflow: auto; height: auto;">';
-          manageAcceptancePopupBody += '<table width="100%" class="list view table default" cellspacing="0" cellpadding="0" border="0">';
-             manageAcceptancePopupBody += '<tbody>';
-                    manageAcceptancePopupBody += "<tr><td style='padding: 2px;text-align:center;color:#FF0000;' width='17'>"+ SUGAR.language.get('FP_events', 'LBL_MANAGE_POPUP_ERROR') +"</td></tr>";
-            manageAcceptancePopupBody += '</tbody></table>';
+  } else { //if no delegates are check show error message
+    manageAcceptancePopupBody += '<div style="padding: 5px 5px; overflow: auto; height: auto;">';
+    manageAcceptancePopupBody += '<table width="100%" class="list view table default" cellspacing="0" cellpadding="0" border="0">';
+    manageAcceptancePopupBody += '<tbody>';
+    manageAcceptancePopupBody += "<tr><td style='padding: 2px;text-align:center;color:#FF0000;' width='17'>" + SUGAR.language.get('FP_events', 'LBL_MANAGE_POPUP_ERROR') + "</td></tr>";
+    manageAcceptancePopupBody += '</tbody></table>';
     manageAcceptancePopupBody += '</div>';
   }
   manageAcceptancePopup += '</div>';
-             manageAcceptancePopup += '<div class="modal-footer">&nbsp;<button type="button" class="btn btn-primary" data-dismiss="modal">'+SUGAR.language.get('app_strings','LBL_CANCEL_BUTTON_LABEL')+'</button></div>';
-          manageAcceptancePopup += '</div>';
-       manageAcceptancePopup += '</div>';
-    manageAcceptancePopup += '</div>';
-    $("body").append(manageAcceptancePopup);
-    $('#details_popup_div .modal-body').html(manageAcceptancePopupBody);
-    $('#details_popup_div').modal('show',{backdrop: 'static'});
+  manageAcceptancePopup += '<div class="modal-footer">&nbsp;<button type="button" class="btn btn-primary" data-dismiss="modal">' + SUGAR.language.get('app_strings', 'LBL_CANCEL_BUTTON_LABEL') + '</button></div>';
+  manageAcceptancePopup += '</div>';
+  manageAcceptancePopup += '</div>';
+  manageAcceptancePopup += '</div>';
+  $("body").append(manageAcceptancePopup);
+  $('#details_popup_div .modal-body').html(manageAcceptancePopupBody);
+  $('#details_popup_div').modal('show', {backdrop: 'static'});
 }
 
 function handle_accepted() {

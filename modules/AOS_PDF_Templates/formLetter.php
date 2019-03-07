@@ -86,30 +86,29 @@ class formLetter
                   <div class="modal-content">
                      <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title">'.$app_strings['LBL_SELECT_TEMPLATE'].'</h4>
+                        <h4 class="modal-title">' . $app_strings['LBL_SELECT_TEMPLATE'] . '</h4>
                      </div>
                      <div class="modal-body">
                         <div style="padding: 5px 5px; overflow: auto; height: auto;">
                               <table width="100%" class="list view table-responsive" cellspacing="0" cellpadding="0" border="0">
                                  <tbody>';
-                                 $iOddEven = 1;
-                                 foreach ($templates as $templateid => $template) {
-                                     $iOddEvenCls = 'oddListRowS1';
-                                     if($iOddEven%2==0)
-                                     {
-                                         $iOddEvenCls = 'evenListRowS1';
-                                     }
-                                    echo '<tr height="20" class="'.$iOddEvenCls.'" >
+            $iOddEven = 1;
+            foreach ($templates as $templateid => $template) {
+                $iOddEvenCls = 'oddListRowS1';
+                if ($iOddEven % 2 == 0) {
+                    $iOddEvenCls = 'evenListRowS1';
+                }
+                echo '<tr height="20" class="' . $iOddEvenCls . '" >
                                             <td width="17" valign="center"><a href="#" onclick="$(\'#popupDiv_ara\').modal(\'hide\');sListView.send_form(true, \'' . $module .
-                                            '\', \'index.php?templateID=' . $templateid . '&entryPoint=formLetter\',\'' . $app_strings['LBL_LISTVIEW_NO_SELECTED'] . '\');"><img src="themes/default/images/txt_image_inline.gif" width="16" height="16" /></a></td>
+                    '\', \'index.php?templateID=' . $templateid . '&entryPoint=formLetter\',\'' . $app_strings['LBL_LISTVIEW_NO_SELECTED'] . '\');"><img src="themes/default/images/txt_image_inline.gif" width="16" height="16" /></a></td>
                                             <td scope="row" align="left"><b><a href="#" onclick="$(\'#popupDiv_ara\').modal(\'hide\');sListView.send_form(true, \'' . $module .
-                                            '\', \'index.php?templateID=' . $templateid . '&entryPoint=formLetter\',\'' . $app_strings['LBL_LISTVIEW_NO_SELECTED'] . '\');">' . $template . '</a></b></td></tr>';
-                                    $iOddEven++;
-                                 }
-                              echo '</tbody></table>
+                    '\', \'index.php?templateID=' . $templateid . '&entryPoint=formLetter\',\'' . $app_strings['LBL_LISTVIEW_NO_SELECTED'] . '\');">' . $template . '</a></b></td></tr>';
+                $iOddEven++;
+            }
+            echo '</tbody></table>
                         </div>
                      </div>
-                     <div class="modal-footer">&nbsp;<button type="button" class="btn btn-primary" data-dismiss="modal">'.$app_strings['LBL_CANCEL_BUTTON_LABEL'].'</button></div>
+                     <div class="modal-footer">&nbsp;<button type="button" class="btn btn-primary" data-dismiss="modal">' . $app_strings['LBL_CANCEL_BUTTON_LABEL'] . '</button></div>
                   </div>
                </div>
             </div>
@@ -152,34 +151,34 @@ class formLetter
                   <div class="modal-content">
                      <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title">'.$app_strings['LBL_SELECT_TEMPLATE'].'</h4>
+                        <h4 class="modal-title">' . $app_strings['LBL_SELECT_TEMPLATE'] . '</h4>
                      </div>
                      <div class="modal-body">
                         <div style="padding: 5px 5px; overflow: auto; height: auto;">
                            <form id="popupForm" action="index.php?entryPoint=formLetter" method="post">
                               <table width="100%" class="list view table-responsive" cellspacing="0" cellpadding="0" border="0">
                                  <tbody>';
-                                 $iOddEven = 1;
-                                 foreach ($templates as $templateid => $template) {
-                                    $iOddEvenCls = 'oddListRowS1';
-                                    if($iOddEven%2==0)
-                                    {
-                                         $iOddEvenCls = 'evenListRowS1';
-                                    }
-                                    $js = "$('#popupDiv_ara').modal('hide');var form=document.getElementById('popupForm');if(form!=null){form.templateID.value='" . $templateid . "';form.submit();}else{alert('Error!');}";
-                                    echo '<tr height="20" class="'.$iOddEvenCls.'">
+            $iOddEven = 1;
+            foreach ($templates as $templateid => $template) {
+                $iOddEvenCls = 'oddListRowS1';
+                if ($iOddEven % 2 == 0) {
+                    $iOddEvenCls = 'evenListRowS1';
+                }
+                $js = "$('#popupDiv_ara').modal('hide');var form=document.getElementById('popupForm');if(form!=null){form.templateID.value='" . $templateid . "';form.submit();}else{alert('Error!');}";
+                echo '<tr height="20" class="' . $iOddEvenCls . '">
                                         <td width="17" valign="center"><a href="#" onclick="' . $js . '"><img src="themes/default/images/txt_image_inline.gif" width="16" height="16" /></a></td>
                                         <td scope="row" align="left"><b><a href="#" onclick="' . $js . '">' . $template . '</a></b></td></tr>';
-                                    $iOddEven++;
-                                 }
-                              echo '</tbody></table>
+                $iOddEven++;
+            }
+            echo '</tbody></table>
                               <input type="hidden" name="templateID" value="" />
                             <input type="hidden" name="module" value="' . $module . '" />
-                            <input type="hidden" name="uid" value="'.clean_string($_REQUEST['record'], 'STANDARDSPACE').'" />
+                            <input type="hidden" name="uid" value="' . clean_string($_REQUEST['record'],
+                    'STANDARDSPACE') . '" />
                            </form>
                         </div>
                      </div>
-                     <div class="modal-footer">&nbsp;<button type="button" class="btn btn-primary" data-dismiss="modal">'.$app_strings['LBL_CANCEL_BUTTON_LABEL'].'</button></div>
+                     <div class="modal-footer">&nbsp;<button type="button" class="btn btn-primary" data-dismiss="modal">' . $app_strings['LBL_CANCEL_BUTTON_LABEL'] . '</button></div>
                   </div>
                </div>
             </div>
