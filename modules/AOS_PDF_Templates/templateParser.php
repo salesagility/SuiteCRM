@@ -49,6 +49,13 @@ class templateParser
         return $string;
     }
 
+    /**
+     * @param $string
+     * @param $key
+     * @param $focus
+     * @return mixed
+     * @throws Exception
+     */
     public function parse_template_bean($string, $key, &$focus)
     {
         global $app_strings, $sugar_config;
@@ -59,51 +66,49 @@ class templateParser
             if (isset($field_def['name']) && $field_def['name'] != '') {
                 $fieldName = $field_def['name'];
                 if ($field_def['type'] == 'currency') {
-                    $repl_arr[$key . "_" . $fieldName] = currency_format_number($focus->$fieldName, $params = array('currency_symbol' => false));
-                } else {
-                    if (($field_def['type'] == 'radioenum' || $field_def['type'] == 'enum' || $field_def['type'] == 'dynamicenum') && isset($field_def['options'])) {
-                        $repl_arr[$key . "_" . $fieldName] = translate($field_def['options'], $focus->module_dir, $focus->$fieldName);
+                    $repl_arr[$key . "_" . $fieldName] = currency_format_number($focus->$fieldName,
+                        $params = array('currency_symbol' => false));
+                } elseif (($field_def['type'] == 'radioenum' || $field_def['type'] == 'enum' || $field_def['type'] == 'dynamicenum') && isset($field_def['options'])) {
+                    $repl_arr[$key . "_" . $fieldName] = translate($field_def['options'], $focus->module_dir,
+                        $focus->$fieldName);
+                } elseif ($field_def['type'] == 'multienum' && isset($field_def['options'])) {
+                    $mVals = unencodeMultienum($focus->$fieldName);
+                    $translatedVals = array();
+                    foreach ($mVals as $mVal) {
+                        $translatedVals[] = translate($field_def['options'], $focus->module_dir, $mVal);
+                    }
+                    $repl_arr[$key . "_" . $fieldName] = implode(", ", $translatedVals);
+                } //Fix for Windows Server as it needed to be converted to a string.
+                elseif ($field_def['type'] == 'int') {
+                    $repl_arr[$key . "_" . $fieldName] = strval($focus->$fieldName);
+                } elseif ($field_def['type'] == 'bool') {
+                    if ($focus->$fieldName == "1") {
+                        $repl_arr[$key . "_" . $fieldName] = "true";
                     } else {
-                        if ($field_def['type'] == 'multienum' && isset($field_def['options'])) {
-                            $mVals = unencodeMultienum($focus->$fieldName);
-                            $translatedVals = array();
-                            foreach ($mVals as $mVal) {
-                                $translatedVals[] = translate($field_def['options'], $focus->module_dir, $mVal);
-                            }
-                            $repl_arr[$key . "_" . $fieldName] = implode(", ", $translatedVals);
-                        } //Fix for Windows Server as it needed to be converted to a string.
-                        else {
-                            if ($field_def['type'] == 'int') {
-                                $repl_arr[$key . "_" . $fieldName] = strval($focus->$fieldName);
-                            } else {
-                                if ($field_def['type'] == 'bool') {
-                                    if ($focus->$fieldName == "1") {
-                                        $repl_arr[$key . "_" . $fieldName] = "true";
-                                    } else {
-                                        $repl_arr[$key . "_" . $fieldName] = "false";
-                                    }
-                                } else {
-                                    if ($field_def['type'] == 'image') {
-                                        $secureLink = $sugar_config['site_url'] . '/' . "public/". $focus->id .  '_' . $fieldName;
-                                        $file_location = $sugar_config['upload_dir'] . '/'  . $focus->id .  '_' . $fieldName;
-                                        // create a copy with correct extension by mime type
-                                        if (!file_exists('public')) {
-                                            sugar_mkdir('public', 0777);
-                                        }
-                                        if (!copy($file_location, "public/{$focus->id}".  '_' . "$fieldName")) {
-                                            $secureLink = $sugar_config['site_url'] . '/'. $file_location;
-                                        }
+                        $repl_arr[$key . "_" . $fieldName] = "false";
+                    }
+                } elseif ($field_def['type'] == 'image') {
+                    $secureLink = $sugar_config['site_url'] . '/' . "public/" . $focus->id . '_' . $fieldName;
+                    $file_location = $sugar_config['upload_dir'] . '/' . $focus->id . '_' . $fieldName;
+                    // create a copy with correct extension by mime type
+                    if (!file_exists('public')) {
+                        sugar_mkdir('public', 0777);
+                    }
+                    if (!copy($file_location, "public/{$focus->id}" . '_' . "$fieldName")) {
+                        $secureLink = $sugar_config['site_url'] . '/' . $file_location;
+                    }
 
                     if (empty($focus->$fieldName)) {
                         $repl_arr[$key . "_" . $fieldName] = "";
                     } else {
                         $link = $secureLink;
-                        $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="'.$field_def['width'].'" height="'.$field_def['height'].'"/>';
+                        $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="' . $field_def['width'] . '" height="' . $field_def['height'] . '"/>';
                     }
-                }
-                else if($field_def['type'] == 'wysiwyg') {
-                    $repl_arr[$key . "_" . $field_def['name']] = html_entity_decode($focus->$field_def['name'], ENT_COMPAT, 'UTF-8');
-                    $repl_arr[$key . "_" . $fieldName] = html_entity_decode($focus->$fieldName, ENT_COMPAT, 'UTF-8');
+                } elseif ($field_def['type'] == 'wysiwyg') {
+                    $repl_arr[$key . "_" . $field_def['name']] = html_entity_decode($focus->$field_def['name'],
+                        ENT_COMPAT, 'UTF-8');
+                    $repl_arr[$key . "_" . $fieldName] = html_entity_decode($focus->$fieldName,
+                        ENT_COMPAT, 'UTF-8');
                 } else {
                     $repl_arr[$key . "_" . $fieldName] = $focus->$fieldName;
                 }
