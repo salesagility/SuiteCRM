@@ -276,208 +276,201 @@ class SubPanel
                     $ret_tabs [$k] = $v;
                 }
             }
-  		}
+        }
 
-  		return $ret_tabs;
+        return $ret_tabs;
+    }
 
+    //saves overrides for defs
+    public function saveSubPanelDefOverride($panel, $subsection, $override)
+    {
+        global $layout_defs, $beanList;
 
-  }
+        //save the new subpanel
+        $name = "subpanel_layout['list_fields']";
 
-  //saves overrides for defs
-  function saveSubPanelDefOverride( $panel, $subsection, $override){
-  		global $layout_defs, $beanList;
+        //bugfix: load looks for moduleName/metadata/subpanels, not moduleName/subpanels
+        $path = 'custom/modules/'. $panel->_instance_properties['module'] . '/metadata/subpanels';
 
-  		//save the new subpanel
-  		$name = "subpanel_layout['list_fields']";
+        //bug# 40171: "Custom subpanels not working as expected"
+        //each custom subpanel needs to have a unique custom def file
+        $filename = $panel->parent_bean->object_name . "_subpanel_" . $panel->name; //bug 42262 (filename with $panel->_instance_properties['get_subpanel_data'] can create problem if had word "function" in it)
+        $oldName1 = '_override' . $panel->parent_bean->object_name .$panel->_instance_properties['module'] . $panel->_instance_properties['subpanel_name'] ;
+        $oldName2 = '_override' . $panel->parent_bean->object_name .$panel->_instance_properties['get_subpanel_data'] ;
+        if (file_exists('custom/Extension/modules/'. $panel->parent_bean->module_dir . "/Ext/Layoutdefs/$oldName1.php")) {
+            unlink('custom/Extension/modules/'. $panel->parent_bean->module_dir . "/Ext/Layoutdefs/$oldName1.php");
+        }
+        if (file_exists('custom/Extension/modules/'. $panel->parent_bean->module_dir . "/Ext/Layoutdefs/$oldName2.php")) {
+            unlink('custom/Extension/modules/'. $panel->parent_bean->module_dir . "/Ext/Layoutdefs/$oldName2.php");
+        }
+        $extname = '_override'.$filename;
+        //end of bug# 40171
 
-  		//bugfix: load looks for moduleName/metadata/subpanels, not moduleName/subpanels
-  		$path = 'custom/modules/'. $panel->_instance_properties['module'] . '/metadata/subpanels';
+        mkdir_recursive($path, true);
+        write_array_to_file($name, $override, $path.'/' . $filename .'.php');
 
-  		//bug# 40171: "Custom subpanels not working as expected"
-  		//each custom subpanel needs to have a unique custom def file
-  		$filename = $panel->parent_bean->object_name . "_subpanel_" . $panel->name; //bug 42262 (filename with $panel->_instance_properties['get_subpanel_data'] can create problem if had word "function" in it)
-  		$oldName1 = '_override' . $panel->parent_bean->object_name .$panel->_instance_properties['module'] . $panel->_instance_properties['subpanel_name'] ;
-  		$oldName2 = '_override' . $panel->parent_bean->object_name .$panel->_instance_properties['get_subpanel_data'] ;
-  		if (file_exists('custom/Extension/modules/'. $panel->parent_bean->module_dir . "/Ext/Layoutdefs/$oldName1.php")){
-  		  unlink('custom/Extension/modules/'. $panel->parent_bean->module_dir . "/Ext/Layoutdefs/$oldName1.php");
-  		}
-  		if (file_exists('custom/Extension/modules/'. $panel->parent_bean->module_dir . "/Ext/Layoutdefs/$oldName2.php")){
-         unlink('custom/Extension/modules/'. $panel->parent_bean->module_dir . "/Ext/Layoutdefs/$oldName2.php");
-  		}
-  		$extname = '_override'.$filename;
-  		//end of bug# 40171
-
-  		mkdir_recursive($path, true);
-  		write_array_to_file( $name, $override,$path.'/' . $filename .'.php');
-
-  		//save the override for the layoutdef
+        //save the override for the layoutdef
         //tyoung 10.12.07 pushed panel->name to lowercase to match case in subpaneldefs.php files -
         //gave error on bad index 'module' as this override key didn't match the key in the subpaneldefs
-  		$name = "layout_defs['".  $panel->parent_bean->module_dir. "']['subpanel_setup']['" .strtolower($panel->name). "']";
-//  	$GLOBALS['log']->debug('SubPanel.php->saveSubPanelDefOverride(): '.$name);
-  		$newValue = override_value_to_string($name, 'override_subpanel_name', $filename);
-  		mkdir_recursive('custom/Extension/modules/'. $panel->parent_bean->module_dir . '/Ext/Layoutdefs', true);
-  		$fp = sugar_fopen('custom/Extension/modules/'. $panel->parent_bean->module_dir . "/Ext/Layoutdefs/$extname.php", 'w');
-  		fwrite($fp, "<?php\n//auto-generated file DO NOT EDIT\n$newValue\n?>");
-  		fclose($fp);
-  		require_once('ModuleInstall/ModuleInstaller.php');
-  		$moduleInstaller = new ModuleInstaller();
-  		$moduleInstaller->silent = true; // make sure that the ModuleInstaller->log() function doesn't echo while rebuilding the layoutdefs
-  		$moduleInstaller->rebuild_layoutdefs();
-  		if (file_exists('modules/'.  $panel->parent_bean->module_dir . '/layout_defs.php'))
-  			include('modules/'.  $panel->parent_bean->module_dir . '/layout_defs.php');
-  		if (file_exists('custom/modules/'.  $panel->parent_bean->module_dir . '/Ext/Layoutdefs/layoutdefs.ext.php'))
-  			include('custom/modules/'.  $panel->parent_bean->module_dir . '/Ext/Layoutdefs/layoutdefs.ext.php');
-  }
+        $name = "layout_defs['".  $panel->parent_bean->module_dir. "']['subpanel_setup']['" .strtolower($panel->name). "']";
+        //  	$GLOBALS['log']->debug('SubPanel.php->saveSubPanelDefOverride(): '.$name);
+        $newValue = override_value_to_string($name, 'override_subpanel_name', $filename);
+        mkdir_recursive('custom/Extension/modules/'. $panel->parent_bean->module_dir . '/Ext/Layoutdefs', true);
+        $fp = sugar_fopen('custom/Extension/modules/'. $panel->parent_bean->module_dir . "/Ext/Layoutdefs/$extname.php", 'w');
+        fwrite($fp, "<?php\n//auto-generated file DO NOT EDIT\n$newValue\n?>");
+        fclose($fp);
+        require_once('ModuleInstall/ModuleInstaller.php');
+        $moduleInstaller = new ModuleInstaller();
+        $moduleInstaller->silent = true; // make sure that the ModuleInstaller->log() function doesn't echo while rebuilding the layoutdefs
+        $moduleInstaller->rebuild_layoutdefs();
+        if (file_exists('modules/'.  $panel->parent_bean->module_dir . '/layout_defs.php')) {
+            include('modules/'.  $panel->parent_bean->module_dir . '/layout_defs.php');
+        }
+        if (file_exists('custom/modules/'.  $panel->parent_bean->module_dir . '/Ext/Layoutdefs/layoutdefs.ext.php')) {
+            include('custom/modules/'.  $panel->parent_bean->module_dir . '/Ext/Layoutdefs/layoutdefs.ext.php');
+        }
+    }
 
-	function get_subpanel_setup($module)
-	{
-		$subpanel_setup = '';
-		$layout_defs = get_layout_defs();
+    public function get_subpanel_setup($module)
+    {
+        $subpanel_setup = '';
+        $layout_defs = get_layout_defs();
 
-		if(!empty($layout_defs) && !empty($layout_defs[$module]['subpanel_setup']))
-      {
-      	$subpanel_setup = $layout_defs[$module]['subpanel_setup'];
-      }
+        if (!empty($layout_defs) && !empty($layout_defs[$module]['subpanel_setup'])) {
+            $subpanel_setup = $layout_defs[$module]['subpanel_setup'];
+        }
 
-      return $subpanel_setup;
-	}
+        return $subpanel_setup;
+    }
 
-	/**
-	 * Retrieve the subpanel definition from the registered layout_defs arrays.
-	 */
-	function getSubPanelDefine($module, $subpanel_id)
-	{
-		$default_subpanel_define = SubPanel::_get_default_subpanel_define($module, $subpanel_id);
-		$custom_subpanel_define = SubPanel::_get_custom_subpanel_define($module, $subpanel_id);
+    /**
+     * Retrieve the subpanel definition from the registered layout_defs arrays.
+     */
+    public function getSubPanelDefine($module, $subpanel_id)
+    {
+        $default_subpanel_define = SubPanel::_get_default_subpanel_define($module, $subpanel_id);
+        $custom_subpanel_define = SubPanel::_get_custom_subpanel_define($module, $subpanel_id);
 
-		$subpanel_define = array_merge($default_subpanel_define, $custom_subpanel_define);
+        $subpanel_define = array_merge($default_subpanel_define, $custom_subpanel_define);
 
-		if(empty($subpanel_define))
-		{
-			print('Could not load subpanel definition for: ' . $subpanel_id);
-		}
+        if (empty($subpanel_define)) {
+            print('Could not load subpanel definition for: ' . $subpanel_id);
+        }
 
-		return $subpanel_define;
-	}
+        return $subpanel_define;
+    }
 
-	function _get_custom_subpanel_define($module, $subpanel_id)
-	{
-		$ret_val = array();
+    public function _get_custom_subpanel_define($module, $subpanel_id)
+    {
+        $ret_val = array();
 
-		if($subpanel_id != '')
-		{
-			$layout_defs = get_layout_defs();
+        if ($subpanel_id != '') {
+            $layout_defs = get_layout_defs();
 
-			if(!empty($layout_defs[$module]['custom_subpanel_defines'][$subpanel_id]))
-			{
-				$ret_val = $layout_defs[$module]['custom_subpanel_defines'][$subpanel_id];
-			}
-		}
+            if (!empty($layout_defs[$module]['custom_subpanel_defines'][$subpanel_id])) {
+                $ret_val = $layout_defs[$module]['custom_subpanel_defines'][$subpanel_id];
+            }
+        }
 
-		return $ret_val;
-	}
+        return $ret_val;
+    }
 
-	function _get_default_subpanel_define($module, $subpanel_id)
-	{
-		$ret_val = array();
+    public function _get_default_subpanel_define($module, $subpanel_id)
+    {
+        $ret_val = array();
 
-		if($subpanel_id != '')
-		{
-	  		$layout_defs = get_layout_defs();
+        if ($subpanel_id != '') {
+            $layout_defs = get_layout_defs();
 
-			if(!empty($layout_defs[$subpanel_id]['default_subpanel_define']))
-			{
-				$ret_val = $layout_defs[$subpanel_id]['default_subpanel_define'];
-			}
-		}
+            if (!empty($layout_defs[$subpanel_id]['default_subpanel_define'])) {
+                $ret_val = $layout_defs[$subpanel_id]['default_subpanel_define'];
+            }
+        }
 
-		return $ret_val;
-	}
+        return $ret_val;
+    }
 
-	function buildSearchQuery()
-	{
-		$thisPanel =& $this->subpanel_defs;
-		$subpanel_defs = $thisPanel->_instance_properties;
+    public function buildSearchQuery()
+    {
+        $thisPanel =& $this->subpanel_defs;
+        $subpanel_defs = $thisPanel->_instance_properties;
 
-		require_once('include/SubPanel/SubPanelSearchForm.php');
+        require_once('include/SubPanel/SubPanelSearchForm.php');
 
-		if (isset($subpanel_defs['type']) && $subpanel_defs['type'] == 'collection') {
-			$arrayValues = array_values($subpanel_defs['collection_list']);
-			$collection = array_shift($arrayValues);
-			$module = $collection['module'];
-		} else {
-			$module = $subpanel_defs['module'];
-		}
-		if($module) {
-			$seed = BeanFactory::getBean($module);
-		} else {
-			$seed = new Meeting();
-		}
+        if (isset($subpanel_defs['type']) && $subpanel_defs['type'] == 'collection') {
+            $arrayValues = array_values($subpanel_defs['collection_list']);
+            $collection = array_shift($arrayValues);
+            $module = $collection['module'];
+        } else {
+            $module = $subpanel_defs['module'];
+        }
+        if ($module) {
+            $seed = BeanFactory::getBean($module);
+        } else {
+            $seed = new Meeting();
+        }
 
-		$_REQUEST['searchFormTab'] = 'basic_search';
-		$searchForm = new SubPanelSearchForm($seed, $module, $this);
+        $_REQUEST['searchFormTab'] = 'basic_search';
+        $searchForm = new SubPanelSearchForm($seed, $module, $this);
 
-		$searchMetaData = $searchForm->retrieveSearchDefs($module);
-		$searchForm->setup($searchMetaData['searchdefs'], $searchMetaData['searchFields'], 'SubpanelSearchFormGeneric.tpl', 'basic_search');
+        $searchMetaData = $searchForm->retrieveSearchDefs($module);
+        $searchForm->setup($searchMetaData['searchdefs'], $searchMetaData['searchFields'], 'SubpanelSearchFormGeneric.tpl', 'basic_search');
 
-		$searchForm->populateFromRequest();
+        $searchForm->populateFromRequest();
 
-		$where_clauses = $searchForm->generateSearchWhere(true, $seed->module_dir);
+        $where_clauses = $searchForm->generateSearchWhere(true, $seed->module_dir);
 
-		if (count($where_clauses) > 0 ) {
-			$this->search_query = '('. implode(' ) AND ( ', $where_clauses) . ')';
-		}
-		$GLOBALS['log']->info("Subpanel Where Clause: $this->search_query");
+        if (count($where_clauses) > 0) {
+            $this->search_query = '('. implode(' ) AND ( ', $where_clauses) . ')';
+        }
+        $GLOBALS['log']->info("Subpanel Where Clause: $this->search_query");
+    }
 
-	}
+    public function get_searchdefs($module)
+    {
+        $thisPanel =& $this->subpanel_defs;
+        $subpanel_defs = $thisPanel->_instance_properties;
 
-	function get_searchdefs($module)
-	{
-		$thisPanel =& $this->subpanel_defs;
-		$subpanel_defs = $thisPanel->_instance_properties;
+        if (isset($subpanel_defs['searchdefs'])) {
+            $searchdefs[$module]['layout']['basic_search'] = $subpanel_defs['searchdefs'];
+            $searchdefs[$module]['templateMeta'] = array('maxColumns' => 3, 'maxColumnsBasic' => 4, 'widths' => array( 'label' => 10, 'field' => 30 )) ;
+            return $searchdefs;
+        }
 
-		if(isset($subpanel_defs['searchdefs'])){
-			$searchdefs[$module]['layout']['basic_search'] = $subpanel_defs['searchdefs'];
-			$searchdefs[$module]['templateMeta'] = Array ('maxColumns' => 3, 'maxColumnsBasic' => 4, 'widths' => Array ( 'label' => 10, 'field' => 30 )) ;
-			return $searchdefs;
-		}
+        return false;
+    }
 
-		return false;
-	}
+    public function getSearchForm()
+    {
+        $thisPanel =& $this->subpanel_defs;
+        $subpanel_defs = $thisPanel->_instance_properties;
+        require_once('include/SubPanel/SubPanelSearchForm.php');
 
-	function getSearchForm()
-	{
+        if (isset($subpanel_defs['type']) && $subpanel_defs['type'] == 'collection') {
+            $arrayValues = array_values($subpanel_defs['collection_list']);
+            $collection = array_shift($arrayValues);
+            $module = $collection['module'];
+        } else {
+            $module = $subpanel_defs['module'];
+        }
+        $seed = BeanFactory::getBean($module);
 
-		$thisPanel =& $this->subpanel_defs;
-		$subpanel_defs = $thisPanel->_instance_properties;
-		require_once('include/SubPanel/SubPanelSearchForm.php');
+        $searchForm = new SubPanelSearchForm($seed, $module, $this);
 
-		if (isset($subpanel_defs['type']) && $subpanel_defs['type'] == 'collection') {
-			$arrayValues = array_values($subpanel_defs['collection_list']);
-			$collection = array_shift($arrayValues);
-			$module = $collection['module'];
-		} else {
-			$module = $subpanel_defs['module'];
-		}
-		$seed = BeanFactory::getBean($module);
+        $searchMetaData = $searchForm->retrieveSearchDefs($module);
 
-		$searchForm = new SubPanelSearchForm($seed, $module, $this);
+        if ($subpanel_searchMetaData = $this->get_searchdefs($module)) {
+            $searchForm->setup($subpanel_searchMetaData, $searchMetaData['searchFields'], 'SubpanelSearchFormGeneric.tpl', 'basic_search');
 
-		$searchMetaData = $searchForm->retrieveSearchDefs($module);
+            if (!empty($this->collections)) {
+                $searchForm->searchFields['collection'] = array();
+            }
 
-		if ($subpanel_searchMetaData = $this->get_searchdefs($module)){
+            $searchForm->populateFromRequest();
 
-			$searchForm->setup($subpanel_searchMetaData, $searchMetaData['searchFields'], 'SubpanelSearchFormGeneric.tpl', 'basic_search');
+            return $searchForm->display();
+        }
 
-			if(!empty($this->collections))
-				$searchForm->searchFields['collection'] = array();
-
-			$searchForm->populateFromRequest();
-
-			return $searchForm->display();
-		}
-
-		return '';
-	}
+        return '';
+    }
 }

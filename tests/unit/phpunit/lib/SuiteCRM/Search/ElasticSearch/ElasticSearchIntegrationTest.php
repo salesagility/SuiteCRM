@@ -157,12 +157,14 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         // Attempt to search the newly added bean by full name
         $results = SearchWrapper::search(
             $this->searchEngine,
-            SearchQuery::fromString("$firstName $lastName", 1))->getHits();
+            SearchQuery::fromString("$firstName $lastName", 1)
+        )->getHits();
 
         self::assertArrayHasKey(
             'Contacts',
             $results,
-            'Unable to find by full name!');
+            'Unable to find by full name!'
+        );
         self::assertEquals(
             $id,
             $results['Contacts'][0],
@@ -182,7 +184,8 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         self::assertArrayHasKey(
             'Contacts',
             $results,
-            "Unable to find by city [$city]!");
+            "Unable to find by city [$city]!"
+        );
         self::assertEquals(
             $id,
             $results['Contacts'][0],
@@ -210,7 +213,8 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         self::assertArrayHasKey(
             'Contacts',
             $results,
-            "Unable to find by updated username!");
+            "Unable to find by updated username!"
+        );
         self::assertEquals(
             $bean->id,
             $results['Contacts'][0],

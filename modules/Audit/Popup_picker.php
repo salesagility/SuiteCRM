@@ -214,7 +214,7 @@ EOHTML;
             $oddRow = !$oddRow;
 
             $xtpl->parse("audit.row");
-        // Put the rows in.
+            // Put the rows in.
         }//end foreach
 
         $xtpl->parse("audit");

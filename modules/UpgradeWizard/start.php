@@ -51,16 +51,16 @@ logThis('-----------------------------------------------------------------------
 logThis('Upgrade started. At start.php');
 
 //set the upgrade progress status.
-set_upgrade_progress('start','in_progress');
+set_upgrade_progress('start', 'in_progress');
 
 unlinkUWTempFiles();
 resetUwSession();
 
-if(isset($_REQUEST['showUpdateWizardMessage']) && $_REQUEST['showUpdateWizardMessage'] == true) {
-	// set a flag to skip the upload screen
-	$_SESSION['skip_zip_upload'] = true;
+if (isset($_REQUEST['showUpdateWizardMessage']) && $_REQUEST['showUpdateWizardMessage'] == true) {
+    // set a flag to skip the upload screen
+    $_SESSION['skip_zip_upload'] = true;
 
-	$newUWMsg =<<<eoq
+    $newUWMsg =<<<eoq
 	<table cellspacing="0" cellpadding="3" border="0">
 		<tr>
 			<th>
@@ -74,7 +74,7 @@ if(isset($_REQUEST['showUpdateWizardMessage']) && $_REQUEST['showUpdateWizardMes
 		</tr>
 	</table>
 eoq;
-	echo $newUWMsg;
+    echo $newUWMsg;
 }
 
 

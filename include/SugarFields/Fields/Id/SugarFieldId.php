@@ -40,7 +40,7 @@
 
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 
-class SugarFieldId extends SugarFieldBase 
+class SugarFieldId extends SugarFieldBase
 {
     /**
      * @see SugarFieldBase::importSanitize()
@@ -50,9 +50,8 @@ class SugarFieldId extends SugarFieldBase
         $vardef,
         $focus,
         ImportFieldSanitize $settings
-        )
-    {
-        if ( strlen($value) > 36 ) {
+        ) {
+        if (strlen($value) > 36) {
             return false;
         }
         

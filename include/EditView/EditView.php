@@ -45,29 +45,31 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Old EditView
  * @deprecated
  */
-class EditView {
+class EditView
+{
     /**
      * smarty object
      * @var object
      */
-    var $ss;
+    public $ss;
     /**
      * location of template to use
      * @var string
      */
-    var $template;
+    public $template;
     /**
      * Module to use
      * @var string
      */
-    var $module;
+    public $module;
 
     /**
      *
      * @param string $module module to use
      * @param string $template template of the form to retreive
      */
-    function __construct($module, $template) {
+    public function __construct($module, $template)
+    {
         $this->module = $module;
         $this->template = $template;
         $this->ss = new Sugar_Smarty();
@@ -76,12 +78,12 @@ class EditView {
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function EditView($module, $template){
+    public function EditView($module, $template)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($module, $template);
@@ -93,8 +95,10 @@ class EditView {
      * assigns all things to the template like mod_srings and app_strings
      *
      */
-    function process() {
-        global $current_language, $app_strings, $sugar_version, $sugar_config, $timedate, $theme;;
+    public function process()
+    {
+        global $current_language, $app_strings, $sugar_version, $sugar_config, $timedate, $theme;
+        ;
         $module_strings = return_module_language($current_language, $this->module);
 
         $this->ss->assign('SUGAR_VERSION', $sugar_version);
@@ -111,8 +115,8 @@ class EditView {
      *
      * @return string HTML of parsed template
      */
-    function display() {
+    public function display()
+    {
         return $this->ss->fetch($this->template);
     }
-
 }

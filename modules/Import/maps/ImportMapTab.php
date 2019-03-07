@@ -52,11 +52,11 @@ require_once('modules/Import/maps/ImportMapOther.php');
 
 class ImportMapTab extends ImportMapOther
 {
-	/**
+    /**
      * String identifier for this import
      */
     public $name = 'tab';
-	/**
+    /**
      * Field delimiter
      */
     public $delimiter = "\t";
@@ -65,4 +65,3 @@ class ImportMapTab extends ImportMapOther
      */
     public $enclosure;
 }
-

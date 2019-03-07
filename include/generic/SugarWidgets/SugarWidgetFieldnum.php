@@ -44,5 +44,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetFieldNum extends SugarWidgetFieldInt
 {
-
 }

@@ -96,9 +96,9 @@ if (!empty($sugar_demodata['quotes_seed_data']['quotes'])) {
             break;
         }
 
-		foreach($quote['bundle_data'] as $bundle_key=>$bundle) {
-			$pb = new ProductBundle();
-	        $pb->team_id = $focus->team_set_id;
+        foreach ($quote['bundle_data'] as $bundle_key=>$bundle) {
+            $pb = new ProductBundle();
+            $pb->team_id = $focus->team_set_id;
             $pb->team_set_id = $focus->team_set_id;
             $pb->currency_id = $focus->currency_id;
             $pb->bundle_stage = $bundle['bundle_stage'];
@@ -146,7 +146,7 @@ if (!empty($sugar_demodata['quotes_seed_data']['quotes'])) {
             } //foreach
 
             $pb->tax = 0;
-			$pb->shipping = 0;
+            $pb->shipping = 0;
             $pb->save();
             
             //Save any product bundle comment

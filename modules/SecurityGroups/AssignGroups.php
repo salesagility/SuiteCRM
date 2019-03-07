@@ -313,5 +313,4 @@ document.body.insertBefore(oNewP, beforeMe);
 EOQ;
         }
     }
-
 }

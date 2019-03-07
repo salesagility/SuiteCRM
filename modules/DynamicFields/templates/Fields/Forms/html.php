@@ -45,17 +45,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 function get_body($ss, $vardef)
 {
-	$edit_mod_strings = return_module_language($GLOBALS['current_language'], 'EditCustomFields');
-	$ss->assign('MOD', $edit_mod_strings);
+    $edit_mod_strings = return_module_language($GLOBALS['current_language'], 'EditCustomFields');
+    $ss->assign('MOD', $edit_mod_strings);
 
-	$edValue = '';
-    if(!empty($vardef['default_value'])) {
+    $edValue = '';
+    if (!empty($vardef['default_value'])) {
         $edValue = $vardef['default_value'];
-        $edValue = str_replace(array("\r\n", "\n"), " ",$edValue);
+        $edValue = str_replace(array("\r\n", "\n"), " ", $edValue);
     }
     $ss->assign('HTML_EDITOR', $edValue);
     $ss->assign('disableInlineEdit', 1);
     $ss->assign('preSave', 'document.popup_form.presave();');
-	///////////////////////////////////
-	return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/html.tpl');
+    ///////////////////////////////////
+    return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/html.tpl');
 }

@@ -42,36 +42,36 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 $dictionary['OAuthKey'] = array('table' => 'oauth_consumer',
-	'comment' => 'OAuth consumer keys',
-	'audited'=>false,
-	'fields' => array (
+    'comment' => 'OAuth consumer keys',
+    'audited'=>false,
+    'fields' => array(
           'c_key' =>
-          array (
+          array(
             'name' => 'c_key',
             'vname' => 'LBL_CONSKEY',
             'type' => 'varchar',
             'required' => true,
             'comment' => 'Consumer public key',
             'importable' => 'required',
-        	'massupdate' => 0,
+            'massupdate' => 0,
             'reportable'=>false,
-        	'studio' => 'hidden',
+            'studio' => 'hidden',
           ),
           'c_secret' =>
-          array (
+          array(
             'name' => 'c_secret',
             'vname' => 'LBL_CONSSECRET',
             //'type' => 'encrypt',
             'type' => 'varchar',
-          	'required' => true,
+              'required' => true,
             'comment' => 'Consumer secret key',
             'importable' => 'required',
-        	'massupdate' => 0,
+            'massupdate' => 0,
             'reportable'=>false,
-        	'studio' => 'hidden',
+            'studio' => 'hidden',
           ),
           'tokens' =>
-          array (
+          array(
             'name' => 'tokens',
             'type' => 'link',
             'relationship' => 'consumer_tokens',
@@ -82,11 +82,11 @@ $dictionary['OAuthKey'] = array('table' => 'oauth_consumer',
           ),
 
     ),
-    'indices' => array (
+    'indices' => array(
        array('name' =>'ckey', 'type' =>'unique', 'fields'=>array('c_key')),
     )
 );
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('OAuthKeys','OAuthKey', array('basic','assignable'));
+VardefManager::createVardef('OAuthKeys', 'OAuthKey', array('basic','assignable'));

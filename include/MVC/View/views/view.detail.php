@@ -71,12 +71,12 @@ class ViewDetail extends SugarView
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ViewDetail(){
+    public function ViewDetail()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -87,10 +87,10 @@ class ViewDetail extends SugarView
      */
     public function preDisplay()
     {
- 	    $metadataFile = $this->getMetaDataFile();
- 	    $this->dv = new DetailView2();
- 	    $this->dv->ss =&  $this->ss;
- 	    $this->dv->setup($this->module, $this->bean, $metadataFile, get_custom_file_if_exists('include/DetailView/DetailView.tpl'));
+        $metadataFile = $this->getMetaDataFile();
+        $this->dv = new DetailView2();
+        $this->dv->ss =&  $this->ss;
+        $this->dv->setup($this->module, $this->bean, $metadataFile, get_custom_file_if_exists('include/DetailView/DetailView.tpl'));
     }
 
     /**
@@ -98,7 +98,7 @@ class ViewDetail extends SugarView
      */
     public function display()
     {
-        if(empty($this->bean->id)){
+        if (empty($this->bean->id)) {
             sugar_die($GLOBALS['app_strings']['ERROR_NO_RECORD']);
         }
         $this->dv->process();

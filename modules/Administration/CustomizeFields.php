@@ -63,9 +63,8 @@ echo getClassicModuleTitle('Customize Fields', array('Customize Fields'), false)
 Module Name:
 <select>
 <?php
-foreach($moduleList as $module)
-{
-   echo "<option>$module</option>";
+foreach ($moduleList as $module) {
+    echo "<option>$module</option>";
 }
 ?>
 </select>

@@ -48,15 +48,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Role'] = array ('column_fields' => array (
-		'id', 'date_entered', 'date_modified',
-		'modified_user_id', 'created_by', 'name',
-		'description',
-	),
-        'list_fields' =>  array (
-		'id','name','description',
-	),
-    'required_fields' =>   array (
-		'name'=>1,
-	),
+$fields_array['Role'] = array('column_fields' => array(
+        'id', 'date_entered', 'date_modified',
+        'modified_user_id', 'created_by', 'name',
+        'description',
+    ),
+        'list_fields' =>  array(
+        'id','name','description',
+    ),
+    'required_fields' =>   array(
+        'name'=>1,
+    ),
 );

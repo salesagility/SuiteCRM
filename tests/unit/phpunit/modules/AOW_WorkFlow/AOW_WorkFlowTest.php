@@ -258,14 +258,14 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        $expected = array(
 //                'where' => array('.name = DATE_ADD(calls., INTERVAL   )'),
 //        );
-//        
-//        
+//
+//
 ////        $tmpstate = new SuiteCRM\StateSaver();
 ////        $tmpstate->pushErrorLevel();
 ////        error_reporting(E_ERROR | E_PARSE);
 //        $query = $aowWorkFlow->build_query_where($aowCondition, $call);
 ////        $tmpstate->popErrorLevel();
-//        
+//
 //        $this->assertEquals($expected, $query);
 //
 //        //test with value type Field

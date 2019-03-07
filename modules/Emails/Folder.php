@@ -75,7 +75,8 @@ class Folder
     /**
      * Folder constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = DBManagerFactory::getInstance();
         $this->id = null;
         $this->type = "inbound";
@@ -110,9 +111,7 @@ class Folder
                 $this->id = $row['parent_folder'];
                 $this->type = $row['folder_type'];
                 $this->mailbox = $row['name'];
-
             }
-
         } else {
             throw new SuiteException("Invalid or empty Email Folder ID");
         }
@@ -125,10 +124,9 @@ class Folder
      * @return Folder
      * @throws SuiteException
      */
-    public function retrieveFromRequest($request) {
-
+    public function retrieveFromRequest($request)
+    {
         if (isset($request['folders_id']) && !empty($request['folders_id'])) {
-
             $foldersId = $request['folders_id'];
             $this->retrieve($foldersId);
         } else {
@@ -141,15 +139,16 @@ class Folder
     /**
      * @return string
      */
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
     /**
      * @return null|string
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
-
 }
