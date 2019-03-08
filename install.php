@@ -116,7 +116,7 @@ if (get_magic_quotes_gpc() == 1) {
 }
 
 
-$GLOBALS['log'] = LoggerManager::getLogger('SugarCRM');
+$GLOBALS['log'] = LoggerManager::getLogger();
 $setup_sugar_version = $suitecrm_version;
 $install_script = true;
 
