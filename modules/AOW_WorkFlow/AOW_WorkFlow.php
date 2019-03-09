@@ -832,8 +832,15 @@ class AOW_WorkFlow extends Basic
             case "Greater_Than_or_Equal_To": return $var1 >= $var2;
             case "Less_Than_or_Equal_To": return $var1 <= $var2;
             case "Contains": return strpos($var1, $var2);
-            case "Starts_With": return strrpos($var1, $var2, -strlen($var1));
-            case "Ends_With": return strpos($var1, $var2, strlen($var1) - strlen($var2));
+            case "Starts_With": 
+                $length = strlen($var2);
+                return (substr($var1, 0, $length) === $var2);
+            case "Ends_With": 
+                $length = strlen($var2);
+                if ($length == 0) {
+                    return true;
+                }
+                return (substr($var1, -$length) === $var2);
             case "is_null": return $var1 == '';
             case "One_of":
                 if (is_array($var1)) {
