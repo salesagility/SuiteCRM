@@ -79,8 +79,8 @@ $filename_arr = explode('?', $filename);
 $filename = $filename_arr[0];
 $file_ext = substr($filename, -3);
 
-$extensions = SugarThemeRegistry::current()->imageExtensions;
-if (!in_array($file_ext, $extensions)) {
+$mime_type = SugarThemeRegistry::current()->getMimeType($file_ext);
+if (is_null($mime_type)) {
     header($_SERVER["SERVER_PROTOCOL"].' 404 Not Found');
     die;
 }
@@ -110,13 +110,7 @@ if (($ifmod || $iftag) && ($ifmod !== false && $iftag !== false)) {
 }
 
 header("Last-Modified: ".gmdate('D, d M Y H:i:s \G\M\T', $last_modified_time));
-
-// now send the content
-if (substr($filename, -3) == 'gif') {
-    header("Content-Type: image/gif");
-} elseif (substr($filename, -3) == 'png') {
-    header("Content-Type: image/png");
-}
+header('Content-Type: ' . $mime_type);
 
 if (!defined('TEMPLATE_URL')) {
     if (!file_exists($filename)) {
