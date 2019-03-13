@@ -729,7 +729,7 @@
 
         <a id="buttontoggle" class="buttontoggle"><span></span></a>
 
-             <div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
+             <div {if $smarty.cookies.sidebartoggle|default:'' == 'collapsed'}style="display:none"{/if}
              class="sidebar">
 
                 <div id="actionMenuSidebar" class="actionMenuSidebar">
