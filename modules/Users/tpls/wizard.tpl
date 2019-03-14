@@ -293,7 +293,7 @@
                                     {else}
                                         <tr><td><img src=include/images/university2.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/suitecrm/forum/suite-forum" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-                                        <tr><td><img src=include/images/docs.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/wiki/index.php/Userguide" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH14} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH15}</td></tr>
+                                        <tr><td><img src=include/images/docs.png style="margin-right: 5px;"></td><td><a href="https://docs.suitecrm.com/user/" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH14} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH15}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
                                         <tr><td><img src=include/images/forums.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/suitecrm/forum/suite-forum" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH18} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH19}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>

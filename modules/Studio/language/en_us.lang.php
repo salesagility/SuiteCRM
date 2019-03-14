@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -48,8 +48,8 @@ $mod_strings = array(
     'LBL_SELECT_FILE' => 'Select File',
     'LBL_MODULE_TITLE' => 'Studio',
     'LBL_TOOLBOX' => 'Toolbox',
-    'LBL_SUGAR_FIELDS_STAGE' => 'SuiteCRM Fields (click items to add to staging area)',
-    'LBL_VIEW_SUGAR_FIELDS' => 'View SuiteCRM Fields',
+    'LBL_SUITE_FIELDS_STAGE' => 'SuiteCRM Fields (click items to add to staging area)',
+    'LBL_VIEW_SUITE_FIELDS' => 'View SuiteCRM Fields',
     'LBL_FAILED_TO_SAVE' => 'Failed To Save',
     'LBL_CONFIRM_UNSAVE' => 'Any changes will go unsaved. Are you sure you would like to continue?',
     'LBL_PUBLISHING' => 'Publishing...',

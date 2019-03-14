@@ -28,7 +28,7 @@
               titleSize: 10,
               textAngle: 30,
               colorsSequential: true,
-              colors: ['#82CA9D', '#FFF79A', '#F7977A'],
+              colors: ['#f08377', '#534d64', '#778591', '#bfcad3', '#d8f5ee'],
               gutterBottom: 110,
               gutterLeft: 50,
               tooltips: function (ind) {

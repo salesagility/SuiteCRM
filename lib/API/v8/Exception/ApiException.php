@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,60 +41,80 @@
 
 namespace SuiteCRM\API\v8\Exception;
 
-
 use SuiteCRM\API\v8\Controller\ApiController;
-use SuiteCRM\Enumerator\ExceptionCode;
-use SuiteCRM\Exception\Exception;
+use SuiteCRM\LangException;
+use SuiteCRM\LangText;
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * Class ApiException
  * @package SuiteCRM\API\v8\Exception
  */
-class ApiException extends Exception
+class ApiException extends LangException
 {
+    const MSG_PREFIX = '[SuiteCRM] [API]';
+    const DEFAULT_CODE = 8000;
+    const HTTP_STATUS = 500;
+    const DETAIL_TEXT_LABEL = 'LBL_API_EXCEPTION_DETAIL';
+    
     /**
-     * @var array $source
-     * @see https://tools.ietf.org/html/rfc6901
+     *
+     * @var array
      */
-    private $source = array('pointer' => '');
+    protected $source = ['pointer' => null, 'parameter' => null];
+    
+    /**
+     *
+     * @var LangText
+     */
+    protected $detail;
 
     /**
-     * @var string $detail
+     *
+     * @param string $message
+     * @param integer $code
+     * @param \Exception $previous
+     * @param LangText $langMessage
      */
-    private $detail = 'Api Version: 8';
-
-    /**
-     * ApiException constructor.
-     * @param string $message API Exception "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_EXCEPTION, $previous = null)
+    public function __construct($message = "", $code = 0, \Exception $previous = null, LangText $langMessage = null)
     {
-        parent::__construct('[API] '.$message.'', $code, $previous);
+        parent::__construct((self::MSG_PREFIX === $this::MSG_PREFIX ? $this::MSG_PREFIX : self::MSG_PREFIX . ' ' . $this::MSG_PREFIX) . ' ' . $message, $code ? $code : self::DEFAULT_CODE, $previous, $langMessage);
     }
 
     /**
      * Gives addition details to what caused the exception
-     * @see ApiController::generateJsonApiExceptionResponse()
-     * @return string
+     * @return LangText
      */
     public function getDetail()
     {
-        return $this->detail;
+        $text = $this->detail ? $this->detail : new LangText($this::DETAIL_TEXT_LABEL);
+        return $text;
     }
 
     /**
      * @param string $detail
      */
-    public function setDetail($detail)
+    public function setDetail(LangText $detail)
     {
         $this->detail = $detail;
     }
-
+    
     /**
-     * @see ApiController::generateJsonApiExceptionResponse()
-     * @see https://tools.ietf.org/html/rfc6901
+     * @param array|string $source
+     */
+    public function setSource($source)
+    {
+        if (is_string($source)) {
+            $source = ['pointer' => $source];
+        }
+        $this->source = $source;
+    }
+    
+    /**
+     *
      * @return array
      */
     public function getSource()
@@ -102,20 +123,10 @@ class ApiException extends Exception
     }
 
     /**
-     * @param $source
-     * @see https://tools.ietf.org/html/rfc6901
-     */
-    public function setSource($source)
-    {
-        $this->source['pointer'] = $source;
-    }
-
-    /**
      * @return int http status code that should be returned back to the client
-     * @see ApiController::generateJsonApiExceptionResponse()
      */
     public function getHttpStatus()
     {
-        return 500;
+        return $this::HTTP_STATUS;
     }
 }

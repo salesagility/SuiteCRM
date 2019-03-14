@@ -19,12 +19,12 @@
       var max = Math.max.apply(null, chartData);
       new RGraph.Bar({
         id: '{/literal}{$question.id}{literal}Chart',
-        data: chartData,
+        data: [chartData],
         options: {
           title: '{/literal}{$question.name}{literal}',
           textSize: 10,
           titleSize: 10,
-          colors: ['#7CB5EC'],
+          colors: ['#f08377', '#534d64', '#778591', '#bfcad3', '#d8f5ee'],
           tooltips: function (ind) {
             return chartLabels[ind] + " - " + chartData[ind];
           },

@@ -47,8 +47,12 @@
   width: auto;
   height: auto;
 }
+#pageContainer .dashletcontainer .pagination td button:disabled {
+  background-color: $disabled-btn-bg;
+  color: $disabled-btn-color;
+}
 
-// Fix the icons in the dashlet pagination.
+  // Fix the icons in the dashlet pagination.
 #pageContainer .dashletcontainer .aor_reports .pagination h3 {
   margin: 0;
 }
@@ -72,7 +76,7 @@
 }
 
 #pageContainer .dashletcontainer .hd .icon {
-  fill: $default-btn-color;
+  fill: $dashlet-title-color;
 }
 
 .dashletPanel thead {
@@ -118,6 +122,11 @@ ul.subpanelTablist li {
 
 }
 
+
+#dashletCategories .suitepicon {
+  margin: 0 4px 0 4px;
+}
+
 #dashletCategories > li {
   display: inline-block;
   font-size: 13px;
@@ -127,7 +136,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a {
   font-weight: 400;
   background-color: $default-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
   padding: 10px 20px 10px 10px;
   border: 1px solid transparent;
   border-top-left-radius: 4px;
@@ -138,7 +147,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a:link {
   font-weight: 400;
   background-color: $default-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
   padding: 10px 20px 10px 10px;
   border: 1px solid transparent;
   border-top-left-radius: 4px;
@@ -149,7 +158,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a:hover {
   font-weight: 400;
   background-color: $default-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
   padding: 10px 20px 10px 10px;
   border: 1px solid transparent;
   border-top-left-radius: 4px;
@@ -160,7 +169,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a:visited {
   font-weight: 400;
   background-color: $default-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
   padding: 10px 20px 10px 10px;
   border: 1px solid transparent;
   border-top-left-radius: 4px;
@@ -171,7 +180,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a:active {
   font-weight: 400;
   background-color: $default-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
   padding: 10px 20px 10px 10px;
   border: 1px solid transparent;
   border-top-left-radius: 4px;
@@ -182,7 +191,7 @@ ul.subpanelTablist li {
 #dashletCategories > li a:focus {
   font-weight: 400;
   background-color: $default-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
   padding: 10px 20px 10px 10px;
   border: 1px solid transparent;
   border-top-left-radius: 4px;
@@ -192,32 +201,32 @@ ul.subpanelTablist li {
 
 #dashletCategories > li.active a {
   background-color: $active-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
 }
 
 #dashletCategories > li.active a:link {
   background-color: $active-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
 }
 
 #dashletCategories > li.active a:hover {
   background-color: $active-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
 }
 
 #dashletCategories > li.active a:visited {
   background-color: $active-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
 }
 
 #dashletCategories > li.active a:active {
   background-color: $active-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
 }
 
 #dashletCategories > li.active a:focus {
   background-color: $active-tab-bg;
-  color: $default-btn-color;
+  color: $add-dashlet-tab-color;
 }
 
 
@@ -286,7 +295,10 @@ ul.subpanelTablist li {
 
 
 .dashletPanel .hd .hd-center .dashletToolSet a {
+  font-size: $dashlet-header-toolset-icon-font-size;
+  color: $dashlet-btn-color;
   padding: 0 2px;
+  line-height: $dashlet-header-toolset-icon-font-size;
 }
 
 .dashletPanel .hd .hd-center .dashletToolSet a:last-child {
@@ -352,6 +364,9 @@ td.dashlet-title > h3 > span {
   margin-left: 8px;
 }
 
+.dashlet-title .suitepicon {
+  font-size: $dashlet-header-icon-font-size;
+}
 
 #moduleDashletsList > table > tbody > tr > td {
   padding: 10px;
@@ -472,6 +487,7 @@ td.dashlet-title > h3 > span {
   padding-right: 0;
 }
 
+
 .dashletPanel .list tr th {
   padding-top: $dashlet-header-height/2;
   padding-bottom: $dashlet-header-height/2;
@@ -482,6 +498,16 @@ td.dashlet-title > h3 > span {
   padding-bottom: $dashlet-header-padding;
 }
 
+.bd .dashletPanel .list-view-data-icon {
+  color: $dashlet-action-color;
+  font-size: $dashlet-action-icon-font-size;
+  line-height: $dashlet-action-icon-font-size;
+  margin: 0 2px 0 2px;
+}
+
+.bd .dashletPanel .list-view-data-icon:hover{
+  text-decoration: none;
+}
 
 .dashletPanel .h3Row {
   background-color: $dashlet-title-bg;
@@ -498,7 +524,7 @@ td.dashlet-title > h3 > span {
 .dashletPanel .h3Row h3 {
   font-size: 13px;
   font-weight: bold;
-  color: $default-btn-color;
+  color: $dashlet-title-color;
   margin: 0 0 0 10px;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -509,7 +535,7 @@ td.dashlet-title > h3 > span {
 }
 
 #dashletbuttons {
-  color: $danger-btn-bg;
+  color: $dashlet-btn-color;
   margin: 0 2px 0 2px;
 }
 
@@ -689,7 +715,10 @@ td.dashlet-title > h3 > span {
   float: left;
 }
 
-
+.edit-dashboard-tabs .suitepicon {
+  font-size: 18px;
+  line-height: 18px;
+}
 
 .dashboardTbList {
   max-width: 90% ;

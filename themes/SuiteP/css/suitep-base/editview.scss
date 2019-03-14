@@ -31,10 +31,6 @@ div#searchResults {
   padding: 0px 32px 20px 20px;
 }
 
-#EditView #reminders input[type="button"]#reminder_add_btn {
-  padding: 0px 20px 20px 32px;
-}
-
 /** Schedule Bar **/
 #scheduler {
   margin-top: 5px;
@@ -312,17 +308,21 @@ a#powered_by:hover {
 
 .footer_right a {
   font-size: 12px;
-  background-image: none, url("../../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.svg"), url("../../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.png");
-  background-position: right 3px;
-  background-repeat: no-repeat;
   color: #4D4D4D;
   padding-right: 20px;
   letter-spacing: 1px;
+  vertical-align: middle;
+  line-height: 38px;
 }
 
 .footer_right a:hover {
   background-position: right -15px;
   color: $danger-btn-bg-hover;
+}
+
+.footer_right .suitepicon {
+  line-height: inherit;
+  margin: 0 4px 0 4px;
 }
 
 .subDmenu {
@@ -626,14 +626,19 @@ slot {
   font-weight: 400;
   background-color: $detail-view-field-bg;
   color: $main-font-color;
-  padding: 0px 10px;
+  padding: 10px 10px;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
-  line-height: 38px;
   text-align: left;
   min-height: 38px;
   vertical-align: baseline;
   white-space: inherit;
+}
+
+.detail-view-field span {
+  line-height: normal;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .detail-view-field a {
@@ -1865,7 +1870,7 @@ table.detail {
 }
 
 .edit td[scope=row] {
-  color: #817D8D;
+  color: $main-font-color;
 }
 
 #EditView hr {
@@ -1978,10 +1983,6 @@ ul.clickMenu form {
   float: left;
 }
 
-ul.clickMenu li.sugar_action_button > form:first-child {
-  padding: 0 15px;
-}
-
 ul.clickMenu.SugarActionMenu li.sugar_action_button ul.subnav.ddopen li form {
   width: 100%;
 }
@@ -2016,7 +2017,7 @@ ul.clickMenu ul.subnav-sub li a:hover {
 
 ul.clickMenu > li {
   position: relative;
-  color: $default-btn-color;
+  color: $panel-button-color;
   cursor: pointer;
   padding: 5px;
   margin: 0 5px 0 0;
@@ -2027,7 +2028,7 @@ ul.clickMenu > li {
 
 ul.SugarActionMenuIESub li {
   position: relative;
-  color: $default-btn-color;
+  color: $panel-button-color;
   cursor: pointer;
   padding: 5px;
   margin: 0;
@@ -2038,7 +2039,7 @@ ul.SugarActionMenuIESub li {
 
 ul.SugarActionMenuIESub li {
   display: block;
-  color: $default-btn-color;
+  color: $panel-button-color;
   margin: 0 5px 0 0;
   float: left;
   text-decoration: none;
@@ -2046,10 +2047,18 @@ ul.SugarActionMenuIESub li {
 
 ul.clickMenu li a {
   display: block;
-  color: $default-btn-color;
-  margin: 0 5px 0 0;
-  float: left;
+  color: $panel-button-color;
+  margin: 0 0 0 4px;
+  display: inline-block;
   text-decoration: none;
+}
+
+.subpanel-table .clickMenu  > .sugar_action_button > .suitepicon {
+  font-size: inherit;
+  line-height: inherit;
+  color: $panel-button-color;
+  display:inline;
+  margin: 0 4px 0 0;
 }
 
 ul.clickMenu li a.clearSearchIcon {
@@ -2065,15 +2074,7 @@ ul.clickMenu li a:hover {
 }
 
 ul.clickMenu > li > span {
-  display: inline-block;
-  background-image: none, url("../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-position: 0% 0%;
-  background-repeat: no-repeat;
-  background-size: 12px auto;
   cursor: pointer;
-  margin-top: 9px;
-  width: 16px;
-  height: 16px;
 }
 
 @-moz-document url-prefix() {
@@ -2124,21 +2125,17 @@ ul#detailViewActions.clickMenu {
 
 .selectActionsDisabled {
   display: inline-block;
-  background-color: #94A6B5;
+  background-color: $list-view-action-button-disabled-bg;
   border-radius: 3px;
   vertical-align: bottom;
 }
 
 .selectActionsDisabled span {
-  background-image: none, url("../../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-position: 9px 7px;
-  background-repeat: no-repeat;
-  background-size: 12px auto;
-  float: left;
   opacity: .4;
   width: 19px;
   height: 17px;
 }
+
 
 .selectActionsDisabled span.ab {
   padding-left: 5px;
@@ -2151,7 +2148,7 @@ ul#detailViewActions.clickMenu {
   top: -1px;
   font-size: 14px;
   font-weight: normal;
-  color: #C9D2DA;
+  color: $list-view-action-button-disabled-color;
   padding: 2px;
   padding: 1px;
   float: left;
@@ -2164,7 +2161,7 @@ ul#detailViewActions.clickMenu {
   top: -1px;
   font-size: 14px;
   font-weight: normal;
-  color: #C9D2DA;
+  color: $list-view-action-button-disabled-color;
   padding: 2px;
   padding: 1px;
   float: left;
@@ -2172,12 +2169,12 @@ ul#detailViewActions.clickMenu {
 }
 
 ul.clickMenu.SugarActionMenu li.single a {
-  background-color: #94A6B5;
+  background-color: $list-view-action-button-bg;
   padding: 0 8px;
 }
 
 ul.clickMenu.SugarActionMenu li.single a:hover {
-  background-color: #778591;
+  background-color: $list-view-action-button-bg-hover;
 }
 
 .view {
@@ -4123,7 +4120,7 @@ hr {
 }
 
 #fieldChoices {
-  background: #ffffff;
+  background: $panel-bg;
   padding: 16px 8px 8px 8px;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
@@ -4322,12 +4319,21 @@ h3 span {
   cursor: pointer;
 }
 
+.fix-inlineEdit-textarea {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
 .inlineEditIcon {
   color: #F08377;
   padding-left: 3px;
   float: right;
   width: 15px;
   height: 10px;
+}
+
+.inlineEditIcon .suitepicon {
+  line-height: inherit;
 }
 
 .inlineEditIcon svg {
@@ -4349,12 +4355,21 @@ td.inlineEditActive {
   float: right;
 }
 
-#inlineEditSaveButton svg {
-  fill: #F08377;
+.inlineEdit .suitepicon-action-edit {
+  display: none;
 }
 
-#inlineEditSaveButton svg:hover {
-  fill: #F08377;
+.inlineEdit:hover  .suitepicon-action-edit {
+  display: inline-block;
+}
+
+#inlineEditSaveButton .suitepicon {
+  text-decoration: none;
+  line-height: inherit;
+}
+
+#inlineEditSaveButton .suitepicon {
+  text-decoration: none;
 }
 
 #inline_edit_field {
@@ -4440,7 +4455,13 @@ object {
 .favorite {
   margin-left: 5px;
   float: left;
-  width: 20px;
+  color: $link-color;
+}
+
+@media (min-width: 751px) {
+  .favorite .suitepicon {
+    font-size: 26px;
+  }
 }
 
 .favorite:hover {
@@ -4542,28 +4563,6 @@ object {
   margin: 4px;
 }
 
-#reminders .add-btn {
-  background-image: url(../../../../themes/SuiteP/images/id-ff-add.png);
-  background-position: 5px center;
-  background-repeat: no-repeat;
-  padding-left: 32px;
-}
-
-#reminders .remove-btn {
-  background-image: url(../../../../themes/SuiteP/images/id-ff-clear.png);
-  background-position: right 5px center;
-  background-repeat: no-repeat;
-  padding-right: 32px;
-}
-
-#reminders .invitee_btn {
-  background-image: url(../../../../themes/default/images/id-ff-clear.png);
-  background-position: right 5px center;
-  background-repeat: no-repeat;
-  padding: 4px 25px 4px 10px;
-  border: 1px solid lightgrey;
-}
-
 #reminders input[type="checkbox"] {
   margin-right: 5px;
 }
@@ -4659,7 +4658,6 @@ object {
 }
 
 #report-editview-footer .tab-panels {
-  width: 100%;
 }
 
 .noGraphDataPoints {

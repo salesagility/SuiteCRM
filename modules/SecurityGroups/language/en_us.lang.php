@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -60,8 +60,8 @@ $mod_strings = array(
     'LBL_CREATED_USER' => 'Created by User',
     'LBL_MODIFIED_USER' => 'Modified by User',
     'LBL_LIST_FORM_TITLE' => 'Security Groups',
-    'LBL_MODULE_NAME' => 'Security Groups Management',
-    'LBL_MODULE_TITLE' => 'Security Groups Management',
+    'LBL_MODULE_NAME' => 'Security Suite Management',
+    'LBL_MODULE_TITLE' => 'Security Suite Management',
     'LNK_NEW_RECORD' => 'Create a Security Group',
     'LNK_LIST' => 'List View',
     'LBL_SEARCH_FORM_TITLE' => 'Search Security Groups Management',
@@ -122,5 +122,6 @@ $mod_strings = array(
     'LBL_INBOUND_EMAIL' => 'Inbound email account',
     'LBL_INBOUND_EMAIL_DESC' => 'Only allow access to an email account if user belongs to a group that is assigned to the mail account.',
     'LBL_PRIMARY_GROUP' => 'Primary Group',
+    'LBL_CHECKMARK' => 'Checkmark',
 
 );

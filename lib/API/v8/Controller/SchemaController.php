@@ -43,12 +43,13 @@ namespace SuiteCRM\API\v8\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Interop\Container\Exception\ContainerException;
-use Psr\Container\NotFoundExceptionInterface;
-use Psr\Container\ContainerExceptionInterface;
 use SuiteCRM\API\JsonApi\v1\JsonApi;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\NotFound;
+use SuiteCRM\API\v8\Exception\InvalidJsonApiResponseException;
+use SuiteCRM\API\v8\Exception\NotAcceptableException;
+use SuiteCRM\API\v8\Exception\NotFoundException;
+use SuiteCRM\API\v8\Exception\UnsupportedMediaTypeException;
+use SuiteCRM\Exception\InvalidArgumentException;
 
 class SchemaController extends ApiController
 {
@@ -56,54 +57,69 @@ class SchemaController extends ApiController
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      * @return ResponseInterface
-     * @throws \InvalidArgumentException
-     * @throws \SuiteCRM\API\v8\Exception\ApiException
-     * @throws \SuiteCRM\API\v8\Exception\NotFound
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      */
     public function getJsonApiSchema(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $jsonApi = new JsonApi();
-        if(file_exists($jsonApi->getSchemaPath()) === false) {
-            throw new NotFound(
-                '[SchemaController] unable to find JSON Api Schema file:  '. $jsonApi->getSchemaPath()
-            );
+        try {
+            $jsonApi = new JsonApi();
+            if (file_exists($jsonApi->getSchemaPath()) === false) {
+                throw new NotFoundException(
+                    '[SchemaController] unable to find JSON Api Schema file:  '. $jsonApi->getSchemaPath()
+                );
+            }
+
+            $schemaFile = file_get_contents($jsonApi->getSchemaPath());
+
+            if ($schemaFile === false) {
+                throw new ApiException(
+                    '[SchemaController] unable to read JSON Api Schema file: '.  $jsonApi->getSchemaPath()
+                );
+            }
+
+            return $response->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE_JSON)->write($schemaFile);
+        } catch (\Exception $e) {
+            $payload = $this->handleExceptionIntoPayloadError($request, $e, isset($payload) ? $payload : []);
         }
-
-        $schemaFile = file_get_contents($jsonApi->getSchemaPath());
-
-        if($schemaFile === false) {
-            throw new ApiException(
-                '[SchemaController] unable to read JSON Api Schema file: '.  $jsonApi->getSchemaPath()
-            );
-        }
-
-        return $response->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE_JSON)->write($schemaFile);
+        
+        return $this->generateJsonApiResponse($request, $response, $payload);
     }
 
     /**
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      * @return ResponseInterface|static
-     * @throws \SuiteCRM\API\v8\Exception\ApiException
-     * @throws \SuiteCRM\API\v8\Exception\NotFound
+     * @throws InvalidJsonApiResponseException
+     * @throws InvalidArgumentException
+     * @throws NotAcceptableException
+     * @throws UnsupportedMediaTypeException
      */
     public function getSwaggerSchema(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $path = dirname(__DIR__).'/swagger.json';
-        if(file_exists($path) === false) {
-            throw new NotFound(
-                '[SchemaController] unable to find JSON Api Schema file:  '. $path
-            );
+        try {
+            $path = dirname(__DIR__).'/swagger.json';
+            if (file_exists($path) === false) {
+                throw new NotFoundException(
+                    '[SchemaController] unable to find JSON Api Schema file:  '. $path
+                );
+            }
+
+            $schemaFile = file_get_contents($path);
+
+            if ($schemaFile === false) {
+                throw new ApiException(
+                    '[SchemaController] unable to read JSON Api Schema file: '.  $path
+                );
+            }
+
+            return $response->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE_JSON)->write($schemaFile);
+        } catch (\Exception $e) {
+            $payload = $this->handleExceptionIntoPayloadError($request, $e, isset($payload) ? $payload : []);
         }
-
-        $schemaFile = file_get_contents($path);
-
-        if($schemaFile === false) {
-            throw new ApiException(
-                '[SchemaController] unable to read JSON Api Schema file: '.  $path
-            );
-        }
-
-        return $response->withHeader(self::CONTENT_TYPE_HEADER, self::CONTENT_TYPE_JSON)->write($schemaFile);
+        
+        return $this->generateJsonApiResponse($request, $response, $payload);
     }
 }

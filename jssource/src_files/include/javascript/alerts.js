@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /**
  *
@@ -76,17 +77,17 @@ Alerts.prototype.enable = function () {
   var alert = new AlertObj();
 
   if (!("Notification" in window)) {
-    alert.title =  "This browser does not support desktop notifications";
+    alert.title = SUGAR.language.translate('app_strings', 'MSG_BROWSER_NOTIFICATIONS_UNSUPPORTED');
     Alerts.prototype.show(alert);
     return;
   }
 
   Notification.requestPermission(function (permission) {
     if (permission === "granted") {
-      alert.title =  "Desktop notifications are now enabled for this web browser.";
+      alert.title = SUGAR.language.translate('app_strings', 'MSG_BROWSER_NOTIFICATIONS_ENABLED');
     }
     else {
-      alert.title = "Desktop notifications are disabled for this web browser. Use your browser preferences to enable them again.";
+      alert.title = SUGAR.language.translate('app_strings', 'MSG_BROWSER_NOTIFICATIONS_DISABLED');
     }
 
     Alerts.prototype.show(alert);
@@ -131,7 +132,6 @@ Alerts.prototype.show = function (AlertObj) {
           }
         }
       }
-      Alerts.prototype.addToManager(AlertObj);
     }
     else {
       var message = AlertObj.title;
@@ -146,9 +146,6 @@ Alerts.prototype.show = function (AlertObj) {
               window.location = AlertObj.options.url_redirect;
             }
           }
-        }
-        else {
-          Alerts.prototype.addToManager(AlertObj);
         }
       }
     }
@@ -175,6 +172,9 @@ Alerts.prototype.addToManager = function (AlertObj) {
     if (typeof AlertObj.options.type !== "undefined") {
       type = AlertObj.options.type
     }
+    if (typeof AlertObj.options.reminder_id !== "undefined") {
+      reminder_id = AlertObj.options.reminder_id
+    }
   }
   $.post(url, {
     module: 'Alerts',
@@ -184,7 +184,13 @@ Alerts.prototype.addToManager = function (AlertObj) {
     url_redirect: url_redirect,
     is_read: is_read,
     target_module: target_module,
+    reminder_id: reminder_id,
     type: type
+  }).done(function (jsonData) {
+    data = JSON.parse(jsonData);
+    if (typeof data !== 'undefined' && typeof data.result !== 'undefined' && data.result === 1) {
+      Alerts.prototype.show(AlertObj);
+    }
   }).fail(function (data) {
     console.error(data);
   }).always(function () {

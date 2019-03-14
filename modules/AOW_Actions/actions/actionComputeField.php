@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,12 +34,14 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *
  * This file was contributed by diligent technology & business consulting GmbH <info@dtbc.eu>
  *
  */
+
+use SuiteCRM\Utility\SuiteValidator;
 
 require_once('modules/AOW_Actions/actions/actionBase.php');
 
@@ -48,7 +50,6 @@ require_once('modules/AOW_Actions/actions/actionBase.php');
  */
 class actionComputeField extends actionBase
 {
-
     const RAW_VALUE = "raw";
     const FORMATTED_VALUE = "formatted";
 
@@ -94,7 +95,10 @@ class actionComputeField extends actionBase
             }
 
             $calculator = new FormulaCalculator(
-                $resolvedParameters, $resolvedRelationParameters, $bean->module_name, $bean->created_by
+                $resolvedParameters,
+                $resolvedRelationParameters,
+                $bean->module_name,
+                $bean->created_by
             );
 
             $relateFields = $this->getAllRelatedFields($bean);
@@ -206,7 +210,7 @@ class actionComputeField extends actionBase
     }
 
     /**
-     * @param $bean
+     * @param SugarBean $bean
      * @param $relationParameters
      * @param $relationParameterFields
      * @param $relationParameterTypes
@@ -219,6 +223,7 @@ class actionComputeField extends actionBase
         $relationParameterFields,
         $relationParameterTypes
     ) {
+        $isValidator = new SuiteValidator();
         $resolvedRelationParameters = array();
 
         $relateFields = $this->getAllRelatedFields($bean);
@@ -236,7 +241,27 @@ class actionComputeField extends actionBase
                     continue;
                 }
 
-                $entity = BeanFactory::getBean($relateFields[$relationParameters[$i]]['module'], $relatedEntityId);
+                if (is_object($relatedEntityId)) {
+                    // If this is a Link2 object then need to use the relationship
+                    // - because it's a one to many relationship's 'one' side
+                    $relationship = $relateFields[$relationParameters[$i]]['link'];
+                    if ($bean->load_relationship($relationship)) {
+                        foreach ($bean->$relationship->getBeans() as $relatedEntity) {
+                            $entity = $relatedEntity;
+                            break;
+                        }
+                    }
+                } elseif ($isValidator->isValidId($relatedEntityId)) {
+                    // If this is a string, it's probably an id of an object - really a relate field
+                    $entity = BeanFactory::getBean(
+                        $relateFields[$relationParameters[$i]]['module'],
+                        $relatedEntityId
+                    );
+                } else {
+                    // Skip if not recognized
+                    $resolvedRelationParameters[$i] = '';
+                    continue;
+                }
             } else {
                 if ($bean->load_relationship($relationParameters[$i])) {
                     foreach ($bean->{$relationParameters[$i]}->getBeans() as $relatedEntity) {
@@ -730,7 +755,7 @@ class actionComputeField extends actionBase
      */
     private function getOtherModuleForRelationship($relationship_name, $module)
     {
-        $db = $GLOBALS['db'];
+        $db = DBManagerFactory::getInstance();
 
         $query =
             "SELECT relationship_name, rhs_module, lhs_module FROM relationships WHERE deleted=0 AND relationship_name = '" .
@@ -752,8 +777,3 @@ class actionComputeField extends actionBase
         return "";
     }
 }
-
-
-
-
-

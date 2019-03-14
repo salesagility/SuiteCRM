@@ -948,6 +948,30 @@ input[type=button].btn-info:focus {
   border: 1px solid $success-btn-bg;
 }
 
+.btn-danger {
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $danger-btn-bg;
+}
+
+.btn-danger:hover {
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $danger-btn-bg;
+}
+
+.btn-danger:active {
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $danger-btn-bg;
+}
+
+.btn-danger:focus {
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  border: 1px solid $danger-btn-bg;
+}
+
 
 .button {
   font-size: $page-font-size;
@@ -1125,6 +1149,10 @@ input[type=submit]:focus, input[type=button] {
   text-transform: none;
 }
 
+#tab-actions > a {
+ padding-right: 5px;
+}
+
 form[name=DetailView] .button {
   margin: 0 4px 4px 0;
   float: left;
@@ -1153,7 +1181,7 @@ button[disabled] {
   font-size: $page-font-size;
   font-weight: 500;
   background-color: $disabled-btn-bg;
-  color: $main-bg;
+  color: $disabled-btn-color;
   cursor: pointer;
   margin: 0 0 0 0;
   border: none;
@@ -1616,29 +1644,35 @@ div.col-sm-6 #email1_span td.email-address-add-button {
   width: 52px; /* same widths as td.email-address-remove-button */
 }
 
-.emailaddresses > tbody:nth-child(1) > tr > td:nth-child(1) button img {
-  content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
-  width: 32px;
-  height: 32px;
+.email-address-add-line-container .suitepicon {
+  line-height: inherit;
 }
 
 
 .emailaddresses button {
-  content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
 }
 
 
 .emailaddresses button {
   background-color: $danger-btn-bg;
-  border: 1px solid transparent;
+  border: 0px solid transparent;
   border-radius: $border-radius-base;
 }
 
+.emailaddresses button .suitepicon {
+  line-height: inherit;
+}
 
 .emailaddresses button:hover {
   background-color: $danger-btn-bg-hover;
+}
+
+.email-address-add-button .suitepicon-action-plus {
+  padding-left: 4px;
+  font-size:24px;
 }
 
 #email1_span i.error {
@@ -1677,7 +1711,7 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 }
 
 .email-address-add-line-container .email-address-add-button {
-  padding: 6px 9px 6px 9px;
+  padding: 0;
 }
 
 .email-address-add-line-container .email-address-add-button:focus {
@@ -1687,7 +1721,7 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 
 .email-address-add-line-container .email-address-add-button:hover {
   background-color: $danger-btn-bg-hover;
-  border: 1px solid $danger-btn-bg-hover;
+  border: 0px solid $danger-btn-bg-hover;
 }
 
 /* override bootstrap (Needs to be stacked) */
@@ -1703,13 +1737,12 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 }
 
 .email-address-input-group .email-address-remove-button {
-  padding: 6px 9px 6px 9px;
   margin-left: 4px;
 }
 
 .email-address-input-group button[disabled].email-address-remove-button {
   font-size: $page-p-size;
-  padding: 6px 9px 6px 9px;
+  padding: 0;
   line-height: 20px;
   width: 36px;
   height: 36px;

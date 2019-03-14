@@ -117,6 +117,16 @@ class OAuth2Tokens extends SugarBean
      */
     public function get_summary_text()
     {
-        return "$this->name";
+        return substr($this->id, 0, 10) . '...';
+    }
+
+    /**
+     * @return string
+     */
+    public static function getNowDateString()
+    {
+        /** @var DBManager */
+        global $db;
+        return $db->convert('', 'now');
     }
 }

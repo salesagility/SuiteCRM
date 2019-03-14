@@ -21,7 +21,7 @@ class SaleModuleCest
      */
     public function _before(AcceptanceTester $I)
     {
-        if(!$this->fakeData) {
+        if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
             $this->fakeDataSeed = rand(0, 2048);
         }
@@ -67,7 +67,7 @@ class SaleModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
@@ -76,7 +76,7 @@ class SaleModuleCest
      */
     public function testScenarioViewSaleTestModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
@@ -95,7 +95,7 @@ class SaleModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
@@ -106,7 +106,7 @@ class SaleModuleCest
      */
     public function testScenarioCreateRecord(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\EditView $editView,
@@ -128,12 +128,13 @@ class SaleModuleCest
 
         // Create a record
         $this->fakeData->seed($this->fakeDataSeed);
+        $editView->waitForEditViewVisible();
         $editView->fillField('#name', implode(' ', $this->fakeData->words()));
         $this->fakeData->seed($this->fakeDataSeed);
         $editView->selectOption(strtolower('#test_'.\Page\SaleModule::$NAME.'_type'), 'New Business');
         $this->fakeData->seed($this->fakeDataSeed);
         $editView->fillField('#amount', $this->fakeData->randomFloat(2));
-        $editView->click('.dateTime > img', '[field="date_closed"]');
+        $editView->click('#date_closed_trigger');
         $editView->waitForElementVisible('#container_date_closed_trigger_c');
         $editView->click('.today .selector', '#container_date_closed_trigger_c');
         $editView->clickSaveButton();
@@ -142,7 +143,7 @@ class SaleModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
@@ -150,7 +151,7 @@ class SaleModuleCest
      */
     public function testScenarioViewRecordFromListView(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
@@ -178,7 +179,7 @@ class SaleModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
@@ -188,7 +189,7 @@ class SaleModuleCest
      */
     public function testScenarioEditRecordFromDetailView(
         \AcceptanceTester$I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\EditView $editView,
@@ -227,7 +228,7 @@ class SaleModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
@@ -237,7 +238,7 @@ class SaleModuleCest
      */
     public function testScenarioDuplicateRecordFromDetailView(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\EditView $editView,
@@ -282,7 +283,7 @@ class SaleModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Helper\WebDriverHelper $webDriverHelper
@@ -291,7 +292,7 @@ class SaleModuleCest
      */
     public function testScenarioDeleteRecordFromDetailView(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Helper\WebDriverHelper $webDriverHelper

@@ -38,6 +38,4 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-<span class="email-opt-in-container">
-    <span class="email-opt-in {$optInFlagClass}" title="{$optInFlagTitle}">{$optInFlagText}</span>
-</span>
+<span class="email-opt-in-container"><span class="email-opt-in {$optInFlagClass}" title="{$optInFlagTitle}">{$optInFlagText}</span></span>

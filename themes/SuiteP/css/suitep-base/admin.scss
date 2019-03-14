@@ -1,12 +1,20 @@
 /**** Admin ***/
 
-.admin-panel h3 {
-  font-size: $page-font-size + 1px;
-  font-weight: bold;
-}
+.admin-panel {
+  h3 {
+    font-size: $page-font-size + 1px;
+    font-weight: bold;
+  }
 
-.admin-panel .other {
-  margin-top: 20px;
+  .other {
+    margin-top: 20px;
+  }
+
+  .suitepicon {
+    font-size: 26px;
+    position: relative;
+    top: 10px;
+  }
 }
 
 .other {

@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,13 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
- ********************************************************************************/
+ */
 *}
 
 	<!-- Begin Campaign Diagnostic Link -->	
@@ -56,10 +57,6 @@
 			<td  colspan="3"><label class="wizard-step-info">{$MOD.LBL_STEP_INFO_CAMPAIGN_HEADER} </label></td>
 			<td colspan="1" class="emptyField">&nbsp;</td>
 		</tr>
-		<!--
-		<tr><td class="datalabel" colspan="3">{$MOD.LBL_WIZARD_HEADER_MESSAGE}<br></td><td>&nbsp;</td></tr>
-		<tr><td class="datalabel" colspan="4">&nbsp;</td></tr>
-		-->
 		<tr>
 			<td width="17%" scope="col"><span sugar='slot1'>{$MOD.LBL_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span sugar='slot'></td>
 			<td width="33%" ><span sugar='slot1b'><input id='name' name='wiz_step1_name' aria-required="true"  title='{$MOD.LBL_NAME}' {$DISABLED}  size='50' maxlength='50' type="text" value="{$CAMP_NAME}" ></span sugar='slot'></td>
@@ -88,23 +85,9 @@
 					{/if}
 
 					<tr{if $HIDE_CAMPAIGN_TYPE} style="display: none;"{/if}>
-						<!--
-					<td scope="col"><span sugar='slot5'>{$MOD.LBL_CAMPAIGN_START_DATE} </span sugar='slot'></td>
-					<td ><span sugar='slot5b'><input id='start_date' name='wiz_step1_start_date' title='{$MOD.LBL_CAMPAIGN_START_DATE}' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');"  type="text" size='11' maxlength='10' value="{$CAMP_START_DATE}"> {sugar_getimage name="jscalendar" ext=".gif" alt=$APP.LBL_ENTER_DATE other_attributes='align="absmiddle" id="start_date_trigger" '} <span class="dateFormat">{$USER_DATEFORMAT}</span></span sugar='slot'></td>
-					-->
 						<td scope="col"><span sugar='slot6'>{$MOD.LBL_CAMPAIGN_TYPE} </td>
 						<td><span sugar='slot6b'><{$SHOULD_TYPE_BE_DISABLED} id='campaign_type' title='{$MOD.LBL_CAMPAIGN_TYPE}' name='wiz_step1_campaign_type' >{$CAMPAIGN_TYPE_OPTIONS}</select></span sugar='slot'></td>
 					</tr>
-
-					<!--
-					<tr>
-					<td scope="col"><span sugar='slot7'>{$MOD.LBL_CAMPAIGN_END_DATE} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span sugar='slot'></td>
-					<td ><span sugar='slot7b'><input id='end_date' name='wiz_step1_end_date'  aria-required="true" title='{$MOD.LBL_CAMPAIGN_END_DATE}' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');"  type="text"s size='11' maxlength='10' value="{$CAMP_END_DATE}"> {sugar_getimage name="jscalendar" ext=".gif" alt=$APP.LBL_ENTER_DATE other_attributes='align="absmiddle" id="end_date_trigger" '} <span class="dateFormat">{$USER_DATEFORMAT}</span></span sugar='slot'></td>
-					<td scope="col"><span sugar='slot8'>{$FREQUENCY_LABEL} </span sugar='slot'></td>
-					<td><span sugar='slot8b'><{$HIDE_FREQUENCY_IF_NEWSLETTER}  id='frequency' name='wiz_step1_frequency' title='{$MOD.LBL_CAMPAIGN_FREQUENCY}'>{$FREQ_OPTIONS}</select></span sugar='slot'></td>
-					</tr>
-					-->
-
 					<tr class="emptyRow">
 						<td width="15%"><span sugar='slot9'>&nbsp;</span></span sugar='slot'></td>
 						<td width="35%" ><span sugeeear='slot9b'>&nbsp;</span sugar='slot'></td>
@@ -226,10 +209,6 @@
         if(validate['wizform']!='undefined'){delete validate['wizform']};
         addToValidate('wizform', 'name', 'alphanumeric', true,  document.getElementById('name').title);
         addToValidate('wizform', 'status', 'alphanumeric', true,  document.getElementById('status').title);
-        //addToValidate('wizform', 'end_date', 'date', true,  document.getElementById('end_date').title);
-        //addToValidate('wizform', 'start_date', 'date', false,  document.getElementById('start_date').title);
-        //addToValidate('wizform', 'currency_id', 'alphanumeric', false,  document.getElementById('currency_id').title);
-
 
         return check_form('wizform');
     }    

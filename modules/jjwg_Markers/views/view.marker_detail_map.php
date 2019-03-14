@@ -1,33 +1,34 @@
 <?php
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-class Jjwg_MarkersViewMarker_Detail_Map extends SugarView {
-
-  function __construct() {
-    parent::__construct();
-  }
+class Jjwg_MarkersViewMarker_Detail_Map extends SugarView
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Jjwg_MarkersViewMarker_Detail_Map(){
+    public function Jjwg_MarkersViewMarker_Detail_Map()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-  function display() {
-
-    $custom_markers_dir = 'themes/default/images/jjwg_Markers/';
-
-?>
+    public function display()
+    {
+        $custom_markers_dir = 'themes/default/images/jjwg_Markers/'; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -62,7 +63,7 @@ class Jjwg_MarkersViewMarker_Detail_Map extends SugarView {
     }
   </style>
 
-  <script type="text/javascript" src="//maps.google.com/maps/api/js?key=<?= $GLOBALS['jjwg_config']['google_maps_api_key']; ?>&sensor=false"></script>
+  <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?= $GLOBALS['jjwg_config']['google_maps_api_key']; ?>&sensor=false"></script>
 
   <script type="text/javascript">
 
@@ -145,7 +146,5 @@ google.maps.event.addDomListener(window, 'load', initialize);
 </html>
 
 <?php
-
-  }
-
+    }
 }

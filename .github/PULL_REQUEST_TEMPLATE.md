@@ -20,9 +20,9 @@
 ### Final checklist
 <!--- Go over all the following points and check all the boxes that apply. --->
 <!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! --->
-- [ ] My code follows the code style of this project found [here](https://suitecrm.com/wiki/index.php/Coding_Standards).
+- [ ] My code follows the code style of this project found [here](https://docs.suitecrm.com/community/contributing-code/coding-standards/).
 - [ ] My change requires a change to the documentation.
-- [ ] I have read the [**How to Contribute**](https://suitecrm.com/wiki/index.php/Contributing_to_SuiteCRM) guidelines.
+- [ ] I have read the [**How to Contribute**](https://docs.suitecrm.com/community/contributing-code/) guidelines.
 
 <!--- Your pull request will be tested via Travis CI to automatically indicate that your changes do not prevent compilation. --->
 

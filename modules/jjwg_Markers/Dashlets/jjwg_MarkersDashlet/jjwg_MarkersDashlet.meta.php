@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
  
 $dashletMeta['jjwg_MarkersDashlet'] = array('module' => 'jjwg_Markers',
     'title' => translate('LBL_HOMEPAGE_TITLE', 'jjwg_Markers'),

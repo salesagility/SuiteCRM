@@ -40,7 +40,6 @@
 
 namespace SuiteCRM\API\v8\Exception;
 
-
 use SuiteCRM\API\v8\Controller\ApiController;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\Exception\Exception;
@@ -51,23 +50,7 @@ use SuiteCRM\Exception\Exception;
  */
 class NotImplementedException extends ApiException
 {
-    /**
-     * NotImplementedException constructor.
-     * @param string $message API Exception "$message"
-     * @param int $code
-     * @param $previous
-     */
-    public function __construct($message = '', $code = ExceptionCode::API_NOT_IMPLEMENTED, $previous = null)
-    {
-        parent::__construct('[NotImplementedException] '.$message.'', $code, $previous);
-    }
-
-    /**
-     * @return int http status code that should be returned back to the client
-     * @see ApiController::generateJsonApiExceptionResponse()
-     */
-    public function getHttpStatus()
-    {
-        return 500;
-    }
+    const MSG_PREFIX = '[NotImplementedException]';
+    const DEFAULT_CODE = 8035;
+    const HTTP_STATUS = 500;
 }

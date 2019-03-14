@@ -242,7 +242,7 @@ RegExp.escape = function (text) { // http://simon.incutio.com/archive/2006/01/20
   return text.replace(arguments.callee.sRE, '\\$1');
 }
 
-function addAlert(type, name, subtitle, description, time, redirect) {
+function addAlert(type, name, subtitle, description, time, redirect, reminder_id) {
   var addIndex = alertList.length;
   alertList[addIndex] = new Array();
   alertList[addIndex]['name'] = name;
@@ -252,6 +252,9 @@ function addAlert(type, name, subtitle, description, time, redirect) {
   alertList[addIndex]['time'] = time;
   alertList[addIndex]['done'] = 0;
   alertList[addIndex]['redirect'] = redirect;
+  if (typeof reminder_id !== 'undefined') {
+    alertList[addIndex]['reminder_id'] = reminder_id;
+  }
 }
 function checkAlerts() {
   var secondsSinceLoad = (Date.now() - scriptStartedTime) / 1000;
@@ -264,13 +267,14 @@ function checkAlerts() {
         if (typeof Alerts !== "undefined") {
           //
           // Use Alerts module
-          Alerts.prototype.show(
+          Alerts.prototype.addToManager(
             {
               title: alertList[mj]['type'] + ": " + alertList[mj]['name'],
               options: {
                 body: alertList[mj]['subtitle'] + "\n" + alertList[mj]['description'] + "\n\n",
                 url_redirect: alertList[mj]['redirect'],
-                target_module: alertList[mj]['type']
+                target_module: alertList[mj]['type'],
+                reminder_id: alertList[mj]['reminder_id']
               }
             }
           );
@@ -3729,7 +3733,7 @@ SUGAR.savedViews = function () {
       }
       //add showSSDIV to url if it is available.  This determines whether saved search sub form should
       //be rendered open or not
-      if (document.getElementById('showSSDIV') && typeof(document.getElementById('showSSDIV') != 'undefined')) {
+      if (document.getElementById('showSSDIV') && (typeof(document.getElementById('showSSDIV')) != 'undefined')) {
         selecturl = selecturl + '&showSSDIV=' + document.getElementById('showSSDIV').value;
       }
       //use created url to navigate
@@ -4949,7 +4953,7 @@ SUGAR.append(SUGAR.util, {
       if (SUGAR.util.closeActivityPanel.panel)
         SUGAR.util.closeActivityPanel.panel.destroy();
       var singleModule = SUGAR.language.get("app_list_strings", "moduleListSingular")[module];
-      singleModule = typeof(singleModule != 'undefined') ? singleModule.toLowerCase() : '';
+      singleModule = (typeof(singleModule) != 'undefined') ? singleModule.toLowerCase() : '';
       var closeText = SUGAR.language.get("app_strings", "LBL_CLOSE_ACTIVITY_CONFIRM").replace("#module#", singleModule);
       SUGAR.util.closeActivityPanel.panel =
         new YAHOO.widget.SimpleDialog("closeActivityDialog",
