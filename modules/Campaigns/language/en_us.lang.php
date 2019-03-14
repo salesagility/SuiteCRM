@@ -106,6 +106,7 @@ $mod_strings = array(
     'LBL_TRACKED_URLS_SUBPANEL_TITLE' => 'Tracker URLs',
     'LBL_CAMPAIGN_ACCOUNTS_SUBPANEL_TITLE' => 'Accounts',
     'LBL_PROSPECT_LIST_SUBPANEL_TITLE' => 'Target List',
+    'LBL_HISTORY_SUBPANEL_TITLE' => 'History',
     'LBL_EMAIL_MARKETING_SUBPANEL_TITLE' => 'Email Marketing',
     'LNK_NEW_EMAIL_TEMPLATE' => 'Create Email Template',
     'LNK_EMAIL_TEMPLATE_LIST' => 'View Email Templates',
