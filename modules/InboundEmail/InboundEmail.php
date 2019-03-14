@@ -38,8 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Imap;
-use SuiteCRM\ImapInterface;
 use SuiteCRM\StateSaver;
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -5612,8 +5610,9 @@ class InboundEmail extends SugarBean
                 $oldPrefix = $this->imagePrefix;
 
 
-                if (in_array('description_html', $fields_selected)) {
-                    $structure = $this->getImap()->fetchStructure($uid, FT_UID); // map of email
+                $structure = $this->getImap()->fetchStructure($uid, FT_UID);
+
+                if ($structure->subtype === 'HTML') {
                     $email->description_html = $this->getMessageTextWithUid(
                         $uid,
                         'HTML',
@@ -5621,10 +5620,7 @@ class InboundEmail extends SugarBean
                         $fullHeader,
                         true
                     );
-                }
-
-                if (in_array('description', $fields_selected)) {
-                    $structure = $this->getImap()->fetchStructure($uid, FT_UID); // map of email
+                } else {
                     $email->description = $this->getMessageTextWithUid(
                         $uid,
                         'PLAIN',
