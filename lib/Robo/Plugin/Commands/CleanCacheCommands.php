@@ -37,6 +37,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 namespace SuiteCRM\Robo\Plugin\Commands;
 
 use SuiteCRM\Robo\Traits\CliRunnerTrait;
@@ -52,14 +53,12 @@ use Symfony\Component\Finder\SplFileInfo;
  * @license  GNU GPLv3
  * @link     CleanCacheCommands
  */
-
 class CleanCacheCommands extends \Robo\Tasks
 {
     use CliRunnerTrait;
 
     /**
      * Clean 'cache/' directory
-
      * @param array $opts
      * @throws \RuntimeException
      * @return void
@@ -77,18 +76,18 @@ class CleanCacheCommands extends \Robo\Tasks
         $toDelete = array();
         $doNotDelete = array('Emails', 'emails', '.', '..');
         $cachesToDelete = array(
-                               'Relationships',
-                               'csv',
-                               'dashlets',
-                               'diagnostics',
-                               'dynamic_fields',
-                               'feeds',
-                               'import',
-                               'include/javascript',
-                               'jsLanguage',
-                               'pdf',
-                               'themes',
-                               'xml',
+            'Relationships',
+            'csv',
+            'dashlets',
+            'diagnostics',
+            'dynamic_fields',
+            'feeds',
+            'import',
+            'include/javascript',
+            'jsLanguage',
+            'pdf',
+            'themes',
+            'xml',
         );
 
         // Calculate sub-caches to clear
@@ -100,7 +99,7 @@ class CleanCacheCommands extends \Robo\Tasks
                 return in_array($directory->getRelativePathname(), $cachesToDelete);
             });
 
-        $this->say("Found Sub-Cache Directories to Clean: ");
+        $this->say('Found Sub-Cache Directories to Clean: ');
         $this->io()->listing(iterator_to_array($subCachesToDelete));
         $toDelete = array_merge($toDelete, iterator_to_array($subCachesToDelete));
 
@@ -112,7 +111,7 @@ class CleanCacheCommands extends \Robo\Tasks
             ->in($cacheDir . 'modules')
             ->exclude($doNotDelete);
 
-        $this->say("Found Module-Cache Directories to Clean: ");
+        $this->say('Found Module-Cache Directories to Clean: ');
         $this->io()->listing(iterator_to_array($moduleCachesToDelete));
         $toDelete = array_merge($toDelete, iterator_to_array($moduleCachesToDelete));
 
