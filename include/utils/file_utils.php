@@ -473,7 +473,7 @@ CIA;
 */
 function cleanFileName($name)
 {
-    return preg_replace('/[^\w-._]+/i', '', $name);
+    return preg_replace('/[^\w\-._]+/i', '', $name);
 }
 
 /**
