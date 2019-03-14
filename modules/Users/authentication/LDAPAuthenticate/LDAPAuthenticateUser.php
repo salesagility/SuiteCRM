@@ -124,11 +124,9 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
             if (!empty($GLOBALS['ldap_config']->settings['ldap_group'])
                 && !empty($GLOBALS['ldap_config']->settings['ldap_group_user_attr'])
                 && !empty($GLOBALS['ldap_config']->settings['ldap_group_attr'])
+                && !in_array($GLOBALS['ldap_config']->settings['ldap_group_user_attr'], $attrs, false)
             ) {
-
-                if (!in_array($attrs, $GLOBALS['ldap_config']->settings['ldap_group_user_attr'])) {
-                    $attrs[] = $GLOBALS['ldap_config']->settings['ldap_group_user_attr'];
-                }
+                $attrs[] = $GLOBALS['ldap_config']->settings['ldap_group_user_attr'];
             }
 
             $GLOBALS['log']->debug(
