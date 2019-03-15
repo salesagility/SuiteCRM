@@ -170,6 +170,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
+        $state->pushTable('user_preferences');
         
         if (isset($_SESSION)) {
             $session = $_SESSION;
@@ -209,6 +210,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $query = "UPDATE users SET date_modified = '$testUserDateModified' WHERE id = '$testUserId' LIMIT 1";
         DBManagerFactory::getInstance()->query($query);
         
+        $state->popTable('user_preferences');
         $state->popTable('tracker');
         $state->popTable('aod_index');
     }
