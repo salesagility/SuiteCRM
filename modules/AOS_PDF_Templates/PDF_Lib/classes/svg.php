@@ -5,7 +5,7 @@
 //	http://www.godisaduck.com/svg2pdf_with_fpdf
 //	http://rhodopsin.blogspot.com
 //
-//	cette class etendue est open source, toute modification devra cependant etre repertoriée~
+//	cette class etendue est open source, toute modification devra cependant etre repertoriï¿½e~
 
 
 // NB UNITS - Works in pixels as main units - converting to PDF units when outputing to PDF string
@@ -13,12 +13,12 @@
 
 class SVG
 {
-    public $svg_gradient;	//	array - contient les infos sur les gradient fill du svg classé par id du svg
+    public $svg_gradient;	//	array - contient les infos sur les gradient fill du svg classï¿½ par id du svg
     public $svg_shadinglist;	//	array - contient les ids des objet shading
     public $svg_info;		//	array contenant les infos du svg voulue par l'utilisateur
     public $svg_attribs;		//	array - holds all attributes of root <svg> tag
     public $svg_style;		//	array contenant les style de groupes du svg
-    public $svg_string;		//	String contenant le tracage du svg en lui même.
+    public $svg_string;		//	String contenant le tracage du svg en lui mï¿½me.
     public $txt_data;		//    array - holds string info to write txt to image
     public $txt_style;		// 	array - current text style
     public $mpdf_ref;
@@ -31,20 +31,37 @@ class SVG
     public $kp;		// mPDF 4.4.003  convert pixels to PDF units
     public $pathBBox;	// mPDF 5.0.039
 
-    public function SVG(&$mpdf)
-    {
-        $this->svg_gradient = array();
-        $this->svg_shadinglist = array();
-        $this->txt_data = array();
-        $this->svg_string = '';
-        $this->svg_info = array();
-        $this->svg_attribs = array();
-        $this->xbase = 0;
-        $this->ybase = 0;
-        $this->svg_error = false;
-        $this->subPathInit = false;	// mPDF 4.4.003
-        $this->dashesUsed = false;	// mPDF 5.0
-        $this->mpdf_ref =& $mpdf;
+	var $svg_gradient;	//	array - contient les infos sur les gradient fill du svg classï¿½ par id du svg
+	var $svg_shadinglist;	//	array - contient les ids des objet shading
+	var $svg_info;		//	array contenant les infos du svg voulue par l'utilisateur
+	var $svg_attribs;		//	array - holds all attributes of root <svg> tag
+	var $svg_style;		//	array contenant les style de groupes du svg
+	var $svg_string;		//	String contenant le tracage du svg en lui mï¿½me.
+	var $txt_data;		//    array - holds string info to write txt to image
+	var $txt_style;		// 	array - current text style
+	var $mpdf_ref;
+	var $xbase;		// mPDF 4.4.003
+	var $ybase;		// mPDF 4.4.003
+	var $svg_error;	// mPDF 4.4.003
+	var $subPathInit;	// mPDF 4.4.003
+	var $spxstart;	// mPDF 4.4.003
+	var $spystart;	// mPDF 4.4.003
+	var $kp;		// mPDF 4.4.003  convert pixels to PDF units
+	var $pathBBox;	// mPDF 5.0.039
+
+	function __construct(&$mpdf){
+		$this->svg_gradient = array();
+		$this->svg_shadinglist = array();
+		$this->txt_data = array();
+		$this->svg_string = '';
+		$this->svg_info = array();
+		$this->svg_attribs = array();
+		$this->xbase = 0;
+		$this->ybase = 0;
+		$this->svg_error = false;
+		$this->subPathInit = false;	// mPDF 4.4.003
+		$this->dashesUsed = false;	// mPDF 5.0
+		$this->mpdf_ref =& $mpdf;
 
         $this->kp = 72 / $mpdf->img_dpi;	// mPDF 4.4.003  constant To convert pixels to pts/PDF units
         $this->kf = 1;				// mPDF 5.0.039	constant To convert font size if re-mapped
@@ -817,7 +834,7 @@ class SVG
                 // Not sure if this is supposed to strip off units, but since I dont use any I will omlt this step
                 $svg_w = preg_replace("/([0-9\.]*)(.*)/i", "$1", $this->svg_attribs['width']);
                 $svg_h = preg_replace("/([0-9\.]*)(.*)/i", "$1", $this->svg_attribs['height']);
-                
+
                 // $xmax = floor($this->svg_attribs['width']);
                 $xmax = floor($svg_w);
                 $xmin = 0;
@@ -874,20 +891,20 @@ class SVG
                     if ($vv[0] < 0) { $sx *= -1; } // change sign
                     $sy=sqrt(pow($vv[1],2)+pow($vv[3],2));
                     if ($vv[3] < 0) { $sy *= -1; } // change sign
-                    
+
                     // rotation angle is
                     $t=atan2($vv[1],$vv[3]);
                     $t=atan2(-$vv[2],$vv[0]);	// Should be the same value or skew has been applied
-                    
+
                     // Reverse angle
                     $t *= -1;
-                    
+
                     // Rebuild matrix
                     $ma = $sx * cos($t);
                     $mb = $sy * sin($t);
                     $mc = -$sx * sin($t);
                     $md = $sy * cos($t);
-                    
+
                     // $transformations .= sprintf(' %.3F %.3F %.3F %.3F %.3F %.3F cm ', $ma, $mb, $mc, $md, $vv[4]*$this->kp, -$vv[5]*$this->kp);
                     */
                     } elseif ($c=='translate' && count($vv)) {
@@ -960,7 +977,7 @@ class SVG
                     $current_style['stroke'] = $tmp;
                 }
             }
-            
+
             $tmp = preg_replace("/(.*)stroke-linecap:\s*([a-z0-9#]*|none)(.*)/i", "$2", $critere_style['style']);
             if ($tmp != $critere_style['style']) {
                 $current_style['stroke-linecap'] = $tmp;
@@ -970,17 +987,17 @@ class SVG
             if ($tmp != $critere_style['style']) {
                 $current_style['stroke-linejoin'] = $tmp;
             }
-            
+
             $tmp = preg_replace("/(.*)stroke-miterlimit:\s*([a-z0-9#]*|none)(.*)/i", "$2", $critere_style['style']);
             if ($tmp != $critere_style['style']) {
                 $current_style['stroke-miterlimit'] = $tmp;
             }
-            
+
             $tmp = preg_replace("/(.*)stroke-opacity:\s*([a-z0-9.]*|none)(.*)/i", "$2", $critere_style['style']);
             if ($tmp != $critere_style['style']) {
                 $current_style['stroke-opacity'] = $tmp;
             }
-            
+
             $tmp = preg_replace("/(.*)stroke-width:\s*([a-z0-9.]*|none)(.*)/i", "$2", $critere_style['style']);
             if ($tmp != $critere_style['style']) {
                 $current_style['stroke-width'] = $tmp;
@@ -1057,7 +1074,7 @@ class SVG
         $path_style = '';
         if (substr_count($critere_style['fill'], 'url')>0) {
             //
-            // couleur degradé
+            // couleur degradï¿½
             $id_gradient = preg_replace("/url\(#([\w_]*)\)/i", "$1", $critere_style['fill']);
             if ($id_gradient != $critere_style['fill']) {
                 if (isset($this->svg_gradient[$id_gradient])) {
@@ -1887,7 +1904,7 @@ class SVG
 
     //
     //	fonction retracant les <ellipse /> et <circle />
-    //	 le cercle est tracé grave a 4 bezier cubic, les poitn de controles
+    //	 le cercle est tracï¿½ grave a 4 bezier cubic, les poitn de controles
     //	sont deduis grace a la constante kappa * rayon
     public function svgEllipse($arguments)
     {
@@ -2138,7 +2155,7 @@ class SVG
                     $current_style['stroke'] = $tmp;
                 }
             }
-            
+
             $tmp = preg_replace("/(.*)stroke-linecap:\s*([a-z0-9#]*|none)(.*)/i", "$2", $critere_style['style']);
             if ($tmp != $critere_style['style']) {
                 $current_style['stroke-linecap'] = $tmp;
@@ -2148,17 +2165,17 @@ class SVG
             if ($tmp != $critere_style['style']) {
                 $current_style['stroke-linejoin'] = $tmp;
             }
-            
+
             $tmp = preg_replace("/(.*)stroke-miterlimit:\s*([a-z0-9#]*|none)(.*)/i", "$2", $critere_style['style']);
             if ($tmp != $critere_style['style']) {
                 $current_style['stroke-miterlimit'] = $tmp;
             }
-            
+
             $tmp = preg_replace("/(.*)stroke-opacity:\s*([a-z0-9.]*|none)(.*)/i", "$2", $critere_style['style']);
             if ($tmp != $critere_style['style']) {
                 $current_style['stroke-opacity'] = $tmp;
             }
-            
+
             $tmp = preg_replace("/(.*)stroke-width:\s*([a-z0-9.]*|none)(.*)/i", "$2", $critere_style['style']);
             if ($tmp != $critere_style['style']) {
                 $current_style['stroke-width'] = $tmp;
@@ -2214,7 +2231,7 @@ class SVG
                 }
                 $current_style['font-weight'] = $tmp;
             }
-            
+
             // select digits not followed by percent sign nor preceeded by forward slash
             $tmp = preg_replace("/(.*)\b(\d+)[\b|\/](.*)/i", "$2", $critere_style['font']);
             if ($tmp != $critere_style['font']) {
@@ -2232,21 +2249,21 @@ class SVG
         if (isset($critere_style['stroke-width'])) {
             $current_style['stroke-width'] = $critere_style['stroke-width'];
         }
-        
+
         if (isset($critere_style['font-style'])) {
             if (strtolower($critere_style['font-style']) == 'oblique') {
                 $critere_style['font-style'] = 'italic';
             }
             $current_style['font-style'] = $critere_style['font-style'];
         }
-        
+
         if (isset($critere_style['font-weight'])) {
             if (strtolower($critere_style['font-weight']) == 'bolder') {
                 $critere_style['font-weight'] = 'bold';
             }
             $current_style['font-weight'] = $critere_style['font-weight'];
         }
-        
+
         if (isset($critere_style['font-size'])) {
             // mPDF 5.4.12
             if (strpos($critere_style['font-size'], '%')!==false) {
@@ -2292,11 +2309,11 @@ class SVG
                 }
             }
         }
-    
+
         if (isset($critere_style['text-anchor'])) {
             $current_style['text-anchor'] = $critere_style['text-anchor'];
         }
-    
+
         // add current style to text style array (will remove it later after writing text to svg_string)
         array_push($this->txt_style, $current_style);
     }
@@ -2371,7 +2388,7 @@ class SVG
         $this->svg_info['data'] = $data;
 
         $this->svg_string = '';
-        
+
         //
         //	chargement unique des fonctions
         if (!function_exists("xml_svg2pdf_start")) {	// mPDF 5.3.76
@@ -2663,7 +2680,7 @@ class SVG
                 }
 
                 //
-                //insertion des path et du style dans le flux de donné general.
+                //insertion des path et du style dans le flux de donnï¿½ general.
                 if (isset($path_cmd) && $path_cmd) {	// mPDF 4.4.003
                     // mPDF 5.0
                     list($prestyle, $poststyle) = $svg_class->svgStyle($path_style, $attribs, strtolower($name));

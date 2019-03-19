@@ -12,21 +12,6 @@ class SecurityGroup extends SecurityGroup_sugar
         parent::__construct();
     }
 
-    /**
-     * @deprecated 7.6 PHP4 Style Constructors are deprecated and will be remove in 8.0, please update your code
-     * @see __construct
-     */
-    public function SecurityGroup()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
-
     public $last_run = array('module' => '', 'record' => '', 'action' => '', 'response' => '');
 
     /**

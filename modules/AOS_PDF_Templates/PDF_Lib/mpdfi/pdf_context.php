@@ -28,11 +28,10 @@ class pdf_context
 
     // Constructor
 
-    public function pdf_context($f)
-    {
-        $this->file = $f;
-        $this->reset();
-    }
+	function __construct($f) {
+		$this->file = $f;
+		$this->reset();
+	}
 
     // Optionally move the file
     // pointer to a new location
