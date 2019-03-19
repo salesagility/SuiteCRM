@@ -66,57 +66,69 @@ $server->register(
         array('return'=>'tns:set_entry_result'),
         $NAMESPACE);
 
-function portal_login($portal_auth, $user_name, $application_name){
+function portal_login($portal_auth, $user_name, $application_name)
+{
     $error = new SoapError();
     $contact = new Contact();
     $result = login_user($portal_auth);
 
-    if($result == 'fail' || $result == 'sessions_exceeded'){
-        if($result == 'sessions_exceeded') {
+    if ($result == 'fail' || $result == 'sessions_exceeded') {
+        if ($result == 'sessions_exceeded') {
             $error->set_error('sessions_exceeded');
-        }
-        else {
+        } else {
             $error->set_error('no_portal');
         }
-        return array('id'=>-1, 'error'=>$error->get_soap_array());
+
+        return array('id' => -1, 'error' => $error->get_soap_array());
     }
     global $current_user;
 
-    if($user_name == 'lead'){
+    if ($user_name == 'lead') {
         session_start();
-        $_SESSION['is_valid_session']= true;
+        $_SESSION['is_valid_session'] = true;
         $_SESSION['ip_address'] = query_client_ip();
         $_SESSION['portal_id'] = $current_user->id;
         $_SESSION['type'] = 'lead';
         login_success();
-        return array('id'=>session_id(), 'error'=>$error->get_soap_array());
-    }else if($user_name == 'portal'){
-        session_start();
-        $_SESSION['is_valid_session']= true;
-        $_SESSION['ip_address'] = query_client_ip();
-        $_SESSION['portal_id'] = $current_user->id;
-        $_SESSION['type'] = 'portal';
-        $GLOBALS['log']->debug("Saving new session");
-        login_success();
-        return array('id'=>session_id(), 'error'=>$error->get_soap_array());
-    }else{
-    $contact = $contact->retrieve_by_string_fields(array('portal_name'=>$user_name, 'portal_active'=>'1', 'deleted'=>0) );
-    if($contact != null){
-        session_start();
-        $_SESSION['is_valid_session']= true;
-        $_SESSION['ip_address'] = query_client_ip();
-        $_SESSION['user_id'] = $contact->id;
-        $_SESSION['portal_id'] = $current_user->id;
 
-        $_SESSION['type'] = 'contact';
-        $_SESSION['assigned_user_id'] = $contact->assigned_user_id;
-        login_success();
-        build_relationship_tree($contact);
-        return array('id'=>session_id(), 'error'=>$error->get_soap_array());
+        return array('id' => session_id(), 'error' => $error->get_soap_array());
+    } else {
+        if ($user_name == 'portal') {
+            session_start();
+            $_SESSION['is_valid_session'] = true;
+            $_SESSION['ip_address'] = query_client_ip();
+            $_SESSION['portal_id'] = $current_user->id;
+            $_SESSION['type'] = 'portal';
+            $GLOBALS['log']->debug("Saving new session");
+            login_success();
+
+            return array('id' => session_id(), 'error' => $error->get_soap_array());
+        } else {
+            $contact = $contact->retrieve_by_string_fields(array(
+                'portal_name' => $user_name,
+                'portal_active' => '1',
+                'deleted' => 0
+            ));
+            if ($contact != null) {
+                session_start();
+                $_SESSION['is_valid_session'] = true;
+                $_SESSION['ip_address'] = query_client_ip();
+                $_SESSION['user_id'] = $contact->id;
+                $_SESSION['portal_id'] = $current_user->id;
+
+                $_SESSION['type'] = 'contact';
+                $_SESSION['assigned_user_id'] = $contact->assigned_user_id;
+                login_success();
+                build_relationship_tree($contact);
+
+                return array('id' => session_id(), 'error' => $error->get_soap_array());
+            }
+
+            $error->set_error('invalid_login');
+
+            return array('id' => -1, 'error' => $error->get_soap_array());
+        }
     }
-
-    $error->set_error('invalid_login');
-    return array('id'=>-1, 'error'=>$error->get_soap_array());
 }
 
 /*
