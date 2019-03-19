@@ -8,7 +8,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -19,7 +19,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -37,8 +37,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 <!-- !!!1
@@ -76,11 +76,12 @@
     <div class="p_login_middle">
         <div id="loginform">
             <div class="error message">{$factor_message}</div>
-            <form method="post" action="">
+            <form method="post" action="index.php?module=Users&action=index">
                 {$APP.LBL_EMAIL_CODE} <input type="text" name="factor_token">
                 <input type="submit" value="{$APP.LBL_VERIFY}">
             </form>
-            <a href="index.php?module=Users&action=Logout">{$APP.LBL_CANCEL}</a>
+            <a href="index.php?module=Users&action=Logout">{$APP.LBL_CANCEL}</a>&nbsp;&nbsp;&nbsp;
+            <a href="index.php?module=Users&action=Resend">{$APP.LBL_RESEND}</a>
         </div>
 
         <div class="p_login_bottom">

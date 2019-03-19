@@ -15,7 +15,6 @@
 }
 
 #detailpanel_fields_display {
-  position: absolute;
   display: inline-block;
   padding: 8px;
   width: 75%;
@@ -240,4 +239,19 @@
 
 .jqtree-tree .jqtree-title {
   color: $link-color;
+}
+
+
+#detailpanel_report {
+  .list-view-rounded-corners {
+    margin: 0px;
+  }
+
+  .list-view-rounded-corners > table th:first-of-type {
+    border-top-left-radius: 0;
+  }
+
+  .list-view-rounded-corners > table th:last-of-type {
+    border-top-right-radius: 0;
+  }
 }

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -77,13 +77,13 @@ class FieldOperator extends Operator
      */
     public function isValid($operator)
     {
-        if(!is_string($operator)) {
+        if (!is_string($operator)) {
             throw new InvalidArgumentException(
                 '[JsonApi][v1][Filters][Operators][FieldOperator][isValid][expected type to be string] $operator'
             );
         }
 
-      return parent::isValid($operator);
+        return parent::isValid($operator);
     }
 
     /**
@@ -93,7 +93,7 @@ class FieldOperator extends Operator
      */
     public function isOperator($operator)
     {
-        if(!is_string($operator)) {
+        if (!is_string($operator)) {
             throw new InvalidArgumentException('[JsonApi][v1][Filters][Operators][FieldOperator][isOperator][expected type to be string] $operator');
         }
 

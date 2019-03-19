@@ -98,9 +98,6 @@
   }
 
   .nav > li > a.first-tab-xs {
-    background-color: $active-tab-bg;
-    background-image: url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
-    background-position: right ($tab-height/2) top (($tab-height/4)*3);
     background-repeat: no-repeat;
     padding-right: $tab-height;
     border-bottom: none;
@@ -141,13 +138,16 @@
 
   #tab-actions > a {
     background-color: $action-tab-bg;
-    background-image: url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
-    background-position: right ($tab-height/2) top (($tab-height/4)*4);
-    background-repeat: no-repeat;
+    color: $action-tab-color;
     cursor: pointer;
-    padding-right: ($tab-height/2)*5;
     border-color: $action-tab-bg;
     border-bottom: $action-tab-seperator;
+  }
+
+  #tab-actions > a .suitepicon-action-caret {
+    line-height: 4px;
+    font-size: 10px;
+    margin-left: 8px;
   }
 
   #tab-actions > a:hover {

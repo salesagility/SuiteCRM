@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -187,7 +187,7 @@ abstract class AbstractMetaDataImplementation
 
         $variables = array();
         foreach ($moduleVariables as $name) {
-            if (isset ($$name)) {
+            if (isset($$name)) {
                 $variables [$name] = $$name;
             }
         }
@@ -216,21 +216,20 @@ abstract class AbstractMetaDataImplementation
         // Now tidy up the module name in the viewdef array
         // MB created definitions store the defs under packagename_modulename and later methods that expect to find them under modulename will fail
 
-        if (isset ($variables ['module_name'])) {
+        if (isset($variables ['module_name'])) {
             $mbName = $variables ['module_name'];
             if ($mbName != $this->_moduleName) {
                 $defs [$this->_moduleName] = $defs [$mbName];
-                unset ($defs [$mbName]);
+                unset($defs [$mbName]);
             }
         }
         $this->_variables = $variables;
         // now remove the modulename preamble from the loaded defs
         reset($defs);
-        $temp = each($defs);
 
-        $GLOBALS['log']->debug(get_class($this) . "->_loadFromFile: returning " . print_r($temp['value'], true));
+        $GLOBALS['log']->debug(get_class($this) . "->_loadFromFile: returning " . print_r($defs, true));
 
-        return $temp['value']; // 'value' contains the value part of 'key'=>'value' part
+        return array_shift($defs); // 'value' contains the value part of 'key'=>'value' part
     }
 
     /**
@@ -271,21 +270,37 @@ abstract class AbstractMetaDataImplementation
                 //If there are no defs for this view, grab them from the non-popup view
                 if ($view == MB_POPUPLIST) {
                     $this->_view = MB_LISTVIEW;
-                    $defs = $this->_loadFromFile($this->getFileName(MB_LISTVIEW, $this->_moduleName, null,
-                        MB_CUSTOMMETADATALOCATION));
+                    $defs = $this->_loadFromFile($this->getFileName(
+                        MB_LISTVIEW,
+                        $this->_moduleName,
+                        null,
+                        MB_CUSTOMMETADATALOCATION
+                    ));
                     if ($defs == null) {
-                        $defs = $this->_loadFromFile($this->getFileName(MB_LISTVIEW, $this->_moduleName, null,
-                            MB_BASEMETADATALOCATION));
+                        $defs = $this->_loadFromFile($this->getFileName(
+                            MB_LISTVIEW,
+                            $this->_moduleName,
+                            null,
+                            MB_BASEMETADATALOCATION
+                        ));
                     }
                     $this->_view = $view;
                 } else {
                     if ($view == MB_POPUPSEARCH) {
                         $this->_view = MB_ADVANCEDSEARCH;
-                        $defs = $this->_loadFromFile($this->getFileName(MB_ADVANCEDSEARCH, $this->_moduleName, null,
-                            MB_CUSTOMMETADATALOCATION));
+                        $defs = $this->_loadFromFile($this->getFileName(
+                            MB_ADVANCEDSEARCH,
+                            $this->_moduleName,
+                            null,
+                            MB_CUSTOMMETADATALOCATION
+                        ));
                         if ($defs == null) {
-                            $defs = $this->_loadFromFile($this->getFileName(MB_ADVANCEDSEARCH, $this->_moduleName, null,
-                                MB_BASEMETADATALOCATION));
+                            $defs = $this->_loadFromFile($this->getFileName(
+                                MB_ADVANCEDSEARCH,
+                                $this->_moduleName,
+                                null,
+                                MB_BASEMETADATALOCATION
+                            ));
                         }
 
                         if (isset($defs['layout']) && isset($defs['layout']['advanced_search'])) {
@@ -345,7 +360,7 @@ abstract class AbstractMetaDataImplementation
 
         $out .= ";\n";
 
-        if (!empty($this->_originalViewTemplateDefs)) {
+        if ($this->hasToAppendOriginalViewTemplateDefs($defs)) {
             $templateMeta = var_export($this->_originalViewTemplateDefs, true);
             if (!empty($templateMeta)) {
                 $out .= '$viewdefs[\'' . $this->_moduleName . '\'][\'' . $this->_viewName . '\'][\'templateMeta\'] = ' . $templateMeta;
@@ -354,10 +369,25 @@ abstract class AbstractMetaDataImplementation
 
         $out .= ";\n?>\n";
 
-
         if (sugar_file_put_contents($filename, $out) === false) {
             $GLOBALS ['log']->fatal(get_class($this) . ": could not write new viewdef file " . $filename);
         }
+    }
+
+    /**
+     * @param $defs array The definitions to save
+     * @return bool
+     */
+    private function hasToAppendOriginalViewTemplateDefs($defs)
+    {
+        if (empty($this->_originalViewTemplateDefs)) {
+            return false;
+        }
+        if (is_array($defs) && isset($defs[$this->_viewName])) {
+            // The defs are already being saved we don't want to duplicate them
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -380,30 +410,27 @@ abstract class AbstractMetaDataImplementation
     protected function _mergeFielddefs(&$fielddefs, $layout)
     {
         foreach ($layout as $key => $def) {
-
             if ((string)$key == 'templateMeta') {
                 continue;
             }
 
             if (is_array($def)) {
-                if (isset ($def ['name']) && !is_array($def ['name'])) // found a 'name' definition, that is not the definition of a field called name :)
-                {
+                if (isset($def ['name']) && !is_array($def ['name'])) { // found a 'name' definition, that is not the definition of a field called name :)
                     // if this is a module field, then merge in the definition,
                     // otherwise this is a new field defined in the layout, so just take the definition
                     $fielddefs [$def ['name']] =
-                        (isset ($fielddefs [$def ['name']])) ? array_merge($fielddefs [$def ['name']], $def) : $def;
+                        (isset($fielddefs [$def ['name']])) ? array_merge($fielddefs [$def ['name']], $def) : $def;
                 } else {
                     // dealing with a listlayout which lacks 'name' keys, but which does have 'label' keys
-                    if (isset ($def ['label']) || isset ($def ['vname']) || isset($def ['widget_class'])) {
+                    if (isset($def ['label']) || isset($def ['vname']) || isset($def ['widget_class'])) {
                         $key = strtolower($key);
-                        $fielddefs [$key] = (isset ($fielddefs [$key])) ? array_merge($fielddefs [$key], $def) : $def;
+                        $fielddefs [$key] = (isset($fielddefs [$key])) ? array_merge($fielddefs [$key], $def) : $def;
                     } else {
                         $this->_mergeFielddefs($fielddefs, $def);
                     }
                 }
             }
         }
-
     }
 
     /**
@@ -413,7 +440,61 @@ abstract class AbstractMetaDataImplementation
      * @param string $type
      * @return string
      */
-    abstract public function getFileName($view, $moduleName, $packageName, $type = MB_CUSTOMMETADATALOCATION);
+    public function getFileName($view, $moduleName, $packageName, $type = MB_BASEMETADATALOCATION)
+    {
+        return $this->getFileNameInPackage($view, $moduleName, $this->_packageName, $type);
+    }
 
+    /**
+     * Construct a full pathname for the requested metadata, in a specific package
+     *
+     * @param string $view The view type, that is, EditView, DetailView etc
+     * @param string $moduleName The name of the module that will use this layout
+     * @param string $packageName The name of the package to use
+     * @param string $type
+     * @return string               The file name
+     */
+    public function getFileNameInPackage($view, $moduleName, $packageName, $type = MB_BASEMETADATALOCATION)
+    {
+        $type = strtolower($type);
+
+        // BEGIN ASSERTIONS
+        if ($type != MB_BASEMETADATALOCATION && $type != MB_HISTORYMETADATALOCATION) {
+            // just warn rather than die
+            $GLOBALS ['log']->warning(
+                "UndeployedMetaDataImplementation->getFileName(): view type $type is not recognized"
+            );
+        }
+        // END ASSERTIONS
+
+        $filenames = array(
+            MB_DASHLETSEARCH => 'dashletviewdefs',
+            MB_DASHLET => 'dashletviewdefs',
+            MB_LISTVIEW => 'listviewdefs',
+            MB_BASICSEARCH => 'searchdefs',
+            MB_ADVANCEDSEARCH => 'searchdefs',
+            MB_EDITVIEW => 'editviewdefs',
+            MB_DETAILVIEW => 'detailviewdefs',
+            MB_QUICKCREATE => 'quickcreatedefs',
+            MB_POPUPSEARCH => 'popupdefs',
+            MB_POPUPLIST => 'popupdefs',
+        );
+
+        switch ($type) {
+            case MB_HISTORYMETADATALOCATION:
+                return 'custom/history/modulebuilder/packages/' . $packageName . '/modules/'
+                    . $moduleName . '/metadata/' . $filenames [$view] . '.php';
+            default:
+                // get the module again, all so we can call this method statically
+                // without relying on the module stored in the class variables
+                $mb = new ModuleBuilder();
+                $module = &$mb->getPackageModule($packageName, $moduleName);
+                return $module->getModuleDir() . '/metadata/' . $filenames [$view] . '.php';
+        }
+    }
+
+    public function getModuleDir()
+    {
+        return $this->module->key_name;
+    }
 }
-

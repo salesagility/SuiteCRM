@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 *}
 
@@ -73,7 +74,7 @@
 			<div>					
 				<input type="radio" name="repeat_end_type" id="repeat_until_radio" value="date" onclick="toggle_repeat_end();" style="position: relative; top: -5px;"> {$MOD.LBL_REPEAT_END_BY}
 				<input type="input" size="11" maxlength="10" id="repeat_until_input" name="repeat_until" value="" disabled>
-				<img border="0" src="index.php?entryPoint=getImage&imageName=jscalendar.gif" alt="{$APP.LBL_ENTER_DATE}" id="repeat_until_trigger" align="absmiddle" style="display: none;">	
+				<span class="suitepicon suitepicon-module-calendar" id="repeat_until_trigger"></span>
 							
 				<script type="text/javascript">
 						Calendar.setup ({literal}{{/literal}
@@ -143,7 +144,7 @@
 			if(typeof validate != "undefined" && typeof validate['CalendarRepeatForm'] != "undefined"){
 				removeFromValidate('CalendarRepeatForm', 'repeat_until');
 			}
-			addToValidateMoreThan('CalendarRepeatForm', 'repeat_count', 'int', true,'{/literal}{$MOD.LBL_REPEAT_COUNT}{literal}', 1);			
+			addToValidateMoreThan('CalendarRepeatForm', 'repeat_count', 'int', true, "{/literal}{$MOD.LBL_REPEAT_COUNT}{literal}", 1);
 		}else{
 			document.forms['CalendarRepeatForm'].repeat_count.setAttribute("disabled","disabled");			
 			document.forms['CalendarRepeatForm'].repeat_until.removeAttribute("disabled");
@@ -152,7 +153,7 @@
 			if(typeof validate != "undefined" && typeof validate['CalendarRepeatForm'] != "undefined"){
 				removeFromValidate('CalendarRepeatForm', 'repeat_count');
 			}
-			addToValidate('CalendarRepeatForm', 'repeat_until', 'date', true,'{/literal}{$MOD.LBL_REPEAT_UNTIL}{literal}');			
+			addToValidate('CalendarRepeatForm', 'repeat_until', 'date', true, "{/literal}{$MOD.LBL_REPEAT_UNTIL}{literal}");
 		}
 		
 		// prevent an issue when a calendar date picker is hidden under a dialog

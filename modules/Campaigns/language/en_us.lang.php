@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -87,6 +87,7 @@ $mod_strings = array(
     'LNK_NEW_CAMPAIGN' => 'Create Campaign (Classic)',
     'LNL_NEW_CAMPAIGN_WIZARD' => 'Create Campaign',
     'LNK_CAMPAIGN_LIST' => 'View Campaigns',
+    'LNK_IMPORT_CAMPAIGNS' => 'Import Campaigns',
     'LNK_NEW_PROSPECT' => 'Create Target',
     'LNK_PROSPECT_LIST' => 'View Targets',
     'LNK_NEW_PROSPECT_LIST' => 'Create Target List',
@@ -105,6 +106,7 @@ $mod_strings = array(
     'LBL_TRACKED_URLS_SUBPANEL_TITLE' => 'Tracker URLs',
     'LBL_CAMPAIGN_ACCOUNTS_SUBPANEL_TITLE' => 'Accounts',
     'LBL_PROSPECT_LIST_SUBPANEL_TITLE' => 'Target List',
+    'LBL_HISTORY_SUBPANEL_TITLE' => 'History',
     'LBL_EMAIL_MARKETING_SUBPANEL_TITLE' => 'Email Marketing',
     'LNK_NEW_EMAIL_TEMPLATE' => 'Create Email Template',
     'LNK_EMAIL_TEMPLATE_LIST' => 'View Email Templates',
@@ -124,8 +126,8 @@ $mod_strings = array(
     'LBL_MESSAGE_QUEUE_TITLE' => 'Message Queue',
 
     'LBL_LOG_ENTRIES_TARGETED_TITLE' => 'Message Sent/Attempted',
-    'LBL_LOG_ENTRIES_SEND_ERROR_TITLE' => 'Bounced Messages,Other',
-    'LBL_LOG_ENTRIES_INVALID_EMAIL_TITLE' => 'Bounced Messages,Invalid Email',
+    'LBL_LOG_ENTRIES_SEND_ERROR_TITLE' => 'Bounced Messages, Other',
+    'LBL_LOG_ENTRIES_INVALID_EMAIL_TITLE' => 'Bounced Messages, Invalid Email',
     'LBL_LOG_ENTRIES_LINK_TITLE' => 'Click-thru Link',
     'LBL_LOG_ENTRIES_VIEWED_TITLE' => 'Viewed Message',
     'LBL_LOG_ENTRIES_REMOVED_TITLE' => 'Opted Out',
@@ -149,7 +151,8 @@ $mod_strings = array(
     'LBL_CAMPAIGN_FREQUENCY' => 'Frequency:',
     'LBL_NEWSLETTERS' => 'View Newsletters',
     'LBL_NEWSLETTER' => 'Newsletter',
-    'LBL_NEWSLETTER_FORENTRY' => 'NewsLetter',
+    'LBL_SURVEY' => 'Survey',
+    'LBL_NEWSLETTER_FORENTRY'=>'NewsLetter',
     'LBL_CREATE_NEWSLETTER' => 'Create Newsletter',
     'LBL_LIST_NAME' => 'Name',
     'LBL_INBOUND_EMAIL_SETTINGS' => 'Inbound Email Settings',
@@ -302,7 +305,7 @@ $mod_strings = array(
     'LBL_MAILBOX_CHECK1_GOOD' => ' Mail account(s)) with bounce handling detected:',
     'LBL_MAILBOX_CHECK1_BAD' => 'No mail account(s) with bounce handling detected.',
     'LBL_MAILBOX_CHECK2_GOOD' => ' E-mail Settings have been configured:',
-    'LBL_MAILBOX_CHECK2_BAD' => 'Please configure your system email address. E-mail Settings have not been configured or are invalid.',
+    'LBL_MAILBOX_CHECK2_BAD' => 'Please configure your system email address. E-mail Settings have not been configured or are invalid. The \"From\" Address must not contain example.com.',
     'LBL_SCHEDULER_CHECK_GOOD' => 'Schedulers detected',
     'LBL_SCHEDULER_CHECK_BAD' => 'No Schedulers detected',
     'LBL_SCHEDULER_CHECK1_BAD' => 'Scheduler has not been set up to process Bounced Campaign Emails.',
@@ -411,7 +414,7 @@ $mod_strings = array(
     'LBL_UPDATE_TEMPLATE' => 'Update template',
     'LBL_ATTACHMENTS' => 'Attachments',
     'ERR_MISSING_REQUIRED_FIELDS' => 'Missing required field',
-    'LBL_SUGAR_DOCUMENT' => 'Document',
+    'LBL_SUITE_DOCUMENT' => 'Document',
     'LBL_EMAIL_ATTACHMENT' => 'Email Attachment',
     'LBL_PROCESS_BOUNCED_EMAILS' => 'Process Bounced Emails',
     'LBL_PROCESS_CAMPAIGN_EMAILS' => 'Process Campaign Emails',
@@ -419,7 +422,7 @@ $mod_strings = array(
     'LBL_CHOOSE_TEMPLATES' => 'Choose Templates',
     'LBL_CHOOSE_TARGETS' => 'Choose Targets',
     'LBL_CAMPAIGN_DETAILS_AND_CONDITIONS' => 'Campaign Details and Conditions',
-    'LBL_OPEN_IN_NEW_WINDOW' => 'Open in new window..',
+    'LBL_OPEN_IN_NEW_WINDOW' => 'Open in new window...',
     'LBL_CREATE_MARKETING_RECORD' => 'Next',
     'LBL_NO_TEMPLATE_SELECTED' => 'Email Template not selected',
     'LBL_SELECT_TEMPLATE' => 'Templates',
@@ -449,7 +452,7 @@ $mod_strings = array(
     'LBL_NEWSLETTER_TITLE' => ' A newsletter campaign is a type of email campaign, which allows you to send an email to a single target list.',
     'LBL_EMAIL_TITLE' => 'An email campaign is a type of email campaign, which allows you to send an email to multiple target lists.',
     'LBL_NON_EMAIL_TITLE' => 'A non email campaign is a campaign that does not send an email.',
-    'LBL_TEMPLATE_SAVING' => 'Please wait, template saving..',
+    'LBL_TEMPLATE_SAVING' => 'Please wait, template saving...',
     'LBL_TEMPLATE_SAVED' => 'Template successfully saved.',
     'LBL_PLEASE_SELECT_OPTION' => 'Please select which option you prefer',
     'LBL_OPTION_SELECT_TEMPLATE' => 'Select an existing template',
@@ -461,6 +464,6 @@ $mod_strings = array(
     'LBL_EMAIL_MARKETING' => 'Email Marketing',
     'LBL_QUEUE_ITEMS' => 'Queue Items',
     'LBL_PROSPECT_LISTS' => 'Prospect Lists',
-	'LBL_SURVEYRESPONSES_CAMPAIGNS_FROM_SURVEYRESPONSES_TITLE' => 'Survey Responses',
-	'LBL_CAMPAIGN_SURVEY' => "Survey",
+    'LBL_SURVEYRESPONSES_CAMPAIGNS_FROM_SURVEYRESPONSES_TITLE' => 'Survey Responses',
+    'LBL_CAMPAIGN_SURVEY' => "Survey",
 );

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,116 +42,206 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$dictionary['OAuth2Tokens'] = array(
+$dictionary['OAuth2Tokens'] = [
     'table' => 'oauth2tokens',
     'audited' => false,
     'comment' => 'Provides tokens for security services',
-    'fields' => array(
-        'id' => array (
+    'fields' => [
+        'id' => [
             'name' => 'id',
             'vname' => 'LBL_ID',
             'type' => 'id',
-            'required'=>true,
+            'required' => true,
             'reportable' => false,
             'api-visible' => false,
-        ),
-        'token_is_revoked' => array(
+            'inline_edit' => false,
+        ],
+        'token_is_revoked' => [
             'name' => 'token_is_revoked',
             'vname' => 'LBL_TOKEN_IS_REVOKED',
             'type' => 'bool',
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
-        ),
-        'token_type' => array(
+        ],
+        'token_type' => [
             'name' => 'token_type',
             'vname' => 'LBL_ACCESS_TOKEN_TYPE',
             'type' => 'varchar',
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
-        ),
-        'access_token_expires' => array(
+            'inline_edit' => false,
+        ],
+        'access_token_expires' => [
             'name' => 'access_token_expires',
             'vname' => 'LBL_ACCESS_TOKEN_EXPIRES',
             'type' => 'datetime',
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
-        ),
-        'access_token' => array(
+            'inline_edit' => false,
+        ],
+        'access_token' => [
             'name' => 'access_token',
             'vname' => 'LBL_ACCESS_TOKEN',
             'type' => 'varchar',
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
-            'len' => '4098',
-        ),
-        'refresh_token' => array(
+            'len' => '4000',
+            'inline_edit' => false,
+        ],
+        'refresh_token' => [
             'name' => 'refresh_token',
             'vname' => 'LBL_REFRESH_TOKEN',
             'type' => 'varchar',
             'required' => false,
             'reportable' => false,
             'api-visible' => false,
-            'len' => '4098',
-        ),
-        'refresh_token_expires' => array(
+            'len' => '4000',
+            'inline_edit' => false,
+        ],
+        'refresh_token_expires' => [
             'name' => 'refresh_token_expires',
             'vname' => 'LBL_REFRESH_TOKEN_EXPIRES',
             'type' => 'datetime',
             'required' => false,
             'reportable' => false,
             'api-visible' => false,
-        ),
-        'grant_type' => array(
+            'inline_edit' => false,
+        ],
+        'grant_type' => [
             'name' => 'grant_type',
             'vname' => 'LBL_GRANT_TYPE',
-            'type' => 'varchar',
+            'type' => 'enum',
+            'options' => 'oauth2_grant_type_dom',
+            'default' => '',
             'required' => true,
             'reportable' => false,
             'api-visible' => false,
-        ),
-        'scopes' => array(
-            'name' => 'scopes',
-            'vname' => 'LBL_SCOPES',
-            'type' => 'varchar',
-            'required' => false,
-            'reportable' => false,
-            'api-visible' => false,
-            'len' => '1024'
-        ),
-        'state' => array(
+            'inline_edit' => false,
+        ],
+        'state' => [
             'name' => 'state',
             'vname' => 'LBL_STATE',
             'type' => 'varchar',
             'required' => false,
             'reportable' => false,
             'api-visible' => false,
-            'len' => '1024'
-        ),
-        'client' => array(
-            'name' => 'client',
+            'len' => '1024',
+            'inline_edit' => false,
+        ],
+        'oauth2client_name' => [
+            'required' => false,
+            'name' => 'oauth2client_name',
+            'rname' => 'name',
+            'id_name' => 'client',
             'vname' => 'LBL_CLIENT',
-            'type' => 'varchar',
-            'required' => true,
+            'type' => 'relate',
+            'link' => 'oauth2clients',
+            'table' => 'oauth2clients',
+            'isnull' => 'true',
+            'module' => 'OAuth2Clients',
+            'dbType' => 'varchar',
+            'len' => 255,
+            'source' => 'non-db',
+            'unified_search' => true,
+            'quicksearch' => 'enabled',
+            'reportable' => true,
+            'inline_edit' => false,
+        ],
+        'oauth2clients' => [
+            'name' => 'oauth2clients',
+            'vname' => 'LBL_CLIENT',
+            'type' => 'link',
+            'relationship' => 'oauth2clients_oauth2tokens',
+            'module' => 'OAuth2Clients',
+            'bean_name' => 'OAuth2Clients',
+            'source' => 'non-db',
+            'inline_edit' => false,
+        ],
+        'client' => [
+            'name' => 'client',
+            'type' => 'relate',
+            'dbType' => 'id',
+            'rname' => 'id',
+            'module' => 'OAuth2Clients',
+            'id_name' => 'client',
             'reportable' => false,
-            'api-visible' => false,
-            'len' => '1024'
-        ),
-    ),
+            'vname' => 'LBL_CLIENT_ID',
+            'massupdate' => false,
+            'inline_edit' => false,
+        ],
+        'assigned_user_id' => [
+            'name' => 'assigned_user_id',
+            'rname' => 'user_name',
+            'id_name' => 'assigned_user_id',
+            'vname' => 'LBL_USER',
+            'group' => 'assigned_user_name',
+            'type' => 'relate',
+            'table' => 'users',
+            'module' => 'Users',
+            'reportable' => true,
+            'isnull' => 'false',
+            'dbType' => 'id',
+            'audited' => true,
+            'comment' => 'User ID assigned to record',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+        ],
+        'assigned_user_name' => [
+            'name' => 'assigned_user_name',
+            'link' => 'assigned_user_link',
+            'vname' => 'LBL_USER',
+            'rname' => 'user_name',
+            'type' => 'relate',
+            'reportable' => false,
+            'source' => 'non-db',
+            'table' => 'users',
+            'id_name' => 'assigned_user_id',
+            'module' => 'Users',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+        ],
+        'assigned_user_link' => [
+            'name' => 'assigned_user_link',
+            'type' => 'link',
+            'relationship' => 'oauth2tokens_assigned_user',
+            'vname' => 'LBL_USER',
+            'link_type' => 'one',
+            'module' => 'Users',
+            'bean_name' => 'User',
+            'source' => 'non-db',
+            'duplicate_merge' => 'enabled',
+            'rname' => 'user_name',
+            'id_name' => 'assigned_user_id',
+            'table' => 'users',
+            'inline_edit' => false,
+        ],
+    ],
     'optimistic_locking' => true,
-);
-if (!class_exists('VardefManager')){
+    'relationships' => [
+        'oauth2tokens_assigned_user' => [
+            'lhs_module' => 'Users',
+            'lhs_table' => 'users',
+            'lhs_key' => 'id',
+            'rhs_module' => 'OAuth2Tokens',
+            'rhs_table' => 'oauth2tokens',
+            'rhs_key' => 'assigned_user_id',
+            'relationship_type' => 'one-to-many'
+        ]
+    ],
+];
+if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }
 
 VardefManager::createVardef(
     'OAuth2Tokens',
     'OAuth2Tokens',
-    array(
+    [
         'default',
 
-    )
+    ]
 );

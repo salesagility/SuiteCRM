@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -77,7 +77,9 @@
                 {foreach from=$summaryList key=k item=activity}
 
                     <!-- BEGIN: row -->
-                    <td><img class="icon" src={$activity.image}></td>
+                    <td>
+                        <span class="suitepicon suitepicon-module-{$activity.module|lower|replace:'_':'-'}"></span>
+                    </td>
                     <td>{$activity.name} {$activity.attachment}</td>
                     <td>{$activity.type} {$activity.status}</td>
                     <td>{$activity.contact_name}</td>
@@ -121,7 +123,9 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td><img class="icon" src={$activity.image}></td>
+                        <td>
+                            <span class="suitepicon suitepicon-module-{$activity.module|lower|replace:'_':'-'}"></span>
+                        </td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
@@ -167,7 +171,9 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td><img class="icon" src={$activity.image}></td>
+                        <td>
+                            <span class="suitepicon suitepicon-module-{$activity.module|lower|replace:'_':'-'}"></span>
+                        </td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
@@ -213,7 +219,9 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td><img class="icon" src={$activity.image}></td>
+                        <td>
+                            <span class="suitepicon suitepicon-module-{$activity.module|lower|replace:'_':'-'}"></span>
+                        </td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
@@ -259,7 +267,9 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td><img class="icon" src={$activity.image}></td>
+                        <td>
+                            <span class="suitepicon suitepicon-module-{$activity.module|lower|replace:'_':'-'}"></span>
+                        </td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
@@ -305,7 +315,9 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td><img class="icon" src={$activity.image}></td>
+                        <td>
+                            <span class="suitepicon suitepicon-module-{$activity.module|lower|replace:'_':'-'}"></span>
+                        </td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>

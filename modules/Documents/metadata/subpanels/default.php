@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,24 +37,24 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
 $subpanel_layout = array(
-	'top_buttons' => array(
+    'top_buttons' => array(
        array('widget_class' => 'SubPanelTopCreateButton'),
-	   array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Documents','field_to_name_array'=>array('document_revision_id'=>'REL_ATTRIBUTE_document_revision_id')),
-	),
+       array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Documents','field_to_name_array'=>array('document_revision_id'=>'REL_ATTRIBUTE_document_revision_id')),
+    ),
 
-	'where' => '',
-	
-	
+    'where' => '',
+    
+    
 
     'list_fields'=> array(
- 	   'object_image'=>array(
+       'object_image'=>array(
             'vname' => 'LBL_OBJECT_IMAGE',
             'widget_class' => 'SubPanelIcon',
             'width' => '2%',
@@ -61,64 +64,63 @@ $subpanel_layout = array(
                 'filename_field' => 'filename',
             ),
             'attachment_image_only'=>true,
-	   ),
+       ),
        'document_name'=> array(
-	    	'name' => 'document_name',
-	 		'vname' => 'LBL_LIST_DOCUMENT_NAME',
-			'widget_class' => 'SubPanelDetailViewLink',
-			'width' => '20%',
-	   ),
+            'name' => 'document_name',
+            'vname' => 'LBL_LIST_DOCUMENT_NAME',
+            'widget_class' => 'SubPanelDetailViewLink',
+            'width' => '20%',
+       ),
        'filename'=>array(
- 	    	'name' => 'filename',
-	 	    'vname' => 'LBL_LIST_FILENAME',
-		    'width' => '20%',
+            'name' => 'filename',
+            'vname' => 'LBL_LIST_FILENAME',
+            'width' => '20%',
             'module' => 'Documents',
             'sortable'=>false,
             'displayParams' => array(
                 'module' => 'Documents',
             ),
-		),
-		'document_revision_id' => array(
-	       'name' => 'document_revision_id',
-	       'usage' => 'query_only',
-	   ),
+        ),
+        'document_revision_id' => array(
+           'name' => 'document_revision_id',
+           'usage' => 'query_only',
+       ),
        'category_id'=>array(
- 	    	'name' => 'category_id',
-	 	    'vname' => 'LBL_LIST_CATEGORY',
-		    'width' => '20%',
-		),		
+            'name' => 'category_id',
+            'vname' => 'LBL_LIST_CATEGORY',
+            'width' => '20%',
+        ),
        'status_id'=>array(
- 	    	'name' => 'status_id',
-	 	    'vname' => 'LBL_LIST_STATUS',
-		    'width' => '10%',
-		),
+            'name' => 'status_id',
+            'vname' => 'LBL_LIST_STATUS',
+            'width' => '10%',
+        ),
        'active_date'=>array(
- 	    	'name' => 'active_date',
-	 	    'vname' => 'LBL_LIST_ACTIVE_DATE',
-		    'width' => '10%',
-		),
+            'name' => 'active_date',
+            'vname' => 'LBL_LIST_ACTIVE_DATE',
+            'width' => '10%',
+        ),
         'get_latest'=>array(
-			'widget_class' => 'SubPanelGetLatestButton',
-		 	'module' => 'Documents',
-			'width' => '5%',
-		),
+            'widget_class' => 'SubPanelGetLatestButton',
+            'module' => 'Documents',
+            'width' => '5%',
+        ),
         'load_signed'=>array(
             'widget_class' => 'SubPanelLoadSignedButton',
             'module' => 'Documents',
             'width' => '5%',
         ),
-		'edit_button'=>array(
-			'vname' => 'LBL_EDIT_BUTTON',
-			'widget_class' => 'SubPanelEditButton',
-		 	'module' => 'Documents',
-			'width' => '5%',
-		),
-		'remove_button'=>array(
-			'vname' => 'LBL_REMOVE',
-			'widget_class' => 'SubPanelRemoveButton',
-		 	'module' => 'Documents',
-			'width' => '5%',
-		),
-	),
+        'edit_button'=>array(
+            'vname' => 'LBL_EDIT_BUTTON',
+            'widget_class' => 'SubPanelEditButton',
+            'module' => 'Documents',
+            'width' => '5%',
+        ),
+        'remove_button'=>array(
+            'vname' => 'LBL_REMOVE',
+            'widget_class' => 'SubPanelRemoveButton',
+            'module' => 'Documents',
+            'width' => '5%',
+        ),
+    ),
 );
-?>

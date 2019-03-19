@@ -312,6 +312,10 @@ div.target-list-table {
   list-style-type: none;
 }
 
+.icon-btn-lst .icon-btn .suitepicon {
+  font-size: 64px;
+}
+
 .icon-btn-lst .icon-btn {
   display: block;
   background-color: $campaign-type-bg;
@@ -682,15 +686,21 @@ form[name="wizform"] br.emptyRow {
   display: none;
 }
 
-form[name="wizform"] div.step3 ul .li-tick {
-  margin-left: 50px;
-}
-
-form[name="wizform"] div.step3 ul .li-cross {
-  margin-left: 50px;
-}
 form[name="wizform"] div.step3 .button-group a.btn img {
   margin-top: 0;
+}
+
+.li-tick .suitepicon {
+  line-height: 48px;
+  font-size: 24px;
+}
+
+.li-tick .suitepicon-action-confirm {
+  color: $alert-success-text;
+}
+
+.li-tick .suitepicon-action-clear {
+  color: $alert-danger-text;
 }
 
 /* non-email campaign / budget page */

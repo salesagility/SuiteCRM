@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -100,7 +100,6 @@ class SugarFieldBase
             foreach ($this->buttons as $v) {
                 $additional .= ' <input type="button" class="button" ' . $v . '>';
             }
-
         }
         if (!empty($this->image)) {
             $additional .= ' <img ' . $this->image . '>';
@@ -187,10 +186,8 @@ class SugarFieldBase
      */
     public function getSmartyView($parentFieldArray, $vardef, $displayParams, $tabindex, $view)
     {
-
-        // set $tabindex = -1 by default
-        if (!is_numeric($tabindex)) {
-            $tabindex = -1;
+        if (is_null($tabindex) || !is_numeric($tabindex)) {
+            $tabindex = 0;
         }
 
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
@@ -344,7 +341,6 @@ class SugarFieldBase
 
     public function displayFromFunc($displayType, $parentFieldArray, $vardef, $displayParams, $tabindex = 0)
     {
-
         if (!is_array($vardef['function'])) {
             $funcName = $vardef['function'];
             $includeFile = '';
@@ -378,8 +374,12 @@ class SugarFieldBase
                     require_once($includeFile);
                 }
 
-                return $funcName($parentFieldArray, $vardef['name'], $parentFieldArray[strtoupper($vardef['name'])],
-                    $displayType);
+                return $funcName(
+                    $parentFieldArray,
+                    $vardef['name'],
+                    $parentFieldArray[strtoupper($vardef['name'])],
+                    $displayType
+                );
             } else {
                 $displayTypeFunc = 'get' . $displayType . 'Smarty';
 
@@ -446,7 +446,6 @@ class SugarFieldBase
 
     public function getQueryLike()
     {
-
     }
 
     public function getQueryIn()
@@ -514,8 +513,6 @@ class SugarFieldBase
             $this->image = $displayParams['image'];
         }
         $this->ss->assign('displayParams', $displayParams);
-
-
     }
 
     protected function getAccessKey($vardef, $fieldType = null, $module = null)
@@ -690,6 +687,4 @@ class SugarFieldBase
 
         return $parentFieldArray;
     }
-
 }
-

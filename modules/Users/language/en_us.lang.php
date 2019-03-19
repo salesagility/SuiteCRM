@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -73,7 +73,7 @@ $mod_strings = array(
     'ERR_USER_IS_LOCKED_OUT' => 'This user is locked out of the SuiteCRM application and cannot log in using his/her existing password.',
     'ERR_PASSWORD_MINPWDLENGTH' => 'Password should contain at least %d characters.',
     'ERR_PASSWORD_ONEUPPER' => 'Password should contain uppercase characters.',
-    'ERR_PASSWORD_ONEUPPER' => 'Password should contain lowercase characters.',
+    'ERR_PASSWORD_ONELOWER' => 'Password should contain lowercase characters.',
     'ERR_PASSWORD_ONENUMBER' => 'Password should contain numbers.',
     'ERR_PASSWORD_SPECCHARS' => 'Password should contain special characters.',
     'LBL_PASSWORD_SENT' => 'Password Updated',
@@ -154,7 +154,6 @@ $mod_strings = array(
     'LBL_FIRST_NAME' => 'First Name',
     'LBL_SYSTEM_GENERATED_PASSWORD' => 'System Generated Password',
     'LBL_GENERATE_PASSWORD_BUTTON_LABEL' => 'Reset Password',
-    'LBL_GENERATE_PASSWORD_BUTTON_TITLE' => 'Reset Password',
     'LBL_GROUP_DESC' => 'Use for assigning items to a group (example: for Inbound Email). This type cannot login through the SuiteCRM web interface.',
     'LBL_GROUP_USER' => 'Group User',
     'LBL_HIDE_TABS' => 'Hide Modules',
@@ -215,6 +214,7 @@ $mod_strings = array(
     'LBL_MODULE_TITLE' => 'Users: Home',
     'LBL_NAME' => 'Full Name',
     'LBL_SIGNATURE_NAME' => 'Name',
+    'LBL_NAVIGATION_PARADIGM_DESCRIPTION' => 'Select to be able to view modules in the navigation bar based on pre-defined groups. When selected, the "Filter Menu By" feature will appear in the "More" menu.',
     'LBL_USE_GROUP_TABS' => 'Module Menu Filters',
     'LBL_NEW_FORM_TITLE' => 'New User',
     'LBL_NEW_PASSWORD' => 'New Password',
@@ -290,7 +290,11 @@ $mod_strings = array(
     'LBL_STATUS' => 'Status',
     'LBL_SUBPANEL_TABS' => 'Subpanel Tabs',
     'LBL_SUBPANEL_TABS_DESCRIPTION' => 'In Detail Views, group Subpanels into tabs and display one tab at a time.',
-    'LBL_SUGAR_LOGIN' => 'Is SuiteCRM User',
+    'LBL_SORT_MODULES' => 'Sort modules alphabetically',
+    'LBL_SORT_MODULES_DESCRIPTION' => 'Order modules by name in the navigation drop down.',
+    'LBL_COUNT_COLLAPSED_SUBPANELS' => 'Show collapsed subpanel hint',
+    'LBL_COUNT_COLLAPSED_SUBPANELS_DESCRIPTION' => 'When subpanels are collapsed, shows a hint to indicate if the subpanel is empty or contains records.',
+    'LBL_SUITE_LOGIN' => 'Is SuiteCRM User',
     'LBL_THEME' => 'Themes',
     'LBL_TIME_FORMAT_TEXT' => 'Set the display format for time stamps',
     'LBL_TIME_FORMAT' => 'Time Format',
@@ -344,7 +348,7 @@ $mod_strings = array(
 // PROJECT RESOURCES STRINGS
     'LBL_RESOURCE_NAME' => 'Name',
     'LBL_SMTP_SERVER_HELP' => 'This SMTP Mail Server can be used for outgoing mail. Provide a username and password for your email account in order to use the mail server.',
-    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administator has not yet configured the default outbound account. Unable to send test email.',
+    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administrator has not yet configured the default outbound account. Unable to send test email.',
     'LBL_MAIL_SMTPPASS' => 'SMTP Password:',
     'LBL_MAIL_SMTPUSER' => 'SMTP Username:',
     'LBL_MAIL_SMTPTYPE' => 'SMTP Server Type:',
@@ -372,8 +376,7 @@ $mod_strings = array(
     'LBL_WIZARD_SKIP_BUTTON' => 'Skip',
     'LBL_WIZARD_FINISH_BUTTON' => 'Finish',
     'LBL_WIZARD_FINISH_TITLE' => 'You are ready to use SuiteCRM!',
-    'LBL_WIZARD_FINISH' => 'Click <b>Finish</b>
-below to save your settings and to begin using SuiteCRM. For more information on using SuiteCRM:<br /><br />
+    'LBL_WIZARD_FINISH' => 'Click <b>Finish</b> below to save your settings and to begin using SuiteCRM. For more information on using SuiteCRM:<br /><br />
 <table cellpadding=0 cellspacing=0>
 <tr><td><!--not_in_theme!-->Visit www.suitecrm.com
 <img src=include/images/suitecrm_login.png style="margin-right: 5px;">
@@ -390,15 +393,13 @@ below to save your settings and to begin using SuiteCRM. For more information on
     'LBL_WIZARD_FINISH9' => 'Configure the Application ',
     'LBL_WIZARD_FINISH10' => 'Use Studio to create and manage application fields and layouts.',
     'LBL_WIZARD_FINISH11' => 'Visit SuiteCRM Site ',
-    'LBL_WIZARD_FINISH12' => 'Find training materials and classes that will help you get started as a
-    system administrator or end user of the application.',
+    'LBL_WIZARD_FINISH12' => 'Find training materials and classes that will help you get started as a system administrator or end user of the application.',
     'LBL_WIZARD_FINISH14' => 'Documentation ',
     'LBL_WIZARD_FINISH15' => 'Product Guides and Release Notes ',
     'LBL_WIZARD_FINISH16' => 'Knowledge Base ',
     'LBL_WIZARD_FINISH17' => 'Tips from SuiteCRM',
     'LBL_WIZARD_FINISH18' => 'Forums ',
-    'LBL_WIZARD_FINISH19' => 'Forums dedicated to the SuiteCRM Community
-    to discuss topics of interest with each other and with SuiteCRM Developers ',
+    'LBL_WIZARD_FINISH19' => 'Forums dedicated to the SuiteCRM Community to discuss topics of interest with each other and with SuiteCRM Developers ',
     'LBL_WIZARD_FINISH2DESC' => 'Go directly to the application Home page.',
     'LBL_WIZARD_PERSONALINFO' => 'Your Information',
     'LBL_WIZARD_LOCALE' => 'Your Locale',
@@ -418,13 +419,8 @@ below to save your settings and to begin using SuiteCRM. For more information on
     'LBL_DELETED' => 'Deleted',
     'LBL_HIDEOPTIONS' => 'Hide Options',
     'LBL_SHOWOPTIONS' => 'Show Options',
-    'LBL_SUITE_SUPERCHARGED' => "Supercharged by SuiteCRM",
-    'LBL_SUITE_POWERED_BY' => "Powered By SugarCRM",
-    'LBL_SUITE_TOP' => "Back to top",
     'LBL_SUITE_PRINT' => "Print this page",
-    'LBL_SUITE_DESC1' => 'SuiteCRM has been written and assembled by <a href="https://salesagility.com">SalesAgility</a>. The Program is provided AS IS, without warranty. Licensed under AGPLv3.',
-    'LBL_SUITE_DESC2' => 'This program is free software; you can redistribute it and/or modify it under the terms of the GNU Affero General Public License version 3 as published by the Free Software Foundation, including the additional permission set forth in the source code header.',
-    'LBL_SUITE_DESC3' => 'SuiteCRM is a trademark of SalesAgility Ltd. All other company and product names may be trademarks of the respective companies with which they are associated.',
+
     'LBL_QUICK_ACCOUNT' => 'Create Account',
     'LBL_QUICK_CONTACT' => 'Create Contact',
     'LBL_QUICK_OPPORTUNITY' => 'Create Opportunity',
@@ -441,7 +437,7 @@ below to save your settings and to begin using SuiteCRM. For more information on
     'LBL_RE' => 'RE:',
     'LBL_BUTTON_CREATE' => 'Create',
     'LBL_BUTTON_EDIT' => 'Edit',
-    'LBL_QS_DISABLED' => '(QuickSearch is not availible for this module. Please use the select button.)',
+    'LBL_QS_DISABLED' => '(QuickSearch is not available for this module. Please use the select button.)',
     'LBL_ENTER_FOLDER_NAME' => 'Please enter a folder name',
     'LBL_ERROR_SELECT_MODULE' => 'Please select a module for the Related to field',
     'ERR_ARCHIVE_EMAIL' => 'Error: Select emails to archive.',
@@ -685,4 +681,13 @@ below to save your settings and to begin using SuiteCRM. For more information on
     'LBL_FACTOR_AUTH_INTERFACE' => 'Two Factor Authentication Interface:',
     'ERR_USER_FACTOR_SMTP_REQUIRED' => 'SMTP server settings required first.',
     'ERR_USER_FACTOR_CHANGE_DISABLED' => 'Current user is not able to change two factor authentication settings.',
+    'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
+    // for Google Token/Synchronization settings
+    'LBL_GOOGLE_API_SETTINGS' => 'Google Account Synchronization',
+    'LBL_GOOGLE_API_TOKEN' => 'Google API Token',
+    'LBL_GOOGLE_API_TOKEN_HELP' => 'Use this to authorize SuiteCRM to access your Google Calendar. This is required for synchronization. Don\'t forget to check the "Enable Calendar Sync" checkbox when done.',
+    'LBL_GOOGLE_API_TOKEN_BTN' => 'Get Token',
+    'LBL_GSYNC_CAL' => 'Enable Calendar Sync',
+    // END Google Token/Synchronization settings
+
 ); // END STRINGS DEFS

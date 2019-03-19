@@ -25,7 +25,7 @@ class BasicModuleCest
      */
     public function _before(AcceptanceTester $I)
     {
-        if(!$this->fakeData) {
+        if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
             $this->fakeDataSeed = rand(0, 2048);
         }
@@ -37,7 +37,6 @@ class BasicModuleCest
      */
     public function _after(AcceptanceTester $I)
     {
-
     }
 
     // Tests
@@ -53,6 +52,7 @@ class BasicModuleCest
     public function testScenarioCreateBasicModule(
        \AcceptanceTester $I,
        \Step\Acceptance\ModuleBuilder $moduleBuilder,
+       \Step\Acceptance\Repair $repair,
        \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a basic module for testing');
@@ -69,12 +69,13 @@ class BasicModuleCest
             \SuiteCRM\Enumerator\SugarObjectType::basic
         );
 
+        $repair->clickQuickRepairAndRebuild();
         $this->lastView = 'ModuleBuilder';
     }
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
@@ -83,7 +84,7 @@ class BasicModuleCest
      */
     public function testScenarioViewBasicTestModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
@@ -104,7 +105,7 @@ class BasicModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\EditView $editView
      * @param \Helper\WebDriverHelper $webDriverHelper
@@ -114,7 +115,7 @@ class BasicModuleCest
      */
     public function testScenarioCreateRecord(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\EditView $editView,
         \Step\Acceptance\DetailView $detailView,
@@ -123,7 +124,6 @@ class BasicModuleCest
         $I->wantTo('Create Basic Test Module Record');
 
         if ($this->lastView !== 'ListView') {
-
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -140,6 +140,7 @@ class BasicModuleCest
 
         // Create a record
         $this->fakeData->seed($this->fakeDataSeed);
+        $editView->waitForEditViewVisible();
         $editView->fillField('#name', $this->fakeData->name);
         $editView->fillField('#description', $this->fakeData->paragraph);
         $editView->clickSaveButton();
@@ -149,7 +150,7 @@ class BasicModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Helper\WebDriverHelper $webDriverHelper
      * @param \Helper\WebDriverHelper $webDriverHelper
@@ -158,7 +159,7 @@ class BasicModuleCest
      */
     public function testScenarioViewRecordFromListView(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Helper\WebDriverHelper $webDriverHelper
@@ -171,7 +172,7 @@ class BasicModuleCest
 
         $I->loginAsAdmin();
 
-        if($this->lastView !== 'ListView') {
+        if ($this->lastView !== 'ListView') {
             // Go to Basic Test Module
             $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
             $listView->waitForListViewVisible();
@@ -192,7 +193,7 @@ class BasicModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
@@ -202,7 +203,7 @@ class BasicModuleCest
      */
     public function testScenarioEditRecordFromDetailView(
         \AcceptanceTester$I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\EditView $editView,
@@ -212,7 +213,6 @@ class BasicModuleCest
 
 
         if ($this->lastView !== 'DetailView') {
-
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -246,7 +246,7 @@ class BasicModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
@@ -256,7 +256,7 @@ class BasicModuleCest
      */
     public function testScenarioDuplicateRecordFromDetailView(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\EditView $editView,
@@ -265,7 +265,6 @@ class BasicModuleCest
         $I->wantTo('Duplicate Basic Test Module Record from detail view');
 
         if ($this->lastView !== 'DetailView') {
-
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -285,7 +284,6 @@ class BasicModuleCest
             $listView->waitForListViewVisible();
             $this->fakeData->seed($this->fakeDataSeed);
             $listView->clickNameLink($this->fakeData->name);
-
         }
 
         // duplicate Record
@@ -307,7 +305,7 @@ class BasicModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Helper\WebDriverHelper $webDriverHelper
@@ -316,7 +314,7 @@ class BasicModuleCest
      */
     public function testScenarioDeleteRecordFromDetailView(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Helper\WebDriverHelper $webDriverHelper
@@ -324,7 +322,6 @@ class BasicModuleCest
         $I->wantTo('Delete Basic Test Module Record from detail view');
 
         if ($this->lastView !== 'DetailView') {
-
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );

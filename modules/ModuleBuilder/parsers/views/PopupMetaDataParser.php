@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -192,7 +192,7 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
      */
     public function handleSave($populate = true)
     {
-        if (empty ($this->_packageName)) {
+        if (empty($this->_packageName)) {
             foreach (array(MB_CUSTOMMETADATALOCATION, MB_BASEMETADATALOCATION) as $value) {
                 $file = $this->implementation->getFileName(MB_POPUPLIST, $this->_moduleName, null, $value);
                 if (file_exists($file)) {
@@ -204,10 +204,14 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
                 mkdir_recursive(dirname($writeFile));
             }
         } else {
-            $writeFile = $file = $this->implementation->getFileName(MB_POPUPLIST, $this->_moduleName, null,
-                $this->_packageName);
+            $writeFile = $file = $this->implementation->getFileName(
+                MB_POPUPLIST,
+                $this->_moduleName,
+                null,
+                $this->_packageName
+            );
         }
-        $this->implementation->_history->append($file);
+        $this->implementation->getHistory()->append($file);
         if ($populate) {
             $this->_populateFromRequest();
         }
@@ -298,7 +302,6 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
                 }
             }
         }
-
     }
 
     /**
@@ -314,6 +317,4 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
 
         return $dir;
     }
-
 }
-

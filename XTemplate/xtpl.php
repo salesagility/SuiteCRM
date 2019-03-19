@@ -318,9 +318,12 @@ function var_exists($bname,$vname){
 function rparse($bname) {
 	if (!empty($this->sub_blocks[$bname])) {
 		reset($this->sub_blocks[$bname]);
-		while (list($k,$v)=each($this->sub_blocks[$bname]))
-			if (!empty($v))
-				$this->rparse($v,$indent."\t");
+		foreach($this->sub_blocks[$bname] as $k => $v) {
+            if (!empty($v)) {
+                $this->rparse($v, $indent . "\t");
+            }
+		}
+
 	}
 	$this->parse($bname);
 }
@@ -436,8 +439,10 @@ function clear_autoreset() {
 
 function scan_globals() {
 	reset($GLOBALS);
-	while (list($k,$v)=each($GLOBALS))
-		$GLOB[$k]=$v;
+	foreach ($GLOBALS as $k => $v) {
+        $GLOB[$k] = $v;
+	}
+
 	$this->assign("PHP",$GLOB);	/* access global variables as {PHP.HTTP_HOST} in your template! */
 }
 
@@ -467,7 +472,7 @@ function maketree($con,$block) {
 	$block_names=array();
 	$blocks=array();
 	reset($con2);
-	while(list($k,$v)=each($con2)) {
+	foreach ($con2 as $k => $v) {
 		$patt="($this->block_start_word|$this->block_end_word)\s*(\w+)\s*$this->block_end_delim(.*)";
 		if (preg_match_all("/$patt/ims",$v,$res, PREG_SET_ORDER)) {
 			// $res[0][1] = BEGIN or END

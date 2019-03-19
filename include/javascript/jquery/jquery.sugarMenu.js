@@ -155,13 +155,15 @@
 
           //if the dropdown handle doesn't exist, lets create it and
           //add it to the dom
-          if (parent.find("span").length == 0) {
+          var foundSpanCount = parent.find("span.suitepicon-action-caret").length;
+          if (foundSpanCount === 0) {
 
             //create dropdown handle
             dropDownHandle = $(document.createElement("span"));
+            dropDownHandle.addClass('suitepicon suitepicon-action-caret');
             parent.append(dropDownHandle);
 
-          } else if (parent.find("span").length == 1) {
+          } else if (foundSpanCount === 1) {
             dropDownHandle = $(parent.find("span"));
           } else {
             dropDownHandle = $(parent.find("span").first());

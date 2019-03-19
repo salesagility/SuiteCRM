@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
  //Request object must have these property values:
  //		Module: module name, this module should have a file called TreeData.php
@@ -57,41 +60,41 @@ $current_language = $GLOBALS['current_language'];
 //module  name and function name parameters are the only ones consumed
 //by this file..
 foreach ($_REQUEST as $key=>$value) {
-
-	switch ($key) {
-	
-		case "function":
-		case "call_back_function":
-			$func_name=$value;
-			$params1['TREE']['function']=$value;
-			break;
-			
-		default:
-			$pssplit=explode('_',$key);
-			if ($pssplit[0] =='PARAMT') {
-				unset($pssplit[0]);
-				$params1['TREE'][implode('_',$pssplit)]=$value;				
-			} else {
-				if ($pssplit[0] =='PARAMN') {
-					$depth=$pssplit[count($pssplit)-1];
-					//parmeter is surrounded  by PARAMN_ and depth info.
-					unset($pssplit[count($pssplit)-1]);unset($pssplit[0]);	
-					$params1['NODES'][$depth][implode('_',$pssplit)]=$value;
-				} else {
-					if ($key=='module') {
-						if (!isset($params1['TREE']['module'])) {
-							$params1['TREE'][$key]=$value;	
-						}
-					} else { 	
-						$params1['REQUEST'][$key]=$value;
-					}					
-				}
-			}
-	}	
-}	
+    switch ($key) {
+    
+        case "function":
+        case "call_back_function":
+            $func_name=$value;
+            $params1['TREE']['function']=$value;
+            break;
+            
+        default:
+            $pssplit=explode('_', $key);
+            if ($pssplit[0] =='PARAMT') {
+                unset($pssplit[0]);
+                $params1['TREE'][implode('_', $pssplit)]=$value;
+            } else {
+                if ($pssplit[0] =='PARAMN') {
+                    $depth=$pssplit[count($pssplit)-1];
+                    //parmeter is surrounded  by PARAMN_ and depth info.
+                    unset($pssplit[count($pssplit)-1]);
+                    unset($pssplit[0]);
+                    $params1['NODES'][$depth][implode('_', $pssplit)]=$value;
+                } else {
+                    if ($key=='module') {
+                        if (!isset($params1['TREE']['module'])) {
+                            $params1['TREE'][$key]=$value;
+                        }
+                    } else {
+                        $params1['REQUEST'][$key]=$value;
+                    }
+                }
+            }
+    }
+}
 $modulename=$params1['TREE']['module']; ///module is a required parameter for the tree.
 require('include/modules.php');
-if (!empty($modulename) && !empty($func_name) && isset($beanList[$modulename]) ) {
+if (!empty($modulename) && !empty($func_name) && isset($beanList[$modulename])) {
     require_once('modules/'.$modulename.'/TreeData.php');
     $TreeDataFunctions = array(
         'ProductTemplates' => array('get_node_data'=>'','get_categories_and_products'=>''),
@@ -137,13 +140,11 @@ if (!empty($modulename) && !empty($func_name) && isset($beanList[$modulename]) )
             ),
         );
         
-	if (isset($TreeDataFunctions[$modulename][$func_name])) {
-		$ret=call_user_func($func_name,$params1);
+    if (isset($TreeDataFunctions[$modulename][$func_name])) {
+        $ret=call_user_func($func_name, $params1);
     }
 }
 
 if (!empty($ret)) {
-	echo $ret;
+    echo $ret;
 }
-
-?>

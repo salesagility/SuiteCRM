@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -43,14 +43,15 @@ namespace SuiteCRM\API\v8\Library;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use League\Url\Components\Query;
+use League\Uri\Components\Query;
 use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\FilterInterpreter;
 use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\SuiteInterpreter;
 use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\JsonApi\v1\Repositories\FilterRepository;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
-use SuiteCRM\API\v8\Exception\BadRequest;
-use SuiteCRM\API\v8\Exception\ModuleNotFound;
+use SuiteCRM\API\v8\Exception\BadRequestException;
+use SuiteCRM\API\v8\Exception\ModuleNotFoundException;
+use SuiteCRM\API\v8\Exception\NotAllowedException;
 
 /**
  * Class ModulesLib
@@ -78,10 +79,16 @@ class ModulesLib
      * @param Response $res
      * @param array $args
      * @return array list => SugarBean[], current_offset => 0, row_count => 0
-     * @throws ModuleNotFound
-     * @throws \InvalidArgumentException
+     * @throws BadRequestException
+     * @throws ModuleNotFoundException
+     * @throws NotAllowed
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \SuiteCRM\API\JsonApi\v1\Filters\Interpreters\InvalidArgumentException
+     * @throws \SuiteCRM\API\v8\Exception\ApiException
+     * @throws \SuiteCRM\Exception\Exception
      */
-    public function generatePaginatedModuleRecords(Request $req, Response $res, $args)
+    public function generatePaginatedModuleRecords(Request $req, Response $res, array $args = array())
     {
         /** @var array $response */
         $response = array();
@@ -90,10 +97,14 @@ class ModulesLib
         $module = \BeanFactory::newBean($args['module']);
 
         if ($module === false) {
-            throw new ModuleNotFound('"' . $args['module'] . '"');
+            throw new ModuleNotFoundException('"' . $args['module'] . '"');
         }
 
-        $moduleList = $this->getModuleList($req, $module);
+        if (!$module->ACLAccess('list')) {
+            throw new NotAllowed();
+        }
+
+        $moduleList = $this->getModuleList($req, $module, $args);
 
         $fields = array('fields' => array());
         $selectFields = $req->getParam('fields');
@@ -120,8 +131,8 @@ class ModulesLib
             // Add links object to $bean
             $bean['links'] =
                 Links::get()
-                ->withSelf($config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $moduleBean->id)
-                ->toJsonApiResponse();
+                    ->withSelf($config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $moduleBean->id)
+                    ->toJsonApiResponse();
 
             // Append bean to resource object in the response
             $response['list'][] = $bean;
@@ -133,12 +144,14 @@ class ModulesLib
     }
 
     /**
+     * @see ModulesLib::generatePaginatedLinksFromModuleRecords
      * @param Request $req
      * @param Response $res
      * @param array $args
      * @param array $paginatedModuleRecords return value from ModulesLib::generatePaginatedLinksFromModuleRecords
-     * @see ModulesLib::generatePaginatedLinksFromModuleRecords
      * @return Links
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function generatePaginatedLinksFromModuleRecords(Request $req, Response $res, $args, $paginatedModuleRecords)
     {
@@ -217,8 +230,11 @@ class ModulesLib
 
     /**
      * Handle sorting in the request
+     *
      * @param Request $req
      * @return string
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     protected function getSorting(Request $req)
     {
@@ -227,7 +243,6 @@ class ModulesLib
         if (!empty($req->getParam('sort'))) {
             $sortField = explode(',', $req->getParam('sort'));
             foreach ($sortField as $sortKey => $sortValue) {
-
                 if ($sortValue[0] === '-') {
                     $sortField[$sortKey] = $db->quote(substr($sortValue, 1)) . ' DESC';
                 } else {
@@ -247,11 +262,15 @@ class ModulesLib
     /**
      * @param Request $req
      * @param \SugarBean $module
+     * @param array $args route arguments
      * @return array
+     * @throws BadRequestException
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \SuiteCRM\API\JsonApi\v1\Filters\Interpreters\InvalidArgumentException
      * @throws \SuiteCRM\Exception\Exception
-     * @throws \SuiteCRM\API\v8\Exception\BadRequest
      */
-    protected function getModuleList(Request $req, \SugarBean $module)
+    protected function getModuleList(Request $req, \SugarBean $module, array $args = array())
     {
         /** @var array $page */
         $page = $req->getParam('page');
@@ -277,14 +296,14 @@ class ModulesLib
         // Filtering (where clause in SQL)
         /** @var FilterRepository $filterRepository */
         $filterRepository = $this->containers->get('FilterRepository');
-        $filterStructure = $filterRepository->fromRequest($req);
+        $filterStructure = $filterRepository->fromRequest($req, $args);
         /** @var FilterInterpreter $filterInterpreter */
         $filterInterpreter = $this->containers->get('FilterInterpreter');
         if (empty($filterStructure)) {
             // Do not perform a filter
             $where = '';
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
-        } elseif($filterInterpreter->isFilterByPreMadeName($filterStructure)) {
+        } elseif ($filterInterpreter->isFilterByPreMadeName($filterStructure)) {
             $where = $filterInterpreter->getFilterByPreMadeName($filterStructure);
             /** @var array $moduleList */
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
@@ -293,12 +312,12 @@ class ModulesLib
             /** @var array $moduleList */
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
         } elseif ($filterInterpreter->isFilterByAttributes($filterStructure)) {
-            $where = $filterInterpreter->getFilterByAttributes($filterStructure);
+            $where = $filterInterpreter->getFilterByAttributes($filterStructure, $args);
 
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
         }
 
-        throw new BadRequest('[ModulesLib][getModuleList][Unknown filter strategy]');
+        throw new BadRequestException('[ModulesLib][getModuleList][Unknown filter strategy]');
     }
 
     /**
@@ -309,6 +328,8 @@ class ModulesLib
      * @param null|array $sort
      * @param null|array $fields eg array ('fields' => 'Accounts' => array('name', 'description'))
      * @return string
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     private function generatePaginationUrl(
         Request $req,
@@ -332,11 +353,11 @@ class ModulesLib
 
 
         if ($filter !== null) {
-            $query->modify(array('filter' => $filter));
+            $query->withContent(array('filter' => $filter));
         }
 
         if ($sort !== null) {
-            $query->modify(array('sort' => implode(',', $sort)));
+            $query->withContent(array('sort' => implode(',', $sort)));
         }
 
 
@@ -345,11 +366,11 @@ class ModulesLib
             foreach ($fields as $module => $moduleFields) {
                 $queryFields['fields'][$module] = $fields[$module];
             }
-            $query->modify($queryFields);
+            $query->withContent($queryFields);
         }
 
-        $query->modify($pagination);
-        $queryString = $query->get();
+        $query->withContent($pagination);
+        $queryString = $query->__toString();
         if ($queryString !== null) {
             return $config['site_url'] . '/api/' . $req->getUri()->getPath() . '?' . $queryString;
         }

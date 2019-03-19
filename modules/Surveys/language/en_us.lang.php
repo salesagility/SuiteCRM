@@ -1,9 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $mod_strings = array(
     'LBL_ASSIGNED_TO_ID'                                     => 'Assigned User Id',
@@ -77,7 +79,6 @@ $mod_strings = array(
     'LBL_VIEW_SURVEY_REPORTS'                                => 'View Survey Reports',
     'LBL_CHECKED'                                            => 'Checked',
     'LBL_UNCHECKED'                                          => 'Unchecked',
-    'LBL_SHOW_ALL_RESPONSES'                                 => 'Show all responses',
     'LBL_RESPONSE_ANSWER'                                    => 'Answer',
     'LBL_RESPONSE_CONTACT'                                   => 'Contact',
     'LBL_RESPONSE_TIME'                                      => 'Date',
@@ -89,4 +90,5 @@ $mod_strings = array(
     'LBL_DISSATISFIED_TEXT'                                  => 'Dissatisfied Text',
     'LBL_SURVEYS_SURVEYQUESTIONS_FROM_SURVEYQUESTIONS_TITLE' => 'Survey Questions',
     'LBL_SURVEYS_SURVEYRESPONSES_FROM_SURVEYRESPONSES_TITLE' => 'Survey Responses',
+    'LBL_SHOW_RESPONSES' => 'Show responses',
 );

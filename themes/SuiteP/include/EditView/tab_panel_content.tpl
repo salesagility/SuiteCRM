@@ -32,6 +32,7 @@
                         {{/if}}
 
                                 {*label*}
+                                {minify}
                                 {{if isset($colData.field.customLabel)}}
                                 <label for="{{$fields[$colData.field.name].name}}">{{$colData.field.customLabel}}</label>
                                 {{elseif isset($colData.field.label)}}
@@ -59,6 +60,7 @@
                                     {{/if}}
                                     {sugar_help text=$popupText WIDTH=-1}
                                 {{/if}}
+                                {/minify}
                             </div>
                         {{/if}}
 

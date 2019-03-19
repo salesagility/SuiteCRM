@@ -51,15 +51,11 @@
 <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.radar.js'></script>
 <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.hbar.js'></script>
 <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.rose.js'></script>
+<script type='text/javascript' src='modules/Surveys/javascript/Survey.js'></script>
 <script>
     {literal}
     $(document).ready(function () {
-      $(".showAllResponsesButton").click(function (e) {
-        var target = $(e.target);
-        var id = target.data('question-id');
-        $('#' + id + 'List').show();
-        return false;
-      });
+        Survey.showHide($('.showHideResponses'));
     });
     {/literal}
 </script>

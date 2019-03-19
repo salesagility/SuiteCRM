@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -237,12 +237,12 @@ class ParserLabel
 
         //$charset = (isset($app_strings['LBL_CHARSET'])) ? $app_strings['LBL_CHARSET'] : $GLOBALS['sugar_config']['default_charset'] ;
 
-            foreach ($labels as $key => $value) {
-                if (!isset($mod_strings [ $key ]) || strcmp($value, $mod_strings [ $key ]) != 0) {
-                    $mod_strings [$key] = to_html(strip_tags(from_html($value))); // must match encoding used in view.labels.php
-                    $changed = true;
-                }
+        foreach ($labels as $key => $value) {
+            if (!isset($mod_strings [ $key ]) || strcmp($value, $mod_strings [ $key ]) != 0) {
+                $mod_strings [$key] = to_html(strip_tags(from_html($value))); // must match encoding used in view.labels.php
+                $changed = true;
             }
+        }
 
         if ($changed) {
             $GLOBALS [ 'log' ]->debug("ParserLabel::addLabels: writing new mod_strings to $filename");

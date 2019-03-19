@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,17 +37,19 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
 
-class DashletsDialog {
-	var $dashlets = array();
+class DashletsDialog
+{
+    public $dashlets = array();
 
-    function getDashlets($category='') {
+    public function getDashlets($category='')
+    {
         global $app_strings, $current_language, $mod_strings;
 
         require_once($GLOBALS['sugar_config']['cache_dir'].'dashlets/dashlets.php');
@@ -59,10 +64,9 @@ class DashletsDialog {
         $dashletStrings = array();
         $dashletsList = array();
 
-        if (!empty($category)){
+        if (!empty($category)) {
             $dashletsList[$categories[$category]] = array();
-        }
-        else{
+        } else {
             $dashletsList['Module Views'] = array();
             $dashletsList['Charts'] = array();
             $dashletsList['Tools'] = array();
@@ -71,27 +75,30 @@ class DashletsDialog {
 
         asort($dashletsFiles);
 
-        foreach($dashletsFiles as $className => $files) {
-            if(!empty($files['meta']) && is_file($files['meta'])) {
+        foreach ($dashletsFiles as $className => $files) {
+            if (!empty($files['meta']) && is_file($files['meta'])) {
                 require_once($files['meta']); // get meta file
 
                 $directory = substr($files['meta'], 0, strrpos($files['meta'], '/') + 1);
-                if(is_file($directory . $files['class'] . '.' . $current_language . '.lang.php'))
+                if (is_file($directory . $files['class'] . '.' . $current_language . '.lang.php')) {
                     require_once($directory . $files['class'] . '.' . $current_language . '.lang.php');
-                elseif(is_file($directory . $files['class'] . '.en_us.lang.php'))
+                } elseif (is_file($directory . $files['class'] . '.en_us.lang.php')) {
                     require_once($directory . $files['class'] . '.en_us.lang.php');
+                }
 
                 // try to translate the string
-                if(empty($dashletStrings[$files['class']][$dashletMeta[$files['class']]['title']]))
+                if (empty($dashletStrings[$files['class']][$dashletMeta[$files['class']]['title']])) {
                     $title = $dashletMeta[$files['class']]['title'];
-                else
+                } else {
                     $title = $dashletStrings[$files['class']][$dashletMeta[$files['class']]['title']];
+                }
 
                 // try to translate the string
-                if(empty($dashletStrings[$files['class']][$dashletMeta[$files['class']]['description']]))
+                if (empty($dashletStrings[$files['class']][$dashletMeta[$files['class']]['description']])) {
                     $description = $dashletMeta[$files['class']]['description'];
-                else
+                } else {
                     $description = $dashletStrings[$files['class']][$dashletMeta[$files['class']]['description']];
+                }
 
                 // generate icon
                 if (!empty($dashletMeta[$files['class']]['icon'])) {
@@ -100,98 +107,89 @@ class DashletsDialog {
                     // in this case, we'll strip off the path information to check for the image existing
                     // in the current theme.
 
-                    $imageName = SugarThemeRegistry::current()->getImageURL(basename($dashletMeta[$files['class']]['icon']), false);
-                    if ( !empty($imageName) ) {
-                        if (is_file($imageName))
-                            $icon = '<img src="' . $imageName .'" alt="" border="0" align="absmiddle" />';  //leaving alt tag blank on purpose for 508
-                        else
-                            $icon = '';
+                    $imageName = $files['class'];
+                    if (!empty($imageName)) {
+                        $icon = $imageName;
                     }
-                }
-                else{
-                    if (empty($dashletMeta[$files['class']]['module'])){
+                } else {
+                    if (empty($dashletMeta[$files['class']]['module'])) {
                         $icon = get_dashlets_dialog_icon('default');
-                    }
-                    else{
-                        if((!in_array($dashletMeta[$files['class']]['module'], $GLOBALS['moduleList']) && !in_array($dashletMeta[$files['class']]['module'], $GLOBALS['modInvisList'])) && (!in_array('Activities', $GLOBALS['moduleList']))){
+                    } else {
+                        if ((!in_array($dashletMeta[$files['class']]['module'], $GLOBALS['moduleList']) && !in_array($dashletMeta[$files['class']]['module'], $GLOBALS['modInvisList'])) && (!in_array('Activities', $GLOBALS['moduleList']))) {
                             unset($dashletMeta[$files['class']]);
                             continue;
-                        }else{
+                        } else {
                             $icon = get_dashlets_dialog_icon($dashletMeta[$files['class']]['module']);
                         }
                     }
                 }
 
                 // determine whether to display
-                if (!empty($dashletMeta[$files['class']]['hidden']) && $dashletMeta[$files['class']]['hidden'] === true){
+                if (!empty($dashletMeta[$files['class']]['hidden']) && $dashletMeta[$files['class']]['hidden'] === true) {
                     $displayDashlet = false;
                 }
                 //co: fixes 20398 to respect ACL permissions
-                elseif(!empty($dashletMeta[$files['class']]['module']) && (!in_array($dashletMeta[$files['class']]['module'], $GLOBALS['moduleList']) && !in_array($dashletMeta[$files['class']]['module'], $GLOBALS['modInvisList'])) && (!in_array('Activities', $GLOBALS['moduleList']))){
+                elseif (!empty($dashletMeta[$files['class']]['module']) && (!in_array($dashletMeta[$files['class']]['module'], $GLOBALS['moduleList']) && !in_array($dashletMeta[$files['class']]['module'], $GLOBALS['modInvisList'])) && (!in_array('Activities', $GLOBALS['moduleList']))) {
                     $displayDashlet = false;
-                }
-                else{
+                } else {
                     $displayDashlet = true;
                     //check ACL ACCESS
-                    if(!empty($dashletMeta[$files['class']]['module']) && ACLController::moduleSupportsACL($dashletMeta[$files['class']]['module'])){
+                    if (!empty($dashletMeta[$files['class']]['module']) && ACLController::moduleSupportsACL($dashletMeta[$files['class']]['module'])) {
                         $type = 'module';
-                        if($dashletMeta[$files['class']]['module'] == 'Trackers')
+                        if ($dashletMeta[$files['class']]['module'] == 'Trackers') {
                             $type = 'Tracker';
-                        if(!ACLController::checkAccess($dashletMeta[$files['class']]['module'], 'view', true, $type)){
+                        }
+                        if (!ACLController::checkAccess($dashletMeta[$files['class']]['module'], 'view', true, $type)) {
                             $displayDashlet = false;
                         }
-                        if(!ACLController::checkAccess($dashletMeta[$files['class']]['module'], 'list', true, $type)){
+                        if (!ACLController::checkAccess($dashletMeta[$files['class']]['module'], 'list', true, $type)) {
                             $displayDashlet = false;
                         }
                     }
                 }
 
-                if ($dashletMeta[$files['class']]['category'] == 'Charts'){
+                if ($dashletMeta[$files['class']]['category'] == 'Charts') {
                     $type = 'predefined_chart';
-                }
-                else{
+                } else {
                     $type = 'module';
                 }
 
-                if ($displayDashlet && isset($dashletMeta[$files['class']]['dynamic_hide']) && $dashletMeta[$files['class']]['dynamic_hide']){
-                    if ( file_exists($files['file']) ) {
+                if ($displayDashlet && isset($dashletMeta[$files['class']]['dynamic_hide']) && $dashletMeta[$files['class']]['dynamic_hide']) {
+                    if (file_exists($files['file'])) {
                         require_once($files['file']);
-                        if ( class_exists($files['class']) ) {
+                        if (class_exists($files['class'])) {
                             $dashletClassName = $files['class'];
                             $displayDashlet = call_user_func(array($files['class'],'shouldDisplay'));
                         }
                     }
                 }
 
-                if ($displayDashlet){
+                if ($displayDashlet) {
                     $cell = array( 'title' => $title,
                         'description' => $description,
-                        'onclick' => 'return SUGAR.mySugar.addDashlet(\'' . $className . '\', \'' . $type . '\', \''.(!empty($dashletMeta[$files['class']]['module']) ? $dashletMeta[$files['class']]['module'] : '' ) .'\');',
+                        'onclick' => 'return SUGAR.mySugar.addDashlet(\'' . $className . '\', \'' . $type . '\', \''.(!empty($dashletMeta[$files['class']]['module']) ? $dashletMeta[$files['class']]['module'] : '') .'\');',
                         'icon' => $icon,
                         'id' => $files['class'] . '_select',
-                        'module_name'=> $dashletsFiles[$className]['module']
+                        'module_name'=> array_key_exists('module', $dashletsFiles[$className]) ? $dashletsFiles[$className]['module']:""
                     );
 
-                    if (!empty($category) && $dashletMeta[$files['class']]['category'] == $categories[$category]){
+                    if (!empty($category) && $dashletMeta[$files['class']]['category'] == $categories[$category]) {
                         array_push($dashletsList[$categories[$category]], $cell);
-                    }
-                    else if (empty($category)){
-                        array_push($dashletsList[$dashletMeta[$files['class']]['category']], $cell);
+                    } else {
+                        if (empty($category)) {
+                            array_push($dashletsList[$dashletMeta[$files['class']]['category']], $cell);
+                        }
                     }
                 }
             }
         }
-        if (!empty($category)){
+        if (!empty($category)) {
             asort($dashletsList[$categories[$category]]);
-        }
-        else{
-            foreach($dashletsList as $key=>$value){
+        } else {
+            foreach ($dashletsList as $key=>$value) {
                 asort($dashletsList[$key]);
             }
         }
         $this->dashlets = $dashletsList;
     }
-
 }
-
-?>

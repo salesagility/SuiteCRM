@@ -1,5 +1,6 @@
-setModuleFieldsPendingFinishedCallback(function(){
+function setModuleFieldsPendingFinishedCallback() {
   var parenthesisBtnHtml;
+
   $( "#aor_conditions_body, #aor_condition_parenthesis_btn" ).sortable({
     handle: '.condition-sortable-handle',
     placeholder: "ui-state-highlight",
@@ -27,14 +28,14 @@ setModuleFieldsPendingFinishedCallback(function(){
   ConditionOrderHandler.setConditionOrders();
   ParenthesisHandler.addParenthesisLineIdent();
   FieldLineHandler.makeGroupDisplaySelectOptions();
-});
+}
 
 $(function(){
 
   $('#EditView_tabs .clear').remove();
 
   $( '#aor_condition_parenthesis_btn' ).bind( "sortstart", function (event, ui) {
-    ui.helper.css('margin-top', $(window).scrollTop() );
+    ui.helper.css('margin-top', 0 );
   });
   $( '#aor_condition_parenthesis_btn' ).bind( "sortbeforestop", function (event, ui) {
     ui.helper.css('margin-top', 0 );

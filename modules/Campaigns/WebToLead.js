@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- 
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 var grid2,grid3,grid4,grid3F,grid4F;var add_all_fields=SUGAR.language.get('app_strings','LBL_ADD_ALL_LEAD_FIELDS');var remove_all_fields=SUGAR.language.get('app_strings','LBL_REMOVE_ALL_LEAD_FIELDS');function addGrids(form_name){if(!check_form('WebToLeadCreation')){return false;}
 else{grid3=SUGAR_GRID_grid1;grid4=SUGAR_GRID_grid2;var webFormDiv=document.getElementById('webformfields');addCols(grid3,'colsFirst',webFormDiv);addCols(grid4,'colsSecond',webFormDiv);return true;}}
 function checkFields(REQUIRED_LEAD_FIELDS,LEAD_SELECT_FIELDS){grid2=SUGAR_GRID_grid0;grid3=SUGAR_GRID_grid1;grid4=SUGAR_GRID_grid2;var reqFields='';for(var i=0;i<grid2.getRecordSet().getLength();i++){if(grid2.getRecord(i).getData()[2]!=null){reqFields=reqFields+grid2.getRecord(i).getData()[0]+', ';}}

@@ -1,0 +1,57 @@
+version: 2
+
+# Group settings to apply to all groups by default, optionally being overridden later
+group_defaults:
+  approve_by_comment:
+    enabled: false
+  reset_on_push:
+    enabled: true
+
+groups:
+  code-review:
+    required: 1
+
+    users: all
+
+    github_reviews:
+      enabled: true
+
+    reset_on_reopened:
+      enabled: true
+
+    author_approval:
+      ignored: true
+
+  assessers:
+    required: 1
+
+    teams: 
+      - suitecrm-core
+      - owner
+
+    approve_by_comment:
+      enabled: true
+      approve_regex: '^Assessed'
+
+    github_reviews:
+      enabled: false
+
+    author_approval:
+      ignored: true
+
+  owners:
+    conditions:
+      labels:
+        - enhancement
+
+    required: 1
+
+    teams:
+      - owner
+
+    approve_by_comment:
+      enabled: true
+      approve_regex: '^Approved'
+
+    github_reviews:
+      enabled: false

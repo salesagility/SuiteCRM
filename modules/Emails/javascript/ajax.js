@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -342,7 +342,37 @@ var AjaxObject = {
 
   ieSendSuccess: function (o) {
     SUGAR.hideMessageBox();
-    SUGAR.showMessageBox(app_strings.LBL_EMAIL_TEST_OUTBOUND_SETTINGS_SENT, app_strings.LBL_EMAIL_TEST_NOTIFICATION_SENT, 'plain');
+        var responseObject = YAHOO.lang.JSON.parse(o.responseText);
+        if (responseObject.status) {
+           SUGAR.showMessageBox(app_strings.LBL_EMAIL_TEST_OUTBOUND_SETTINGS_SENT, app_strings.LBL_EMAIL_TEST_NOTIFICATION_SENT, 'plain');
+        } else {
+
+            var dialogBody =
+                "<div style='padding: 10px'>" +
+                    "<div class='well'>" + responseObject.errorMessage + "</div>" +
+                    "<div >" +
+                       "<button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#fullSmtpLog' aria-expanded='false' aria-controls='fullSmtpLog'>" +
+                            app_strings.LBL_EMAIL_TEST_SEE_FULL_SMTP_LOG +
+                        "</button>" +
+                        "<div class='collapse' id='fullSmtpLog'>" +
+                            "<pre style='height: 300px; overflow: scroll;'>" +
+                               responseObject.fullSmtpLog +
+                            "</pre>" +
+                        "</div>" +
+                    "</div>"+
+                "</div>";
+                this.showFullSmtpLogDialog(app_strings.LBL_EMAIL_TEST_OUTBOUND_SETTINGS, dialogBody, 'plain');
+        }
+        },
+        showFullSmtpLogDialog: function(headerText, bodyHtml, dialogType) {
+
+                var config = { };
+                config.type = dialogType;
+                config.title = headerText;
+                config.msg = bodyHtml;
+                //config.modal = false;
+                config.width = 600;
+                YAHOO.SUGAR.MessageBox.show(config);
   },
 
   /**
@@ -461,6 +491,8 @@ AjaxObject.accounts = {
       // fill values
       document.getElementById("mail_id").value = ret.id;
       document.getElementById("type").value = ret.type;
+      document.getElementById("smtp_from_name").value = ret.smtp_from_name;
+      document.getElementById("smtp_from_addr").value = ret.smtp_from_addr;
       document.getElementById("mail_sendtype").value = ret.mail_sendtype;
       document.getElementById("mail_name").value = ret.name;
       document.getElementById("mail_smtpserver").value = ret.mail_smtpserver;
@@ -843,35 +875,35 @@ AjaxObject.detailView = {
     var SED = SUGAR.email2.detailView;
     var ret = YAHOO.lang.JSON.parse(o.responseText);
 
-    if (!SED.quickCreateDialog) {
-      SED.quickCreateDialog = new YAHOO.widget.Dialog("emailDetailDialog", {
-        modal: true,
-        visible: true,
-        //fixedcenter:true,
-        constraintoviewport: true,
-        draggable: true,
-        autofillheight: "body",
-        shadow: true
-      });
-      SED.quickCreateDialog.renderEvent.subscribe(function () {
-        var viewHeight = YAHOO.util.Dom.getViewportHeight();
-        var contH = 0;
-        for (var i in this.body.childNodes) {
-          if (this.body.childNodes[i].offsetHeight)
-            contH += this.body.childNodes[i].offsetHeight;
-        }
-        this.body.style.overflow = "auto";
-        this.body.style.width = "800px";
-        this.body.style.height = (viewHeight - 75 > contH ? (contH + 10) : (viewHeight - 75)) + "px";
-        this.center();
-      }, SED.quickCreateDialog);
-    }
-    SED.quickCreateDialog.setHeader(app_strings.LBL_EMAIL_RECORD);
-    SED.quickCreateDialog.setBody(ret.html);
-    SED.quickCreateDialog.render();
-    SUGAR.util.evalScript(ret.html);
-    SED.quickCreateDialog.show();
-  },
+		if(!SED.quickCreateDialog) {
+			SED.quickCreateDialog = new YAHOO.widget.Dialog("emailDetailDialog", {
+				modal:true,
+				visible:true,
+            	//fixedcenter:true,
+            	constraintoviewport: true,
+            	draggable: true,
+				autofillheight: "body",
+				shadow	: true
+			});
+			SED.quickCreateDialog.renderEvent.subscribe(function() {
+            	var viewHeight = YAHOO.util.Dom.getViewportHeight();
+            	var contH = document.body["scrollHeight"];
+            	for (var i in this.body.childNodes) {
+            		if (this.body.childNodes[i].offsetHeight)
+            			contH += this.body.childNodes[i].offsetHeight;
+            	}
+        		this.body.style.overflow = "auto";
+        		this.body.style.width = "800px";
+        		this.body.style.height = (viewHeight - 75 > contH ? (contH + 10) : (viewHeight - 75)) + "px";
+        		this.center();
+            }, SED.quickCreateDialog);
+		}
+		SED.quickCreateDialog.setHeader(app_strings.LBL_EMAIL_RECORD);
+		SED.quickCreateDialog.setBody(ret.html);
+		SED.quickCreateDialog.render();
+        SUGAR.util.evalScript(ret.html);
+        SED.quickCreateDialog.show();
+	},
 
   showAssignmentDialogWithData: function (o) {
     var SEC = SUGAR.email2.contextMenus;
@@ -918,7 +950,7 @@ AjaxObject.detailView = {
         fixedcenter: true,
         constraintoviewport: true,
         buttons: [{
-          text: app_strings.LBL_EMAIL_ARCHIVE_TO_SUGAR, isDefault: true, handler: function () {
+          text: app_strings.LBL_EMAIL_ARCHIVE_TO_SUITE, isDefault: true, handler: function () {
             AjaxObject.detailView.getImportAction(SED.importDialog.ret);
           }
         }]//,

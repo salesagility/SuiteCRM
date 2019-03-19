@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -61,7 +61,7 @@
               document.getElementById('detailpanel_parameters').className += ' expanded';
             </script>
         </h4>
-        <div id="conditionLines" class="panelContainer" style="min-height: 50px;">
+        <div id="aor_conditionLines" class="panelContainer" style="min-height: 50px;">
         </div>
         <input id='updateParametersButton' class="panelContainer" type="button"
                value="{sugar_translate label='LBL_UPDATE_PARAMETERS' module='AOR_Reports'}"/>
@@ -81,26 +81,10 @@
                   $elem = $(elem);
                   var ln = $elem.attr('id').substr(17);
                   var id = $elem.val();
-                  _form.append('<input type="hidden" name="parameter_id[]" value="' + id + '">');
-                  var operator = $("#aor_conditions_operator\\[" + ln + "\\]").val();
-                  _form.append('<input type="hidden" name="parameter_operator[]" value="' + operator + '">');
-                  var fieldType = $('#aor_conditions_value_type\\[' + ln + '\\]').val();
-                  _form.append('<input type="hidden" name="parameter_type[]" value="' + fieldType + '">');
-                  var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
-                  _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldInput + '">');
-
+                  appendHiddenFields(_form, ln, id);
+                  updateTimeDateFields(fieldInput, ln);
                   // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
-                  if ($('#aor_conditions_value\\[' + ln + '\\]\\[0\\]').length) {
-                    var fieldValue = $('#aor_conditions_value\\[' + ln + '\\]\\[0\\]').val();
-                    var fieldSign = $('#aor_conditions_value\\[' + ln + '\\]\\[1\\]').val();
-                    var fieldNumber = $('#aor_conditions_value\\[' + ln + '\\]\\[2\\]').val();
-                    var fieldTime = $('#aor_conditions_value\\[' + ln + '\\]\\[3\\]').val();
-                    _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldValue + '">');
-                    _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldSign + '">');
-                    _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldNumber + '">');
-                    _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldTime + '">');
-                  }
-
+                  updateHiddenReportFields(ln, _form);
                 });
                 _form.submit();
               });
@@ -111,40 +95,22 @@
     </form>
 </div>
 
-<div id='detailpanel_report' class='detail view  detail508 expanded'>
-    {counter name="panelFieldCount" start=0 print=false assign="panelFieldCount"}
-    <h4>
-        <a href="javascript:void(0)" class="collapseLink" onclick="collapsePanel('report');">
-            <img border="0" id="detailpanel_report_img_hide" src="{sugar_getimagepath file="basic_search.gif"}"></a>
-        <a href="javascript:void(0)" class="expandLink" onclick="expandPanel('report');">
-            <img border="0" id="detailpanel_report_img_show" src="{sugar_getimagepath file="advanced_search.gif"}"></a>
-        {sugar_translate label='LBL_REPORT' module='AOR_Reports'}
-        <script>
-          document.getElementById('detailpanel_report').className += ' expanded';
-        </script>
-    </h4>
-    <table id='FIELDS' class="panelContainer" cellspacing='{$gridline}'>
-        {counter name="fieldsUsed" start=0 print=false assign="fieldsUsed"}
-        {counter name="fieldsHidden" start=0 print=false assign="fieldsHidden"}
-        {capture name="tr" assign="tableRow"}
-            <tr>
-                {counter name="fieldsUsed"}
-                <td width='37.5%' colspan='4'>
-                    {if !$fields.field_lines.hidden}
-                        {counter name="panelFieldCount"}
-                        <span id='field_lines_span'>
-{$fields.field_lines.value}
-                            {$report_content}
-</span>
-                    {/if}
-                </td>
-            </tr>
-        {/capture}
-        {if $fieldsUsed > 0 && $fieldsUsed != $fieldsHidden}
-            {$tableRow}
-        {/if}
-    </table>
-    <script type="text/javascript">SUGAR.util.doWhen("typeof initPanel == 'function'", function () {ldelim} initPanel('report', 'expanded'); {rdelim}); </script>
-</div>
+
+<div class="panel-content">
+    <div>&nbsp;</div>
+    <div class="panel panel-default">
+        <div class="panel-heading ">
+            <a class="" role="button" data-toggle="collapse" href="#detailpanel_report" aria-expanded="false">
+                <div class="col-xs-10 col-sm-11 col-md-11">
+                    {sugar_translate label='LBL_REPORT' module='AOR_Reports'}
+                </div>
+            </a>
+        </div>
+        <div class="panel-body panel-collapse collapse in" id="detailpanel_report">
+            <div class="tab-content">
+                {$report_content}
+            </div>
+        </div>
+    </div>
 
 <script src="modules/AOR_Reports/Dashlets/AORReportsDashlet/AORReportsDashlet.js"></script>

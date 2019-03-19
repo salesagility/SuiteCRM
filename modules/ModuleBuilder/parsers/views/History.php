@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -88,7 +88,7 @@ class History implements HistoryInterface
 
         $this->_basename = basename($this->_previewFilename);
         $this->_dirname = dirname($this->_previewFilename);
-        $this->_historyLimit = isset ($GLOBALS ['sugar_config'] ['studio_max_history']) ? $GLOBALS ['sugar_config'] ['studio_max_history'] : 50;
+        $this->_historyLimit = isset($GLOBALS ['sugar_config'] ['studio_max_history']) ? $GLOBALS ['sugar_config'] ['studio_max_history'] : 50;
 
         // create the history directory if it does not already exist
         if (!is_dir($this->_dirname)) {
@@ -183,7 +183,9 @@ class History implements HistoryInterface
             $new_file = $this->getFileByTimestamp($time);
         }
         // now we have a unique filename, copy the file into the history
-        copy($path, $new_file);
+        if (file_exists($path)) {
+            copy($path, $new_file);
+        }
         $this->_list [] = $time;
 
         // finally, trim the number of files we're holding in the history to that specified in the configuration
@@ -247,6 +249,4 @@ class History implements HistoryInterface
     {
         return $this->_dirname . DIRECTORY_SEPARATOR . $this->_basename . '_' . $timestamp;
     }
-
-
 }

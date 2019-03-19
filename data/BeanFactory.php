@@ -9,7 +9,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -20,7 +20,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -38,8 +38,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 require_once 'data/SugarBean.php';
@@ -59,7 +59,8 @@ class BeanFactory
     public static $hits = 0;
 
     /**
-     * Returns a SugarBean object by id. The Last 10 loaded beans are cached in memory to prevent multiple retrieves per request.
+     * Returns a SugarBean object by id. The Last 10 loaded beans are cached in memory
+     * to prevent multiple retrieves per request.
      * If no id is passed, a new bean is created.
      *
      * @static
@@ -67,7 +68,8 @@ class BeanFactory
      * @param string $module
      * @param string $id
      * @param array  $params  A name/value array of parameters. Names: encode, deleted,
-     *                        If $params is boolean we revert to the old arguments (encode, deleted), and use $params as $encode.
+     *                        If $params is boolean we revert to the old arguments (encode, deleted),
+ *                            and use $params as $encode.
      *                        This will be changed to using only $params in later versions.
      * @param bool   $deleted @see SugarBean::retrieve
      *
@@ -197,8 +199,9 @@ class BeanFactory
                     //If a bean isn't in the database yet, we need to hold onto it.
                     if (!empty(self::$loadedBeans[$info['module']][$info['id']]->in_save)) {
                         ++self::$total;
-                    } //Beans that have been used recently should be held in memory if possible
-                    elseif (!empty(self::$touched[$info['module']][$info['id']]) && self::$touched[$info['module']][$info['id']] > 0) {
+                    } elseif (!empty(self::$touched[$info['module']][$info['id']])
+                        && self::$touched[$info['module']][$info['id']] > 0) {
+                        //Beans that have been used recently should be held in memory if possible
                         --self::$touched[$info['module']][$info['id']];
                         ++self::$total;
                     } else {
@@ -228,6 +231,26 @@ class BeanFactory
         } else {
             return false;
         }
+
+        return true;
+    }
+
+    /*
+     * Clears a bean from cache so that it will be retrieved from DB next time
+     *
+     * @param $beanId
+     */
+    public static function unregisterBean($module, $id)
+    {
+        if (empty($id)) {
+            return false;
+        }
+        if (!isset(self::$loadedBeans[$module][$id])) {
+            return false;
+        }
+
+        unset(self::$loadedBeans[$module][$id]);
+        unset(self::$touched[$module][$id]);
 
         return true;
     }

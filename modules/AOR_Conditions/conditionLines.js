@@ -50,8 +50,8 @@ var LogicalOperatorHandler = {
             '<select class="logic-select" name="aor_conditions_logic_op[' + (_condln ? _condln : condln) + ']" onchange="LogicalOperatorHandler.onLogicSelectChange(this, ' + (_condln ? _condln : condln) + ');" style="display:none;">' +
 
             (!value && !forcedValue ? ('   <option value=""' + selecteds.none + '></option>') : '')  +
-            '   <option value="AND"' + selecteds.AND + '>AND</option>' +
-            '   <option value="OR"' + selecteds.OR + '>OR</option>' +
+            '   <option value="AND"' + selecteds.AND + '>' + SUGAR.language.get('AOR_Conditions', 'LBL_CONDITION_AND') + '</option>' +
+            '   <option value="OR"' + selecteds.OR + '>' + SUGAR.language.get('AOR_Conditions', 'LBL_CONDITION_OR') + '</option>' +
             '</select>';
 
         //logicSelectCounter++;
@@ -311,26 +311,13 @@ function showConditionCurrentModuleFields(ln, value){
 }
 
 var moduleFieldsPendingFinished = 0;
-var moduleFieldsPendingFinishedCallback = null;
 
-var setModuleFieldsPendingFinishedCallback = function(callback) {
-    moduleFieldsPendingFinishedCallback = callback;
+var testModuleFieldsPendingFinished = function () {
+  moduleFieldsPendingFinished--;
+  if (moduleFieldsPendingFinished <= 0) {
+    setModuleFieldsPendingFinishedCallback();
+  }
 };
-
-var testModuleFieldsPandingFinihed = function() {
-    moduleFieldsPendingFinished--;
-    if(moduleFieldsPendingFinished==0) {
-        moduleFieldsPendingFinished = true;
-        if(moduleFieldsPendingFinishedCallback) {
-            moduleFieldsPendingFinishedCallback();
-        }
-    }
-};
-
-
-
-
-
 
 function showConditionModuleField(ln, operator_value, type_value, field_value, overrideView, logic_value, condition_order, parenthesis){
     if(overrideView === undefined){
@@ -350,11 +337,11 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
             success: function(result) {
                 document.getElementById('aor_conditions_operatorInput'+ln).innerHTML = result.responseText;
                 SUGAR.util.evalScript(result.responseText);
-                testModuleFieldsPandingFinihed();
+                testModuleFieldsPendingFinished();
             },
             failure: function(result) {
                 document.getElementById('aor_conditions_operatorInput'+ln).innerHTML = '';
-                testModuleFieldsPandingFinihed();
+                testModuleFieldsPendingFinished();
             }
         }
         var callback2 = {
@@ -362,11 +349,11 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
                 document.getElementById('aor_conditions_fieldTypeInput'+ln).innerHTML = result.responseText;
                 SUGAR.util.evalScript(result.responseText);
                 document.getElementById('aor_conditions_fieldTypeInput'+ln).onchange = function(){showConditionModuleFieldType(ln, undefined, overrideView);};
-                testModuleFieldsPandingFinihed();
+                testModuleFieldsPendingFinished();
             },
             failure: function(result) {
                 document.getElementById('aor_conditions_fieldTypeInput'+ln).innerHTML = '';
-                testModuleFieldsPandingFinihed();
+                testModuleFieldsPendingFinished();
             }
         }
         var callback3 = {
@@ -374,11 +361,11 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
                 document.getElementById('aor_conditions_fieldInput'+ln).innerHTML = result.responseText;
                 SUGAR.util.evalScript(result.responseText);
                 enableQS(false);
-                testModuleFieldsPandingFinihed();
+                testModuleFieldsPendingFinished();
             },
             failure: function(result) {
                 document.getElementById('aor_conditions_fieldInput'+ln).innerHTML = '';
-                testModuleFieldsPandingFinihed();
+                testModuleFieldsPendingFinished();
             }
         }
 

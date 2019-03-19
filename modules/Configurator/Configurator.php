@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -44,13 +44,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class Configurator
 {
+    /** @var array */
     public $config = '';
     public $override = '';
-    public $allow_undefined = array('stack_trace_errors', 'export_delimiter', 'use_real_names', 'developerMode', 'default_module_favicon', 'authenticationClass', 'SAML_loginurl', 'SAML_logouturl', 'SAML_X509Cert', 'dashlet_auto_refresh_min', 'show_download_tab', 'enable_action_menu', 'enable_line_editing_list', 'enable_line_editing_detail', 'hide_subpanels');
+    public $allow_undefined = array('stack_trace_errors', 'export_delimiter', 'use_real_names', 'developerMode', 'default_module_favicon', 'authenticationClass', 'SAML_loginurl', 'SAML_logouturl', 'SAML_X509Cert', 'dashlet_auto_refresh_min', 'show_download_tab', 'enable_action_menu','enable_line_editing_list','enable_line_editing_detail', 'hide_subpanels');
     public $errors = array('main' => '');
     public $logger = null;
     public $previous_sugar_override_config_array = array();
     public $useAuthenticationClass = false;
+
+    /**
+     * @var array
+     */
+    protected $keysToIgnoreLoadedOverrideFile = [];
+
     protected $error = null;
 
     public function __construct()
@@ -102,10 +109,14 @@ class Configurator
         $diffArray = deepArrayDiff($this->config, $sugar_config);
         $overrideArray = sugarArrayMergeRecursive($overrideArray, $diffArray);
 
+        foreach ($this->keysToIgnoreLoadedOverrideFile as $key => $val) {
+            $overrideArray[$key] = $val;
+        }
+
         // To remember checkbox state
         if (!$this->useAuthenticationClass && !$fromParseLoggerSettings) {
             if (isset($overrideArray['authenticationClass']) &&
-                    $overrideArray['authenticationClass'] == 'SAMLAuthenticate') {
+                $overrideArray['authenticationClass'] == 'SAMLAuthenticate') {
                 unset($overrideArray['authenticationClass']);
             }
         }
@@ -146,6 +157,15 @@ class Configurator
         if (isset($this->config['logger']['level']) && $this->logger) {
             $this->logger->setLevel($this->config['logger']['level']);
         }
+    }
+
+    /**
+     * @param mixed $key
+     * @param mixed $value
+     */
+    public function addKeyToIgnoreOverride($key, $value)
+    {
+        $this->keysToIgnoreLoadedOverrideFile[$key] = $value;
     }
 
     //bug #27947 , if previous $sugar_config['stack_trace_errors'] is true and now we disable it , we should clear all the cache.
@@ -337,5 +357,67 @@ class Configurator
                 'level' => 'fatal');
         }
         $this->handleOverride(true);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isConfirmOptInEnabled()
+    {
+        $confirmOptInEnabled =
+            $this->getConfirmOptInEnumValue() === SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN;
+
+        if (!$confirmOptInEnabled) {
+            $this->logger->warn('Confirm Opt in is disabled in email settings');
+        }
+
+        return $confirmOptInEnabled;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOptInEnabled()
+    {
+        $confirmOptInEnabled =
+            $this->getConfirmOptInEnumValue() === SugarEmailAddress::COI_STAT_OPT_IN;
+
+        if (!$confirmOptInEnabled) {
+            $this->logger->warn('Confirm Opt in is disabled in email settings');
+        }
+
+        return $confirmOptInEnabled;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getConfirmOptInTemplateId()
+    {
+        /** @var null|string $confirmOptInTemplateId */
+        $confirmOptInTemplateId = $this->config['email_confirm_opt_in_email_template_id'];
+        if (empty($confirmOptInTemplateId)) {
+            $confirmOptInTemplateId =
+                isset($this->config['system_email_templates']['confirm_opt_in_template_id']) ?
+                    $this->config['system_email_templates']['confirm_opt_in_template_id'] : null;
+        }
+
+        if (!$confirmOptInTemplateId) {
+            $this->logger->warn('Confirm Opt template is not set');
+        }
+
+        return $confirmOptInTemplateId;
+    }
+
+    /**
+     * returns Confirm Opt In Enum Value from configuration
+     *
+     * @return string
+     */
+    public function getConfirmOptInEnumValue()
+    {
+        // TODO: use this function everywhere to make the code more clear also this variable 'email_enable_confirm_opt_in' is enum but assuming a bool -> should change this config variable name
+        $ret = isset($this->config['email_enable_confirm_opt_in']) ? $this->config['email_enable_confirm_opt_in'] : SugarEmailAddress::COI_STAT_DISABLED;
+        return $ret;
     }
 }
