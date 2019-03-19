@@ -170,21 +170,6 @@ class XML_HTMLSax3_StateParser {
     }
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    function XML_HTMLSax3_StateParser(& $htmlsax){
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct( $htmlsax);
-    }
-
-
-    /**
     * Moves the position back one character
     * @access protected
     * @return void
@@ -496,7 +481,7 @@ class XML_HTMLSax3 {
     * </pre>
     * @access public
     */
-    function XML_HTMLSax3() {
+    function __construct() {
         if (version_compare(phpversion(), '4.3', 'ge')) {
             $this->state_parser = new XML_HTMLSax3_StateParser_Gtet430($this);
         } else {

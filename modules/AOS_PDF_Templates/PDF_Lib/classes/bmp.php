@@ -4,10 +4,11 @@ class bmp
 {
     public $mpdf = null;
 
-    public function bmp(&$mpdf)
-    {
-        $this->mpdf = $mpdf;
-    }
+var $mpdf = null;
+
+function __construct(&$mpdf) {
+	$this->mpdf = $mpdf;
+}
 
 
     public function _getBMPimage($data, $file)
@@ -260,7 +261,7 @@ class bmp
                 }
         }
         }
-    
+
         $out = '';
         if (count($pixels)%2) {
             $pixels[]=0;

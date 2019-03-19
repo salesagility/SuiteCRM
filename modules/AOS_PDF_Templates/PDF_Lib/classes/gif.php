@@ -41,14 +41,14 @@ class CGIFLZW
 
     ///////////////////////////////////////////////////////////////////////////
 
-    // CONSTRUCTOR
-    public function CGIFLZW()
-    {
-        $this->MAX_LZW_BITS = 12;
-        unset($this->Next);
-        unset($this->Vals);
-        unset($this->Stack);
-        unset($this->Buf);
+	// CONSTRUCTOR
+	function __construct()
+	{
+		$this->MAX_LZW_BITS = 12;
+		unSet($this->Next);
+		unSet($this->Vals);
+		unSet($this->Stack);
+		unSet($this->Buf);
 
         $this->Next  = range(0, (1 << $this->MAX_LZW_BITS)       - 1);
         $this->Vals  = range(0, (1 << $this->MAX_LZW_BITS)       - 1);
@@ -254,12 +254,12 @@ class CGIFCOLORTABLE
 
     ///////////////////////////////////////////////////////////////////////////
 
-    // CONSTRUCTOR
-    public function CGIFCOLORTABLE()
-    {
-        unset($this->m_nColors);
-        unset($this->m_arColors);
-    }
+	// CONSTRUCTOR
+	function __construct()
+	{
+		unSet($this->m_nColors);
+		unSet($this->m_arColors);
+	}
 
     ///////////////////////////////////////////////////////////////////////////
 
@@ -341,20 +341,20 @@ class CGIFFILEHEADER
 
     ///////////////////////////////////////////////////////////////////////////
 
-    // CONSTRUCTOR
-    public function CGIFFILEHEADER()
-    {
-        unset($this->m_lpVer);
-        unset($this->m_nWidth);
-        unset($this->m_nHeight);
-        unset($this->m_bGlobalClr);
-        unset($this->m_nColorRes);
-        unset($this->m_bSorted);
-        unset($this->m_nTableSize);
-        unset($this->m_nBgColor);
-        unset($this->m_nPixelRatio);
-        unset($this->m_colorTable);
-    }
+	// CONSTRUCTOR
+	function __construct()
+	{
+		unSet($this->m_lpVer);
+		unSet($this->m_nWidth);
+		unSet($this->m_nHeight);
+		unSet($this->m_bGlobalClr);
+		unSet($this->m_nColorRes);
+		unSet($this->m_bSorted);
+		unSet($this->m_nTableSize);
+		unSet($this->m_nBgColor);
+		unSet($this->m_nPixelRatio);
+		unSet($this->m_colorTable);
+	}
 
     ///////////////////////////////////////////////////////////////////////////
 
@@ -417,19 +417,19 @@ class CGIFIMAGEHEADER
 
     ///////////////////////////////////////////////////////////////////////////
 
-    // CONSTRUCTOR
-    public function CGIFIMAGEHEADER()
-    {
-        unset($this->m_nLeft);
-        unset($this->m_nTop);
-        unset($this->m_nWidth);
-        unset($this->m_nHeight);
-        unset($this->m_bLocalClr);
-        unset($this->m_bInterlace);
-        unset($this->m_bSorted);
-        unset($this->m_nTableSize);
-        unset($this->m_colorTable);
-    }
+	// CONSTRUCTOR
+	function __construct()
+	{
+		unSet($this->m_nLeft);
+		unSet($this->m_nTop);
+		unSet($this->m_nWidth);
+		unSet($this->m_nHeight);
+		unSet($this->m_bLocalClr);
+		unSet($this->m_bInterlace);
+		unSet($this->m_bSorted);
+		unSet($this->m_nTableSize);
+		unSet($this->m_colorTable);
+	}
 
     ///////////////////////////////////////////////////////////////////////////
 
@@ -488,18 +488,18 @@ class CGIFIMAGE
 
     ///////////////////////////////////////////////////////////////////////////
 
-    public function CGIFIMAGE()
-    {
-        unset($this->m_disp);
-        unset($this->m_bUser);
-        unset($this->m_bTrans);
-        unset($this->m_nDelay);
-        unset($this->m_nTrans);
-        unset($this->m_lpComm);
-        unset($this->m_data);
-        $this->m_gih = new CGIFIMAGEHEADER();
-        $this->m_lzw = new CGIFLZW();
-    }
+	function __construct()
+	{
+		unSet($this->m_disp);
+		unSet($this->m_bUser);
+		unSet($this->m_bTrans);
+		unSet($this->m_nDelay);
+		unSet($this->m_nTrans);
+		unSet($this->m_lpComm);
+		unSet($this->m_data);
+		$this->m_gih = new CGIFIMAGEHEADER();
+		$this->m_lzw = new CGIFLZW();
+	}
 
     ///////////////////////////////////////////////////////////////////////////
 
@@ -661,14 +661,14 @@ class CGIF
 
     ///////////////////////////////////////////////////////////////////////////
 
-    // CONSTRUCTOR
-    public function CGIF()
-    {
-        $this->m_gfh     = new CGIFFILEHEADER();
-        $this->m_img     = new CGIFIMAGE();
-        $this->m_lpData  = "";
-        $this->m_bLoaded = false;
-    }
+	// CONSTRUCTOR
+	function __construct()
+	{
+		$this->m_gfh     = new CGIFFILEHEADER();
+		$this->m_img     = new CGIFIMAGE();
+		$this->m_lpData  = "";
+		$this->m_bLoaded = false;
+	}
 
     ///////////////////////////////////////////////////////////////////////////
     public function ClearData()

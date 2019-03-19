@@ -839,8 +839,7 @@ public $aliasNbPgHex;
     // **********************************
     // **********************************
 
-    public function mPDF($mode='', $format='A4', $default_font_size=0, $default_font='', $mgl=15, $mgr=15, $mgt=16, $mgb=16, $mgh=9, $mgf=9, $orientation='P')
-    {
+function __construct($mode='',$format='A4',$default_font_size=0,$default_font='',$mgl=15,$mgr=15,$mgt=16,$mgb=16,$mgh=9,$mgf=9, $orientation='P') {
 
 /*-- BACKGROUNDS --*/
         if (!class_exists('grad', false)) {
@@ -5175,7 +5174,7 @@ public $aliasNbPgHex;
         } else {
             $this->minwSpacing = 0;
         }
-  
+
         $this->SetFont($FontFamily, $saved[ 'style' ].($this->U ? 'U' : '').($this->S ? 'S' : ''), $saved[ 'sizePt' ], false);
 
         $this->currentfontstyle = $saved[ 'style' ].($this->U ? 'U' : '').($this->S ? 'S' : '');
@@ -5609,7 +5608,7 @@ public $aliasNbPgHex;
         if ($this->ColActive && $check_h > ($this->PageBreakTrigger - $this->y0)) {
             $this->SetCol($this->NbCol-1);
         }
- 
+
         //	mPDF 5.4.04
         // Avoid just border/background-color moved on to next page
         if ($endofblock && $blockstate > 1 && !$content) {
@@ -6713,7 +6712,7 @@ public $aliasNbPgHex;
                 $currContent = mb_substr($currContent, 0, mb_strlen($currContent, $this->mb_enc)+1-mb_strlen($post, $this->mb_enc), $this->mb_enc) . '-';
             }
         }
-        
+
         /*-- HYPHENATION --*/
         // Soft Hyphens chr(173)
         elseif ($this->textparam['hyphens'] != 2 && (!$this->usingCoreFont && preg_match("/\xc2\xad/", $currWord)) || ($this->usingCoreFont && preg_match("/".chr(173)."/", $currWord) && ($this->FontFamily!='csymbol' && $this->FontFamily!='czapfdingbats'))) {	// mPDF 5.6.06
@@ -7244,7 +7243,7 @@ public $aliasNbPgHex;
         $arraysize = count($content);
 
         $margins = ($this->cMarginL+$this->cMarginR) + ($ipaddingL+$ipaddingR + $fpaddingR + $fpaddingR);
- 
+
         // PAINT BACKGROUND FOR THIS LINE
         if (!$is_table) {
             $this->DivLn($lineHeight, $this->blklvl, false);
@@ -15137,7 +15136,7 @@ public $aliasNbPgHex;
                     }
                 }
             } else { // TAG **
-           
+
                 if ($e[0]=='/') {
                     /*-- PROGRESS-BAR --*/
                     if ($this->progressBar) { 	// 10% increments
@@ -16575,10 +16574,10 @@ public $aliasNbPgHex;
         $resetpagenum = $pagenumstyle = $suppress = '';
         $marks = '';
         $bg = array();
- 
+
         $newformat = '';
 
- 
+
         if (isset($p['SHEET-SIZE']) && is_array($p['SHEET-SIZE'])) {
             $newformat = $p['SHEET-SIZE'];
             if ($newformat[0] > $newformat[1]) { // landscape
@@ -16707,7 +16706,7 @@ public $aliasNbPgHex;
         }
         $this->page_box['outer_width_LR'] = $outer_width_LR;	// Used in MARKS:crop etc.
         $this->page_box['outer_width_TB'] = $outer_width_TB;
- 
+
         return array($orientation,$mgl,$mgr,$mgt,$mgb,$mgh,$mgf,$header,$footer,$bg,$resetpagenum,$pagenumstyle,$suppress,$marks,$newformat);
     }
     /*-- END CSS-PAGE --*/
@@ -17419,7 +17418,7 @@ public $aliasNbPgHex;
     }
     break;
 
-     
+
      case 'INDEXINSERT':
     if (isset($attr['FONT-SIZE'])) {
         $reffontsize = $attr['FONT-SIZE'];
@@ -17478,7 +17477,7 @@ public $aliasNbPgHex;
 /*-- END INDEX --*/
 
 /*-- WATERMARK --*/
-     
+
      case 'WATERMARKTEXT':
     if (isset($attr['CONTENT']) && $attr['CONTENT']) {
         $txt = htmlspecialchars_decode($attr['CONTENT'], ENT_QUOTES);
@@ -17493,7 +17492,7 @@ public $aliasNbPgHex;
     $this->SetWatermarkText($txt, $alpha);
     break;
 
-     
+
      case 'WATERMARKIMAGE':
     if (isset($attr['SRC'])) {
         $src = $attr['SRC'];
@@ -18231,7 +18230,7 @@ public $aliasNbPgHex;
 
 /*-- TABLES --*/
     if ($this->tableLevel) {
-       
+
        // If already something on the line
         if ($this->cell[$this->row][$this->col]['s'] > 0  && !$this->nestedtablejustfinished) {
             $this->_saveCellTextBuffer("\n");
@@ -18836,7 +18835,7 @@ public $aliasNbPgHex;
 
 
 /*-- BARCODES --*/
-    
+
     case 'BARCODE':
     if (isset($attr['CODE']) && $attr['CODE']) {
         $objattr = array();
@@ -19332,7 +19331,7 @@ public $aliasNbPgHex;
             $objattr['background-col'] = $this->ConvertColor($properties['BACKGROUND-COLOR']);
         }
     }
- 
+
     $type = '';
       $texto='';
     $height = $this->FontSize;
@@ -20269,7 +20268,7 @@ public $aliasNbPgHex;
     $this->col=-1; //int
     $this->row=-1; //int
     $table = &$this->table[$this->tableLevel][$this->tbctr[$this->tableLevel]];
- 
+
     // New table - any level
     if ($this->cacheTables) {
         $this->packTableData = true;	// required for cacheTables
@@ -21459,7 +21458,7 @@ public $aliasNbPgHex;
         if (isset($properties['MARGIN-BOTTOM'])) {
             $this->list_margin_bottom = $this->ConvertSize($properties['MARGIN-BOTTOM'], $this->blk[$this->blklvl]['inner_width'], $this->FontSize, false);
         }
-       
+
         if (isset($this->blk[$this->blklvl]['line_height'])) {
             $this->list_lineheight[$this->listlvl][$occur] = $this->blk[$this->blklvl]['line_height'];
         }
@@ -22845,7 +22844,7 @@ public $aliasNbPgHex;
                                     $this->kwt_moved = true;
                                     $this->tbrot_maxw = $this->h - ($this->y + $this->bMargin + 5) - $this->kwt_height;
                                 }
-                 
+
                                 //$recalculate = $this->tbsqrt($tableheight / $fullpage, $iteration); $iteration++;
                     $recalculate = (1 / $this->shrin_k) + 0.001; 	// undo any shrink
                             }
@@ -23256,7 +23255,7 @@ public $aliasNbPgHex;
           } else {
               $list_item_marker = $anum . $this->list_number_suffix;
           }
-          
+
           if ($maxnum>87) {
               $bbit = 87;
           } elseif ($maxnum>86) {
@@ -23292,7 +23291,7 @@ public $aliasNbPgHex;
           } else {
               $list_item_marker = $anum . $this->list_number_suffix;
           }
-          
+
           if ($maxnum>87) {
               $bbit = 87;
           } elseif ($maxnum>86) {
@@ -23319,7 +23318,7 @@ public $aliasNbPgHex;
               $bbit = $maxnum;
           }
               $maxlnum = $this->dec2roman($bbit, false);
-          
+
             $blt_width = $this->GetStringWidth($maxlnum.$this->list_number_suffix);
               break;
           case 'disc':
@@ -23489,7 +23488,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
                 $this->x = $x;
             } else {
                 /*-- END RTL --*/
-      
+
                 if ($this->list_align_style == 'L') {
                     $lalign = 'L';
                 } else {
@@ -23847,7 +23846,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
         //Print-out special content
 
         if (substr($vetor[0], 0, 3) == "\xbb\xa4\xac") { //identifier has been identified!
-      
+
             $objattr = $this->_getObjAttr($vetor[0]);
 
             /*-- TABLES --*/
@@ -24961,7 +24960,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
                 if ($sh['x'] || $sh['y']) {
                     $shadow .= sprintf(' q 1 0 0 1 %.4F %.4F cm', $sh['x']*_MPDFK, -$sh['y']*_MPDFK)."\n";
                 }
- 
+
                 // Set path for INNER shadow
                 $shadow .= ' q 0 w ';
                 $shadow .= $this->SetFColor($col1, true)."\n";
@@ -30326,7 +30325,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
                             } elseif ($tablestartpageno != $this->page && !empty($tableheader)) {
                                 $by += $maxbwtop /2;
                             }
-    
+
                             $by -= $tableheaderadj;
                             $bh = $this->y - $by + $tablefooteradj;
                             if (!$table['borders_separate']) {
@@ -31185,7 +31184,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
                     $tbw = $w;
                     $tbh = $h;
                     $tab_bord = 0;
-               
+
                     $corner = '';
                     if ($i == 0) {		// Top
                         $tby -= $halfspaceT + ($table['border_details']['T']['w']/2);
@@ -31249,7 +31248,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
             $this->printcellbuffer();
         }
 
- 
+
         if ($this->tableClipPath) {
             $this->_out("Q");
         }
@@ -33510,7 +33509,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         if ($this->directionality == 'rtl') {
             $this->ChangeColumn = -($this->ChangeColumn);
         }	// *RTL*
- 
+
            //Stay on the page
                 return false;
             } else {
@@ -33872,7 +33871,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
             /*-- END INDEX --*/
 
             /*-- TOC --*/
-     
+
             // Adjust ToC
             foreach ($this->col_toc as $v) {
                 $this->tocontents->_toc[]=array('t'=>$v['t'],'l'=>$v['l'],'p'=>$v['p'],'link'=>$v['link'],'toc_id'=>$v['toc_id']);
@@ -34064,7 +34063,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
             /*-- END INDEX --*/
 
             /*-- TOC --*/
-     
+
             // Adjust ToC
             foreach ($this->col_toc as $v) {
                 $this->tocontents->_toc[]=array('t'=>$v['t'],'l'=>$v['l'],'p'=>$v['p'],'link'=>$v['link'],'toc_id'=>$v['toc_id']);
@@ -34182,7 +34181,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         $this->columnLinks = array();
         $this->columnAnnots = array();
         $this->columnForms = array();
-   
+
         $this->col_Reference = array();
         $this->col_BMoutlines = array();
         $this->col_toc = array();
@@ -35695,7 +35694,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
             } else {
                 $this->SetFont('sans');
             }
-               
+
             if ($bgcol) {
                 $this->SetFColor($bgcol);
             } else {
@@ -37152,7 +37151,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
   } else {
       $size *= (25.4/$this->dpi);
   } //nothing == px
-  
+
         return $size;
     }
 
@@ -37471,13 +37470,13 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
     {
         return pack("H*", str_replace(array("\r","\n"," "), "", $hex));
     }
-    
+
     public function str2hex($str)
     {
         return current(unpack("H*", $str));
     }
 
-    
+
     public function pdf_write_value(&$value)
     {
         switch ($value[0]) {

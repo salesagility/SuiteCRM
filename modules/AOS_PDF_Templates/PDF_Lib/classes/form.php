@@ -49,9 +49,8 @@ class form
     // FORMS
     public $textarea_lineheight;
 
-    public function form(&$mpdf)
-    {
-        $this->mpdf = $mpdf;
+function __construct(&$mpdf) {
+	$this->mpdf = $mpdf;
 
         // ACTIVE FORMS
     $this->formExportType = 'xfdf'; // 'xfdf' or 'html'
@@ -1625,7 +1624,7 @@ f Q ';
             }
             $this->mpdf->_out('/I ['.$selectIndex.'] ');
         }
-    
+
         if (is_array($form['FF']) && count($form['FF'])>0) {
             $this->mpdf->_out('/Ff '.$this->_setflag($form['FF']).' ');
         }
