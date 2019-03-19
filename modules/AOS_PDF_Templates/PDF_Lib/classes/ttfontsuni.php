@@ -83,10 +83,50 @@ class TTFontFile
     public $maxUniChar;
     public $kerninfo;
 
-    public function TTFontFile()
-    {
-        $this->maxStrLenRead = 200000;	// Maximum size of glyf table to read in as string (otherwise reads each glyph from file)
-    }
+var $unAGlyphs;	// mPDF 5.4.05
+var $panose;
+var $maxUni;
+var $sFamilyClass;
+var $sFamilySubClass;
+var $sipset;
+var $smpset;
+var $_pos;
+var $numTables;
+var $searchRange;
+var $entrySelector;
+var $rangeShift;
+var $tables;
+var $otables;
+var $filename;
+var $fh;
+var $glyphPos;
+var $charToGlyph;
+var $ascent;
+var $descent;
+var $name;
+var $familyName;
+var $styleName;
+var $fullName;
+var $uniqueFontID;
+var $unitsPerEm;
+var $bbox;
+var $capHeight;
+var $stemV;
+var $italicAngle;
+var $flags;
+var $underlinePosition;
+var $underlineThickness;
+var $charWidths;
+var $defaultWidth;
+var $maxStrLenRead;
+var $numTTCFonts;
+var $TTCFonts;
+var $maxUniChar;
+var $kerninfo;
+
+	function __construct() {
+		$this->maxStrLenRead = 200000;	// Maximum size of glyf table to read in as string (otherwise reads each glyph from file)
+	}
 
 
     public function getMetrics($file, $TTCfontID=0, $debug=false, $BMPonly=false, $kerninfo=false, $unAGlyphs=false)
@@ -1576,7 +1616,7 @@ class TTFontFile
             $os2 = $this->_set_ushort($os2, 80, 0x0000);	// ulCodePageRange = Bit #31 Symbol ****  80 = Bit 0-15
             $os2 = $this->_set_ushort($os2, 82, 0x0000);	// ulCodePageRange = Bit #32- Symbol **** 82 = Bits 48-63
             $os2 = $this->_set_ushort($os2, 84, 0x0000);	// ulCodePageRange = Bit #32- Symbol **** 84 = Bits 32-47
-    
+
             $os2 = $this->_set_ushort($os2, 64, 0x01);		// FirstCharIndex
             $os2 = $this->_set_ushort($os2, 66, count($subset));		// LastCharIndex
             // Set PANOSE first bit to 5 for Symbol
@@ -2232,15 +2272,15 @@ class TTFontFile
         hdmx
         kern
         LTSH
-        
+
         Tables which do NOT require glyphIndex
         VDMX
-        
+
         GDEF
         GPOS
         GSUB
         JSTF
-        
+
         DSIG
         PCLT - not recommended
         */

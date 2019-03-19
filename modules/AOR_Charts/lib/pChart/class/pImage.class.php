@@ -81,9 +81,9 @@
      public $LastChartLayout	= CHART_LAST_LAYOUT_REGULAR;	// Last layout : regular or stacked
 
      /* Class constructor */
-     public function pImage($XSize, $YSize, $DataSet=null, $TransparentBackground=false)
+     public function __construct($XSize, $YSize, $DataSet = null, $TransparentBackground = false)
      {
-         $this->TransparentBackground = $TransparentBackground;
+     $this->TransparentBackground = $TransparentBackground;
 
          if ($DataSet != null) {
              $this->DataSet = $DataSet;
@@ -294,7 +294,7 @@
          if ($FontName != null) {
              $this->FontName = $FontName;
          }
- 
+
          if ($FontSize != null) {
              $this->FontSize = $FontSize;
          }
@@ -397,7 +397,7 @@
          if (is_array($NewTitle)) {
              $NewTitle = $this->removeVOIDFromArray($OldTitle, $NewTitle);
          }
- 
+
          if ($this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION) {
              if (!isset($_SESSION)) {
                  return(-1);
@@ -572,7 +572,7 @@
 
          $Picture = imagecreatetruecolor($this->XSize, $this->YSize);
          imagecopy($Picture, $this->Picture, 0, 0, 0, 0, $this->XSize, $this->YSize);
-     
+
          for ($i=1;$i<=$Height;$i++) {
              if ($Y+($i-1) < $this->YSize && $Y-$i > 0) {
                  imagecopymerge($Picture, $this->Picture, $X, $Y+($i-1), $X, $Y-$i, $Width, 1, $StartAlpha-$AlphaStep*$i);

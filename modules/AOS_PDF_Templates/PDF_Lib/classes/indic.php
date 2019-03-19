@@ -1,10 +1,10 @@
 <?php
 
-class indic
-{
-    public function indic()
-    {
-    }
+class indic {
+
+function __construct() {
+
+}
 
 
     public function substituteIndic($earr, $lang, $font)
