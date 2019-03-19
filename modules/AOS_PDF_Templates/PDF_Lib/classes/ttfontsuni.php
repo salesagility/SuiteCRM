@@ -79,7 +79,7 @@ var $TTCFonts;
 var $maxUniChar;
 var $kerninfo;
 
-	function TTFontFile() {
+	function __construct() {
 		$this->maxStrLenRead = 200000;	// Maximum size of glyf table to read in as string (otherwise reads each glyph from file)
 	}
 

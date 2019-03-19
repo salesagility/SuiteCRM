@@ -4,7 +4,7 @@ class directw {
 
 var $mpdf = null;
 
-function directw(&$mpdf) {
+function __construct(&$mpdf) {
 	$this->mpdf = $mpdf;
 }
 

@@ -2,7 +2,7 @@
 
 class indic {
 
-function indic() {
+function __construct() {
 
 }
 

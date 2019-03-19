@@ -97,7 +97,7 @@ class nusoap_xmlschema extends nusoap_base  {
 	* @param	string $namespaces namespaces defined in enclosing XML
 	* @access   public
 	*/
-	function nusoap_xmlschema($schema='',$xml='',$namespaces=array()){
+	function __construct($schema='',$xml='',$namespaces=array()){
 		parent::nusoap_base();
 		$this->debug('nusoap_xmlschema class instantiated, inside constructor');
 		// files

@@ -26,7 +26,7 @@ class CGIFLZW
 	///////////////////////////////////////////////////////////////////////////
 
 	// CONSTRUCTOR
-	function CGIFLZW()
+	function __construct()
 	{
 		$this->MAX_LZW_BITS = 12;
 		unSet($this->Next);
@@ -240,7 +240,7 @@ class CGIFCOLORTABLE
 	///////////////////////////////////////////////////////////////////////////
 
 	// CONSTRUCTOR
-	function CGIFCOLORTABLE()
+	function __construct()
 	{
 		unSet($this->m_nColors);
 		unSet($this->m_arColors);
@@ -327,7 +327,7 @@ class CGIFFILEHEADER
 	///////////////////////////////////////////////////////////////////////////
 
 	// CONSTRUCTOR
-	function CGIFFILEHEADER()
+	function __construct()
 	{
 		unSet($this->m_lpVer);
 		unSet($this->m_nWidth);
@@ -403,7 +403,7 @@ class CGIFIMAGEHEADER
 	///////////////////////////////////////////////////////////////////////////
 
 	// CONSTRUCTOR
-	function CGIFIMAGEHEADER()
+	function __construct()
 	{
 		unSet($this->m_nLeft);
 		unSet($this->m_nTop);
@@ -473,7 +473,7 @@ class CGIFIMAGE
 
 	///////////////////////////////////////////////////////////////////////////
 
-	function CGIFIMAGE()
+	function __construct()
 	{
 		unSet($this->m_disp);
 		unSet($this->m_bUser);
@@ -647,7 +647,7 @@ class CGIF
 	///////////////////////////////////////////////////////////////////////////
 
 	// CONSTRUCTOR
-	function CGIF()
+	function __construct()
 	{
 		$this->m_gfh     = new CGIFFILEHEADER();
 		$this->m_img     = new CGIFIMAGE();

@@ -31,7 +31,7 @@ class SVG {
 	var $kp;		// mPDF 4.4.003  convert pixels to PDF units
 	var $pathBBox;	// mPDF 5.0.039
 
-	function SVG(&$mpdf){
+	function __construct(&$mpdf){
 		$this->svg_gradient = array();
 		$this->svg_shadinglist = array();
 		$this->txt_data = array();

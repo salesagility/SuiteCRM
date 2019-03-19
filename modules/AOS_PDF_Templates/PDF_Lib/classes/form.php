@@ -49,7 +49,7 @@ var $form_button_icon;
 // FORMS
 var $textarea_lineheight;
 
-function form(&$mpdf) {
+function __construct(&$mpdf) {
 	$this->mpdf = $mpdf;
 
 	// ACTIVE FORMS

@@ -29,7 +29,7 @@ var $TOC_even_footer_value;
 var $TOC_page_selector;
 var $m_TOC; 
 
-function tocontents(&$mpdf) {
+function __construct(&$mpdf) {
 	$this->mpdf = $mpdf;
 	$this->_toc=array();
 	$this->TOCmark = 0;
