@@ -116,15 +116,8 @@ class StateCheckerConfig
     protected static $autoRun = true;
     
     /**
-     * Save trace info on state-hash mismatch
-     * (Slow working but give more information about the error location, use in development only)
-     * @var boolean
-     */
-    protected static $saveTraces = true;
-    
-    /**
      * Redefine memory limit
-     * (For more memory expensive task, for e.g collection stack trace information when $saveTraces is ON, use in development only)
+     * (For more memory expensive task, use in development only)
      * @var boolean
      */
     protected static $redefineMemoryLimit = false;
@@ -215,11 +208,6 @@ class StateCheckerConfig
             isset($sugar_config['state_checker']['auto_run']) ?
                 $sugar_config['state_checker']['auto_run'] :
                 self::$autoRun;
-        
-        self::$saveTraces =
-            isset($sugar_config['state_checker']['save_traces']) ?
-                $sugar_config['state_checker']['save_traces'] :
-                self::$saveTraces;
         
         self::$redefineMemoryLimit =
             isset($sugar_config['state_checker']['redefine_memory_limit']) ?
