@@ -64,7 +64,7 @@ class fpdi_pdf_parser extends pdf_parser {
         $this->fpdi =& $fpdi;
 	  $this->filename = $filename;
 
-        parent::pdf_parser($filename);
+        parent::__construct($filename);
         if ($this->success == false) { return false; }
 
         // resolve Pages-Dictonary

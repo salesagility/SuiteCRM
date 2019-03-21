@@ -74,7 +74,7 @@ class SpotsDashlet extends Dashlet
             $this->showGui = 0;
         }
 
-        parent::Dashlet($id); // call parent constructor
+        parent::__construct($id); // call parent constructor
 
         $this->isConfigurable = true; // dashlet is configurable
         $this->hasScript = true;  // dashlet has javascript attached to it
