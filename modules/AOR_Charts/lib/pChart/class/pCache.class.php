@@ -20,9 +20,9 @@
    var $CacheIndex;
    var $CacheDB;
 
-   /* Class creator */
-   function pCache($Settings="")
-    {
+     /* Class creator */
+     public function __construct($Settings = "")
+     {
      $CacheFolder	= isset($Settings["CacheFolder"]) ? $Settings["CacheFolder"] : "cache";
      $CacheIndex	= isset($Settings["CacheIndex"]) ? $Settings["CacheIndex"] : "index.db";
      $CacheDB		= isset($Settings["CacheDB"]) ? $Settings["CacheDB"] : "cache.db";

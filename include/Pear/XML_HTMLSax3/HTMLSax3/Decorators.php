@@ -150,7 +150,7 @@ class XML_HTMLSax3_Linefeed {
     * @param string original handler method
     * @access protected
     */
-    function XML_HTMLSax3_LineFeed(&$orig_obj, $orig_method) {
+    public function __construct(&$orig_obj, $orig_method) {
         $this->orig_obj =& $orig_obj;
         $this->orig_method = $orig_method;
     }

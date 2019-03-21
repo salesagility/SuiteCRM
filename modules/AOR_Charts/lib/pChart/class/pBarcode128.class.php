@@ -22,9 +22,9 @@
    var $pChartObject;
    var $CRC;
 
-   /* Class creator */
-   function pBarcode128($BasePath="")
-    {
+     /* Class creator */
+     public function __construct($BasePath = "")
+     {
      $this->Codes   = "";
      $this->Reverse = "";
 

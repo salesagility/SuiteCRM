@@ -35,15 +35,15 @@
    var $pDataObject;
    var $LabelPos = "" ;
 
-   /* Class creator */
-   function pPie($Object,$pDataObject)
-    {
-     /* Cache the pChart object reference */
-     $this->pChartObject = $Object;
+     /* Class creator */
+     public function __construct($Object, $pDataObject)
+     {
+         /* Cache the pChart object reference */
+         $this->pChartObject = $Object;
 
-     /* Cache the pData object reference */
-     $this->pDataObject  = $pDataObject;
-    }
+         /* Cache the pData object reference */
+         $this->pDataObject = $pDataObject;
+     }
 
    /* Draw a pie chart */
    function draw2DPie($X,$Y,$Format="")
