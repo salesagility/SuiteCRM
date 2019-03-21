@@ -116,13 +116,6 @@ class StateCheckerConfig
     protected static $autoRun = true;
     
     /**
-     * Redefine memory limit
-     * (For more memory expensive task, use in development only)
-     * @var boolean
-     */
-    protected static $redefineMemoryLimit = false;
-    
-    /**
      * Store more information about hash-mismatch,
      * which part having state of globals/filesys/database.
      * (Slow working but give more information about the error location, use in development only)
@@ -208,11 +201,6 @@ class StateCheckerConfig
             isset($sugar_config['state_checker']['auto_run']) ?
                 $sugar_config['state_checker']['auto_run'] :
                 self::$autoRun;
-        
-        self::$redefineMemoryLimit =
-            isset($sugar_config['state_checker']['redefine_memory_limit']) ?
-                $sugar_config['state_checker']['redefine_memory_limit'] :
-                self::$redefineMemoryLimit;
         
         self::$storeDetails =
             isset($sugar_config['state_checker']['store_details']) ?

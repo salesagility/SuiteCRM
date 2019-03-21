@@ -112,24 +112,9 @@ class StateChecker
             throw new StateCheckerException('Incompatible DB type, only supported: mysqli');
         }
         $this->resetHashes();
-        
-        if (StateCheckerConfig::get('redefineMemoryLimit')) {
-            $this->memoryLimit = ini_get('memory_limit');
-            ini_set('memory_limit', -1);
-        }
                 
         if (StateCheckerConfig::get('autoRun')) {
             $this->getStateHash();
-        }
-    }
-
-    /**
-     *
-     */
-    public function __destruct()
-    {
-        if (StateCheckerConfig::get('redefineMemoryLimit')) {
-            ini_set('memory_limit', $this->memoryLimit);
         }
     }
 
