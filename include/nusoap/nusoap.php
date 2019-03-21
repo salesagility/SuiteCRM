@@ -1510,7 +1510,7 @@ class nusoap_fault extends nusoap_base
     */
     public function __construct($faultcode, $faultactor='', $faultstring='', $faultdetail='')
     {
-        parent::nusoap_base();
+        parent::__construct();
         $this->faultcode = $faultcode;
         $this->faultactor = $faultactor;
         $this->faultstring = $faultstring;
@@ -1808,7 +1808,7 @@ class nusoap_xmlschema extends nusoap_base
     */
     public function __construct($schema='', $xml='', $namespaces=array())
     {
-        parent::nusoap_base();
+        parent::__construct();
         $this->debug('nusoap_xmlschema class instantiated, inside constructor');
         // files
         $this->schema = $schema;
@@ -3020,7 +3020,7 @@ class soapval extends nusoap_base
     */
     public function __construct($name='soapval', $type=false, $value=-1, $element_ns=false, $type_ns=false, $attributes=false)
     {
-        parent::nusoap_base();
+        parent::__construct();
         $this->name = $name;
         $this->type = $type;
         $this->value = $value;
@@ -3316,7 +3316,7 @@ class soap_transport_http extends nusoap_base
     */
     public function __construct($url, $curl_options = null, $use_curl = false)
     {
-        parent::nusoap_base();
+        parent::__construct();
         $this->debug("ctor url=$url use_curl=$use_curl curl_options:");
         $this->appendDebug($this->varDump($curl_options));
         $this->setURL($url);
@@ -4964,7 +4964,7 @@ class nusoap_server extends nusoap_base
     */
     public function __construct($wsdl=false)
     {
-        parent::nusoap_base();
+        parent::__construct();
         // turn on debugging?
         global $debug;
         global $HTTP_SERVER_VARS;
@@ -6220,7 +6220,7 @@ class wsdl extends nusoap_base
      */
     public function __construct($wsdl = '', $proxyhost=false, $proxyport=false, $proxyusername=false, $proxypassword=false, $timeout=0, $response_timeout=30, $curl_options=null, $use_curl=false)
     {
-        parent::nusoap_base();
+        parent::__construct();
         $this->debug("ctor wsdl=$wsdl timeout=$timeout response_timeout=$response_timeout");
         $this->proxyhost = $proxyhost;
         $this->proxyport = $proxyport;
@@ -8357,7 +8357,7 @@ class nusoap_parser extends nusoap_base
     */
     public function __construct($xml, $encoding='UTF-8', $method='', $decode_utf8=true)
     {
-        parent::nusoap_base();
+        parent::__construct();
         $this->xml = $xml;
         $this->xml_encoding = $encoding;
         $this->method = $method;
@@ -9248,7 +9248,7 @@ class nusoap_client extends nusoap_base
     */
     public function __construct($endpoint, $wsdl = false, $proxyhost = false, $proxyport = false, $proxyusername = false, $proxypassword = false, $timeout = 0, $response_timeout = 30, $portName = '')
     {
-        parent::nusoap_base();
+        parent::__construct();
         //ADDED FOR SUGAR PROXY SUPPORT
         global $proxy_config;
         if (!$proxyhost) {

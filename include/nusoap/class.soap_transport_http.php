@@ -110,7 +110,7 @@ class soap_transport_http extends nusoap_base {
 	* @access public
 	*/
 	function __construct($url, $curl_options = NULL, $use_curl = false){
-		parent::nusoap_base();
+		parent::__construct();
 		$this->debug("ctor url=$url use_curl=$use_curl curl_options:");
 		$this->appendDebug($this->varDump($curl_options));
 		$this->setURL($url);

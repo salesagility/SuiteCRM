@@ -87,7 +87,7 @@ class nusoap_fault extends nusoap_base {
     * @param mixed $faultdetail detail, typically a string or array of string
 	*/
 	function __construct($faultcode,$faultactor='',$faultstring='',$faultdetail=''){
-		parent::nusoap_base();
+        parent::__construct();
 		$this->faultcode = $faultcode;
 		$this->faultactor = $faultactor;
 		$this->faultstring = $faultstring;

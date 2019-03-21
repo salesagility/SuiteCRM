@@ -111,7 +111,7 @@ class soapval extends nusoap_base {
 	* @access   public
 	*/
   	function __construct($name='soapval',$type=false,$value=-1,$element_ns=false,$type_ns=false,$attributes=false) {
-		parent::nusoap_base();
+		parent::__construct();
 		$this->name = $name;
 		$this->type = $type;
 		$this->value = $value;
