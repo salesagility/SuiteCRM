@@ -1919,17 +1919,17 @@ class AOR_Report extends Basic
                                 $params = base64_decode($condition->value);
                             }
                             $date = getPeriodEndDate($params)->format('Y-m-d H:i:s');
-                            $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
+                            $value = "'" . $this->db->quote(getPeriodDate($params)->format('Y-m-d H:i:s')) . "'";
 
                             $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND '));
                             $tiltLogicOp = false;
 
                             switch ($aor_sql_operator_list[$condition->operator]) {
                                 case "=":
-                                    $query['where'][] = $field . ' BETWEEN ' . $value . ' AND ' . '"' . $date . '"';
+                                    $query['where'][] = $field . " BETWEEN " . $value . " AND " . "'" . $this->db->quote($date) . "'";
                                     break;
                                 case "!=":
-                                    $query['where'][] = $field . ' NOT BETWEEN ' . $value . ' AND ' . '"' . $date . '"';
+                                    $query['where'][] = $field . " NOT BETWEEN " . $value . " AND " . "'" . $this->db->quote($date)  . "'";
                                     break;
                                 case ">":
                                 case "<":
