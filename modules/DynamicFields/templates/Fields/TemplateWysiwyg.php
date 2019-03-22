@@ -55,7 +55,7 @@ class TemplateWysiwyg extends TemplateField
 	var $len = '';
     var $inline_edit = 0;
 
-	public function get_field_def()
+	function get_field_def()
 	{
 		$def = parent::get_field_def();
 
