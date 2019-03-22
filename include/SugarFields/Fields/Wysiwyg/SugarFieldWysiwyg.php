@@ -44,13 +44,13 @@ require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 
 class SugarFieldWysiwyg extends SugarFieldBase {
 
-    public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $vardef['inline_edit'] = false;
         return parent::getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
 
-    public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
 
