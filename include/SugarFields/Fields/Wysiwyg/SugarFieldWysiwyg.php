@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,43 +39,57 @@
  *
  * This file was contributed by Urdhva tech private limited <contact@urdhva-tech.com>
  **/
+
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
+
 class SugarFieldWysiwyg extends SugarFieldBase {
 
-  function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex) {
-      $vardef['inline_edit'] = false;
-    return parent::getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
+    public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    {
+        $vardef['inline_edit'] = false;
+        return parent::getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
 
-  function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex) {
+    public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    {
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
-      require_once('include/SugarTinyMCE.php');
-      global $json;
-    
-    if(empty($json)) {
-      $json = getJSONobj();
-    }
-    $form_name = '';
-    if(!empty($this->ss->_tpl_vars['displayParams']['formName']))
-        $form_name = $this->ss->_tpl_vars['displayParams']['formName'];
-    $tiny = new SugarTinyMCE();
-    $tiny->defaultConfig['apply_source_formatting']=false;
-    $tiny->defaultConfig['cleanup_on_startup']=true;
-    $tiny->defaultConfig['relative_urls']=false;
-    $tiny->defaultConfig['convert_urls']=false;
-    $tiny->defaultConfig['strict_loading_mode'] = true;
-    $tiny->defaultConfig['width'] = '100%';
-    $config = $tiny->defaultConfig;
-    $config['plugins']  = 'print code preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists textcolor wordcount imagetools    contextmenu colorpicker textpattern ';
-    $config['elements'] = "#{$form_name} "."#".$vardef['name'];
-    $config['selector'] = "#{$form_name} "."#".$vardef['name'];
-    $config['content_css'] = 'include/javascript/mozaik/vendor/tinymce/tinymce/skins/lightgray/content.min.css';
-    $config['toolbar1']   = 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat';
-    $config['theme'] = 'modern';
-    $jsConfig = $json->encode($config);
-    $initiate = '<script type="text/javascript" language="Javascript"> tinyMCE.init('.$jsConfig.');</script>';
-    $this->ss->assign("tiny", $initiate);
-    return parent::getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
+
+        require_once('include/SugarTinyMCE.php');
+
+        global $json;
+
+        if (empty($json)) {
+            $json = getJSONobj();
+        }
+
+        $form_name = '';
+
+        if (!empty($this->ss->_tpl_vars['displayParams']['formName'])) {
+            $form_name = $this->ss->_tpl_vars['displayParams']['formName'];
+        }
+
+        $tiny = new SugarTinyMCE();
+
+        $tiny->defaultConfig['apply_source_formatting'] = false;
+        $tiny->defaultConfig['cleanup_on_startup'] = true;
+        $tiny->defaultConfig['relative_urls'] = false;
+        $tiny->defaultConfig['convert_urls'] = false;
+        $tiny->defaultConfig['strict_loading_mode'] = true;
+        $tiny->defaultConfig['width'] = '100%';
+
+        $config = $tiny->defaultConfig;
+
+        $config['plugins']  = 'print code preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern ';
+        $config['elements'] = "#{$form_name} "."#".$vardef['name'];
+        $config['selector'] = "#{$form_name} "."#".$vardef['name'];
+        $config['content_css'] = 'include/javascript/mozaik/vendor/tinymce/tinymce/skins/lightgray/content.min.css';
+        $config['toolbar1'] = 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat';
+        $config['theme'] = 'modern';
+
+        $jsConfig = $json->encode($config);
+        $initiate = '<script type="text/javascript" language="Javascript"> tinyMCE.init('.$jsConfig.');</script>';
+        $this->ss->assign("tiny", $initiate);
+
+        return parent::getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
 }
-?>

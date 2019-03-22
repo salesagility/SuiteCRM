@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,18 +39,44 @@
  * This file was contributed by Urdhva tech private limited <contact@urdhva-tech.com>
  *}
 <link rel="stylesheet" type="text/css" href="include/SugarFields/Fields/Wysiwyg/css/wysiwyg-editview.css" />
+
 {if empty({{sugarvar key='value' string=true}})}
-{assign var="value" value={{sugarvar key='default_value' string=true}} }
+    {assign var="value" value={{sugarvar key='default_value' string=true}} }
 {else}
-{assign var="value" value={{sugarvar key='value' string=true}} }
-{/if} 
+    {assign var="value" value={{sugarvar key='value' string=true}} }
+{/if}
+
 {{if $displayParams.maxlength}}
-{literal} 
-{{$tiny}}
-{/literal}<div class="wysiwyg"><textarea id="{{sugarvar key='name'}}" name="{{sugarvar key='name'}}" maxlength="{{$displayParams.maxlength}}" rows="{{$displayParams.rows|default:4}}" cols="{{$displayParams.cols|default:60}}" title='{{$vardef.help}}' tabindex="{{$tabindex}}" {{$displayParams.field}}>{$value}</textarea></div>
+    {literal}
+        {{$tiny}}
+    {/literal}
+    <div class="wysiwyg">
+        <textarea
+            id="{{sugarvar key='name'}}"
+            name="{{sugarvar key='name'}}"
+            maxlength="{{$displayParams.maxlength}}"
+            rows="{{$displayParams.rows|default:4}}"
+            cols="{{$displayParams.cols|default:60}}"
+            title='{{$vardef.help}}'
+            tabindex="{{$tabindex}}"
+            {{$displayParams.field}}
+        >{$value}</textarea>
+    </div>
 {{else}}
-{literal} 
-{{$tiny}}
-{/literal}<div class="wysiwyg"><textarea id="{{sugarvar key='name'}}" name="{{sugarvar key='name'}}" rows="{{$displayParams.rows|default:4}}" cols="{{$displayParams.cols|default:60}}" title='{{$vardef.help}}' tabindex="{{$tabindex}}" {{$displayParams.field}}>{$value}</textarea></div>
+    {literal}
+        {{$tiny}}
+    {/literal}
+    <div class="wysiwyg">
+        <textarea
+            id="{{sugarvar key='name'}}"
+            name="{{sugarvar key='name'}}"
+            rows="{{$displayParams.rows|default:4}}"
+            cols="{{$displayParams.cols|default:60}}"
+            title='{{$vardef.help}}'
+            tabindex="{{$tabindex}}"
+            {{$displayParams.field}}
+        >{$value}</textarea>
+    </div>
 {{/if}}
+
 <br />
