@@ -66,11 +66,13 @@ class templateParser
             if (isset($field_def['name']) && $field_def['name'] != '') {
                 $fieldName = $field_def['name'];
                 if ($field_def['type'] == 'currency') {
+                    $params = array(
+                        'currency_symbol' => false
+                    );
+
                     $repl_arr[$key . "_" . $fieldName] = currency_format_number(
                         $focus->{$fieldName},
-                        $params = array(
-                            'currency_symbol' => false
-                        )
+                        $params
                     );
                 } elseif (($field_def['type'] == 'radioenum' || $field_def['type'] == 'enum' || $field_def['type'] == 'dynamicenum') && isset($field_def['options'])) {
                     $repl_arr[$key . "_" . $fieldName] = translate(
