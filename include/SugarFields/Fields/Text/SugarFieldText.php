@@ -47,14 +47,18 @@ class SugarFieldText extends SugarFieldBase
         if (!isset($displayParams['nl2br'])) {
             $displayParams['nl2br'] = true;
         }
+
         if (!isset($displayParams['htmlescape']) && $vardef['editor'] != "html") {
             $displayParams['htmlescape'] = true;
         }
+
         if (!isset($displayParams['url2html'])) {
             $displayParams['url2html'] = true;
         }
+
         return parent::getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
+
     public function getClassicEditView($field_id='description', $value='', $prefix='', $rich_text=false, $maxlength='', $tabindex=1, $cols=80, $rows=4)
     {
         $this->ss->assign('prefix', $prefix);
@@ -68,8 +72,8 @@ class SugarFieldText extends SugarFieldBase
         $displayParams['rows'] = $rows;
         $displayParams['cols'] = $cols;
 
-
         $this->ss->assign('displayParams', $displayParams);
+
         if (isset($GLOBALS['current_user'])) {
             $height = $GLOBALS['current_user']->getPreference('text_editor_height');
             $width = $GLOBALS['current_user']->getPreference('text_editor_width');
@@ -89,18 +93,19 @@ class SugarFieldText extends SugarFieldBase
     {
         parent::setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass);
         $editor = "";
+
         if (isset($vardef['editor']) && $vardef['editor'] == "html") {
             if (!isset($displayParams['htmlescape'])) {
                 $displayParams['htmlescape'] = false;
             }
+
             if ($_REQUEST['action'] == "EditView") {
-                require_once("include/SugarTinyMCE.php");
+                require_once(__DIR__ . "/../../../../include/SugarTinyMCE.php");
                 $tiny = new SugarTinyMCE();
                 $editor = $tiny->getInstance($vardef['name'], 'email_compose_light');
             }
-            $this->ss->assign("tinymce", $editor);
-        } else {
-            $this->ss->assign("tinymce", $editor);
         }
+
+        $this->ss->assign("tinymce", $editor);
     }
 }
