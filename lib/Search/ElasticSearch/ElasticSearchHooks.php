@@ -73,7 +73,9 @@ class ElasticSearchHooks
     {
         $this->action = 'index';
 
-        $this->reIndexSafe($bean);
+        if (ElasticSearchIndexer::isEnabled() !== false) {
+            $this->reIndexSafe($bean);
+        }
     }
 
     /**
