@@ -305,7 +305,7 @@ function getPeriodDate($date_time_period_list_selected)
             $datetime_period = $q[3]['start']->sub(new DateInterval('P3M'));
         } elseif ($thisMonth >= $q[4]['start'] && $thisMonth <= $q[4]['end']) {
             // quarter 4 - 3 months
-            $datetime_period = $q[3]['start']->sub(new DateInterval('P3M'));
+            $datetime_period = $q[4]['start']->sub(new DateInterval('P3M'));
         }
     } elseif ($date_time_period_list_selected == 'this_year') {
         $datetime_period = $datetime_period = $datetime_period->setDate(
