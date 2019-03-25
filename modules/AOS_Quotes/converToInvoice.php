@@ -22,7 +22,7 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
-    if(!(ACLController::checkAccess('AOS_Invoices', 'edit', true))){
+    if (!(ACLController::checkAccess('AOS_Invoices', 'edit', true))) {
         ACLController::displayNoAccess();
         die;
     }

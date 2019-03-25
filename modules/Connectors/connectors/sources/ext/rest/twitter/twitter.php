@@ -59,8 +59,6 @@ class ext_rest_twitter extends ext_rest
         $this->allowedModuleList = array('Accounts' => $app_list_strings['moduleList']['Accounts'],
             'Contacts' => $app_list_strings['moduleList']['Contacts'],
             'Leads' => $app_list_strings['moduleList']['Leads']);
-
-
     }
 
     /**

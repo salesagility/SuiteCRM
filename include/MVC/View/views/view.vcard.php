@@ -53,15 +53,15 @@ require_once('include/vCard.php');
 
 class ViewVcard extends SugarView
 {
-	public $type = 'detail';
-	
-	/**
+    public $type = 'detail';
+    
+    /**
      * @see SugarView::display()
      */
-	public function display()
+    public function display()
     {
-		$vcard = new vCard();		
-		$vcard->loadContact($this->bean->id, $this->module);
-		$vcard->saveVCard();
- 	}
+        $vcard = new vCard();
+        $vcard->loadContact($this->bean->id, $this->module);
+        $vcard->saveVCard();
+    }
 }

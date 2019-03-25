@@ -48,7 +48,8 @@ require_once('include/connectors/sources/default/source.php');
  * Generic source connected using EAPM access details
  * @api
  */
-abstract class ext_eapm extends source{
+abstract class ext_eapm extends source
+{
 
     /**
      * The ExternalAPI Base that instantiated this connector.
@@ -67,5 +68,4 @@ abstract class ext_eapm extends source{
         $GLOBALS['log']->debug("Connector is getting eapm");
         return $this->_eapm;
     }
-
 }

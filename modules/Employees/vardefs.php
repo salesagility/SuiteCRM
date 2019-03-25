@@ -42,8 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 global $dictionary;
-if(empty($dictionary['User'])){
-	include('modules/Users/vardefs.php');
+if (empty($dictionary['User'])) {
+    include('modules/Users/vardefs.php');
 }
 $dictionary['Employee']=$dictionary['User'];
 //users of employees modules are not allowed to change the employee/user status.
@@ -60,4 +60,3 @@ $dictionary['Employee']['fields']['email_addresses_primary']['required']=false;
 // bugs 47553 & 49716
 $dictionary['Employee']['fields']['status']['studio']=false;
 $dictionary['Employee']['fields']['status']['required']=false;
-

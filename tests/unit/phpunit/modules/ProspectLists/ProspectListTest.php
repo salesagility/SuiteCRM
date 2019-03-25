@@ -214,9 +214,9 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testmark_relationships_deleted()
     {
 //        $state = new SuiteCRM\StateSaver();
-//        
-//        
-//        
+//
+//
+//
 //        $prospectList = new ProspectList();
 //
 //        //execute the method and test if it works and does not throws an exception.
@@ -228,15 +228,15 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        }
 //
 //        $this->markTestIncomplete('Method has no implementation');
-//        
+//
 //        // clean up
     }
 
     public function testfill_in_additional_list_fields()
     {
 //        $state = new SuiteCRM\StateSaver();
-//        
-//        
+//
+//
 //        $prospectList = new ProspectList();
 //
 //        //execute the method and test if it works and does not throws an exception.
@@ -248,7 +248,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        }
 //
 //        $this->markTestIncomplete('Method has no implementation');
-//        
+//
 //        // clean up
     }
 
@@ -264,11 +264,11 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testupdate_currency_id()
     {
 //        $state = new SuiteCRM\StateSaver();
-//        
-//        
-//        
-//        
-//        
+//
+//
+//
+//
+//
 //
 //        $prospectList = new ProspectList();
 //
@@ -281,7 +281,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        }
 //
 //        $this->markTestIncomplete('Method has no implementation');
-//        
+//
 //        // clean up
     }
 

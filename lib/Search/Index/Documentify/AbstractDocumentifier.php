@@ -62,7 +62,7 @@ abstract class AbstractDocumentifier
      *
      * @return array
      */
-    public abstract function documentify(\SugarBean $bean);
+    abstract public function documentify(\SugarBean $bean);
 
     /**
      * Applies sanitizePhone() to all the phones in the serialisation array.

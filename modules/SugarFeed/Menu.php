@@ -49,4 +49,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-$module_menu  = Array();
+$module_menu  = array();

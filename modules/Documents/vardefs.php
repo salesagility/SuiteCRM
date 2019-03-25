@@ -452,4 +452,3 @@ $dictionary['Document'] = array('table' => 'documents',
 );
 VardefManager::createVardef('Documents', 'Document', array('default', 'assignable', 'security_groups',
 ));
-

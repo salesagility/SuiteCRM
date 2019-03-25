@@ -64,8 +64,7 @@ $current_row=1;
 $tracker = new Tracker();
 $history = $tracker->get_recently_viewed($current_user->id);
 
-foreach($history as $row)
-{
+foreach ($history as $row) {
     $moduleImage = SugarThemeRegistry::current()->getImageURL("{$row['module_name']}.gif");
     echo <<<EOQ
         <tr>

@@ -44,10 +44,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetFieldImage extends SugarWidgetFieldVarchar
 {
-
-	function displayListPlain($layout_def) {
-		$value = $this->_get_list_value($layout_def);
-		return "<a href=\"javascript:SUGAR.image.lightbox('index.php?entryPoint=download&id=$value&type=SugarFieldImage&isTempFile=1')\">"
-		       . translate("LBL_VIEW_IMAGE") . '</a>';
-	}
+    public function displayListPlain($layout_def)
+    {
+        $value = $this->_get_list_value($layout_def);
+        return "<a href=\"javascript:SUGAR.image.lightbox('index.php?entryPoint=download&id=$value&type=SugarFieldImage&isTempFile=1')\">"
+               . translate("LBL_VIEW_IMAGE") . '</a>';
+    }
 }

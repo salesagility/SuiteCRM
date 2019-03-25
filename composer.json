@@ -9,6 +9,9 @@
     "vendor-dir": "vendor",
     "platform": {
       "php": "5.6.0"
+    },
+    "preferred-install": {
+      "elasticsearch/elasticsearch": "dist"
     }
   },
   "require": {
@@ -35,20 +38,25 @@
     "symfony/options-resolver": "^3.4",
     "symfony/validator": "^3.4",
     "symfony/yaml": "^3.4",
-    "phpmailer/phpmailer": "^6.0"
+    "phpmailer/phpmailer": "^6.0",
+    "soundasleep/html2text": "~0.5",
+    "consolidation/robo": "^1.4"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
-    "mikey179/vfsStream": "1.6.*",
+    "mikey179/vfsstream": "1.6.*",
     "codeception/codeception": "^2.0",
-    "fzaninotto/Faker": "^1.6",
+    "fzaninotto/faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
     "browserstack/browserstack-local": "dev-master",
-    "consolidation/robo": "^1.0.0",
     "mockery/mockery": "^1.1.0",
     "flow/jsonpath": "^0.4"
   },
-  "scripts": {},
+  "scripts": {
+    "post-install-cmd": [
+      "rm -R vendor/elasticsearch/elasticsearch/tests/Elasticsearch/Tests "
+    ]
+  },
   "prefer-stable": true,
   "autoload": {
     "psr-4": {

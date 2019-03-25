@@ -46,9 +46,9 @@ require_once('include/MVC/View/views/view.list.php');
 
 class RolesViewList extends ViewList
 {
- 	public function preDisplay()
- 	{
- 		$this->lv = new ListViewSmarty();
- 		$this->lv->showMassupdateFields = false;
- 	}
+    public function preDisplay()
+    {
+        $this->lv = new ListViewSmarty();
+        $this->lv->showMassupdateFields = false;
+    }
 }
