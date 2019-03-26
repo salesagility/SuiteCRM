@@ -39,17 +39,19 @@
     "symfony/validator": "^3.4",
     "symfony/yaml": "^3.4",
     "phpmailer/phpmailer": "^6.0",
+    "ezyang/htmlpurifier": "^4.10",
+    "leafo/scssphp": "^0.7.7",
     "soundasleep/html2text": "~0.5",
     "consolidation/robo": "^1.4"
   },
   "require-dev": {
-    "leafo/scssphp": "dev-master",
     "mikey179/vfsstream": "1.6.*",
     "codeception/codeception": "^2.0",
     "fzaninotto/faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
     "browserstack/browserstack-local": "dev-master",
     "mockery/mockery": "^1.1.0",
+    "symfony/yaml": "^3.4",
     "flow/jsonpath": "^0.4"
   },
   "scripts": {

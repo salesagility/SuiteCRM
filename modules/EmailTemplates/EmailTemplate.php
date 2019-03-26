@@ -904,7 +904,7 @@ class EmailTemplate extends SugarBean
     {
         global $sugar_config;
         $domain = $sugar_config['site_url'] . '/';
-        $ret = $this->body_html = preg_replace('/(&lt;img src=&quot;)(public\/[^.]*.(jpg|jpeg|png|gif|bmp))(&quot;)/', "$1" . $domain . "$2$4", $this->body_html);
+        $ret = $this->body_html = preg_replace('/(src=&quot;)(public\/[^.]*.(jpg|jpeg|png|gif|bmp))(&quot;)/', "$1" . $domain . "$2$4", $this->body_html);
         return $ret;
     }
 
