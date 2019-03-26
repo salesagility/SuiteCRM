@@ -7747,7 +7747,7 @@ eoq;
 
     public function saveMailBoxValueOfInboundEmail()
     {
-        $query = "update Inbound_email set mailbox = '{$this->email_user}'";
+        $query = "update inbound_email set mailbox = '{$this->mailbox}' where id ='{$this->id}'";
         $this->db->query($query);
     }
 
