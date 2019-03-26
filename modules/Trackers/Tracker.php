@@ -113,8 +113,8 @@ class Tracker extends SugarBean
 	           $module_query = is_array($modules) ? ' AND module_name IN (\'' . implode("','" , $modules) . '\')' :  ' AND module_name = \'' . $modules . '\'';
 	        }
 
-	        $query = 'SELECT item_id, item_summary, module_name, id FROM ' . $this->table_name . ' WHERE user_id = \'' . $user_id . '\' AND deleted = 0 AND visible = 1' . $module_query . ' ORDER BY id DESC LIMIT 1';
-	        $result = $this->db->query($query,true,$query);
+	        $query = 'SELECT item_id, item_summary, module_name, id FROM ' . $this->table_name . ' WHERE user_id = \'' . $user_id . '\' AND deleted = 0 AND visible = 1' . $module_query . ' ORDER BY id DESC ';
+	        $result = $this->db->limitQuery($query,0,1,true,$query);
 	        while(($row = $this->db->fetchByAssoc($result))) {
 	               $breadCrumb->push($row);
 	        }
