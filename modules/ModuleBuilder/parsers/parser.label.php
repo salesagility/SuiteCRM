@@ -295,6 +295,10 @@ class ParserLabel
                     }
                 }
 
+                foreach ($labels as $key => $value) {
+                    $mod_strings[$key] = $value;
+                }
+
                 foreach ($mod_strings as $key => $val) {
                     $out .= override_value_to_string_recursive2('mod_strings', $key, $val);
                 }
@@ -334,6 +338,10 @@ class ParserLabel
                             $changed_mod_strings = true;
                         }
                     }
+                }
+
+                foreach ($labels as $key => $value) {
+                    $mod_strings[$key] = $value;
                 }
 
                 foreach ($mod_strings as $key => $val) {

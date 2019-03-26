@@ -600,7 +600,7 @@ class ListViewDataEmails extends ListViewData
                     $is_imported = [];
                 }
 
-                if ($is_imported instanceof Countable) {
+                if (is_array($is_imported) || $is_imported instanceof Countable) {
                     $count = count($is_imported);
                 } else {
                     LoggerManager::getLogger()->warn('ListViewDataEmails::getEmailRecordFieldValue: email list should be a Countable');

@@ -183,7 +183,7 @@ function getModuleTreeData($module)
                         'module_label'=> $module_label)
     );
 
-    if ($module != '') {
+    if ($module != '' && ACLController::checkAccess($module, 'list', true)) {
         if (isset($beanList[$module]) && $beanList[$module]) {
             $mod = new $beanList[$module]();
 
@@ -194,6 +194,10 @@ function getModuleTreeData($module)
                     if ($mod->load_relationship($name)) {
                         $rel_module = $mod->$name->getRelatedModuleName();
                     }
+                }
+
+                if (!ACLController::checkAccess($rel_module, 'list', true)) {
+                    continue;
                 }
 
                 $rel_module_label = isset($app_list_strings['moduleList'][$rel_module]) ? $app_list_strings['moduleList'][$rel_module] : $rel_module;
