@@ -1,5 +1,6 @@
-{*
-/**
+<?php
+
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -36,33 +37,36 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
-*}
-{include file="_head.tpl" theme_template=true}
-<body onMouseOut="closeMenus();">
+ *
+ * This file was contributed by Urdhva tech private limited <contact@urdhva-tech.com>
+ **/
 
-{if $AUTHENTICATED}
-    <div id="ajaxHeader">
-        {include file="_headerModuleList.tpl" theme_template=true}
-    </div>
-{/if}
-{literal}
-    <iframe id='ajaxUI-history-iframe' src='index.php?entryPoint=getImage&imageName=blank.png' title='empty'
-            style='display:none'></iframe>
-<input id='ajaxUI-history-field' type='hidden'>
-<script type='text/javascript'>
-    if (SUGAR.ajaxUI && !SUGAR.ajaxUI.hist_loaded) {
-        YAHOO.util.History.register('ajaxUILoc', "", SUGAR.ajaxUI.go);
-        {/literal}{if $smarty.request.module != "ModuleBuilder"}{* Module builder will init YUI history on its own *}
-        YAHOO.util.History.initialize("ajaxUI-history-field", "ajaxUI-history-iframe");
-        {/if}{literal}
-    }
-</script>
-{/literal}
-<!-- Start of page content -->
-{if $AUTHENTICATED}
-<div id="bootstrap-container"
-     class="{if $THEME_CONFIG.display_sidebar && $smarty.cookies.sidebartoggle|default:'' != 'collapsed'}col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2{/if} main bootstrap-container">
-    <div id="content" class="content">
-        <div id="pagecontent" class=".pagecontent">
-{/if}
+if (!defined('sugarEntry') || !sugarEntry) {
+	die('Not A Valid Entry Point');
+}
+
+// NOTE => field type
+
+require_once('modules/DynamicFields/templates/Fields/TemplateField.php');
+
+class TemplateWysiwyg extends TemplateField
+{
+	var $type = 'wysiwyg';
+	var $len = '';
+    var $inline_edit = 0;
+
+	function get_field_def()
+	{
+		$def = parent::get_field_def();
+
+		//IF WE HAVE A DEFAULT VALUE SET IT
+		$def['default'] = !empty( $this->default) ? $this->default : $this->default_value;
+		//STILL HAVE THE DB THINK OF THE FIELD AS A text
+
+		$def['dbType'] = 'text';
+        $this->inline_edit =  0;
+        $def['inline_edit'] = 0;
+
+		return $def;
+	}
+}

@@ -1,11 +1,10 @@
 {*
-/**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,33 +35,48 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
-*}
-{include file="_head.tpl" theme_template=true}
-<body onMouseOut="closeMenus();">
+ *
+ * This file was contributed by Urdhva tech private limited <contact@urdhva-tech.com>
+ *}
+<link rel="stylesheet" type="text/css" href="include/SugarFields/Fields/Wysiwyg/css/wysiwyg-editview.css" />
 
-{if $AUTHENTICATED}
-    <div id="ajaxHeader">
-        {include file="_headerModuleList.tpl" theme_template=true}
+{if empty({{sugarvar key='value' string=true}})}
+    {assign var="value" value={{sugarvar key='default_value' string=true}} }
+{else}
+    {assign var="value" value={{sugarvar key='value' string=true}} }
+{/if}
+
+{{if $displayParams.maxlength}}
+    {literal}
+        {{$tiny}}
+    {/literal}
+    <div class="wysiwyg">
+        <textarea
+            id="{{sugarvar key='name'}}"
+            name="{{sugarvar key='name'}}"
+            maxlength="{{$displayParams.maxlength}}"
+            rows="{{$displayParams.rows|default:4}}"
+            cols="{{$displayParams.cols|default:60}}"
+            title='{{$vardef.help}}'
+            tabindex="{{$tabindex}}"
+            {{$displayParams.field}}
+        >{$value}</textarea>
     </div>
-{/if}
-{literal}
-    <iframe id='ajaxUI-history-iframe' src='index.php?entryPoint=getImage&imageName=blank.png' title='empty'
-            style='display:none'></iframe>
-<input id='ajaxUI-history-field' type='hidden'>
-<script type='text/javascript'>
-    if (SUGAR.ajaxUI && !SUGAR.ajaxUI.hist_loaded) {
-        YAHOO.util.History.register('ajaxUILoc', "", SUGAR.ajaxUI.go);
-        {/literal}{if $smarty.request.module != "ModuleBuilder"}{* Module builder will init YUI history on its own *}
-        YAHOO.util.History.initialize("ajaxUI-history-field", "ajaxUI-history-iframe");
-        {/if}{literal}
-    }
-</script>
-{/literal}
-<!-- Start of page content -->
-{if $AUTHENTICATED}
-<div id="bootstrap-container"
-     class="{if $THEME_CONFIG.display_sidebar && $smarty.cookies.sidebartoggle|default:'' != 'collapsed'}col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2{/if} main bootstrap-container">
-    <div id="content" class="content">
-        <div id="pagecontent" class=".pagecontent">
-{/if}
+{{else}}
+    {literal}
+        {{$tiny}}
+    {/literal}
+    <div class="wysiwyg">
+        <textarea
+            id="{{sugarvar key='name'}}"
+            name="{{sugarvar key='name'}}"
+            rows="{{$displayParams.rows|default:4}}"
+            cols="{{$displayParams.cols|default:60}}"
+            title='{{$vardef.help}}'
+            tabindex="{{$tabindex}}"
+            {{$displayParams.field}}
+        >{$value}</textarea>
+    </div>
+{{/if}}
+
+<br />

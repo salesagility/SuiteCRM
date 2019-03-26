@@ -1,11 +1,11 @@
-{*
-/**
+<?php
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,33 +36,29 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
-*}
-{include file="_head.tpl" theme_template=true}
-<body onMouseOut="closeMenus();">
+ *
+ * This file was contributed by Urdhva tech private limited <contact@urdhva-tech.com>
+ **/
 
-{if $AUTHENTICATED}
-    <div id="ajaxHeader">
-        {include file="_headerModuleList.tpl" theme_template=true}
-    </div>
-{/if}
-{literal}
-    <iframe id='ajaxUI-history-iframe' src='index.php?entryPoint=getImage&imageName=blank.png' title='empty'
-            style='display:none'></iframe>
-<input id='ajaxUI-history-field' type='hidden'>
-<script type='text/javascript'>
-    if (SUGAR.ajaxUI && !SUGAR.ajaxUI.hist_loaded) {
-        YAHOO.util.History.register('ajaxUILoc', "", SUGAR.ajaxUI.go);
-        {/literal}{if $smarty.request.module != "ModuleBuilder"}{* Module builder will init YUI history on its own *}
-        YAHOO.util.History.initialize("ajaxUI-history-field", "ajaxUI-history-iframe");
-        {/if}{literal}
-    }
-</script>
-{/literal}
-<!-- Start of page content -->
-{if $AUTHENTICATED}
-<div id="bootstrap-container"
-     class="{if $THEME_CONFIG.display_sidebar && $smarty.cookies.sidebartoggle|default:'' != 'collapsed'}col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2{/if} main bootstrap-container">
-    <div id="content" class="content">
-        <div id="pagecontent" class=".pagecontent">
-{/if}
+/**
+ * Smarty plugin
+ * @package Smarty
+ * @subpackage plugins
+ */
+
+/**
+ * Smarty HTML parser modifier plugin
+ *
+ * Type:     modifier<br>
+ * Name:     htmlparser<br>
+ * Purpose:  parse html to display
+ * @param string
+ * @return string
+ */
+
+function smarty_modifier_htmlparser($string)
+{
+    $string = from_html($string, true);
+
+    return $string;
+}

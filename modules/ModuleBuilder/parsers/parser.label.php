@@ -295,6 +295,7 @@ class ParserLabel
                     }
                 }
 
+                // Fix for issue #551 - save new labels
                 foreach ($labels as $key => $value) {
                     $mod_strings[$key] = $value;
                 }
@@ -340,6 +341,7 @@ class ParserLabel
                     }
                 }
 
+                // Fix for issue #551 - save new labels
                 foreach ($labels as $key => $value) {
                     $mod_strings[$key] = $value;
                 }
