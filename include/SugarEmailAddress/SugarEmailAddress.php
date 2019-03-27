@@ -194,9 +194,9 @@ class SugarEmailAddress extends SugarBean
     );
     
     /**
-     * For saveAtUserProfile() method to telling what 
+     * For saveAtUserProfile() method to telling what
      * went wrong at the last call.
-     * 
+     *
      * @var array
      */
     public $lastSaveAtUserProfileErrors = [];
@@ -277,20 +277,19 @@ class SugarEmailAddress extends SugarBean
      * returns:
      * true - success
      * false - error
-     * 
-     * Note: 
-     * This function could head to many errors but return 
+     *
+     * Note:
+     * This function could head to many errors but return
      * value is false in each case.
      * It is confusing because the ambiguous return value.
-     * This function also stores the error code(s) in 
-     * array SugarEmailAddress::$lastSaveAtUserProfileErrors 
+     * This function also stores the error code(s) in
+     * array SugarEmailAddress::$lastSaveAtUserProfileErrors
      *
      * @param array $request $_REQUEST
      * @return bool
      */
     public function saveAtUserProfile($request)
     {
-        
         $this->lastSaveAtUserProfileErrors = [];
 
         // validate the request first
@@ -686,11 +685,13 @@ class SugarEmailAddress extends SugarBean
                     $emailId = isset($address['email_address_id'])
                     && isset($current_links[$address['email_address_id']])
                         ? $address['email_address_id'] : null;
-                    $emailId = $this->AddUpdateEmailAddress($address['email_address'],
+                    $emailId = $this->AddUpdateEmailAddress(
+                        $address['email_address'],
                         $address['invalid_email'],
                         $address['opt_out'],
                         $emailId,
-                        !is_null($optIn) ? $address['confirm_opt_in_flag'] : null);// this will save the email address if not found
+                        !is_null($optIn) ? $address['confirm_opt_in_flag'] : null
+                    );// this will save the email address if not found
 
                     //verify linkage and flags.
                     $upd_eabr = "";
@@ -1310,7 +1311,7 @@ class SugarEmailAddress extends SugarBean
             $new_confirmed_opt_in = self::COI_STAT_OPT_IN;
         } else {
             // Reset the opt in status
-           $new_confirmed_opt_in = self::COI_STAT_DISABLED;
+            $new_confirmed_opt_in = self::COI_STAT_DISABLED;
         }
 
         // determine how we are going to put in this address - UPDATE or INSERT
@@ -1338,18 +1339,18 @@ class SugarEmailAddress extends SugarBean
                 $upd_r = $this->db->query($upd_q);
 
 
-                    if ($new_confirmed_opt_in === self::COI_STAT_DISABLED) {
-                        // reset confirm opt in
-                        $upd_q = 'UPDATE ' . $this->table_name . ' ' .
+                if ($new_confirmed_opt_in === self::COI_STAT_DISABLED) {
+                    // reset confirm opt in
+                    $upd_q = 'UPDATE ' . $this->table_name . ' ' .
                             'SET '.
                             'confirm_opt_in_date=NULL,' .
                             'confirm_opt_in_sent_date=NULL,' .
                             'confirm_opt_in_fail_date=NULL ' .
                             'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
-                        $upd_r = $this->db->query($upd_q);
-                        // set for audit table detection
-                        $duplicate->confirm_opt_in = null;
-                    }
+                    $upd_r = $this->db->query($upd_q);
+                    // set for audit table detection
+                    $duplicate->confirm_opt_in = null;
+                }
             }
 
             if (!empty($this->fetched_row)) {
@@ -1564,10 +1565,14 @@ class SugarEmailAddress extends SugarBean
                 $prefillDataArr[] = array(
                     'email_address' => $email,
                     'primary_address' => isset($_REQUEST['emailAddressPrimaryFlag']) && $_REQUEST['emailAddressPrimaryFlag'] == $key,
-                    'invalid_email' => isset($_REQUEST['emailAddressInvalidFlag']) && in_array($key,
-                            $_REQUEST['emailAddressInvalidFlag']),
-                    'opt_out' => isset($_REQUEST['emailAddressOptOutFlag']) && in_array($key,
-                            $_REQUEST['emailAddressOptOutFlag']),
+                    'invalid_email' => isset($_REQUEST['emailAddressInvalidFlag']) && in_array(
+                        $key,
+                            $_REQUEST['emailAddressInvalidFlag']
+                    ),
+                    'opt_out' => isset($_REQUEST['emailAddressOptOutFlag']) && in_array(
+                        $key,
+                            $_REQUEST['emailAddressOptOutFlag']
+                    ),
                     'reply_to_address' => false
                 );
                 $key = $module . $widget_id . 'emailAddress' . ++$count;
@@ -1606,8 +1611,10 @@ class SugarEmailAddress extends SugarBean
         $this->smarty->assign('prefillData', $prefillData);
         $this->smarty->assign('tabindex', $tabindex);
         //Set addDefaultAddress flag (do not add if it's from the Email module)
-        $this->smarty->assign('addDefaultAddress',
-            (isset($_REQUEST['module']) && $_REQUEST['module'] == 'Emails') ? 'false' : 'true');
+        $this->smarty->assign(
+            'addDefaultAddress',
+            (isset($_REQUEST['module']) && $_REQUEST['module'] == 'Emails') ? 'false' : 'true'
+        );
         $form = $this->view;
 
         //determine if this should be a quickcreate form, or a quick create form under subpanels

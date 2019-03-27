@@ -48,15 +48,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['UserPreferences'] = array ('column_fields' => Array(
-		'id'
-		,'category'
-		,'name'
-		,'contents'
-		,'assigned_user_id'
-		,'date_entered'
-		,'date_modified'
-		,'deleted'
-		),
+$fields_array['UserPreferences'] = array('column_fields' => array(
+        'id'
+        ,'category'
+        ,'name'
+        ,'contents'
+        ,'assigned_user_id'
+        ,'date_entered'
+        ,'date_modified'
+        ,'deleted'
+        ),
         'list_fields' =>  array('id', 'contents','category'),
 );

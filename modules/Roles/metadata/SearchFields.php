@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$searchFields['Roles'] = 
-	array (
-		'name' => array( 'query_type'=>'default'),
-		);
+$searchFields['Roles'] =
+    array(
+        'name' => array( 'query_type'=>'default'),
+        );

@@ -67,8 +67,10 @@ function getDisplayForField($modulePath, $field, $reportModule)
             continue;
         }
         if (!empty($currentBean->field_name_map[$relName]['vname'])) {
-            $moduleLabel = trim(translate($currentBean->field_name_map[$relName]['vname'], $currentBean->module_dir),
-                ':');
+            $moduleLabel = trim(
+                translate($currentBean->field_name_map[$relName]['vname'], $currentBean->module_dir),
+                ':'
+            );
         }
         $thisModule = getRelatedModule($currentBean->module_dir, $relName);
         $currentBean = BeanFactory::getBean($thisModule);
@@ -93,19 +95,21 @@ function getDisplayForField($modulePath, $field, $reportModule)
 
 function requestToUserParameters($reportBean = null)
 {
+    global $app_list_strings;
     $params = array();
-    if(!empty($_REQUEST['parameter_id'])) {
+    if (!empty($_REQUEST['parameter_id'])) {
         $dateCount = 0;
         foreach ($_REQUEST['parameter_id'] as $key => $parameterId) {
-
             if ($_REQUEST['parameter_type'][$key] === 'Multi') {
-                $_REQUEST['parameter_value'][$key] = encodeMultienumValue(explode(',',
-                    $_REQUEST['parameter_value'][$key]));
+                $_REQUEST['parameter_value'][$key] = encodeMultienumValue(explode(
+                    ',',
+                    $_REQUEST['parameter_value'][$key]
+                ));
             }
 
             $condition = BeanFactory::getBean('AOR_Conditions', $_REQUEST['parameter_id'][$key]);
             $value = $_REQUEST['parameter_value'][$key];
-            if ($reportBean && $condition) {
+            if ($reportBean && $condition && !array_key_exists($value,$app_list_strings['date_time_period_list'])){
                 $value = fixUpFormatting($reportBean->report_module, $condition->field, $value);
             }
 
@@ -554,8 +558,11 @@ function convertToDateTime($value)
     $formattedValue .= ' 00:00:00';
     $userTimezone = $current_user->getPreference('timezone');
     $utz = new DateTimeZone($userTimezone);
-    $dateTime = DateTime::createFromFormat('Y-m-d H:i:s',
-        $formattedValue, $utz);
+    $dateTime = DateTime::createFromFormat(
+        'Y-m-d H:i:s',
+        $formattedValue,
+        $utz
+    );
     $dateTime->setTimezone(new DateTimeZone('UTC'));
 
     return $dateTime;

@@ -52,6 +52,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 function get_layout_defs()
 {
     //TODO add global memory cache support here.  If there is an in memory cache, leverage it.
-	global $layout_defs;
-	return $layout_defs;
+    global $layout_defs;
+    return $layout_defs;
 }

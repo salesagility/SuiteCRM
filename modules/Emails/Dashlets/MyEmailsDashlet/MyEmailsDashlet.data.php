@@ -49,7 +49,7 @@ global $current_user, $app_strings;
 $dashletData['MyEmailsDashlet']['searchFields'] = array(
                                                        'date_sent_received'  => array('default' => ''),
                                                        'name'  => array('default' => ''),
-													   //'from_addr_name' => array('default' => ''),
+                                                       //'from_addr_name' => array('default' => ''),
                                                        'assigned_user_id'   => array('default' => ''),
     'category_id'      => array('default' => ''),
                                                        );
@@ -57,7 +57,7 @@ $dashletData['MyEmailsDashlet']['columns'] = array(
                                                    'from_addr' => array('width'   => '15',
                                                                        'label'   => 'LBL_FROM',
                                                                        'default' => true),
-												   'name' => array('width'   => '40',
+                                                   'name' => array('width'   => '40',
                                                                    'label'   => 'LBL_SUBJECT',
                                                                    'link'    => true,
                                                                    'default' => true),
@@ -86,4 +86,3 @@ $dashletData['MyEmailsDashlet']['columns'] = array(
         'label' => 'LBL_CATEGORY',
         'default' => true),
 );
-

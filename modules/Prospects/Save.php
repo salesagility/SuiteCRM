@@ -50,7 +50,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 require_once('modules/Prospects/ProspectFormBase.php');
 $prospectForm = new ProspectFormBase();
-if (!isset($_REQUEST['return_module'])) $_REQUEST['return_module']='Prospects';
-if (!isset($_REQUEST['return_action'])) $_REQUEST['return_action']='index';
+if (!isset($_REQUEST['return_module'])) {
+    $_REQUEST['return_module']='Prospects';
+}
+if (!isset($_REQUEST['return_action'])) {
+    $_REQUEST['return_action']='index';
+}
 
 $prospectForm->handleSave('', true, false);

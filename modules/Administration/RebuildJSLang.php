@@ -41,8 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if(is_admin($current_user)){
-
+if (is_admin($current_user)) {
     global $mod_strings, $sugar_config;
     echo $mod_strings['LBL_REBUILD_JAVASCRIPT_LANG_DESC'];
 
@@ -51,7 +50,6 @@ if(is_admin($current_user)){
 
     //remove language cache files
     LanguageManager::clearLanguageCache();
-}
-else{
-	sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
+} else {
+    sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }

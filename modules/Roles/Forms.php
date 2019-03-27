@@ -50,13 +50,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
-function get_validate_record_js () {
-global $mod_strings;
-global $app_strings;
+function get_validate_record_js()
+{
+    global $mod_strings;
+    global $app_strings;
 
-$err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
+    $err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
 
-$the_script  = <<<EOQ
+    $the_script  = <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 function verify_data(form) {
@@ -73,15 +74,12 @@ function verify_data(form) {
 
 EOQ;
 
-return $the_script;
-
-
-
+    return $the_script;
 }
 
 function get_chooser_js()
 {
-$the_script  = <<<EOQ
+    $the_script  = <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 <!--  to hide script contents from old browsers
@@ -112,5 +110,5 @@ function set_chooser()
 </script>
 EOQ;
 
-return $the_script;
+    return $the_script;
 }

@@ -53,7 +53,7 @@ class EmailMock extends Email
     /**
      *
      * @param int $err
-     */    
+     */
     public function setLastSaveAndStoreInSentErrorPublic($err)
     {
         return parent::setLastSaveAndStoreInSentError($err);
@@ -67,7 +67,8 @@ class EmailMock extends Email
      * @global $current_user
      * @return object mail SugarPHPMailer object
      */
-    public function setMailer($mail, $mailer_id = '', $ieId = '') {
+    public function setMailer($mail, $mailer_id = '', $ieId = '')
+    {
         return $mail; // skipp oe settings
     }
 }

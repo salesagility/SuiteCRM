@@ -86,7 +86,11 @@ class EmailsDataAddress
             'type' => $type,
             'id' => $id,
             'attributes' => $this->getDataArrayAttributes(
-                    $attributesReplyTo, $attributesFrom, $attributesName, $attributesOe),
+                    $attributesReplyTo,
+                $attributesFrom,
+                $attributesName,
+                $attributesOe
+            ),
             'prepend' => $prepend,
             'isPersonalEmailAccount' => $isPersonalEmailAccount,
             'isGroupEmailAccount' => $isGroupEmailAccount,

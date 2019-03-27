@@ -45,6 +45,75 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $layout_defs['Campaigns'] = array(
     // list of what Subpanels to show in the DetailView
     'subpanel_setup' => array(
+        'history' => array(
+            'order' => 5,
+            'sort_order' => 'desc',
+            'sort_by' => 'date_entered',
+            'title_key' => 'LBL_HISTORY_SUBPANEL_TITLE',
+            'type' => 'collection',
+            'subpanel_name' => 'history',   //this values is not associated with a physical file.
+            'module' => 'History',
+
+            'top_buttons' => array(
+                array('widget_class' => 'SubPanelTopCreateNoteButton'),
+                array('widget_class' => 'SubPanelTopSummaryButton'),
+                array('widget_class' => 'SubPanelTopFilterButton'),
+            ),
+
+            'collection_list' => array(
+                'meetings' => array(
+                    'module' => 'Meetings',
+                    'subpanel_name' => 'ForHistory',
+                    'get_subpanel_data' => 'meetings',
+                ),
+                'tasks' => array(
+                    'module' => 'Tasks',
+                    'subpanel_name' => 'ForHistory',
+                    'get_subpanel_data' => 'tasks',
+                ),
+                'calls' => array(
+                    'module' => 'Calls',
+                    'subpanel_name' => 'ForHistory',
+                    'get_subpanel_data' => 'calls',
+                ),
+                'notes' => array(
+                    'module' => 'Notes',
+                    'subpanel_name' => 'ForHistory',
+                    'get_subpanel_data' => 'notes',
+                ),
+            ),
+            'searchdefs' => array(
+                'collection' =>
+                    array(
+                        'name' => 'collection',
+                        'label' => 'LBL_COLLECTION_TYPE',
+                        'type' => 'enum',
+                        'options' => $GLOBALS['app_list_strings']['collection_temp_list'],
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'name' =>
+                    array(
+                        'name' => 'name',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'current_user_only' =>
+                    array(
+                        'name' => 'current_user_only',
+                        'label' => 'LBL_CURRENT_USER_FILTER',
+                        'type' => 'bool',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'date_modified' =>
+                    array(
+                        'name' => 'date_modified',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+            ),
+        ),
         'prospectlists' => array(
             'order' => 10,
             'sort_order' => 'asc',
@@ -212,7 +281,7 @@ $layout_defs['Campaigns'] = array(
             'title_key' => 'LBL_OPPORTUNITY_SUBPANEL_TITLE',
             'top_buttons' => array(),
         ),
-        'surveyresponses_campaigns' => array (
+        'surveyresponses_campaigns' => array(
           'order' => 100,
           'module' => 'SurveyResponses',
           'subpanel_name' => 'default',
@@ -221,13 +290,13 @@ $layout_defs['Campaigns'] = array(
           'title_key' => 'LBL_SURVEYRESPONSES_CAMPAIGNS_FROM_SURVEYRESPONSES_TITLE',
           'get_subpanel_data' => 'surveyresponses_campaigns',
           'top_buttons' =>
-          array (
+          array(
             0 =>
-            array (
+            array(
               'widget_class' => 'SubPanelTopButtonQuickCreate',
             ),
             1 =>
-            array (
+            array(
               'widget_class' => 'SubPanelTopSelectButton',
               'mode' => 'MultiSelect',
             ),

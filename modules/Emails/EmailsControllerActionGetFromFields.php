@@ -50,7 +50,8 @@ require_once __DIR__ . '/EmailsDataAddressCollector.php';
  *
  * @author gyula
  */
-class EmailsControllerActionGetFromFields {
+class EmailsControllerActionGetFromFields
+{
 
     /**
      *
@@ -60,27 +61,29 @@ class EmailsControllerActionGetFromFields {
     
     /**
      *
-     * @var EmailsDataAddressCollector 
+     * @var EmailsDataAddressCollector
      */
     protected $collector;
 
     /**
-     * 
+     *
      * @param User $currentUser
      * @param EmailsDataAddressCollector $collector
      */
-    public function __construct(User $currentUser, EmailsDataAddressCollector $collector) {
+    public function __construct(User $currentUser, EmailsDataAddressCollector $collector)
+    {
         $this->currentUser = $currentUser;
         $this->collector = $collector;
     }
 
     /**
-     * 
+     *
      * @param Email $email
      * @param InboundEmail $ie
      * @return string JSON
      */
-    public function handleActionGetFromFields(Email $email, InboundEmail $ie) {
+    public function handleActionGetFromFields(Email $email, InboundEmail $ie)
+    {
         $email->email2init();
         $ie->email = $email;
         $ieAccounts = $ie->retrieveAllByGroupIdWithGroupAccounts($this->currentUser->id);
@@ -90,7 +93,11 @@ class EmailsControllerActionGetFromFields {
         $defaultEmailSignature = $this->getDefaultSignatures();
         $prependSignature = $this->currentUser->getPreference('signature_prepend');
         $dataAddresses = $this->collector->collectDataAddressesFromIEAccounts(
-            $ieAccounts, $showFolders, $prependSignature, $emailSignatures, $defaultEmailSignature
+            $ieAccounts,
+            $showFolders,
+            $prependSignature,
+            $emailSignatures,
+            $defaultEmailSignature
         );
 
         $dataEncoded = json_encode(array('data' => $dataAddresses), JSON_UNESCAPED_UNICODE);
@@ -103,7 +110,8 @@ class EmailsControllerActionGetFromFields {
      * @param string|null $accountSignatures
      * @return array|null
      */
-    protected function getEmailSignatures($accountSignatures = null) {
+    protected function getEmailSignatures($accountSignatures = null)
+    {
         if ($accountSignatures != null) {
             $emailSignatures = unserialize(base64_decode($accountSignatures));
         } else {
@@ -118,7 +126,8 @@ class EmailsControllerActionGetFromFields {
      *
      * @return array
      */
-    protected function getDefaultSignatures() {
+    protected function getDefaultSignatures()
+    {
         $defaultEmailSignature = $this->currentUser->getDefaultSignature();
         if (empty($defaultEmailSignature)) {
             $defaultEmailSignature = array(
@@ -132,5 +141,4 @@ class EmailsControllerActionGetFromFields {
 
         return $defaultEmailSignature;
     }
-    
 }

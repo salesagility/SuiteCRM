@@ -49,6 +49,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * *******************************************************************************/
 
 $dictionary['MergeRecord'] = array(
-	'table'=>'does_not_exist',
-    'fields' => array (),
+    'table'=>'does_not_exist',
+    'fields' => array(),
 );
