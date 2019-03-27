@@ -44,7 +44,6 @@ use DBManager;
 use DBManagerFactory;
 use mysqli_result;
 use MysqliManager;
-use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
 if (!defined('sugarEntry') || !sugarEntry) {
