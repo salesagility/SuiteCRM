@@ -37,7 +37,8 @@
     "symfony/yaml": "^3.4",
     "phpmailer/phpmailer": "^6.0",
     "soundasleep/html2text": "~0.5",
-    "consolidation/robo": "^1.4"
+    "consolidation/robo": "^1.4",
+    "mpdf/mpdf": "^6.1"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
