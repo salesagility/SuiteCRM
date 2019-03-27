@@ -67,7 +67,10 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
         $state->pushGlobals();
-        
+
+        // suppress output during the test
+        $this->setOutputCallback(function() {});
+
         // test
         
         

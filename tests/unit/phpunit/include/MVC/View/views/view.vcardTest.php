@@ -19,7 +19,7 @@ class ViewVcardTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $view = new ViewVcard();
         $view->module = 'Contacts';
         $view->bean = new Contact();
-
+        $this->expectOutputRegex('/.*BEGIN:VCARD.*/');
         //execute the method and test if it works and does not throws an exception other than headers output exception.
         try {
             $view->display();
