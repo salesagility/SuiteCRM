@@ -158,15 +158,15 @@ class Sugar_Smarty extends Smarty
         $this->assign('APP_CONFIG', $sugar_config);
 
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel('sugar_smarty_errors');
+        $state->pushErrorLevel('sugar_smarty_errors', 'error_reporting', false);
         
         if (!(isset($sugar_config['developerMode']) && $sugar_config['developerMode'])) {
             $level = isset($sugar_config['smarty_error_level']) ? $sugar_config['smarty_error_level'] : 0;
             error_reporting($level);
         }
         $fetch = parent::fetch(get_custom_file_if_exists($resource_name), $cache_id, $compile_id, $display);
-        
-        $state->popErrorLevel('sugar_smarty_errors');
+
+        $state->popErrorLevel('sugar_smarty_errors', 'error_reporting', false);
         
         return $fetch;
     }
