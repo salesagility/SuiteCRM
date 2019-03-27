@@ -80,7 +80,10 @@ class SugarControllerTest extends StateCheckerPHPUnitTestCaseAbstract
         $state = new StateSaver();
         $state->pushTable('tracker');
         $state->pushGlobals();
-        
+
+        // suppress output during the test
+        $this->setOutputCallback(function() {});
+
         // test
         
         
