@@ -43,6 +43,7 @@
     "leafo/scssphp": "^0.7.7",
     "mikey179/vfsstream": "1.6.*",
     "mockery/mockery": "^0.9.9",
+    "roave/security-advisories": "dev-master",
     "symfony/yaml": "^3.4"
   },
   "scripts": {},
