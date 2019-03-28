@@ -35,7 +35,7 @@
     "tuupola/slim-jwt-auth": "^2.0"
   },
   "require-dev": {
-    "browserstack/browserstack-local": "dev-master",
+    "browserstack/browserstack-local": "^1.1",
     "codeception/codeception": "^2.0",
     "flow/jsonpath": "^0.4",
     "fzaninotto/faker": "^1.6",
