@@ -65,7 +65,8 @@
   "extra": {
       "merge-plugin": {
           "include": [
-              "composer.ext.json"
+              "composer.ext.json",
+              "custom/Extension/application/Ext/Composer/*/*.json"
           ],
           "recurse": true,
           "replace": false,
