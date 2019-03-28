@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,17 +34,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 require_once('data/SugarBean.php');
 require_once('include/OutboundEmail/OutboundEmail.php');
 
@@ -90,8 +87,15 @@ class Administration extends SugarBean {
         self::__construct();
     }
 
+    /**
+     * @param bool $category
+     * @param bool $clean
+     * @return $this|null
+     */
+    public function retrieveSettings($category = false, $clean = false)
+    {
+        $categoryQuoted = $this->db->quote($category);
 
-    function retrieveSettings($category = FALSE, $clean=false) {
         // declare a cache for all settings
         $settings_cache = sugar_cache_retrieve('admin_settings_cache');
 
@@ -108,8 +112,8 @@ class Administration extends SugarBean {
             }
         }
 
-        if ( ! empty($category) ) {
-            $query = "SELECT category, name, value FROM {$this->table_name} WHERE category = '{$category}'";
+        if (!empty($category)) {
+            $query = "SELECT category, name, value FROM {$this->table_name} WHERE category = '$categoryQuoted'";
         } else {
             $query = "SELECT category, name, value FROM {$this->table_name}";
         }
@@ -179,21 +183,33 @@ class Administration extends SugarBean {
         $this->retrieveSettings(false, true);
     }
 
-    function saveSetting($category, $key, $value) {
-        $result = $this->db->query("SELECT count(*) AS the_count FROM config WHERE category = '{$category}' AND name = '{$key}'");
+    /**
+     * @param $category string
+     * @param $key string
+     * @param $value string
+     * @return int
+     */
+    public function saveSetting($category, $key, $value)
+    {
+        $categoryQuoted = $this->db->quote($category);
+        $keyQuoted = $this->db->quote($key);
+        $valueQuoted = $this->db->quote($value);
+
+        $result = $this->db->query("SELECT count(*) AS the_count FROM config WHERE category = '$categoryQuoted' AND name = '$keyQuoted'");
         $row = $this->db->fetchByAssoc($result);
         $row_count = $row['the_count'];
 
-        if($category."_".$key == 'ldap_admin_password' || $category."_".$key == 'proxy_password')
-            $value = $this->encrpyt_before_save($value);
-
-        if( $row_count == 0){
-            $result = $this->db->query("INSERT INTO config (value, category, name) VALUES ('$value','$category', '$key')");
+        if ($category . "_" . $keyQuoted === 'ldap_admin_password' || $categoryQuoted . "_" . $keyQuoted === 'proxy_password') {
+            $valueQuoted = $this->encrpyt_before_save($value);
         }
-        else{
-            $result = $this->db->query("UPDATE config SET value = '{$value}' WHERE category = '{$category}' AND name = '{$key}'");
+
+        if ($row_count == 0) {
+            $result = $this->db->query("INSERT INTO config (value, category, name) VALUES ('$valueQuoted','$categoryQuoted', '$keyQuoted')");
+        } else {
+            $result = $this->db->query("UPDATE config SET value = '$valueQuoted' WHERE category = '$categoryQuoted' AND name = '$keyQuoted'");
         }
         sugar_cache_clear('admin_settings_cache');
+
         return $this->db->getAffectedRowCount($result);
     }
 
@@ -203,4 +219,4 @@ class Administration extends SugarBean {
             : Array(false, false);
     }
 }
-?>
+
