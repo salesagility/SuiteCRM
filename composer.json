@@ -65,7 +65,7 @@
   },
   "scripts": {
     "post-install-cmd": [
-      "rm -R vendor/elasticsearch/elasticsearch/tests/Elasticsearch/Tests "
+      "rm -R -f vendor/elasticsearch/elasticsearch/tests/Elasticsearch/Tests"
     ]
   },
   "prefer-stable": true,
