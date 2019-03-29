@@ -1,10 +1,18 @@
 {
   "name": "salesagility/suitecrm",
   "description": "SuiteCRM",
+  "homepage": "https://suitecrm.com",
   "type": "project",
   "license": "GPL-3.0",
   "authors": [],
   "minimum-stability": "dev",
+  "support": {
+    "issues": "https://github.com/salesagility/SuiteCRM/issues",
+    "wiki": "https://docs.suitecrm.com",
+    "forum": "https://suitecrm.com/suitecrm/forum",
+    "chat": "https://gitter.im/suitecrm/Lobby",
+    "source": "https://github.com/salesagility/SuiteCRM"
+  },
   "config": {
     "vendor-dir": "vendor",
     "platform": {
