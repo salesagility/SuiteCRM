@@ -62,7 +62,6 @@
     "mikey179/vfsstream": "1.6.*",
     "mockery/mockery": "^1.1.0",
     "roave/security-advisories": "dev-master",
-    "symfony/yaml": "^3.4"
   },
   "scripts": {
     "post-install-cmd": [
