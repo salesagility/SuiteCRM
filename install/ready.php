@@ -102,7 +102,7 @@ if (empty($memory_limit)) {
     $memory_limit = "-1";
 }
 if (!defined('SUGARCRM_MIN_MEM')) {
-    define('SUGARCRM_MIN_MEM', 40*1024*1024);
+    define('SUGARCRM_MIN_MEM', 64*1024*1024);
 }
 $sugarMinMem = constant('SUGARCRM_MIN_MEM');
 // logic based on: http://us2.php.net/manual/en/ini.core.php#ini.memory-limit

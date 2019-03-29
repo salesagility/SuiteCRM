@@ -270,6 +270,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
                 [
                     'mobile' => '9788363300',
                     'work' => '7111123512',
+                    'home' => '4451633872',
                 ],
             'address' => [
                 'primary' => [

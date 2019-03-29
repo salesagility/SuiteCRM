@@ -275,8 +275,7 @@
                         {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
                         <li class="topnav {if $smarty.foreach.groupList.last}all{/if}">
                             <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">
-                            <a href="#" id="grouptab_{$smarty.foreach.groupList.index}" class="dropdown-toggle grouptab"
-                               data-toggle="dropdown">{$group}</a>
+                            <a href="#" id="grouptab_{$smarty.foreach.groupList.index}" class="dropdown-toggle grouptab">{$group}</a>
                             <span class="notCurrentTabRight">&nbsp;</span>
                             <ul class="dropdown-menu" role="menu" {if $smarty.foreach.groupList.last} class="All"{/if}>
                                 {foreach from=$modules.modules item=module key=modulekey}
@@ -415,11 +414,11 @@
                             <span class="notCurrentTabRight">&nbsp;</span>
                             <ul id="overflow-menu" class="dropdown-menu" role="menu">
                                 <!--nav items without actions -->
-                                    {foreach from=$modules.extra item=submodulename key=submodule}
-                                        <li class="topnav without-actions">
-                                            <span class=" notCurrentTab"> <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a> </span>
-                                        </li>
-                                    {/foreach}
+                                {foreach from=$modules.extra item=submodulename key=submodule}
+                                    <li class="topnav without-actions">
+                                        <span class=" notCurrentTab"> <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a> </span>
+                                    </li>
+                                {/foreach}
                             </ul>
                         </li>
                     {/if}
@@ -729,7 +728,7 @@
 
         <a id="buttontoggle" class="buttontoggle"><span></span></a>
 
-             <div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
+        <div {if $smarty.cookies.sidebartoggle|default:'' == 'collapsed'}style="display:none"{/if}
              class="sidebar">
 
                 <div id="actionMenuSidebar" class="actionMenuSidebar">
