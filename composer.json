@@ -10,6 +10,8 @@
     "platform": {
       "php": "5.6.0"
     },
+    "optimize-autoloader": true,
+    "sort-packages": true,
     "preferred-install": {
       "elasticsearch/elasticsearch": "dist"
     }
@@ -39,19 +41,19 @@
     "symfony/yaml": "^3.4",
     "phpmailer/phpmailer": "^6.0",
     "ezyang/htmlpurifier": "^4.10",
-    "leafo/scssphp": "^0.7.7",
     "soundasleep/html2text": "~0.5",
     "consolidation/robo": "^1.4"
   },
   "require-dev": {
-    "mikey179/vfsstream": "1.6.*",
+    "browserstack/browserstack-local": "dev-master",
     "codeception/codeception": "^2.0",
+    "flow/jsonpath": "^0.4",
     "fzaninotto/faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
-    "browserstack/browserstack-local": "dev-master",
+    "leafo/scssphp": "^0.7.7",
+    "mikey179/vfsstream": "1.6.*",
     "mockery/mockery": "^1.1.0",
-    "symfony/yaml": "^3.4",
-    "flow/jsonpath": "^0.4"
+    "symfony/yaml": "^3.4"
   },
   "scripts": {
     "post-install-cmd": [
