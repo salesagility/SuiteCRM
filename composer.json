@@ -34,7 +34,6 @@
     "consolidation/robo": "^1.4",
     "elasticsearch/elasticsearch": "^5.3",
     "ezyang/htmlpurifier": "^4.10",
-    "filp/whoops": "^2.2",
     "google/apiclient": "^2.0",
     "google/recaptcha": "^1.1",
     "justinrainbow/json-schema": "^5.2",
@@ -55,13 +54,14 @@
   "require-dev": {
     "browserstack/browserstack-local": "^1.1",
     "codeception/codeception": "^2.0",
+    "filp/whoops": "^2.3",
     "flow/jsonpath": "^0.4",
     "fzaninotto/faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
     "leafo/scssphp": "^0.7.7",
     "mikey179/vfsstream": "1.6.*",
     "mockery/mockery": "^1.1.0",
-    "roave/security-advisories": "dev-master",
+    "roave/security-advisories": "dev-master"
   },
   "scripts": {
     "post-install-cmd": [
