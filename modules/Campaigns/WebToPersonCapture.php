@@ -140,6 +140,9 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 } else {
                     if (array_key_exists($k, $person) || array_key_exists($k, $person->field_defs)) {
                         if (in_array($k, $possiblePersonCaptureFields)) {
+                            if (is_array($v)) {
+                                $v = encodeMultienumValue($v);
+                            }
                             $person->$k = $v;
                         } else {
                             LoggerManager::getLogger()->warn('Trying to set a non-valid field via WebToPerson Form: ' . $k);
