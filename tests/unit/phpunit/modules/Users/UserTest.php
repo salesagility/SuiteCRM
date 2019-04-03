@@ -845,9 +845,10 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $emailAddress->addAddress('abc@email.com');
 
         $expected =
-            '<a class="email-link"'
-            . ' onclick="$(document).openComposeViewModal(this);" data-module="Accounts" '
-            . 'data-record-id="" data-module-name="test" data-email-address="abc@email.com">abc@email.com</a>';
+            '            <a class="email-link" href="mailto:"
+                    onclick="$(document).openComposeViewModal(this);"
+                    data-module="Accounts" data-record-id=""
+                    data-module-name="test" data-email-address="abc@email.com">abc@email.com</a>';
         $actual = $user->getEmailLink2("abc@email.com", $account);
         $this->assertSame($expected, $actual);
 
@@ -862,9 +863,10 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $emailAddress->addAddress('abc@email.com');
 
         $expected =
-            '<a class="email-link"'
-            . ' onclick="$(document).openComposeViewModal(this);" data-module="Contacts"'
-            . ' data-record-id="" data-module-name="test" data-email-address="abc@email.com">abc@email.com</a>';
+            '            <a class="email-link" href="mailto:"
+                    onclick="$(document).openComposeViewModal(this);"
+                    data-module="Contacts" data-record-id=""
+                    data-module-name="test" data-email-address="abc@email.com">abc@email.com</a>';
         $actual = $user->getEmailLink2("abc@email.com", $contact);
         $this->assertSame($expected, $actual);
         
