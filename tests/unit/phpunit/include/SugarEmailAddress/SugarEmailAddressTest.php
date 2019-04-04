@@ -736,9 +736,8 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testPopulateAddresses()
     {
-        if (!empty($_REQUEST)) {
-            $req = $_REQUEST;
-        }
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
 
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
@@ -956,11 +955,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $GLOBALS['log'] = $logger;
 
-        if (!empty($req)) {
-            $_REQUEST = $req;
-        } else {
-            unset($_REQUEST);
-        }
+        $state->popGlobals();
     }
 
     /**
