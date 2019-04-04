@@ -116,10 +116,11 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'SEND_ATTEMPTS' => '0',
             'DELETED' => '0',
             'RELATED_CONFIRM_OPT_IN' => '0',
-            'EMAIL1_LINK' =>
-                '<a class="email-link"'
-                . ' onclick="$(document).openComposeViewModal(this);"'
-                . ' data-module="EmailMan" data-record-id="" data-module-name="" data-email-address=""></a>',
+            'EMAIL1_LINK' => '            <a class="email-link" href="mailto:"
+                    onclick="$(document).openComposeViewModal(this);"
+                    data-module="EmailMan" data-record-id=""
+                    data-module-name="" data-email-address=""
+                ></a>'
         );
 
         $actual = $emailMan->get_list_view_data();
