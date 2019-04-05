@@ -7,7 +7,9 @@ require_once 'include/entryPoint.php';
 $sugar_view=new SugarView();
 $favicon = $sugar_view->getFavicon();
 $shortname = $GLOBALS['system_config']->settings['system_name'];
-$searchuri="{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}" . dirname($_SERVER['REQUEST_URI']). "/index.php?action=UnifiedSearch&amp;module=Home&amp;search_form=false&amp;advanced=false&amp;query_string={searchTerms}";
+$searchuri="{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}"
+    . (in_array("{$_SERVER['REQUEST_SCHEME']}{$_SERVER['SERVER_PORT']}",["http80","https443"])?"":":{$_SERVER['SERVER_PORT']}")
+    . dirname($_SERVER['REQUEST_URI']). "index.php?action=UnifiedSearch&amp;module=Home&amp;search_form=false&amp;advanced=false&amp;query_string={searchTerms}";
 
 header("Content-type: text/xml");
 print <<<EOF
