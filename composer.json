@@ -40,6 +40,7 @@
     "phpmailer/phpmailer": "^6.0",
     "ezyang/htmlpurifier": "^4.10",
     "leafo/scssphp": "^0.7.7",
+    "fullcalendar/fullcalendar": "^3.9",
     "soundasleep/html2text": "~0.5",
     "consolidation/robo": "^1.4"
   },
