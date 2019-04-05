@@ -80,7 +80,7 @@ class Filter
      * @param array $params
      * @return array
      */
-    protected function addDeletedParameter(array $params): array
+    protected function addDeletedParameter(array $params)
     {
         if (!array_key_exists('deleted', $params)) {
             $params['deleted'] = [
