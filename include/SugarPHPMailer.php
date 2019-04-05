@@ -303,7 +303,7 @@ eoq;
         //Replace any embeded images using the secure entryPoint for src url.
         $this->replaceImageByRegex(
             "(?:{$sugar_config['site_url']})?index.php[?]entryPoint=download&(?:amp;)?[^\"]+?id=",
-            'upload://',
+            'upload/',
             true
         );
 
@@ -322,13 +322,13 @@ eoq;
                     $filename = $note->file->original_file_name;
                     $mime_type = $note->file->mime_type;
                 } else {
-                    $file_location = "upload://{$note->id}";
+                    $file_location = "upload/{$note->id}";
                     $filename = $note->id . $note->filename;
                     $mime_type = $note->file_mime_type;
                 }
             } elseif ($note->object_name === 'DocumentRevision') { // from Documents
                 $filename = $note->id . $note->filename;
-                $file_location = "upload://$filename";
+                $file_location = "upload/$filename";
                 $mime_type = $note->file_mime_type;
             }
 
