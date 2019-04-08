@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Attributes extends BaseOption
 {
-    const REGEX_ATTRIBUTE_PATTERN = '/[\b\B]/';
+    const REGEX_ATTRIBUTE_PATTERN = '/\b\B/';
 
     /**
      * @inheritdoc
