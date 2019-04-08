@@ -35,7 +35,7 @@ class RelationshipObjectHelper
         foreach (array_unique($relationships) as $module) {
             $linkResponse = new LinksResponse();
             $linkResponse->setRelated(
-                sprintf('/%s/%s/%s', $uriPath, 'relationships', strtolower($module))
+                sprintf('%s/%s/%s', $uriPath, 'relationships', strtolower($module))
             );
 
             $relationshipsLinks[$module] = ['links' => $linkResponse];
