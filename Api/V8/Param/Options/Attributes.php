@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Param\Options;
 
 use InvalidArgumentException;
@@ -9,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Attributes extends BaseOption
 {
-    const REGEX_FIELD_PATTERN = '/[\b\B]/';
+    const REGEX_ATTRIBUTE_PATTERN = '/[\b\B]/';
 
     /**
      * @inheritdoc
@@ -22,15 +23,14 @@ class Attributes extends BaseOption
             ->setDefined('attributes')
             ->setAllowedTypes('attributes', 'array')
             ->setAllowedValues('attributes', $this->validatorFactory->createClosureForIterator([
-                new Assert\NotBlank(),
                 new Assert\Regex([
-                    'pattern' => self::REGEX_FIELD_PATTERN,
+                    'pattern' => self::REGEX_ATTRIBUTE_PATTERN,
                     'match' => false,
                 ]),
             ]))
             ->setNormalizer('attributes', function (Options $options, $values) {
                 $bean = $this->beanManager->newBeanSafe($options->offsetGet('type'));
-                
+
                 foreach ($values as $attribute => $value) {
                     $invalidProperty =
                         !property_exists($bean, $attribute) &&
