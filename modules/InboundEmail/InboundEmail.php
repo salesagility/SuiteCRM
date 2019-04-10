@@ -5616,6 +5616,7 @@ class InboundEmail extends SugarBean
                     'MIXED',
                     'ALTERNATIVE',
                     'RELATED',
+                    'REPORT',
                     'HTML'
                 ];
 
