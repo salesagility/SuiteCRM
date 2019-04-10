@@ -5612,7 +5612,14 @@ class InboundEmail extends SugarBean
 
                 $structure = $this->getImap()->fetchStructure($uid, FT_UID);
 
-                if ($structure->subtype === 'HTML') {
+                $subtypeArray = [
+                    'MIXED',
+                    'ALTERNATIVE',
+                    'RELATED',
+                    'HTML'
+                ];
+
+                if (in_array(strtoupper($structure->subtype), $subtypeArray, true)) {
                     $email->description_html = $this->getMessageTextWithUid(
                         $uid,
                         'HTML',
@@ -5620,7 +5627,7 @@ class InboundEmail extends SugarBean
                         $fullHeader,
                         true
                     );
-                } else {
+                } elseif ($structure->subtype === 'PLAIN') {
                     $email->description = $this->getMessageTextWithUid(
                         $uid,
                         'PLAIN',
@@ -5628,6 +5635,8 @@ class InboundEmail extends SugarBean
                         $fullHeader,
                         true
                     );
+                } else {
+                    $log->warn('Unknown MIME subtype in fetch request');
                 }
             } else {
                 $log->warn('Missing viewdefs in request');
