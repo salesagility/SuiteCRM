@@ -41,6 +41,7 @@
 *}
 <script type="text/javascript" src="{sugar_getjspath file='include/javascript/sugar_3.js'}"></script>
 <script type="text/javascript" src="{sugar_getjspath file='include/javascript/popup_helper.js'}"></script>
+{$STYLE_JS}
 <script type="text/javascript">
 	{$ASSOCIATED_JAVASCRIPT_DATA}
 
