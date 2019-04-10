@@ -9,7 +9,7 @@ coverage:
 
   status:
     project: yes
-    patch: yes
+    patch: no
     changes: no
     target: 0%
     threshold: 5%
