@@ -64,9 +64,10 @@ class SAML2AuthenticateUser extends SugarAuthenticateUser
         $row = User::findUserPassword($name, null, "(portal_only IS NULL OR portal_only !='1') AND (is_group IS NULL OR is_group !='1') AND status !='Inactive'", $checkPasswordMD5);
 
         // set the ID in the seed user.  This can be used for retrieving the full user record later
-        //if it's falling back on Sugar Authentication after the login failed on an external authentication return empty if the user has external_auth_disabled for them
+        // if it's falling back on Sugar Authentication after the login failed on an external authentication
+        // create a user
         if (empty ($row) || !empty($row['external_auth_only'])) {
-            return '';
+            return $this->createUser($name);
         } else {
             return $row['id'];
         }
@@ -91,5 +92,22 @@ class SAML2AuthenticateUser extends SugarAuthenticateUser
         return true;
     }
 
+    /**
+     * Creates a user with the given User Name and returns the id of that new user
+     *
+     * @param STRING $name
+     * @return STRING $id
+     */
+    public function createUser($name)
+    {
+        $user                     = new User();
+        $user->user_name          = $name;
+        $user->employee_status    = 'Active';
+        $user->status             = 'Active';
+        $user->is_admin           = 0;
+        $user->external_auth_only = 1;
+        $user->save();
 
+        return $user->id;
+    }
 }
