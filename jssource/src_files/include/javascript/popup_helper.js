@@ -200,7 +200,8 @@ function send_back_teams(module, form, field, error_message, request_data, form_
 
   closePopup();
 
-  SUGAR.util.globalEval("var call_back_function = window.opener." + request_data.call_back_function);
+  var call_back_function = window.opener[request_data.call_back_function];
+
   var result_data = {
     "form_name": form_name,
     "field_name": field_name,
@@ -230,16 +231,7 @@ function send_back_selected(module, form, field, error_message, request_data) {
 
   SUGAR.util.globalEval("var selection_list_array = {" + array_contents.join(",") + "}");
 
-  // cn: bug 12274 - stripping false-positive security envelope
-  SUGAR.util.globalEval("var temp_request_data = " + window.document.forms['popup_query_form'].request_data.value);
-
-  if (temp_request_data.jsonObject) {
-    var request_data = temp_request_data.jsonObject;
-  } else {
-    var request_data = temp_request_data; // passed data that is NOT incorrectly encoded via JSON.encode();
-  }
-
-  // cn: end bug 12274 fix
+  var request_data = JSON.parse(window.document.forms['popup_query_form'].request_data.value);
 
   var passthru_data = Object();
   if (typeof(request_data.passthru_data) != 'undefined') {
@@ -250,7 +242,7 @@ function send_back_selected(module, form, field, error_message, request_data) {
 
   closePopup();
 
-  SUGAR.util.globalEval("var call_back_function = window.opener." + request_data.call_back_function);
+  var call_back_function = window.opener[request_data.call_back_function];
   var result_data = {
     "form_name": form_name,
     "selection_list": selection_list_array,
