@@ -42,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-require_once('include/MVC/View/views/view.list.php');
 require_once('modules/Prospects/ProspectsListViewSmarty.php');
 
 class ProspectsViewList extends ViewList
