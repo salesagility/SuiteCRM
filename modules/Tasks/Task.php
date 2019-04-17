@@ -200,9 +200,9 @@ class Task extends SugarBean
         require_once($beanFiles[$beanType]);
         $parent = new $beanType();
 
-        if (is_subclass_of($parent, 'Person')) {
+        if ($parent instanceof \Person) {
             $query = "SELECT first_name, last_name, assigned_user_id parent_name_owner from $parent->table_name where id = '$this->parent_id'";
-        } elseif (is_subclass_of($parent, 'File')) {
+        } elseif ($parent instanceof \File) {
             $query = "SELECT document_name, assigned_user_id parent_name_owner from $parent->table_name where id = '$this->parent_id'";
         } else {
             $query = "SELECT name ";
@@ -222,9 +222,9 @@ class Task extends SugarBean
             $this->parent_name_owner = $row['parent_name_owner'];
             $this->parent_name_mod = $this->parent_type;
         }
-        if (is_subclass_of($parent, 'Person') and $row != null) {
+        if ($parent instanceof \Person and $row != null) {
             $this->parent_name = $locale->getLocaleFormattedName(stripslashes($row['first_name']), stripslashes($row['last_name']));
-        } elseif (is_subclass_of($parent, 'File') && $row != null) {
+        } elseif ($parent instanceof \File && $row != null) {
             $this->parent_name = $row['document_name'];
         } elseif ($row != null) {
             $this->parent_name = stripslashes($row['name']);

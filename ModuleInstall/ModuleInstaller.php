@@ -1936,7 +1936,7 @@ class ModuleInstaller
                     require_once($beanFiles[$class]);
                     $mod = new $class();
                     //#30273
-                    if (is_subclass_of($mod, 'SugarBean')  && $mod->disable_vardefs == false) {
+                    if ($mod instanceof \SugarBean && $mod->disable_vardefs == false) {
                         $GLOBALS['log']->debug("Creating Tables Bean : $bean");
                         $mod->create_tables();
                         SugarBean::createRelationshipMeta($mod->getObjectName(), $mod->db, $mod->table_name, array(), $mod->module_dir);
@@ -1960,7 +1960,7 @@ class ModuleInstaller
                     require_once($beanFiles[$class]);
                     $mod = new $class();
 
-                    if (is_subclass_of($mod, 'SugarBean')) {
+                    if ($mod instanceof \SugarBean) {
                         $GLOBALS['log']->debug("Drop Tables : $bean");
                         if (isset($GLOBALS['mi_remove_tables']) && $GLOBALS['mi_remove_tables']) {
                             $mod->drop_tables();

@@ -369,7 +369,7 @@ class ACLController
             $class = $beanList[$module];
             require_once($beanFiles[$class]);
             $mod = new $class();
-            if (!is_subclass_of($mod, 'SugarBean')) {
+            if (!$mod instanceof \SugarBean) {
                 $checkModules[$module] = false;
             } else {
                 $checkModules[$module] = $mod->bean_implements('ACL');

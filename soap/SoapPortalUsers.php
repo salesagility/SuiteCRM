@@ -719,7 +719,7 @@ function portal_get_module_fields($session, $module_name)
     $seed = new $class_name();
     $seed->fill_in_additional_detail_fields();
     $returnFields = get_return_module_fields($seed, $module_name, $error->get_soap_array(), true);
-    if (is_subclass_of($seed, 'Person')) {
+    if ($seed instanceof \Person) {
         $returnFields['module_fields']['email1'] = array('name'=>'email1', 'type'=>'email', 'required'=>0, 'label'=>translate('LBL_EMAIL_ADDRESS', $seed->module_dir));
         $returnFields['module_fields']['email_opt_out'] = array('name'=>'email_opt_out', 'type'=>'bool', 'required'=>0, 'label'=>translate('LBL_EMAIL_OPT_OUT', $seed->module_dir), 'options'=>array());
     } //if

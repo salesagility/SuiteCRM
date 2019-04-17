@@ -325,7 +325,7 @@ class vCard
                     $GLOBALS['log']->debug('I found a company name');
                     if (!empty($value)) {
                         $GLOBALS['log']->debug('I found a company name (fer real)');
-                        if (is_a($bean, "Contact") || is_a($bean, "Lead")) {
+                        if ($bean instanceof \Contact || $bean instanceof \Lead) {
                             $GLOBALS['log']->debug('And Im dealing with a person!');
                             $accountBean = BeanFactory::getBean('Accounts');
                             // It's a contact, we better try and match up an account
@@ -350,7 +350,7 @@ class vCard
                                 $result = $accountBean->retrieve_by_string_fields(array('name' => $short_company_name, 'deleted' => 0));
                             }
 
-                            if (is_a($bean, "Lead") || ! isset($result->id)) {
+                            if ($bean instanceof \Lead || ! isset($result->id)) {
                                 // We could not find a parent account, or this is a lead so only copy the name, no linking
                                 $GLOBALS['log']->debug("Did not find a matching company ($full_company_name)");
                                 $bean->account_id = '';
@@ -381,7 +381,7 @@ class vCard
             }
         }
 
-        if (is_a($bean, "Contact") && empty($bean->account_id) && !empty($bean->account_name)) {
+        if ($bean instanceof \Contact && empty($bean->account_id) && !empty($bean->account_name)) {
             $GLOBALS['log']->debug("Look ma! I'm creating a new account: " . $bean->account_name);
             // We need to create a new account
             $accountBean = BeanFactory::getBean('Accounts');

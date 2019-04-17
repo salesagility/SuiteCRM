@@ -1186,7 +1186,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            $this->privErrorReset();
 
            // ----- Look if the $p_archive is a PclZip object
-           if ((is_object($p_archive)) && (get_class($p_archive) == 'pclzip')) {
+           if ((is_object($p_archive)) && ($p_archive instanceof \pclzip)) {
                //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "The parameter is valid PclZip object '".$p_archive->zipname."'");
 
                // ----- Duplicate the archive
@@ -1251,7 +1251,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            }
 
            // ----- Look if the $p_archive_to_add is a PclZip object
-           if ((is_object($p_archive_to_add)) && (get_class($p_archive_to_add) == 'pclzip')) {
+           if ((is_object($p_archive_to_add)) && ($p_archive_to_add instanceof \pclzip)) {
                //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "The parameter is valid PclZip object");
 
                // ----- Merge the archive

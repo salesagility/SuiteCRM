@@ -1723,7 +1723,7 @@ class PHPMailer
      */
     public function smtpClose()
     {
-        if (is_a($this->smtp, 'SMTP')) {
+        if ($this->smtp instanceof \SMTP) {
             if ($this->smtp->connected()) {
                 $this->smtp->quit();
                 $this->smtp->close();
