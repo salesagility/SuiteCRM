@@ -40,6 +40,7 @@
 
 namespace SuiteCRM\Robo\Plugin\Commands;
 
+use Api\Core\Config\ApiConfig;
 use Robo\Task\Base\loadTasks;
 use SuiteCRM\Robo\Traits\RoboTrait;
 
@@ -58,6 +59,7 @@ class ApiCommands extends \Robo\Tasks
         $this->taskComposerInstall()->noDev()->noInteraction()->run();
         $this->generateKeys();
         $this->setKeyPermissions();
+        $this->updateEncryptionKey();
     }
 
     /**
@@ -79,12 +81,12 @@ class ApiCommands extends \Robo\Tasks
         $publicKeyExport = $publicKey['key'];
 
         file_put_contents(
-            'Api/V8/OAuth2/private.key',
+            ApiConfig::OAUTH2_PRIVATE_KEY,
             $privateKeyExport
         );
 
         file_put_contents(
-            'Api/V8/OAuth2/public.key',
+            ApiConfig::OAUTH2_PUBLIC_KEY,
             $publicKeyExport
         );
     }
@@ -95,12 +97,33 @@ class ApiCommands extends \Robo\Tasks
     private function setKeyPermissions()
     {
         chmod(
-            'Api/V8/OAuth2/private.key',
+            ApiConfig::OAUTH2_PRIVATE_KEY,
             0600
         ) &&
         chmod(
-            'Api/V8/OAuth2/public.key',
+            ApiConfig::OAUTH2_PUBLIC_KEY,
             0600
+        );
+    }
+
+    /**
+     * Update OAuth2 encryption keys.
+     * @throws \Exception
+     */
+    private function updateEncryptionKey()
+    {
+        $oldKey = ApiConfig::OAUTH2_ENCRYPTION_KEY;
+        $key = base64_encode(random_bytes(32));
+        $apiConfig = file_get_contents('Api/Core/Config/ApiConfig.php');
+
+        $configFileContents = str_replace(
+            $oldKey,
+            $key,
+            $apiConfig
+        );
+
+        file_put_contents(
+            'Api/Core/Config/ApiConfig.php', $configFileContents, LOCK_EX
         );
     }
 }
