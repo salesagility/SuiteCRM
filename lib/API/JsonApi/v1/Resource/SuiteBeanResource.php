@@ -115,7 +115,7 @@ class SuiteBeanResource extends Resource
                 throw $exception;
             }
 
-            if ($definition['type'] === 'datetime' && isset($sugarBean->$fieldName)) {
+            if ($definition['type'] === 'datetime' && isset($sugarBean->$fieldName) && $sugarBean->$fieldName !== '') {
                 // Convert to DB date
                 $datetime = $dateTimeConverter->fromUser($sugarBean->$fieldName);
                 if (empty($datetime)) {
