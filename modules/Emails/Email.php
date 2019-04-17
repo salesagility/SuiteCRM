@@ -541,7 +541,7 @@ class Email extends Basic
      */
     protected function createTempEmailAtSend(Email $email = null)
     {
-        $this->tempEmailAtSend = $email ? $email : new Email();
+        $this->tempEmailAtSend = $email ?: new Email();
         if (!$this->tempEmailAtSend->date_sent_received) {
             $this->tempEmailAtSend->date_sent_received = TimeDate::getInstance()->nowDb();
         }
@@ -2921,7 +2921,7 @@ class Email extends Basic
         $this->clearTempEmailAtSend();
 
         $OBCharset = $locale->getPrecedentPreference('default_email_charset');
-        $mail = $mail ? $mail : new SugarPHPMailer();
+        $mail = $mail ?: new SugarPHPMailer();
 
         if (!$this->to_addrs_arr) {
             LoggerManager::getLogger()->error('"To" address(es) is not set or empty to sending email.');
@@ -3116,8 +3116,8 @@ class Email extends Basic
                 $ieId = $_REQUEST['inbound_email_id'];
                 $this->createTempEmailAtSend($tempEmail);
                 $this->getTempEmailAtSend()->status = 'replied';
-                $ie = $ie ? $ie : new InboundEmail();
-                $nonGmailSentFolder = $nonGmailSentFolder ? $nonGmailSentFolder : new NonGmailSentFolderHandler();
+                $ie = $ie ?: new InboundEmail();
+                $nonGmailSentFolder = $nonGmailSentFolder ?: new NonGmailSentFolderHandler();
                 if (!$ieMailId = $this->getTempEmailAtSend()->saveAndStoreInSentFolderIfNoGmail($ie, $ieId, $mail, $nonGmailSentFolder, $check_notify, $options)) {
                     LoggerManager::getLogger()->debug('IE Mail ID is ' . ($ieMailId === null ? 'null' : $ieMailId) . ' after save and store in non-gmail sent folder.');
                 }
@@ -3188,7 +3188,7 @@ class Email extends Basic
         $ieMailId = $this->save($check_notify);
         if ($ieMailId) {
             // mark SEEN (STORE MAIL IN SENT BOX)
-            $this->setNonGmailSentFolderHandler($nonGmailSentFolder ? $nonGmailSentFolder : new NonGmailSentFolderHandler());
+            $this->setNonGmailSentFolderHandler($nonGmailSentFolder ?: new NonGmailSentFolderHandler());
             if (!($ie && $ie->id)) {
                 LoggerManager::getLogger()->warn('Exists and retrieved InboundEmail needed for storing email as sent.');
                 $this->setLastSaveAndStoreInSentError(self::ERR_NO_IE);

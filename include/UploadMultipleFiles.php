@@ -565,7 +565,7 @@ class UploadMultipleFiles
         }
         $ret = realpath($path);
 
-        return $ret ? $ret : $path;
+        return $ret ?: $path;
     }
 
     /**

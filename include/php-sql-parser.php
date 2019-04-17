@@ -957,9 +957,9 @@ EOREGEX
 
                         if ($first_join) {
                             $join_type = 'JOIN';
-                            $saved_join_type = ($modifier ? $modifier : 'JOIN');
+                            $saved_join_type = ($modifier ?: 'JOIN');
                         } else {
-                            $new_join_type = ($modifier ? $modifier : 'JOIN');
+                            $new_join_type = ($modifier ?: 'JOIN');
                             $join_type = $saved_join_type;
                             $saved_join_type = $new_join_type;
                             unset($new_join_type);

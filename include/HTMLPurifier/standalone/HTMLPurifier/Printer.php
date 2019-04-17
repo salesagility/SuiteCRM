@@ -51,7 +51,7 @@ class HTMLPurifier_Printer
     protected function start($tag, $attr = array())
     {
         return $this->generator->generateFromToken(
-            new HTMLPurifier_Token_Start($tag, $attr ? $attr : array())
+            new HTMLPurifier_Token_Start($tag, $attr ?: array())
         );
     }
 

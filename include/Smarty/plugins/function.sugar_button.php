@@ -527,8 +527,8 @@ function replaceFormClick(&$dom_tree = array(), $js_form = '', &$hidden_field_ex
     foreach ($dom_tree as $key => $sub_tree) {
         if (is_array($sub_tree)) {
             list($_submit, $_hidden) = replaceFormClick($dom_tree[$key], $js_form, $hidden_field_exists);
-            $set_submit = ($set_submit) ? $set_submit : $_submit;
-            $is_hidden_field = ($is_hidden_field) ? $is_hidden_field : $_hidden;
+            $set_submit = ($set_submit) ?: $_submit;
+            $is_hidden_field = ($is_hidden_field) ?: $_hidden;
         }
     }
 

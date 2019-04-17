@@ -266,7 +266,7 @@ class Zend_Gdata_Health extends Zend_Gdata
         $entry = new Zend_Gdata_Health_ProfileEntry();
         $entry->title = $this->newTitle($subject);
         $entry->content = $this->newContent($body);
-        $entry->content->type = $bodyType ? $bodyType : 'text';
+        $entry->content->type = $bodyType ?: 'text';
         $entry->setCcr($ccrXML);
 
         // use correct feed for /h9 or /health

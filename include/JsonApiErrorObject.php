@@ -134,14 +134,14 @@ class JsonApiErrorObject
      */
     public function __construct(LangText $title = null, LangText $detail = null, $id = null, $code = null, $status = null, $links = null, $source = null, $meta = null)
     {
-        $this->setTitle($title ? $title : $this->getDefaultTitle());
-        $this->setDetail($detail ? $detail : $this->getDefaultDetail());
-        $this->setId($id ? $id : $this->getDefaultId());
-        $this->setCode($code ? $code : $this->getDefaultCode());
-        $this->setStatus($status ? $status : $this->getDefaultStatus());
-        $this->setLinks($links ? $links : $this->getDefaultLinks());
-        $this->setSource($source ? $source : $this->getDefaultSource());
-        $this->setMeta($meta ? $meta : $this->getDefaultMeta());
+        $this->setTitle($title ?: $this->getDefaultTitle());
+        $this->setDetail($detail ?: $this->getDefaultDetail());
+        $this->setId($id ?: $this->getDefaultId());
+        $this->setCode($code ?: $this->getDefaultCode());
+        $this->setStatus($status ?: $this->getDefaultStatus());
+        $this->setLinks($links ?: $this->getDefaultLinks());
+        $this->setSource($source ?: $this->getDefaultSource());
+        $this->setMeta($meta ?: $this->getDefaultMeta());
     }
 
     /**

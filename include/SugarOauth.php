@@ -173,7 +173,7 @@
                 if ($query) {
                     $url = $clean_url;
                     parse_str($query, $query_params);
-                    $params = array_merge($params?$params:array(), $query_params);
+                    $params = array_merge($params?:array(), $query_params);
                 }
             }
             $client = $acc->getHttpClient($this->_oauth_config, $url);

@@ -134,8 +134,8 @@ $Web_To_Lead_Form_html = WebToLeadFormBuilder::generate(
     $web_assigned_user,
     $web_form_required_fields_msg
 );
-$xtpl->assign("BODY", $Web_To_Lead_Form_html ? $Web_To_Lead_Form_html : '');
-$xtpl->assign("BODY_HTML", $Web_To_Lead_Form_html ? $Web_To_Lead_Form_html : '');
+$xtpl->assign("BODY", $Web_To_Lead_Form_html ?: '');
+$xtpl->assign("BODY_HTML", $Web_To_Lead_Form_html ?: '');
 
 
 require_once('include/SugarTinyMCE.php');

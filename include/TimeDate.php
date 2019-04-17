@@ -951,7 +951,7 @@ class TimeDate
     {
         $zero = new DateTime("@0", self::$gmtTimezone);
 
-        return $zero->format($format ? $format : $this->get_time_format());
+        return $zero->format($format ?: $this->get_time_format());
     }
 
     /**

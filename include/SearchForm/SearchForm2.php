@@ -393,12 +393,12 @@ class SearchForm
                 $value = isset($defs['value']) ? $defs['value'] : null;
                 if (($vname || $label) && $value) {
                     $type = isset($defs['type']) ? $defs['type'] : null;
-                    if (isset($app_strings[$vname ? $vname : $label])) {
-                        $labelText = $app_strings[$vname ? $vname : $label];
-                    } elseif (isset($mod_strings[$vname ? $vname : $label])) {
-                        $labelText = $mod_strings[$vname ? $vname : $label];
+                    if (isset($app_strings[$vname ?: $label])) {
+                        $labelText = $app_strings[$vname ?: $label];
+                    } elseif (isset($mod_strings[$vname ?: $label])) {
+                        $labelText = $mod_strings[$vname ?: $label];
                     } else {
-                        $labelText = $vname ? $vname : $label;
+                        $labelText = $vname ?: $label;
                     }
                     if (!preg_match('/\:\s*/', $labelText)) {
                         $labelText .= ':';

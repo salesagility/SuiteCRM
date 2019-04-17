@@ -139,7 +139,7 @@ class ListViewService
             if (!$translated) {
                 $translated = $text->getText($bean->field_name_map[strtolower($key)]['vname']);
             }
-            $column['label'] = $translated ? $translated : $column['label'];
+            $column['label'] = $translated ?: $column['label'];
             
             // TODO: validate the column name (for e.g label and name should be requered etc...) also check the ListViewColumnInterface keys are match..
             $data[] = $column;

@@ -81,7 +81,7 @@ class ApiException extends LangException
      */
     public function __construct($message = "", $code = 0, \Exception $previous = null, LangText $langMessage = null)
     {
-        parent::__construct((self::MSG_PREFIX === $this::MSG_PREFIX ? $this::MSG_PREFIX : self::MSG_PREFIX . ' ' . $this::MSG_PREFIX) . ' ' . $message, $code ? $code : self::DEFAULT_CODE, $previous, $langMessage);
+        parent::__construct((self::MSG_PREFIX === $this::MSG_PREFIX ? $this::MSG_PREFIX : self::MSG_PREFIX . ' ' . $this::MSG_PREFIX) . ' ' . $message, $code ?: self::DEFAULT_CODE, $previous, $langMessage);
     }
 
     /**
@@ -90,7 +90,7 @@ class ApiException extends LangException
      */
     public function getDetail()
     {
-        $text = $this->detail ? $this->detail : new LangText($this::DETAIL_TEXT_LABEL);
+        $text = $this->detail ?: new LangText($this::DETAIL_TEXT_LABEL);
         return $text;
     }
 

@@ -838,8 +838,8 @@ function SetFormText( $w, $h, $name, $value = '', $default = '', $title = '', $f
 			}
 		}
 		$this->form_button_text = $ca;
-		$this->form_button_text_over = $rc ? $rc : $ca;
-		$this->form_button_text_click = $ac ? $ac : $ca;
+		$this->form_button_text_over = $rc ?: $ca;
+		$this->form_button_text_click = $ac ?: $ca;
 	}
 
 

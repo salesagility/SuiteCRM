@@ -258,7 +258,7 @@ class CaseUpdatesHook
         $caseUpdate = new AOP_Case_Updates();
         $caseUpdate->name = $email->name;
         $caseUpdate->contact_id = $contact_id;
-        $updateText = $this->unquoteEmail($email->description_html ? $email->description_html : $email->description);
+        $updateText = $this->unquoteEmail($email->description_html ?: $email->description);
         $caseUpdate->description = $updateText;
         $caseUpdate->internal = false;
         $caseUpdate->case_id = $email->parent_id;

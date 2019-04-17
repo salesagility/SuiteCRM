@@ -14,7 +14,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
      */
     public function __construct($varParser = null)
     {
-        $this->varParser = $varParser ? $varParser : new HTMLPurifier_VarParser_Native();
+        $this->varParser = $varParser ?: new HTMLPurifier_VarParser_Native();
     }
 
     /**

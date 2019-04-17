@@ -1817,7 +1817,7 @@ class HTMLPurifier_Config
      */
     public function __construct($definition, $parent = null)
     {
-        $parent = $parent ? $parent : $definition->defaultPlist;
+        $parent = $parent ?: $definition->defaultPlist;
         $this->plist = new HTMLPurifier_PropertyList($parent);
         $this->def = $definition; // keep a copy around for checking
         $this->parser = new HTMLPurifier_VarParser_Flexible();
@@ -6972,7 +6972,7 @@ class HTMLPurifier_Language
                         $stripped_token->attr = array();
                         $subst['$'.$i.'.Compact'] = $generator->generateFromToken($stripped_token);
                     }
-                    $subst['$'.$i.'.Line'] = $value->line ? $value->line : 'unknown';
+                    $subst['$'.$i.'.Line'] = $value->line ?: 'unknown';
                 }
                 continue;
             } elseif (is_array($value)) {
@@ -7112,7 +7112,7 @@ class HTMLPurifier_LanguageFactory
             } else {
                 // Go fallback
                 $raw_fallback = $this->getFallbackFor($code);
-                $fallback = $raw_fallback ? $raw_fallback : 'en';
+                $fallback = $raw_fallback ?: 'en';
                 $depth++;
                 $lang = $this->create($config, $context, $fallback);
                 if (!$raw_fallback) {
@@ -10147,7 +10147,7 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
             $new_declarations .= "$prop:$value;";
         }
 
-        return $new_declarations ? $new_declarations : false;
+        return $new_declarations ?: false;
     }
 }
 
@@ -13688,7 +13688,7 @@ class HTMLPurifier_AttrTransform_Length extends HTMLPurifier_AttrTransform
     public function __construct($name, $css_name = null)
     {
         $this->name = $name;
-        $this->cssName = $css_name ? $css_name : $name;
+        $this->cssName = $css_name ?: $name;
     }
 
     /**

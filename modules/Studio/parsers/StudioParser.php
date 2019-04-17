@@ -350,7 +350,7 @@ EOQ;
         }
 
         $fp = sugar_fopen($file, 'w');
-        $output = $contents ? $contents : $this->curText;
+        $output = $contents ?: $this->curText;
         if (strpos($file, 'SearchForm.html') > 0) {
             $fileparts = preg_split("'<!--\s*(BEGIN|END)\s*:\s*main\s*-->'", $output);
             if (!empty($fileparts) && count($fileparts) > 1) {

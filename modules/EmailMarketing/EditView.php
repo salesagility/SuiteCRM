@@ -250,7 +250,7 @@ function getOutboundEmailAccountSelected(EmailMarketing $emailMarketing)
 
 $outboundEmailAccountOptions = getOutboundEmailAccountOptions();
 $outboundEmailAccountSelected = getOutboundEmailAccountSelected($focus);
-$outboundEmailAccountOptionsHTML = get_select_options_with_id($outboundEmailAccountOptions, $outboundEmailAccountSelected ? $outboundEmailAccountSelected : '');
+$outboundEmailAccountOptionsHTML = get_select_options_with_id($outboundEmailAccountOptions, $outboundEmailAccountSelected ?: '');
 $xtpl->assign('outboundEmailAccountOptionsHTML', $outboundEmailAccountOptionsHTML);
 
 $xtpl->parse("main");

@@ -1031,9 +1031,9 @@ class EmailMan extends SugarBean
 
             $mail->ClearAllRecipients();
             $mail->ClearReplyTos();
-            $mail->Sender = $this->current_emailmarketing->from_addr ? $this->current_emailmarketing->from_addr : $this->mailbox_from_addr;
+            $mail->Sender = $this->current_emailmarketing->from_addr ?: $this->mailbox_from_addr;
             isValidEmailAddress($mail->Sender);
-            $mail->From = $this->current_emailmarketing->from_addr ? $this->current_emailmarketing->from_addr : $this->mailbox_from_addr;
+            $mail->From = $this->current_emailmarketing->from_addr ?: $this->mailbox_from_addr;
             isValidEmailAddress($mail->From);
             $mail->FromName = $locale->translateCharsetMIME(trim($this->current_emailmarketing->from_name), 'UTF-8', $OBCharset);
 

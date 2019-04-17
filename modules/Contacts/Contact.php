@@ -685,7 +685,7 @@ class Contact extends Person implements EmailInterface
                     } elseif (!method_exists($this->user_sync, 'add')) {
                         $GLOBALS['log']->fatal('Contact::$user_sync::add() is not a function');
                     } else {
-                        $this->user_sync->add($user_id ? $user_id : $focus_user->id);
+                        $this->user_sync->add($user_id ?: $focus_user->id);
                     }
 
                     return;

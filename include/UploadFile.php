@@ -571,7 +571,7 @@ class UploadFile
         }
         $ret = realpath($path);
 
-        return $ret ? $ret : $path;
+        return $ret ?: $path;
     }
 
     /**

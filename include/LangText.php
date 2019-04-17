@@ -154,11 +154,11 @@ class LangText
         // TODO: app_strings and mod_strings could be in separated methods
         global $app_strings, $mod_strings, $app_list_strings;
         
-        $module = $module ? $module : $this->module;
+        $module = $module ?: $this->module;
         
         if (!$mod_strings && $module) {
             // retrieve translation for specified module
-            $lang = $lang ? $lang : ($this->lang ? $this->lang : $GLOBALS['current_language']);
+            $lang = $lang ?: ($this->lang ?: $GLOBALS['current_language']);
             include_once __DIR__ . '/SugarObjects/LanguageManager.php';
             \LanguageManager::loadModuleLanguage($module, $lang);
         }

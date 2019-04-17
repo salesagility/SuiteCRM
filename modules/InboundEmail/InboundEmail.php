@@ -4057,7 +4057,7 @@ class InboundEmail extends SugarBean
         global $sugar_config;
 
         $msgPart = '';
-        $bc = $this->buildBreadCrumbs(($structure->parts) ? $structure->parts : null, $type);
+        $bc = $this->buildBreadCrumbs(($structure->parts) ?: null, $type);
         //Add an offset if specified
         if (!empty($bcOffset)) {
             $bc = $this->addBreadCrumbOffset($bc, $bcOffset);

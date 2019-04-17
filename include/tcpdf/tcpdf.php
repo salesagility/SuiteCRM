@@ -3688,13 +3688,13 @@ if (!class_exists('TCPDF', false)) {
                         // get string width without spaces
                         $width = $this->GetStringWidth(str_replace(' ', '', $txt));
                         // calculate average space width
-                        $spacewidth = ($w - $width - (2 * $this->cMargin)) / ($ns?$ns:1) / $this->FontSize / $this->k;
+                        $spacewidth = ($w - $width - (2 * $this->cMargin)) / ($ns?:1) / $this->FontSize / $this->k;
                         // set word position to be used with TJ operator
                         $txt2 = str_replace(chr(0).' ', ') '.(-2830 * $spacewidth).' (', $txt2);
                     } else {
                         // get string width
                         $width = $this->GetStringWidth($txt);
-                        $spacewidth = (($w - $width - (2 * $this->cMargin)) / ($ns?$ns:1)) * $this->k;
+                        $spacewidth = (($w - $width - (2 * $this->cMargin)) / ($ns?:1)) * $this->k;
                         $rs .= sprintf('BT %.3F Tw ET ', $spacewidth);
                     }
                 }
@@ -11847,8 +11847,8 @@ if (!class_exists('TCPDF', false)) {
                                         $t_x = $this->lMargin - $this->endlinex - (($no - $ns - 1) * $this->GetStringWidth(chr(32)));
                                     }
                                     // calculate additional space to add to each space
-                                    $spacewidth = (($tw - $linew + (($no - $ns) * $this->GetStringWidth(chr(32)))) / ($ns?$ns:1)) * $this->k;
-                                    $spacewidthu = ($tw - $linew + ($no * $this->GetStringWidth(chr(32)))) / ($ns?$ns:1) / $this->FontSize / $this->k;
+                                    $spacewidth = (($tw - $linew + (($no - $ns) * $this->GetStringWidth(chr(32)))) / ($ns?:1)) * $this->k;
+                                    $spacewidthu = ($tw - $linew + ($no * $this->GetStringWidth(chr(32)))) / ($ns?:1) / $this->FontSize / $this->k;
                                     $nsmax = $ns;
                                     $ns = 0;
                                     reset($lnstring);

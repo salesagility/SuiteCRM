@@ -262,7 +262,7 @@ if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") 
 
 
         $result['filepath'] = $filepath;
-        $result['errors'] = $errors ? $errors : false;
+        $result['errors'] = $errors ?: false;
 
         // TODO--low: validate file size & image width/height and save, show status result to client js
 

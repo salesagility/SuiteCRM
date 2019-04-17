@@ -40,7 +40,7 @@ if (array_key_exists("aop", $sugar_config) && array_key_exists("joomla_url", $su
     $wbsv = file_get_contents($portalURL.'/index.php?option=com_advancedopenportal&task=create&sug='.$_REQUEST['record']);
     $res = json_decode($wbsv);
     if (!$res->success) {
-        $msg = $res->error ? $res->error : $mod_strings['LBL_CREATE_PORTAL_USER_FAILED'];
+        $msg = $res->error ?: $mod_strings['LBL_CREATE_PORTAL_USER_FAILED'];
         SugarApplication::appendErrorMessage($msg);
     } else {
         SugarApplication::appendErrorMessage($mod_strings['LBL_CREATE_PORTAL_USER_SUCCESS']);

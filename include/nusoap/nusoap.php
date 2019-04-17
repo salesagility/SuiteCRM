@@ -2276,17 +2276,17 @@ class nusoap_xmlschema extends nusoap_base
         }
         // move on...
         if ($name == 'complexType') {
-            $this->xdebug('done processing complexType ' . ($this->currentComplexType ? $this->currentComplexType : '(unknown)'));
+            $this->xdebug('done processing complexType ' . ($this->currentComplexType ?: '(unknown)'));
             $this->xdebug($this->varDump($this->complexTypes[$this->currentComplexType]));
             $this->currentComplexType = array_pop($this->complexTypeStack);
             //$this->currentElement = false;
         }
         if ($name == 'element') {
-            $this->xdebug('done processing element ' . ($this->currentElement ? $this->currentElement : '(unknown)'));
+            $this->xdebug('done processing element ' . ($this->currentElement ?: '(unknown)'));
             $this->currentElement = array_pop($this->elementStack);
         }
         if ($name == 'simpleType') {
-            $this->xdebug('done processing simpleType ' . ($this->currentSimpleType ? $this->currentSimpleType : '(unknown)'));
+            $this->xdebug('done processing simpleType ' . ($this->currentSimpleType ?: '(unknown)'));
             $this->xdebug($this->varDump($this->simpleTypes[$this->currentSimpleType]));
             $this->currentSimpleType = array_pop($this->simpleTypeStack);
         }

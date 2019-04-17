@@ -321,7 +321,7 @@ class AOR_Report extends Basic
                 $rows[0]['module_path'] = unserialize(base64_decode($rows[0]['module_path']));
                 if (!$rows[0]['module_path'][0]) {
                     $module = new $beanList[$this->report_module]();
-                    $rows[0]['field_id_name'] = $module->field_defs[$rows[0]['field']]['id_name'] ? $module->field_defs[$rows[0]['field']]['id_name'] : $module->field_defs[$rows[0]['field']]['name'];
+                    $rows[0]['field_id_name'] = $module->field_defs[$rows[0]['field']]['id_name'] ?: $module->field_defs[$rows[0]['field']]['name'];
                     $rows[0]['module_path'][0] = $module->table_name;
                 } else {
                     $rows[0]['field_id_name'] = $rows[0]['field'];
