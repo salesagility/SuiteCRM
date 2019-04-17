@@ -56,10 +56,13 @@ class ApiCommands extends \Robo\Tasks
         $this->say('Configure V8 Api');
 
         $this->taskComposerInstall()->noDev()->noInteraction()->run();
-
         $this->generateKeys();
+        $this->setKeyPermissions();
     }
 
+    /**
+     * Generate OAuth2 public/private keys.
+     */
     private function generateKeys()
     {
         $privateKey = openssl_pkey_new(
@@ -83,6 +86,21 @@ class ApiCommands extends \Robo\Tasks
         file_put_contents(
             'Api/V8/OAuth2/public.key',
             $publicKeyExport
+        );
+    }
+
+    /**
+     * Sets the Oauth2 key permissions.
+     */
+    private function setKeyPermissions()
+    {
+        chmod(
+            'Api/V8/OAuth2/private.key',
+            0600
+        ) &&
+        chmod(
+            'Api/V8/OAuth2/public.key',
+            0600
         );
     }
 }
