@@ -5229,7 +5229,7 @@ if (!class_exists('TCPDF', false)) {
                     if (ob_get_contents()) {
                         $this->Error('Some data has already been output, can\'t send PDF file');
                     }
-                    if (php_sapi_name() != 'cli') {
+                    if (PHP_SAPI != 'cli') {
                         //We send to a browser
                         header('Content-Type: application/pdf');
                         if (headers_sent()) {

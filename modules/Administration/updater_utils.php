@@ -55,7 +55,7 @@ function getSystemInfo($send_usage_info=true)
     $info = getBaseSystemInfo($send_usage_info);
     if ($send_usage_info) {
         $info['application_key']=$sugar_config['unique_key'];
-        $info['php_version']=phpversion();
+        $info['php_version']= PHP_VERSION;
         if (isset($_SERVER['SERVER_SOFTWARE'])) {
             $info['server_software'] = $_SERVER['SERVER_SOFTWARE'];
         } // if
@@ -114,7 +114,7 @@ function getSystemInfo($send_usage_info=true)
             $info['distro_name'] = $distro_name;
         }
     }
-    $info['os'] = php_uname('s');
+    $info['os'] = PHP_OS;
     $info['os_version'] = php_uname('r');
     $info['timezone_u'] = $GLOBALS['current_user']->getPreference('timezone');
     $info['timezone'] = date('e');

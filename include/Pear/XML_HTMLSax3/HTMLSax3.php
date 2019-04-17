@@ -530,7 +530,7 @@ class XML_HTMLSax3
     */
     public function XML_HTMLSax3()
     {
-        if (version_compare(phpversion(), '4.3', 'ge')) {
+        if (PHP_VERSION_ID >= 40300) {
             $this->state_parser = new XML_HTMLSax3_StateParser_Gtet430($this);
         } else {
             $this->state_parser = new XML_HTMLSax3_StateParser_Lt430($this);

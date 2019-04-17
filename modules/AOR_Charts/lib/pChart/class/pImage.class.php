@@ -183,7 +183,7 @@
      /* Automatic output method based on the calling interface */
      public function autoOutput($FileName="output.png")
      {
-         if (php_sapi_name() == "cli") {
+         if (PHP_SAPI == "cli") {
              $this->Render($FileName);
          } else {
              $this->Stroke();

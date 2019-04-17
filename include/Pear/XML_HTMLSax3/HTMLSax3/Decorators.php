@@ -286,7 +286,7 @@ class XML_HTMLSax3_Entities_Parsed
 /**
 * Compatibility with older PHP versions
 */
-if (version_compare(phpversion(), '4.3', '<') && !function_exists('html_entity_decode')) {
+if (PHP_VERSION_ID < 40300 && !function_exists('html_entity_decode')) {
     function html_entity_decode($str, $style=ENT_NOQUOTES)
     {
         return strtr(

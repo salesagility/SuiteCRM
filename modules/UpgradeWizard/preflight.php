@@ -69,7 +69,7 @@ logThis('at preflight.php');
 //set the upgrade progress status.
 set_upgrade_progress('preflight', 'in_progress');
 $php_warnings = '';
-if (version_compare(phpversion(), '5.2.0') >=0) {
+if (version_compare(PHP_VERSION, '5.2.0') >=0) {
     $stop = true; // flag to show "next"
     if (isset($_SESSION['files'])) {
         unset($_SESSION['files']);
@@ -315,7 +315,7 @@ eoq;
     //php version suggestion
     $php_suggested_ver = '';
     if (check_php_version() === 0) {
-        $php_suggested_ver=$mod_strings['LBL_CURRENT_PHP_VERSION'].phpversion().". ".$mod_strings['LBL_RECOMMENDED_PHP_VERSION_1'].constant('SUITECRM_PHP_REC_VERSION').$mod_strings['LBL_RECOMMENDED_PHP_VERSION_2'];
+        $php_suggested_ver=$mod_strings['LBL_CURRENT_PHP_VERSION']. PHP_VERSION .". ".$mod_strings['LBL_RECOMMENDED_PHP_VERSION_1'].constant('SUITECRM_PHP_REC_VERSION').$mod_strings['LBL_RECOMMENDED_PHP_VERSION_2'];
     }
     if (empty($mod_strings['LBL_UPGRADE_TAKES_TIME_HAVE_PATIENCE'])) {
         $mod_strings['LBL_UPGRADE_TAKES_TIME_HAVE_PATIENCE'] = 'Upgrade may take some time';

@@ -231,7 +231,7 @@
      /* Automatic output method based on the calling interface */
      public function autoOutput($ID, $Destination="output.png")
      {
-         if (php_sapi_name() == "cli") {
+         if (PHP_SAPI == "cli") {
              $this->saveFromCache($ID, $Destination);
          } else {
              $this->strokeFromCache($ID);

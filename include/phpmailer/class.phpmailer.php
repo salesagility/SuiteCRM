@@ -2695,7 +2695,7 @@ class PHPMailer
             }
             $magic_quotes = get_magic_quotes_runtime();
             if ($magic_quotes) {
-                if (version_compare(PHP_VERSION, '5.3.0', '<')) {
+                if (PHP_VERSION_ID < 50300) {
                     set_magic_quotes_runtime(false);
                 } else {
                     //Doesn't exist in PHP 5.4, but we don't need to check because
@@ -2707,7 +2707,7 @@ class PHPMailer
             $file_buffer = file_get_contents($path);
             $file_buffer = $this->encodeString($file_buffer, $encoding);
             if ($magic_quotes) {
-                if (version_compare(PHP_VERSION, '5.3.0', '<')) {
+                if (PHP_VERSION_ID < 50300) {
                     set_magic_quotes_runtime($magic_quotes);
                 } else {
                     ini_set('magic_quotes_runtime', $magic_quotes);

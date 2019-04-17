@@ -42,7 +42,7 @@ function smarty_core_write_compiled_include($params, &$smarty)
     $_include_compiled .= $params['plugins_code'];
     $_include_compiled .= "<?php";
 
-    $this_varname = ((double)phpversion() >= 5.0) ? '_smarty' : 'this';
+    $this_varname = ((double)PHP_VERSION >= 5.0) ? '_smarty' : 'this';
     for ($_i = 0, $_for_max = count($_match_source); $_i < $_for_max; $_i++) {
         $_match =& $_match_source[$_i];
         $source = $_match[4];

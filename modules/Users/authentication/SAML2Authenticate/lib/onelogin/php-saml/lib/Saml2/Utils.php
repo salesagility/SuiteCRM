@@ -860,7 +860,7 @@ class OneLogin_Saml2_Utils
      */
     public static function isSessionStarted()
     {
-        if (version_compare(phpversion(), '5.4.0', '>=')) {
+        if (PHP_VERSION_ID >= 50400) {
             return session_status() === PHP_SESSION_ACTIVE ? true : false;
         }
         return session_id() === '' ? false : true;

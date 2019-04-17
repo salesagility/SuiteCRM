@@ -240,7 +240,7 @@ function get_modified_entries($session, $module_name, $ids, $select_fields)
 
     $xml = '<?xml version="1.0" encoding="utf-8"?><items>';
     while ($row = $seed->db->fetchByAssoc($result)) {
-        if (version_compare(phpversion(), '5.0') < 0) {
+        if (version_compare(PHP_VERSION, '5.0') < 0) {
             $temp = $seed;
         } else {
             $temp = @clone($seed);

@@ -1087,13 +1087,13 @@ class HTMLPurifier_Bootstrap
         if (($funcs = spl_autoload_functions()) === false) {
             spl_autoload_register($autoload);
         } elseif (function_exists('spl_autoload_unregister')) {
-            if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
+            if (PHP_VERSION_ID >= 50300) {
                 // prepend flag exists, no need for shenanigans
                 spl_autoload_register($autoload, true, true);
             } else {
-                $buggy  = version_compare(PHP_VERSION, '5.2.11', '<');
-                $compat = version_compare(PHP_VERSION, '5.1.2', '<=') &&
-                          version_compare(PHP_VERSION, '5.1.0', '>=');
+                $buggy  = PHP_VERSION_ID < 50211;
+                $compat = PHP_VERSION_ID <= 50102 &&
+                    PHP_VERSION_ID >= 50100;
                 foreach ($funcs as $func) {
                     if ($buggy && is_array($func)) {
                         // :TRICKY: There are some compatibility issues and some
@@ -19000,7 +19000,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
     {
         static $oldVersion;
         if ($oldVersion === null) {
-            $oldVersion = version_compare(PHP_VERSION, '5.1', '<');
+            $oldVersion = PHP_VERSION_ID < 50100;
         }
         if ($oldVersion) {
             $haystack = substr($haystack, $offset, $length);

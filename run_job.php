@@ -45,7 +45,7 @@ chdir(dirname(__FILE__));
 
 require_once('include/entryPoint.php');
 
-$sapi_type = php_sapi_name();
+$sapi_type = PHP_SAPI;
 // Allow only CLI invocation
 if (substr($sapi_type, 0, 3) != 'cli') {
     sugar_die("run_job.php is CLI only.");

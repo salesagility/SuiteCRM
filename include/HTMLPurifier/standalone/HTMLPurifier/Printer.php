@@ -171,7 +171,7 @@ class HTMLPurifier_Printer
     {
         static $five = null;
         if ($five === null) {
-            $five = version_compare(PHP_VERSION, '5', '>=');
+            $five = PHP_VERSION_ID >= 50000;
         }
         $prefix = 'HTMLPurifier_' . $sec_prefix;
         if (!$five) {

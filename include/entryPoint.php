@@ -50,7 +50,7 @@ set_include_path(
 );
 
 if (!defined('PHP_VERSION_ID')) {
-    $version_array = explode('.', phpversion());
+    $version_array = explode('.', PHP_VERSION);
     define('PHP_VERSION_ID', ($version_array[0] * 10000 + $version_array[1] * 100 + $version_array[2]));
 }
 
