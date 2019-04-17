@@ -39,7 +39,7 @@ class pdf_context
 	// and reset the buffered data
 
 	function reset($pos = null, $l = 100) {
-		if (!is_null ($pos)) {
+		if ($pos !== null) {
 			fseek ($this->file, $pos);
 		}
 

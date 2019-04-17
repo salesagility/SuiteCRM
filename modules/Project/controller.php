@@ -438,7 +438,7 @@ class ProjectController extends SugarController
             $taskarr = array();
             $t = 0;
             $skipped = 0;
-            if (!is_null($tasks)) {
+            if ($tasks !== null) {
                 foreach ($tasks as $task) {
                     if ($this->count_days($start, $task->date_start) == -1 && $this->count_days($start, $task->date_finish) == -1) {
                         $skipped++;

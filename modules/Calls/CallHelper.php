@@ -58,13 +58,13 @@ function getDurationMinutesOptions($focus, $field, $value, $view)
     
     global $timedate;
     //setting default date and time
-    if (is_null($focus->date_start)) {
+    if ($focus->date_start === null) {
         $focus->date_start = $timedate->to_display_date(gmdate($timedate->get_date_time_format()));
     }
-    if (is_null($focus->duration_hours)) {
+    if ($focus->duration_hours === null) {
         $focus->duration_hours = "0";
     }
-    if (is_null($focus->duration_minutes)) {
+    if ($focus->duration_minutes === null) {
         $focus->duration_minutes = "1";
     }
     

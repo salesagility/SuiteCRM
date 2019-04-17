@@ -1474,7 +1474,7 @@ class Smarty_Compiler extends Smarty
             if (is_bool($arg_value)) {
                 $arg_value = $arg_value ? 'true' : 'false';
             }
-            if (is_null($arg_value)) {
+            if ($arg_value === null) {
                 $arg_value = 'null';
             }
             if ($_cache_attrs && in_array($arg_name, $_cache_attrs)) {

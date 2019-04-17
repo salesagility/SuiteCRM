@@ -155,7 +155,7 @@ class nusoap_wsdlcache
                 $this->debug("$wsdl ($filename) not in cache (2)");
             }
             $this->releaseMutex($filename);
-            return (!is_null($s)) ? unserialize($s) : null;
+            return ($s !== null) ? unserialize($s) : null;
         }
         $this->debug("Unable to obtain mutex for $filename in get");
         

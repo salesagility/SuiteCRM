@@ -157,7 +157,7 @@ class ViewModulefield extends SugarView
 
             // Fix for issue #1177 - when trying to add or edit fields in a module an error message is shown:
             // "Warning: Creating default object from empty value"
-            if (!isset($module->mbvardefs) || is_null($module->mbvardefs)) {
+            if (!isset($module->mbvardefs) || $module->mbvardefs === null) {
                 $module->mbvardefs = new stdClass();
             }
             $module->mbvardefs->vardefs =  $dictionary[$objectName];

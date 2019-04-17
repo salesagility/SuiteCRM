@@ -92,7 +92,7 @@ function sugar_mkdir($pathname, $mode = null, $recursive = false, $context = nul
         }
     } else {
         $errorMessage = "Cannot create directory $pathname cannot be touched";
-        if (is_null($GLOBALS['log'])) {
+        if ($GLOBALS['log'] === null) {
             throw new Exception("Error occurred but the system doesn't have logger. Error message: \"$errorMessage\"");
         }
         $GLOBALS['log']->error($errorMessage);

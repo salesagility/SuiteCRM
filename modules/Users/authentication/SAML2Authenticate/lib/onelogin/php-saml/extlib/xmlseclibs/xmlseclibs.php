@@ -624,7 +624,7 @@ class XMLSecurityDSig
     public function createNewSignNode($name, $value=null)
     {
         $doc = $this->sigNode->ownerDocument;
-        if (! is_null($value)) {
+        if ($value !== null) {
             $node = $doc->createElementNS(XMLSecurityDSig::XMLDSIGNS, $this->prefix.':'.$name, $value);
         } else {
             $node = $doc->createElementNS(XMLSecurityDSig::XMLDSIGNS, $this->prefix.':'.$name);
@@ -680,7 +680,7 @@ class XMLSecurityDSig
                 break;
         }
         
-        if (is_null($arXPath) && ($node instanceof DOMNode) && ($node->ownerDocument !== null) && $node->isSameNode($node->ownerDocument->documentElement)) {
+        if ($arXPath === null && ($node instanceof DOMNode) && ($node->ownerDocument !== null) && $node->isSameNode($node->ownerDocument->documentElement)) {
             /* Check for any PI or comments as they would have been excluded */
             $element = $node;
             while ($refnode = $element->previousSibling) {

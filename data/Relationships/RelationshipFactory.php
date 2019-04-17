@@ -71,7 +71,7 @@ class SugarRelationshipFactory
      */
     public static function getInstance()
     {
-        if (is_null(self::$rfInstance)) {
+        if (self::$rfInstance === null) {
             self::$rfInstance = new self();
         }
 

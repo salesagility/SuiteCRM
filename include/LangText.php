@@ -163,15 +163,15 @@ class LangText
             \LanguageManager::loadModuleLanguage($module, $lang);
         }
 
-        if (!is_null($key)) {
+        if ($key !== null) {
             $this->key = $key;
         }
 
-        if (!is_null($args)) {
+        if ($args !== null) {
             $this->args = $args;
         }
 
-        if (!is_null($use)) {
+        if ($use !== null) {
             $this->use = $use;
         }
 

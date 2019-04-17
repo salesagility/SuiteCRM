@@ -60,11 +60,11 @@ class EntryPointConfirmOptInHandler
      */
     public function __construct($request = null, $post = null)
     {
-        if (is_null($request)) {
+        if ($request === null) {
             $request = $_REQUEST;
         }
 
-        if (is_null($post)) {
+        if ($post === null) {
             $post = $_POST;
         }
 

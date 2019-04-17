@@ -101,7 +101,7 @@ class ChartsDashlet extends Dashlet
         $chartReport = new SavedReport();
         $chartExists = $chartReport->retrieve($this->report_id, false);
 
-        if (!is_null($chartExists)) {
+        if ($chartExists !== null) {
             $title = getReportNameTranslation($chartReport->name);
             $this->title = $title;
 
@@ -145,7 +145,7 @@ class ChartsDashlet extends Dashlet
         $chartReport = new SavedReport();
         $chartExists = $chartReport->retrieve($this->report_id, false);
 
-        if (!is_null($chartExists)) {
+        if ($chartExists !== null) {
             $this->title = $chartReport->name;
 
             require_once("modules/Reports/templates/templates_chart.php");

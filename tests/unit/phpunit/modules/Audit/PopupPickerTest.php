@@ -25,7 +25,7 @@ class PopupPickerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $popupPicker->process_page();
         $output = ob_get_contents();
         ob_end_clean();
-        $this->assertTrue(is_null($result));
+        $this->assertTrue($result === null);
         $this->assertNotEmpty($output);
         $this->assertContains('<!DOCTYPE HTML>', $output);
         $this->assertContains('<html lang=\'en_us\'>', $output);

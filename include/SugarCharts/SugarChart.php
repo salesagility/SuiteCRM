@@ -431,7 +431,7 @@ class SugarChart
     public function formatNumber($number, $decimals= null, $decimal_point= null, $thousands_sep= null)
     {
         global $locale;
-        if (is_null($decimals)) {
+        if ($decimals === null) {
             $decimals = $locale->getPrecision();
         }
         $seps = get_number_seperators();

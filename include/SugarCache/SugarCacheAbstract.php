@@ -165,7 +165,7 @@ abstract class SugarCacheAbstract
      */
     public function set($key, $value, $ttl = null)
     {
-        if (is_null($value)) {
+        if ($value === null) {
             $value = SugarCache::EXTERNAL_CACHE_NULL_VALUE;
         }
 
@@ -192,7 +192,7 @@ abstract class SugarCacheAbstract
      */
     public function __isset($key)
     {
-        return !is_null($this->__get($key));
+        return $this->__get($key) !== null;
     }
 
     /**

@@ -515,7 +515,7 @@ class nusoap_base
             }
         }
         // serialize null value
-        if (is_null($val)) {
+        if ($val === null) {
             $this->debug("serialize_val: serialize null");
             if ($use == 'literal') {
                 // TODO: depends on minOccurs

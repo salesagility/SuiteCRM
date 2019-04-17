@@ -3524,8 +3524,8 @@ function upgradeModulesForTeam()
         }
 
         //upgrade the team
-        $name = is_null($row['first_name'])?'':$row['first_name'];
-        $name_2 = is_null($row['last_name'])?'':$row['last_name'];
+        $name = $row['first_name'] === null ?'':$row['first_name'];
+        $name_2 = $row['last_name'] === null ?'':$row['last_name'];
         $associated_user_id = $row['id'];
 
         //Bug 32914

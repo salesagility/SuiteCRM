@@ -80,7 +80,7 @@ $filename = $filename_arr[0];
 $file_ext = substr($filename, -3);
 
 $mime_type = SugarThemeRegistry::current()->getMimeType($file_ext);
-if (is_null($mime_type)) {
+if ($mime_type === null) {
     header($_SERVER["SERVER_PROTOCOL"].' 404 Not Found');
     die;
 }

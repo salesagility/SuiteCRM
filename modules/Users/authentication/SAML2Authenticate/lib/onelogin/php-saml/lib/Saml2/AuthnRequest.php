@@ -145,7 +145,7 @@ AUTHNREQUEST;
     {
         $subject = $this->_authnRequest;
 
-        if (is_null($deflate)) {
+        if ($deflate === null) {
             $deflate = $this->_settings->shouldCompressRequests();
         }
 

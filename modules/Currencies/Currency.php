@@ -342,10 +342,10 @@ function format_number($amount, $round = null, $decimals = null, $params = array
     $dec_sep = $seps[1];
 
     // cn: bug 8522 - sig digits not honored in pdfs
-    if (is_null($decimals)) {
+    if ($decimals === null) {
         $decimals = $locale->getPrecision();
     }
-    if (is_null($round)) {
+    if ($round === null) {
         $round = $locale->getPrecision();
     }
 

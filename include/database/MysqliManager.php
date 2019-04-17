@@ -213,7 +213,7 @@ class MysqliManager extends MysqlManager
      */
     public function disconnect()
     {
-        if (isset($GLOBALS['log']) && !is_null($GLOBALS['log'])) {
+        if (isset($GLOBALS['log']) && $GLOBALS['log'] !== null) {
             $GLOBALS['log']->debug('Calling MySQLi::disconnect()');
         }
         if (!empty($this->database)) {
@@ -297,7 +297,7 @@ class MysqliManager extends MysqlManager
     {
         global $sugar_config;
 
-        if (is_null($configOptions)) {
+        if ($configOptions === null) {
             $configOptions = $sugar_config['dbconfig'];
         }
 

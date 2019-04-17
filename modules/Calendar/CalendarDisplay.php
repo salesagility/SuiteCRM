@@ -156,13 +156,13 @@ class CalendarDisplay
         $ss->assign('a_str', json_encode($cal->items));
 
         $start = $current_user->getPreference('day_start_time');
-        if (is_null($start)) {
+        if ($start === null) {
             $start = SugarConfig::getInstance()->get('calendar.default_day_start', "08:00");
         }
         $ss->assign('day_start_time', $start);
 
         $end = $current_user->getPreference('day_end_time');
-        if (is_null($end)) {
+        if ($end === null) {
             $end = SugarConfig::getInstance()->get('calendar.default_day_end', "19:00");
         }
         $ss->assign('day_end_time', $end);
@@ -336,12 +336,12 @@ class CalendarDisplay
         $TIME_END_MINUTES_OPTIONS = get_select_options_with_id(array('0'=>'00','15'=>'15','30'=>'30','45'=>'45'), $d_end_min);
 
         $displayTimeslots = $GLOBALS['current_user']->getPreference('calendar_display_timeslots');
-        if (is_null($displayTimeslots)) {
+        if ($displayTimeslots === null) {
             $displayTimeslots = SugarConfig::getInstance()->get('calendar.display_timeslots', true);
         }
 
         $shared_calendar_separate = $GLOBALS['current_user']->getPreference('calendar_display_shared_separate');
-        if (is_null($shared_calendar_separate)) {
+        if ($shared_calendar_separate === null) {
             $shared_calendar_separate = SugarConfig::getInstance()->get('calendar.calendar_display_shared_separate', true);
         }
         $ss->assign('week', $_REQUEST['week']);

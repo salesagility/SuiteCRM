@@ -528,7 +528,7 @@ if (isset($_SESSION['installation_scenarios'])) {
 }
 
 //Have a 'core' options, with accounts / contacts if no other scenario is selected
-if (!is_null($_SESSION['scenarios'])) {
+if ($_SESSION['scenarios'] !== null) {
     unset($GLOBALS['tabStructure']['LBL_TABGROUP_DEFAULT']);
 }
 

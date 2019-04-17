@@ -324,7 +324,7 @@ class nusoap_client extends nusoap_base
         if ($headers) {
             $this->requestHeaders = $headers;
         }
-        if ($this->endpointType == 'wsdl' && is_null($this->wsdl)) {
+        if ($this->endpointType == 'wsdl' && $this->wsdl === null) {
             $this->loadWSDL();
             if ($this->getError()) {
                 return false;
@@ -540,7 +540,7 @@ class nusoap_client extends nusoap_base
     */
     public function getOperationData($operation)
     {
-        if ($this->endpointType == 'wsdl' && is_null($this->wsdl)) {
+        if ($this->endpointType == 'wsdl' && $this->wsdl === null) {
             $this->loadWSDL();
             if ($this->getError()) {
                 return false;
@@ -925,7 +925,7 @@ class nusoap_client extends nusoap_base
             $evalStr = "echo \"$evalStr\";";
             return $evalStr;
         }
-        if ($this->endpointType == 'wsdl' && is_null($this->wsdl)) {
+        if ($this->endpointType == 'wsdl' && $this->wsdl === null) {
             $this->loadWSDL();
             if ($this->getError()) {
                 return "echo \"" . $this->getError() . "\";";

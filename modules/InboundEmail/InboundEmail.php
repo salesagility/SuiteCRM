@@ -242,7 +242,7 @@ class InboundEmail extends SugarBean
     {
         $ret = parent::retrieve($id, $encode, $deleted);
         // if I-E bean exist
-        if (!is_null($ret)) {
+        if ($ret !== null) {
             $this->email_password = blowfishDecode(blowfishGetKey('InboundEmail'), $this->email_password);
             $this->retrieveMailBoxFolders();
         }
@@ -3911,7 +3911,7 @@ class InboundEmail extends SugarBean
      */
     public function addBreadCrumbOffset($bc, $offset)
     {
-        if ((empty($bc) || is_null($bc)) && !empty($offset)) {
+        if ((empty($bc) || $bc === null) && !empty($offset)) {
             return $offset;
         }
 

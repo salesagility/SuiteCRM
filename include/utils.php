@@ -875,7 +875,7 @@ function showFullName()
     global $current_user;
     static $showFullName = null;
 
-    if (is_null($showFullName)) {
+    if ($showFullName === null) {
         $sysPref = !empty($sugar_config['use_real_names']);
         $userPref = (is_object($current_user)) ? $current_user->getPreference('use_real_names') : null;
 
@@ -917,7 +917,7 @@ function safe_map($request_var, &$focus, $always_copy = false)
  */
 function safe_map_named($request_var, &$focus, $member_var, $always_copy)
 {
-    if (isset($_REQUEST[$request_var]) && ($always_copy || is_null($focus->$member_var))) {
+    if (isset($_REQUEST[$request_var]) && ($always_copy || $focus->$member_var === null)) {
         $GLOBALS['log']->debug("safe map named called assigning '{$_REQUEST[$request_var]}' to $member_var");
         $focus->$member_var = $_REQUEST[$request_var];
     }

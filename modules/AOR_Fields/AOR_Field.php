@@ -136,7 +136,7 @@ class AOR_Field extends Basic
                             }
                             $field->$field_name = $postField[$i];
                         }
-                    } elseif (is_null($postField)) {
+                    } elseif ($postField === null) {
                         // do nothing
                     } else {
                         throw new Exception('illegal type in post data at key ' . $key . $field_name . ' ' . gettype($postField));

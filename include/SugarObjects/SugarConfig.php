@@ -52,7 +52,7 @@ class SugarConfig
     public static function getInstance()
     {
         static $instance = null;
-        if (is_null($instance)) {
+        if ($instance === null) {
             $instance = new SugarConfig();
         }
         return $instance;
@@ -73,7 +73,7 @@ class SugarConfig
 
     public function clearCache($key = null)
     {
-        if (is_null($key)) {
+        if ($key === null) {
             $this->_cached_values = array();
         } else {
             unset($this->_cached_values[$key]);

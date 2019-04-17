@@ -72,22 +72,22 @@ if (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {
 }
 
 //needed when creating a new note with default values passed in
-if (isset($_REQUEST['contact_name']) && is_null($focus->contact_name)) {
+if (isset($_REQUEST['contact_name']) && $focus->contact_name === null) {
     $focus->contact_name = $_REQUEST['contact_name'];
 }
-if (isset($_REQUEST['contact_id']) && is_null($focus->contact_id)) {
+if (isset($_REQUEST['contact_id']) && $focus->contact_id === null) {
     $focus->contact_id = $_REQUEST['contact_id'];
 }
-if (isset($_REQUEST['opportunity_name']) && is_null($focus->parent_name)) {
+if (isset($_REQUEST['opportunity_name']) && $focus->parent_name === null) {
     $focus->parent_name = $_REQUEST['opportunity_name'];
 }
-if (isset($_REQUEST['opportunity_id']) && is_null($focus->parent_id)) {
+if (isset($_REQUEST['opportunity_id']) && $focus->parent_id === null) {
     $focus->parent_id = $_REQUEST['opportunity_id'];
 }
-if (isset($_REQUEST['account_name']) && is_null($focus->parent_name)) {
+if (isset($_REQUEST['account_name']) && $focus->parent_name === null) {
     $focus->parent_name = $_REQUEST['account_name'];
 }
-if (isset($_REQUEST['account_id']) && is_null($focus->parent_id)) {
+if (isset($_REQUEST['account_id']) && $focus->parent_id === null) {
     $focus->parent_id = $_REQUEST['account_id'];
 }
 

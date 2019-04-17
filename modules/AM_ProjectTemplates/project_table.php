@@ -79,7 +79,7 @@ class AM_ProjectTemplatesTable
             $resource_array[] = $resource;
         }
 
-        if (!is_null($tasks)) {
+        if ($tasks !== null) {
             foreach ($tasks as $task) {
                 $task->duration_unit = "Days";
                 $task->date_start =  Date('Y-m-d');

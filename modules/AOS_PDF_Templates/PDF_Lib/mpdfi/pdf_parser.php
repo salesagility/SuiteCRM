@@ -204,7 +204,7 @@ class pdf_parser
      * @param integer $end end-position in xref-table
      */
     function pdf_read_xref(&$result, $offset, $start = null, $end = null) {
-        if (is_null ($start) || is_null ($end)) {
+        if ($start === null || $end === null) {
 		fseek($this->f, $o_pos = $offset);
             $data = trim(fgets($this->f,1024));
 
@@ -318,7 +318,7 @@ class pdf_parser
      * @return mixed
      */
     function pdf_read_value(&$c, $token = null) {
-    	if (is_null($token)) {
+    	if ($token === null) {
     	    $token = $this->pdf_read_token($c);
     	}
     	

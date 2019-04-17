@@ -1403,7 +1403,7 @@ class wsdl extends nusoap_base
                 } else {
                     $elementNS = '';
                 }
-                if (is_null($value)) {
+                if ($value === null) {
                     if ($use == 'literal') {
                         // TODO: depends on minOccurs
                         $xml = "<$name$elementNS/>";
@@ -1523,7 +1523,7 @@ class wsdl extends nusoap_base
                     $elementNS = '';
                 }
             }
-            if (is_null($value)) {
+            if ($value === null) {
                 if ($use == 'literal') {
                     // TODO: depends on minOccurs and nillable
                     $xml = "<$elementName$elementNS/>";
@@ -1575,7 +1575,7 @@ class wsdl extends nusoap_base
                     $elementNS = '';
                 }
             }
-            if (is_null($value)) {
+            if ($value === null) {
                 if ($use == 'literal') {
                     // TODO: depends on minOccurs
                     $xml = "<$name$elementNS/>";
@@ -1804,9 +1804,9 @@ class wsdl extends nusoap_base
                             }
                         }
                     } else {
-                        if (is_null($v) && isset($attrs['minOccurs']) && $attrs['minOccurs'] == '0') {
+                        if ($v === null && isset($attrs['minOccurs']) && $attrs['minOccurs'] == '0') {
                             // do nothing
-                        } elseif (is_null($v) && isset($attrs['nillable']) && $attrs['nillable'] == 'true') {
+                        } elseif ($v === null && isset($attrs['nillable']) && $attrs['nillable'] == 'true') {
                             // TODO: serialize a nil correctly, but for now serialize schema-defined type
                             $xml .= $this->serializeType($eName, isset($attrs['type']) ? $attrs['type'] : $attrs['ref'], $v, $use, $encodingStyle, $unqualified);
                         } elseif (isset($attrs['type']) || isset($attrs['ref'])) {

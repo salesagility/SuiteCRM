@@ -652,7 +652,7 @@ class SugarEmailAddress extends SugarBean
                         $address['invalid_email'],
                         $address['opt_out'],
                         $emailId,
-                        !is_null($optIn) ? $address['confirm_opt_in_flag'] : null
+                        $optIn !== null ? $address['confirm_opt_in_flag'] : null
                     );// this will save the email address if not found
 
                     //verify linkage and flags.
@@ -1055,7 +1055,7 @@ class SugarEmailAddress extends SugarBean
             $replyToFlag = ($replyTo) ? '1' : '0';
             $invalidFlag = ($invalid) ? '1' : '0';
             $optOutFlag = ($optOut) ? '1' : '0';
-            if (!is_null($optIn)) {
+            if ($optIn !== null) {
                 $optInFlag = ($optIn) ? '1' : '0';
             }
 
@@ -1082,7 +1082,7 @@ class SugarEmailAddress extends SugarBean
                 'confirm_opt_in_flag' => null,
             );
 
-            if (!is_null($optIn)) {
+            if ($optIn !== null) {
                 $addr['confirm_opt_in_flag'] = $optInFlag;
             }
 
@@ -1251,7 +1251,7 @@ class SugarEmailAddress extends SugarBean
         }
 
         // confirmed opt in check
-        if (!is_null($optInFlag)) {
+        if ($optInFlag !== null) {
             $optInFlag = (int)$optInFlag;
         }
 
@@ -1282,14 +1282,14 @@ class SugarEmailAddress extends SugarBean
             if (
                 $duplicate_email['invalid_email'] != $new_invalid
                 || $duplicate_email['opt_out'] != $new_opt_out
-                || (!is_null($optInFlag) && $duplicate_email['confirm_opt_in'] != $new_confirmed_opt_in)
+                || ($optInFlag !== null && $duplicate_email['confirm_opt_in'] != $new_confirmed_opt_in)
                 || (trim($duplicate_email['email_address']) != $address)
             ) {
                 $upd_q = 'UPDATE ' . $this->table_name . ' ' .
                     'SET email_address=\'' . $address . '\', ' .
                     'invalid_email=' . $new_invalid . ', ' .
                     'opt_out=' . $new_opt_out . ', ' .
-                    (!is_null($optInFlag) ? ('confirm_opt_in=\'' . $this->db->quote($new_confirmed_opt_in) . '\', ') : '') .
+                    ($optInFlag !== null ? ('confirm_opt_in=\'' . $this->db->quote($new_confirmed_opt_in) . '\', ') : '') .
                     'date_modified=' . $this->db->now() . ' ' .
                     'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
                 // set for audit table detection
@@ -1329,8 +1329,8 @@ class SugarEmailAddress extends SugarBean
         if (!empty($address)) {
             $guid = create_guid();
             $now = TimeDate::getInstance()->nowDb();
-            $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted, invalid_email, opt_out" . (!is_null($optInFlag) ? ", confirm_opt_in" : '') . ")
-                        VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0 , $new_invalid, $new_opt_out" . (!is_null($optInFlag) ? ", '" . $this->db->quote($new_confirmed_opt_in) ."'" : '') . ")";
+            $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted, invalid_email, opt_out" . ($optInFlag !== null ? ", confirm_opt_in" : '') . ")
+                        VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0 , $new_invalid, $new_opt_out" . ($optInFlag !== null ? ", '" . $this->db->quote($new_confirmed_opt_in) ."'" : '') . ")";
             $this->db->query($qa);
             $isUpdate = false;
         }
@@ -2001,15 +2001,15 @@ class SugarEmailAddress extends SugarBean
         $disabledAttribute = $configOptInEnabled ? '' : 'disabled="disabled"';
         $hiddenClass = $configOptInEnabled ? '' : 'hidden';
 
-        if (is_null($returnModule)) {
+        if ($returnModule === null) {
             $returnModule = $module;
         }
 
-        if (is_null($returnAction)) {
+        if ($returnAction === null) {
             $returnAction = $module;
         }
 
-        if (is_null($moduleTab)) {
+        if ($moduleTab === null) {
             $moduleTab = $module;
         }
 

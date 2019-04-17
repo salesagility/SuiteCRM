@@ -76,10 +76,10 @@ class CallsQuickCreate extends QuickCreate
         $this->javascript->setSugarBean($focus);
         $this->javascript->addAllFields('');
 
-        if (is_null($focus->date_start)) {
+        if ($focus->date_start === null) {
             $focus->date_start = $timedate->nowDate();
         }
-        if (is_null($focus->time_start)) {
+        if ($focus->time_start === null) {
             $focus->time_start = $timedate->asUserTime($timedate->getNow(), true);
         }
         if (!isset($focus->duration_hours)) {

@@ -760,7 +760,7 @@ EOHTML;
 
 
         // trap deprecated use of image extension
-        if (is_null($ext)) {
+        if ($ext === null) {
             $imageNameExp = explode('.', $imageName);
             if (count($imageNameExp) == 1) {
                 $imageName .= '.gif';
@@ -778,8 +778,8 @@ EOHTML;
             // get sprite metadata
             if ($sp = $this->getSpriteMeta($imageName)) {
                 // requested size should match
-                if ((!is_null($width) && $sp['width'] == $width) || (is_null($width)) &&
-                    (!is_null($height) && $sp['height'] == $height) || (is_null($height))) {
+                if (($width !== null && $sp['width'] == $width) || ($width === null) &&
+                    ($height !== null && $sp['height'] == $height) || ($height === null)) {
                     $other_attributes .= ' data-orig="'.$imageName.'"';
 
                     if ($sprite = $this->getSprite($sp['class'], $other_attributes, $alt)) {
@@ -802,8 +802,8 @@ EOHTML;
             }
         }
 
-        $attr_width = (is_null($width)) ? "" : "width=\"$width\"";
-        $attr_height = (is_null($height)) ? "" : "height=\"$height\"";
+        $attr_width = ($width === null) ? "" : "width=\"$width\"";
+        $attr_height = ($height === null) ? "" : "height=\"$height\"";
 
         if (strpos($cached_results[$imageName], 'svg') !== false) {
             return $imageJSONEncode ? json_encode($cached_results[$imageName]) : $cached_results[$imageName];

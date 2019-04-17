@@ -176,7 +176,7 @@ class Minifier
 
         $this->b = $this->getReal();
 
-        while ($this->a !== false && !is_null($this->a) && $this->a !== '') {
+        while ($this->a !== false && $this->a !== null && $this->a !== '') {
 
             // now we give $b the same check for conditional comments we gave $a before we began looping
             if (strlen($this->b) > 1) {

@@ -221,7 +221,7 @@ function findAllFiles($the_dir, $the_array, $include_dirs=false, $ext='', $exclu
     }
     $d = dir($the_dir);
 
-    if (is_null($d)) {
+    if ($d === null) {
         $backtrace = getBacktraceString();
         $emsg = 'wrong parameter for dir() function: ' . $the_dir . "\n" . $backtrace;
         $GLOBALS['log']->fatal($emsg);

@@ -14348,7 +14348,7 @@ if (!class_exists('TCPDF', false)) {
         */
         public function empty_string($str)
         {
-            return (is_null($str) or (is_string($str) and (strlen($str) == 0)));
+            return ($str === null or (is_string($str) and (strlen($str) == 0)));
         }
     } // END OF TCPDF CLASS
 }

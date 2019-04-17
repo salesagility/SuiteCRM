@@ -563,7 +563,7 @@ abstract class DBManager
                     $values['deleted'] = (int)$val;
                 } else {
                     // need to do some thing about types of values
-                    if (!is_null($val) || !empty($fieldDef['required'])) {
+                    if ($val !== null || !empty($fieldDef['required'])) {
                         $values[$field] = $this->massageValue($val, $fieldDef);
                     }
                 }
@@ -2029,7 +2029,7 @@ abstract class DBManager
                     $val = $this->truncate($val, $fieldDef['len']);
                 }
                 $columnName = $this->quoteIdentifier($fieldDef['name']);
-                if (!is_null($val) || !empty($fieldDef['required'])) {
+                if ($val !== null || !empty($fieldDef['required'])) {
                     $columns[] = "{$columnName}=".$this->massageValue($val, $fieldDef);
                 } elseif ($this->isNullable($fieldDef)) {
                     $columns[] = "{$columnName}=NULL";
@@ -2195,7 +2195,7 @@ abstract class DBManager
             }
         }
 
-        if (is_null($val)) {
+        if ($val === null) {
             if (!empty($fieldDef['required'])) {
                 if (isset($fieldDef['default']) && $fieldDef['default'] != '') {
                     return $fieldDef['default'];

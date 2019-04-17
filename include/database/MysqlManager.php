@@ -508,7 +508,7 @@ class MysqlManager extends DBManager
     {
         global $sugar_config;
 
-        if (is_null($configOptions)) {
+        if ($configOptions === null) {
             $configOptions = $sugar_config['dbconfig'];
         }
 
@@ -630,7 +630,7 @@ class MysqlManager extends DBManager
         $all_parameters = $additional_parameters;
         if (is_array($string)) {
             $all_parameters = array_merge($string, $all_parameters);
-        } elseif (!is_null($string)) {
+        } elseif ($string !== null) {
             array_unshift($all_parameters, $string);
         }
         $all_strings = implode(',', $all_parameters);

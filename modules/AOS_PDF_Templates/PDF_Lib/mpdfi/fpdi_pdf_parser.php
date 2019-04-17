@@ -264,12 +264,12 @@ class fpdi_pdf_parser extends pdf_parser
         if (isset($page[1][1][$box_index]))
             $box =& $page[1][1][$box_index];
         
-        if (!is_null($box) && $box[0] == PDF_TYPE_OBJREF) {
+        if ($box !== null && $box[0] == PDF_TYPE_OBJREF) {
             $tmp_box = $this->pdf_resolve_object($this->c,$box);
             $box = $tmp_box[1];
         }
             
-        if (!is_null($box) && $box[0] == PDF_TYPE_ARRAY) {
+        if ($box !== null && $box[0] == PDF_TYPE_ARRAY) {
             $b =& $box[1];
             return array("x" => $b[0][1]/_MPDFK,
                          "y" => $b[1][1]/_MPDFK,

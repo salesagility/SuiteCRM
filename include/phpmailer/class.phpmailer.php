@@ -694,7 +694,7 @@ class PHPMailer
 
         //Can't use additional_parameters in safe_mode, calling mail() with null params breaks
         //@link http://php.net/manual/en/function.mail.php
-        if (ini_get('safe_mode') or !$this->UseSendmailOptions or is_null($params)) {
+        if (ini_get('safe_mode') or !$this->UseSendmailOptions or $params === null) {
             $result = @mail($to, $subject, $body, $header);
         } else {
             $result = @mail($to, $subject, $body, $header, $params);
@@ -1068,7 +1068,7 @@ class PHPMailer
      */
     public static function validateAddress($address, $patternselect = null)
     {
-        if (is_null($patternselect)) {
+        if ($patternselect === null) {
             $patternselect = self::$validator;
         }
         if (is_callable($patternselect)) {
@@ -1601,12 +1601,12 @@ class PHPMailer
      */
     public function smtpConnect($options = null)
     {
-        if (is_null($this->smtp)) {
+        if ($this->smtp === null) {
             $this->smtp = $this->getSMTPInstance();
         }
 
         //If no options are provided, use whatever is set in the instance
-        if (is_null($options)) {
+        if ($options === null) {
             $options = $this->SMTPOptions;
         }
 
@@ -1711,7 +1711,7 @@ class PHPMailer
         // If we get here, all connection attempts have failed, so close connection hard
         $this->smtp->close();
         // As we've caught all exceptions, just report whatever the last one was
-        if ($this->exceptions and !is_null($lastexception)) {
+        if ($this->exceptions and $lastexception !== null) {
             throw $lastexception;
         }
         return false;
@@ -2083,7 +2083,7 @@ class PHPMailer
             $this->lastMessageID = sprintf('<%s@%s>', $this->uniqueid, $this->serverHostname());
         }
         $result .= $this->headerLine('Message-ID', $this->lastMessageID);
-        if (!is_null($this->Priority)) {
+        if ($this->Priority !== null) {
             $result .= $this->headerLine('X-Priority', $this->Priority);
         }
         if ($this->XMailer == '') {
@@ -3247,7 +3247,7 @@ class PHPMailer
     protected function setError($msg)
     {
         $this->error_count++;
-        if ($this->Mailer == 'smtp' and !is_null($this->smtp)) {
+        if ($this->Mailer == 'smtp' and $this->smtp !== null) {
             $lasterror = $this->smtp->getError();
             if (!empty($lasterror['error'])) {
                 $msg .= $this->lang('smtp_error') . $lasterror['error'];

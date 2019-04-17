@@ -2237,7 +2237,7 @@ class HTMLPurifier_Config
         // check preconditions
         $def = null;
         if ($optimized) {
-            if (is_null($this->get($type . '.DefinitionID'))) {
+            if ($this->get($type . '.DefinitionID') === null) {
                 // fatally error out if definition ID not set
                 throw new HTMLPurifier_Exception(
                         "Cannot retrieve raw version without specifying %$type.DefinitionID"
@@ -2298,7 +2298,7 @@ class HTMLPurifier_Config
         }
         // check invariants for creation
         if (!$optimized) {
-            if (!is_null($this->get($type . '.DefinitionID'))) {
+            if ($this->get($type . '.DefinitionID') !== null) {
                 if ($this->chatty) {
                     $this->triggerError(
                             'Due to a documentation error in previous version of HTML Purifier, your ' .
@@ -3704,10 +3704,10 @@ class HTMLPurifier_ElementDef
             $this->content_model_type = $def->content_model_type;
             $this->child = false;
         }
-        if (!is_null($def->child)) {
+        if ($def->child !== null) {
             $this->child = $def->child;
         }
-        if (!is_null($def->formatting)) {
+        if ($def->formatting !== null) {
             $this->formatting = $def->formatting;
         }
         if ($def->descendants_are_inline) {
@@ -4630,10 +4630,10 @@ class HTMLPurifier_ErrorCollector
 
         // perform special substitutions, also add custom parameters
         $subst = array();
-        if (!is_null($token)) {
+        if ($token !== null) {
             $args['CurrentToken'] = $token;
         }
-        if (!is_null($attr)) {
+        if ($attr !== null) {
             $subst['$CurrentAttr.Name'] = $attr;
             if (isset($token->attr[$attr])) {
                 $subst['$CurrentAttr.Value'] = $token->attr[$attr];
@@ -4761,7 +4761,7 @@ class HTMLPurifier_ErrorCollector
                 // W3C uses an icon to indicate the severity of the error.
                 $error = $this->locale->getErrorName($severity);
                 $string .= "<span class=\"error e$severity\"><strong>$error</strong></span> ";
-                if (!is_null($line) && !is_null($col)) {
+                if ($line !== null && $col !== null) {
                     $string .= "<em class=\"location\">Line $line, Column $col: </em> ";
                 } else {
                     $string .= '<em class="location">End of Document: </em> ';
@@ -5972,7 +5972,7 @@ class HTMLPurifier_HTMLModule
         }
         $ret = array();
         foreach ($list as $value) {
-            if (is_null($value)) {
+            if ($value === null) {
                 continue;
             }
             $ret[$value] = true;
@@ -7457,7 +7457,7 @@ class HTMLPurifier_Lexer
         if (is_object($lexer)) {
             $inst = $lexer;
         } else {
-            if (is_null($lexer)) {
+            if ($lexer === null) {
                 do {
                     // auto-detection algorithm
                     if ($needs_tracking) {
@@ -8641,10 +8641,10 @@ class HTMLPurifier_URI
      */
     public function __construct($scheme, $userinfo, $host, $port, $path, $query, $fragment)
     {
-        $this->scheme = is_null($scheme) || ctype_lower($scheme) ? $scheme : strtolower($scheme);
+        $this->scheme = $scheme === null || ctype_lower($scheme) ? $scheme : strtolower($scheme);
         $this->userinfo = $userinfo;
         $this->host = $host;
-        $this->port = is_null($port) ? $port : (int)$port;
+        $this->port = $port === null ? $port : (int)$port;
         $this->path = $path;
         $this->query = $query;
         $this->fragment = $fragment;
@@ -8695,7 +8695,7 @@ class HTMLPurifier_URI
         $chars_pchar = $chars_sub_delims . ':@';
 
         // validate host
-        if (!is_null($this->host)) {
+        if ($this->host !== null) {
             $host_def = new HTMLPurifier_AttrDef_URI_Host();
             $this->host = $host_def->validate($this->host, $config, $context);
             if ($this->host === false) {
@@ -8709,7 +8709,7 @@ class HTMLPurifier_URI
         // URI that we don't allow into one we do.  So instead, we just
         // check if the scheme can be dropped because there is no host
         // and it is our default scheme.
-        if (!is_null($this->scheme) && is_null($this->host) || $this->host === '') {
+        if ($this->scheme !== null && $this->host === null || $this->host === '') {
             // support for relative paths is pretty abysmal when the
             // scheme is present, so axe it when possible
             $def = $config->getDefinition('URI');
@@ -8719,13 +8719,13 @@ class HTMLPurifier_URI
         }
 
         // validate username
-        if (!is_null($this->userinfo)) {
+        if ($this->userinfo !== null) {
             $encoder = new HTMLPurifier_PercentEncoder($chars_sub_delims . ':');
             $this->userinfo = $encoder->encode($this->userinfo);
         }
 
         // validate port
-        if (!is_null($this->port)) {
+        if ($this->port !== null) {
             if ($this->port < 1 || $this->port > 65535) {
                 $this->port = null;
             }
@@ -8733,7 +8733,7 @@ class HTMLPurifier_URI
 
         // validate path
         $segments_encoder = new HTMLPurifier_PercentEncoder($chars_pchar . '/');
-        if (!is_null($this->host)) { // this catches $this->host === ''
+        if ($this->host !== null) { // this catches $this->host === ''
             // path-abempty (hier and relative)
             // http://www.example.com/my/path
             // //www.example.com/my/path (looks odd, but works, and
@@ -8757,7 +8757,7 @@ class HTMLPurifier_URI
                 } else {
                     $this->path = $segments_encoder->encode($this->path);
                 }
-            } elseif (!is_null($this->scheme)) {
+            } elseif ($this->scheme !== null) {
                 // path-rootless (hier)
                 // http:my/path
                 // Short circuit evaluation means we don't need to check nz
@@ -8784,11 +8784,11 @@ class HTMLPurifier_URI
         // qf = query and fragment
         $qf_encoder = new HTMLPurifier_PercentEncoder($chars_pchar . '/?');
 
-        if (!is_null($this->query)) {
+        if ($this->query !== null) {
             $this->query = $qf_encoder->encode($this->query);
         }
 
-        if (!is_null($this->fragment)) {
+        if ($this->fragment !== null) {
             $this->fragment = $qf_encoder->encode($this->fragment);
         }
         return true;
@@ -8805,13 +8805,13 @@ class HTMLPurifier_URI
         // there is a rendering difference between a null authority
         // (http:foo-bar) and an empty string authority
         // (http:///foo-bar).
-        if (!is_null($this->host)) {
+        if ($this->host !== null) {
             $authority = '';
-            if (!is_null($this->userinfo)) {
+            if ($this->userinfo !== null) {
                 $authority .= $this->userinfo . '@';
             }
             $authority .= $this->host;
-            if (!is_null($this->port)) {
+            if ($this->port !== null) {
                 $authority .= ':' . $this->port;
             }
         }
@@ -8823,17 +8823,17 @@ class HTMLPurifier_URI
         // differently than http:///foo), so unfortunately we have to
         // defer to the schemes to do the right thing.
         $result = '';
-        if (!is_null($this->scheme)) {
+        if ($this->scheme !== null) {
             $result .= $this->scheme . ':';
         }
-        if (!is_null($authority)) {
+        if ($authority !== null) {
             $result .= '//' . $authority;
         }
         $result .= $this->path;
-        if (!is_null($this->query)) {
+        if ($this->query !== null) {
             $result .= '?' . $this->query;
         }
-        if (!is_null($this->fragment)) {
+        if ($this->fragment !== null) {
             $result .= '#' . $this->fragment;
         }
 
@@ -8975,15 +8975,15 @@ class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
     {
         $this->host = $config->get('URI.Host');
         $base_uri = $config->get('URI.Base');
-        if (!is_null($base_uri)) {
+        if ($base_uri !== null) {
             $parser = new HTMLPurifier_URIParser();
             $this->base = $parser->parse($base_uri);
             $this->defaultScheme = $this->base->scheme;
-            if (is_null($this->host)) {
+            if ($this->host === null) {
                 $this->host = $this->base->host;
             }
         }
-        if (is_null($this->defaultScheme)) {
+        if ($this->defaultScheme === null) {
             $this->defaultScheme = $config->get('URI.DefaultScheme');
         }
     }
@@ -9244,14 +9244,14 @@ abstract class HTMLPurifier_URIScheme
         // authority is set
         if (!$this->may_omit_host &&
             // if the scheme is present, a missing host is always in error
-            (!is_null($uri->scheme) && ($uri->host === '' || is_null($uri->host))) ||
+            ($uri->scheme !== null && ($uri->host === '' || $uri->host === null)) ||
             // if the scheme is not present, a *blank* host is in error,
             // since this translates into '///path' which most browsers
             // interpret as being 'http://path'.
-            (is_null($uri->scheme) && $uri->host === '')
+            ($uri->scheme === null && $uri->host === '')
         ) {
             do {
-                if (is_null($uri->scheme)) {
+                if ($uri->scheme === null) {
                     if (substr($uri->path, 0, 2) != '//') {
                         $uri->host = null;
                         break;
@@ -9262,7 +9262,7 @@ abstract class HTMLPurifier_URIScheme
                 }
                 // first see if we can manually insert a hostname
                 $host = $config->get('URI.Host');
-                if (!is_null($host)) {
+                if ($host !== null) {
                     $uri->host = $host;
                 } else {
                     // we can't do anything sensible, reject the URL.
@@ -15232,7 +15232,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
     public function generateBaseDirectoryPath($config)
     {
         $base = $config->get('Cache.SerializerPath');
-        $base = is_null($base) ? HTMLPURIFIER_PREFIX . '/HTMLPurifier/DefinitionCache/Serializer' : $base;
+        $base = $base === null ? HTMLPURIFIER_PREFIX . '/HTMLPurifier/DefinitionCache/Serializer' : $base;
         return $base;
     }
 
@@ -17144,13 +17144,13 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
         if ($name !== '') {
             $params['element'] = $name;
         }
-        if (!is_null($attr)) {
+        if ($attr !== null) {
             $params['attr'] = $attr;
         }
 
         // special case: attribute transform
-        if (!is_null($attr)) {
-            if (is_null($property)) {
+        if ($attr !== null) {
+            if ($property === null) {
                 $property = 'pre';
             }
             $type = 'attr_transform_' . $property;
@@ -17158,7 +17158,7 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
         }
 
         // special case: tag transform
-        if (is_null($property)) {
+        if ($property === null) {
             return array('tag_transform', $params);
         }
 
@@ -20581,7 +20581,7 @@ class HTMLPurifier_TagTransform_Simple extends HTMLPurifier_TagTransform
     {
         $new_tag = clone $tag;
         $new_tag->name = $this->transform_to;
-        if (!is_null($this->style) &&
+        if ($this->style !== null &&
             ($new_tag instanceof HTMLPurifier_Token_Start || $new_tag instanceof HTMLPurifier_Token_Empty)
         ) {
             $this->prependCSS($new_tag->attr, $this->style);
@@ -20845,7 +20845,7 @@ class HTMLPurifier_URIFilter_DisableExternal extends HTMLPurifier_URIFilter
      */
     public function filter(&$uri, $config, $context)
     {
-        if (is_null($uri->host)) {
+        if ($uri->host === null) {
             return true;
         }
         if ($this->ourHostParts === false) {
@@ -20991,7 +20991,7 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
     {
         $def = $config->getDefinition('URI');
         $this->base = $def->base;
-        if (is_null($this->base)) {
+        if ($this->base === null) {
             trigger_error(
                 'URI.MakeAbsolute is being ignored due to lack of ' .
                 'value for URI.Base configuration',
@@ -21015,18 +21015,18 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
      */
     public function filter(&$uri, $config, $context)
     {
-        if (is_null($this->base)) {
+        if ($this->base === null) {
             return true;
         } // abort early
-        if ($uri->path === '' && is_null($uri->scheme) &&
-            is_null($uri->host) && is_null($uri->query) && is_null($uri->fragment)) {
+        if ($uri->path === '' && $uri->scheme === null &&
+            $uri->host === null && $uri->query === null && $uri->fragment === null) {
             // reference to current document
             $uri = clone $this->base;
             return true;
         }
-        if (!is_null($uri->scheme)) {
+        if ($uri->scheme !== null) {
             // absolute URI already: don't change
-            if (!is_null($uri->host)) {
+            if ($uri->host !== null) {
                 return true;
             }
             $scheme_obj = $uri->getSchemeObj($config, $context);
@@ -21040,7 +21040,7 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
             }
             // special case: had a scheme but always is hierarchical and had no authority
         }
-        if (!is_null($uri->host)) {
+        if ($uri->host !== null) {
             // network path, don't bother
             return true;
         }
@@ -21050,7 +21050,7 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
             // relative path, needs more complicated processing
             $stack = explode('/', $uri->path);
             $new_stack = array_merge($this->basePathStack, $stack);
-            if ($new_stack[0] !== '' && !is_null($this->base->host)) {
+            if ($new_stack[0] !== '' && $this->base->host !== null) {
                 array_unshift($new_stack, '');
             }
             $new_stack = $this->_collapseStack($new_stack);
@@ -21061,13 +21061,13 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
         }
         // re-combine
         $uri->scheme = $this->base->scheme;
-        if (is_null($uri->userinfo)) {
+        if ($uri->userinfo === null) {
             $uri->userinfo = $this->base->userinfo;
         }
-        if (is_null($uri->host)) {
+        if ($uri->host === null) {
             $uri->host = $this->base->host;
         }
-        if (is_null($uri->port)) {
+        if ($uri->port === null) {
             $uri->port = $this->base->port;
         }
         return true;

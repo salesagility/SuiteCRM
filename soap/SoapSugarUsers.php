@@ -653,7 +653,7 @@ function set_entry($session, $module_name, $name_value_list)
         if ($value['name'] == 'id' && isset($value['value']) && strlen($value['value']) > 0) {
             $result = $seed->retrieve($value['value']);
             //bug: 44680 - check to ensure the user has access before proceeding.
-            if (is_null($result)) {
+            if ($result === null) {
                 $error->set_error('no_access');
 
                 return array('id' => -1, 'error' => $error->get_soap_array());

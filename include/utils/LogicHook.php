@@ -258,7 +258,7 @@ class LogicHook
                     if (isset($GLOBALS['log'])) {
                         $GLOBALS['log']->debug('Creating new instance of hook class '.$hook_class.' with parameters');
                     }
-                    if (!is_null($this->bean)) {
+                    if ($this->bean !== null) {
                         $class = new $hook_class($this->bean, $event, $arguments);
                     } else {
                         $class = new $hook_class($event, $arguments);
@@ -268,7 +268,7 @@ class LogicHook
                         $GLOBALS['log']->debug('Creating new instance of hook class '.$hook_class.' without parameters');
                     }
                     $class = new $hook_class();
-                    if (!is_null($this->bean)) {
+                    if ($this->bean !== null) {
                         $class->$hook_function($this->bean, $event, $arguments);
                     } else {
                         $class->$hook_function($event, $arguments);

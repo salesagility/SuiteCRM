@@ -1348,7 +1348,7 @@ class soap_transport_http extends nusoap_base
     public function getCookiesForRequest($cookies, $secure=false)
     {
         $cookie_str = '';
-        if ((! is_null($cookies)) && (is_array($cookies))) {
+        if (($cookies !== null) && (is_array($cookies))) {
             foreach ($cookies as $cookie) {
                 if (! is_array($cookie)) {
                     continue;

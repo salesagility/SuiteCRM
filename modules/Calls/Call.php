@@ -441,14 +441,14 @@ class Call extends SugarBean
 
         global $timedate;
         //setting default date and time
-        if (is_null($this->date_start)) {
+        if ($this->date_start === null) {
             $this->date_start = $timedate->now();
         }
 
-        if (is_null($this->duration_hours)) {
+        if ($this->duration_hours === null) {
             $this->duration_hours = "0";
         }
-        if (is_null($this->duration_minutes)) {
+        if ($this->duration_minutes === null) {
             $this->duration_minutes = "1";
         }
 
@@ -490,7 +490,7 @@ class Call extends SugarBean
 
         if (isset($_REQUEST['parent_type']) && empty($this->parent_type)) {
             $this->parent_type = $_REQUEST['parent_type'];
-        } elseif (is_null($this->parent_type)) {
+        } elseif ($this->parent_type === null) {
             $this->parent_type = $app_list_strings['record_type_default_key'];
         }
     }

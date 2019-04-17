@@ -550,8 +550,8 @@ class SugarFolder
 
         while ($a = $this->db->fetchByAssoc($r)) {
             $temp = array();
-            $temp['flagged']   = (is_null($a['flagged']) || $a['flagged'] == '0') ? '' : 1;
-            $temp['status']    = (is_null($a['reply_to_status']) || $a['reply_to_status'] == '0') ? '' : 1;
+            $temp['flagged']   = ($a['flagged'] === null || $a['flagged'] == '0') ? '' : 1;
+            $temp['status']    = ($a['reply_to_status'] === null || $a['reply_to_status'] == '0') ? '' : 1;
             $temp['from']      = preg_replace('/[\x00-\x08\x0B-\x1F]/', '', $a['from_addr']);
             $temp['subject']   = $a['name'];
             $temp['date']      = $this->timeDate->to_display_date_time($this->db->fromConvert($a['date_sent_received'], 'datetime'));
@@ -1001,7 +1001,7 @@ class SugarFolder
                 }
             }
 
-            if (is_null($rootNode)) {
+            if ($rootNode === null) {
                 $guid = create_guid();
                 $label = 'Parent';
                 $rootNode = new ExtNode($guid, $label);

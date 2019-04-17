@@ -249,7 +249,7 @@ LOGOUTRESPONSE;
     {
         $subject = $this->_logoutResponse;
 
-        if (is_null($deflate)) {
+        if ($deflate === null) {
             $deflate = $this->_settings->shouldCompressResponses();
         }
 

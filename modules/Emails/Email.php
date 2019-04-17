@@ -3771,8 +3771,8 @@ class Email extends Basic
 
         while ($a = $this->db->fetchByAssoc($rs)) {
             $temp = array();
-            $temp['flagged'] = (is_null($a['flagged']) || $a['flagged'] == '0') ? '' : 1;
-            $temp['status'] = (is_null($a['reply_to_status']) || $a['reply_to_status'] == '0') ? '' : 1;
+            $temp['flagged'] = ($a['flagged'] === null || $a['flagged'] == '0') ? '' : 1;
+            $temp['status'] = ($a['reply_to_status'] === null || $a['reply_to_status'] == '0') ? '' : 1;
             $temp['subject'] = $a['name'];
             $temp['date'] = $timedate->to_display_date_time($a['date_sent_received']);
             $temp['uid'] = $a['id'];

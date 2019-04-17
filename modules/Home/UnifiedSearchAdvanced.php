@@ -597,7 +597,7 @@ class UnifiedSearchAdvanced
      */
     private function writeUnifiedSearchModulesDisplayFile($unified_search_modules_display)
     {
-        if (is_null($unified_search_modules_display) || empty($unified_search_modules_display)) {
+        if ($unified_search_modules_display === null || empty($unified_search_modules_display)) {
             return false;
         }
 

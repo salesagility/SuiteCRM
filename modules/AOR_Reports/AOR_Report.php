@@ -247,7 +247,7 @@ class AOR_Report extends Basic
             if ($field->group_display) {
 
                 // if we have a main group already thats wrong cause only one main grouping field possible
-                if (!is_null($mainGroupField)) {
+                if ($mainGroupField !== null) {
                     $GLOBALS['log']->fatal('main group already found');
                 }
 
@@ -372,7 +372,7 @@ class AOR_Report extends Basic
 
         // set the default values
 
-        if (is_null($reportId)) {
+        if ($reportId === null) {
             $reportId = $this->id;
         }
 

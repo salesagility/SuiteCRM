@@ -125,7 +125,7 @@ class ParserLabel
     public static function removeLabel($language, $label, $labelvalue, $moduleName, $basepath = null, $forRelationshipLabel = false)
     {
         $GLOBALS [ 'log' ]->debug("ParserLabel::removeLabels($language, \$label, \$labelvalue, $moduleName, $basepath );");
-        if (is_null($basepath)) {
+        if ($basepath === null) {
             $deployedModule = true;
             $basepath = "custom/modules/$moduleName/language";
             if ($forRelationshipLabel) {
