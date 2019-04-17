@@ -127,7 +127,7 @@ class SugarDateTime extends DateTime
         if (!$d) {
             return false;
         }
-        $sd = new self($d->format(DateTime::ISO8601));
+        $sd = new self($d->format(DateTime::ATOM));
         $sd->setTimezone($d->getTimezone());
         return $sd;
     }
