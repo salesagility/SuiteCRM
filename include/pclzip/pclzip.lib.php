@@ -4639,7 +4639,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
 
            // ----- Create the directory
            //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Create directory '$p_dir'");
-           if (!@mkdir($p_dir, 0777)) {
+           if (!mkdir($p_dir, 0777) && !is_dir($p_dir)) {
                // ----- Error log
                PclZip::privErrorLog(PCLZIP_ERR_DIR_CREATE_FAIL, "Unable to create directory '$p_dir'");
 

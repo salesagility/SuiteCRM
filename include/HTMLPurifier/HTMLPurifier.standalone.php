@@ -15283,7 +15283,9 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
                 return false;
             }
             $old = umask(0000);
-            mkdir($directory, $chmod);
+            if (!mkdir($directory, $chmod) && !is_dir($directory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $directory));
+            }
             umask($old);
         } elseif (!$this->_testPermissions($directory, $chmod)) {
             return false;
