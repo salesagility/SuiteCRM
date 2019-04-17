@@ -87,9 +87,10 @@ class ApiCommands extends Tasks
     }
 
     /**
+     * Configure SuiteCRM V8 API
      * @param string $name
      * @param string $password
-     * @throws \SuiteException
+     * @throws \Exception
      */
     public function configureV8Api($name, $password)
     {
@@ -179,6 +180,7 @@ class ApiCommands extends Tasks
         @require_once __DIR__ . '/../../../../modules/Administration/UpgradeAccess.php';
     }
 
+
     /**
      * Creates OAuth2 client.
      * @param string $name
@@ -187,25 +189,7 @@ class ApiCommands extends Tasks
      */
     private function createClient($name)
     {
-        $nameQuoted = $this->db->quote($name);
-
-        $query = <<<SQL
-SELECT
-    count(`id`) AS `count`
-FROM
-    `oauth2clients`
-WHERE
-    `name` LIKE '$nameQuoted %'
-SQL;
-
-        $result = $this->db->fetchOne($query);
-
-        $count = $result
-            ? (int)$result['count']
-            : 0;
-
-        $count++;
-
+        $count = $this->getNameCount($name, 'oauth2clients', 'name');
         $dateTime = new DateTime();
 
         $clientSecret = base_convert(
@@ -232,34 +216,16 @@ SQL;
      * @param string $name
      * @param string $password
      * @return array
-     * @throws \SuiteException
      */
     private function createUser($name, $password)
     {
-        $nameQuoted = $this->db->quote($name);
-
-        $query = <<<SQL
-SELECT
-    count(`id`) AS `count`
-FROM
-    `users`
-WHERE
-    `user_name` LIKE '$nameQuoted %'
-SQL;
-
-        $result = $this->db->fetchOne($query);
-
-        $count = $result
-            ? (int)$result['count']
-            : 0;
-
-        $count++;
+        $count = $this->getNameCount($name, 'users', 'user_name');
 
         $userBean = $this->beanManager->newBeanSafe(
             User::class
         );
 
-        $userBean->user_name = $nameQuoted . ' ' . $count;
+        $userBean->user_name = $name . ' ' . $count;
         $userBean->first_name = 'V8';
         $userBean->last_name = 'API User';
         $userBean->email1 = 'API@example.com';
@@ -328,5 +294,34 @@ SQL;
         ];
 
         $this->io->table($headers, $rows);
+    }
+
+    /**
+     * Returns the number of duplicate name records from a table.
+     * @param string $name
+     * @param string $table
+     * @param string $row
+     * @return int
+     */
+    private function getNameCount($name, $table, $row)
+    {
+        $query = <<<SQL
+SELECT
+    count(`id`) AS `count`
+FROM
+    `$table`
+WHERE
+    `$row` LIKE '$name %'
+SQL;
+
+        $result = $this->db->fetchOne($query);
+
+        $count = $result
+            ? (int)$result['count']
+            : 0;
+
+        $count++;
+
+        return $count;
     }
 }
