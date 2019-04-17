@@ -41,13 +41,39 @@
 namespace SuiteCRM\Robo\Plugin\Commands;
 
 use Api\Core\Config\ApiConfig;
+use DateTime;
+use DBManager;
+use OAuth2Clients;
 use Robo\Task\Base\loadTasks;
+use Robo\Tasks;
 use SuiteCRM\Robo\Traits\RoboTrait;
+use SuiteCRM\Robo\Traits\CliRunnerTrait;
+use Api\V8\BeanDecorator\BeanManager;
+use User;
+use DBManagerFactory;
 
-class ApiCommands extends \Robo\Tasks
+class ApiCommands extends Tasks
 {
     use loadTasks;
     use RoboTrait;
+    use CliRunnerTrait;
+
+    /**
+     * @var DBManager
+     */
+    protected $db;
+
+    /**
+     * @var BeanManager
+     */
+    protected $beanManager;
+
+    /**
+     * @var array
+     */
+    protected static $beanAliases = [
+        User::class => 'Users',
+    ];
 
     /**
      * Configure environment
@@ -56,11 +82,16 @@ class ApiCommands extends \Robo\Tasks
     {
         $this->say('Configure V8 Api');
 
+        $this->bootstrap();
+        $this->db = DBManagerFactory::getInstance();
+        $this->beanManager = new BeanManager($this->db, static::$beanAliases);
+
         $this->taskComposerInstall()->noDev()->noInteraction()->run();
         $this->generateKeys();
         $this->setKeyPermissions();
         $this->updateEncryptionKey();
         $this->rebuildHtaccessFile();
+        $this->createClient();
     }
 
     /**
@@ -134,5 +165,50 @@ class ApiCommands extends \Robo\Tasks
     private function rebuildHtaccessFile()
     {
         @require_once __DIR__ . '/../../../../modules/Administration/UpgradeAccess.php';
+    }
+
+    /**
+     * Creates OAuth2 client.
+     * @return array
+     * @throws \Exception
+     */
+    private function createClient()
+    {
+        $query = <<<SQL
+SELECT
+    count(`id`) AS `count`
+FROM
+    `oauth2clients`
+WHERE
+    `name` LIKE 'V8 API Client %'
+SQL;
+
+        $result = $this->db->fetchOne($query);
+
+        $count = $result
+            ? (int)$result['count']
+            : 0;
+
+        $count++;
+
+        $dateTime = new DateTime();
+
+        $clientSecret = base_convert(
+            $dateTime->getTimestamp() * 4096,
+            10,
+            16
+        );
+
+        $clientBean = $this->beanManager->newBeanSafe(
+            OAuth2Clients::class
+        );
+
+        $clientBean->name = 'V8 API Client ' . $count;
+        $clientBean->secret = hash('sha256', $clientSecret);
+        $clientBean->{'is_confidential'} = true;
+        $clientBean->save();
+        $clientBean->retrieve($clientBean->id);
+
+        return !empty($clientBean->fetched_row['id']) ? compact('clientBean', 'clientSecret') : [];
     }
 }
