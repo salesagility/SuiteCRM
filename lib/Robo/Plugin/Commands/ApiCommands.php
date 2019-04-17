@@ -102,6 +102,8 @@ class ApiCommands extends Tasks
         $this->rebuildHtaccessFile();
         $client = $this->createClient($name);
         $user = $this->createUser($name, $password);
+        $this->outputClientCredentials($client);
+        $this->outputUserCredentials($user);
     }
 
     /**
@@ -226,6 +228,7 @@ SQL;
     }
 
     /**
+     * Creates a SuiteCRM user.
      * @param string $name
      * @param string $password
      * @return array
@@ -267,5 +270,63 @@ SQL;
         return !empty($userBean->fetched_row['id'])
             ? compact('userBean', 'password')
             : [];
+    }
+
+    /**
+     * Returns client credentials.
+     * @param array $client
+     */
+    private function outputClientCredentials(array $client)
+    {
+        $clientBean = $client['clientBean'];
+
+        $clientArray = [
+            'grantType' => 'Password Credentials',
+            'accessToken' => '{{suitecrm.url}}/Api/access_token',
+            'clientID' => $clientBean->id,
+            'clientSecret' => $client['clientSecret']
+        ];
+
+        $this->io()->title('V8 API Client Credentials');
+
+        $headers = [
+            'Grant Type',
+            'Access Token URL',
+            'Client ID',
+            'Client Secret',
+        ];
+
+        $rows = [
+            $clientArray,
+        ];
+
+        $this->io->table($headers, $rows);
+    }
+
+    /**
+     * Returns user credentials..
+     * @param array $user
+     */
+    private function outputUserCredentials(array $user)
+    {
+        $userBean = $user['userBean'];
+
+        $userArray = [
+            'name' => $userBean->user_name,
+            'password' => $user['password']
+        ];
+
+        $this->io()->title('V8 API User Credentials');
+
+        $headers = [
+            'Username',
+            'Password',
+        ];
+
+        $rows = [
+            $userArray,
+        ];
+
+        $this->io->table($headers, $rows);
     }
 }
