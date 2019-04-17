@@ -60,6 +60,7 @@ class ApiCommands extends \Robo\Tasks
         $this->generateKeys();
         $this->setKeyPermissions();
         $this->updateEncryptionKey();
+        $this->rebuildHtaccessFile();
     }
 
     /**
@@ -125,5 +126,13 @@ class ApiCommands extends \Robo\Tasks
         file_put_contents(
             'Api/Core/Config/ApiConfig.php', $configFileContents, LOCK_EX
         );
+    }
+
+    /**
+     * Rebuild .Htaccess file.
+     */
+    private function rebuildHtaccessFile()
+    {
+        @require_once __DIR__ . '/../../../../modules/Administration/UpgradeAccess.php';
     }
 }
