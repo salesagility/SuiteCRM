@@ -10,12 +10,12 @@ class BeanManager
     /**
      * @var \DBManager
      */
-    private $db;
+    protected $db;
 
     /**
      * @var array
      */
-    private $beanAliases;
+    protected $beanAliases;
 
     /**
      * @param \DBManager $db
