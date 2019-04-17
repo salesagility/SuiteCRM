@@ -49,8 +49,8 @@ use Robo\Tasks;
 use SuiteCRM\Robo\Traits\RoboTrait;
 use SuiteCRM\Robo\Traits\CliRunnerTrait;
 use Api\V8\BeanDecorator\BeanManager;
-use User;
 use DBManagerFactory;
+use User;
 
 class ApiCommands extends Tasks
 {
@@ -73,25 +73,35 @@ class ApiCommands extends Tasks
      */
     protected static $beanAliases = [
         User::class => 'Users',
+        OAuth2Clients::class => 'OAuth2Clients',
     ];
 
     /**
-     * Configure environment
+     * ApiCommands constructor.
      */
-    public function configureV8Api()
+    public function __construct()
     {
-        $this->say('Configure V8 Api');
-
         $this->bootstrap();
         $this->db = DBManagerFactory::getInstance();
         $this->beanManager = new BeanManager($this->db, static::$beanAliases);
+    }
+
+    /**
+     * @param string $name
+     * @param string $password
+     * @throws \SuiteException
+     */
+    public function configureV8Api($name, $password)
+    {
+        $this->say('Configure V8 Api');
 
         $this->taskComposerInstall()->noDev()->noInteraction()->run();
         $this->generateKeys();
         $this->setKeyPermissions();
         $this->updateEncryptionKey();
         $this->rebuildHtaccessFile();
-        $this->createClient();
+        $client = $this->createClient($name);
+        $user = $this->createUser($name, $password);
     }
 
     /**
@@ -169,18 +179,21 @@ class ApiCommands extends Tasks
 
     /**
      * Creates OAuth2 client.
+     * @param string $name
      * @return array
      * @throws \Exception
      */
-    private function createClient()
+    private function createClient($name)
     {
+        $nameQuoted = $this->db->quote($name);
+
         $query = <<<SQL
 SELECT
     count(`id`) AS `count`
 FROM
     `oauth2clients`
 WHERE
-    `name` LIKE 'V8 API Client %'
+    `name` LIKE '$nameQuoted %'
 SQL;
 
         $result = $this->db->fetchOne($query);
@@ -210,5 +223,49 @@ SQL;
         $clientBean->retrieve($clientBean->id);
 
         return !empty($clientBean->fetched_row['id']) ? compact('clientBean', 'clientSecret') : [];
+    }
+
+    /**
+     * @param string $name
+     * @param string $password
+     * @return array
+     * @throws \SuiteException
+     */
+    private function createUser($name, $password)
+    {
+        $nameQuoted = $this->db->quote($name);
+
+        $query = <<<SQL
+SELECT
+    count(`id`) AS `count`
+FROM
+    `users`
+WHERE
+    `user_name` LIKE '$nameQuoted %'
+SQL;
+
+        $result = $this->db->fetchOne($query);
+
+        $count = $result
+            ? (int)$result['count']
+            : 0;
+
+        $count++;
+
+        $userBean = $this->beanManager->newBeanSafe(
+            User::class
+        );
+
+        $userBean->user_name = $nameQuoted . ' ' . $count;
+        $userBean->first_name = 'V8';
+        $userBean->last_name = 'API User';
+        $userBean->email1 = 'API@example.com';
+        $userBean->save();
+        $userBean->setNewPassword($password, 1);
+        $userBean->retrieve($userBean->id);
+
+        return !empty($userBean->fetched_row['id'])
+            ? compact('userBean', 'password')
+            : [];
     }
 }
