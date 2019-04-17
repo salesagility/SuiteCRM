@@ -1074,7 +1074,7 @@ function repairTableDictionaryExtFile()
             $dir = dir($tableDictionaryExt);
             while (($entry = $dir->read()) !== false) {
                 $entry = $tableDictionaryExt . '/' . $entry;
-                if (is_file($entry) && preg_match('/\.php$/i', $entry) && is_writeable($entry)) {
+                if (is_file($entry) && preg_match('/\.php$/i', $entry) && is_writable($entry)) {
                     if (function_exists('sugar_fopen')) {
                         $fp = @sugar_fopen($entry, 'r');
                     } else {

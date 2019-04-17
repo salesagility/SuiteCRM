@@ -285,7 +285,7 @@ class XMLSecurityKey
                 }
                 $this->key = openssl_get_publickey($this->key);
             } else {
-                $this->key = openssl_get_privatekey($this->key, $this->passphrase);
+                $this->key = openssl_pkey_get_private($this->key, $this->passphrase);
             }
         } elseif ($this->cryptParams['cipher'] == MCRYPT_RIJNDAEL_128) {
             /* Check key length */

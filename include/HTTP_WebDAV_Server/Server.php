@@ -156,7 +156,7 @@ class HTTP_WebDAV_Server
                 $this->http_status("412 Precondition failed");
             } else {
                 $this->http_status("405 Method not allowed");
-                header("Allow: ".join(", ", $this->_allow()));  // tell client what's allowed
+                header("Allow: ".implode(", ", $this->_allow()));  // tell client what's allowed
             }
         }
     }
@@ -439,8 +439,8 @@ class HTTP_WebDAV_Server
 
         // tell clients what we found
         $this->http_status("200 OK");
-        header("DAV: "  .join(",", $dav));
-        header("Allow: ".join(", ", $allow));
+        header("DAV: "  .implode(",", $dav));
+        header("Allow: ".implode(", ", $allow));
     }
 
     // }}}

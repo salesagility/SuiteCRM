@@ -173,7 +173,7 @@ class EmailTemplateParser
         }
 
         $parts = explode($charUnderscore, ltrim($variable, $charVariable));
-        list($moduleName, $attribute) = [array_shift($parts), join($charUnderscore, $parts)];
+        list($moduleName, $attribute) = [array_shift($parts), implode($charUnderscore, $parts)];
         if (in_array($attribute, static::$allowedVariables, true)) {
             return $this->getNonDBVariableValue($attribute);
         }

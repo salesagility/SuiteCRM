@@ -28520,7 +28520,7 @@ function IndexEntry($txt, $xref='') {
 	if ($this->usingCoreFont) { $txt = mb_convert_encoding($txt,$this->mb_enc,'UTF-8'); }
 
 	$Present=0;
-	$size=sizeof($this->Reference);
+	$size=count($this->Reference);
 
 	if ($this->directionality == 'rtl') {	// *RTL*
 		$txt = str_replace(':',' - ',$txt);	// *RTL*
@@ -28642,7 +28642,7 @@ function CreateIndex($NbCol=1, $reffontsize='', $linespacing='', $offset=3, $use
 	if (!$divlettfont) { $divlettfont = $reffont; }
 	if (!$linespacing) { $linespacing= $this->default_lineheight_correction; }
 	if ($this->ColActive) { $this->SetColumns(0); }	// *COLUMNS*
-	$size=sizeof($this->Reference);
+	$size=count($this->Reference);
 	if ($size == 0) { return false; }
 
 
@@ -28664,7 +28664,7 @@ function CreateIndex($NbCol=1, $reffontsize='', $linespacing='', $offset=3, $use
 	}
 	//Alphabetic sort of the references
 	usort($this->Reference, 'cmp');
-	$size=sizeof($this->Reference);
+	$size=count($this->Reference);
 	$this->breakpoints[$this->CurrCol][] = $this->y; 	// *COLUMNS*
 
 	$divlettjuststarted = false;

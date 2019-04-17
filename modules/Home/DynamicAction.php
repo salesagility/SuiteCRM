@@ -55,6 +55,6 @@ if (!isset($_REQUEST['DynamicAction'])) {
 $dynamicAction = $_REQUEST['DynamicAction'];
 $res = $mySugar->$dynamicAction();
 if (isset($_REQUEST['commit_session'])) {
-    session_commit();
+    session_write_close();
 }
 echo $res;
