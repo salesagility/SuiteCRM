@@ -51,7 +51,6 @@ use SuiteCRM\API\JsonApi\v1\Repositories\FilterRepository;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
 use SuiteCRM\API\v8\Exception\BadRequestException;
 use SuiteCRM\API\v8\Exception\ModuleNotFoundException;
-use SuiteCRM\API\v8\Exception\NotAllowedException;
 
 /**
  * Class ModulesLib

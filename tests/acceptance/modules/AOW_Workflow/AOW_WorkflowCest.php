@@ -1,7 +1,5 @@
 <?php
 
-use \Faker\Factory;
-
 /**
  * Class LoginCest
  *
