@@ -50,7 +50,7 @@ class OneLogin_Saml2_Utils
     {
         assert('is_string($msg)');
         if (extension_loaded('gettext')) {
-            bindtextdomain("phptoolkit", dirname(dirname(dirname(__FILE__))).'/locale');
+            bindtextdomain("phptoolkit", dirname(dirname(__DIR__)).'/locale');
             textdomain('phptoolkit');
 
             $translatedMsg = gettext($msg);
@@ -123,7 +123,7 @@ class OneLogin_Saml2_Utils
             }
         }
 
-        $schemaFile = dirname(__FILE__).'/schemas/' . $schema;
+        $schemaFile = __DIR__ .'/schemas/' . $schema;
         $oldEntityLoader = libxml_disable_entity_loader(false);
         $res = $dom->schemaValidate($schemaFile);
         libxml_disable_entity_loader($oldEntityLoader);

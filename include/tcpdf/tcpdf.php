@@ -177,19 +177,19 @@ r46451 - 2009-04-23 16:57:40 -0700 (Thu, 23 Apr 2009) - jenny - tcpdf initial ch
 /**
  * main configuration file
  */
-require_once(dirname(__FILE__).'/config/tcpdf_config.php');
+require_once(__DIR__ .'/config/tcpdf_config.php');
 
 // includes some support files
 
 /**
  * unicode data
  */
-require_once(dirname(__FILE__).'/unicode_data.php');
+require_once(__DIR__ .'/unicode_data.php');
 
 /**
  * html colors table
  */
-require_once(dirname(__FILE__).'/htmlcolors.php');
+require_once(__DIR__ .'/htmlcolors.php');
 
 if (!class_exists('TCPDF', false)) {
     /**
@@ -5349,8 +5349,8 @@ if (!class_exists('TCPDF', false)) {
         */
         protected function _getfontpath()
         {
-            if (!defined('K_PATH_FONTS') and is_dir(dirname(__FILE__).'/fonts')) {
-                define('K_PATH_FONTS', dirname(__FILE__).'/fonts/');
+            if (!defined('K_PATH_FONTS') and is_dir(__DIR__ .'/fonts')) {
+                define('K_PATH_FONTS', __DIR__ .'/fonts/');
             }
             return defined('K_PATH_FONTS') ? K_PATH_FONTS : '';
         }
@@ -9655,7 +9655,7 @@ if (!class_exists('TCPDF', false)) {
             $this->sign = true;
             $this->signature_data = array();
             if (strlen($signing_cert) == 0) {
-                $signing_cert = 'file://'.dirname(__FILE__).'/tcpdf.pem';
+                $signing_cert = 'file://'. __DIR__ .'/tcpdf.pem';
             }
             if (strlen($private_key) == 0) {
                 $private_key = $signing_cert;
@@ -10670,7 +10670,7 @@ if (!class_exists('TCPDF', false)) {
             if ($this->empty_string($code)) {
                 return;
             }
-            require_once(dirname(__FILE__).'/barcodes.php');
+            require_once(__DIR__ .'/barcodes.php');
             // save current graphic settings
             $gvars = $this->getGraphicVars();
             // create new barcode object
@@ -10925,7 +10925,7 @@ if (!class_exists('TCPDF', false)) {
             if ($this->empty_string($code)) {
                 return;
             }
-            require_once(dirname(__FILE__).'/2dbarcodes.php');
+            require_once(__DIR__ .'/2dbarcodes.php');
             // save current graphic settings
             $gvars = $this->getGraphicVars();
             // create new barcode object

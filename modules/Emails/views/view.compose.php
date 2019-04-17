@@ -131,7 +131,7 @@ class EmailsViewCompose extends ViewEdit
      */
     public function getEditView()
     {
-        $a = dirname(dirname(__FILE__)) . '/include/ComposeView/ComposeView.php';
+        $a = dirname(__DIR__) . '/include/ComposeView/ComposeView.php';
         require_once 'modules/Emails/include/ComposeView/ComposeView.php';
         return new ComposeView();
     }

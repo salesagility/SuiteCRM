@@ -152,7 +152,7 @@ class OneLogin_Saml2_Settings
      */
     private function _loadPaths()
     {
-        $basePath = dirname(dirname(dirname(__FILE__))).'/';
+        $basePath = dirname(dirname(__DIR__)).'/';
         $this->_paths = array(
             'base' => $basePath,
             'config' => $basePath,

@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once dirname(dirname(__FILE__)).'/SAML2Authenticate/lib/onelogin/php-saml/_toolkit_loader.php';
+require_once dirname(__DIR__).'/SAML2Authenticate/lib/onelogin/php-saml/_toolkit_loader.php';
 require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
 
 /**
@@ -71,7 +71,7 @@ class SAML2Authenticate extends SugarAuthenticate
     {
         parent::pre_login();
 
-        require_once dirname(dirname(__FILE__)) . '/SAML2Authenticate/lib/onelogin/settings.php';
+        require_once dirname(__DIR__) . '/SAML2Authenticate/lib/onelogin/settings.php';
         $auth = new OneLogin_Saml2_Auth($settingsInfo);
 
         if (isset($_REQUEST['SAMLResponse']) && $_REQUEST['SAMLResponse']) {
@@ -158,7 +158,7 @@ class SAML2Authenticate extends SugarAuthenticate
      */
     public function preLogout()
     {
-        require_once dirname(dirname(__FILE__)) . '/SAML2Authenticate/lib/onelogin/settings.php';
+        require_once dirname(__DIR__) . '/SAML2Authenticate/lib/onelogin/settings.php';
         $auth = new OneLogin_Saml2_Auth($settingsInfo);
 
         $returnTo = null;

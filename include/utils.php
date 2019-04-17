@@ -3297,8 +3297,8 @@ function sugar_cleanup($exit = false)
         return;
     }
     $called = true;
-    set_include_path(realpath(dirname(__FILE__) . '/..') . PATH_SEPARATOR . get_include_path());
-    chdir(realpath(dirname(__FILE__) . '/..'));
+    set_include_path(realpath(__DIR__ . '/..') . PATH_SEPARATOR . get_include_path());
+    chdir(realpath(__DIR__ . '/..'));
     global $sugar_config;
     require_once 'include/utils/LogicHook.php';
     LogicHook::initialize();

@@ -706,7 +706,7 @@ function print_graph($g,$pgwidth) {
 	}
 	if ($graph) {
 		$graph->Stroke( _MPDF_PATH.$figure_file);
-		$srcpath = str_replace("\\","/",dirname(__FILE__)) . "/";
+		$srcpath = str_replace("\\","/", __DIR__) . "/";
 		$srcpath .= $figure_file;
 		return array('file'=>$srcpath, 'w'=>$w, 'h'=>$h);
 	}

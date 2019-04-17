@@ -388,7 +388,7 @@ class SugarTheme
     public function __destruct()
     {
         // Set the current directory to one which we expect it to be (i.e. the root directory of the install
-        $dir = realpath(dirname(__FILE__) . '/../..');
+        $dir = realpath(__DIR__ . '/../..');
         static $includePathIsPatched = false;
         if ($includePathIsPatched == false) {
             $path = explode(PATH_SEPARATOR, get_include_path());

@@ -977,7 +977,7 @@ function mPDF($mode='',$format='A4',$default_font_size=0,$default_font='',$mgl=1
 
 
 	$this->baselineC = 0.35;	// Baseline for text
-	$this->noImageFile = str_replace("\\","/",dirname(__FILE__)) . '/includes/no_image.jpg';
+	$this->noImageFile = str_replace("\\","/", __DIR__) . '/includes/no_image.jpg';
 	$this->subPos = 0;
 	$this->forceExactLineheight = false;
 	$this->listOcc = 0;

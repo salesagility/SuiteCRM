@@ -1006,7 +1006,7 @@ class HTMLPurifier_AttrValidator
 
 // constants are slow, so we use as few as possible
 if (!defined('HTMLPURIFIER_PREFIX')) {
-    define('HTMLPURIFIER_PREFIX', dirname(__FILE__) . '/standalone');
+    define('HTMLPURIFIER_PREFIX', __DIR__ . '/standalone');
     set_include_path(HTMLPURIFIER_PREFIX . PATH_SEPARATOR . get_include_path());
 }
 

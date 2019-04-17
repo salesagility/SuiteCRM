@@ -327,7 +327,7 @@ r47930 - 2009-06-02 16:21:39 -0700 (Tue, 02 Jun 2009) - jenny - Updating with ch
 function ReadMap($enc)
 {
     //Read a map file
-    $file = dirname(__FILE__).'/enc/'.strtolower($enc).'.map';
+    $file = __DIR__ .'/enc/'.strtolower($enc).'.map';
     $a = file($file);
     if (empty($a)) {
         die('Error: encoding not found: '.$enc);

@@ -1042,7 +1042,7 @@ abstract class BaseFacebook
             curl_setopt(
                 $ch,
                 CURLOPT_CAINFO,
-                  dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fb_ca_chain_bundle.crt'
+                  __DIR__ . DIRECTORY_SEPARATOR . 'fb_ca_chain_bundle.crt'
             );
             $result = curl_exec($ch);
         }
