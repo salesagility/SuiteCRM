@@ -450,7 +450,7 @@ class MssqlManager extends DBManager
             if (!empty($matches[3])) {
                 if ($start == 0) {
                     $match_two = strtolower($matches[2]);
-                    if (!strpos($match_two, 'distinct') > 0 && strpos($match_two, 'distinct') !== 0) {
+                    if ((!strpos($match_two, 'distinct')) > 0 && strpos($match_two, 'distinct') !== 0) {
                         $orderByMatch = array();
                         preg_match('/^(.*)(\bORDER BY\b)(.*)$/is', $matches[3], $orderByMatch);
                         if (!empty($orderByMatch[3])) {

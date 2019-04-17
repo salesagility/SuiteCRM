@@ -4157,16 +4157,352 @@ public $aliasNbPgHex;
         $charspacing=$this->charspacing;//Character Spacing
         $this->ResetSpacing();
 
-            $this->AddPage($this->CurOrientation);
-            // Added to correct for OddEven Margins
-            $x += $this->MarginCorrection;
-            if ($currentx) {
-                $currentx += $this->MarginCorrection;
-            }
-            $this->x=$x;
-            // WORD SPACING
-            $this->SetSpacing($charspacing, $ws);
-        }
+	$usey = $this->y + 0.002;
+	if (($newblock) && ($blockstate==1 || $blockstate==3) && ($lineCount == 0) ) { 
+		$usey += $this->blk[$this->blklvl]['margin_top'] + $this->blk[$this->blklvl]['padding_top'] + $this->blk[$this->blklvl]['border_top']['w'];
+	}
+
+/*-- CSS-IMAGE-FLOAT --*/
+	// If float exists at this level
+	if (isset($this->floatmargins['R']) && $usey <= $this->floatmargins['R']['y1'] && $usey >= $this->floatmargins['R']['y0'] && !$this->floatmargins['R']['skipline']) { $fpaddingR += $this->floatmargins['R']['w']; }
+	if (isset($this->floatmargins['L']) && $usey <= $this->floatmargins['L']['y1'] && $usey >= $this->floatmargins['L']['y0'] && !$this->floatmargins['L']['skipline']) { $fpaddingL += $this->floatmargins['L']['w']; }
+/*-- END CSS-IMAGE-FLOAT --*/
+
+
+
+       // try adding another char
+	if (( $contentWidth + $cw > $maxWidth - $WidthCorrection - (($this->cMarginL+$this->cMarginR)*_MPDFK) - ($paddingL+$paddingR +(($fpaddingL + $fpaddingR) * _MPDFK) ) +  0.001))  {// 0.001 is to correct for deviations converting mm=>pts
+		// it won't fit, output what we already have
+		$lineCount++;
+
+		// contains any content that didn't make it into this print
+		$savedContent = '';
+		$savedContentB = '';
+		$savedFont = array();
+		$savedObj = array();
+		// mPDF 5.6.20
+		$savedPreContent = array();
+		$savedPreContentB = array();
+		$savedPreFont = array();
+
+		// cut off and save any partial words at the end of the string
+		$words = explode( ' ', $currContent ); 
+		///////////////////
+		// HYPHENATION
+		$currWord = $words[count($words)-1] ;
+		$success = false;
+
+		// mPDF 5.6.21   Hard Hyphens -
+		$hardsuccess = false;
+		if ($this->textparam['hyphens'] != 2 && preg_match("/\-/",$currWord)) {	
+			$rem = $maxWidth - $WidthCorrection - (($this->cMarginL+$this->cMarginR)*_MPDFK) - ($paddingL+$paddingR +(($fpaddingL + $fpaddingR) * _MPDFK) );
+			list($hardsuccess,$pre,$post,$prelength) = $this->hardHyphenate($currWord, (($rem-$cutoffWidth)/_MPDFK -$this->GetCharWidth("-", false)) );
+			if ($hardsuccess) { 
+				$already = array_pop( $words );
+				$forward = mb_substr($already,$prelength+1,mb_strlen($already, $this->mb_enc), $this->mb_enc);
+				$words[] = $pre.'-';
+				$words[] = $forward;
+				$currContent = mb_substr($currContent,0,mb_strlen($currContent, $this->mb_enc)+1-mb_strlen($post, $this->mb_enc), $this->mb_enc) . '-';
+			}
+		}
+		
+/*-- HYPHENATION --*/
+		// Soft Hyphens chr(173)
+		elseif (($this->textparam['hyphens'] != 2 && (!$this->usingCoreFont && preg_match("/\xc2\xad/", $currWord))) || ($this->usingCoreFont && preg_match("/".chr(173)."/",$currWord) && ($this->FontFamily!='csymbol' && $this->FontFamily!='czapfdingbats')) ) {	// mPDF 5.6.06
+			$rem = $maxWidth - $WidthCorrection - (($this->cMarginL+$this->cMarginR)*_MPDFK) - ($paddingL+$paddingR +(($fpaddingL + $fpaddingR) * _MPDFK) );
+			list($success,$pre,$post,$prelength) = $this->softHyphenate($currWord, (($rem-$cutoffWidth)/_MPDFK -$this->GetCharWidth(" ", false)) );
+		}
+
+		if (!$success && !$hardsuccess && $this->textparam['hyphens'] == 1 ) { 	// mPDF 5.6.06	// mPDF 5.6.21
+			// Look ahead to get current word
+			for($ac = $i; $ac<(mb_strlen($s)-1); $ac++) {
+				$addc = mb_substr($s,$ac,1,$this->mb_enc );
+				if ($addc == ' ') { break; }
+				$currWord .= $addc;
+			}
+			$rem = $maxWidth - $WidthCorrection - (($this->cMarginL+$this->cMarginR)*_MPDFK) - ($paddingL+$paddingR +(($fpaddingL + $fpaddingR) * _MPDFK) );
+			list($success,$pre,$post,$prelength) = $this->hyphenateWord($currWord, (($rem-$cutoffWidth)/_MPDFK -$this->GetCharWidth(" ", false)) );
+		}
+		if ($success) { 
+			$already = array_pop( $words );
+			$forward = mb_substr($already,$prelength,mb_strlen($already, $this->mb_enc), $this->mb_enc);
+			$words[] = $pre.'-';
+			$words[] = $forward;
+			$currContent = mb_substr($currContent,0,mb_strlen($currContent, $this->mb_enc)+1-mb_strlen($post, $this->mb_enc), $this->mb_enc) . '-';
+		}
+/*-- END HYPHENATION --*/
+
+		// mPDF 5.6.13 Decimal alignment (cancel if wraps to > 1 line)
+		if ($is_table && substr($align,0,1)=='D' ) { $align=substr($align,2,1); }
+
+/*-- CJK-FONTS --*/
+		// mPDF 5.6.42
+		if ($this->checkCJK) {
+			$lastchar = mb_substr($words[(count($words)-1)],mb_strlen($words[(count($words)-1)], $this->mb_enc)-1, 1, $this->mb_enc);
+		}
+		// Next character is suitable to add as overhanging or squeezed punctuation
+		if ($this->checkCJK && preg_match("/[".$this->CJKoverflow."]/u", $c) && $this->allowCJKorphans && !$CJKoverflow) {
+			// add character onto this line
+			$currContent .= $c;
+			$cutoffWidth = $contentWidth;
+			$contentWidth += $cw;
+			$CJKoverflow = true;
+			continue;
+		}
+		// Last character that fits is not allowed to end a line - move lastchar(s) to start of next line
+		elseif ($this->checkCJK && preg_match("/[".$this->CJKleading."]/u", $lastchar)) {
+			//move lastchar(s) to next line
+			$m0 = $lastchar;
+			$m1 = $c;
+			while(preg_match("/[".$this->CJKleading."]/u", $m0) && mb_strlen($words[(count($words)-1)], $this->mb_enc)>2) {
+				// trim last letter off word[0]
+				$words[(count($words)-1)] = mb_substr($words[(count($words)-1)],0,mb_strlen($words[(count($words)-1)], $this->mb_enc)-1, $this->mb_enc);
+				// and add it to savedContent for next line
+				$savedContent = $m0.$savedContent;
+				$m1 = $lastchar;
+				$lastchar = mb_substr($words[(count($words)-1)],mb_strlen($words[(count($words)-1)], $this->mb_enc)-1, 1, $this->mb_enc);
+				$m0 = $lastchar;
+			}
+			$lastContent = '';
+			for ( $w = 0; $w < count( $words ) ; $w++) { $lastContent .= $words[ $w ]." "; }
+			$savedFont = $this->saveFont();
+			// replace the current content with the cropped version
+			$currContent = rtrim( $lastContent );
+		}
+		// Next character is not allowed to start a new line
+		elseif ($this->checkCJK && preg_match("/[".$this->CJKfollowing."]/u", $c)) {
+			// try squeezing another character(s) onto this line = Oikomi
+			if ($this->allowCJKorphans && !$CJKoverflow) {	// mPDF 5.6.40
+			      $lookahead = mb_substr($s,$i+1,1,$this->mb_enc );
+				//if lookahead is not another following char
+				if (!$lookahead || ($lookahead && !preg_match("/[".$this->CJKfollowing."]/u", $lookahead))) {
+					$currContent .= $c;
+					$cutoffWidth = $contentWidth;
+					$contentWidth += $cw;
+					if ($this->allowCJKoverflow && preg_match("/[".$this->CJKoverflow."]/u", $c)) { $CJKoverflow = true; }
+					continue;
+				}
+			}
+			// or move lastchar(s) to next line to keep $c company = Oidashi
+			$m0 = $lastchar;
+			$m1 = $c;
+			while(preg_match("/[".$this->CJKfollowing."]/u", $m1) && mb_strlen($words[(count($words)-1)], $this->mb_enc)>2) {
+				// trim last letter off word[0]
+				$words[(count($words)-1)] = mb_substr($words[(count($words)-1)],0,mb_strlen($words[(count($words)-1)], $this->mb_enc)-1, $this->mb_enc);
+				// and add it to savedContent for next line
+				$savedContent = $m0.$savedContent;
+				$m1 = $lastchar;
+				$lastchar = mb_substr($words[(count($words)-1)],mb_strlen($words[(count($words)-1)], $this->mb_enc)-1, 1, $this->mb_enc);
+				$m0 = $lastchar;
+			}
+			$lastContent = '';
+			for ( $w = 0; $w < count( $words ) ; $w++) { $lastContent .= $words[ $w ]." "; }
+			$savedFont = $this->saveFont();
+			// replace the current content with the cropped version
+			$currContent = rtrim( $lastContent );
+		}
+		// mPDF 5.6.42
+	  	elseif ($this->checkCJK && preg_match("/([".$this->pregCJKchars."]+[0-9\x{ff10}-\x{ff19}]+$)/u", $words[0])) {
+			$lookahead = mb_substr($s,$i,16,$this->mb_enc );
+			//and if lookahead starts with a few numerals
+			if ($lookahead && (preg_match("/^([0-9\x{ff10}-\x{ff19}]+[".$this->pregCJKchars."]+)/u", $lookahead) || preg_match("/^([0-9\x{ff10}-\x{ff19}]+$)/u", $lookahead)) ) {
+				// or move lastchar(s) to next line to keep numerals together
+				$m0 = $lastchar;
+				while(preg_match("/[0-9\x{ff10}-\x{ff19}]/u", $m0) && mb_strlen($words[(count($words)-1)], $this->mb_enc)>2) {
+					// trim last letter off word[0]
+					$words[(count($words)-1)] = mb_substr($words[(count($words)-1)],0,mb_strlen($words[(count($words)-1)], $this->mb_enc)-1, $this->mb_enc);
+					// and add it to savedContent for next line
+					$savedContent = $m0.$savedContent;
+					$lastchar = mb_substr($words[(count($words)-1)],mb_strlen($words[(count($words)-1)], $this->mb_enc)-1, 1, $this->mb_enc);
+					$m0 = $lastchar;
+				}
+			}
+			$lastContent = '';
+			for ( $w = 0; $w < count( $words ) ; $w++) { $lastContent .= $words[ $w ]." "; }
+			$savedFont = $this->saveFont();
+			// replace the current content with the cropped version
+			$currContent = rtrim( $lastContent );
+		}
+		elseif/*-- END CJK-FONTS --*/
+		// if it looks like we didn't finish any words for this chunk
+		( count( $words ) == 1 ) {
+		  // TO correct for error when word too wide for page - but only when one long word from left to right margin
+		  if (count($content) == 1 && $currContent != ' ') {
+			$lastchar = mb_substr($words[0],mb_strlen($words[0], $this->mb_enc)-1, 1, $this->mb_enc);
+			$lastContent = $words[0]; 
+			$savedFont = $this->saveFont();
+			// replace the current content with the cropped version
+			$currContent = rtrim( $lastContent );
+		  }
+		  // mPDF 5.6.20
+		  elseif (	count($content)>1
+				&& (!isset($this->objectbuffer[(count($content)-1)]) && !isset($this->objectbuffer[(count($content)-2)]))
+				&& substr($content[count($content)-2],-1,1) != ' '
+				&& substr($currContent,0,1) != ' '
+			) {
+			// Go back to find a space in a previous chunk of content
+			$found = false;
+			for ($ix=count($content)-1;$ix>=0;$ix--) {
+				// mPDF 5.6.29
+				if ($this->usingCoreFont && preg_match('/[ '.chr(173).']/',$content[$ix],$m)) { $match = $m[0]; $found = $ix; break; }
+				elseif (!$this->usingCoreFont) {
+					if (preg_match('/[ ]/',$content[$ix])) { $match = ' '; $found = $ix; break; }
+					elseif (preg_match('/[\x{00AD}]/u',$content[$ix])) {
+						// even though it is UTF-8 replace it temporarily with chr(173)
+						$content[$ix] = preg_replace('/[\x{00AD}]/u',chr(173),$content[$ix]);
+						$match = chr(173); $found = $ix; break; 
+					}
+				}
+			}
+			if ($found !== false) {
+				$charpos = strrpos($content[$found],$match);	// mPDF 5.6.29
+				for ($ix=count($content)-1;$ix>$found;$ix--) {
+					// save and crop off any subsequent chunks
+					$savedPreContent[] = array_pop($content);
+					$savedPreContentB[] = array_pop($contentB);
+					$savedPreFont[] = array_pop($font);
+				}
+				if (substr($content[count($content)-1],$charpos+1,strlen($content[count($content)-1])-1) != '') {
+					$savedPreContent[] = substr($content[count($content)-1],$charpos+1,strlen($content[count($content)-1])-1);
+					$savedPreContentB[] = preg_replace('/L/','',$contentB[count($content)-1]);	// ???
+					$savedPreFont[] = $font[count($content)-1];
+				}
+				$savedContent = '';
+				$savedContentB = '';
+				$savedFont = array();
+
+				$currContent =& $content[ count( $content ) - 1 ];
+				$currContent = substr($currContent,0,$charpos);
+				if ($match == chr(173)) { $currContent .= '-'; }	// mPDF 5.6.29
+				if (strpos($contentB[(count($contentB)-1)],'R')!==false) {			// ???
+					$contentB[count($content)-1] = preg_replace('/R/','',$contentB[count($content)-1]);	// ???
+				}
+
+				$currContent = rtrim( $currContent );
+			}
+			else {
+				$savedContent = array_pop( $content );
+				$savedContentB = array_pop($contentB);
+				$savedFont = array_pop( $font );
+				$currContent =& $content[ count( $content ) - 1 ];
+				$currContent = rtrim( $currContent );
+			}
+		  }
+		  else {
+			// save and crop off the content currently on the stack
+			$savedContent = array_pop( $content );
+			$savedContentB = array_pop($contentB);	// mPDF 5.6.20
+			$savedFont = array_pop( $font );
+			// trim any trailing spaces off the last bit of content
+			$currContent =& $content[ count( $content ) - 1 ];
+			$currContent = rtrim( $currContent );
+		  }
+		}
+		else {	// otherwise, we need to find which bit to cut off
+		  $lastContent = '';
+              for ( $w = 0; $w < count( $words ) - 1; $w++) { $lastContent .= $words[ $w ]." "; }
+              $savedContent = $words[ count( $words ) - 1 ];
+              $savedFont = $this->saveFont();
+              // replace the current content with the cropped version
+              $currContent = rtrim( $lastContent );
+		}
+		// CJK - strip CJK space at end of line
+		// &#x3000; = \xe3\x80\x80 = CJK space
+		if ($this->checkCJK) { $currContent = preg_replace("/\xe3\x80\x80$/",'',$currContent) ; }	// *CJK-FONTS*
+
+
+		if (isset($this->objectbuffer[(count($content)-1)]) && $this->objectbuffer[(count($content)-1)]['type']=='dottab') {
+			$savedObj = array_pop( $this->objectbuffer );
+			$contentWidth -= ($this->objectbuffer[(count($content)-1)]['OUTER-WIDTH'] * _MPDFK);
+		}
+
+		// Set Current lineheight (correction factor)
+		$lhfixed = false; 
+/*-- LISTS --*/
+		if ($is_list) {
+			if (preg_match('/([0-9.,]+)mm/',$this->list_lineheight[$this->listlvl][$this->listOcc],$am)) { 
+				$lhfixed = true; 
+				$def_fontsize = $this->InlineProperties['LISTITEM'][$this->listlvl][$this->listOcc][$this->listnum]['size'];
+				$this->lineheight_correction = $am[1] / $def_fontsize ;
+			}
+			else { 
+				$this->lineheight_correction = $this->list_lineheight[$this->listlvl][$this->listOcc]; 
+			}
+		}
+		elseif/*-- END LISTS --*/
+/*-- TABLES --*/
+		($is_table) {
+			if (preg_match('/([0-9.,]+)mm/',$this->table_lineheight,$am)) { 
+				$lhfixed = true; 
+				$def_fontsize = $this->FontSize; 				// needs to be default font-size for block ****
+				$this->lineheight_correction = $lineHeight / $def_fontsize ; 
+			}
+			else { 
+				$this->lineheight_correction = $this->table_lineheight; 
+			}
+		}
+		elseif/*-- END TABLES --*/
+		(isset($this->blk[$this->blklvl]['line_height']) && $this->blk[$this->blklvl]['line_height']) {
+			if (preg_match('/([0-9.,]+)mm/',$this->blk[$this->blklvl]['line_height'],$am)) { 
+				$lhfixed = true; 
+				$def_fontsize = $this->blk[$this->blklvl]['InlineProperties']['size']; 	// needs to be default font-size for block ****
+				$this->lineheight_correction = $am[1] / $def_fontsize ;
+			}
+			else { 
+				$this->lineheight_correction = $this->blk[$this->blklvl]['line_height']; 
+			}
+		} 
+		else {
+			$this->lineheight_correction = $this->normalLineheight; 
+		}
+		// update $contentWidth and $cutoffWidth since they changed with cropping
+		// Also correct lineheight to maximum fontsize (not for tables)
+		$contentWidth = 0;
+		//  correct lineheight to maximum fontsize
+		if ($lhfixed) { $maxlineHeight = $this->lineheight; }
+		else { $maxlineHeight = 0; }
+		$this->forceExactLineheight = true;
+		$maxfontsize = 0;
+		// While we're at it, check for cursive text
+		$checkCursive=false;
+		if ($this->biDirectional) {  $checkCursive=true; }	// *RTL*
+		foreach ( $content as $k => $chunk )
+		{
+              $this->restoreFont( $font[ $k ]);
+		  if (!isset($this->objectbuffer[$k])) { 
+			// mPDF 5.6.40
+			if ($this->checkCJK && $k == count($content)-1 && $CJKoverflow && $align=='J' && $this->allowCJKoverflow && $this->CJKforceend) {
+			  // force-end overhang
+				$hanger = mb_substr($chunk,mb_strlen($chunk,$this->mb_enc)-1,1,$this->mb_enc );
+				$content[$k] = $chunk = mb_substr($chunk,0,mb_strlen($chunk,$this->mb_enc)-1,$this->mb_enc );
+			}
+			if (!$this->usingCoreFont) {
+			      $content[$k] = $chunk = str_replace("\xc2\xad",'',$chunk ); 
+				if (isset($this->CurrentFont['indic']) && $this->CurrentFont['indic']) {  $checkCursive=true; }	// *INDIC*
+			}
+			// Soft Hyphens chr(173)
+			elseif ($this->FontFamily!='csymbol' && $this->FontFamily!='czapfdingbats') {
+			      $content[$k] = $chunk = str_replace(chr(173),'',$chunk );
+			}
+			$contentWidth += $this->GetStringWidth( $chunk ) * _MPDFK; 
+			if (!empty($this->spanborddet)) { 
+				if (strpos($contentB[$k],'L')!==false) $contentWidth += $this->spanborddet['L']['w'] * _MPDFK; 
+				if (strpos($contentB[$k],'R')!==false) $contentWidth += $this->spanborddet['R']['w'] * _MPDFK; 
+			}
+			if (!$lhfixed) { $maxlineHeight = max($maxlineHeight,$this->FontSize * $this->lineheight_correction ); }
+			if ($lhfixed && ($this->FontSize > $def_fontsize || ($this->FontSize > ($lineHeight * $this->lineheight_correction) && $is_list))) { 
+				$this->forceExactLineheight = false; 
+			}
+			$maxfontsize = max($maxfontsize,$this->FontSize); 
+		  }
+		}
+
+		$lastfontreqstyle = $font[count($font)-1]['ReqFontStyle'];
+		$lastfontstyle = $font[count($font)-1]['style'];
+		if ($blockdir == 'ltr' && strpos($lastfontreqstyle,"I") !== false && strpos($lastfontstyle,"I") === false) {	// Artificial italic
+			$lastitalic = $this->FontSize*0.15*_MPDFK;
+		}
+		else { $lastitalic = 0; }
 
         // Test: to put line through centre of cell: $this->Line($this->x,$this->y+($h/2),$this->x+50,$this->y+($h/2));
 
@@ -4180,15 +4516,148 @@ public $aliasNbPgHex;
             $this->x += $this->ChangeColumn * ($this->ColWidth+$this->ColGap);
         }
 
-        // COLUMNS Update/overwrite the lowest bottom of printing y value for a column
-        if ($this->ColActive) {
-            if ($h) {
-                $this->ColDetails[$this->CurrCol]['bottom_margin'] = $this->y+$h;
-            } else {
-                $this->ColDetails[$this->CurrCol]['bottom_margin'] = $this->y+$this->divheight;
-            }
-        }
-        /*-- END COLUMNS --*/
+		// when every text item checked i.e. $maxfontsize is set properly
+
+		$af = 0; 	// Above font
+		$bf = 0; 	// Below font
+		$mta = 0;	// Maximum top-aligned 
+		$mba = 0;	// Maximum bottom-aligned 
+
+		foreach ( $content as $k => $chunk ) {
+		  if (isset($this->objectbuffer[$k]) && $this->objectbuffer[$k]) { 
+			$contentWidth += $this->objectbuffer[$k]['OUTER-WIDTH'] * _MPDFK; 
+			$oh = $this->objectbuffer[$k]['OUTER-HEIGHT'];
+			$va = $this->objectbuffer[$k]['vertical-align']; // = $objattr['vertical-align'] = set as M,T,B,S
+			if ($lhfixed && $oh > $def_fontsize) { $this->forceExactLineheight = false; }
+
+			if ($va == 'BS') {	//  (BASELINE default)
+				$af = max($af, ($oh - ($maxfontsize * (0.5 + $this->baselineC))));
+			}
+			elseif ($va == 'M') { 
+				$af = max($af, ($oh - $maxfontsize)/2);
+				$bf = max($bf, ($oh - $maxfontsize)/2);
+			}
+			elseif ($va == 'TT') { 
+				$bf = max($bf, ($oh - $maxfontsize));
+			}
+			elseif ($va == 'TB') { 
+				$af = max($af, ($oh - $maxfontsize));
+			}
+			elseif ($va == 'T') { 
+				$mta = max($mta, $oh);
+			}
+			elseif ($va == 'B') { 
+				$mba = max($mba, $oh);
+			}
+		  }
+		}
+		if ((!$lhfixed || !$this->forceExactLineheight) && ($af > (($maxlineHeight - $maxfontsize)/2) || $bf > (($maxlineHeight - $maxfontsize)/2))) {
+			$maxlineHeight = $maxfontsize + $af + $bf;
+		}
+		elseif (!$lhfixed) { $af = $bf = ($maxlineHeight - $maxfontsize)/2; }
+
+		if ($mta > $maxlineHeight) { 
+			$bf += ($mta - $maxlineHeight);
+			$maxlineHeight = $mta;
+		}
+		if ($mba > $maxlineHeight) { 
+			$af += ($mba - $maxlineHeight);
+			$maxlineHeight = $mba;
+		}
+
+
+		$lineHeight = $maxlineHeight; 
+		$cutoffWidth = $contentWidth;
+		// If NOT images, and maxfontsize NOT > lineHeight - this value determines text baseline positioning
+		if ($lhfixed && $af==0 && $bf==0 && $maxfontsize<=($def_fontsize * $this->lineheight_correction * 0.8 )) { 
+			$this->linemaxfontsize = $def_fontsize; 
+		}
+		else { $this->linemaxfontsize = $maxfontsize; }
+
+
+		$inclCursive=false;
+		foreach ( $content as $k => $chunk ) {
+			if (!isset($this->objectbuffer[$k]) || (isset($this->objectbuffer[$k]) && !$this->objectbuffer[$k])) {
+				if ($this->usingCoreFont) {
+				      $content[$k] = str_replace(chr(160),chr(32),$chunk );
+				}
+				else {
+				      $content[$k] = str_replace(chr(194).chr(160),chr(32),$chunk ); 
+					if ($checkCursive) {
+						if (preg_match("/([".$this->pregRTLchars."])/u", $chunk)) { $inclCursive = true; }	// *RTL*
+						if (preg_match("/([".$this->pregHIchars.$this->pregBNchars.$this->pregPAchars."])/u", $chunk)) { $inclCursive = true; }	// *INDIC*
+					}
+				}
+			}
+		}
+
+		// JUSTIFICATION J
+		$jcharspacing = 0;
+		$jws = 0;
+		$nb_carac = 0;
+		$nb_spaces = 0;
+		// if it's justified, we need to find the char/word spacing (or if orphans have allowed length of line to go over the maxwidth)
+		if ( ($align == 'J' && !$CJKoverflow) || (($cutoffWidth + $lastitalic > $maxWidth - $WidthCorrection - (($this->cMarginL+$this->cMarginR)*_MPDFK) - ($paddingL+$paddingR +(($fpaddingL + $fpaddingR) * _MPDFK) ) +  0.001) && (!$CJKoverflow || ($CJKoverflow && !$this->allowCJKoverflow))) || ($CJKoverflow && $align == 'J' && $this->allowCJKoverflow && $hanger && $this->CJKforceend)) {   // 0.001 is to correct for deviations converting mm=>pts	// mPDF 5.6.40
+		  // JUSTIFY J (Use character spacing)
+ 		  // WORD SPACING
+			foreach ( $content as $k => $chunk ) {
+				if (!isset($this->objectbuffer[$k]) || (isset($this->objectbuffer[$k]) && !$this->objectbuffer[$k])) {
+					$nb_carac += mb_strlen( $chunk, $this->mb_enc ) ;  
+					$nb_spaces += mb_substr_count( $chunk,' ', $this->mb_enc ) ;  
+				}
+			}
+			list($jcharspacing,$jws) = $this->GetJspacing($nb_carac,$nb_spaces,($maxWidth-$lastitalic-$cutoffWidth-$WidthCorrection-(($this->cMarginL+$this->cMarginR)*_MPDFK)-($paddingL+$paddingR +(($fpaddingL + $fpaddingR) * _MPDFK) )),$inclCursive);
+		}
+
+
+		// WORD SPACING
+		$empty = $maxWidth - $lastitalic-$WidthCorrection - $contentWidth - (($this->cMarginL+$this->cMarginR)* _MPDFK) - ($paddingL+$paddingR +(($fpaddingL + $fpaddingR) * _MPDFK) );
+
+		$empty -= ($jcharspacing * $nb_carac);
+		$empty -= ($jws * $nb_spaces);
+
+		$empty /= _MPDFK;
+		$b = ''; //do not use borders
+		// Get PAGEBREAK TO TEST for height including the top border/padding
+		$check_h = max($this->divheight,$lineHeight);
+		if (($newblock) && ($blockstate==1 || $blockstate==3) && ($this->blklvl > 0) && ($lineCount == 1) && (!$is_table) && (!$is_list)) { 
+			$check_h += ($this->blk[$this->blklvl]['padding_top'] + $this->blk[$this->blklvl]['margin_top'] + $this->blk[$this->blklvl]['border_top']['w']);
+		}
+
+		if ($this->ColActive && $check_h > ($this->PageBreakTrigger - $this->y0)) { 
+			$this->SetCol($this->NbCol-1);
+		}
+
+		// PAGEBREAK
+		// 'If' below used in order to fix "first-line of other page with justify on" bug 
+		if(!$is_table && ($this->y+$check_h) > $this->PageBreakTrigger and !$this->InFooter and $this->AcceptPageBreak()) {
+			$bak_x=$this->x;//Current X position
+
+			// WORD SPACING
+			$ws=$this->ws;//Word Spacing
+			$charspacing=$this->charspacing;//Character Spacing
+			$this->ResetSpacing();
+
+		      $this->AddPage($this->CurOrientation);
+
+		      $this->x = $bak_x;
+			// Added to correct for OddEven Margins
+			$currentx += $this->MarginCorrection;
+			$this->x += $this->MarginCorrection;
+
+			// WORD SPACING
+			$this->SetSpacing($charspacing,$ws);
+		}
+
+		if ($this->keep_block_together && !$is_table && $this->kt_p00 < $this->page && ($this->y+$check_h) > $this->kt_y00) {
+			$this->printdivbuffer();
+			$this->keep_block_together = 0;
+		}
+
+		if ($this->kwt && !$is_table) {	// mPDF 5.7+
+			$this->printkwtbuffer();
+			$this->kwt = false;
+		}
 
         // KEEP BLOCK TOGETHER Update/overwrite the lowest bottom of printing y value on first page
         if ($this->keep_block_together) {
@@ -32301,26 +32770,458 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
         return $enc;
     }
 
-    // Compute U value
-    public function _Uvalue()
-    {
-        if ($this->useRC128encryption) {
-            $tmp = $this->_md5_16($this->padding.$this->_hexToString($this->uniqid));
-            $enc = $this->_RC4($this->encryption_key, $tmp);
-            $len = strlen($tmp);
-            for ($i=1; $i<=19; ++$i) {
-                $key = '';
-                for ($j=0; $j<$len; ++$j) {
-                    $key .= chr(ord($this->encryption_key{$j}) ^ $i);
-                }
-                $enc = $this->_RC4($key, $enc);
-            }
-            $enc .= str_repeat("\x00", 16);
-            return substr($enc, 0, 32);
-        } else {
-            return $this->_RC4($this->encryption_key, $this->padding);
-        }
-    }
+function TableWordWrap($maxwidth, $forcewrap = 0, $textbuffer = '', $def_fontsize, $returnarray=false) {	// NB ** returnarray used in flowchart
+   $biggestword=0;
+   $toonarrow=false;
+
+   $textbuffer[0][0] = preg_replace('/^[ ]*/','',$textbuffer[0][0]);
+   if ((count($textbuffer) == 0) or ((count($textbuffer) == 1) && ($textbuffer[0][0] == ''))) { return 0; }
+
+   $text = '';
+   $lhfixed = false; 
+   if (preg_match('/([0-9.,]+)mm/',$this->table_lineheight)) { $lhfixed = true; }
+   if ($lhfixed) { $def_lineheight = $this->_computeLineheight($this->table_lineheight, $def_fontsize);}
+   else { $def_lineheight = 0; }
+   // START OF NEW LINE
+   // Initialise lineheight variables
+   $maxfontsize = 0;
+   $forceExactLineheight = true;
+   $lhxt = array('BS'=>0, 'M'=>0, 'TT'=>0, 'TB'=>0, 'T'=>0, 'B'=>0);
+   $maxlineHeight = $def_lineheight ;
+   $ch = 0;
+   $width = 0;
+   $ln = 1;	// Counts line number
+   $mxw = $this->GetCharWidth('W',false);
+   for($cctr=0;$cctr<count($textbuffer);$cctr++) {	// mPDF 5.6.22
+	$chunk = $textbuffer[$cctr];	// mPDF 5.6.22
+	$line = $chunk[0];
+	//IMAGE
+      if (substr($line,0, 6) == "\xbb\xa4\xac") { //identifier has been identified!
+		$objattr = $this->_getObjAttr($line);
+		if ($objattr['type'] == 'nestedtable') {
+			// END OF LINE
+			// Finalise & add lineheight
+			$ch += $this->finaliseCellLineHeight($lhxt, $maxfontsize, $maxlineHeight, $lhfixed, $forceExactLineheight);
+			$level = $objattr['level'];
+			$ih = $this->table[($level+1)][$objattr['nestedcontent']]['h'];	// nested table width
+			$ch += $ih;
+			// START OF NEW LINE
+			// Initialise lineheight variables
+			$ln++;
+			$maxfontsize = 0;
+			$forceExactLineheight = true;
+			$lhxt = array('BS'=>0, 'M'=>0, 'TT'=>0, 'TB'=>0, 'T'=>0, 'B'=>0);
+			$maxlineHeight = $def_lineheight ;
+			$width = 0;
+			$text = "";
+			continue;
+		}
+
+		list($skipln,$iw,$ih) = $this->inlineObject((isset($specialcontent['type']) ? $specialcontent['type'] : null),0,0, $objattr, $this->lMargin,$width,$maxwidth,$maxlineHeight,false,true);
+		if ($objattr['type'] == 'hr') {
+			// END OF LINE
+			// Finalise & add lineheight 
+			$ch += $this->finaliseCellLineHeight($lhxt, $maxfontsize, $maxlineHeight, $lhfixed, $forceExactLineheight);
+			// Add HR height
+			$ch += $ih;
+			// START OF NEW LINE
+			// Initialise lineheight variables
+			$ln++;
+			$maxfontsize = 0;
+			$forceExactLineheight = true;
+			$lhxt = array('BS'=>0, 'M'=>0, 'TT'=>0, 'TB'=>0, 'T'=>0, 'B'=>0);
+			$maxlineHeight = $def_lineheight ;
+			$width = 0;
+			$text = "";
+			continue;
+		}
+
+		if ($skipln==1 || $skipln==-2) {
+			// Finish last line
+			// END OF LINE
+			// Finalise & add lineheight 
+			$ch += $this->finaliseCellLineHeight($lhxt, $maxfontsize, $maxlineHeight, $lhfixed, $forceExactLineheight);
+			// START OF NEW LINE
+			// Initialise lineheight variables
+			$maxfontsize = 0;
+			$forceExactLineheight = true;
+			$lhxt = array('BS'=>0, 'M'=>0, 'TT'=>0, 'TB'=>0, 'T'=>0, 'B'=>0);
+			$maxlineHeight = $def_lineheight ;
+			$ln++;
+			$width = 0;
+			$text = "";
+		}
+		$va = (isset($objattr['vertical-align']) ? $objattr['vertical-align'] : null); 
+		if ($va) {
+			$lhxt[$va] = max($lhxt[$va], $ih);
+		}
+		if ($lhfixed && $ih > $def_fontsize) { $forceExactLineheight = false; }
+		$maxlineHeight = max($maxlineHeight ,$ih);
+		$width += $iw;
+		continue;
+	}
+
+	// SET FONT SIZE/STYLE from $chunk[n]
+	// FONTSIZE
+	if(isset($chunk[11]) and $chunk[11] != '') { 
+	   if ($this->shrin_k) {
+		$this->SetFontSize($chunk[11]/$this->shrin_k,false); 
+	   }
+	   else {
+		$this->SetFontSize($chunk[11],false); 
+	   }
+	}
+	if ($line == "\n") {
+		// END OF LINE
+		$maxfontsize = max($maxfontsize,$this->FontSize); 
+		$fh = $this->_computeLineheight($this->table_lineheight);
+		if ($lhfixed && $this->FontSize > $def_fontsize) {
+			$fh = $this->FontSize;
+			$forceExactLineheight = false; 
+		}
+		$maxlineHeight = max($maxlineHeight,$fh); 
+
+		// Finalise & add lineheight 
+		$ch += $this->finaliseCellLineHeight($lhxt, $maxfontsize, $maxlineHeight, $lhfixed, $forceExactLineheight);
+		// START OF NEW LINE
+		// Initialise lineheight variables
+		$maxfontsize = 0;
+		$forceExactLineheight = true;
+		$lhxt = array('BS'=>0, 'M'=>0, 'TT'=>0, 'TB'=>0, 'T'=>0, 'B'=>0);
+		$maxlineHeight = $this->_computeLineheight($this->table_lineheight);
+		$ln++;
+		$text = "";
+		$width = 0;
+		if(isset($chunk[11]) and $chunk[11] != '') { 
+			$this->SetFontSize($this->default_font_size,false);
+		}
+		continue;
+	}
+
+	$lbw = $rbw = 0;	// Border widths
+	if(isset($chunk[16]) && !empty($chunk[16])) {	//Border
+		$this->spanborddet = $chunk[16];
+		if (isset($this->spanborddet['L'])) $lbw = $this->spanborddet['L']['w'];
+		if (isset($this->spanborddet['R'])) $rbw = $this->spanborddet['R']['w'];
+	}
+      if(isset($chunk[15])) { 	 // Word spacing
+		$this->wSpacingCSS = $chunk[15]; 
+		if ($this->wSpacingCSS && strtoupper($this->wSpacingCSS) != 'NORMAL') { 
+			$this->minwSpacing = $this->ConvertSize($this->wSpacingCSS,$this->FontSize); 
+		}
+	}
+      if(isset($chunk[14])) { 	 // Letter spacing
+		$this->lSpacingCSS = $chunk[14]; 
+		if (($this->lSpacingCSS || $this->lSpacingCSS==='0') && strtoupper($this->lSpacingCSS) != 'NORMAL') {
+			$this->fixedlSpacing = $this->ConvertSize($this->lSpacingCSS,$this->FontSize);
+		}
+	}
+      if(isset($chunk[13])) { 	 // Font Kerning
+		$this->kerning = $chunk[13]; 
+	}
+      if(isset($chunk[9])) { 	 // Text params - Outline, hyphens	// mPDF 5.6.08
+		$this->textparam = $chunk[9]; 
+	}
+	// FONTFAMILY
+	if(isset($chunk[4]) and $chunk[4] != '') { $font = $this->SetFont($chunk[4],$this->FontStyle,0,false); }
+
+	// FONT STYLE B I U
+	if(isset($chunk[2]) and $chunk[2] != '') {
+		$this->SetStyles($chunk[2]);
+	}
+
+	$space = $this->GetCharWidth(' ',false);
+
+	if (mb_substr($line,0,1,$this->mb_enc ) == ' ') { 	// line (chunk) starts with a space
+		$width += $space;
+		$text .= ' ';
+	}
+
+	if (mb_substr($line,(mb_strlen($line,$this->mb_enc )-1),1,$this->mb_enc ) == ' ') { $lsend = true; }	// line (chunk) ends with a space
+	else { $lsend = false; }
+	$line= trim($line);
+	if ($line == '') { continue; }
+
+	// mPDF ITERATION
+	if ($this->iterationCounter) $line = preg_replace('/{iteration ([a-zA-Z0-9_]+)}/','\\1', $line);
+
+	$words = explode(' ', $line);
+
+	foreach ($words as $k=>$word) {
+		$word = trim($word);
+		$wordwidth = $this->GetStringWidth($word);
+		if ($k==0) { $wordwidth += $lbw; }
+		if ($k==(count($words)-1)) { $wordwidth += $rbw; }
+		//maxwidth is insufficient for one word
+		if ($wordwidth > $maxwidth + 0.0001) {
+			$firstchunk=true;
+			while($wordwidth > $maxwidth + 0.0001) {
+				$chw = 0;	// check width
+				$oneCJKorphan = false;
+				$mlen = mb_strlen($word, $this->mb_enc );
+				for ( $i = 0; $i < $mlen; $i++ ) {
+					$chw = $this->GetStringWidth(mb_substr($word,0,$i+1,$this->mb_enc ));
+					if ($k==0) { $chw += $lbw; }
+					if ($k==(count($words)-1)) { $chw += $rbw; }
+					if ($chw > $maxwidth) {
+						if ($i==0 && $firstchunk) {
+							// If first letter of line does not fit
+							$wordwidth = $maxwidth - 0.0001;
+							if ($this->debug) { $this->Error("Table cell width calculated less than that needed for one character!"); }
+							break;
+						}
+/*-- CJK-FONTS --*/
+					 	// mPDF 5.6.40	mPDF 5.6.44
+						if ($this->checkCJK && !$this->usingCoreFont && preg_match("/[".$this->pregCJKchars."]/u", $word)) {	// mPDF 5.6.44
+							if (!$oneCJKorphan && preg_match('/['.$this->CJKoverflow.']$/u',mb_substr($word,0,$i+1,$this->mb_enc )) && $this->allowCJKorphans) {
+								$wordwidth = $maxwidth - 0.0001;
+								$oneCJKorphan = true; 
+								continue;
+							}
+							$cjkfix = 0;
+							// Last character that fits is not allowed to end a line - move lastchar(s) to start of next line
+							if ($i>0 && preg_match("/[".$this->CJKleading."$]/u", mb_substr($word,0,$i,$this->mb_enc ))) {
+								$cjkfix = 1;
+							}
+							// Next character is not allowed to start a new line
+							elseif (preg_match("/[".$this->CJKfollowing."]/u", mb_substr($word,$i,1,$this->mb_enc ))) {
+								// try squeezing another character(s) onto this line = Oikomi
+								if ($this->allowCJKorphans && !$oneCJKorphan) {
+									//if lookahead is not another following char
+									if ($i==($mlen-1) || ($i<($mlen-1) && !preg_match("/[".$this->CJKfollowing."]/u", mb_substr($word,$i+1,1,$this->mb_enc )))) {
+										$wordwidth = $maxwidth - 0.0001;
+										$oneCJKorphan = true; 
+										continue;
+									}
+								}
+								// or move lastchar(s) to next line
+								$cjkfix = 2;
+							}
+							// mPDF 5.6.42
+							// CJK numerals kept together
+							elseif (preg_match("/([".$this->pregCJKchars."]+[0-9\x{ff10}-\x{ff19}]+$)/u", mb_substr($word,0,$i,$this->mb_enc )) && preg_match("/^([0-9\x{ff10}-\x{ff19}]+[".$this->pregCJKchars."]+)/u", mb_substr($word,$i,16,$this->mb_enc ))) {
+								$cjkfix = 3;
+							}
+							if ($cjkfix) {
+								//move lastchar(s) to next line
+								$m0 = mb_substr($word,$i-1,1,$this->mb_enc );	// chars to move
+								$m1 = mb_substr($word,0,$i-1,$this->mb_enc );   // str after stripped chars to move
+								$mi = $i - 1;
+								if ($cjkfix == 3) { $match = "0-9\x{ff10}-\x{ff19}"; }
+								else { $match = $this->CJKleading; }
+								while(preg_match("/[".$match."$]/u", $m1) && mb_strlen($m1, $this->mb_enc)>2) {
+									$m0 = mb_substr($m1,$mi-1,1,$this->mb_enc ).$m0;	// chars to move
+									$m1 = mb_substr($m1,0,$mi-1,$this->mb_enc );   // str after stripped chars to move
+									$mi--;
+								}
+								// Insert $m0 into $word at $i
+								$word =  mb_substr($word,0,$i,$this->mb_enc ) . $m0 .  mb_substr($word,$i,mb_strlen($word, $this->mb_enc )-$i,$this->mb_enc );
+								$mlen = mb_strlen($word, $this->mb_enc );	// increment max for loop counter
+							}
+
+
+
+						}
+/*-- END CJK-FONTS --*/
+
+						if ($text && $firstchunk) {
+							// END OF LINE
+							// Finalise & add lineheight 
+							$maxfontsize = max($maxfontsize,$this->FontSize); 
+							$fh = $this->_computeLineheight($this->table_lineheight);
+							if ($lhfixed && $this->FontSize > $def_fontsize) {
+								$fh = $this->FontSize;
+								$forceExactLineheight = false; 
+							}
+							$maxlineHeight = max($maxlineHeight,$fh); 
+							$ch += $this->finaliseCellLineHeight($lhxt, $maxfontsize, $maxlineHeight, $lhfixed, $forceExactLineheight);
+							// START OF NEW LINE
+							// Initialise lineheight variables
+							$maxfontsize = $this->FontSize;
+							$forceExactLineheight = true;
+							$lhxt = array('BS'=>0, 'M'=>0, 'TT'=>0, 'TB'=>0, 'T'=>0, 'B'=>0);
+							$maxlineHeight = $this->_computeLineheight($this->table_lineheight);
+							$ln++;
+						}
+						// END OF LINE
+						// Finalise & add lineheight 
+						$maxfontsize = max($maxfontsize,$this->FontSize); 
+						$fh = $this->_computeLineheight($this->table_lineheight);
+						if ($lhfixed && $this->FontSize > $def_fontsize) {
+							$fh = $this->FontSize;
+							$forceExactLineheight = false; 
+						}
+						$maxlineHeight = max($maxlineHeight,$fh); 
+						$ch += $this->finaliseCellLineHeight($lhxt, $maxfontsize, $maxlineHeight, $lhfixed, $forceExactLineheight);
+						// START OF NEW LINE
+						// Initialise lineheight variables
+						$maxfontsize = $this->FontSize;
+						$forceExactLineheight = true;
+						$lhxt = array('BS'=>0, 'M'=>0, 'TT'=>0, 'TB'=>0, 'T'=>0, 'B'=>0);
+						$maxlineHeight = $this->_computeLineheight($this->table_lineheight);
+						$ln++;
+						$mxw = $maxwidth;
+						$text = mb_substr($word,0,$i,$this->mb_enc );
+						$word = mb_substr($word,$i,mb_strlen($word, $this->mb_enc )-$i,$this->mb_enc );
+						$wordwidth = $this->GetStringWidth($word);
+						$width = 0; 
+						$firstchunk=false;
+						break;
+					}
+				}
+				if (mb_strlen($word, $this->mb_enc )<2 && $wordwidth > $maxwidth + 0.0001) {
+					$wordwidth = $maxwidth - 0.0001;
+					if ($this->debug) { $this->Error("Table cell width calculated less than that needed for single character!"); }
+				}
+				$firstchunk=false;
+			}
+		}
+		// Word fits on line...
+		if ($width + $wordwidth  < $maxwidth + 0.0001) {
+			$mxw = max($mxw, ($width+$wordwidth));
+			$width += $wordwidth + $space;
+			$text .= $word.' ';
+		}
+		// Word does not fit on line...
+		else {
+				// mPDF 5.6.21  hard hyphens
+				if ($this->textparam['hyphens'] != 2 && preg_match('/\-/',$word)) {
+					list($hardsuccess,$pre,$post,$prelength) = $this->hardHyphenate($word, ($maxwidth - $width)-$this->GetCharWidth("-", false));
+					if ($hardsuccess) { 
+						$text .= $pre.'-';
+						$word = $post;
+						$wordwidth = $this->GetStringWidth($word);
+						if ($k==(count($words)-1)) { $wordwidth += $rbw; }
+					}
+				}
+/*-- HYPHENATION --*/
+				// Soft Hyphens chr(173)
+				elseif (($this->textparam['hyphens'] != 2 && (!$this->usingCoreFont && preg_match("/\xc2\xad/",
+                                $word))) || ($this->usingCoreFont && preg_match("/".chr(173)."/",$word) && ($this->FontFamily!='csymbol' && $this->FontFamily!='czapfdingbats')) ) {	// mPDF 5.6.06  5.6.08
+					list($success,$pre,$post,$prelength) = $this->softHyphenate($word, ($maxwidth - $width));
+					if ($success) { 
+						$text .= $pre.'-';
+						$word = $post;
+						$wordwidth = $this->GetStringWidth($word);
+						if ($k==(count($words)-1)) { $wordwidth += $rbw; }
+					}
+				}
+				elseif ($this->textparam['hyphens'] == 1) { 	// mPDF 5.6.06   5.6.08
+					list($success,$pre,$post,$prelength) = $this->hyphenateWord($word, ($maxwidth - $width));
+					if ($success) { 
+						$text .= $pre.'-';
+						$word = $post;
+						$wordwidth = $this->GetStringWidth($word);
+						if ($k==(count($words)-1)) { $wordwidth += $rbw; }
+					}
+				}
+/*-- END HYPHENATION --*/
+
+
+				// mPDF 5.6.22
+		  		if (	count($textbuffer)>1 && $cctr > 0 && $k==0
+					&& (substr($textbuffer[$cctr][0],0, 6) != "\xbb\xa4\xac")
+					&& (substr($textbuffer[$cctr-1][0],0, 6) != "\xbb\xa4\xac")
+					&& substr($textbuffer[$cctr-1][0],-1,1) != ' '
+					&& substr($textbuffer[$cctr][0],0,1) != ' '
+					) {
+					// Go back to find a space in a previous chunk of content
+					$found = false;
+					for ($ix=$cctr-1;$ix>=0;$ix--) {
+						if (preg_match('/[ ]/',$textbuffer[$ix][0])) { $found = $ix; break; }		
+					}
+					if ($found !== false) {
+						$charpos = strrpos($textbuffer[$found][0],' ');
+						// mPDF 5.6.24
+						$a1 = $a2 = $textbuffer[$found];
+						$a1[0] = "\n";
+						$a2[0] = substr($textbuffer[$found][0], $charpos+1, strlen($textbuffer[$found][0])-$charpos);
+						$textbuffer[$found][0] = substr($textbuffer[$found][0], 0, $charpos);
+						array_insert($textbuffer, $a1, $found+1);
+						array_insert($textbuffer, $a2, $found+2);
+						// Initialise all variables
+						$biggestword=0;
+						$toonarrow=false;
+						$lhfixed = false; 
+						if (preg_match('/([0-9.,]+)mm/',$this->table_lineheight)) { $lhfixed = true; }
+						if ($lhfixed) { $def_lineheight = $this->_computeLineheight($this->table_lineheight, $def_fontsize);}
+						else { $def_lineheight = 0; }
+						$maxfontsize = 0;
+						$forceExactLineheight = true;
+						$lhxt = array('BS'=>0, 'M'=>0, 'TT'=>0, 'TB'=>0, 'T'=>0, 'B'=>0);
+						$maxlineHeight = $def_lineheight ;
+						$ch = 0;
+						$width = 0;
+						$ln = 1;	// Counts line number
+						$mxw = $this->GetCharWidth('W',false);
+						$text = '';
+
+						$cctr = -1;
+						break;
+					}
+				}
+
+				// END OF LINE
+				// Finalise & add lineheight 
+				$maxfontsize = max($maxfontsize,$this->FontSize); 
+				$fh = $this->_computeLineheight($this->table_lineheight);
+				if ($lhfixed && $this->FontSize > $def_fontsize) {
+					$fh = $this->FontSize;
+					$forceExactLineheight = false; 
+				}
+				$maxlineHeight = max($maxlineHeight,$fh); 
+				$ch += $this->finaliseCellLineHeight($lhxt, $maxfontsize, $maxlineHeight, $lhfixed, $forceExactLineheight);
+				$mxw = $maxwidth;
+				// START OF NEW LINE
+				// Initialise lineheight variables
+				$maxfontsize = $this->FontSize;
+				$forceExactLineheight = true;
+				$lhxt = array('BS'=>0, 'M'=>0, 'TT'=>0, 'TB'=>0, 'T'=>0, 'B'=>0);
+				$maxlineHeight = $this->_computeLineheight($this->table_lineheight);
+				$ln++;
+				$width = $wordwidth + $space;
+				$text = $word.' ';
+          }
+		$maxfontsize = max($maxfontsize,$this->FontSize); 
+		$fh = $this->_computeLineheight($this->table_lineheight);
+		if ($lhfixed && $this->FontSize > $def_fontsize) {
+			$fh = $this->FontSize;
+			$forceExactLineheight = false; 
+		}
+		$maxlineHeight = max($maxlineHeight,$fh); 
+	}
+
+	// End of textbuffer chunk
+	if (!$lsend) {
+		$width -= $space;
+		$text = rtrim($text);
+	}
+
+	// RESET FONT SIZE/STYLE
+	// RESETTING VALUES
+	//Now we must deactivate what we have used
+	if(isset($chunk[2]) and $chunk[2] != '') {
+		$this->ResetStyles();
+	}
+	if(isset($chunk[4]) and $chunk[4] != '') {
+		$this->SetFont($this->default_font,$this->FontStyle,0,false);
+	}
+	if(isset($chunk[11]) and $chunk[11] != '') { 
+		$this->SetFontSize($this->default_font_size,false);
+	}
+	$this->spanborddet = array();
+	$this->kerning = false;	
+	$this->lSpacingCSS = '';
+	$this->wSpacingCSS = '';
+	$this->fixedlSpacing = false;
+	$this->minwSpacing = 0;	
+   }
+   // Finalise lineheight if something output on line and add
+   if ($width) {
+	$ch += $this->finaliseCellLineHeight($lhxt, $maxfontsize, $maxlineHeight, $lhfixed, $forceExactLineheight);
+   }
+   if ($returnarray) { return array($ch,$ln,$mxw); }
+   else { return $ch; }
 
     // Compute encryption key
     public function _generateencryptionkey($user_pass, $owner_pass, $protection)
@@ -32981,39 +33882,406 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         }
 
 
-        /*-- BOOKMARKS --*/
-        // Update Bookmarks
-        foreach ($this->BMoutlines as $i=>$o) {
-            if ($o['p']>=$end_page) {
-                $this->BMoutlines[$i]['p'] -= $n_tod;
-            } elseif ($p<$start_page) {
-                unset($this->BMoutlines[$i]);
-            }
-        }
-        /*-- END BOOKMARKS --*/
+function _tableWrite(&$table, $split=false, $startrow=0, $startcol=0, $splitpg=0, $rety = 0){
+	$level = $table['level'];
+	$levelid = $table['levelid'];
 
-        // Update Page Links
-        if (count($this->PageLinks)) {
-            $newarr = array();
-            foreach ($this->PageLinks as $i=>$o) {
-                foreach ($this->PageLinks[$i] as $key => $pl) {
-                    if (strpos($pl[4], '@')===0) {
-                        $p=substr($pl[4], 1);
-                        if ($p>$end_page) {
-                            $this->PageLinks[$i][$key][4] = '@'.($p - $n_tod);
-                        } elseif ($p<$start_page) {
-                            unset($this->PageLinks[$i][$key]);
-                        }
-                    }
-                }
-                if ($i>$end_page) {
-                    $newarr[($i - $n_tod)] = $this->PageLinks[$i];
-                } elseif ($p<$start_page) {
-                    $newarr[$i] = $this->PageLinks[$i];
-                }
-            }
-            $this->PageLinks = $newarr;
-        }
+	$cells = &$table['cells'];
+	$numcols = $table['nc'];
+	$numrows = $table['nr'];
+
+	if ($this->ColActive && $level==1) { $this->breakpoints[$this->CurrCol][] = $this->y; }	// *COLUMNS*
+
+	if (!$split || ($startrow==0 && $splitpg==0) || $startrow>0){
+		// TABLE TOP MARGIN
+		if ($table['margin']['T']) {
+		   if (!$this->table_rotate && $level==1) {
+			$this->DivLn($table['margin']['T'],$this->blklvl,true,1); 	// collapsible
+		   }
+		   else {
+			$this->y += ($table['margin']['T']);
+		   }
+		}
+		// Advance down page by half width of top border
+		if ($table['borders_separate']) { 
+			if ($startrow>0 && (!isset($table['is_thead']) || count($table['is_thead'])==0))
+				$adv = $table['border_spacing_V']/2; 
+			else 
+				$adv = $table['padding']['T'] + $table['border_details']['T']['w'] + $table['border_spacing_V']/2; 
+		}
+		else { 
+			$adv = $table['max_cell_border_width']['T']/2; 
+		}
+		if (!$this->table_rotate && $level==1) { $this->DivLn($adv); }
+		else { $this->y += $adv; }
+	}
+
+	if ($level==1) {
+		$this->x = $this->lMargin  + $this->blk[$this->blklvl]['outer_left_margin'] + $this->blk[$this->blklvl]['padding_left'] + $this->blk[$this->blklvl]['border_left']['w'];
+		$x0 = $this->x; 
+		$y0 = $this->y;
+		$right = $x0 + $this->blk[$this->blklvl]['inner_width'];
+		$outerfilled = $this->y;	// Keep track of how far down the outer DIV bgcolor is painted (NB rowspans)
+		$this->outerfilled = $this->y;
+		$this->colsums = array();
+	}
+	else {
+		$x0 = $this->x; 
+		$y0 = $this->y;
+		$right = $x0 + $table['w'];
+	}
+
+	if ($this->table_rotate) {
+		$temppgwidth = $this->tbrot_maxw;
+		$this->PageBreakTrigger = $pagetrigger = $y0 + ($this->blk[$this->blklvl]['inner_width']);
+	   if ($level==1) {
+		$this->tbrot_y0 = $this->y - $adv - $table['margin']['T'] ;
+		$this->tbrot_x0 = $this->x;
+		$this->tbrot_w = $table['w'];
+		if ($table['borders_separate']) { $this->tbrot_h = $table['margin']['T'] + $table['padding']['T'] + $table['border_details']['T']['w'] + $table['border_spacing_V']/2; }
+		else { $this->tbrot_h = $table['margin']['T'] + $table['padding']['T'] + $table['max_cell_border_width']['T']; }
+	   }
+	}
+	else {
+		$this->PageBreakTrigger = $pagetrigger = ($this->h - $this->bMargin);
+	   	if ($level==1) {
+			$temppgwidth = $this->blk[$this->blklvl]['inner_width'];
+	   		if (isset($table['a']) and ($table['w'] < $this->blk[$this->blklvl]['inner_width'])) {
+				if ($table['a']=='C') { $x0 += ((($right-$x0) - $table['w'])/2); }
+				elseif ($table['a']=='R') { $x0 = $right - $table['w']; }
+			}
+	   	}
+		else {
+			$temppgwidth = $table['w'];
+		}
+	}
+	if(!isset($table['overflow'])) { $table['overflow'] = null; }
+	if ($table['overflow']=='hidden' && $level==1 && !$this->table_rotate && !$this->ColActive) {
+		//Bounding rectangle to clip
+		$this->tableClipPath = sprintf('q %.3F %.3F %.3F %.3F re W n',$x0*_MPDFK,$this->h*_MPDFK,$this->blk[$this->blklvl]['inner_width']*_MPDFK,-$this->h*_MPDFK);
+		$this->_out($this->tableClipPath);
+	}
+	else { $this->tableClipPath = ''; }
+
+
+	if ($table['borders_separate']) { $indent = $table['margin']['L'] + $table['border_details']['L']['w'] + $table['padding']['L'] + $table['border_spacing_H']/2; }
+	else { $indent = $table['margin']['L'] + $table['max_cell_border_width']['L']/2; }
+	$x0 += $indent;
+
+	$returny = 0;
+	$lastCol = 0;
+	$tableheader = array();
+	$tablefooter = array();
+	$tableheaderrowheight = 0; 
+	$tablefooterrowheight = 0;
+	$footery = 0;
+
+	// mPD 3.0 Set the Page & Column where table starts
+	if (($this->mirrorMargins) && (($this->page)%2==0)) {	// EVEN
+		$tablestartpage = 'EVEN'; 
+	}
+	elseif (($this->mirrorMargins) && (($this->page)%2==1)) {	// ODD
+		$tablestartpage = 'ODD'; 
+	}
+	else { $tablestartpage = ''; }
+	if ($this->ColActive) { $tablestartcolumn = $this->CurrCol; }
+	else { $tablestartcolumn = ''; }
+
+	if ($this->cacheTables) { $fh = fopen($table['cache'], "r+b"); }
+	else { $fh = null; }
+
+	$y = $h = 0;
+	for( $i = 0; $i < $numrows ; $i++ ) { //Rows
+	  if ($this->progressBar) { $this->UpdateProgressBar(7,intval(30 + ($i*40/$numrows)),' '); }	// *PROGRESS-BAR*
+	  if (isset($table['is_tfoot'][$i]) && $table['is_tfoot'][$i] && $level==1) { 
+		$tablefooterrowheight += $table['hr'][$i]; 
+		$tablefooter[$i][0]['trbackground-images'] = $table['trbackground-images'][$i];
+		$tablefooter[$i][0]['trgradients'] = $table['trgradients'][$i];
+		$tablefooter[$i][0]['trbgcolor'] = $table['bgcolor'][$i];
+	  	for( $j = $startcol ; $j < $numcols ; $j++ ) { //Columns
+			if (isset($cells[$i][$j]) && $cells[$i][$j]) {
+				if ($this->cacheTables) {
+					$cell = $this->_uncacheCell($table['cells'][$i][$j], '', $fh);
+				}
+				else 
+					$cell = &$cells[$i][$j];
+				if ($split) { 
+					if ($table['colPg'][$j] != $splitpg) { continue; }
+					list($x,$w) = $this->_splitTableGetWidth($table, $i, $j, $fh); 
+					$js = $j - $startcol;
+				}
+				else { 
+					list($x,$w) = $this->_tableGetWidth($table, $i, $j, $fh); 
+					$js = $j;
+				}
+
+				list($y,$h) = $this->_tableGetHeight($table, $i, $j, $fh);  
+				$x += $x0;
+				$y += $y0;
+				//Get info of tfoot ==>> table footer
+				$tablefooter[$i][$js]['x'] = $x;
+				$tablefooter[$i][$js]['y'] = $y;
+				$tablefooter[$i][$js]['h'] = $h;
+				$tablefooter[$i][$js]['w'] = $w;
+				if (isset($cell['textbuffer'])) { $tablefooter[$i][$js]['textbuffer'] = $cell['textbuffer']; }
+				else { $tablefooter[$i][$js]['textbuffer'] = ''; }
+				$tablefooter[$i][$js]['a'] = $cell['a'];
+				$tablefooter[$i][$js]['R'] = $cell['R'];
+				$tablefooter[$i][$js]['va'] = $cell['va'];
+				$tablefooter[$i][$js]['mih'] = $cell['mih'];
+				$tablefooter[$i][$js]['gradient'] = $cell['gradient'];	// *BACKGROUNDS*
+				$tablefooter[$i][$js]['background-image'] = $cell['background-image'];	// *BACKGROUNDS*
+				//CELL FILL BGCOLOR
+				if (!$this->simpleTables){
+			 		if ($this->packTableData) {
+						$c = $this->_unpackCellBorder($cell['borderbin']);
+						$tablefooter[$i][$js]['border'] = $c['border'];
+						$tablefooter[$i][$js]['border_details'] = $c['border_details'];
+					}
+			 		else {
+						$tablefooter[$i][$js]['border'] = $cell['border'];
+						$tablefooter[$i][$js]['border_details'] = $cell['border_details'];
+					}
+				}
+				elseif ($this->simpleTables){
+					$tablefooter[$i][$js]['border'] = $table['simple']['border'];
+					$tablefooter[$i][$js]['border_details'] = $table['simple']['border_details'];
+				}
+				$tablefooter[$i][$js]['bgcolor'] = $cell['bgcolor'];
+				$tablefooter[$i][$js]['padding'] = $cell['padding'];
+				$tablefooter[$i][$js]['rowspan'] = $cell['rowspan'];
+				$tablefooter[$i][$js]['colspan'] = $cell['colspan'];
+			}
+		}
+	  }
+	}
+
+	if ($level==1) { $this->_out('___TABLE___BACKGROUNDS'.date('jY')); }
+	$tableheaderadj = 0;
+	$tablefooteradj = 0;
+
+	$tablestartpageno = $this->page;
+
+	//Draw Table Contents and Borders
+	for( $i = 0; $i < $numrows ; $i++ ) { //Rows
+	  if ($split && $startrow > 0) { 
+		$thnr = (isset($table['is_thead']) ? count($table['is_thead']) : 0);
+		if ($i >= $thnr && $i < $startrow) { continue; }
+		if ($i == $startrow){ $returny = $rety - $tableheaderrowheight; }
+	  }
+
+	  // Get Maximum row/cell height in row - including rowspan>1 + 1 overlapping
+	  $maxrowheight = $this->_tableGetMaxRowHeight($table, $i, $fh);
+
+	  $skippage = false;
+	  $newpagestarted = false;
+	  for( $j = $startcol ; $j < $numcols ; $j++ ) { //Columns
+		if ($split) { 
+			if ($table['colPg'][$j] > $splitpg) { break; }
+			$lastCol = $j; 
+		}
+		if (isset($cells[$i][$j]) && $cells[$i][$j]) {
+			if ($this->cacheTables) {
+				$cell = $this->_uncacheCell($table['cells'][$i][$j], '', $fh);
+			}
+			else 
+				$cell = &$cells[$i][$j];
+			if ($split) { 
+				$lastCol = $j + (isset($cell['colspan']) ? ($cell['colspan']-1) : 0) ; 
+				list($x,$w) = $this->_splitTableGetWidth($table, $i, $j, $fh); 
+			}
+			else { list($x,$w) = $this->_tableGetWidth($table, $i, $j, $fh); }
+
+			list($y,$h) = $this->_tableGetHeight($table, $i, $j, $fh);
+			$x += $x0;
+			$y += $y0;
+			$y -= $returny;
+
+			if ($table['borders_separate']) { 
+			  if (!empty($tablefooter) || $i == ($numrows-1) || (isset($cell['rowspan']) && ($i+$cell['rowspan']) == $numrows)  || (!isset($cell['rowspan']) && ($i+1) == $numrows) ) {
+				$extra = $table['padding']['B'] + $table['border_details']['B']['w'] + $table['border_spacing_V']/2; 
+				//$extra = $table['margin']['B'] + $table['padding']['B'] + $table['border_details']['B']['w'] + $table['border_spacing_V']/2; 
+			  }
+			  else {
+				$extra = $table['border_spacing_V']/2; 
+			  }
+			}
+	  		else { $extra = $table['max_cell_border_width']['B']/2; }
+
+			if ($j==$startcol  && ((($y + $maxrowheight + $extra ) > ($pagetrigger+0.001)) || ((($this->keepColumns || !$this->ColActive) && !empty($tablefooter) && ($y + $maxrowheight + $tablefooterrowheight + $extra) > $pagetrigger) && ($this->tableLevel == 1 && $i < ($numrows - $table['headernrows'])))) && ($y0 >0 || $x0 > 0) && !$this->InFooter && $this->autoPageBreak ) {
+
+				if (!$skippage) {
+					$finalSpread = true;
+					$firstSpread = true; 
+					if ($split) {
+						for($t=$startcol; $t<$numcols; $t++) {
+							// Are there more columns to print on a next page?
+							if ($table['colPg'][$t] > $splitpg) {
+								$finalSpread = false;
+								break;
+							}
+						}
+						if ($startcol>0) { $firstSpread = false; }
+					}
+
+		      		if (($this->keepColumns || !$this->ColActive) && !empty($tablefooter) && $i > 0 ) { 
+						$this->y = $y;
+						$ya = $this->y;
+						$this->TableHeaderFooter($tablefooter,$tablestartpage,$tablestartcolumn,'F',$level, $firstSpread, $finalSpread);
+						if ($this->table_rotate) {
+							$this->tbrot_h += $this->y - $ya ;
+						}
+						$tablefooteradj = $this->y - $ya ;
+					}
+					$y -= $y0;
+					$returny += $y;
+
+					$oldcolumn = $this->CurrCol;
+					if ($this->AcceptPageBreak()) {
+	  					$newpagestarted = true;
+						$this->y = $y + $y0;
+
+						// Move down to account for border-spacing or 
+						// extra half border width in case page breaks in middle
+						if($i>0 && !$this->table_rotate && $level==1 && !$this->ColActive) {
+							if ($table['borders_separate']) { 
+								$adv = $table['border_spacing_V']/2; 
+								// If table footer
+								if (($this->keepColumns || !$this->ColActive) && !empty($tablefooter) && $i > 0 ) { 
+									$adv += ($table['padding']['B'] + $table['border_details']['B']['w']); 
+								}
+							}
+							else { 
+								$maxbwtop = 0;
+								$maxbwbottom = 0;
+								if (!$this->simpleTables){
+									if (!empty($tablefooter)) { $maxbwbottom = $table['max_cell_border_width']['B']; }
+									else { 
+									   $brow = $i-1; 
+									   for( $ctj = 0 ; $ctj < $numcols ; $ctj++ ) {
+										if (isset($cells[$brow][$ctj]) && $cells[$brow][$ctj]) {
+											if ($this->cacheTables) {
+												$cadj = $this->_uncacheCell($table['cells'][$brow][$ctj], '', $fh);
+			 	   								list($bt,$br,$bb,$bl) = $this->_getBorderWidths($cadj['borderbin']);
+											}
+											elseif ($this->packTableData) {
+			 	   								list($bt,$br,$bb,$bl) = $this->_getBorderWidths($cells[$brow][$ctj]['borderbin']);
+											}
+											else {
+												$bb = $cells[$brow][$ctj]['border_details']['B']['w'];
+											}
+											$maxbwbottom = max($maxbwbottom , $bb); 
+										}
+									   }
+									}
+									if (!empty($tableheader)) { $maxbwtop = $table['max_cell_border_width']['T']; }
+									else { 
+									   $trow = $i-1; 
+									   for( $ctj = 0 ; $ctj < $numcols ; $ctj++ ) {
+										if (isset($cells[$trow][$ctj]) && $cells[$trow][$ctj]) {
+											if ($this->cacheTables) {
+												$cadj = $this->_uncacheCell($table['cells'][$trow][$ctj], '', $fh);
+			 	   								list($bt,$br,$bb,$bl) = $this->_getBorderWidths($cadj['borderbin']);
+											}
+											elseif ($this->packTableData) {
+			 	   								list($bt,$br,$bb,$bl) = $this->_getBorderWidths($cells[$trow][$ctj]['borderbin']);
+											}
+											else {
+												$bt = $cells[$trow][$ctj]['border_details']['T']['w'];
+											}
+											$maxbwtop = max($maxbwtop , $bt);
+										}
+									   }
+									}
+								}
+								elseif ($this->simpleTables){
+									$maxbwtop = $table['simple']['border_details']['T']['w'];
+									$maxbwbottom = $table['simple']['border_details']['B']['w']; 
+								}
+								$adv = $maxbwbottom /2;
+							}
+							$this->y += $adv;
+						}
+
+						// Rotated table split over pages - needs this->y for borders/backgrounds
+						if($i>0 && $this->table_rotate && $level==1) {
+				//			$this->y = $y0 + $this->tbrot_w;
+						}
+
+						if ($this->tableClipPath ) { $this->_out("Q"); }
+
+						$bx = $x0;
+						$by = $y0;
+
+						if ($table['borders_separate']) { 
+							$bx -= ($table['padding']['L'] + $table['border_details']['L']['w'] + $table['border_spacing_H']/2); 
+							if ($tablestartpageno != $this->page) {	// IF already broken across a previous pagebreak
+								$by += $table['max_cell_border_width']['T']/2; 
+								if (empty($tableheader)) { $by -= ($table['border_spacing_V']/2); }
+							}
+							else { 
+								$by -= ($table['padding']['T'] + $table['border_details']['T']['w'] + $table['border_spacing_V']/2); 
+							}
+						}
+
+						elseif ($tablestartpageno != $this->page && !empty($tableheader)) { $by += $maxbwtop /2; }	
+	
+						$by -= $tableheaderadj;
+						$bh = $this->y - $by + $tablefooteradj;
+  						if (!$table['borders_separate']) { $bh -= $adv ; }
+						if ($split) { 
+							$bw = 0;
+							for($t=$startcol; $t<$numcols; $t++) {
+								if ($table['colPg'][$t] == $splitpg) { $bw += $table['wc'][$t]; }
+								if ($table['colPg'][$t] > $splitpg) { break; }
+							}
+							if ($table['borders_separate']) { 
+								if ($firstSpread) { 
+									$bw += $table['padding']['L'] + $table['border_details']['L']['w'] + $table['border_spacing_H']; 
+								}
+								else {
+									$bx += ($table['padding']['L'] + $table['border_details']['L']['w']); 
+									$bw += $table['border_spacing_H']; 
+								}
+								if ($finalSpread) { 
+									$bw += $table['padding']['R'] + $table['border_details']['R']['w']/2 + $table['border_spacing_H']; 
+								}
+							}
+						}
+						else {
+							$bw = $table['w'] - ($table['max_cell_border_width']['L']/2) - ($table['max_cell_border_width']['R']/2) - $table['margin']['L'] - $table['margin']['R'];
+						}
+
+						// mPDF 5.4.16
+		      			if ($this->splitTableBorderWidth && ($this->keepColumns || !$this->ColActive) && empty($tablefooter) && $i > 0 && $table['border_details']['B']['w']) {
+							$prevDrawColor = $this->DrawColor;
+							$lw = $this->LineWidth;
+							$this->SetLineWidth($this->splitTableBorderWidth);
+							$this->SetDColor($table['border_details']['B']['c']);	
+							$this->SetLineJoin(0);
+							$this->SetLineCap(0);
+ 							$blx = $bx;
+							$blw = $bw;
+ 							if (!$table['borders_separate']) { 
+								$blx -= ($table['max_cell_border_width']['L']/2);
+								$blw += ($table['max_cell_border_width']['L']/2 + $table['max_cell_border_width']['R']/2);
+							}
+							$this->Line($blx,$this->y+($this->splitTableBorderWidth/2),$blx+$blw,$this->y+($this->splitTableBorderWidth/2));
+							$this->DrawColor = $prevDrawColor;
+							$this->_out($this->DrawColor);
+							$this->SetLineWidth($lw);
+							$this->SetLineJoin(2);
+							$this->SetLineCap(2);
+						} 
+
+						if (!$this->ColActive && ($i > 0 || $j > 0)) {
+							if (isset($table['bgcolor'][-1])) { 
+					  			$color = $this->ConvertColor($table['bgcolor'][-1]);
+					  			if ($color) {
+								   if (!$table['borders_separate']) { $bh -= $table['max_cell_border_width']['B']/2; }
+								   $this->tableBackgrounds[$level*9][] = array('gradient'=>false, 'x'=>$bx, 'y'=>$by, 'w'=>$bw, 'h'=>$bh, 'col'=>$color);
+								}
+							}
 
         // OrientationChanges
         if (count($this->OrientationChanges)) {
@@ -33549,92 +34817,148 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
     //----------- COLUMNS ---------------------
     /*-- COLUMNS --*/
 
-    public function SetColumns($NbCol, $vAlign='', $gap=5)
-    {
-        // NbCol = number of columns
-// CurrCol = Number of the current column starting at 0
-// Called externally to set columns on/off and number
-// Integer 2 upwards sets columns on to that number
-// Anything less than 2 turns columns off
-    if ($NbCol<2) {	// SET COLUMNS OFF
-        if ($this->ColActive) {
-            $this->ColActive=0;
-            if (count($this->columnbuffer)) {
-                $this->printcolumnbuffer();
-            }
-            $this->NbCol=1;
-            $this->ResetMargins();
-            $this->pgwidth = $this->w - $this->lMargin - $this->rMargin;
-            $this->divwidth = 0;
-            $this->Ln();
-        }
-        $this->ColActive=0;
-        $this->columnbuffer = array();
-        $this->ColDetails = array();
-        $this->columnLinks = array();
-        $this->columnAnnots = array();
-        $this->columnForms = array();
-        $this->col_Reference = array();
-        $this->col_BMoutlines = array();
-        $this->col_toc = array();
-        $this->breakpoints = array();
-    } else {	// SET COLUMNS ON
-        if ($this->ColActive) {
-            $this->ColActive=0;
-            if (count($this->columnbuffer)) {
-                $this->printcolumnbuffer();
-            }
-            $this->ResetMargins();
-        }
-        if (isset($this->y) && $this->y>$this->tMargin) {
-            $this->Ln();
-        }
-        $this->NbCol=$NbCol;
-        $this->ColGap = $gap;
-        $this->divwidth = 0;
-        $this->ColActive=1;
-        $this->ColumnAdjust = true;	// enables column height adjustment for the page
-        $this->columnbuffer = array();
-        $this->ColDetails = array();
-        $this->columnLinks = array();
-        $this->columnAnnots = array();
-        $this->columnForms = array();
-        $this->col_Reference = array();
-        $this->col_BMoutlines = array();
-        $this->col_toc = array();
-        $this->breakpoints = array();
-        if ((strtoupper($vAlign) == 'J') || (strtoupper($vAlign) == 'JUSTIFY')) {
-            $vAlign = 'J';
-        } else {
-            $vAlign = '';
-        }
-        $this->colvAlign = $vAlign;
-        //Save the ordinate
-        $absL = $this->DeflMargin-($gap/2);
-        $absR = $this->DefrMargin-($gap/2);
-        $PageWidth = $this->w-$absL-$absR;	// virtual pagewidth for calculation only
-        $ColWidth = (($PageWidth - ($gap * ($NbCol)))/$NbCol);
-        $this->ColWidth = $ColWidth;
-        /*-- RTL --*/
+/*-- IMPORTS --*/
 
-        if ($this->directionality == 'rtl') {
-            for ($i=0;$i<$this->NbCol;$i++) {
-                $this->ColL[$i] = $absL + ($gap/2) + (($NbCol - ($i+1))*($PageWidth/$NbCol)) ;
-                $this->ColR[$i] = $this->ColL[$i] + $ColWidth;	// NB This is not R margin -> R pos
-            }
-        } else {
-            /*-- END RTL --*/
-            for ($i=0;$i<$this->NbCol;$i++) {
-                $this->ColL[$i] = $absL + ($gap/2) + ($i* ($PageWidth/$NbCol));
-                $this->ColR[$i] = $this->ColL[$i] + $ColWidth;	// NB This is not R margin -> R pos
-            }
-        }	// *RTL*
-        $this->pgwidth = $ColWidth;
-        $this->SetCol(0);
-        $this->y0=$this->y;
-    }
-        $this->x = $this->lMargin;
-    }
+	// from mPDFI
+	function _putimportedobjects() {
+		if (is_array($this->parsers) && count($this->parsers) > 0) {
+			foreach($this->parsers AS $filename => $p) {
+				$this->current_parser =& $this->parsers[$filename];
+				if (is_array($this->_obj_stack[$filename])) {
+					while($n = key($this->_obj_stack[$filename])) {
+						$nObj = $this->current_parser->pdf_resolve_object($this->current_parser->c,$this->_obj_stack[$filename][$n][1]);
+						$this->_newobj($this->_obj_stack[$filename][$n][0]);
+						if ($nObj[0] == PDF_TYPE_STREAM) {
+							$this->pdf_write_value($nObj);
+						} 
+						else {
+							$this->pdf_write_value($nObj[1]);
+						}
+						$this->_out('endobj');
+						$this->_obj_stack[$filename][$n] = null; // free memory
+						unset($this->_obj_stack[$filename][$n]);
+						reset($this->_obj_stack[$filename]);
+					}
+				}
+			}
+		}
+	}
+
+
+	function _putformxobjects() {
+		$filter=($this->compress) ? '/Filter /FlateDecode ' : '';
+		reset($this->tpls);
+		foreach($this->tpls AS $tplidx => $tpl) {
+			$p=($this->compress) ? gzcompress($tpl['buffer']) : $tpl['buffer'];
+			$this->_newobj();
+			$this->tpls[$tplidx]['n'] = $this->n;
+			$this->_out('<<'.$filter.'/Type /XObject');
+			$this->_out('/Subtype /Form');
+			$this->_out('/FormType 1');
+			// Left/Bottom/Right/Top
+			$this->_out(sprintf('/BBox [%.2F %.2F %.2F %.2F]',
+				$tpl['box']['x']*_MPDFK,
+				$tpl['box']['y']*_MPDFK,
+				($tpl['box']['x'] + $tpl['box']['w'])*_MPDFK,
+				($tpl['box']['y'] + $tpl['box']['h'])*_MPDFK  )
+			);
+
+
+			if (isset($tpl['box']))
+				$this->_out(sprintf('/Matrix [1 0 0 1 %.5F %.5F]',-$tpl['box']['x']*_MPDFK, -$tpl['box']['y']*_MPDFK));
+			$this->_out('/Resources ');
+
+			if (isset($tpl['resources'])) {
+				$this->current_parser =& $tpl['parser'];
+				$this->pdf_write_value($tpl['resources']);
+			} else {
+				$this->_out('<</ProcSet [/PDF /Text /ImageB /ImageC /ImageI]');
+					if (isset($this->_res['tpl'][$tplidx]['fonts']) && count($this->_res['tpl'][$tplidx]['fonts'])) {
+						$this->_out('/Font <<');
+						foreach($this->_res['tpl'][$tplidx]['fonts'] as $font)
+							$this->_out('/F'.$font['i'].' '.$font['n'].' 0 R');
+						$this->_out('>>');
+				}
+					if((isset($this->_res['tpl'][$tplidx]['images']) && count($this->_res['tpl'][$tplidx]['images'])) ||
+                        (isset($this->_res['tpl'][$tplidx]['tpls']) && count($this->_res['tpl'][$tplidx]['tpls'])))
+					{
+						$this->_out('/XObject <<');
+						if (isset($this->_res['tpl'][$tplidx]['images']) && count($this->_res['tpl'][$tplidx]['images'])) {
+							foreach($this->_res['tpl'][$tplidx]['images'] as $image)
+								$this->_out('/I'.$image['i'].' '.$image['n'].' 0 R');
+						}
+						if (isset($this->_res['tpl'][$tplidx]['tpls']) && count($this->_res['tpl'][$tplidx]['tpls'])) {
+							foreach($this->_res['tpl'][$tplidx]['tpls'] as $i => $itpl)
+								$this->_out($this->tplprefix.$i.' '.$itpl['n'].' 0 R');
+						}
+						$this->_out('>>');
+					}
+					$this->_out('>>');
+			}
+
+			$this->_out('/Length '.strlen($p).' >>');
+			$this->_putstream($p);
+			$this->_out('endobj');
+		}
+	}
+
+/*-- END IMPORTS --*/
+
+
+function _putpatterns() {
+	for ($i = 1; $i <= count($this->patterns); $i++) {
+		$x = $this->patterns[$i]['x'];
+		$y = $this->patterns[$i]['y']; 
+		$w = $this->patterns[$i]['w'];
+		$h = $this->patterns[$i]['h']; 
+		$pgh = $this->patterns[$i]['pgh']; 
+		$orig_w = $this->patterns[$i]['orig_w'];
+		$orig_h = $this->patterns[$i]['orig_h']; 
+		$image_id = $this->patterns[$i]['image_id'];
+		$itype = $this->patterns[$i]['itype'];
+		$bpa = $this->patterns[$i]['bpa'];	// mPDF 5.6.10  background positioning area
+
+		if ($this->patterns[$i]['x_repeat']) { $x_repeat = true; } 
+		else { $x_repeat = false; }
+		if ($this->patterns[$i]['y_repeat']) { $y_repeat = true; }
+		else { $y_repeat = false; }
+		$x_pos = $this->patterns[$i]['x_pos'];
+		if (stristr($x_pos ,'%') ) { 
+			$x_pos += 0; 
+			$x_pos /= 100; 
+			if (isset($bpa['w']) && $bpa['w']) $x_pos = ($bpa['w'] * $x_pos) - ($orig_w/_MPDFK * $x_pos);	// mPDF 5.6.10
+			else $x_pos = ($w * $x_pos) - ($orig_w/_MPDFK * $x_pos);
+		}
+		$y_pos = $this->patterns[$i]['y_pos'];
+		if (stristr($y_pos ,'%') ) { 
+			$y_pos += 0; 
+			$y_pos /= 100; 
+			if (isset($bpa['h']) && $bpa['h']) $y_pos = ($bpa['h'] * $y_pos) - ($orig_h/_MPDFK * $y_pos);	// mPDF 5.6.10
+			else $y_pos = ($h * $y_pos) - ($orig_h/_MPDFK * $y_pos);
+		}
+		if (isset($bpa['x']) && $bpa['x']) $adj_x = ($x_pos + $bpa['x']) *_MPDFK;	// mPDF 5.6.10
+		else $adj_x = ($x_pos + $x) *_MPDFK;
+		if (isset($bpa['y']) && $bpa['y']) $adj_y = (($pgh - $y_pos - $bpa['y'])*_MPDFK) - $orig_h ;	// mPDF 5.6.10
+		else $adj_y = (($pgh - $y_pos - $y)*_MPDFK) - $orig_h ;
+		$img_obj = false;
+		if ($itype == 'svg' || $itype == 'wmf') {
+			foreach($this->formobjects AS $fo) {
+				if ($fo['i'] == $image_id) { 
+					$img_obj = $fo['n']; 
+					$fo_w = $fo['w'];
+					$fo_h = -$fo['h'];
+					$wmf_x = $fo['x'];
+					$wmf_y = $fo['y']; 
+					break; 
+				}
+			}
+		}
+		else {
+			foreach($this->images AS $img) {
+				if ($img['i'] == $image_id) { $img_obj = $img['n']; break; }
+			}
+		}
+		if (!$img_obj ) { echo "Problem: Image object not found for background pattern ".$img['i']; exit; }
 
     public function SetCol($CurrCol)
     {

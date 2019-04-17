@@ -295,8 +295,8 @@ EOQ;
         }
 
         if ((isset($_POST['isSaveFromDetailView']) && $_POST['isSaveFromDetailView'] == 'true') ||
-        (isset($_POST['is_ajax_call']) && !empty($_POST['is_ajax_call']) && !empty($focus->id) ||
-        (isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') && !empty($focus->id))
+        ((isset($_POST['is_ajax_call']) && !empty($_POST['is_ajax_call']) && !empty($focus->id)) ||
+            ((isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') && !empty($focus->id)))
     ) {
             $focus->save(true);
             $return_id = $focus->id;

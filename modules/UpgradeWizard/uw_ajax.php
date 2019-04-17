@@ -687,7 +687,7 @@ function preflightCheckJsonGetSchemaErrors($persistence)
 {
     global $mod_strings;
 
-    if (isset($persistence['sql_errors']) && count($persistence['sql_errors'] > 0)) {
+    if (isset($persistence['sql_errors']) && count($persistence['sql_errors']) > 0) {
         $out = "<b class='error'>{$mod_strings['ERR_UW_PREFLIGHT_ERRORS']}:</b> ";
         $out .= "<a href='javascript:void(0);toggleNwFiles(\"sqlErrors\");'>{$mod_strings['LBL_UW_SHOW_SQL_ERRORS']}</a><div id='sqlErrors' style='display:none'>";
         foreach ($persistence['sql_errors'] as $sqlError) {

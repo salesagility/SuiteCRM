@@ -109,9 +109,9 @@ class ListViewDisplay
         if (!empty($GLOBALS['sugar_config']['save_query']) && $GLOBALS['sugar_config']['save_query'] == 'populate_only') {
             if (empty($GLOBALS['displayListView'])
                     && (!empty($_REQUEST['clear_query'])
-                        || $_REQUEST['module'] == $moduleDir
-                            && ((empty($_REQUEST['query']) || $_REQUEST['query'] == 'MSI')
-                                && (!$searching)))) {
+                        || ($_REQUEST['module'] == $moduleDir
+                        && ((empty($_REQUEST['query']) || $_REQUEST['query'] == 'MSI')
+                            && (!$searching))))) {
                 $_SESSION['last_search_mod'] = $_REQUEST['module'] ;
                 $this->should_process = false;
                 return false;

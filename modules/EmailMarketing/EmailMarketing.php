@@ -205,7 +205,7 @@ class EmailMarketing extends SugarBean
     {
         $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
         $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
-        $isCampaignDetailView = $module = 'Campaigns' && $action == 'DetailView';
+        $isCampaignDetailView = $module = ('Campaigns' && $action == 'DetailView');
         return $isCampaignDetailView;
     }
 

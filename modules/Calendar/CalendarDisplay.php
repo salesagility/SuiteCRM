@@ -167,7 +167,7 @@ class CalendarDisplay
         }
         $ss->assign('day_end_time', $end);
 
-        $ss->assign('sugar_body_only', (isset($_REQUEST['to_pdf']) && $_REQUEST['to_pdf'] || isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only']));
+        $ss->assign('sugar_body_only', ((isset($_REQUEST['to_pdf']) && $_REQUEST['to_pdf']) || (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'])));
         require_once('include/json_config.php');
         global $json;
         $json = getJSONobj();

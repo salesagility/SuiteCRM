@@ -361,7 +361,7 @@ class parseCSV
                 }
 
                 // end of row
-            } elseif (($ch == "\n" && $pch != "\r" || $ch == "\r") && !$enclosed) {
+            } elseif ((($ch == "\n" && $pch != "\r") || $ch == "\r") && !$enclosed) {
                 if ($n >= $search_depth) {
                     $strlen = 0;
                     $to_end = false;

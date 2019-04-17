@@ -89,8 +89,8 @@ class SugarWidgetSubPanelIcon extends SugarWidgetField
         }
         $action_access = false;
         if (!empty($record) &&
-            ($layout_def[$action] && !$layout_def['owner_module']
-            ||  $layout_def[$action] && !ACLController::moduleSupportsACL($layout_def['owner_module'])
+            (($layout_def[$action] && !$layout_def['owner_module'])
+            || ($layout_def[$action] && !ACLController::moduleSupportsACL($layout_def['owner_module']))
             || ACLController::checkAccess($layout_def['owner_module'], 'view', $layout_def['owner_id'] == $current_user->id))) {
             $action_access = true;
         }

@@ -115,7 +115,7 @@ class ListView
 
         $populateOnly = $this->ignorePopulateOnly ? false : (!empty($sugar_config['save_query']) && $sugar_config['save_query'] == 'populate_only');
         if (isset($seed->module_dir) && $populateOnly) {
-            if (empty($GLOBALS['displayListView']) && strcmp(strtolower($_REQUEST['action']), 'popup') != 0 && (!empty($_REQUEST['clear_query']) || $_REQUEST['module'] == $seed->module_dir && ((empty($_REQUEST['query']) || $_REQUEST['query'] == 'MSI')&& (empty($_SESSION['last_search_mod']) || $_SESSION['last_search_mod'] != $seed->module_dir)))) {
+            if (empty($GLOBALS['displayListView']) && strcmp(strtolower($_REQUEST['action']), 'popup') != 0 && (!empty($_REQUEST['clear_query']) || ($_REQUEST['module'] == $seed->module_dir && ((empty($_REQUEST['query']) || $_REQUEST['query'] == 'MSI') && (empty($_SESSION['last_search_mod']) || $_SESSION['last_search_mod'] != $seed->module_dir))))) {
                 $_SESSION['last_search_mod'] = $_REQUEST['module'] ;
                 return;
             }

@@ -231,7 +231,7 @@ function rtf2text($filename)
                     $i += 2;
                 // Since, we’ve found the alphabetic character, the next characters are control word
                     // and, possibly, some digit parameter.
-                } elseif ($nc >= 'a' && $nc <= 'z' || $nc >= 'A' && $nc <= 'Z') {
+                } elseif (($nc >= 'a' && $nc <= 'z') || ($nc >= 'A' && $nc <= 'Z')) {
                     $word = "";
                     $param = null;
 
@@ -241,7 +241,7 @@ function rtf2text($filename)
                         // If the current character is a letter and there were no digits before it,
                         // then we’re still reading the control word. If there were digits, we should stop
                         // since we reach the end of the control word.
-                        if ($nc >= 'a' && $nc <= 'z' || $nc >= 'A' && $nc <= 'Z') {
+                        if (($nc >= 'a' && $nc <= 'z') || ($nc >= 'A' && $nc <= 'Z')) {
                             if (empty($param)) {
                                 $word .= $nc;
                             } else {

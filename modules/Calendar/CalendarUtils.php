@@ -359,7 +359,7 @@ class CalendarUtils
                 continue;
             }
 
-            if (($i < $count || $count == 0 && $current->format("U") < $end->format("U"))) {
+            if (($i < $count || ($count == 0 && $current->format("U") < $end->format("U")))) {
                 $arr[] = $current->format($GLOBALS['timedate']->get_date_time_format());
             }
             $i++;

@@ -59,7 +59,7 @@ if (isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true") 
 } else {
     $base_project_id = $sugarbean->id;
 }
-if (isset($_REQUEST['save_type']) || isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true") {
+if (isset($_REQUEST['save_type']) || (isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true")) {
     $query = "SELECT id FROM project_task WHERE project_id = '" . $base_project_id . "' AND deleted = 0";
     $result = $sugarbean->db->query($query, true, "Error retrieving project tasks");
     $row = $sugarbean->db->fetchByAssoc($result);
@@ -110,7 +110,7 @@ if (isset($GLOBALS['check_notify'])) {
 $sugarbean->save($check_notify);
 $return_id = $sugarbean->id;
 
-if (isset($_REQUEST['save_type']) || isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true") {
+if (isset($_REQUEST['save_type']) || (isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true")) {
     for ($i = 0; $i < count($projectTasks); $i++) {
         if (isset($_REQUEST['save_type']) || (isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true")) {
             $projectTasks[$i]->id = '';

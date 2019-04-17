@@ -778,8 +778,8 @@ EOHTML;
             // get sprite metadata
             if ($sp = $this->getSpriteMeta($imageName)) {
                 // requested size should match
-                if ((!is_null($width) && $sp['width'] == $width) || (is_null($width)) &&
-                    (!is_null($height) && $sp['height'] == $height) || (is_null($height))) {
+                if ((!is_null($width) && $sp['width'] == $width) || ((is_null($width)) &&
+                        (!is_null($height) && $sp['height'] == $height)) || (is_null($height))) {
                     $other_attributes .= ' data-orig="'.$imageName.'"';
 
                     if ($sprite = $this->getSprite($sp['class'], $other_attributes, $alt)) {
