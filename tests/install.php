@@ -11,7 +11,7 @@ if (!defined('sugarEntry')) {
     // This is global bootstrap for autoloading
     // get silent config
     $file_config = file_get_contents(__DIR__ . '/travis_config_si.php');
-    $write_config = file_put_contents(__DIR__ . '/../config_si.php', $file_config);
+    $write_config = file_put_contents(__DIR__ . '/../config_si.php', $file_config, LOCK_EX);
 
     if ($write_config === false) {
         throw new Exception('Unable to copy silent config file');
