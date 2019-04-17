@@ -77,7 +77,7 @@ class ApiCommands extends Tasks
     ];
 
     /**
-     * ApiCommands constructor.
+     * ApiCommands constructor
      */
     public function __construct()
     {
@@ -102,13 +102,13 @@ class ApiCommands extends Tasks
         $this->updateEncryptionKey();
         $this->rebuildHtaccessFile();
         $client = $this->createClient($name);
-        $user = $this->createUser($name, $password);
+        $user = $this->createAPIUser($name, $password);
         $this->outputClientCredentials($client);
         $this->outputUserCredentials($user);
     }
 
     /**
-     * Generate OAuth2 public/private keys.
+     * Generate OAuth2 public/private keys
      */
     private function generateKeys()
     {
@@ -137,7 +137,7 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Sets the Oauth2 key permissions.
+     * Sets the Oauth2 key permissions
      */
     private function setKeyPermissions()
     {
@@ -152,7 +152,7 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Update OAuth2 encryption keys.
+     * Update OAuth2 encryption keys
      * @throws \Exception
      */
     private function updateEncryptionKey()
@@ -173,7 +173,7 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Rebuild .Htaccess file.
+     * Rebuild .Htaccess file
      */
     private function rebuildHtaccessFile()
     {
@@ -182,14 +182,14 @@ class ApiCommands extends Tasks
 
 
     /**
-     * Creates OAuth2 client.
-     * @param string $name
+     * Creates OAuth2 client
+     * @param string $userName
      * @return array
      * @throws \Exception
      */
-    private function createClient($name)
+    public function createClient($userName)
     {
-        $count = $this->getNameCount($name, 'oauth2clients', 'name');
+        $count = $this->getNameCount($userName, 'oauth2clients', 'name');
         $dateTime = new DateTime();
 
         $clientSecret = base_convert(
@@ -212,12 +212,12 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Creates a SuiteCRM user.
+     * Creates a SuiteCRM user for the V8 API
      * @param string $name
      * @param string $password
      * @return array
      */
-    private function createUser($name, $password)
+    public function createAPIUser($name, $password)
     {
         $count = $this->getNameCount($name, 'users', 'user_name');
 
@@ -239,7 +239,7 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Returns client credentials.
+     * Returns client credentials
      * @param array $client
      */
     private function outputClientCredentials(array $client)
@@ -270,7 +270,7 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Returns user credentials..
+     * Returns user credentials
      * @param array $user
      */
     private function outputUserCredentials(array $user)
@@ -297,7 +297,7 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Returns the number of duplicate name records from a table.
+     * Returns the number of duplicate name records from a table
      * @param string $name
      * @param string $table
      * @param string $row
