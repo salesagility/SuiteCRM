@@ -78,6 +78,19 @@ class CodingStandardCommands extends \Robo\Tasks
     }
 
     /**
+     * Lints the codebase without modifying any files.
+     */
+    public function stylePHPCSFixerDryRun()
+    {
+        $this->say('Coding Standards: PSR2');
+
+        $paths = new Paths();
+        $result = $this->_exec('php vendor/bin/php-cs-fixer fix --dry-run --path-mode=intersection ' . $paths->getProjectPath() . ' --verbose --show-progress=run-in --config=' . $paths->getProjectPath() . '/.php_cs.dist');
+
+        return $result;
+    }
+
+    /**
      * A tool to automatically fix all PHP coding standards issues in modified files.
      */
     public function stylePHPCSFixerModified()
