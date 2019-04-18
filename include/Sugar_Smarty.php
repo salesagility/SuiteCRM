@@ -54,6 +54,9 @@ if (!defined('SUGAR_SMARTY_DIR')) {
  */
 class Sugar_Smarty extends Smarty
 {
+    
+    protected static $outputCollection = [];
+    
     /**
      * Sugar_Smarty constructor.
      */
@@ -164,11 +167,78 @@ class Sugar_Smarty extends Smarty
             $level = isset($sugar_config['smarty_error_level']) ? $sugar_config['smarty_error_level'] : 0;
             error_reporting($level);
         }
-        $fetch = parent::fetch(get_custom_file_if_exists($resource_name), $cache_id, $compile_id, $display);
+        // a feature toggling for json response collector
+        if ($this->getOutputFormat($sugar_config) == 'json') {
+            $fetch = '';  // avoid the output, it will be collected
+            $this->collectData($resource_name, get_custom_file_if_exists($resource_name), $cache_id, $compile_id, $display);
+        } else {
+            $fetch = parent::fetch(get_custom_file_if_exists($resource_name), $cache_id, $compile_id, $display);
+        }
         $state->popErrorLevel('sugar_smarty_errors', 'error_reporting', false);
 
         return $fetch;
     }
+    
+    /**
+     * return value sugar_config[system_output_format] could be 'json' or 'html' (html is the default)
+     * 
+     * @param array $sugarConfig
+     * @return string
+     * @throws Exception
+     */
+    protected function getOutputFormat($sugarConfig = []) {
+        $outputFormat = 'html';
+        // output format in the config?
+        if (isset($sugar_config['system_output_format']) && $sugar_config['system_output_format']) {
+            $outputFormat = $sugar_config['system_output_format'];
+        }
+        // request able to override any config settings of output format:
+        if (isset($_REQUEST['system_output_format']) && $_REQUEST['system_output_format']) {
+            $outputFormat = $_REQUEST['system_output_format'];
+        }
+        // check if it's valid?
+        if (!in_array($outputFormat, array('html', 'json'))) {
+            throw new Exception("Invalid output format: '$outputFormat'");
+        }
+        return $outputFormat;
+    }
+    
+    /**
+     * when system output format is JSON it won't shows any data or template, just collect the output info
+     * 
+     * @param string $resourceName
+     * @param string $customized
+     * @param ??? $cacheId
+     * @param ??? $compileId
+     * @param boolean $display
+     * @return int collection size
+     */
+    protected function collectData($resourceName, $customized, $cacheId, $compileId, $display) {
+        
+        // TODO: here we can decide what data should be collected/excluded (filtered by "response filter"):
+        // in english: store the output into the collection only if given parameters match with the given filter-request
+        
+        $outputData = [
+            'resourceName' => $resourceName,
+            'customized' => $customized,
+            'cacheId' => $cacheId,
+            'comiledId' => $compileId,
+            'display' => $display,
+            '_tpl_vars' => $this->_tpl_vars
+        ];
+        
+        return array_push(self::$outputCollection, $outputData);
+    }
+    
+    /**
+     * Interface function of collected outputs for forward compatibility
+     * 
+     * @return array
+     */
+    public static function getOutputCollection() {
+        return self::$outputCollection;
+    }
+    
 
     /**
      * Log smarty error out to default log location
