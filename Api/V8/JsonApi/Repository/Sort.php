@@ -23,7 +23,7 @@ class Sort
             $value = ltrim($value, '-');
         }
 
-        if (!property_exists($bean, $value)) {
+        if (empty($bean->field_defs[$value])) {
             throw new \InvalidArgumentException(sprintf(
                 'Sort field %s in %s module is not found',
                 $value,
