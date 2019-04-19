@@ -48,7 +48,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-require_once('include/MVC/View/views/view.classic.php');
 
 class EmailTemplatesViewClassic extends ViewClassic
 {

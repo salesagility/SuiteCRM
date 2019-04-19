@@ -39,7 +39,6 @@
  */
 
  
-require_once('include/MVC/View/views/view.list.php');
 
 class ContactsViewCloseContactAddressPopup extends ViewList
 {
