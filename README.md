@@ -1,8 +1,8 @@
-## SuiteCRM 7.10.13
+## SuiteCRM 7.10.15
 
-[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=hotfix)](https://travis-ci.org/salesagility/SuiteCRM)
+[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=hotfix-7.10.x)](https://travis-ci.org/salesagility/SuiteCRM)
 [![codecov](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix/graph/badge.svg)](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix)
-
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/suitecrm/Lobby)	
 
 ### What's in this repository ###
 

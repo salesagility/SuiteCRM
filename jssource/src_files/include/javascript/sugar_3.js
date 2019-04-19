@@ -1996,9 +1996,9 @@ sugarListView.prototype.confirm_action = function (del) {
 
 }
 sugarListView.get_num_selected = function () {
-  var selectCount = $("input[name='selectCount[]']:first");
-  if (selectCount.length > 0)
-    return parseInt(selectCount.val().replace("+", ""));
+  var selectCount = sugarListView.get_checks_count();
+  if (selectCount > 0)
+        return selectCount;
   return 0;
 
 }

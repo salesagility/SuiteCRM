@@ -41,6 +41,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
         $state->pushGlobals();
+        $state->pushPHPConfigOptions();
 
         // test
         
@@ -65,7 +66,8 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
+
+        $state->popPHPConfigOptions();
         $state->popGlobals();
         $state->popTable('tracker');
     }
