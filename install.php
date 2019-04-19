@@ -271,7 +271,10 @@ if(isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") {
 
         // TODO--low: validate file size & image width/height and save, show status result to client js
 
-        echo "<script>window.top.window.{$_REQUEST['callback']}(" . json_encode($result) . ");</script>";
+        if (!empty($_REQUEST['callback'] === 'uploadLogoCallback')) {
+            echo "<script>window.top.window.uploadLogoCallback" . json_encode($result) . ");</script>";
+        }
+
         return;
     }
 
