@@ -1,5 +1,7 @@
 <?php
 
+require_once 'modules/Campaigns/utils.php';
+
 
 class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
@@ -10,6 +12,68 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
+    }
+
+    public function testSubscribeUnsubscribeFromNewsLetterCampaign()
+    {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('sugarfeed');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('leads_cstm');
+        $state->pushTable('leads');
+        $state->pushTable('campaigns');
+        $state->pushTable('prospect_lists');
+        $state->pushTable('prospect_list_campaigns');
+        $state->pushTable('prospect_lists_prospects');
+        $state->pushGlobals();
+
+        $campaign = new Campaign();
+        $campaign->name = create_guid();
+        $campaign->campaign_type = "NewsLetter";
+        $campaign->save();
+        $campaign->load_relationship('prospectlists');
+
+        // Add the lists to the campaign
+        $exempt_list = new ProspectList();
+        $exempt_list->list_type = "exempt";
+        $exempt_list->save();
+        $campaign->prospectlists->add($exempt_list->id);
+
+        $default_list = new ProspectList();
+        $default_list->list_type = "default";
+        $default_list->save();
+        $campaign->prospectlists->add($default_list->id);
+
+        $test_list = new ProspectList();
+        $test_list->list_type = "test";
+        $test_list->save();
+        $campaign->prospectlists->add($test_list->id);
+
+        $lead = new Lead();
+        $lead->save();
+
+        // Subscribe
+        subscribe($campaign->id, null, $lead, true);
+        $keyed = get_subscription_lists_keyed($lead);
+        $this->assertArrayHasKey($campaign->name, $keyed['subscribed']);
+        $this->assertEquals($default_list->id, $keyed['subscribed'][$campaign->name]['prospect_list_id']);
+
+        // Unsubscribe
+        unsubscribe($campaign->id, $lead);
+        $keyed = get_subscription_lists_keyed($lead);
+        $this->assertArrayNotHasKey($campaign->name, $keyed['subscribed']);
+        $this->assertArrayHasKey($campaign->name, $keyed['unsubscribed']);
+        $this->assertEquals($default_list->id, $keyed['unsubscribed'][$campaign->name]['prospect_list_id']);
+
+        $state->popGlobals();
+        $state->popTable('prospect_lists_prospects');
+        $state->popTable('prospect_list_campaigns');
+        $state->popTable('prospect_lists');
+        $state->popTable('campaigns');
+        $state->popTable('leads');
+        $state->popTable('leads_cstm');
+        $state->popTable('aod_indexevent');
+        $state->popTable('sugarfeed');
     }
 
     public function testCampaign()

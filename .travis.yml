@@ -13,7 +13,7 @@ jobs:
       - stage: codecoverage
         if: type IN (pull_request) OR branch in (master, develop, hotfix)
         php: 7.0
-        script: ./vendor/bin/codecept run install --env travis-ci-hub -f -d --ext DotReporter; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 1;" >> config_override.php  ; ./vendor/bin/robo -vvv code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f ./_output/coverage.xml
+        script: ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 1;" >> config_override.php  ; ./vendor/bin/robo code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f ./_output/coverage.xml
 sudo: required
 dist: trusty
 services:
@@ -60,18 +60,17 @@ before_script:
   - phpenv config-add travis.php.ini
   - sudo service apache2 restart
   # Install composer
-  - rm composer.lock
   - composer install
   - ./vendor/bin/codecept build
 
 script:
   # Run the wizard installer
   - echo "using install wizard"
-  - ./vendor/bin/codecept run install --env travis-ci-hub -f -d --ext DotReporter
+  - ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter
   - ./build/push_output.sh
   
   # Run the unit tests
-  # - ./vendor/bin/codecept run unit --steps -f -vvv -d
+  # - ./vendor/bin/codecept run unit --steps -f
   - cd tests
   - ../vendor/bin/phpunit --stop-on-failure --stop-on-error --colors --configuration $(pwd)/phpunit.xml.dist ./tests/unit/phpunit
   - cd ..
@@ -88,10 +87,10 @@ script:
   - sudo chmod 600 Api/V8/OAuth2/p*.key
   # - sudo chown www-data:www-data Api/V8/OAuth2/p*.key
   # Run API functional tests
-  - ./vendor/bin/codecept run tests/api/V8/ -f -d --ext DotReporter
+  - ./vendor/bin/codecept run tests/api/V8/ -f --ext DotReporter
   # RUN Basic Acceptance test
   - echo "\$sugar_config['imap_test'] = true;" >> config_override.php
-  - ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -d --ext DotReporter
+  - ./vendor/bin/codecept run acceptance --env travis-ci-hub -f --ext DotReporter
 
 after_script:
   - ./build/push_output.sh
