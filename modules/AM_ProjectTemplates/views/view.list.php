@@ -51,7 +51,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-require_once('include/MVC/View/views/view.list.php');
 require_once('modules/AM_ProjectTemplates/AM_ProjectTemplatesListViewSmarty.php');
 
 class AM_ProjectTemplatesViewList extends ViewList

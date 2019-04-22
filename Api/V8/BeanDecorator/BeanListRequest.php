@@ -41,7 +41,7 @@ class BeanListRequest
     /**
      * @var boolean
      */
-    protected $singleSelect = false;
+    protected $singleSelect = true;
 
     /**
      * @var array

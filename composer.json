@@ -40,7 +40,8 @@
     "soundasleep/html2text": "~0.5",
     "symfony/options-resolver": "^3.4",
     "symfony/validator": "^3.4",
-    "tuupola/slim-jwt-auth": "^2.0"
+    "tuupola/slim-jwt-auth": "^2.0",
+    "wikimedia/composer-merge-plugin": "^1.4"
   },
   "require-dev": {
     "browserstack/browserstack-local": "^1.1",
@@ -72,5 +73,19 @@
       "Api/"
     ]
   },
-  "extra": {}
+  "extra": {
+      "merge-plugin": {
+          "include": [
+              "composer.ext.json",
+              "custom/Extension/application/Ext/Composer/*/*.json"
+          ],
+          "recurse": true,
+          "replace": false,
+          "ignore-duplicates": false,
+          "merge-dev": true,
+          "merge-extra": false,
+          "merge-extra-deep": false,
+          "merge-scripts": false
+      }
+  }
 }
