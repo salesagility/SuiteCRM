@@ -703,89 +703,181 @@ class SugarApplication
     }
 
     /**
-     * Storing messages into session
-     *
-     * @access	public
-     * @param string $message
+     * Add an error message for the user
+     * @param string $error_message
+     * @throws Exception
      */
-    public static function appendErrorMessage($message)
+    public static function appendErrorMessage($error_message)
     {
-        self::appendMessage('user_error_message', $message);
+        self::appendMessage('error', $error_message);
     }
 
     /**
      * picking up the messages from the session and clearing session storage array
-     * @return array messages
+     * @return array
+     * @throws Exception
      */
     public static function getErrorMessages()
     {
-        $messages = self::getMessages('user_error_message');
-        return $messages;
+        return self::getMessages('error');
     }
 
     /**
      * Storing messages into session
-     *
-     * @access	public
      * @param string $message
+     * @throws Exception
      */
     public static function appendSuccessMessage($message)
     {
-        self::appendMessage('user_success_message', $message);
+        self::appendMessage('okay', $message);
     }
 
     /**
      * picking up the messages from the session and clearing session storage array
-     * @return array messages
+     * @return array
+     * @throws Exception
      */
     public static function getSuccessMessages()
     {
-        $messages = self::getMessages('user_success_message');
+        return self::getMessages('user_success_message');
+    }
+
+
+    /**
+     * @param string $type the type of the message. Values allowed:
+     *                         error, info, alert, okay, warning.
+     *
+     * @param string $message the message to be displayed to the user.
+     *                         For consistency with other messages, it should begin
+     *                         with a capital letter and end with a period.
+     *
+     * @param bool $repeat if this is FALSE and the message is already set, then
+     *                         the message won't be repeated.
+     *
+     * @throws Exception
+     */
+    public static function appendMessage($type = 'info', $message = '', $repeat = true)
+    {
+
+        if (!empty($message)) {
+            self::validateMessageType($type);
+
+            if (!isset($_SESSION['suite_messages'][$type])
+                || !is_array($_SESSION['suite_messages'][$type])
+            ) {
+                $_SESSION['suite_messages'][$type] = array();
+            }
+            if ($repeat
+                || (!in_array($message, $_SESSION['suite_messages'][$type], false))
+            ) {
+                $_SESSION['suite_messages'][$type][] = $message;
+            }
+        }
+    }
+
+
+    /**
+     * Return all messages that have been set.
+     *
+     * @param string $type optional, values allowed: error, info, alert, okay
+     *                             and warning.
+     * @param boolean $clear_queue optional, set to FALSE if you do not want to clear
+     *                             the messages queue
+     *
+     * @return array the key is the message type, the value an array of
+     * messages.
+     * If the $type parameter is passed, you get only that type, or an empty array if
+     * there are no such messages.
+     * If $type is not passed, all message types are returned, or an empty array if
+     * none exist.
+     * @throws Exception
+     */
+    public static function getMessages($type = null, $clear_queue = true)
+    {
+        $messages = array();
+        self::validateMessageType($type);
+        self::_appendOldMessageTypes();
+
+        if (isset($_SESSION['suite_messages'], $type)) {
+            if (isset($_SESSION['suite_messages'][$type])) {
+                $messages[$type] = $_SESSION['suite_messages'][$type];
+                self::_clearQueue($clear_queue);
+            }
+        } else {
+            if (!isset($_SESSION['suite_messages'])) {
+                $_SESSION['suite_messages'] = array();
+            }
+            $messages = $_SESSION['suite_messages'];
+            self::_clearQueue($clear_queue);
+        }
+
         return $messages;
     }
 
     /**
-     * Storing messages into session
-     * @param string $message
-     */
-    protected static function appendMessage($type, $message)
-    {
-        self::validateMessageType($type);
-
-        if (empty($_SESSION[$type]) || !is_array($_SESSION[$type])) {
-            $_SESSION[$type] = array();
-        }
-        if (!in_array($message, $_SESSION[$type])) {
-            $_SESSION[$type][] = $message;
-        }
-    }
-
-    /**
-     * picking up the messages from the session and clearing session storage array
-     * @return array messages
-     */
-    protected static function getMessages($type)
-    {
-        self::validateMessageType($type);
-
-        if (isset($_SESSION[$type]) && is_array($_SESSION[$type])) {
-            $msgs = $_SESSION[$type];
-            unset($_SESSION[$type]);
-            return $msgs;
-        } else {
-            return array();
-        }
-    }
-
-    /**
+     * Validates message type
      *
-     * @param string $type possible message types: ['user_error_message', 'user_success_message']
+     * @param string $type possible message types:
+     *                     'alert', 'error', 'info', 'okay', 'user_error_message',
+     *                     'user_success_message',
+     *
      * @throws Exception message type should be valid
+     *
      */
     protected static function validateMessageType($type)
     {
-        if (!in_array($type, array('user_error_message', 'user_success_message'))) {
+        $types = array(
+            'alert',
+            'error',
+            'info',
+            'okay',
+            'user_error_message',
+            'user_success_message',
+        );
+
+        if ($type !== null && !in_array($type, $types, false)) {
             throw new Exception('Incorrect application message type: ' . $type);
+        }
+    }
+
+    /**
+     * Clear messages Queue
+     *
+     * @param bool $clear_queue optional, set to FALSE if you do not want to clear
+     *                             the messages queue
+     *
+     */
+    private static function _clearQueue($clear_queue = true)
+    {
+        if ($clear_queue) {
+            unset($_SESSION['suite_messages'], $_SESSION['user_error_message'], $_SESSION['user_success_message']);
+        }
+    }
+
+    /**
+     * Append old messages types set through $_SESSION
+     * @throws Exception
+     */
+    private static function _appendOldMessageTypes()
+    {
+        if (isset($_SESSION['user_error_message'])) {
+            if (is_string($_SESSION['user_error_message'])) {
+                self::appendMessage('error', $_SESSION['user_error_message']);
+            } elseif (is_array($_SESSION['user_error_message'])) {
+                foreach ($_SESSION['user_error_message'] as $msg) {
+                    self::appendMessage('error', $msg);
+                }
+            }
+        }
+
+        if (isset($_SESSION['user_success_message'])) {
+            if (is_string($_SESSION['user_success_message'])) {
+                self::appendMessage('okay', $_SESSION['user_success_message']);
+            } elseif (is_array($_SESSION['user_success_message'])) {
+                foreach ($_SESSION['user_success_message'] as $msg) {
+                    self::appendMessage('okay', $msg);
+                }
+            }
         }
     }
 

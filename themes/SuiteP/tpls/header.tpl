@@ -66,3 +66,19 @@
     <div id="content" class="content">
         <div id="pagecontent" class=".pagecontent">
 {/if}
+{foreach from=$messages item=typedmessages key=type}
+    {foreach from=$typedmessages item=msg}
+        {if $type == 'error'}
+            <div role="alert" class="alert alert-danger">{$msg}</div>
+        {/if}
+        {if $type == 'info'}
+            <div role="alert" class="alert alert-info">{$msg}</div>
+        {/if}
+        {if $type == 'alert'}
+            <div role="alert" class="alert alert-warning">{$msg}</div>
+        {/if}
+        {if $type == 'okay'}
+            <div role="alert" class="alert alert-success">{$msg}</div>
+        {/if}
+    {/foreach}
+{/foreach}
