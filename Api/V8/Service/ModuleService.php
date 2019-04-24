@@ -223,7 +223,7 @@ class ModuleService
     {
         $bean->set_created_by = !(isset($attributes['created_by']) || isset($attributes['created_by_name']));
         $bean->update_modified_by = !(isset($attributes['modified_user_id']) || isset($attributes['modified_by_name']));
-        $bean->update_date_entered = !isset($attributes['date_entered']);
+        $bean->update_date_entered = isset($attributes['date_entered']);
         $bean->update_date_modified = !isset($attributes['date_modified']);
 
         return $bean;
