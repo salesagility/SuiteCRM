@@ -168,7 +168,7 @@ class Sugar_Smarty extends Smarty
             error_reporting($level);
         }
         // a feature toggling for json response collector
-        if ($this->getOutputFormat($sugar_config) == 'json') {
+        if ($this->getOutputFormat($sugar_config, $_REQUEST) == 'json') {
             $fetch = '';  // avoid the output, it will be collected
             $this->collectData($resource_name, get_custom_file_if_exists($resource_name), $cache_id, $compile_id, $display);
         } else {
@@ -186,15 +186,15 @@ class Sugar_Smarty extends Smarty
      * @return string
      * @throws Exception
      */
-    protected function getOutputFormat($sugarConfig = []) {
+    protected function getOutputFormat($sugarConfig = [], $request = []) {
         $outputFormat = 'html';
         // output format in the config?
-        if (isset($sugar_config['system_output_format']) && $sugar_config['system_output_format']) {
-            $outputFormat = $sugar_config['system_output_format'];
+        if (isset($sugarConfig['system_output_format']) && $sugarConfig['system_output_format']) {
+            $outputFormat = $sugarConfig['system_output_format'];
         }
         // request able to override any config settings of output format:
-        if (isset($_REQUEST['system_output_format']) && $_REQUEST['system_output_format']) {
-            $outputFormat = $_REQUEST['system_output_format'];
+        if (isset($request['system_output_format']) && $request['system_output_format']) {
+            $outputFormat = $request['system_output_format'];
         }
         // check if it's valid?
         if (!in_array($outputFormat, array('html', 'json'))) {
