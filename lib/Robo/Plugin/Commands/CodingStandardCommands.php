@@ -50,23 +50,6 @@ class CodingStandardCommands extends \Robo\Tasks
     use RoboTrait;
 
     /**
-     * Configure environment.
-     */
-    public function styleConfigurePHPCSFixer()
-    {
-        $this->say('Configure PHPCSFixer');
-
-        if ($this->_exec('which composer') === null) {
-            throw new Exception('Could not find composer');
-        }
-
-        $this->taskComposerConfig()->set('bin-dir', 'vendor/bin/')->run();
-
-        $this->taskComposerRequire()->dependency('friendsofphp/php-cs-fixer')->dev()->run();
-        $this->taskComposerInstall()->dev()->run();
-    }
-
-    /**
      * A tool to automatically fix all PHP coding standards issues.
      */
     public function stylePHPCSFixer()
