@@ -161,6 +161,22 @@ class ModuleService
             $bean->new_with_id = true;
         }
 
+        if (isset($attributes['created_by']) || isset($attributes['created_by_name'])) {
+            $bean->set_created_by = false;
+        }
+
+        if (isset($attributes['modified_user_id']) || isset($attributes['modified_by_name'])) {
+            $bean->update_modified_by = false;
+        }
+
+        if (isset($attributes['date_entered'])) {
+            $bean->update_date_entered = false;
+        }
+
+        if (isset($attributes['date_modified'])) {
+            $bean->update_date_modified = false;
+        }
+
         foreach ($attributes as $property => $value) {
             $bean->$property = $value;
         }
