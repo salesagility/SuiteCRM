@@ -16,12 +16,12 @@ class RelationshipService
     /**
      * @var BeanManager
      */
-    private $beanManager;
+    protected $beanManager;
 
     /**
      * @var AttributeObjectHelper
      */
-    private $attributeHelper;
+    protected $attributeHelper;
 
     /**
      * @param BeanManager $beanManager

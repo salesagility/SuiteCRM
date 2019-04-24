@@ -66,17 +66,17 @@ class UserService
     /**
      * @var BeanManager
      */
-    private $beanManager;
+    protected $beanManager;
 
     /**
      * @var AttributeObjectHelper
      */
-    private $attributeHelper;
+    protected $attributeHelper;
 
     /**
      * @var RelationshipObjectHelper
      */
-    private $relationshipHelper;
+    protected $relationshipHelper;
 
     /**
      * @param BeanManager $beanManager

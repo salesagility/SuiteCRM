@@ -10,7 +10,7 @@ class RelationshipObjectHelper
     /**
      * @var VarDefHelper
      */
-    private $varDefHelper;
+    protected $varDefHelper;
 
     /**
      * @param VarDefHelper $varDefHelper
