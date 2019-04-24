@@ -90,10 +90,6 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
             ['access_token' => $tokenId]
         );
 
-        if (new \DateTime() > new \DateTime($token->access_token_expires) || $token->id === null) {
-            return true;
-        }
-
-        return false;
+        return $token->id === null || $token->token_is_revoked === '1' || new \DateTime() > new \DateTime($token->access_token_expires);
     }
 }
