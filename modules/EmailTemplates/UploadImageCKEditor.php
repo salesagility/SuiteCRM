@@ -1,4 +1,7 @@
 <?php
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,79 +41,50 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
+require_once('include/JSON.php');
+require_once('include/upload_file.php');
+
+if (count($_FILES) != 1) {
+    http_response_code('400');
+    echo "Only one file allowed";
+    die();
 }
 
-/**
- * Class SuiteEditorSettings
- *
- * store and extends an associative settings for editors
- */
-abstract class SuiteEditorSettings
-{
-    /**
-     * @var string
-     */
-    public $contents;
+if (!is_dir($cachedir = sugar_cached('images/'))) {
+    mkdir_recursive($cachedir);
+}
 
-    /**
-     * Target textarea element ID
-     *
-     * @var string
-     */
-    public $textareaId;
+// cn: bug 11012 - fixed some MIME types not getting picked up.  Also changed array iterator.
+$imgType = array('image/gif', 'image/png', 'image/x-png', 'image/bmp', 'image/jpeg', 'image/jpg', 'image/pjpeg');
 
-    /**
-     * @var string
-     */
-    public $elementId;
+$ret = array();
 
-    /**
-     * @var int
-     */
-    public $width;
-
-    /**
-     * @var string
-     */
-    public $group;
-
-    /**
-     * Javascript for body click handling
-     *
-     * @var string
-     */
-    public $clickHandler;
-
-    /**
-     * Language string
-     *
-     * @var string
-     */
-    public $language;
-
-    /**
-     * SuiteEditorSettings constructor.
-     *
-     * @param $settings array or object
-     */
-    public function __construct($settings = null)
-    {
-        if ($settings) {
-            $this->extend($settings);
+foreach ($_FILES as $k => $file) {
+    if (in_array(strtolower($_FILES[$k]['type']), $imgType) && $_FILES[$k]['size'] > 0) {
+        $upload_file = new UploadFile($k);
+        // check the file
+        if ($upload_file->confirm_upload()) {
+            $dest = $cachedir.basename($upload_file->get_stored_file_name()); // target name
+            $guid = create_guid();
+            if ($upload_file->final_move($guid)) { // move to uploads
+                $path = $upload_file->get_upload_path($guid);
+                // if file is OK, copy to cache
+                if (verify_uploaded_image($path) && copy($path, $dest)) {
+                    $ret[] = $dest;
+                }
+                // remove temp file
+                unlink($path);
+            }
         }
     }
+}
 
-    /**
-     * extends the settings
-     *
-     * @param $settings array or object
-     */
-    public function extend($settings)
-    {
-        foreach ($settings as $key => $value) {
-            $this->$key = $value;
-        }
-    }
+if (!empty($ret)) {
+    $fn = $ret[0];
+    header('Content-type: application/json');
+    echo json_encode(["fileName" => basename($fn), "uploaded" => 1, "url" => $fn]);
+} else {
+    http_response_code('500');
+    echo "Upload failed";
+    die();
 }

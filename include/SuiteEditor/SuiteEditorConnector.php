@@ -51,6 +51,9 @@ include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorTinyMCE.p
 include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorSettingsForMozaik.php');
 include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorMozaik.php');
 
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorSettingsForCKEditor.php');
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorCKEditor.php');
+
 /**
  * Class SuiteEditor
  *
@@ -61,11 +64,14 @@ class SuiteEditorConnector
 {
     public static function getSuiteSettings($html, $width)
     {
+        global $current_language;
+
         return array(
             'contents' => $html,
             'textareaId' => 'body_text',
             'elementId' => 'email_template_editor',
             'width' => $width,
+            'language' => $current_language,
             'clickHandler' => "function(e){
                 onClickTemplateBody();
             }",
@@ -106,6 +112,11 @@ class SuiteEditorConnector
             case 'mozaik':
                 $editor = new SuiteEditorMozaik();
                 $settings = new SuiteEditorSettingsForMozaik($settings);
+                break;
+
+            case 'ckeditor':
+                $editor = new SuiteEditorCKEditor();
+                $settings = new SuiteEditorSettingsForCKEditor($settings);
                 break;
 
             // new editor type should be possible to store in
