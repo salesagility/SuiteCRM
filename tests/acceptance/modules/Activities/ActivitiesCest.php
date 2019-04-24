@@ -83,10 +83,11 @@ class ActivitiesCest
         $listView->waitForListViewVisible();
         $listView->clickNameLink($account_name);
 
-        //Click on Activites subpanel
+        //Click on Activities subpanel
         $I->click(['id'=>'subpanel_title_activities']);
         $I->waitForElementVisible('#Activities_createtask_button', 60);
         $I->expect('the due date is visible');
+        $I->wait(5);
         $I->see('01/19/2038', '//*[@id="list_subpanel_activities"]/table/tbody/tr/td[6]');
 
         // Delete the Account
