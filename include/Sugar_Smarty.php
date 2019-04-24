@@ -54,9 +54,8 @@ if (!defined('SUGAR_SMARTY_DIR')) {
  */
 class Sugar_Smarty extends Smarty
 {
-    
-    protected static $outputCollection = [];
-    
+    protected static $legacyService;
+
     /**
      * Sugar_Smarty constructor.
      */
@@ -92,6 +91,23 @@ class Sugar_Smarty extends Smarty
     }
 
     /**
+     * Interface function of collected outputs for forward compatibility
+     *
+     * @return array
+     */
+    public static function getLegacyApiService() {
+        if (!class_exists('SuiteCRM\\App\\Modules\\Legacy\\Service\\LegacyApiService')) {
+            throw new \Exception('Legacy Api Service not found');
+        }
+
+        if (empty(self::$legacyService)) {
+            self::$legacyService = new \SuiteCRM\App\Modules\Legacy\Service\LegacyApiService();
+        }
+
+        return self::$legacyService;
+    }
+
+    /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function Sugar_Smarty()
@@ -104,6 +120,7 @@ class Sugar_Smarty extends Smarty
         }
         self::__construct();
     }
+
 
     /**
      * Override default _unlink method call to fix Bug 53010
@@ -170,7 +187,16 @@ class Sugar_Smarty extends Smarty
         // a feature toggling for json response collector
         if ($this->getOutputFormat($sugar_config, $_REQUEST) == 'json') {
             $fetch = '';  // avoid the output, it will be collected
-            $this->collectData($resource_name, get_custom_file_if_exists($resource_name), $cache_id, $compile_id, $display);
+
+            self::getLegacyApiService()->collectData(
+                $resource_name,
+                get_custom_file_if_exists($resource_name),
+                $cache_id,
+                $compile_id,
+                $display,
+                $this->_tpl_vars
+            );
+
         } else {
             $fetch = parent::fetch(get_custom_file_if_exists($resource_name), $cache_id, $compile_id, $display);
         }
@@ -178,10 +204,10 @@ class Sugar_Smarty extends Smarty
 
         return $fetch;
     }
-    
+
     /**
      * return value sugar_config[system_output_format] could be 'json' or 'html' (html is the default)
-     * 
+     *
      * @param array $sugarConfig
      * @return string
      * @throws Exception
@@ -202,43 +228,6 @@ class Sugar_Smarty extends Smarty
         }
         return $outputFormat;
     }
-    
-    /**
-     * when system output format is JSON it won't shows any data or template, just collect the output info
-     * 
-     * @param string $resourceName
-     * @param string $customized
-     * @param ??? $cacheId
-     * @param ??? $compileId
-     * @param boolean $display
-     * @return int collection size
-     */
-    protected function collectData($resourceName, $customized, $cacheId, $compileId, $display) {
-        
-        // TODO: here we can decide what data should be collected/excluded (filtered by "response filter"):
-        // in english: store the output into the collection only if given parameters match with the given filter-request
-        
-        $outputData = [
-            'resourceName' => $resourceName,
-            'customized' => $customized,
-            'cacheId' => $cacheId,
-            'comiledId' => $compileId,
-            'display' => $display,
-            '_tpl_vars' => $this->_tpl_vars
-        ];
-        
-        return array_push(self::$outputCollection, $outputData);
-    }
-    
-    /**
-     * Interface function of collected outputs for forward compatibility
-     * 
-     * @return array
-     */
-    public static function getOutputCollection() {
-        return self::$outputCollection;
-    }
-    
 
     /**
      * Log smarty error out to default log location
@@ -248,7 +237,7 @@ class Sugar_Smarty extends Smarty
     public function trigger_error($error_msg, $error_type = E_USER_WARNING)
     {
         $error_msg = htmlentities($error_msg);
-        
+
         switch ($error_type) {
             case E_USER_ERROR:
                 $GLOBALS['log']->error('Smarty: ' . $error_msg);
