@@ -61,6 +61,8 @@ class SugarApplication
     public $headerDisplayed = false;
     public $default_module = 'Home';
     public $default_action = 'index';
+    
+    protected static $legacyService;
 
     public function __construct()
     {
@@ -677,15 +679,64 @@ class SugarApplication
             if (headers_sent()) {
                 echo "<script>SUGAR.ajaxUI.loadContent('$url');</script>\n";
             } else {
-                //@ob_end_clean(); // clear output buffer
-                session_write_close();
-                header('HTTP/1.1 301 Moved Permanently');
-                header("Location: " . $url);
+                global $sugar_config;
+                if (self::getOutputFormat($sugar_config, $_REQUEST) == 'json') {
+                    SugarApplication::getLegacyApiService()->collectRedirect($url);
+                } else {
+                    //@ob_end_clean(); // clear output buffer
+                    session_write_close();
+                    header('HTTP/1.1 301 Moved Permanently');
+                    header("Location: " . $url);
+                }
             }
         }
         if (!defined('SUITE_PHPUNIT_RUNNER')) {
+            if (self::getOutputFormat($sugar_config, $_REQUEST) == 'json') {
+                throw new Exception('should catches unexpected sugar exit after any redirection');
+            }
             exit();
         }
+    }
+
+    /**
+     * return value sugar_config[system_output_format] could be 'json' or 'html' (html is the default)
+     *
+     * @param array $sugarConfig
+     * @return string
+     * @throws Exception
+     */
+    public static function getOutputFormat($sugarConfig = [], $request = []) {
+        $outputFormat = 'html';
+        // output format in the config?
+        if (isset($sugarConfig['system_output_format']) && $sugarConfig['system_output_format']) {
+            $outputFormat = $sugarConfig['system_output_format'];
+        }
+        // request able to override any config settings of output format:
+        if (isset($request['system_output_format']) && $request['system_output_format']) {
+            $outputFormat = $request['system_output_format'];
+        }
+        // check if it's valid?
+        if (!in_array($outputFormat, array('html', 'json'))) {
+            throw new Exception("Invalid output format: '$outputFormat'");
+        }
+        return $outputFormat;
+    }
+
+    /**
+     * Interface function of collected outputs for forward compatibility
+     *
+     * @return array
+     */
+    public static function getLegacyApiService() {
+        if (!class_exists('SuiteCRM\\App\\Modules\\Legacy\\Service\\LegacyApiService')) {
+            throw new \Exception('Legacy Api Service not found');
+        }
+
+        if (empty(self::$legacyService)) {
+            self::$legacyService = new \SuiteCRM\App\Modules\Legacy\Service\LegacyApiService();
+        }
+
+        return self::$legacyService;
     }
 
     /**

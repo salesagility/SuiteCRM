@@ -108,5 +108,10 @@ if (!empty($GLOBALS['app'])) {
 }
 if (!defined('SUITE_PHPUNIT_RUNNER')) {
     sugar_cleanup();
-    header($url);
+    global $sugar_config;
+    if (SugarApplication::getOutputFormat($sugar_config, $_REQUEST) == 'json') {
+        SugarApplication::getLegacyApiService()->collectRedirect($url);
+    } else { 
+        header($url);
+    }
 }

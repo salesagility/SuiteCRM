@@ -54,7 +54,6 @@ if (!defined('SUGAR_SMARTY_DIR')) {
  */
 class Sugar_Smarty extends Smarty
 {
-    protected static $legacyService;
 
     /**
      * Sugar_Smarty constructor.
@@ -88,23 +87,6 @@ class Sugar_Smarty extends Smarty
         $this->plugins_dir = $plugins_dir;
 
         $this->assign("VERSION_MARK", getVersionedPath(''));
-    }
-
-    /**
-     * Interface function of collected outputs for forward compatibility
-     *
-     * @return array
-     */
-    public static function getLegacyApiService() {
-        if (!class_exists('SuiteCRM\\App\\Modules\\Legacy\\Service\\LegacyApiService')) {
-            throw new \Exception('Legacy Api Service not found');
-        }
-
-        if (empty(self::$legacyService)) {
-            self::$legacyService = new \SuiteCRM\App\Modules\Legacy\Service\LegacyApiService();
-        }
-
-        return self::$legacyService;
     }
 
     /**
@@ -185,10 +167,10 @@ class Sugar_Smarty extends Smarty
             error_reporting($level);
         }
         // a feature toggling for json response collector
-        if ($this->getOutputFormat($sugar_config, $_REQUEST) == 'json') {
+        if (SugarApplication::getOutputFormat($sugar_config, $_REQUEST) == 'json') {
             $fetch = '';  // avoid the output, it will be collected
 
-            self::getLegacyApiService()->collectData(
+            SugarApplication::getLegacyApiService()->collectSmartyData(
                 $resource_name,
                 get_custom_file_if_exists($resource_name),
                 $cache_id,
@@ -203,30 +185,6 @@ class Sugar_Smarty extends Smarty
         $state->popErrorLevel('sugar_smarty_errors', 'error_reporting', false);
 
         return $fetch;
-    }
-
-    /**
-     * return value sugar_config[system_output_format] could be 'json' or 'html' (html is the default)
-     *
-     * @param array $sugarConfig
-     * @return string
-     * @throws Exception
-     */
-    protected function getOutputFormat($sugarConfig = [], $request = []) {
-        $outputFormat = 'html';
-        // output format in the config?
-        if (isset($sugarConfig['system_output_format']) && $sugarConfig['system_output_format']) {
-            $outputFormat = $sugarConfig['system_output_format'];
-        }
-        // request able to override any config settings of output format:
-        if (isset($request['system_output_format']) && $request['system_output_format']) {
-            $outputFormat = $request['system_output_format'];
-        }
-        // check if it's valid?
-        if (!in_array($outputFormat, array('html', 'json'))) {
-            throw new Exception("Invalid output format: '$outputFormat'");
-        }
-        return $outputFormat;
     }
 
     /**

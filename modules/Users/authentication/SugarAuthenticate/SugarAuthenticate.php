@@ -424,7 +424,15 @@ class SugarAuthenticate
         session_start();
         session_destroy();
         ob_clean();
-        header('Location: index.php?module=Users&action=Login');
+            
+        global $sugar_config;
+        $url = 'index.php?module=Users&action=Login';
+        if (SugarApplication::getOutputFormat($sugar_config, $_REQUEST) == 'json') {
+            SugarApplication::getLegacyApiService()->collectRedirect($url);
+        } else { 
+            header('Location: ' . $url);
+        }
+        
         sugar_cleanup(true);
     }
 
