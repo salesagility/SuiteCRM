@@ -161,13 +161,15 @@ class ModuleService
             $bean->new_with_id = true;
         }
 
-        $bean = $this->setRecordUpdateParams($bean, $attributes);
+        $this->setRecordUpdateParams($bean, $attributes);
 
         foreach ($attributes as $property => $value) {
             $bean->$property = $value;
         }
 
         $bean->save();
+        
+        $bean->retrieve($bean->id);
 
         $dataResponse = $this->getDataResponse(
             $bean,
@@ -194,13 +196,15 @@ class ModuleService
         $attributes = $params->getData()->getAttributes();
         $bean = $this->beanManager->getBeanSafe($module, $id);
 
-        $bean = $this->setRecordUpdateParams($bean, $attributes);
+        $this->setRecordUpdateParams($bean, $attributes);
 
         foreach ($attributes as $property => $value) {
             $bean->$property = $value;
         }
 
         $bean->save();
+        
+        $bean->retrieve($bean->id);
 
         $dataResponse = $this->getDataResponse(
             $bean,
@@ -217,7 +221,6 @@ class ModuleService
     /**
      * @param \SugarBean $bean
      * @param array $attributes
-     * @return \SugarBean
      */
     protected function setRecordUpdateParams(\SugarBean $bean, array $attributes)
     {
@@ -225,8 +228,6 @@ class ModuleService
         $bean->update_modified_by = !(isset($attributes['modified_user_id']) || isset($attributes['modified_by_name']));
         $bean->update_date_entered = isset($attributes['date_entered']);
         $bean->update_date_modified = !isset($attributes['date_modified']);
-
-        return $bean;
     }
 
     /**
