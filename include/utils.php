@@ -3298,6 +3298,15 @@ function pre_login_check()
     }
 }
 
+function sugar_cleanup_exit() {
+    global $sugar_config;
+    if (SugarApplication::getOutputFormat($sugar_config, $_REQUEST) == 'json') {
+        throw new Exception('should catch unexpected sugar_cleanup exits');
+    } else {
+        exit;
+    }
+}
+
 function sugar_cleanup($exit = false)
 {
     static $called = false;
@@ -3315,7 +3324,7 @@ function sugar_cleanup($exit = false)
     //added this check to avoid errors during install.
     if (empty($sugar_config['dbconfig'])) {
         if ($exit) {
-            exit;
+            sugar_cleanup_exit();
         } else {
             return;
         }
@@ -3351,7 +3360,7 @@ function sugar_cleanup($exit = false)
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         if ($exit) {
-            exit;
+            sugar_cleanup_exit();
         }
     }
 }
