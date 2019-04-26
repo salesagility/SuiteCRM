@@ -60,7 +60,7 @@ class RelationshipService
             /** @var \SugarBean $relatedBean */
             foreach ($relatedBeans as $relatedBean) {
                 $linkResponse = new LinksResponse();
-                $linkResponse->setSelf(sprintf('/V8/module/%s/%s', $relatedBean->getObjectName(), $relatedBean->id));
+                $linkResponse->setSelf(sprintf('V8/module/%s/%s', $relatedBean->getObjectName(), $relatedBean->id));
 
                 $dataResponse = new DataResponse($relatedBean->getObjectName(), $relatedBean->id);
                 $dataResponse->setLinks($linkResponse);

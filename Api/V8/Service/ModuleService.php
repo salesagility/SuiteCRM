@@ -181,11 +181,15 @@ class ModuleService
             $bean->new_with_id = true;
         }
 
+        $this->setRecordUpdateParams($bean, $attributes);
+
         foreach ($attributes as $property => $value) {
             $bean->$property = $value;
         }
 
         $bean->save();
+        
+        $bean->retrieve($bean->id);
 
         $dataResponse = $this->getDataResponse(
             $bean,
@@ -216,11 +220,15 @@ class ModuleService
             throw new AccessDeniedException();
         }
 
+        $this->setRecordUpdateParams($bean, $attributes);
+
         foreach ($attributes as $property => $value) {
             $bean->$property = $value;
         }
 
         $bean->save();
+        
+        $bean->retrieve($bean->id);
 
 
         $dataResponse = $this->getDataResponse(
@@ -233,6 +241,18 @@ class ModuleService
         $response->setData($dataResponse);
 
         return $response;
+    }
+
+    /**
+     * @param \SugarBean $bean
+     * @param array $attributes
+     */
+    protected function setRecordUpdateParams(\SugarBean $bean, array $attributes)
+    {
+        $bean->set_created_by = !(isset($attributes['created_by']) || isset($attributes['created_by_name']));
+        $bean->update_modified_by = !(isset($attributes['modified_user_id']) || isset($attributes['modified_by_name']));
+        $bean->update_date_entered = isset($attributes['date_entered']);
+        $bean->update_date_modified = !isset($attributes['date_modified']);
     }
 
     /**
