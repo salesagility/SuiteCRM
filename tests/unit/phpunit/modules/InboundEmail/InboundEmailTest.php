@@ -6,6 +6,21 @@ require_once __DIR__ . '/../../../../../modules/InboundEmail/InboundEmail.php';
 
 class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    public static $class_state = null;
+
+    public static function setUpBeforeClass()
+    {
+        // FIXME: The tests here depend on the email_cache table staying around and the right test order.
+        // Until that is fixed (run with RUN_PER_TESTS to see the problem) we at least restore after the class is done.
+        self::$class_state = new SuiteCRM\StateSaver();
+        self::$class_state->pushTable('email_cache');
+    }
+
+    public static function tearDownAfterClass()
+    {
+        self::$class_state->popTable('email_cache');
+    }
+
     protected function storeStateAll()
     {
         // save state
@@ -229,6 +244,9 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testFindOptimumSettingsFalsePositive()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
         $fake = new ImapHandlerFakeData();
         $fake->add('isAvailable', null, [true]);  // <-- when the code calls ImapHandlerInterface::isAvailable([null]), it will return true
         $fake->add('setTimeout', [1, 60], [true]);
@@ -261,6 +279,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('getLastError', null, ["Mailbox is empty"]);
         $ret = $inboundEmail->findOptimumSettings();
         $this->assertEquals($exp, $ret);
+
+        $state->popGlobals();
     }
 
     public function testFindOptimumSettingsFail()
@@ -310,6 +330,9 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testFindOptimumSettingsOk()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
         $fake = new ImapHandlerFakeData();
         $fake->add('isAvailable', null, [true]);  // <-- when the code calls ImapHandlerInterface::isAvailable([null]), it will return true
         $fake->add('setTimeout', [1, 60], [true]);
@@ -334,6 +357,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'serial' => '::::::::novalidate-cert::notls::secure',
             'service' => 'foo/notls/novalidate-cert/secure',
         ], $ret);
+
+        $state->popGlobals();
     }
 
     public function testFindOptimumSettingsNoImap()

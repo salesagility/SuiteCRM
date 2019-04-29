@@ -40,7 +40,6 @@
  */
 
 
-require_once('include/MVC/View/views/view.detail.php');
 
 class ProjectViewTemplatesDetail extends ViewDetail
 {
