@@ -407,6 +407,11 @@ class SugarController
         } else {
             $logicHook->call_custom_logic('', "handle_exception", $e);
         }
+        
+        global $sugar_config;
+        if (SugarApplication::getOutputFormat($sugar_config, $_REQUEST) == 'json') {
+            throw new Exception("A sugar exception catched: '" . $e->getMessage() . "'\nsee more in previous..", -388, $e);
+        } 
     }
 
     /**
