@@ -146,7 +146,7 @@ class CustomLoader
      * @param App $app
      * @return App
      */
-    public static function loadCustomRoutes(App $app, $customRoutesFile = 'routes.php')
+    public static function loadCustomRoutes(App $app, $customRoutesFile = 'Config/routes.php')
     {
         self::getLastError();
         $customRoutesFile = self::$customPath . $customRoutesFile;

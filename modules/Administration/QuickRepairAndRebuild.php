@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -40,7 +37,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
+use Api\Core\Config\ApiConfig;
 
 class RepairAndClear
 {
@@ -117,6 +118,9 @@ class RepairAndClear
                 $this->clearExternalAPICache();
                 $this->rebuildExtensions();
                 $this->rebuildAuditTables();
+                if (empty(ApiConfig::OAUTH2_ENCRYPTION_KEY)) {
+                    $this->rebuildEncryptionKey();
+                }
                 $this->repairDatabase();
                 break;
         }
@@ -454,6 +458,36 @@ class RepairAndClear
     ///////////////////////////////////////////////////////////////
     ////END REPAIR AUDIT TABLES
 
+    /**
+     * Rebuilds the OAuth2 encryption key
+     * @throws Exception
+     */
+    private function rebuildEncryptionKey()
+    {
+        $oldKey = "OAUTH2_ENCRYPTION_KEY = '" . ApiConfig::OAUTH2_ENCRYPTION_KEY;
+        $key = "OAUTH2_ENCRYPTION_KEY = '" . base64_encode(random_bytes(32));
+        $apiConfig = 'Api/Core/Config/ApiConfig.php';
+
+        if (is_writable($apiConfig)) {
+            $configContents = file_get_contents($apiConfig);
+
+            $configFileContents = str_replace(
+                $oldKey,
+                $key,
+                $configContents
+            );
+
+            $result = file_put_contents(
+                'Api/Core/Config/ApiConfig.php', $configFileContents, LOCK_EX
+            );
+
+            if ($result === false) {
+                LoggerManager::getLogger()->warn('QRR: Failed to update OAUTH2_ENCRYPTION_KEY');
+            }
+        } else {
+            LoggerManager::getLogger()->warn('QRR: API Config not writable: ' . $apiConfig);
+        }
+    }
 
     ///////////////////////////////////////////////////////////////
     //// Recursively unlink all files of the given $extension in the given $thedir.

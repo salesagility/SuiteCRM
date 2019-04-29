@@ -1,6 +1,5 @@
 <?php
 
-require_once('include/MVC/View/views/view.list.php');
 require_once('modules/Leads/LeadsListViewSmarty.php');
 
 class LeadsViewList extends ViewList
