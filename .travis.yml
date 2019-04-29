@@ -21,6 +21,10 @@ services:
 addons:
   chrome: stable
 
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
 env:
   - INSTANCE_URL=http://localhost DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1 COMPOSER_MEMORY_LIMIT=-1
 
