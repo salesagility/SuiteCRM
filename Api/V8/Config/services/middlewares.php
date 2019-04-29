@@ -35,8 +35,8 @@ return CustomLoader::mergeCustomArray([
         );
 
         if (empty(ApiConfig::OAUTH2_ENCRYPTION_KEY)) {
-            $oldKey = ApiConfig::OAUTH2_ENCRYPTION_KEY;
-            $key = base64_encode(random_bytes(32));
+            $oldKey = "OAUTH2_ENCRYPTION_KEY = '" . ApiConfig::OAUTH2_ENCRYPTION_KEY;
+            $key = "OAUTH2_ENCRYPTION_KEY = '" . base64_encode(random_bytes(32));
             $apiConfig = file_get_contents('Api/Core/Config/ApiConfig.php');
 
             $configFileContents = str_replace(
