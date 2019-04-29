@@ -54,45 +54,46 @@ $viewdefs[$module_name]['DetailView'] = array(
         ),
     ),
     'panels' => array(
-
-        array(
-
-            array(
-                'name' => 'document_name',
-                'label' => 'LBL_DOC_NAME',
-            ),
-            array(
-                'name' => 'uploadfile',
-                'displayParams' => array('link' => 'uploadfile', 'id' => 'id'),
-            ),
-
-        ),
-        array(
-            'category_id',
-            'subcategory_id',
-        ),
-
-        array(
-
-            'status',
-
-        ),
-        array(
-            'active_date',
-            'exp_date',
-        ),
-
-        array(
-            array('name' => 'assigned_user_name', 'label' => 'LBL_ASSIGNED_TO'),
-        ),
-
-        array(
+        'default' => array(
 
             array(
-                'name' => 'description',
-                'label' => 'LBL_DOC_DESCRIPTION',
+
+                array(
+                    'name' => 'document_name',
+                    'label' => 'LBL_DOC_NAME',
+                ),
+                array(
+                    'name' => 'uploadfile',
+                    'displayParams' => array('link' => 'uploadfile', 'id' => 'id'),
+                ),
+
+            ),
+            array(
+                'category_id',
+                'subcategory_id',
+            ),
+
+            array(
+
+                'status',
+
+            ),
+            array(
+                'active_date',
+                'exp_date',
+            ),
+
+            array(
+                array('name' => 'assigned_user_name', 'label' => 'LBL_ASSIGNED_TO'),
+            ),
+
+            array(
+
+                array(
+                    'name' => 'description',
+                    'label' => 'LBL_DOC_DESCRIPTION',
+                ),
             ),
         ),
-
     )
 );
