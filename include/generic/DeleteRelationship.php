@@ -109,6 +109,17 @@ if($bean_name == 'Team')
 	}
  	$focus->db->query($query);
  }
+if ($bean_name === "Account" && $linked_field === 'leads') {
+    // for Accounts-Leads non-standard relationship, after clearing account_id form Lead's bean, clear also account_name
+    $focus->retrieve($record);
+    $lead = new Lead();
+    $lead->retrieve($linked_id);
+    if ($focus->name === $lead->account_name) {
+        $lead->account_name = '';
+    }
+    $lead->save();
+    unset($lead);
+}
 if ($bean_name == "Meeting") {
     $focus->retrieve($record);
     $user = new User();
