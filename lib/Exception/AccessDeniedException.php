@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,48 +38,24 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$module_name = '<module_name>';
-$viewdefs[$module_name]['DetailView'] = array(
-    'templateMeta' => array(
-        'form' => array(
-            'buttons' => array(
-                'EDIT',
-                'DUPLICATE',
-                'DELETE',
-                'FIND_DUPLICATES',
-            )
-        ),
-        'maxColumns' => '2',
-        'widths' => array(
-            array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30')
-        ),
-    ),
+namespace SuiteCRM\Exception;
 
-    'panels' =>
-        array(
-            'default' =>
-                array(
-                    array(
-                        'name',
-                        'assigned_user_name',
-                    ),
-                    array(
-                        array(
-                            'name' => 'date_entered',
-                            'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-                            'label' => 'LBL_DATE_ENTERED',
-                        ),
-                        array(
-                            'name' => 'date_modified',
-                            'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-                            'label' => 'LBL_DATE_MODIFIED',
-                        ),
-                    ),
+use SuiteCRM\Enumerator\ExceptionCode;
 
-                    array(
-                        'description',
-                    ),
-                )
-        )
-);
+/**
+ * Class AccessDeniedException
+ * @package SuiteCRM\Exception
+ */
+class AccessDeniedException extends Exception
+{
+    /**
+     * AccessDeniedException constructor.
+     * @param string $message
+     * @param int $code
+     * @param null $previous
+     */
+    public function __construct($message = '', $code = ExceptionCode::APPLICATION_UNHANDLED_BEHAVIOUR, $previous = null)
+    {
+        parent::__construct('[AccessDeniedException] ' . $message . '', $code, $previous);
+    }
+}

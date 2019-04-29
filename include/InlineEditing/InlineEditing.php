@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -255,27 +255,23 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         $fieldlist[$fieldname]['value'] = $value;
         $fieldlist[$fieldname]['id_name'] = $aow_field;
         $fieldlist[$fieldname]['name'] = $aow_field . '_display';
-    } else {
-        if (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime')) {
-            $value = $focus->convertField($value, $fieldlist[$fieldname]);
-            if (!$value) {
-                $value = date($timedate->get_date_time_format());
-            }
-            $fieldlist[$fieldname]['name'] = $aow_field;
-            $fieldlist[$fieldname]['value'] = $value;
-        } else {
-            if (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'date')) {
-                $value = $focus->convertField($value, $fieldlist[$fieldname]);
-                $fieldlist[$fieldname]['name'] = $aow_field;
-                if (empty($value)) {
-                    $value = str_replace("%", "", date($date_format));
-                }
-                $fieldlist[$fieldname]['value'] = $value;
-            } else {
-                $fieldlist[$fieldname]['value'] = $value;
-                $fieldlist[$fieldname]['name'] = $aow_field;
-            }
+    } elseif (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')) {
+        $value = $focus->convertField($value, $fieldlist[$fieldname]);
+        if (!$value) {
+            $value = date($timedate->get_date_time_format());
         }
+        $fieldlist[$fieldname]['name'] = $aow_field;
+        $fieldlist[$fieldname]['value'] = $value;
+    } elseif (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'date')) {
+        $value = $focus->convertField($value, $fieldlist[$fieldname]);
+        $fieldlist[$fieldname]['name'] = $aow_field;
+        if (empty($value)) {
+            $value = str_replace("%", "", date($date_format));
+        }
+        $fieldlist[$fieldname]['value'] = $value;
+    } else {
+        $fieldlist[$fieldname]['value'] = $value;
+        $fieldlist[$fieldname]['name'] = $aow_field;
     }
 
     if ($fieldlist[$fieldname]['type'] == 'currency' && $view != 'EditView') {
@@ -327,26 +323,26 @@ function saveField($field, $id, $module, $value)
     if (is_object($bean) && $bean->id != "") {
         if ($bean->field_defs[$field]['type'] == "multienum") {
             $bean->$field = encodeMultienumValue($value);
-        } else {
-            if ($bean->field_defs[$field]['type'] == "relate" || $bean->field_defs[$field]['type'] == 'parent') {
-                $save_field = $bean->field_defs[$field]['id_name'];
-                $bean->$save_field = $value;
-                if ($bean->field_defs[$field]['type'] == 'parent') {
-                    $bean->parent_type = $_REQUEST['parent_type'];
-                    $bean->fill_in_additional_parent_fields(); // get up to date parent info as need it to display name
-                }
-            } else {
-                if ($bean->field_defs[$field]['type'] == "currency") {
-                    if (stripos($field, 'usdollar')) {
-                        $newfield = str_replace("_usdollar", "", $field);
-                        $bean->$newfield = $value;
-                    } else {
-                        $bean->$field = $value;
-                    }
-                } else {
-                    $bean->$field = $value;
-                }
+        } elseif ($bean->field_defs[$field]['type'] == "relate" || $bean->field_defs[$field]['type'] == 'parent') {
+            $save_field = $bean->field_defs[$field]['id_name'];
+            $bean->$save_field = $value;
+            if ($bean->field_defs[$field]['type'] == 'parent') {
+                $bean->parent_type = $_REQUEST['parent_type'];
+                $bean->fill_in_additional_parent_fields(); // get up to date parent info as need it to display name
             }
+        } elseif ($bean->field_defs[$field]['type'] == "currency") {
+            if (stripos($field, 'usdollar')) {
+                $newfield = str_replace("_usdollar", "", $field);
+                $bean->$newfield = $value;
+            } else {
+                $bean->$field = $value;
+            }
+        } elseif ($module === 'Leads' && $field === 'account_name') {
+            require_once('modules/Leads/LeadFormBase.php');
+            $bean->$field = $value;
+            $bean->account_id = LeadFormBase::handleLeadAccountName($bean);
+        } else {
+            $bean->$field = $value;
         }
 
         $check_notify = false;
@@ -374,9 +370,8 @@ function saveField($field, $id, $module, $value)
         }
         $bean->retrieve();
         return getDisplayValue($bean, $field);
-    } else {
-        return false;
     }
+    return false;
 }
 
 function getDisplayValue($bean, $field, $method = "save")
@@ -501,12 +496,10 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
         if ($vardef['ext2']) {
             $value .= getFieldValueFromModule($fieldName, $vardef['ext2'], $record);
+        } elseif (!empty($vardef['rname']) || $vardef['name'] == "related_doc_name") {
+            $value .= getFieldValueFromModule($fieldName, $vardef['module'], $record);
         } else {
-            if (!empty($vardef['rname']) || $vardef['name'] == "related_doc_name") {
-                $value .= getFieldValueFromModule($fieldName, $vardef['module'], $record);
-            } else {
-                $value .= $name;
-            }
+            $value .= $name;
         }
 
         if ($vardef['name'] != "assigned_user_name") {
@@ -518,7 +511,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             $value : 'http://' . $value);
         $value = '<a href=' . $link . ' target="_blank">' . $value . '</a>';
     }
-    
+
     if ($vardef['type'] == "currency") {
         if ($_REQUEST['view'] != "DetailView") {
             $value = currency_format_number($value);
@@ -562,7 +555,6 @@ function checkAccess($bean)
 {
     if ($bean->ACLAccess('EditView')) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }

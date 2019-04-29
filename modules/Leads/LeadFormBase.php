@@ -212,6 +212,45 @@ EOQ;
         return $the_form;
     }
 
+    /**
+     * Starting from a Lead bean, searches for an account_id to match the given account_name.
+     * This relationship is handled loosely, to allow for Leads to refer to non-existent accounts.
+     * Makes changes to the bean, but does not Save it. Will clear an existing account_id,
+     * if there isn't one (and only one) to match the account_name.
+     *
+     * Returns the new account_id, if one is assigned.
+     *
+     * @param $leadBean
+     * @return string
+     */
+    public static function handleLeadAccountName($leadBean)
+    {
+
+        if (isset($leadBean->account_name)) {
+            $account_query =
+                "SELECT id FROM accounts WHERE deleted != 1 AND name = '" .
+                $leadBean->db->quote(trim($leadBean->account_name)) .
+                "'";
+            $account_results = $leadBean->db->query($account_query);
+            $row = $leadBean->db->fetchByAssoc($account_results);
+
+            if (!isset($leadBean->account_id) || $leadBean->account_id === '') {
+                // If id is empty, and we can find one, and only one, matching account, we fill it
+                if ($account_results->num_rows === 1) {
+                    $leadBean->account_id = $row['id'];
+                }
+            } else {
+                if (isset($leadBean->fetched_row['account_name']) &&
+                    strcmp($leadBean->account_name, $leadBean->fetched_row['account_name']) !== 0) {
+                    // if account_name is being changed in this edit, update the id whether it was present before or not,
+                    // or bank it if there were zero (or more than one) account_name matches
+                    $leadBean->account_id = (($account_results->num_rows === 1) ? $row['id'] : '');
+                }
+            }
+        }
+
+        return $leadBean->account_id;
+    }
 
     public function handleSave($prefix, $redirect=true, $useRequired=false, $do_save=true, $exist_lead=null)
     {
@@ -329,6 +368,8 @@ EOQ;
         if (!isset($_POST[$prefix.'do_not_call'])) {
             $focus->do_not_call = 0;
         }
+
+        $this->handleLeadAccountName($focus);
 
         if ($do_save) {
             if (!empty($GLOBALS['check_notify'])) {

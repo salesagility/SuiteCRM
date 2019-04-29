@@ -34,7 +34,7 @@ class Attributes extends BaseOption
 
                 foreach ($values as $attribute => $value) {
                     $invalidProperty =
-                        !property_exists($bean, $attribute) &&
+                        empty($bean->field_defs[$attribute]) &&
                         !array_key_exists($attribute, $bean->field_defs) &&
                         !array_key_exists($attribute, $bean->field_name_map);
                     if ($invalidProperty) {
