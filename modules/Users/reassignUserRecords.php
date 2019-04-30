@@ -254,10 +254,10 @@ else if(!isset($_GET['execute'])){
 
 	global $current_user;
 	// Set the from and to user names so that we can display them in the results
-	$fromusername = $_POST['fromuser'];
-	$tousername = $_POST['touser'];
+    $fromUserNameQuoted = $this->db->quote($_POST['fromuser']);
+	$toUserNameQuoted = $this->db->quote($_POST['touser']);
 
-	$query = "select user_name, id from users where id in ('{$_POST['fromuser']}', '{$_POST['touser']}')";
+    $query = "select user_name, id from users where id in ('$fromUserNameQuoted', '$toUserNameQuoted')";
 	$res = DBManagerFactory::getInstance()->query($query, true);
 	while($row = DBManagerFactory::getInstance()->fetchByAssoc($res)){
 		if($row['id'] == $_POST['fromuser'])

@@ -54,28 +54,29 @@ $viewdefs[$module_name]['DetailView'] = array(
         ),
     ),
     'panels' => array(
-        array('name', array('name' => 'amount', 'label' => '{$MOD.LBL_AMOUNT} ({$CURRENCY})'),),
-        //'{$MOD.LBL_AMOUNT} ({$CURRENCY})'),),
-        array('date_closed', 'sales_stage'),
-        array($_object_name . '_type', 'next_step'),
-        array(
-            'lead_source',
+        'default' => array(
+            array('name', array('name' => 'amount', 'label' => '{$MOD.LBL_AMOUNT} ({$CURRENCY})'),),
+            array('date_closed', 'sales_stage'),
+            array($_object_name . '_type', 'next_step'),
             array(
-                'name' => 'date_entered',
-                'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}'
+                'lead_source',
+                array(
+                    'name' => 'date_entered',
+                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}'
+                ),
             ),
-        ),
-        array(
-            'probability'
-        ),
-        array(
-            'assigned_user_name',
             array(
-                'name' => 'date_modified',
-                'label' => 'LBL_DATE_MODIFIED',
-                'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}'
-            )
-        ),
-        array(array('name' => 'description', 'nl2br' => true)),
+                'probability'
+            ),
+            array(
+                'assigned_user_name',
+                array(
+                    'name' => 'date_modified',
+                    'label' => 'LBL_DATE_MODIFIED',
+                    'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}'
+                )
+            ),
+            array(array('name' => 'description', 'nl2br' => true)),
+        )
     )
 );

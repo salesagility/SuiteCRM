@@ -131,14 +131,14 @@ class SugarWebServiceUtilv4_1 extends SugarWebServiceUtilv4
                 $params['where'] = $optional_where;
             }
 
+            if (!empty($order_by)) {
+                $params['order_by'] = $order_by;
+            }
+
             $related_beans = $bean->$link_field_name->getBeans($params);
             //Create a list of field/value rows based on $link_module_fields
 			$list = array();
             $filterFields = array();
-            if (!empty($order_by) && !empty($related_beans))
-            {
-                $related_beans = order_beans($related_beans, $order_by);
-            }
             foreach($related_beans as $id => $bean)
             {
                 if (empty($filterFields) && !empty($link_module_fields))
