@@ -2,7 +2,7 @@
 
 use Faker\Generator;
 
-class AOS_Prouduct_CategoriesCest
+class AOS_Product_CategoriesCest
 {
     /**
      * @var Generator $fakeData

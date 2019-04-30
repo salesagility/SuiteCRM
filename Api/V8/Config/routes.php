@@ -5,6 +5,7 @@ use Api\V8\Factory\ParamsMiddlewareFactory;
 use Api\V8\Param\CreateModuleParams;
 use Api\V8\Param\CreateRelationshipParams;
 use Api\V8\Param\DeleteModuleParams;
+use Api\V8\Param\DeleteRelationshipParams;
 use Api\V8\Param\GetModuleParams;
 use Api\V8\Param\GetModulesParams;
 use Api\V8\Param\GetRelationshipParams;
@@ -111,7 +112,7 @@ $app->group('', function () use ($app) {
                 '/module/{moduleName}/{id}/relationships/{linkFieldName}/{relatedBeanId}',
                 'Api\V8\Controller\RelationshipController:deleteRelationship'
             )
-            ->add($paramsMiddlewareFactory->bind(DeleteRelationShipParams::class));
+            ->add($paramsMiddlewareFactory->bind(DeleteRelationshipParams::class));
         
         // add custom routes
         $app->group('/custom', function () use ($app) {

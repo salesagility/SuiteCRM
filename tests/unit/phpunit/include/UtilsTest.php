@@ -80,4 +80,17 @@ class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
         // clean up
         unset($app_strings['TEST_NONEXISTS_LABEL']);
     }
+
+    public function testencodeMultienumValue()
+    {
+        $this->assertEquals('', encodeMultienumValue(array()));
+        $this->assertEquals('^foo^', encodeMultienumValue(array('foo')));
+        $this->assertEquals('^foo^,^bar^', encodeMultienumValue(array('foo', 'bar')));
+    }
+
+    public function testunencodeMultienumValue()
+    {
+        $this->assertEquals(array('foo'), unencodeMultienum('^foo^'));
+        $this->assertEquals(array('foo', 'bar'), unencodeMultienum('^foo^,^bar^'));
+    }
 }
