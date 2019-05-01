@@ -71,7 +71,7 @@ class ListViewSearchService
     /**
      * @var BeanManager
      */
-    private $beanManager;
+    protected $beanManager;
 
     /**
      * @param BeanManager $beanManager

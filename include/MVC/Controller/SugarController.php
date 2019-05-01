@@ -397,8 +397,13 @@ class SugarController
      */
     protected function handleException(Exception $e)
     {
-        $GLOBALS['log']->fatal("Exception handling in " . __FILE__ . ':' . __LINE__);
-        $this->showException($e);
+        
+        global $sugar_config;
+        if (SugarApplication::getOutputFormat($sugar_config, $_REQUEST) != 'json') {
+            $GLOBALS['log']->fatal("Exception handling in " . __FILE__ . ':' . __LINE__);
+            $this->showException($e);
+        } 
+        
         $logicHook = new LogicHook();
 
         if (isset($this->bean)) {
@@ -408,7 +413,6 @@ class SugarController
             $logicHook->call_custom_logic('', "handle_exception", $e);
         }
         
-        global $sugar_config;
         if (SugarApplication::getOutputFormat($sugar_config, $_REQUEST) == 'json') {
             throw new Exception("A sugar exception catched: '" . $e->getMessage() . "'\nsee more in previous..", -388, $e);
         } 

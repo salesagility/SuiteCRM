@@ -703,7 +703,9 @@ class AOW_WorkFlow extends Basic
                             && isset($condition_bean->rel_fields_before_value[$condition->field])) {
                             $value = $condition_bean->rel_fields_before_value[$condition->field];
                         } else {
-                            $value = $condition_bean->fetched_row[$condition->field];
+                            $value = from_html($condition_bean->fetched_row[$condition->field]);
+                            // Bug - on delete bean action CRM load bean in a different way and bean can contain html characters
+                            $field = from_html($field);
                         }
                         if (in_array($data['type'], $dateFields)) {
                             $value = strtotime($value);

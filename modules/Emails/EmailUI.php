@@ -435,18 +435,20 @@ eoq;
         global $current_user;
 
         if ($current_user->getEmailClient() == 'sugar') {
-            return '<a class="email-link"'
-                . ' onclick="$(document).openComposeViewModal(this);"'
-                . ' data-module="' . $module_name
-                . '" data-record-id="' . $record_id
-                . '" data-module-name="' . $name
-                . '" data-email-address="' . $addr  . '">'
-                . $text . '</a>';
+            $html =<<<HTML
+            <a class="email-link" href="mailto:{$addr}"
+                    onclick="$(document).openComposeViewModal(this);"
+                    data-module="{$module_name}" data-record-id="{$record_id}"
+                    data-module-name="{$name}" data-email-address="{$addr}"
+                >{$text}</a>
+HTML;
+        } else {
+            $html =<<<HTML
+                <a class="email-link" href="mailto:{$addr}">{$text}</a>
+HTML;
         }
 
-        return '<a class="email-link"'
-            . ' href="mailto:' .  $addr . '">'
-            . $text . '</a>';
+        return $html;
     }
 
     /**

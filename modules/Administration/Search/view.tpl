@@ -47,7 +47,7 @@
     <table class="edit view" width="100%" cellspacing="1" cellpadding="0" border="0">
         <tr>
             <th scope="row" colspan="4" align="left">
-                <h4>Search Interface</h4>
+                <h4>{sugar_translate label="LBL_SEARCH_INTERFACE"}</h4>
             </th>
         </tr>
 
