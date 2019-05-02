@@ -129,6 +129,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testload_report_beans()
     {
         $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
         
         
         
@@ -145,6 +146,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        $state->popGlobals();
     }
 
     public function testgetReportFields()

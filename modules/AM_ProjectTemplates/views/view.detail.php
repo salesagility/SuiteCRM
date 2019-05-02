@@ -22,7 +22,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @author Andrew Mclaughlan <andrew@mclaughlan.info>
  */
 
-require_once('include/MVC/View/views/view.detail.php');
 
 class AM_ProjectTemplatesViewDetail extends ViewDetail
 {

@@ -1477,18 +1477,22 @@ class EmailMan extends SugarBean
 
         $mailer->replace('sugarurl', $sugar_config['site_url']);
 
+        $timedate = TimeDate::getInstance();
         if (!$mailer->send()) {
+            $emailAddress->confirm_opt_in_fail_date = $timedate->nowDb();
             $ret = false;
             $log->fatal(
                 'Confirm Opt In Email sending failed. Mailer Error Info: '
                 . $mailer->ErrorInfo
             );
         } else {
+            $emailAddress->confirm_opt_in_sent_date = $timedate->nowDb();
             $log->debug(
                 'Confirm Opt In Email sent: '
                 . $emailAddress->email_address
             );
         }
+        $emailAddress->save();
 
         return $ret;
     }
