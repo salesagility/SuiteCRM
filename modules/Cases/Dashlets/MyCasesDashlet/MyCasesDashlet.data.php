@@ -44,19 +44,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $current_user;
 
-$dashletData['MyCasesDashlet']['searchFields'] = array(
-    'date_entered' => array('default' => ''),
-    'priority' => array('default' => ''),
-    'status' => array('default' => array('Assigned', 'New', 'Pending Input')),
+$dashletData['MyCasesDashlet']['searchFields'] = [
+    'date_entered' => ['default' => ''],
+    'priority' => ['default' => ''],
+    'status' => ['default' => ['Open_Assigned', 'Open_New', 'Open_Pending Input']],
 
-    'name' => array('default' => ''),
-    'type' => array('default' => ''),
-    'assigned_user_id' => array(
+    'name' => ['default' => ''],
+    'type' => ['default' => ''],
+    'assigned_user_id' => [
         'type' => 'assigned_user_name',
         'label' => 'LBL_ASSIGNED_TO',
         'default' => $current_user->name
-    )
-);
+    ]
+];
 
 $dashletData['MyCasesDashlet']['columns'] = array(
     'case_number' => array(
