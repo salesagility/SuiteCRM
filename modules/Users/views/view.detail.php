@@ -202,7 +202,7 @@ class UsersViewDetail extends ViewDetail
             global $current_user;
             if ($this->bean->id == $current_user->id) {
                 $_COOKIE[$current_user->id . '_activePage'] = '0';
-                setcookie($current_user->id . '_activePage', '0', 3000, null, null, false, true);
+                setcookie($current_user->id . '_activePage', '0', 3000, null, null, isSSL(), true);
             }
         }
 

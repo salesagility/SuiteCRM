@@ -92,7 +92,6 @@ class Basic extends SugarBean
     {
         $this->validateSugarEmailAddressField($emailField);
         $configurator = new Configurator();
-        $sugar_config = $configurator->config;
 
         /** @var EmailAddress $emailAddressBean */
         $emailAddressBean = BeanFactory::getBean('EmailAddresses');
@@ -101,7 +100,7 @@ class Basic extends SugarBean
         $emailAddressId = $this->getEmailAddressId($emailField);
         $emailAddressBean->retrieve($emailAddressId);
         
-        if (!empty($emailAddressBean->id) && $sugar_config['email_enable_confirm_opt_in'] === SugarEmailAddress::COI_STAT_DISABLED) {
+        if (!empty($emailAddressBean->id) && $configurator->getConfirmOptInEnumValue() === SugarEmailAddress::COI_STAT_DISABLED) {
             $log = LoggerManager::getLogger();
             $log->warn('Confirm Opt In is not enabled.');
             $emailAddressBean->setConfirmedOptInState(SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN);

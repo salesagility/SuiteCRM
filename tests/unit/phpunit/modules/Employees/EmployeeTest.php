@@ -137,10 +137,11 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'SHOW_ON_EMPLOYEES' => '1',
             'ENCODED_NAME' => ' ',
             'EMAIL1' => '',
-            'EMAIL1_LINK' =>
-                '<a class="email-link"'
-                . ' onclick="$(document).openComposeViewModal(this);'
-                . '" data-module="Employees" data-record-id="" data-module-name=" " data-email-address=""></a>',
+            'EMAIL1_LINK' => '            <a class="email-link" href="mailto:"
+                    onclick="$(document).openComposeViewModal(this);"
+                    data-module="Employees" data-record-id=""
+                    data-module-name=" " data-email-address=""
+                ></a>',
             'MESSENGER_TYPE' => '',
             'REPORTS_TO_NAME' => null,
         );

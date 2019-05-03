@@ -25,7 +25,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $current_user = new User();
     }
 
-    protected function tearDown()
+    public function tearDown()
     {
         $this->state->popTable('tracker');
         $this->state->popTable('tasks');

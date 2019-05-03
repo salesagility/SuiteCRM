@@ -11,6 +11,21 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $current_user = new User();
     }
 
+    public function testaddDomainToRelativeImagesSrc()
+    {
+        global $sugar_config;
+
+        $template = new EmailTemplate();
+        $html = '<img style="font-family:Arial, Helvetica, sans-serif;font-size:14px;line-height:22.4px;color:#444444;padding:0px;margin:0px;" src="public/c1270a2d-a083-495e-7c61-5c8a9046ec0d.png" alt="c1270a2d-a083-495e-7c61-5c8a9046ec0d.png" width="267" height="200">';
+        $template->body_html = to_html($html);
+        $sugar_config['site_url'] = 'https://foobar.com';
+
+        $template->addDomainToRelativeImagesSrc();
+
+        $result = from_html($template->body_html);
+        $this->assertContains('src="https://foobar.com/public/c1270a2d-a083-495e-7c61-5c8a9046ec0d.png" alt="c1270a2d-a083-495e-7c61-5c8a9046ec0d.png"', $result);
+    }
+
     public function testEmailTemplate()
     {
 

@@ -256,4 +256,15 @@ class LoggerManager
     {
         return self::$_instance->_level;
     }
+
+    /**
+     * Sets the level Mapping.
+     *
+     * @param string $level name of logger level to set it to
+     * @param string $value value of this level
+     */
+    public static function setLevelMapping($level, $value)
+    {
+        self::$_levelMapping[$level] = $value;
+    }
 }

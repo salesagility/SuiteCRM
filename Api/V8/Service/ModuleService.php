@@ -14,28 +14,29 @@ use Api\V8\Param\GetModuleParams;
 use Api\V8\Param\GetModulesParams;
 use Api\V8\Param\UpdateModuleParams;
 use Slim\Http\Request;
+use SuiteCRM\Exception\AccessDeniedException;
 
 class ModuleService
 {
     /**
      * @var BeanManager
      */
-    private $beanManager;
+    protected $beanManager;
 
     /**
      * @var AttributeObjectHelper
      */
-    private $attributeHelper;
+    protected $attributeHelper;
 
     /**
      * @var RelationshipObjectHelper
      */
-    private $relationshipHelper;
+    protected $relationshipHelper;
 
     /**
      * @var PaginationObjectHelper
      */
-    private $paginationHelper;
+    protected $paginationHelper;
 
     /**
      * @param BeanManager $beanManager
@@ -57,9 +58,9 @@ class ModuleService
 
     /**
      * @param GetModuleParams $params
-     * @param string $path
-     *
+     * @param $path
      * @return DocumentResponse
+     * @throws AccessDeniedException
      */
     public function getRecord(GetModuleParams $params, $path)
     {
@@ -68,6 +69,10 @@ class ModuleService
             $params->getModuleName(),
             $params->getId()
         );
+
+        if (!$bean->ACLAccess('view')) {
+            throw new AccessDeniedException();
+        }
 
         $dataResponse = $this->getDataResponse($bean, $fields, $path);
 
@@ -80,8 +85,8 @@ class ModuleService
     /**
      * @param GetModulesParams $params
      * @param Request $request
-     *
      * @return DocumentResponse
+     * @throws AccessDeniedException
      */
     public function getRecords(GetModulesParams $params, Request $request)
     {
@@ -93,6 +98,15 @@ class ModuleService
 
         $size = $params->getPage()->getSize();
         $number = $params->getPage()->getNumber();
+
+        $bean = $this->beanManager->newBeanSafe(
+            $params->getModuleName()
+        );
+
+        if (!$bean->ACLAccess('view')) {
+            throw new AccessDeniedException();
+        }
+
         // negative numbers are validated in params
         $offset = $number !== 0 ? ($number - 1) * $size : $number;
         $realRowCount = $this->beanManager->countRecords($module, $where);
@@ -140,6 +154,7 @@ class ModuleService
      *
      * @return DocumentResponse
      * @throws \InvalidArgumentException When bean is already exist.
+     * @throws AccessDeniedException
      */
     public function createRecord(CreateModuleParams $params, Request $request)
     {
@@ -156,16 +171,25 @@ class ModuleService
         }
 
         $bean = $this->beanManager->newBeanSafe($module);
+
+        if (!$bean->ACLAccess('save')) {
+            throw new AccessDeniedException();
+        }
+
         if ($id !== null) {
             $bean->id = $id;
             $bean->new_with_id = true;
         }
+
+        $this->setRecordUpdateParams($bean, $attributes);
 
         foreach ($attributes as $property => $value) {
             $bean->$property = $value;
         }
 
         $bean->save();
+        
+        $bean->retrieve($bean->id);
 
         $dataResponse = $this->getDataResponse(
             $bean,
@@ -182,8 +206,8 @@ class ModuleService
     /**
      * @param UpdateModuleParams $params
      * @param Request $request
-     *
      * @return DocumentResponse
+     * @throws AccessDeniedException
      */
     public function updateRecord(UpdateModuleParams $params, Request $request)
     {
@@ -192,11 +216,20 @@ class ModuleService
         $attributes = $params->getData()->getAttributes();
         $bean = $this->beanManager->getBeanSafe($module, $id);
 
+        if (!$bean->ACLAccess('save')) {
+            throw new AccessDeniedException();
+        }
+
+        $this->setRecordUpdateParams($bean, $attributes);
+
         foreach ($attributes as $property => $value) {
             $bean->$property = $value;
         }
 
         $bean->save();
+        
+        $bean->retrieve($bean->id);
+
 
         $dataResponse = $this->getDataResponse(
             $bean,
@@ -211,9 +244,21 @@ class ModuleService
     }
 
     /**
+     * @param \SugarBean $bean
+     * @param array $attributes
+     */
+    protected function setRecordUpdateParams(\SugarBean $bean, array $attributes)
+    {
+        $bean->set_created_by = !(isset($attributes['created_by']) || isset($attributes['created_by_name']));
+        $bean->update_modified_by = !(isset($attributes['modified_user_id']) || isset($attributes['modified_by_name']));
+        $bean->update_date_entered = isset($attributes['date_entered']);
+        $bean->update_date_modified = !isset($attributes['date_modified']);
+    }
+
+    /**
      * @param DeleteModuleParams $params
-     *
      * @return DocumentResponse
+     * @throws AccessDeniedException
      */
     public function deleteRecord(DeleteModuleParams $params)
     {
@@ -221,6 +266,11 @@ class ModuleService
             $params->getModuleName(),
             $params->getId()
         );
+
+        if (!$bean->ACLAccess('delete')) {
+            throw new AccessDeniedException();
+        }
+
         $bean->mark_deleted($bean->id);
 
         $response = new DocumentResponse();
