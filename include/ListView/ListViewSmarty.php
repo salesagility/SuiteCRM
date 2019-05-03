@@ -133,7 +133,7 @@ class ListViewSmarty extends ListViewDisplay
 
         $totalWidth = 0;
         foreach ((array)$this->displayColumns as $name => $params) {
-            $totalWidth += (isset($params['width']))? (int)$params['width'] : 0;
+            $totalWidth += isset($params['width'])? (int)$params['width'] : 0;
         }
         $adjustment = $totalWidth / 100;
 
