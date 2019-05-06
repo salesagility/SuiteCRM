@@ -483,7 +483,7 @@ if ($upgradeType != constant('DCE_INSTANCE')) {
 
     require_once("{$cwd}/sugar_version.php"); // provides $sugar_version & $sugar_flavor
 
-    $GLOBALS['log']	= LoggerManager::getLogger('SugarCRM');
+    $GLOBALS['log']	= LoggerManager::getLogger();
     $patchName		= basename($argv[1]);
     $zip_from_dir	= substr($patchName, 0, strlen($patchName) - 4); // patch folder name (minus ".zip")
     $path			= $argv[2]; // custom log file, if blank will use ./upgradeWizard.log

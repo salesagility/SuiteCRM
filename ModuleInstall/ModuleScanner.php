@@ -622,7 +622,7 @@ class ModuleScanner
             } else {
                 $token['_msi'] = token_name($token[0]);
                 switch ($token[0]) {
-                    case T_WHITESPACE: continue;
+                    case T_WHITESPACE: break;
                     case T_EVAL:
                         if (in_array('eval', $this->blackList) && !in_array('eval', $this->blackListExempt)) {
                             $issues[]= translate('ML_INVALID_FUNCTION') . ' eval()';

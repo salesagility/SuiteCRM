@@ -452,8 +452,6 @@ $upgradeType = verifyArguments($argv, $usage_dce, $usage_regular);
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	PREP LOCALLY USED PASSED-IN VARS & CONSTANTS
-//$GLOBALS['log']	= LoggerManager::getLogger('SugarCRM');
-//require_once('/var/www/html/eddy/sugarnode/SugarTemplateUtilities.php');
 
 $path			= $argv[2]; // custom log file, if blank will use ./upgradeWizard.log
 //$db				= &DBManagerFactory::getInstance();  //<---------
@@ -516,7 +514,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
     /////retrieve admin user
     $configOptions = $sugar_config['dbconfig'];
 
-    $GLOBALS['log']	= LoggerManager::getLogger('SugarCRM');
+    $GLOBALS['log']	= LoggerManager::getLogger();
     $db				= &DBManagerFactory::getInstance();
     ///////////////////////////////////////////////////////////////////////////////
     ////	MAKE SURE PATCH IS COMPATIBLE

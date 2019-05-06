@@ -38,7 +38,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * "Powered by SugarCRM".
  */
 
-require_once('include/MVC/View/views/view.detail.php');
 
 class AccountsViewDetail extends ViewDetail
 {

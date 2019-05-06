@@ -80,7 +80,11 @@ class SugarControllerTest extends StateCheckerPHPUnitTestCaseAbstract
         $state = new StateSaver();
         $state->pushTable('tracker');
         $state->pushGlobals();
-        
+        $state->pushPHPConfigOptions();
+
+        // suppress output during the test
+        $this->setOutputCallback(function() {});
+
         // test
         
         
@@ -111,7 +115,8 @@ class SugarControllerTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(true);
         
         // clean up
-        
+
+        $state->popPHPConfigOptions();
         $state->popGlobals();
         $state->popTable('tracker');
     }
@@ -183,6 +188,8 @@ class SugarControllerTest extends StateCheckerPHPUnitTestCaseAbstract
         $state = new StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
+        $state->pushTable('users');
+        $state->pushTable('user_preferences');
         
         if (isset($_SESSION)) {
             $session = $_SESSION;
@@ -222,6 +229,8 @@ class SugarControllerTest extends StateCheckerPHPUnitTestCaseAbstract
         $query = "UPDATE users SET date_modified = '$testUserDateModified' WHERE id = '$testUserId' LIMIT 1";
         DBManagerFactory::getInstance()->query($query);
         
+        $state->popTable('user_preferences');
+        $state->popTable('users');
         $state->popTable('tracker');
         $state->popTable('aod_index');
     }

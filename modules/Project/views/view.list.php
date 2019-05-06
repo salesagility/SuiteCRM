@@ -50,7 +50,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-require_once('include/MVC/View/views/view.list.php');
 require_once('modules/Project/ProjectListViewSmarty.php');
 
 class ProjectViewList extends ViewList

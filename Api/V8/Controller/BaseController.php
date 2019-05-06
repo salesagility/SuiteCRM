@@ -1,7 +1,6 @@
 <?php
 namespace Api\V8\Controller;
 
-use Api\V8\JsonApi\Response\DocumentResponse;
 use Api\V8\JsonApi\Response\ErrorResponse;
 use Slim\Http\Response as HttpResponse;
 

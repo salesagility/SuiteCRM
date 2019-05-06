@@ -41,7 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once('include/MVC/View/views/view.list.php');
 require_once('modules/Meetings/MeetingsListViewSmarty.php');
 
 class MeetingsViewList extends ViewList

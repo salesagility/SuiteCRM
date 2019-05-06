@@ -323,27 +323,30 @@ $server->register(
 /**
  * Retrieve a list of beans.  This is the primary method for getting list of SugarBeans from Sugar using the SOAP API.
  *
- * @param String $session -- Session ID returned by a previous call to login.
- * @param String $module_name -- The name of the module to return records from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
- * @param String $query -- SQL where clause without the word 'where'
- * @param String $order_by -- SQL order by clause without the phrase 'order by'
- * @param String $offset -- The record offset to start from.
- * @param Array $select_fields -- A list of the fields to be included in the results. This optional parameter allows for only needed fields to be retrieved.
- * @param String $max_results -- The maximum number of records to return.  The default is the sugar configuration value for 'list_max_entries_per_page'
- * @param Number $deleted -- false if deleted records should not be include, true if deleted records should be included.
- * @return Array 'result_count' -- The number of records returned
- *               'next_offset' -- The start of the next page (This will always be the previous offset plus the number of rows returned.  It does not indicate if there is additional data unless you calculate that the next_offset happens to be closer than it should be.
- *               'field_list' -- The vardef information on the selected fields.
- *                      Array -- 'field'=>  'name' -- the name of the field
- *                                          'type' -- the data type of the field
- *                                          'label' -- the translation key for the label of the field
- *                                          'required' -- Is the field required?
- *                                          'options' -- Possible values for a drop down field
- *               'entry_list' -- The records that were retrieved
- *               'error' -- The SOAP error, if any
+ * @param string $session -- Session ID returned by a previous call to login.
+ * @param string $module_name -- The name of the module to return records from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
+ * @param string $query -- SQL where clause without the word 'where'
+ * @param string $order_by -- SQL order by clause without the phrase 'order by'
+ * @param integer $offset -- The record offset to start from.
+ * @param array $select_fields -- A list of the fields to be included in the results. This optional parameter allows for only needed fields to be retrieved.
+ * @param integer $max_results -- The maximum number of records to return.  The default is the sugar configuration value for 'list_max_entries_per_page'
+ * @param bool $deleted -- false if deleted records should not be include, true if deleted records should be included.
+ * @return array 'result_count' -- integer - The number of records returned
+ *               'next_offset' -- integer - The start of the next page (This will always be the previous offset plus the number of rows returned.  It does not indicate if there is additional data unless you calculate that the next_offset happens to be closer than it should be.
+ *               'entry_list' -- Array - The records that were retrieved
+ *                 'relationship_list' -- Array - The records link field data. The example is if asked about accounts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
+ * @exception 'SoapFault' -- The SOAP error, if any
  */
-function get_entry_list($session, $module_name, $query, $order_by, $offset, $select_fields, $max_results, $deleted)
-{
+function get_entry_list(
+    $session = null,
+    $module_name = null,
+    $query = null,
+    $order_by = null,
+    $offset = null,
+    $select_fields = null,
+    $max_results = null,
+    $deleted = false
+) {
     global $beanList, $beanFiles, $current_user;
     $error = new SoapError();
     if (!validate_authenticated($session)) {
