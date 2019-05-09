@@ -107,3 +107,4 @@ branches:
     - /feature.*/
     - /fix.*/
     - /staging.*/
+
