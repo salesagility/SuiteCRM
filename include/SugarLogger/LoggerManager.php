@@ -240,7 +240,8 @@ class LoggerManager
 
     public static function setLogLevel($level)
     {
-        self::$_instance::$_level = $level;
+        $instance = self::$_instance;
+        $instance::$_level = $level;
     }
 
     public static function getLogLevel()
