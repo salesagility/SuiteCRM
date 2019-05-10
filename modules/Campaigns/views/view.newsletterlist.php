@@ -45,7 +45,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  */
 
-require_once('include/MVC/View/views/view.list.php');
 
 class ViewNewsLetterList extends ViewList
 {

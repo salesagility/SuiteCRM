@@ -6,47 +6,47 @@ class BeanListRequest
     /**
      * @var \SugarBean
      */
-    private $bean;
+    protected $bean;
 
     /**
      * @var string
      */
-    private $orderBy = '';
+    protected $orderBy = '';
 
     /**
      * @var string
      */
-    private $where = '';
+    protected $where = '';
 
     /**
      * @var integer
      */
-    private $offset = BeanManager::DEFAULT_OFFSET;
+    protected $offset = BeanManager::DEFAULT_OFFSET;
 
     /**
      * @var integer
      */
-    private $limit = -1;
+    protected $limit = -1;
 
     /**
      * @var integer
      */
-    private $max = BeanManager::DEFAULT_ALL_RECORDS;
+    protected $max = BeanManager::DEFAULT_ALL_RECORDS;
 
     /**
      * @var integer
      */
-    private $deleted = 0;
+    protected $deleted = 0;
 
     /**
      * @var boolean
      */
-    private $singleSelect = false;
+    protected $singleSelect = true;
 
     /**
      * @var array
      */
-    private $fields = [];
+    protected $fields = [];
 
     /**
      * @param \SugarBean $bean

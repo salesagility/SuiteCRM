@@ -30,6 +30,7 @@ return [
             Document::class => 'Documents',
             FieldsMetaData::class => 'DynamicFields',
             Email::class => 'Emails',
+            EmailAddress::class => 'EmailAddresses',
             EmailTemplate::class => 'EmailTemplates',
             Employee::class => 'Employees',
             UsersLastImport::class => 'Import',
