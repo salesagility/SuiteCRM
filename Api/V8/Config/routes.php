@@ -5,6 +5,7 @@ use Api\V8\Factory\ParamsMiddlewareFactory;
 use Api\V8\Param\CreateModuleParams;
 use Api\V8\Param\CreateRelationshipParams;
 use Api\V8\Param\DeleteModuleParams;
+use Api\V8\Param\GetFieldListParams;
 use Api\V8\Param\GetModuleParams;
 use Api\V8\Param\GetModulesParams;
 use Api\V8\Param\GetRelationshipParams;
@@ -45,6 +46,9 @@ $app->group('', function () use ($app) {
         $app->get('/current-user', 'Api\V8\Controller\UserController:getCurrentUser');
 
         $app->get('/meta/modules', 'Api\V8\Controller\MetaController:getModuleList');
+
+        $app->get('/meta/fields/{moduleName}', 'Api\V8\Controller\MetaController:getFieldList')
+            ->add($paramsMiddlewareFactory->bind(GetFieldListParams::class));
         
         $app
             ->get('/user-preferences/{id}', 'Api\V8\Controller\UserPreferencesController:getUserPreferences')

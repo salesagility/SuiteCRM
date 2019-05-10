@@ -45,6 +45,7 @@ use Api\V8\Helper\ModuleListProvider;
 use Api\V8\JsonApi\Response\AttributeResponse;
 use Api\V8\JsonApi\Response\DataResponse;
 use Api\V8\JsonApi\Response\DocumentResponse;
+use Api\V8\Param\GetFieldListParams;
 use Slim\Http\Request;
 
 /**
@@ -53,8 +54,6 @@ use Slim\Http\Request;
  */
 class MetaService
 {
-
-    
     /**
      * @var BeanManager
      */
@@ -64,6 +63,17 @@ class MetaService
      * @var ModuleListProvider
      */
     private $moduleListProvider;
+
+    private static $allowedVardefFields = [
+          'type',
+          'dbType',
+          'source',
+          'relationship',
+          'default',
+          'len',
+          'precision',
+          'comments',
+    ];
 
     /**
      * UserService constructor.
@@ -93,5 +103,52 @@ class MetaService
         $response = new DocumentResponse();
         $response->setData($dataResponse);
         return $response;
+    }
+
+    /**
+     *
+     * @param Request $request
+     * @return DocumentResponse
+     */
+    public function getFieldList(Request $request, GetFieldListParams $fieldListParams)
+    {
+        $fieldList = $this->buildFieldList($fieldListParams->getModule());
+
+        $dataResponse = new DataResponse('fields', '');
+        $attributeResponse = new AttributeResponse($fieldList);
+        $dataResponse->setAttributes($attributeResponse);
+
+        $response = new DocumentResponse();
+        $response->setData($dataResponse);
+        return $response;
+    }
+
+    /**
+     * @param string $module
+     * @return array
+     */
+    private function buildFieldList($module)
+    {
+        $bean = $this->beanManager->newBeanSafe($module);
+        $fieldList = [];
+        foreach ($bean->field_defs as $fieldName => $fieldDef) {
+            $fieldList[$fieldName] = $this->pruneVardef($fieldDef);
+        }
+        return $fieldList;
+    }
+
+    /**
+     * @param array $def
+     * @return array
+     */
+    private function pruneVardef($def)
+    {
+        $pruned = [];
+        foreach ($def as $var => $val) {
+            if (in_array($var, static::$allowedVardefFields, true)) {
+                $pruned[$var] = $val;
+            }
+        }
+        return $pruned;
     }
 }

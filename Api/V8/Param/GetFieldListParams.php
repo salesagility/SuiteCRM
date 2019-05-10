@@ -38,71 +38,36 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace Api\V8\Controller;
+namespace Api\V8\Param;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use Api\V8\Param\GetFieldListParams;
-use Api\V8\Service\MetaService;
-use Api\V8\Service\UserService;
-use Exception;
-use Slim\Http\Request;
-use Slim\Http\Response;
+use Api\V8\Param\Options as ParamOption;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * UserController
- *
- * @author gyula
+ * Class GetFieldListParams
+ * @package Api\V8\Param
  */
-class MetaController extends BaseController
+class GetFieldListParams extends BaseParam
 {
     
     /**
-     * @var UserService
+     * @return string
      */
-    private $metaService;
-    
-    /**
-     * @param MetaService $metaService
-     */
-    public function __construct(MetaService $metaService)
+    public function getModule()
     {
-        $this->metaService = $metaService;
-    }
-    
-    /**
-     *
-     * @param Request $request
-     * @param Response $response
-     * @param array $args
-     * @return Response
-     */
-    public function getModuleList(Request $request, Response $response, array $args)
-    {
-        try {
-            $jsonResponse = $this->metaService->getModuleList($request);
-            return $this->generateResponse($response, $jsonResponse, 200);
-        } catch (Exception $exception) {
-            return $this->generateErrorResponse($response, $exception, 400);
-        }
+        return $this->parameters['moduleName'];
     }
 
     /**
      *
-     * @param Request $request
-     * @param Response $response
-     * @param array $args
-     * @return Response
+     * @param OptionsResolver $resolver
      */
-    public function getFieldList(Request $request, Response $response, array $args, GetFieldListParams $fieldListParams)
+    protected function configureParameters(OptionsResolver $resolver)
     {
-        try {
-            $jsonResponse = $this->metaService->getFieldList($request, $fieldListParams);
-            return $this->generateResponse($response, $jsonResponse, 200);
-        } catch (Exception $exception) {
-            return $this->generateErrorResponse($response, $exception, 400);
-        }
+        $this->setOptions($resolver, [ParamOption\ModuleName::class]);
     }
 }
