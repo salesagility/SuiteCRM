@@ -43,6 +43,8 @@ $app->group('', function () use ($app) {
             ->add($paramsMiddlewareFactory->bind(ListViewColumnsParams::class));
         
         $app->get('/current-user', 'Api\V8\Controller\UserController:getCurrentUser');
+
+        $app->get('/meta/modules', 'Api\V8\Controller\MetaController:getModuleList');
         
         $app
             ->get('/user-preferences/{id}', 'Api\V8\Controller\UserPreferencesController:getUserPreferences')
