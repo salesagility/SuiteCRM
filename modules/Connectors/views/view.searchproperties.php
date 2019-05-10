@@ -43,7 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-require_once('include/MVC/View/views/view.list.php');
 require_once('include/connectors/sources/SourceFactory.php');
 
 class ViewSearchProperties extends ViewList

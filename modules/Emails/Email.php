@@ -1957,7 +1957,7 @@ class Email extends Basic
         }
 
         $noteArray = array();
-        $q = "SELECT id FROM notes WHERE deleted = 0 AND parent_id = '" . $id . "'";
+        $q = "SELECT id FROM notes WHERE deleted = 0 AND parent_id = " . $this->db->quoted($id);
         $r = $this->db->query($q);
 
         while ($a = $this->db->fetchByAssoc($r)) {

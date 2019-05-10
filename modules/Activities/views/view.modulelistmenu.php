@@ -38,7 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once('include/MVC/View/views/view.modulelistmenu.php');
 
 class ActivitiesViewModulelistmenu extends ViewModulelistmenu
 {
