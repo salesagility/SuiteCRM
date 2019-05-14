@@ -36,7 +36,6 @@ coverage:
         - include/Smarty/*
         - include/reCaptcha/*
         - include/Pear/*
-        - include/pclzip/*
         - include/nusoap/*
         - include/HTTP_WebDAV_Server/*
         - include/HTMLPurifier/*
