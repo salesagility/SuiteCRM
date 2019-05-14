@@ -250,7 +250,7 @@ $subdirs = ['full', 'langpack', 'module', 'patch', 'theme', 'temp'];
 
 require_once('include/entryPoint.php');
 require_once('modules/UpgradeWizard/uw_utils.php');
-require_once('include/utils/zip_utils.php');
+require_once('include/utils/php_zip_utils.php');
 require_once('include/utils/sugar_file_utils.php');
 require_once('include/SugarObjects/SugarConfig.php');
 global $sugar_config;
