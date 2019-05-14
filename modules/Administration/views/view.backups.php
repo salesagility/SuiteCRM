@@ -77,7 +77,7 @@ class ViewBackups extends SugarView
      */
     public function display()
     {
-        require_once('include/utils/zip_utils.php');
+        require_once('include/utils/php_zip_utils.php');
 
         $form_action = "index.php?module=Administration&action=Backups";
         

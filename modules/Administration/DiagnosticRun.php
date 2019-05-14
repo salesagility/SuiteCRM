@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 require_once('include/utils/progress_bar_utils.php');
-require_once('include/utils/zip_utils.php');
+require_once('include/utils/php_zip_utils.php');
 
 global $current_user;
 

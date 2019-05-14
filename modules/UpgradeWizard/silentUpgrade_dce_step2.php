@@ -488,7 +488,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
     //load up entrypoint from original template
     require_once("{$argv[4]}/include/entryPoint.php");
 
-    require_once("{$newtemplate_path}/include/utils/zip_utils.php");
+    require_once("{$newtemplate_path}/include/utils/php_zip_utils.php");
     require_once("{$newtemplate_path}/modules/Administration/UpgradeHistory.php");
 
     // We need to run the silent upgrade as the admin user
