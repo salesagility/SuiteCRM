@@ -3362,7 +3362,6 @@ $md5_string_calculated = array (
   './include/utils/progress_bar_utils.php' => '9a2483371dc94dc741e650d4e223cf2d',
   './include/utils/security_utils.php' => '9ac679b4efd8255a746ccd55916a5978',
   './include/utils/sugar_file_utils.php' => 'bb65092c730cf7761f060d4e6a39d00b',
-  './include/utils/zip_utils.php' => '01c973b88a6ad3bc1caf28fd5a6e6eb5',
   './include/utils.php' => '4a7e3a3c95a9a13115a2e1b713bd3e83',
   './include/vCard.php' => '0b0a64b78d6d20755d6a3d4128aa8093',
   './include/ytree/ExtNode.php' => '4867a9ac00d669ccef96b3b090284634',
