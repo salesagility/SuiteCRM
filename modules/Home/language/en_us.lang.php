@@ -77,7 +77,7 @@ $mod_strings = array(
     'LBL_CLOSE_DASHLETS' => 'Close',
     'LBL_OPTIONS' => 'Options',
     // dashlet search fields
-    'LBL_TODAY' => 'Today',LBL_LOCATION
+    'LBL_TODAY' => 'Today',
     'LBL_YESTERDAY' => 'Yesterday',
     'LBL_TOMORROW' => 'Tomorrow',
     'LBL_NEXT_WEEK' => 'Next Week',
