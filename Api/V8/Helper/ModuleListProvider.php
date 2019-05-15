@@ -51,10 +51,65 @@ class ModuleListProvider
      */
     public function getModuleList()
     {
-        require_once 'include/modules.php';
+        global $current_user;
 
-        global $moduleList;
+        $modules = query_module_access_list($current_user);
+        \ACLController:: filterModuleList($modules, false);
 
-        return $moduleList;
+        $modules = $this->markInvisibleModulesReadOnly($modules);
+        $modules = $this->markACLAccess($modules);
+
+        return $modules;
+    }
+
+    /**
+     * @param $modules
+     * @return array
+     */
+    private function markInvisibleModulesReadOnly($modules)
+    {
+        global $modInvisList;
+
+        foreach ($modInvisList as $invis) {
+            $modules[$invis] = 'read_only';
+        }
+
+        return $modules;
+    }
+
+    /**
+     * @param $modules
+     * @return mixed
+     */
+    private function markACLAccess($modules)
+    {
+        global $current_user;
+
+        $actions = \ACLAction::getUserActions($current_user->id, true);
+        foreach ($actions as $key => $value) {
+            $this->setACL($value['module']['access']['aclaccess'], $key, $modules);
+        }
+
+        return $modules;
+    }
+
+    /**
+     * @param $level
+     * @param $key
+     * @param $modules
+     */
+    private function setACL($level, $key, &$modules)
+    {
+        global $current_user;
+
+        if (!is_admin($current_user) && $level === ACL_ALLOW_DISABLED) {
+            unset($modules[$key]);
+            return;
+        }
+        if ($level < ACL_ALLOW_ENABLED) {
+            $modules[$key] = 'read_only';
+            return;
+        }
+        $modules[$key] = '';
     }
 }
