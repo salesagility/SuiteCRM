@@ -35,7 +35,7 @@
     "symfony/options-resolver": "^3.4",
     "symfony/validator": "^3.4",
     "symfony/yaml": "^3.4",
-    "tinymce/tinymce": "^4.9"
+    "tinymce/tinymce": "^4.9",
     "phpmailer/phpmailer": "^6.0"
   },
   "require-dev": {
