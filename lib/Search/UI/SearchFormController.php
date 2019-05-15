@@ -74,4 +74,3 @@ class SearchFormController extends Controller
         parent::display();
     }
 }
-

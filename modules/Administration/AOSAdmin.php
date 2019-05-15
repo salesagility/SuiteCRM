@@ -48,7 +48,9 @@ global $app_list_strings;
 global $app_strings;
 global $theme;
 
-if (!is_admin($current_user)) sugar_die("Unauthorized access to administration.");
+if (!is_admin($current_user)) {
+    sugar_die("Unauthorized access to administration.");
+}
 
 require_once('modules/Configurator/Configurator.php');
 
@@ -67,7 +69,6 @@ $sugar_smarty = new Sugar_Smarty();
 $errors = array();
 
 if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
-
     foreach ($_POST as $key => $value) {
         if (strcmp("$value", 'true') == 0) {
             $value = true;

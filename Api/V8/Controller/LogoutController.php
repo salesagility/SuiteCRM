@@ -11,12 +11,12 @@ class LogoutController extends BaseController
     /**
      * @var LogoutService
      */
-    private $logoutService;
+    protected $logoutService;
 
     /**
      * @var ResourceServer
      */
-    private $resourceServer;
+    protected $resourceServer;
 
     /**
      * @param LogoutService $logoutService

@@ -364,7 +364,6 @@ class ElasticSearchIndexer extends AbstractIndexer
 
         $meta = $results[$this->index]['mappings'][$module]['_meta'];
         return $meta;
-
     }
 
     /** @return int */
@@ -565,5 +564,23 @@ class ElasticSearchIndexer extends AbstractIndexer
         }
 
         return $meta['last_index'];
+    }
+    
+    /**
+     *
+     * @param bool $differential
+     * @param int $searchdefs
+     */
+    public static function repairElasticsearchIndex($differential = true, $searchdefs = 0)
+    {
+        $indexer = new ElasticSearchIndexer();
+        if ( ! $indexer->isEnabled()) {
+            return 0 ;
+        }
+        $indexer->setDifferentialIndexing($differential);
+        if ($searchdefs) {
+            $indexer->setDocumentifier(new SearchDefsDocumentifier());
+        }
+        $indexer->index();
     }
 }

@@ -110,19 +110,21 @@ class SearchThrowableHandler
      */
     private function getFriendlyMessage()
     {
+        global $mod_strings;
+
         switch (get_class($this->throwable)) {
             case SearchUserFriendlyException::class:
                 return $this->throwable->getMessage();
             case SearchInvalidRequestException::class:
-                return 'An error has occurred while performing the search. Your query syntax might not be valid.';
+                return $mod_strings['LBL_ELASTIC_SEARCH_SEARCH_INVALID_REQUEST'];
             case SearchEngineNotFoundException::class:
-                return 'Unable to find the requested SearchEngine. Try performing the search again.';
+                return $mod_strings['LBL_ELASTIC_SEARCH_SEARCH_ENGINE_NOT_FOUND'];
             case NoNodesAvailableException::class:
-                return 'Failed to connect to the Elasticsearch server.';
+                return $mod_strings['LBL_ELASTIC_SEARCH_NO_NODES_AVAILABLE'];
             case SearchException::class:
-                return 'An error internal to the Search has occurred.';
+                return $mod_strings['LBL_ELASTIC_SEARCH_SEARCH'];
             default:
-                return 'An unknown error has occurred while performing the search.';
+                return $mod_strings['LBL_ELASTIC_SEARCH_DEFAULT'];
         }
     }
 
@@ -167,8 +169,10 @@ class SearchThrowableHandler
      */
     private function printFriendlyMessage()
     {
+        global $mod_strings;
+
         $message = $this->getFriendlyMessage();
-        $endMessage = 'Contact an administrator if the problem persists. More information available in the logs.';
+        $endMessage = $mod_strings['LBL_ELASTIC_SEARCH_EXCEPTION_END_MESSAGE'];
 
         echo '<h1>Error</h1>';
         echo "<p class='text-danger'>$message $endMessage</p>";

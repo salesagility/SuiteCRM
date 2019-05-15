@@ -47,8 +47,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/Studio/TabGroups/TabGroupHelper.php');
 TabGroupHelper::saveTabGroups($_POST);
 ob_clean();
-if(!empty($_POST['grouptab_lang'])){
-	header('Location: index.php?module=Studio&action=TabGroups&lang='.$_POST['grouptab_lang']);
-}else{
-	header('Location: index.php?module=Studio&action=TabGroups');	
+if (!empty($_POST['grouptab_lang'])) {
+    header('Location: index.php?module=Studio&action=TabGroups&lang='.$_POST['grouptab_lang']);
+} else {
+    header('Location: index.php?module=Studio&action=TabGroups');
 }

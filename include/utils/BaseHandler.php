@@ -40,7 +40,7 @@
 */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-   die('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
 class BaseHandler
@@ -141,7 +141,8 @@ class BaseHandler
      *
      * @return void
      */
-    protected function protectedExit() {
+    protected function protectedExit()
+    {
         exit;
     }
 

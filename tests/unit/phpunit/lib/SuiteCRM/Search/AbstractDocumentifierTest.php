@@ -109,9 +109,8 @@ class AbstractDocumentifierTest extends SearchTestAbstract
         $state->popTable('reminders_invitees');
     }
 
-    public function setUp()
+    protected function setUp()
     {
-
         $this->documentifier = new AbstractDocumentifierMock();
 
         return parent::setUp();

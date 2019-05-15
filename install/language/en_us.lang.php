@@ -229,6 +229,7 @@ $mod_strings = array(
     'LBL_LICENSE_CHKDB_HEADER' => 'Verifying DB Credentials.',
     'LBL_LICENSE_CHECK_PASSED' => 'System passed check for compatibility.',
     'LBL_CREATE_CACHE' => 'Preparing to Install...',
+    'LBL_CREATE_DEFAULT_ENC_KEY' => 'Creating default encryption key...',
     'LBL_LICENSE_REDIRECT' => 'Redirecting in ',
     'LBL_LICENSE_I_ACCEPT' => 'I Accept',
     'LBL_LICENSE_PRINTABLE' => ' Printable View ',
@@ -547,13 +548,13 @@ $contact_user_link_guid',
     'ERR_ADMIN_EMAIL' => 'Administrator Email Address is incorrect.',
     'ERR_SITE_URL' => 'Site URL is required.',
 
-	'STAT_CONFIGURATION' => 'Configuration relationships...',
-	'STAT_CREATE_DB' => 'Create database...',
+    'STAT_CONFIGURATION' => 'Configuration relationships...',
+    'STAT_CREATE_DB' => 'Create database...',
 
-	'STAT_CREATE_DEFAULT_SETTINGS' => 'Create default settings...',
-	'STAT_INSTALL_FINISH' => 'Install finish...',
-	'STAT_INSTALL_FINISH_LOGIN' => 'Installation process finished, <a href="%s">please log in...</a>',
-	'LBL_LICENCE_TOOLTIP' => 'Please accept license first',
+    'STAT_CREATE_DEFAULT_SETTINGS' => 'Create default settings...',
+    'STAT_INSTALL_FINISH' => 'Install finish...',
+    'STAT_INSTALL_FINISH_LOGIN' => 'Installation process finished, <a href="%s">please log in...</a>',
+    'LBL_LICENCE_TOOLTIP' => 'Please accept license first',
 
     'LBL_MORE_OPTIONS_TITLE' => 'More options',
     'LBL_START' => '',
@@ -570,4 +571,3 @@ $contact_user_link_guid',
     'LBL_DBCONFIG_B_MSG1_LABEL' => '', // this label dynamically needed in install/installConfig.php:293
     'LBL_DBCONFIG_B_MSG1' => 'The username and password of a database administrator who can create database tables and users and who can write to the database is necessary in order to set up the SuiteCRM database.'
 );
-

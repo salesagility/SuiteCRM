@@ -298,7 +298,7 @@ define(GESTURE_MOVE_START, {
  * @param cfg {Object} Optional. An object which specifies:
  * <dl>
  * <dt>standAlone (defaults to false)</dt>
- * <dd>true, if the subscriber should be notified even if a "gesturemovestart" has not occured on the same node.</dd>
+ * <dd>true, if the subscriber should be notified even if a "gesturemovestart" has not occurred on the same node.</dd>
  * <dt>root (defaults to document)</dt>
  * <dd>The node to which the internal DOM listeners should be attached.</dd>
  * <dt>preventDefault (defaults to false)</dt>
@@ -416,7 +416,7 @@ define(GESTURE_MOVE, {
  * @param cfg {Object} Optional. An object which specifies:
  * <dl>
  * <dt>standAlone (defaults to false)</dt>
- * <dd>true, if the subscriber should be notified even if a "gesturemovestart" or "gesturemove" has not occured on the same node.</dd>
+ * <dd>true, if the subscriber should be notified even if a "gesturemovestart" or "gesturemove" has not occurred on the same node.</dd>
  * <dt>root (defaults to document)</dt>
  * <dd>The node to which the internal DOM listeners should be attached.</dd>
  * <dt>preventDefault (defaults to false)</dt>

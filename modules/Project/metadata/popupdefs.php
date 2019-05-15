@@ -43,11 +43,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $popupMeta = array('moduleMain' => 'Project',
-						'varName' => 'PROJECT',
-						'orderBy' => 'name',
-						'whereClauses' => 
-							array('name' => 'project.name'),
-						'searchInputs' =>
-							array('name')
-						);
-
+                        'varName' => 'PROJECT',
+                        'orderBy' => 'name',
+                        'whereClauses' =>
+                            array('name' => 'project.name'),
+                        'searchInputs' =>
+                            array('name')
+                        );

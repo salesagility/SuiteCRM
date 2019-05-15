@@ -213,17 +213,18 @@ class SugarView
                 echo $this->_getModLanguageJS();
             }
         }
-
+        
         if ($this->_getOption('show_header')) {
             $this->displayHeader();
         } else {
             $this->renderJavascript();
         }
-
+        
         $this->_buildModuleList();
         $this->preDisplay();
         $this->displayErrors();
         $this->display();
+        
         if (!empty($this->module)) {
             $GLOBALS['logic_hook']->call_custom_logic($this->module, 'after_ui_frame');
         } else {
@@ -567,15 +568,15 @@ class SugarView
             );
             $ss->assign("CURRENT_USER_ID", $current_user->id);
 
-	    // get the last viewed records
-	    $favorites = BeanFactory::getBean('Favorites');
-	    $favorite_records = $favorites->getCurrentUserSidebarFavorites();
-	    $ss->assign("favoriteRecords", $favorite_records);
- 	    
-	    $tracker = BeanFactory::getBean('Trackers');
-	    $history = $tracker->get_recently_viewed($current_user->id);
-	    $ss->assign("recentRecords", $this->processRecentRecords($history));
-	}
+            // get the last viewed records
+            $favorites = BeanFactory::getBean('Favorites');
+            $favorite_records = $favorites->getCurrentUserSidebarFavorites();
+            $ss->assign("favoriteRecords", $favorite_records);
+        
+            $tracker = BeanFactory::getBean('Trackers');
+            $history = $tracker->get_recently_viewed($current_user->id);
+            $ss->assign("recentRecords", $this->processRecentRecords($history));
+        }
 
         $bakModStrings = $mod_strings;
         if (isset($_SESSION["authenticated_user_id"])) {
@@ -721,8 +722,10 @@ class SugarView
             }
 
             foreach ($groupTabs as $key => $tabGroup) {
-                if (count($topTabs) >= $max_tabs - 1 && $key !== $app_strings['LBL_TABGROUP_ALL'] && in_array($tabGroup['modules'][$moduleTab],
-                        $tabGroup['extra'])
+                if (count($topTabs) >= $max_tabs - 1 && $key !== $app_strings['LBL_TABGROUP_ALL'] && in_array(
+                    $tabGroup['modules'][$moduleTab],
+                        $tabGroup['extra']
+                )
                 ) {
                     unset($groupTabs[$key]['modules'][$moduleTab]);
                 }
@@ -1385,13 +1388,13 @@ EOHTML;
 
         $module_menu = array();
 
-        if (file_exists('modules/' . $module . '/Menu.php')) {
-            require('modules/' . $module . '/Menu.php');
+        if (file_exists(get_custom_file_if_exists('modules/' . $module . '/Menu.php'))) {
+            require(get_custom_file_if_exists('modules/' . $module . '/Menu.php'));
         }
         if (file_exists('custom/modules/' . $module . '/Ext/Menus/menu.ext.php')) {
             require('custom/modules/' . $module . '/Ext/Menus/menu.ext.php');
         }
-        if (!file_exists('modules/' . $module . '/Menu.php') &&
+        if (!file_exists(get_custom_file_if_exists('modules/' . $module . '/Menu.php')) &&
             !file_exists('custom/modules/' . $module . '/Ext/Menus/menu.ext.php') &&
             !empty($GLOBALS['mod_strings']['LNK_NEW_RECORD'])
         ) {
@@ -1995,7 +1998,7 @@ EOHTML;
     {
         if (!is_array($array)) {
             throw new InvalidArgumentException('Sub-parameter should be an array to merging. ' . gettype($array) . ' given.', self::ERR_NOT_SUB_ARRAY);
-        }        
+        }
         foreach ($array as $key => $value) {
             // Renumber integer keys as array_merge_recursive() does. Note that PHP
             // automatically converts array keys that are integer strings (e.g., '1')

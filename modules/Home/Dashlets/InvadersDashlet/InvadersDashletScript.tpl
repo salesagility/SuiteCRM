@@ -205,7 +205,7 @@ if(typeof InvadersGame == 'undefined') {
 	    		if (cx > -1 && cx < 5 && cy > -1 && cy < 4) {
 	    			var dAlien = document.getElementById("a" + cx + cy);
 	    			if (!(dAlien.style.backgroundImage == "none")) {
-	    			    //Collision occured
+	    			    //Collision occurred
 	    				dAlien.style.backgroundImage = "none";
 	    				InvadersGame.shotFired = false;
 	    				shot.style.display = "none";

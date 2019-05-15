@@ -92,7 +92,7 @@ Not ideal but it'll work since it's the only way to get that info without editin
 
 			<td align='center'>
 				<div align='center' id="{$ACTION_NAME}link" onclick="aclviewer.toggleDisplay('{$ACTION_NAME}')"><b>{$ACTION_LABEL}</b></div>
-				<div  style="display: none; text-align: center;" id="{$ACTION_NAME}">
+				<div  style="all: initial; display: none; text-align: center;" id="{$ACTION_NAME}">
 					<select name='act_guid{$ACTION_NAME}' id='act_guid{$ACTION_NAME}' onblur="cascadeAccessOption('{$ACTION_NAME}',this); aclviewer.toggleDisplay('{$ACTION_NAME}');" >
 					{html_options options=$ACTION.accessOptions selected=$ACTION.aclaccess }
 					</select>
@@ -147,8 +147,8 @@ Not ideal but it'll work since it's the only way to get that info without editin
 {*
 					<select name='act_guid{$ACTION.id}' id = 'act_guid{$ACTION.id}' onblur="document.getElementById('{$ACTION.id}link').innerHTML=this.options[this.selectedIndex].text; aclviewer.toggleDisplay('{$ACTION.id}');" >
 *}
- 					<select id='{$ACTION_NAME}' name='act_guid{$ACTION.id}' onblur="document.getElementById('{$ACTION.id}link').innerHTML=this.options[this.selectedIndex].text; aclviewer.toggleDisplay('{$ACTION.id}');" >
-{* END - SECURITY GROUPS *}
+                        <select class='{$ACTION_NAME}' style="all: initial" name='act_guid{$ACTION.id}' id = 'act_guid{$ACTION.id}' onblur="document.getElementById('{$ACTION.id}link').innerHTML=this.options[this.selectedIndex].text; aclviewer.toggleDisplay('{$ACTION.id}');" >
+ 					{* END - SECURITY GROUPS *}
 					{html_options options=$ACTION.accessOptions selected=$ACTION.aclaccess }
 					</select>
 					{/if}

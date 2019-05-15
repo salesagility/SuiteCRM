@@ -64,7 +64,7 @@ $GLOBALS['tabStructure'] = array(
             "Home",
             "Accounts",
             "Contacts",
-            "Leads",    
+            "Leads",
             "Campaigns",
             "Prospects",
             "ProspectLists",
@@ -103,6 +103,6 @@ $GLOBALS['tabStructure'] = array(
     ),
 );
 
-if(file_exists('custom/include/tabConfig.php')){
+if (file_exists('custom/include/tabConfig.php')) {
     require 'custom/include/tabConfig.php';
 }

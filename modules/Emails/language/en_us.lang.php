@@ -80,7 +80,7 @@ $mod_strings = array(
     'LBL_CONTACT_NAME' => 'Contact:',
     'LBL_CONTACTS_SUBPANEL_TITLE' => 'Contacts',
     'LBL_CREATED_BY' => 'Created by',
-    'LBL_DATE_SENT' => 'Date Sent:',
+    'LBL_DATE_SENT_RECEIVED' => 'Date Sent/Received:',
     'LBL_DATE' => 'Date Sent:',
     'LBL_DELETE_FROM_SERVER' => 'Delete message from server',
     'LBL_DESCRIPTION' => 'Description',
@@ -162,8 +162,8 @@ $mod_strings = array(
 
     'LBL_LIST_ASSIGNED' => 'Assigned',
     'LBL_LIST_CONTACT_NAME' => 'Contact Name',
-    'LBL_LIST_DATE_SENT' => 'Date Sent',
     'LBL_LIST_DATE' => 'Date Sent',
+    'LBL_LIST_DATE_SENT_RECEIVED' => 'Date Sent/Received',
     'LBL_LIST_FORM_DRAFTS_TITLE' => 'Draft',
     'LBL_LIST_FORM_SENT_TITLE' => 'Sent Emails',
     'LBL_LIST_FORM_TITLE' => 'Email List',
@@ -385,5 +385,28 @@ $mod_strings = array(
 
     'LBL_LIST_DATE_MODIFIED' => 'Last Modified',
     'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
+    
+    // Email Validation Error messages. Typicaly for Email Validation:
+    'ERR_FIELD_FROM_IS_NOT_SET' => 'From field is not set.',
+    'ERR_FIELD_FROM_IS_EMPTY' => 'From field is empty.',
+    'ERR_FIELD_FROM_IS_INVALID' => 'From field is invalid.',
+    'ERR_FIELD_FROM_ADDR_IS_NOT_SET' => 'From address is not set.',
+    'ERR_FIELD_FROM_ADDR_IS_EMPTY' => 'From address is empty.',
+    'ERR_FIELD_FROM_ADDR_IS_INVALID' => 'From address is invalid.',
+    'ERR_FIELD_FROMNAME_IS_NOT_SET' => 'From-name is not set.',
+    'ERR_FIELD_FROMNAME_IS_EMPTY' => 'From-name is empty.',
+    'ERR_FIELD_FROMNAME_IS_INVALID' => 'From-name is invalid.',
+    'ERR_FIELD_FROM_NAME_IS_NOT_SET' => 'From name is not set.',
+    'ERR_FIELD_FROM_NAME_IS_EMPTY' => 'From name is empty.',
+    'ERR_FIELD_FROM_NAME_IS_INVALID' => 'From name is invalid.',
+    'ERR_FIELD_FROM_ADDR_NAME_IS_NOT_SET' => 'From address and name pair is not set.',
+    'ERR_FIELD_FROM_ADDR_NAME_IS_EMPTY' => 'From address and name pair is empty.',
+    'ERR_FIELD_FROM_ADDR_NAME_IS_INVALID' => 'From address and name pair is invalid.',
+    'ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX' => 'From address and name pair format is incorrect, use "from@emailaddress.org <Name of Person>" format.',
+    'ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART' => 'Invalid name part of From address and name pair.',
+    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART' => 'Invalid email address part of From address and name pair.',
+    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM' => 'From address and name pair does not match to from name or email address.',
+    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR' => 'From address and name pair does not match to from address.',
+    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME' => 'From address and name pair does not match to from-name.',
+    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME' => 'From address and name pair does not match to from name.',
 );
-

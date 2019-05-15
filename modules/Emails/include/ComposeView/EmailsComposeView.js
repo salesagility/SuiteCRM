@@ -470,6 +470,7 @@
       var mb = messageBox();
       mb.hideHeader();
       mb.hideFooter();
+      document.activeElement.blur();
       mb.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
       mb.show();
       mb.on('ok', function () {

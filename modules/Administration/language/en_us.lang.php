@@ -968,8 +968,9 @@ $mod_strings = array(
     'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART_FAIL' => 'Failed to start partial index.',
 
     // SearchWrapper Settings
+    'LBL_SEARCH_INTERFACE' => 'Search Interface',
     'LBL_SEARCH_ENGINE' => 'Search Engine',
-    'LBL_SEARCH_ENGINE_HELP' => 'Configure the default search engine used by the search wrapper',
+    'LBL_SEARCH_ENGINE_HELP' => 'Configure the default search engine used by the search.',
     'LBL_SEARCH_ENGINE_TOOLTIP' => 'Select a search engine for the Global Search.',
 
     'LBL_SEARCH_MODULES' => 'Search Modules',

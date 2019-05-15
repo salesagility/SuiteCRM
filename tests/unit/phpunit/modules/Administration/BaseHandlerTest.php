@@ -41,16 +41,18 @@
 use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
 
 if (!defined('sugarEntry') || !sugarEntry) {
-   die('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
 class BaseHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
 {
-    public function setUp() {
+    protected function setUp()
+    {
         parent::setUp();
     }
 
-    public function testFirst() {
+    public function testFirst()
+    {
         $this->assertEquals(true, true);
     }
 }

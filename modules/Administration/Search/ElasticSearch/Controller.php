@@ -142,7 +142,6 @@ class Controller extends AbstractController
             $return['status'] = 'success';
             $return['ping'] = $time;
             $return['info'] = $info;
-
         } /** @noinspection PhpRedundantCatchClauseInspection */
         catch (BadRequest400Exception $exception) {
             $error = json_decode($exception->getMessage());
