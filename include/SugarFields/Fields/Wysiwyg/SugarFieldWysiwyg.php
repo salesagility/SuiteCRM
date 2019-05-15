@@ -82,7 +82,7 @@ class SugarFieldWysiwyg extends SugarFieldBase {
         $config['plugins']  = 'print code preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern ';
         $config['elements'] = "#{$form_name} "."#".$vardef['name'];
         $config['selector'] = "#{$form_name} "."#".$vardef['name'];
-        $config['content_css'] = 'include/javascript/mozaik/vendor/tinymce/tinymce/skins/lightgray/content.min.css';
+        $config['content_css'] = 'vendor/tinymce/tinymce/skins/lightgray/content.min.css';
         $config['toolbar1'] = 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat';
         $config['theme'] = 'modern';
 
