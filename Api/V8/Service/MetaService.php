@@ -150,6 +150,12 @@ class MetaService
                 $pruned[$var] = $val;
             }
         }
+        if (!isset($def['required'])) {
+            $pruned['required'] = false;
+        }
+        if (!isset($def['dbType'])) {
+            $pruned['dbType'] = $def['type'];
+        }
         return $pruned;
     }
 }
