@@ -73,6 +73,7 @@ class MetaService
           'len',
           'precision',
           'comments',
+          'required',
     ];
 
     /**
