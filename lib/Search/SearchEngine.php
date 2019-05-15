@@ -22,7 +22,7 @@ abstract class SearchEngine
      *
      * @return SearchResults
      */
-    public abstract function search(SearchQuery $query);
+    abstract public function search(SearchQuery $query);
 
     /**
      * Performs a search using the given query and shows a search view.

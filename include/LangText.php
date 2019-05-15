@@ -157,7 +157,7 @@ class LangText
 
         return $text;
     }
-    
+
     /**
      *
      * @global array $app_strings
@@ -179,10 +179,10 @@ class LangText
                 $text = $this->key;
             }
         }
-        
+
         return $text;
     }
-    
+
     /**
      *
      * @global array $app_strings
@@ -203,9 +203,15 @@ class LangText
                 $text = $this->resolveTextByGlobal($app_strings, $this->key);
                 break;
             case self::USING_ALL_STRINGS:
-                $text = $this->resolveTextByGlobal($mod_strings, $this->key,
-                    $this->resolveTextByGlobal($app_strings, $this->key,
-                        $this->resolveTextByGlobal($app_list_strings, $this->key)));
+                $text = $this->resolveTextByGlobal(
+                    $mod_strings,
+                    $this->key,
+                    $this->resolveTextByGlobal(
+                        $app_strings,
+                        $this->key,
+                        $this->resolveTextByGlobal($app_list_strings, $this->key)
+                    )
+                );
                 break;
             default:
                 ErrorMessage::drop('Unknown use case for translation: ' . $this->use);
@@ -213,9 +219,9 @@ class LangText
         }
         return $text;
     }
-    
+
     /**
-     * 
+     *
      * @param array $texts
      * @param string $key
      * @param string|null $default
@@ -255,7 +261,7 @@ class LangText
         }
         return $text;
     }
-    
+
     /**
      *
      * @param string|null $key
@@ -276,7 +282,7 @@ class LangText
             $this->use = $use;
         }
     }
-    
+
     /**
      *
      * @param string $module
@@ -286,16 +292,16 @@ class LangText
     protected function getModuleLang($module = null, $lang = null)
     {
         $moduleLang = null;
-        
+
         $moduleName = $module ? $module : $this->module;
-        
+
         if ($moduleName) {
             // retrieve translation for specified module
             $lang = $lang ? $lang : ($this->lang ? $this->lang : $GLOBALS['current_language']);
             include_once __DIR__ . '/SugarObjects/LanguageManager.php';
             $moduleLang = \LanguageManager::loadModuleLanguage($moduleName, $lang);
         }
-        
+
         return $moduleLang;
     }
 

@@ -33,6 +33,22 @@ return CustomLoader::mergeCustomArray([
             sprintf('file://%s/%s', $baseDir, ApiConfig::OAUTH2_PRIVATE_KEY),
             sprintf('file://%s/%s', $baseDir, ApiConfig::OAUTH2_PUBLIC_KEY)
         );
+
+        if (empty(ApiConfig::OAUTH2_ENCRYPTION_KEY)) {
+            $oldKey = "OAUTH2_ENCRYPTION_KEY = '" . ApiConfig::OAUTH2_ENCRYPTION_KEY;
+            $key = "OAUTH2_ENCRYPTION_KEY = '" . base64_encode(random_bytes(32));
+            $apiConfig = file_get_contents('Api/Core/Config/ApiConfig.php');
+
+            $configFileContents = str_replace(
+                $oldKey,
+                $key,
+                $apiConfig
+            );
+            file_put_contents(
+                'Api/Core/Config/ApiConfig.php', $configFileContents, LOCK_EX
+            );
+        }
+
         $server->setEncryptionKey(ApiConfig::OAUTH2_ENCRYPTION_KEY);
 
         // Client credentials grant

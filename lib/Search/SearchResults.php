@@ -118,6 +118,15 @@ class SearchResults
         foreach ($hits as $module => $beans) {
             foreach ((array)$beans as $bean) {
                 $obj = BeanFactory::getBean($module, $bean);
+                
+                // if a search found a bean but suitecrm does not, it could happens
+                // maybe the bean is deleted but elsasticsearch is not re-indexing yet.
+                // so at this point we trying to rebuild the index and try again to get bean:
+                if (!$obj) {
+                    ElasticSearch\ElasticSearchIndexer::repairElasticsearchIndex();
+                    $obj = BeanFactory::getBean($module, $bean);
+                }
+                
                 if (!$obj) {
                     throw new Exception('Error retrieveing bean: ' . $module . ' [' . $bean . ']');
                 }
@@ -141,22 +150,51 @@ class SearchResults
     {
         foreach ($fieldDefs as &$fieldDef) {
             if (isset($obj->{$fieldDef['name']})) {
-                if ($fieldDef['type'] == 'relate' && isset($fieldDef['link']) && isset($fieldDef['id_name']) && $fieldDef['id_name']) {
-                    $relField = $fieldDef['id_name'];
-                    if (isset($obj->{$fieldDef['link']})) {
-                        $link2 = $obj->{$fieldDef['link']};
-                        $link2Focus = $link2->getFocus();
-                        $relId = $link2Focus->$relField;
-                    } else {
-                        $relId = $obj->$relField;
-                    }
-                    $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $fieldDef['module'], $relId, 'DetailView');
-                } elseif ($fieldDef['name'] == 'name') {
-                    $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $obj->module_name, $obj->id, 'DetailView');
-                }
+                $obj = $this->updateObjLinks($obj, $fieldDef);
             }
         }
         return $obj;
+    }
+    
+    /**
+     * Update related links in a bean to show it on results page
+     *
+     * @param SugarBean $obj
+     * @param array $fieldDef
+     * @return SugarBean
+     */
+    protected function updateObjLinks(SugarBean $obj, &$fieldDef)
+    {
+        if ($fieldDef['type'] == 'relate' && isset($fieldDef['link']) && isset($fieldDef['id_name']) && $fieldDef['id_name']) {
+            $relId = $this->getRelatedId($obj, $fieldDef['id_name'], $fieldDef['link']);
+            $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $fieldDef['module'], $relId, 'DetailView');
+        } elseif ($fieldDef['name'] == 'name') {
+            $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $obj->module_name, $obj->id, 'DetailView');
+        }
+        return $obj;
+    }
+    
+    /**
+     * resolve related record ID
+     *
+     * @param string $idName
+     * @param string $link
+     * @return null|string
+     */
+    protected function getRelatedId(SugarBean $obj, $idName, $link)
+    {
+        $relId = $obj->id;
+        $relField = $idName;
+        if (isset($obj->$link)) {
+            $link2 = $obj->$link;
+            $link2Focus = $link2->getFocus();
+            $relId = $link2Focus->$relField;
+        } elseif (isset($obj->$relField)) {
+            $relId = $obj->$relField;
+        } else {
+            LoggerManager::getLogger()->warn('Unresolved related ID for field: '. $relField);
+        }
+        return $relId;
     }
     
     /**

@@ -92,16 +92,15 @@ class Basic extends SugarBean
     {
         $this->validateSugarEmailAddressField($emailField);
         $configurator = new Configurator();
-        $sugar_config = $configurator->config;
 
         /** @var EmailAddress $emailAddressBean */
         $emailAddressBean = BeanFactory::getBean('EmailAddresses');
         
-          // Fixed #5657: Only update state if email address is exist
+        // Fixed #5657: Only update state if email address is exist
         $emailAddressId = $this->getEmailAddressId($emailField);
         $emailAddressBean->retrieve($emailAddressId);
         
-        if (!empty($emailAddressBean->id) && $sugar_config['email_enable_confirm_opt_in'] === SugarEmailAddress::COI_STAT_DISABLED) {
+        if (!empty($emailAddressBean->id) && $configurator->getConfirmOptInEnumValue() === SugarEmailAddress::COI_STAT_DISABLED) {
             $log = LoggerManager::getLogger();
             $log->warn('Confirm Opt In is not enabled.');
             $emailAddressBean->setConfirmedOptInState(SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN);
@@ -123,13 +122,12 @@ class Basic extends SugarBean
         $emailAddress = $this->cleanUpEmailAddress($this->{$emailField});
 
         if (!$emailAddress) {
-
             $log->warn('Trying to get an empty email address.');
             return null;
         }
 
         // List view requires us to retrieve the mail so we can see the email addresses
-        if(!$this->retrieve()) {
+        if (!$this->retrieve()) {
             $log->fatal('A Basic can not retrive.');
             return null;
         }

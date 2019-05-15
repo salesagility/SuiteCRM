@@ -1,6 +1,7 @@
 <?php
 
 use SuiteCRM\Utility\SuiteValidator;
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -98,7 +99,6 @@ function refreshJobs()
  */
 function pollMonitoredInboxes()
 {
-
     $_bck_up = array('team_id' => $GLOBALS['current_user']->team_id, 'team_set_id' => $GLOBALS['current_user']->team_set_id);
     $GLOBALS['log']->info('----->Scheduler fired job of type pollMonitoredInboxes()');
     global $dictionary;
@@ -115,7 +115,7 @@ function pollMonitoredInboxes()
     while ($a = $ie->db->fetchByAssoc($r)) {
         $GLOBALS['log']->debug('In while loop of Inbound Emails');
         $ieX = new InboundEmail();
-        $ieX->retrieve($a['id']);;
+        $ieX->retrieve($a['id']);
         $mailboxes = $ieX->mailboxarray;
         foreach ($mailboxes as $mbox) {
             $ieX->mailbox = $mbox;
@@ -167,12 +167,12 @@ function pollMonitoredInboxes()
                         if ($ieX->isPop3Protocol()) {
                             $uid = $msgNoToUIDL[$msgNo];
                         } else {
-                            $uid = imap_uid($ieX->conn, $msgNo);
+                            $uid = $ieX->getImap()->getUid($msgNo);
                         } // else
                         if ($isGroupFolderExists) {
                             if ($ieX->returnImportedEmail($msgNo, $uid)) {
                                 // add to folder
-                                $sugarFolder->addBean($ieX->email);
+                                $sugarFolder->addBean($ieX);
                                 if ($ieX->isPop3Protocol()) {
                                     $messagesToDelete[] = $msgNo;
                                 } else {
@@ -220,7 +220,7 @@ function pollMonitoredInboxes()
                                  which has caseid in message*/
                                 $ieX->getMessagesInEmailCache($msgNo, $uid);
                                 $email = new Email();
-                                $header = imap_headerinfo($ieX->conn, $msgNo);
+                                $header = $ieX->getImap()->getHeaderInfo($msgNo);
                                 $email->name = $ieX->handleMimeHeaderDecode($header->subject);
                                 $email->from_addr = $ieX->convertImapToSugarEmailAddress($header->from);
                                 isValidEmailAddress($email->from_addr);
@@ -243,7 +243,6 @@ function pollMonitoredInboxes()
                     if ($ieX->isMailBoxTypeCreateCase() && $distributionMethod == 'roundRobin') {
                         $emailUI->setLastRobin($ieX, $lastRobin);
                     } // if
-
                 } // if
                 if ($isGroupFolderExists) {
                     $leaveMessagesOnMailServer = $ieX->get_stored_options("leaveMessagesOnMailServer", 0);
@@ -260,8 +259,8 @@ function pollMonitoredInboxes()
                 // cn: bug 9171 - continue while
             } // else
         } // foreach
-        imap_expunge($ieX->conn);
-        imap_close($ieX->conn, CL_EXPUNGE);
+        $ieX->getImap()->expunge();
+        $ieX->getImap()->close(CL_EXPUNGE);
     } // while;
     return true;
 }
@@ -272,7 +271,6 @@ function pollMonitoredInboxes()
 function runMassEmailCampaign()
 {
     if (!class_exists('LoggerManager')) {
-
     }
     $GLOBALS['log'] = LoggerManager::getLogger('emailmandelivery');
     $GLOBALS['log']->debug('Called:runMassEmailCampaign');
@@ -311,7 +309,9 @@ function pruneDatabase()
             // find tables with deleted=1
             $columns = $db->get_columns($table);
             // no deleted - won't delete
-            if (empty($columns['deleted'])) continue;
+            if (empty($columns['deleted'])) {
+                continue;
+            }
 
             $custom_columns = array();
             if (array_search($table . '_cstm', $tables)) {
@@ -527,8 +527,9 @@ function trimSugarFeeds()
  * + */
 function syncGoogleCalendar()
 {
+    global $sugar_config;
     require_once 'include/GoogleSync/GoogleSync.php';
-    $googleSync = new GoogleSync();
+    $googleSync = new GoogleSync($sugar_config);
     $googleSync->syncAllUsers();
 
     return true;
@@ -564,29 +565,37 @@ function pollMonitoredInboxesAOP()
 
     require_once('modules/Configurator/Configurator.php');
     $aopInboundEmail = new AOPInboundEmail();
+
     $sqlQueryResult = $aopInboundEmail->db->query(
-        'SELECT id, name FROM inbound_email WHERE is_personal = 0 AND deleted=0 AND status=\'Active\''.
+        'SELECT id, name FROM inbound_email WHERE is_personal = 0 AND deleted=0 AND status=\'Active\'' .
         ' AND mailbox_type != \'bounce\''
     );
+
     $GLOBALS['log']->debug('Just got Result from get all Inbounds of Inbound Emails');
 
     while ($inboundEmailRow = $aopInboundEmail->db->fetchByAssoc($sqlQueryResult)) {
         $GLOBALS['log']->debug('In while loop of Inbound Emails');
+
         $aopInboundEmailX = new AOPInboundEmail();
+
         if (!$aopInboundEmailX->retrieve($inboundEmailRow['id']) || !$aopInboundEmailX->id) {
             throw new Exception('Error retrieving AOP Inbound Email: ' . $inboundEmailRow['id']);
         }
+
         $mailboxes = $aopInboundEmailX->mailboxarray;
+
         foreach ($mailboxes as $mbox) {
             $aopInboundEmailX->mailbox = $mbox;
             $newMsgs = array();
             $msgNoToUIDL = array();
             $connectToMailServer = false;
+
             if ($aopInboundEmailX->isPop3Protocol()) {
                 $msgNoToUIDL = $aopInboundEmailX->getPop3NewMessagesToDownloadForCron();
                 // get all the keys which are msgnos;
                 $newMsgs = array_keys($msgNoToUIDL);
             }
+
             if ($aopInboundEmailX->connectMailserver() == 'true') {
                 $connectToMailServer = true;
             } // if
@@ -594,9 +603,11 @@ function pollMonitoredInboxesAOP()
             $GLOBALS['log']->debug('Trying to connect to mailserver for [ ' . $inboundEmailRow['name'] . ' ]');
             if ($connectToMailServer) {
                 $GLOBALS['log']->debug('Connected to mailserver');
+
                 if (!$aopInboundEmailX->isPop3Protocol()) {
                     $newMsgs = $aopInboundEmailX->getNewMessageIds();
                 }
+
                 if (is_array($newMsgs)) {
                     $current = 1;
                     $total = count($newMsgs);
@@ -619,13 +630,15 @@ function pollMonitoredInboxesAOP()
                         if ($aopInboundEmailX->isPop3Protocol()) {
                             $uid = $msgNoToUIDL[$msgNo];
                         } else {
-                            $uid = imap_uid($aopInboundEmailX->conn, $msgNo);
+                            $uid = $aopInboundEmailX->getImap()->getUid($msgNo);
                         } // else
                         if ($isGroupFolderExists) {
                             $emailId = $aopInboundEmailX->returnImportedEmail($msgNo, $uid, false, true, $isGroupFolderExists);
-                            if ($emailId) {
+
+                            if (!empty($emailId)) {
                                 // add to folder
-                                $sugarFolder->addBean($aopInboundEmailX->email);
+
+                                $sugarFolder->addBean($aopInboundEmailX);
                                 if ($aopInboundEmailX->isPop3Protocol()) {
                                     $messagesToDelete[] = $msgNo;
                                 } else {
@@ -635,8 +648,8 @@ function pollMonitoredInboxesAOP()
                                     $userId = $assignManager->getNextAssignedUser();
                                     $GLOBALS['log']->debug('userId [ ' . $userId . ' ]');
                                     $validatior = new SuiteValidator();
-                                    if ((!isset($aopInboundEmailX->email) || !$aopInboundEmailX->email || 
-                                        !isset($aopInboundEmailX->email->id) || !$aopInboundEmailX->email->id) && 
+                                    if ((!isset($aopInboundEmailX->email) || !$aopInboundEmailX->email ||
+                                        !isset($aopInboundEmailX->email->id) || !$aopInboundEmailX->email->id) &&
                                         $validatior->isValidId($emailId)
                                     ) {
                                         $aopInboundEmailX->email = new Email();
@@ -656,7 +669,7 @@ function pollMonitoredInboxesAOP()
 
                                 $aopInboundEmailX->getMessagesInEmailCache($msgNo, $uid);
                                 $email = new Email();
-                                $header = imap_headerinfo($aopInboundEmailX->conn, $msgNo);
+                                $header = $aopInboundEmailX->getImap()->getHeaderInfo($msgNo);
                                 $email->name = $aopInboundEmailX->handleMimeHeaderDecode($header->subject);
                                 $email->from_addr = $aopInboundEmailX->convertImapToSugarEmailAddress($header->from);
                                 isValidEmailAddress($email->from_addr);
@@ -676,9 +689,9 @@ function pollMonitoredInboxesAOP()
                         $current++;
                     } // foreach
                     // update Inbound Account with last robin
-
                 } // if
-                if ($isGroupFolderExists) {
+
+                if (!empty($isGroupFolderExists)) {
                     $leaveMessagesOnMailServer = $aopInboundEmailX->get_stored_options("leaveMessagesOnMailServer", 0);
                     if (!$leaveMessagesOnMailServer) {
                         if ($aopInboundEmailX->isPop3Protocol()) {
@@ -693,8 +706,8 @@ function pollMonitoredInboxesAOP()
                 // cn: bug 9171 - continue while
             } // else
         } // foreach
-        imap_expunge($aopInboundEmailX->conn);
-        imap_close($aopInboundEmailX->conn, CL_EXPUNGE);
+        $aopInboundEmailX->getImap()->expunge();
+        $aopInboundEmailX->getImap()->close(CL_EXPUNGE);
     } // while
     return true;
 }
@@ -710,7 +723,7 @@ function aodIndexUnindexed()
     while ($total > 0) {
         $total = performLuceneIndexing();
         $sanityCount++;
-        if($sanityCount > 100){
+        if ($sanityCount > 100) {
             return true;
         }
     }
@@ -747,7 +760,7 @@ function performLuceneIndexing()
         $c = 0;
         while ($row = $db->fetchByAssoc($res)) {
             $suc = $index->index($beanModule, $row['id']);
-            if($suc){
+            if ($suc) {
                 $c++;
                 $total++;
             }
@@ -756,7 +769,6 @@ function performLuceneIndexing()
             $index->commit();
             $index->optimise();
         }
-
     }
     $index->optimise();
     return $total;
@@ -789,7 +801,7 @@ function aorRunScheduledReports()
             $jq->submitJob($job);
         }
     }
-    return true;  
+    return true;
 }
 
 function processAOW_Workflow()

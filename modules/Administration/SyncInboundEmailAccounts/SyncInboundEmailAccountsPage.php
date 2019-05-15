@@ -71,8 +71,10 @@ class SyncInboundEmailAccountsPage
      * The class handle a sub-action called method, use $_REQUEST['method']
      *
      * @param array $includeData
+     * @param ImapHandlerInterface $imap
      */
-    public function __construct($includeData) {
+    public function __construct($includeData, ImapHandlerInterface $imap)
+    {
 
         // create object state
 
@@ -82,8 +84,7 @@ class SyncInboundEmailAccountsPage
 
         // handle the sub-action
 
-        new SyncInboundEmailAccountsSubActionHandler($this);
-
+        new SyncInboundEmailAccountsSubActionHandler($this, $imap);
     }
 
     /**
@@ -91,7 +92,8 @@ class SyncInboundEmailAccountsPage
      *
      * @param $ieList
      */
-    public function showForm($ieList) {
+    public function showForm($ieList)
+    {
         $this->tpl->assign('ieList', $ieList);
         $this->tpl->display('modules/Administration/templates/SyncInboundEmailAccounts.tpl');
     }
@@ -99,8 +101,8 @@ class SyncInboundEmailAccountsPage
     /**
      * @param string $output
      */
-    public function showOutput($output) {
+    public function showOutput($output)
+    {
         echo $output;
     }
-
 }

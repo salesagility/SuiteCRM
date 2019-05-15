@@ -651,7 +651,18 @@ CAL.dialog_save = function () {
         CAL.update_vcal();
 
         var newEvent = new Object();
-        $("#calendar" + res.user_id).fullCalendar("removeEvents", res['record']);
+        // If there's more than one calendar ("shared calendar separate" is active) use the one related to the event user
+        var thisCal = $('div[id^="calendar"].fc');
+        if (thisCal.length > 1) {
+            // Let's look for the user ID
+            var user_id = res.user_id;
+            if (user_id === ""){
+                user_id = res.users[0];
+            }
+            thisCal = $("#calendar" + user_id);
+        }
+
+        thisCal.fullCalendar("removeEvents", res['record']);
         newEvent.module = res['module_name'];
         newEvent.title = res['name'];
         newEvent.record = res['record'];
@@ -666,7 +677,7 @@ CAL.dialog_save = function () {
         if ((res['duration_hours'] % 24 === 0) && (res['time_start'] == "12:00am")) {
           newEvent.allDay = "true";
         }
-        $('#calendar' + res.user_id).fullCalendar('renderEvent', newEvent);
+        thisCal.fullCalendar('renderEvent', newEvent);
 
         if (res['repeat']) {
           $.each(res['repeat'], function (key, value) {
@@ -680,7 +691,7 @@ CAL.dialog_save = function () {
             if ((res['duration_hours'] % 24 === 0) && (res['time_start'] == "12:00am")) {
               newEvent.allDay = "true";
             }
-            $('#calendar' + res.user_id).fullCalendar('renderEvent', newEvent);
+            thisCal.fullCalendar('renderEvent', newEvent);
           });
         }
 

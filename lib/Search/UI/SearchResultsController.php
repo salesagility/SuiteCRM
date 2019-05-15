@@ -48,6 +48,7 @@ use BeanFactory;
 use Exception;
 use SugarBean;
 use SuiteCRM\LangText;
+use SuiteCRM\Search\Exceptions\SearchException;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Search\SearchResults;
 use SuiteCRM\Search\UI\MVC\Controller;
@@ -87,6 +88,35 @@ class SearchResultsController extends Controller
     public function display()
     {
         $headers = $this->getListViewHeaders();
+        
+        $total = $this->results->getTotal();
+        if ($total > 1) {
+            $size = $this->query->getSize();
+            if ($size) {
+                $from = $this->query->getFrom();
+                $string = $this->query->getSearchString();
+
+                $page = (int)($from / $size) + 1;
+                $prev = $page > 1;
+                $next = $total - $from > $size;
+                $last = (int)($total / $size) + ($total%$size === 0 ? 0 : 1);
+
+                $this->view->getTemplate()->assign('pagination', [
+                    'prev' => $prev,
+                    'next' => $next,
+                    'page' => $page,
+                    'last' => $last,
+                    'size' => $size,
+                    'from' => $from,
+                    'total' => $total,
+                    'string' => $string,
+                ]);
+            } else {
+                throw new SearchException('Search Size can not be Zero.', SearchException::ZERO_SIZE);
+            }
+        }
+        $this->view->getTemplate()->assign('total', $total);
+        
         $this->view->getTemplate()->assign('headers', $headers);
         $this->view->getTemplate()->assign('results', $this->results);
         $this->view->getTemplate()->assign('resultsAsBean', $this->results->getHitsAsBeans());
@@ -169,7 +199,13 @@ class SearchResultsController extends Controller
     {
         $label = isset($fieldValue['label']) ?
             LangText::get(
-                $fieldValue['label'], null, LangText::USING_ALL_STRINGS, true, true, $bean->module_name) :
+                $fieldValue['label'],
+                null,
+                LangText::USING_ALL_STRINGS,
+                true,
+                true,
+                $bean->module_name
+            ) :
             null;
         if (!$label) {
             $label = isset($fieldDef['vname']) ?

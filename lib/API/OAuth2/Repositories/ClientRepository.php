@@ -53,21 +53,20 @@ class ClientRepository implements ClientRepositoryInterface
      */
     public function getClientEntity($clientIdentifier, $grantType, $clientSecret = null, $mustValidateSecret = true)
     {
-
         $client = new \OAuth2Clients();
         $client->retrieve($clientIdentifier);
-        if(empty($client->id)) {
+        if (empty($client->id)) {
             return null;
         }
 
-        if($client->allowed_grant_type !== $grantType) {
+        if ($client->allowed_grant_type !== $grantType) {
             throw new GrantTypeNotAllowedForClient();
         }
 
         if (
             $mustValidateSecret === true
             && (bool)$client->is_confidential === true
-            && password_verify($clientSecret, $client->secret) === false
+            && hash('sha256', $clientSecret) !== $client->secret
         ) {
             return null;
         }

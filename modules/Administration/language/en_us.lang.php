@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -785,28 +785,28 @@ $mod_strings = array(
     'LBL_TOTAL_FILES' => 'Total files',
     'LBL_REMOVED_FILES' => 'Removed files',
 
-    'LBL_GOOGLE_SUITE_ADMIN_HEADER'               => 'Google Suite',
-    'LBL_GOOGLE_SUITE_ADMIN_DESC'                 => 'Manage your Google Suite Integration.',
+    'LBL_GOOGLE_SUITE_ADMIN_HEADER' => 'Google Suite',
+    'LBL_GOOGLE_SUITE_ADMIN_DESC' => 'Manage your Google Suite Integration.',
 
-    'LBL_JJWG_MAPS_ADMIN_CONFIG_TITLE'            => 'Google Maps Settings',
-    'LBL_JJWG_MAPS_ADMIN_CONFIG_DESC'             => 'Configuration settings to adjust your Google Maps',
-    'LBL_JJWG_MAPS_ADMIN_GEOCODED_COUNTS_TITLE'   => 'Geocoded Counts',
-    'LBL_JJWG_MAPS_ADMIN_GEOCODED_COUNTS_DESC'    => 'Shows the number of module objects geocoded, grouped by geocoding response',
-    'LBL_JJWG_MAPS_ADMIN_DONATE_TITLE'            => 'Donate to this Project',
-    'LBL_JJWG_MAPS_ADMIN_DONATE_DESC'             => 'Please consider donating to this project!',
+    'LBL_JJWG_MAPS_ADMIN_CONFIG_TITLE' => 'Google Maps Settings',
+    'LBL_JJWG_MAPS_ADMIN_CONFIG_DESC' => 'Configuration settings to adjust your Google Maps',
+    'LBL_JJWG_MAPS_ADMIN_GEOCODED_COUNTS_TITLE' => 'Geocoded Counts',
+    'LBL_JJWG_MAPS_ADMIN_GEOCODED_COUNTS_DESC' => 'Shows the number of module objects geocoded, grouped by geocoding response',
+    'LBL_JJWG_MAPS_ADMIN_DONATE_TITLE' => 'Donate to this Project',
+    'LBL_JJWG_MAPS_ADMIN_DONATE_DESC' => 'Please consider donating to this project!',
     'LBL_JJWG_MAPS_ADMIN_GEOCODE_ADDRESSES_TITLE' => 'Geocode Addresses',
-    'LBL_JJWG_MAPS_ADMIN_GEOCODE_ADDRESSES_DESC'  => 'Geocode your object addreses. This process may take a few minutes!',
-    'LBL_JJWG_MAPS_ADMIN_GEOCODING_TEST_TITLE'    => 'Geocoding Test',
-    'LBL_JJWG_MAPS_ADMIN_GEOCODING_TEST_DESC'     => 'Run a single geocoding test with detailed display results.',
-    'LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_TITLE'     => 'Address Cache',
-    'LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_DESC'      => 'Provides access to Address Cache information. This is only cache.',
+    'LBL_JJWG_MAPS_ADMIN_GEOCODE_ADDRESSES_DESC' => 'Geocode your object addreses. This process may take a few minutes!',
+    'LBL_JJWG_MAPS_ADMIN_GEOCODING_TEST_TITLE' => 'Geocoding Test',
+    'LBL_JJWG_MAPS_ADMIN_GEOCODING_TEST_DESC' => 'Run a single geocoding test with detailed display results.',
+    'LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_TITLE' => 'Address Cache',
+    'LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_DESC' => 'Provides access to Address Cache information. This is only cache.',
 
     // Google Calendar
-    'LBL_GOOGLE_CALENDAR_SETTINGS_TITLE'          => 'Google Calendar Settings',
-    'LBL_GOOGLE_CALENDAR_SETTINGS_DESC'           => 'Configuration settings to adjust your Google Calendar',
-    'LBL_GOOGLE_CALENDAR_SETTINGS_JSON'           => 'Upload Google API Credentials File',
-    'LBL_GOOGLE_CALENDAR_SETTINGS_JSON_HELP'      => 'Upload the JSON Credentials file you downloaded from Google Developers Console.',
-    'LBL_GOOGLE_CALENDAR_GET_API_KEY'             => 'Get API Credentials',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_TITLE' => 'Google Calendar Settings',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_DESC' => 'Configuration settings to adjust your Google Calendar',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_JSON' => 'Upload Google API Credentials File',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_JSON_HELP' => 'Upload the JSON Credentials file you downloaded from Google Developers Console.',
+    'LBL_GOOGLE_CALENDAR_GET_API_KEY' => 'Get API Credentials',
 
     'LBL_DISPLAY_SIDEBAR' => 'Display Sidebar',
     'LBL_COLOUR_ADMIN_PAGEHEADER' => 'Page header colour',
@@ -968,8 +968,9 @@ $mod_strings = array(
     'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART_FAIL' => 'Failed to start partial index.',
 
     // SearchWrapper Settings
+    'LBL_SEARCH_INTERFACE' => 'Search Interface',
     'LBL_SEARCH_ENGINE' => 'Search Engine',
-    'LBL_SEARCH_ENGINE_HELP' => 'Configure the default search engine used by the search wrapper',
+    'LBL_SEARCH_ENGINE_HELP' => 'Configure the default search engine used by the search.',
     'LBL_SEARCH_ENGINE_TOOLTIP' => 'Select a search engine for the Global Search.',
 
     'LBL_SEARCH_MODULES' => 'Search Modules',

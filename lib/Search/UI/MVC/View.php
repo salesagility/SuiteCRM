@@ -79,7 +79,6 @@ abstract class View
      */
     public function preDisplay()
     {
-
     }
 
     /**

@@ -36,12 +36,62 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *}
 <h2 class="moduleTitle">{$APP.LBL_SEARCH_REAULTS_TITLE}</h2>
+{if $total}{$APP.LBL_SEARCH_TOTAL}{$total}{/if}
 {if isset($error)}
     <p class="error">{$APP.ERR_SEARCH_INVALID_QUERY}</p>
 {else}
+    
+    {if $pagination}
+        <ul class="nav nav-tabs">
+            <li class="tab-inline-pagination">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tbody>
+                        <tr>
+                            <td nowrap class="paginationWrapper">
+                                <span class="pagination">
+                                    <button type="button" class="button btn-pagination" title="{$APP.LBL_SEARCH_PREV}"{if !$pagination.prev}disabled="true"{else}onclick="pagination.onClick('prev');"{/if}>
+                                        <span class="suitepicon suitepicon-action-left"> </span><span class="pagination-label">{$APP.LBL_SEARCH_PREV}</span>
+                                    </button>
+                                    &nbsp;&nbsp;
+                                    <span class="pagination-range-label">{$APP.LBL_SEARCH_PAGE}{$pagination.page}{$APP.LBL_SEARCH_OF}{$pagination.last}</span>
+                                    &nbsp;&nbsp;
+                                    <button type="button" class="button btn-pagination" title="{$APP.LBL_SEARCH_NEXT}"{if !$pagination.next}disabled="true"{else}onclick="pagination.onClick('next');"{/if}>
+                                        <span class="pagination-label">{$APP.LBL_SEARCH_NEXT}</span><span class="suitepicon suitepicon-action-right"> </span>
+                                    </button>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </li>
+        </ul>
+        <script>
+            {literal}
+            var pagination = {
+                onClick: function(dir) {
+                    var from = {/literal}{$pagination.from}{literal};
+                    var size = {/literal}{$pagination.size}{literal};
+                    var string = "{/literal}{$pagination.string}{literal}";
+                    if (dir === 'prev') {
+                        from -= size;
+                    } else if (dir === 'next') {
+                        from += size;
+                    } else {
+                        throw 'Invalid direction';
+                    }
+                    // keep search form values
+                    $('input[name="search-query-from"]').val(from);
+                    $('select[name="search-query-size"]').val(size);
+                    $('input[name="search-query-string"').val(string);
+                    $('#search-wrapper-form').submit();
+                }
+            };
+            {/literal}
+        </script>
+    {/if}
 
     {foreach from=$resultsAsBean item=beans key=module}
-    <h3>{$module} ({php} echo count($this->get_template_vars('resultsAsBean')[$this->get_template_vars('module')]);{/php})</h3>
+    <h3>{$module}</h3>
     <table class="list view">
         <thead>
             <tr>

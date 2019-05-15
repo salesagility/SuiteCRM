@@ -9,7 +9,7 @@ class Opportunities extends \AcceptanceTester
      */
     public function gotoOpportunities()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Opportunities');
     }
 

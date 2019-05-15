@@ -25,7 +25,7 @@ class CompanyModuleCest
      */
     public function _before(AcceptanceTester $I)
     {
-        if(!$this->fakeData) {
+        if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
             $this->fakeData->addProvider(new Faker\Provider\en_US\Address($this->fakeData));
             $this->fakeData->addProvider(new Faker\Provider\en_US\PhoneNumber($this->fakeData));
@@ -76,7 +76,7 @@ class CompanyModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
@@ -85,7 +85,7 @@ class CompanyModuleCest
      */
     public function testScenarioViewCompanyTestModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
@@ -105,7 +105,7 @@ class CompanyModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\EditView $editView
      * @param \Step\Acceptance\DetailView $detailView
@@ -116,7 +116,7 @@ class CompanyModuleCest
      */
     public function testScenarioCreateRecord(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\EditView $editView,
         \Step\Acceptance\DetailView $detailView,
@@ -124,7 +124,7 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Create Company Test Module Record');
 
-        if($this->lastView !== 'ListView') {
+        if ($this->lastView !== 'ListView') {
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -165,7 +165,7 @@ class CompanyModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Helper\WebDriverHelper $webDriverHelper
@@ -174,14 +174,14 @@ class CompanyModuleCest
      */
     public function testScenarioViewRecordFromListView(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Select Record from list view');
 
-        if($this->lastView !== 'ListView') {
+        if ($this->lastView !== 'ListView') {
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -207,12 +207,11 @@ class CompanyModuleCest
 
         $detailView->waitForDetailViewVisible();
         $this->lastView = 'DetailView';
-
     }
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
@@ -222,7 +221,7 @@ class CompanyModuleCest
      */
     public function testScenarioEditRecordFromDetailView(
         \AcceptanceTester$I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\EditView $editView,
@@ -230,7 +229,7 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Edit Company Test Module Record from detail view');
 
-        if($this->lastView !== 'DetailView') {
+        if ($this->lastView !== 'DetailView') {
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -264,7 +263,7 @@ class CompanyModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
@@ -274,7 +273,7 @@ class CompanyModuleCest
      */
     public function testScenarioDuplicateRecordFromDetailView(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\EditView $editView,
@@ -282,7 +281,7 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Duplicate Company Test Module Record from detail view');
 
-        if($this->lastView !== 'DetailView') {
+        if ($this->lastView !== 'DetailView') {
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -325,7 +324,7 @@ class CompanyModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Helper\WebDriverHelper $webDriverHelper
@@ -334,14 +333,14 @@ class CompanyModuleCest
      */
     public function testScenarioDeleteRecordFromDetailView(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Delete Company Test Module Record from detail view');
 
-        if($this->lastView !== 'ListView') {
+        if ($this->lastView !== 'ListView') {
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );

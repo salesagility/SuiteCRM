@@ -1191,14 +1191,16 @@ function return_module_language($language, $module, $refresh = false)
     // cn: bug 6048 - merge en_us with requested language
     if ($language != $sugar_config['default_language']) {
         $loaded_mod_strings = sugarLangArrayMerge(
-                LanguageManager::loadModuleLanguage($module, $sugar_config['default_language'], $refresh), $loaded_mod_strings
+                LanguageManager::loadModuleLanguage($module, $sugar_config['default_language'], $refresh),
+            $loaded_mod_strings
         );
     }
 
     // Load in en_us strings by default
     if ($language != 'en_us' && $sugar_config['default_language'] != 'en_us') {
         $loaded_mod_strings = sugarLangArrayMerge(
-                LanguageManager::loadModuleLanguage($module, 'en_us', $refresh), $loaded_mod_strings
+                LanguageManager::loadModuleLanguage($module, 'en_us', $refresh),
+            $loaded_mod_strings
         );
     }
 
@@ -2092,7 +2094,9 @@ function clean_xss($str, $cleanImg = true)
     $matches = array_merge($matches, xss_check_pattern($javascript_regex, $str));
 
     if ($cleanImg) {
-        $matches = array_merge($matches, xss_check_pattern($imgsrc_regex, $str)
+        $matches = array_merge(
+            $matches,
+            xss_check_pattern($imgsrc_regex, $str)
         );
     }
 
@@ -2392,7 +2396,7 @@ function securexss($value)
 
         return $new;
     }
-    static $xss_cleanup = array('&quot;' => '&#38;', '"' => '&quot;', "'" => '&#039;', '<' => '&lt;', '>' => '&gt;');
+    static $xss_cleanup = ['&quot;' => '&#38;', '"' => '&quot;', "'" => '&#039;', '<' => '&lt;', '>' => '&gt;', '`' => '&#96;'];
     $value = preg_replace(array('/javascript:/i', '/\0/'), array('java script:', ''), $value);
     $value = preg_replace('/javascript:/i', 'java script:', $value);
 
@@ -2459,8 +2463,6 @@ function clear_register_value($category, $name)
 // this function cleans id's when being imported
 function convert_id($string)
 {
-
-
     $stateSaver = new SuiteCRM\StateSaver();
     $stateSaver->pushErrorLevel();
 
@@ -3096,7 +3098,7 @@ function _ppd($mixed)
 function _ppl($mixed, $die = false, $displayStackTrace = false, $loglevel = 'fatal')
 {
     if (!isset($GLOBALS['log']) || empty($GLOBALS['log'])) {
-        $GLOBALS['log'] = LoggerManager:: getLogger('SugarCRM');
+        $GLOBALS['log'] = LoggerManager:: getLogger();
     }
 
     $mix = print_r($mixed, true); // send print_r() output to $mix
@@ -3208,7 +3210,8 @@ function check_php_version($sys_php_version = '')
         return 0;
     }
 
-    // Everything else is fair gamereturn 1;
+    // Everything else is fair game
+    return 1;
 }
 
 /**
@@ -3509,6 +3512,7 @@ function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext
 //            return; //depricated we have lots of these ignore them
         case E_USER_NOTICE:
             $type = 'User notice';
+            // no break
         case E_NOTICE:
             $type = 'Notice';
             $halt_script = false;
@@ -3517,10 +3521,13 @@ function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext
 
         case E_USER_WARNING:
             $type = 'User warning';
+            // no break
         case E_COMPILE_WARNING:
             $type = 'Compile warning';
+            // no break
         case E_CORE_WARNING:
             $type = 'Core warning';
+            // no break
         case E_WARNING:
             $type = 'Warning';
             $halt_script = false;
@@ -3528,10 +3535,13 @@ function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext
 
         case E_USER_ERROR:
             $type = 'User error';
+            // no break
         case E_COMPILE_ERROR:
             $type = 'Compile error';
+            // no break
         case E_CORE_ERROR:
             $type = 'Core error';
+            // no break
         case E_ERROR:
             $type = 'Error';
             $halt_script = true;
@@ -3610,8 +3620,10 @@ function return_bytes($val)
     switch ($last) {
         case 'g':
             $val *= 1024;
+            // no break
         case 'm':
             $val *= 1024;
+            // no break
         case 'k':
             $val *= 1024;
     }
@@ -3940,7 +3952,7 @@ function getPhpInfo($level = -1)
  *
  * @return $result a formatted string
  */
-function string_format($format, $args)
+function string_format($format, $args, $escape = true)
 {
     $result = $format;
 
@@ -3957,8 +3969,21 @@ function string_format($format, $args)
     }
     /* End of fix */
 
+    if ($escape) {
+        $db = DBManagerFactory::getInstance();
+    }
     for ($i = 0; $i < count($args); ++$i) {
-        $result = str_replace('{' . $i . '}', $args[$i], $result);
+        if (strpos($args[$i], ',') !== false) {
+            $values = explode(',', $args[$i]);
+            if ($escape) {
+                foreach ($values as &$value) {
+                    $value = $db->quote($value);
+                }
+            }
+            $args[$i] = implode("','", $values);
+        }
+
+        $result = str_replace('{'.$i.'}', "'" . $args[$i] . "'", $result);
     }
 
     return $result;
@@ -4648,7 +4673,8 @@ function ajaxInit()
  * @return string
  */
 function getAbsolutePath(
-$path, $currentServer = false
+$path,
+    $currentServer = false
 ) {
     $path = trim($path);
 
@@ -5549,7 +5575,8 @@ function isValidId($id)
     return $result;
 }
 
-function isValidEmailAddress($email, $message = 'Invalid email address given', $orEmpty = true, $logInvalid = 'error') {
+function isValidEmailAddress($email, $message = 'Invalid email address given', $orEmpty = true, $logInvalid = 'error')
+{
     if ($orEmpty && !$email) {
         return true;
     }

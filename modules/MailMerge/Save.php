@@ -51,7 +51,7 @@ $document_id = $_POST['document_id'];
 $selObjs = urldecode($_POST['selected_objects_def']);
 
 $item_ids = array();
-parse_str($selObjs,$item_ids);
+parse_str($selObjs, $item_ids);
 
 $class_name = $beanList[$module];
 $includedir = $beanFiles[$class_name];
@@ -64,10 +64,9 @@ $document = new Document();
 $document->retrieve($document_id);
 
 $items = array();
-foreach($item_ids as $key=>$value)
-{
-	$seed->retrieve($key);
-	$items[] = $seed;
+foreach ($item_ids as $key=>$value) {
+    $seed->retrieve($key);
+    $items[] = $seed;
 }
 
 $state = new \SuiteCRM\StateSaver();

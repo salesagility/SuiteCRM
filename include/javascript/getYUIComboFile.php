@@ -41,55 +41,59 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (empty($_REQUEST)) die();
+if (empty($_REQUEST)) {
+    die();
+}
 
 $yui_path = array(
     "2.9.0" => "include/javascript/yui",
-	"2_9_0" => "include/javascript/yui",
-	"3.3.0" => "include/javascript/yui3",
-	"3_3_0" => "include/javascript/yui3"
+    "2_9_0" => "include/javascript/yui",
+    "3.3.0" => "include/javascript/yui3",
+    "3_3_0" => "include/javascript/yui3"
 );
 $types = array(
     "js" => "application/javascript",
-	"css" => "text/css",
+    "css" => "text/css",
 );
 $out = "";
 
 $contentType = "";
 $allpath = "";
 
-foreach ($_REQUEST as $param => $val)
-{
-	//No backtracking in the path
-	if (strpos($param, "..") !== false)
+foreach ($_REQUEST as $param => $val) {
+    //No backtracking in the path
+    if (strpos($param, "..") !== false) {
         continue;
+    }
 
-	$version = explode("/", $param);
-	$version = $version[0];
-    if (empty($yui_path[$version])) continue;
+    $version = explode("/", $param);
+    $version = $version[0];
+    if (empty($yui_path[$version])) {
+        continue;
+    }
 
     $path = $yui_path[$version] . substr($param, strlen($version));
 
-	$extension = substr($path, strrpos($path, "_") + 1);
+    $extension = substr($path, strrpos($path, "_") + 1);
 
-	//Only allowed file extensions
-	if (empty($types[$extension]))
-	   continue;
+    //Only allowed file extensions
+    if (empty($types[$extension])) {
+        continue;
+    }
 
-	if (empty($contentType))
-    {
+    if (empty($contentType)) {
         $contentType = $types[$extension];
     }
-	//Put together the final filepath
-	$path = substr($path, 0, strrpos($path, "_")) . "." . $extension;
-	$contents = '';
-	if (is_file($path)) {
-	   $out .= "/*" . $path . "*/\n";
-	   $contents =  file_get_contents($path);
-	   $out .= $contents . "\n";
-	}
-	$path = empty($contents) ? $path : $contents;
-	$allpath .= md5($path);
+    //Put together the final filepath
+    $path = substr($path, 0, strrpos($path, "_")) . "." . $extension;
+    $contents = '';
+    if (is_file($path)) {
+        $out .= "/*" . $path . "*/\n";
+        $contents =  file_get_contents($path);
+        $out .= $contents . "\n";
+    }
+    $path = empty($contents) ? $path : $contents;
+    $allpath .= md5($path);
 }
 
 $etag = '"'.md5($allpath).'"';
@@ -100,4 +104,4 @@ header("Pragma: dummy=bogus");
 header("Etag: $etag");
 header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 2592000));
 header("Content-Type: $contentType");
-echo ($out);
+echo($out);

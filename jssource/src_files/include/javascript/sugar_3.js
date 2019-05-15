@@ -1996,9 +1996,9 @@ sugarListView.prototype.confirm_action = function (del) {
 
 }
 sugarListView.get_num_selected = function () {
-  var selectCount = $("input[name='selectCount[]']:first");
-  if (selectCount.length > 0)
-    return parseInt(selectCount.val().replace("+", ""));
+  var selectCount = sugarListView.get_checks_count();
+  if (selectCount > 0)
+        return selectCount;
   return 0;
 
 }
@@ -3733,7 +3733,7 @@ SUGAR.savedViews = function () {
       }
       //add showSSDIV to url if it is available.  This determines whether saved search sub form should
       //be rendered open or not
-      if (document.getElementById('showSSDIV') && typeof(document.getElementById('showSSDIV') != 'undefined')) {
+      if (document.getElementById('showSSDIV') && (typeof(document.getElementById('showSSDIV')) != 'undefined')) {
         selecturl = selecturl + '&showSSDIV=' + document.getElementById('showSSDIV').value;
       }
       //use created url to navigate
@@ -4953,7 +4953,7 @@ SUGAR.append(SUGAR.util, {
       if (SUGAR.util.closeActivityPanel.panel)
         SUGAR.util.closeActivityPanel.panel.destroy();
       var singleModule = SUGAR.language.get("app_list_strings", "moduleListSingular")[module];
-      singleModule = typeof(singleModule != 'undefined') ? singleModule.toLowerCase() : '';
+      singleModule = (typeof(singleModule) != 'undefined') ? singleModule.toLowerCase() : '';
       var closeText = SUGAR.language.get("app_strings", "LBL_CLOSE_ACTIVITY_CONFIRM").replace("#module#", singleModule);
       SUGAR.util.closeActivityPanel.panel =
         new YAHOO.widget.SimpleDialog("closeActivityDialog",

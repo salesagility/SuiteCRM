@@ -9,7 +9,7 @@ class Invoices extends \AcceptanceTester
      */
     public function gotoInvoices()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Invoices');
     }
 
