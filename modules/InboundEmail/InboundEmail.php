@@ -7759,7 +7759,7 @@ eoq;
         } // if
     }
 
-    function saveMailBoxValueOfInboundEmail()
+    public function saveMailBoxValueOfInboundEmail()
     {
         $emailUserQuoted = $this->db->quote($this->email_user);
         $query = "update Inbound_email set mailbox = '$emailUserQuoted'";
