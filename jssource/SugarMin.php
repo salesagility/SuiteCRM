@@ -1,5 +1,7 @@
 <?php
 
+use JShrink\Minifier;
+
 class SugarMin
 {
 
@@ -20,7 +22,7 @@ class SugarMin
      */
     private function __construct($text, $compression)
     {
-        $this->text = trim($text)."\n";
+        $this->text = trim($text) . "\n";
         $this->compression = $compression;
     }
 
@@ -50,6 +52,8 @@ class SugarMin
      */
     protected function jsParser()
     {
-        return (new JShrink\Minifier)::minify($this->text);
+        $jshrink = new Minifier;
+
+        return $jshrink::minify($this->text);
     }
 }
