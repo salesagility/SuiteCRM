@@ -82,7 +82,7 @@ $viewdefs['Emails']['ListView'] = array(
         ),
         'includes' => array(
             array(
-              'file' => 'include/javascript/jstree/dist/jstree.js',
+              'file' => 'vendor/vakata/jstree/dist/jstree.js',
             ),
             array(
                 'file' => 'modules/Emails/include/ListView/ComposeViewModal.js',
