@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Sort extends BaseOption
 {
-    const REGEX_SORT_PATTERN = '/[^\w-]/';
+    const REGEX_SORT_PATTERN = '/[^\w\-]/';
 
     /**
      * @inheritdoc

@@ -1,14 +1,10 @@
-<?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,52 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once('modules/Meetings/MeetingsListViewSmarty.php');
+if (!checkValidate('EditCredentials', 'name')) {
+  addToValidate('EditCredentials', 'name', 'varchar', true);
+}
 
-class MeetingsViewList extends ViewList
-{
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function MeetingsViewList()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
-
-
-    public function preDisplay()
-    {
-        $this->lv = new MeetingsListViewSmarty();
-    }
-
-    public function listViewProcess()
-    {
-        $this->processSearchForm();
-        $this->lv->searchColumns = $this->searchForm->searchColumns;
-
-        if (!$this->headers) {
-            return;
-        }
-        if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
-            $this->lv->ss->assign("SEARCH", true);
-            $this->lv->ss->assign('savedSearchData', $this->searchForm->getSavedSearchData());
-            // add recurring_source field to filter to be able acl check to use it on row level
-            $this->lv->mergeDisplayColumns = true;
-            $filterFields = array('recurring_source' => 1);
-            $this->lv->setup($this->seed, 'include/ListView/ListViewGeneric.tpl', $this->where, $this->params, 0, -1, $filterFields);
-            $savedSearchName = empty($_REQUEST['saved_search_select_name']) ? '' : (' - ' . $_REQUEST['saved_search_select_name']);
-            echo $this->lv->display();
-        }
-    }
+if (!checkValidate('EditCredentials', 'assigned_user_name')) {
+  addToValidate('EditCredentials', 'assigned_user_name', 'varchar', true);
 }

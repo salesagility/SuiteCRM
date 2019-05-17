@@ -13,7 +13,7 @@ class RelationshipController extends BaseController
     /**
      * @var RelationshipService
      */
-    private $relationshipService;
+    protected $relationshipService;
 
     /**
      * @param RelationshipService $relationshipService
