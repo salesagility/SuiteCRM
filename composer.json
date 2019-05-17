@@ -55,6 +55,7 @@
     "symfony/validator": "^3.4",
     "symfony/yaml": "^3.4",
     "tinymce/tinymce": "^4.9.11",
+    "tedivm/jshrink": "^1.3",
     "tuupola/slim-jwt-auth": "^2.0",
     "vlucas/phpdotenv": "^3.5",
     "wikimedia/composer-merge-plugin": "^1.4",
