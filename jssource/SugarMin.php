@@ -44,9 +44,12 @@ class SugarMin
         }
     }
 
+    /**
+     * @return bool|string
+     * @throws Exception
+     */
     protected function jsParser()
     {
-        require_once('jssource/Minifier.php');
-        return Minifier::minify($this->text);
+        return (new JShrink\Minifier)::minify($this->text);
     }
 }
