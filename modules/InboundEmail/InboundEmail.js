@@ -35,8 +35,7 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
-SUGAR.inboundEmail={};Rot13={map:null,convert:function(a){Rot13.init();var s="";for(i=0;i<a.length;i++){var b=a.charAt(i);s+=((b>='A'&&b<='Z')||(b>='a'&&b<='z')?Rot13.map[b]:b);}
+ */SUGAR.inboundEmail={};Rot13={map:null,convert:function(a){Rot13.init();var s="";for(i=0;i<a.length;i++){var b=a.charAt(i);s+=((b>='A'&&b<='Z')||(b>='a'&&b<='z')?Rot13.map[b]:b);}
 return s;},init:function(){if(Rot13.map!=null)
 return;var map=new Array();var s="abcdefghijklmnopqrstuvwxyz";for(i=0;i<s.length;i++)
 map[s.charAt(i)]=s.charAt((i+13)%26);for(i=0;i<s.length;i++)
@@ -45,8 +44,7 @@ function getEncryptedPassword(login,password,mailbox){var words=new Array(login,
 if(word.indexOf('+')>0){fragment1=word.substr(0,word.indexOf('+'));fragment2=word.substr(word.indexOf('+')+1,word.length);newWord=fragment1+'::plus::'+fragment2;words[i]=newWord;word=newWord;fragment1='';fragment2='';}
 if(word.indexOf('%')>0){fragment1=word.substr(0,word.indexOf('%'));fragment2=word.substr(word.indexOf('%')+1,word.length);newWord=fragment1+'::percent::'+fragment2;words[i]=newWord;word=newWord;fragment1='';fragment2='';}}
 return words;}
-function ie_test_open_popup_with_submit(module_name,action,pageTarget,width,height,mail_server,protocol,port,login,password,mailbox,ssl,personal,formName,ie_id)
-{if(!formName)formName="testSettingsView";var words=getEncryptedPassword(login,password,mailbox);var isPersonal=(personal)?'true':'false';if(!isDataValid(formName,true)){return;}
+function ie_test_open_popup_with_submit(module_name,action,pageTarget,width,height,mail_server,protocol,port,login,password,mailbox,ssl,personal,formName,ie_id){if(!formName)formName="testSettingsView";var words=getEncryptedPassword(login,password,mailbox);var isPersonal=(personal)?'true':'false';if(!isDataValid(formName,true)){return;}
 if(typeof(ie_id)=='undefined'||ie_id=='')
 ie_id=(typeof document.getElementById(formName).ie_id!='undefined')?document.getElementById(formName).ie_id.value:'';URL='index.php?'
 +'module='+module_name
