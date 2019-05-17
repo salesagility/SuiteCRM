@@ -63,7 +63,7 @@ class UserPreferencesController extends BaseController
     /**
      * @var UserPreferencesService
      */
-    private $userPreferencesService;
+    protected $userPreferencesService;
 
     /**
      * @param UserPreferencesService $userPreferencesService

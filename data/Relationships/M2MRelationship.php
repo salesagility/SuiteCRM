@@ -266,6 +266,10 @@ class M2MRelationship extends SugarRelationship
                 $this->def['join_key_rhs'] => $rhs->id
             );
 
+            if (!empty($this->def['relationship_role_column']) && !empty($this->def['relationship_role_column_value'])) {
+                $dataToRemove[$this->def['relationship_role_column']] = $this->def['relationship_role_column_value'];
+            }
+            $dataToRemove['deleted'] = 0;
 
             if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes") {
                 if (get_class($lhs) != 'SecurityGroup' && $lhs->$lhsLinkName instanceof Link2) {

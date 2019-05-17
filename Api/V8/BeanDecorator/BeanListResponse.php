@@ -6,12 +6,12 @@ class BeanListResponse
     /**
      * @var \SugarBean[]|[]
      */
-    private $beans;
+    protected $beans;
 
     /**
      * @var int
      */
-    private $rowCount;
+    protected $rowCount;
 
     /**
      * @param array $result

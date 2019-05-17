@@ -574,6 +574,9 @@ class ElasticSearchIndexer extends AbstractIndexer
     public static function repairElasticsearchIndex($differential = true, $searchdefs = 0)
     {
         $indexer = new ElasticSearchIndexer();
+        if ( ! $indexer->isEnabled()) {
+            return 0 ;
+        }
         $indexer->setDifferentialIndexing($differential);
         if ($searchdefs) {
             $indexer->setDocumentifier(new SearchDefsDocumentifier());
