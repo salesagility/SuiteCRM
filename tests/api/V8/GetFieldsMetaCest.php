@@ -35,13 +35,10 @@ class GetFieldsMetaCest
         $I->seeResponseContainsJson(['type' => 'fields']);
         $I->seeResponseContainsJson(
             [
-                'attributes' =>
-                    [
-                        'name' => [
-                            'type' => 'name',
-                            "dbType" => "varchar",
-                        ],
-                    ],
+                'name' => [
+                    'type' => 'name',
+                    "dbType" => "varchar",
+                ],
             ]
         );
     }
