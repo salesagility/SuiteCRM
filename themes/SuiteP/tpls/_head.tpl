@@ -78,5 +78,5 @@
     <link rel="stylesheet" type="text/css" href="themes/SuiteP/css/colourSelector.php">
     <script type="text/javascript" src='{sugar_getjspath file="themes/SuiteP/js/jscolor.js"}'></script>
     <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
-    <script type="text/javascript" src='{sugar_getjspath file="include/javascript/mozaik/vendor/tinymce/tinymce/tinymce.min.js"}'></script>
+    <script type="text/javascript" src='{sugar_getjspath file="vendor/tinymce/tinymce/tinymce.min.js"}'></script>
 </head>

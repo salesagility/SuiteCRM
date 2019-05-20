@@ -53,7 +53,8 @@
     "symfony/yaml": "^3.4",
     "tuupola/slim-jwt-auth": "^2.0",
     "vakata/jstree": "^3.3",
-    "wikimedia/composer-merge-plugin": "^1.4"
+    "fullcalendar/fullcalendar": "^3.9",
+    "tinymce/tinymce": "^4.9"
   },
   "require-dev": {
     "browserstack/browserstack-local": "^1.1",
