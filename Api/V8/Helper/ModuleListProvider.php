@@ -54,7 +54,7 @@ class ModuleListProvider
         global $current_user;
 
         $modules = query_module_access_list($current_user);
-        \ACLController:: filterModuleList($modules, false);
+        \ACLController::filterModuleList($modules, false);
 
         $modules = $this->markInvisibleModulesReadOnly($modules);
         $modules = $this->markACLAccess($modules);

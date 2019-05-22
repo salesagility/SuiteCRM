@@ -89,6 +89,7 @@ class MetaService
     }
 
     /**
+     * Build the response with a list of modules to return.
      *
      * @param Request $request
      * @return DocumentResponse
@@ -107,6 +108,7 @@ class MetaService
     }
 
     /**
+     * Build the response with a list of fields to return.
      *
      * @param Request $request
      * @return DocumentResponse
@@ -125,6 +127,8 @@ class MetaService
     }
 
     /**
+     * Build the list of fields for a given module.
+     *
      * @param string $module
      * @return array
      */
@@ -139,6 +143,8 @@ class MetaService
     }
 
     /**
+     * We only allow certain fields from the vardefs to be returned in the field list.
+     *
      * @param array $def
      * @return array
      */

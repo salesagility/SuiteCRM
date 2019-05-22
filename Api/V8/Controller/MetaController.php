@@ -52,9 +52,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * UserController
- *
- * @author gyula
+ * MetaController
  */
 class MetaController extends BaseController
 {
