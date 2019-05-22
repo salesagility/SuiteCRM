@@ -96,6 +96,7 @@ if (isset($_REQUEST['record'])) {
 //if subsaction has been set, then process subscriptions
 if (isset($_REQUEST['subs_action'])) {
     manageSubscriptions($focus);
+    SugarApplication::redirect("index.php?module=" . $_REQUEST['return_module'] . "&action=" . $_REQUEST['return_action'] . "&record=" . $_REQUEST['record']);
 }
 
 //$title = $GLOBALS['app_strings']['LBL_MANAGE_SUBSCRIPTIONS_FOR'].$focus->name;
