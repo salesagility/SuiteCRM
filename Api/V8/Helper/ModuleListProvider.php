@@ -55,8 +55,7 @@ class ModuleListProvider
 
         $modules = query_module_access_list($current_user);
         \ACLController::filterModuleList($modules, false);
-
-        $modules = $this->markInvisibleModulesReadOnly($modules);
+        $modules = $this->removeInvisibleModules($modules);
         $modules = $this->markACLAccess($modules);
 
         return $modules;
@@ -66,12 +65,12 @@ class ModuleListProvider
      * @param $modules
      * @return array
      */
-    private function markInvisibleModulesReadOnly($modules)
+    private function removeInvisibleModules($modules)
     {
         global $modInvisList;
 
         foreach ($modInvisList as $invis) {
-            $modules[$invis] = 'read_only';
+            unset($modules[$invis]);
         }
 
         return $modules;
@@ -85,31 +84,51 @@ class ModuleListProvider
     {
         global $current_user;
 
-        $actions = \ACLAction::getUserActions($current_user->id, true);
-        foreach ($actions as $key => $value) {
-            $this->setACL($value['module']['access']['aclaccess'], $key, $modules);
+        $modulesWithAccess = [];
+        $moduleActions = \ACLAction::getUserActions($current_user->id, true);
+
+        foreach ($moduleActions as $moduleName => $value) {
+            if (!in_array($moduleName, $modules, true)) {
+                continue;
+            }
+            $access = $this->buildAccessArray($moduleName, $value['module']);
+            if (count($access)) {
+                $modulesWithAccess[$moduleName] = ['access' => array_unique($access)];
+            }
         }
 
-        return $modules;
+        return $modulesWithAccess;
+    }
+
+    /**
+     * @param $actions
+     * @return array
+     */
+    private function buildAccessArray($moduleName, $actions)
+    {
+        $access = [];
+        foreach ($actions as $actionName => $record) {
+            if (!$this->hasACL($record['aclaccess'], $moduleName)) {
+                continue;
+            }
+            $access[] = $actionName;
+        }
+        return $access;
     }
 
     /**
      * @param $level
-     * @param $key
-     * @param $modules
+     * @param $module
+     * @return bool
      */
-    private function setACL($level, $key, &$modules)
+    private function hasACL($level, $module)
     {
         global $current_user;
 
-        if (!is_admin($current_user) && $level === ACL_ALLOW_DISABLED) {
-            unset($modules[$key]);
-            return;
+        if (is_admin(is_admin($current_user))) {
+            return true;
         }
-        if ($level < ACL_ALLOW_ENABLED) {
-            $modules[$key] = 'read_only';
-            return;
-        }
-        $modules[$key] = '';
+
+        return $level >= ACL_ALLOW_ENABLED;
     }
 }
