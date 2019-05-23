@@ -57,7 +57,22 @@ class ModuleListProvider
         \ACLController::filterModuleList($modules, false);
         $modules = $this->removeInvisibleModules($modules);
         $modules = $this->markACLAccess($modules);
+        $modules = $this->addModuleLabels($modules);
 
+        return $modules;
+    }
+
+    /**
+     * @param $modules
+     * @return mixed
+     */
+    private function addModuleLabels($modules)
+    {
+        global $app_list_strings;
+
+        foreach ($modules as $moduleName => &$moduleData) {
+            $moduleData['label'] = $app_list_strings['moduleList'][$moduleName];
+        }
         return $modules;
     }
 
@@ -92,9 +107,13 @@ class ModuleListProvider
                 continue;
             }
             $access = $this->buildAccessArray($moduleName, $value['module']);
-            if (count($access)) {
-                $modulesWithAccess[$moduleName] = ['access' => array_unique($access)];
+            if (!count($access)) {
+                continue;
             }
+            $modulesWithAccess[$moduleName] = [
+                'label' => '',
+                'access' => array_unique($access)
+            ];
         }
 
         return $modulesWithAccess;
