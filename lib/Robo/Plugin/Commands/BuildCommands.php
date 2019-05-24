@@ -45,47 +45,86 @@ use Robo\Task\Base\loadTasks;
 
 class BuildCommands extends \Robo\Tasks
 {
-    use loadTasks;
-    use RoboTrait;
-    // define public methods as commands
+  use loadTasks;
+  use RoboTrait;
+  // define public methods as commands
 
-    /**
-     * Build SuiteP theme
-     * @params array $opts optional command line arguments
-     * color_scheme - set which color scheme you wish to build
-     * @throws \RuntimeException
-     */
-    public function buildSuitep(array $opts = ['color_scheme' => ''])
-    {
-        $this->say('Compile SuiteP Theme (SASS)');
-        if (empty($this->opts['color_scheme'])) {
-            $this->buildSuitePColorScheme('Dawn');
-            $this->buildSuitePColorScheme('Day');
-            $this->buildSuitePColorScheme('Dusk');
-            $this->buildSuitePColorScheme('Night');
-        } elseif (is_array($this->opts['color_scheme'])) {
-            foreach ($this->opts['color_scheme'] as $colorScheme) {
-                $this->buildSuitePColorScheme($colorScheme);
+  /**
+   * Build SuiteP theme
+   * @params array $opts optional command line arguments
+   * color_scheme - set which color scheme you wish to build
+   * @throws \RuntimeException
+   */
+  public function buildSuitep(array $opts = ['color_scheme' => ''])
+  {
+    $this->say('Compile SuiteP Theme (SASS)');
+    if (empty($this->opts['color_scheme'])) {
+      /** Look for Subthemes in the SuiteP theme Dir **/
+      $std = "themes/SuiteP/css/";
+      if (is_dir($std) && $dir = opendir($std)) {
+        // Good directory
+        while(false !== ($file = readdir($dir))) {
+          // Start searching for possible subtheme directories
+          if (filetype($std . $file) === 'dir') {
+            // Could be a subtheme, look for style.scss && style.css
+            if (file_exists($std . $file . "/style.scss")) {
+              // Bingo! Found a SASS file
+              if (file_exists($std . $file . "/style.css")) {
+                // We got a compiled style, remove it.
+                $this->say("Found stlye.css for {$file}, Removing");
+                unlink($std . $file . "/style.css");
+              }
+              $this->say("Found stlye.scss for {$file}, Compiling");
+              // Compile our style.
+              $this->buildSuitePColorScheme($file);
             }
-        } else {
-            $this->buildSuitePColorScheme($this->opts['color_scheme']);
+          }
         }
-        $this->say('Compile SuiteP Theme (SASS) Complete');
-    }
+      }
 
-    /**
-     * @param string $colorScheme eg Dawn
-     * @throws \RuntimeException
-     */
-    private function buildSuitePColorScheme($colorScheme)
-    {
-        $os = new OperatingSystem();
-        $command =
-            $os->toOsPath("./vendor/bin/pscss")
-            . " -f compressed "
-            . $os->toOsPath("themes/SuiteP/css/{$colorScheme}/style.scss")
-            . " > "
-            . $os->toOsPath("themes/SuiteP/css/{$colorScheme}/style.css");
-        $this->_exec($command);
+      /** Look for Subthemes in the custom/theme Dir **/
+      // Good opportunity to refactor here.
+      // Does the same as above just looks in the custom directory.
+      $ctd = "custom/themes/SuiteP/css/";
+      if (is_dir($ctd) && $dir = opendir($ctd)) {
+        while(false !== ($file = readdir($dir))) {
+          if (filetype($ctd . $file) === 'dir') {
+            if (file_exists($ctd . $file . "/style.scss")) {
+              if (file_exists($ctd . $file . "/style.css")) {
+                $this->say("Found stlye.css for {$file}, Removing");
+                unlink($ctd . $file . "/style.css");
+              }
+              $this->say("Found stlye.scss for {$file}, Compiling");
+              $this->buildSuitePColorScheme($file);
+            }
+          }
+        }
+      }
+    } elseif (is_array($this->opts['color_scheme'])) {
+      foreach ($this->opts['color_scheme'] as $colorScheme) {
+        $this->buildSuitePColorScheme($colorScheme);
+      }
+    } else {
+      $this->buildSuitePColorScheme($this->opts['color_scheme']);
     }
+    $this->say('Compile SuiteP Theme (SASS) Complete');
+  }
+
+  /**
+   * @param string $colorScheme eg Dawn
+   * @param string $location eg Directory to work from
+   * @throws \RuntimeException
+   */
+  private function buildSuitePColorScheme($colorScheme, $location = "themes/SuiteP/css/")
+  {
+    $os = new OperatingSystem();
+    $command =
+      $os->toOsPath("./vendor/bin/pscss")
+      . " -f compressed "
+      . $os->toOsPath("{$location}{$colorScheme}/style.scss")
+      . " > "
+      . $os->toOsPath("{$location}{$colorScheme}/style.css");
+    $this->_exec($command);
+  }
+
 }
