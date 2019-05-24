@@ -47,6 +47,7 @@ use Api\V8\JsonApi\Response\DataResponse;
 use Api\V8\JsonApi\Response\DocumentResponse;
 use Api\V8\Param\GetFieldListParams;
 use Slim\Http\Request;
+use SuiteCRM\API\v8\Exception\NotAllowedException;
 
 /**
  * Class MetaService
@@ -112,6 +113,7 @@ class MetaService
      *
      * @param Request $request
      * @return DocumentResponse
+     * @throws NotAllowedException
      */
     public function getFieldList(Request $request, GetFieldListParams $fieldListParams)
     {
@@ -127,13 +129,31 @@ class MetaService
     }
 
     /**
+     * @param string $module
+     * @throws NotAllowedException
+     */
+    private function checkIfUserHasModuleAccess($module)
+    {
+        global $current_user;
+
+        $modules = query_module_access_list($current_user);
+        \ACLController::filterModuleList($modules, false);
+
+        if(!in_array($module, $modules)) {
+            throw new NotAllowedException('The API user does not have access to this module.');
+        }
+    }
+
+    /**
      * Build the list of fields for a given module.
      *
      * @param string $module
      * @return array
+     * @throws NotAllowedException
      */
     private function buildFieldList($module)
     {
+        $this->checkIfUserHasModuleAccess($module);
         $bean = $this->beanManager->newBeanSafe($module);
         $fieldList = [];
         foreach ($bean->field_defs as $fieldName => $fieldDef) {
