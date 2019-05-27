@@ -36,11 +36,10 @@ class GetModulesMetaCest
             [
                 'attributes' =>
                     [
-                        'Home',
-                        'Calendar',
-                        'Calls',
-                        // ...
-                        'SecurityGroups',
+                        'Accounts' => [
+                            'label' => 'Accounts',
+                            'access' => ['access']
+                        ],
                     ],
             ]
         );
