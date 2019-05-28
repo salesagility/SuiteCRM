@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>acc_member</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="21.9733859 7.38255039e-06 21.9733859 21.9734228 0 21.9734228 0 7.38255039e-06 21.9733859 7.3825504e-06"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="acc_member">
+            <g id="Page-1" transform="translate(4.000000, 4.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Clip-2"></g>
+                <path d="M10.9866966,7.38255039e-06 C10.9866966,7.38255039e-06 5.49334094,5.49336309 -1.47651008e-05,5.49336309 C-1.47651008e-05,5.49336309 -1.47651008e-05,19.4128664 10.9866966,21.9734302 C21.9734081,19.4128664 21.9734081,5.49336309 21.9734081,5.49336309 C16.4800523,5.49336309 10.9866966,7.38255039e-06 10.9866966,7.38255039e-06" id="Fill-1" fill="#FFFFFF" mask="url(#mask-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

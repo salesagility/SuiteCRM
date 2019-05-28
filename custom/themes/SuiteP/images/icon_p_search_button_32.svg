@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="25px" height="78px" viewBox="0 0 25 78" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.7.2 (28276) - http://www.bohemiancoding.com/sketch -->
+    <title>p_search_button</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="p_search_button" stroke="#FFFFFF">
+            <g id="Group-2" opacity="0.400000006" transform="translate(2.000000, 2.000000)">
+                <circle id="Oval-7" stroke-width="2" cx="7.5" cy="7.5" r="7.5"></circle>
+                <path d="M16.5,15.5 L20.0355339,19.0355339" id="Line" stroke-width="4" stroke-linecap="round"></path>
+            </g>
+            <g id="Group-2" transform="translate(2.000000, 56.000000)">
+                <circle id="Oval-7" stroke-width="2" cx="7.5" cy="7.5" r="7.5"></circle>
+                <path d="M16.5,15.5 L20.0355339,19.0355339" id="Line" stroke-width="4" stroke-linecap="round"></path>
+            </g>
+        </g>
+    </g>
+</svg>

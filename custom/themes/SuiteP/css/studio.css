@@ -1,0 +1,201 @@
+/**** Studio ***/
+#delete img {
+  width: 32px;
+  height: 32px; }
+
+#exportcustom h3 {
+  font-size: 14px;
+  font-weight: bold;
+  padding-left: 0px;
+  margin: 3px; }
+
+#layoutEditor h4 {
+  font-size: 14px;
+  font-weight: bold;
+  padding-left: 0px;
+  margin: 3px; }
+
+#layoutEditor h3 {
+  font-size: 14px;
+  font-weight: bold;
+  padding-left: 0px;
+  margin: 3px; }
+
+#layoutEditor h2 {
+  font-size: 14px;
+  font-weight: bold;
+  padding-left: 0px;
+  margin: 3px; }
+
+#layoutEditor h1 {
+  font-size: 14px;
+  font-weight: bold;
+  padding-left: 0px;
+  margin: 3px; }
+
+.panel_name {
+  font-size: 14px;
+  font-weight: bold;
+  padding-left: 0px;
+  margin: 3px; }
+
+.panel_name {
+  font-weight: bold;
+  color: #565656;
+  margin: 5px;
+  float: left; }
+
+#toolbox {
+  background: #FFFFFF;
+  padding: 5px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  float: left;
+  overflow-y: scroll;
+  width: 192px; }
+
+#panels {
+  position: absolute;
+  padding: 5px;
+  margin-left: 200px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  float: right;
+  width: 100%; }
+
+.le_panel {
+  background: #BFCAD3;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+.le_row {
+  background: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+#toolbox .special:nth-of-type(2) {
+  background: #94A6B5;
+  color: #F5F5F5;
+  padding: 5px;
+  margin: 2px 3px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  float: left;
+  overflow: hidden;
+  width: 150px; }
+
+#toolbox .special:nth-of-type(3) {
+  background: #BFCAD3;
+  color: #F5F5F5;
+  padding: 5px;
+  margin: 2px 3px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  float: left;
+  overflow: hidden;
+  width: 150px; }
+
+#layoutEditor .le_panel {
+  padding: 5px 15px 15px 15px;
+  margin: 2px 2px 10px 2px; }
+
+#layoutEditor .le_panel .le_row {
+  padding: 5px 0px 5px 15px;
+  margin: 5px 5px;
+  clear: both; }
+
+#panels > .le_panel > .le_row {
+  line-height: 48px;
+  height: 48px; }
+
+#panels > .le_panel > .le_row > .le_field {
+  line-height: 18px; }
+
+#panels > .le_panel > .panel_label {
+  margin-bottom: 20px;
+  text-align: center; }
+
+#panels span {
+  margin-bottom: 5px; }
+
+body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
+  display: none; }
+
+#toolbox .le_row,
+.le_field {
+  padding: 5px;
+  margin: 2px 3px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  float: left;
+  overflow: hidden;
+  width: 150px; }
+
+.le_field {
+  background: #F5F5F5; }
+
+#toolbox .le_panel img, #toolbox .le_row img, .le_field img {
+  margin: 0; }
+
+#delete {
+  background: #F08377;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  margin: 5px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  width: 150px; }
+
+#delete span {
+  color: #F5F5F5; }
+
+#panels .le_row .le_field, #availablefields .le_field, #layoutPreview .le_row .le_field {
+  display: block; }
+
+.le_row .le_field {
+  display: none; }
+
+.field_tabindex, .field_label, .field_name, .panel_id {
+  display: none; }
+
+#availablefields .le_field {
+  clear: both; }
+
+#availablefields {
+  margin-top: 20px; }
+
+#layoutEditorButtons div {
+  float: left; }
+
+.le_edit {
+  cursor: pointer;
+  float: right; }
+
+.deleteme {
+  font-weight: normal;
+  color: #565656; }
+
+#delete {
+  text-align: center; }
+
+#exportcustom > table > tbody > tr > .mbLBL {
+  line-height: 20px; }
+
+#popup_form_id > table > tbody > tr > .mbLBL
+.relform td {
+  padding-bottom: 8px;
+  padding-left: 8px; }
+
+#editlabels td {
+  padding-bottom: 8px;
+  padding-left: 8px; }
+
+#exportcustom > table > tbody > tr > td {
+  padding-bottom: 8px;
+  padding-left: 8px; }
+
+#popup_form_id > table > tbody > tr > td {
+  padding-bottom: 8px;
+  padding-left: 8px; }
+
+/*# sourceMappingURL=studio.css.map */

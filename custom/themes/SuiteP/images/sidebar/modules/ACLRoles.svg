@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="28px"
+   height="28px"
+   viewBox="0 0 28 28"
+   version="1.1"
+   id="svg2"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="admin_role_management.svg">
+  <metadata
+     id="metadata17">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>admin_role_management</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1855"
+     inkscape:window-height="1056"
+     id="namedview15"
+     showgrid="false"
+     inkscape:zoom="8.4285714"
+     inkscape:cx="-6.8813559"
+     inkscape:cy="14"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Page-1" />
+  <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title4">admin_role_management</title>
+  <desc
+     id="desc6">Created with Sketch.</desc>
+  <defs
+     id="defs8" />
+  <g
+     id="Page-1"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd">
+    <g
+       id="admin_role_management"
+       transform="matrix(1.1433479,0,0,1.1433479,-2.0218241,-1.8635224)"
+       style="fill:#ffffff;fill-opacity:1">
+      <path
+         d="M 10.922542,8.0024186 C 10.65691,8.0171189 10.392645,8.0878859 10.11197,8.2147193 9.5031012,8.4844542 9.0371335,9.0786228 8.8354306,9.7876596 l -2.0218145,7.0206264 -1.1620134,0 C 5.3220408,16.780252 5,17.069815 5,17.403822 c 0,0.325801 0.3230664,0.623569 0.6516027,0.594168 l 16.9054323,0 c 0.329904,0.02803 0.651603,-0.269734 0.651603,-0.594168 0,-0.332639 -0.323067,-0.62357 -0.651603,-0.595536 l -1.162013,0 -2.020447,-7.0206264 C 19.174239,9.0799903 18.708271,8.4844542 18.098035,8.2147193 17.538395,7.9661804 17.037557,7.9316516 16.477917,8.137115 L 14.105003,9.0160608 11.732088,8.137115 C 11.452781,8.0304518 11.187149,7.9890857 10.922542,8.0024186 l 0,0 z m 0.149739,1.2259429 c 0.121363,0 0.250932,0.028033 0.387338,0.077262 l 2.437185,0.9001425 c 0.06393,0.02803 0.136064,0.03487 0.208199,0.03487 0.07213,0 0.144268,-0.0068 0.208198,-0.03487 l 2.437185,-0.9001425 c 0.723738,-0.2697348 1.319616,0.2765722 1.47038,0.8081785 l 1.225943,4.242597 -10.6820453,0 1.225943,-4.242597 C 10.11197,9.6809964 10.527341,9.2348571 11.072281,9.2283615 l 0,0 z m -2.6522214,6.3177435 11.3698864,0 0.357937,1.260813 -12.0857605,0 0.3579371,-1.260813 z"
+         id="path13"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff;fill-opacity:1" />
+    </g>
+  </g>
+</svg>

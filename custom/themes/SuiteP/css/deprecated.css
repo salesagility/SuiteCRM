@@ -1,0 +1,110 @@
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+/** DEPRECATED STYLES **/
+
+.tabForm {
+    background: none;
+}
+
+.dataLabel {
+    font-size: 12px;
+    font-weight: normal;
+    text-align: left;
+    padding: 5px;
+}
+
+.dataField {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.tabDetailView {
+    border-bottom: 2px solid;
+    border-top: 2px solid;
+    margin-bottom: 10px;
+    margin-top: 2px;
+    border-bottom-color: #ABC3D7;
+    border-top-color: #4E8CCF;
+}
+
+.tabDetailView td table td {
+    border: 0;
+    background: white;
+}
+
+.tabDetailView tr.pagination td {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #CBDAE6;
+}
+
+.tabDetailView tr.pagination td table td {
+    border: none;
+}
+
+.tabDetailViewDL {
+    background-color: #F6F6F6;
+    color: #000000;
+    border-bottom: 1px solid #CBDAE6;
+    font-size: 12px;
+    padding: 5px 6px;
+    text-align: right;
+    vertical-align: top;
+}
+
+.tabDetailViewDF {
+    background-color: #FFFFFF;
+    color: #444444;
+    border-bottom: 1px solid #CBDAE6;
+    font-size: 12px;
+    padding: 5px 10px 5px 8px;
+    vertical-align: top;
+}
+
+.listViewThS1 {
+    background: #EBEBED none repeat scroll 0 0;
+    border-color: #CCCCCC -moz-use-text-color;
+    border-style: solid none;
+    border-width: 1px medium;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 4px 5px;
+    text-align: left;
+}
