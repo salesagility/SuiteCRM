@@ -18,7 +18,7 @@ test:
     - echo "Make Sure Commit SHA Exists, Use for revision hashing"
     - echo $CI_COMMIT_SHA
     - echo "Dry Run Deployment On Linux3"
-    - rsync --update --dry-run --checksum -rlvzub --exclude ".*" --exclude "*.tgz" --exclude "Makefile.*" -e "ssh -i ~/.ssh/id_rsa.pub" ./ gitlab-runner@dev2:/var/lib/docker/volumes/suite_os/_data/suitecrm
+    - rsync --update --dry-run --checksum -rlvzub --exclude ".*" --exclude "*.tgz" --exclude "Makefile.*" -e "ssh -i ~/.ssh/id_rsa.pub" ./ localadmin@dev2:/var/lib/docker/volumes/suite_os/_data/suitecrm
     
 
 build:
