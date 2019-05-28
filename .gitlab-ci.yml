@@ -18,7 +18,9 @@ test:
     - echo "Make Sure Commit SHA Exists, Use for revision hashing"
     - echo $CI_COMMIT_SHA
     - echo "Dry Run Deployment On Linux3"
-    - rsync --update --dry-run --checksum -rlvzub --exclude ".*" --exclude "*.tgz" --exclude "Makefile.*" -e "ssh -i ~/.ssh/id_rsa.pub" ./ localadmin@dev2:/var/lib/docker/volumes/suite_os/_data/suitecrm
+    - cat .ssh/id_rsa.pub
+    - ls -la /var/lib/docker/volumes/suite_os/data/suitecrm
+    # - rsync --update --dry-run --checksum -rlvzub --exclude ".*" --exclude "*.tgz" --exclude "Makefile.*" -e "ssh -i ~/.ssh/id_rsa.pub" ./ localadmin@dev2:/var/lib/docker/volumes/suite_os/_data/suitecrm
     
 
 build:
@@ -26,26 +28,6 @@ build:
   script: 
     - echo "Building The App"
     - echo $CI_COMMIT_SHA
-
-user-test: 
-  stage: user-test
-  before_script:
-    # Find SSH Agent
-    - 'which ssh-agent'
-    # Run the Agent
-    - eval $(ssh-agent -s)
-    #Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
-    - ssh-add <(echo "$SSH_PRIVATE_KEY")
-  script:
-    # - echo "Update Local Preview"
-    # - rsync --update --checksum -rlvzu --exclude ".*" --exclude "*.tgz" --exclude "Makefile.*" -e "ssh -i ~/.ssh/id_rsa.pub" _src/ _preview
-    - echo "Create Revision Hashes"
-    - sed -i "s/@@hash/$CI_COMMIT_SHA/g" _src/index.php
-    - echo "Deploying to the preview folder"
-    - rsync --update --checksum -rlvzub --exclude ".*" --exclude "*.tgz" --exclude "Makefile.*" --backup-dir="backups/$CI_JOB_ID" -e "ssh -i ~/.ssh/id_rsa.pub" _src/ gitlab-runner@linux3:/var/www/mc-dev/$DEPLOYMENT_PREVIEW_DESTINATION/_preview
-    
-  when: manual
-  allow_failure: true
 
 deploy_prod:
   stage: deploy
