@@ -57,6 +57,44 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertContains('src="https://foobar.com/public/c1270a2d-a083-495e-7c61-5c8a9046ec0d.png" alt="c1270a2d-a083-495e-7c61-5c8a9046ec0d.png"', $result);
     }
 
+    public function testrepairEntryPointImages()
+    {
+        global $sugar_config;
+
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('email_templates');
+        $state->pushTable('aod_index');
+
+        $sugar_config['site_url'] = 'https://foobar.com';
+
+        $ids = [create_guid(), create_guid()];
+        $html = '<img src="https://foobar.com/index.php?entryPoint=download&type=Notes&id=' . $ids[0] . '&filename=test2.png" alt="" style="font-size:14px;" width="381" height="339">';
+        $html .= '<img alt="test.png" src="https://foobar.com/index.php?entryPoint=download&type=Notes&id=' . $ids[1] . '&filename=test.png" width="118" height="105">';
+
+        foreach ($ids as $id) {
+            file_put_contents('upload/' . $id, 'IAmAnImage:' . $id);
+        }
+
+        $template = new EmailTemplate();
+        $template->body_html = to_html($html);
+        $template->new_with_id = true;
+        $template->save();
+        $this->assertNotNull($template->retrieve($template->id));
+
+        foreach ($ids as $id) {
+            $this->assertTrue(is_file('public/' . $id . '.png'));
+            unlink('public/' . $id . '.png');
+            unlink('upload/' . $id);
+        }
+
+        $expected = '<img src="https://foobar.com/public/' . $ids[0] . '.png" alt="" style="font-size:14px;" width="381" height="339" />';
+        $expected .= '<img alt="test.png" src="https://foobar.com/public/' . $ids[1] . '.png" width="118" height="105" />';
+        $this->assertEquals($expected, from_html($template->body_html));
+
+        $state->popTable('aod_index');
+        $state->popTable('email_templates');
+    }
+
     public function testEmailTemplate()
     {
 
