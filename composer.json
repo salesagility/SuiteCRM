@@ -41,6 +41,7 @@
     "league/oauth2-server": "^5.1",
     "league/uri": "^4.2.3",
     "monolog/monolog": "^1.23",
+    "mpdf/mpdf": "^6.1",
     "nesbot/carbon": "^1.31",
     "onelogin/php-saml": "^3.0.0",
     "paragonie/random_compat": "^2.0",
@@ -52,7 +53,8 @@
     "symfony/validator": "^3.4",
     "symfony/yaml": "^3.4",
     "tuupola/slim-jwt-auth": "^2.0",
-    "wikimedia/composer-merge-plugin": "^1.4"
+    "wikimedia/composer-merge-plugin": "^1.4",
+    "tinymce/tinymce": "^4.9"
   },
   "require-dev": {
     "browserstack/browserstack-local": "^1.1",
