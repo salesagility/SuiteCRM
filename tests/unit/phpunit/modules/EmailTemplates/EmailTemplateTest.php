@@ -11,6 +11,37 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $current_user = new User();
     }
 
+    public function testcreateCopyTemplate()
+    {
+        global $current_user;
+
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('email_templates');
+        $state->pushGlobals();
+
+        $this->setOutputCallback(function($msg) {});
+
+        $current_user->id = create_guid();
+        $_REQUEST['func'] = 'createCopy';
+        $_POST['name'] = 'Name';
+        $_POST['subject'] = 'Subject';
+        $_POST['body_html'] = 'BodyHTML';
+        require('modules/EmailTemplates/EmailTemplateData.php');
+
+        $output = json_decode($this->getActualOutput(), true);
+        $this->assertNotEmpty($output['data']);
+        $this->assertNotEmpty($output['data']['id']);
+        $template = new EmailTemplate();
+        $this->assertNotNull($template->retrieve($output['data']['id']));
+
+        $this->assertEquals($current_user->id, $template->assigned_user_id);
+
+        $state->popTable('email_templates');
+        $state->popTable('aod_index');
+        $state->popGlobals();
+    }
+
     public function testaddDomainToRelativeImagesSrc()
     {
         global $sugar_config;
