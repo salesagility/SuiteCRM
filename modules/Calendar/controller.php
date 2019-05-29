@@ -141,7 +141,7 @@ class CalendarController extends SugarController
                 $jsonData['edit_all_recurrences'] = 'true';
             }
             if ($jsonData['duration_hours'] %24 == 0) {
-                $jsonData['allDay'] == "true";
+                $jsonData['allDay'] = "true";
             }
         } else {
             $jsonData = array(

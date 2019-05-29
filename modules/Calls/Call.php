@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,13 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
-
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 class Call extends SugarBean
@@ -116,14 +109,14 @@ class Call extends SugarBean
 
     // This is used to retrieve related fields from form posts.
     public $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'contact_id', 'user_id', 'contact_name');
-    public $relationship_fields = array(	'account_id'		=> 'accounts',
-                                        'opportunity_id'	=> 'opportunities',
-                                        'contact_id'		=> 'contacts',
-                                        'case_id'			=> 'cases',
-                                        'user_id'			=> 'users',
-                                        'assigned_user_id'	=> 'users',
-                                        'note_id'			=> 'notes',
-                                        'lead_id'			=> 'leads',
+    public $relationship_fields = array(    'account_id'        => 'accounts',
+                                        'opportunity_id'    => 'opportunities',
+                                        'contact_id'        => 'contacts',
+                                        'case_id'            => 'cases',
+                                        'user_id'            => 'users',
+                                        'assigned_user_id'    => 'users',
+                                        'note_id'            => 'notes',
+                                        'lead_id'            => 'leads',
                                 );
 
     public function __construct()
@@ -184,6 +177,9 @@ class Call extends SugarBean
 
     // save date_end by calculating user input
     // this is for calendar
+    private static $remindersInSaving = false;
+
+
     public function save($check_notify = false)
     {
         global $timedate;
@@ -244,11 +240,13 @@ class Call extends SugarBean
             vCal::cache_sugar_vcal($current_user);
         }
 
-        if (isset($_REQUEST['reminders_data'])) {
+        if (isset($_REQUEST['reminders_data']) && !self::$remindersInSaving) {
+            self::$remindersInSaving = true;
             $reminderData = json_encode(
                 $this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
             );
             Reminder::saveRemindersDataJson('Calls', $return_id, $reminderData);
+            self::$remindersInSaving = false;
         }
 
         return $return_id;
@@ -339,7 +337,7 @@ class Call extends SugarBean
         $query .= " FROM calls ";
 
         if (preg_match("/contacts/", $where)) {
-            $query .=	"LEFT JOIN calls_contacts
+            $query .=    "LEFT JOIN calls_contacts
 	                    ON calls.id=calls_contacts.call_id
 	                    LEFT JOIN contacts
 	                    ON calls_contacts.contact_id=contacts.id ";
@@ -531,7 +529,7 @@ class Call extends SugarBean
         }
         $mergeTime = isset($call_fields['DATE_START']) ? $call_fields['DATE_START'] : null; //$timedate->merge_date_time($call_fields['DATE_START'], $call_fields['TIME_START']);
         $date_db = $timedate->to_db($mergeTime);
-        if ($date_db	< $today) {
+        if ($date_db    < $today) {
             if ($call_fields['STATUS']=='Held' || $call_fields['STATUS']=='Not Held') {
                 $call_fields['DATE_START']= "<font>".$call_fields['DATE_START']."</font>";
             } else {
@@ -700,15 +698,15 @@ class Call extends SugarBean
         //		$GLOBALS['log']->debug('Call.php->get_notification_recipients():'.print_r($this,true));
         $list = array();
         if (!is_array($this->contacts_arr)) {
-            $this->contacts_arr =	array();
+            $this->contacts_arr =    array();
         }
 
         if (!is_array($this->users_arr)) {
-            $this->users_arr =	array();
+            $this->users_arr =    array();
         }
 
         if (!is_array($this->leads_arr)) {
-            $this->leads_arr =	array();
+            $this->leads_arr =    array();
         }
 
         foreach ($this->users_arr as $user_id) {

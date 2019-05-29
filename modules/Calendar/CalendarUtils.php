@@ -76,7 +76,6 @@ class CalendarUtils
                 'parent_name',
                 'parent_id',
                 'parent_type',
-                'priority'
             ),
             'Calls' => array(
                 'name',
@@ -87,7 +86,6 @@ class CalendarUtils
                 'parent_name',
                 'parent_id',
                 'parent_type',
-                'priority'
             ),
             'Tasks' => array(
                 'name',

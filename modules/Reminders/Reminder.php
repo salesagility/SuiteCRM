@@ -74,6 +74,8 @@ class Reminder extends Basic
 
     private static $remindersData = array();
 
+    private static $remindersInSaving = false;
+
     // ---- save and load remainders on EditViews
 
     /**
@@ -87,11 +89,15 @@ class Reminder extends Basic
      */
     public static function saveRemindersDataJson($eventModule, $eventModuleId, $remindersDataJson)
     {
-        $reminderData = json_decode($remindersDataJson);
-        if (!json_last_error()) {
-            Reminder::saveRemindersData($eventModule, $eventModuleId, $reminderData);
-        } else {
-            throw new Exception(json_last_error_msg());
+        if(!self::$remindersInSaving) {
+            self::$remindersInSaving = true;
+            $reminderData = json_decode($remindersDataJson);
+            if (!json_last_error()) {
+                Reminder::saveRemindersData($eventModule, $eventModuleId, $reminderData);
+            } else {
+                throw new Exception(json_last_error_msg());
+            }
+            self::$remindersInSaving = false;
         }
     }
 
