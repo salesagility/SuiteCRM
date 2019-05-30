@@ -1,0 +1,7 @@
+{
+  "phpformatter.pharPath": "php-cs-fixer-v2.phar",
+  "editor.defaultFormatter": "vscode.php-language-features",
+  "phpformatter.arguments" : [
+    "indentation_type=@PSR2"
+  ]
+}
