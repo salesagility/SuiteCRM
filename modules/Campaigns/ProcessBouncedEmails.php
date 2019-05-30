@@ -53,13 +53,25 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @param Email $email
  * @return string
  */
-function retrieveErrorReportAttachment($email)
+function retrieveErrorReportAttachment(Email $email)
 {
     $contents = "";
-    $query = "SELECT description FROM notes WHERE file_mime_type = 'messsage/rfc822' AND parent_type='Emails' AND parent_id = '".$email->id."' AND deleted=0";
-    $rs = DBManagerFactory::getInstance()->query($query);
-    while ($row = DBManagerFactory::getInstance()->fetchByAssoc($rs)) {
-        $contents .= $row['description'];
+
+    $email->getNotes($email->id);
+    foreach ($email->attachments as $note) {
+        if ($note->file_mime_type == 'message/rfc822') {
+            $note_content = $note->getAttachmentContent();
+            if ($note_content !== false) {
+                // XXX: we don't know the encoding of the attached email, but
+                // assume it's quoted-printable.
+                $contents .= quoted_printable_decode($note_content);
+            }
+        } else if ($note->file_mime_type == 'message/delivery-status') {
+            $note_content = $note->getAttachmentContent();
+            if ($note_content !== false) {
+                $contents .= $note_content;
+            }
+        }
     }
 
     return $contents;
@@ -88,16 +100,70 @@ function createBouncedCampaignLogEntry($row, $email, $email_description)
     $bounce->related_type='Emails';
     $bounce->related_id= $email->id;
 
-    //do we have the phrase permanent error in the email body.
-    if (preg_match('/permanent[ ]*error/', $email_description)) {
+    if (checkBouncedEmailInvalid($email_description)) {
         $bounce->activity_type='invalid email';
-        markEmailAddressInvalid($email);
+        markBounceEmailAddressInvalid($bounce);
     } else {
         $bounce->activity_type='send error';
     }
         
     $return_id=$bounce->save();
     return $return_id;
+}
+
+/**
+ * Given an bounce entry, mark the related email address as invalid.
+ *
+ * @param CampaignLog $bounce
+ */
+function markBounceEmailAddressInvalid(CampaignLog $bounce)
+{
+    $sea = new SugarEmailAddress();
+    $email_address = $sea->getPrimaryAddress(false, $bounce->target_id, $bounce->target_type);
+    if (empty($email_address)) {
+        return;
+    }
+
+    LoggerManager::getLogger()->info("Marking email address as invalid: ". $email_address);
+    markEmailAddressInvalid($email_address);
+}
+
+/**
+ * Given the email description returns whether the email should be marked invalid.
+ *
+ * @param string $email_description
+ * @return bool
+ */
+function checkBouncedEmailInvalid($email_description)
+{
+    /* Consider as invalid if we get a permanent error status (5.X.X)
+     * and in addition we get an smtp error 550.
+     * https://tools.ietf.org/html/rfc3464#section-2.3.4
+     * https://tools.ietf.org/html/rfc3464#section-2.3.6
+     * https://www.usps.org/info/smtp_codes.html
+     * Example:
+     *  Status: 5.0.0
+     *  Diagnostic-Code: smtp; 550 #5.1.0 Address rejected.
+     * Example:
+     *  Status: 5.5.0
+     *  Diagnostic-Code: smtp; 550 5.5.0 Requested action not taken: mailbox unavailable
+     * Example:
+     *  Status: 5.1.1
+     *  Diagnostic-Code: smtp; 554 5.1.1
+     */
+    if (preg_match('/^Status:\s*([0-9]+)\.([0-9]+)\.([0-9]+)/m', $email_description, $match)) {
+        // 5.1.1 (permanent) Bad destination mailbox address
+        if ($match[1] == '5' && $match[2] == '1' && $match[3] == '1') {
+            return true;
+        }
+
+        // Permanent error with smtp error code for non-existent email address
+        if ($match[1] == '5' && preg_match('/^Diagnostic-Code:\s*smtp\s*;.*550/m', $email_description)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /**
@@ -168,15 +234,9 @@ function campaign_process_bounced_emails(&$email, &$email_header)
     $emailFromAddress = $email_header->fromaddress;
     $email_description = $email->raw_source;
 
-    //if raw_source is empty, try using the description instead
-    if (empty($email_description)) {
-        $email_description = $email->description;
-    }
-
     $email_description .= retrieveErrorReportAttachment($email);
 
     if (preg_match('/MAILER-DAEMON|POSTMASTER/i', $emailFromAddress)) {
-        $email_description=quoted_printable_decode($email_description);
         $matches=array();
 
         //do we have the identifier tag in the email?
