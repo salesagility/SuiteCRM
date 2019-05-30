@@ -197,6 +197,9 @@ class SugarApplication
             self::setCookie('ck_login_language_20', $_SESSION['authenticated_user_language'], time() + 86400 * 90);
         }
         //check if user can access
+
+        // call after load user custom hook, with the user
+        LogicHook::initialize()->call_custom_logic('', 'after_load_user');
     }
 
     public function ACLFilter()

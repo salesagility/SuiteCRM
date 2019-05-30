@@ -81,6 +81,11 @@ if (empty($GLOBALS['installing']) && empty($sugar_config['dbconfig']['db_name'])
     exit();
 }
 
+// load custom entryPoint code
+if (is_file('custom/include/entryPoint.php')) {
+    require_once 'custom/include/entryPoint.php';
+}
+
 // make sure SugarConfig object is available
 $GLOBALS['sugar_config'] = $sugar_config;
 require_once 'include/SugarObjects/SugarConfig.php';
