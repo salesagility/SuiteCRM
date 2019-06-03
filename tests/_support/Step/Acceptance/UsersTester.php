@@ -21,7 +21,6 @@ class UsersTester extends \AcceptanceTester
         $I = new NavigationBarTester($this->getScenario());
         $I->clickUserMenuItem('Admin');
         $I->see('ADMINISTRATION');
-        $I->click('#user_management');
     }
 
     /**

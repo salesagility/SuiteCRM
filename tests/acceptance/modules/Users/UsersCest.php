@@ -8,8 +8,6 @@ use Step\Acceptance\DetailView;
 use Step\Acceptance\EditView;
 use Step\Acceptance\ListView;
 use Step\Acceptance\UsersTester;
-use Step\Acceptance\Administration;
-use Step\Acceptance\SideBar;
 
 class UsersCest
 {
@@ -113,64 +111,5 @@ class UsersCest
         $I->uncheckOption(['name' => 'user_count_collapsed_subpanels']);
         $EditView->clickSaveButton();
         $DetailView->waitForDetailViewVisible();
-    }
-
-    public function testScenarioCreateUser(
-        AcceptanceTester $I,
-        SideBar $sideBar,
-        ListView $listView,
-        EditView $editView,
-        UsersTester $user,
-        Administration $administration,
-        WebDriverHelper $webDriverHelper
-    ) {
-        $I->wantTo('Create a new user');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
-        $I->loginAsAdmin();
-
-        // Navigate to user edit-view
-        $administration->gotoAdministration();
-        $user->gotoUsers();
-        $listView->waitForListViewVisible();
-        $sideBar->clickSideBarAction('Create New User');
-        $editView->waitForEditViewVisible();
-
-        // Create test user
-        $I->fillField('user_name', 'TEST_USER');
-        $I->fillField('last_name', 'TEST_USER');
-        $I->executeJS('window.scrollTo(0,document.body.scrollHeight); return true;');
-        $I->fillField('Users0emailAddress0', 'fakeemail@fakeaddress.com');
-        $I->executeJS('window.scrollTo(0,0); return true;');
-        $I->click('#tab2');
-        $I->fillField('#new_password', 'TEST_USER');
-        $I->fillField('#confirm_pwd', 'TEST_USER');
-        $I->wait(1);
-        $editView->clickSaveButton();
-
-        // Logout
-        $administration->logout();
-        $I->wait(1);
-
-        // Login
-        $I->seeElement('#loginform');
-        $I->fillField('#user_name', 'TEST_USER');
-        $I->fillField('#username_password', 'TEST_USER');
-        $I->click('Log In');
-        $I->waitForElementNotVisible('#loginform', 120);
-
-        $I->click('#next_tab_personalinfo');
-        $I->fillField('#last_name', 'TEST_USER_MODIFIED');
-        $I->click('#next_tab_locale');
-        $I->click('#next_tab_finish');
-        $I->click('save');
-        $I->wait(10);
-
-        $administration->logout();
-        $I->loginAsAdmin();
-        $I->saveSessionSnapshot('login');
     }
 }

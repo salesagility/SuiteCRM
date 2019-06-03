@@ -42,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/SugarFields/SugarFieldHandler.php');
 require_once('include/SugarObjects/templates/person/Person.php');
 require_once __DIR__ . '/../../include/EmailInterface.php';
 require_once __DIR__ . '/../Emails/EmailUI.php';
@@ -705,7 +704,8 @@ class User extends Person implements EmailInterface
             }
         }
 
-        $this->saveUserForm();
+        $this->saveFormPreferences();
+
         $this->savePreferencesToDB();
 
         if ((isset($_POST['old_password']) || $this->portal_only) &&
@@ -732,34 +732,6 @@ class User extends Person implements EmailInterface
         }
 
         return $this->id;
-    }
-
-    public function saveUserForm() {
-
-        $sfh = new SugarFieldHandler();
-
-        foreach ($this->column_fields as $fieldName) {
-            $field = $this->field_defs[$fieldName];
-            $type = !empty($field['custom_type']) ? $field['custom_type'] : $field['type'];
-            $sf = $sfh::getSugarField($type);
-            if ($sf !== null) {
-                $sf->save($this, $_POST, $fieldName, $field, '');
-            } else {
-                $GLOBALS['log']->fatal("Field '$fieldName' does not have a SugarField handler");
-            }
-        }
-        foreach ($this->additional_column_fields as $fieldName) {
-            $field = $this->field_defs[$fieldName];
-            $type = !empty($field['custom_type']) ? $field['custom_type'] : $field['type'];
-            $sf = $sfh::getSugarField($type);
-            if ($sf !== null) {
-                $sf->save($this, $_POST, $fieldName, $field, '');
-            } else {
-                $GLOBALS['log']->fatal("Field '$fieldName' does not have a SugarField handler");
-            }
-        }
-
-        $this->saveFormPreferences();
     }
 
     public function saveFormPreferences()
