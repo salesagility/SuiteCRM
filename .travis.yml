@@ -1,20 +1,32 @@
 language: php
-php:
-  - 5.6
-  - 7.0
-  - 7.1
-  - 7.2
+os: linux
+sudo: required
 
 matrix:
   fast_finish: true
-jobs:
   include:
-      - stage: codecoverage
-        if: type IN (pull_request) OR branch in (master, develop, hotfix)
-        php: 7.0
-        script: ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter; ./vendor/bin/robo code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f ./_output/coverage.xml
-sudo: required
-dist: trusty
+    - name: "PHP 5.6 / MySQL 5.6"
+      php: "5.6"
+      dist: trusty
+    - name: "PHP 7.0 / MySQL 5.7"
+      php: "7.0"
+      dist: xenial
+    - name: "PHP 7.1 / MySQL 5.7"
+      php: "7.1"
+      dist: xenial
+    - name: "PHP 7.2 / MySQL 5.7"
+      php: "7.2"
+      dist: xenial
+    - name: "PHP 7.3 / MySQL 5.7"
+      php: "7.3"
+      dist: xenial
+    - stage: codecoverage
+      if: type IN (pull_request) OR branch in (master, develop, hotfix)
+      php: "7.0"
+      dist: xenial
+      script: ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 1;" >> config_override.php  ; ./vendor/bin/robo code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f ./_output/coverage.xml
+
+
 services:
   - mysql
   - elasticsearch
@@ -46,6 +58,8 @@ before_script:
   - mysql -e "CREATE DATABASE automated_tests CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
   - mysql -u root -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
   - mysql -u root -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
+  # FIXME: https://github.com/salesagility/SuiteCRM/issues/7107
+  - mysql -u root -e "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode, 'STRICT_TRANS_TABLES', ''));"
   # Install apache - images with PHP 7 or above
   - sudo apt-get update
   - sudo apt-get install apache2 libapache2-mod-fastcgi

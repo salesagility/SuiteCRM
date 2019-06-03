@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,61 +38,69 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+namespace Api\V8\Controller;
 
-
-
-if (!isset($install_script) || !$install_script) {
-    die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
 
+use Api\V8\Param\GetFieldListParams;
+use Api\V8\Service\MetaService;
+use Api\V8\Service\UserService;
+use Exception;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
-$langHeader = get_language_header();
-$out =<<<EOQ
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+/**
+ * MetaController
+ */
+class MetaController extends BaseController
+{
+    
+    /**
+     * @var UserService
+     */
+    private $metaService;
+    
+    /**
+     * @param MetaService $metaService
+     */
+    public function __construct(MetaService $metaService)
+    {
+        $this->metaService = $metaService;
+    }
+    
+    /**
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
+    public function getModuleList(Request $request, Response $response, array $args)
+    {
+        try {
+            $jsonResponse = $this->metaService->getModuleList($request);
+            return $this->generateResponse($response, $jsonResponse, 200);
+        } catch (Exception $exception) {
+            return $this->generateErrorResponse($response, $exception, 400);
+        }
+    }
 
-<html {$langHeader}>
-<head>
-   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <meta http-equiv="Content-Style-Type" content="text/css">
-   <title>{$disabled_title}</title>
-   <link rel="stylesheet" href="install/install.css" type="text/css">
-</head>
-
-<body>
-  <table cellspacing="0" cellpadding="0" border="0" align="center" class=
-  "shell">
-    <tr>
-      <th width="400">{$disabled_title_2}</th>
-
-      <th width="200" height="30" style="text-align: right;">&nbsp;</th>
-    </tr>
-
-    <tr>
-      <td colspan="2">
-      <p>
-		<img src="{$sugar_md}" alt="SugarCRM" border="0">
-      </p>
-	  {$disabled_text}
-      </td>
-    </tr>
-
-    <tr>
-      <td align="right" colspan="2" height="20">
-        <hr>
-        <form action="install.php" method="post" name="form" id="form">
-        <table cellspacing="0" cellpadding="0" border="0" class="stdTable">
-          <tr>
-            <td><input class="button" type="submit" value="{$mod_strings['LBL_START']}" /></td>
-          </tr>
-        </table>
-        </form>
-      </td>
-    </tr>
-  </table>
-  <footer id="install_footer">
-    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/suitecrm/forum" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
-</footer>
-</body>
-</html>
-EOQ;
-echo $out;
+    /**
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
+    public function getFieldList(Request $request, Response $response, array $args, GetFieldListParams $fieldListParams)
+    {
+        try {
+            $jsonResponse = $this->metaService->getFieldList($request, $fieldListParams);
+            return $this->generateResponse($response, $jsonResponse, 200);
+        } catch (Exception $exception) {
+            return $this->generateErrorResponse($response, $exception, 400);
+        }
+    }
+}

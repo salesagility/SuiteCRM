@@ -87,7 +87,7 @@ class HistoryCest
         $I->click(['id'=>'subpanel_title_history']);
         $I->waitForElementVisible('#History_createnoteorattachment_button', 60);
         $I->expect('the due date is visible');
-        $I->see('01/19/2038', '//*[@id="list_subpanel_history"]/table/tbody/tr/td[9]');
+        $I->seeInSource('01/19/2038');
 
         // Delete the Account
         $detailView->clickActionMenuItem('Delete');

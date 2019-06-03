@@ -87,7 +87,7 @@ class ActivitiesCest
         $I->click(['id'=>'subpanel_title_activities']);
         $I->waitForElementVisible('#Activities_createtask_button', 60);
         $I->expect('the due date is visible');
-        $I->see('01/19/2038', '//*[@id="list_subpanel_activities"]/table/tbody/tr/td[6]');
+        $I->seeInSource('01/19/2038');
 
         // Delete the Account
         $detailView->clickActionMenuItem('Delete');
