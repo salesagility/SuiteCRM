@@ -13,10 +13,4 @@ class Administration extends \AcceptanceTester
         $I = new NavigationBarTester($this->getScenario());
         $I->clickUserMenuItem('#admin_link');
     }
-
-    public function logout()
-    {
-        $I = new NavigationBarTester($this->getScenario());
-        $I->clickUserMenuItem('#logout_link');
-    }
 }
