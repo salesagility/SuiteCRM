@@ -1,0 +1,107 @@
+image: "registry.gitlab.com/connorshea/suitecrm:latest"
+
+variables:
+  INSTANCE_URL: http://localhost
+  DATABASE_DRIVER: MYSQL
+  DATABASE_NAME: automated_tests
+  DATABASE_HOST: mysql
+  DATABASE_USER: automated_tests
+  DATABASE_PASSWORD: automated_tests
+  MYSQL_DATABASE: automated_tests
+  MYSQL_USER: automated_tests
+  MYSQL_PASSWORD: automated_tests
+  MYSQL_ROOT_PASSWORD: automated_tests
+  INSTANCE_ADMIN_USER: admin
+  INSTANCE_ADMIN_PASSWORD: admin1
+  COMPOSER_MEMORY_LIMIT: -1
+
+.default_before_script_template:
+  before_script: &default_before_script_definition
+    - composer install --no-plugins --no-scripts --no-progress --no-suggest
+
+.php_codecept_before_script_template:
+  before_script: &php_codecept_before_script_definition
+    # Install dependencies.
+    - composer install --no-plugins --no-scripts --no-progress --no-suggest
+    # Run chromedriver in the background.
+    - chromedriver --url-base=/wd/hub &
+    # Copy Apache CI config into Apache directory.
+    - cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
+    # Replace the variables in config with the pwd.
+    - sed -e "s?\${CI_PROJECT_DIR}?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
+    # Copy Travis PHP INI.
+    - cp travis.php.ini /usr/local/etc/php/php.ini
+    # Restart apache.
+    - service apache2 restart
+    # Set up codecept.
+    - ./vendor/bin/codecept build
+
+# Use anchors to reuse common configuration options.
+# https://docs.gitlab.com/ee/ci/yaml/README.html#anchors
+.php: &php
+  services:
+    - name: mysql:5.7
+    # See https://gitlab.com/gitlab-org/gitlab-ce/issues/42214#note_74842882
+    - name: docker.elastic.co/elasticsearch/elasticsearch:5.6.16
+      alias: elasticsearch
+      command: ["bin/elasticsearch", "-Expack.security.enabled=false", "-Ediscovery.type=single-node"]
+  before_script: *php_codecept_before_script_definition
+  script:
+    # Run install wizard
+    - ./vendor/bin/codecept run install --env travis-ci-hub -f -d --ext DotReporter
+    - chmod -R 777 .
+    - echo "\$sugar_config['state_checker']['test_state_check_mode'] = 2;" >> config_override.php
+    - echo "\$sugar_config['show_log_trace'] = true;" >> config_override.php
+    - echo "\$sugar_config['logger']['level'] = 'fatal';" >> config_override.php
+    # Override configured host for ElasticSearch so it will connect to the GitLab CI ElasticSearch service.
+    - echo "\$sugar_config['search']['ElasticSearch']['host'] = 'elasticsearch';" >> config_override.php
+    # Run PHPUnit Unit tests.
+    # - ./vendor/bin/phpunit --colors --configuration ./tests/phpunit.xml.dist ./tests/unit/phpunit
+    # Install OAuth2 demo data
+    - mysql --host=mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -D${MYSQL_DATABASE} -v -e "source tests/_data/api_data.sql"
+    # Install demo user data
+    - mysql --host=mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -D${MYSQL_DATABASE} -v -e "source tests/_data/demo_users.sql"
+    # set the log level to error
+    - echo "\$sugar_config['logger']['level'] = 'error';" >> config_override.php
+    # Add keys
+    - chmod -R 777 .
+    # - openssl genrsa -out Api/V8/OAuth2/private.key 2048
+    # - openssl rsa -in Api/V8/OAuth2/private.key -pubout -out Api/V8/OAuth2/public.key
+    # - chmod 600 Api/V8/OAuth2/p*.key
+    # Run API functional tests
+    # - ./vendor/bin/codecept run tests/api/V8/ -f -d -vvv
+    # Run basic acceptance tests
+    - echo "\$sugar_config['imap_test'] = true;" >> config_override.php
+    - ./vendor/bin/codecept run acceptance --env travis-ci-hub -d -vvv
+  # Save 'var/log/apache2/error.log', 'suitecrm.log', and tests output as artifacts
+  # https://docs.gitlab.com/ee/user/project/pipelines/job_artifacts.html
+  artifacts:
+    paths:
+      - /var/log/apache2/error.log
+      - suitecrm.log
+      - tests/_output/
+      - config.php
+      - config_si.php
+      - config_override.php
+    expire_in: 2 weeks
+    when: always
+
+php-lint:
+  before_script: *default_before_script_definition
+  script:
+    - for file in $(git diff --name-status HEAD~1 HEAD | egrep "^[ACMR].*\.php$" | cut -c 3-); do php -l $file; done
+  # Cache composer packages for reuse on the next run of the test suite.
+  cache:
+    # Set a key for the cache, e.g. based on the PHP version.
+    key: 'php-lint'
+    paths:
+      - vendor/
+
+php:7.2:
+  <<: *php
+  # Cache composer packages for reuse on the next run of the test suite.
+  cache:
+    # Set a key for the cache, e.g. based on the PHP version.
+    key: 'php-7.2'
+    paths:
+      - vendor/
