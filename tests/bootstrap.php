@@ -40,7 +40,7 @@
 error_reporting(E_ALL);
 
 /* bootstrap composer's autoloader */
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once dirname(__FILE__) . '/../vendor/autoload.php';
 
 /* bootstrap sugarcrm */
 error_reporting(E_ALL);

@@ -4,11 +4,7 @@ modules:
   config:
     \SuiteCRM\Test\Driver\WebDriver:
       url: "http://localhost/"
-<<<<<<< HEAD
       wait: 0
-=======
-      wait: 10
->>>>>>> Update Codeception config files.
       port: 9515 # ChromeDriver port
       browser: chrome
       window_size: false
