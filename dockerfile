@@ -1,15 +1,7 @@
 FROM php:7-apache
 LABEL maintainer "Mark N Carpenter Jr <mcarpenter@smtcorp.com>"
 
-RUN apt update && apt upgrade && apt install -y \
-    git \
-    curl \
-    ca-certificates \
-    xz-utils \
-  --no-install-reccomends && rm -r /var/lib/apt/lists/*
-
-RUN mkdir /SMT && git clone -b master http://dev2/dev/suite-crm.git /SMT/suitecrm
-
+# Set our Envrionment Variables.
 ENV ALLOW_EMPTY_PASSWORD="yes" \
     APACHE_HTTPS_PORT_NUMBER="443" \
     APACHE_HTTP_PORT_NUMBER="80" \
@@ -37,4 +29,29 @@ ENV ALLOW_EMPTY_PASSWORD="yes" \
     SUITECRM_SMTP_USER="" \
     SUITECRM_VALIDATE_USER_IP="yes"
 
+# Get our dependancies
+RUN apt update && apt upgrade -y && apt install -y \
+    php-dom \
+    php-intl \
+    php-zip \
+    php-gd \
+    php-curl \
+    git \
+    curl \
+    wget \
+    ca-certificates \
+    xz-utils \
+    && rm -r /var/lib/apt/lists/*
+
+# Grab Suite from the master branch of our repository.
+RUN mkdir /SMT && git clone -b master http://dev2/gitlab/dev/suite-crm.git /SMT/suitecrm \
+    cd /SMT/suitecrm \
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    php composer-setup.php \
+    php -r "unlink('composer-setup.php');" \
+    php composer.phar update \
+    php composer.phar install \
+    php -B "\$_REQUEST = array('goto' => 'SilentInstall');" -F install.php
+
+# Expose our appications ports
 EXPOSE 80 443
