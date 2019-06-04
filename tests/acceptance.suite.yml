@@ -20,4 +20,4 @@ modules:
             port: 9515
             capabilities:
             "goog:chromeOptions": 
-                args: ["--headless", "--no-sandbox", "--disable-dev-shm-usage", "window-size=1920x1080"]
+                args: ["--headless", "--no-sandbox", "--disable-dev-shm-usage"]
