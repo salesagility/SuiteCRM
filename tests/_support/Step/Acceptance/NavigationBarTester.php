@@ -49,20 +49,28 @@ class NavigationBarTester extends Tester
         $breakpoint = $design->getBreakpointString();
         switch ($breakpoint) {
             case DesignBreakPoint::lg:
-                $I->moveMouseOver('.desktop-bar #toolbar .globalLinks-desktop');
-                $I->click($link, '.desktop-bar #toolbar .globalLinks-desktop');
+                $globalLinks = '.desktop-bar #toolbar .globalLinks-desktop';
+                $I->waitForElementVisible($globalLinks);
+                $I->click($globalLinks);
+                $I->click($link, $globalLinks);
                 break;
             case DesignBreakPoint::md:
-                $I->click('.tablet-bar #toolbar .globalLinks-mobile');
-                $I->click($link, '.tablet-bar #toolbar .globalLinks-mobile');
+                $globalLinks = '.tablet-bar #toolbar .globalLinks-mobile';
+                $I->waitForElementVisible($globalLinks);
+                $I->click($globalLinks);
+                $I->click($link, $globalLinks);
                 break;
             case DesignBreakPoint::sm:
-                $I->click('.tablet-bar #toolbar .globalLinks-mobile');
-                $I->click($link, '.tablet-bar #toolbar .globalLinks-mobile');
+                $globalLinks = '.tablet-bar #toolbar .globalLinks-mobile';
+                $I->waitForElementVisible($globalLinks);
+                $I->click($globalLinks);
+                $I->click($link, $globalLinks);
                 break;
             case DesignBreakPoint::xs:
-                $I->click('.mobile-bar #toolbar .globalLinks-mobile');
-                $I->click($link, '.mobile-bar #toolbar .globalLinks-mobile');
+                $globalLinks = '.mobile-bar #toolbar .globalLinks-mobile';
+                $I->waitForElementVisible($globalLinks);
+                $I->click($globalLinks);
+                $I->click($link, $globalLinks);
                 break;
         }
     }
