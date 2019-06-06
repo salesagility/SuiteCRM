@@ -56,8 +56,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class LoggerManager
 {
-    //this the the current log level
-    private $_level = 'fatal';
+    //this the the current log level;
+    private static $_level = 'fatal';
 
     //this is a list of different loggers that have been loaded
     protected static $_loggers = array();
@@ -88,7 +88,7 @@ class LoggerManager
     //only let the getLogger instantiate this object
     private function __construct()
     {
-        $level = SugarConfig::getInstance()->get('logger.level', $this->_level);
+        $level = SugarConfig::getInstance()->get('logger.level', self::$_level);
         if (!empty($level)) {
             $this->setLevel($level);
         }
@@ -109,14 +109,14 @@ class LoggerManager
         $message
         ) {
         if (!isset(self::$_levelMapping[$method])) {
-            $method = $this->_level;
+            $method = self::$_level;
         }
         //if the method is a direct match to our level let's let it through this allows for custom levels
-        if ($method == $this->_level
+        if ($method == self::$_level
                 //otherwise if we have a level mapping for the method and that level is less than or equal to the current level let's let it log
                 || (!empty(self::$_levelMapping[$method])
                     && (
-                            (isset(self::$_levelMapping[$this->_level]) ? self::$_levelMapping[$this->_level] : null) >=
+                            (isset(self::$_levelMapping[self::$_level]) ? self::$_levelMapping[self::$_level] : null) >=
                             (isset(self::$_levelMapping[$method]) ? self::$_levelMapping[$method] : null)
                     ))) {
             //now we get the logger type this allows for having a file logger an email logger, a firebug logger or any other logger you wish you can set different levels to log differently
@@ -139,12 +139,12 @@ class LoggerManager
     public function wouldLog($method)
     {
         if (!isset(self::$_levelMapping[$method])) {
-            $method = $this->_level;
+            $method = self::$_level;
         }
-        if ($method == $this->_level
+        if ($method == self::$_level
                 //otherwise if we have a level mapping for the method and that level is less than or equal to the current level let's let it log
                 || (!empty(self::$_levelMapping[$method])
-                        && self::$_levelMapping[$this->_level] >= self::$_levelMapping[$method])) {
+                        && self::$_levelMapping[self::$_level] >= self::$_levelMapping[$method])) {
             return true;
         }
         return false;
@@ -175,7 +175,7 @@ class LoggerManager
         $name
         ) {
         if (isset(self::$_levelMapping[$name])) {
-            $this->_level = $name;
+            self::$_level = $name;
         }
     }
 
@@ -249,7 +249,8 @@ class LoggerManager
 
     public static function setLogLevel($level)
     {
-        self::$_instance->_level = $level;
+        $instance = self::$_instance;
+        $instance::$_level = $level;
     }
 
     public static function getLogLevel()
