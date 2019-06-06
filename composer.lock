@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a895f6897d3cf57d1d5e55bd5dcb3977",
+    "content-hash": "9057f3bf35e168f0c28cc58292dcfd93",
     "packages": [
         {
             "name": "consolidation/annotated-command",
@@ -1098,7 +1098,7 @@
                 {
                     "name": "Luís Otávio Cobucci Oblonczyk",
                     "email": "lcobucci@gmail.com",
-                    "role": "Developer"
+                    "role": "developer"
                 }
             ],
             "description": "A simple library to work with JSON Web Token and JSON Web Signature",
@@ -2802,50 +2802,6 @@
             "time": "2017-04-04T11:38:05+00:00"
         },
         {
-            "name": "browserstack/browserstack-local",
-            "version": "v1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/browserstack/browserstack-local-php.git",
-                "reference": "491c6e31960ce8111d2cb70cb84d03e73f270dbb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/browserstack/browserstack-local-php/zipball/491c6e31960ce8111d2cb70cb84d03e73f270dbb",
-                "reference": "491c6e31960ce8111d2cb70cb84d03e73f270dbb",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.19"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.6.*"
-            },
-            "suggest": {
-                "phpdocumentor/phpdocumentor": "2.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "BrowserStack\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "PHP bindings for BrowserStack Local",
-            "homepage": "https://github.com/browserstack/browserstack-local-php",
-            "keywords": [
-                "BrowserStack",
-                "browserstacklocal",
-                "local",
-                "php",
-                "selenium"
-            ],
-            "time": "2016-09-19T13:39:06+00:00"
-        },
-        {
             "name": "codeception/codeception",
             "version": "2.4.1",
             "source": {
@@ -4336,6 +4292,17 @@
         {
             "name": "roave/security-advisories",
             "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Roave/SecurityAdvisories.git",
+                "reference": "4c0ba8a35f1f12dd9236452e9fae4346b0bf2a56"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/4c0ba8a35f1f12dd9236452e9fae4346b0bf2a56",
+                "reference": "4c0ba8a35f1f12dd9236452e9fae4346b0bf2a56",
+                "shasum": ""
+            },
             "conflict": {
                 "3f/pygmentize": "<1.2",
                 "adodb/adodb-php": "<5.20.12",
@@ -4528,7 +4495,7 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
-            "time": "2019-04-24T06:22:37+00:00"
+            "time": "2019-05-23T20:42:12+00:00"
         },
         {
             "name": "sebastian/comparator",
