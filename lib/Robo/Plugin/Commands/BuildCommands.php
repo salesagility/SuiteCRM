@@ -102,10 +102,10 @@ class BuildCommands extends \Robo\Tasks
             while(false !== ($file = readdir($dir))) {
                 if (filetype($directory . $file) === 'dir' && file_exists($directory .     $file . "/style.scss")) {
                     if (file_exists($directory . $file . "/style.css")) {
-                        $this->say("Found stlye.css for {$file}, Removing");
+                        $this->say("Found style.css for {$file}, Removing");
                         unlink($directory . $file . "/style.css");
                     }
-                    $this->say("Found stlye.scss for {$file}, Compiling");
+                    $this->say("Found style.scss for {$file}, Compiling");
                     $this->buildSuitePColorScheme($file, $directory);
                 }
             }
