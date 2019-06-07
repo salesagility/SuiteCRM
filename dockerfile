@@ -1,4 +1,4 @@
-FROM php:7-apache
+FROM php:7.3-apache
 LABEL maintainer "Mark N Carpenter Jr <mcarpenter@smtcorp.com>"
 
 # Set our Envrionment Variables.
@@ -31,16 +31,20 @@ ENV ALLOW_EMPTY_PASSWORD="yes" \
 
 # Get our dependancies
 RUN apt update && apt upgrade -y && apt install -y \
-    php-dom \
-    php-intl \
-    php-zip \
-    php-gd \
-    php-curl \
+    libxml2-dev \
+    zlib1g \
     git \
+    libcurl-dev \
     curl \
     wget \
     ca-certificates \
     xz-utils \
+    && docker-php-ext-install -j$(nproc) dom \
+    && docker-php-ext-install -j$(nproc) intl \
+    && docker-php-ext-install -j$(nproc) zip \
+    && docker-php-ext-install -j$(nproc) curl \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd \
     && rm -r /var/lib/apt/lists/*
 
 # Grab Suite from the master branch of our repository.
