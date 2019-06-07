@@ -117,20 +117,29 @@ class TestEnvironmentCommands extends \Robo\Tasks
     }
 
     /**
-     * Download and run the chrome web driver
+     * Download and run the Chrome WebDriver.
+     * @command driver:run-chrome
      * @param array $opts
+     * @option string $url_base 
+     * @option bool $reinstall Forces the Chrome WebDriver executable to be reinstalled, can be used to get a newer version.
+     * @usage driver:run-chrome --reinstall
      */
-    public function driverRunChrome($opts = ['url_base' => '/wd/hub'])
+    public function driverRunChrome($opts = ['url_base' => '/wd/hub', 'reinstall' => false])
     {
         $this->say('Driver Run Chrome');
         $os = new OperatingSystem();
         $paths = new Paths();
         $url = $this->getChromeWebDriverUrl();
-        $basePath = $os->toOsPath($paths->getProjectPath().'/build/tmp/');
+        $basePath = $os->toOsPath($paths->getProjectPath() . '/build/tmp/');
 
         if (!file_exists($basePath)) {
             if (mkdir($basePath, 0777, true) === false) {
-                throw  new \RuntimeException('Unable to create file structure ' . $basePath);
+                throw new \RuntimeException('Unable to create file structure ' . $basePath);
+            }
+        } else if ($opts['reinstall']) {
+            $this->_deleteDir($basePath);
+            if (mkdir($basePath, 0777, true) === false) {
+                throw new \RuntimeException('Unable to create file structure ' . $basePath);
             }
         }
 
@@ -138,6 +147,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
         $unzippedPath = $basePath . DIRECTORY_SEPARATOR . 'webdriver';
 
         if (!file_exists($unzippedPath)) {
+            $this->say('Downloading Chrome WebDriver.');
             $this->download($url, $zipPath);
             $this->unzip($zipPath, $unzippedPath);
         }
@@ -370,6 +380,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
      */
     private function unzip($zipPath, $unzippedPath)
     {
+        $this->say("Unzipping {$zipPath}.");
         $zip = new \ZipArchive();
         $res = $zip->open($zipPath);
         if ($res === true) {
