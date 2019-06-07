@@ -1,6 +1,6 @@
 stages:
   - test
-  - build
+  - build-image
   - user-test
   - deploy
 
