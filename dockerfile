@@ -59,10 +59,13 @@ RUN mkdir /SMT && git clone -b master http://dev2/gitlab/dev/suite-crm.git /SMT/
 # Composer should cover them all though.
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 RUN php composer-setup.php && php -r "unlink('composer-setup.php');"
-RUN php composer.phar update && php composer.phar install
+RUN php composer.phar update --no-plugins --no-scripts --working-dir=/SMT/suitecrm \
+    && php composer.phar install --no-plugins --no-scripts --working-dir=/SMT/suitecrm
+
 
 # Start the SILENT install of SuiteCRM
-RUN php -B "\$_REQUEST = array('goto' => 'SilentInstall');" -F install.php
+RUN cd /SMT/suitecrm \
+    && php -B "\$_REQUEST = array('goto' => 'SilentInstall');" -F install.php
 
 # Expose our appications ports
 EXPOSE 80 443
