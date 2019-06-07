@@ -19,15 +19,16 @@ test:
     - echo $CI_COMMIT_SHA
     - echo "Dry Run Deployment On Linux3"
     - cat ~/.ssh/id_rsa.pub
-    - ls -la /var/lib/docker/volumes/suite_os/data/suitecrm
+    # - ls -la /var/lib/docker/volumes/suite_os/data/suitecrm
     # - rsync --update --dry-run --checksum -rlvzub --exclude ".*" --exclude "*.tgz" --exclude "Makefile.*" -e "ssh -i ~/.ssh/id_rsa.pub" ./ localadmin@dev2:/var/lib/docker/volumes/suite_os/_data/suitecrm
     
 
 build:
-  stage: build
+  stage: build-image
   script: 
-    - echo "Building The App"
+    - echo "Building smt/suitecrm:latest"
     - echo $CI_COMMIT_SHA
+    - docker build --tag smt/suitecrm:latest --force-rm docker
 
 deploy_prod:
   stage: deploy
