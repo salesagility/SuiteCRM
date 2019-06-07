@@ -32,9 +32,12 @@ ENV ALLOW_EMPTY_PASSWORD="yes" \
 # Get our dependancies
 RUN apt update && apt upgrade -y && apt install -y \
     libxml2-dev \
-    zlib1g \
+    zlib1g-dev \
+    libzip-dev \
+    libcurl4-gnutls-dev \
+    libjpeg-dev \
+    libpng-dev \
     git \
-    libcurl-dev \
     curl \
     wget \
     ca-certificates \
@@ -43,19 +46,23 @@ RUN apt update && apt upgrade -y && apt install -y \
     && docker-php-ext-install -j$(nproc) intl \
     && docker-php-ext-install -j$(nproc) zip \
     && docker-php-ext-install -j$(nproc) curl \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
+    # && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    # && docker-php-ext-install -j$(nproc) gd \
     && rm -r /var/lib/apt/lists/*
 
 # Grab Suite from the master branch of our repository.
 RUN mkdir /SMT && git clone -b master http://dev2/gitlab/dev/suite-crm.git /SMT/suitecrm \
-    cd /SMT/suitecrm \
-    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    php composer-setup.php \
-    php -r "unlink('composer-setup.php');" \
-    php composer.phar update \
-    php composer.phar install \
-    php -B "\$_REQUEST = array('goto' => 'SilentInstall');" -F install.php
+    && cd /SMT/suitecrm
+
+# Install Composer, we might consider adding any other Suite install Deps here
+# Composer should cover them all though.
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+RUN php composer-setup.php && php -r "unlink('composer-setup.php');"
+RUN php composer.phar update && php composer.phar install
+
+# Start the SILENT install of SuiteCRM
+RUN php -B "\$_REQUEST = array('goto' => 'SilentInstall');" -F install.php
 
 # Expose our appications ports
 EXPOSE 80 443
