@@ -47,7 +47,7 @@ if (!is_admin($GLOBALS['current_user'])) {
 }
 
 require_once('include/utils/db_utils.php');
-require_once('include/utils/zip_utils.php');
+require_once('include/utils/php_zip_utils.php');
 
 // increase the cuttoff time to 1 hour
 ini_set("max_execution_time", "3600");
