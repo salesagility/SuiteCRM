@@ -86,7 +86,9 @@ script:
   - ./build/push_output.sh
   
   # Run the unit tests
-  # - ./vendor/bin/codecept run unit --steps -f
+  - sudo chmod -R 777 .
+  - echo "\$sugar_config['state_checker']['save_traces'] = false;" >> config_override.php
+  - echo "\$sugar_config['state_checker']['redefine_memory_limit'] = false;" >> config_override.php
   - cd tests
   - ../vendor/bin/phpunit --stop-on-failure --stop-on-error --colors --configuration $(pwd)/phpunit.xml.dist ./tests/unit/phpunit
   - cd ..
