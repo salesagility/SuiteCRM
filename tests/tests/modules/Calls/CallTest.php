@@ -1,7 +1,7 @@
 <?php
 
 
-class CallTest extends PHPUnit_Framework_TestCase
+class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testCall()
     {
@@ -25,7 +25,13 @@ class CallTest extends PHPUnit_Framework_TestCase
 
     public function testACLAccess()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
         $call = new Call();
 
@@ -36,10 +42,25 @@ class CallTest extends PHPUnit_Framework_TestCase
         //test with recurring_source attribute set
         $call->recurring_source = 'test';
         $this->assertFalse($call->ACLAccess('edit'));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testSaveAndMarkDeleted()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('calls');
+        $state->pushTable('vcals');
+        $state->pushGlobals();
+        
+        // test
+        
         $call = new Call();
 
         $call->name = 'test';
@@ -53,6 +74,13 @@ class CallTest extends PHPUnit_Framework_TestCase
         $call->mark_deleted($call->id);
         $result = $call->retrieve($call->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('vcals');
+        $state->popTable('calls');
+        $state->popTable('aod_indexevent');
     }
 
     public function testget_contacts()
@@ -111,6 +139,13 @@ class CallTest extends PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_detail_fields()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $call = new Call();
 
         //execute the method and verify it sets up the intended fields
@@ -123,10 +158,21 @@ class CallTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(-1, $call->email_reminder_time);
         $this->assertEquals(false, $call->email_reminder_checked);
         $this->assertEquals('Accounts', $call->parent_type);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testget_list_view_data()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $call = new Call();
 
         $current_theme = SugarThemeRegistry::current();
@@ -172,6 +218,10 @@ class CallTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Administrator', $call->assigned_user_name);
         $this->assertEquals('Administrator', $call->created_by_name);
         $this->assertEquals('Administrator', $call->modified_by_name);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testset_notification_body()
@@ -222,6 +272,15 @@ class CallTest extends PHPUnit_Framework_TestCase
 
     public function testset_accept_status()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('calls_users');
+        $state->pushTable('vcals');
+        $state->pushGlobals();
+        
+        // test
+        
         $call = new Call();
         $call->id = 1;
 
@@ -235,6 +294,12 @@ class CallTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($call_users));
 
         $call->delete_linked($call->id);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('vcals');
+        $state->popTable('calls_users');
     }
 
     public function testget_notification_recipients()
@@ -262,10 +327,21 @@ class CallTest extends PHPUnit_Framework_TestCase
 
     public function testlistviewACLHelper()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $call = new Call();
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $call->listviewACLHelper();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testsave_relationship_changes()
@@ -277,7 +353,7 @@ class CallTest extends PHPUnit_Framework_TestCase
             $call->save_relationship_changes(true);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 

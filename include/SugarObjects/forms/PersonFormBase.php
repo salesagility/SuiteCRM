@@ -209,7 +209,7 @@ function checkForDuplicates($prefix='')
 
 	$rows = array();
 
-    global $db;
+    $db = DBManagerFactory::getInstance();
 	$result = $db->query($query);
 
     //Loop through the results and store

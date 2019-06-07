@@ -1,7 +1,7 @@
 <?php
 
 
-class BugTest extends PHPUnit_Framework_TestCase
+class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testBug()
     {
@@ -21,7 +21,6 @@ class BugTest extends PHPUnit_Framework_TestCase
 
     public function testget_summary_text()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $bug = new Bug();
 
@@ -72,7 +71,7 @@ class BugTest extends PHPUnit_Framework_TestCase
             $bug->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -177,7 +176,17 @@ class BugTest extends PHPUnit_Framework_TestCase
     }
 
     public function testsave()
-    {
+    {	
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('bugs');
+        $state->pushGlobals();
+        
+        // test
+
         $bug = new Bug();
 
         $bug->name = 'test';
@@ -197,6 +206,12 @@ class BugTest extends PHPUnit_Framework_TestCase
         $bug->mark_deleted($bug->id);
         $result = $bug->retrieve($bug->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('bugs');
+        $state->popTable('aod_indexevent');
     }
 
     public function testgetReleaseDropDown()

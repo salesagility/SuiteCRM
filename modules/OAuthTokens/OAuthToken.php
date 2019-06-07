@@ -233,7 +233,7 @@ class OAuthToken extends SugarBean
 	 */
     static public function cleanup()
 	{
-	    global $db;
+	    $db = DBManagerFactory::getInstance();
 	    // delete invalidated tokens older than 1 day
 	    $db->query("DELETE FROM oauth_tokens WHERE tstate = ".self::INVALID." AND token_ts < ".(time()-60*60*24));
 	    // delete request tokens older than 1 day
@@ -248,7 +248,7 @@ class OAuthToken extends SugarBean
 	 */
 	public static function checkNonce($key, $nonce, $ts)
 	{
-	    global $db;
+	    $db = DBManagerFactory::getInstance();
 
 	    $res = $db->query(sprintf("SELECT * FROM oauth_nonce WHERE conskey='%s' AND nonce_ts > %d", $db->quote($key), $ts));
 	    if($res && $db->fetchByAssoc($res)) {
@@ -282,7 +282,7 @@ class OAuthToken extends SugarBean
 	 */
 	public static function deleteByConsumer($consumer_id)
 	{
-	   global $db;
+	   $db = DBManagerFactory::getInstance();
 	   $db->query("DELETE FROM oauth_tokens WHERE consumer='".$db->quote($consumer_id) ."'");
 	}
 
@@ -292,7 +292,7 @@ class OAuthToken extends SugarBean
 	 */
 	public static function deleteByUser($user_id)
 	{
-	   global $db;
+	   $db = DBManagerFactory::getInstance();
 	   $db->query("DELETE FROM oauth_tokens WHERE assigned_user_id='".$db->quote($user_id) ."'");
 	}
 

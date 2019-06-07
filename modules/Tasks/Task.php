@@ -295,7 +295,16 @@ class Task extends SugarBean {
 
 		$today = $timedate->nowDb();
 		$task_fields = $this->get_list_view_array();
-		$dbtime = $timedate->to_db($task_fields['DATE_DUE']);
+                
+                
+                $dateDue = null;
+                if (isset($task_fields['DATE_DUE'])) {
+                    $dateDue = $task_fields['DATE_DUE'];
+                } else {
+                    LoggerManager::getLogger()->warn('Due date is not set for Test list view data');
+                }
+                
+		$dbtime = $timedate->to_db($dateDue);
 		if($override_date_for_subpanel){
 			$dbtime = $timedate->to_db($task_fields['DATE_START']);
 		}

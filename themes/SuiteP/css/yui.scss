@@ -1181,6 +1181,7 @@ span.yui-carousel-first-button-disabled {
 
 .yui-dt-scrollable .yui-dt-bd {
   overflow: scroll;
+  max-height: 465px;
 }
 
 .yui-dt-scrollable .yui-dt-hd {
@@ -2976,7 +2977,7 @@ div.yui-layout-hd h2 {
 }
 
 .yui-layout .yui-layout-noscroll div.yui-layout-bd {
-  overflow: hidden;
+  overflow: visible;
 }
 
 .yui-layout .yui-layout-scroll div.yui-layout-bd {
@@ -2998,11 +2999,11 @@ div.yui-layout-hd h2 {
 
 .yui-layout .yui-layout-unit div.yui-layout-hd .collapse {
   position: absolute;
-  top: 5px;
+  top: 25px;
   font-size: 0;
   cursor: pointer;
-  width: 11px;
-  height: 11px;
+  height: 111px;
+  width: 111px;
 }
 
 .yui-layout .yui-layout-unit div.yui-layout-hd .close {
@@ -3038,6 +3039,7 @@ div.yui-layout-hd h2 {
 
 .yui-layout .yui-layout-wrap {
   position: absolute;
+  top: 50px;
   left: 0;
   width: 100%;
   height: 100%;
@@ -3250,7 +3252,7 @@ div.yui-layout-hd h2 {
 .yui-layout-unit .yui-resize-handle-r .yui-layout-resize-knob, .yui-layout-unit .yui-resize-handle-l .yui-layout-resize-knob
 {
   position: absolute;
-  height: 16px;
+  height: 0;
   width: 6px;
   top: 45%;
   left: 0;
@@ -3678,43 +3680,31 @@ a.yuimenuitemlabel:hover {
 
 .yui-pg-first, .yui-pg-previous, .yui-pg-next, .yui-pg-last, .yui-pg-current, .yui-pg-pages, .yui-pg-page
 {
-  display: inline-block;
   font-family: arial, helvetica, clean, sans-serif;
   padding: 3px 6px;
   zoom: 1;
 }
 
 .yui-pg-pages {
-  padding: 0;
+  font-family: arial, helvetica, clean, sans-serif;
+  zoom: 1;
 }
 
 .yui-pg-current {
-  padding: 3px 0;
-}
 
-/* a.yui-pg-first:link, a.yui-pg-first:visited, a.yui-pg-first:active, a.yui-pg-first:hover, a.yui-pg-previous:link, a.yui-pg-previous:visited, a.yui-pg-previous:active, a.yui-pg-previous:hover, a.yui-pg-next:link, a.yui-pg-next:visited, a.yui-pg-next:active, a.yui-pg-next:hover, a.yui-pg-last:link, a.yui-pg-last:visited, a.yui-pg-last:active, a.yui-pg-last:hover, a.yui-pg-page:link, a.yui-pg-page:visited, a.yui-pg-page:active, a.yui-pg-page:hover
-    {
-    color: #06c;
-    text-decoration: underline;
-    outline: 0;
 }
-
- span.yui-pg-first, span.yui-pg-previous, span.yui-pg-next, span.yui-pg-last
-    {
-    color: #a6a6a6;
-}*/
 
 .yui-pg-page {
-  background-color: #fff;
-  padding: 2px 6px;
+  background-color: rgb(246, 246, 246);
+  padding: 0 0;
   border: 1px solid #CBCBCB;
   text-decoration: none;
 }
 
 .yui-pg-current-page {
   font-weight: bold;
-  background-color: transparent;
-  padding: 3px 6px;
+  background-color: #c8cec4;
+  padding: 3px 6px 3px 6px;
   border: none;
 }
 
@@ -3998,7 +3988,7 @@ a.yuimenuitemlabel:hover {
   right: 0;
   cursor: s-resize;
   width: 100%;
-  height: 5px;
+  height: 15px;
   zoom: 1;
 }
 
@@ -6102,34 +6092,6 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
   background-color: transparent ;
 }
 
-/*
-    //Custom SugarCRM theme
-
-.yui-layout-wrap .yui-navset .yui-content {
-    background:#FFF none repeat scroll 0 0;
-    height : 100%;
-}
-
-.yui-layout .yui-layout-unit .yui-layout-wrap div.yui-layout-bd {
-    background:#FFF none repeat scroll 0 0;
-}
-
-
-.yui-navset-top ul{
-
-    border-style:solid;
-    border-width:0 0 5px;
-}
-
-
-.yui-navset-top ul li.selected a, .yui-navset-top ul li.selected a:focus, .yui-navset-top ul li.selected a:hover {
-
-}
-
-.yui-navset  {
-    height : 100%;
-}*/
-
 .yui-layout-unit-right.yui-resize .yui-layout-wrap .yui-layout-hd {
 
   padding:10px 0 10px 0;
@@ -6153,5 +6115,5 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
 }
 
 .yui-layout .yui-layout-clip {
-  padding:10px 0 0 0;
+  padding:10px;
 }

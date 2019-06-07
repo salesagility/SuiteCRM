@@ -276,6 +276,10 @@ class M2MRelationship extends SugarRelationship
 				$this->def['join_key_rhs'] => $rhs->id
 			);
 
+            if(!empty($this->def['relationship_role_column']) && !empty($this->def['relationship_role_column_value'])) {
+                $dataToRemove[$this->def['relationship_role_column']] = $this->def['relationship_role_column_value'];
+            }
+            $dataToRemove['deleted'] = 0;
 
               if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes")
               {
@@ -430,7 +434,14 @@ class M2MRelationship extends SugarRelationship
         }
         $rel_table = $this->getRelationshipTable();
 
-        $where = "$rel_table.$knownKey = '{$link->getFocus()->id}'" . $this->getRoleWhere();
+        $linkFocusId = null;
+        if (isset($link->getFocus()->id)) {
+            $linkFocusId = $link->getFocus()->id;
+        } else {
+            LoggerManager::getLogger()->error('Link focus id is not set for M2MRelationship get query');
+        }
+        
+        $where = "$rel_table.$knownKey = '{$linkFocusId}'" . $this->getRoleWhere();
         $order_by = '';
 
         //Add any optional where clause
@@ -619,7 +630,7 @@ class M2MRelationship extends SugarRelationship
         //Roles can allow for multiple links between two records with different roles
         $query .= $this->getRoleWhere() . " and deleted = 0";
 
-        return $GLOBALS['db']->getOne($query);
+        return DBManagerFactory::getInstance()->getOne($query);
     }
 
     /**

@@ -45,7 +45,12 @@ function get_hook_array($module_name){
 
 			$hook_array = null;
 			// This will load an array of the hooks to process
-			include("custom/modules/$module_name/logic_hooks.php");
+                        $file = "custom/modules/$module_name/logic_hooks.php";
+                        if (file_exists($file)) {
+                            include($file);
+                        } else {
+                            LoggerManager::getLogger()->warn('File not found: ' . $file);
+                        }
 			return $hook_array;
 
 //end function return_hook_array

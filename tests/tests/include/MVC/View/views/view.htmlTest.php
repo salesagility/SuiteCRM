@@ -1,6 +1,6 @@
 <?php
 
-class ViewHtmlTest extends PHPUnit_Framework_TestCase
+class ViewHtmlTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testViewHtml()
     {
@@ -19,7 +19,7 @@ class ViewHtmlTest extends PHPUnit_Framework_TestCase
         try {
             $view->display();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 }

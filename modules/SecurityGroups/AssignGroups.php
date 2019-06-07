@@ -71,8 +71,20 @@ function popup_onload($event, $arguments)
 */
 	global $sugar_config;
 
-	$module = $_REQUEST['module'];
-	$action = $_REQUEST['action'];
+        $action = null;
+        if (isset($_REQUEST['action'])) {
+            $action = $_REQUEST['action'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined action in request');
+        }
+        
+        $module = null;
+        if (isset($_REQUEST['module'])) {
+            $module = $_REQUEST['module'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined module in request');
+        }
+        
 
 	if(isset($action) && ($action == "Save" || $action == "SetTimezone")) return;  
 
@@ -118,8 +130,22 @@ EOQ;
 
 function mass_assign($event, $arguments)
 {
-    $action = $_REQUEST['action'];
-    $module = $_REQUEST['module'];
+    
+        
+        $action = null;
+        if (isset($_REQUEST['action'])) {
+            $action = $_REQUEST['action'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined action in request');
+        }
+        
+        $module = null;
+        if (isset($_REQUEST['module'])) {
+            $module = $_REQUEST['module'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined module in request');
+        }
+        
   
   	$no_mass_assign_list = array("Emails"=>"Emails","ACLRoles"=>"ACLRoles"); //,"Users"=>"Users");
     //check if security suite enabled

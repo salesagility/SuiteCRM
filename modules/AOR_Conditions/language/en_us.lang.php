@@ -62,4 +62,6 @@ $mod_strings = array (
   'LBL_CONDITION_OPERATOR' => 'Condition Operator',
   'LBL_AOR_REPORT_ID' => 'Report Id',
   'LBL_PARAMETER' => 'Parameter',
+    'LBL_CONDITION_AND' => 'AND',
+    'LBL_CONDITION_OR' => 'OR',
 );

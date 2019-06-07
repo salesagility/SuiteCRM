@@ -419,8 +419,7 @@ function getRunningUser()
     if ($runningUser == null) {  // matches null, false and ""
         if (is_windows()) {
             $runningUser = getenv('USERDOMAIN').'\\'.getenv('USERNAME');
-        }
-        else {
+        } else {
             $usr = posix_getpwuid(posix_geteuid());
             $runningUser = $usr['name'];
         }
@@ -462,7 +461,6 @@ function addCronAllowedUser($addUser)
         } else {
             $sugar_config['cron']['allowed_cron_users'][] = $addUser;
             $GLOBALS['log']->info("Web server user $addUser added to allowed_cron_users in config.php.");
-
         }
     }
 
@@ -651,7 +649,7 @@ function get_assigned_user_name($assigned_user_id, $is_group = '')
  */
 function get_user_name($id)
 {
-    global $db;
+    $db = DBManagerFactory::getInstance();
 
     if (empty($db)) {
         $db = DBManagerFactory::getInstance();
@@ -1341,7 +1339,7 @@ function append_where_clause(&$where_clauses, $variable_name, $SQL_name = null)
     }
 
     if (isset($_REQUEST[$variable_name]) && $_REQUEST[$variable_name] != '') {
-        array_push($where_clauses, "$SQL_name like '".$GLOBALS['db']->quote($_REQUEST[$variable_name])."%'");
+        array_push($where_clauses, "$SQL_name like '".DBManagerFactory::getInstance()->quote($_REQUEST[$variable_name])."%'");
     }
 }
 
@@ -1686,8 +1684,7 @@ function sugar_die($error_message, $exit_code = 1)
 {
     global $focus;
     sugar_cleanup();
-    //echo $error_message;
-    //die($exit_code);
+    echo $error_message;
     throw new \Exception($error_message, $exit_code);
 }
 
@@ -2294,7 +2291,7 @@ function securexss($value)
 
         return $new;
     }
-    static $xss_cleanup = array('&quot;' => '&#38;', '"' => '&quot;', "'" => '&#039;', '<' => '&lt;', '>' => '&gt;');
+    static $xss_cleanup = ['&quot;' => '&#38;', '"' => '&quot;', "'" => '&#039;', '<' => '&lt;', '>' => '&gt;', '`' => '&#96;'];
     $value = preg_replace(array('/javascript:/i', '/\0/'), array('java script:', ''), $value);
     $value = preg_replace('/javascript:/i', 'java script:', $value);
 
@@ -2390,9 +2387,9 @@ function getWebPath($relative_path)
 {
     $current_theme = SugarThemeRegistry::current();
     $theme_directory = $current_theme->dirName;
-    if(strpos($relative_path, "themes".DIRECTORY_SEPARATOR.$theme_directory) === false) {
+    if (strpos($relative_path, "themes".DIRECTORY_SEPARATOR.$theme_directory) === false) {
         $test_path = SUGAR_PATH.DIRECTORY_SEPARATOR."themes".DIRECTORY_SEPARATOR.$theme_directory.DIRECTORY_SEPARATOR.$relative_path;
-        if(file_exists($test_path)) {
+        if (file_exists($test_path)) {
             $resource_name = "themes".DIRECTORY_SEPARATOR.$theme_directory.DIRECTORY_SEPARATOR.$relative_path;
         }
     }
@@ -3067,7 +3064,8 @@ function decodeJavascriptUTF8($str)
  *                   0 if version is between minimun and recomended PHP versions,
  *                   -1 otherwise (less than minimum or buggy version)
  */
-function check_php_version($sys_php_version = '') {
+function check_php_version($sys_php_version = '')
+{
     if ($sys_php_version === '') {
         $sys_php_version = constant('PHP_VERSION');
     }
@@ -3396,7 +3394,7 @@ function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext
     $error_msg = " $errstr occurred in <b>$errfile</b> on line $errline [".date('Y-m-d H:i:s').']';
     $halt_script = true;
     switch ($errno) {
-        case 2048 :
+        case 2048:
             return; //depricated we have lots of these ignore them
         case E_USER_NOTICE:
         case E_NOTICE:
@@ -3490,6 +3488,7 @@ function return_bytes($val)
 {
     $val = trim($val);
     $last = strtolower($val{strlen($val) - 1});
+    $val = preg_replace("/[^0-9,.]/", "", $val);
 
     switch ($last) {
         // The 'G' modifier is available since PHP 5.1.0
@@ -3720,30 +3719,13 @@ function search_filter_rel_info(&$focus, $tar_rel_module, $relationship_name)
     //end function search_filter_rel_info
 }
 
+/**
+ * @param $module_name
+ * @return mixed
+ */
 function get_module_info($module_name)
 {
-    global $beanList;
-    global $dictionary;
-
-    //Get dictionary and focus data for module
-    $vardef_name = $beanList[$module_name];
-
-    if ($vardef_name == 'aCase') {
-        $class_name = 'Case';
-    } else {
-        $class_name = $vardef_name;
-    }
-
-    if (!file_exists('modules/'.$module_name.'/'.$class_name.'.php')) {
-        return;
-    }
-
-    include_once 'modules/'.$module_name.'/'.$class_name.'.php';
-
-    $module_bean = new $vardef_name();
-
-    return $module_bean;
-    //end function get_module_table
+    return BeanFactory::getBean($module_name);
 }
 
 /**
@@ -3843,7 +3825,7 @@ function getPhpInfo($level = -1)
  *
  * @return $result a formatted string
  */
-function string_format($format, $args)
+function string_format($format, $args, $escape = true)
 {
     $result = $format;
 
@@ -3860,8 +3842,21 @@ function string_format($format, $args)
     }
     /* End of fix */
 
+    if ($escape) {
+        $db = DBManagerFactory::getInstance();
+    }
     for ($i = 0; $i < count($args); ++$i) {
-        $result = str_replace('{'.$i.'}', $args[$i], $result);
+        if (strpos($args[$i], ',') !== false) {
+            $values = explode(',', $args[$i]);
+            if ($escape) {
+                foreach ($values as &$value) {
+                    $value = $db->quote($value);
+                }
+            }
+            $args[$i] = implode("','", $values);
+        }
+
+        $result = str_replace('{'.$i.'}', "'" . $args[$i] . "'", $result);
     }
 
     return $result;
@@ -4178,11 +4173,11 @@ function generate_search_where(
                         if (!empty($field_value)) {
                             $field_value .= ',';
                         }
-                        $field_value .= "'".$GLOBALS['db']->quote($val)."'";
+                        $field_value .= "'".DBManagerFactory::getInstance()->quote($val)."'";
                     }
                 }
             } else {
-                $field_value = $GLOBALS['db']->quote($values[$field]);
+                $field_value = DBManagerFactory::getInstance()->quote($values[$field]);
             }
             //set db_fields array.
             if (!isset($parms['db_field'])) {
@@ -4190,7 +4185,7 @@ function generate_search_where(
             }
             if (isset($parms['my_items']) and $parms['my_items'] == true) {
                 global $current_user;
-                $field_value = $GLOBALS['db']->quote($current_user->id);
+                $field_value = DBManagerFactory::getInstance()->quote($current_user->id);
                 $operator = '=';
             }
 
@@ -4201,7 +4196,7 @@ function generate_search_where(
                     if (strstr($db_field, '.') === false) {
                         $db_field = $bean->table_name.'.'.$db_field;
                     }
-                    if ($GLOBALS['db']->supports('case_sensitive') && isset($parms['query_type']) && $parms['query_type'] == 'case_insensitive') {
+                    if (DBManagerFactory::getInstance()->supports('case_sensitive') && isset($parms['query_type']) && $parms['query_type'] == 'case_insensitive') {
                         $db_field = 'upper('.$db_field.')';
                         $field_value = strtoupper($field_value);
                     }
@@ -4211,7 +4206,7 @@ function generate_search_where(
                         $where .= ' OR ';
                     }
                     switch (strtolower($operator)) {
-                        case 'like' :
+                        case 'like':
                             $where .= $db_field." like '".$field_value.$like_char."'";
                             break;
                         case 'in':
@@ -4370,11 +4365,10 @@ function createGroupUser($name)
 
 function _getIcon($iconFileName)
 {
-    if(file_exists(SugarThemeRegistry::current()->getImagePath().DIRECTORY_SEPARATOR.'icon_'.$iconFileName.'.svg')) {
+    if (file_exists(SugarThemeRegistry::current()->getImagePath().DIRECTORY_SEPARATOR.'icon_'.$iconFileName.'.svg')) {
         $iconName = "icon_{$iconFileName}.svg";
         $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
-    }
-    else {
+    } else {
         $iconName = "icon_{$iconFileName}.gif";
         $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
     }
@@ -4461,11 +4455,11 @@ function html_entity_decode_utf8($string)
     //php will have issues with numbers with leading zeros, so do not include them in what we send to code2utf.
 
     $string = preg_replace_callback('~&#x0*([0-9a-f]+);~i',
-        function($matches) {
+        function ($matches) {
             return code2utf(hexdec($matches[1]));
         }, $string);
     $string = preg_replace_callback('~&#0*([0-9]+);~',
-        function($matches) {
+        function ($matches) {
             return code2utf($matches[1]);
         }, $string);
 
@@ -4543,7 +4537,7 @@ function chartColors()
  */
 function ajaxInit()
 {
-    ini_set('display_errors', 'false');
+    //ini_set('display_errors', 'false');
 }
 
 /**
@@ -5445,7 +5439,48 @@ function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL
  * @return bool
  * @todo add to a separated common validator class
  */
-function isValidId($id) {
+function isValidId($id)
+{
     $valid = is_numeric($id) || (is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id));
     return $valid;
+}
+
+function getAppString($key)
+{
+    global $app_strings;
+
+    if (!isset($app_strings[$key])) {
+        LoggerManager::getLogger()->warn('Language key not found: ' . $key);
+        return $key;
+    }
+
+    if (!$app_strings[$key]) {
+        LoggerManager::getLogger()->warn('Language string is empty at key: ' . $key);
+        return $key;
+    }
+
+    return $app_strings[$key];
+}
+
+/**
+ * @param string $className
+ * @return mixed
+ */
+function getClassInstance($className, $includePath = false)
+{
+    if ($includePath) {
+        require_once get_custom_file_if_exists($includePath);
+    }
+
+    $customClassName = 'Custom' . $className;
+
+    if (class_exists($customClassName)) {
+        return new $customClassName;
+    }
+
+    if (class_exists($className)) {
+        return new $className;
+    }
+
+    LoggerManager::getLogger()->fatal('Unable to find class: ' . $className);
 }

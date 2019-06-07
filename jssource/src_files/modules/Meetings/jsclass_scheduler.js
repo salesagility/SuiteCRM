@@ -790,7 +790,7 @@ SugarWidgetScheduler.getScheduleDetails = function(beans, ids) {
     }
 
     $.each(arguments, function (index, value) {
-      SUGAR.util.evalScript(value[0]);
+      SUGAR.util.evalScript('<script>' + value[0] + '</script>');
       var container = result.body;
       containers.push(container);
     });

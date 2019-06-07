@@ -1,9 +1,16 @@
 <?php
 
-class ViewQuickeditTest extends PHPUnit_Framework_TestCase
+class ViewQuickeditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testpreDisplay()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         //check without setting any values, it should execute without any issues.
         $view = new ViewQuickedit();
         $view->preDisplay();
@@ -22,12 +29,21 @@ class ViewQuickeditTest extends PHPUnit_Framework_TestCase
         $_REQUEST['record'] = 1;
         $view->preDisplay();
         $this->assertNotSame($request, $_REQUEST);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testdisplay()
     {
-        error_reporting(E_ALL);
-        //error_reporting(E_ERROR | E_PARSE |E_NOTICE);
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
         //execute the method with required child objects and paramerers preset. it will rteturn some html.
         $view = new ViewQuickedit();
@@ -53,5 +69,9 @@ class ViewQuickeditTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->assertStringStartsWith('mysqli_query()', $e->getMessage());
         }
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 }

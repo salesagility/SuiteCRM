@@ -387,10 +387,10 @@ class SugarApplication
  	    if ( empty($row_count) )
  	    {
             $version_query = "SELECT count(*) as the_count FROM config WHERE category='info' AND name='sugar_version' AND ".
-            $GLOBALS['db']->convert('value', 'text2char')." = ".$GLOBALS['db']->quoted($GLOBALS['sugar_db_version']);
+            DBManagerFactory::getInstance()->convert('value', 'text2char')." = ".DBManagerFactory::getInstance()->quoted($GLOBALS['sugar_db_version']);
 
-            $result = $GLOBALS['db']->query($version_query);
-            $row = $GLOBALS['db']->fetchByAssoc($result);
+            $result = DBManagerFactory::getInstance()->query($version_query);
+            $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
             $row_count = $row['the_count'];
             sugar_cache_put('checkDatabaseVersion_row_count', $row_count);
         }

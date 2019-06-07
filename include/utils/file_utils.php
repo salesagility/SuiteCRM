@@ -130,13 +130,7 @@ function write_array_to_file( $the_name, $the_array, $the_file, $mode="w", $head
                     var_export_helper( $the_array ) .
                     ";";
 
-    $result = sugar_file_put_contents($the_file, $the_string, LOCK_EX) !== false;
-
-    if (function_exists('opcache_invalidate')) {
-        opcache_invalidate($the_file, true);
-    }
-
-    return $result;
+    return sugar_file_put_contents($the_file, $the_string, LOCK_EX) !== false;
 }
 
 function write_encoded_file( $soap_result, $write_to_dir, $write_to_file="" )
@@ -363,7 +357,9 @@ function get_file_extension($filename, $string_to_lower=true)
 {
     if(strpos($filename, '.') !== false)
     {
-       return $string_to_lower ? strtolower(array_pop(explode('.',$filename))) : array_pop(explode('.',$filename));
+        $splits = explode('.',$filename);
+        $pop = array_pop($splits);
+        return $string_to_lower ? strtolower($pop) : $pop;
     }
 
     return '';
@@ -439,7 +435,9 @@ function get_mime_content_type_from_filename($filename)
             'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
         );
 
-        $ext = strtolower(array_pop(explode('.',$filename)));
+        $splits = explode('.',$filename);
+        $pop = array_pop($splits);
+        $ext = strtolower($pop);
         if (array_key_exists($ext, $mime_types)) {
             return $mime_types[$ext];
         }

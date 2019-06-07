@@ -1,6 +1,6 @@
 <?php
 
-class UserPreferenceTest extends PHPUnit_Framework_TestCase
+class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function test__construct()
     {
@@ -22,7 +22,6 @@ class UserPreferenceTest extends PHPUnit_Framework_TestCase
     {
         global $sugar_config;
 
-        error_reporting(E_ERROR | E_PARSE);
 
         $userPreference = new UserPreference();
 
@@ -43,13 +42,27 @@ class UserPreferenceTest extends PHPUnit_Framework_TestCase
         $result = $userPreference->getDefaultPreference('timef');
         $this->assertEquals($time_format, $result);
 
-        $email_link_type = $sugar_config['email_link_type'] != '' ? $sugar_config['email_link_type'] : $sugar_config['email_default_client'];
+        $emailLinkType = null;
+        if (isset($sugar_config['email_link_type'])) {
+            $emailLinkType = $sugar_config['email_link_type'];
+        } else {
+            LoggerManager::getLogger()->warn('Email link type is not set, please use $sugar_config[email_link_type]');
+        }
+        
+        $email_link_type = $emailLinkType != '' ? $emailLinkType : $sugar_config['email_default_client'];
         $result = $userPreference->getDefaultPreference('email_link_type');
         $this->assertEquals($email_link_type, $result);
     }
 
     public function testSetAndGetPreference()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         global $sugar_config;
 
         $user = new User();
@@ -68,10 +81,21 @@ class UserPreferenceTest extends PHPUnit_Framework_TestCase
 
         $result = $userPreference->getPreference('chartEngine');
         $this->assertEquals($sugar_config['chartEngine'], $result);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testloadPreferences()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $user = new User();
         $user->retrieve('1');
 
@@ -79,22 +103,44 @@ class UserPreferenceTest extends PHPUnit_Framework_TestCase
 
         $result = $userPreference->loadPreferences();
 
-        $this->assertEquals(false, $result);
+        $this->assertEquals(true, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testreloadPreferences()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $user = new User();
         $user->retrieve('1');
 
         $userPreference = new UserPreference($user);
 
         $result = $userPreference->reloadPreferences();
-        $this->assertEquals(false, $result);
+        $this->assertEquals(true, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testgetUserDateTimePreferences()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $user = new User();
         $user->retrieve('1');
 
@@ -102,10 +148,22 @@ class UserPreferenceTest extends PHPUnit_Framework_TestCase
 
         $result = $userPreference->getUserDateTimePreferences();
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testSavePreferencesToDBAndResetPreferences()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('user_preferences');
+        $state->pushGlobals();
+        
+        // test
+        
         $user = new User();
         $user->retrieve('1');
 
@@ -129,10 +187,17 @@ class UserPreferenceTest extends PHPUnit_Framework_TestCase
                 'category' => 'test_category',
         ));
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('user_preferences');
     }
 
     public function testupdateAllUserPrefs()
     {
+        $this->markTestIncomplete('Multiple errors in method: Unknown column user_preferences in field list');
+        
         global $current_user;
 
         $current_user = new User();
@@ -140,6 +205,5 @@ class UserPreferenceTest extends PHPUnit_Framework_TestCase
 
         //UserPreference::updateAllUserPrefs("test","test val");
 
-        $this->markTestIncomplete('Multiple errors in method: Unknown column user_preferences in field list');
     }
 }

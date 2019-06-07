@@ -132,7 +132,15 @@ function query_client_ip()
 	}
 	else
 	{
-		$clientIP = $_SERVER['REMOTE_ADDR'];
+            
+            $remoteAddr = null;
+            if (isset($_SERVER['REMOTE_ADDR'])) {
+                $remoteAddr = $_SERVER['REMOTE_ADDR'];
+            } else {
+                LoggerManager::getLogger()->warn('Remote Address is not defined');
+            }
+            
+            $clientIP = $remoteAddr;
 	}
 	return $clientIP;
 }

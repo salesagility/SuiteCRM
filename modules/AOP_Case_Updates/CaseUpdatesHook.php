@@ -602,14 +602,25 @@ class CaseUpdatesHook
     {
         global $current_user, $sugar_config;
         $email_template = new EmailTemplate();
-        if ($_REQUEST['module'] === 'Import') {
+        
+        $module = null;
+        if (isset($_REQUEST['module'])) {
+            $module = $_REQUEST['module'];
+        } else {
+            LoggerManager::getLogger()->warn('Requested module is not set for case update');
+        }
+        
+        if ($module === 'Import') {
             //Don't send email on import
+            LoggerManager::getLogger()->warn("Don't send email on import");
             return;
         }
         if (!isAOPEnabled()) {
+            LoggerManager::getLogger()->warn("Don't send email if AOP enabled");
             return;
         }
         if ($caseUpdate->internal) {
+            LoggerManager::getLogger()->warn("Don't send email if case update is internal");
             return;
         }
         $signature = array();

@@ -254,12 +254,12 @@ else if(!isset($_GET['execute'])){
 
 	global $current_user;
 	// Set the from and to user names so that we can display them in the results
-	$fromusername = $_POST['fromuser'];
-	$tousername = $_POST['touser'];
+    $fromUserNameQuoted = $this->db->quote($_POST['fromuser']);
+	$toUserNameQuoted = $this->db->quote($_POST['touser']);
 
-	$query = "select user_name, id from users where id in ('{$_POST['fromuser']}', '{$_POST['touser']}')";
-	$res = $GLOBALS['db']->query($query, true);
-	while($row = $GLOBALS['db']->fetchByAssoc($res)){
+    $query = "select user_name, id from users where id in ('$fromUserNameQuoted', '$toUserNameQuoted')";
+	$res = DBManagerFactory::getInstance()->query($query, true);
+	while($row = DBManagerFactory::getInstance()->fetchByAssoc($res)){
 		if($row['id'] == $_POST['fromuser'])
 			$fromusername = $row['user_name'];
 		if($row['id'] == $_POST['touser'])
@@ -300,13 +300,16 @@ else if(!isset($_GET['execute'])){
 		echo "<tr>\n";
 		echo "<td>\n";
 
+        $currentUserID = $this->db->quote($current_user->id);
+        $tableName = $this->db->quote($object->table_name);
+
 		$q_select = "select id";
 		$q_update = "update ";
-		$q_set = " set assigned_user_id = '{$_POST['touser']}', ".
+		$q_set = " set assigned_user_id = '$toUserNameQuoted', ".
 			      "date_modified = '".TimeDate::getInstance()->nowDb()."', ".
-			      "modified_user_id = '{$current_user->id}' ";
-		$q_tables   = " {$object->table_name} ";
-		$q_where  = "where {$object->table_name}.deleted=0 and {$object->table_name}.assigned_user_id = '{$_POST['fromuser']}' ";
+			      "modified_user_id = '$currentUserID' ";
+		$q_tables   = " {$tableName} ";
+		$q_where  = "where {$tableName}.deleted=0 and {$tableName}.assigned_user_id = '$fromUserNameQuoted' ";
 
 		// Process conditions based on metadata
 		if(isset($moduleFilters[$p_module]['fields']) && is_array($moduleFilters[$p_module]['fields'])){
@@ -316,28 +319,29 @@ else if(!isset($_GET['execute'])){
 					$_SESSION['reassignRecords']['filters'][$meta['name']] = $_POST[$meta['name']];
 				$is_custom = isset($meta['custom_table']) && $meta['custom_table'] == true;
 				if($is_custom && !$custom_added){
-					$q_tables .= "inner join {$object->table_name}_cstm on {$object->table_name}.id = {$object->table_name}_cstm.id_c ";
+					$q_tables .= "inner join {$tableName}_cstm on {$tableName}.id = {$tableName}_cstm.id_c ";
 					$custom_added = true;
 				}
 				$addcstm = ($is_custom ? "_cstm" : "");
+				$nameQuoted = $_POST[$meta['name']];
 				switch($meta['type']){
 					case "text":
 					case "select":
-						$q_where .= " and {$object->table_name}{$addcstm}.{$meta['dbname']} = '{$_POST[$meta['name']]}' ";
+						$q_where .= " and {$tableName}{$addcstm}.{$meta['dbname']} = '{$nameQuoted}' ";
 						break;
 					case "multiselect":
-						if(empty($_POST[$meta['name']])){
+						if(empty($nameQuoted)){
 							continue;
 						}
 						$in_string = "";
 						$empty_check = "";
-						foreach($_POST[$meta['name']] as $onevalue){
+						foreach($nameQuoted as $onevalue){
 							if(empty($onevalue))
-								$empty_check .= " OR {$object->table_name}{$addcstm}.{$meta['dbname']} is null ";
+								$empty_check .= " OR {$tableName}{$addcstm}.{$meta['dbname']} is null ";
 							$in_string .= "'$onevalue', ";
 						}
 						$in_string = substr($in_string, 0, count($in_string) - 3);
-						$q_where .= " and ({$object->table_name}{$addcstm}.{$meta['dbname']} in ($in_string) $empty_check)";
+						$q_where .= " and ({$tableName}{$addcstm}.{$meta['dbname']} in ($in_string) $empty_check)";
 						break;
 					default:
 						//echo "Skipping field {$meta['name']} since the type is not supported<BR>";
@@ -357,8 +361,8 @@ else if(!isset($_GET['execute'])){
 		$_SESSION['reassignRecords']['modules'][$module]['query'] = $query;
 		$_SESSION['reassignRecords']['modules'][$module]['update'] = $updatequery;
 
-		$res = $GLOBALS['db']->query($countquery, true);
-		$row = $GLOBALS['db']->fetchByAssoc($res);
+		$res = DBManagerFactory::getInstance()->query($countquery, true);
+		$row = DBManagerFactory::getInstance()->fetchByAssoc($res);
 
 		echo "{$row['count']} {$mod_strings_users['LBL_REASS_RECORDS_FROM']} {$app_list_strings['moduleList'][$p_module]} {$mod_strings_users['LBL_REASS_WILL_BE_UPDATED']}\n<BR>\n";
 		echo "<input type=checkbox name={$module}_workflow> {$mod_strings_users['LBL_REASS_WORK_NOTIF_AUDIT']}<BR>\n";
@@ -394,14 +398,14 @@ else if(isset($_GET['execute']) && $_GET['execute'] == true){
 
 		echo "<h5>{$mod_strings_users['LBL_PROCESSING']} {$app_list_strings['moduleList'][$p_module]}</h5>";
 
-		$res = $GLOBALS['db']->query($query, true);
+		$res = DBManagerFactory::getInstance()->query($query, true);
 
 		//echo "<i>Workflow and Notifications <b>".($workflow ? "enabled" : "disabled")."</b> for this module record reassignment</i>\n<BR>\n";
 		echo "<table border='0' cellspacing='0' cellpadding='0'  class='detail view'>\n";
 		echo "<tr>\n";
 		echo "<td>\n";
 		if(! $workflow){
-			$affected_rows = $GLOBALS['db']->getAffectedRowCount($res);
+			$affected_rows = DBManagerFactory::getInstance()->getAffectedRowCount($res);
 			echo "{$mod_strings_users['LBL_UPDATE_FINISH']}: $affected_rows {$mod_strings_users['LBL_AFFECTED']}<BR>\n";
 		}
 		else{
@@ -409,7 +413,7 @@ else if(isset($_GET['execute']) && $_GET['execute'] == true){
 			$failarr = array();
 
 			require_once($beanFiles[$module]);
-			while($row = $GLOBALS['db']->fetchByAssoc($res)){
+			while($row = DBManagerFactory::getInstance()->fetchByAssoc($res)){
 				$bean = new $module();
 				if(empty($row['id'])){
 					continue;

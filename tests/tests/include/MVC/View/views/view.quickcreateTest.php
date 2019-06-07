@@ -1,9 +1,16 @@
 <?php
 
-class ViewQuickcreateTest extends PHPUnit_Framework_TestCase
+class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testpreDisplay()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
         //check without setting any values, it should execute without any issues.
         $view = new ViewQuickcreate();
@@ -23,11 +30,22 @@ class ViewQuickcreateTest extends PHPUnit_Framework_TestCase
         $_REQUEST['record'] = 1;
         $view->preDisplay();
         $this->assertNotSame($request, $_REQUEST);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testdisplay()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
+
 
         //execute the method with required child objects and parameters preset. it will return some html.
         $view = new ViewQuickcreate();
@@ -44,5 +62,9 @@ class ViewQuickcreateTest extends PHPUnit_Framework_TestCase
 
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertEquals(false, json_decode($renderedContent)); //check that it doesn't return json. 
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 }

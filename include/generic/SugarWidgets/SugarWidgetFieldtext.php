@@ -62,7 +62,7 @@ class SugarWidgetFieldText extends SugarWidgetFieldVarchar
     }
 
 
-    function queryFilterEquals($layout_def)
+    function queryFilterEquals(&$layout_def)
     {
         return $this->reporter->db->convert($this->_get_column_select($layout_def), "text2char").
         	" = ".$this->reporter->db->quoted($layout_def['input_name0']);

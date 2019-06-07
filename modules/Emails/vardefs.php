@@ -527,8 +527,13 @@ $dictionary['Email'] = array(
             'lhs_key' => 'id',
             'rhs_module' => 'Meetings',
             'rhs_table' => 'meetings',
-            'rhs_key' => 'parent_id',
-            'relationship_type' => 'one-to-many',
+            'rhs_key' => 'id',
+            'relationship_type' => 'many-to-many',
+            'join_table' => 'emails_beans',
+            'join_key_lhs' => 'email_id',
+            'join_key_rhs' => 'bean_id',
+            'relationship_role_column' => 'bean_module',
+            'relationship_role_column_value' => 'Meetings',
         ),
     ), // end relationships
     'indices' => array(

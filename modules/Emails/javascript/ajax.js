@@ -846,7 +846,7 @@ AjaxObject.detailView = {
 			});
 			SED.quickCreateDialog.renderEvent.subscribe(function() {
             	var viewHeight = YAHOO.util.Dom.getViewportHeight();
-            	var contH = 0;
+            	var contH = document.body["scrollHeight"];
             	for (var i in this.body.childNodes) {
             		if (this.body.childNodes[i].offsetHeight)
             			contH += this.body.childNodes[i].offsetHeight;

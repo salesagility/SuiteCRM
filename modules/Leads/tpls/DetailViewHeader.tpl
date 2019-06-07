@@ -53,7 +53,7 @@
 
 {assign var=preForm value=$preForm|cat:"</td><td>"}
 
-{if isset($bean->account_id) && !empty($bean->account_id)}
+{if ($bean->converted=='1') && isset($bean->account_id) && !empty($bean->account_id)}
 {assign var=displayPreform value=true}
 {assign var=preForm value=$preForm|cat:$MOD.LBL_CONVERTED_ACCOUNT}
 {assign var=preForm value=$preForm|cat:"&nbsp;<a href='index.php?module=Accounts&action=DetailView&record="}

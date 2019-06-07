@@ -1,6 +1,6 @@
 <?php
 
-class NoteTest extends PHPUnit_Framework_TestCase
+class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testNote()
     {
@@ -21,7 +21,6 @@ class NoteTest extends PHPUnit_Framework_TestCase
 
     public function testsafeAttachmentName()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $note = new Note();
 
@@ -46,17 +45,28 @@ class NoteTest extends PHPUnit_Framework_TestCase
             $note->mark_deleted(1);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
     public function testdeleteAttachment()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+
         $note = new Note();
 
         $note->id = 1;
         $result = $note->deleteAttachment();
         $this->assertEquals(true, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testget_summary_text()
@@ -95,7 +105,7 @@ class NoteTest extends PHPUnit_Framework_TestCase
             $note->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -108,7 +118,7 @@ class NoteTest extends PHPUnit_Framework_TestCase
             $note->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -139,11 +149,22 @@ class NoteTest extends PHPUnit_Framework_TestCase
 
     public function testlistviewACLHelper()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $note = new Note();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $note->listviewACLHelper();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testbean_implements()

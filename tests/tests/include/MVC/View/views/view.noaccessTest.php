@@ -1,6 +1,6 @@
 <?php
 
-class ViewNoaccessTest extends PHPUnit_Framework_TestCase
+class ViewNoaccessTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testdisplay()
     {

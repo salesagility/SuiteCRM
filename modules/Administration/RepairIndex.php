@@ -72,20 +72,20 @@ function compare($table_name, $db_indexes, $var_indexes) {
 
 		//no matching index in database.
 		if(empty($sel_db_index)) {
-			$add_index[]=$GLOBALS['db']->add_drop_constraint($table_name,$var_i_def);
+			$add_index[]=DBManagerFactory::getInstance()->add_drop_constraint($table_name,$var_i_def);
 			continue;
 		}
 		if(!$field_list_match) {
 			//drop the db index and create new index based on vardef
-			$drop_index[]=$GLOBALS['db']->add_drop_constraint($table_name,$sel_db_index,true);
-			$add_index[]=$GLOBALS['db']->add_drop_constraint($table_name,$var_i_def);
+			$drop_index[]=DBManagerFactory::getInstance()->add_drop_constraint($table_name,$sel_db_index,true);
+			$add_index[]=DBManagerFactory::getInstance()->add_drop_constraint($table_name,$var_i_def);
 			continue;
 		}
 		//check for name match.
 		//it should not occur for indexes of type primary or unique.
 		if( $var_i_def['type'] != 'primary' and $var_i_def['type'] != 'unique' and $var_i_def['name'] != $sel_db_index['name']) {
 			//rename index.
-			$rename=$GLOBALS['db']->renameIndexDefs($sel_db_index,$var_i_def,$table_name);
+			$rename=DBManagerFactory::getInstance()->renameIndexDefs($sel_db_index,$var_i_def,$table_name);
 			if(is_array($rename)) {
 				$change_index=array_merge($change_index,$rename);
 			} else {

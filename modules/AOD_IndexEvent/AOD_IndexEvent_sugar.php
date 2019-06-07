@@ -93,7 +93,7 @@ class AOD_IndexEvent_sugar extends Basic {
 		switch($interface){
 			case 'ACL': return true;
 		}
-		return false;
+		return false;                
 }
 
 }

@@ -1,7 +1,7 @@
 <?php
 
 require_once 'include/utils/mvc_utils.php';
-class mvc_utilsTest extends PHPUnit_Framework_TestCase
+class mvc_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testloadParentView()
     {
@@ -10,14 +10,19 @@ class mvc_utilsTest extends PHPUnit_Framework_TestCase
             loadParentView('classic');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
     public function testgetPrintLink()
     {
-        error_reporting(E_ERROR | E_PARSE);
-
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         //test without setting REQUEST param
         $expected = "javascript:void window.open('index.php?','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')";
         $actual = getPrintLink();
@@ -28,6 +33,10 @@ class mvc_utilsTest extends PHPUnit_Framework_TestCase
         $expected = 'javascript:SUGAR.ajaxUI.print();';
         $actual = getPrintLink();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testajaxBannedModules()

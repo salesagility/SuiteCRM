@@ -1,7 +1,7 @@
 <?php
 
 require_once 'include/utils/db_utils.php';
-class db_utilsTest extends PHPUnit_Framework_TestCase
+class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function db_convertProvider()
     {
@@ -39,13 +39,12 @@ class db_utilsTest extends PHPUnit_Framework_TestCase
 
     public function testdb_concat()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         //execute the method and test if it returns expected values
 
         $table = 'Table1';
         $fields = array('Col1', 'Col2', 'Col3');
-        $expected = "LTRIM(RTRIM(CONCAT(IFNULL(Table1.Col1,''),'',IFNULL(Table1.Col2,''),'',IFNULL(Table1.Col3,''))))";
+        $expected = "LTRIM(RTRIM(CONCAT(IFNULL(Table1.Col1,''),' ',IFNULL(Table1.Col2,''),' ',IFNULL(Table1.Col3,''))))";
         $actual = db_concat($table, $fields);
         $this->assertSame($expected, $actual);
     }

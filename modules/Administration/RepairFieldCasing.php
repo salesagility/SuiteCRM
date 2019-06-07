@@ -50,8 +50,8 @@ if(is_admin($current_user)) {
     $module_entries = array();
 
     $query = "SELECT * FROM fields_meta_data";
-    $result = $GLOBALS['db']->query($query);
-    while($row = $GLOBALS['db']->fetchByAssoc($result)) {
+    $result = DBManagerFactory::getInstance()->query($query);
+    while($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
     	  $name = $row['name'];
     	  $id = $row['id'];
     	  $module_entries[$row['custom_module']] = true;
@@ -71,11 +71,11 @@ if(is_admin($current_user)) {
            foreach($entries as $original_col_name=>$entry) {
                echo '<br>'. string_format($mod_strings['LBL_REPAIR_FIELD_CASING_SQL_FIELD_META_DATA'], array($entry['name']));
            	   $update_sql = "UPDATE fields_meta_data SET id = '" . $entry['custom_module'] . strtolower($entry['name']) . "', name = '" . strtolower($entry['name']) . "' WHERE id = '" . $entry['id'] . "'";
-           	   $GLOBALS['db']->query($update_sql);
+           	   DBManagerFactory::getInstance()->query($update_sql);
 
            	   echo '<br>'. string_format($mod_strings['LBL_REPAIR_FIELD_CASING_SQL_CUSTOM_TABLE'], array($entry['name'], $table_name));
 
-      		   $GLOBALS['db']->query($GLOBALS['db']->renameColumnSQL($table_name, $entry['name'], strtolower($entry['name'])));
+      		   DBManagerFactory::getInstance()->query(DBManagerFactory::getInstance()->renameColumnSQL($table_name, $entry['name'], strtolower($entry['name'])));
            }
        }
     }

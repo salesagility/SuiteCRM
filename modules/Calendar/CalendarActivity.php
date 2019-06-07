@@ -225,7 +225,7 @@ class CalendarActivity
                     $bean->disable_row_level_security = true;
                 }
 
-                $where = self::get_occurs_until_where_clause($bean->table_name,
+                $where = self::get_occurs_within_where_clause($bean->table_name,
                     isset($bean->rel_users_table) ? $bean->rel_users_table : null, $view_start_time, $view_end_time,
                     $activity['start'], $activity['end']);
 
@@ -292,8 +292,8 @@ class CalendarActivity
 
         $field_date = $table_name . '.' . $field_name;
         $field_end_date = $table_name . '.' . $field_end_date;
-        $start_day = $GLOBALS['db']->convert("'{$start->asDb()}'", 'datetime');
-        $end_day = $GLOBALS['db']->convert("'{$end->asDb()}'", 'datetime');
+        $start_day = DBManagerFactory::getInstance()->convert("'{$start->asDb()}'", 'datetime');
+        $end_day = DBManagerFactory::getInstance()->convert("'{$end->asDb()}'", 'datetime');
 
         $where = '(';
         $where .= call_user_func($callback, $field_date, $field_end_date, $start_day, $end_day);

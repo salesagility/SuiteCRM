@@ -33,7 +33,8 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail {
 
     public function display() {
 
-        global $db, $mod_strings, $app_list_strings;
+        global $mod_strings, $app_list_strings;
+        $db = DBManagerFactory::getInstance();
 
         echo '<link rel="stylesheet" type="text/css" href="modules/AM_ProjectTemplates/css/style.css" />';
         echo '<link rel="stylesheet" type="text/css" href="modules/AM_ProjectTemplates/qtip/jquery.qtip.min.css" />';

@@ -43,7 +43,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  
 class SugarWidgetFieldSingleEnum extends SugarWidgetFieldEnum {
     
-    function displayInput(&$layout_def) {
+    function displayInput($layout_def) {
         global $app_list_strings;
 
         if(!empty($layout_def['remove_blank']) && $layout_def['remove_blank']) {

@@ -219,6 +219,10 @@ class Document extends File {
 	}
 
 	function is_authenticated() {
+            if (!isset($this->authenticated)) {
+                LoggerManager::getLogger()->warn('Document::$authenticated is not set');
+                return null;
+            }
 		return $this->authenticated;
 	}
 
@@ -348,10 +352,34 @@ class Document extends File {
 		$document_fields['FILE_URL'] = $this->file_url;
 		$document_fields['FILE_URL_NOIMAGE'] = $this->file_url_noimage;
 		$document_fields['LAST_REV_CREATED_BY'] = $this->last_rev_created_name;
-		$document_fields['CATEGORY_ID'] = empty ($this->category_id) ? "" : $app_list_strings['document_category_dom'][$this->category_id];
-		$document_fields['SUBCATEGORY_ID'] = empty ($this->subcategory_id) ? "" : $app_list_strings['document_subcategory_dom'][$this->subcategory_id];
+                
+                $value = null;
+                if (empty ($this->category_id)) {
+                    $value = '';
+                } else {
+                    if (isset($app_list_strings['document_category_dom'][$this->category_id])) {                    
+                        $value = $app_list_strings['document_category_dom'][$this->category_id];
+                    } else {
+                        LoggerManager::getLogger()->warn('Categori ID is not set for Document list view data in $app_list_strings[document_category_dom]['.$this->category_id.']');
+                    }
+                }
+                
+		$document_fields['CATEGORY_ID'] = $value;
+                
+                $value = null;
+                if (empty ($this->subcategory_id)) {
+                    $value = '';
+                } else {
+                    if (isset($app_list_strings['document_subcategory_dom'][$this->subcategory_id])) {                    
+                        $value = $app_list_strings['document_subcategory_dom'][$this->subcategory_id];
+                    } else {
+                        LoggerManager::getLogger()->warn('Categori ID is not set for Document list view data in $app_list_strings[document_subcategory_dom]['.$this->subcategory_id.']');
+                    }
+                }
+                
+		$document_fields['SUBCATEGORY_ID'] = $value;
         $document_fields['NAME'] = $this->document_name;
-		$document_fields['DOCUMENT_NAME_JAVASCRIPT'] = $GLOBALS['db']->quote($document_fields['DOCUMENT_NAME']);
+		$document_fields['DOCUMENT_NAME_JAVASCRIPT'] = DBManagerFactory::getInstance()->quote($document_fields['DOCUMENT_NAME']);
 		return $document_fields;
 	}
 
@@ -367,42 +395,50 @@ class Document extends File {
 	function mark_relationships_deleted($id)
     {
         $this->load_relationships('revisions');
-       	$revisions= $this->get_linked_beans('revisions','DocumentRevision');
+        $revisions = $this->get_linked_beans('revisions', 'DocumentRevision');
 
-       	if (!empty($revisions) && is_array($revisions)) {
-       		foreach($revisions as $key=>$version) {
-       			UploadFile::unlink_file($version->id,$version->filename);
-       			//mark the version deleted.
-       			$version->mark_deleted($version->id);
-       		}
-       	}
+        if (!empty($revisions) && is_array($revisions)) {
+            foreach ($revisions as $key => $version) {
+                UploadFile::unlink_file($version->id, $version->filename);
+                //mark the version deleted.
+                $version->mark_deleted($version->id);
+            }
+        }
+        parent::mark_relationships_deleted($id);
+    }
 
-	}
 
+    public function bean_implements($interface)
+    {
+        switch ($interface) {
+            case 'ACL':
+                return true;
+            case 'FILE':
+                return true;
+        }
 
-	function bean_implements($interface) {
-		switch ($interface) {
-			case 'ACL' :
-				return true;
-		}
-		return false;
-	}
+        return false;
+    }
 
-	//static function.
-	function get_document_name($doc_id){
-		if (empty($doc_id)) return null;
+    //static function.
+    public function get_document_name($doc_id)
+    {
+        if (empty($doc_id)) {
+            return null;
+        }
 
-		$db = DBManagerFactory::getInstance();
-		$query="select document_name from documents where id='$doc_id'  and deleted=0";
-		$result=$db->query($query);
-		if (!empty($result)) {
-			$row=$db->fetchByAssoc($result);
-			if (!empty($row)) {
-				return $row['document_name'];
-			}
-		}
-		return null;
-	}
+        $db = DBManagerFactory::getInstance();
+        $query = "select document_name from documents where id='$doc_id'  and deleted=0";
+        $result = $db->query($query);
+        if (!empty($result)) {
+            $row = $db->fetchByAssoc($result);
+            if (!empty($row)) {
+                return $row['document_name'];
+            }
+        }
+
+        return null;
+    }
 }
 
 require_once('modules/Documents/DocumentExternalApiDropDown.php');

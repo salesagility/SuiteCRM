@@ -717,7 +717,7 @@ function new_handle_set_entries($module_name, $name_value_lists, $select_fields 
 						//have an object with this outlook_id, if we do
 						//then we can set the id, otherwise this is a new object
 						$order_by = "";
-						$query = $seed->table_name.".outlook_id = '".$GLOBALS['db']->quote($seed->outlook_id)."'";
+						$query = $seed->table_name.".outlook_id = '".DBManagerFactory::getInstance()->quote($seed->outlook_id)."'";
 						$response = $seed->get_list($order_by, $query, 0,-1,-1,0);
 						$list = $response['list'];
 						if(count($list) > 0){
@@ -1004,7 +1004,7 @@ LEFT OUTER JOIN email_addr_bean_rel eabr ON eabr.bean_id = c.id
 WHERE c.first_name = '{$trimmed_first}' AND c.last_name = '{$trimmed_last}' AND c.deleted = 0 AND eabr.id IS NULL";
 
         //Apply the limit query filter to this since we only need the first record
-        $result = $GLOBALS['db']->getOne($query);
+        $result = DBManagerFactory::getInstance()->getOne($query);
         return !empty($result) ? $result : null;
     }
 }
@@ -1060,33 +1060,36 @@ function get_decoded($object){
 
 }
 
-/**
- * decrypt a string use the TripleDES algorithm. This meant to be
- * modified if the end user chooses a different algorithm
- *
- * @param $string - the string to decrypt
- *
- * @return a decrypted string if we can decrypt, the original string otherwise
- */
-function decrypt_string($string){
-	if(function_exists('mcrypt_cbc')){
+    /**
+     * decrypt a string use the TripleDES algorithm. This meant to be
+     * modified if the end user chooses a different algorithm
+     *
+     * @param $string - the string to decrypt
+     *
+     * @return a decrypted string if we can decrypt, the original string otherwise
+     */
+    function decrypt_string($string)
+    {
+        if (function_exists('openssl_decrypt')) {
 
-		$focus = new Administration();
-		$focus->retrieveSettings();
-		$key = '';
-		if(!empty($focus->settings['ldap_enc_key'])){
-			$key = $focus->settings['ldap_enc_key'];
-		}
-		if(empty($key))
-			return $string;
-		$buffer = $string;
-		$key = substr(md5($key),0,24);
-	    $iv = "password";
-	    return mcrypt_cbc(MCRYPT_3DES, $key, pack("H*", $buffer), MCRYPT_DECRYPT, $iv);
-	}else{
-		return $string;
-	}
-}
+            $focus = new Administration();
+            $focus->retrieveSettings();
+            $key = '';
+            if (!empty($focus->settings['ldap_enc_key'])) {
+                $key = $focus->settings['ldap_enc_key'];
+            }
+            if (empty($key)) {
+                return $string;
+            }
+            $buffer = $string;
+            $key = substr(md5($key), 0, 24);
+            $iv = "password";
+
+            return openssl_decrypt(pack("H*", $buffer), 'des-ede3-cbc', $key, OPENSSL_NO_PADDING, $iv);
+        } else {
+            return $string;
+        }
+    }
 
 }
 

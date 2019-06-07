@@ -56,8 +56,7 @@ $uids = array();
 if($_REQUEST['select_entire_list'] == '1'){
 	$order_by = '';
 
-	require_once('include/MassUpdate.php');
-	$mass = new MassUpdate();
+	$mass = getClassInstance('MassUpdate', 'include/MassUpdate.php');
 	$mass->generateSearchWhere($_REQUEST['module'], $_REQUEST['current_query_by_page']);
 	$ret_array = create_export_query_relate_link_patch($_REQUEST['module'], $mass->searchFields, $mass->where_clauses);
 	/* BEGIN - SECURITY GROUPS */
@@ -81,9 +80,9 @@ if($_REQUEST['select_entire_list'] == '1'){
 	}
 	/* END - SECURITY GROUPS */
 	$query = $focus->create_export_query($order_by, $ret_array['where'], $ret_array['join']);
-	$result = $GLOBALS['db']->query($query,true);
+	$result = DBManagerFactory::getInstance()->query($query,true);
 	$uids = array();
-	while($val = $GLOBALS['db']->fetchByAssoc($result,false))
+	while($val = DBManagerFactory::getInstance()->fetchByAssoc($result,false))
 	{
 		array_push($uids, $val['id']);
 	}

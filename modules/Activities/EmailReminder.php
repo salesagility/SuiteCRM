@@ -232,7 +232,7 @@ class EmailReminder
      */
     public function getMeetingsForRemind()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $query = "
             SELECT id, date_start, email_reminder_time FROM meetings
             WHERE email_reminder_time != -1
@@ -260,7 +260,7 @@ class EmailReminder
      */
     public function getCallsForRemind()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $query = "
             SELECT id, date_start, email_reminder_time FROM calls
             WHERE email_reminder_time != -1
@@ -290,7 +290,7 @@ class EmailReminder
      */
     protected function getRecipients($id, $module = "Meetings")
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
     
         switch($module ) {
             case "Meetings":

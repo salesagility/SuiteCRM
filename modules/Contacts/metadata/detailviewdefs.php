@@ -147,7 +147,7 @@ array (
       array (
         0 => 
         array (
-          'file' => 'modules/Leads/Lead.js',
+          'file' => 'modules/Contacts/Contact.js',
         ),
       ),
       'useTabs' => true,

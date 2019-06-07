@@ -63,10 +63,13 @@ class LanguageManager
         if(empty($lang))
             $lang = $GLOBALS['sugar_config']['default_language'];
 		static $createdModules = array();
-		if(empty($createdModules[$module]) && ($refresh || !file_exists(sugar_cached('modules/').$module.'/language/'.$lang.'.lang.php'))){
+        if (!isset($createdModules[$module])) {
+            $createdModules[$module] = array();
+        }
+        if(empty($createdModules[$module][$lang]) && ($refresh || !file_exists(sugar_cached('modules/').$module.'/language/'.$lang.'.lang.php'))){
 			$loaded_mod_strings = array();
 			$loaded_mod_strings = LanguageManager::loadTemplateLanguage($module , $templates, $lang , $loaded_mod_strings);
-			$createdModules[$module] = true;
+            $createdModules[$module][$lang] = true;
 			LanguageManager::refreshLanguage($module,$lang, $loaded_mod_strings);
 		}
 	}
@@ -189,8 +192,11 @@ class LanguageManager
 				 );
 
 		#27023, if this module template language file was not attached , get the template from this module vardef cache file if exsits and load the template language files.
-		static $createdModules;
-		if(empty($createdModules[$module]) && isset($GLOBALS['beanList'][$module])){
+        static $createdModules = array();
+        if (!isset($createdModules[$module])) {
+            $createdModules[$module] = array();
+        }
+        if(empty($createdModules[$module][$lang]) && isset($GLOBALS['beanList'][$module])){
 				$object = $GLOBALS['beanList'][$module];
 
 				if ($object == 'aCase')
@@ -199,7 +205,7 @@ class LanguageManager
 		        if(!empty($GLOBALS["dictionary"]["$object"]["templates"])){
 		        	$templates = $GLOBALS["dictionary"]["$object"]["templates"];
 					$loaded_mod_strings = LanguageManager::loadTemplateLanguage($module , $templates, $lang , $loaded_mod_strings);
-					$createdModules[$module] = true;
+                    $createdModules[$module][$lang] = true;
 		        }
 		}
 		//end of fix #27023

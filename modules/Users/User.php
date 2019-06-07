@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -473,17 +473,26 @@ class User extends Person {
     */
 	public static function getLicensedUsersWhere()
 	{
-		return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND ".$GLOBALS['db']->convert('user_name', 'length').">0";
+		return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND ".DBManagerFactory::getInstance()->convert('user_name', 'length').">0";
 	    return "1<>1";
 	}
 
-	function save($check_notify = false) {
-		$isUpdate = !empty($this->id) && !$this->new_with_id;
-
-
-		$query = "SELECT count(id) as total from users WHERE ".self::getLicensedUsersWhere();
-
-
+    /**
+     * Normally a bean returns ID from save() method if it was
+     * success and false (or maybe null) is something went wrong.
+     * BUT (for some reason) if User bean saved properly except
+     * the email addresses of it, this User::save() method also
+     * return a false.
+     * It's a confusing ambiguous return value for caller method.
+     *
+     * To handle this issue when save method can not save email
+     * addresses and return false it also set the variable called
+     * User::$lastSaveErrorIsEmailAddressSaveError to true.
+     *
+     * @param bool $check_notify
+     * @return string
+     */
+	public function save($check_notify = false) {
         // is_group & portal should be set to 0 by default
         if (!isset($this->is_group)) {
             $this->is_group = 0;
@@ -505,6 +514,11 @@ class User extends Person {
 		// set some default preferences when creating a new user
 		$setNewUserPreferences = empty($this->id) || !empty($this->new_with_id);
 
+        if (!$this->verify_data()) {
+            SugarApplication::appendErrorMessage($this->error_string);
+            header('Location: index.php?action=Error&module=Users');
+            exit;
+        }
 
 		parent::save($check_notify);
 
@@ -515,12 +529,244 @@ class User extends Person {
 		        $this->setPreference('calendar_publish_key', create_guid());
 	        }
 		}
-
+        $this->saveFormPreferences();
         $this->savePreferencesToDB();
+
+        if ((isset($_POST['old_password']) || $this->portal_only) &&
+            (isset($_POST['new_password']) && !empty($_POST['new_password'])) &&
+            (isset($_POST['password_change']) && $_POST['password_change'] === 'true')) {
+            if (!$this->change_password($_POST['old_password'], $_POST['new_password'])) {
+                if (isset($_POST['page']) && $_POST['page'] === 'EditView') {
+                    SugarApplication::appendErrorMessage($this->error_string);
+                    header("Location: index.php?action=EditView&module=Users&record=" . $_POST['record']);
+                    exit;
+                }
+                if (isset($_POST['page']) && $_POST['page'] === 'Change') {
+                    SugarApplication::appendErrorMessage($this->error_string);
+                    header("Location: index.php?action=ChangePassword&module=Users&record=" . $_POST['record']);
+                    exit;
+                }
+            }
+        }
+
         return $this->id;
 	}
 
-	/**
+    public function saveFormPreferences(){
+        if (!$this->is_group && !$this->portal_only) {
+
+            require_once('modules/MySettings/TabController.php');
+
+            global $current_user;
+
+            $display_tabs_def = isset($_REQUEST['display_tabs_def']) ? urldecode($_REQUEST['display_tabs_def']) : '';
+            $hide_tabs_def = isset($_REQUEST['hide_tabs_def']) ? urldecode($_REQUEST['hide_tabs_def']) : '';
+            $remove_tabs_def = isset($_REQUEST['remove_tabs_def']) ? urldecode($_REQUEST['remove_tabs_def']) : '';
+
+            $DISPLAY_ARR = array();
+            $HIDE_ARR = array();
+            $REMOVE_ARR = array();
+
+            parse_str($display_tabs_def, $DISPLAY_ARR);
+            parse_str($hide_tabs_def, $HIDE_ARR);
+            parse_str($remove_tabs_def, $REMOVE_ARR);
+
+            $this->is_group = 0;
+            $this->portal_only = 0;
+
+            if ((isset($_POST['is_admin']) && ($_POST['is_admin'] == 'on' || $_POST['is_admin'] == '1')) ||
+              (isset($_POST['UserType']) && $_POST['UserType'] == "Administrator"))
+                $this->is_admin = 1;
+            elseif (isset($_POST['is_admin']) && empty($_POST['is_admin']))
+                $this->is_admin = 0;
+
+            if (isset($_POST['mailmerge_on']) && !empty($_POST['mailmerge_on'])) {
+                $this->setPreference('mailmerge_on', 'on', 0, 'global');
+            } else {
+                $this->setPreference('mailmerge_on', 'off', 0, 'global');
+            }
+
+            if (isset($_POST['user_swap_last_viewed'])) {
+                $this->setPreference('swap_last_viewed', $_POST['user_swap_last_viewed'], 0, 'global');
+            } else {
+                $this->setPreference('swap_last_viewed', '', 0, 'global');
+            }
+
+            if (isset($_POST['user_swap_shortcuts'])) {
+                $this->setPreference('swap_shortcuts', $_POST['user_swap_shortcuts'], 0, 'global');
+            } else {
+                $this->setPreference('swap_shortcuts', '', 0, 'global');
+            }
+
+            if (isset($_POST['use_group_tabs'])) {
+                $this->setPreference('navigation_paradigm', $_POST['use_group_tabs'], 0, 'global');
+            } else {
+                $this->setPreference('navigation_paradigm', 'gm', 0, 'global');
+            }
+
+            if (isset($_POST['sort_modules_by_name'])) {
+                $this->setPreference('sort_modules_by_name', $_POST['sort_modules_by_name'], 0, 'global');
+            } else {
+                $this->setPreference('sort_modules_by_name', '', 0, 'global');
+            }
+
+            if (isset($_POST['user_subpanel_tabs'])) {
+                $this->setPreference('subpanel_tabs', $_POST['user_subpanel_tabs'], 0, 'global');
+            } else {
+                $this->setPreference('subpanel_tabs', '', 0, 'global');
+            }
+
+            if (isset($_POST['user_theme'])) {
+                $this->setPreference('user_theme', $_POST['user_theme'], 0, 'global');
+                $_SESSION['authenticated_user_theme'] = $_POST['user_theme'];
+            }
+
+            if (isset($_POST['user_module_favicon'])) {
+                $this->setPreference('module_favicon', $_POST['user_module_favicon'], 0, 'global');
+            } else {
+                $this->setPreference('module_favicon', '', 0, 'global');
+            }
+
+            $tabs = new TabController();
+            if (isset($_POST['display_tabs']))
+                $tabs->set_user_tabs($DISPLAY_ARR['display_tabs'], $this, 'display');
+            if (isset($HIDE_ARR['hide_tabs'])) {
+                $tabs->set_user_tabs($HIDE_ARR['hide_tabs'], $this, 'hide');
+            } else {
+                $tabs->set_user_tabs(array(), $this, 'hide');
+            }
+            if (is_admin($current_user)) {
+                if (isset($REMOVE_ARR['remove_tabs'])) {
+                    $tabs->set_user_tabs($REMOVE_ARR['remove_tabs'], $this, 'remove');
+                } else {
+                    $tabs->set_user_tabs(array(), $this, 'remove');
+                }
+            }
+
+            if (isset($_POST['no_opps'])) {
+                $this->setPreference('no_opps', $_POST['no_opps'], 0, 'global');
+            } else {
+                $this->setPreference('no_opps', 'off', 0, 'global');
+            }
+
+            if (isset($_POST['reminder_time'])) {
+                $this->setPreference('reminder_time', $_POST['reminder_time'], 0, 'global');
+            }
+            if (isset($_POST['email_reminder_time'])) {
+                $this->setPreference('email_reminder_time', $_POST['email_reminder_time'], 0, 'global');
+            }
+            if (isset($_POST['reminder_checked'])) {
+                $this->setPreference('reminder_checked', $_POST['reminder_checked'], 0, 'global');
+            }
+            if (isset($_POST['email_reminder_checked'])) {
+                $this->setPreference('email_reminder_checked', $_POST['email_reminder_checked'], 0, 'global');
+            }
+
+            if (isset($_POST['timezone']))
+                $this->setPreference('timezone', $_POST['timezone'], 0, 'global');
+            if (isset($_POST['ut']))
+                $this->setPreference('ut', '0', 0, 'global');
+            else
+                $this->setPreference('ut', '1', 0, 'global');
+            if (isset($_POST['currency']))
+                $this->setPreference('currency', $_POST['currency'], 0, 'global');
+            if (isset($_POST['default_currency_significant_digits']))
+                $this->setPreference('default_currency_significant_digits', $_POST['default_currency_significant_digits'], 0, 'global');
+            if (isset($_POST['num_grp_sep']))
+                $this->setPreference('num_grp_sep', $_POST['num_grp_sep'], 0, 'global');
+            if (isset($_POST['dec_sep']))
+                $this->setPreference('dec_sep', $_POST['dec_sep'], 0, 'global');
+            if (isset($_POST['fdow']))
+                $this->setPreference('fdow', $_POST['fdow'], 0, 'global');
+            if (isset($_POST['dateformat']))
+                $this->setPreference('datef', $_POST['dateformat'], 0, 'global');
+            if (isset($_POST['timeformat']))
+                $this->setPreference('timef', $_POST['timeformat'], 0, 'global');
+            if (isset($_POST['timezone']))
+                $this->setPreference('timezone', $_POST['timezone'], 0, 'global');
+            if (isset($_POST['mail_fromname']))
+                $this->setPreference('mail_fromname', $_POST['mail_fromname'], 0, 'global');
+            if (isset($_POST['mail_fromaddress']))
+                $this->setPreference('mail_fromaddress', $_POST['mail_fromaddress'], 0, 'global');
+            if (isset($_POST['mail_sendtype']))
+                $this->setPreference('mail_sendtype', $_POST['mail_sendtype'], 0, 'global');
+            if (isset($_POST['mail_smtpserver']))
+                $this->setPreference('mail_smtpserver', $_POST['mail_smtpserver'], 0, 'global');
+            if (isset($_POST['mail_smtpport']))
+                $this->setPreference('mail_smtpport', $_POST['mail_smtpport'], 0, 'global');
+            if (isset($_POST['mail_smtpuser']))
+                $this->setPreference('mail_smtpuser', $_POST['mail_smtpuser'], 0, 'global');
+            if (isset($_POST['mail_smtppass']))
+                $this->setPreference('mail_smtppass', $_POST['mail_smtppass'], 0, 'global');
+            if (isset($_POST['default_locale_name_format']))
+                $this->setPreference('default_locale_name_format', $_POST['default_locale_name_format'], 0, 'global');
+            if (isset($_POST['export_delimiter']))
+                $this->setPreference('export_delimiter', $_POST['export_delimiter'], 0, 'global');
+            if (isset($_POST['default_export_charset']))
+                $this->setPreference('default_export_charset', $_POST['default_export_charset'], 0, 'global');
+            if (isset($_POST['use_real_names'])) {
+                $this->setPreference('use_real_names', 'on', 0, 'global');
+            } elseif (!isset($_POST['use_real_names']) && !isset($_POST['from_dcmenu'])) {
+                // Make sure we're on the full form and not the QuickCreate.
+                $this->setPreference('use_real_names', 'off', 0, 'global');
+            }
+
+            if (isset($_POST['mail_smtpauth_req'])) {
+                $this->setPreference('mail_smtpauth_req', $_POST['mail_smtpauth_req'], 0, 'global');
+            } else {
+                $this->setPreference('mail_smtpauth_req', '', 0, 'global');
+            }
+
+            // SSL-enabled SMTP connection
+            if (isset($_POST['mail_smtpssl'])) {
+                $this->setPreference('mail_smtpssl', 1, 0, 'global');
+            } else {
+                $this->setPreference('mail_smtpssl', 0, 0, 'global');
+            }
+            ///////////////////////////////////////////////////////////////////////////
+            ////    PDF SETTINGS
+            foreach ($_POST as $k => $v) {
+                if (strpos($k, "sugarpdf_pdf") !== false) {
+                    $this->setPreference($k, $v, 0, 'global');
+                }
+            }
+            ////    PDF SETTINGS
+            ///////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////
+            ////	SIGNATURES
+            if (isset($_POST['signature_id']))
+                $this->setPreference('signature_default', $_POST['signature_id'], 0, 'global');
+
+            if (isset($_POST['signature_prepend']))
+                $this->setPreference('signature_prepend', $_POST['signature_prepend'], 0, 'global');
+            ////	END SIGNATURES
+            ///////////////////////////////////////////////////////////////////////////
+
+
+            if (isset($_POST['email_link_type']))
+                $this->setPreference('email_link_type', $_REQUEST['email_link_type']);
+            if (isset($_POST['editor_type']))
+                $this->setPreference('editor_type', $_REQUEST['editor_type']);
+            if (isset($_REQUEST['email_show_counts'])) {
+                $this->setPreference('email_show_counts', $_REQUEST['email_show_counts'], 0, 'global');
+            } else {
+                $this->setPreference('email_show_counts', 0, 0, 'global');
+            }
+            if (isset($_REQUEST['email_editor_option']))
+                $this->setPreference('email_editor_option', $_REQUEST['email_editor_option'], 0, 'global');
+            if (isset($_REQUEST['default_email_charset']))
+                $this->setPreference('default_email_charset', $_REQUEST['default_email_charset'], 0, 'global');
+
+            if (isset($_POST['calendar_publish_key']))
+                $this->setPreference('calendar_publish_key', $_POST['calendar_publish_key'], 0, 'global');
+            if (isset($_POST['subtheme'])) {
+                $this->setPreference('subtheme', $_POST['subtheme'], 0, 'global');
+            }
+        }
+    }
+
+
+    /**
 	* @return boolean true if the user is a member of the role_name, false otherwise
 	* @param string $role_name - Must be the exact name of the acl_role
 	* @param string $user_id - The user id to check for the role membership, empty string if current user
@@ -622,7 +868,12 @@ class User extends Person {
      */
 	public function retrieve($id = -1, $encode = true, $deleted = true) {
 		$ret = parent::retrieve($id, $encode, $deleted);
-		if ($ret && $_SESSION !== null) {
+                
+                if (!isset($_SESSION)) {
+                    LoggerManager::getLogger()->warn('Undefined variable: _SESSION');
+                }
+                
+		if ($ret && isset($_SESSION) && $_SESSION !== null) {
 				$this->loadPreferences();
 		}
 		return $ret;
@@ -756,9 +1007,9 @@ EOQ;
 	 */
 	public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
 	{
-	    global $db;
+	    $db = DBManagerFactory::getInstance();
 		$name = $db->quote($name);
-		$query = "SELECT * from users where user_name='$name'";
+		$query = "SELECT * FROM users WHERE user_name='$name' AND deleted=0";
 		if(!empty($where)) {
 		    $query .= " AND $where";
 		}
@@ -941,12 +1192,19 @@ EOQ;
 		global $mod_strings;
 
 		$user_fields = parent::get_list_view_data();
+                
+                $lblCheckmark = null;
+                if (isset($mod_strings['LBL_CHECKMARK'])) {
+                    $lblCheckmark = $mod_strings['LBL_CHECKMARK'];
+                } else {
+                    LoggerManager::getLogger()->warn('Undefined index: LBL_CHECKMARK');
+                }
 
 		if ($this->is_admin)
-			$user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '',null,null,'.gif',$mod_strings['LBL_CHECKMARK']);
+			$user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '',null,null,'.gif',$lblCheckmark);
 		elseif (!$this->is_admin) $user_fields['IS_ADMIN'] = '';
 		if ($this->is_group)
-			$user_fields['IS_GROUP_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '',null,null,'.gif',$mod_strings['LBL_CHECKMARK']);
+			$user_fields['IS_GROUP_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '',null,null,'.gif',$lblCheckmark);
 		else
 			$user_fields['IS_GROUP_IMAGE'] = '';
 
@@ -1048,12 +1306,14 @@ EOQ;
 	function get_meetings() {
 		// First, get the list of IDs.
 		$query = "SELECT meeting_id as id from meetings_users where user_id='$this->id' AND deleted=0";
-		return $this->build_related_list($query, new Meeting());
+                $meeting = new Meeting();
+		return $this->build_related_list($query, $meeting);
 	}
 	function get_calls() {
 		// First, get the list of IDs.
 		$query = "SELECT call_id as id from calls_users where user_id='$this->id' AND deleted=0";
-		return $this->build_related_list($query, new Call());
+                $call = new Call();
+		return $this->build_related_list($query, $call);
 	}
 
 	/**

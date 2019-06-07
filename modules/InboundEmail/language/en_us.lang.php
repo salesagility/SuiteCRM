@@ -93,9 +93,7 @@ $mod_strings = array(
 	'LBL_FOUND_MAILBOXES'	=> 'Found the following usable folders.<br>Click one to choose it:',
 	'LBL_FOUND_OPTIMUM_MSG'	=> '<br>Found optimum settings. Press the button below to apply them to your mail account.',
 	'LBL_FROM_ADDR'			=> '"From" Address',
-    // as long as XTemplate doesn't support output escaping, transform
-    // quotes to html-entities right here (bug #48913)
-    'LBL_FROM_ADDR_DESC'    => "The email address provided here might not appear in the &quot;From&quot; address section of the email sent due to restrictions imposed by the mail service provider. In these circumstances, the email address defined in the outgoing mail server will be used.",
+    'LBL_FROM_ADDR_DESC'    => 'The email address provided here might not appear in the "From" address section of the email sent due to restrictions imposed by the mail service provider. In these circumstances, the email address defined in the outgoing mail server will be used.',
 	'LBL_FROM_NAME_ADDR'	=> 'From Name/Email',
 	'LBL_FROM_NAME'			=> '"From" Name',
 	'LBL_GROUP_QUEUE'		=> 'Assign To Group',

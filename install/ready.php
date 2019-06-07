@@ -86,7 +86,7 @@ $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_CUSTOM'].'</b> '.$mod_strings['
 
 
 // modules dir
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_MODULE'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p';
+$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_MODULE'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 
 // upload dir
 $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_UPLOAD'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
@@ -108,7 +108,7 @@ if(empty($memory_limit)){
     $memory_limit = "-1";
 }
 if(!defined('SUGARCRM_MIN_MEM')) {
-    define('SUGARCRM_MIN_MEM', 40*1024*1024);
+    define('SUGARCRM_MIN_MEM', 64*1024*1024);
 }
 $sugarMinMem = constant('SUGARCRM_MIN_MEM');
 // logic based on: http://us2.php.net/manual/en/ini.core.php#ini.memory-limit
@@ -270,7 +270,7 @@ if(is_windows()) {
         }
     }
     $cronString = '<p><b>'.$mod_strings_scheduler['LBL_CRON_WINDOWS_DESC'].'</b><br>
-						cd '.realpath('./').'<br>
+						cd /D '.realpath('./').'<br>
 						php.exe -f cron.php
 						<br>'.$error.'</p>
 			   ';

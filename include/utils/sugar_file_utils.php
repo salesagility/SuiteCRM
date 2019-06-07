@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once(__DIR__.'/../SugarCache/SugarCache.php');
+
 /**
  * sugar_mkdir
  * Call this function instead of mkdir to apply pre-configured permission
@@ -153,12 +155,15 @@ function sugar_file_put_contents($filename, $data, $flags = null, $context = nul
     }
 
     if (!is_writable($filename)) {
-        $GLOBALS['log']->error("File $filename cannot be written to");
+        LoggerManager::getLogger()->error("File $filename cannot be written to");
 
         return false;
     }
 
-    return file_put_contents($filename, $data, $flags, $context);
+    $result = file_put_contents($filename, $data, $flags, $context);
+    SugarCache::cleanFile($filename);
+
+    return $result;
 }
 
 /**

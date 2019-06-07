@@ -61,7 +61,6 @@ $mod_strings = array(
 	'ERR_ADMIN_PASS_BLANK'				=> 'Provide the password for the SuiteCRM admin user. ',
 
 	'ERR_CHECKSYS'                      => 'Errors have been detected during compatibility check. In order for your SuiteCRM Installation to function properly, please take the proper steps to address the issues listed below and either press the recheck button, or try installing again.',
-	'ERR_CHECKSYS_CALL_TIME'            => 'Allow Call Time Pass Reference is On (this should be set to Off in php.ini)',
 	'ERR_CHECKSYS_CURL'					=> 'Not found: SuiteCRM Scheduler will run with limited functionality.',
 	'ERR_CHECKSYS_IMAP'					=> 'Not found: InboundEmail and Campaigns (Email) require the IMAP libraries. Neither will be functional.',
 	'ERR_CHECKSYS_MSSQL_MQGPC'			=> 'Magic Quotes GPC cannot be turned "On" when using MS SQL Server.',
@@ -96,7 +95,7 @@ $mod_strings = array(
 	'ERR_DB_ADMIN'						=> 'The provided database administrator username and/or password is invalid, and a connection to the database could not be established. Please enter a valid user name and password. (Error: ',
 	'ERR_DB_ADMIN_MSSQL'                => 'The provided database administrator username and/or password is invalid, and a connection to the database could not be established. Please enter a valid user name and password.',
 	'ERR_DB_EXISTS_NOT'					=> 'The specified database does not exist.',
-	'ERR_DB_EXISTS_WITH_CONFIG'			=> 'Database already exists with config data. To run an install with the chosen database, please re-run the install and choose: "Drop and recreate existing SuiteCRM tables?"  To upgrade, use the Upgrade Wizard in the Admin Console. Please read the upgrade documentation located <a href="https://docs.suitecrm.com/admin/installation-guide/3.upgrading/" target="_new">here</a>.',
+	'ERR_DB_EXISTS_WITH_CONFIG'			=> 'Database already exists with config data. To run an install with the chosen database, please re-run the install and choose: "Drop and recreate existing SuiteCRM tables?"  To upgrade, use the Upgrade Wizard in the Admin Console. Please read the upgrade documentation located <a href="https://docs.suitecrm.com/admin/installation-guide/upgrading/" target="_new">here</a>.',
 	'ERR_DB_EXISTS'						=> 'The provided Database Name already exists -- cannot create another one with the same name.',
 	'ERR_DB_EXISTS_PROCEED'             => 'The provided Database Name already exists. You can<br>1. hit the back button and choose a new database name <br>2. click next and continue but all existing tables on this database will be dropped. <strong>This means your tables and data will be blown away.</strong>',
 	'ERR_DB_HOSTNAME'					=> 'Host name cannot be blank.',
@@ -233,13 +232,11 @@ $mod_strings = array(
 	'LBL_DBCONFIG_MSG3'                 => 'Name of the database that will contain the data for the SuiteCRM instance you are about to install:',
 	'LBL_DBCONFIG_MSG3_LABEL' => 'Database Name',
 	'LBL_DBCONFIG_B_MSG1'               => 'The username and password of a database administrator who can create database tables and users and who can write to the database is necessary in order to set up the SuiteCRM database.',
-	'LBL_DBCONFIG_B_MSG1_LABEL' => '',
 	'LBL_DBCONFIG_SECURITY'             => 'For security purposes, you can specify an exclusive database user to connect to the SuiteCRM database. This user must be able to write, update and retrieve data on the SuiteCRM database that will be created for this instance. This user can be the database administrator specified above, or you can provide new or existing database user information.',
 	'LBL_DBCONFIG_AUTO_DD'              => 'Do it for me',
 	'LBL_DBCONFIG_PROVIDE_DD'           => 'Provide existing user',
 	'LBL_DBCONFIG_CREATE_DD'            => 'Define user to create',
 	'LBL_DBCONFIG_SAME_DD'              => 'Same as Admin User',
-	//'LBL_DBCONF_I18NFIX'              => 'Apply database column expansion for varchar and char types (up to 255) for multi-byte data?',
 	'LBL_FTS'                           => 'Full Text Search',
 	'LBL_FTS_INSTALLED'                 => 'Installed',
 	'LBL_FTS_INSTALLED_ERR1'            => 'Full Text Search capability is not installed.',
@@ -584,7 +581,7 @@ $contact_user_link_guid',
 	),
 
 	// SMTP settings
-    
+
     'LBL_FROM_NAME' => '"From" Name:',
     'LBL_FROM_ADDR' => '"From" Address:',
 
@@ -686,5 +683,3 @@ $contact_user_link_guid',
 
 
 );
-
-?>

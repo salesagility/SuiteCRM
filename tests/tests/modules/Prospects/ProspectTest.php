@@ -1,7 +1,7 @@
 <?php
 
 
-class ProspectTest extends PHPUnit_Framework_TestCase
+class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testProspect()
     {
@@ -23,7 +23,6 @@ class ProspectTest extends PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $prospect = new Prospect();
 
@@ -64,13 +63,15 @@ class ProspectTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
 
         //test with valid string params
-        $expected = "prospects.last_name like '%' or prospects.first_name like '%' or prospects.assistant like '%'";
+        $expected = "prospects.last_name like '1%' or prospects.first_name like '1%' or prospects.assistant like '1%' or prospects.phone_home like '%1%' or prospects.phone_mobile like '%1%' or prospects.phone_work like '%1%' or prospects.phone_other like '%1%' or prospects.phone_fax like '%1%' or prospects.assistant_phone like '%1%'";
         $actual = $prospect->build_generic_where_clause('1');
         $this->assertSame($expected, $actual);
     }
 
     public function testconverted_prospect()
     {
+        $this->markTestIncomplete('Multiple errors in query');
+        
         $prospect = new Prospect();
 
         //execute the method and test if it works and does not throws an exception.
@@ -78,10 +79,9 @@ class ProspectTest extends PHPUnit_Framework_TestCase
             //$prospect->converted_prospect('1', '2', '3', '4');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
-        $this->markTestIncomplete('Multiple errors in query');
     }
 
     public function testbean_implements()

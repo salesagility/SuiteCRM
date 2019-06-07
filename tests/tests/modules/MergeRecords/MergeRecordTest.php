@@ -1,6 +1,6 @@
 <?php
 
-class MergeRecordTest extends PHPUnit_Framework_TestCase
+class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testMergeRecord()
     {
@@ -20,17 +20,24 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
 
     public function testsave()
     {
+        $this->markTestIncomplete('method has no implementation');
+        
         $mergeRecord = new MergeRecord();
         //$mergeRecord->save();
 
-        $this->markTestIncomplete('method has no implementation');
     }
 
     public function testretrieve()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -44,13 +51,17 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue(isset($mergeRecord->merge_bean->id));
         $this->assertEquals(1, $mergeRecord->merge_bean->id);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testload_merge_bean()
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -77,7 +88,7 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -102,9 +113,16 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -117,15 +135,26 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
             $mergeRecord->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testfill_in_additional_detail_fields()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -138,15 +167,19 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
             $mergeRecord->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testget_summary_text()
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -164,6 +197,13 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
 
     public function testget_list_view_data()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $mergeRecord = new MergeRecord();
 
         $mergeRecord->load_merge_bean('Users');
@@ -171,13 +211,24 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
         $result = $mergeRecord->get_list_view_data();
 
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testbuild_generic_where_clause()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -194,6 +245,11 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
         $expected = "contacts.last_name like '1%' or contacts.first_name like '1%' or accounts.name like '1%' or contacts.assistant like '1%' or ea.email_address like '1%' or contacts.phone_home like '%1%' or contacts.phone_mobile like '%1%' or contacts.phone_work like '%1%' or contacts.phone_other like '%1%' or contacts.phone_fax like '%1%' or contacts.assistant_phone like '%1%'";
         $actual = $mergeRecord->build_generic_where_clause(1);
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
+
     }
 
     public function testbean_implements()
@@ -207,6 +263,13 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
 
     public function testACLAccess()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $mergeRecord = new MergeRecord();
 
         //test without loading merge bean
@@ -219,13 +282,17 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(true, $mergeRecord->ACLAccess('save'));
         $this->assertEquals(true, $mergeRecord->ACLAccess('editview'));
         $this->assertEquals(true, $mergeRecord->ACLAccess('delete'));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testpopulate_search_params()
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -245,10 +312,9 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
 
     public function testget_inputs_for_search_params()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -284,7 +350,7 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -303,7 +369,7 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -330,6 +396,5 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame($expected, $actual);
 
-        //error_reporting(E_ALL);
     }
 }

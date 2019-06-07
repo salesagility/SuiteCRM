@@ -45,7 +45,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * them along, or displaying an error message to the user.
  */
 
-global $db, $current_user, $mod_strings, $app_strings, $app_list_strings;
+global $current_user, $mod_strings, $app_strings, $app_list_strings;
+$db = DBManagerFactory::getInstance();
+
 
 $ret = $db->query("SELECT id FROM meetings_users WHERE meeting_id = '".$db->quote($_REQUEST['meeting_id'])."' AND user_id = '".$current_user->id."' AND deleted = 0",true);
 $row = $db->fetchByAssoc($ret);

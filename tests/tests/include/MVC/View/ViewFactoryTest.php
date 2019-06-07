@@ -1,11 +1,10 @@
 <?php
 
 
-class ViewFactoryTest extends PHPUnit_Framework_TestCase
+class ViewFactoryTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testloadView()
     {
-        error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
         //check with invalid input. must return sugaview instance
         $view = ViewFactory::loadView('default', '');

@@ -1,7 +1,7 @@
 <?php
 
 
-class AOR_FieldTest extends PHPUnit_Framework_TestCase
+class AOR_FieldTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOR_Field()
     {
@@ -23,7 +23,15 @@ class AOR_FieldTest extends PHPUnit_Framework_TestCase
 
     public function testsave_lines()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aor_fields');
+        $state->pushGlobals();
+        
+        // test
+        
 
         $aor_Field = new AOR_Field();
 
@@ -46,7 +54,13 @@ class AOR_FieldTest extends PHPUnit_Framework_TestCase
             $aor_Field->save_lines($post_data, new AOR_Report());
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aor_fields');
+        $state->popTable('aod_indexevent');
     }
 }
