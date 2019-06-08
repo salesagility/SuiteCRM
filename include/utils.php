@@ -448,15 +448,17 @@ function get_sugar_config_defaults()
 function getRunningUser()
 {
     // works on Windows and Linux, but might return null on systems that include exec in
-    // disabled_functions in php.ini (typical in shared hosting)
+    // disabled_functions in php.ini (typical in shared hosting) or if posix is not installed on Linux
     $runningUser = exec('whoami');
 
     if ($runningUser == null) {  // matches null, false and ""
         if (is_windows()) {
             $runningUser = getenv('USERDOMAIN') . '\\' . getenv('USERNAME');
-        } else {
+        } elseif (function_exists('posix_getpwuid')) {
             $usr = posix_getpwuid(posix_geteuid());
             $runningUser = $usr['name'];
+        } else {
+            $GLOBALS['log']->debug('getRunningUser() returns null in /include/utils.php line 464');
         }
     }
     return ($runningUser == null) ? '' : $runningUser;
