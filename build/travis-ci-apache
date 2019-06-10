@@ -9,5 +9,5 @@
     Require all granted
   </Directory>
 
-  ErrorLog ${APACHE_LOG_DIR}/error.log
+  ErrorLog /var/log/apache2/error.log
 </VirtualHost>
