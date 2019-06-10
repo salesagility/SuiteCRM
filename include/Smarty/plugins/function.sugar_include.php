@@ -39,6 +39,7 @@ r22571 - 2007-05-08 16:35:35 -0700 (Tue, 08 May 2007) - clee -
  * @subpackage plugins
  */
 
+require_once 'jssource/minify_utils.php';
 
 /**
  * Smarty {sugar_include} function plugin
@@ -55,6 +56,7 @@ r22571 - 2007-05-08 16:35:35 -0700 (Tue, 08 May 2007) - clee -
 function smarty_function_sugar_include($params, &$smarty)
 {
     global $app_strings;
+    $jsFiles = array();
 
     if(isset($params['type']) && $params['type'] == 'php') {
 		if(!isset($params['file'])) {
@@ -76,16 +78,59 @@ function smarty_function_sugar_include($params, &$smarty)
 	} else if(is_array($params['include'])) {
 	   	  $code = '';
 	   	  foreach($params['include'] as $include) {
+              $file = false;
 	   	  	      if(isset($include['file'])) {
-	   	  	         $file = $include['file'];
-	   	  	         if(preg_match('/[\.]js$/si',$file)) {
-	   	  	            $code .= "<script src=\"". getJSPath($include['file']) ."\"></script>";
-	   	  	         } else if(preg_match('/[\.]php$/si', $file)) {
-	   	  	            require_once($file);	
-	   	  	         }
-	   	  	      } 
+                     $file = realpath($include['file']);
+
+                     if ($file === false) {
+                        LoggerManager::getLogger()->error(
+                            'smarty_function_sugar_include - Given file path is'.
+                            ' incorrect: ' . $include['file']
+                        );
+                     } else {
+                         if (preg_match('/tiny_mce.*[\.]js$/si', $file)) {
+                             $code .= "<script src=\"".$file ."\"></script>";
+                             LoggerManager::getLogger()->warn(
+                                 'smarty_function_sugar_include - tiny_mce are not '.
+                                 'minifyed and concatenated with other JS Files '.
+                                 'because stop working.'
+                             );
+                         } else if(preg_match('/[\.]js$/si',$file)) {
+                             if (in_array($file, $jsFiles)) {
+                                 LoggerManager::getLogger()->warn(
+                                     'smarty_function_sugar_include - JS file'.
+                                     ' already added: ' . $file
+                                 );
+                             } else {
+                                 $jsFiles[] = $file;
+                                 LoggerManager::getLogger()->debug(
+                                     'smarty_function_sugar_include - JS file'.
+                                     ' added to be minifyed and concatenated: '
+                                     . $file
+                                 );
+                             }
+                         } else if(preg_match('/[\.]php$/si', $file)) {
+                             require_once($file);
+                         }
+                     }
+                  }
 	   	  } //foreach
+
+        if (!empty($jsFiles)) {
+            $includeFile = joinAndMinifyJSFiles($jsFiles);
+
+            if ($includeFile) {
+                $code .= "<script src=\"".
+                      $includeFile.
+                      "\"></script>";
+            } else {
+                LoggerManager::getLogger()->warn(
+                    'smarty_function_sugar_include - JS files cannot be included '.
+                    'in HTML code. Please verify joinAndMinifyJSFiles function'
+                );
+            }
+        }
 	      return $code;
    	} //if
 }
-?>
+

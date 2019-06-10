@@ -494,4 +494,130 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 CompressFiles($bu_path, $from_path);
             }
         }
+
+        /**
+         * Join and minify JS files
+         *
+         * @author Jose C. Massón <jose@gcoop.coop>
+         * @param array $jsFiles an 'array' of js files
+         * @return bool|string Minified JS file path
+         */
+        function joinAndMinifyJSFiles($jsFiles)
+        {
+            $jsFiles = processJSFilesPaths($jsFiles);
+            $target = SugarThemeRegistry::current()->getJSPath() . '/' .
+                sha1(implode('|', $jsFiles)) . '.js';
+            $ret = sugar_cached($target);
+
+            if (!is_file($ret)) {
+                $jsFilesContents = processJSFilesContents($jsFiles);
+                try {
+                    $customJSPath = create_cache_directory($target);
+                    if ($customJSPath === false) {
+                        LoggerManager::getLogger()->error(
+                            "joinAndMinifyJSFiles - The directory {$customJSPath} could" .
+                            ' not be created'
+                        );
+
+                        return false;
+                    }
+
+                    if (!inDeveloperMode() && !is_file($customJSPath)) {
+                        $jsFilesContents = SugarMin::minify($jsFilesContents);
+                    }
+                } catch (Exception $e) {
+                    LoggerManager::getLogger()->error(
+                        "joinAndMinifyJSFiles - {$e->getMessage()}"
+                    );
+
+                    return false;
+                }
+
+                $sfpc = sugar_file_put_contents($customJSPath, $jsFilesContents);
+
+                if ($sfpc === 0) {
+                    LoggerManager::getLogger()->warn(
+                        'joinAndMinifyJSFiles - The content of all files is empty.'
+                    );
+                } elseif ($sfpc === false) {
+                    LoggerManager::getLogger()->error(
+                        'joinAndMinifyJSFiles - There was an error writing the file' .
+                        " {$customJSPath}"
+                    );
+                    return false;
+                }
+            }
+
+            return getJSPath($ret);
+        }
+
+        /**
+         * Process an array of JS files and return their content concatenated
+         * @author Jose C. Massón <jose@gcoop.coop>
+         * @param array $jsFiles an 'array' of js files
+         * @return string
+         */
+        function processJSFilesContents($jsFiles)
+        {
+            $jsFilesContents = '';
+
+            foreach ($jsFiles as $jsFileName) {
+                if (is_file($jsFileName)) {
+                    $jsFileContent = sugar_file_get_contents($jsFileName);
+
+                    if ($jsFileContent === false) {
+                        LoggerManager::getLogger()->error(
+                            'processJSFiles - There was an error opening ' .
+                            "the file: {$jsFileName}"
+                        );
+                    } elseif ($jsFileContent === '') {
+                        LoggerManager::getLogger()->warn(
+                            'processJSFiles - The content of JS is empty: ' .
+                            "{$jsFileName}"
+                        );
+                    } else {
+                        $jsFilesContents .= $jsFileContent;
+                    }
+
+                } else {
+                    LoggerManager::getLogger()->error(
+                        "processJSFiles - {$jsFileName} is not a file."
+                    );
+                }
+            }
+
+            return $jsFilesContents;
+        }
+
+        /**
+         * Process an array of JS files and return their realpaths
+         * and verify that there are no duplicates
+         *
+         * @author Gyula Madarasz
+         * @author Jose C. Massón <jose@gcoop.coop>
+         * @param array $jsFiles an 'array' of js files
+         * @return array
+         */
+        function processJSFilesPaths($jsFiles)
+        {
+            $jsFilesReal = [];
+            foreach ($jsFiles as $jsFilesKey => $jsFile) {
+                $jsFileReal = realpath($jsFile);
+                if (!$jsFileReal) {
+                    LoggerManager::getLogger()->error(
+                        'processJSFilesPaths - Given JS File path is wrong: '
+                        . $jsFile
+                    );
+                } elseif (in_array($jsFileReal, $jsFilesReal, false)) {
+                    LoggerManager::getLogger()->warn(
+                        'processJSFilesPaths - Given JS File is duplicated: '
+                        . $jsFile
+                    );
+                } else {
+                    $jsFilesReal[$jsFilesKey] = $jsFileReal;
+                }
+            }
+
+            return $jsFilesReal;
+        }
     }
