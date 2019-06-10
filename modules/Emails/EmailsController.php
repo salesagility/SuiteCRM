@@ -657,14 +657,19 @@ class EmailsController extends SugarController
         $this->view = 'ajax';
     }
 
+    /**
+     * @throws SugarControllerException
+     */
     public function action_DeleteFromImap()
     {
         $uid = $_REQUEST['uid'];
         $inboundEmail = new InboundEmail();
         $db = DBManagerFactory::getInstance();
 
-        if (isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
+        if (!empty($_REQUEST['inbound_email_record'])) {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($_REQUEST['inbound_email_record']));
+        } else {
+            throw new SugarControllerException('No Inbound Email record in request');
         }
 
         if (isset($uid)) {
