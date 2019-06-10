@@ -185,6 +185,7 @@ $mod_strings = array(
     'LBL_BUTTON_FORWARD' => 'Forward',
     'LBL_BUTTON_REPLY_TITLE' => 'Reply',
     'LBL_BUTTON_REPLY_ALL' => 'Reply All',
+    'LBL_BUTTON_DELETE_IMAP' => 'Delete from IMAP',
     'LBL_CASES_SUBPANEL_TITLE' => 'Cases',
     'LBL_INBOUND_TITLE' => 'Inbound Email',
     'LBL_INTENT' => 'Intent',
