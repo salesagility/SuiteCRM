@@ -666,10 +666,14 @@ class EmailsController extends SugarController
         $db = DBManagerFactory::getInstance();
 
         if (!empty($_REQUEST['inbound_email_record'])) {
-            $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($_REQUEST['inbound_email_record']));
+            $emailID = $_REQUEST['inbound_email_record'];
+        } elseif (!empty($_REQUEST['record'])) {
+            $emailID = (new Email())->retrieve($_REQUEST['record']);
         } else {
             throw new SugarControllerException('No Inbound Email record in request');
         }
+
+        $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($emailID));
 
         if (isset($uid)) {
             $inboundEmail->deleteMessageOnMailServer($uid);
