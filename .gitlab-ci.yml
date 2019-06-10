@@ -70,11 +70,11 @@ variables:
     - echo "\$sugar_config['logger']['level'] = 'error';" >> config_override.php
     # Add keys
     - chmod -R 777 .
-    # - openssl genrsa -out Api/V8/OAuth2/private.key 2048
-    # - openssl rsa -in Api/V8/OAuth2/private.key -pubout -out Api/V8/OAuth2/public.key
-    # - chmod 600 Api/V8/OAuth2/p*.key
+    - openssl genrsa -out Api/V8/OAuth2/private.key 2048
+    - openssl rsa -in Api/V8/OAuth2/private.key -pubout -out Api/V8/OAuth2/public.key
+    - chmod 600 Api/V8/OAuth2/p*.key
     # Run API functional tests
-    # - ./vendor/bin/codecept run tests/api/V8/ -f -d -vvv
+    - ./vendor/bin/codecept run tests/api/V8/ -d -vvv
     # Run basic acceptance tests
     - echo "\$sugar_config['imap_test'] = true;" >> config_override.php
     - ./vendor/bin/codecept run acceptance --env travis-ci-hub -d -vvv
