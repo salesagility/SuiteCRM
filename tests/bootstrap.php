@@ -38,15 +38,15 @@
  */
 
 /* bootstrap composer's autoloader */
-require_once dirname(__FILE__) . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 /* bootstrap sugarcrm */
 error_reporting(E_ALL);
 define('sugarEntry', true);
 global $sugar_config, $db;
-require_once dirname(__FILE__) . '/../include/utils.php';
-require_once dirname(__FILE__) . '/../include/modules.php';
-require_once dirname(__FILE__) . '/../include/entryPoint.php';
+require_once __DIR__ . '/../include/utils.php';
+require_once __DIR__ . '/../include/modules.php';
+require_once __DIR__ . '/../include/entryPoint.php';
 //Oddly entry point loads app_strings but not app_list_strings, manually do this here.
 $GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['current_language']);
 
