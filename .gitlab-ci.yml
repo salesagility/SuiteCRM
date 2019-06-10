@@ -31,6 +31,8 @@ variables:
     - sed -e "s?\${CI_PROJECT_DIR}?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
     # Copy Travis PHP INI.
     - cp travis.php.ini /usr/local/etc/php/php.ini
+    # FIXME: https://github.com/salesagility/SuiteCRM/issues/7107
+    - mysql --host=mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -e "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode, 'STRICT_TRANS_TABLES', ''));"
     # Restart apache.
     - service apache2 restart
     # Set up codecept.
