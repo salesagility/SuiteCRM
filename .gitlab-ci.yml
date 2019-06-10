@@ -17,12 +17,12 @@ variables:
 
 .default_before_script_template:
   before_script: &default_before_script_definition
-    - composer install --no-plugins --no-scripts --no-progress --no-suggest
+    - composer install --no-plugins --no-progress --no-suggest
 
 .php_codecept_before_script_template:
   before_script: &php_codecept_before_script_definition
     # Install dependencies.
-    - composer install --no-plugins --no-scripts --no-progress --no-suggest
+    - composer install --no-plugins --no-progress --no-suggest
     # Run chromedriver in the background.
     - chromedriver --url-base=/wd/hub &
     # Copy Apache CI config into Apache directory.
