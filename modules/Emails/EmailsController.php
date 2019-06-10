@@ -663,7 +663,6 @@ class EmailsController extends SugarController
     public function action_DeleteFromImap()
     {
         $uid = $_REQUEST['uid'];
-        $inboundEmail = new InboundEmail();
         $db = DBManagerFactory::getInstance();
 
         if (!empty($_REQUEST['inbound_email_record'])) {
