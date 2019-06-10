@@ -50,6 +50,7 @@ variables:
     # Run install wizard
     - ./vendor/bin/codecept run install --env travis-ci-hub -f -d --ext DotReporter
     - chmod -R 777 .
+    # Disable memory-intensive StateChecker behavior.
     - echo "\$sugar_config['state_checker']['save_traces'] = false;" >> config_override.php
     - echo "\$sugar_config['state_checker']['redefine_memory_limit'] = false;" >> config_override.php
     - echo "\$sugar_config['state_checker']['test_state_check_mode'] = 2;" >> config_override.php
