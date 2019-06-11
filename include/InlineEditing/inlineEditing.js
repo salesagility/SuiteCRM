@@ -443,19 +443,27 @@ function handleSave(field,id,module,type){
         parent_type = $('#parent_type').val();
     }
     var output_value = saveFieldHTML(field,module,id,value, parent_type);
-    var output = setValueClose(output_value);
+    // If the field type is email, we don't want to handle linebreaks in the output.
+    if (field === 'email1') {
+        setValueClose(output_value, false);
+    } else {
+        setValueClose(output_value);
+    }
 }
 
 /**
  * Takes the value and places it inside the td, also inputs the edit icon stuff as this was removed when the field was retrieved.
  * Calls buildEditField() to re add the on dblclick event.
  * @param value
+ * @param replaceLinebreaks Whether or not to replace linebreaks in the value with <br> elements.
  */
 
-function setValueClose(value){
+function setValueClose(value, replaceLinebreaks = true) {
     $.get('themes/'+SUGAR.themes.theme_name+'/images/inline_edit_icon.svg', function(data) {
         // Fix for #3136 - replace new line characters with <br /> for html on close.
-        value = value.replace(/(?:\r\n|\r|\n)/g, '<br />');
+        if (replaceLinebreaks) {
+            value = value.replace(/(?:\r\n|\r|\n)/g, '<br />');
+        }
 
         $(".inlineEditActive").html("");
         $(".inlineEditActive").html(value + '<div class="inlineEditIcon">' + inlineEditIcon + '</div>');

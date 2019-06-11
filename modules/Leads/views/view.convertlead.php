@@ -669,7 +669,8 @@ class ViewConvertLead extends SugarView
             return;
         }
 
-        global $beanList, $db;
+        global $beanList;
+        $db = DBManagerFactory::getInstance();
 
         $activitesList = array("Calls", "Tasks", "Meetings", "Emails", "Notes");
         $activities = array();
