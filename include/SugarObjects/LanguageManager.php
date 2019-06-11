@@ -174,6 +174,9 @@ class LanguageManager
      */
     private static function _clearCache($module_dir, $lang = null)
     {
+        if ($module_dir === 'unified_search_modules.php') {
+            return;
+        }
         if (!empty($module_dir) && !empty($lang)) {
             $file = sugar_cached('modules/').$module_dir.'/language/'.$lang.'.lang.php';
             if (file_exists($file)) {
