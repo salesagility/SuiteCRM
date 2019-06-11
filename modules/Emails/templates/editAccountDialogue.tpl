@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -194,31 +194,6 @@
                 <h4>{$mod_strings.LBL_EMAIL_SETTINGS_OUTBOUND}</h4>
             </td>
         </tr>
-
-        <tr>
-            <td scope="row">
-                {$app_strings.LBL_EMAIL_SETTINGS_FROM_NAME}:
-                <span class="required">
-						{$app_strings.LBL_REQUIRED_SYMBOL}
-					</span>
-            </td>
-            <td>
-                <input type="text" id="ie_from_name" name="from_name" size="30" maxlength="64" value="">
-            </td>
-        </tr>
-
-        <tr>
-            <td scope="row">
-                {$app_strings.LBL_EMAIL_SETTINGS_FROM_ADDR}:
-                <span class="required">
-						{$app_strings.LBL_REQUIRED_SYMBOL}
-					</span>
-            </td>
-            <td>
-                <input type="text" id="ie_from_addr" name="from_addr" size="30" maxlength="64" value="">
-            </td>
-        </tr>
-
         <tr>
             <td scope="row">
                 {$app_strings.LBL_EMAIL_SETTINGS_REPLY_TO_ADDR}:
@@ -243,7 +218,7 @@
                 <span class="required">{$app_strings.LBL_REQUIRED_SYMBOL}</span>
             </td>
             <td>
-                <input type="text" id="inbound_mail_smtpuser" name="mail_smtpuser" size="30" maxlength="64">
+                <input type="text" id="inbound_mail_smtpuser" name="mail_smtpuser" size="30" maxlength="255">
             </td>
         </tr>
         <tr class="yui-hidden" id="inboundAccountRequiredPassword">
@@ -252,7 +227,7 @@
                 <span class="required">{$app_strings.LBL_REQUIRED_SYMBOL}</span>
             </td>
             <td>
-                <input type="password" id="inbound_mail_smtppass" name="mail_smtppass" size="30" maxlength="64">
+                <input type="password" id="inbound_mail_smtppass" name="mail_smtppass" size="30" maxlength="255">
             </td>
         </tr>
 
@@ -266,7 +241,7 @@
                        type='button'
                        accessKey="{$app_strings.LBL_SAVE_BUTTON_KEY}"
                        class="button"
-                       onClick='SUGAR.email2.accounts.saveIeAccount();'
+                       onClick='SUGAR.email2.accounts.saveIeAccount(getUserEditViewUserId());'
                        name="button" id="saveButton" value="  {$app_strings.LBL_EMAIL_DONE_BUTTON_LABEL}  ">
                 &nbsp;
                 <input title="{$app_strings.LBL_EMAIL_SETTINGS_ADD_ACCOUNT}"

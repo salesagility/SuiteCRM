@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once 'modules/SchedulersJobs/SchedulersJob.php';
@@ -75,10 +78,10 @@ class SugarJobQueue
         $this->db = DBManagerFactory::getInstance();
         $job = new SchedulersJob();
         $this->job_queue_table = $job->table_name;
-        if(!empty($GLOBALS['sugar_config']['jobs']['max_retries'])) {
+        if (!empty($GLOBALS['sugar_config']['jobs']['max_retries'])) {
             $this->jobTries = $GLOBALS['sugar_config']['jobs']['max_retries'];
         }
-        if(!empty($GLOBALS['sugar_config']['jobs']['timeout'])) {
+        if (!empty($GLOBALS['sugar_config']['jobs']['timeout'])) {
             $this->timeout = $GLOBALS['sugar_config']['jobs']['timeout'];
         }
     }
@@ -94,7 +97,7 @@ class SugarJobQueue
         $job->new_with_id = true;
         $job->status = SchedulersJob::JOB_STATUS_QUEUED;
         $job->resolution = SchedulersJob::JOB_PENDING;
-        if(empty($job->execute_time)) {
+        if (empty($job->execute_time)) {
             $job->execute_time = $GLOBALS['timedate']->nowDb();
         }
         $job->save();
@@ -111,7 +114,7 @@ class SugarJobQueue
     {
         $job = new SchedulersJob();
         $job->retrieve($jobId);
-        if(empty($job->id)) {
+        if (empty($job->id)) {
             $GLOBALS['log']->info("Job $jobId not found!");
             return null;
         }
@@ -128,7 +131,9 @@ class SugarJobQueue
     public function resolveJob($jobId, $resolution, $message = null)
     {
         $job = $this->getJob($jobId);
-        if(empty($job)) return false;
+        if (empty($job)) {
+            return false;
+        }
         return $job->resolveJob($resolution, $message);
     }
 
@@ -142,7 +147,9 @@ class SugarJobQueue
     public function postponeJob($jobId, $message = null, $delay = null)
     {
         $job = $this->getJob($jobId);
-        if(empty($job)) return false;
+        if (empty($job)) {
+            return false;
+        }
         return $job->postponeJob($message, $delay);
     }
 
@@ -153,7 +160,9 @@ class SugarJobQueue
     public function deleteJob($jobId)
     {
         $job = new SchedulersJob();
-        if(empty($job)) return false;
+        if (empty($job)) {
+            return false;
+        }
         return $job->mark_deleted($jobId);
     }
 
@@ -168,7 +177,7 @@ class SugarJobQueue
         // bsitnikovski@sugarcrm.com bugfix #56144: Scheduler Bug
         $date = $this->db->convert($this->db->quoted($GLOBALS['timedate']->getNow()->modify("-{$this->timeout} seconds")->asDb()), 'datetime');
         $res = $this->db->query("SELECT id FROM {$this->job_queue_table} WHERE status='".SchedulersJob::JOB_STATUS_RUNNING."' AND date_modified <= $date");
-        while($row = $this->db->fetchByAssoc($res)) {
+        while ($row = $this->db->fetchByAssoc($res)) {
             $this->resolveJob($row["id"], SchedulersJob::JOB_FAILURE, translate('ERR_TIMEOUT', 'SchedulersJobs'));
             $ret = false;
         }
@@ -194,15 +203,15 @@ class SugarJobQueue
         $now = $this->db->now();
         $queued = SchedulersJob::JOB_STATUS_QUEUED;
         $try = $this->jobTries;
-        while($try--) {
+        while ($try--) {
             // TODO: tranaction start?
             $id = $this->db->getOne("SELECT id FROM {$this->job_queue_table} WHERE execute_time <= $now AND status = '$queued' ORDER BY date_entered ASC");
-            if(empty($id)) {
+            if (empty($id)) {
                 return null;
             }
             $job = new SchedulersJob();
             $job->retrieve($id);
-            if(empty($job->id)) {
+            if (empty($job->id)) {
                 return null;
             }
             $job->status = SchedulersJob::JOB_STATUS_RUNNING;
@@ -211,7 +220,7 @@ class SugarJobQueue
             // using direct query here to be able to fetch affected count
             // if count is 0 this means somebody changed the job status and we have to try again
             $res = $this->db->query("UPDATE {$this->job_queue_table} SET status='{$job->status}', date_modified=$now, client='$client' WHERE id='{$job->id}' AND status='$queued'");
-            if($this->db->getAffectedRowCount($res) == 0) {
+            if ($this->db->getAffectedRowCount($res) == 0) {
                 // somebody stole our job, try again
                 continue;
             } else {

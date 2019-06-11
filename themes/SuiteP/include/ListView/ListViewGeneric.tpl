@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 {sugar_include include=$includes}
@@ -83,9 +83,11 @@
                 {capture assign="createLink"}<a href="?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">{$APP.LBL_CREATE_BUTTON_LABEL}</a>{/capture}
                 {capture assign="importLink"}<a href="?module=Import&action=Step1&import_module={$pageData.bean.moduleDir}&return_module={$pageData.bean.moduleDir}&return_action=index">{$APP.LBL_IMPORT}</a>{/capture}
                 {capture assign="helpLink"}<a target="_blank" href='?module=Administration&action=SupportPortal&view=documentation&version={$sugar_info.sugar_version}&edition={$sugar_info.sugar_flavor}&lang=&help_module={$currentModule}&help_action=&key='>{$APP.LBL_CLICK_HERE}</a>{/capture}
-                <p class="msg">
-                    {$APP.MSG_EMPTY_LIST_VIEW_NO_RESULTS|replace:"<item2>":$createLink|replace:"<item3>":$importLink}
-                </p>
+
+			{if !(isset($options.hide_edit_link) && $options.hide_edit_link === true) && !empty($quickViewLinks)}
+				<p class="msg"> {$APP.MSG_EMPTY_LIST_VIEW_NO_RESULTS|replace:"<item2>":$createLink|replace:"<item3>":$importLink} </p>
+			{/if}
+
         {elseif $query == "-advanced_search"}
             <p class="msg emptyResults">
                 {$APP.MSG_LIST_VIEW_NO_RESULTS_CHANGE_CRITERIA}
@@ -171,16 +173,16 @@
 								{if $pageData.ordering.sortOrder == 'ASC'}
 									{capture assign="imageName"}arrow_down.{$arrowExt}{/capture}
 									{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_DESC'}{/capture}
-									{sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+									<span class="suitepicon suitepicon-action-sorting-descending" title="{$alt_sort}"></span>
 								{else}
 									{capture assign="imageName"}arrow_up.{$arrowExt}{/capture}
 									{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_ASC'}{/capture}
-									{sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+									<span class="suitepicon suitepicon-action-sorting-ascending" title="{$alt_sort}"></span>
 								{/if}
 							{else}
 								{capture assign="imageName"}arrow.{$arrowExt}{/capture}
 								{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT'}{/capture}
-								{sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+								<span class="suitepicon suitepicon-action-sorting-none" title="{$alt_sort}"></span>
 							{/if}
 							</a>
 						{else}
@@ -214,7 +216,7 @@
 			<tr height='20' class='{$_rowColor}S1'>
 				{if $prerow}
 				<td>
-				 {if !$is_admin && is_admin_for_user && $rowData.IS_ADMIN==1}
+				 {if !$is_admin && $is_admin_for_user && $rowData.IS_ADMIN==1}
 						<input type='checkbox' disabled="disabled" class='listview-checkbox' value='{$rowData.ID}'>
 				 {else}
 	                    <input title="{sugar_translate label='LBL_SELECT_THIS_ROW_TITLE'}" onclick='sListView.check_item(this, document.MassUpdate)' type='checkbox' class='listview-checkbox' name='mass[]' value='{$rowData.ID}'>
@@ -232,7 +234,7 @@
 							   href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
 							>
                                 {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
-                                {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
+								<span class="suitepicon suitepicon-action-edit"></span></a>
                         {/if}
 					</td>
 				{/if}

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,13 +34,25 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
+<form action="index.php" method="post" name="DetailView" id="formDetailView">
+    <input type="hidden" name="module" value="{$module}">
+    <input type="hidden" name="record" value="{$fields.id.value}">
+    <input type="hidden" name="return_action">
+    <input type="hidden" name="return_module">
+    <input type="hidden" name="return_id">
+    <input type="hidden" name="module_tab">
+    <input type="hidden" name="isDuplicate" value="false">
+    <input type="hidden" name="offset" value="{$offset}">
+    <input type="hidden" name="action" value="EditView">
+    <input type="hidden" name="sugar_body_only">
+</form>
 <div class="detail-view">
     {*display tabs*}
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
@@ -106,7 +118,7 @@
         {/if}
         {if $config.enable_action_menu}
             <li id="tab-actions" class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{$APP.LBL_LINK_ACTIONS}}</a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{$APP.LBL_LINK_ACTIONS}}<span class="suitepicon suitepicon-action-caret"></span></a>
                 {{include file="themes/SuiteP/include/DetailView/actions_menu.tpl"}}
             </li>
         {/if}

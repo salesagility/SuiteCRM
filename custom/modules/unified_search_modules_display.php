@@ -1,6 +1,50 @@
 <?php
-// created: 2014-01-29 09:59:23
+// created: 2018-08-15 11:18:10
 $unified_search_modules_display = array (
+  'Accounts' => 
+  array (
+    'visible' => true,
+  ),
+  'Contacts' => 
+  array (
+    'visible' => true,
+  ),
+  'Opportunities' => 
+  array (
+    'visible' => true,
+  ),
+  'Calls' => 
+  array (
+    'visible' => true,
+  ),
+  'Documents' => 
+  array (
+    'visible' => true,
+  ),
+  'Cases' => 
+  array (
+    'visible' => true,
+  ),
+  'AOS_Contracts' => 
+  array (
+    'visible' => true,
+  ),
+  'Leads' => 
+  array (
+    'visible' => true,
+  ),
+  'Meetings' => 
+  array (
+    'visible' => true,
+  ),
+  'Notes' => 
+  array (
+    'visible' => true,
+  ),
+  'Campaigns' => 
+  array (
+    'visible' => true,
+  ),
   'AOP_Case_Events' => 
   array (
     'visible' => false,
@@ -10,10 +54,6 @@ $unified_search_modules_display = array (
     'visible' => false,
   ),
   'AOR_Reports' => 
-  array (
-    'visible' => false,
-  ),
-  'AOS_Contracts' => 
   array (
     'visible' => false,
   ),
@@ -45,37 +85,13 @@ $unified_search_modules_display = array (
   array (
     'visible' => false,
   ),
-  'Accounts' => 
-  array (
-    'visible' => true,
-  ),
   'Bugs' => 
   array (
     'visible' => false,
   ),
-  'Calls' => 
-  array (
-    'visible' => true,
-  ),
   'Calls_Reschedule' => 
   array (
     'visible' => false,
-  ),
-  'Campaigns' => 
-  array (
-    'visible' => false,
-  ),
-  'Cases' => 
-  array (
-    'visible' => true,
-  ),
-  'Contacts' => 
-  array (
-    'visible' => true,
-  ),
-  'Documents' => 
-  array (
-    'visible' => true,
   ),
   'FP_Event_Locations' => 
   array (
@@ -84,22 +100,6 @@ $unified_search_modules_display = array (
   'FP_events' => 
   array (
     'visible' => false,
-  ),
-  'Leads' => 
-  array (
-    'visible' => true,
-  ),
-  'Meetings' => 
-  array (
-    'visible' => true,
-  ),
-  'Notes' => 
-  array (
-    'visible' => true,
-  ),
-  'Opportunities' => 
-  array (
-    'visible' => true,
   ),
   'Project' => 
   array (

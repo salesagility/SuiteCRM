@@ -9157,7 +9157,7 @@ if (!class_exists('TCPDF', false)) {
 			$k = $this->k;
 			$this->javascript .= sprintf("f".$name."=this.addField('%s','%s',%d,[%.2F,%.2F,%.2F,%.2F]);", $name, $type, $this->PageNo()-1, $x*$k, ($this->h-$y)*$k+1, ($x+$w)*$k, ($this->h-$y-$h)*$k+1)."\n";
 			$this->javascript .= 'f'.$name.'.textSize='.$this->FontSizePt.";\n";
-			while (list($key, $val) = each($prop)) {
+			foreach($prop as $key => $val) {
 				if (strcmp(substr($key, -5), 'Color') == 0) {
 					$val = $this->_JScolor($val);
 				} else {
@@ -11051,7 +11051,7 @@ if (!class_exists('TCPDF', false)) {
 						// get attributes
 						preg_match_all('/([^=\s]*)=["]?([^"]*)["]?/', $element, $attr_array, PREG_PATTERN_ORDER);
 						$dom[$key]['attribute'] = array(); // reset attribute array
-						while (list($id, $name) = each($attr_array[1])) {
+						foreach ($attr_array[1] as $id => $name) {
 							$dom[$key]['attribute'][strtolower($name)] = $attr_array[2][$id];
 						}
 						// split style attributes
@@ -11059,7 +11059,7 @@ if (!class_exists('TCPDF', false)) {
 							// get style attributes
 							preg_match_all('/([^;:\s]*):([^;]*)/', $dom[$key]['attribute']['style'], $style_array, PREG_PATTERN_ORDER);
 							$dom[$key]['style'] = array(); // reset style attribute array
-							while (list($id, $name) = each($style_array[1])) {
+                            foreach ($style_array[1] as $id => $name) {
 								$dom[$key]['style'][strtolower($name)] = trim($style_array[2][$id]);
 							}
 							// --- get some style attributes ---
@@ -11650,24 +11650,31 @@ if (!class_exists('TCPDF', false)) {
 												// get current X position
 												preg_match('/([0-9\.\+\-]*)[\s]([0-9\.\+\-]*)[\s]([0-9\.\+\-]*)[\s]('.$strpiece[1][0].')[\s]('.$strpiece[2][0].')([\s]*)/x', $pmid, $xmatches);
 												$currentxpos = $xmatches[1];
+												$function = function ($matches) {
+                                                    global $spacew;
+                                                    $newx = sprintf("%.2F",(floatval($matches[1]) + $spacew));
+                                                    return "".$newx." ".$matches[2]." ".$matches[3]." ".$matches[4]." x*#!#*x".$matches[5].$matches[6];
+												};
+
 												// justify block
 												$pmid = preg_replace_callback('/([0-9\.\+\-]*)[\s]([0-9\.\+\-]*)[\s]([0-9\.\+\-]*)[\s]('.$strpiece[1][0].')[\s]('.$strpiece[2][0].')([\s]*)/x',
-													create_function('$matches', 'global $spacew;
-													$newx = sprintf("%.2F",(floatval($matches[1]) + $spacew));
-													return "".$newx." ".$matches[2]." ".$matches[3]." ".$matches[4]." x*#!#*x".$matches[5].$matches[6];'), $pmid, 1);
+                                                    $function, $pmid, 1);
 												break;
 											}
 											case 'c': {
 												// get current X position
 												preg_match('/([0-9\.\+\-]*)[\s]([0-9\.\+\-]*)[\s]([0-9\.\+\-]*)[\s]([0-9\.\+\-]*)[\s]([0-9\.\+\-]*)[\s]('.$strpiece[1][0].')[\s]('.$strpiece[2][0].')([\s]*)/x', $pmid, $xmatches);
 												$currentxpos = $xmatches[1];
-												// justify block
-												$pmid = preg_replace_callback('/([0-9\.\+\-]*)[\s]([0-9\.\+\-]*)[\s]([0-9\.\+\-]*)[\s]([0-9\.\+\-]*)[\s]([0-9\.\+\-]*)[\s]('.$strpiece[1][0].')[\s]('.$strpiece[2][0].')([\s]*)/x',
-													create_function('$matches', 'global $spacew;
+												$function = function ($matches) {
+                                                    global $spacew;
 													$newx1 = sprintf("%.3F",(floatval($matches[1]) + $spacew));
 													$newx2 = sprintf("%.3F",(floatval($matches[3]) + $spacew));
 													$newx3 = sprintf("%.3F",(floatval($matches[5]) + $spacew));
-													return "".$newx1." ".$matches[2]." ".$newx2." ".$matches[4]." ".$newx3." ".$matches[6]." x*#!#*x".$matches[7].$matches[8];'), $pmid, 1);
+													return "".$newx1." ".$matches[2]." ".$newx2." ".$matches[4]." ".$newx3." ".$matches[6]." x*#!#*x".$matches[7].$matches[8];
+												};
+												// justify block
+												$pmid = preg_replace_callback('/([0-9\.\+\-]*)[\s]([0-9\.\+\-]*)[\s]([0-9\.\+\-]*)[\s]([0-9\.\+\-]*)[\s]([0-9\.\+\-]*)[\s]('.$strpiece[1][0].')[\s]('.$strpiece[2][0].')([\s]*)/x',
+                                                    $function, $pmid, 1);
 												break;
 											}
 										}
@@ -11691,11 +11698,14 @@ if (!class_exists('TCPDF', false)) {
 										// escape special characters
 										$pmidtemp = preg_replace('/[\\\][\(]/x', '\\#!#OP#!#', $pmidtemp);
 										$pmidtemp = preg_replace('/[\\\][\)]/x', '\\#!#CP#!#', $pmidtemp);
+										$function = function ($matches) {
+                                            global $spacew;
+                                            $matches[1] = str_replace("#!#OP#!#", "(", $matches[1]);
+                                            $matches[1] = str_replace("#!#CP#!#", ")", $matches[1]);
+                                            return "[(".str_replace(chr(0).chr(32), ") ".(-2830 * $spacew)." (", $matches[1]).")]";
+										};
 										$pmid = preg_replace_callback("/\[\(([^\)]*)\)\]/x",
-													create_function('$matches', 'global $spacew;
-													$matches[1] = str_replace("#!#OP#!#", "(", $matches[1]);
-													$matches[1] = str_replace("#!#CP#!#", ")", $matches[1]);
-													return "[(".str_replace(chr(0).chr(32), ") ".(-2830 * $spacew)." (", $matches[1]).")]";'), $pmidtemp);
+                                            $function, $pmidtemp);
 										$this->setPageBuffer($startlinepage, $pstart."\n".$pmid."\n".$pend);
 										$endlinepos = strlen($pstart."\n".$pmid."\n");
 									} else {
@@ -12195,7 +12205,7 @@ if (!class_exists('TCPDF', false)) {
 						// get style attributes
 						preg_match_all('/([^;:\s]*):([^;]*)/', $tag['attribute']['style'], $style_array, PREG_PATTERN_ORDER);
 						$astyle = array();
-						while (list($id, $name) = each($style_array[1])) {
+                        foreach ($style_array[1] as $id => $name) {
 							$name = strtolower($name);
 							$astyle[$name] = trim($style_array[2][$id]);
 						}
@@ -13642,18 +13652,21 @@ if (!class_exists('TCPDF', false)) {
 			global $jfrompage, $jtopage;
 			$jfrompage = $frompage;
 			$jtopage = $topage;
+			$function = function($matches) {
+                global $jfrompage, $jtopage;
+                $pagenum = intval($matches[3]) + 1;
+                if (($pagenum >= $jtopage) AND ($pagenum < $jfrompage)) {
+                    $newpage = ($pagenum + 1);
+                } elseif ($pagenum == $jfrompage) {
+                    $newpage = $jtopage;
+                } else {
+                    $newpage = $pagenum;
+                }
+                --$newpage;
+                return "this.addField('".$matches[1]."','".$matches[2]."',".$newpage."";
+			};
 			$this->javascript = preg_replace_callback('/this\.addField\(\'([^\']*)\',\'([^\']*)\',([0-9]+)/',
-				create_function('$matches', 'global $jfrompage, $jtopage;
-				$pagenum = intval($matches[3]) + 1;
-				if (($pagenum >= $jtopage) AND ($pagenum < $jfrompage)) {
-					$newpage = ($pagenum + 1);
-				} elseif ($pagenum == $jfrompage) {
-					$newpage = $jtopage;
-				} else {
-					$newpage = $pagenum;
-				}
-				--$newpage;
-				return "this.addField(\'".$matches[1]."\',\'".$matches[2]."\',".$newpage."";'), $tmpjavascript);
+                $function, $tmpjavascript);
 			// return to last page
 			$this->lastPage(true);
 			return true;
@@ -13779,18 +13792,21 @@ if (!class_exists('TCPDF', false)) {
 			$tmpjavascript = $this->javascript;
 			global $jpage;
 			$jpage = $page;
+			$function = function ($matches) {
+                global $jpage;
+                $pagenum = intval($matches[3]) + 1;
+                if ($pagenum >= $jpage) {
+                    $newpage = ($pagenum - 1);
+                } elseif ($pagenum == $jpage) {
+                    $newpage = 1;
+                } else {
+                    $newpage = $pagenum;
+                }
+                --$newpage;
+                return "this.addField('".$matches[1]."','".$matches[2]."',".$newpage."";
+			};
 			$this->javascript = preg_replace_callback('/this\.addField\(\'([^\']*)\',\'([^\']*)\',([0-9]+)/',
-				create_function('$matches', 'global $jpage;
-				$pagenum = intval($matches[3]) + 1;
-				if ($pagenum >= $jpage) {
-					$newpage = ($pagenum - 1);
-				} elseif ($pagenum == $jpage) {
-					$newpage = 1;
-				} else {
-					$newpage = $pagenum;
-				}
-				--$newpage;
-				return "this.addField(\'".$matches[1]."\',\'".$matches[2]."\',".$newpage."";'), $tmpjavascript);
+                $function, $tmpjavascript);
 			// return to last page
 			$this->lastPage(true);
 			return true;

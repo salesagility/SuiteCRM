@@ -1,0 +1,912 @@
+/**** Calendar ***/
+
+.yui-calcontainer .yui-cal-nav .yui-cal-nav-btn {
+  background-color: $danger-btn-bg;
+  border: none;
+  border-radius: $border-radius-base;
+}
+
+button#goto_date_trigger_div_nav_cancel {
+  font-size: 13px;
+  font-weight: 500;
+  background-color: $danger-btn-bg;
+  color: $danger-btn-color;
+  cursor: pointer;
+  padding: 0 10px 0 10px;
+  margin: 0 0 0 0;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+  letter-spacing: 1px;
+  line-height: 40px;
+  height: 40px;
+  text-transform: uppercase;
+}
+
+button#goto_date_trigger_div_nav_submit {
+  font-size: 13px;
+  font-weight: 500;
+  background-color: $danger-btn-bg;
+  color: $danger-btn-color;
+  cursor: pointer;
+  padding: 0 10px 0 10px;
+  margin: 0 0 0 0;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+  letter-spacing: 1px;
+  line-height: 40px;
+  height: 40px;
+  text-shadow: none;
+  text-transform: uppercase;
+}
+
+table#goto_date_trigger_div_t thead {
+  background: $calendar-other-month-day-header-bg;
+}
+
+
+.yui-calendar .calweekdaycell {
+  font-weight: normal;
+}
+
+.yui-calendar .calhead {
+  background: $calendar-nav-header-bg;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.yui-calendar a.calnav {
+  font-weight: normal;
+  background-color: $calendar-nav-button-bg;
+  color: $default-btn-color;
+  padding: 8px;
+  border: 1px solid $calendar-nav-button-bg;
+  border-radius: $border-radius-base;
+  width: auto;
+  height: auto;
+  text-transform: uppercase;
+}
+
+.yui-calendar a.calnavleft
+{
+  color: $default-btn-color;
+  background-color: $calendar-arrow-button-bg;
+  border: 1px solid $calendar-arrow-button-bg;
+  padding: 0;
+  border-radius: $border-radius-base;
+  text-transform: uppercase;
+  font-weight: normal;
+  height: 32px;
+  width: 32px;
+  display: inline-block;
+  margin-top: 10px;
+  background-origin: padding-box;
+  background-position: 0 0;
+}
+
+.yui-calendar a.calnavright {
+  display: inline-block;
+  font-weight: normal;
+  background-color: $calendar-arrow-button-bg;
+  background-origin: padding-box;
+  background-position: 0 0;
+  color: $calendar-arrow-button-color;
+  padding: 0;
+  margin-top: 10px;
+  border: 1px solid $calendar-arrow-button-bg;
+  border-radius: $border-radius-base;
+  width: 32px;
+  height: 32px;
+  text-transform: uppercase;
+}
+
+.yui-calendar .calheader {
+  padding: 4px;
+  line-height: 48px;
+  height: 48px;
+}
+
+.yui-calendar .calnavleft {
+  left: 0;
+  background-image: url("../../../../../themes/SuiteP/images/p_left.svg");
+}
+
+.yui-calendar .calnavright {
+  right: 0;
+  background-image: url("../../../../../themes/SuiteP/images/p_right.svg");
+}
+.yui-module .hd {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.yui-module .ft {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.yui-module.yui-overlay.yui-panel.cal_panel {
+  border-radius: $border-radius-base;
+}
+.yui-panel .bd {
+  display: block;
+  padding: 0 10px 0 10px;
+}
+
+.yui-calendar .calbody td {
+  background: $calendar-slot-bg;
+}
+
+.yui-calendar td.calcell a {
+  background: $calendar-slot-bg;
+  color: $calendar-slot-color;
+  line-height: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+.yui-calendar td.calcell.selected {
+  background: $calendar-selected-bg;
+  color: $calendar-slot-color;
+}
+
+.yui-calendar td.calcell.selected a {
+  background: $calendar-selected-bg;
+  color: $calendar-selected-color;
+}
+
+.yui-calendar td.calcell a:hover {
+  background: $calendar-selected-color;
+  color: $calendar-selected-color;
+}
+
+.yui-calendar td.calcell.calcellhover {
+  background: $calendar-slot-bg;
+  color: $calendar-slot-color;
+}
+
+.yui-calendar td.calcell.calcellhover a {
+  background: $calendar-slot-bg;
+  color: $calendar-slot-color;
+}
+
+.yui-calendar .calweekdaycell {
+  color: $calendar-other-month-day-header-color;
+}
+
+.yui-calendar a.calnav {
+  background-color: $calendar-nav-bg;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+}
+
+.yui-calendar a.calnav:hover {
+  background-color: $calendar-selected-bg;
+  color: $calendar-selected-color;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+}
+
+a#callnav_today {
+  clear:both;
+  line-height: 40px;
+  display: block;
+}
+
+.monthHeader {
+  background: $calendar-title-bg;
+  color: $calendar-title-color;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-top: 10px;
+  border: none;
+  border: 1px solid transparent;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  line-height: $calendar-title-height;
+  height: $calendar-title-height;
+  vertical-align: middle;
+}
+
+.monthHeader h3 {
+  margin-top: 0;
+  line-height: $calendar-title-height;
+  height: $calendar-title-height;
+}
+
+.monthCalBody {
+  background-color: $calendar-user-bg;
+}
+
+.monthCalBody h5 {
+  font-size: $page-font-size;
+  font-weight: bold;
+  padding: 0;
+  text-align: center;
+  clear:both;
+
+}
+
+h5.calSharedUser  {
+  line-height: $calendar-user-height;
+  height: $calendar-user-height;
+}
+
+
+.fc-unthemed thead {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+
+
+.fc-view-container .monthCalBody * {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+
+.fc-view-container .monthCalBody:before {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+
+.fc-view-container .monthCalBody:after {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+
+.fc-view-container .monthCalBody {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+
+div.monthFooter {
+  background-color: $calendar-header-bg;
+  line-height: 32px;
+}
+.monthCalBody td {
+  background-color: $calendar-body-bg;
+  color: $calendar-body-color;
+}
+
+.monthCalBody th a {
+  color: $calendar-body-header-color;
+}
+
+.yearCalBody {
+  border: none;
+}
+
+.yearCalBodyMonth {
+  background-color: $calendar-year-body-bg;
+  border-top: 2px solid $danger-btn-bg;
+  border-bottom: 2px solid $calendar-year-body-border-color;
+}
+
+.yearCalBody .monthHeader {
+  border: none;
+}
+
+.yearCalBodyMonth #daily_cal_table {
+  border-top: $calendar-header-bg;
+}
+
+.yearCalBodyMonth #daily_cal_table .monthCalBodyTHDay {
+  border-color: $calendar-header-bg;
+}
+
+.yearCalBodyMonth > a {
+  color: $link-color;
+}
+
+h5.calSharedUser {
+  color: $calendar-month-day-header-bg;
+}
+
+
+.olCgClass td {
+  border-bottom-color: $calendar-header-bg;
+}
+
+.olBgClass {
+  background-color: $calendar-header-bg;
+}
+
+.yui-navset .yui-nav {
+  border-bottom: 1px solid $calendar-header-bg;
+}
+
+.yui-navset .yui-navset-top .yui-nav {
+  border-bottom: 1px solid $calendar-header-bg;
+}
+
+.yui-layout .yui-layout-hd {
+  border-bottom: 1px solid $calendar-header-bg;
+}
+
+.yui-layout .yui-layout-unit div.yui-layout-bd{
+  border-color: $calendar-header-bg;
+}
+
+.yui-navset .yui-content{
+  border-color: $calendar-header-bg;
+}
+
+.yui-navset .yui-navset-top .yui-content {
+  border-color: $calendar-header-bg;
+}
+
+.yui-navset .yui-nav .selected a {
+  border-color: $calendar-header-bg;
+}
+
+.yui-navset .yui-nav .selected a em {
+  border-color: $calendar-header-bg;
+}
+
+
+.yui-navset .yui-nav a {
+  border-color: $calendar-header-bg;
+}
+
+
+.yui-navset .yui-nav a em {
+  border-color: $calendar-header-bg;
+}
+
+
+.yui-navset .yui-nav a {
+  border-color: $calendar-header-bg;
+}
+
+.yui-navset .yui-navset-top .yui-nav a {
+  border-color: $calendar-header-bg;
+}
+
+a.sugar-tab-close {
+  background: transparent url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px;
+}
+
+.yui-navset .yui-nav a.sugar-tab-close {
+  background: transparent url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px;
+}
+
+.yui-navset .yui-nav .selected a.sugar-tab-close {
+  background: transparent url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px;
+}
+
+.yui-nav {
+  overflow-y: hidden;
+}
+
+ul.yui-nav li.selected {
+  background: $selection-bg;
+}
+
+
+.qtip-content {
+  overflow-y: auto;
+  max-height: 450px;
+}
+
+.qtip-content .title {
+  font-weight: bold;
+}
+
+.qtip {
+  font-family: 'Lato', Lato, Arial, sans-serif;
+  font-size: $qtip-font-size;
+  border: none;
+  border-radius: $border-radius-base;
+  -webkit-border-radius: $border-radius-base;
+}
+
+
+.qtip-titlebar {
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+}
+
+.qtip-titlebar {
+  padding:  5px 24px 5px 10px;
+}
+
+.qtip-title-text {
+  display: block;
+  color: $qtip-title-color;
+  float: left;
+  line-height: $qtip-font-size + 6px;
+  width: 128px;
+}
+
+.qtip-title-buttons {
+  display: inline-block;
+  padding: 0 0 0 4px;
+  float: right;
+  vertical-align: middle;
+}
+
+.qtip-title-buttons a:first-of-type {
+  margin: 0 0 0 4px;
+}
+
+.qtip-title-buttons a {
+  color: $qtip-btn-color;
+  padding: 0 4px;
+  margin: 0;
+}
+
+.qtip-title-buttons a:hover {
+  color: $qtip-btn-hover;
+}
+
+.qtip-default .qtip-titlebar {
+  background-color: $qtip-title-bg;
+}
+
+.qtip-default .qtip-icon {
+  top: 16px;
+  background-color: transparent;
+  border: none;
+}
+
+.qtip-default .qtip-titlebar .qtip-close {
+  font-size: 22px;
+  color: $qtip-btn-color;
+}
+
+.qtip-default .qtip-titlebar .qtip-close:hover {
+  font-size: 22px;
+  font-weight: bold;
+  color: $qtip-btn-hover;
+}
+
+.qtip-content {
+  line-height: 16px;
+}
+
+.qtip-content {
+  background-color: $qtip-content-bg;
+  color: $qtip-content-color;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+.qtip .qtip-tip {
+  /* hide the tip of the speech bubble */
+  display: none;
+}
+
+.qtip-content a {
+  font-weight: bold;
+  color: $link-color;
+}
+
+.qtip-content a:hover {
+  color: $link-color-hover;
+}
+
+
+td.fc-widget-header {
+  background-color: $calendar-header-bg;
+  padding: 0;
+  border: none;
+}
+
+td.fc-widget-header table > thead {
+  background-color: $calendar-header-bg;
+  padding: 0;
+  border: none;
+}
+
+td.fc-widget-header table > thead > tr > th {
+  background-color: $calendar-header-bg;
+  padding: 0;
+  border: none;
+}
+
+
+td.fc-day-top.fc-other-month {
+  background-color: $calendar-other-month-day-header-bg;
+  opacity: 1;
+}
+
+.fc-title {
+  font-size: 13px;
+  line-height: 24px;
+}
+
+.fc-day-header a {
+  color: $calendar-header-color;
+}
+
+.fc-day-header a:hover {
+  color: $calendar-header-color;
+}
+
+td.fc-day-top.fc-today {
+  background: $calendar-month-day-header-bg;
+  cursor: pointer;
+}
+
+.fc-day-top {
+  background: $calendar-month-day-header-bg;
+  cursor: pointer;
+}
+
+.fc-unthemed th,
+.fc-unthemed td,
+.fc-unthemed thead,
+.fc-unthemed tbody,
+.fc-unthemed .fc-divider,
+.fc-unthemed .fc-row,
+.fc-unthemed .fc-content, /* for gutter border */
+.fc-unthemed .fc-popover,
+.fc-unthemed .fc-list-view,
+.fc-unthemed .fc-list-heading td {
+  border-color: $calendar-border-color !important;
+}
+
+.fc-unthemed .fc-divider,
+.fc-unthemed .fc-popover .fc-header,
+.fc-unthemed .fc-list-heading td {
+  border-color: $calendar-border-color !important;
+}
+
+.fc-unthemed .fc-divider,
+.fc-unthemed .fc-popover .fc-header,
+.fc-unthemed .fc-list-heading td {
+  border-color: $calendar-border-color !important;
+}
+
+.monthFooter td {
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 7px;
+  padding-right: 7px;
+  border-top: 1px solid;
+  border-bottom: 2px solid;
+}
+
+
+
+.pagecontent > div.row.monthHeader > div > a {
+  color: $default-btn-color;
+}
+
+.pagecontent > div.row.monthHeader {
+  margin-bottom: 0;
+}
+
+.monthHeader td {
+  padding-left: 5px;
+}
+
+.monthViewDayHeight {
+  height: 100px;
+}
+
+.monthViewDayHeight td[scope=row] {
+  padding: 5px;
+  text-align: center;
+}
+
+.monthViewDayHeight td {
+  padding: 3px;
+  text-align: right;
+  vertical-align: top;
+}
+
+.yearViewDayHeight {
+  height: 40px;
+}
+
+.monthCalBodyDayItem {
+  padding: 5px 0 8px 0;
+  margin: 7px 0 7px 0;
+  border-top: 1px solid;
+}
+
+.monthCalBodyDayItem td {
+  vertical-align: top;
+}
+
+.monthCalBodyDayItem td img {
+  padding-right: 3px;
+  vertical-align: top;
+}
+
+.monthCalBody th {
+  font-weight: normal;
+  padding: 7px;
+  height: 20px;
+  vertical-align: top;
+}
+
+.monthCalBodyTH th {
+  font-weight: bold;
+  padding: 5px;
+  border-bottom: 1px solid;
+}
+
+.monthCalBody td {
+  padding: 5px;
+  text-align: left;
+}
+
+.monthCalBody td div table td {
+  text-align: left;
+}
+
+.monthCalBody {
+  padding: 0;
+}
+
+.monthCalBody td.yearCalBody {
+  padding: 0;
+  margin: 0;
+}
+
+.yearCalBodyMonth {
+  padding: 5px 0 0 0;
+  text-align: center;
+}
+
+.yearCalBodyMonth #daily_cal_table {
+  margin-top: 5px;
+}
+
+.yearCalBodyMonth > a {
+  font-weight: bold;
+  padding: 5px;
+  margin: 0;
+  width: 100%;
+  text-decoration: none;
+}
+
+.yearCalBodyMonth > a:hover {
+  text-decoration: underline;
+}
+
+.calSharedUser {
+  padding-top: 5px;
+  padding-left: 8px;
+  margin-top: 0;
+  margin-bottom: 0;
+  border-top: 1px;
+  height: 20px;
+}
+
+.fc-toolbar {
+  display: none;
+  height: 0;
+  visibility: collapse;
+}
+
+.monthCalBody > .calSharedUser {
+  color: $default-btn-color;
+}
+
+thead.fc-head {
+  background: $calendar-month-day-header-bg;
+  color: $default-btn-color;
+}
+
+thead.fc-head tr td {
+  padding: 8px;
+}
+
+a.fc-day-number {
+  color: $calendar-other-month-day-header-color;
+  text-decoration: none;
+}
+
+a.fc-day-number:hover {
+  color: $calendar-other-month-day-header-color-hover;
+  text-decoration: none;
+}
+
+.calendar {
+  border: 1px solid $calendar-border-color;
+}
+
+.calendar .button {
+  border-color: $panel-default-border;
+  background-image: none;
+}
+
+.calendar .combo {
+  background: $gray-lighter;
+  padding: 0;
+}
+
+.calendar .combo .active {
+  background: #eee;
+}
+
+.calendar .combo .hilite {
+  background: $panel-bg;
+  padding: 1px 4px 1px 4px;
+  border-color: $panel-default-border;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.calendar .combo .label{
+  padding: 2px 4px 2px 4px;
+  text-align: left;
+}
+
+.calendar .combo .label-IEfix {
+  padding: 2px 4px 2px 4px;
+  text-align: left;
+}
+
+.calendar .nav {
+  background: transparent no-repeat 100% 100%;
+}
+
+.calendar table {
+  background: $panel-bg;
+}
+
+.calendar table .wn {
+  background: $panel-bg;
+  border-right: 1px solid $panel-default-border;
+}
+
+.calendar tbody .day {
+  background: $calendar-slot-bg;
+  padding: 2px 4px 2px 2px;
+  text-align: right;
+}
+
+.calendar tbody .day.othermonth.oweekend {
+  color: #666;
+}
+
+.calendar tbody .emptycell {
+  display: none;
+}
+
+.calendar tbody .rowhilite td,
+.calendar tbody .rowhilite td.weekend {
+  background: $panel-bg;
+}
+
+.calendar tbody .rowhilite td.wn {
+  background: $panel-bg;
+}
+
+.calendar tbody td.hilite,
+.calendar tbody td.weekend.hilite {
+  background: $panel-bg;
+  border-color: $panel-default-border;
+}
+
+.calendar tbody td.selected {
+  background: $panel-bg;
+  border-color: $panel-default-border;
+}
+
+.calendar tbody td.today a,
+.calendar tbody td.today {
+  background-color: $calendar-today-bg;
+  color: $calendar-today-color;
+}
+
+.calendar tbody td.weekend {
+  background: $calendar-other-month-day-body-bg;
+  color: $calendar-other-month-day-body-color;
+}
+
+.calendar tfoot .ttip {
+  background: $calendar-tip-bg;
+  color: $calendar-tip-color;
+  border-top: 1px solid $panel-default-border;
+  border-bottom: 1px solid $panel-default-border;
+}
+
+.calendar thead .hilite {
+  border-top: 1px solid $panel-default-border;
+}
+
+.calendar thead .name {
+  background: $panel-bg;
+  border-color: $panel-default-border;
+}
+
+.calendar thead .title {
+  background: $calendar-month-day-header-bg;
+  color: $calendar-month-day-header-color;
+  padding: 3px;
+  border-top: 1px solid $calendar-body-header-color;
+  border-bottom: 1px solid $calendar-body-header-color;
+}
+
+.calendar thead .weekend {
+  font-weight: bold;
+  color: $calendar-other-month-day-body-color;
+}
+
+
+
+.fc-bg table > tbody > tr .fc-today {
+  background-color: $calendar-today-bg;
+}
+
+div.fc-basic-view .fc-body .fc-row {
+  min-height: $calendar-month-slot-height; /* ensure that all rows are at least this tall */
+}
+
+/* user list */
+
+.modal-calendar-user-list table.edit {
+  margin-top: 8px;
+  width: 256px;
+}
+
+.modal-calendar-user-list table.edit tr td:first-of-type {
+  width: 192px;
+}
+
+.modal-calendar-user-list #shared_ids_td {
+  width: 128px;
+}
+
+.modal-calendar-user-list select[size]#shared_ids {
+  height: 200px;
+}
+
+
+iframe.teamNoticeBox {
+  overflow: auto;
+  width: 100%;
+}
+
+
+.modal-cal-edit .modal-content {
+  width: 95%;
+}
+
+.modal-cal-edit  .modal-lg {
+  width: 90%;
+}
+
+.modal-calendar-user-list .modal-content {
+  width: 95%;
+}
+
+.modal-calendar-settings  .modal-content  {
+  width: 95%;
+}
+
+.modal-calendar-user-list .modal-content select {
+  color: $main-font-color;
+}
+
+@media (min-width: 1350px) {
+  .modal-cal-edit .modal-content {
+    width: 90%;
+  }
+
+  .modal-cal-edit  .modal-lg {
+    width: 80%;
+  }
+
+  .modal-calendar-user-list .modal-content {
+    width: 900px;
+  }
+
+  .modal-calendar-settings  .modal-content  {
+    width: 900px;
+  }
+}
+

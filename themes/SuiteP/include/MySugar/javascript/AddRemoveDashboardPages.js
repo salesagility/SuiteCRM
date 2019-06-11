@@ -51,14 +51,7 @@ function addDashboardForm(page_id){
         type: 'POST',
 
         success : function(data) {
-
-            var form = '<form method="post" name="addpageform" id="addpageform" action="index.php?module=Home&amp;action=AddDashboardPages">' +
-              '<input type="text" name="dashName" id="dashName">' +
-              '<select name="numColumns"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>' +
-              '</form>';
             var titleval = SUGAR.language.get('app_strings', 'LBL_ADD_DASHBOARD_PAGE');
-            var myButtons = [{ text: SUGAR.language.get('app_strings', 'LBL_SAVE_BUTTON_LABEL'), handler: handleSubmit, isDefault: true },
-                { text: SUGAR.language.get('app_strings', 'LBL_CANCEL_BUTTON_TITLE'), handler:handleCancel }];
             $("#dashName").attr('type', 'text');
             $('.modal-add-dashboard > .modal-dialog > .modal-content > .modal-header .modal-title').html(titleval);
             $('.modal-add-dashboard > .modal-dialog > .modal-content > .modal-body').html(data);

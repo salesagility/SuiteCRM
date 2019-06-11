@@ -359,16 +359,12 @@
     padding: .4em;
 }
 #Milestone, #Milestone_label, #Subtask, #Subtask_label {
-    display: inline!important;
+    display: inline-block!important;
 }
 #Duration, #Lag {
     display: inline!important;
     width: 58%!important;
  }
-#Duration_unit, #Lag_unit {
-    display: inline;
-    padding: .3em;
-}
 #Resources {
     width: 60%;
     padding: .3em;

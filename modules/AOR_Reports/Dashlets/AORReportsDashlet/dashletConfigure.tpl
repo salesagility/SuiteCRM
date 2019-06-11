@@ -1,3 +1,43 @@
+{*
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+*}
 <div>
     <form action='index.php' name='EditView' id='configure_{$id}' method='post' onSubmit='return SUGAR.dashlets.postForm("configure_{$id}", SUGAR.mySugar.uncoverPage);'>
         <input type='hidden' name='id' value='{$id}'>
@@ -37,11 +77,11 @@
                                             true
                                     );' >
                                 {/literal}
-                            <img src="themes/default/images/id-ff-select.png">
+                            <span class="suitepicon suitepicon-action-select"></span>
                         </button>
                         <button type="button" name="btn_clr_aor_report_name" id="btn_clr_aor_report_name" tabindex="0" title="{$MOD.LBL_DASHLET_CLEAR_REPORT}"  class="button lastChild"
                             onclick="SUGAR.clearRelateField(this.form, 'aor_report_name', 'aor_report_id');"  value="{$MOD.LBL_DASHLET_CLEAR_REPORT}" >
-                            <img src="themes/default/images/id-ff-clear.png">
+                            <span class="suitepicon suitepicon-action-clear"></span>
                         </button>
                     </span>
                     <script type="text/javascript">
@@ -118,9 +158,9 @@
                 <td>
                     <div id="parameterOptions{$id}">
 
-                            <input type='hidden' name='parameter_id[]' value='{$condition.id}'>
-                            <input type='hidden' name='parameter_operator[]' value='{$condition.operator}'>
-                            <input type='hidden' name='parameter_type[]' value='{$condition.value_type}'>
+                            <input type='hidden' name='parameter_id[{$condition.key}]' value='{$condition.id}'>
+                            <input type='hidden' name='parameter_operator[{$condition.key}]' value='{$condition.operator}'>
+                            <input type='hidden' name='parameter_type[{$condition.key}]' value='{$condition.value_type}'>
 
                         {if $condition.value_type == "Period"}
                             {$condition.module_display} - <em>{$condition.field_display}</em> - {$condition.operator_display}
@@ -206,9 +246,9 @@
                     var html = '';
                     for(var x = 0; x < data.length; x++) {
                         var cond = data[x];
-                        html += "<input type='hidden' name='parameter_id[]' value='"+cond.id+"'>";
-                        html += "<input type='hidden' name='parameter_operator[]' value='"+cond.operator+"'>";
-                        html += "<input type='hidden' name='parameter_type[]' value='"+cond.value_type+"'>";
+                        html += "<input type='hidden' name='parameter_id["+cond.key+"]' value='"+cond.id+"'>";
+                        html += "<input type='hidden' name='parameter_operator["+cond.key+"]' value='"+cond.operator+"'>";
+                        html += "<input type='hidden' name='parameter_type["+cond.key+"]' value='"+cond.value_type+"'>";
                         html += cond.module_display+" "+cond.field_display+" "+cond.operator_display+" "+cond.field;
                     }
                     paramContainer.html(html);

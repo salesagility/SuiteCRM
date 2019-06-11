@@ -1,11 +1,11 @@
 <?php
-
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 class Favorites extends Basic
 {
@@ -88,8 +88,16 @@ class Favorites extends Basic
      */
     public function getFavoriteID($module, $record_id)
     {
-        global $db, $current_user;
-        $query = "SELECT id FROM favorites WHERE parent_id= '" . $record_id . "' AND parent_type = '" . $module . "' AND assigned_user_id = '" . $current_user->id . "' AND deleted = 0 ORDER BY date_entered DESC";
+        global $current_user;
+        $db = DBManagerFactory::getInstance();
+
+        $recordIdQuote = $db->quote($record_id);
+        $moduleQuote = $db->quote($module);
+        $currentUserIdQuote = $db->quote($current_user->id);
+
+        $query = "SELECT id FROM favorites WHERE parent_id= '" . $recordIdQuote .
+                "' AND parent_type = '" . $moduleQuote . "' AND assigned_user_id = '" .
+                $currentUserIdQuote . "' AND deleted = 0 ORDER BY date_entered DESC";
 
         return $db->getOne($query);
     }
@@ -100,14 +108,20 @@ class Favorites extends Basic
      */
     public function getCurrentUserSidebarFavorites($id = null)
     {
-        global $db, $current_user;
+        global $current_user;
+        $db = DBManagerFactory::getInstance();
 
         $return_array = array();
 
+        $currentUserIdQuote = $db->quote($current_user->id);
         if ($id) {
-            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . $current_user->id . "' AND parent_id = '" . $id . "' AND deleted = 0 ORDER BY date_entered DESC";
+            $idQuote = $db->quote($id);
+            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" .
+                    $currentUserIdQuote . "' AND parent_id = '" . $idQuote .
+                    "' AND deleted = 0 ORDER BY date_entered DESC";
         } else {
-            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . $current_user->id . "' AND deleted = 0 ORDER BY date_entered DESC";
+            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" .
+                    $currentUserIdQuote . "' AND deleted = 0 ORDER BY date_entered DESC";
         }
 
         $result = $db->query($query);
@@ -115,7 +129,7 @@ class Favorites extends Basic
         $i = 0;
         while ($row = $db->fetchByAssoc($result)) {
             $bean = BeanFactory::getBean($row['parent_type'], $row['parent_id']);
-            if($bean) {
+            if ($bean) {
                 $return_array[$i]['item_summary'] = $bean->name;
                 $return_array[$i]['item_summary_short'] = to_html(getTrackerSubstring($bean->name));
                 $return_array[$i]['id'] = $row['parent_id'];
@@ -131,12 +145,73 @@ class Favorites extends Basic
 
                 ++$i;
             }
-
         }
 
         return $return_array;
     }
 
+    /**
+     * @parm string $module
+     * @return array Representing an array of \SuiteCRM\API\JsonApi\Resource\Resource
+     */
+    public function getCurrentUserFavoritesForModule($module)
+    {
+        $db = DBManagerFactory::getInstance();
+        global $current_user;
+        global $moduleList;
+
+        if (empty($module)) {
+            throw new \SuiteCRM\Exception\Exception(
+                '[Favorites] [module not specified]',
+                \SuiteCRM\Enumerator\ExceptionCode::APPLICATION_UNHANDLED_BEHAVIOUR
+            );
+        }
+
+        if (in_array($module, $moduleList) === false) {
+            throw new \SuiteCRM\Exception\Exception(
+                '[Favorites] [module not found] ' . $module,
+                \SuiteCRM\Enumerator\ExceptionCode::APPLICTAION_MODULE_NOT_FOUND
+            );
+        }
+
+        $response = array();
+
+        $currentUserIdQuote = $db->quote($current_user->id);
+        $moduleQuote = $db->quote($module);
+        $dbResult = $db->query(
+            "SELECT parent_id, parent_type FROM favorites " .
+            " WHERE assigned_user_id = '" . $currentUserIdQuote . "'" .
+            " AND deleted = 0 " .
+            " AND parent_type = '" . $moduleQuote . "'" .
+            " ORDER BY date_entered DESC "
+        );
+
+        while ($row = $db->fetchByAssoc($dbResult)) {
+            /** @var \SugarBean $sugarBean */
+            $sugarBean = BeanFactory::getBean($row['parent_type'], $row['parent_id']);
+            if ($sugarBean !== false) {
+                $response[] = array(
+                    'id' => $sugarBean->id,
+                    'type' => $sugarBean->module_name,
+                    'attributes' => array(
+                        'name' => $sugarBean->name
+                    )
+                );
+            }
+        }
+
+        return $response;
+    }
+
+    public function save($notify = false)
+    {
+        global $current_user;
+
+        if (empty($this->assigned_user_id)) {
+            $this->assigned_user_id = $current_user->id;
+        }
+        parent::save($notify);
+    }
     /**
      * @param string $interface
      * @return bool
@@ -146,7 +221,7 @@ class Favorites extends Basic
         switch ($interface) {
             case 'ACL':
                 return false;
-            default :
+            default:
                 return false;
         }
     }

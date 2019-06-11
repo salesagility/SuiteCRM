@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 <!DOCTYPE html>
@@ -48,11 +48,9 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
     <!-- Bootstrap -->
     <link href="themes/SuiteP/css/normalize.css" rel="stylesheet" type="text/css"/>
-    <link href="themes/SuiteP/css/bootstrap.min.css" rel="stylesheet">
     <link href='themes/SuiteP/css/fonts.css' rel='stylesheet' type='text/css'>
     <link href="themes/SuiteP/css/grid.css" rel="stylesheet" type="text/css"/>
     <link href="themes/SuiteP/css/footable.core.css" rel="stylesheet" type="text/css"/>
-
     <title>{$APP.LBL_BROWSER_TITLE}</title>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -70,14 +68,15 @@
         SUGAR.themes.hide_image = '{/literal}{sugar_getimagepath file="hide.gif"}{literal}';
         SUGAR.themes.show_image = '{/literal}{sugar_getimagepath file="show.gif"}{literal}';
         SUGAR.themes.loading_image = '{/literal}{sugar_getimagepath file="img_loading.gif"}{literal}';
-        SUGAR.themes.allThemes = eval({/literal}{$allThemes}{literal});
+        
         if (YAHOO.env.ua)
             UA = YAHOO.env.ua;
         -->
     </script>
     {/literal}
     {$SUGAR_CSS}
-    <link rel="stylesheet" type="text/css" href="themes/SuiteP/css/colourSelector.php">    
+    <link rel="stylesheet" type="text/css" href="themes/SuiteP/css/colourSelector.php">
     <script type="text/javascript" src='{sugar_getjspath file="themes/SuiteP/js/jscolor.js"}'></script>
     <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
+    <script type="text/javascript" src='{sugar_getjspath file="include/javascript/mozaik/vendor/tinymce/tinymce/tinymce.min.js"}'></script>
 </head>
