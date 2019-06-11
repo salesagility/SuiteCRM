@@ -1218,6 +1218,7 @@
 				});
 			}
 
+            /*
 			if (s.theme_advanced_show_current_color) {
 				function updateColor(controlId, color) {
 					if (c = cm.get(controlId)) {
@@ -1231,6 +1232,7 @@
 				updateColor('forecolor', fc);
 				updateColor('backcolor', bc);
 			}
+            */
 
 			if (s.theme_advanced_show_current_color) {
 				function updateColor(controlId, color) {

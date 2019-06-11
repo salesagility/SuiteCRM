@@ -1413,8 +1413,9 @@
             }
             
             var keyColors = prop['chart.key.colors'];
-    
-            if (typeof(keyColors) != 'null' && keyColors && keyColors.length) {
+
+            //typeof(keyColors) != 'null' && 
+            if (keyColors && keyColors.length) {
                 for (var i=0; i<prop['chart.key.colors'].length; ++i) {
                     prop['chart.key.colors'][i] = this.parseSingleColorForGradient(prop['chart.key.colors'][i]);
                 }

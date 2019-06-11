@@ -2196,7 +2196,7 @@ var PARENT_NODE = 'parentNode',
         _re: {
             //attr: /(\[.*\])/g,
             attr: /(\[[^\]]*\])/g,
-            pseudos: /:([\-\w]+(?:\(?:['"]?(.+)['"]?\)))*/i
+            pseudos: /:([\-\w]+(?:\(?:['"]?(.+?)['"]?\)))*/i
         },
 
         /**
@@ -2396,7 +2396,7 @@ var PARENT_NODE = 'parentNode',
         _parsers: [
             {
                 name: ATTRIBUTES,
-                re: /^\[(-?[a-z]+[\w\-]*)+([~\|\^\$\*!=]=?)?['"]?([^\]]*?)['"]?\]/i,
+                re: /^\[(-?[a-z][\w\-]*)([~\|\^\$\*!=]=?)?['"]?([^\]]*?)['"]?\]/i,
                 fn: function(match, token) {
                     var operator = match[2] || '',
                         operators = Y.Selector.operators,
@@ -2449,7 +2449,7 @@ var PARENT_NODE = 'parentNode',
             },
             {
                 name: PSEUDOS,
-                re: /^:([\-\w]+)(?:\(['"]?(.+)['"]?\))*/i,
+                re: /^:([\-\w]+)(?:\(['"]?(.+?)['"]?\))*/i,
                 fn: function(match, token) {
                     var test = Selector[PSEUDOS][match[1]];
                     if (test) { // reorder match array

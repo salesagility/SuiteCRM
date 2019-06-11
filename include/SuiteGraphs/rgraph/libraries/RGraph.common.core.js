@@ -2896,7 +2896,8 @@
         if (counter >= 5) {
             return '';
         }
-        
+
+        //case 'null':      str += 'null'; break;
         switch (typeof obj) {
             
             case 'string':    str += obj + ' (' + (typeof obj) + ', ' + obj.length + ')'; break;
@@ -2904,7 +2905,6 @@
             case 'boolean':   str += obj + ' (' + (typeof obj) + ')'; break;
             case 'function':  str += 'function () {}'; break;
             case 'undefined': str += 'undefined'; break;
-            case 'null':      str += 'null'; break;
             
             case 'object':
                 // In case of null
@@ -2921,7 +2921,12 @@
             
             
             default:
-                str += 'Unknown type: ' + typeof obj + '';
+                if (obj === null) {
+                    str += 'null';
+                }
+                else {
+                    str += 'Unknown type: ' + typeof obj + '';
+                }
                 break;
         }
 

@@ -1592,27 +1592,27 @@ function fill_form(type) {
       }
     }
 
-    if (field.type == 'datetime' || field.type == 'date') {
-      if (typeof(filter_def.input_name0) != 'undefined' && typeof(filter_def.input_name0) != 'array') {
+      if (field.type == 'datetime' || field.type == 'date') {
+          if (typeof (filter_def.input_name0) != 'undefined' && !Array.isArray(filter_def.input_name0)) {
         var date_match = filter_def.input_name0.match(date_reg_format);
         if (date_match != null) {
           filter_def.input_name0 = date_match[date_reg_positions['Y']] + "-" + date_match[date_reg_positions['m']] + "-" + date_match[date_reg_positions['d']];
         }
       }
-      if (typeof(filter_def.input_name1) != 'undefined' && typeof(filter_def.input_name1) != 'array') {
+          if (typeof (filter_def.input_name1) != 'undefined' && !Array.isArray(filter_def.input_name1)) {
         var date_match = filter_def.input_name1.match(date_reg_format);
         if (date_match != null) {
           filter_def.input_name1 = date_match[date_reg_positions['Y']] + "-" + date_match[date_reg_positions['m']] + "-" + date_match[date_reg_positions['d']];
         }
       }
     } else if (field.type == 'datetimecombo') {
-      if ((typeof(filter_def.input_name0) != 'undefined' && typeof(filter_def.input_name0) != 'array') && (typeof(filter_def.input_name1) != 'undefined' && typeof(filter_def.input_name1) != 'array')) {
+          if ((typeof (filter_def.input_name0) != 'undefined' && !Array.isArray(filter_def.input_name0)) && (typeof (filter_def.input_name1) != 'undefined' && !Array.isArray(filter_def.input_name1))) {
         var dbValue = convertReportDateTimeToDB(filter_def.input_name0, filter_def.input_name1);
         if (dbValue != '') {
           filter_def.input_name0 = dbValue;
         }
       }
-      if (typeof(filter_def.input_name2) != 'undefined' && typeof(filter_def.input_name2) != 'array' && typeof(filter_def.input_name3) != 'undefined' && typeof(filter_def.input_name3) != 'array') {
+          if ((typeof (filter_def.input_name2) != 'undefined' && !Array.isArray(filter_def.input_name2)) && (typeof (filter_def.input_name3) != 'undefined' && !Array.isArray(filter_def.input_name3))) {
         var dbValue = convertReportDateTimeToDB(filter_def.input_name2, filter_def.input_name3);
         if (dbValue != '') {
           filter_def.input_name2 = dbValue;

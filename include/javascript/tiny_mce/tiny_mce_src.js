@@ -15582,10 +15582,11 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 					}
 				}
 			},
-
+/*
 			mceToggleFormat : function(command, ui, value) {
 				formatter.toggle(value);
 			},
+*/
 
 			InsertHorizontalRule : function() {
 				editor.execCommand('mceInsertContent', false, '<hr />');

@@ -1427,6 +1427,7 @@ AutoCompleteBase.prototype = {
             if (delim) {
                 while ((newVal = Lang.trimRight(newVal)) &&
                         (delimPos = newVal.length - delim.length) &&
+                        (newVal.lastIndexOf(delim) !== -1) &&
                         newVal.lastIndexOf(delim) === delimPos) {
 
                     newVal = newVal.substring(0, delimPos);

@@ -281,8 +281,9 @@
         /**
         * Change null arguments to empty arrays
         */
+        // if (typeof(arguments[i]) == 'null' || !arguments[i])
         for (var i=1; i<arguments.length; ++i) {
-            if (typeof(arguments[i]) == 'null' || !arguments[i]) {
+            if (!arguments[i]) {
                 arguments[i] = [];
             }
         }

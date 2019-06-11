@@ -1602,7 +1602,7 @@
                 var font = prop['chart.text.font'];
     
                 for (x=this.gutterLeft + (xTickGap / 2); x<=ca.width - this.gutterRight; x+=xTickGap) {
-    
+                    // 'tag': 'label'
                     RGraph.text2(this, {
                         'font': font,
                         'size': text_size,
@@ -1612,7 +1612,6 @@
                         'text': String(labels[i++]),
                         'valign': prop['chart.xaxispos'] == 'top' ? 'bottom' : valign,
                         'halign': halign,
-                        'tag':'label',
                         'marker':false,
                         'angle':angle,
                         'tag': 'labels'

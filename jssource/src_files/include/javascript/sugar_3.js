@@ -3053,7 +3053,7 @@ SUGAR.util = function () {
         return;
       }
 
-      var objRegex = /<\s*script([^>]*)>((.|\s|\v|\0)*?)<\s*\/script\s*>/igm;
+      var objRegex = /<\s*script([^>]*)>([\s\S](?!<\/script>))*[\s\S]?<\s*\/script\s*>/igm;
       var lastIndex = -1;
       var result = objRegex.exec(text);
       while (result && result.index > lastIndex) {
@@ -4012,8 +4012,8 @@ SUGAR.tabChooser = function () {
       }
       if (!SUGAR.tabChooser.frozenOptions[left_name][right_name]) {
         SUGAR.tabChooser.frozenOptions[left_name][right_name] = [];
-      }
-      if (typeof target == 'array') {
+        }
+      if (Array.isArray(target)) {
         for (var i in target) {
           SUGAR.tabChooser.frozenOptions[left_name][right_name][target[i]] = true;
         }
