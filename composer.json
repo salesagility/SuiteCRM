@@ -59,7 +59,7 @@
     "filp/whoops": "^2.3",
     "flow/jsonpath": "^0.4",
     "fzaninotto/faker": "^1.6",
-    "jeroendesloovere/vcard": "v1.5",
+    "jeroendesloovere/vcard": "v1.7.2",
     "leafo/scssphp": "^0.7.7",
     "mikey179/vfsstream": "1.6.*",
     "mockery/mockery": "^1.1.0",
