@@ -1097,11 +1097,11 @@ $($.fullCalendar).ready(function () {
               at: 'top left'
             },
             show: {solo: true},
-            hide: {event: false},
-							event: 'mouseleave',
-							fixed: true,
-							delay: 500
-						},
+            hide: {
+              event: 'mouseleave',
+              fixed: true,
+              delay: 500
+            },
             style: {
               width: 224,
               padding: 5,
