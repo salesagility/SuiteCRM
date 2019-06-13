@@ -60,7 +60,7 @@
     "flow/jsonpath": "^0.4",
     "fzaninotto/faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
-    "leafo/scssphp": "^0.7.7",
+    "leafo/scssphp": "^0.8.2",
     "mikey179/vfsstream": "1.6.*",
     "mockery/mockery": "^1.1.0",
     "roave/security-advisories": "dev-master"
