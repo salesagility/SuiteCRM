@@ -1996,11 +1996,11 @@ sugarListView.prototype.confirm_action = function (del) {
 
 }
 sugarListView.get_num_selected = function () {
-  var selectCount = sugarListView.get_checks_count();
-  if (selectCount > 0)
-        return selectCount;
+  let selectCount = $("input[name='selectCount[]']:first");
+  if (selectCount.length > 0) {
+    return parseInt(selectCount.val().replace("+", ""));
+  }
   return 0;
-
 }
 sugarListView.update_count = function (count, add) {
   if (typeof document.MassUpdate != 'undefined') {
@@ -2424,6 +2424,7 @@ sugarListView.prototype.save_checks = function (offset, moduleString) {
 }
 
 sugarListView.prototype.check_item = function (cb, form) {
+  debugger;
   if (cb.checked) {
     sugarListView.update_count(1, true);
 

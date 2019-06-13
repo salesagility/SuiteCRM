@@ -541,6 +541,10 @@ class ListViewDisplay
     {
         global $app_strings;
 
+        if (isset($_POST['mass'])) {
+            $total = count($_POST['mass']);
+        }
+
         $displayStyle = $total > 0 ? "" : "display: none;";
         $template = new Sugar_Smarty();
 
