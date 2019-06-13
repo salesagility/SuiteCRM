@@ -675,12 +675,22 @@ class EmailsController extends SugarController
 
         $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($emailID));
 
+        if (is_array($uid)) {
+            $uid = implode(',', $uid);
+            $this->view = 'ajax';
+        }
+
         if (isset($uid)) {
             $inboundEmail->deleteMessageOnMailServer($uid);
         } else {
             LoggerManager::getLogger()->fatal('EmailsController::action_DeleteFromImap() missing uid');
         }
-        header('location:index.php?module=Emails&action=index');
+
+        if ($this->view === 'ajax') {
+            echo json_encode(['response' => true]);
+        } else {
+            header('location:index.php?module=Emails&action=index');
+        }
     }
 
     /**

@@ -111,6 +111,9 @@ $viewdefs['Emails']['ListView'] = array(
             array(
                 'file' => 'modules/Emails/include/ListView/MarkEmails.js',
             ),
+            [
+                'file' => 'modules/Emails/include/ListView/DeleteEmailAction.js',
+            ],
         ),
         'options' => array(
             'hide_edit_link' => true

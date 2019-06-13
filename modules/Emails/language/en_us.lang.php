@@ -55,6 +55,7 @@ $mod_strings = array(
     'LBL_IMPORT' => 'Import',
     'LBL_LOADING' => 'Loading',
     'LBL_MARKING' => 'Marking',
+    'LBL_DELETING' => 'Deleting',
 
     'LBL_CONFIRM_DELETE_EMAIL' => 'Are you sure you want to delete this email?',
     'LBL_ENTER_FOLDER_NAME' => 'Please enter a folder name',
