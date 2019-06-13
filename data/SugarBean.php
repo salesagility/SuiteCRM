@@ -4983,6 +4983,7 @@ class SugarBean
                                         $this->$name = $mod->name;
                                     }
                                 }
+                                BeanFactory::unregisterBean($related_module, $this->$id_name);
                             }
                         }
                     }
