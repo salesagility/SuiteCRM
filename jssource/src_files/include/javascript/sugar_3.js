@@ -2424,7 +2424,6 @@ sugarListView.prototype.save_checks = function (offset, moduleString) {
 }
 
 sugarListView.prototype.check_item = function (cb, form) {
-  debugger;
   if (cb.checked) {
     sugarListView.update_count(1, true);
 
