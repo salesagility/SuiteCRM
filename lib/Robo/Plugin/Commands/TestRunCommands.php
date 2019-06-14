@@ -46,15 +46,15 @@ class TestRunCommands extends \Robo\Tasks
     /**
      * Run install test suite.
      * @param array $opts
-     * @option boolean verbose Whether to set the test suite to output extra information. Good for debugging.
+     * @option boolean debug Whether to set the test suite to output extra information.
      * @option boolean fail-fast Stop after first failure.
      */
-    public function TestsInstall($opts = ['verbose' => false, 'fail-fast' => false]) {
+    public function TestsInstall($opts = ['debug' => false, 'fail-fast' => false]) {
       $this->say('Running Install Test Suite.');
 
       $command = './vendor/bin/codecept run install --env chrome-driver';
 
-      if ($opts['verbose']) {
+      if ($opts['debug']) {
         $command .= ' -vvv -d';
       }
       if ($opts['fail-fast']) {
@@ -67,15 +67,15 @@ class TestRunCommands extends \Robo\Tasks
     /**
      * Run API test suite.
      * @param array $opts
-     * @option boolean verbose Whether to set the test suite to output extra information. Good for debugging.
+     * @option boolean debug Whether to set the test suite to output extra information.
      * @option boolean fail-fast Stop after first failure.
      */
-    public function TestsAPI($opts = ['verbose' => false, 'fail-fast' => false]) {
+    public function TestsAPI($opts = ['debug' => false, 'fail-fast' => false]) {
       $this->say('Running API Test Suite.');
 
       $command = './vendor/bin/codecept run api';
 
-      if ($opts['verbose']) {
+      if ($opts['debug']) {
         $command .= ' -vvv -d';
       }
       if ($opts['fail-fast']) {
@@ -88,15 +88,15 @@ class TestRunCommands extends \Robo\Tasks
     /**
      * Run acceptance test suite.
      * @param array $opts
-     * @option boolean verbose Whether to set the test suite to output extra information. Good for debugging.
+     * @option boolean verdebugbose Whether to set the test suite to output extra information.
      * @option boolean fail-fast Stop after first failure.
      */
-    public function TestsAcceptance($opts = ['verbose' => false, 'fail-fast' => false]) {
+    public function TestsAcceptance($opts = ['debug' => false, 'fail-fast' => false]) {
       $this->say('Running Codeception Acceptance Test Suite.');
 
       $command = './vendor/bin/codecept run acceptance --env chrome-driver';
 
-      if ($opts['verbose']) {
+      if ($opts['debug']) {
         $command .= ' -vvv -d';
       }
       if ($opts['fail-fast']) {
@@ -109,15 +109,15 @@ class TestRunCommands extends \Robo\Tasks
     /**
      * Run PHPUnit unit test suite.
      * @param array $opts
-     * @option boolean verbose Whether to set the test suite to output extra information. Good for debugging.
+     * @option boolean debug Whether to set the test suite to output extra information.
      * @option boolean fail-fast Stop after first failure.
      */
-    public function TestsUnit($opts = ['verbose' => false, 'fail-fast' => false]) {
+    public function TestsUnit($opts = ['debug' => false, 'fail-fast' => false]) {
       $this->say('Running PHPUnit Unit Test Suite.');
 
       $command = './vendor/bin/phpunit --colors --configuration ./tests/phpunit.xml.dist ./tests/unit/phpunit';
       
-      if ($opts['verbose']) {
+      if ($opts['debug']) {
         $command .= ' -v --debug';
       }
       if ($opts['fail-fast']) {
