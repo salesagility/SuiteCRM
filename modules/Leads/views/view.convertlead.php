@@ -480,6 +480,14 @@ class ViewConvertLead extends SugarView
                     } else {
                         $bean->$leadsRel->add($lead->id);
                     }
+
+                    /* BEGIN - SECURITY GROUPS */
+                    global $sugar_config;
+                    if(isset($sugar_config['securitysuite_inherit_parent']) && $sugar_config['securitysuite_inherit_parent'] == true)
+                    {
+                        SecurityGroup::inherit_parentQuery($bean, $lead->module_dir, $lead->id, $bean->id, $bean->module_dir);
+                    }
+                    /* END - SECURITY GROUPS */
                 }
             }
             //Special case code for opportunities->Accounts
