@@ -932,46 +932,83 @@ class EditView
             $ajaxSave,
             $this->defs
         );
-
-        /* BEGIN - SECURITY GROUPS */
+        /* BEGIN - SECURITY GROUPS */ 
         //if popup select add panel if user is a member of multiple groups to metadataFile
         global $sugar_config;
-        if (
-            $this->focus->module_dir !== "Users" &&
-            $this->focus->module_dir !== "SugarFeed" &&
-            $sugar_config['securitysuite_popup_select'] === true &&
-            isset($sugar_config['securitysuite_popup_select']) &&
-            empty($this->focus->fetched_row['id'])
-        ) {
+        if(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true
+            && empty($this->focus->fetched_row['id']) && $this->focus->module_dir != "Users" && $this->focus->module_dir != "SugarFeed") {
 
             //there are cases such as uploading an attachment to an email template where the request module may
             //not be the same as the current bean module. If that happens we can just skip it
             //however...let quickcreate through
-            if ($this->view !== 'QuickCreate' && (empty($_REQUEST['module']) || $_REQUEST['module'] !== $this->focus->module_dir)) {
-                return $str;
-            }
+            if($this->view != 'QuickCreate' && (empty($_REQUEST['module']) || $_REQUEST['module'] != $this->focus->module_dir)) return $str;
 
             require_once('modules/SecurityGroups/SecurityGroup.php');
-            $groupFocus = new SecurityGroup();
-            $security_modules = $groupFocus->getSecurityModules();
-            if (array_key_exists($this->focus->module_dir, $security_modules)) {
+            $security_modules = SecurityGroup::getSecurityModules();
+            if(in_array($this->focus->module_dir,array_keys($security_modules))) {
                 global $current_user;
 
-                $group_count = $groupFocus->getMembershipCount($current_user->id);
-                if ($group_count > 1) {
-                    $groups = $groupFocus->getUserSecurityGroups($current_user->id);
+                $group_count = SecurityGroup::getMembershipCount($current_user->id);
+                if($group_count > 1) {
+                
+                    //https://www.sugaroutfitters.com/support/securitysuite/2313
+                    //if there is a parent then use the groups on that record as the default selected
+                    //note: only the user's groups show in the drop down. A request may be made to include any already on parent
+                    $parent_groups = SecurityGroup::getParentGroups($this->focus);
+
+                    $groups = SecurityGroup::getUserSecurityGroups($current_user->id);
                     $group_options = '';
-                    foreach ($groups as $group) {
-                        $group_options .= '<option value="' . $group['id'] . '" label="' . $group['name'] . '" selected="selected">' . $group['name'] . '</option>';
+                    foreach($groups as $group) {
+                        $group_options .= '<option value="'.$group['id'].'" label="'.$group['name'].'" '.(empty($group['noninheritable'])?'selected="selected"':'').'>'.$group['name'].'</option>';
                     }
                     //multilingual support
                     global $current_language;
-                    $ss_mod_strings = return_module_language($current_language, 'SecurityGroups');
-
+                    $ss_mod_strings = return_module_language($current_language, 'SecurityGroups');  
+                    
                     $lbl_securitygroups_select = $ss_mod_strings['LBL_GROUP_SELECT'];
                     $lbl_securitygroups = $ss_mod_strings['LBL_LIST_FORM_TITLE'];
+                    
+                    //SuiteCRM: check which theme this is for.
+                    if($theme == 'SuiteP' || $theme == 'SuitePImproved')
+                    {
+                        $group_panel = <<<EOQ
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a class="" role="button" data-toggle="collapse" aria-expanded="false">
+            <div class="col-xs-10 col-sm-11 col-md-11">
+                $lbl_securitygroups_select
+            </div>
+        </a>
+    </div>
+    <div class="panel-body panel-collapse collapse in" id="detailpanel_0">
+        <div class="tab-content">
+            <div class="row edit-view-row">
+                <div class="col-xs-12 col-sm-6 edit-view-row-item">
+                    <div class="col-xs-12 col-sm-4 label">
+                        $lbl_securitygroups:
+                    </div>
+                    <div class="col-xs-12 col-sm-8 edit-view-field " type="enum" field="securitygroups_panel">
+                        <select title="" id="securitygroup_list" name="securitygroup_list[]" multiple="multiple" size="${group_count}" style="height: 100%">
+                        $group_options
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+EOQ;
+                        $group_panel = preg_replace("/[\r\n]+/", "", $group_panel);
 
-                    $group_panel = <<<EOQ
+                        $group_panel_append = <<<EOQ
+    <script>
+        $('#${form_name}_tabs .panel-content').append($('${group_panel}'));
+    </script>
+EOQ;
+                    }
+                    else
+                    {
+                        $group_panel = <<<EOQ
 <div class="edit view edit508 " id="detailpanel_securitygroups">
     <h4>&nbsp;&nbsp;
     $lbl_securitygroups_select
@@ -982,7 +1019,7 @@ class EditView
         $lbl_securitygroups:
     </td>
     <td width="37.5%" valign="top">
-        <select title="" id="securitygroup_list" name="securitygroup_list[]" multiple="multiple" size="${group_count}">
+        <select title="" id="securitygroup_list" name="securitygroup_list[]" multiple="multiple" size="${group_count}" style="height: 100%">
         $group_options
         </select>
     </td>
@@ -990,19 +1027,20 @@ class EditView
     </tbody></table>
 </div>
 EOQ;
-                    $group_panel = preg_replace("/[\r\n]+/", "", $group_panel);
+                        $group_panel = preg_replace("/[\r\n]+/", "", $group_panel);
 
-                    $group_panel_append = <<<EOQ
-<script>
-    $('#${form_name}_tabs div:first').append($('${group_panel}'));
-</script>
+                        $group_panel_append = <<<EOQ
+    <script>
+        $('#${form_name}_tabs div:first').append($('${group_panel}'));
+    </script>
 EOQ;
+                    }
+
                     $str .= $group_panel_append;
                 }
             }
         }
-
-        /* END - SECURITY GROUPS */
+        /* END - SECURITY GROUPS */  
 
         return $str;
     }

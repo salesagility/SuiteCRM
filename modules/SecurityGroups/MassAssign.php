@@ -47,6 +47,13 @@ elseif (isset($_REQUEST['entire'])) {
     } else {
         $where = '';
     }
+	$export_where = !empty($_SESSION['export_where']) ? $_SESSION['export_where'] : '';
+	if (empty($_REQUEST['export_where_md5']) || $_REQUEST['export_where_md5'] != md5($export_where)) {
+		$err = translate('LBL_ERROR_EXPORT_WHERE_CHANGED', 'SecurityGroups');
+		SugarApplication::appendErrorMessage($err);
+		header("Location: index.php?action={$_POST['return_action']}&module={$_POST['return_module']}");
+		sugar_die('');
+	}
     if (empty($order_by)) {
         $order_by = '';
     }
@@ -73,14 +80,11 @@ if (isset($_POST['mass']) && is_array($_POST['mass'])) {
                 $rel_name = "SecurityGroups";
             } else {
                 if (empty($rel_name) || !isset($rel_name)) {
-                    $rel_name = $groupFocus->getLinkName($sugarbean->module_dir, "SecurityGroups");
+                    $rel_name = SecurityGroup::getLinkName($sugarbean->module_dir,"SecurityGroups");
                 }
             }
             $sugarbean->load_relationship($rel_name);
             $sugarbean->$rel_name->delete($sugarbean->id, $groupFocus->id);
-                
-        //As of 6.3.0 many-to-many requires a link field set in both modules...so lets bypass that
-                //$groupFocus->removeGroupFromRecord($sugarbean->module_dir, $id, $groupFocus->id);
             //}
         } else {
             $sugarbean->retrieve($id);
@@ -92,7 +96,7 @@ if (isset($_POST['mass']) && is_array($_POST['mass'])) {
                 $rel_name = "SecurityGroups";
             } else {
                 if (empty($rel_name) || !isset($rel_name)) {
-                    $rel_name = $groupFocus->getLinkName($sugarbean->module_dir, "SecurityGroups");
+                    $rel_name = SecurityGroup::getLinkName($sugarbean->module_dir,"SecurityGroups");
                 }
             }
             $GLOBALS['log']->debug("MassAssign - adding relationship relationship name: ".$rel_name);
@@ -109,7 +113,7 @@ if (isset($_POST['mass']) && is_array($_POST['mass'])) {
                 $row = $db->fetchByAssoc($result);
                 if (empty($row))
                 {
-                    $groupFocus->addGroupToRecord($sugarbean->module_dir, $id, $groupFocus->id);
+                    SecurityGroup::addGroupToRecord($sugarbean->module_dir, $id, $groupFocus->id);
                 }
                 */
 

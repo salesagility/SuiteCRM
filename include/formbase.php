@@ -78,6 +78,13 @@ function populateFromPost($prefix, &$focus, $skipRetrieve = false, $checkACL = f
 {
     global $current_user;
 
+    /* BEGIN - SECURITY GROUPS */ 
+    if(!empty($_REQUEST['dup_checked']) && !empty($_REQUEST[$prefix.'id']))
+    {
+        $focus->new_with_id = true;
+    }
+    /* END - SECURITY GROUPS */ 
+
     if (!empty($_REQUEST[$prefix.'record']) && !$skipRetrieve) {
         $focus->retrieve($_REQUEST[$prefix.'record']);
     }
