@@ -85,7 +85,7 @@ class HistoryCest
 
         //Click on History subpanel
         $I->click(['id'=>'subpanel_title_history']);
-        $I->waitForElementVisible('#History_createnoteorattachment_button', 60);
+        $I->waitForElementVisible('#History_createnoteorattachment_button');
         $I->expect('the due date is visible');
         $I->seeInSource('01/19/2038');
 

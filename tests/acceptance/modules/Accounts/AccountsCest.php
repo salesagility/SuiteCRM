@@ -158,7 +158,7 @@ class AccountsCest
 
         // Click on Member Organizations subpanel
         $I->click(['id' => 'subpanel_title_accounts']);
-        $I->waitForElementVisible('#member_accounts_create_button', 60);
+        $I->waitForElementVisible('#member_accounts_create_button');
 
         // Add child account
         $accountName = 'Test_' . $this->fakeData->company();
