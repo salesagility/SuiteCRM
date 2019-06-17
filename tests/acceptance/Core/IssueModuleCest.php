@@ -167,9 +167,11 @@ class IssueModuleCest
 
         $I->loginAsAdmin();
 
-        // Go to Issue Test Module
-        $navigationBar->clickAllMenuItem(\Page\IssueModule::$NAME);
-        $listView->waitForListViewVisible();
+        if ($this->lastView !== 'ListView') {
+            // Go to Issue Test Module
+            $navigationBar->clickAllMenuItem(\Page\IssueModule::$NAME);
+            $listView->waitForListViewVisible();
+        }
 
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickFilterButton();
