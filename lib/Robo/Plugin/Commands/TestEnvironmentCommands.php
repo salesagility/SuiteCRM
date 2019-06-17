@@ -117,16 +117,38 @@ class TestEnvironmentCommands extends \Robo\Tasks
     }
 
     /**
-     * Download and run the Chrome WebDriver.
-     * @command driver:run-chrome
+     * Run ChromeDriver.
+     * @command chromedriver:run
      * @param array $opts
      * @option string $url_base 
-     * @option bool $reinstall Forces the Chrome WebDriver executable to be reinstalled, can be used to get a newer version.
-     * @usage driver:run-chrome --reinstall
      */
-    public function driverRunChrome($opts = ['url_base' => '/wd/hub', 'reinstall' => false])
+    public function chromedriverRun($opts = ['url_base' => '/wd/hub'])
     {
-        $this->say('Driver Run Chrome');
+        $this->say('Running ChromeDriver...');
+        $os = new OperatingSystem();
+        $paths = new Paths();
+        $basePath = $os->toOsPath($paths->getProjectPath() . '/build/tmp/');
+
+        $unzippedPath = $basePath . DIRECTORY_SEPARATOR . 'webdriver';
+
+        if (!file_exists($unzippedPath)) {
+            throw new \RuntimeException('ChromeDriver is not installed in ' . $unzippedPath);
+        }
+
+        $this->runChromeWebDriver($unzippedPath, $opts['url_base']);
+    }
+
+
+    /**
+     * Download and install ChromeDriver.
+     * @command chromedriver:install
+     * @param array $opts
+     * @option bool $reinstall Forces the Chrome WebDriver executable to be reinstalled, can be used to get a newer version.
+     * @usage chromedriver:install --reinstall
+     */
+    public function chromedriverInstall($opts = ['reinstall' => false])
+    {
+        $this->say('Installing ChromeDriver...');
         $os = new OperatingSystem();
         $paths = new Paths();
         $url = $this->getChromeWebDriverUrl();
@@ -147,14 +169,14 @@ class TestEnvironmentCommands extends \Robo\Tasks
         $unzippedPath = $basePath . DIRECTORY_SEPARATOR . 'webdriver';
 
         if (!file_exists($unzippedPath)) {
-            $this->say('Downloading Chrome WebDriver.');
+            $this->say('Downloading ChromeDriver.');
             $this->download($url, $zipPath);
             $this->unzip($zipPath, $unzippedPath);
+        } else {
+            $this->say('ChromeDriver has already been downloaded.');
         }
 
-        $this->runChromeWebDriver($unzippedPath, $opts['url_base']);
-
-        $this->say('Driver Run Chrome Completed');
+        $this->say('ChromeDriver install completed');
     }
 
     /**
