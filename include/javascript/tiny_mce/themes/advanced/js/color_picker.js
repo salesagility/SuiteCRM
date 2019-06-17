@@ -36,7 +36,6 @@ var colors = [
  * '#00FFFF': 'Aqua'
  * '#2F4F4F':'Dark Slate Grey'
  * '#696969':'Dim Gray' 
- * '#808080':'Grey',
  * '#FF00FF':'Fuchsia' 
  * '#D3D3D3':'Light Grey'
  * '#778899':'Light Slate Grey'
@@ -51,7 +50,7 @@ var named = {
 	'#FF8C00':'Darkorange','#9932CC':'Dark Orchid','#8B0000':'Dark Red','#E9967A':'Dark Salmon','#8FBC8F':'Dark Sea Green','#483D8B':'Dark Slate Blue',
 	'#2F4F4F':'Dark Slate Gray','#00CED1':'Dark Turquoise','#9400D3':'Dark Violet','#FF1493':'Deep Pink','#00BFFF':'Deep Sky Blue',
 	'#696969':'Dim Gray','#1E90FF':'Dodger Blue','#B22222':'Fire Brick','#FFFAF0':'Floral White','#228B22':'Forest Green',
-	'#DCDCDC':'Gainsboro','#F8F8FF':'Ghost White','#FFD700':'Gold','#DAA520':'Golden Rod','#808080':'Gray',
+	'#DCDCDC':'Gainsboro','#F8F8FF':'Ghost White','#FFD700':'Gold','#DAA520':'Golden Rod','#808080':'Gray','#808080':'Grey',
 	'#008000':'Green','#ADFF2F':'Green Yellow','#F0FFF0':'Honey Dew','#FF69B4':'Hot Pink','#CD5C5C':'Indian Red','#4B0082':'Indigo','#FFFFF0':'Ivory',
 	'#F0E68C':'Khaki','#E6E6FA':'Lavender','#FFF0F5':'Lavender Blush','#7CFC00':'Lawn Green','#FFFACD':'Lemon Chiffon','#ADD8E6':'Light Blue',
 	'#F08080':'Light Coral','#E0FFFF':'Light Cyan','#FAFAD2':'Light Golden Rod Yellow','#D3D3D3':'Light Gray','#90EE90':'Light Green',
