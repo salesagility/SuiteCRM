@@ -117,29 +117,6 @@ class TestEnvironmentCommands extends \Robo\Tasks
     }
 
     /**
-     * Run ChromeDriver.
-     * @command chromedriver:run
-     * @param array $opts
-     * @option string $url_base 
-     */
-    public function chromedriverRun($opts = ['url_base' => '/wd/hub'])
-    {
-        $this->say('Running ChromeDriver...');
-        $os = new OperatingSystem();
-        $paths = new Paths();
-        $basePath = $os->toOsPath($paths->getProjectPath() . '/build/tmp/');
-
-        $unzippedPath = $basePath . DIRECTORY_SEPARATOR . 'webdriver';
-
-        if (!file_exists($unzippedPath)) {
-            throw new \RuntimeException('ChromeDriver is not installed in ' . $unzippedPath);
-        }
-
-        $this->runChromeWebDriver($unzippedPath, $opts['url_base']);
-    }
-
-
-    /**
      * Download and install ChromeDriver.
      * @command chromedriver:install
      * @param array $opts
@@ -177,6 +154,28 @@ class TestEnvironmentCommands extends \Robo\Tasks
         }
 
         $this->say('ChromeDriver install completed');
+    }
+
+    /**
+     * Run ChromeDriver.
+     * @command chromedriver:run
+     * @param array $opts
+     * @option string $url_base The base URL from which the WebDriver will be run.
+     */
+    public function chromedriverRun($opts = ['url_base' => '/wd/hub'])
+    {
+        $this->say('Running ChromeDriver...');
+        $os = new OperatingSystem();
+        $paths = new Paths();
+        $basePath = $os->toOsPath($paths->getProjectPath() . '/build/tmp/');
+
+        $unzippedPath = $basePath . DIRECTORY_SEPARATOR . 'webdriver';
+
+        if (!file_exists($unzippedPath)) {
+            throw new \RuntimeException('ChromeDriver is not installed in ' . $unzippedPath);
+        }
+
+        $this->runChromeWebDriver($unzippedPath, $opts['url_base']);
     }
 
     /**
