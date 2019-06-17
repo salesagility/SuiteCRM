@@ -87,8 +87,6 @@ script:
   
   # Run the unit tests
   - sudo chmod -R 777 .
-  - echo "\$sugar_config['state_checker']['save_traces'] = false;" >> config_override.php
-  - echo "\$sugar_config['state_checker']['redefine_memory_limit'] = false;" >> config_override.php
   - ./vendor/bin/phpunit --stop-on-failure --stop-on-error --colors --configuration ./tests/phpunit.xml.dist ./tests/unit/phpunit
   # Install OAuth2 demo data
   - mysql -u root -D automated_tests -v -e "source tests/_data/api_data.sql"
