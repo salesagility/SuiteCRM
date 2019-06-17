@@ -129,15 +129,15 @@ class TestEnvironmentCommands extends \Robo\Tasks
         $os = new OperatingSystem();
         $paths = new Paths();
         $url = $this->getChromeWebDriverUrl();
-        $basePath = $os->toOsPath($paths->getProjectPath() . '/build/tmp/');
+        $basePath = $os->toOsPath($paths->getProjectPath() . '/build/tmp');
 
         if (!file_exists($basePath)) {
-           if (mkdir($basePath, 0777, true) || is_dir($basePath)) {
+           if (mkdir($basePath, 0777, true) === false) {
                 throw new \RuntimeException('Unable to create file structure ' . $basePath);
             }
         } elseif ($opts['reinstall']) {
             $this->_deleteDir($basePath);
-            if (mkdir($basePath, 0777, true) || is_dir($basePath)) {
+            if (mkdir($basePath, 0777, true) === false) {
                 throw new \RuntimeException('Unable to create file structure ' . $basePath);
             }
         }
