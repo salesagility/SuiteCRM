@@ -39,16 +39,12 @@ class AcceptanceTester extends \Codeception\Actor
     public function login($username, $password)
     {
         $I = $this;
-        if ($I->loadSessionSnapshot('login')) {
-            return;
-        }
-        // Log In
-        $I->seeElement('#loginform');
+
+        $I->waitForElementVisible('#loginform');
         $I->fillField('#user_name', $username);
         $I->fillField('#username_password', $password);
         $I->click('Log In');
         $I->waitForElementNotVisible('#loginform', 120);
-        $I->saveSessionSnapshot('login');
     }
 
     public function loginAsAdmin()
