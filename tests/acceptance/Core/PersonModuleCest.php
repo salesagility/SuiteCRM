@@ -121,17 +121,15 @@ class PersonModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create Person Test Module Record');
-        if ($this->lastView !== 'ListView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
 
-            $I->loginAsAdmin();
+        $I->loginAsAdmin();
 
-            // Go to Person Test Module
-            $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
-            $listView->waitForListViewVisible();
-        }
+        // Go to Person Test Module
+        $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
+        $listView->waitForListViewVisible();
 
         // Select create Person Test Module form the current menu
         $navigationBar->clickCurrentMenuItem('Create ' . \Page\PersonModule::$NAME);
@@ -236,34 +234,32 @@ class PersonModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Edit Person Test Module Record from detail view');
-        if ($this->lastView !== 'DetailView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
 
-            $I->loginAsAdmin();
+        $I->loginAsAdmin();
 
-            // Go to Person Test Module
-            $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
-            $listView->waitForListViewVisible();
+        // Go to Person Test Module
+        $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Select record from list view
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $name = $this->fakeData->title;
-            $name .= ' ';
-            $this->fakeData->seed($this->fakeDataSeed);
-            $name = $this->fakeData->firstName;
-            $name .= ' ';
-            $this->fakeData->seed($this->fakeDataSeed);
-            $name .= $this->fakeData->lastName;
-            $listView->fillField('#search_name_basic', $name);
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickNameLink($name);
-        }
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $name = $this->fakeData->title;
+        $name .= ' ';
+        $this->fakeData->seed($this->fakeDataSeed);
+        $name = $this->fakeData->firstName;
+        $name .= ' ';
+        $this->fakeData->seed($this->fakeDataSeed);
+        $name .= $this->fakeData->lastName;
+        $listView->fillField('#search_name_basic', $name);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickNameLink($name);
 
         // Edit Record
         $detailView->clickActionMenuItem('Edit');
@@ -295,34 +291,32 @@ class PersonModuleCest
     ) {
         $I->wantTo('Duplicate Person Test Module Record from detail view');
 
-        if ($this->lastView !== 'DetailView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
 
-            $I->loginAsAdmin();
+        $I->loginAsAdmin();
 
-            // Go to Person Test Module
-            $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
-            $listView->waitForListViewVisible();
+        // Go to Person Test Module
+        $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Select record from list view
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $name = $this->fakeData->title;
-            $name .= ' ';
-            $this->fakeData->seed($this->fakeDataSeed);
-            $name = $this->fakeData->firstName;
-            $name .= ' ';
-            $this->fakeData->seed($this->fakeDataSeed);
-            $name .= $this->fakeData->lastName;
-            $listView->fillField('#search_name_basic', $name);
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickNameLink($name);
-        }
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $name = $this->fakeData->title;
+        $name .= ' ';
+        $this->fakeData->seed($this->fakeDataSeed);
+        $name = $this->fakeData->firstName;
+        $name .= ' ';
+        $this->fakeData->seed($this->fakeDataSeed);
+        $name .= $this->fakeData->lastName;
+        $listView->fillField('#search_name_basic', $name);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickNameLink($name);
         // Edit Record
         $detailView->clickActionMenuItem('Duplicate');
 

@@ -124,17 +124,15 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Create Company Test Module Record');
 
-        if ($this->lastView !== 'ListView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
+        // Go to Company Test Module
+        $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Go to Company Test Module
-            $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
-            $listView->waitForListViewVisible();
-        }
         // Select create Company Test Module form the current menu
         $navigationBar->clickCurrentMenuItem('Create ' . \Page\CompanyModule::$NAME);
 
@@ -181,27 +179,23 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Select Record from list view');
 
-        if ($this->lastView !== 'ListView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
+        // Go to Company Test Module
+        $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Go to Company Test Module
-            $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
-            $listView->waitForListViewVisible();
-
-
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->fillField('#name_basic', $this->fakeData->company);
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $listView->dontSee('No results found');
-        }
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#name_basic', $this->fakeData->company);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $listView->dontSee('No results found');
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($this->fakeData->company);
 
@@ -229,28 +223,26 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Edit Company Test Module Record from detail view');
 
-        if ($this->lastView !== 'DetailView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
+        // Go to Company Test Module
+        $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Go to Company Test Module
-            $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
-            $listView->waitForListViewVisible();
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#name_basic', $this->fakeData->company);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $listView->dontSee('No results found');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickNameLink($this->fakeData->company);
 
-            // Select record from list view
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->fillField('#name_basic', $this->fakeData->company);
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $listView->dontSee('No results found');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickNameLink($this->fakeData->company);
-        }
         // Edit Record
         $detailView->clickActionMenuItem('Edit');
 
@@ -281,29 +273,26 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Duplicate Company Test Module Record from detail view');
 
-        if ($this->lastView !== 'DetailView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
-
-            $I->loginAsAdmin();
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+        $I->loginAsAdmin();
 
 
-            // Go to Company Test Module
-            $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
-            $listView->waitForListViewVisible();
+        // Go to Company Test Module
+        $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Select record from list view
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->fillField('#name_basic', $this->fakeData->company);
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $listView->dontSee('No results found');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickNameLink($this->fakeData->company);
-        }
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#name_basic', $this->fakeData->company);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $listView->dontSee('No results found');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickNameLink($this->fakeData->company);
 
         // Edit Record
         $detailView->clickActionMenuItem('Duplicate');
@@ -340,26 +329,24 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Delete Company Test Module Record from detail view');
 
-        if ($this->lastView !== 'ListView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
+        // Go to Company Test Module
+        $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Go to Company Test Module
-            $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
-            $listView->waitForListViewVisible();
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#name_basic', $this->fakeData->company);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $listView->dontSee('No results found');
 
-            // Select record from list view
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->fillField('#name_basic', $this->fakeData->company);
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $listView->dontSee('No results found');
-        }
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($this->fakeData->company);
 
