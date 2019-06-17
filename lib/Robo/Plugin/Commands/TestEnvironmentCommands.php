@@ -123,7 +123,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
      * @option bool $reinstall Forces the Chrome WebDriver executable to be reinstalled, can be used to get a newer version.
      * @usage chromedriver:install --reinstall
      */
-    public function chromedriverInstall($opts = ['reinstall' => false])
+    public function chromeDriverInstall($opts = ['reinstall' => false])
     {
         $this->say('Installing ChromeDriver...');
         $os = new OperatingSystem();
@@ -162,7 +162,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
      * @param array $opts
      * @option string $url_base The base URL from which the WebDriver will be run.
      */
-    public function chromedriverRun($opts = ['url_base' => '/wd/hub'])
+    public function chromeDriverRun($opts = ['url_base' => '/wd/hub'])
     {
         $this->say('Running ChromeDriver...');
         $os = new OperatingSystem();
