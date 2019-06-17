@@ -149,11 +149,10 @@ class TestEnvironmentCommands extends \Robo\Tasks
             $this->say('Downloading ChromeDriver.');
             $this->download($url, $zipPath);
             $this->unzip($zipPath, $unzippedPath);
+            $this->say('ChromeDriver install completed.');
         } else {
             $this->say('ChromeDriver has already been downloaded.');
         }
-
-        $this->say('ChromeDriver install completed');
     }
 
     /**
