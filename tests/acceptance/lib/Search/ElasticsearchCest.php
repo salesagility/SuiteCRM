@@ -56,8 +56,7 @@ class ElasticsearchCest
      * @param WebDriverHelper $helper
      */
     public function testSearchSetup(AcceptanceTester $I, WebDriverHelper $helper)
-    {
-        
+    {        
         // login..
         
         $I->amOnUrl($helper->getInstanceURL());
@@ -77,7 +76,7 @@ class ElasticsearchCest
 
         $I->click('#elastic_search');
         $I->checkOption('#es-enabled');
-        $I->fillField('#es-host', 'localhost');
+        $I->fillField('#es-host', $helper->getElasticSearchHost());
         $I->fillField('#es-user', 'admin');
         $I->fillField('#es-password', 'admin');
 
