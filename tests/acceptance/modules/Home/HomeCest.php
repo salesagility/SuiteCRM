@@ -43,10 +43,6 @@ class HomeCest
     ) {
         $I->wantTo('Create a chart dashlet on the dashboard');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to dashboard
         $I->loginAsAdmin();
         $dashboard->waitForDashboardVisible();

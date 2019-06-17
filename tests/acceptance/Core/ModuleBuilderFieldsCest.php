@@ -60,10 +60,6 @@ class ModuleBuilderFieldsCest
     ) {
         $I->wantTo('Create a module for testing fields');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         $I->loginAsAdmin();
 
         $moduleBuilder->createModule(
@@ -88,10 +84,6 @@ class ModuleBuilderFieldsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Add relate field');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 
@@ -173,10 +165,6 @@ class ModuleBuilderFieldsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Add html field');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 
@@ -290,14 +278,6 @@ class ModuleBuilderFieldsCest
     ) {
         return; // test failing behaviour is not similar in different environments
         $I->wantTo('Relate a record to accounts');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 

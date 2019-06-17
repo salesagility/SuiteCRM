@@ -41,10 +41,6 @@ class CallsCest
     ) {
         $I->wantTo('View the calls module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to calls list-view
         $I->loginAsAdmin();
         $calls->gotoCalls();
@@ -72,10 +68,6 @@ class CallsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a call');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to Calls
         $I->loginAsAdmin();

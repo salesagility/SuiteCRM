@@ -43,10 +43,6 @@ class AccountsCest
     ) {
         $I->wantTo('View the accounts module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
         $accounts->gotoAccounts();
@@ -74,9 +70,6 @@ class AccountsCest
     ) {
         $I->wantTo('Create an Account');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();
@@ -109,10 +102,6 @@ class AccountsCest
     ) {
         $I->wantTo('Inline edit an account on the list-view');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
         $accounts->gotoAccounts();
@@ -141,10 +130,6 @@ class AccountsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create an Account');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();

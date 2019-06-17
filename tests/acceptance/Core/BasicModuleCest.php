@@ -57,10 +57,6 @@ class BasicModuleCest
     ) {
         $I->wantTo('Create a basic module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         $I->loginAsAdmin();
 
         $moduleBuilder->createModule(
@@ -89,10 +85,6 @@ class BasicModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('View Basic Test Module');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 
@@ -123,9 +115,6 @@ class BasicModuleCest
     ) {
         $I->wantTo('Create Basic Test Module Record');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         // Go to Basic Test Module
@@ -162,10 +151,6 @@ class BasicModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Select Record from list view');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 
@@ -206,9 +191,6 @@ class BasicModuleCest
     ) {
         $I->wantTo('Edit Basic Test Module Record from detail view');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         // Go to Basic Test Module
@@ -255,9 +237,6 @@ class BasicModuleCest
     ) {
         $I->wantTo('Duplicate Basic Test Module Record from detail view');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         // Go to Basic Test Module
@@ -309,9 +288,6 @@ class BasicModuleCest
     ) {
         $I->wantTo('Delete Basic Test Module Record from detail view');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         // Go to Basic Test Module

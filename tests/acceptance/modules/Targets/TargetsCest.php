@@ -43,10 +43,6 @@ class TargetsCest
     ) {
         $I->wantTo('View the targets module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to targets list-view
         $I->loginAsAdmin();
         $targets->gotoTargets();

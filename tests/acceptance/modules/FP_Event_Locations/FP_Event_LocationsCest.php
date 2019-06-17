@@ -43,10 +43,6 @@ class LocationsCest
     ) {
         $I->wantTo('View the locations module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to locations list-view
         $I->loginAsAdmin();
         $locations->gotoLocations();
@@ -73,10 +69,6 @@ class LocationsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a Location');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to locations list-view
         $I->loginAsAdmin();

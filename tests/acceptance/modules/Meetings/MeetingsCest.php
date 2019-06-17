@@ -43,10 +43,6 @@ class MeetingsCest
     ) {
         $I->wantTo('View the meetings module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to meetings list-view
         $I->loginAsAdmin();
         $meetings->gotoMeetings();
@@ -73,10 +69,6 @@ class MeetingsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a meeting');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to meetings list-view
         $I->loginAsAdmin();
@@ -110,10 +102,6 @@ class MeetingsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a meeting');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to meetings list-view
         $I->loginAsAdmin();

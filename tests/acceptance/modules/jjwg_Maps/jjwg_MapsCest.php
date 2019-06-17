@@ -43,10 +43,6 @@ class jjwg_MapsCest
     ) {
         $I->wantTo('View the maps module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to maps list-view
         $I->loginAsAdmin();
         $maps->gotoMaps();
@@ -75,10 +71,6 @@ class jjwg_MapsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a Map');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();

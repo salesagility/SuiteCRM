@@ -56,11 +56,6 @@ class IssueModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a issue module for testing');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         $I->loginAsAdmin();
 
         $moduleBuilder->createModule(
@@ -88,10 +83,6 @@ class IssueModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('View Issue Test Module');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         $I->loginAsAdmin();
 
         // Navigate to module
@@ -121,10 +112,6 @@ class IssueModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create Issue Test Module Record');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         $I->loginAsAdmin();
 
         // Go to Issue Test Module
@@ -161,10 +148,6 @@ class IssueModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Select Record from list view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         $I->loginAsAdmin();
 
         // Go to Issue Test Module
@@ -203,9 +186,6 @@ class IssueModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Edit Issue Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         // Go to Issue Test Module
@@ -251,9 +231,6 @@ class IssueModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Duplicate Issue Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         // Go to Issue Test Module
@@ -304,9 +281,6 @@ class IssueModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Delete Issue Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         // Go to Issue Test Module

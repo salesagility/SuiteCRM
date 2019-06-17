@@ -43,10 +43,6 @@ class LeadsCest
     ) {
         $I->wantTo('View the leads module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to leads list-view
         $I->loginAsAdmin();
         $leads->gotoLeads();
@@ -73,10 +69,6 @@ class LeadsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a Lead');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to leads list-view
         $I->loginAsAdmin();

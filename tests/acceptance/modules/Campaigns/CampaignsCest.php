@@ -43,10 +43,6 @@ class CampaignsCest
     ) {
         $I->wantTo('View the campaigns module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to campaigns list-view
         $I->loginAsAdmin();
         $campaigns->gotoCampaigns();
@@ -73,10 +69,6 @@ class CampaignsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create Non-Email Campaign');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to campaigns list-view
         $I->loginAsAdmin();
@@ -124,10 +116,6 @@ class CampaignsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create Newsletter Campaign');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
 //        $I->loginAsAdmin();
 //

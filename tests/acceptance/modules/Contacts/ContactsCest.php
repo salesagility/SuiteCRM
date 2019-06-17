@@ -43,10 +43,6 @@ class ContactsCest
     ) {
         $I->wantTo('View the contacts module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to contacts list-view
         $I->loginAsAdmin();
         $contacts->gotoContacts();
@@ -73,10 +69,6 @@ class ContactsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a Contact');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to contacts list-view
         $I->loginAsAdmin();
