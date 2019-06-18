@@ -132,6 +132,7 @@ if (!empty($_POST['saveConfig'])) {
         $configurator->config['passwordsetting']['onelower'] = $_POST['passwordsetting_onelower'];
         $configurator->config['passwordsetting']['onenumber'] = $_POST['passwordsetting_onenumber'];
         $configurator->config['passwordsetting']['onespecial'] = $_POST['passwordsetting_onespecial'];
+		$configurator->config['passwordsetting']['minpwdlength'] = $_POST['passwordsetting_minpwdlength'];
 
         $configurator->saveConfig();
 
