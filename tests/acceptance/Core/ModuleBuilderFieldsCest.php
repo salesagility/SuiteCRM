@@ -246,15 +246,22 @@ class ModuleBuilderFieldsCest
      * @param AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
      * @param \Step\Acceptance\Repair $repair
+     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to test deploying a module
      */
     public function testScenarioDeployModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ModuleBuilder $moduleBuilder,
-        \Step\Acceptance\Repair $repair
+        \Step\Acceptance\Repair $repair,
+        \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Deploy Test Module');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+        $I->loginAsAdmin();
 
         $moduleBuilder->deployPackage(\Page\ModuleFields::$PACKAGE_NAME, true);
         $moduleBuilder->deployPackage(\Page\ModuleFields::$PACKAGE_NAME, true);
