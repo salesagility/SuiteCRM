@@ -7,7 +7,7 @@ ENV ALLOW_EMPTY_PASSWORD="yes" \
     APACHE_HTTP_PORT_NUMBER="80" \
     MARIADB_HOST="mariadb" \
     MARIADB_PORT_NUMBER="3306" \
-    MARIADB_ROOT_PASSWORD="" \
+    MARIADB_ROOT_PASSWORD="suitesql" \
     MARIADB_ROOT_USER="root" \
     MYSQL_CLIENT_CREATE_DATABASE_NAME="" \
     MYSQL_CLIENT_CREATE_DATABASE_PASSWORD="" \
@@ -47,6 +47,8 @@ RUN apt update && apt upgrade -y && apt install -y \
     && docker-php-ext-install -j$(nproc) zip \
     && docker-php-ext-install -j$(nproc) curl \
     && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
+    && docker-php-ext-install -j$(nproc) pdo_mysql \
     # && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     # && docker-php-ext-install -j$(nproc) gd \
     && rm -r /var/lib/apt/lists/*
@@ -61,6 +63,22 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 RUN php composer-setup.php && php -r "unlink('composer-setup.php');"
 RUN php composer.phar update --no-plugins --no-scripts --working-dir=/SMT/suitecrm \
     && php composer.phar install --no-plugins --no-scripts --working-dir=/SMT/suitecrm
+
+# Create and Configure Apache Vhosts
+# HTTP
+COPY suite-vhost.conf /etc/apache2/sites-available/suitecrm/suite-vhost.conf
+# HTTPS
+COPY suite-https-vhost.conf /etc/apache2/sites-available/suitecrm/suite-https-vhost.conf
+RUN a2ensite suite-vhost.conf \
+    && a2ensite suite-ssl-vhost.conf \
+    && service apache2 restart
+
+# Add the PHP configuration.
+# Add our configuration
+COPY suite-php.ini /usr/local/etc/php/conf.d/suite-php.ini
+# Enable a php.ini to override.
+RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
+    && service apache2 restart
 
 
 # Start the SILENT install of SuiteCRM
