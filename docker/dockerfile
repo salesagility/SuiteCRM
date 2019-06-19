@@ -2,6 +2,7 @@ FROM php:7.3-apache
 LABEL maintainer "Mark N Carpenter Jr <mcarpenter@smtcorp.com>"
 
 ARG current_branch=master
+ARG repository_url="https://github.com/salesagility/SuiteCRM.git"
 
 # Set our Envrionment Variables.
 ENV ALLOW_EMPTY_PASSWORD="yes" \
@@ -58,23 +59,23 @@ RUN apt update && apt upgrade -y && apt install -y \
     && rm -r /var/lib/apt/lists/*
 
 # Grab Suite from the master branch of our repository.
-RUN mkdir /SMT && git clone -b ${current_branch} http://dev2/gitlab/dev/suite-crm.git /SMT/suitecrm \
-    && cd /SMT/suitecrm
+RUN git clone -b ${current_branch} ${repository_url} /suitecrm
 
-RUN mkdir /SMT/suitecrm/cache/ \
-    && mkdir /SMT/suitecrm/cache/images \
-    && mkdir /SMT/suitecrm/cache/layout \
-    && mkdir /SMT/suitecrm/cache/pdf \
-    && mkdir /SMT/suitecrm/cache/xml \
-    && mkdir /SMT/suitecrm/cache/include \
-    && mkdir /SMT/suitecrm/cache/include/javascript
+# Create the missing cache dirs.
+RUN mkdir /suitecrm/cache/ \
+    && mkdir /suitecrm/cache/images \
+    && mkdir /suitecrm/cache/layout \
+    && mkdir /suitecrm/cache/pdf \
+    && mkdir /suitecrm/cache/xml \
+    && mkdir /suitecrm/cache/include \
+    && mkdir /suitecrm/cache/include/javascript
 
 # Install Composer, we might consider adding any other Suite install Deps here
 # Composer should cover them all though.
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 RUN php composer-setup.php && php -r "unlink('composer-setup.php');"
-RUN php composer.phar update --no-plugins --no-scripts --working-dir=/SMT/suitecrm \
-    && php composer.phar install --no-plugins --no-scripts --working-dir=/SMT/suitecrm
+RUN php composer.phar update --no-plugins --no-scripts --working-dir=/suitecrm \
+    && php composer.phar install --no-plugins --no-scripts --working-dir=/suitecrm
 
 # Create and Configure Apache Vhosts
 # HTTP
@@ -96,14 +97,14 @@ COPY suite-php.ini /usr/local/etc/php/conf.d/suite-php.ini
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
     && service apache2 restart
 
-RUN chown -R www-data:www-data /SMT/suitecrm \
-    && chmod -R 755 /SMT/suitecrm \
-    && cd /SMT/suitecrm \
+RUN chown -R www-data:www-data /suitecrm \
+    && chmod -R 755 /suitecrm \
+    && cd /suitecrm \
     # ADD config_override.php below if in use.
     && chmod -R 775 cache custom modules themes data upload
 
 # Start the SILENT install of SuiteCRM
-RUN cd /SMT/suitecrm \
+RUN cd /suitecrm \
     && php -B "\$_REQUEST = array('goto' => 'SilentInstall');" -F install.php
 
 # Expose our appications ports
