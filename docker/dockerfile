@@ -96,6 +96,10 @@ COPY suite-php.ini /usr/local/etc/php/conf.d/suite-php.ini
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
     && service apache2 restart
 
+RUN chown -R www-data:www-data /SMT/suitecrm \
+    && chmod -R 755 /SMT/suitecrm \
+    && cd /SMT/suitecrm \
+    && chmod -R 775 cache custom modules themes data upload config_override.php
 
 # Start the SILENT install of SuiteCRM
 RUN cd /SMT/suitecrm \
