@@ -1,6 +1,8 @@
 FROM php:7.3-apache
 LABEL maintainer "Mark N Carpenter Jr <mcarpenter@smtcorp.com>"
 
+ARG current_branch=master
+
 # Set our Envrionment Variables.
 ENV ALLOW_EMPTY_PASSWORD="yes" \
     APACHE_HTTPS_PORT_NUMBER="443" \
@@ -27,7 +29,8 @@ ENV ALLOW_EMPTY_PASSWORD="yes" \
     SUITECRM_SMTP_PORT="" \
     SUITECRM_SMTP_PROTOCOL="" \
     SUITECRM_SMTP_USER="" \
-    SUITECRM_VALIDATE_USER_IP="yes"
+    SUITECRM_VALIDATE_USER_IP="yes" \
+    CURRENT_BRANCH=$current_branch
 
 # Get our dependancies
 RUN apt update && apt upgrade -y && apt install -y \
@@ -42,7 +45,7 @@ RUN apt update && apt upgrade -y && apt install -y \
     wget \
     ca-certificates \
     xz-utils \
-    mod_ssl \
+    # mod_ssl \
     && docker-php-ext-install -j$(nproc) dom \
     && docker-php-ext-install -j$(nproc) intl \
     && docker-php-ext-install -j$(nproc) zip \
@@ -55,7 +58,7 @@ RUN apt update && apt upgrade -y && apt install -y \
     && rm -r /var/lib/apt/lists/*
 
 # Grab Suite from the master branch of our repository.
-RUN mkdir /SMT && git clone -b master http://dev2/gitlab/dev/suite-crm.git /SMT/suitecrm \
+RUN mkdir /SMT && git clone -b ${current_branch} http://dev2/gitlab/dev/suite-crm.git /SMT/suitecrm \
     && cd /SMT/suitecrm
 
 # Install Composer, we might consider adding any other Suite install Deps here

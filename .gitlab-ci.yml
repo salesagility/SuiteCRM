@@ -29,7 +29,7 @@ build:
     - echo "Building smt/suitecrm:latest"
     - echo $CI_COMMIT_SHA
     # gitlab-runner is part of the docker group so no sudo here.
-    - docker build --tag smt/suitecrm:latest --force-rm ./docker/
+    - docker build --tag smt/suitecrm:latest --force-rm --build-arg current_branch $CI_COMMIT_REF_NAME ./docker/
 
 deploy_prod:
   stage: deploy
