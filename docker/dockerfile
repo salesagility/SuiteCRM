@@ -42,6 +42,7 @@ RUN apt update && apt upgrade -y && apt install -y \
     wget \
     ca-certificates \
     xz-utils \
+    mod_ssl \
     && docker-php-ext-install -j$(nproc) dom \
     && docker-php-ext-install -j$(nproc) intl \
     && docker-php-ext-install -j$(nproc) zip \
@@ -66,12 +67,16 @@ RUN php composer.phar update --no-plugins --no-scripts --working-dir=/SMT/suitec
 
 # Create and Configure Apache Vhosts
 # HTTP
-COPY suite-vhost.conf /etc/apache2/sites-available/suitecrm/suite-vhost.conf
+COPY suite-vhost.conf /etc/apache2/sites-available/suite-vhost.conf
 # HTTPS
-COPY suite-https-vhost.conf /etc/apache2/sites-available/suitecrm/suite-https-vhost.conf
+COPY suite-https-vhost.conf /etc/apache2/sites-available/suite-https-vhost.conf
+COPY certs/cert.pem /opt/suitecrm/apache/conf/certs/cert.pem
+COPY certs/key.pem /opt/suitecrm/apache/conf/certs/key.pem
+# Enable Sites
 RUN a2ensite suite-vhost.conf \
-    && a2ensite suite-ssl-vhost.conf \
-    && service apache2 restart
+    && a2ensite suite-https-vhost.conf \
+    && a2enmod ssl \
+    && service apache2 reload
 
 # Add the PHP configuration.
 # Add our configuration
