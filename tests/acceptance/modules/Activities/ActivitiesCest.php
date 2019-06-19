@@ -85,7 +85,7 @@ class ActivitiesCest
 
         //Click on Activites subpanel
         $I->click(['id'=>'subpanel_title_activities']);
-        $I->waitForElementVisible('#Activities_createtask_button', 60);
+        $I->waitForElementVisible('#Activities_createtask_button');
         $I->expect('the due date is visible');
         $I->seeInSource('01/19/2038');
 

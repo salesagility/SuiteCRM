@@ -33,7 +33,7 @@ class Meetings extends \AcceptanceTester
         $I->fillField('#description', $faker->text());
         $I->fillField('#location', $faker->city());
 
-        $I->waitForElementVisible('#date_start_hours', 120);
+        $I->waitForElementVisible('#date_start_hours');
 
         $I->selectOption('#duration', '15 minutes');
         $I->selectOption('#status', 'Held');
