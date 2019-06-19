@@ -50,23 +50,6 @@ class CodingStandardCommands extends \Robo\Tasks
     use RoboTrait;
 
     /**
-     * Configure environment.
-     */
-    public function styleConfigurePHPCSFixer()
-    {
-        $this->say('Configure PHPCSFixer');
-
-        if ($this->_exec('which composer') === null) {
-            throw new Exception('Could not find composer');
-        }
-
-        $this->taskComposerConfig()->set('bin-dir', 'vendor/bin/')->run();
-
-        $this->taskComposerRequire()->dependency('friendsofphp/php-cs-fixer')->dev()->run();
-        $this->taskComposerInstall()->dev()->run();
-    }
-
-    /**
      * A tool to automatically fix all PHP coding standards issues.
      */
     public function stylePHPCSFixer()
@@ -75,6 +58,19 @@ class CodingStandardCommands extends \Robo\Tasks
 
         $paths = new Paths();
         $this->_exec('php vendor/bin/php-cs-fixer fix --path-mode=intersection ' . $paths->getProjectPath() . ' --verbose --show-progress=run-in --config=' . $paths->getProjectPath() . '/.php_cs.dist');
+    }
+
+    /**
+     * Lints the codebase without modifying any files.
+     */
+    public function stylePHPCSFixerDryRun()
+    {
+        $this->say('Coding Standards: PSR2');
+
+        $paths = new Paths();
+        $result = $this->_exec('php vendor/bin/php-cs-fixer fix --dry-run --path-mode=intersection ' . $paths->getProjectPath() . ' --verbose --show-progress=run-in --config=' . $paths->getProjectPath() . '/.php_cs.dist');
+
+        return $result;
     }
 
     /**
