@@ -79,7 +79,7 @@ COPY certs/key.pem /opt/suitecrm/apache/conf/certs/key.pem
 RUN a2ensite suite-vhost.conf \
     && a2ensite suite-https-vhost.conf \
     && a2enmod ssl \
-    && service apache2 reload
+    && service apache2 restart
 
 # Add the PHP configuration.
 # Add our configuration
