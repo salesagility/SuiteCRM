@@ -84,6 +84,7 @@ class ActivitiesCest
         $listView->clickNameLink($account_name);
 
         //Click on Activites subpanel
+        $I->waitForElementVisible(['id'=>'subpanel_title_activities']);
         $I->click(['id'=>'subpanel_title_activities']);
         $I->waitForElementVisible('#Activities_createtask_button');
         $I->expect('the due date is visible');

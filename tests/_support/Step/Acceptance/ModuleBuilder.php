@@ -23,6 +23,7 @@ class ModuleBuilder extends Administration
 
         $packageExists = $I->seePageHas($packageName, '#Buttons');
         if ($packageExists === false) {
+            $I->waitForElementVisible('#newPackageLink');
             // Create new package
             $I->click('#newPackageLink');
 

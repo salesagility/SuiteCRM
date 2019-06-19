@@ -163,6 +163,7 @@ class AccountsCest
         // Add child account
         $accountName = 'Test_' . $this->fakeData->company();
         $I->click('#member_accounts_create_button');
+        $I->waitForElementVisible('#Accounts_subpanel_full_form_button');
         $I->click('#Accounts_subpanel_full_form_button');
         $editView->waitForEditViewVisible();
         $I->fillfield('#name', $accountName);

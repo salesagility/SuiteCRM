@@ -84,6 +84,7 @@ class HistoryCest
         $listView->clickNameLink($account_name);
 
         //Click on History subpanel
+        $I->waitForElementVisible(['id'=>'subpanel_title_history']);
         $I->click(['id'=>'subpanel_title_history']);
         $I->waitForElementVisible('#History_createnoteorattachment_button');
         $I->expect('the due date is visible');
