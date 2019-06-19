@@ -448,6 +448,7 @@ class aSubPanel
                 }
             }
         }
+        return $display_fields;
     }
 
     function isDatasourceFunction ()
