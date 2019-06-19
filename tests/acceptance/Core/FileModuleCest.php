@@ -120,18 +120,15 @@ class FileModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create File Test Module Record');
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+        $I->loginAsAdmin();
 
-        if ($this->lastView !== 'ListView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        // Go to File Test Module
+        $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            $I->loginAsAdmin();
-
-            // Go to File Test Module
-            $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
-            $listView->waitForListViewVisible();
-        }
         // Select create File Test Module form the current menu
         $navigationBar->clickCurrentMenuItem('Create ' . \Page\FileModule::$NAME);
 
@@ -171,25 +168,23 @@ class FileModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Select Record from list view');
-        if ($this->lastView !== 'ListView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
+        // Go to File Test Module
+        $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Go to File Test Module
-            $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
-            $listView->waitForListViewVisible();
-
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->fillField('#document_name_basic', $this->fakeData->lastName . '.test.txt');
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-        }
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#document_name_basic', $this->fakeData->lastName . '.test.txt');
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
 
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
@@ -216,27 +211,24 @@ class FileModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Edit File Test Module Record from detail view');
-        if ($this->lastView !== 'DetailView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
+        // Go to File Test Module
+        $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Go to File Test Module
-            $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
-            $listView->waitForListViewVisible();
-
-            // Select record from list view
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->fillField('#document_name_basic', $this->fakeData->lastName . '.test.txt');
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
-        }
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#document_name_basic', $this->fakeData->lastName . '.test.txt');
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
         // Edit Record
         $detailView->clickActionMenuItem('Edit');
 
@@ -266,27 +258,25 @@ class FileModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Duplicate File Test Module Record from detail view');
-        if ($this->lastView !== 'DetailView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
+        // Go to File Test Module
+        $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Go to File Test Module
-            $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
-            $listView->waitForListViewVisible();
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#document_name_basic', $this->fakeData->lastName . '.test.txt');
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
 
-            // Select record from list view
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->fillField('#document_name_basic', $this->fakeData->lastName . '.test.txt');
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
-        }
         // Edit Record
         $detailView->clickActionMenuItem('Duplicate');
 
@@ -321,27 +311,24 @@ class FileModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Delete File Test Module Record from detail view');
-        if ($this->lastView !== 'DetailView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
+        // Go to File Test Module
+        $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Go to File Test Module
-            $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
-            $listView->waitForListViewVisible();
-
-            // Select record from list view
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->fillField('#document_name_basic', $this->fakeData->lastName);
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
-        }
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#document_name_basic', $this->fakeData->lastName);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
         // Delete Record
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();

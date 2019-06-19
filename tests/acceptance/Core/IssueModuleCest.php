@@ -203,27 +203,25 @@ class IssueModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Edit Issue Test Module Record from detail view');
-        if ($this->lastView !== 'DetailView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
+        // Go to Issue Test Module
+        $navigationBar->clickAllMenuItem(\Page\IssueModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Go to Issue Test Module
-            $navigationBar->clickAllMenuItem(\Page\IssueModule::$NAME);
-            $listView->waitForListViewVisible();
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#name_basic', $this->fakeData->name);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickNameLink($this->fakeData->name);
 
-            // Select record from list view
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->fillField('#name_basic', $this->fakeData->name);
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickNameLink($this->fakeData->name);
-        }
         // Edit Record
         $detailView->clickActionMenuItem('Edit');
 
@@ -253,27 +251,24 @@ class IssueModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Duplicate Issue Test Module Record from detail view');
-        if ($this->lastView !== 'DetailView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
+        // Go to Issue Test Module
+        $navigationBar->clickAllMenuItem(\Page\IssueModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Go to Issue Test Module
-            $navigationBar->clickAllMenuItem(\Page\IssueModule::$NAME);
-            $listView->waitForListViewVisible();
-
-            // Select record from list view
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->fillField('#name_basic', $this->fakeData->name);
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickNameLink($this->fakeData->name);
-        }
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#name_basic', $this->fakeData->name);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickNameLink($this->fakeData->name);
 
         // Edit Record
         $detailView->clickActionMenuItem('Duplicate');
@@ -309,27 +304,25 @@ class IssueModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Delete Issue Test Module Record from detail view');
-        if ($this->lastView !== 'DetailView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
+        // Go to Issue Test Module
+        $navigationBar->clickAllMenuItem(\Page\IssueModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Go to Issue Test Module
-            $navigationBar->clickAllMenuItem(\Page\IssueModule::$NAME);
-            $listView->waitForListViewVisible();
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#name_basic', $this->fakeData->name);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickNameLink($this->fakeData->name);
 
-            // Select record from list view
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->fillField('#name_basic', $this->fakeData->name);
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickNameLink($this->fakeData->name);
-        }
         // Delete Record
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
