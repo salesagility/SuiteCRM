@@ -1,5 +1,6 @@
 stages:
   - test
+  - build-dev-image
   - build-image
   - user-test
   - deploy
@@ -23,13 +24,13 @@ test:
     # - rsync --update --dry-run --checksum -rlvzub --exclude ".*" --exclude "*.tgz" --exclude "Makefile.*" -e "ssh -i ~/.ssh/id_rsa.pub" ./ localadmin@dev2:/var/lib/docker/volumes/suite_os/_data/suitecrm
     
 
-build:
-  stage: build-image
+build-dev-image:
+  stage: build-dev-image
   script: 
     - echo "Building smt/suitecrm:latest"
     - echo $CI_COMMIT_SHA
     # gitlab-runner is part of the docker group so no sudo here.
-    - docker build --tag smt/suitecrm:latest --force-rm --build-arg current_branch=$CI_COMMIT_REF_NAME ./docker/
+    - docker build --force-rm -t smt/suitecrm:latest --build-arg current_branch=$CI_COMMIT_REF_NAME ./docker/
 
 deploy_prod:
   stage: deploy
@@ -49,6 +50,23 @@ deploy_prod:
     - echo "Copying Files"
     - rsync --update --checksum -rlvzub --exclude ".*" --exclude "*.tgz*" --exclude "Makefile.*" --backup-dir="backups/$CI_JOB_ID" -e "ssh -i ~/.ssh/id_rsa.pub" _src/ gitlab-runner@linux3:/var/www/$DEPLOYMENT_DESTINATION
 
+  environment:
+    name: production
+    url: https://dev2:8443
+  only:
+    - master
+    - merge-requests
+  when: manual
+  allow_failure: false
+
+build-image:
+  stage: build-dev-image
+  script: 
+    - echo "Building smt/suitecrm:latest"
+    - echo $CI_COMMIT_SHA
+    # gitlab-runner is part of the docker group so no sudo here.
+    - docker build --force-rm -t smt/suitecrm:latest --build-arg current_branch=$CI_COMMIT_REF_NAME ./docker/
+  
   environment:
     name: production
     url: https://dev2:8443
