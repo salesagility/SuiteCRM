@@ -153,7 +153,7 @@ class Audit extends SugarBean
                             }
                             $temp_list[$field['name']]=$date_created;
                         }
-                        if (($field['name'] == 'before_value_string' || $field['name'] == 'after_value_string') && ($row['data_type'] == "enum" || $row['data_type'] == "multienum")) {
+                        if (($field['name'] == 'before_value_string' || $field['name'] == 'after_value_string' || $field['name'] == 'before_value_text' || $field['name'] == 'after_value_text') && ($row['data_type'] == "enum" || $row['data_type'] == "multienum")) {
                             global $app_list_strings;
                             $enum_keys = unencodeMultienum($temp_list[$field['name']]);
                             $enum_values = array();
