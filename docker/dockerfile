@@ -60,13 +60,14 @@ RUN apt update && apt upgrade -y && apt install -y \
 # Grab Suite from the master branch of our repository.
 RUN mkdir /SMT && git clone -b ${current_branch} http://dev2/gitlab/dev/suite-crm.git /SMT/suitecrm \
     && cd /SMT/suitecrm
-RUN mkdir cache/ \
-    && mkdir cache/images \
-    && mkdir cache/layout \
-    && mkdir cache/pdf \
-    && mkdir cache/xml \
-    && mkdir cache/include \
-    && mkdir cache/include/javascript
+
+RUN mkdir /SMT/suitecrm/cache/ \
+    && mkdir /SMT/suitecrm/cache/images \
+    && mkdir /SMT/suitecrm/cache/layout \
+    && mkdir /SMT/suitecrm/cache/pdf \
+    && mkdir /SMT/suitecrm/cache/xml \
+    && mkdir /SMT/suitecrm/cache/include \
+    && mkdir /SMT/suitecrm/cache/include/javascript
 
 # Install Composer, we might consider adding any other Suite install Deps here
 # Composer should cover them all though.
