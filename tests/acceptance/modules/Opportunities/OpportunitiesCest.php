@@ -43,10 +43,6 @@ class OpportunitiesCest
     ) {
         $I->wantTo('View the opportunities module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to opportunities list-view
         $I->loginAsAdmin();
         $opportunities->gotoOpportunities();
@@ -75,10 +71,6 @@ class OpportunitiesCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create an opportunity');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();

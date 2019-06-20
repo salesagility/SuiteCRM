@@ -43,10 +43,6 @@ class ProductsCest
     ) {
         $I->wantTo('View the products module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to products list-view
         $I->loginAsAdmin();
         $products->gotoProducts();
@@ -73,10 +69,6 @@ class ProductsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a product');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to products list-view
         $I->loginAsAdmin();

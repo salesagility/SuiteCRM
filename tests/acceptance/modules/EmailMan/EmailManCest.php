@@ -37,9 +37,6 @@ class EmailManCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Save an outgoing email configuration');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to email configuration and save settings
         $I->loginAsAdmin();

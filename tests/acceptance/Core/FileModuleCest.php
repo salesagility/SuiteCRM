@@ -56,10 +56,6 @@ class FileModuleCest
     ) {
         $I->wantTo('Create a file module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         $I->loginAsAdmin();
 
         $moduleBuilder->createModule(
@@ -87,10 +83,6 @@ class FileModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('View File Test Module');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         $I->loginAsAdmin();
 
         // Navigate to module
@@ -120,9 +112,6 @@ class FileModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create File Test Module Record');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         // Go to File Test Module
@@ -169,9 +158,6 @@ class FileModuleCest
     ) {
         $I->wantTo('Select Record from list view');
         
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         // Go to File Test Module
@@ -211,9 +197,6 @@ class FileModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Edit File Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         // Go to File Test Module
@@ -258,9 +241,6 @@ class FileModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Duplicate File Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         // Go to File Test Module
@@ -311,9 +291,6 @@ class FileModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Delete File Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         // Go to File Test Module

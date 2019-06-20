@@ -58,11 +58,6 @@ class CompanyModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a company module for testing');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         $I->loginAsAdmin();
 
         $moduleBuilder->createModule(
@@ -90,9 +85,6 @@ class CompanyModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('View Company Test Module');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 
@@ -124,9 +116,6 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Create Company Test Module Record');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         // Go to Company Test Module
@@ -179,9 +168,6 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Select Record from list view');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         // Go to Company Test Module
@@ -223,9 +209,6 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Edit Company Test Module Record from detail view');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         // Go to Company Test Module
@@ -272,10 +255,6 @@ class CompanyModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Duplicate Company Test Module Record from detail view');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
 
@@ -329,9 +308,6 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Delete Company Test Module Record from detail view');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         // Go to Company Test Module

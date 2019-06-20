@@ -48,10 +48,6 @@ class EmailsCest
     ) {
         $I->wantTo('View the emails module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to emails list-view
         $I->loginAsAdmin();
         $emails->gotoEmails();
@@ -74,10 +70,6 @@ class EmailsCest
         // TODO: Refactor
 
         $I->wantTo('View the HTML of two emails');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 

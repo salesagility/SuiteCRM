@@ -57,10 +57,6 @@ class PersonModuleCest
     ) {
         $I->wantTo('Create a person module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         $I->loginAsAdmin();
 
         $moduleBuilder->createModule(
@@ -88,9 +84,6 @@ class PersonModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('View Person Test Module');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 
@@ -121,10 +114,6 @@ class PersonModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create Person Test Module Record');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         $I->loginAsAdmin();
 
         // Go to Person Test Module
@@ -186,9 +175,6 @@ class PersonModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Select Record from list view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 
@@ -234,9 +220,6 @@ class PersonModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Edit Person Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 
@@ -290,10 +273,6 @@ class PersonModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Duplicate Person Test Module Record from detail view');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 
@@ -350,9 +329,6 @@ class PersonModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Delete Person Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 
@@ -404,10 +380,6 @@ class PersonModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a Person Record using a vcard');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
 
         // Create VCard for test
         $vcard = new VCard();

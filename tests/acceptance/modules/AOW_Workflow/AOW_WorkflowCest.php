@@ -54,13 +54,9 @@ class AOW_WorkflowCest
         \Step\Acceptance\Workflow $workflow
     ) {
         $I->wantTo('Create a workflow for accounts');
-        $I->amOnUrl($webDriverHelper->getInstanceURL());
 
         // Login as Administrator
-        $I->login(
-            $webDriverHelper->getAdminUser(),
-            $webDriverHelper->getAdminPassword()
-        );
+        $I->loginAsAdmin();
 
         $dashboard->waitForDashboardVisible();
         $workflow->navigateToWorkflow($navigationBar, $listView);

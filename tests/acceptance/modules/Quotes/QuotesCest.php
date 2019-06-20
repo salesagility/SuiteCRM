@@ -43,10 +43,6 @@ class QuotesCest
     ) {
         $I->wantTo('View the quotes module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to quotes list-view
         $I->loginAsAdmin();
         $quotes->gotoQuotes();

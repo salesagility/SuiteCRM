@@ -40,6 +40,7 @@ class AcceptanceTester extends \Codeception\Actor
     {
         $I = $this;
 
+        $I->amOnUrl($I->getInstanceURL());
         $I->waitForElementVisible('#loginform');
         $I->fillField('#user_name', $username);
         $I->fillField('#username_password', $password);

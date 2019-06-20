@@ -43,10 +43,6 @@ class AOR_ReportsCest
     ) {
         $I->wantTo('View the reports module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to reports list-view
         $I->loginAsAdmin();
         $reports->gotoReports();
@@ -77,10 +73,6 @@ class AOR_ReportsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a Report');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to reports list-view
         $I->loginAsAdmin();
@@ -124,10 +116,6 @@ class AOR_ReportsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Select Report from list view');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to reports list-view
         $I->loginAsAdmin();
@@ -179,10 +167,6 @@ class AOR_ReportsCest
     ) {
         $I->wantTo('Edit a Report from the detail view');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to a report
         $I->loginAsAdmin();
         $reports->gotoReports();
@@ -233,10 +217,6 @@ class AOR_ReportsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Duplicate Report from detail view');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to a report
         $I->loginAsAdmin();
@@ -290,10 +270,6 @@ class AOR_ReportsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Delete Report from detail view');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to a report
         $I->loginAsAdmin();

@@ -43,10 +43,6 @@ class NotesCest
     ) {
         $I->wantTo('View the notes module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to notes list-view
         $I->loginAsAdmin();
         $notes->gotoNotes();

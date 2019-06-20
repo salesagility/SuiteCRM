@@ -49,10 +49,6 @@ class ActivitiesCest
     ) {
         $I->wantTo('See the due date field on Account Activities subpanel');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
         $accounts->gotoAccounts();
