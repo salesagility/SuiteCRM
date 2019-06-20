@@ -1,7 +1,7 @@
 version: '2'
 services:
   mariadb:
-    image: mariadb/mariadb:latest
+    image: mariadb:latest
     environment:
       - MARIADB_USER=suitecrm
       - MARIADB_DATABASE=suitecrm
