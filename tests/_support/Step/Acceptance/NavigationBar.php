@@ -89,7 +89,6 @@ class NavigationBar extends Tester
             case DesignBreakPoint::lg:
                 $allMenuButton = '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav.all';
                 $I->waitForElementVisible($allMenuButton);
-                $I->wait(1);
                 $I->click('All', $allMenuButton);
                 $allMenu = $allMenuButton . ' > span.notCurrentTab > ul.dropdown-menu';
                 $I->waitForElementVisible($allMenu);
@@ -98,7 +97,6 @@ class NavigationBar extends Tester
             case DesignBreakPoint::md:
                 $allMenuButton = 'div.navbar-header > button.navbar-toggle';
                 $I->waitForElementVisible($allMenuButton);
-                $I->wait(1);
                 $I->click($allMenuButton);
                 $allMenu = 'div.navbar-header > #mobile_menu';
                 $I->waitForElementVisible($allMenu);
@@ -107,7 +105,6 @@ class NavigationBar extends Tester
             case DesignBreakPoint::sm:
                 $allMenuButton = 'div.navbar-header > button.navbar-toggle';
                 $I->waitForElementVisible($allMenuButton);
-                $I->wait(1);
                 $I->click($allMenuButton);
                 $allMenu = 'div.navbar-header > #mobile_menu';
                 $I->waitForElementVisible($allMenu);
@@ -116,7 +113,6 @@ class NavigationBar extends Tester
             case DesignBreakPoint::xs:
                 $allMenuButton = 'div.navbar-header > button.navbar-toggle';
                 $I->waitForElementVisible($allMenuButton);
-                $I->wait(1);
                 $I->click($allMenuButton);
                 $allMenu = 'div.navbar-header > #mobile_menu';
                 $I->waitForElementVisible($allMenu);
