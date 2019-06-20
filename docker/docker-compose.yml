@@ -31,10 +31,10 @@ services:
       - 'suite_os_data:/certs'
     depends_on:
       - mariadb
-  volumes:
-      suite_os_data:
-        driver: local
-      suite_db_maria:
-        driver: local
+volumes:
+    suite_os_data:
+      driver: local
+    suite_db_maria:
+      driver: local
     
 
