@@ -1,10 +1,12 @@
 ## First part from https://github.com/github/gitignore/blob/master/SugarCRM.gitignore
 # Ignore custom .htaccess stuff.
 /.htaccess
+
 # Ignore large parts of the annoying cache directory without breaking things.
 cache/*
 upload/*
 !upload/index.html
+
 # Ignore some files and directories from the custom directory.
 custom/
 custom/history/*
@@ -13,17 +15,22 @@ custom/modulebuilder/*
 custom/working/*
 custom/modules/*/Ext/
 custom/modules/unified_search_modules_display.php
+
 # Ignore AOD indexes
 modules/AOD_Index/Index/*
 install/status.json
+
 # Configuration files should be ignored.
 /config.php
 /config_override.php
 /config_si.php
+
 # Connector configuration should also be ignored.
 custom/modules/Connectors/connectors/sources/ext/*/*/config.php
+
 # Logs files can safely be ignored.
 *.log
+
 ## IDE specific items
 # Eclipse
 *.pydevproject
@@ -40,6 +47,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
+
 # Emacs
 *~
 \#*\#
@@ -48,28 +56,37 @@ local.properties
 .elc
 auto-save-list
 tramp
+
 # IntelliJ Idea
 *.iml
 *.ipr
 *.iws
 .idea/
 .phpstorm.meta.php
+
 # NetBeans
 nbproject/
+
 # Vim
 .*.sw[a-z]
 *.un~
 Session.vim
 tags
+
 # Windows
 Thumbs.db
 Desktop.ini
 .DS_Store
 .DS_Store?
+
 # Microsoft Visual Studio
 *.sln
 *.suo
 *.phpproj
+# VSCode
+.vscode/
+docker/certs/
+
 # Disytel
 lang_cmp.php
 .kdev4/

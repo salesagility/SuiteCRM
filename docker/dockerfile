@@ -5,6 +5,9 @@ ARG current_branch=master
 ARG repository_url="https://github.com/salesagility/SuiteCRM.git"
 
 # Set our Envrionment Variables.
+# TODO: Create a ENV and/or ARG for using a local DB in the image or a
+# Docker Container.
+
 ENV ALLOW_EMPTY_PASSWORD="yes" \
     APACHE_HTTPS_PORT_NUMBER="443" \
     APACHE_HTTP_PORT_NUMBER="80" \
