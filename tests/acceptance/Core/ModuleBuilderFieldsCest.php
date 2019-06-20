@@ -198,6 +198,8 @@ class ModuleBuilderFieldsCest
         $I->waitForElementVisible('#type');
         $I->selectOption('#type', 'HTML');
 
+        // Wait for 1 second to allow the field to become interactive.
+        $I->wait(1);
         $I->waitForElementVisible('#field_name_id');
         $I->fillField('#field_name_id', 'test_html_field');
 
