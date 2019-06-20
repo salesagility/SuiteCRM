@@ -41,7 +41,7 @@ build-dev-image:
 
     # - docker build --force-rm -t smt/suitecrm:latest --build-arg current_branch=$CI_COMMIT_REF_NAME --build-arg repository_url=http://dev2/gitlab/dev/suite-crm ./docker/
 
-    - docker-compose -f ./docker/docker-compose.yml up --detach --force-recreate --always-recreate-deps
+    - docker-compose -f ./docker/docker-compose.yml up -d --force-recreate --always-recreate-deps
 
 deploy_prod:
   stage: deploy
