@@ -23,7 +23,7 @@ class ListView extends Tester
     public function clickFilterButton()
     {
         $I = $this;
-        $I->waitForElementVisible('a.glyphicon-filter', '.searchLink');
+        $I->waitForElementVisible('.searchLink a.glyphicon-filter');
         $I->click('a.glyphicon-filter', '.searchLink');
         $I->waitForFilterModalVisible();
     }

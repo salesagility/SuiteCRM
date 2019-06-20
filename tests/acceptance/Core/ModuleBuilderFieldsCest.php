@@ -106,7 +106,7 @@ class ModuleBuilderFieldsCest
         $I->click('.container-close');
 
         // Add field button
-        $I->waitForElementVisible(['name' => 'addfieldbtn']);
+        $I->waitForElementVisible('[name="addfieldbtn"]');
         $I->click(['name' => 'addfieldbtn']);
 
         // Fill in edit field tab
@@ -191,7 +191,7 @@ class ModuleBuilderFieldsCest
         $I->click('.container-close');
 
         // Add field button
-        $I->waitForElementVisible(['name' => 'addfieldbtn']);
+        $I->waitForElementVisible('[name="addfieldbtn"]');
         $I->click(['name' => 'addfieldbtn']);
 
         // Fill in edit field tab
