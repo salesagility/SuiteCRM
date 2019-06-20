@@ -26,6 +26,13 @@ test:
 
 build-dev-image:
   stage: build-dev-image
+
+  before_script:
+  - docker info
+  - apk add --no-cache python py3-pip
+  - pip install --no-cache-dir docker-compose
+  - docker-compose -v
+
   script: 
     - echo "Building smt/suitecrm:latest"
     - echo $CI_COMMIT_SHA
