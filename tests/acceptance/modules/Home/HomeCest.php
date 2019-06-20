@@ -51,12 +51,12 @@ class HomeCest
         $I->loginAsAdmin();
         $dashboard->waitForDashboardVisible();
         $detailView->clickActionMenuItem('Add Dashlets');
-        $I->wait(1);
+        $I->waitForElementVisible('#chartCategory');
         $I->click('#chartCategory');
         $I->click('All Opportunities By Lead Source By Outcome');
         $I->click('Close');
         $dashboard->waitForDashboardVisible();
-        $I->wait(1);
+        $I->waitForText('All Opportunities By Lead Source By Outcome');
         $I->see('All Opportunities By Lead Source By Outcome');
         $dashboardID = $I->grabAttributeFrom('descendant-or-self::div[@class="dashletPanel"]', 'id');
         if ($dashboardID != "") {
