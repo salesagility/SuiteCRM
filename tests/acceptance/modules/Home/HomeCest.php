@@ -56,7 +56,8 @@ class HomeCest
         $I->click('All Opportunities By Lead Source By Outcome');
         $I->click('Close');
         $dashboard->waitForDashboardVisible();
-        $I->waitForText('All Opportunities By Lead Source By Outcome');
+        // This has to be uppercase because Codeception is case sensitive in waitForText... for some reason.
+        $I->waitForText('ALL OPPORTUNITIES BY LEAD SOURCE BY OUTCOME');
         $I->see('All Opportunities By Lead Source By Outcome');
         $dashboardID = $I->grabAttributeFrom('descendant-or-self::div[@class="dashletPanel"]', 'id');
         if ($dashboardID != "") {
