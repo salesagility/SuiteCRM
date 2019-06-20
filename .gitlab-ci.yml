@@ -30,7 +30,7 @@ build-dev-image:
   before_script:
     - docker info
     # - apk add --no-cache python py3-pip
-    - pip -m install --user --no-cache-dir docker-compose
+    - python -m pip install --user --no-cache-dir docker-compose
     - docker-compose -v
 
   script: 
