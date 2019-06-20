@@ -1,0 +1,40 @@
+version: '2'
+services:
+  mariadb:
+    image: mariadb/mariadb:latest
+    environment:
+      - MARIADB_USER=suitecrm
+      - MARIADB_DATABASE=suitecrm
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      # We'll need to point this to the directory of mariaDB
+      # according to this --
+      # https://forums.docker.com/t/how-to-make-mariadb-database-changes-persistent/17339/3
+      - 'suite_db_maria:/var/lib/mysql'
+  suitecrm:
+    build:
+      context: ./
+      args:
+        current_branch: 'silent-installs'
+        repository_url: "http://dev2/gitlab/dev/suite-crm"
+    image: smt/suitecrm:latest
+    environment:
+      - MARIADB_HOST=mariadb
+      - MARIADB_PORT_NUMBER=3306
+      - SUITECRM_DATABASE_USER=suitecrm
+      - SUITECRM_DATABASE_NAME=suitecrm
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - '80:8580'
+      - '443:8543'
+    volumes:
+      - 'suite_os_data:/certs'
+    depends_on:
+      - mariadb
+  volumes:
+      suite_os_data:
+        driver: local
+      suite_db_maria:
+        driver: local
+    
+
