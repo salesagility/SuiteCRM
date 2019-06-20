@@ -29,7 +29,7 @@ build-dev-image:
 
   before_script:
   - docker info
-  - apk add --no-cache python py3-pip
+  # - apk add --no-cache python py3-pip
   - pip install --no-cache-dir docker-compose
   - docker-compose -v
 
