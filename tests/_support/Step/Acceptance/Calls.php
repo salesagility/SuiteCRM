@@ -75,7 +75,6 @@ class Calls extends \AcceptanceTester
         $I->fillField('#parent_name', $module_name);
 
         $I->wait(2);
-
         $I->clickSaveButton();
         $DetailView->waitForDetailViewVisible();
     }

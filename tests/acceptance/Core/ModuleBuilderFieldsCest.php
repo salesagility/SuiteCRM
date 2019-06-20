@@ -198,7 +198,6 @@ class ModuleBuilderFieldsCest
         $I->waitForElementVisible('#type');
         $I->selectOption('#type', 'HTML');
 
-        $I->wait(1);
         $I->waitForElementVisible('#field_name_id');
         $I->fillField('#field_name_id', 'test_html_field');
 

@@ -19,6 +19,7 @@ class EditView extends Tester
     {
         $I = $this;
         $I->executeJS('window.scrollTo(0,0); return true;');
+        $I->waitForText('Save');
         $I->click('Save');
     }
 }
