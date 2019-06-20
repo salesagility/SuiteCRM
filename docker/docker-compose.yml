@@ -3,9 +3,9 @@ services:
   mariadb:
     image: mariadb:latest
     environment:
-      - MARIADB_USER=suitecrm
-      - MARIADB_DATABASE=suitecrm
-      - ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_USER=suitecrm
+      - MYSQL_DATABASE=suitecrm
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     volumes:
       # We'll need to point this to the directory of mariaDB
       # according to this --
@@ -19,8 +19,8 @@ services:
         repository_url: "http://dev2/gitlab/dev/suite-crm"
     image: smt/suitecrm:latest
     environment:
-      - MARIADB_HOST=mariadb
-      - MARIADB_PORT_NUMBER=3306
+      - MYSQL_HOST=mariadb
+      - MYSQL_PORT_NUMBER=3306
       - SUITECRM_DATABASE_USER=suitecrm
       - SUITECRM_DATABASE_NAME=suitecrm
       - ALLOW_EMPTY_PASSWORD=yes
