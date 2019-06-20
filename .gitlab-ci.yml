@@ -30,7 +30,7 @@ build-dev-image:
     - echo "Building smt/suitecrm:latest"
     - echo $CI_COMMIT_SHA
     # gitlab-runner is part of the docker group so no sudo here.
-    - docker build --force-rm -t smt/suitecrm:latest --build-arg current_branch=$CI_COMMIT_REF_NAME ./docker/
+    - docker build --force-rm -t smt/suitecrm:latest --build-arg current_branch=$CI_COMMIT_REF_NAME --build-arg repository_url=http://dev2/gitlab/dev/suite-crm ./docker/
 
 deploy_prod:
   stage: deploy
@@ -60,7 +60,7 @@ deploy_prod:
   allow_failure: false
 
 build-image:
-  stage: build-dev-image
+  stage: build-image
   script: 
     - echo "Building smt/suitecrm:latest"
     - echo $CI_COMMIT_SHA
