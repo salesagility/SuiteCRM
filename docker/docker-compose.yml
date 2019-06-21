@@ -1,4 +1,7 @@
 version: '2'
+environment:
+  - BUILD_FROM_BRANCH='master'
+  - BUILD_FROM_REPO='https://github.com/salesagility/SuiteCRM.git'
 services:
   mariadb:
     image: mariadb:latest
@@ -15,8 +18,8 @@ services:
     build:
       context: ./
       args:
-        current_branch: 'silent-installs'
-        repository_url: "http://dev2/gitlab/dev/suite-crm"
+        current_branch: ${BUILD_FROM_BRANCH}
+        repository_url: ${BUILD_FROM_REPO}
     image: smt/suitecrm:latest
     environment:
       - MYSQL_HOST=mariadb
