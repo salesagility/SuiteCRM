@@ -147,21 +147,21 @@ function requestToUserParameters($reportBean = null)
                             'id' => $parameterId,
                             'operator' => $_REQUEST['parameter_operator'][$key],
                             'type' => $_REQUEST['parameter_type'][$key],
-                            'value' => convertToDateTime($_REQUEST['parameter_value'][$key])->format('Y-m-d H:i:s'),
+                            'value' => $value,
                         );
                     } elseif (strpos($paramValue, '-') === 2 || strpos($paramValue, '-') === 4) {
                         $params[$parameterId] = array(
                             'id' => $parameterId,
                             'operator' => $_REQUEST['parameter_operator'][$key],
                             'type' => $_REQUEST['parameter_type'][$key],
-                            'value' => convertToDateTime($_REQUEST['parameter_value'][$key])->format('Y-m-d H:i:s'),
+                            'value' => $value,
                         );
                     } elseif (strpos($paramValue, '.') === 2 || strpos($paramValue, '.') === 4) {
                         $params[$parameterId] = array(
                             'id' => $parameterId,
                             'operator' => $_REQUEST['parameter_operator'][$key],
                             'type' => $_REQUEST['parameter_type'][$key],
-                            'value' => convertToDateTime($_REQUEST['parameter_value'][$key])->format('Y-m-d H:i:s'),
+                            'value' => $value,
                         );
                     }
                 }
