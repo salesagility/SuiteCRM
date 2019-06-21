@@ -597,7 +597,7 @@ enableQS(false);
         global $current_user;
 
 
-        if ((!empty($this->selectedCategories) && !in_array('User Feed', $this->categories))
+        if (!empty($this->selectedCategories) && !in_array('User Feed', $this->categories, true)
             ) {
             // The user feed system isn't enabled, don't let them post notes
             return '';
