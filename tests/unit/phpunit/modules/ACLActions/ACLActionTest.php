@@ -110,8 +110,8 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result2 = ACLAction::getUserActions('1', false, 'Accounts');
         $result3 = ACLAction::getUserActions('1', false, 'Accounts', 'list');
 
-        self::markTestIncomplete('Need to implement: verify that all three results retunred are different.');
-        //verify that all three results retunred are different
+        self::markTestIncomplete('Need to implement: verify that all three results returned are different.');
+        //verify that all three results returned are different
         //$this->assertNotSame($result1, $result2);
         //$this->assertNotSame($result1, $result3);
         //$this->assertNotSame($result2, $result3);
