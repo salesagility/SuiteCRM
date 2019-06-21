@@ -23,7 +23,7 @@ class ListView extends Tester
     public function clickFilterButton()
     {
         $I = $this;
-        $I->waitForElementVisible('.searchLink a.glyphicon-filter');
+        // TODO: Might be able to use waitForElementClickable here in the future when we're on a higher version of Codeception?
         $I->click('a.glyphicon-filter', '.searchLink');
         $I->waitForFilterModalVisible();
     }

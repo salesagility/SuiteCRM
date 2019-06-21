@@ -108,6 +108,7 @@ class jjwg_MapsCest
         // Delete account
         $accounts->gotoAccounts();
         $listView->waitForListViewVisible();
+        $I->wait(5);
         $listView->clickFilterButton();
         $I->fillField('#name_basic', $account_name);
         $I->click('#search_form_submit');
