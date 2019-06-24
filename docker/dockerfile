@@ -69,7 +69,7 @@ RUN apt update && apt upgrade -y && apt install -y \
     && docker-php-ext-install -j$(nproc) zip \
     && docker-php-ext-install -j$(nproc) curl \
     && docker-php-ext-install -j$(nproc) gd \
-    docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install -j$(nproc) imap \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
     && docker-php-ext-install -j$(nproc) pdo_mysql \
