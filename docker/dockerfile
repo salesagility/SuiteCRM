@@ -58,6 +58,8 @@ RUN apt update && apt upgrade -y && apt install -y \
     libcurl4-gnutls-dev \
     libjpeg-dev \
     libpng-dev \
+    libc-client-dev \
+    libkrb5-dev \
     git \
     curl \
     wget \
