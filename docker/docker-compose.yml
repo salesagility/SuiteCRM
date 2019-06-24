@@ -15,11 +15,12 @@ services:
     build:
       context: ./
       args:
+        # ENVS FROM THE CI, or PASSED BY CLI TO COMPOSE
         current_branch: ${BUILD_FROM_BRANCH}
         repository_url: ${BUILD_FROM_REPO}
     image: smt/suitecrm:latest
     environment:
-      - MYSQL_HOST=mariadb
+      - DATABASE_HOST_NAME=mariadb
       - MYSQL_PORT_NUMBER=3306
       - SUITECRM_DATABASE_USER=suitecrm
       - SUITECRM_DATABASE_NAME=suitecrm

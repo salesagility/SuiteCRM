@@ -8,20 +8,34 @@ ARG repository_url="https://github.com/salesagility/SuiteCRM.git"
 # TODO: Create a ENV and/or ARG for using a local DB in the image or a
 # Docker Container.
 
+# So, defaults for the install environment will get set here.
+# ENVs passed in through compose override these.
+# Fallback Defaults, "like last chance or this breaks", are specified in
+# config_si.php
 ENV ALLOW_EMPTY_PASSWORD="yes" \
     APACHE_HTTPS_PORT_NUMBER="443" \
     APACHE_HTTP_PORT_NUMBER="80" \
-    MARIADB_HOST="mariadb" \
-    MARIADB_PORT_NUMBER="3306" \
-    MARIADB_ROOT_PASSWORD="suitesql" \
-    MARIADB_ROOT_USER="root" \
-    MYSQL_CLIENT_CREATE_DATABASE_NAME="" \
-    MYSQL_CLIENT_CREATE_DATABASE_PASSWORD="" \
-    MYSQL_CLIENT_CREATE_DATABASE_PRIVILEGES="ALL" \
-    MYSQL_CLIENT_CREATE_DATABASE_USER="" \
+    # ---------- Database ENVs ----------
+    DATABASE_HOST_NAME="mariadb" \
+    DATABASE_TYPE='mysql' \
+    DATABASE_PORT_NUMBER="3306" \
+    DATABASE_ROOT_USERNAME="root" \
+    DATABASE_ROOT_PASSWORD="suitesql" \
+    DATABASE_NAME='suitecrm' \
+    DATABASE_CREATE_NEW='false' \
+    DATABASE_CLIENT_CREATE_DATABASE_USER="suitedb" \
+    DATABASE_CLIENT_CREATE_DATABASE_PASSWORD="suitesql" \
+    DATABASE_CLIENT_CREATE_DATABASE_NAME="suitecrm" \
+    DATABASE_CLIENT_CREATE_DATABASE_PRIVILEGES="ALL" \
+    DATABASE_USR_DATA='create' \
+    DATABASE_DROP_TABLES='0' \
+    DATABASE_DEMO_DATA='false' \
+    DATABASE_USER_PRIVILEDGED='true' \
+    # ---------- Suite ENVs ----------
+    # DB; name, user, password should match above
+    SUITECRM_DATABASE_USER="suitedb" \
+    SUITECRM_DATABASE_PASSWORD="suitesql" \
     SUITECRM_DATABASE_NAME="suitecrm" \
-    SUITECRM_DATABASE_PASSWORD="" \
-    SUITECRM_DATABASE_USER="suitecrm" \
     SUITECRM_HOST="127.0.0.1" \
     SUITECRM_HTTP_TIMEOUT="3600" \
     SUITECRM_USERNAME="user" \
@@ -93,12 +107,13 @@ RUN a2ensite suite-vhost.conf \
     && a2enmod ssl \
     && service apache2 restart
 
-# Add the PHP configuration.
-# Add our configuration
+# Add our php.ini configuration.
 COPY suite-php.ini /usr/local/etc/php/conf.d/suite-php.ini
 # Enable a php.ini to override.
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
     && service apache2 restart
+# Add our configuration(s)
+COPY config_si.php /suitecrm/config_si.php
 
 RUN chown -R www-data:www-data /suitecrm \
     && chmod -R 755 /suitecrm \
