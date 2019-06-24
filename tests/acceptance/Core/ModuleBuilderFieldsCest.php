@@ -98,7 +98,7 @@ class ModuleBuilderFieldsCest
         $I->click('.container-close');
 
         // Add field button
-        $I->waitForElementVisible(['name' => 'addfieldbtn']);
+        $I->waitForElementVisible('[name="addfieldbtn"]');
         $I->click(['name' => 'addfieldbtn']);
 
         // Fill in edit field tab
@@ -179,13 +179,14 @@ class ModuleBuilderFieldsCest
         $I->click('.container-close');
 
         // Add field button
-        $I->waitForElementVisible(['name' => 'addfieldbtn']);
+        $I->waitForElementVisible('[name="addfieldbtn"]');
         $I->click(['name' => 'addfieldbtn']);
 
         // Fill in edit field tab
         $I->waitForElementVisible('#type');
         $I->selectOption('#type', 'HTML');
 
+        // Wait for 1 second to allow the field to become interactive.
         $I->wait(1);
         $I->waitForElementVisible('#field_name_id');
         $I->fillField('#field_name_id', 'test_html_field');

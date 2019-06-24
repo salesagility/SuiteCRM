@@ -419,7 +419,7 @@ class PersonModuleCest
         $I->waitForElementVisible('.import-vcard');
 
         $I->attachFile('#vcard_file', $fileName);
-        $I->wait(1);
+        $I->waitForElementVisible('.import-vcard #import_vcard_button');
         $I->click('#import_vcard_button', '.import-vcard');
 
         $detailView->waitForDetailViewVisible();

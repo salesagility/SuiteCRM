@@ -95,7 +95,7 @@ class ActivitiesCest
         $listView->waitForListViewVisible();
 
         // Select record from list view
-        $I->wait(4);
+        $I->wait(3);
         $listView->clickFilterButton();
         $listView->click('Quick Filter');
         $listView->fillField('#name_basic', $callName);
