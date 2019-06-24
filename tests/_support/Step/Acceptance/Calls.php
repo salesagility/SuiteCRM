@@ -28,6 +28,7 @@ class Calls extends \AcceptanceTester
         $Sidebar = new SideBar($this->getScenario());
         $faker = $this->getFaker();
 
+        $I->waitForText('Log Call', null, '.actionmenulink');
         $I->see('Log Call', '.actionmenulink');
         $Sidebar->clickSideBarAction('Log');
         $I->waitForEditViewVisible();
@@ -54,6 +55,7 @@ class Calls extends \AcceptanceTester
         $Sidebar = new SideBar($this->getScenario());
         $faker = $this->getFaker();
 
+        $I->waitForText('Log Call', null, '.actionmenulink');
         $I->see('Log Call', '.actionmenulink');
         $Sidebar->clickSideBarAction('Log');
         $I->waitForEditViewVisible();

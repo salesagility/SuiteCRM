@@ -19,6 +19,7 @@ class DetailView extends Tester
     {
         $I = $this;
 
+        $I->waitForElementVisible('#tab-actions');
         $I->click('ACTIONS', '#tab-actions');
         $I->waitForElementVisible('#tab-actions > .dropdown-menu');
 

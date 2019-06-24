@@ -90,6 +90,7 @@ class ModuleBuilderFieldsCest
         $moduleBuilder->selectModule(\Page\ModuleFields::$PACKAGE_NAME, \Page\ModuleFields::$NAME);
 
         // View Fields button
+        $I->waitForElementVisible(['name' => 'viewfieldsbtn']);
         $I->click(['name' => 'viewfieldsbtn']);
 
         // Close popup
@@ -124,6 +125,7 @@ class ModuleBuilderFieldsCest
         // Add to layout viewlayoutsbtn
         $moduleBuilder->selectModule(\Page\ModuleFields::$PACKAGE_NAME, \Page\ModuleFields::$NAME);
         // View Layouts button
+        $I->waitForElementVisible(['name' => 'viewlayoutsbtn']);
         $I->click(['name' => 'viewlayoutsbtn']);
 
         $moduleBuilder->closePopupSuccess();
@@ -171,6 +173,7 @@ class ModuleBuilderFieldsCest
         $moduleBuilder->selectModule(\Page\ModuleFields::$PACKAGE_NAME, \Page\ModuleFields::$NAME);
 
         // View Fields button
+        $I->waitForElementVisible(['name' => 'viewfieldsbtn']);
         $I->click(['name' => 'viewfieldsbtn']);
 
         // Close popup
@@ -205,6 +208,7 @@ class ModuleBuilderFieldsCest
         // Add to layout viewlayoutsbtn
         $moduleBuilder->selectModule(\Page\ModuleFields::$PACKAGE_NAME, \Page\ModuleFields::$NAME);
         // View Layouts button
+        $I->waitForElementVisible(['name' => 'viewlayoutsbtn']);
         $I->click(['name' => 'viewlayoutsbtn']);
 
         $moduleBuilder->closePopupSuccess();
