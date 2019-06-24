@@ -23,6 +23,12 @@ matrix:
     - name: "PHP 7.3 / MySQL 5.7"
       php: "7.3"
       dist: xenial
+    # Run composer validate to make sure the composer.json and composer.lock are in sync.
+    - name: "composer validate"
+      php: "7.2"
+      dist: xenial
+      before_script: composer install
+      script: composer validate
     - stage: codecoverage
       if: type IN (pull_request) OR branch in (master, develop, hotfix)
       php: "7.0"
