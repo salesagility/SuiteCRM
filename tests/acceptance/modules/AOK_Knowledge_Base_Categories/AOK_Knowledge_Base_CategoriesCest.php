@@ -43,10 +43,6 @@ class AOK_Knowledge_Base_CategoriesCest
     ) {
         $I->wantTo('View the knowledgeBaseCategory module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to knowledgeBaseCategory list-view
         $I->loginAsAdmin();
         $knowledgeBaseCategory->gotoKnowledgeBaseCategories();
@@ -73,10 +69,6 @@ class AOK_Knowledge_Base_CategoriesCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create KnowledgeBaseCategory');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to knowledge base category list-view
         $I->loginAsAdmin();

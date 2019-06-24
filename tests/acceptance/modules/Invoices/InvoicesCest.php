@@ -43,10 +43,6 @@ class InvoicesCest
     ) {
         $I->wantTo('View the invoices module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to invoices list-view
         $I->loginAsAdmin();
         $invoices->gotoInvoices();
@@ -73,10 +69,6 @@ class InvoicesCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create an Invoice');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to invoices list-view
         $I->loginAsAdmin();
@@ -112,10 +104,6 @@ class InvoicesCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create an Invoice');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to invoices list-view
         $I->loginAsAdmin();

@@ -41,10 +41,6 @@ class CalendarCest
     ) {
         $I->wantTo('View the calendar module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to calendar list-view
         $I->loginAsAdmin();
         $calendar->gotoCalendar();

@@ -42,13 +42,9 @@ class jjwg_AreasCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('View the mapsAreas module for testing');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
-        // Navigate to mapsAreas list-view
+        
         $I->loginAsAdmin();
+        // Navigate to mapsAreas list-view
         $mapsAreas->gotoMapsAreas();
         $listView->waitForListViewVisible();
 

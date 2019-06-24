@@ -43,10 +43,6 @@ class CasesCest
     ) {
         $I->wantTo('View the cases module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to cases list-view
         $I->loginAsAdmin();
         $cases->gotoCases();
@@ -75,10 +71,6 @@ class CasesCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a Case');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();

@@ -36,8 +36,6 @@ class UsersCest
     
     public function testEmailSettingsMailAccountAdd(AcceptanceTester $I, UsersTester $Users, WebDriverHelper $webDriverHelper)
     {
-        $instanceUrl = $webDriverHelper->getInstanceURL();
-        $I->amOnUrl($instanceUrl);
         $I->loginAsAdmin();
         $Users->gotoProfile();
         $I->see('User Profile', '.panel-heading');
@@ -64,10 +62,6 @@ class UsersCest
         WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('View the collapsed subpanel hints on Accounts');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to Users list-view
         $I->loginAsAdmin();
