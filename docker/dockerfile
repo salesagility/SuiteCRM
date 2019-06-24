@@ -17,7 +17,7 @@ ENV ALLOW_EMPTY_PASSWORD="yes" \
     APACHE_HTTP_PORT_NUMBER="80" \
     # ---------- Database ENVs ----------
     DATABASE_HOST_NAME="mariadb" \
-    DATABASE_TYPE='mysql' \
+    DATABASE_TYPE='mysqli' \
     DATABASE_PORT_NUMBER="3306" \
     DATABASE_ROOT_USERNAME="root" \
     DATABASE_ROOT_PASSWORD="suitesql" \
