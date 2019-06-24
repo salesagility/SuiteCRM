@@ -65,7 +65,7 @@ RUN apt update && apt upgrade -y && apt install -y \
     wget \
     ca-certificates \
     xz-utils \
-    php7.2-mysql \
+    php7.3-mysql \
   # mod_ssl \
     && docker-php-ext-install -j$(nproc) dom \
     && docker-php-ext-install -j$(nproc) intl \
