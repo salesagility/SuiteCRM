@@ -24,8 +24,6 @@ class ExceptionTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
     }
 
-
-
     public function testGetDetail()
     {
         $this->assertEquals(
