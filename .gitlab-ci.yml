@@ -45,7 +45,7 @@ build-dev-image:
     - export BUILD_FROM_REPO=$CI_PROJECT_URL
     - echo $BUILD_FROM_BRANCH
     - echo $BUILD_FROM_REPO
-    - docker-compose -f ./docker/docker-compose.yml up -d --force-recreate --always-recreate-deps
+    - docker-compose -f ./docker/docker-compose.yml up -d --build --force-recreate --always-recreate-deps
 
 deploy_prod:
   stage: deploy
