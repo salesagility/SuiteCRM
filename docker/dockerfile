@@ -65,13 +65,13 @@ RUN apt update && apt upgrade -y && apt install -y \
     wget \
     ca-certificates \
     xz-utils \
-    php-mysql \
   # mod_ssl \
     && docker-php-ext-install -j$(nproc) dom \
     && docker-php-ext-install -j$(nproc) intl \
     && docker-php-ext-install -j$(nproc) zip \
     && docker-php-ext-install -j$(nproc) curl \
     && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-install -j$(nproc) mysqli \
     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install -j$(nproc) imap \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
