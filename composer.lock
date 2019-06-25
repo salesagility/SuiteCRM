@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9057f3bf35e168f0c28cc58292dcfd93",
+    "content-hash": "34f5630a85071c3fd010b84ad81cc00c",
     "packages": [
         {
             "name": "consolidation/annotated-command",
@@ -1098,7 +1098,7 @@
                 {
                     "name": "Luís Otávio Cobucci Oblonczyk",
                     "email": "lcobucci@gmail.com",
-                    "role": "developer"
+                    "role": "Developer"
                 }
             ],
             "description": "A simple library to work with JSON Web Token and JSON Web Signature",
@@ -5142,7 +5142,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.5.9",
+        "php": ">= 5.6.0",
         "ext-curl": "*",
         "ext-gd": "*",
         "ext-json": "*",
@@ -5151,6 +5151,6 @@
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "5.5.9"
+        "php": "5.6.0"
     }
 }
