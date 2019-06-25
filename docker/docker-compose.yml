@@ -3,9 +3,11 @@ services:
   mariadb:
     image: mariadb:latest
     environment:
-      - MYSQL_USER=suitecrm
+      - MYSQL_ROOT_PASSWORD=suitesqladmin
       - MYSQL_DATABASE=suitecrm
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_USER=suitecrm
+      - MYSQL_PASSWORD=${SUITE_MYSQL_PASSWORD}
+      - MYSQL_ALLOW_EMPTY_PASSWORD=no
     volumes:
       # We'll need to point this to the directory of mariaDB
       # according to this --

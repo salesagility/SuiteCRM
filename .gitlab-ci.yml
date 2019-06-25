@@ -43,8 +43,9 @@ build-dev-image:
     
     - export BUILD_FROM_BRANCH=$CI_COMMIT_REF_NAME
     - export BUILD_FROM_REPO=$CI_PROJECT_URL
-    - echo $BUILD_FROM_BRANCH
-    - echo $BUILD_FROM_REPO
+    - export SUITE_MYSQL_PASSWORD=changeme
+    - echo "MYSQL User Password- " $SUITE_MYSQL_PASSWORD
+    - echo $BUILD_FROM_REPO/$BUILD_FROM_BRANCH
     - docker-compose -f ./docker/docker-compose.yml up -d --build --force-recreate --always-recreate-deps
 
 deploy_prod:
