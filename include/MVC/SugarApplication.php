@@ -795,8 +795,8 @@ class SugarApplication
         $secure = false,
         $httponly = true
     ) {
-        if(isSSL()){
-	        $secure = true;
+        if (isSSL()) {
+            $secure = true;
         }
         if (is_null($domain)) {
             if (isset($_SERVER["HTTP_HOST"])) {

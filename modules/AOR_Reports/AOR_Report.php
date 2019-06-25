@@ -883,7 +883,7 @@ class AOR_Report extends Basic
 
     private function getModuleFieldByGroupValue($beanList, $group_value)
     {
-		global $app_list_strings;
+        global $app_list_strings;
         $moduleFieldByGroupValues = array();
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND group_display = 1 AND deleted = 0 ORDER BY field_order ASC";
@@ -1127,14 +1127,27 @@ class AOR_Report extends Basic
                     if ($att['function'] != '' || $att['format'] != '') {
                         $csv .= $this->encloseForCSV($row[$name]);
                     } else {
-                        $t = getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name], '',
-                            $currency_id);
+                        $t = getModuleField(
+                            $att['module'],
+                            $att['field'],
+                            $att['field'],
+                            'DetailView',
+                            $row[$name],
+                            '',
+                            $currency_id
+                        );
                         if (false !== strpos($t, 'checkbox')) {
                             $csv .= $row[$name];
                         } else {
-                            $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'],
+                            $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField(
+                                $att['module'],
                                 $att['field'],
-                                'DetailView', $row[$name], '', $currency_id))));
+                                $att['field'],
+                                'DetailView',
+                                $row[$name],
+                                '',
+                                $currency_id
+                            ))));
                         }
                     }
                     $csv .= $delimiter;
