@@ -47,6 +47,7 @@
   "require-dev": {
     "codeception/codeception": "^2.0",
     "flow/jsonpath": "^0.4",
+    "friendsofphp/php-cs-fixer": "2.14",
     "fzaninotto/faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
     "leafo/scssphp": "^0.7.7",
