@@ -26,6 +26,12 @@ matrix:
       dist: xenial
       before_script: composer install
       script: composer validate
+    # Run php-cs-fixer to lint the codebase.
+    - name: "Lint"
+      php: "7.2"
+      dist: xenial
+      before_script: composer install
+      script: ./vendor/bin/robo style:phpcsfixer-dry-run
     - stage: codecoverage
       if: type IN (pull_request) OR branch in (master, develop, hotfix)
       php: "7.0"
