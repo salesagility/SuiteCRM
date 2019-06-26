@@ -258,6 +258,7 @@ class ModuleBuilderFieldsCest
         $moduleBuilder->selectModule(\Page\ModuleFields::$PACKAGE_NAME, \Page\ModuleFields::$NAME);
 
         // View Fields button
+        $I->waitForElementVisible(['name' => 'viewfieldsbtn']);
         $I->click(['name' => 'viewfieldsbtn']);
 
         // Close popup
