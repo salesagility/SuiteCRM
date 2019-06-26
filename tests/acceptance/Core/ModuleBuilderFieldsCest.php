@@ -291,6 +291,7 @@ class ModuleBuilderFieldsCest
         // Add to layout viewlayoutsbtn
         $moduleBuilder->selectModule(\Page\ModuleFields::$PACKAGE_NAME, \Page\ModuleFields::$NAME);
         // View Layouts button
+        $I->waitForElementVisible(['name' => 'viewlayoutsbtn']);
         $I->click(['name' => 'viewlayoutsbtn']);
 
         $moduleBuilder->closePopupSuccess();
