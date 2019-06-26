@@ -45,7 +45,7 @@ class TargetListsCest
 
         // Navigate to targets list-view
         $I->loginAsAdmin();
-        $targetList->gotoTargetList();
+        $I->visitPage('ProspectLists', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Targets', '.module-title-text');
