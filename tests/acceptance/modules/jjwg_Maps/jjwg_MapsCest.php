@@ -45,7 +45,7 @@ class jjwg_MapsCest
 
         // Navigate to maps list-view
         $I->loginAsAdmin();
-        $maps->gotoMaps();
+        $I->visitPage('jjwg_Maps', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Maps', '.module-title-text');
@@ -83,7 +83,7 @@ class jjwg_MapsCest
         $accounts->createAccount($account_name);
 
         // Navigate to maps list-view
-        $map->gotoMaps();
+        $I->visitPage('jjwg_Maps', 'index');
         $listView->waitForListViewVisible();
 
         // Create map
