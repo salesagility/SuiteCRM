@@ -45,7 +45,7 @@ class AOS_Product_CategoriesCest
 
         // Navigate to productCategories list-view
         $I->loginAsAdmin();
-        $productCategories->gotoProductCategories();
+        $I->visitPage('AOS_Product_Categories', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Products - Categories', '.module-title-text');
@@ -72,7 +72,7 @@ class AOS_Product_CategoriesCest
 
         // Navigate to product category list-view
         $I->loginAsAdmin();
-        $productCategory->gotoProductCategories();
+        $I->visitPage('AOS_Product_Categories', 'index');
         $listView->waitForListViewVisible();
 
         // Create product category

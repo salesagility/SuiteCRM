@@ -45,7 +45,7 @@ class EventsCest
 
         // Navigate to events list-view
         $I->loginAsAdmin();
-        $events->gotoEvents();
+        $I->visitPage('FP_events', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Events', '.module-title-text');
@@ -83,7 +83,7 @@ class EventsCest
         $location->createEventLocation($location_name);
 
         // Navigate to events list-view
-        $event->gotoEvents();
+        $I->visitPage('FP_events', 'index');
         $listView->waitForListViewVisible();
 
         // Create event

@@ -45,7 +45,7 @@ class ProductsCest
 
         // Navigate to products list-view
         $I->loginAsAdmin();
-        $products->gotoProducts();
+        $I->visitPage('AOS_Products', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Products', '.module-title-text');
@@ -72,7 +72,7 @@ class ProductsCest
 
         // Navigate to products list-view
         $I->loginAsAdmin();
-        $product->gotoProducts();
+        $I->visitPage('AOS_Products', 'index');
         $listView->waitForListViewVisible();
 
         // Create product

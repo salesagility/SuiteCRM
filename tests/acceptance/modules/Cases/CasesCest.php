@@ -45,7 +45,7 @@ class CasesCest
 
         // Navigate to cases list-view
         $I->loginAsAdmin();
-        $cases->gotoCases();
+        $I->visitPage('Cases', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Cases', '.module-title-text');
@@ -83,7 +83,7 @@ class CasesCest
         $account->createAccount($account_name);
 
         // Navigate to cases list-view
-        $cases->gotoCases();
+        $I->visitPage('Cases', 'index');
         $listView->waitForListViewVisible();
 
         // Create case
