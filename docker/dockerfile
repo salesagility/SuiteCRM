@@ -23,14 +23,14 @@ ENV ALLOW_EMPTY_PASSWORD="yes" \
     DATABASE_ROOT_PASSWORD="suitesqladmin" \
     DATABASE_NAME='suitecrm' \
     DATABASE_CREATE_NEW='true' \
-    DATABASE_CLIENT_CREATE_DATABASE_USER="suitedb" \
-    DATABASE_CLIENT_CREATE_DATABASE_PASSWORD="suitesql" \
-    DATABASE_CLIENT_CREATE_DATABASE_NAME="suitecrm" \
-    DATABASE_CLIENT_CREATE_DATABASE_PRIVILEGES="ALL" \
     DATABASE_USR_DATA='create' \
     DATABASE_DROP_TABLES='0' \
     DATABASE_DEMO_DATA='true' \
     DATABASE_USER_PRIVILEDGED='true' \
+    DATABASE_CLIENT_CREATE_DATABASE_USER="suitedb" \
+    DATABASE_CLIENT_CREATE_DATABASE_PASSWORD="suitesql" \
+    DATABASE_CLIENT_CREATE_DATABASE_NAME="suitecrm" \
+    DATABASE_CLIENT_CREATE_DATABASE_PRIVILEGES="ALL" \
     # ---------- Suite ENVs ----------
     # DB; name, user, password should match above
     SUITECRM_DATABASE_USER="suitedb" \
@@ -119,6 +119,7 @@ RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
     && service apache2 restart
 # Add our configuration(s)
 COPY config_si.php /suitecrm/config_si.php
+# COPY config.php /suitecrm/config.php
 
 RUN chown -R www-data:www-data /suitecrm \
     && chmod -R 755 /suitecrm \
@@ -127,8 +128,10 @@ RUN chown -R www-data:www-data /suitecrm \
     && chmod -R 775 cache custom modules themes data upload
 
 # Start the SILENT install of SuiteCRM
+# RUN cd /suitecrm \
+    # && php -B "\$_REQUEST = array('goto' => 'SilentInstall', 'cli' => true);" -F install.php
 RUN cd /suitecrm \
-    && php -B "\$_REQUEST = array('goto' => 'SilentInstall');" -F install.php
+    && php -r "\$_SERVER['HTTP_HOST'] = 'localhost'; \$_SERVER['REQUEST_URI'] = 'install.php';\$_REQUEST = array('goto' => 'SilentInstall', 'cli' => true);require_once 'install.php';";
 
 # Expose our appications ports
 EXPOSE 80 443
