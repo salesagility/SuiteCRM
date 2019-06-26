@@ -45,7 +45,7 @@ class jjwg_AreasCest
         
         $I->loginAsAdmin();
         // Navigate to mapsAreas list-view
-        $mapsAreas->gotoMapsAreas();
+        $I->visitPage('jjwg_Areas', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Maps - Areas', '.module-title-text');

@@ -45,7 +45,7 @@ class LocationsCest
 
         // Navigate to locations list-view
         $I->loginAsAdmin();
-        $locations->gotoLocations();
+        $I->visitPage('FP_Event_Locations', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Locations', '.module-title-text');
@@ -72,7 +72,7 @@ class LocationsCest
 
         // Navigate to locations list-view
         $I->loginAsAdmin();
-        $location->gotoLocations();
+        $I->visitPage('FP_Event_Locations', 'index');
         $listView->waitForListViewVisible();
 
         // Create location

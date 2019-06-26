@@ -74,7 +74,7 @@ class EventsCest
 
         // Navigate to locations list-view
         $I->loginAsAdmin();
-        $location->gotoLocations();
+        $I->visitPage('FP_Event_Locations', 'index');
         $listView->waitForListViewVisible();
 
         // Create location
@@ -96,7 +96,7 @@ class EventsCest
         $listView->waitForListViewVisible();
 
         // Delete location
-        $location->gotoLocations();
+        $I->visitPage('FP_Event_Locations', 'index');
         $listView->waitForListViewVisible();
         $listView->clickFilterButton();
         $I->fillField('#name_basic', $location_name);

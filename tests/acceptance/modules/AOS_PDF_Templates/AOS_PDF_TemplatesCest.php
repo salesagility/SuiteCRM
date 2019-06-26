@@ -45,7 +45,7 @@ class AOS_PDF_TemplatesCest
 
         // Navigate to pdfTemplates list-view
         $I->loginAsAdmin();
-        $pdfTemplates->gotoPDFTemplates();
+        $I->visitPage('AOS_PDF_Templates', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('PDF - Templates', '.module-title-text');
@@ -72,7 +72,7 @@ class AOS_PDF_TemplatesCest
 
         // Navigate to PDF Template list-view
         $I->loginAsAdmin();
-        $pdfTemplate->gotoPDFTemplates();
+        $I->visitPage('AOS_PDF_Templates', 'index');
         $listView->waitForListViewVisible();
 
         // Create PDF Template

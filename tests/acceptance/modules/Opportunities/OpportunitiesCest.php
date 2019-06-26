@@ -45,7 +45,7 @@ class OpportunitiesCest
 
         // Navigate to opportunities list-view
         $I->loginAsAdmin();
-        $opportunities->gotoOpportunities();
+        $I->visitPage('Opportunities', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Opportunities', '.module-title-text');
@@ -83,7 +83,7 @@ class OpportunitiesCest
         $account->createAccount($account_name);
 
         // Navigate to opportunities list-view
-        $opportunities->gotoOpportunities();
+        $I->visitPage('Opportunities', 'index');
         $listView->waitForListViewVisible();
 
         // Create opportunity
