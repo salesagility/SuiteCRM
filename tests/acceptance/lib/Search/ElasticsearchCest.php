@@ -74,6 +74,7 @@ class ElasticsearchCest
         $I->selectOption('#search-engine', 'Elasticsearch Engine');
         $I->click('Save');
 
+        $I->waitForElementVisible('#elastic_search');
         $I->click('#elastic_search');
         $I->checkOption('#es-enabled');
         $I->fillField('#es-host', $helper->getElasticSearchHost());
