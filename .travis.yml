@@ -5,21 +5,18 @@ sudo: required
 matrix:
   fast_finish: true
   include:
-    - name: "PHP 5.5 / MySQL 5.6"
-      php: "5.5"
-      dist: trusty
-    - name: "PHP 5.6 / MySQL 5.6"
-      php: "5.6"
-      dist: trusty
-    - name: "PHP 7.0 / MySQL 5.7"
-      php: "7.0"
-      dist: xenial
-    - name: "PHP 7.1 / MySQL 5.7"
-      php: "7.1"
-      dist: xenial
-    - name: "PHP 7.2 / MySQL 5.7"
+    - name: "StateChecker PHPUnit"
       php: "7.2"
       dist: xenial
+      script:
+        - echo "using install wizard"
+        - ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter
+        - ./build/push_output.sh
+        # Run the unit tests
+        - sudo chmod -R 777 .
+        - echo "\$sugar_config['developerMode'] = true;" >> config_override.php
+        - echo "\$sugar_config['state_checker']['test_state_check_mode'] = 2;" >> config_override.php
+        - ./vendor/bin/phpunit --colors --configuration ./tests/phpunit.xml.dist ./tests/unit/phpunit
     - name: "PHP 7.3 / MySQL 5.7"
       php: "7.3"
       dist: xenial
