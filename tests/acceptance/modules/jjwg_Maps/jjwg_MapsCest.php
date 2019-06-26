@@ -74,7 +74,7 @@ class jjwg_MapsCest
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -98,7 +98,7 @@ class jjwg_MapsCest
         $listView->waitForListViewVisible();
 
         // Delete account
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
         $I->wait(5);
         $listView->clickFilterButton();

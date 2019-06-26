@@ -51,7 +51,7 @@ class HistoryCest
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -68,7 +68,7 @@ class HistoryCest
         $calls->createCallRelateModule($callName, $account_name, "Account", array("status" => "Held"));
 
         // Navigate to the Account's Detail View and confirm the due date contains data
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Select record from list view

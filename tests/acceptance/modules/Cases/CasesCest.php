@@ -74,7 +74,7 @@ class CasesCest
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $account->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -96,7 +96,7 @@ class CasesCest
         $listView->waitForListViewVisible();
 
         // Delete account
-        $account->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
         $listView->clickFilterButton();
         $I->fillField('#name_basic', $account_name);

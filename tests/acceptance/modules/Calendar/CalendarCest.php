@@ -43,7 +43,7 @@ class CalendarCest
 
         // Navigate to calendar list-view
         $I->loginAsAdmin();
-        $calendar->gotoCalendar();
+        $I->visitPage('Calendar', 'index');
 
         $I->see('Calendar', '.moduleTitle');
     }
