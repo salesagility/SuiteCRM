@@ -22,7 +22,7 @@ class LoginCest
     }
 
     // tests
-    public function testScenarioLoginAsAdministrator(AcceptanceTester $I, \Helper\WebDriverHelper $webDriverHelper)
+    public function testScenarioLoginAsAdministrator(AcceptanceTester $I)
     {
         $I->wantTo('Login as an administrator');
         // Login as Administrator

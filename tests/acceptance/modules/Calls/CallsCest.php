@@ -29,15 +29,13 @@ class CallsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Calls $calls
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the calls module.
      */
     public function testScenarioViewCallsModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Calls $calls,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Calls $calls
     ) {
         $I->wantTo('View the calls module for testing');
 
@@ -55,7 +53,6 @@ class CallsCest
      * @param \Step\Acceptance\NavigationBar $NavigationBar
      * @param \Step\Acceptance\Calls $calls
      * @param \Step\Acceptance\DetailView $detailView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to verify the date field of a call
      */
@@ -64,8 +61,7 @@ class CallsCest
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\NavigationBar $NavigationBar,
         \Step\Acceptance\Calls $calls,
-        \Step\Acceptance\DetailView $detailView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Create a call');
 

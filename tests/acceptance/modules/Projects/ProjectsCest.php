@@ -31,15 +31,13 @@ class ProjectsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Projects $projects
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the projects module.
      */
     public function testScenarioViewProjectsModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Projects $projects,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Projects $projects
     ) {
         $I->wantTo('View the projects module for testing');
 
@@ -56,7 +54,6 @@ class ProjectsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Projects $project
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a project so that I can test
      * the standard fields.
@@ -65,8 +62,7 @@ class ProjectsCest
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Projects $project,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Projects $project
     ) {
         $I->wantTo('Create a Project');
 

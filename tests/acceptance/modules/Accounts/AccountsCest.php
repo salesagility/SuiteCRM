@@ -31,15 +31,13 @@ class AccountsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Accounts $accounts
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the accounts module.
      */
     public function testScenarioViewAccountsModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Accounts $accounts,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Accounts $accounts
     ) {
         $I->wantTo('View the accounts module for testing');
 
@@ -56,7 +54,6 @@ class AccountsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Accounts $accounts
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a report with the reports module so that I can test
      * the standard fields.
@@ -65,8 +62,7 @@ class AccountsCest
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Accounts $accounts,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Accounts $accounts
     ) {
         $I->wantTo('Create an Account');
 
@@ -90,15 +86,13 @@ class AccountsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Accounts $accounts
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to inline edit a field on the list-view
      */
     public function testScenarioInlineEditListView(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Accounts $accounts,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Accounts $accounts
     ) {
         $I->wantTo('Inline edit an account on the list-view');
 
@@ -126,8 +120,7 @@ class AccountsCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\EditView $editView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Accounts $accounts,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Accounts $accounts
     ) {
         $I->wantTo('Create an Account');
 

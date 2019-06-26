@@ -31,15 +31,13 @@ class ContractsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Contracts $contracts
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the contracts module.
      */
     public function testScenarioViewContractsModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Contracts $contracts,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Contracts $contracts
     ) {
         $I->wantTo('View the contracts module for testing');
 
@@ -57,7 +55,6 @@ class ContractsCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Contracts $contract
      * @param \Step\Acceptance\Accounts $account
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a contract so that I can test
      * the standard fields.
@@ -67,8 +64,7 @@ class ContractsCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Contracts $contract,
-        \Step\Acceptance\Accounts $account,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Accounts $account
     ) {
         $I->wantTo('Create a Contract');
 
