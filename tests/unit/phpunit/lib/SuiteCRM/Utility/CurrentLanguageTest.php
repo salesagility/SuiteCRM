@@ -22,8 +22,6 @@ class CurrentLanguageTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
     }
 
-
-
     public function testGetCurrentLanguage()
     {
         $state = new SuiteCRM\StateSaver();

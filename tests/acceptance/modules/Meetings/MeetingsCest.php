@@ -43,10 +43,6 @@ class MeetingsCest
     ) {
         $I->wantTo('View the meetings module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to meetings list-view
         $I->loginAsAdmin();
         $meetings->gotoMeetings();
@@ -73,10 +69,6 @@ class MeetingsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a meeting');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to meetings list-view
         $I->loginAsAdmin();
@@ -111,10 +103,6 @@ class MeetingsCest
     ) {
         $I->wantTo('Create a meeting');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to meetings list-view
         $I->loginAsAdmin();
         $meeting->gotoMeetings();
@@ -130,7 +118,7 @@ class MeetingsCest
         $I->selectOption('#date_start_hours', '01');
         $I->selectOption('#date_start_minutes', '00');
         $I->doubleClick('#inlineEditSaveButton');
-        $I->wait(3);
+        $I->waitForText('01/01/2000 01:00');
         $I->see('01/01/2000 01:00');
 
         // Delete meeting

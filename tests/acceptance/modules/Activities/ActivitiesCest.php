@@ -49,10 +49,6 @@ class ActivitiesCest
     ) {
         $I->wantTo('See the due date field on Account Activities subpanel');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
         $accounts->gotoAccounts();
@@ -84,8 +80,9 @@ class ActivitiesCest
         $listView->clickNameLink($account_name);
 
         //Click on Activites subpanel
+        $I->waitForElementVisible(['id'=>'subpanel_title_activities']);
         $I->click(['id'=>'subpanel_title_activities']);
-        $I->waitForElementVisible('#Activities_createtask_button', 60);
+        $I->waitForElementVisible('#Activities_createtask_button');
         $I->expect('the due date is visible');
         $I->seeInSource('01/19/2038');
 
@@ -99,7 +96,7 @@ class ActivitiesCest
         $listView->waitForListViewVisible();
 
         // Select record from list view
-        $I->wait(4);
+        $I->wait(3);
         $listView->clickFilterButton();
         $listView->click('Quick Filter');
         $listView->fillField('#name_basic', $callName);

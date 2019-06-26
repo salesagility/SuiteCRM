@@ -886,6 +886,7 @@ class AOR_Report extends Basic
 
     private function getModuleFieldByGroupValue($beanList, $group_value)
     {
+		global $app_list_strings;
         $moduleFieldByGroupValues = array();
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND group_display = 1 AND deleted = 0 ORDER BY field_order ASC";
@@ -903,7 +904,7 @@ class AOR_Report extends Basic
                     $related_bean->retrieve($group_value);
                     $moduleFieldByGroupValues[] = ($related_bean instanceof Person) ? $related_bean->full_name : $related_bean->name;
                 } else {
-                    $moduleFieldByGroupValues[] = $group_value;
+                    $moduleFieldByGroupValues[] = $app_list_strings[$field_def['options']][$group_value];
                 }
                 continue;
                 // End

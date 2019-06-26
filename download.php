@@ -227,8 +227,9 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             $name = str_replace("+", "_", $name);
         }
 
-        header("Pragma: public");
-        header("Cache-Control: maxage=1, post-check=0, pre-check=0");
+        header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+        header('Cache-Control: post-check=0, pre-check=0', false);
+        header('Pragma: no-cache');
         if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == "SugarFieldImage")) {
             $mime = getimagesize($download_location);
             if (!empty($mime)) {

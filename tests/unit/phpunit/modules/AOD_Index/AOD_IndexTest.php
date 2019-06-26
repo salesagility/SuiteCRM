@@ -100,11 +100,6 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcommit()
     {
         self::markTestIncomplete('File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
         
         $aod_index = new AOD_Index();
         $aod_index->id = 1;
@@ -117,8 +112,6 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testisModuleSearchable()
@@ -161,12 +154,6 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
         
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $aod_index = new AOD_Index();
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
@@ -178,8 +165,6 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testgetIndexableModules()

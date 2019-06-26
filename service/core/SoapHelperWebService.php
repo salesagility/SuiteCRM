@@ -1220,7 +1220,9 @@ class SoapHelperWebServices
             $key = substr(md5($key), 0, 24);
             $iv = "password";
             $GLOBALS['log']->info('End: SoapHelperWebServices->decrypt_string');
-            return openssl_decrypt(pack("H*", $buffer), 'des-ede3-cbc', $key, OPENSSL_NO_PADDING, $iv);
+            $decrypted = openssl_decrypt(pack("H*", $buffer), 'des-ede3-cbc', $key, OPENSSL_RAW_DATA|OPENSSL_ZERO_PADDING, $iv);
+            $decrypted = str_replace("\0", "", $decrypted);
+            return $decrypted;
         }
 
         $GLOBALS['log']->info('End: SoapHelperWebServices->decrypt_string');

@@ -43,10 +43,6 @@ class AOS_Product_CategoriesCest
     ) {
         $I->wantTo('View the productCategories module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to productCategories list-view
         $I->loginAsAdmin();
         $productCategories->gotoProductCategories();
@@ -73,10 +69,6 @@ class AOS_Product_CategoriesCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a product category');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to product category list-view
         $I->loginAsAdmin();

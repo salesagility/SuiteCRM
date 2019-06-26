@@ -43,10 +43,6 @@ class AOS_PDF_TemplatesCest
     ) {
         $I->wantTo('View the pdfTemplates module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to pdfTemplates list-view
         $I->loginAsAdmin();
         $pdfTemplates->gotoPDFTemplates();
@@ -73,10 +69,6 @@ class AOS_PDF_TemplatesCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a PDF Template');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to PDF Template list-view
         $I->loginAsAdmin();

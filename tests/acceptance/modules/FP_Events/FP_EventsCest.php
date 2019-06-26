@@ -43,10 +43,6 @@ class EventsCest
     ) {
         $I->wantTo('View the events module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to events list-view
         $I->loginAsAdmin();
         $events->gotoEvents();
@@ -75,10 +71,6 @@ class EventsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create an Event');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to locations list-view
         $I->loginAsAdmin();

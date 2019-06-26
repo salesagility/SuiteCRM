@@ -43,10 +43,6 @@ class jjwg_Address_CacheCest
     ) {
         $I->wantTo('View the mapsAddressCache module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to mapsAddressCache list-view
         $I->loginAsAdmin();
         $mapsAddressCache->gotoMapsAddressCache();
@@ -73,10 +69,6 @@ class jjwg_Address_CacheCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create maps address cache');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to maps address cache list-view
         $I->loginAsAdmin();

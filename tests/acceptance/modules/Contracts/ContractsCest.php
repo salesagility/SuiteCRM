@@ -43,10 +43,6 @@ class ContractsCest
     ) {
         $I->wantTo('View the contracts module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to contracts list-view
         $I->loginAsAdmin();
         $contracts->gotoContracts();
@@ -75,10 +71,6 @@ class ContractsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a Contract');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();

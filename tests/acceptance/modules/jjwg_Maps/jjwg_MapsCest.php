@@ -43,10 +43,6 @@ class jjwg_MapsCest
     ) {
         $I->wantTo('View the maps module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to maps list-view
         $I->loginAsAdmin();
         $maps->gotoMaps();
@@ -76,10 +72,6 @@ class jjwg_MapsCest
     ) {
         $I->wantTo('Create a Map');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
         $accounts->gotoAccounts();
@@ -108,7 +100,7 @@ class jjwg_MapsCest
         // Delete account
         $accounts->gotoAccounts();
         $listView->waitForListViewVisible();
-        $I->wait(10);
+        $I->wait(5);
         $listView->clickFilterButton();
         $I->fillField('#name_basic', $account_name);
         $I->click('#search_form_submit');

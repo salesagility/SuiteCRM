@@ -43,10 +43,6 @@ class AccountsCest
     ) {
         $I->wantTo('View the accounts module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
         $accounts->gotoAccounts();
@@ -74,9 +70,6 @@ class AccountsCest
     ) {
         $I->wantTo('Create an Account');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();
@@ -109,10 +102,6 @@ class AccountsCest
     ) {
         $I->wantTo('Inline edit an account on the list-view');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
         $accounts->gotoAccounts();
@@ -142,10 +131,6 @@ class AccountsCest
     ) {
         $I->wantTo('Create an Account');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
         $accounts->gotoAccounts();
@@ -158,11 +143,12 @@ class AccountsCest
 
         // Click on Member Organizations subpanel
         $I->click(['id' => 'subpanel_title_accounts']);
-        $I->waitForElementVisible('#member_accounts_create_button', 60);
+        $I->waitForElementVisible('#member_accounts_create_button');
 
         // Add child account
         $accountName = 'Test_' . $this->fakeData->company();
         $I->click('#member_accounts_create_button');
+        $I->waitForElementVisible('#Accounts_subpanel_full_form_button');
         $I->click('#Accounts_subpanel_full_form_button');
         $editView->waitForEditViewVisible();
         $I->fillfield('#name', $accountName);

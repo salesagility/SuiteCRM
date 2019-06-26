@@ -658,6 +658,42 @@ class EmailsController extends SugarController
     }
 
     /**
+     * @throws SugarControllerException
+     */
+    public function action_DeleteFromImap()
+    {
+        $uid = $_REQUEST['uid'];
+        $db = DBManagerFactory::getInstance();
+
+        if (!empty($_REQUEST['inbound_email_record'])) {
+            $emailID = $_REQUEST['inbound_email_record'];
+        } elseif (!empty($_REQUEST['record'])) {
+            $emailID = (new Email())->retrieve($_REQUEST['record']);
+        } else {
+            throw new SugarControllerException('No Inbound Email record in request');
+        }
+
+        $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($emailID));
+
+        if (is_array($uid)) {
+            $uid = implode(',', $uid);
+            $this->view = 'ajax';
+        }
+
+        if (isset($uid)) {
+            $inboundEmail->deleteMessageOnMailServer($uid);
+        } else {
+            LoggerManager::getLogger()->fatal('EmailsController::action_DeleteFromImap() missing uid');
+        }
+
+        if ($this->view === 'ajax') {
+            echo json_encode(['response' => true]);
+        } else {
+            header('location:index.php?module=Emails&action=index');
+        }
+    }
+
+    /**
      * @param array $request
      * @throws SugarControllerException
      */

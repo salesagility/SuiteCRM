@@ -42,11 +42,6 @@ class AM_Project_TemplatesCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('View the projectTemplates module for testing');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to projectTemplates list-view
         $I->loginAsAdmin();
         $projectTemplates->gotoProjectTemplates();
@@ -73,10 +68,6 @@ class AM_Project_TemplatesCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a project template');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to project templates list-view
         $I->loginAsAdmin();
