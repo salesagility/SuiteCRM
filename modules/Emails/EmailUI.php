@@ -3205,14 +3205,21 @@ eoq;
         $ieAccountsFull = $ie->retrieveAllByGroupId($current_user->id);
         $ieAccountsShowOptionsMeta = array();
         $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
-
-        $defaultIEAccount = $ie->getUsersDefaultOutboundServerId($current_user);
+        $defaultIEAccount = (new SugarFolder())->getUsersDefaultOutboundServerId($current_user);
 
         foreach ($ieAccountsFull as $k => $v) {
-            $selected = (!empty($showFolders) && in_array($v->id, $showFolders)) ? true : false;
-            $default = ($defaultIEAccount == $v->id) ? true : false;
-            $has_groupfolder = !empty($v->groupfolder_id) ? true : false;
-            $type = ($v->is_personal) ? $mod_strings['LBL_MAILBOX_TYPE_PERSONAL'] : $mod_strings['LBL_MAILBOX_TYPE_GROUP'];
+            $default = $defaultIEAccount == $v->id;
+            $has_groupfolder = !empty($v->groupfolder_id);
+            $type = $v->is_personal ? $mod_strings['LBL_MAILBOX_TYPE_PERSONAL'] : $mod_strings['LBL_MAILBOX_TYPE_GROUP'];
+
+            $personalSelected = (!empty($showFolders) && in_array($v->id, $showFolders, true));
+            $allowOutboundGroupUsage = $v->get_stored_options('allow_outbound_group_usage', false);
+            $selected = $personalSelected || $allowOutboundGroupUsage  || is_admin($current_user);
+
+            if (!$selected) {
+                LoggerManager::getLogger()->debug("Inbound Email {$v->name}, not selected and will not be available for selection within compose UI.");
+                continue;
+            }
 
             $ieAccountsShowOptionsMeta[] = array(
                 "id" => $v->id,
