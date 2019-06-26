@@ -49,6 +49,7 @@ class HomeCest
         $detailView->clickActionMenuItem('Add Dashlets');
         $I->waitForElementVisible('#chartCategory');
         $I->click('#chartCategory');
+        $I->waitForText('All Opportunities By Lead Source By Outcome');
         $I->click('All Opportunities By Lead Source By Outcome');
         $I->click('Close');
         $dashboard->waitForDashboardVisible();
