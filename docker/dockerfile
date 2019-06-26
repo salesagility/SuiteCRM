@@ -20,16 +20,16 @@ ENV ALLOW_EMPTY_PASSWORD="yes" \
     DATABASE_TYPE='mysqli' \
     DATABASE_PORT_NUMBER="3306" \
     DATABASE_ROOT_USERNAME="root" \
-    DATABASE_ROOT_PASSWORD="suitesql" \
+    DATABASE_ROOT_PASSWORD="suitesqladmin" \
     DATABASE_NAME='suitecrm' \
-    DATABASE_CREATE_NEW='false' \
+    DATABASE_CREATE_NEW='true' \
     DATABASE_CLIENT_CREATE_DATABASE_USER="suitedb" \
     DATABASE_CLIENT_CREATE_DATABASE_PASSWORD="suitesql" \
     DATABASE_CLIENT_CREATE_DATABASE_NAME="suitecrm" \
     DATABASE_CLIENT_CREATE_DATABASE_PRIVILEGES="ALL" \
     DATABASE_USR_DATA='create' \
     DATABASE_DROP_TABLES='0' \
-    DATABASE_DEMO_DATA='false' \
+    DATABASE_DEMO_DATA='true' \
     DATABASE_USER_PRIVILEDGED='true' \
     # ---------- Suite ENVs ----------
     # DB; name, user, password should match above
