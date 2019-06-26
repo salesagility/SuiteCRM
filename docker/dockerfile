@@ -130,8 +130,8 @@ RUN chown -R www-data:www-data /suitecrm \
 # Start the SILENT install of SuiteCRM
 # RUN cd /suitecrm \
     # && php -B "\$_REQUEST = array('goto' => 'SilentInstall', 'cli' => true);" -F install.php
-RUN cd /suitecrm \
-    && php -F install.php
+# RUN cd /suitecrm \
+#     && php -F install.php
 
 # Expose our appications ports
 EXPOSE 80 443
