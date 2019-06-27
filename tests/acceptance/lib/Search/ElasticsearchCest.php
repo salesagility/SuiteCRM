@@ -168,7 +168,9 @@ class ElasticsearchCest
         $navi->clickAllMenuItem('Accounts');
         
         for ($i=0; $i<$max; $i++) {
+            $I->waitForElementVisible('//*[@id="MassUpdate"]/div[3]/table/tbody/tr[1]/td[3]/b/a');
             $I->click('//*[@id="MassUpdate"]/div[3]/table/tbody/tr[1]/td[3]/b/a');
+            $I->waitForElementVisible('//*[@id="tab-actions"]/a');
             $I->click('//*[@id="tab-actions"]/a');
             $I->click('Delete');
             $I->wait(1);
