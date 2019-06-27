@@ -658,10 +658,13 @@ if (typeof('console') == 'undefined') {
               title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'),
               msg: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_MESSAGE'),
               width: 500,
-              close: true
+              close: true,
+
             });
             ModuleBuilder.updateContent(o);
-          }
+            setTimeout(YAHOO.SUGAR.MessageBox.hide, 3000)
+
+          };
 
           onFailure = function (o) {
             YAHOO.SUGAR.MessageBox.hide();
