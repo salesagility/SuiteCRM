@@ -7,15 +7,6 @@ use InvalidArgumentException;
 class AccountsTester extends \AcceptanceTester
 {
     /**
-     * Navigate to accounts module
-     */
-    public function gotoAccounts()
-    {
-        $I = new NavigationBarTester($this->getScenario());
-        $I->clickAllMenuItem('Accounts');
-    }
-
-    /**
      * Create an account
      *
      * @param $name
