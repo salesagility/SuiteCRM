@@ -61,7 +61,11 @@ $viewdefs [$module_name] =
                                         0 =>
                                             array(
                                                 'name' => 'aor_report_name',
-                                            ),
+                                        ),
+                                        1 => array(
+                                                'name' => 'last_run',
+                                                'displayParams' => array('readOnly' => true),
+                                        ),
                                     ),
                                 2 =>
                                     array(
@@ -70,10 +74,6 @@ $viewdefs [$module_name] =
                                                 'name' => 'schedule',
                                                 'label' => 'LBL_SCHEDULE',
                                             ),
-                                        1 => array(
-                                            'name' => 'last_run',
-                                            'displayParams' => array('readOnly' => true),
-                                        ),
                                     ),
                                 3 =>
                                     array(
