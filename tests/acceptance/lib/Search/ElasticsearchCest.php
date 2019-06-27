@@ -149,11 +149,11 @@ class ElasticsearchCest
         for ($i=$from; $i<$max; $i++) {
             $accounts->createAccount('acc_for_test ' . $i, false, false);
             // waiting few second to elasticsearch indexer makes the job done:
-            // $accounts->wait(3);
+            $accounts->wait(3);
         }
         
         // waiting few second to elasticsearch indexer makes the job done:
-        // $accounts->wait(5);
+        $accounts->wait(5);
     }
     
     /**
