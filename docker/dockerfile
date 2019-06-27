@@ -17,38 +17,42 @@ ENV ALLOW_EMPTY_PASSWORD="yes" \
     APACHE_HTTP_PORT_NUMBER="80" \
     # ---------- Database ENVs ----------
     DATABASE_HOST_NAME="mariadb" \
-    DATABASE_TYPE='mysqli' \
-    DATABASE_PORT_NUMBER="3306" \
+    DATABASE_TYPE='mysql' \
+    # DATABASE_PORT_NUMBER="3306" \
     DATABASE_ROOT_USERNAME="root" \
     DATABASE_ROOT_PASSWORD="${SUITE_MYSQL_PASSWORD}" \
     DATABASE_NAME='suitecrm' \
     DATABASE_CREATE_NEW='true' \
     DATABASE_USR_DATA='create' \
-    DATABASE_DROP_TABLES='0' \
+    DATABASE_DROP_TABLES='1' \
     DATABASE_DEMO_DATA='true' \
     DATABASE_USER_PRIVILEDGED='true' \
-    DATABASE_CLIENT_CREATE_DATABASE_USER="suitedb" \
-    DATABASE_CLIENT_CREATE_DATABASE_PASSWORD="suitesql" \
-    DATABASE_CLIENT_CREATE_DATABASE_NAME="suitecrm" \
-    DATABASE_CLIENT_CREATE_DATABASE_PRIVILEGES="ALL" \
+    # DATABASE_CLIENT_CREATE_DATABASE_USER="suitedb" \
+    # DATABASE_CLIENT_CREATE_DATABASE_PASSWORD="suitesql" \
+    # DATABASE_CLIENT_CREATE_DATABASE_NAME="suitecrm" \
+    # DATABASE_CLIENT_CREATE_DATABASE_PRIVILEGES="ALL" \
     # ---------- Suite ENVs ----------
     # DB; name, user, password should match above
-    SUITECRM_DATABASE_USER="suitedb" \
-    SUITECRM_DATABASE_PASSWORD="suitesql" \
-    SUITECRM_DATABASE_NAME="suitecrm" \
-    SUITECRM_HOST="127.0.0.1" \
-    SUITECRM_HTTP_TIMEOUT="3600" \
-    SUITECRM_USERNAME="user" \
-    SUITECRM_PASSWORD="password" \
-    SUITECRM_EMAIL="user@example.com" \
-    SUITECRM_LAST_NAME="Name" \
-    SUITECRM_SMTP_HOST="" \
-    SUITECRM_SMTP_PASSWORD="" \
-    SUITECRM_SMTP_PORT="" \
-    SUITECRM_SMTP_PROTOCOL="" \
-    SUITECRM_SMTP_USER="" \
-    SUITECRM_VALIDATE_USER_IP="yes" \
-    CURRENT_BRANCH=$current_branch
+    # SUITECRM_DATABASE_USER="suitedb" \
+    # SUITECRM_DATABASE_PASSWORD="suitesql" \
+    # SUITECRM_DATABASE_NAME="suitecrm" \
+    # SUITECRM_HOST="127.0.0.1" \
+    # SUITECRM_HTTP_TIMEOUT="3600" \
+    # SUITECRM_USERNAME="user" \
+    # SUITECRM_PASSWORD="password" \
+    # SUITECRM_EMAIL="user@example.com" \
+    # SUITECRM_LAST_NAME="Name" \
+    # SUITECRM_SMTP_HOST="" \
+    # SUITECRM_SMTP_PASSWORD="" \
+    # SUITECRM_SMTP_PORT="" \
+    # SUITECRM_SMTP_PROTOCOL="" \
+    # SUITECRM_SMTP_USER="" \
+    # SUITECRM_VALIDATE_USER_IP="yes" \
+    SITE_ADMIN_PASSWORD="password" \
+    SITE_ADMIN_USER="user" \
+    SITE_URL="http://10.27.1.130:8580"\
+    SITE_SYSTEM_NAME='SuiteCRM Docker Build' \
+  CURRENT_BRANCH=$current_branch
 
 # Get our dependancies
 RUN apt update && apt upgrade -y && apt install -y \
