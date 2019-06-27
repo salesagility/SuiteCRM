@@ -2,7 +2,7 @@
 // Look for ENVs first, then use the last possible case.
 $sugar_config_si  = array (
 
-  'dbUSRData' => isset($_ENV['DATABASE_USR_DATA']) ? $_ENV['DATABASE_USR_DATA'] : 'create',
+  'dbUSRData' => getenv('DATABASE_USR_DATA'),
   // ---------- Database Options ----------
 
   'setup_db_admin_password' => getenv('DATABASE_ROOT_PASSWORD'),
@@ -18,10 +18,10 @@ $sugar_config_si  = array (
 
   // ---------- Suite Site Options ----------
   
-  'setup_site_admin_password' => isset($_ENV['SITE_ADMIN_PASSWORD']) ? $_ENV['SITE_ADMIN_PASSWORD'] : 'admin',
-  'setup_site_admin_user_name' => isset($_ENV['SITE_ADMIN_USER']) ? $_ENV['SITE_ADMIN_USER'] : 'admin',
-  'setup_site_url' => isset($_ENV['SITE_URL']) ? $_ENV['SITE_URL'] : 'http://localhost',
-  'setup_system_name' => isset($_ENV['SITE_SYSTEM_NAME']) ? $_ENV['SITE_SYSTEM_NAME'] : 'SuiteCRM Docker Build',
+  'setup_site_admin_password' => getenv('SITE_ADMIN_PASSWORD'),
+  'setup_site_admin_user_name' => getenv('SITE_ADMIN_USER'),
+  'setup_site_url' => getenv('SITE_URL'),
+  'setup_system_name' => getenv('SITE_SYSTEM_NAME'),
   'setup_site_sugarbeet_automatic_checks' => true,
   'show_log_trace' => false,
 
