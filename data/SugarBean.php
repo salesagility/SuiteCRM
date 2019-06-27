@@ -5007,6 +5007,8 @@ class SugarBean
                                         $this->$name = $mod->name;
                                     }
                                 }
+                                // The related bean is incomplete due to $fill_in_rel_depth, we don't want to cache it
+                                BeanFactory::unregisterBean($related_module, $this->$id_name);
                             }
                         }
                     }

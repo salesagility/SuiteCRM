@@ -7,15 +7,6 @@ use InvalidArgumentException;
 class AccountsTester extends \AcceptanceTester
 {
     /**
-     * Navigate to accounts module
-     */
-    public function gotoAccounts()
-    {
-        $I = new NavigationBarTester($this->getScenario());
-        $I->clickAllMenuItem('Accounts');
-    }
-
-    /**
      * Create an account
      *
      * @param $name
@@ -30,7 +21,7 @@ class AccountsTester extends \AcceptanceTester
         $DetailView = new DetailView($this->getScenario());
         $Sidebar = new SideBar($this->getScenario());
 
-        $I->see('Create Account', '.actionmenulink');
+        $I->waitForText('Create Account', 5, '.actionmenulink');
         $Sidebar->clickSideBarAction('Create');
         $I->waitForEditViewVisible();
         $I->fillField('#name', $name);

@@ -5,15 +5,6 @@ namespace Step\Acceptance;
 class Opportunities extends \AcceptanceTester
 {
     /**
-     * Navigate to opportunities module
-     */
-    public function gotoOpportunities()
-    {
-        $I = new NavigationBarTester($this->getScenario());
-        $I->clickAllMenuItem('Opportunities');
-    }
-
-    /**
      * Create an opportunity
      *
      * @param $name

@@ -55,6 +55,7 @@ $mod_strings = array(
     'LBL_IMPORT' => 'Import',
     'LBL_LOADING' => 'Loading',
     'LBL_MARKING' => 'Marking',
+    'LBL_DELETING' => 'Deleting',
 
     'LBL_CONFIRM_DELETE_EMAIL' => 'Are you sure you want to delete this email?',
     'LBL_ENTER_FOLDER_NAME' => 'Please enter a folder name',
@@ -185,6 +186,7 @@ $mod_strings = array(
     'LBL_BUTTON_FORWARD' => 'Forward',
     'LBL_BUTTON_REPLY_TITLE' => 'Reply',
     'LBL_BUTTON_REPLY_ALL' => 'Reply All',
+    'LBL_BUTTON_DELETE_IMAP' => 'Delete from IMAP',
     'LBL_CASES_SUBPANEL_TITLE' => 'Cases',
     'LBL_INBOUND_TITLE' => 'Inbound Email',
     'LBL_INTENT' => 'Intent',

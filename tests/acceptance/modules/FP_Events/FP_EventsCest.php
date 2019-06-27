@@ -43,13 +43,9 @@ class EventsCest
     ) {
         $I->wantTo('View the events module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to events list-view
         $I->loginAsAdmin();
-        $events->gotoEvents();
+        $I->visitPage('FP_events', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Events', '.module-title-text');
@@ -76,13 +72,9 @@ class EventsCest
     ) {
         $I->wantTo('Create an Event');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to locations list-view
         $I->loginAsAdmin();
-        $location->gotoLocations();
+        $I->visitPage('FP_Event_Locations', 'index');
         $listView->waitForListViewVisible();
 
         // Create location
@@ -91,7 +83,7 @@ class EventsCest
         $location->createEventLocation($location_name);
 
         // Navigate to events list-view
-        $event->gotoEvents();
+        $I->visitPage('FP_events', 'index');
         $listView->waitForListViewVisible();
 
         // Create event
@@ -104,7 +96,7 @@ class EventsCest
         $listView->waitForListViewVisible();
 
         // Delete location
-        $location->gotoLocations();
+        $I->visitPage('FP_Event_Locations', 'index');
         $listView->waitForListViewVisible();
         $listView->clickFilterButton();
         $I->fillField('#name_basic', $location_name);

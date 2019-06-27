@@ -43,13 +43,9 @@ class TargetListsCest
     ) {
         $I->wantTo('View the targets module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to targets list-view
         $I->loginAsAdmin();
-        $targetList->gotoTargetList();
+        $I->visitPage('ProspectLists', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Targets', '.module-title-text');
