@@ -5,15 +5,15 @@ $sugar_config_si  = array (
   'dbUSRData' => isset($_ENV['DATABASE_USR_DATA']) ? $_ENV['DATABASE_USR_DATA'] : 'create',
   // ---------- Database Options ----------
 
-  'setup_db_admin_password' => getenv('DATABASE_ROOT_PASSWORD') || 'automated_tests',
-  'setup_db_admin_user_name' => getenv('DATABASE_ROOT_USERNAME') || 'automated_tests',
-  'setup_db_create_database' => getenv('DATABASE_CREATE_NEW') || 1,
-  'setup_db_database_name' => getenv('DATABASE_NAME') || 'automated_tests',
-  'setup_db_drop_tables' => getenv('DATABASE_DROP_TABLES') || 0,
-  'setup_db_host_name' => getenv('DATABASE_HOST_NAME') || 'localhost',
-  'setup_db_pop_demo_data' => getenv('DATABASE_DEMO_DATA') || true,
-  'setup_db_type' => getenv('DATABASE_TYPE') || 'mysql',
-  'setup_db_username_is_privileged' => getenv('DATABASE_USER_PRIVILEDGED') || true,
+  'setup_db_admin_password' => getenv('DATABASE_ROOT_PASSWORD'),
+  'setup_db_admin_user_name' => getenv('DATABASE_ROOT_USERNAME'),
+  'setup_db_create_database' => getenv('DATABASE_CREATE_NEW'),
+  'setup_db_database_name' => getenv('DATABASE_NAME'),
+  'setup_db_drop_tables' => getenv('DATABASE_DROP_TABLES'),
+  'setup_db_host_name' => getenv('DATABASE_HOST_NAME'),
+  'setup_db_pop_demo_data' => getenv('DATABASE_DEMO_DATA'),
+  'setup_db_type' => getenv('DATABASE_TYPE'),
+  'setup_db_username_is_privileged' => getenv('DATABASE_USER_PRIVILEDGED'),
 
 
   // ---------- Suite Site Options ----------
