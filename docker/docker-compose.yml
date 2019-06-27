@@ -12,7 +12,7 @@ services:
       # We'll need to point this to the directory of mariaDB
       # according to this --
       # https://forums.docker.com/t/how-to-make-mariadb-database-changes-persistent/17339/3
-      - 'docker_suite_db_maria:/var/lib/mysql'
+      - 'suite_db_maria:/var/lib/mysql'
   suitecrm:
     build:
       context: ./
@@ -31,7 +31,7 @@ services:
       - '8580:80'
       - '8543:443'
     volumes:
-      - 'docker_suite_os_data:/certs'
+      - 'suite_os_data:/certs'
     depends_on:
       - mariadb
 volumes:
