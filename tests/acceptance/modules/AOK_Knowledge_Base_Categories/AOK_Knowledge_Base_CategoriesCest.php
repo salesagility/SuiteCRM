@@ -45,7 +45,7 @@ class AOK_Knowledge_Base_CategoriesCest
 
         // Navigate to knowledgeBaseCategory list-view
         $I->loginAsAdmin();
-        $knowledgeBaseCategory->gotoKnowledgeBaseCategories();
+        $I->visitPage('AOK_Knowledge_Base_Categories', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('KB - Categories', '.module-title-text');
@@ -72,7 +72,7 @@ class AOK_Knowledge_Base_CategoriesCest
 
         // Navigate to knowledge base category list-view
         $I->loginAsAdmin();
-        $knowledgeBaseCategories->gotoKnowledgeBaseCategories();
+        $I->visitPage('AOK_Knowledge_Base_Categories', 'index');
         $listView->waitForListViewVisible();
 
         // Create knowledge base category

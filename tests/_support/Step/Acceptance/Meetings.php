@@ -5,15 +5,6 @@ namespace Step\Acceptance;
 class Meetings extends \AcceptanceTester
 {
     /**
-     * Navigate to meetings module
-     */
-    public function gotoMeetings()
-    {
-        $I = new NavigationBarTester($this->getScenario());
-        $I->clickAllMenuItem('Meetings');
-    }
-
-    /**
      * Create a meeting
      *
      * @param $name

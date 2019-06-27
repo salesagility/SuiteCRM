@@ -45,7 +45,7 @@ class jjwg_Address_CacheCest
 
         // Navigate to mapsAddressCache list-view
         $I->loginAsAdmin();
-        $mapsAddressCache->gotoMapsAddressCache();
+        $I->visitPage('jjwg_Address_Cache', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Maps - Address Cache', '.module-title-text');
@@ -72,7 +72,7 @@ class jjwg_Address_CacheCest
 
         // Navigate to maps address cache list-view
         $I->loginAsAdmin();
-        $mapsAddressCache->gotoMapsAddressCache();
+        $I->visitPage('jjwg_Address_Cache', 'index');
         $listView->waitForListViewVisible();
 
         // Create maps address cache

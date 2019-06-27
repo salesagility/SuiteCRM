@@ -45,7 +45,7 @@ class AccountsCest
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Accounts', '.module-title-text');
@@ -73,7 +73,7 @@ class AccountsCest
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -104,7 +104,7 @@ class AccountsCest
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -113,7 +113,7 @@ class AccountsCest
         $accounts->createAccount($account_name);
 
         // Inline edit
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
         $I->doubleClick('.inlineEditIcon');
         $I->fillField('#name', 'InlineAccountNameEdit');
@@ -133,7 +133,7 @@ class AccountsCest
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account

@@ -43,7 +43,7 @@ class CallsCest
 
         // Navigate to calls list-view
         $I->loginAsAdmin();
-        $calls->gotoCalls();
+        $I->visitPage('Calls', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Calls', '.module-title-text');
@@ -71,7 +71,7 @@ class CallsCest
 
         // Navigate to Calls
         $I->loginAsAdmin();
-        $NavigationBar->clickAllMenuItem('Calls');
+        $I->visitPage('Calls', 'index');
 
         // Create call
         $this->fakeData->seed($this->fakeDataSeed);

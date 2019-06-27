@@ -45,7 +45,7 @@ class TasksCest
 
         // Navigate to tasks list-view
         $I->loginAsAdmin();
-        $tasks->gotoTasks();
+        $I->visitPage('Tasks', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Tasks', '.module-title-text');

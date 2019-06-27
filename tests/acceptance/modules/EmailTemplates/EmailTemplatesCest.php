@@ -45,7 +45,7 @@ class EmailTemplatesCest
 
         // Navigate to emailTemplate list-view
         $I->loginAsAdmin();
-        $emailTemplate->gotoEmailTemplates();
+        $I->visitPage('EmailTemplates', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Email - Templates', '.module-title-text');

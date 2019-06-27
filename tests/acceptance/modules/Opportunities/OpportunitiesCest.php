@@ -45,7 +45,7 @@ class OpportunitiesCest
 
         // Navigate to opportunities list-view
         $I->loginAsAdmin();
-        $opportunities->gotoOpportunities();
+        $I->visitPage('Opportunities', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Opportunities', '.module-title-text');
@@ -74,7 +74,7 @@ class OpportunitiesCest
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $account->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -83,7 +83,7 @@ class OpportunitiesCest
         $account->createAccount($account_name);
 
         // Navigate to opportunities list-view
-        $opportunities->gotoOpportunities();
+        $I->visitPage('Opportunities', 'index');
         $listView->waitForListViewVisible();
 
         // Create opportunity
@@ -96,7 +96,7 @@ class OpportunitiesCest
         $listView->waitForListViewVisible();
 
         // Delete account
-        $account->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
         $listView->clickFilterButton();
         $I->fillField('#name_basic', $account_name);

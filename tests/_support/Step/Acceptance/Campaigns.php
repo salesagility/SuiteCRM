@@ -5,15 +5,6 @@ namespace Step\Acceptance;
 class Campaigns extends \AcceptanceTester
 {
     /**
-     * Navigate to campaigns module
-     */
-    public function gotoCampaigns()
-    {
-        $I = new NavigationBarTester($this->getScenario());
-        $I->clickAllMenuItem('Campaigns');
-    }
-
-    /**
      * Create a non-emails campaign
      *
      * @param $name
@@ -126,7 +117,7 @@ class Campaigns extends \AcceptanceTester
         $I->see('You cannot send a marketing email until your subscription list has at least one entry. You can populate your list after finishing.');
 
         // Populate target list
-        $targetList->gotoTargetList();
+        $I->visitPage('ProspectLists', 'index');
         $listView->waitForListViewVisible();
         $I->click($name . ' Subscription List');
         $detailView->waitForDetailViewVisible();
@@ -138,7 +129,7 @@ class Campaigns extends \AcceptanceTester
         $I->fillField('#last_name', $faker->name);
         $I->click('Save');
 
-        $targetList->gotoTargetList();
+        $I->visitPage('ProspectLists', 'index');
         $listView->waitForListViewVisible();
         $I->click($name . ' Unsubscription List');
         $detailView->waitForDetailViewVisible();
@@ -150,7 +141,7 @@ class Campaigns extends \AcceptanceTester
         $I->fillField('#last_name', $faker->name);
         $I->click('Save');
 
-        $targetList->gotoTargetList();
+        $I->visitPage('ProspectLists', 'index');
         $listView->waitForListViewVisible();
         $I->click($name . ' Test List');
         $detailView->waitForDetailViewVisible();

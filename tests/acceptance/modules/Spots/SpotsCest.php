@@ -45,7 +45,7 @@ class SpotsCest
 
         // Navigate to spots list-view
         $I->loginAsAdmin();
-        $spots->gotoSpots();
+        $I->visitPage('Spots', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Spots', '.module-title-text');

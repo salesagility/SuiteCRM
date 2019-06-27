@@ -44,7 +44,7 @@ class AM_Project_TemplatesCest
         $I->wantTo('View the projectTemplates module for testing');
         // Navigate to projectTemplates list-view
         $I->loginAsAdmin();
-        $projectTemplates->gotoProjectTemplates();
+        $I->visitPage('AM_ProjectTemplates', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Projects - Templates', '.module-title-text');
@@ -71,7 +71,7 @@ class AM_Project_TemplatesCest
 
         // Navigate to project templates list-view
         $I->loginAsAdmin();
-        $projectTemplate->gotoProjectTemplates();
+        $I->visitPage('AM_ProjectTemplates', 'index');
         $listView->waitForListViewVisible();
 
         // Create project template

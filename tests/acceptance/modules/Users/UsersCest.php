@@ -82,7 +82,7 @@ class UsersCest
         $I->wantTo('Create an Account');
 
         // Navigate to accounts list-view
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account

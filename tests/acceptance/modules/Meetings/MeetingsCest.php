@@ -45,7 +45,7 @@ class MeetingsCest
 
         // Navigate to meetings list-view
         $I->loginAsAdmin();
-        $meetings->gotoMeetings();
+        $I->visitPage('Meetings', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Meetings', '.module-title-text');
@@ -72,7 +72,7 @@ class MeetingsCest
 
         // Navigate to meetings list-view
         $I->loginAsAdmin();
-        $meeting->gotoMeetings();
+        $I->visitPage('Meetings', 'index');
         $listView->waitForListViewVisible();
 
         // Create meeting
@@ -105,7 +105,7 @@ class MeetingsCest
 
         // Navigate to meetings list-view
         $I->loginAsAdmin();
-        $meeting->gotoMeetings();
+        $I->visitPage('Meetings', 'index');
         $listView->waitForListViewVisible();
 
         // Create meeting
