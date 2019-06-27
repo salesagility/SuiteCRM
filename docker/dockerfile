@@ -118,8 +118,9 @@ COPY suite-php.ini /usr/local/etc/php/conf.d/suite-php.ini
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
     && service apache2 restart
 # Add our configuration(s)
-COPY config_si.php /suitecrm/config_si.php
-# COPY config.php /suitecrm/config.php
+COPY config_bn.php /suitecrm/config_si.php
+# COPY config_si.php /suitecrm/config_si.php
+# COPY config.php /suitecrm/config_si.php
 
 RUN chown -R www-data:www-data /suitecrm \
     && chmod -R 755 /suitecrm \
