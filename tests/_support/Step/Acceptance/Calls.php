@@ -5,16 +5,6 @@ namespace Step\Acceptance;
 class Calls extends \AcceptanceTester
 {
     /**
-     * Navigate to calls module
-     */
-    public function gotoCalls()
-    {
-        $I = new NavigationBar($this->getScenario());
-        $I->clickAllMenuItem('Calls');
-    }
-
-
-    /**
      * Create a call
      *
      * @param $name

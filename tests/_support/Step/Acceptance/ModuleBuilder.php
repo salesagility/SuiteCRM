@@ -16,7 +16,7 @@ class ModuleBuilder extends Administration
     {
         $I = $this;
 
-        $I->gotoAdministration();
+        $I->visitPage('Administration', 'index');
 
         // Go To Module Builder
         $I->click('#moduleBuilder');
@@ -92,7 +92,7 @@ class ModuleBuilder extends Administration
     {
         $I = $this;
 
-        $I->gotoAdministration();
+        $I->visitPage('Administration', 'index');
 
         // Go To Module Builder
         $I->click('#moduleBuilder');
@@ -110,7 +110,7 @@ class ModuleBuilder extends Administration
     {
         $I = $this;
 
-        $I->gotoAdministration();
+        $I->visitPage('Administration', 'index');
 
         // Go To Module Builder
         $I->click('#moduleBuilder');
@@ -140,7 +140,7 @@ class ModuleBuilder extends Administration
     {
         $I = $this;
 
-        $I->gotoAdministration();
+        $I->visitPage('Administration', 'index');
 
         // Go To Module Builder
         $I->click('#moduleBuilder');

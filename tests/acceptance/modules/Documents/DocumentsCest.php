@@ -45,7 +45,7 @@ class DocumentsCest
 
         // Navigate to documents list-view
         $I->loginAsAdmin();
-        $documents->gotoDocuments();
+        $I->visitPage('Documents', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Documents', '.module-title-text');

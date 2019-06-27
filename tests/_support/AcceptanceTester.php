@@ -82,4 +82,23 @@ class AcceptanceTester extends \Codeception\Actor
         $I->dontSee('error');
         $I->dontSee('PHP');
     }
+
+    /**
+     * Helper for navigating to a page.
+     * 
+     * @param string $module SuiteCRM module name
+     * @param string $action View action name, e.g. index, EditView, DetailView.
+     * @param string|null $record The id of a record, used for EditView and DetailView routes.
+     */
+    public function visitPage($module, $action, $record = null)
+    {
+        $I = $this;
+        $url = $I->getInstanceURL();
+        if ($record !== null) {
+            $url .= "/index.php?module={$module}&action={$action}&record={$record}";
+        } else {
+            $url .= "/index.php?module={$module}&action={$action}";
+        }
+        $I->amOnUrl($url);
+    }
 }

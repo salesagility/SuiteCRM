@@ -12,5 +12,3 @@ modules:
         chromeOptions:
             args: ["window-size=1920x1080"]
             binary: "/usr/bin/google-chrome"
-
-
