@@ -1,5 +1,6 @@
 <?php
 // Look for ENVs first, then use the last possible case.
+
 $sugar_config_si  = array (
 
   'dbUSRData' => getenv('DATABASE_USR_DATA'),
