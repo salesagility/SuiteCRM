@@ -20,7 +20,7 @@ ENV ALLOW_EMPTY_PASSWORD="yes" \
     DATABASE_TYPE='mysql' \
     # DATABASE_PORT_NUMBER="3306" \
     DATABASE_ROOT_USERNAME="root" \
-    DATABASE_ROOT_PASSWORD="changeme" \
+    DATABASE_ROOT_PASSWORD="suitesqladmin" \
     # See below, ENV's aren't working for some reason.
     # DATABASE_ROOT_PASSWORD="${SUITE_MYSQL_PASSWORD}" \
     DATABASE_NAME='suitecrm' \
