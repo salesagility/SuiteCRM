@@ -53,7 +53,8 @@ class AccountsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Accounts $accounts
+     * @param \Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\SideBar $sideBar
      *
      * As administrative user I want to create a report with the reports module so that I can test
      * the standard fields.
@@ -62,10 +63,10 @@ class AccountsCest
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Accounts $accounts
+        \Step\Acceptance\EditView $editView,
+        \Step\Acceptance\SideBar $sideBar
     ) {
         $I->wantTo('Create an Account');
-
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();
@@ -74,7 +75,35 @@ class AccountsCest
 
         // Create account
         $this->fakeData->seed($this->fakeDataSeed);
-        $accounts->createAccount('Test_'. $this->fakeData->company());
+        $faker = $I->getFaker();
+
+        $I->see('Create Account', '.actionmenulink');
+        $sideBar->clickSideBarAction('Create');
+        $editView->waitForEditViewVisible();
+        $I->fillField('#name', 'Test_' . $this->fakeData->company());
+        $I->fillField('#phone_office', $faker->phoneNumber());
+        $I->fillField('#website', $faker->url());
+        $I->fillField('#phone_fax', $faker->phoneNumber());
+        $I->fillField('#Accounts0emailAddress0', $faker->email());
+        $I->fillField('#billing_address_street', $faker->streetAddress());
+        $I->fillField('#billing_address_city', $faker->city());
+        $I->fillField('#billing_address_state', $faker->city());
+        $I->fillField('#billing_address_postalcode', $faker->postcode());
+        $I->fillField('#billing_address_country', $faker->country());
+        $I->fillField('#description', $faker->text());
+        $I->fillField('#annual_revenue', $faker->randomDigit());
+        $I->fillField('#employees', $faker->randomDigit());
+
+        $I->checkOption('#shipping_checkbox');
+        $I->selectOption('#account_type', 'Analyst');
+        $I->selectOption('#industry', 'Apparel');
+
+        $I->seeElement('#assigned_user_name');
+        $I->seeElement('#parent_name');
+        $I->seeElement('#campaign_name');
+
+        $editView->clickSaveButton();
+        $detailView->waitForDetailViewVisible();
 
         // Delete account
         $detailView->clickActionMenuItem('Delete');
@@ -122,7 +151,7 @@ class AccountsCest
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Accounts $accounts
     ) {
-        $I->wantTo('Create an Account');
+        $I->wantTo('Create a child Account');
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();
@@ -132,10 +161,13 @@ class AccountsCest
         // Create account
         $this->fakeData->seed($this->fakeDataSeed);
         $parentAccountName = 'Test_' . $this->fakeData->company();
-        $accounts->createAccount($parentAccountName);
+        $accountId = $accounts->createAccount($parentAccountName);
+
+        $I->visitPage('Accounts', 'DetailView', $accountId);
+        $detailView->waitForDetailViewVisible();
 
         // Click on Member Organizations subpanel
-        $I->click(['id' => 'subpanel_title_accounts']);
+        $I->click('#subpanel_title_accounts');
         $I->waitForElementVisible('#member_accounts_create_button');
 
         // Add child account
