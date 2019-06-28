@@ -29,13 +29,11 @@ class CalendarCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\Calendar $calendar
      *
      * As an administrator I want to view the calendar module.
      */
     public function testScenarioViewCalendarModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\Calendar $calendar
+        \AcceptanceTester $I
     ) {
         $I->wantTo('View the calendar module for testing');
 

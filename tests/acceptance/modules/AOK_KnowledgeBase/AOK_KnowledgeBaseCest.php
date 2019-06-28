@@ -30,14 +30,12 @@ class AOK_KnowledgeBaseCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\KnowledgeBase $knowledgeBase
      *
      * As an administrator I want to view the knowledgeBase module.
      */
     public function testScenarioViewKnowledgeBaseModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\KnowledgeBase $knowledgeBase
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the knowledgeBase module for testing');
 

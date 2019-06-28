@@ -30,14 +30,12 @@ class ProductsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Products $products
      *
      * As an administrator I want to view the products module.
      */
     public function testScenarioViewProductsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Products $products
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the products module for testing');
 

@@ -35,14 +35,12 @@ class EmailsCest
     /**
      * @param AcceptanceTester $I
      * @param ListView $listView
-     * @param EmailsTester $emails
      *
      * As an administrator I want to view the emails module.
      */
     public function testScenarioViewEmailsModule(
         AcceptanceTester $I,
-        ListView $listView,
-        EmailsTester $emails
+        ListView $listView
     ) {
         $I->wantTo('View the emails module for testing');
 

@@ -30,14 +30,12 @@ class TasksCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Tasks $tasks
      *
      * As an administrator I want to view the tasks module.
      */
     public function testScenarioViewTasksModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Tasks $tasks
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the tasks module for testing');
 

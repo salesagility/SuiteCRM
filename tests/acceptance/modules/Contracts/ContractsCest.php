@@ -30,14 +30,12 @@ class ContractsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Contracts $contracts
      *
      * As an administrator I want to view the contracts module.
      */
     public function testScenarioViewContractsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Contracts $contracts
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the contracts module for testing');
 

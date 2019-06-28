@@ -30,14 +30,12 @@ class CampaignsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Campaigns $campaigns
      *
      * As an administrator I want to view the campaigns module.
      */
     public function testScenarioViewCampaignsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Campaigns $campaigns
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the campaigns module for testing');
 

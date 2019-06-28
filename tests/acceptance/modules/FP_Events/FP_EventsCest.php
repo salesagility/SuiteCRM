@@ -30,14 +30,12 @@ class EventsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Events $events
      *
      * As an administrator I want to view the events module.
      */
     public function testScenarioViewEventsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Events $events
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the events module for testing');
 
