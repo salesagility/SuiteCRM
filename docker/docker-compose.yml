@@ -6,7 +6,9 @@ services:
       - MYSQL_ROOT_PASSWORD=suitesqladmin
       # - MYSQL_DATABASE=suitecrm
       # - MYSQL_USER=suitecrm
-      - MYSQL_PASSWORD=${SUITE_MYSQL_PASSWORD}
+      - MYSQL_PASSWORD=changeme
+      # See below, ENV's aren't working for some reason.
+      # - MYSQL_PASSWORD=${SUITE_MYSQL_PASSWORD}
       - MYSQL_ALLOW_EMPTY_PASSWORD=no
     volumes:
       # We'll need to point this to the directory of mariaDB
