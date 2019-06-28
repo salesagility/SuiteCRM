@@ -45,7 +45,7 @@ class LeadsCest
 
         // Navigate to leads list-view
         $I->loginAsAdmin();
-        $leads->gotoLeads();
+        $I->visitPage('Leads', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Leads', '.module-title-text');
@@ -72,7 +72,7 @@ class LeadsCest
 
         // Navigate to leads list-view
         $I->loginAsAdmin();
-        $lead->gotoLeads();
+        $I->visitPage('Leads', 'index');
         $listView->waitForListViewVisible();
 
         // Create lead

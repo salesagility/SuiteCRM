@@ -45,7 +45,7 @@ class AOK_KnowledgeBaseCest
 
         // Navigate to knowledgeBase list-view
         $I->loginAsAdmin();
-        $knowledgeBase->gotoKnowledgeBase();
+        $I->visitPage('AOK_KnowledgeBase', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Knowledge Base', '.module-title-text');
@@ -72,7 +72,7 @@ class AOK_KnowledgeBaseCest
 
         // Navigate to Knowledge Base list-view
         $I->loginAsAdmin();
-        $knowledgeBase->gotoKnowledgeBase();
+        $I->visitPage('AOK_KnowledgeBase', 'index');
         $listView->waitForListViewVisible();
 
         // Create Knowledge Base

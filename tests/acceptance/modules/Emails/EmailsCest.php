@@ -50,7 +50,8 @@ class EmailsCest
 
         // Navigate to emails list-view
         $I->loginAsAdmin();
-        $emails->gotoEmails();
+        
+        $I->visitPage('Emails', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Emails', '.module-title-text');

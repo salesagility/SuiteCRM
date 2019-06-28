@@ -45,7 +45,7 @@ class jjwg_MarkersCest
 
         // Navigate to mapsMarkers list-view
         $I->loginAsAdmin();
-        $mapsMarkers->gotoMapsMarkers();
+        $I->visitPage('jjwg_Markers', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Maps - Markers', '.module-title-text');
@@ -72,7 +72,7 @@ class jjwg_MarkersCest
 
         // Navigate to map markers list-view
         $I->loginAsAdmin();
-        $mapMarker->gotoMapsMarkers();
+        $I->visitPage('jjwg_Markers', 'index');
         $listView->waitForListViewVisible();
 
         // Create map marker

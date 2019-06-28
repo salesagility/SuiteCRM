@@ -45,7 +45,7 @@ class SurveysCest
 
         // Navigate to surveys list-view
         $I->loginAsAdmin();
-        $surveys->gotoSurveys();
+        $I->visitPage('Surveys', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Surveys', '.module-title-text');

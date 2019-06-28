@@ -48,7 +48,7 @@ class UsersCest
         $I->fillField('email_user', 'testuser_name');
         $I->fillField('email_password', 'testuser_pass');
         $I->click('Test Settings');
-        $I->wait(20);
+        $I->waitForText('Connection completed successfully.');
         $I->see('Connection completed successfully.');
     }
 
@@ -71,7 +71,7 @@ class UsersCest
         $I->see('User Profile', '.panel-heading');
 
         $I->click("Layout Options");
-        $I->wait(5);
+        $I->waitForElementVisible('input[name="user_count_collapsed_subpanels"]');
         $I->seeElement('input', ['name' => 'user_count_collapsed_subpanels']);
         $I->checkOption(['name' => 'user_count_collapsed_subpanels']);
         $EditView->clickSaveButton();
@@ -82,7 +82,7 @@ class UsersCest
         $I->wantTo('Create an Account');
 
         // Navigate to accounts list-view
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account

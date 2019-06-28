@@ -16,13 +16,14 @@ class ModuleBuilder extends Administration
     {
         $I = $this;
 
-        $I->gotoAdministration();
+        $I->visitPage('Administration', 'index');
 
         // Go To Module Builder
         $I->click('#moduleBuilder');
 
         $packageExists = $I->seePageHas($packageName, '#Buttons');
         if ($packageExists === false) {
+            $I->waitForElementVisible('#newPackageLink');
             // Create new package
             $I->click('#newPackageLink');
 
@@ -91,7 +92,7 @@ class ModuleBuilder extends Administration
     {
         $I = $this;
 
-        $I->gotoAdministration();
+        $I->visitPage('Administration', 'index');
 
         // Go To Module Builder
         $I->click('#moduleBuilder');
@@ -109,7 +110,7 @@ class ModuleBuilder extends Administration
     {
         $I = $this;
 
-        $I->gotoAdministration();
+        $I->visitPage('Administration', 'index');
 
         // Go To Module Builder
         $I->click('#moduleBuilder');
@@ -139,7 +140,7 @@ class ModuleBuilder extends Administration
     {
         $I = $this;
 
-        $I->gotoAdministration();
+        $I->visitPage('Administration', 'index');
 
         // Go To Module Builder
         $I->click('#moduleBuilder');
@@ -156,6 +157,6 @@ class ModuleBuilder extends Administration
         $I->closePopupSuccess();
 
         // Wait for page to refresh and look for new package link
-        $I->waitForElement('#newPackageLink', 30);
+        $I->waitForElement('#newPackageLink');
     }
 }

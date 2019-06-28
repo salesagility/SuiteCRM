@@ -45,7 +45,7 @@ class ContactsCest
 
         // Navigate to contacts list-view
         $I->loginAsAdmin();
-        $contacts->gotoContacts();
+        $I->visitPage('Contacts', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Contacts', '.module-title-text');
@@ -72,7 +72,7 @@ class ContactsCest
 
         // Navigate to contacts list-view
         $I->loginAsAdmin();
-        $contact->gotoContacts();
+        $I->visitPage('Contacts', 'index');
         $listView->waitForListViewVisible();
 
         // Create contact

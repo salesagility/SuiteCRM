@@ -90,6 +90,7 @@ class ModuleBuilderFieldsCest
         $moduleBuilder->selectModule(\Page\ModuleFields::$PACKAGE_NAME, \Page\ModuleFields::$NAME);
 
         // View Fields button
+        $I->waitForElementVisible(['name' => 'viewfieldsbtn']);
         $I->click(['name' => 'viewfieldsbtn']);
 
         // Close popup
@@ -98,7 +99,7 @@ class ModuleBuilderFieldsCest
         $I->click('.container-close');
 
         // Add field button
-        $I->waitForElementVisible(['name' => 'addfieldbtn']);
+        $I->waitForElementVisible('[name="addfieldbtn"]');
         $I->click(['name' => 'addfieldbtn']);
 
         // Fill in edit field tab
@@ -124,6 +125,7 @@ class ModuleBuilderFieldsCest
         // Add to layout viewlayoutsbtn
         $moduleBuilder->selectModule(\Page\ModuleFields::$PACKAGE_NAME, \Page\ModuleFields::$NAME);
         // View Layouts button
+        $I->waitForElementVisible(['name' => 'viewlayoutsbtn']);
         $I->click(['name' => 'viewlayoutsbtn']);
 
         $moduleBuilder->closePopupSuccess();
@@ -171,6 +173,7 @@ class ModuleBuilderFieldsCest
         $moduleBuilder->selectModule(\Page\ModuleFields::$PACKAGE_NAME, \Page\ModuleFields::$NAME);
 
         // View Fields button
+        $I->waitForElementVisible(['name' => 'viewfieldsbtn']);
         $I->click(['name' => 'viewfieldsbtn']);
 
         // Close popup
@@ -179,13 +182,14 @@ class ModuleBuilderFieldsCest
         $I->click('.container-close');
 
         // Add field button
-        $I->waitForElementVisible(['name' => 'addfieldbtn']);
+        $I->waitForElementVisible('[name="addfieldbtn"]');
         $I->click(['name' => 'addfieldbtn']);
 
         // Fill in edit field tab
         $I->waitForElementVisible('#type');
         $I->selectOption('#type', 'HTML');
 
+        // Wait for 1 second to allow the field to become interactive.
         $I->wait(1);
         $I->waitForElementVisible('#field_name_id');
         $I->fillField('#field_name_id', 'test_html_field');
@@ -204,6 +208,7 @@ class ModuleBuilderFieldsCest
         // Add to layout viewlayoutsbtn
         $moduleBuilder->selectModule(\Page\ModuleFields::$PACKAGE_NAME, \Page\ModuleFields::$NAME);
         // View Layouts button
+        $I->waitForElementVisible(['name' => 'viewlayoutsbtn']);
         $I->click(['name' => 'viewlayoutsbtn']);
 
         $moduleBuilder->closePopupSuccess();

@@ -51,7 +51,7 @@ class HistoryCest
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -68,7 +68,7 @@ class HistoryCest
         $calls->createCallRelateModule($callName, $account_name, "Account", array("status" => "Held"));
 
         // Navigate to the Account's Detail View and confirm the due date contains data
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Select record from list view
@@ -80,6 +80,7 @@ class HistoryCest
         $listView->clickNameLink($account_name);
 
         //Click on History subpanel
+        $I->waitForElementVisible(['id'=>'subpanel_title_history']);
         $I->click(['id'=>'subpanel_title_history']);
         $I->waitForElementVisible('#History_createnoteorattachment_button');
         $I->expect('the due date is visible');
@@ -95,7 +96,7 @@ class HistoryCest
         $listView->waitForListViewVisible();
 
         // Select record from list view
-        $I->wait(4);
+        $I->wait(3);
         $listView->clickFilterButton();
         $listView->click('Quick Filter');
         $listView->fillField('#name_basic', $callName);

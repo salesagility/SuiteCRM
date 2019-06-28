@@ -23,17 +23,26 @@ matrix:
     - name: "PHP 7.3 / MySQL 5.7"
       php: "7.3"
       dist: xenial
+    # Run composer validate to make sure the composer.json and composer.lock are in sync.
+    - name: "composer validate"
+      php: "7.2"
+      dist: xenial
+      before_script: composer install
+      script: composer validate
     - stage: codecoverage
       if: type IN (pull_request) OR branch in (master, develop, hotfix)
       php: "7.0"
       dist: xenial
       script: ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 1;" >> config_override.php  ; ./vendor/bin/robo code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f ./_output/coverage.xml
 
-
 services:
   - mysql
 addons:
   chrome: stable
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
 
 env:
   - INSTANCE_URL=http://localhost DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1 COMPOSER_MEMORY_LIMIT=-1

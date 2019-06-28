@@ -51,7 +51,7 @@ class ActivitiesCest
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -68,7 +68,7 @@ class ActivitiesCest
         $calls->createCallRelateModule($callName, $account_name, "Account");
 
         // Navigate to the Account's Detail View and confirm the due date contains data
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Select record from list view
@@ -80,6 +80,7 @@ class ActivitiesCest
         $listView->clickNameLink($account_name);
 
         //Click on Activites subpanel
+        $I->waitForElementVisible(['id'=>'subpanel_title_activities']);
         $I->click(['id'=>'subpanel_title_activities']);
         $I->waitForElementVisible('#Activities_createtask_button');
         $I->expect('the due date is visible');
@@ -95,7 +96,7 @@ class ActivitiesCest
         $listView->waitForListViewVisible();
 
         // Select record from list view
-        $I->wait(4);
+        $I->wait(3);
         $listView->clickFilterButton();
         $listView->click('Quick Filter');
         $listView->fillField('#name_basic', $callName);

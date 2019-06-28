@@ -5,16 +5,6 @@ namespace Step\Acceptance;
 class Calls extends \AcceptanceTester
 {
     /**
-     * Navigate to calls module
-     */
-    public function gotoCalls()
-    {
-        $I = new NavigationBar($this->getScenario());
-        $I->clickAllMenuItem('Calls');
-    }
-
-
-    /**
      * Create a call
      *
      * @param $name
@@ -28,6 +18,7 @@ class Calls extends \AcceptanceTester
         $Sidebar = new SideBar($this->getScenario());
         $faker = $this->getFaker();
 
+        $I->waitForText('Log Call', null, '.actionmenulink');
         $I->see('Log Call', '.actionmenulink');
         $Sidebar->clickSideBarAction('Log');
         $I->waitForEditViewVisible();
@@ -54,6 +45,7 @@ class Calls extends \AcceptanceTester
         $Sidebar = new SideBar($this->getScenario());
         $faker = $this->getFaker();
 
+        $I->waitForText('Log Call', null, '.actionmenulink');
         $I->see('Log Call', '.actionmenulink');
         $Sidebar->clickSideBarAction('Log');
         $I->waitForEditViewVisible();
@@ -75,7 +67,6 @@ class Calls extends \AcceptanceTester
         $I->fillField('#parent_name', $module_name);
 
         $I->wait(2);
-
         $I->clickSaveButton();
         $DetailView->waitForDetailViewVisible();
     }

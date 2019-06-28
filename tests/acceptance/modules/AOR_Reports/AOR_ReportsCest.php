@@ -45,7 +45,7 @@ class AOR_ReportsCest
 
         // Navigate to reports list-view
         $I->loginAsAdmin();
-        $reports->gotoReports();
+        $I->visitPage('AOR_Reports', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Reports', '.module-title-text');
@@ -76,7 +76,7 @@ class AOR_ReportsCest
 
         // Navigate to reports list-view
         $I->loginAsAdmin();
-        $reports->gotoReports();
+        $I->visitPage('AOR_Reports', 'index');
         $listView->waitForListViewVisible();
 
         // Select create report from sidebar
@@ -119,7 +119,7 @@ class AOR_ReportsCest
 
         // Navigate to reports list-view
         $I->loginAsAdmin();
-        $reports->gotoReports();
+        $I->visitPage('AOR_Reports', 'index');
         $listView->waitForListViewVisible();
 
         // Select create report from sidebar
@@ -133,7 +133,7 @@ class AOR_ReportsCest
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
 
-        $reports->gotoReports();
+        $I->visitPage('AOR_Reports', 'index');
         $listView->waitForListViewVisible();
 
         $listView->clickNameLink($reportName);
@@ -169,7 +169,7 @@ class AOR_ReportsCest
 
         // Navigate to a report
         $I->loginAsAdmin();
-        $reports->gotoReports();
+        $I->visitPage('AOR_Reports', 'index');
         $listView->waitForListViewVisible();
 
         // Select create report from sidebar
@@ -220,7 +220,7 @@ class AOR_ReportsCest
 
         // Navigate to a report
         $I->loginAsAdmin();
-        $reports->gotoReports();
+        $I->visitPage('AOR_Reports', 'index');
         $listView->waitForListViewVisible();
 
         // Select create report from sidebar
@@ -273,7 +273,7 @@ class AOR_ReportsCest
 
         // Navigate to a report
         $I->loginAsAdmin();
-        $reports->gotoReports();
+        $I->visitPage('AOR_Reports', 'index');
         $listView->waitForListViewVisible();
 
         // Select create report from sidebar

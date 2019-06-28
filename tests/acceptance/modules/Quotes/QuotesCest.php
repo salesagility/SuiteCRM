@@ -45,7 +45,7 @@ class QuotesCest
 
         // Navigate to quotes list-view
         $I->loginAsAdmin();
-        $quotes->gotoQuotes();
+        $I->visitPage('AOS_Quotes', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Quotes', '.module-title-text');
