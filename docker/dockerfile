@@ -57,7 +57,7 @@ ENV ALLOW_EMPTY_PASSWORD="yes" \
   CURRENT_BRANCH=$current_branch
 
 # Get our dependancies
-RUN apt update && apt upgrade -y && apt install -y \
+RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
     libxml2-dev \
     zlib1g-dev \
     libzip-dev \
@@ -87,10 +87,9 @@ RUN apt update && apt upgrade -y && apt install -y \
     && rm -r /var/lib/apt/lists/*
 
 # Grab Suite from the master branch of our repository.
-RUN git clone -b ${current_branch} ${repository_url} /suitecrm
-
-# Create the missing cache dirs.
-RUN mkdir /suitecrm/cache/ \
+RUN git clone -b ${current_branch} ${repository_url} /suitecrm \
+    # Create the missing cache dirs.
+    && mkdir /suitecrm/cache/ \
     && mkdir /suitecrm/cache/images \
     && mkdir /suitecrm/cache/layout \
     && mkdir /suitecrm/cache/pdf \
@@ -100,10 +99,10 @@ RUN mkdir /suitecrm/cache/ \
 
 # Install Composer, we might consider adding any other Suite install Deps here
 # Composer should cover them all though.
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php composer-setup.php && php -r "unlink('composer-setup.php');"
-RUN php composer.phar update --no-plugins --no-scripts --working-dir=/suitecrm \
-    && php composer.phar install --no-plugins --no-scripts --working-dir=/suitecrm
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php && php -r "unlink('composer-setup.php');" \
+    && php composer.phar install --no-plugins --no-scripts --working-dir=/suitecrm \
+    && php composer.phar update --no-plugins --no-scripts --working-dir=/suitecrm
 
 # Create and Configure Apache Vhosts
 # HTTP
