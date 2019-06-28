@@ -86,6 +86,11 @@ RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
     # && docker-php-ext-install -j$(nproc) gd \
     && rm -r /var/lib/apt/lists/*
 
+# Install PHP Debug Tools
+RUN git clone https://github.com/xdebug/xdebug.git \
+    && cd xdebug \
+    && ./rebuild.sh
+
 # Grab Suite from the master branch of our repository.
 RUN git clone -b ${current_branch} ${repository_url} /suitecrm \
     # Create the missing cache dirs.
@@ -135,7 +140,7 @@ RUN chown -R www-data:www-data /suitecrm \
 
 # Start the SILENT install of SuiteCRM
 RUN cd /suitecrm \
-    && php -r "\$_SERVER['HTTP_HOST'] = 'localhost'; \$_SERVER['REQUEST_URI'] = 'install.php';\$_REQUEST = array('goto' => 'SilentInstall', 'cli' => true);require_once 'install.php';";
+    && php -r "\$_SERVER['HTTP_HOST'] = 'localhost'; \$_SERVER['REQUEST_URI'] = 'install.php';\$_REQUEST = array('goto' => 'SilentInstall', 'cli' => 'true');require_once 'install.php';";
 
 # Expose our appications ports
-EXPOSE 80 443
+EXPOSE 80 443 9000
