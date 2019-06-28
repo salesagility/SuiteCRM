@@ -46,7 +46,7 @@ build-dev-image:
     - export SUITE_MYSQL_PASSWORD=changeme
     - echo "MYSQL User Password- " $SUITE_MYSQL_PASSWORD
     - echo $BUILD_FROM_REPO/$BUILD_FROM_BRANCH
-    - docker-compose rm -v -f ./docker/docker-compose.yml up -d --build --force-recreate --always-recreate-deps
+    - docker-compose -f ./docker/docker-compose.yml up -d --build --force-recreate --always-recreate-deps
 
 deploy_prod:
   stage: deploy
