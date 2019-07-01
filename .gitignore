@@ -84,9 +84,10 @@ Desktop.ini
 *.sln
 *.suo
 *.phpproj
+
 # VSCode
 .vscode/
-docker/certs/
+
 
 # Disytel
 lang_cmp.php
@@ -130,3 +131,6 @@ include/Imap/ImapTestSettings.txt
 
 # Ignore php-cs-fixer cache
 .php_cs.cache
+
+# Docker Specifics
+docker/certs/
