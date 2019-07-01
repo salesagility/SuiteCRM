@@ -8,7 +8,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -43,10 +43,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $module_name = 'AOR_Scheduled_Reports';
-$layout_defs[$module_name] = array(
-    'subpanel_setup' => array(
-        'securitygroups' => array(
-            'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),
+$layout_defs[$module_name] = [
+    'subpanel_setup' => [
+        'securitygroups' => [
+            'top_buttons' => [['widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'],],
             'order' => 900,
             'sort_by' => 'name',
             'sort_order' => 'asc',
@@ -56,6 +56,6 @@ $layout_defs[$module_name] = array(
             'get_subpanel_data' => 'SecurityGroups',
             'add_subpanel_data' => 'securitygroup_id',
             'title_key' => 'LBL_SECURITYGROUPS_SUBPANEL_TITLE',
-        ),
-    ),
-);
+        ],
+    ],
+];

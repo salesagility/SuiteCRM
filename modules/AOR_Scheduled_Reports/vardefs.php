@@ -143,4 +143,4 @@ $dictionary['AOR_Scheduled_Reports'] = array(
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOR_Scheduled_Reports', 'AOR_Scheduled_Reports', array('basic', 'security_groups'));
+VardefManager::createVardef('AOR_Scheduled_Reports', 'AOR_Scheduled_Reports', ['basic', 'security_groups']);
