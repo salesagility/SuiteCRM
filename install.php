@@ -79,8 +79,6 @@ if (empty($session_id)) {
 $GLOBALS['installing'] = true;
 define('SUGARCRM_IS_INSTALLING', $GLOBALS['installing']);
 $GLOBALS['sql_queries'] = 0;
-$_REQUEST['js_admin_repair'] = 'mini';
-require_once 'modules/Administration/callJSRepair.php';
 require_once('include/SugarLogger/LoggerManager.php');
 require_once('sugar_version.php');
 require_once('suitecrm_version.php');
