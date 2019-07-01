@@ -43,13 +43,9 @@ class DocumentsCest
     ) {
         $I->wantTo('View the documents module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to documents list-view
         $I->loginAsAdmin();
-        $documents->gotoDocuments();
+        $I->visitPage('Documents', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Documents', '.module-title-text');

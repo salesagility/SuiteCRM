@@ -43,13 +43,9 @@ class jjwg_Address_CacheCest
     ) {
         $I->wantTo('View the mapsAddressCache module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to mapsAddressCache list-view
         $I->loginAsAdmin();
-        $mapsAddressCache->gotoMapsAddressCache();
+        $I->visitPage('jjwg_Address_Cache', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Maps - Address Cache', '.module-title-text');
@@ -74,13 +70,9 @@ class jjwg_Address_CacheCest
     ) {
         $I->wantTo('Create maps address cache');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to maps address cache list-view
         $I->loginAsAdmin();
-        $mapsAddressCache->gotoMapsAddressCache();
+        $I->visitPage('jjwg_Address_Cache', 'index');
         $listView->waitForListViewVisible();
 
         // Create maps address cache

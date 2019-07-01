@@ -43,13 +43,9 @@ class CampaignsCest
     ) {
         $I->wantTo('View the campaigns module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to campaigns list-view
         $I->loginAsAdmin();
-        $campaigns->gotoCampaigns();
+        $I->visitPage('Campaigns', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Campaigns', '.module-title-text');
@@ -74,13 +70,9 @@ class CampaignsCest
     ) {
         $I->wantTo('Create Non-Email Campaign');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to campaigns list-view
         $I->loginAsAdmin();
-        $campaign->gotoCampaigns();
+        $I->visitPage('Campaigns', 'index');
         $listView->waitForListViewVisible();
 
         // Create campaign
@@ -125,10 +117,6 @@ class CampaignsCest
     ) {
         $I->wantTo('Create Newsletter Campaign');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
 //        $I->loginAsAdmin();
 //
 //        // Setup email settings
@@ -136,7 +124,7 @@ class CampaignsCest
 //        $inboundEmailTester->createBounceEmail();
 //
 //        // Navigate to campaigns list-view
-//        $campaign->gotoCampaigns();
+//        $I->visitPage('Campaigns', 'index');
 //        $listView->waitForListViewVisible();
 //
 //        // Create Newsletter campaign
@@ -145,7 +133,7 @@ class CampaignsCest
 //        $campaign->createNewletterCampaign($name);
 //
 //        // Check that campaign is ready to send
-//        $campaign->gotoCampaigns();
+//        $I->visitPage('Campaigns', 'index');
 //        $listView->waitForListViewVisible();
 //        $listView->clickFilterButton();
 //        $I->click('Quick Filter');
@@ -157,7 +145,7 @@ class CampaignsCest
 //        $detailView->clickActionMenuItem('Launch Wizard');
 //        $I->wait(5);
 //        $I->dontSee('You cannot send a marketing email until your subscription list has at least one entry. You can populate your list after finishing.');
-//        $campaign->gotoCampaigns();
+//        $I->visitPage('Campaigns', 'index');
 //        $listView->clearFilterButton();
 //
 //        // Delete campaign

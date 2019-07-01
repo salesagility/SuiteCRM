@@ -43,13 +43,9 @@ class AOK_KnowledgeBaseCest
     ) {
         $I->wantTo('View the knowledgeBase module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to knowledgeBase list-view
         $I->loginAsAdmin();
-        $knowledgeBase->gotoKnowledgeBase();
+        $I->visitPage('AOK_KnowledgeBase', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Knowledge Base', '.module-title-text');
@@ -74,13 +70,9 @@ class AOK_KnowledgeBaseCest
     ) {
         $I->wantTo('Create a Knowledge Base');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to Knowledge Base list-view
         $I->loginAsAdmin();
-        $knowledgeBase->gotoKnowledgeBase();
+        $I->visitPage('AOK_KnowledgeBase', 'index');
         $listView->waitForListViewVisible();
 
         // Create Knowledge Base

@@ -70,6 +70,8 @@ Desktop.ini
 *.sln
 *.suo
 *.phpproj
+# Microsoft Visual Studio Code
+.vscode
 # Disytel
 lang_cmp.php
 .kdev4/

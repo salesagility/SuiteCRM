@@ -601,12 +601,12 @@ enableQS(false);
     public function getPostForm()
     {
         global $current_user;
-
-        if ((!empty($this->selectedCategories) && !in_array('UserFeed', $this->selectedCategories))
-            ) {
+        
+        if (!empty($this->selectedCategories) && !in_array('User Feed', $this->categories, true)) {
             // The user feed system isn't enabled, don't let them post notes
             return '';
         }
+        
         $user_name = ucfirst($GLOBALS['current_user']->user_name);
         $moreimg = SugarThemeRegistry::current()->getImage('advanced_search', 'onclick="toggleDisplay(\'more_' . $this->id . '\'); toggleDisplay(\'more_img_'.$this->id.'\'); toggleDisplay(\'less_img_'.$this->id.'\');"', null, null, '.gif', translate('LBL_SHOW_MORE_OPTIONS', 'SugarFeed'));
         $lessimg = SugarThemeRegistry::current()->getImage('basic_search', 'onclick="toggleDisplay(\'more_' . $this->id . '\'); toggleDisplay(\'more_img_'.$this->id.'\'); toggleDisplay(\'less_img_'.$this->id.'\');"', null, null, '.gif', translate('LBL_HIDE_OPTIONS', 'SugarFeed'));
