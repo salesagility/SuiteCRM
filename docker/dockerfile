@@ -50,11 +50,11 @@ ENV ALLOW_EMPTY_PASSWORD="yes" \
     # SUITECRM_SMTP_PROTOCOL="" \
     # SUITECRM_SMTP_USER="" \
     # SUITECRM_VALIDATE_USER_IP="yes" \
-    SITE_ADMIN_PASSWORD="password" \
     SITE_ADMIN_USER="user" \
+    SITE_ADMIN_PASSWORD="password" \
     SITE_URL="http://10.27.1.130:8580"\
     SITE_SYSTEM_NAME='SuiteCRM Docker Build' \
-  CURRENT_BRANCH=$current_branch
+    CURRENT_BRANCH=$current_branch
 
 # Get our dependancies
 RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
@@ -71,6 +71,7 @@ RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
     wget \
     ca-certificates \
     xz-utils \
+    openssl \
   # mod_ssl \
     && docker-php-ext-install -j$(nproc) dom \
     && docker-php-ext-install -j$(nproc) intl \
@@ -85,7 +86,14 @@ RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
     # && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     # && docker-php-ext-install -j$(nproc) gd \
     && rm -r /var/lib/apt/lists/* \
-    # Configure XDEBUG
+    # Generate Self Signed SSL
+    && openssl genrsa -des3 -passout pass:x -out server.pass.key 2048 \
+    && openssl rsa -passin pass:x -in server.pass.key -out server.key \
+    && rm server.pass.key \
+    openssl req -new -key server.key -out server.csr \
+        -subj "/C=USA/ST=Connecticut/L=Newtown/O=Sample Corp/OU=Software Department/CN=sample.com" \
+    && openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt \
+  # Configure XDEBUG
     && git clone https://github.com/xdebug/xdebug.git \
     && cd xdebug \
     && ./rebuild.sh \
@@ -108,9 +116,9 @@ RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
 
 # Create and Configure Apache Vhosts
 # HTTP
-COPY suite-vhost.conf /etc/apache2/sites-available/suite-vhost.conf
+COPY /suitecrm/docker/suite-vhost.conf /etc/apache2/sites-available/suite-vhost.conf
 # HTTPS
-COPY suite-https-vhost.conf /etc/apache2/sites-available/suite-https-vhost.conf
+# COPY /suitecrm/docker/suite-https-vhost.conf /etc/apache2/sites-available/suite-https-vhost.conf
 # COPY certs/cert.pem /opt/suitecrm/apache/conf/certs/cert.pem
 # COPY certs/key.pem /opt/suitecrm/apache/conf/certs/key.pem
 # Add our php.ini configuration.
