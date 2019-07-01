@@ -84,15 +84,13 @@ RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
     && docker-php-ext-install -j$(nproc) pdo_mysql \
     # && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     # && docker-php-ext-install -j$(nproc) gd \
-    && rm -r /var/lib/apt/lists/*
-
-# Install PHP Debug Tools
-RUN git clone https://github.com/xdebug/xdebug.git \
+    && rm -r /var/lib/apt/lists/* \
+    # Configure XDEBUG
+    && git clone https://github.com/xdebug/xdebug.git \
     && cd xdebug \
-    && ./rebuild.sh
-
-# Grab Suite from the master branch of our repository.
-RUN git clone -b ${current_branch} ${repository_url} /suitecrm \
+    && ./rebuild.sh \
+    # Grab Suite from the master branch of our repository.
+    && git clone -b ${current_branch} ${repository_url} /suitecrm \
     # Create the missing cache dirs.
     && mkdir /suitecrm/cache/ \
     && mkdir /suitecrm/cache/images \
@@ -100,11 +98,10 @@ RUN git clone -b ${current_branch} ${repository_url} /suitecrm \
     && mkdir /suitecrm/cache/pdf \
     && mkdir /suitecrm/cache/xml \
     && mkdir /suitecrm/cache/include \
-    && mkdir /suitecrm/cache/include/javascript
-
-# Install Composer, we might consider adding any other Suite install Deps here
-# Composer should cover them all though.
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && mkdir /suitecrm/cache/include/javascript \
+    # Install Composer, we might consider adding any other Suite install Deps here
+    # Composer should cover them all though.
+    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php && php -r "unlink('composer-setup.php');" \
     && php composer.phar install --no-plugins --no-scripts --working-dir=/suitecrm \
     && php composer.phar update --no-plugins --no-scripts --working-dir=/suitecrm
@@ -114,18 +111,15 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 COPY suite-vhost.conf /etc/apache2/sites-available/suite-vhost.conf
 # HTTPS
 COPY suite-https-vhost.conf /etc/apache2/sites-available/suite-https-vhost.conf
-COPY certs/cert.pem /opt/suitecrm/apache/conf/certs/cert.pem
-COPY certs/key.pem /opt/suitecrm/apache/conf/certs/key.pem
-# Enable Sites
-RUN a2ensite suite-vhost.conf \
-    && a2ensite suite-https-vhost.conf \
-    && a2enmod ssl \
-    && service apache2 restart
-
+# COPY certs/cert.pem /opt/suitecrm/apache/conf/certs/cert.pem
+# COPY certs/key.pem /opt/suitecrm/apache/conf/certs/key.pem
 # Add our php.ini configuration.
 COPY suite-php.ini /usr/local/etc/php/conf.d/suite-php.ini
-# Enable a php.ini to override.
+# Enable a php.ini to override, and Enable Sites
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
+    a2ensite suite-vhost.conf \
+    && a2ensite suite-https-vhost.conf \
+    && a2enmod ssl \
     && service apache2 restart
 # Add our configuration(s)
 # COPY config_bn.php /suitecrm/config_si.php
