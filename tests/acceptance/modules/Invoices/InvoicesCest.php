@@ -43,13 +43,9 @@ class InvoicesCest
     ) {
         $I->wantTo('View the invoices module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to invoices list-view
         $I->loginAsAdmin();
-        $invoices->gotoInvoices();
+        $I->visitPage('AOS_Invoices', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Invoices', '.module-title-text');
@@ -74,13 +70,9 @@ class InvoicesCest
     ) {
         $I->wantTo('Create an Invoice');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to invoices list-view
         $I->loginAsAdmin();
-        $invoice->gotoInvoices();
+        $I->visitPage('AOS_Invoices', 'index');
         $listView->waitForListViewVisible();
 
         // Create invoice
@@ -113,13 +105,9 @@ class InvoicesCest
     ) {
         $I->wantTo('Create an Invoice');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to invoices list-view
         $I->loginAsAdmin();
-        $invoice->gotoInvoices();
+        $I->visitPage('AOS_Invoices', 'index');
         $listView->waitForListViewVisible();
 
         // Create invoice

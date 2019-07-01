@@ -43,13 +43,9 @@ class CasesCest
     ) {
         $I->wantTo('View the cases module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to cases list-view
         $I->loginAsAdmin();
-        $cases->gotoCases();
+        $I->visitPage('Cases', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Cases', '.module-title-text');
@@ -76,13 +72,9 @@ class CasesCest
     ) {
         $I->wantTo('Create a Case');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $account->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -91,7 +83,7 @@ class CasesCest
         $account->createAccount($account_name);
 
         // Navigate to cases list-view
-        $cases->gotoCases();
+        $I->visitPage('Cases', 'index');
         $listView->waitForListViewVisible();
 
         // Create case
@@ -104,7 +96,7 @@ class CasesCest
         $listView->waitForListViewVisible();
 
         // Delete account
-        $account->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
         $listView->clickFilterButton();
         $I->fillField('#name_basic', $account_name);

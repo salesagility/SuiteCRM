@@ -43,13 +43,9 @@ class EmailTemplatesCest
     ) {
         $I->wantTo('View the emailTemplate module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to emailTemplate list-view
         $I->loginAsAdmin();
-        $emailTemplate->gotoEmailTemplates();
+        $I->visitPage('EmailTemplates', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Email - Templates', '.module-title-text');

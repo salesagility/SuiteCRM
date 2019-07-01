@@ -43,13 +43,9 @@ class ContractsCest
     ) {
         $I->wantTo('View the contracts module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to contracts list-view
         $I->loginAsAdmin();
-        $contracts->gotoContracts();
+        $I->visitPage('AOS_Contracts', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Contracts', '.module-title-text');
@@ -76,13 +72,9 @@ class ContractsCest
     ) {
         $I->wantTo('Create a Contract');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $account->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -91,7 +83,7 @@ class ContractsCest
         $account->createAccount($account_name);
 
         // Navigate to contracts list-view
-        $contract->gotoContracts();
+        $I->visitPage('AOS_Contracts', 'index');
         $listView->waitForListViewVisible();
 
         // Create contract
@@ -104,7 +96,7 @@ class ContractsCest
         $listView->waitForListViewVisible();
 
         // Delete account
-        $account->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
         $listView->clickFilterButton();
         $I->fillField('#name_basic', $account_name);

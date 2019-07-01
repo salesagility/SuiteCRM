@@ -43,13 +43,9 @@ class SurveysCest
     ) {
         $I->wantTo('View the surveys module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to surveys list-view
         $I->loginAsAdmin();
-        $surveys->gotoSurveys();
+        $I->visitPage('Surveys', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Surveys', '.module-title-text');
