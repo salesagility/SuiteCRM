@@ -34,6 +34,8 @@ services:
     ports:
       - '8580:80'
       - '8543:443'
+    expose:
+      - '9000'
     volumes:
       - 'suite_os_data:/certs'
     depends_on:
