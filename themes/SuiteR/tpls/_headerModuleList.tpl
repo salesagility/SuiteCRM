@@ -220,7 +220,7 @@
                                                     <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
                                                 </li>
                                                 <li class="recentlinks_top" role="presentation">
-                                                    <a title="{$item.module_name}" accessKey="{$smarty.foreach.lastViewed.iteration}" href="{sugar_link module=$item.module action='DetailView' record=$item.id link_only=1}">{$item.item_summary_short}</a>
+                                                    <a title="{$item.module_name}" accessKey="{$smarty.foreach.lastViewed.iteration}" href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}">{$item.item_summary_short}</a>
                                                 </li>
                                             </div>
                                         {/if}
