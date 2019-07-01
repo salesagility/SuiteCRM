@@ -43,20 +43,18 @@ class HomeCest
     ) {
         $I->wantTo('Create a chart dashlet on the dashboard');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to dashboard
         $I->loginAsAdmin();
         $dashboard->waitForDashboardVisible();
         $detailView->clickActionMenuItem('Add Dashlets');
-        $I->wait(1);
+        $I->waitForElementVisible('#chartCategory');
         $I->click('#chartCategory');
+        $I->waitForText('All Opportunities By Lead Source By Outcome');
         $I->click('All Opportunities By Lead Source By Outcome');
         $I->click('Close');
         $dashboard->waitForDashboardVisible();
-        $I->wait(1);
+        // This has to be uppercase because Codeception is case sensitive in waitForText... for some reason.
+        $I->waitForText('ALL OPPORTUNITIES BY LEAD SOURCE BY OUTCOME');
         $I->see('All Opportunities By Lead Source By Outcome');
         $dashboardID = $I->grabAttributeFrom('descendant-or-self::div[@class="dashletPanel"]', 'id');
         if ($dashboardID != "") {

@@ -43,13 +43,9 @@ class jjwg_MarkersCest
     ) {
         $I->wantTo('View the mapsMarkers module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to mapsMarkers list-view
         $I->loginAsAdmin();
-        $mapsMarkers->gotoMapsMarkers();
+        $I->visitPage('jjwg_Markers', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Maps - Markers', '.module-title-text');
@@ -74,13 +70,9 @@ class jjwg_MarkersCest
     ) {
         $I->wantTo('Create a Map Marker');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to map markers list-view
         $I->loginAsAdmin();
-        $mapMarker->gotoMapsMarkers();
+        $I->visitPage('jjwg_Markers', 'index');
         $listView->waitForListViewVisible();
 
         // Create map marker

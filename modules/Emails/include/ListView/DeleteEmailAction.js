@@ -1,10 +1,10 @@
-<?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,25 +33,64 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/* bootstrap composer's autoloader */
-require_once __DIR__ . '/../vendor/autoload.php';
 
-/* bootstrap sugarcrm */
-error_reporting(E_ALL);
-define('sugarEntry', true);
-global $sugar_config, $db;
-require_once __DIR__ . '/../include/utils.php';
-require_once __DIR__ . '/../include/modules.php';
-require_once __DIR__ . '/../include/entryPoint.php';
-//Oddly entry point loads app_strings but not app_list_strings, manually do this here.
-$GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['current_language']);
+(function ($) {
+  /**
+   *
+   * @param options
+   * @return {*|HTMLElement}
+   */
+  $.fn.DeleteEmailAction = function (options) {
+    "use strict";
+    let self = this;
+    let opts = $.extend({}, $.fn.DeleteEmailAction.defaults, options);
 
-/* VERY BAD :-( - but for now at least tests are running */
-$GLOBALS['sugar_config']['resource_management']['default_limit'] = 999999;
+    self.handleClick = function () {
+      "use strict";
 
+      SUGAR.Emails.handleSelectedListViewItems(
+        'Emails',
+        'DeleteFromImap',
+        function () {
+          window.location.reload();
+        },
+        false,
+        SUGAR.language.translate('Emails', 'LBL_DELETING'),
+        'Error deleting emails.'
+      );
 
-define('SUITE_PHPUNIT_RUNNER', true);
+    };
+
+    /**
+     * @constructor
+     */
+    self.construct = function () {
+      "use strict";
+      $(opts.buttonSelector).click(self.handleClick);
+    };
+
+    /**
+     * @destructor
+     */
+    self.destruct = function() {
+
+    };
+
+    self.construct();
+    return $(self);
+  };
+
+  $.fn.DeleteEmailAction.defaults = {
+    'buttonSelector': '[data-action=emails-delete-multiple]',
+    'contentSelector': '#content',
+    'defaultFolder': 'INBOX'
+  };
+}(jQuery));
+
+$(document).ready(function () {
+  $(document).DeleteEmailAction();
+});

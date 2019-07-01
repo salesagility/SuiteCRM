@@ -43,13 +43,9 @@ class ProjectsCest
     ) {
         $I->wantTo('View the projects module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to projects list-view
         $I->loginAsAdmin();
-        $projects->gotoProjects();
+        $I->visitPage('Project', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Projects', '.module-title-text');
@@ -74,13 +70,9 @@ class ProjectsCest
     ) {
         $I->wantTo('Create a Project');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to projects list-view
         $I->loginAsAdmin();
-        $project->gotoProjects();
+        $I->visitPage('Project', 'index');
         $listView->waitForListViewVisible();
 
         // Create project

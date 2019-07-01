@@ -43,13 +43,9 @@ class SpotsCest
     ) {
         $I->wantTo('View the spots module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to spots list-view
         $I->loginAsAdmin();
-        $spots->gotoSpots();
+        $I->visitPage('Spots', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Spots', '.module-title-text');

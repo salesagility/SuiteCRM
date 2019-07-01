@@ -1,4 +1,4 @@
-## SuiteCRM 7.10.17
+## SuiteCRM 7.10.18
 
 [![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=hotfix-7.10.x)](https://travis-ci.org/salesagility/SuiteCRM)
 [![codecov](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix/graph/badge.svg)](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix)
@@ -11,6 +11,10 @@ This is the git repository for the SuiteCRM project, the award-winning, enterpri
 This repository has been created to allow community members to collaborate and contribute to the project, helping to develop the SuiteCRM ecosystem.
 
 ### Contributing to the project ###
+
+#### Making a Pull Request ####
+
+The [contributing code](https://docs.suitecrm.com/community/contributing-code/) documentation page will provide all the details you need to know about coding standards, which branch to direct your PR to (depending on whether it's a bug fix or a new feature), testing, etc.
 
 #### Security ####
 

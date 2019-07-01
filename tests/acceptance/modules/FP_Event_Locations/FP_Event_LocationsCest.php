@@ -43,13 +43,9 @@ class LocationsCest
     ) {
         $I->wantTo('View the locations module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to locations list-view
         $I->loginAsAdmin();
-        $locations->gotoLocations();
+        $I->visitPage('FP_Event_Locations', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Locations', '.module-title-text');
@@ -74,13 +70,9 @@ class LocationsCest
     ) {
         $I->wantTo('Create a Location');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to locations list-view
         $I->loginAsAdmin();
-        $location->gotoLocations();
+        $I->visitPage('FP_Event_Locations', 'index');
         $listView->waitForListViewVisible();
 
         // Create location

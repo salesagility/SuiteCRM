@@ -9,8 +9,6 @@ class StringValidatorTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     protected $tester;
 
-
-
     public function testStartsWith()
     {
         $testString = 'foobarbaz';

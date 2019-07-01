@@ -1508,7 +1508,7 @@ eoq;
             $ieId = $_REQUEST['ieId'];
             $ie->retrieve($ieId);
 
-            if ($ie->group_id == $current_user->id) {
+            if (($ie->group_id == $current_user->id) || ($current_user->is_admin)) {
                 $ret = array();
 
                 foreach ($ie->field_defs as $k => $v) {

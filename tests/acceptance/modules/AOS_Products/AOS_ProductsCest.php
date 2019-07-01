@@ -43,13 +43,9 @@ class ProductsCest
     ) {
         $I->wantTo('View the products module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to products list-view
         $I->loginAsAdmin();
-        $products->gotoProducts();
+        $I->visitPage('AOS_Products', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Products', '.module-title-text');
@@ -74,13 +70,9 @@ class ProductsCest
     ) {
         $I->wantTo('Create a product');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to products list-view
         $I->loginAsAdmin();
-        $product->gotoProducts();
+        $I->visitPage('AOS_Products', 'index');
         $listView->waitForListViewVisible();
 
         // Create product

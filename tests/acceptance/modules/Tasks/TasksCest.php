@@ -43,13 +43,9 @@ class TasksCest
     ) {
         $I->wantTo('View the tasks module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to tasks list-view
         $I->loginAsAdmin();
-        $tasks->gotoTasks();
+        $I->visitPage('Tasks', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Tasks', '.module-title-text');

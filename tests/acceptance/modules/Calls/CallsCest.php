@@ -41,13 +41,9 @@ class CallsCest
     ) {
         $I->wantTo('View the calls module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to calls list-view
         $I->loginAsAdmin();
-        $calls->gotoCalls();
+        $I->visitPage('Calls', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Calls', '.module-title-text');
@@ -73,13 +69,9 @@ class CallsCest
     ) {
         $I->wantTo('Create a call');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to Calls
         $I->loginAsAdmin();
-        $NavigationBar->clickAllMenuItem('Calls');
+        $I->visitPage('Calls', 'index');
 
         // Create call
         $this->fakeData->seed($this->fakeDataSeed);
