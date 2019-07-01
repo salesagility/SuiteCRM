@@ -87,8 +87,8 @@ RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
     # && docker-php-ext-install -j$(nproc) gd \
     && rm -r /var/lib/apt/lists/* \
     # Generate Self Signed SSL
-    && openssl genrsa -des3 -passout pass:x -out server.pass.key 2048 \
-    && openssl rsa -passin pass:x -in server.pass.key -out server.key \
+    && openssl genrsa -des3 -passout pass:dockerself -out server.pass.key 2048 \
+    && openssl rsa -passin pass:dockerself -in server.pass.key -out server.key \
     && rm server.pass.key \
     openssl req -new -key server.key -out server.csr \
         -subj "/C=USA/ST=Connecticut/L=Newtown/O=Sample Corp/OU=Software Department/CN=sample.com" \
