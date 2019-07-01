@@ -91,7 +91,7 @@ RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
     && openssl rsa -passin pass:dockerself -in server.pass.key -out server.key \
     && rm server.pass.key \
     && openssl req -new -key server.key -out server.csr \
-        -subj "/C=USA/ST=Connecticut/L=Newtown/O=Sample Corp/OU=Software Department/CN=sample.com" \
+        -subj "/C=US/ST=Connecticut/L=Newtown/O=Sample Corp/OU=Software Department/CN=sample.com" \
     && openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt \
   # Configure XDEBUG
     && git clone https://github.com/xdebug/xdebug.git \
