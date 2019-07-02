@@ -60,19 +60,19 @@ ENV ALLOW_EMPTY_PASSWORD="yes" \
 RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
     libxml2-dev \
     zlib1g-dev \
-    libzip-dev \
-    libcurl4-gnutls-dev \
-    libjpeg-dev \
-    libpng-dev \
-    libc-client-dev \
-    libkrb5-dev \
+    # libzip-dev \
+    # libcurl4-gnutls-dev \
+    # libjpeg-dev \
+    # libpng-dev \
+    # libc-client-dev \
+    # libkrb5-dev \
     git \
-    curl \
-    wget \
+    # curl \
+    # wget \
     ca-certificates \
-    xz-utils \
+    # xz-utils \
     openssl \
-  # mod_ssl \
+    # mod_ssl \
     && docker-php-ext-install -j$(nproc) dom \
     && docker-php-ext-install -j$(nproc) intl \
     && docker-php-ext-install -j$(nproc) zip \
@@ -112,7 +112,7 @@ RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
     && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php && php -r "unlink('composer-setup.php');" \
     && php composer.phar install --no-plugins --no-scripts --working-dir=/suitecrm \
-    && php composer.phar update --no-plugins --no-scripts --working-dir=/suitecrm
+    && php composer.phar update --no-plugins --no-scripts --working-dir=/suitecrm 
 
 # Create and Configure Apache Vhosts
 # HTTP
@@ -125,8 +125,8 @@ COPY suite-vhost.conf /etc/apache2/sites-available/suite-vhost.conf
 COPY suite-php.ini /usr/local/etc/php/conf.d/suite-php.ini
 # Enable a php.ini to override, and Enable Sites
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
-    a2ensite suite-vhost.conf \
-    && a2ensite suite-https-vhost.conf \
+    && a2ensite suite-vhost.conf \
+    # && a2ensite suite-https-vhost.conf \
     && a2enmod ssl \
     && service apache2 restart
 # Add our configuration(s)
