@@ -116,7 +116,7 @@ RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
 
 # Create and Configure Apache Vhosts
 # HTTP
-COPY /suitecrm/docker/suite-vhost.conf /etc/apache2/sites-available/suite-vhost.conf
+COPY suite-vhost.conf /etc/apache2/sites-available/suite-vhost.conf
 # HTTPS
 # COPY /suitecrm/docker/suite-https-vhost.conf /etc/apache2/sites-available/suite-https-vhost.conf
 # COPY certs/cert.pem /opt/suitecrm/apache/conf/certs/cert.pem
