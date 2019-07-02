@@ -105,7 +105,8 @@ RUN mkdir /suitecrm/cache/ \
     && mkdir /suitecrm/cache/include/javascript
 
     # Generate Self Signed SSL
-RUN cd /suitecrm/docker/certs \
+RUN mkdir /suitecrm/docker/certs \
+    && cd /suitecrm/docker/certs \
     && openssl genrsa -des3 -passout pass:dockerself -out server.pass.key 2048 \
     && openssl rsa -passin pass:dockerself -in server.pass.key -out server.key \
     && rm server.pass.key \
