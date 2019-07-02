@@ -121,9 +121,7 @@ RUN mkdir /suitecrm/docker/certs \
     && rm server.pass.key \
     && openssl req -new -key server.key -out server.csr \
         -subj "/C=US/ST=Connecticut/L=Newtown/O=Sample Corp/OU=Software Department/CN=sample.com" \
-    && openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt \
-    && cp server.crt /opt/suitecrm/apache/conf/certs/cert.pem \
-    && cp server.key /opt/suitecrm/apache/conf/certs/key.pem
+    && openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
 
 # Create and Configure Apache Vhosts
 # HTTP
