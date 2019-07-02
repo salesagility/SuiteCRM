@@ -87,14 +87,6 @@ RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
     # && docker-php-ext-install -j$(nproc) gd \
     && rm -r /var/lib/apt/lists/*
 
-    # Generate Self Signed SSL
-RUN openssl genrsa -des3 -passout pass:dockerself -out server.pass.key 2048 \
-    && openssl rsa -passin pass:dockerself -in server.pass.key -out server.key \
-    && rm server.pass.key \
-    && openssl req -new -key server.key -out server.csr \
-        -subj "/C=US/ST=Connecticut/L=Newtown/O=Sample Corp/OU=Software Department/CN=sample.com" \
-    && openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
-
     # Configure XDEBUG
 RUN git clone https://github.com/xdebug/xdebug.git \
     && cd xdebug \
@@ -112,10 +104,20 @@ RUN mkdir /suitecrm/cache/ \
     && mkdir /suitecrm/cache/include \
     && mkdir /suitecrm/cache/include/javascript
 
+    # Generate Self Signed SSL
+RUN cd /suitecrm/docker/certs \
+    && openssl genrsa -des3 -passout pass:dockerself -out server.pass.key 2048 \
+    && openssl rsa -passin pass:dockerself -in server.pass.key -out server.key \
+    && rm server.pass.key \
+    && openssl req -new -key server.key -out server.csr \
+        -subj "/C=US/ST=Connecticut/L=Newtown/O=Sample Corp/OU=Software Department/CN=sample.com" \
+    && openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+
     # Install Composer, we might consider adding any
     # other Suite install Deps here
     # Composer should cover them all though.
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+RUN cd /suitecrm/docker \
+    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php && php -r "unlink('composer-setup.php');" \
     && php composer.phar install --no-plugins --no-scripts --working-dir=/suitecrm \
     && php composer.phar update --no-plugins --no-scripts --working-dir=/suitecrm 
@@ -125,8 +127,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 COPY suite-vhost.conf /etc/apache2/sites-available/suite-vhost.conf
 # HTTPS
 COPY suite-https-vhost.conf /etc/apache2/sites-available/suite-https-vhost.conf
-COPY /var/www/html/server.crt /opt/suitecrm/apache/conf/certs/cert.pem
-COPY /var/www/html/server.key /opt/suitecrm/apache/conf/certs/key.pem
+COPY /suitecrm/docker/certs/server.crt /opt/suitecrm/apache/conf/certs/cert.pem
+COPY /suitecrm/docker/certs/server.key /opt/suitecrm/apache/conf/certs/key.pem
 # Add our php.ini configuration.
 COPY suite-php.ini /usr/local/etc/php/conf.d/suite-php.ini
 # Enable a php.ini to override, and Enable Sites
