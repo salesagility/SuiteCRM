@@ -104,6 +104,15 @@ RUN mkdir /suitecrm/cache/ \
     && mkdir /suitecrm/cache/include \
     && mkdir /suitecrm/cache/include/javascript
 
+    # Install Composer, we might consider adding any
+    # other Suite install Deps here
+    # Composer should cover them all though.
+RUN cd /suitecrm/docker \
+    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php && php -r "unlink('composer-setup.php');" \
+    && php composer.phar install --no-plugins --no-scripts --working-dir=/suitecrm \
+    && php composer.phar update --no-plugins --no-scripts --working-dir=/suitecrm 
+
     # Generate Self Signed SSL
 RUN mkdir /suitecrm/docker/certs \
     && cd /suitecrm/docker/certs \
@@ -115,15 +124,6 @@ RUN mkdir /suitecrm/docker/certs \
     && openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt \
     && cp server.crt /opt/suitecrm/apache/conf/certs/cert.pem \
     && cp server.key /opt/suitecrm/apache/conf/certs/key.pem
-
-    # Install Composer, we might consider adding any
-    # other Suite install Deps here
-    # Composer should cover them all though.
-RUN cd /suitecrm/docker \
-    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php composer-setup.php && php -r "unlink('composer-setup.php');" \
-    && php composer.phar install --no-plugins --no-scripts --working-dir=/suitecrm \
-    && php composer.phar update --no-plugins --no-scripts --working-dir=/suitecrm 
 
 # Create and Configure Apache Vhosts
 # HTTP
