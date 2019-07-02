@@ -112,7 +112,9 @@ RUN mkdir /suitecrm/docker/certs \
     && rm server.pass.key \
     && openssl req -new -key server.key -out server.csr \
         -subj "/C=US/ST=Connecticut/L=Newtown/O=Sample Corp/OU=Software Department/CN=sample.com" \
-    && openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+    && openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt \
+    && cp server.crt /opt/suitecrm/apache/conf/certs/cert.pem \
+    && cp server.key /opt/suitecrm/apache/conf/certs/key.pem
 
     # Install Composer, we might consider adding any
     # other Suite install Deps here
@@ -128,8 +130,9 @@ RUN cd /suitecrm/docker \
 COPY suite-vhost.conf /etc/apache2/sites-available/suite-vhost.conf
 # HTTPS
 COPY suite-https-vhost.conf /etc/apache2/sites-available/suite-https-vhost.conf
-COPY /suitecrm/docker/certs/server.crt /opt/suitecrm/apache/conf/certs/cert.pem
-COPY /suitecrm/docker/certs/server.key /opt/suitecrm/apache/conf/certs/key.pem
+# If we're supplying certs...
+# COPY server.crt /opt/suitecrm/apache/conf/certs/cert.pem
+# COPY server.key /opt/suitecrm/apache/conf/certs/key.pem
 # Add our php.ini configuration.
 COPY suite-php.ini /usr/local/etc/php/conf.d/suite-php.ini
 # Enable a php.ini to override, and Enable Sites
