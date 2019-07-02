@@ -762,8 +762,8 @@ $dictionary['User'] = array(
                 'user_name',
                 'is_group',
                 'status',
-                'last_name',
-                'first_name',
+                'last_name (100)',
+                'first_name (100)',
                 'id'
             )
         ),
