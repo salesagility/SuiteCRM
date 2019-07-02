@@ -125,8 +125,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 COPY suite-vhost.conf /etc/apache2/sites-available/suite-vhost.conf
 # HTTPS
 COPY suite-https-vhost.conf /etc/apache2/sites-available/suite-https-vhost.conf
-COPY server.crt /opt/suitecrm/apache/conf/certs/cert.pem
-COPY server.key /opt/suitecrm/apache/conf/certs/key.pem
+COPY /var/www/html/server.crt /opt/suitecrm/apache/conf/certs/cert.pem
+COPY /var/www/html/server.key /opt/suitecrm/apache/conf/certs/key.pem
 # Add our php.ini configuration.
 COPY suite-php.ini /usr/local/etc/php/conf.d/suite-php.ini
 # Enable a php.ini to override, and Enable Sites
