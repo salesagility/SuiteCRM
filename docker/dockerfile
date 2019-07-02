@@ -58,10 +58,10 @@ ENV ALLOW_EMPTY_PASSWORD="yes" \
 
 # Get our dependancies
 RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
-    # libxml2-dev \
+    libxml2-dev \
     # zlib1g-dev \
-    # # libzip-dev \
-    # # libcurl4-gnutls-dev \
+    # libzip-dev \
+    # libcurl4-gnutls-dev \
     # libjpeg-dev \
     # libpng-dev \
     # libc-client-dev \
