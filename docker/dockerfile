@@ -1,5 +1,5 @@
 FROM php:7.3-apache
-LABEL maintainer "Mark N Carpenter Jr <mcarpenter@smtcorp.com>"
+LABEL maintainer="Mark N Carpenter Jr <mcarpenter@smtcorp.com>"
 
 ARG current_branch=master
 ARG repository_url="https://github.com/salesagility/SuiteCRM.git"
@@ -60,17 +60,17 @@ ENV ALLOW_EMPTY_PASSWORD="yes" \
 RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
     libxml2-dev \
     zlib1g-dev \
-    # libzip-dev \
-    # libcurl4-gnutls-dev \
-    # libjpeg-dev \
-    # libpng-dev \
-    # libc-client-dev \
-    # libkrb5-dev \
+    libzip-dev \
+    libcurl4-gnutls-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libc-client-dev \
+    libkrb5-dev \
     git \
-    # curl \
-    # wget \
+    curl \
+    wget \
     ca-certificates \
-    # xz-utils \
+    xz-utils \
     openssl \
     # mod_ssl \
     && docker-php-ext-install -j$(nproc) dom \
@@ -85,31 +85,37 @@ RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
     && docker-php-ext-install -j$(nproc) pdo_mysql \
     # && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     # && docker-php-ext-install -j$(nproc) gd \
-    && rm -r /var/lib/apt/lists/* \
+    && rm -r /var/lib/apt/lists/*
+
     # Generate Self Signed SSL
-    && openssl genrsa -des3 -passout pass:dockerself -out server.pass.key 2048 \
+RUN openssl genrsa -des3 -passout pass:dockerself -out server.pass.key 2048 \
     && openssl rsa -passin pass:dockerself -in server.pass.key -out server.key \
     && rm server.pass.key \
     && openssl req -new -key server.key -out server.csr \
         -subj "/C=US/ST=Connecticut/L=Newtown/O=Sample Corp/OU=Software Department/CN=sample.com" \
-    && openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt \
-  # Configure XDEBUG
-    && git clone https://github.com/xdebug/xdebug.git \
+    && openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+
+    # Configure XDEBUG
+RUN git clone https://github.com/xdebug/xdebug.git \
     && cd xdebug \
-    && ./rebuild.sh \
+    && ./rebuild.sh
+
     # Grab Suite from the master branch of our repository.
-    && git clone -b ${current_branch} ${repository_url} /suitecrm \
+RUN git clone -b ${current_branch} ${repository_url} /suitecrm
+
     # Create the missing cache dirs.
-    && mkdir /suitecrm/cache/ \
+RUN mkdir /suitecrm/cache/ \
     && mkdir /suitecrm/cache/images \
     && mkdir /suitecrm/cache/layout \
     && mkdir /suitecrm/cache/pdf \
     && mkdir /suitecrm/cache/xml \
     && mkdir /suitecrm/cache/include \
-    && mkdir /suitecrm/cache/include/javascript \
-    # Install Composer, we might consider adding any other Suite install Deps here
+    && mkdir /suitecrm/cache/include/javascript
+
+    # Install Composer, we might consider adding any
+    # other Suite install Deps here
     # Composer should cover them all though.
-    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php && php -r "unlink('composer-setup.php');" \
     && php composer.phar install --no-plugins --no-scripts --working-dir=/suitecrm \
     && php composer.phar update --no-plugins --no-scripts --working-dir=/suitecrm 
