@@ -126,7 +126,7 @@ COPY suite-php.ini /usr/local/etc/php/conf.d/suite-php.ini
 # Enable a php.ini to override, and Enable Sites
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
     && a2ensite suite-vhost.conf \
-    && a2ensite suite-https-vhost.conf \
+    # && a2ensite suite-https-vhost.conf \
     && a2enmod ssl \
     && service apache2 restart
 # Add our configuration(s)
