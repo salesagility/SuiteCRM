@@ -58,21 +58,21 @@ ENV ALLOW_EMPTY_PASSWORD="yes" \
 
 # Get our dependancies
 RUN apt update && apt upgrade -y && apt install --no-install-recommends -y \
-    libxml2-dev \
-    zlib1g-dev \
-    libzip-dev \
-    libcurl4-gnutls-dev \
-    libjpeg-dev \
-    libpng-dev \
-    libc-client-dev \
-    libkrb5-dev \
+    # libxml2-dev \
+    # zlib1g-dev \
+    # # libzip-dev \
+    # # libcurl4-gnutls-dev \
+    # libjpeg-dev \
+    # libpng-dev \
+    # libc-client-dev \
+    # libkrb5-dev \
     git \
-    curl \
-    wget \
+    # curl \
+    # wget \
     ca-certificates \
-    xz-utils \
+    # xz-utils \
     openssl \
-  # mod_ssl \
+    # mod_ssl \
     && docker-php-ext-install -j$(nproc) dom \
     && docker-php-ext-install -j$(nproc) intl \
     && docker-php-ext-install -j$(nproc) zip \
