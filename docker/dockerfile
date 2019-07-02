@@ -124,17 +124,18 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 # HTTP
 COPY suite-vhost.conf /etc/apache2/sites-available/suite-vhost.conf
 # HTTPS
-# COPY /suitecrm/docker/suite-https-vhost.conf /etc/apache2/sites-available/suite-https-vhost.conf
-# COPY certs/cert.pem /opt/suitecrm/apache/conf/certs/cert.pem
-# COPY certs/key.pem /opt/suitecrm/apache/conf/certs/key.pem
+COPY /suitecrm/docker/suite-https-vhost.conf /etc/apache2/sites-available/suite-https-vhost.conf
+COPY /var/www/html/server.crt /opt/suitecrm/apache/conf/certs/cert.pem
+COPY /var/www/html/server.key /opt/suitecrm/apache/conf/certs/key.pem
 # Add our php.ini configuration.
 COPY suite-php.ini /usr/local/etc/php/conf.d/suite-php.ini
 # Enable a php.ini to override, and Enable Sites
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
     && a2ensite suite-vhost.conf \
-    # && a2ensite suite-https-vhost.conf \
+    && a2ensite suite-https-vhost.conf \
     && a2enmod ssl \
     && service apache2 restart
+    
 # Add our configuration(s)
 # COPY config_bn.php /suitecrm/config_si.php
 COPY config_si.php /suitecrm/config_si.php
