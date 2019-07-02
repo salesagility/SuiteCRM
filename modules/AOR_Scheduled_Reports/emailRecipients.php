@@ -47,7 +47,7 @@ function display_email_lines($focus, $field, $value, $view)
         $html = '<script src="' . getVersionedPath('modules/AOR_Scheduled_Reports/emailRecipients.js') . '"></script>';
         $html .= '<input type="hidden" name="aor_email_type_list" id="aor_email_type_list" value="' . get_select_options_with_id($app_list_strings['aor_email_type_list'], '') . '">';
 
-        $html .= '<button type="button" onclick="add_emailLine()"><img src="' . SugarThemeRegistry::current()->getImageURL('id-ff-add.png') . '"></button>';
+        $html .= '<button type="button" class="btn btn-danger email-address-add-button" onclick="add_emailLine()"><span class="suitepicon suitepicon-action-plus"></span></button>';
         $html .= '<table id="emailLine_table" width="100%"></table>';
 
         $html .= '<input type="hidden" name="email_recipients_list" value="">';
