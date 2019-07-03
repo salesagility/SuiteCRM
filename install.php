@@ -649,6 +649,8 @@ EOQ;
         $_SESSION['oc_username']    = $_REQUEST['oc_username'];
         $_SESSION['oc_password']   	= $_REQUEST['oc_password'];
         $the_file = 'oc_convert.php';
+    } elseif ($next_step === 9) {
+        $the_file = $workflow[4];
     } else {
         $the_file = $workflow[$next_step];
     }
