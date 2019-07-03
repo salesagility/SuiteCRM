@@ -788,12 +788,12 @@ EOQ;
 }
 
 
-$the_file = clean_string($the_file, 'FILE');
+$the_file = 'install/' . clean_string($the_file, 'FILE');
 
-installerHook('pre_installFileRequire', array('the_file' => $the_file));
-
-// change to require to get a good file load error message if the file is not available.
-
-require('install/' . $the_file);
-
-installerHook('post_installFileRequire', array('the_file' => $the_file));
+if (file_exists($the_file)) {
+    installerHook('pre_installFileRequire', array('the_file' => $the_file));
+    require($the_file);
+    installerHook('post_installFileRequire', array('the_file' => $the_file));
+} else {
+    LoggerManager::getLogger()->debug('Install file not found: ' . $the_file);
+}
