@@ -121,7 +121,7 @@ while ($row = $db->fetchByAssoc($result)) {
             }
         }
         if ($execute) {
-            $newstr = mysql_real_escape_string(base64_encode(serialize($newprefs)));
+            $newstr = mysqli_real_escape_string(base64_encode(serialize($newprefs)));
             $db->query("UPDATE users SET user_preferences = '{$newstr}' WHERE id = '{$row['id']}'");
         }
     }

@@ -183,7 +183,7 @@ class MysqlManager extends DBManager
         $this->checkConnection();
         $this->query_time = microtime(true);
         $this->lastsql = $sql;
-        $result = $suppress ? @mysql_query($sql, $this->database) : mysql_query($sql, $this->database);
+        $result = $suppress ? @mysqli::query($sql) : mysqli::query($sql);
 
         $this->query_time = microtime(true) - $this->query_time;
         $GLOBALS['log']->info('Query Execution Time:' . $this->query_time);
@@ -205,7 +205,7 @@ class MysqlManager extends DBManager
      */
     public function getAffectedRowCount($result)
     {
-        return mysql_affected_rows($this->getDatabase());
+        return mysqli_affected_rows($this->getDatabase());
     }
 
     /**
@@ -219,7 +219,7 @@ class MysqlManager extends DBManager
      */
     public function getRowCount($result)
     {
-        return mysql_num_rows($result);
+        return mysqli_num_rows($result);
     }
 
     /**
@@ -232,7 +232,7 @@ class MysqlManager extends DBManager
         $GLOBALS['log']->debug('Calling MySQL::disconnect()');
         if (!empty($this->database)) {
             $this->freeResult();
-            mysql_close($this->database);
+            mysqli::close($this->database);
             $this->database = null;
         }
     }
@@ -243,7 +243,7 @@ class MysqlManager extends DBManager
     protected function freeDbResult($dbResult)
     {
         if (!empty($dbResult)) {
-            mysql_free_result($dbResult);
+            mysqli_free_result($dbResult);
         }
     }
 
@@ -378,9 +378,9 @@ class MysqlManager extends DBManager
             return 0;
         }
 
-        $fields = mysql_num_fields($result);
+        $fields = mysqli_num_fields($result);
         for ($i = 0; $i < $fields; $i++) {
-            $meta = mysql_fetch_field($result, $i);
+            $meta = mysqli_fetch_field($result, $i);
             if (!$meta) {
                 return array();
             }
@@ -404,7 +404,7 @@ class MysqlManager extends DBManager
             return false;
         }
 
-        return mysql_fetch_assoc($result);
+        return mysqli_fetch_assoc($result);
     }
 
     /**
@@ -490,7 +490,7 @@ class MysqlManager extends DBManager
             return $this->arrayQuote($string);
         }
 
-        return mysql_real_escape_string($this->quoteInternal($string), $this->getDatabase());
+        return mysqli_real_escape_string($this->quoteInternal($string), $this->getDatabase());
     }
 
     /**
@@ -513,7 +513,7 @@ class MysqlManager extends DBManager
         }
 
         if ($this->getOption('persistent')) {
-            $this->database = @mysql_pconnect(
+            $this->database = @mysqli::pconnect(
                 $configOptions['db_host_name'],
                 $configOptions['db_user_name'],
                 $configOptions['db_password']
@@ -521,13 +521,13 @@ class MysqlManager extends DBManager
         }
 
         if (!$this->database) {
-            $this->database = mysql_connect(
+            $this->database = mysqli_connect(
                 $configOptions['db_host_name'],
                 $configOptions['db_user_name'],
                 $configOptions['db_password']
             );
             if (empty($this->database)) {
-                $GLOBALS['log']->fatal("Could not connect to server " . $configOptions['db_host_name'] . " as " . $configOptions['db_user_name'] . ":" . mysql_error());
+                $GLOBALS['log']->fatal("Could not connect to server " . $configOptions['db_host_name'] . " as " . $configOptions['db_user_name'] . ":" . mysqli_error($this->database));
                 if ($dieOnError) {
                     if (isset($GLOBALS['app_strings']['ERR_NO_DB'])) {
                         sugar_die($GLOBALS['app_strings']['ERR_NO_DB']);
@@ -545,8 +545,8 @@ class MysqlManager extends DBManager
                     . "in your config.php file</b>";
             }
         }
-        if (!empty($configOptions['db_name']) && !@mysql_select_db($configOptions['db_name'])) {
-            $GLOBALS['log']->fatal("Unable to select database {$configOptions['db_name']}: " . mysql_error($this->database));
+        if (!empty($configOptions['db_name']) && !@mysqli::select_db($configOptions['db_name'])) {
+            $GLOBALS['log']->fatal("Unable to select database {$configOptions['db_name']}: " . mysqli_error($this->database));
             if ($dieOnError) {
                 sugar_die($GLOBALS['app_strings']['ERR_NO_DB']);
             } else {
@@ -555,13 +555,13 @@ class MysqlManager extends DBManager
         }
 
         // cn: using direct calls to prevent this from spamming the Logs
-        mysql_query("SET CHARACTER SET utf8", $this->database);
+        mysqli::query("SET CHARACTER SET utf8", $this->database);
         $names = "SET NAMES 'utf8'";
         $collation = $this->getOption('collation');
         if (!empty($collation)) {
             $names .= " COLLATE '$collation'";
         }
-        mysql_query($names, $this->database);
+        mysqli::query($names, $this->database);
 
         if (!$this->checkError('Could Not Connect:', $dieOnError)) {
             $GLOBALS['log']->info("connected to db");
@@ -1217,11 +1217,11 @@ class MysqlManager extends DBManager
     public function lastDbError()
     {
         if ($this->database) {
-            if (mysql_errno($this->database)) {
-                return "MySQL error " . mysql_errno($this->database) . ": " . mysql_error($this->database);
+            if (mysqli_errno($this->database)) {
+                return "MySQL error " . mysqli_errno($this->database) . ": " . mysqli_error($this->database);
             }
         } else {
-            $err = mysql_error();
+            $err = mysqli::error();
             if ($err) {
                 return $err;
             }
@@ -1291,10 +1291,10 @@ class MysqlManager extends DBManager
         }
 
         return array(
-            "MySQL Version" => @mysql_get_client_info(),
-            "MySQL Host Info" => @mysql_get_host_info($this->database),
-            "MySQL Server Info" => @mysql_get_server_info($this->database),
-            "MySQL Client Encoding" => @mysql_client_encoding($this->database),
+            "MySQL Version" => @mysqli_get_client_info(),
+            "MySQL Host Info" => @mysqli_get_host_info($this->database),
+            "MySQL Server Info" => @mysqli_get_server_info($this->database),
+            "MySQL Client Encoding" => @mysqli_client_encoding($this->database),
             "MySQL Character Set Settings" => join(", ", $charset_str),
         );
     }
@@ -1460,7 +1460,7 @@ class MysqlManager extends DBManager
      */
     protected function selectDb($dbname)
     {
-        return mysql_select_db($dbname);
+        return mysqli::select_db($dbname);
     }
 
     /**
@@ -1532,7 +1532,7 @@ class MysqlManager extends DBManager
      */
     public function valid()
     {
-        return function_exists("mysql_connect");
+        return function_exists("mysqli_connect");
     }
 
     /**

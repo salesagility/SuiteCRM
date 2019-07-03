@@ -44,8 +44,8 @@ SugarContainer.prototype.start=function(root_widget){this.root_widget=new root_w
 if(typeof(global_request_registry)=="undefined"){var global_request_registry=new Object();}
 var req_count=0;SugarClass.inherit("SugarDateTime","SugarClass");function SugarDateTime(){this.init(root_div);}
 SugarDateTime.prototype.init=function(root_div){this.root_div=root_div;}
-SugarDateTime.mysql2jsDateTime=function(mysql_date,mysql_time){var match=new RegExp(date_reg_format);if(((result=match.exec(mysql_date)))==null){return null;}
-var match2=new RegExp(time_reg_format);if((result2=match2.exec(mysql_time))==null){result2=[0,0,0,0];}
+SugarDateTime.mysql2jsDateTime=function(mysqli_date,mysqli_time){var match=new RegExp(date_reg_format);if(((result=match.exec(mysqli_date)))==null){return null;}
+var match2=new RegExp(time_reg_format);if((result2=match2.exec(mysqli_time))==null){result2=[0,0,0,0];}
 var match3=/^0(\d)/;if((result3=match3.exec(result2[1]))!=null){result2[1]=result3[1];}
 if(typeof(result2[3])!='undefined'){if(result2[3]=='pm'||result2[3]=='PM'){if(parseInt(result2[1])!=12){result2[1]=parseInt(result2[1])+12;}}
 else if(result2[1]==12){result2[1]=0;}}

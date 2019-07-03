@@ -765,9 +765,9 @@ function finishDiag()
 $doconfigphp = ((empty($_POST['configphp']) || $_POST['configphp'] == 'off') ? false : true);
 $docustom_dir = ((empty($_POST['custom_dir']) || $_POST['custom_dir'] == 'off') ? false : true);
 $dophpinfo = ((empty($_POST['phpinfo']) || $_POST['phpinfo'] == 'off') ? false : true);
-$domysql_dumps = ((empty($_POST['mysql_dumps']) || $_POST['mysql_dumps'] == 'off') ? false : true);
-$domysql_schema = ((empty($_POST['mysql_schema']) || $_POST['mysql_schema'] == 'off') ? false : true);
-$domysql_info = ((empty($_POST['mysql_info']) || $_POST['mysql_info'] == 'off') ? false : true);
+$domysql_dumps = ((empty($_POST['mysqli_dumps']) || $_POST['mysqli_dumps'] == 'off') ? false : true);
+$domysqli_schema = ((empty($_POST['mysqli_schema']) || $_POST['mysqli_schema'] == 'off') ? false : true);
+$domysql_info = ((empty($_POST['mysqli_info']) || $_POST['mysql_info'] == 'off') ? false : true);
 $domd5 = ((empty($_POST['md5']) || $_POST['md5'] == 'off') ? false : true);
 $domd5filesmd5 = ((empty($_POST['md5filesmd5']) || $_POST['md5filesmd5'] == 'off') ? false : true);
 $domd5calculated = ((empty($_POST['md5calculated']) || $_POST['md5calculated'] == 'off') ? false : true);

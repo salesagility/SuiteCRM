@@ -2180,7 +2180,7 @@ function clean_string($str, $filter = 'STANDARD', $dieOnBadData = true)
             $GLOBALS['log']->fatal("SECURITY[$filter]: bad data passed in; string: {$str}");
         }
         if ($dieOnBadData) {
-            die("Bad data passed in; <a href=\"{$sugar_config['site_url']}\">Return to Home</a>");
+            die("Bad data passed in; Data = '{$str}' <a href=\"{$sugar_config['site_url']}\">Return to Home</a>");
         }
 
         return false;

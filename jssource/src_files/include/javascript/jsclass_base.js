@@ -104,15 +104,15 @@ SugarDateTime.prototype.init = function (root_div) {
 
 // return the javascript Date object
 // given the Sugar Meetings date_start/time_start or date_end/time_end
-SugarDateTime.mysql2jsDateTime = function (mysql_date, mysql_time) {
+SugarDateTime.mysql2jsDateTime = function (mysqli_date, mysqli_time) {
   var match = new RegExp(date_reg_format);
-  if (((result = match.exec(mysql_date))) == null) {
+  if (((result = match.exec(mysqli_date))) == null) {
     return null;
   }
 
   var match2 = new RegExp(time_reg_format);
 
-  if ((result2 = match2.exec(mysql_time)) == null) {
+  if ((result2 = match2.exec(mysqli_time)) == null) {
     result2 = [0, 0, 0, 0];
   }
 

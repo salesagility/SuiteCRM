@@ -1,0 +1,47 @@
+version: '3'
+services:
+  mariadb:
+    image: mariadb:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=suitesqladmin
+      - MYSQL_DATABASE=suitecrm
+      - MYSQL_USER=suitecrm
+      # - MYSQL_PASSWORD=changeme
+      # See below, ENV's aren't working for some reason.
+      - MYSQL_PASSWORD=${SUITE_MYSQL_PASSWORD}
+      - MYSQL_ALLOW_EMPTY_PASSWORD=no
+    volumes:
+      # We'll need to point this to the directory of mariaDB
+      # according to this --
+      # https://forums.docker.com/t/how-to-make-mariadb-database-changes-persistent/17339/3
+      - 'suite_db_maria:/var/lib/mysql'
+    expose:
+      - '3306'
+  suitecrm:
+    build:
+      context: ./
+      args:
+        # ENVS FROM THE CI, or PASSED BY CLI TO COMPOSE
+        current_branch: ${BUILD_FROM_BRANCH}
+        repository_url: ${BUILD_FROM_REPO}
+    image: smt/suitecrm:latest
+    environment:
+      - DATABASE_HOST_NAME=mariadb
+      - MYSQL_PORT_NUMBER=3306
+      - SUITECRM_DATABASE_USER=suitecrm
+      - SUITECRM_DATABASE_NAME=suitecrm
+      - SUITECRM_DATABASE_PASSWORD=${SUITE_MYSQL_PASSWORD}
+      - ALLOW_EMPTY_PASSWORD=no
+    ports:
+      - '8580:80'
+      - '8543:443'
+    volumes:
+      - 'suite_os_data:/certs'
+    depends_on:
+      - mariadb
+volumes:
+    suite_os_data:
+      driver: local
+    suite_db_maria:
+      driver: local
+

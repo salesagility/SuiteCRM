@@ -69,14 +69,14 @@
 	<td ><span><input name='phpinfo' class="checkbox" type="checkbox" tabindex='3' checked></span></td>
 	</tr><tr>
 	<td scope="row"><span>{$DB_NAME} - {$MOD.LBL_DIAGNOSTIC_MYSQLDUMPS}</span></td>
-	<td ><span><input name='mysql_dumps' class="checkbox" type="checkbox" tabindex='4' checked></span></td>
+	<td ><span><input name='mysqli_dumps' class="checkbox" type="checkbox" tabindex='4' checked></span></td>
 	</tr><tr>
 	<td scope="row"><span>{$DB_NAME} - {$MOD.LBL_DIAGNOSTIC_MYSQLSCHEMA}</span></td>
 
-	<td ><span><input name='mysql_schema' class="checkbox" type="checkbox" tabindex='5' checked></span></td>
+	<td ><span><input name='mysqli_schema' class="checkbox" type="checkbox" tabindex='5' checked></span></td>
 	</tr><tr>
 	<td scope="row"><span>{$DB_NAME} - {$MOD.LBL_DIAGNOSTIC_MYSQLINFO}</span></td>
-	<td ><span><input name='mysql_info' class="checkbox" type="checkbox" tabindex='6' checked></span></td>
+	<td ><span><input name='mysqli_info' class="checkbox" type="checkbox" tabindex='6' checked></span></td>
 	</tr><tr>
 	<td scope="row"><span>{$MOD.LBL_DIAGNOSTIC_MD5}</span></td>
 	<td ><span><input name='md5' class="checkbox" type="checkbox" tabindex='7' onclick="md5checkboxes()" checked></span></td>

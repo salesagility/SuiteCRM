@@ -1,0 +1,93 @@
+stages:
+  - test
+  - build-dev-image
+  - build-image
+  - user-test
+  - deploy
+
+test:
+  stage: test
+  before_script:
+  # Find the SSH Agent
+  - 'which ssh-agent'
+  # Run The Agent
+  - eval $(ssh-agent -s)
+  # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+
+  script:
+    - echo "Make Sure Commit SHA Exists, Use for revision hashing"
+    - echo $CI_COMMIT_SHA
+    - echo "Dry Run Deployment On Linux3"
+    - cat ~/.ssh/id_rsa.pub
+    # - ls -la /var/lib/docker/volumes/suite_os/data/suitecrm
+    # - rsync --update --dry-run --checksum -rlvzub --exclude ".*" --exclude "*.tgz" --exclude "Makefile.*" -e "ssh -i ~/.ssh/id_rsa.pub" ./ localadmin@dev2:/var/lib/docker/volumes/suite_os/_data/suitecrm
+    
+
+build-dev-image:
+  stage: build-dev-image
+
+  before_script:
+    - docker info
+    # - apk add --no-cache python py3-pip
+    - python -m pip install --user --no-cache-dir docker-compose
+    - docker-compose -v
+
+  script: 
+    - echo "Building smt/suitecrm:latest"
+    - echo $CI_COMMIT_SHA
+    # gitlab-runner is part of the docker group so no sudo here.
+    # we should sub in the commit hash or tag inplace of latest in here.
+
+    # - docker build --force-rm -t smt/suitecrm:latest --build-arg current_branch=$CI_COMMIT_REF_NAME --build-arg repository_url=http://dev2/gitlab/dev/suite-crm ./docker/
+    
+    - export BUILD_FROM_BRANCH=$CI_COMMIT_REF_NAME
+    - export BUILD_FROM_REPO=$CI_PROJECT_URL
+    - export SUITE_MYSQL_PASSWORD=changeme
+    - echo "MYSQL User Password- " $SUITE_MYSQL_PASSWORD
+    - echo $BUILD_FROM_REPO/$BUILD_FROM_BRANCH
+    - docker-compose -f ./docker/docker-compose.yml up -d --build --force-recreate --always-recreate-deps
+
+deploy_prod:
+  stage: deploy
+  before_script:
+    # Find the SSH Agent
+    - 'which ssh-agent'
+    # Run The Agent
+    - eval $(ssh-agent -s)
+    # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+
+  script:
+    - echo "Deploy App to Linux 3"
+    # - ssh gitlab-runner@linux3 -tt
+    - echo "Create Revision Hashes"
+    - sed -i "s/@@hash/$CI_COMMIT_SHA/g" _src/index.php
+    - echo "Copying Files"
+    - rsync --update --checksum -rlvzub --exclude ".*" --exclude "*.tgz*" --exclude "Makefile.*" --backup-dir="backups/$CI_JOB_ID" -e "ssh -i ~/.ssh/id_rsa.pub" _src/ gitlab-runner@linux3:/var/www/$DEPLOYMENT_DESTINATION
+
+  environment:
+    name: production
+    url: https://dev2:8443
+  only:
+    - master
+    - merge-requests
+  when: manual
+  allow_failure: false
+
+build-image:
+  stage: build-image
+  script: 
+    - echo "Building smt/suitecrm:latest"
+    - echo $CI_COMMIT_SHA
+    # gitlab-runner is part of the docker group so no sudo here.
+    - docker build --force-rm -t smt/suitecrm:latest --build-arg current_branch=$CI_COMMIT_REF_NAME --build-arg repository_url=http://dev2/gitlab/dev/suite-crm ./docker/
+  
+  environment:
+    name: production
+    url: https://dev2:8443
+  only:
+    - master
+    - merge-requests
+  when: manual
+  allow_failure: false
