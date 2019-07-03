@@ -790,10 +790,10 @@ EOQ;
 
 $the_file = 'install/' . clean_string($the_file, 'FILE');
 
-if (file_exists($the_file)) {
-    installerHook('pre_installFileRequire', array('the_file' => $the_file));
+if (is_file($the_file)) {
+    installerHook('pre_installFileRequire', ['the_file' => $the_file]);
     require($the_file);
-    installerHook('post_installFileRequire', array('the_file' => $the_file));
+    installerHook('post_installFileRequire', ['the_file' => $the_file]);
 } else {
-    LoggerManager::getLogger()->debug('Install file not found: ' . $the_file);
+    LoggerManager::getLogger()->fatal('Install file not found: ' . $the_file);
 }
