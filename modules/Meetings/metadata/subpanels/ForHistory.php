@@ -111,6 +111,10 @@ $subpanel_layout = array(
             'vname' => 'LBL_LIST_DATE_ENTERED',
             'width' => '10%',
         ),
+        'date_due'=>array(
+            'vname' => 'LBL_LIST_DUE_DATE',
+            'width' => '10%',
+        ),
         'assigned_user_name' => array(
             'name' => 'assigned_user_name',
             'vname' => 'LBL_LIST_ASSIGNED_TO_NAME',
