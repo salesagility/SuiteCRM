@@ -3023,8 +3023,8 @@ class Email extends Basic
         isValidEmailAddress($mail->Sender);
         $mail->AddReplyTo($ReplyToAddr, $locale->translateCharsetMIME(trim($ReplyToName), 'UTF-8', $OBCharset));
 
-        //$mail->Subject = html_entity_decode($this->name, ENT_QUOTES, 'UTF-8');
-        $mail->Subject = $this->name;
+        $mail->Subject = html_entity_decode($this->name, ENT_QUOTES, 'UTF-8');
+        //$mail->Subject = $this->name;
 
         ///////////////////////////////////////////////////////////////////////
         ////	ATTACHMENTS
