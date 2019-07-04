@@ -31,15 +31,13 @@ class jjwg_AreasCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\MapsAreas $mapsAreas
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the mapsAreas module.
      */
     public function testScenarioViewMapsAreasModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\MapsAreas $mapsAreas,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\MapsAreas $mapsAreas
     ) {
         $I->wantTo('View the mapsAreas module for testing');
         

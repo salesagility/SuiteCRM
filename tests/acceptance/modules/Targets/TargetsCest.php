@@ -31,15 +31,13 @@ class TargetsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Targets $targets
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the targets module.
      */
     public function testScenarioViewTargetsModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Targets $targets,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Targets $targets
     ) {
         $I->wantTo('View the targets module for testing');
 

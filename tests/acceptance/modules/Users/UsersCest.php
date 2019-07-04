@@ -2,7 +2,6 @@
 
 use Faker\Factory;
 use Faker\Generator;
-use Helper\WebDriverHelper;
 use Step\Acceptance\Accounts;
 use Step\Acceptance\DetailView;
 use Step\Acceptance\EditView;
@@ -34,7 +33,7 @@ class UsersCest
         $this->fakeData->seed($this->fakeDataSeed);
     }
     
-    public function testEmailSettingsMailAccountAdd(AcceptanceTester $I, UsersTester $Users, WebDriverHelper $webDriverHelper)
+    public function testEmailSettingsMailAccountAdd(AcceptanceTester $I, UsersTester $Users)
     {
         $I->loginAsAdmin();
         $Users->gotoProfile();
@@ -58,8 +57,7 @@ class UsersCest
         UsersTester $Users,
         ListView $listView,
         EditView $EditView,
-        Accounts $accounts,
-        WebDriverHelper $webDriverHelper
+        Accounts $accounts
     ) {
         $I->wantTo('View the collapsed subpanel hints on Accounts');
 

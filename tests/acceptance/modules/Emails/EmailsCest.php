@@ -36,15 +36,13 @@ class EmailsCest
      * @param AcceptanceTester $I
      * @param ListView $listView
      * @param EmailsTester $emails
-     * @param WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the emails module.
      */
     public function testScenarioViewEmailsModule(
         AcceptanceTester $I,
         ListView $listView,
-        EmailsTester $emails,
-        WebDriverHelper $webDriverHelper
+        EmailsTester $emails
     ) {
         $I->wantTo('View the emails module for testing');
 

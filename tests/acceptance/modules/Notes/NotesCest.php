@@ -31,15 +31,13 @@ class NotesCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Notes $notes
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the notes module.
      */
     public function testScenarioViewNotesModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Notes $notes,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Notes $notes
     ) {
         $I->wantTo('View the notes module for testing');
 

@@ -31,15 +31,13 @@ class AM_Project_TemplatesCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\ProjectTemplates $projectTemplates
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the projectTemplates module.
      */
     public function testScenarioViewProjectTemplatesModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\ProjectTemplates $projectTemplates,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ProjectTemplates $projectTemplates
     ) {
         $I->wantTo('View the projectTemplates module for testing');
         // Navigate to projectTemplates list-view
@@ -55,7 +53,6 @@ class AM_Project_TemplatesCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\ProjectTemplates $projectTemplate
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a project template so that I can test
      * the standard fields.
@@ -64,8 +61,7 @@ class AM_Project_TemplatesCest
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\ProjectTemplates $projectTemplate,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ProjectTemplates $projectTemplate
     ) {
         $I->wantTo('Create a project template');
 

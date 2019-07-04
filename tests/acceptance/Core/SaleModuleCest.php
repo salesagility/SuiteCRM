@@ -39,7 +39,6 @@ class SaleModuleCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to create and deploy a sale module so that I can test
      * that the sale functionality is working. Given that I have already created a module I expect to deploy
@@ -47,8 +46,7 @@ class SaleModuleCest
      */
     public function testScenarioCreateSaleModule(
        \AcceptanceTester $I,
-       \Step\Acceptance\ModuleBuilder $moduleBuilder,
-        \Helper\WebDriverHelper $webDriverHelper
+       \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a sale module for testing');
 
@@ -65,7 +63,6 @@ class SaleModuleCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view my sale test module so that I can see if it has been
      * deployed correctly.
@@ -73,8 +70,7 @@ class SaleModuleCest
     public function testScenarioViewSaleTestModule(
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View Sale Test Module');
         $I->loginAsAdmin();
@@ -91,7 +87,6 @@ class SaleModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a record with my sale test module so that I can test
      * the standard fields.
@@ -101,8 +96,7 @@ class SaleModuleCest
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Create Sale Test Module Record');
 
@@ -134,15 +128,13 @@ class SaleModuleCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view the record by selecting it in the list view
      */
     public function testScenarioViewRecordFromListView(
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('Select Record from list view');
 
@@ -169,7 +161,6 @@ class SaleModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to edit the record by selecting it in the detail view
      */
@@ -178,8 +169,7 @@ class SaleModuleCest
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Edit Sale Test Module Record from detail view');
         $I->loginAsAdmin();
@@ -214,7 +204,6 @@ class SaleModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to duplicate the record
      */
@@ -223,8 +212,7 @@ class SaleModuleCest
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Duplicate Sale Test Module Record from detail view');
 
@@ -265,7 +253,6 @@ class SaleModuleCest
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to delete the record by selecting it in the detail view
      */
@@ -273,8 +260,7 @@ class SaleModuleCest
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Delete Sale Test Module Record from detail view');
 

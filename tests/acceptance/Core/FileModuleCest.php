@@ -43,7 +43,6 @@ class FileModuleCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to create and deploy a file module so that I can test
      * that the file functionality is working. Given that I have already created a module I expect to deploy
@@ -51,8 +50,7 @@ class FileModuleCest
      */
     public function testScenarioCreateFileModule(
        \AcceptanceTester $I,
-       \Step\Acceptance\ModuleBuilder $moduleBuilder,
-        \Helper\WebDriverHelper $webDriverHelper
+       \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a file module for testing');
 
@@ -71,7 +69,6 @@ class FileModuleCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view my file test module so that I can see if it has been
      * deployed correctly.
@@ -79,8 +76,7 @@ class FileModuleCest
     public function testScenarioViewFileTestModule(
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View File Test Module');
         $I->loginAsAdmin();
@@ -98,7 +94,6 @@ class FileModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailview
      * @param \Step\Acceptance\EditView $editView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a record with my file test module so that I can test
      * the standard fields.
@@ -108,8 +103,7 @@ class FileModuleCest
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailview,
-        \Step\Acceptance\EditView $editView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Create File Test Module Record');
         $I->loginAsAdmin();
@@ -145,7 +139,6 @@ class FileModuleCest
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view the record by selecting it in the list view
      */
@@ -153,8 +146,7 @@ class FileModuleCest
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Select Record from list view');
         
@@ -184,7 +176,6 @@ class FileModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to edit the record by selecting it in the detail view
      */
@@ -193,8 +184,7 @@ class FileModuleCest
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Edit File Test Module Record from detail view');
         $I->loginAsAdmin();
@@ -228,7 +218,6 @@ class FileModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to duplicate the record
      */
@@ -237,8 +226,7 @@ class FileModuleCest
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Duplicate File Test Module Record from detail view');
         $I->loginAsAdmin();
@@ -279,7 +267,6 @@ class FileModuleCest
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to delete the record by selecting it in the detail view
      */
@@ -287,8 +274,7 @@ class FileModuleCest
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Delete File Test Module Record from detail view');
         $I->loginAsAdmin();

@@ -31,15 +31,13 @@ class QuotesCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Quotes $quotes
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the quotes module.
      */
     public function testScenarioViewQuotesModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Quotes $quotes,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Quotes $quotes
     ) {
         $I->wantTo('View the quotes module for testing');
 

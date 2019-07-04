@@ -44,7 +44,6 @@ class PersonModuleCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to create and deploy a person module so that I can test
      * that the person functionality is working. Given that I have already created a module I expect to deploy
@@ -52,8 +51,7 @@ class PersonModuleCest
      */
     public function testScenarioCreatePersonModule(
        \AcceptanceTester $I,
-       \Step\Acceptance\ModuleBuilder $moduleBuilder,
-        \Helper\WebDriverHelper $webDriverHelper
+       \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a person module for testing');
 
@@ -72,7 +70,6 @@ class PersonModuleCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view my person test module so that I can see if it has been
      * deployed correctly.
@@ -80,8 +77,7 @@ class PersonModuleCest
     public function testScenarioViewPersonTestModule(
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View Person Test Module');
 
@@ -100,7 +96,6 @@ class PersonModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a record with my person test module so that I can test
      * the standard fields.
@@ -110,8 +105,7 @@ class PersonModuleCest
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Create Person Test Module Record');
         $I->loginAsAdmin();
@@ -163,7 +157,6 @@ class PersonModuleCest
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view the record by selecting it in the list view
      */
@@ -171,8 +164,7 @@ class PersonModuleCest
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Select Record from list view');
 
@@ -207,7 +199,6 @@ class PersonModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to edit the record by selecting it in the detail view
      */
@@ -216,8 +207,7 @@ class PersonModuleCest
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Edit Person Test Module Record from detail view');
 
@@ -260,7 +250,6 @@ class PersonModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to duplicate the record
      */
@@ -269,8 +258,7 @@ class PersonModuleCest
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Duplicate Person Test Module Record from detail view');
 
@@ -317,7 +305,6 @@ class PersonModuleCest
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to delete the record by selecting it in the detail view
      */
@@ -325,8 +312,7 @@ class PersonModuleCest
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Delete Person Test Module Record from detail view');
 
@@ -367,7 +353,6 @@ class PersonModuleCest
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to delete the record by selecting it in the detail view
      */
@@ -376,8 +361,7 @@ class PersonModuleCest
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\SideBar $sideBar,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Create a Person Record using a vcard');
 

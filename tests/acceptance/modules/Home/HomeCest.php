@@ -31,15 +31,13 @@ class HomeCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\Dashboard $dashboard
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As a user I want to see a chart added to my dashboard
      */
     public function testCreateChartsDashlet(
         \AcceptanceTester $I,
         \Step\Acceptance\Dashboard $dashboard,
-        \Step\Acceptance\DetailView $detailView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Create a chart dashlet on the dashboard');
 

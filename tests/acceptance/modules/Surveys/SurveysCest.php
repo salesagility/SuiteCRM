@@ -31,15 +31,13 @@ class SurveysCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Surveys $surveys
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the surveys module.
      */
     public function testScenarioViewSurveysModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Surveys $surveys,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Surveys $surveys
     ) {
         $I->wantTo('View the surveys module for testing');
 
