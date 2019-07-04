@@ -50,6 +50,7 @@ function display_email_lines($focus, $field, $value, $view)
         $html .= '<button type="button" onclick="add_emailLine()"><img src="' . SugarThemeRegistry::current()->getImageURL('id-ff-add.png') . '"></button>';
         $html .= '<table id="emailLine_table" width="100%"></table>';
 
+        $html .= '<input type="hidden" name="email_recipients_list" value="">';
         $html .= "<script>";
 
         if (isset($params['email_target_type'])) {

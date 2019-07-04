@@ -18,6 +18,7 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
         $aorScheduledReports = new AOR_Scheduled_Reports();
         $aorScheduledReports->name = "test";
         $aorScheduledReports->description = "test description";
+        $_POST['email_recipients_list'] = '';
         $_POST['email_recipients']= array('email_target_type'=> array('Email Address','all','Specify User')  ,'email' =>array('test@test.com','','1') );
 
 
