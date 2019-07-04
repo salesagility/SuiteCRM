@@ -52,8 +52,8 @@ class CompanyModuleCest
      * the module before testing.
      */
     public function testScenarioCreateCompanyModule(
-       \AcceptanceTester $I,
-       \Step\Acceptance\ModuleBuilder $moduleBuilder
+        \AcceptanceTester $I,
+        \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a company module for testing');
         $I->loginAsAdmin();

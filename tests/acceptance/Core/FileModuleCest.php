@@ -49,8 +49,8 @@ class FileModuleCest
      * the module before testing.
      */
     public function testScenarioCreateFileModule(
-       \AcceptanceTester $I,
-       \Step\Acceptance\ModuleBuilder $moduleBuilder
+        \AcceptanceTester $I,
+        \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a file module for testing');
 

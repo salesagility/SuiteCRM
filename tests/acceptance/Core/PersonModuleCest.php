@@ -50,8 +50,8 @@ class PersonModuleCest
      * the module before testing.
      */
     public function testScenarioCreatePersonModule(
-       \AcceptanceTester $I,
-       \Step\Acceptance\ModuleBuilder $moduleBuilder
+        \AcceptanceTester $I,
+        \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a person module for testing');
 

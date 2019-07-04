@@ -753,7 +753,7 @@ class EmailsController extends SugarController
         if (!$accounts) {
             $url = 'index.php?module=Users&action=EditView&record=' . $current_user->id . "&showEmailSettingsPopup=1";
             SugarApplication::appendErrorMessage(
-                    "You don't have any valid email account settings yet. <a href=\"$url\">Click here to set your email accounts.</a>"
+                "You don't have any valid email account settings yet. <a href=\"$url\">Click here to set your email accounts.</a>"
             );
         }
 

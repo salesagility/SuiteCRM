@@ -61,10 +61,10 @@ THIS IS FOR PORTAL USERS
 this authenticates a user as a portal user and returns the session id or it returns false otherwise;
 */
 $server->register(
-        'portal_login',
-        array('portal_auth'=>'tns:user_auth','user_name'=>'xsd:string', 'application_name'=>'xsd:string'),
-        array('return'=>'tns:set_entry_result'),
-        $NAMESPACE
+    'portal_login',
+    array('portal_auth'=>'tns:user_auth','user_name'=>'xsd:string', 'application_name'=>'xsd:string'),
+    array('return'=>'tns:set_entry_result'),
+    $NAMESPACE
 );
 
 function portal_login($portal_auth, $user_name, $application_name)
@@ -148,10 +148,10 @@ function portal_validate_authenticated($session_id)
 
 
 $server->register(
-        'portal_logout',
-        array('session'=>'xsd:string'),
-        array('return'=>'tns:error_value'),
-        $NAMESPACE
+    'portal_logout',
+    array('session'=>'xsd:string'),
+    array('return'=>'tns:error_value'),
+    $NAMESPACE
 );
 function portal_logout($session)
 {
@@ -165,10 +165,10 @@ function portal_logout($session)
 }
 
 $server->register(
-        'portal_get_sugar_id',
-        array('session'=>'xsd:string'),
-        array('return'=>'tns:set_entry_result'),
-        $NAMESPACE
+    'portal_get_sugar_id',
+    array('session'=>'xsd:string'),
+    array('return'=>'tns:set_entry_result'),
+    $NAMESPACE
 );
 function portal_get_sugar_id($session)
 {
@@ -181,10 +181,10 @@ function portal_get_sugar_id($session)
 }
 
 $server->register(
-        'portal_get_sugar_contact_id',
-        array('session'=>'xsd:string'),
-        array('return'=>'tns:set_entry_result'),
-        $NAMESPACE
+    'portal_get_sugar_contact_id',
+    array('session'=>'xsd:string'),
+    array('return'=>'tns:set_entry_result'),
+    $NAMESPACE
 );
 function portal_get_sugar_contact_id($session)
 {
@@ -458,10 +458,10 @@ function portal_set_entry($session, $module_name, $name_value_list)
 NOTE SPECIFIC CODE
 */
 $server->register(
-        'portal_set_note_attachment',
-        array('session'=>'xsd:string','note'=>'tns:note_attachment'),
-        array('return'=>'tns:set_entry_result'),
-        $NAMESPACE
+    'portal_set_note_attachment',
+    array('session'=>'xsd:string','note'=>'tns:note_attachment'),
+    array('return'=>'tns:set_entry_result'),
+    $NAMESPACE
 );
 
 function portal_set_note_attachment($session, $note)

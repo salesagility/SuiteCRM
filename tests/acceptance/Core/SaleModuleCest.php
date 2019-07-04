@@ -45,8 +45,8 @@ class SaleModuleCest
      * the module before testing.
      */
     public function testScenarioCreateSaleModule(
-       \AcceptanceTester $I,
-       \Step\Acceptance\ModuleBuilder $moduleBuilder
+        \AcceptanceTester $I,
+        \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a sale module for testing');
 

@@ -3243,7 +3243,7 @@ class Email extends Basic
          */
         if (!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess(
             $this->parent_type,
-                'view',
+            'view',
             $is_owner,
             'module',
             $in_group
@@ -3588,55 +3588,55 @@ class Email extends Basic
                 case 'support':
                     $email_fields['CREATE_RELATED'] = '<a href="index.php?module=Cases&action=EditView&inbound_email_id=' . $this->id . '" >' . SugarThemeRegistry::current()->getImage(
                         'CreateCases',
-                            'border="0"',
+                        'border="0"',
                         null,
                         null,
                         ".gif",
-                            $mod_strings['LBL_CREATE_CASES']
+                        $mod_strings['LBL_CREATE_CASES']
                     ) . $mod_strings['LBL_CREATE_CASE'] . '</a>';
                     break;
 
                 case 'sales':
                     $email_fields['CREATE_RELATED'] = '<a href="index.php?module=Leads&action=EditView&inbound_email_id=' . $this->id . '" >' . SugarThemeRegistry::current()->getImage(
                         'CreateLeads',
-                            'border="0"',
+                        'border="0"',
                         null,
                         null,
                         ".gif",
-                            $mod_strings['LBL_CREATE_LEADS']
+                        $mod_strings['LBL_CREATE_LEADS']
                     ) . $mod_strings['LBL_CREATE_LEAD'] . '</a>';
                     break;
 
                 case 'contact':
                     $email_fields['CREATE_RELATED'] = '<a href="index.php?module=Contacts&action=EditView&inbound_email_id=' . $this->id . '" >' . SugarThemeRegistry::current()->getImage(
                         'CreateContacts',
-                            'border="0"',
+                        'border="0"',
                         null,
                         null,
                         ".gif",
-                            $mod_strings['LBL_CREATE_CONTACTS']
+                        $mod_strings['LBL_CREATE_CONTACTS']
                     ) . $mod_strings['LBL_CREATE_CONTACT'] . '</a>';
                     break;
 
                 case 'bug':
                     $email_fields['CREATE_RELATED'] = '<a href="index.php?module=Bugs&action=EditView&inbound_email_id=' . $this->id . '" >' . SugarThemeRegistry::current()->getImage(
                         'CreateBugs',
-                            'border="0"',
+                        'border="0"',
                         null,
                         null,
                         ".gif",
-                            $mod_strings['LBL_CREATE_BUGS']
+                        $mod_strings['LBL_CREATE_BUGS']
                     ) . $mod_strings['LBL_CREATE_BUG'] . '</a>';
                     break;
 
                 case 'task':
                     $email_fields['CREATE_RELATED'] = '<a href="index.php?module=Tasks&action=EditView&inbound_email_id=' . $this->id . '" >' . SugarThemeRegistry::current()->getImage(
                         'CreateTasks',
-                            'border="0"',
+                        'border="0"',
                         null,
                         null,
                         ".gif",
-                            $mod_strings['LBL_CREATE_TASKS']
+                        $mod_strings['LBL_CREATE_TASKS']
                     ) . $mod_strings['LBL_CREATE_TASK'] . '</a>';
                     break;
 
@@ -3688,7 +3688,7 @@ class Email extends Basic
 
         return $mod_strings['LBL_QUICK_CREATE'] . "&nbsp;<a id='$this->id' onclick='return quick_create_overlib(\"{$this->id}\", \"" . SugarThemeRegistry::current()->__toString() . "\", this);' href=\"#\" >" . SugarThemeRegistry::current()->getImage(
             "advanced_search",
-                "border='0' align='absmiddle'",
+            "border='0' align='absmiddle'",
             null,
             null,
             '.gif',
@@ -4204,16 +4204,16 @@ eoq;
             null,
             null,
             ".gif",
-                $mod_strings['LBL_USERS']
+            $mod_strings['LBL_USERS']
         ) . '</a>&nbsp;
 				<a href="#" id="showUsers" onClick="javascript:showUserSelect();">
 					<span style="display:none;" id="checkMark">' . SugarThemeRegistry::current()->getImage(
-                    'check_inline',
-                'border="0"',
-                    null,
-                    null,
-                    ".gif",
-                    $mod_strings['LBL_CHECK_INLINE']
+            'check_inline',
+            'border="0"',
+            null,
+            null,
+            ".gif",
+            $mod_strings['LBL_CHECK_INLINE']
                 ) . '</span>
 				</a>
 
@@ -4224,7 +4224,7 @@ eoq;
 						<td  colspan="' . $colspan . '" id="hiddenhead" onClick="hideUserSelect();" onMouseOver="this.style.border = \'outset red 1px\';" onMouseOut="this.style.border = \'inset white 0px\';this.style.borderBottom = \'inset red 1px\';">
 							<a href="#" onClick="javascript:hideUserSelect();">' . SugarThemeRegistry::current()->getImage(
                     'close',
-                'border="0"',
+                    'border="0"',
                     null,
                     null,
                     ".gif",

@@ -651,7 +651,7 @@ class SugarApplication
      * @param	string	$url	The URL to redirect to
      */
     public static function redirect(
-    $url
+        $url
     ) {
         /*
          * If the headers have been sent, then we cannot send an additional location header
@@ -787,7 +787,7 @@ class SugarApplication
      * already been sent
      */
     public static function setCookie(
-    $name,
+        $name,
         $value,
         $expire = 0,
         $path = '/',
@@ -795,8 +795,8 @@ class SugarApplication
         $secure = false,
         $httponly = true
     ) {
-        if(isSSL()){
-	        $secure = true;
+        if (isSSL()) {
+            $secure = true;
         }
         if (is_null($domain)) {
             if (isset($_SERVER["HTTP_HOST"])) {

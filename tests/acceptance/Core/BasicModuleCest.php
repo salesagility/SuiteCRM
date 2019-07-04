@@ -49,9 +49,9 @@ class BasicModuleCest
      * the module before testing.
      */
     public function testScenarioCreateBasicModule(
-       \AcceptanceTester $I,
-       \Step\Acceptance\ModuleBuilder $moduleBuilder,
-       \Step\Acceptance\Repair $repair
+        \AcceptanceTester $I,
+        \Step\Acceptance\ModuleBuilder $moduleBuilder,
+        \Step\Acceptance\Repair $repair
     ) {
         $I->wantTo('Create a basic module for testing');
 

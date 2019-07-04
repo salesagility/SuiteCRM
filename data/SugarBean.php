@@ -3028,10 +3028,10 @@ class SugarBean
             }
             require_once('data/Link2.php');
             $rel = Relationship::retrieve_by_modules(
-                        $new_rel_link,
-                        $this->module_dir,
-                        $this->db,
-                        'many-to-many'
+                $new_rel_link,
+                $this->module_dir,
+                $this->db,
+                'many-to-many'
                     );
 
             if (!empty($rel)) {
