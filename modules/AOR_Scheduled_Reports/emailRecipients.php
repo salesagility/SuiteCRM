@@ -44,7 +44,7 @@ function display_email_lines($focus, $field, $value, $view)
     $params = unserialize(base64_decode($value));
 
     if ($view == 'EditView') {
-        $html = '<script src="modules/AOR_Scheduled_Reports/emailRecipients.js"></script>';
+        $html = '<script src="' . getVersionedPath('modules/AOR_Scheduled_Reports/emailRecipients.js') . '"></script>';
         $html .= '<input type="hidden" name="aor_email_type_list" id="aor_email_type_list" value="' . get_select_options_with_id($app_list_strings['aor_email_type_list'], '') . '">
 				  <input type="hidden" name="aor_email_to_list" id="aor_email_to_list" value="' . get_select_options_with_id($app_list_strings['aor_email_to_list'], '') . '">';
 
