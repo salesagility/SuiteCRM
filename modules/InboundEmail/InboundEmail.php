@@ -3496,8 +3496,11 @@ class InboundEmail extends SugarBean
                 $reply->reply_to_name = $replyToName;
                 $reply->reply_to_addr = $replyToAddr;
                 $attachments = $et->getAttachments();
-                $reply->attachments = array_merge($reply->attachments, $attachments);
-                $reply->handleAttachments();
+
+                if (!empty($attachments)) {
+                    $reply->attachments = array_merge($reply->attachments, $attachments);
+                    $reply->handleAttachments();
+                }
 
                 $GLOBALS['log']->debug('saving and sending auto-reply email');
                 //$reply->save(); // don't save the actual email.
