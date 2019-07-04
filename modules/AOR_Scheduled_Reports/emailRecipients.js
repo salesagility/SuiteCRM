@@ -74,7 +74,6 @@ function load_emailline(to, type, value){
 function add_emailLine(){
 
     var aor_email_type_list = document.getElementById("aor_email_type_list").value;
-    var aor_email_to_list = document.getElementById("aor_email_to_list").value;
 
     tablebody = document.createElement("tbody");
     tablebody.id = 'emailLine_body' + emailln;
