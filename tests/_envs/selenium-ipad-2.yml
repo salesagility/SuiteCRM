@@ -1,9 +1,0 @@
-# iPad 2 resolution (vertical)
-# `selenium-hub` environment config goes here
-modules:
-  enabled:
-    - \SuiteCRM\Test\Driver\WebDriver
-  config:
-    \SuiteCRM\Test\Driver\WebDriver:
-      width: 768
-      height: 1024
