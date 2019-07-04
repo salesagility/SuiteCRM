@@ -1,4 +1,5 @@
 <?php
+use SuiteCRM\Utility\SuiteValidator;
 
 //Grab the survey
 if (empty($_REQUEST['id'])) {
@@ -77,7 +78,7 @@ EOF;
     return false;
 }
 
-use SuiteCRM\Utility\SuiteValidator; ?>
+?>
     <!DOCTYPE html>
     <html lang="en">
     <head>
