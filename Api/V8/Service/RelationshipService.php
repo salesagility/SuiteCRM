@@ -82,7 +82,7 @@ class RelationshipService
     {
         $sourceBean = $params->getSourceBean();
         $relatedBean = $params->getRelatedBean();
-        $linkFieldName = $this->beanManager->getLinkedFieldName($sourceBean, $relatedBean);
+        $linkFieldName = $params->getLinkedFieldName();
 
         $this->beanManager->createRelationshipSafe($sourceBean, $relatedBean, $linkFieldName);
 
