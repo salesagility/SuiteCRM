@@ -790,7 +790,7 @@ class SugarApplication
     $name,
         $value,
         $expire = 0,
-        $path = '/',
+        $path = null,
         $domain = null,
         $secure = false,
         $httponly = true
