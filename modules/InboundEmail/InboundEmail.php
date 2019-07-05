@@ -3955,6 +3955,7 @@ class InboundEmail extends SugarBean
     public function getMessageTextWithUid($uid, $type, $structure, $fullHeader, $clean_email = true, $bcOffset = "")
     {
         global $sugar_config;
+        $cacheDir = $GLOBALS['sugar_config']['cache_dir'] . 'images/';
 
         $msgPart = '';
         $bc = $this->buildBreadCrumbs($structure->parts, $type);
@@ -3983,9 +3984,8 @@ class InboundEmail extends SugarBean
                                 continue;
                             }
                             $partid = substr($part->id, 1, -1); // strip <> around
-                            if (isset($this->inlineImages[$partid])) {
-                                $imageName = $this->inlineImages[$partid];
-                                $newImagePath = "class=\"image\" src=\"{$this->imagePrefix}{$imageName}\"";
+                            if ($part->parameters[0]->value) {
+                                $newImagePath = "class=\"image\" src=\"{$cacheDir}{$this->inlineImages[$partid]}\"";
                                 $preImagePath = "src=\"cid:$partid\"";
                                 $msgPartRaw = str_replace($preImagePath, $newImagePath, $msgPartRaw);
                             }
@@ -4593,6 +4593,11 @@ class InboundEmail extends SugarBean
         if ((strtolower($part->disposition) == 'inline' && in_array($part->subtype, $this->imageTypes))
             || ($part->type == 5)
         ) {
+
+            if (!is_dir($cacheDir)) {
+                mkdir($cacheDir);
+            }
+
             if (copy($uploadDir . $fileName, sugar_cached("images/{$fileName}.") . strtolower($part->subtype))) {
                 $id = substr($part->id, 1, -1); //strip <> around
                 $this->inlineImages[$id] = $attach->id . "." . strtolower($part->subtype);
