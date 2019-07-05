@@ -785,9 +785,16 @@ class SugarApplication
     /**
      * Wrapper for the PHP setcookie() function, to handle cases where headers have
      * already been sent
+     * @param $name
+     * @param $value
+     * @param int $expire
+     * @param null $path
+     * @param null $domain
+     * @param bool $secure
+     * @param bool $httponly
      */
     public static function setCookie(
-    $name,
+        $name,
         $value,
         $expire = 0,
         $path = null,
@@ -795,10 +802,10 @@ class SugarApplication
         $secure = false,
         $httponly = true
     ) {
-        if(isSSL()){
-	        $secure = true;
+        if (isSSL()) {
+            $secure = true;
         }
-        if (is_null($domain)) {
+        if ($domain === null) {
             if (isset($_SERVER["HTTP_HOST"])) {
                 $domain = $_SERVER["HTTP_HOST"];
             } else {
