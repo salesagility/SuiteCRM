@@ -310,7 +310,7 @@ class ApiTester extends \Codeception\Actor
      */
     public function deleteRelationship($relationshipMeta, $ids)
     {
-        $tableName = $relationshipMeta['relationshipMeta'];
+        $tableName = $relationshipMeta['tableName'];
         $sourceIdName = $relationshipMeta['sourceIdName'];
         $relatedIdName = $relationshipMeta['relatedIdName'];
 

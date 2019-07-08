@@ -27,8 +27,8 @@ class CreateRelationShipCest
 
         $linkName = 'contacts';
 
-        $endpoint = $I->getInstanceURL() . '/Api/V8/module/Accounts/{id}/relationships/' . $linkName;
-        $endpoint = str_replace('{id}', $accountId, $endpoint);
+        $endpoint = $I->getInstanceURL() . '/Api/V8/module/Accounts/{id}/relationships/{linkFieldName}';
+        $endpoint = str_replace(['{id}','{linkFieldName}'], [$accountId, $linkName], $endpoint);
 
         $payload = [
             'data' => [
