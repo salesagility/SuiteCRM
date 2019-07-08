@@ -126,7 +126,7 @@ class ModuleBuilder extends Administration
     {
         $I = $this;
         $I->waitForElementVisible('#sugarMsgWindow_mask');
-        $I->waitForText('This operation is completed successfully', null, '#sugarMsgWindow_c');
+        $I->waitForText('This operation is completed successfully', 10, '#sugarMsgWindow_c');
         $I->click('.container-close');
     }
 
