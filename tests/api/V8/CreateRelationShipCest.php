@@ -25,7 +25,9 @@ class CreateRelationShipCest
         $accountId = $I->createAccount();
         $contactId = $I->createContact();
 
-        $endpoint = $I->getInstanceURL() . '/Api/V8/module/Accounts/{id}/relationships';
+        $linkName = 'contacts';
+
+        $endpoint = $I->getInstanceURL() . '/Api/V8/module/Accounts/{id}/relationships/' . $linkName;
         $endpoint = str_replace('{id}', $accountId, $endpoint);
 
         $payload = [
@@ -44,14 +46,26 @@ class CreateRelationShipCest
         $I->seeResponseContainsJson(
             [
                 'message' => sprintf(
-                    'Contact with id %s has been added to Account with id %s',
+                    'Contact with id %s has been added to Account with id %s using link %s',
                     $contactId,
-                    $accountId
+                    $accountId,
+                    $linkName
                 )
             ]
         );
 
         $I->deleteBean('accounts', $accountId);
         $I->deleteBean('contacts', $contactId);
+        $I->deleteRelationship(
+            [
+                'tableName' => 'accounts_contacts',
+                'sourceIdName' => 'account_id',
+                'relatedIdName' => 'contact_id',
+            ],
+            [
+                'sourceId' => $accountId,
+                'relatedId' => $contactId,
+            ]
+        );
     }
 }
