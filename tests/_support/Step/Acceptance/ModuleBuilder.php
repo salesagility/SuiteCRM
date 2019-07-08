@@ -125,8 +125,9 @@ class ModuleBuilder extends Administration
     public function closePopupSuccess()
     {
         $I = $this;
-        # Wait the modal to hide itself.
-        $I->waitForElementNotVisible('#sugarMsgWindow_mask');
+        $I->waitForText('This operation is completed successfully', 10, '#sugarMsgWindow_c');
+        $I->waitForElementVisible('a.container-close');
+        $I->click('a.container-close');
     }
 
     /**
