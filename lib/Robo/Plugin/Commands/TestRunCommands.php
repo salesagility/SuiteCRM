@@ -44,15 +44,15 @@ class TestRunCommands extends \Robo\Tasks
     use \SuiteCRM\Robo\Traits\RoboTrait;
 
     /**
-     * Run install test suite.
+     * Run install test suite with the custom env.
      * @param array $opts
      * @option boolean debug Whether to set the test suite to output extra information.
      * @option boolean fail-fast Stop after first failure.
      */
     public function TestsInstall($opts = ['debug' => false, 'fail-fast' => false]) {
-      $this->say('Running Install Test Suite.');
+      $this->say('Running Codeception Install Test Suite.');
 
-      $command = './vendor/bin/codecept run install --env chrome-driver';
+      $command = './vendor/bin/codecept run install --env custom';
 
       if ($opts['debug']) {
         $command .= ' -vvv -d';
@@ -71,7 +71,7 @@ class TestRunCommands extends \Robo\Tasks
      * @option boolean fail-fast Stop after first failure.
      */
     public function TestsAPI($opts = ['debug' => false, 'fail-fast' => false]) {
-      $this->say('Running API Test Suite.');
+      $this->say('Running Codeception API Test Suite.');
 
       $command = './vendor/bin/codecept run api';
 
@@ -86,15 +86,15 @@ class TestRunCommands extends \Robo\Tasks
     }
 
     /**
-     * Run acceptance test suite.
+     * Run acceptance test suite with the custom env.
      * @param array $opts
-     * @option boolean verdebugbose Whether to set the test suite to output extra information.
+     * @option boolean debug Whether to set the test suite to output extra information.
      * @option boolean fail-fast Stop after first failure.
      */
     public function TestsAcceptance($opts = ['debug' => false, 'fail-fast' => false]) {
       $this->say('Running Codeception Acceptance Test Suite.');
 
-      $command = './vendor/bin/codecept run acceptance --env chrome-driver';
+      $command = './vendor/bin/codecept run acceptance --env custom';
 
       if ($opts['debug']) {
         $command .= ' -vvv -d';
