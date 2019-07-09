@@ -19,14 +19,35 @@ class Acceptance extends \Codeception\Module
         return true;
     }
 
-    public function _beforeSuite()
+    // Clean up any files left behind by module builder tests.
+    // This needs to be run both before _and_ after to handle the case where
+    // the test run is cancelled or fails and the afterSuite() hook isn't run.
+    public function _beforeSuite($settings = array())
     {
-        $this->deleteModuleFiles('CompanyTestModule');
+        $this->deleteModulesHelper();
     }
 
+    // Clean up any files left behind by module builder tests.
     public function _afterSuite()
     {
-        $this->deleteModuleFiles('CompanyTestModule');
+        $this->deleteModulesHelper();
+    }
+
+    // Clean up any files left behind by module builder tests.
+    private function deleteModulesHelper() {
+        $modules = array(
+            'BasicTestModule',
+            'CompanyTestModule',
+            'FileTestModule',
+            'IssueTestModule',
+            'PersonTestModule',
+            'SaleTestModule',
+            'TestModuleFields'
+        );
+        
+        foreach ($modules as $module) {
+            $this->deleteModuleFiles($module);
+        }
     }
 
     /**
