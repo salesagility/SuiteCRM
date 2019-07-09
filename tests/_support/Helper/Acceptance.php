@@ -18,4 +18,56 @@ class Acceptance extends \Codeception\Module
         }
         return true;
     }
+
+    public function _beforeSuite()
+    {
+        $directories = array(
+            "custom/modulebuilder/builds/CompanyTestModule",
+            "custom/modulebuilder/packages/CompanyTestModule",
+            "modules/Test_CompanyTestModule"
+        );
+        
+        foreach ($directories as $_index => $directory) {
+            if (is_dir($directory)) {
+                $this->getModule('Filesystem')->deleteDir($directory);
+            }
+        }
+
+        $files = array(
+            "custom/application/Ext/Include/modules.ext.php",
+            "custom/Extension/application/Ext/Include/CompanyTestModule.php"
+        );
+
+        foreach ($files as $_index => $file) {
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
+    }
+
+    public function _afterSuite()
+    {
+        $directories = array(
+            "custom/modulebuilder/builds/CompanyTestModule/",
+            "custom/modulebuilder/packages/CompanyTestModule/",
+            "modules/Test_CompanyTestModule/"
+        );
+
+        foreach ($directories as $_index => $directory) {
+            if (is_dir($directory)) {
+                $this->getModule('Filesystem')->deleteDir($directory);
+            }
+        }
+
+        $files = array(
+            "custom/application/Ext/Include/modules.ext.php",
+            "custom/Extension/application/Ext/Include/CompanyTestModule.php"
+        );
+
+        foreach ($files as $_index => $file) {
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
+    }
 }
