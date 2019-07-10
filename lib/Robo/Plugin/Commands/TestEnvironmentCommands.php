@@ -451,7 +451,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
             throw new \RuntimeException('Unable to find ChromeDriver ' . $binPath);
         }
 
-        $this->say('Hint: open terminal and run `'.$os->toOsPath('./vendor/bin/codecept').' run [test suite] --env chrome-driver`');
+        $this->say('Hint: open terminal and run `'.$os->toOsPath('./vendor/bin/codecept').' run [test suite] --env custom`');
         $this->say('Starting ChromeDriver');
         $this->_exec(
             $binPath
