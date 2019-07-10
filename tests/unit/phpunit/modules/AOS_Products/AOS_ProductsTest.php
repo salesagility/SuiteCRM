@@ -36,7 +36,7 @@ class AOS_ProductsTest extends SuitePHPUnitFrameworkTestCase
         $aosProducts->name = 'test';
         $aosProducts->category = 1;
         $aosProducts->product_image = 'test img';
-        $_POST['deleteAttachment'] = '1';
+        $_POST['remove_file_product_image'] = '1';
 
         $aosProducts->save();
 
@@ -44,6 +44,7 @@ class AOS_ProductsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(isset($aosProducts->id));
         $this->assertEquals(36, strlen($aosProducts->id));
         $this->assertEquals('', $aosProducts->product_image);
+        $this->assertEquals('test img', $aosProducts->product_image);
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $aosProducts->mark_deleted($aosProducts->id);
