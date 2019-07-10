@@ -2665,7 +2665,8 @@ sugarListView.prototype.send_mass_update = function (mode, no_record_txt, del) {
           ar.push(document.MassUpdate.elements[wp].value);
         }
       }
-      if (document.MassUpdate.uid.value != '') document.MassUpdate.uid.value += ',';
+      if (document.MassUpdate.uid.value != '' && ar.length)
+        document.MassUpdate.uid.value += ',';
       document.MassUpdate.uid.value += ar.join(',');
       if (document.MassUpdate.uid.value == '') {
         alert(no_record_txt);
