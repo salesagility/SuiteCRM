@@ -272,7 +272,7 @@ class SecurityGroup extends SecurityGroup_sugar
             }
 
             //inherit only for those that support Security Groups
-            $security_modules = self::::getSecurityModules();
+            $security_modules = self::getSecurityModules();
 
             if (in_array($focus->module_dir, array_keys($security_modules))) {
                 $query = 'INSERT INTO securitygroups_records(id,securitygroup_id,record_id,module,date_modified,deleted) '
