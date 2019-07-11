@@ -56,33 +56,19 @@ class SugarWidgetSubPanelEmailLink extends SugarWidgetField
         global $current_user;
         global $focus;
 
-        if (isset($layout_def['varname'])) {
-            $key = strtoupper($layout_def['varname']);
-        } else {
-            $key = $this->_get_column_alias($layout_def);
-            $key = strtoupper($key);
+        require_once('modules/Emails/EmailUI.php');
+        $emailUi = new EmailUI();
+        if ($focus !== null) {
+            return $emailUi->populateComposeViewFields($focus);
         }
-        $value = $layout_def['fields'][$key];
-
-        $client = $current_user->getEmailClient();
-
-        if ($client == 'sugar') {
-            require_once('modules/Emails/EmailUI.php');
-            $emailUi = new EmailUI();
-            if ($focus !== null) {
-                return $emailUi->populateComposeViewFields($focus);
-            }
-            if (!empty($layout_def['module']) && !empty($layout_def['fields']) && !empty($layout_def['fields']['ID'])) {
-                $bean = BeanFactory::getBean($layout_def['module'], $layout_def['fields']['ID']);
-                if (!empty($bean)) {
-                    return $emailUi->populateComposeViewFields($bean);
-                }
-            }
-            if ($current_user !== null) {
-                return $emailUi->populateComposeViewFields($current_user);
+        if (!empty($layout_def['module']) && !empty($layout_def['fields']) && !empty($layout_def['fields']['ID'])) {
+            $bean = BeanFactory::getBean($layout_def['module'], $layout_def['fields']['ID']);
+            if (!empty($bean)) {
+                return $emailUi->populateComposeViewFields($bean);
             }
         }
-
-        return '<a href="mailto:' . $value . '" >' . $value . '</a>';
+        if ($current_user !== null) {
+            return $emailUi->populateComposeViewFields($current_user);
+        }
     }
 }
