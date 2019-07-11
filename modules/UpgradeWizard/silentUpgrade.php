@@ -68,7 +68,7 @@ function build_argument_string($arguments = [])
 }
 
 //Bug 52872. Dies if the request does not come from CLI.
-$sapi_type = php_sapi_name();
+$sapi_type = PHP_SAPI;
 if (strpos($sapi_type, 'cli') !== 0) {
     die('This is command-line only script');
 }
