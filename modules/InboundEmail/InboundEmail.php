@@ -550,20 +550,11 @@ class InboundEmail extends SugarBean
      */
     private function mesageStructureHasAttachment($imapStructure)
     {
-        if (!isset($imapStructure->parts)
-            && isset($imapStructure->disposition)
-            && $imapStructure->disposition == 'attachment') {
+        if (($imapStructure->type !== 0) && ($imapStructure->type !== 1)) {
             return true;
         }
 
-        if (isset($imapStructure->parts)) {
-            foreach ($imapStructure->parts as $part) {
-                if ($this->mesageStructureHasAttachment($part)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return isset($imapStructure->parts[0]->parts);
     }
 
     ///////////////////////////////////////////////////////////////////////////
