@@ -3677,9 +3677,9 @@ class InboundEmail extends SugarBean
                 }
 
                 $et->subject = "Re:" . " " . str_replace(
-                        '%1',
-                        $c->case_number,
-                        $c->getEmailSubjectMacro() . " " . $c->name
+                    '%1',
+                    $c->case_number,
+                    $c->getEmailSubjectMacro() . " " . $c->name
                     );
 
                 $html = trim($email->description_html);
@@ -7938,7 +7938,7 @@ eoq;
                         }
                         $query = 'SELECT count(emails.message_id) as cnt, emails.message_id AS mid FROM emails WHERE emails.message_id IN ("' . implode(
                             '","',
-                                $query
+                            $query
                         ) . '") and emails.deleted = 0 group by emails.message_id';
                         $r = $this->db->query($query);
                         $tmp = array();

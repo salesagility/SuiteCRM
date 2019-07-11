@@ -1176,7 +1176,7 @@ $app_strings = array(
     'LBL_EMAIL_FOLDERS' => SugarThemeRegistry::current()->getImage(
         'icon_email_folder',
         'align=absmiddle border=0',
-            null,
+        null,
         null,
         '.gif',
         ''

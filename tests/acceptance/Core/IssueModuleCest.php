@@ -50,8 +50,8 @@ class IssueModuleCest
      * the module before testing.
      */
     public function testScenarioCreateIssueModule(
-       \AcceptanceTester $I,
-       \Step\Acceptance\ModuleBuilder $moduleBuilder
+        \AcceptanceTester $I,
+        \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a issue module for testing');
         $I->loginAsAdmin();

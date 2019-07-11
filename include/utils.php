@@ -451,8 +451,7 @@ function getRunningUser()
     if ($runningUser == null) {  // matches null, false and ""
         if (is_windows()) {
             $runningUser = getenv('USERDOMAIN').'\\'.getenv('USERNAME');
-        }
-        elseif (function_exists('posix_getpwuid') && function_exists('posix_geteuid')) {
+        } elseif (function_exists('posix_getpwuid') && function_exists('posix_geteuid')) {
             $usr = posix_getpwuid(posix_geteuid());
             $runningUser = $usr['name'];
         }
@@ -1189,7 +1188,7 @@ function return_module_language($language, $module, $refresh = false)
     // cn: bug 6048 - merge en_us with requested language
     if ($language != $sugar_config['default_language']) {
         $loaded_mod_strings = sugarLangArrayMerge(
-                LanguageManager::loadModuleLanguage($module, $sugar_config['default_language'], $refresh),
+            LanguageManager::loadModuleLanguage($module, $sugar_config['default_language'], $refresh),
             $loaded_mod_strings
         );
     }
@@ -1197,7 +1196,7 @@ function return_module_language($language, $module, $refresh = false)
     // Load in en_us strings by default
     if ($language != 'en_us' && $sugar_config['default_language'] != 'en_us') {
         $loaded_mod_strings = sugarLangArrayMerge(
-                LanguageManager::loadModuleLanguage($module, 'en_us', $refresh),
+            LanguageManager::loadModuleLanguage($module, 'en_us', $refresh),
             $loaded_mod_strings
         );
     }
@@ -1680,7 +1679,7 @@ function get_select_options_with_id_separate_key($label_list, $key_list, $select
         // The bug was only happening with one of the users in the drop down.  It was being replaced by none.
         if (
                 ($option_key != '' && $selected_key == $option_key) || (
-                $option_key == '' && (($selected_key == '' && !$massupdate) || $selected_key == '__SugarMassUpdateClearField__')
+                    $option_key == '' && (($selected_key == '' && !$massupdate) || $selected_key == '__SugarMassUpdateClearField__')
                 ) || (is_array($selected_key) && in_array($option_key, $selected_key))
         ) {
             $selected_string = 'selected ';
@@ -4662,7 +4661,7 @@ function ajaxInit()
  * @return string
  */
 function getAbsolutePath(
-$path,
+    $path,
     $currentServer = false
 ) {
     $path = trim($path);
@@ -4686,7 +4685,7 @@ $path,
  * @return object
  */
 function loadBean(
-$module
+    $module
 ) {
     return SugarModule::get($module)->loadBean();
 }

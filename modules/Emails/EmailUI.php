@@ -2823,7 +2823,7 @@ eoq;
 
         $q = "SELECT * FROM folders f WHERE f.created_by = '{$user->id}' AND f.deleted = 0 AND coalesce(" . $user->db->convert(
             "f.folder_type",
-                "length"
+            "length"
         ) . ",0) > 0";
         $r = $user->db->query($q);
 
@@ -2936,7 +2936,7 @@ eoq;
 
         if (ACLController::checkAccess('EmailTemplates', 'list', true) && ACLController::checkAccess(
             'EmailTemplates',
-                'view',
+            'view',
             true
         )
         ) {

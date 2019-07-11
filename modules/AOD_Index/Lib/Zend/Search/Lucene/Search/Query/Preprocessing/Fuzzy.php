@@ -112,9 +112,9 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy extends Zend_Search_Lu
             foreach ($searchFields as $fieldName) {
                 $subquery = new Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy(
                     $this->_word,
-                                                                                    $this->_encoding,
-                                                                                    $fieldName,
-                                                                                    $this->_minimumSimilarity
+                    $this->_encoding,
+                    $fieldName,
+                    $this->_minimumSimilarity
                 );
 
                 $rewrittenSubquery = $subquery->rewrite($index);

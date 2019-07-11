@@ -1045,7 +1045,7 @@ class ListView
                 $this->child_focus,
                 $related_field_name,
                 $this->query_orderby,
-            $this->query_where,
+                $this->query_where,
                 $current_offset,
                 $this->query_limit
             );
@@ -1470,7 +1470,7 @@ class ListView
                 || (!empty($sugar_config['disable_export']))
                 || (!empty($sugar_config['admin_export_only'])
                 && !(
-                        is_admin($current_user)
+                    is_admin($current_user)
                         || (ACLController::moduleSupportsACL($_REQUEST['module'])
                             && ACLAction::getUserAccessLevel($current_user->id, $_REQUEST['module'], 'access') == ACL_ALLOW_ENABLED
                             && (ACLAction::getUserAccessLevel($current_user->id, $_REQUEST['module'], 'admin') == ACL_ALLOW_ADMIN ||

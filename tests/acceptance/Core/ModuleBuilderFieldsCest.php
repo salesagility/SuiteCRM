@@ -53,8 +53,8 @@ class ModuleBuilderFieldsCest
      * the module before testing.
      */
     public function testScenarioCreateFieldsModule(
-       \AcceptanceTester $I,
-       \Step\Acceptance\ModuleBuilder $moduleBuilder
+        \AcceptanceTester $I,
+        \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a module for testing fields');
 

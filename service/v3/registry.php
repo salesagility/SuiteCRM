@@ -106,8 +106,8 @@ class registry_v3 extends registry
         parent::registerTypes();
         
         $this->serviceClass->registerType(
-             'md5_results',
-             'complexType',
+            'md5_results',
+            'complexType',
             'array',
             '',
             'SOAP-ENC:Array',
@@ -134,9 +134,9 @@ class registry_v3 extends registry
         $this->serviceClass->registerType(
             'upcoming_activities_list',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'tns:upcoming_activity_entry[]')
@@ -161,9 +161,9 @@ class registry_v3 extends registry
         $this->serviceClass->registerType(
             'last_viewed_list',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'tns:last_viewed_entry[]')
@@ -190,10 +190,10 @@ class registry_v3 extends registry
         $this->serviceClass->registerType(
             'field',
             'complexType',
-             'struct',
-             'all',
-              '',
-                array(
+            'struct',
+            'all',
+            '',
+            array(
                     'name'=>array('name'=>'name', 'type'=>'xsd:string'),
                     'type'=>array('name'=>'type', 'type'=>'xsd:string'),
                     'group'=>array('name'=>'group', 'type'=>'xsd:string'),

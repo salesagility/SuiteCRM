@@ -194,21 +194,21 @@ class XML_HTMLSax3_OpeningTagState
                     {$context->handler_method_opening}(
                         $context->htmlsax,
                         $tag,
-                    $Attributes,
+                        $Attributes,
                         true
                     );
                 $context->handler_object_element->
                     {$context->handler_method_closing}(
                         $context->htmlsax,
                         $tag,
-                    true
+                        true
                     );
             } else {
                 $context->handler_object_element->
                     {$context->handler_method_opening}(
                         $context->htmlsax,
                         $tag,
-                    $Attributes,
+                        $Attributes,
                         false
                     );
             }

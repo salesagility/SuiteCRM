@@ -169,9 +169,9 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
             $this->_fields[$field->name] =
                                 new Zend_Search_Lucene_Index_FieldInfo(
                                     $field->name,
-                                                                       $field->isIndexed,
-                                                                       $fieldNumber,
-                                                                       $field->storeTermVector
+                                    $field->isIndexed,
+                                    $fieldNumber,
+                                    $field->storeTermVector
                                 );
 
             return $fieldNumber;
@@ -197,9 +197,9 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
             $this->_fields[$fieldInfo->name] =
                                 new Zend_Search_Lucene_Index_FieldInfo(
                                     $fieldInfo->name,
-                                                                       $fieldInfo->isIndexed,
-                                                                       $fieldNumber,
-                                                                       $fieldInfo->storeTermVector
+                                    $fieldInfo->isIndexed,
+                                    $fieldNumber,
+                                    $fieldInfo->storeTermVector
                                 );
 
             return $fieldNumber;
@@ -473,11 +473,11 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
 
         $term = new Zend_Search_Lucene_Index_Term(
             $termEntry->text,
-                                                  $this->_fields[$termEntry->field]->number
+            $this->_fields[$termEntry->field]->number
         );
         $termInfo = new Zend_Search_Lucene_Index_TermInfo(
             count($termDocs),
-                                                          $freqPointer,
+            $freqPointer,
             $proxPointer,
             $skipOffset
         );
@@ -520,9 +520,9 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
      */
     protected function _dumpTermDictEntry(
         Zend_Search_Lucene_Storage_File $dicFile,
-                                        &$prevTerm,
+        &$prevTerm,
         Zend_Search_Lucene_Index_Term     $term,
-                                        &$prevTermInfo,
+        &$prevTermInfo,
         Zend_Search_Lucene_Index_TermInfo $termInfo
     ) {
         if (isset($prevTerm) && $prevTerm->field == $term->field) {

@@ -955,7 +955,7 @@ class Smarty
         if (!empty($this->cache_handler_func)) {
             return call_user_func_array(
                 $this->cache_handler_func,
-                                  array('clear', &$this, &$dummy, $tpl_file, $cache_id, $compile_id, $exp_time)
+                array('clear', &$this, &$dummy, $tpl_file, $cache_id, $compile_id, $exp_time)
             );
         }
         $_params = array('auto_base' => $this->cache_dir,
@@ -1513,7 +1513,7 @@ class Smarty
         return $this->_get_auto_filename(
             $this->compile_dir,
             $resource_name,
-                                         $this->_compile_id
+            $this->_compile_id
         ) . '.php';
     }
 
@@ -1566,7 +1566,7 @@ class Smarty
                         $_source_return = isset($this->_plugins['resource'][$_resource_type]) &&
                             call_user_func_array(
                                 $this->_plugins['resource'][$_resource_type][0][0],
-                                                 array($_resource_name, &$params['source_content'], &$this)
+                                array($_resource_name, &$params['source_content'], &$this)
                             );
                     } else {
                         $_source_return = true;
@@ -1575,7 +1575,7 @@ class Smarty
                     $_timestamp_return = isset($this->_plugins['resource'][$_resource_type]) &&
                         call_user_func_array(
                             $this->_plugins['resource'][$_resource_type][0][1],
-                                             array($_resource_name, &$params['resource_timestamp'], &$this)
+                            array($_resource_name, &$params['resource_timestamp'], &$this)
                         );
 
                     $_return = $_source_return && $_timestamp_return;
@@ -1820,7 +1820,7 @@ class Smarty
         $error_msg,
         $tpl_file = null,
         $tpl_line = null,
-            $file = null,
+        $file = null,
         $line = null,
         $error_type = E_USER_ERROR
     ) {

@@ -348,7 +348,7 @@ class MysqlManager extends DBManager
             $columns[$name]['type'] = strtolower($matches[1][0]);
             if (isset($matches[2][0]) && in_array(
                 strtolower($matches[1][0]),
-                    array('varchar', 'char', 'varchar2', 'int', 'decimal', 'float')
+                array('varchar', 'char', 'varchar2', 'int', 'decimal', 'float')
             )
             ) {
                 $columns[$name]['len'] = strtolower($matches[2][0]);

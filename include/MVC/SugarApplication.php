@@ -651,7 +651,7 @@ class SugarApplication
      * @param	string	$url	The URL to redirect to
      */
     public static function redirect(
-    $url
+        $url
     ) {
         /*
          * If the headers have been sent, then we cannot send an additional location header

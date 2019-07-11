@@ -220,11 +220,11 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
                     $options_ret['type'] = $this->get_name_value('type', $var['dbType']);
                 }
 
-	            $entry = array();
-	            $entry['name'] = $var['name'];
-	            $entry['type'] = $var['type'];
-	            $entry['group'] = isset($var['group']) ? $var['group'] : '';
-	            $entry['id_name'] = isset($var['id_name']) ? $var['id_name'] : '';
+                $entry = array();
+                $entry['name'] = $var['name'];
+                $entry['type'] = $var['type'];
+                $entry['group'] = isset($var['group']) ? $var['group'] : '';
+                $entry['id_name'] = isset($var['id_name']) ? $var['id_name'] : '';
                 if (isset($var['parentenum'])) {
                     $entry['parentenum'] = $var['parentenum'];
                 }
