@@ -548,7 +548,7 @@ class InboundEmail extends SugarBean
      * @param $imapStructure
      * @return bool
      */
-    private function mesageStructureHasAttachment($imapStructure)
+    public function mesageStructureHasAttachment($imapStructure)
     {
         if (!isset($imapStructure->parts)
             && isset($imapStructure->disposition)
