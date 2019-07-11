@@ -80,10 +80,6 @@ class AOS_Contracts extends AOS_Contracts_sugar
             unset($_POST['service_id']);
         }
 
-        if (isset($_POST['renewal_reminder_date']) && !empty($_POST['renewal_reminder_date'])) {
-            $this->createReminder();
-        }
-
         require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
 
         perform_aos_save($this);
@@ -95,8 +91,9 @@ class AOS_Contracts extends AOS_Contracts_sugar
         $productQuoteGroup->save_groups($_POST, $this, 'group_');
 
         if (isset($_POST['renewal_reminder_date']) && !empty($_POST['renewal_reminder_date'])) {
-            $this->createLink();
+            $this->createReminder();
         }
+
         return $return_id;
     }
 
@@ -133,27 +130,6 @@ class AOS_Contracts extends AOS_Contracts_sugar
             $call->deleted = 0;
             $call->save();
             $this->call_id = $call->id;
-        }
-    }
-
-    public function createLink()
-    {
-        require_once('modules/Calls/Call.php');
-        $call = new call();
-
-        if ($this->renewal_reminder_date != 0) {
-            $call->id = $this->call_id;
-
-            if (!isset($this->contract_account_id)) {
-                LoggerManager::getLogger()->warn('Contract Account ID not defined for AOS Contracts / create link.');
-                $contractAccountId = null;
-            } else {
-                $contractAccountId = $this->contract_account_id;
-            }
-            $call->parent_id = $contractAccountId;
-            $call->parent_type = 'Accounts';
-            $call->reminder_time = 60;
-            $call->save();
         }
     }
 
