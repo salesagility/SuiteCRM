@@ -70,7 +70,7 @@ function displayAttachmentField($focus, $field, $value, $view)
         $focus = array_change_key_case($focus, CASE_LOWER);
     }
 
-    if (!empty($focus['inbound_email_record'])) {
+    if (!empty($focus['inbound_email_record'] && empty($focus['id']))) {
         $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($focus['inbound_email_record']));
         $structure = $inboundEmail->getImap()->fetchStructure($focus['uid'], FT_UID);
 
@@ -92,7 +92,6 @@ function displayAttachmentField($focus, $field, $value, $view)
     $template->assign('attachments', $attachmentString);
 
     $result = $template->fetch('modules/Emails/templates/displayAttachmentField.tpl');
-
 
     return $result;
 }
