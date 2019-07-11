@@ -603,6 +603,7 @@ if ($upgradeType != constant('DCE_INSTANCE')) {
 
     // MAKE SURE PATCH IS COMPATIBLE
     if (is_file("$unzip_dir/manifest.php")) {
+        include "$unzip_dir/manifest.php";
         if (!isset($manifest)) {
             fwrite(STDERR, "\nThe patch did not contain a proper manifest.php file.  Cannot continue.\n\n");
             exit(1);
