@@ -125,7 +125,13 @@ $viewdefs[$module_name]['DetailView'] = array(
                     'name' => 'date_entered',
                     'label' => 'LBL_DATE_ENTERED',
                 )
-            )
+            ),
+            [
+                'attachment' => [
+                    'name' => 'attachment',
+                    'label' => 'LBL_ATTACHMENTS',
+                ]
+            ]
         )
     )
 );
