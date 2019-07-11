@@ -488,13 +488,7 @@ class ListViewDisplay
         }
 
 
-        $userPref = $GLOBALS['current_user']->getPreference('email_link_type');
-        $defaultPref = $GLOBALS['sugar_config']['email_default_client'];
-        if ($userPref != '') {
-            $client = $userPref;
-        } else {
-            $client = $defaultPref;
-        }
+        $client = $GLOBALS['current_user']->getEmailClient();
 
         if ($client === 'sugar') {
             require_once 'modules/Emails/EmailUI.php';

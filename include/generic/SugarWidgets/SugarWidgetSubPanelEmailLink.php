@@ -54,7 +54,6 @@ class SugarWidgetSubPanelEmailLink extends SugarWidgetField
     public function displayList(&$layout_def)
     {
         global $current_user;
-        global $sugar_config;
         global $focus;
 
         if (isset($layout_def['varname'])) {
@@ -65,13 +64,7 @@ class SugarWidgetSubPanelEmailLink extends SugarWidgetField
         }
         $value = $layout_def['fields'][$key];
 
-        $userPref = $current_user->getPreference('email_link_type');
-        $defaultPref = $sugar_config['email_default_client'];
-        if ($userPref != '') {
-            $client = $userPref;
-        } else {
-            $client = $defaultPref;
-        }
+        $client = $current_user->getEmailClient();
 
         if ($client == 'sugar') {
             require_once('modules/Emails/EmailUI.php');
