@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once("include/utils.php");
 require_once("include/ytree/Tree.php");
 require_once("include/ytree/ExtNode.php");
 require_once("include/SugarFolders/SugarFolders.php");
@@ -952,7 +953,7 @@ HTML;
             $this->smarty->assign("app_strings", $app_strings);
             $this->smarty->assign(
                 "contact_strings",
-                return_module_language($_SESSION['authenticated_user_language'], 'Contacts')
+                return_module_language(get_current_language(), 'Contacts')
             );
             $this->smarty->assign("contact", $contactMeta);
 

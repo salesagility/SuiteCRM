@@ -657,6 +657,22 @@ function get_language_display($key)
     return $sugar_config['languages'][$key];
 }
 
+/**
+ * Returns the currently active language string.
+ *
+ * @return string
+ */
+function get_current_language()
+{
+    global $sugar_config;
+
+    if (!empty($_SESSION['authenticated_user_language'])) {
+        return $_SESSION['authenticated_user_language'];
+    } else {
+        return $sugar_config['default_language'];
+    }
+}
+
 function get_assigned_user_name($assigned_user_id, $is_group = '')
 {
     static $saved_user_list = null;
