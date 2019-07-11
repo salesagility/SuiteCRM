@@ -133,6 +133,9 @@ class AOS_Contracts extends AOS_Contracts_sugar
             $call->deleted = 0;
             $call->save();
             $this->call_id = $call->id;
+            $relate_values = array('user_id'=>$call->assigned_user_id,'call_id'=>$call->id);
+            $data_values = array('accept_status'=>'none');
+            $call->set_relationship($call->rel_users_table, $relate_values, true, true, $data_values);
         }
     }
 
