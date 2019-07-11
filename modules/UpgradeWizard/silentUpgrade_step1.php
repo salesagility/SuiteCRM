@@ -158,7 +158,7 @@ function checkResourceSettings()
                         0 => 'Reports',
                         1 => 'Export',
                         2 => 'Import',
-                        3 => 'Administration',1
+                        3 => 'Administration',
                         4 => 'Sync',
                     ),
                 'default_limit' => 1000,
