@@ -139,6 +139,7 @@ $mod_strings = array(
     'LBL_SHOW_ALT_TEXT' => 'Show Plain Text',
     'LBL_SIGNATURE' => 'Signature',
     'LBL_SUBJECT' => 'Subject:',
+    'LBL_ATTACHMENTS' => 'Attachmens:',
     'LBL_TEXT_BODY' => 'Text Body',
     'LBL_TIME' => 'Time Sent:',
     'LBL_TO_ADDRS' => 'To',
