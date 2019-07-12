@@ -45,14 +45,20 @@ class TestRunCommands extends \Robo\Tasks
 
     /**
      * Run install test suite with the custom env.
+     * 
+     * @param string $fileOrDirectory Provide a path to a file or directory to
+     *   run a specific test/specific directory of tests.
      * @param array $opts
-     * @option boolean debug Whether to set the test suite to output extra information.
-     * @option boolean fail-fast Stop after first failure.
+     * @option debug Whether to have the test suite output extra information.
+     * @option fail-fast Stop after first failure.
+     * @usage tests:install
+     * @usage tests:install ./tests/install/UserWizardCest.php
+     * @usage tests:install --debug ./tests/install/UserWizardCest.php
      */
-    public function TestsInstall($opts = ['debug' => false, 'fail-fast' => false]) {
+    public function TestsInstall($fileOrDirectory = null, $opts = ['debug' => false, 'fail-fast' => false]) {
       $this->say('Running Codeception Install Test Suite.');
 
-      $command = './vendor/bin/codecept run install --env custom';
+      $command = "./vendor/bin/codecept run install --env custom {$fileOrDirectory}";
 
       if ($opts['debug']) {
         $command .= ' -vvv -d';
@@ -66,14 +72,21 @@ class TestRunCommands extends \Robo\Tasks
 
     /**
      * Run API test suite.
+     * 
+     * @param string $fileOrDirectory Provide a path to a file or directory to
+     *   run a specific test/specific directory of tests.
      * @param array $opts
-     * @option boolean debug Whether to set the test suite to output extra information.
-     * @option boolean fail-fast Stop after first failure.
+     * @option debug Whether to have the test suite output extra information.
+     * @option fail-fast Stop after first failure.
+     * @usage tests:api
+     * @usage tests:api ./tests/api/V8/GetFieldsMetaCest.php
+     * @usage tests:api ./tests/api/V8/
+     * @usage tests:api --debug ./tests/api/V8/GetFieldsMetaCest.php
      */
-    public function TestsAPI($opts = ['debug' => false, 'fail-fast' => false]) {
+    public function TestsAPI($fileOrDirectory = null, $opts = ['debug' => false, 'fail-fast' => false]) {
       $this->say('Running Codeception API Test Suite.');
 
-      $command = './vendor/bin/codecept run api';
+      $command = "./vendor/bin/codecept run api {$fileOrDirectory}";
 
       if ($opts['debug']) {
         $command .= ' -vvv -d';
@@ -87,14 +100,21 @@ class TestRunCommands extends \Robo\Tasks
 
     /**
      * Run acceptance test suite with the custom env.
+     * 
+     * @param string $fileOrDirectory Provide a path to a file or directory to
+     *   run a specific test/specific directory of tests.
      * @param array $opts
-     * @option boolean debug Whether to set the test suite to output extra information.
-     * @option boolean fail-fast Stop after first failure.
+     * @option debug Whether to have the test suite output extra information.
+     * @option fail-fast Stop after first failure.
+     * @usage tests:acceptance
+     * @usage tests:acceptance ./tests/acceptance/modules/Calendar/CalendarCest.php
+     * @usage tests:acceptance ./tests/acceptance/modules/
+     * @usage tests:acceptance --debug ./tests/acceptance/modules/Calendar/CalendarCest.php
      */
-    public function TestsAcceptance($opts = ['debug' => false, 'fail-fast' => false]) {
+    public function TestsAcceptance($fileOrDirectory = null, $opts = ['debug' => false, 'fail-fast' => false]) {
       $this->say('Running Codeception Acceptance Test Suite.');
 
-      $command = './vendor/bin/codecept run acceptance --env custom';
+      $command = "./vendor/bin/codecept run acceptance --env custom {$fileOrDirectory}";
 
       if ($opts['debug']) {
         $command .= ' -vvv -d';
@@ -108,14 +128,21 @@ class TestRunCommands extends \Robo\Tasks
 
     /**
      * Run PHPUnit unit test suite.
+     * 
+     * @param string $fileOrDirectory Provide a path to a file or directory to
+     *   run a specific test/specific directory of tests.
      * @param array $opts
-     * @option boolean debug Whether to set the test suite to output extra information.
-     * @option boolean fail-fast Stop after first failure.
+     * @option debug Whether to have the test suite output extra information.
+     * @option fail-fast Stop after first failure.
+     * @usage tests:unit
+     * @usage tests:unit ./tests/unit/phpunit/modules/Favorites/FavoritesTest.php
+     * @usage tests:unit ./tests/unit/phpunit/modules/
+     * @usage tests:unit --debug ./tests/unit/phpunit/modules/Favorites/FavoritesTest.php
      */
-    public function TestsUnit($opts = ['debug' => false, 'fail-fast' => false]) {
+    public function TestsUnit($fileOrDirectory = './tests/unit/phpunit', $opts = ['debug' => false, 'fail-fast' => false]) {
       $this->say('Running PHPUnit Unit Test Suite.');
 
-      $command = './vendor/bin/phpunit --colors --configuration ./tests/phpunit.xml.dist ./tests/unit/phpunit';
+      $command = "./vendor/bin/phpunit --colors --configuration ./tests/phpunit.xml.dist {$fileOrDirectory}";
       
       if ($opts['debug']) {
         $command .= ' -v --debug';
