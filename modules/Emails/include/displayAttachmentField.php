@@ -56,7 +56,7 @@ function displayAttachmentField($focus, $field, $value, $view)
     $result = '';
     $attachments = [];
 
-    if ($view !== 'detailview') {
+    if ($view !== 'DetailView') {
         return $result;
     }
 
