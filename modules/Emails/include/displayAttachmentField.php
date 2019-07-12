@@ -74,7 +74,7 @@ function displayAttachmentField($focus, $field, $value, $view)
         $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($focus['inbound_email_record']));
         $structure = $inboundEmail->getImap()->fetchStructure($focus['uid'], FT_UID);
 
-        if ($inboundEmail->mesageStructureHasAttachment($structure)) {
+        if ($inboundEmail->messageStructureHasAttachment($structure)) {
             foreach ($structure->parts as $part) {
                 if (is_string($part->dparameters[0]->value)) {
                     $attachments[] = $part->dparameters[0]->value;
