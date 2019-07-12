@@ -514,7 +514,7 @@ class InboundEmail extends SugarBean
             foreach ($emailHeaders as $i=> $emailHeader) {
                 $structure = $this->getImap()->fetchStructure($emailHeader['uid'], FT_UID);
 
-                $emailHeaders[$i]['has_attachment'] = $this->mesageStructureHasAttachment($structure);
+                $emailHeaders[$i]['has_attachment'] = $this->messageStructureHasAttachment($structure);
             }
         }
 
@@ -548,7 +548,7 @@ class InboundEmail extends SugarBean
      * @param $imapStructure
      * @return bool
      */
-    public function mesageStructureHasAttachment($imapStructure)
+    public function messageStructureHasAttachment($imapStructure)
     {
         if (($imapStructure->type !== 0) && ($imapStructure->type !== 1)) {
             return true;
