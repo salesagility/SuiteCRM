@@ -345,11 +345,7 @@ class SugarApplication
      */
     public static function preLoadLanguages()
     {
-        if (!empty($_SESSION['authenticated_user_language'])) {
-            $GLOBALS['current_language'] = $_SESSION['authenticated_user_language'];
-        } else {
-            $GLOBALS['current_language'] = $GLOBALS['sugar_config']['default_language'];
-        }
+        $GLOBALS['current_language'] = get_current_language();
         $GLOBALS['log']->debug('current_language is: ' . $GLOBALS['current_language']);
         //set module and application string arrays based upon selected language
         $GLOBALS['app_strings'] = return_application_language($GLOBALS['current_language']);
@@ -361,11 +357,7 @@ class SugarApplication
      */
     public function loadLanguages()
     {
-        if (!empty($_SESSION['authenticated_user_language'])) {
-            $GLOBALS['current_language'] = $_SESSION['authenticated_user_language'];
-        } else {
-            $GLOBALS['current_language'] = $GLOBALS['sugar_config']['default_language'];
-        }
+        $GLOBALS['current_language'] = get_current_language();
         $GLOBALS['log']->debug('current_language is: ' . $GLOBALS['current_language']);
         //set module and application string arrays based upon selected language
         $GLOBALS['app_strings'] = return_application_language($GLOBALS['current_language']);

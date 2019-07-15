@@ -141,15 +141,21 @@ $viewdefs[$module_name]['DetailView'] = array(
             array(
                 'parent_name'
             ),
-            array(
-                'date_entered' => array(
+            [
+                'date_entered' => [
                     'name' => 'date_entered',
+                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
                     'label' => 'LBL_DATE_ENTERED',
-                )
-            ),
-            array(
+                ]
+            ],
+            'date_sent_received' => [
+                'name' => 'date_sent_received',
+                'vname' => 'date_sent_received',
+                'label' => 'LBL_DATE_SENT_RECEIVED',
+            ],
+            [
                 'category_id',
-            ),
+            ],
         )
     )
 );
