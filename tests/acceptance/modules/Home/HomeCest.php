@@ -46,6 +46,10 @@ class HomeCest
         $dashboard->waitForDashboardVisible();
         $detailView->clickActionMenuItem('Add Dashlets');
         $I->waitForElementVisible('#chartCategory');
+        # TODO: Replace with waitForElementClickable
+        # This wait is necessary right now because the chartCategory button isn't
+        # necessarily clickable immediately, which can cause flaky failures.
+        $I->wait(1);
         $I->click('#chartCategory');
         $I->waitForText('All Opportunities By Lead Source By Outcome');
         $I->click('All Opportunities By Lead Source By Outcome');
