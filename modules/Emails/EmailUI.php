@@ -2201,14 +2201,15 @@ HTML;
     }
 
     /**
-     * @param $userIds
+     * @param array $userIds
      * @return array
      */
     public function getAssignedEmailsCountForUsers($userIds)
     {
         $counts = [];
         foreach ($userIds as $id) {
-            $r = $this->db->query("SELECT count(*) AS c FROM emails WHERE assigned_user_id = '$id' AND status = 'unread'");
+            $idQuoted = $this->db->quoted($id);
+            $r = $this->db->query("SELECT count(*) AS c FROM emails WHERE assigned_user_id = $idQuoted AND status = 'unread'");
             $a = $this->db->fetchByAssoc($r);
             $counts[$id] = $a['c'];
         }
