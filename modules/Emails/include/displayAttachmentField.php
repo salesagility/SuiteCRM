@@ -52,7 +52,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 function displayAttachmentField($focus, $field, $value, $view)
 {
-    global $app_strings, $app_list_strings, $mod_strings, $db;
+    global $db;
     $result = '';
     $attachments = [];
 
@@ -86,12 +86,7 @@ function displayAttachmentField($focus, $field, $value, $view)
     $attachmentString = implode(',', $attachments);
 
     $template = new Sugar_Smarty();
-    $template->assign('APP', $app_strings);
-    $template->assign('APP_LIST_STRINGS', $app_list_strings);
-    $template->assign('MOD', $mod_strings);
     $template->assign('attachments', $attachmentString);
 
-    $result = $template->fetch('modules/Emails/templates/displayAttachmentField.tpl');
-
-    return $result;
+    return $template->fetch('modules/Emails/templates/displayAttachmentField.tpl');
 }
