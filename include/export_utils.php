@@ -51,16 +51,43 @@ function getDelimiter()
     global $sugar_config;
     global $current_user;
 
-    if (!empty($sugar_config['export_excel_compatible'])) {
-        return "\t";
-    }
-
     $delimiter = ','; // default to "comma"
     $userDelimiter = $current_user->getPreference('export_delimiter');
     $delimiter = empty($sugar_config['export_delimiter']) ? $delimiter : $sugar_config['export_delimiter'];
     $delimiter = empty($userDelimiter) ? $delimiter : $userDelimiter;
 
     return $delimiter;
+}
+
+/**
+ * Prints the encoded CSV to the output buffer with the right headers for downloading.
+ *
+ * @param string $csv The CSV, UTF-8 encoded
+ * @param string $name The name of the document
+ */
+function printCSV($csv, $name) {
+    global $locale, $sugar_config;
+
+    // Excel correctly detects the CSV encoding for utf8+bom files. utf16(+bom) only works on Excel for Windows,
+    // but fails with Excel on macOS.
+    if (!empty($sugar_config['export_excel_compatible'])) {
+        $charset = 'UTF-8';
+        $data = $locale->addBOM($csv, $charset);
+    } else {
+        $charset = $locale->getExportCharset();
+        $data = $locale->translateCharset($csv, 'UTF-8', $charset);
+    }
+
+    header("Pragma: cache");
+    header("Content-type: text/comma-separated-values; charset=" . $charset);
+    header("Content-Disposition: attachment; filename=\"{$name}.csv\"");
+    header("Content-transfer-encoding: binary");
+    header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+    header("Last-Modified: " . TimeDate::httpTime());
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Content-Length: " . mb_strlen($data, '8bit'));
+
+    print $data;
 }
 
 
@@ -193,15 +220,7 @@ function export($type, $records = null, $members = false, $sample=false)
         $field_labels[$key] = translateForExport($dbname, $focus);
     }
 
-    $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
-    if ($locale->getExportCharset() == 'UTF-8' &&
-        ! preg_match('/macintosh|mac os x|mac_powerpc/i', $user_agent)) { // Bug 60377 - Mac Excel doesn't support UTF-8
-        //Bug 55520 - add BOM to the exporting CSV so any symbols are displayed correctly in Excel
-        $BOM = "\xEF\xBB\xBF";
-        $content = $BOM;
-    } else {
-        $content = '';
-    }
+    $content = '';
 
     // setup the "header" line with proper delimiters
     $content .= "\"".implode("\"".getDelimiter()."\"", array_values($field_labels))."\"\r\n";

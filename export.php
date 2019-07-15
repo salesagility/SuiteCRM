@@ -47,7 +47,6 @@ ini_set('zlib.output_compression', 'Off');
 ob_start();
 require_once('include/export_utils.php');
 global $sugar_config;
-global $locale;
 global $current_user;
 global $app_list_strings;
 
@@ -74,28 +73,12 @@ if (!empty($app_list_strings['moduleList'][$_REQUEST['module']])) {
     $filename = $app_list_strings['moduleList'][$_REQUEST['module']];
 }
 
-//strip away any blank spaces
-$filename = str_replace(' ', '', $filename);
-
-$transContent = $GLOBALS['locale']->translateCharset($content, 'UTF-8', $GLOBALS['locale']->getExportCharset());
-
 if (!empty($_REQUEST['members'])) {
     $filename .= '_'.'members';
 }
 ///////////////////////////////////////////////////////////////////////////////
 ////	BUILD THE EXPORT FILE
-ob_clean();
-header("Pragma: cache");
-header("Content-type: application/octet-stream; charset=".$GLOBALS['locale']->getExportCharset());
-header("Content-Disposition: attachment; filename={$filename}.csv");
-header("Content-transfer-encoding: binary");
-header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-header("Last-Modified: " . TimeDate::httpTime());
-header("Cache-Control: post-check=0, pre-check=0", false);
-if (!empty($sugar_config['export_excel_compatible'])) {
-    $transContent=chr(255) . chr(254) . mb_convert_encoding($transContent, 'UTF-16LE', 'UTF-8');
-}
-header("Content-Length: ".mb_strlen($transContent, '8bit'));
-print $transContent;
 
+ob_clean();
+printCSV($content, $filename);
 sugar_cleanup(true);
