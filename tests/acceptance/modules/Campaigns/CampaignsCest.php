@@ -31,25 +31,19 @@ class CampaignsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Campaigns $campaigns
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the campaigns module.
      */
     public function testScenarioViewCampaignsModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Campaigns $campaigns,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Campaigns $campaigns
     ) {
         $I->wantTo('View the campaigns module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to campaigns list-view
         $I->loginAsAdmin();
-        $campaigns->gotoCampaigns();
+        $I->visitPage('Campaigns', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Campaigns', '.module-title-text');
@@ -60,7 +54,6 @@ class CampaignsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Campaigns $campaign
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a non-emails campaign so that I can test
      * the standard fields.
@@ -69,18 +62,13 @@ class CampaignsCest
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Campaigns $campaign,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Campaigns $campaign
     ) {
         $I->wantTo('Create Non-Email Campaign');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to campaigns list-view
         $I->loginAsAdmin();
-        $campaign->gotoCampaigns();
+        $I->visitPage('Campaigns', 'index');
         $listView->waitForListViewVisible();
 
         // Create campaign
@@ -108,8 +96,7 @@ class CampaignsCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Campaigns $campaign
      * @param \Step\Acceptance\InboundEmailTester $inboundEmailTester
-     * @param \Step\Acceptance\EmailMan $EmailManTester,
-     * @param \Helper\WebDriverHelper $webDriverHelper
+     * @param \Step\Acceptance\EmailMan $EmailManTester
      *
      * As administrative user I want to create a Newsletter campaign so that I can test
      * the standard fields.
@@ -120,14 +107,9 @@ class CampaignsCest
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Campaigns $campaign,
         \Step\Acceptance\EmailManTester $EmailManTester,
-        \Step\Acceptance\InboundEmailTester $inboundEmailTester,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\InboundEmailTester $inboundEmailTester
     ) {
         $I->wantTo('Create Newsletter Campaign');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
 //        $I->loginAsAdmin();
 //
@@ -136,7 +118,7 @@ class CampaignsCest
 //        $inboundEmailTester->createBounceEmail();
 //
 //        // Navigate to campaigns list-view
-//        $campaign->gotoCampaigns();
+//        $I->visitPage('Campaigns', 'index');
 //        $listView->waitForListViewVisible();
 //
 //        // Create Newsletter campaign
@@ -145,7 +127,7 @@ class CampaignsCest
 //        $campaign->createNewletterCampaign($name);
 //
 //        // Check that campaign is ready to send
-//        $campaign->gotoCampaigns();
+//        $I->visitPage('Campaigns', 'index');
 //        $listView->waitForListViewVisible();
 //        $listView->clickFilterButton();
 //        $I->click('Quick Filter');
@@ -157,7 +139,7 @@ class CampaignsCest
 //        $detailView->clickActionMenuItem('Launch Wizard');
 //        $I->wait(5);
 //        $I->dontSee('You cannot send a marketing email until your subscription list has at least one entry. You can populate your list after finishing.');
-//        $campaign->gotoCampaigns();
+//        $I->visitPage('Campaigns', 'index');
 //        $listView->clearFilterButton();
 //
 //        // Delete campaign

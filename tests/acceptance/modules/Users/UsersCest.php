@@ -2,7 +2,6 @@
 
 use Faker\Factory;
 use Faker\Generator;
-use Helper\WebDriverHelper;
 use Step\Acceptance\Accounts;
 use Step\Acceptance\DetailView;
 use Step\Acceptance\EditView;
@@ -34,10 +33,8 @@ class UsersCest
         $this->fakeData->seed($this->fakeDataSeed);
     }
     
-    public function testEmailSettingsMailAccountAdd(AcceptanceTester $I, UsersTester $Users, WebDriverHelper $webDriverHelper)
+    public function testEmailSettingsMailAccountAdd(AcceptanceTester $I, UsersTester $Users)
     {
-        $instanceUrl = $webDriverHelper->getInstanceURL();
-        $I->amOnUrl($instanceUrl);
         $I->loginAsAdmin();
         $Users->gotoProfile();
         $I->see('User Profile', '.panel-heading');
@@ -50,7 +47,7 @@ class UsersCest
         $I->fillField('email_user', 'testuser_name');
         $I->fillField('email_password', 'testuser_pass');
         $I->click('Test Settings');
-        $I->wait(20);
+        $I->waitForText('Connection completed successfully.');
         $I->see('Connection completed successfully.');
     }
 
@@ -60,14 +57,9 @@ class UsersCest
         UsersTester $Users,
         ListView $listView,
         EditView $EditView,
-        Accounts $accounts,
-        WebDriverHelper $webDriverHelper
+        Accounts $accounts
     ) {
         $I->wantTo('View the collapsed subpanel hints on Accounts');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to Users list-view
         $I->loginAsAdmin();
@@ -77,7 +69,7 @@ class UsersCest
         $I->see('User Profile', '.panel-heading');
 
         $I->click("Layout Options");
-        $I->wait(5);
+        $I->waitForElementVisible('input[name="user_count_collapsed_subpanels"]');
         $I->seeElement('input', ['name' => 'user_count_collapsed_subpanels']);
         $I->checkOption(['name' => 'user_count_collapsed_subpanels']);
         $EditView->clickSaveButton();
@@ -88,7 +80,7 @@ class UsersCest
         $I->wantTo('Create an Account');
 
         // Navigate to accounts list-view
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account

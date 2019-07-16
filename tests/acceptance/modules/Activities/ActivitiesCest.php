@@ -34,7 +34,6 @@ class ActivitiesCest
      * @param \Step\Acceptance\Accounts $accounts
      * @param \Step\Acceptance\Calls $calls
      * @param \Step\Acceptance\NavigationBar $NavigationBar
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As a user I want to see the due date on the activities module
      */
@@ -44,18 +43,13 @@ class ActivitiesCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\Accounts $accounts,
         \Step\Acceptance\Calls $calls,
-        \Step\Acceptance\NavigationBar $NavigationBar,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\NavigationBar $NavigationBar
     ) {
         $I->wantTo('See the due date field on Account Activities subpanel');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -72,7 +66,7 @@ class ActivitiesCest
         $calls->createCallRelateModule($callName, $account_name, "Account");
 
         // Navigate to the Account's Detail View and confirm the due date contains data
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Select record from list view
@@ -84,8 +78,9 @@ class ActivitiesCest
         $listView->clickNameLink($account_name);
 
         //Click on Activites subpanel
+        $I->waitForElementVisible(['id'=>'subpanel_title_activities']);
         $I->click(['id'=>'subpanel_title_activities']);
-        $I->waitForElementVisible('#Activities_createtask_button', 60);
+        $I->waitForElementVisible('#Activities_createtask_button');
         $I->expect('the due date is visible');
         $I->seeInSource('01/19/2038');
 
@@ -99,7 +94,7 @@ class ActivitiesCest
         $listView->waitForListViewVisible();
 
         // Select record from list view
-        $I->wait(4);
+        $I->wait(3);
         $listView->clickFilterButton();
         $listView->click('Quick Filter');
         $listView->fillField('#name_basic', $callName);

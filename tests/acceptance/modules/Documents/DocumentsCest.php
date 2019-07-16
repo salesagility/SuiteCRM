@@ -31,25 +31,19 @@ class DocumentsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Documents $documents
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the documents module.
      */
     public function testScenarioViewDocumentsModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Documents $documents,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Documents $documents
     ) {
         $I->wantTo('View the documents module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to documents list-view
         $I->loginAsAdmin();
-        $documents->gotoDocuments();
+        $I->visitPage('Documents', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Documents', '.module-title-text');

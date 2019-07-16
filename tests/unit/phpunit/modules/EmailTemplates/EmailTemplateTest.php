@@ -20,7 +20,8 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_templates');
         $state->pushGlobals();
 
-        $this->setOutputCallback(function($msg) {});
+        $this->setOutputCallback(function ($msg) {
+        });
 
         $current_user->id = create_guid();
         $_REQUEST['func'] = 'createCopy';

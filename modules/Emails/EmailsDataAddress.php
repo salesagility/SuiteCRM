@@ -66,18 +66,18 @@ class EmailsDataAddress
      * @return array
      */
     public function getDataArray(
-            $type,
-            $id,
-            $attributesReplyTo,
-            $attributesFrom,
-            $attributesName,
-            $attributesOe,
-            $prepend,
-            $isPersonalEmailAccount,
-            $isGroupEmailAccount,
-            $outboundEmailId,
-            $outboundEmailName,
-            $emailSignaturesArray
+        $type,
+        $id,
+        $attributesReplyTo,
+        $attributesFrom,
+        $attributesName,
+        $attributesOe,
+        $prepend,
+        $isPersonalEmailAccount,
+        $isGroupEmailAccount,
+        $outboundEmailId,
+        $outboundEmailName,
+        $emailSignaturesArray
     ) {
         $signatureResolver = new EmailsSignatureResolver();
         $signatureResolver->setSignatureArray($emailSignaturesArray);
@@ -86,7 +86,7 @@ class EmailsDataAddress
             'type' => $type,
             'id' => $id,
             'attributes' => $this->getDataArrayAttributes(
-                    $attributesReplyTo,
+                $attributesReplyTo,
                 $attributesFrom,
                 $attributesName,
                 $attributesOe

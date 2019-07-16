@@ -101,6 +101,7 @@ class ImapHandlerFactoryTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testSaveTestSettingsKeyOK()
     {
+        $state = new SuiteCRM\StateSaver();
         $settingsFile = __DIR__ . '/../../../../../include/Imap' . ImapHandlerFactory::SETTINGS_KEY_FILE;
         $factory = new ImapHandlerFactory();
         $existsBefore = file_exists($settingsFile);
@@ -108,8 +109,8 @@ class ImapHandlerFactoryTest extends StateCheckerPHPUnitTestCaseAbstract
         $results = $factory->saveTestSettingsKey('testCaseExample');
         $existsAfter = file_exists($settingsFile);
         $this->assertTrue($existsAfter);
-        $this->assertTrue(unlink($settingsFile));
         $this->assertTrue($results);
+        $factory->deleteTestSettings();
     }
     
     /**
@@ -120,5 +121,6 @@ class ImapHandlerFactoryTest extends StateCheckerPHPUnitTestCaseAbstract
         $factory = new ImapHandlerFactory();
         $results = $factory->getImapHandler();
         $this->assertInstanceOf(ImapHandlerInterface::class, $results);
+        $factory->deleteTestSettings();
     }
 }

@@ -107,7 +107,7 @@ class LoggerManager
                 //otherwise if we have a level mapping for the method and that level is less than or equal to the current level let's let it log
                 || (!empty(self::$_levelMapping[$method])
                     && (
-                            (isset(self::$_levelMapping[self::$_level]) ? self::$_levelMapping[self::$_level] : null) >=
+                        (isset(self::$_levelMapping[self::$_level]) ? self::$_levelMapping[self::$_level] : null) >=
                             (isset(self::$_levelMapping[$method]) ? self::$_levelMapping[$method] : null)
                     ))) {
             //now we get the logger type this allows for having a file logger an email logger, a firebug logger or any other logger you wish you can set different levels to log differently

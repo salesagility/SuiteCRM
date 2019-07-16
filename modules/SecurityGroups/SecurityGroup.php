@@ -578,6 +578,7 @@ class SecurityGroup extends SecurityGroup_sugar
             $module,
                 ENT_QUOTES
         ) . "'," . $db->convert('', 'today') . ',0 )';
+      
         $GLOBALS['log']->debug("SecuritySuite: Save Default Group: $query");
         $db->query($query);
     }

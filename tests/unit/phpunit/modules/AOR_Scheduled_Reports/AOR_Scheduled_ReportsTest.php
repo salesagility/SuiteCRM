@@ -45,7 +45,6 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
         unset($aorScheduledReports);
 
         // clean up
-                
         $state->popGlobals();
         $state->popTable('tracker');
         $state->popTable('aod_index');
@@ -71,22 +70,11 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
 
     public function testbean_implements()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-
-        
-
         $aorScheduledReports = new AOR_Scheduled_Reports();
         $this->assertEquals(false, $aorScheduledReports->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aorScheduledReports->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $aorScheduledReports->bean_implements('ACL')); //test with valid value
-        
-        // clean up
     }
-
-
-
 
     public function testshouldRun()
     {

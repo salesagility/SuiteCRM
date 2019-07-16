@@ -278,7 +278,7 @@ function save_custom_app_list_strings(&$app_list_strings, $language)
         if ($handle) {
             $contents =create_dropdown_lang_pak_contents(
                 $app_list_strings,
-                             $language
+                $language
             );
 
             if (fwrite($handle, $contents)) {
@@ -522,7 +522,7 @@ function dropdown_item_edit($dropdown_type, $language, $key, $value)
 function replace_or_add_dropdown_type(
     $dropdown_type,
     &$dropdown_array,
-   &$file_contents
+    &$file_contents
 ) {
     $new_contents = "<?php\n?>";
     $new_entry = override_value_to_string(
@@ -557,7 +557,7 @@ function replace_or_add_dropdown_type(
 function replace_or_add_app_string(
     $name,
     $value,
-   &$file_contents
+    &$file_contents
 ) {
     $new_contents = "<?php\n?>";
     $new_entry = override_value_to_string(

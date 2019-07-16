@@ -31,25 +31,19 @@ class AOS_Product_CategoriesCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\ProductCategories $productCategories
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the productCategories module.
      */
     public function testScenarioViewProductCategoriesModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\ProductCategories $productCategories,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ProductCategories $productCategories
     ) {
         $I->wantTo('View the productCategories module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to productCategories list-view
         $I->loginAsAdmin();
-        $productCategories->gotoProductCategories();
+        $I->visitPage('AOS_Product_Categories', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Products - Categories', '.module-title-text');
@@ -60,7 +54,6 @@ class AOS_Product_CategoriesCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\ProductCategories $productCategory
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a product category so that I can test
      * the standard fields.
@@ -69,18 +62,13 @@ class AOS_Product_CategoriesCest
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\ProductCategories $productCategory,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ProductCategories $productCategory
     ) {
         $I->wantTo('Create a product category');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to product category list-view
         $I->loginAsAdmin();
-        $productCategory->gotoProductCategories();
+        $I->visitPage('AOS_Product_Categories', 'index');
         $listView->waitForListViewVisible();
 
         // Create product category

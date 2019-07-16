@@ -31,25 +31,19 @@ class AccountsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Accounts $accounts
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the accounts module.
      */
     public function testScenarioViewAccountsModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Accounts $accounts,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Accounts $accounts
     ) {
         $I->wantTo('View the accounts module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Accounts', '.module-title-text');
@@ -60,7 +54,6 @@ class AccountsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Accounts $accounts
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a report with the reports module so that I can test
      * the standard fields.
@@ -69,18 +62,14 @@ class AccountsCest
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Accounts $accounts,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Accounts $accounts
     ) {
         $I->wantTo('Create an Account');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -97,25 +86,19 @@ class AccountsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Accounts $accounts
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to inline edit a field on the list-view
      */
     public function testScenarioInlineEditListView(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Accounts $accounts,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Accounts $accounts
     ) {
         $I->wantTo('Inline edit an account on the list-view');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -124,7 +107,7 @@ class AccountsCest
         $accounts->createAccount($account_name);
 
         // Inline edit
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
         $I->doubleClick('.inlineEditIcon');
         $I->fillField('#name', 'InlineAccountNameEdit');
@@ -137,18 +120,13 @@ class AccountsCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\EditView $editView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Accounts $accounts,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Accounts $accounts
     ) {
         $I->wantTo('Create an Account');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -158,11 +136,12 @@ class AccountsCest
 
         // Click on Member Organizations subpanel
         $I->click(['id' => 'subpanel_title_accounts']);
-        $I->waitForElementVisible('#member_accounts_create_button', 60);
+        $I->waitForElementVisible('#member_accounts_create_button');
 
         // Add child account
         $accountName = 'Test_' . $this->fakeData->company();
         $I->click('#member_accounts_create_button');
+        $I->waitForElementVisible('#Accounts_subpanel_full_form_button');
         $I->click('#Accounts_subpanel_full_form_button');
         $editView->waitForEditViewVisible();
         $I->fillfield('#name', $accountName);

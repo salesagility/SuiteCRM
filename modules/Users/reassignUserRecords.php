@@ -146,7 +146,7 @@ if (!isset($_SESSION['reassignRecords']['assignedModuleListCache'])) {
                 $obj = new $p();
                 if (!isset($obj->field_defs['assigned_user_id']) ||
                      (
-                    isset($obj->field_defs['assigned_user_id']) &&
+                         isset($obj->field_defs['assigned_user_id']) &&
                     isset($obj->field_defs['assigned_user_id']['source']) &&
                     $obj->field_defs['assigned_user_id']['source'] == "non-db"
                 )
@@ -250,7 +250,7 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
     global $current_user;
     // Set the from and to user names so that we can display them in the results
     $fromUserNameQuoted = $this->db->quote($_POST['fromuser']);
-	$toUserNameQuoted = $this->db->quote($_POST['touser']);
+    $toUserNameQuoted = $this->db->quote($_POST['touser']);
 
     $query = "select user_name, id from users where id in ('$fromUserNameQuoted', '$toUserNameQuoted')";
     $res = DBManagerFactory::getInstance()->query($query, true);
@@ -328,7 +328,7 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
                     $q_where .= " and {$tableName}{$addcstm}.{$meta['dbname']} = '{$nameQuoted}' ";
                         break;
                     case "multiselect":
-                        if(empty($nameQuoted)){
+                        if (empty($nameQuoted)) {
                             continue;
                         }
                         $in_string = "";

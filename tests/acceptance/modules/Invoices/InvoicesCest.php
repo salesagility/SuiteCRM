@@ -31,25 +31,19 @@ class InvoicesCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Invoices $invoices
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the invoices module.
      */
     public function testScenarioViewInvoicesModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Invoices $invoices,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Invoices $invoices
     ) {
         $I->wantTo('View the invoices module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to invoices list-view
         $I->loginAsAdmin();
-        $invoices->gotoInvoices();
+        $I->visitPage('AOS_Invoices', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Invoices', '.module-title-text');
@@ -60,7 +54,6 @@ class InvoicesCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Invoices $invoice
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create an invoice so that I can test
      * the standard fields.
@@ -69,18 +62,13 @@ class InvoicesCest
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Invoices $invoice,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Invoices $invoice
     ) {
         $I->wantTo('Create an Invoice');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to invoices list-view
         $I->loginAsAdmin();
-        $invoice->gotoInvoices();
+        $I->visitPage('AOS_Invoices', 'index');
         $listView->waitForListViewVisible();
 
         // Create invoice
@@ -99,7 +87,6 @@ class InvoicesCest
      * @param \Step\Acceptance\ListView $listView
      * @param \\Step\Acceptance\EditView $editView
      * @param \Step\Acceptance\Invoices $invoice
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create an invoice and check the number rounding
      */
@@ -108,18 +95,13 @@ class InvoicesCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\EditView $editView,
-        \Step\Acceptance\Invoices $invoice,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Invoices $invoice
     ) {
         $I->wantTo('Create an Invoice');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to invoices list-view
         $I->loginAsAdmin();
-        $invoice->gotoInvoices();
+        $I->visitPage('AOS_Invoices', 'index');
         $listView->waitForListViewVisible();
 
         // Create invoice

@@ -23,17 +23,26 @@ matrix:
     - name: "PHP 7.3 / MySQL 5.7"
       php: "7.3"
       dist: xenial
+    # Run composer validate to make sure the composer.json and composer.lock are in sync.
+    - name: "composer validate"
+      php: "7.2"
+      dist: xenial
+      before_script: composer install
+      script: composer validate
     - stage: codecoverage
       if: type IN (pull_request) OR branch in (master, develop, hotfix)
       php: "7.0"
       dist: xenial
       script: ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 1;" >> config_override.php  ; ./vendor/bin/robo code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f ./_output/coverage.xml
 
-
 services:
   - mysql
 addons:
   chrome: stable
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
 
 env:
   - INSTANCE_URL=http://localhost DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1 COMPOSER_MEMORY_LIMIT=-1
@@ -56,8 +65,6 @@ before_script:
   - mysql -e "CREATE DATABASE automated_tests CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
   - mysql -u root -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
   - mysql -u root -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
-  # FIXME: https://github.com/salesagility/SuiteCRM/issues/7107
-  - mysql -u root -e "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode, 'STRICT_TRANS_TABLES', ''));"
   # Install apache - images with PHP 7 or above
   - sudo apt-get update
   - sudo apt-get install apache2 libapache2-mod-fastcgi
@@ -86,10 +93,8 @@ script:
   - ./build/push_output.sh
   
   # Run the unit tests
-  # - ./vendor/bin/codecept run unit --steps -f
-  - cd tests
-  - ../vendor/bin/phpunit --stop-on-failure --stop-on-error --colors --configuration $(pwd)/phpunit.xml.dist ./tests/unit/phpunit
-  - cd ..
+  - sudo chmod -R 777 .
+  - ./vendor/bin/phpunit --stop-on-failure --stop-on-error --colors --configuration ./tests/phpunit.xml.dist ./tests/unit/phpunit
   # Install OAuth2 demo data
   - mysql -u root -D automated_tests -v -e "source tests/_data/api_data.sql"
   # Install demo user data
