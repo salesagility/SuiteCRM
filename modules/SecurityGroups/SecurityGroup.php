@@ -565,19 +565,21 @@ class SecurityGroup extends SecurityGroup_sugar
      */
     public static function saveDefaultGroup($group_id, $module)
     {
+        $db = DBManagerFactory::getInstance();
+
         $query = 'INSERT INTO securitygroups_default (id, securitygroup_id, module, date_modified, deleted) '
             . 'VALUES ( ';
-        if ($this->db->dbType == 'mysql') {
+        if ($db->dbType === 'mysql') {
             $query .= ' uuid() ';
-        } elseif ($this->db->dbType == 'mssql') {
+        } elseif ($db->dbType === 'mssql') {
             $query .= ' lower(newid()) ';
         }
         $query .= ",'" . htmlspecialchars($group_id, ENT_QUOTES) . "', '" . htmlspecialchars(
             $module,
                 ENT_QUOTES
-        ) . "'," . $this->db->convert('', 'today') . ',0 )';
+        ) . "'," . $db->convert('', 'today') . ',0 )';
         $GLOBALS['log']->debug("SecuritySuite: Save Default Group: $query");
-        $this->db->query($query);
+        $db->query($query);
     }
 
     /**
@@ -585,8 +587,11 @@ class SecurityGroup extends SecurityGroup_sugar
      */
     public static function removeDefaultGroup($default_id)
     {
-        $query = "DELETE FROM securitygroups_default WHERE id = '" . htmlspecialchars($default_id) . "' ";
-        $this->db->query($query);
+        $db = DBManagerFactory::getInstance();
+
+        $query = "DELETE FROM securitygroups_default WHERE id = '" . htmlspecialchars($default_id,
+                ENT_QUOTES | ENT_HTML5) . "' ";
+        $db->query($query);
     }
 
     /**
