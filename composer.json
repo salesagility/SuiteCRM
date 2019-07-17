@@ -38,6 +38,7 @@
     "paragonie/random_compat": "^2.0",
     "psr/log": "^1.0",
     "slim/slim": "^3.8",
+    "smarty/smarty": "^2.6",
     "soundasleep/html2text": "~0.5",
     "symfony/options-resolver": "^3.4",
     "symfony/validator": "^3.4",
@@ -52,7 +53,6 @@
     "leafo/scssphp": "^0.7.7",
     "mikey179/vfsstream": "1.6.*",
     "mockery/mockery": "^0.9.9",
-    "roave/security-advisories": "dev-master",
     "symfony/yaml": "^3.4"
   },
   "scripts": {},

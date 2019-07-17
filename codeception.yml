@@ -33,7 +33,6 @@ coverage:
         - include/timezone/*
         - include/SuiteGraphs/*
         - include/social/*
-        - include/Smarty/*
         - include/reCaptcha/*
         - include/phpmailer/*
         - include/Pear/*
