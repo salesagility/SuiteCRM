@@ -38,12 +38,12 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-{include file="_head.tpl" theme_template=true}
+{include file="_head.tpl"}
 <body onMouseOut="closeMenus();">
 
 {if $AUTHENTICATED}
     <div id="ajaxHeader">
-        {include file="_headerModuleList.tpl" theme_template=true}
+        {include file="_headerModuleList.tpl"}
     </div>
 {/if}
 {literal}
