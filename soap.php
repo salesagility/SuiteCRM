@@ -47,7 +47,6 @@ require_once('include/utils/file_utils.php');
 ob_start();
 
 require_once('soap/SoapError.php');
-require_once('include/nusoap/nusoap.php');
 require_once('modules/Contacts/Contact.php');
 require_once('modules/Accounts/Account.php');
 require_once('modules/Opportunities/Opportunity.php');

@@ -38,7 +38,6 @@ coverage:
         - include/phpmailer/*
         - include/Pear/*
         - include/pclzip/*
-        - include/nusoap/*
         - include/HTTP_WebDAV_Server/*
         - include/HTMLPurifier/*
         - include/SugarXHprof/*
