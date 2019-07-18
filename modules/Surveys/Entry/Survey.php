@@ -1,5 +1,5 @@
 <?php
-
+use SuiteCRM\Utility\SuiteValidator;
 //Grab the survey
 if (empty($_REQUEST['id'])) {
     header('HTTP/1.0 404 Not Found');
@@ -76,8 +76,7 @@ EOF;
 
     return false;
 }
-
-use SuiteCRM\Utility\SuiteValidator; ?>
+?>
     <!DOCTYPE html>
     <html lang="en">
     <head>
