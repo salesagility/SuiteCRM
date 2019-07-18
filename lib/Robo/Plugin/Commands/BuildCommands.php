@@ -57,7 +57,7 @@ class BuildCommands extends \Robo\Tasks
      * color_scheme - set which color scheme you wish to build
      * @throws \RuntimeException
      */
-    public function buildSuitP(array $opts = ['color_scheme' => ''])
+    public function buildSuiteP(array $opts = ['color_scheme' => ''])
     {
         $this->say('Compile SuiteP Theme (SASS)');
         if (empty($this->$opts['color_scheme'])) {
