@@ -5587,8 +5587,7 @@ function isValidEmailAddress($email, $message = 'Invalid email address given', $
 
 function displayAdminError($errorString)
 {
-    $output = '<p class="error">' . $errorString . '</p>';
-    SugarApplication::appendErrorMessage($output);
+    SugarApplication::appendErrorMessage($errorString);
 }
 
 function getAppString($key)
