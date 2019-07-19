@@ -1988,20 +1988,55 @@ function sugarListView() {
 
 sugarListView.prototype.confirm_action = function (del) {
   if (del == 1) {
-    return confirm(SUGAR.language.get('app_strings', 'NTC_DELETE_CONFIRMATION_NUM') + sugarListView.get_num_selected() + SUGAR.language.get('app_strings', 'NTC_DELETE_SELECTED_RECORDS'));
+    return confirm(SUGAR.language.get('app_strings', 'NTC_DELETE_CONFIRMATION_NUM') + sugarListView.get_num_selected_string() + SUGAR.language.get('app_strings', 'NTC_DELETE_SELECTED_RECORDS'));
   }
   else {
-    return confirm(SUGAR.language.get('app_strings', 'NTC_UPDATE_CONFIRMATION_NUM') + sugarListView.get_num_selected() + SUGAR.language.get('app_strings', 'NTC_DELETE_SELECTED_RECORDS'));
+    return confirm(SUGAR.language.get('app_strings', 'NTC_UPDATE_CONFIRMATION_NUM') + sugarListView.get_num_selected_string() + SUGAR.language.get('app_strings', 'NTC_DELETE_SELECTED_RECORDS'));
   }
 
 }
-sugarListView.get_num_selected = function () {
-  var selectCount = sugarListView.get_checks_count();
-  if (selectCount > 0)
-        return selectCount;
-  return 0;
 
+/**
+ * Returns whether the value returned by get_num_selected() is exact. In case it isn't the real count could be
+ * more than the returned value.
+ *
+ * @returns {boolean}
+ */
+sugarListView.get_num_selected_is_exact = function () {
+  var the_form = document.MassUpdate;
+  return (typeof the_form == 'undefined' || the_form.select_entire_list.value != 1 || !the_form.show_plus.value);
 }
+
+/**
+ * Returns the number of selected records as a string. In case the value is not exact because count queries are
+ * disabled then '+' is appended.
+ *
+ * @returns {string}
+ */
+sugarListView.get_num_selected_string = function () {
+  var count = sugarListView.get_num_selected().toString();
+  if (!sugarListView.get_num_selected_is_exact()) {
+    count += '+';
+  }
+  return count;
+}
+
+/**
+ * Returns the number of selected records.
+ * Use get_num_selected_is_exact() to check whether the value is exact or not.
+ *
+ * @returns {number}
+ */
+sugarListView.get_num_selected = function () {
+  var the_form = document.MassUpdate;
+  if (typeof the_form != 'undefined' && the_form.select_entire_list.value == 1) {
+    var selectCount = $("input[name='selectCount[]']:first");
+    if (selectCount.length > 0)
+      return parseInt(selectCount.val().replace("+", ""));
+  }
+  return sugarListView.get_checks_count();
+}
+
 sugarListView.update_count = function (count, add) {
   if (typeof document.MassUpdate != 'undefined') {
     the_form = document.MassUpdate;
@@ -2009,11 +2044,11 @@ sugarListView.update_count = function (count, add) {
       if (typeof the_form.elements[wp].name != 'undefined' && the_form.elements[wp].name == 'selectCount[]') {
         if (add) {
           the_form.elements[wp].value = parseInt(the_form.elements[wp].value, 10) + count;
-          if (the_form.select_entire_list.value == 1 && the_form.show_plus.value) {
+          if (!sugarListView.get_num_selected_is_exact()) {
             the_form.elements[wp].value += '+';
           }
         } else {
-          if (the_form.select_entire_list.value == 1 && the_form.show_plus.value) {
+          if (!sugarListView.get_num_selected_is_exact()) {
             the_form.elements[wp].value = count + '+';
           } else {
             the_form.elements[wp].value = count;
@@ -2303,6 +2338,7 @@ sugarListView.prototype.check_item = function (cb, form) {
 sugarListView.prototype.toggleSelected = function () {
 
     var numSelected = sugarListView.get_num_selected();
+    var numSelectedString = sugarListView.get_num_selected_string();
     var selectedRecords = document.getElementById("selectedRecordsTop");
     var selectActions = document.getElementById("actionLinkTop");
     var selectActionsDisabled = document.getElementById("select_actions_disabled_top");
@@ -2310,6 +2346,8 @@ sugarListView.prototype.toggleSelected = function () {
     var selectActionsDisabledBottom = document.getElementById("select_actions_disabled_bottom");
 
     if (numSelected > 0) {
+        $('.selectedRecords.value').html(numSelectedString);
+        $('.selectedRecords').removeClass('hidden');
         $(selectedRecords).removeAttr("style").addClass("show");
         $(".selectActionsDisabled").hide();
         jQuery('ul[name=selectActions]').each(function () {
@@ -2327,6 +2365,7 @@ sugarListView.prototype.toggleSelected = function () {
             jQuery(this).removeAttr("style").addClass("hide");
         });
     } else {
+        $('.selectedRecords').addClass('hidden');
         $(selectedRecords).hide();
         $(selectActions).removeAttr("style").removeClass("show").addClass("hide");
         $(selectActionsBottom).removeAttr("style").removeClass("show").addClass("hide");
