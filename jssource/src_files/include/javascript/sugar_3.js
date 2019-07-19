@@ -2231,8 +2231,12 @@ sugarListView.get_checks = function () {
     // build associated array of uids, associated array ensures uniqueness
     inputs = document.MassUpdate.elements;
     for (i = 0; i < inputs.length; i++) {
-      if (inputs[i].name == 'mass[]') {
-        ar[inputs[i].value] = (inputs[i].checked) ? 1 : 0; // 0 of it is unchecked
+      if (inputs[i].name === 'mass[]') {
+        if (inputs[i].value !== '') {
+          ar[inputs[i].value] = (inputs[i].checked) ? 1 : 0; // 0 of it is unchecked
+        } else {
+          ar[i] = (inputs[i].checked) ? 1 : 0; // 0 of it is unchecked
+        }
       }
     }
 
