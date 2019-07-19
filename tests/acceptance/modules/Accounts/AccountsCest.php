@@ -114,7 +114,7 @@ class AccountsCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Accounts $accounts
      *
-     * As administrative user I want to inline edit a field on the list-view
+     * As an admin user I want to inline edit a field on the list-view
      */
     public function testScenarioInlineEditListView(
         \AcceptanceTester $I,
