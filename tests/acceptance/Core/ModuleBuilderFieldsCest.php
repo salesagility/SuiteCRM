@@ -37,7 +37,6 @@ class ModuleBuilderFieldsCest
     {
     }
 
-    // Tests
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
@@ -64,6 +63,9 @@ class ModuleBuilderFieldsCest
     /**
      * @param AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
+     * 
+     * @depends testScenarioCreateFieldsModule
+     * 
      * As an administrator I want to add a relate field to the basic module so that I can test relating records to the
      * accounts module
      */
@@ -140,11 +142,12 @@ class ModuleBuilderFieldsCest
         $moduleBuilder->closePopupSuccess();
     }
 
-
-
     /**
      * @param AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
+     * 
+     * @depends testScenarioAddRelateField
+     * 
      * As an administrator I want to add a html field to the basic module so that I can test relating records to the
      * accounts module
      */
@@ -225,6 +228,8 @@ class ModuleBuilderFieldsCest
      * @param AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
      * @param \Step\Acceptance\Repair $repair
+     * 
+     * @depends testScenarioAddHtmlField
      *
      * As an administrator I want to test deploying a module
      */
@@ -251,6 +256,8 @@ class ModuleBuilderFieldsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\Accounts $accounts
      *
+     * @depends testScenarioDeployModule
+     * 
      * As an administrator I want to test relating to the accounts module
      */
     public function testScenarioRelateToAccounts(
