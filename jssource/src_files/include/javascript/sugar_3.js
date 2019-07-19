@@ -2393,10 +2393,7 @@ sugarListView.prototype.check_all = function (form, field, value, pageTotal) {
   });
   if (document.MassUpdate.select_entire_list &&
     document.MassUpdate.select_entire_list.value == 1) {
-    sugarListView.prototype.toggleSelected();
-    $(document.MassUpdate.massall).each(function () {
-      $(this).attr('disabled', true);
-    });
+    sugarListView.prototype.clear_all();
   }
   else {
     $(document.MassUpdate.massall).each(function () {
