@@ -9,12 +9,6 @@ use Faker\Generator;
 class ModuleBuilderFieldsCest
 {
     /**
-     * @var string $lastView helps the test skip some repeated tests in order to make the test framework run faster at the
-     * potential cost of being accurate and reliable
-     */
-    protected $lastView;
-
-    /**
      * @var Generator $fakeData
      */
     protected $fakeData;
@@ -65,8 +59,6 @@ class ModuleBuilderFieldsCest
             \Page\ModuleFields::$NAME,
             \SuiteCRM\Enumerator\SugarObjectType::basic
         );
-
-        $this->lastView = 'ModuleBuilder';
     }
 
     /**
