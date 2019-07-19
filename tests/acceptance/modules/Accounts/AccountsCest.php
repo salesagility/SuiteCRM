@@ -142,6 +142,15 @@ class AccountsCest
         $I->see('InlineAccountNameEdit');
     }
 
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\Accounts $accounts
+     *
+     * As an admin user I want to create a child account.
+     */
     public function testScenarioCreateAccountChild(
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
