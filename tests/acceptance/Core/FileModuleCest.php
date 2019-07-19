@@ -62,6 +62,8 @@ class FileModuleCest
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      *
+     * @depends testScenarioCreateFileModule
+     * 
      * As administrative user I want to view my file test module so that I can see if it has been
      * deployed correctly.
      */
@@ -85,6 +87,8 @@ class FileModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailview
      * @param \Step\Acceptance\EditView $editView
+     * 
+     * @depends testScenarioCreateFileModule
      *
      * As administrative user I want to create a record with my file test module so that I can test
      * the standard fields.
@@ -130,6 +134,8 @@ class FileModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      *
+     * @depends testScenarioCreateRecord
+     *
      * As administrative user I want to view the record by selecting it in the list view
      */
     public function testScenarioViewRecordFromListView(
@@ -165,7 +171,9 @@ class FileModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
-     *
+     * 
+     * @depends testScenarioCreateRecord
+     * 
      * As administrative user I want to edit the record by selecting it in the detail view
      */
     public function testScenarioEditRecordFromDetailView(
@@ -207,6 +215,8 @@ class FileModuleCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
      *
+     * @depends testScenarioCreateRecord
+     * 
      * As administrative user I want to duplicate the record
      */
     public function testScenarioDuplicateRecordFromDetailView(
@@ -254,7 +264,12 @@ class FileModuleCest
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
-     *
+     * 
+     * @depends testScenarioCreateRecord
+     * @depends testScenarioViewRecordFromListView
+     * @depends testScenarioEditRecordFromDetailView
+     * @depends testScenarioDuplicateRecordFromDetailView
+     * 
      * As administrative user I want to delete the record by selecting it in the detail view
      */
     public function testScenarioDeleteRecordFromDetailView(

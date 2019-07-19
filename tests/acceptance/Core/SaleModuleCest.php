@@ -62,6 +62,8 @@ class SaleModuleCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
+     * 
+     * @depends testScenarioCreateSaleModule
      *
      * As administrative user I want to view my sale test module so that I can see if it has been
      * deployed correctly.
@@ -86,6 +88,8 @@ class SaleModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
+     * 
+     * @depends testScenarioCreateSaleModule
      *
      * As administrative user I want to create a record with my sale test module so that I can test
      * the standard fields.
@@ -127,6 +131,8 @@ class SaleModuleCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
+     * 
+     * @depends testScenarioCreateRecord
      *
      * As administrative user I want to view the record by selecting it in the list view
      */
@@ -160,6 +166,8 @@ class SaleModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
+     * 
+     * @depends testScenarioCreateRecord
      *
      * As administrative user I want to edit the record by selecting it in the detail view
      */
@@ -203,6 +211,8 @@ class SaleModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
+     * 
+     * @depends testScenarioCreateRecord
      *
      * As administrative user I want to duplicate the record
      */
@@ -252,6 +262,11 @@ class SaleModuleCest
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
+     * 
+     * @depends testScenarioCreateRecord
+     * @depends testScenarioViewRecordFromListView
+     * @depends testScenarioEditRecordFromDetailView
+     * @depends testScenarioDuplicateRecordFromDetailView
      *
      * As administrative user I want to delete the record by selecting it in the detail view
      */

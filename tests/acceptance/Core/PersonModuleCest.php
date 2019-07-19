@@ -63,6 +63,8 @@ class PersonModuleCest
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      *
+     * @depends testScenarioCreatePersonModule
+     * 
      * As administrative user I want to view my person test module so that I can see if it has been
      * deployed correctly.
      */
@@ -87,6 +89,8 @@ class PersonModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
+     * 
+     * @depends testScenarioCreatePersonModule
      *
      * As administrative user I want to create a record with my person test module so that I can test
      * the standard fields.
@@ -147,6 +151,8 @@ class PersonModuleCest
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
+     * 
+     * @depends testScenarioCreateRecord
      *
      * As administrative user I want to view the record by selecting it in the list view
      */
@@ -188,6 +194,8 @@ class PersonModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
+     * 
+     * @depends testScenarioCreateRecord
      *
      * As administrative user I want to edit the record by selecting it in the detail view
      */
@@ -238,6 +246,8 @@ class PersonModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
+     * 
+     * @depends testScenarioCreateRecord
      *
      * As administrative user I want to duplicate the record
      */
@@ -293,6 +303,11 @@ class PersonModuleCest
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
+     * 
+     * @depends testScenarioCreateRecord
+     * @depends testScenarioViewRecordFromListView
+     * @depends testScenarioEditRecordFromDetailView
+     * @depends testScenarioDuplicateRecordFromDetailView
      *
      * As administrative user I want to delete the record by selecting it in the detail view
      */
@@ -335,18 +350,18 @@ class PersonModuleCest
     }
 
     /**
-    /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
+     * 
+     * @depends testScenarioCreateRecord
      *
      * As administrative user I want to delete the record by selecting it in the detail view
      */
     public function testScenarioImportVCardFromDetailView(
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
-        \Step\Acceptance\SideBar $sideBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView
     ) {
