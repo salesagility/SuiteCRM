@@ -30,14 +30,12 @@ class CasesCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Cases $cases
      *
      * As an administrator I want to view the cases module.
      */
     public function testScenarioViewCasesModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Cases $cases
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the cases module for testing');
 

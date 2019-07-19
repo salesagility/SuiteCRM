@@ -30,14 +30,12 @@ class AOS_Product_CategoriesCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\ProductCategories $productCategories
      *
      * As an administrator I want to view the productCategories module.
      */
     public function testScenarioViewProductCategoriesModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\ProductCategories $productCategories
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the productCategories module for testing');
 

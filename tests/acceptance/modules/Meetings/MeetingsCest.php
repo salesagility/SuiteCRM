@@ -30,14 +30,12 @@ class MeetingsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Meetings $meetings
      *
      * As an administrator I want to view the meetings module.
      */
     public function testScenarioViewMeetingsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Meetings $meetings
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the meetings module for testing');
 

@@ -30,14 +30,12 @@ class AOS_PDF_TemplatesCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\PDFTemplates $pdfTemplates
      *
      * As an administrator I want to view the pdfTemplates module.
      */
     public function testScenarioViewPDFTemplatesModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\PDFTemplates $pdfTemplates
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the pdfTemplates module for testing');
 
