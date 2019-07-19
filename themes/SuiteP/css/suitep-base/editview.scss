@@ -1203,12 +1203,6 @@ p.error {
   margin: 0;
 }
 
-.error {
-  border: none;
-  color: $alert-danger-text;
-  background: transparent;
-}
-
 .error:empty {
   padding: 0;
 }
