@@ -249,7 +249,7 @@ class Smarty_Compiler extends Smarty
                 if ($prefilter[3] || is_callable($prefilter[0])) {
                     $source_content = call_user_func_array(
                         $prefilter[0],
-                                                            array($source_content, &$this)
+                        array($source_content, &$this)
                     );
                     $this->_plugins['prefilter'][$filter_name][3] = true;
                 } else {
@@ -397,7 +397,7 @@ class Smarty_Compiler extends Smarty
                 if ($postfilter[3] || is_callable($postfilter[0])) {
                     $compiled_content = call_user_func_array(
                         $postfilter[0],
-                                                              array($compiled_content, &$this)
+                        array($compiled_content, &$this)
                     );
                     $this->_plugins['postfilter'][$filter_name][3] = true;
                 } else {
@@ -2085,7 +2085,7 @@ class Smarty_Compiler extends Smarty
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
                     $this->_syntax_error(
                         "(secure mode) super global access not permitted",
-                                         E_USER_WARNING,
+                        E_USER_WARNING,
                         __FILE__,
                         __LINE__
                     );
@@ -2098,7 +2098,7 @@ class Smarty_Compiler extends Smarty
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
                     $this->_syntax_error(
                         "(secure mode) super global access not permitted",
-                                         E_USER_WARNING,
+                        E_USER_WARNING,
                         __FILE__,
                         __LINE__
                     );
@@ -2111,7 +2111,7 @@ class Smarty_Compiler extends Smarty
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
                     $this->_syntax_error(
                         "(secure mode) super global access not permitted",
-                                         E_USER_WARNING,
+                        E_USER_WARNING,
                         __FILE__,
                         __LINE__
                     );
@@ -2124,7 +2124,7 @@ class Smarty_Compiler extends Smarty
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
                     $this->_syntax_error(
                         "(secure mode) super global access not permitted",
-                                         E_USER_WARNING,
+                        E_USER_WARNING,
                         __FILE__,
                         __LINE__
                     );
@@ -2137,7 +2137,7 @@ class Smarty_Compiler extends Smarty
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
                     $this->_syntax_error(
                         "(secure mode) super global access not permitted",
-                                         E_USER_WARNING,
+                        E_USER_WARNING,
                         __FILE__,
                         __LINE__
                     );
@@ -2150,7 +2150,7 @@ class Smarty_Compiler extends Smarty
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
                     $this->_syntax_error(
                         "(secure mode) super global access not permitted",
-                                         E_USER_WARNING,
+                        E_USER_WARNING,
                         __FILE__,
                         __LINE__
                     );
@@ -2167,7 +2167,7 @@ class Smarty_Compiler extends Smarty
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
                     $this->_syntax_error(
                         "(secure mode) super global access not permitted",
-                                         E_USER_WARNING,
+                        E_USER_WARNING,
                         __FILE__,
                         __LINE__
                     );
@@ -2198,7 +2198,7 @@ class Smarty_Compiler extends Smarty
                 if ($this->security && !$this->security_settings['ALLOW_CONSTANTS']) {
                     $this->_syntax_error(
                         "(secure mode) constants not permitted",
-                                         E_USER_WARNING,
+                        E_USER_WARNING,
                         __FILE__,
                         __LINE__
                     );
@@ -2407,7 +2407,7 @@ class Smarty_Compiler extends Smarty
         }
         $this->_syntax_error(
             "mismatched tag {/$close_tag}.$message",
-                             E_USER_ERROR,
+            E_USER_ERROR,
             __FILE__,
             __LINE__
         );

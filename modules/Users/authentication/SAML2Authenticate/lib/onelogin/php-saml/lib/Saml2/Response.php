@@ -381,8 +381,8 @@ class OneLogin_Saml2_Response
             # If find a Signature on the Response, validates it checking the original response
             if ($hasSignedResponse && !OneLogin_Saml2_Utils::validateSign($this->document, $cert, $fingerprint, $fingerprintalg, OneLogin_Saml2_Utils::RESPONSE_SIGNATURE_XPATH, $multiCerts)) {
                 throw new OneLogin_Saml2_ValidationError(
-                        "Signature validation failed. SAML Response rejected",
-                        OneLogin_Saml2_ValidationError::INVALID_SIGNATURE
+                    "Signature validation failed. SAML Response rejected",
+                    OneLogin_Saml2_ValidationError::INVALID_SIGNATURE
                     );
             }
 
@@ -390,8 +390,8 @@ class OneLogin_Saml2_Response
             $documentToCheckAssertion = $this->encrypted ? $this->decryptedDocument : $this->document;
             if ($hasSignedAssertion && !OneLogin_Saml2_Utils::validateSign($documentToCheckAssertion, $cert, $fingerprint, $fingerprintalg, OneLogin_Saml2_Utils::ASSERTION_SIGNATURE_XPATH, $multiCerts)) {
                 throw new OneLogin_Saml2_ValidationError(
-                        "Signature validation failed. SAML Response rejected",
-                        OneLogin_Saml2_ValidationError::INVALID_SIGNATURE
+                    "Signature validation failed. SAML Response rejected",
+                    OneLogin_Saml2_ValidationError::INVALID_SIGNATURE
                     );
             }
             

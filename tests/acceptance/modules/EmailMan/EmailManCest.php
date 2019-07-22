@@ -27,14 +27,12 @@ class EmailManCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\EmailManTester $emailMan
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to test outgoing mail configuration.
      */
     public function testScenarioAdminEmailSettings(
         \AcceptanceTester $I,
-        \Step\Acceptance\EmailManTester $emailMan,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EmailManTester $emailMan
     ) {
         $I->wantTo('Save an outgoing email configuration');
 

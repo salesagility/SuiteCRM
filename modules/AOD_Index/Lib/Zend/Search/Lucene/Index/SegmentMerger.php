@@ -193,22 +193,22 @@ class Zend_Search_Lucene_Index_SegmentMerger
                         $storedFields[] =
                                  new Zend_Search_Lucene_Field(
                                      $fieldInfo->name,
-                                                              $fdtFile->readString(),
-                                                              'UTF-8',
-                                                              true,
-                                                              $fieldInfo->isIndexed,
-                                                              $bits & 1
+                                     $fdtFile->readString(),
+                                     'UTF-8',
+                                     true,
+                                     $fieldInfo->isIndexed,
+                                     $bits & 1
                                  );
                     } else {            // Binary data
                         $storedFields[] =
                                  new Zend_Search_Lucene_Field(
                                      $fieldInfo->name,
-                                                              $fdtFile->readBinary(),
-                                                              '',
-                                                              true,
-                                                              $fieldInfo->isIndexed,
-                                                              $bits & 1,
-                                                              true
+                                     $fdtFile->readBinary(),
+                                     '',
+                                     true,
+                                     $fieldInfo->isIndexed,
+                                     $bits & 1,
+                                     true
                                  );
                     }
                 }

@@ -272,7 +272,7 @@ class SugarFeedDashlet extends DashletGeneric
                 $lvsParams,
                 0,
                 $this->displayRows,
-                              array('name',
+                array('name',
                                     'description',
                                     'date_entered',
                                     'created_by',
@@ -394,8 +394,8 @@ class SugarFeedDashlet extends DashletGeneric
                 $text,
                 'UserFeed',
                 $GLOBALS['current_user']->id,
-                                $GLOBALS['current_user']->id,
-                                $_REQUEST['link_type'],
+                $GLOBALS['current_user']->id,
+                $_REQUEST['link_type'],
                 $_REQUEST['link_url']
                                 );
         }
@@ -411,8 +411,8 @@ class SugarFeedDashlet extends DashletGeneric
                 $text,
                 'SugarFeed',
                 $_REQUEST['parentFeed'],
-                                $GLOBALS['current_user']->id,
-                                '',
+                $GLOBALS['current_user']->id,
+                '',
                 ''
                                 );
         }

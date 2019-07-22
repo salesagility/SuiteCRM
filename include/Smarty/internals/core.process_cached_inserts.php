@@ -15,7 +15,7 @@ function smarty_core_process_cached_inserts($params, &$smarty)
 {
     preg_match_all(
         '!'.$smarty->_smarty_md5.'{insert_cache (.*)}'.$smarty->_smarty_md5.'!Uis',
-                   $params['results'],
+        $params['results'],
         $match
     );
     list($cached_inserts, $insert_args) = $match;

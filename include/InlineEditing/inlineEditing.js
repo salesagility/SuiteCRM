@@ -323,7 +323,7 @@ $(document).on('click', function (e) {
                     date_compare = true;
                 }
             } else {
-                output_value_compare = $(output_value).text();
+                output_value_compare = output_value;
             }
             if (user_value != output_value_compare) {
                 message_field = message_field != 'undefined' ? message_field : '';

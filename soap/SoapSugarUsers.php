@@ -141,8 +141,8 @@ function login($user_auth, $application)
             $password = decrypt_string($user_auth['password']);
             $authController = new AuthenticationController();
             if ($authController->login(
-                    $user_auth['user_name'],
-                        $password
+                $user_auth['user_name'],
+                $password
                 ) && isset($_SESSION['authenticated_user_id'])
                 ) {
                 $success = true;
@@ -1022,7 +1022,7 @@ function get_module_fields($session, $module_name)
     $seed = new $class_name();
     if ($seed->ACLAccess('ListView', true) || $seed->ACLAccess('DetailView', true) || $seed->ACLAccess(
         'EditView',
-            true
+        true
     )
     ) {
         return get_return_module_fields($seed, $module_name, $error);

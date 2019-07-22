@@ -30,16 +30,12 @@ class ContactsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Contacts $contacts
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the contacts module.
      */
     public function testScenarioViewContactsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Contacts $contacts,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the contacts module for testing');
 
@@ -56,7 +52,6 @@ class ContactsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Contacts $contact
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a contact so that I can test
      * the standard fields.
@@ -65,8 +60,7 @@ class ContactsCest
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Contacts $contact,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Contacts $contact
     ) {
         $I->wantTo('Create a Contact');
 
