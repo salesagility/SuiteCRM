@@ -1220,7 +1220,7 @@ div.content p.error {
 
 .error a {
   font-weight: 600;
-  color: $link-color;
+  color: white;
   text-decoration: underline;
 }
 
@@ -1234,7 +1234,7 @@ div.content p.error {
 }
 
 .error a:hover {
-  color: $link-color-hover;
+  color: black;
 }
 
 .success {
