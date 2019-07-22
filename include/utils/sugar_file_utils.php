@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once 'include/utils.php';
+
 /**
  * sugar_mkdir
  * Call this function instead of mkdir to apply pre-configured permission
@@ -289,6 +291,7 @@ function sugar_touch($filename, $time = null, $atime = null)
  */
 function sugar_chmod($filename, $mode = null)
 {
+
     if (!is_int($mode)) {
         $mode = (int)$mode;
     }
