@@ -41,8 +41,6 @@ class UserWizardCest
     public function testScenarioInstallSuiteCRMWithDefaultConfiguration(InstallTester $I, Step\Acceptance\EmailManTester $I2, \Helper\WebDriverHelper $webDriverHelper)
     {
         $I->wantTo('check the php version meets the recommended requirements.');
-        $_REQUEST['js_admin_repair'] = 'mini';
-        require_once 'modules/Administration/callJSRepair.php';
         $I->amOnUrl($webDriverHelper->getInstanceURL());
         $I->waitForText('Setup');
         $I->maySeeOldVersionDetected();
