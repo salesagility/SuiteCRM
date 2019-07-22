@@ -956,7 +956,7 @@ abstract class DBManager
                 continue;
             }
 
-            if (in_array($value['type'], array('alternate_key', 'foreign'))) {
+            if (in_array($value['type'], array('alternate_key'))) {
                 $value['type'] = 'index';
             }
 
