@@ -49,6 +49,14 @@ class BuildCommands extends \Robo\Tasks
     use RoboTrait;
     // define public methods as commands
 
+    public function buildJS()
+    {
+        $this->say('Compile JS Source');
+        $root = getcwd();
+        $_REQUEST['js_admin_repair'] = 'mini';
+        require_once $root . '/modules/Administration/callJSRepair.php';
+    }
+
     /**
      * Build SuiteP theme
      * @params array $opts optional command line arguments

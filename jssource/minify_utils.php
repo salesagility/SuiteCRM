@@ -340,9 +340,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 } else {
                     file_put_contents($to_path, $out);
                 }
-            } else {
-                //log failure
-                echo"<B> COULD NOT COMPRESS $from_path, it is not a file \n";
             }
         } else {
             //log failure
@@ -394,16 +391,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
             $bu_dir = dirname($bu_path);
 
             if (!file_exists($bu_dir)) {
-                //directory does not exist, log it and return
-                echo" directory $bu_dir does not exist, could not restore $bu_path";
-                return;
+                if (!mkdir($bu_dir, 0777, true) && !is_dir($bu_dir)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $bu_dir));
+                }
             }
 
             //delete backup src file if it exists already
-            if (file_exists($bu_path)) {
+            if (file_exists($bu_path) && !is_dir($bu_path)) {
                 unlink($bu_path);
             }
-            copy($from_path, $bu_path);
+
+            if (!is_dir($bu_path)) {
+                copy($from_path, $bu_path);
+            }
         }
     }
 
