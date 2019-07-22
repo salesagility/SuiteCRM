@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
+require_once 'include/utils/file_utils.php';
 
 function copy_recursive($source, $dest)
 {
