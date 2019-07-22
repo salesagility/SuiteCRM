@@ -89,6 +89,7 @@ before_script:
 script:
   # Run the wizard installer
   - echo "using install wizard"
+  - ./vendor/bin/robo build:js
   - ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter
   - ./build/push_output.sh
   
