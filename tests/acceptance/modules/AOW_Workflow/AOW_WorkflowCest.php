@@ -130,6 +130,5 @@ class AOW_WorkflowCest
     //     $detailView->acceptPopup();
     //
     //     $listView->waitForListViewVisible();
-    //     $this->lastView = 'ListView';
     // }
 }
