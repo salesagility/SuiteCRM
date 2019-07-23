@@ -950,7 +950,9 @@ abstract class DBManager
             if (isset($value['type']) && $value['type'] == 'primary') {
                 continue;
             }
-
+            if ($value['type'] == 'foreign') {
+                continue;
+            }
             //database helpers do not know how to handle full text indices
             if ($value['type'] == 'fulltext') {
                 continue;
