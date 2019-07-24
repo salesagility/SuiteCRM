@@ -273,7 +273,19 @@ function clickedawayclose(field,id,module, type){
     clickListenerActive = true;
 }
 
-$(document).on('click', function (e) {
+/*
+ * Disable any existing click listeners before registering this listener.
+ * This is done to prevent the listener from being registered more than
+ * once across page views.
+ */
+$(document).off().on('click', warnOnLeavingActiveField);
+
+/**
+ * Display a confirmation dialog if the user clicks outside of a field that's actively being edited.
+ * 
+ * @param {Event} e - the click event 
+ */
+function warnOnLeavingActiveField(e) {
     if (clickListenerActive) {
         var field = ie_field;
         var id = ie_id;
@@ -342,7 +354,7 @@ $(document).on('click', function (e) {
             }
         }
     }
-});
+};
 
 /**
  * Depending on what type of field we are editing the parts of the field may differ and need different jquery to pickup the values
