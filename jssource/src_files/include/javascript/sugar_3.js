@@ -2028,11 +2028,13 @@ sugarListView.get_num_selected_string = function () {
  * @returns {number}
  */
 sugarListView.get_num_selected = function () {
-  var the_form = document.MassUpdate;
-  if (typeof the_form != 'undefined' && the_form.select_entire_list.value == 1) {
-    var selectCount = $("input[name='selectCount[]']:first");
-    if (selectCount.length > 0)
-      return parseInt(selectCount.val().replace("+", ""));
+  if (typeof document.MassUpdate != 'undefined') {
+    var the_form = document.MassUpdate;
+    if (typeof the_form != 'undefined' && the_form.select_entire_list.value == 1) {
+      var selectCount = $("input[name='selectCount[]']:first");
+      if (selectCount.length > 0)
+        return parseInt(selectCount.val().replace("+", ""));
+    }
   }
   return sugarListView.get_checks_count();
 }
