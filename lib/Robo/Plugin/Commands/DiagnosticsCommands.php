@@ -136,7 +136,12 @@ class DiagnosticsCommands extends \Robo\Tasks
      * @return String
      */
     protected function getComposerVersion() {
-        return 'Not implemented.';
+        // Take a string like 'Composer version 1.8.6 2019-06-11 15:03:05' and get the version string from it.
+        $composerVersionString = exec('composer --version');
+        $re = '/Composer version (\d+\.\d+\.\d+)/';
+        preg_match($re, $composerVersionString, $matches);
+
+        return $matches[1];
     }
 
     /**
