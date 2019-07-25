@@ -189,7 +189,7 @@ class DiagnosticsCommands extends \Robo\Tasks
      * @return String
      */
     protected function getPhpIniFile() {
-        return 'Not implemented.';
+        return php_ini_loaded_file();
     }
     
     /**
@@ -197,7 +197,14 @@ class DiagnosticsCommands extends \Robo\Tasks
      * @return String
      */
     protected function getPhpErrorsFile() {
-        return 'Not implemented.';
+        // If the directory starts with `.` it's relative to the base path.
+        // Otherwise, just print whatever it returns.
+        $errorDir = pathinfo(ini_get('error_log'), PATHINFO_DIRNAME);
+        if (substr($errorDir, 0, strlen('.')) === '.') {
+            return $this->getBasePath() . DIRECTORY_SEPARATOR . ini_get('error_log');
+        } else {
+            return ini_get('error_log');
+        }
     }
     
     /**
