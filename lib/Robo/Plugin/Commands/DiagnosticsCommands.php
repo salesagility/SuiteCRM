@@ -48,6 +48,7 @@ class DiagnosticsCommands extends \Robo\Tasks
 
     /**
      * Print diagnostic information about SuiteCRM.
+     * Useful for reporting issues.
      */
     public function diagnostics() {
         $this->io()->title('SuiteCRM Diagnostics');
