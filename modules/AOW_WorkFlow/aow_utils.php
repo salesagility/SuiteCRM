@@ -80,7 +80,7 @@ function getModuleFields(
                     if (array_key_exists($mod->module_dir, $blockedModuleFields)) {
                         if (in_array(
                             $arr['name'],
-                                $blockedModuleFields[$mod->module_dir]
+                            $blockedModuleFields[$mod->module_dir]
                             ) && !$current_user->isAdmin()
                         ) {
                             $GLOBALS['log']->debug('hiding ' . $arr['name'] . ' field from ' . $current_user->name);

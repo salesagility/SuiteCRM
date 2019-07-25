@@ -97,7 +97,7 @@ EOS;
         $html .= "cr_fields[" . $line . "] = \"" . trim(preg_replace(
             '/\s+/',
             ' ',
-                getModuleFields($module, 'EditView', '', array(), array('email1', 'email2'))
+            getModuleFields($module, 'EditView', '', array(), array('email1', 'email2'))
         )) . "\";";
         $html .= "cr_relationships[".$line."] = \"".trim(preg_replace('/\s+/', ' ', getModuleRelationships($module)))."\";";
         if ($params && array_key_exists('field', $params)) {

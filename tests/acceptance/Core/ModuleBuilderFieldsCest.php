@@ -9,12 +9,6 @@ use Faker\Generator;
 class ModuleBuilderFieldsCest
 {
     /**
-     * @var string $lastView helps the test skip some repeated tests in order to make the test framework run faster at the
-     * potential cost of being accurate and reliable
-     */
-    protected $lastView;
-
-    /**
      * @var Generator $fakeData
      */
     protected $fakeData;
@@ -47,16 +41,14 @@ class ModuleBuilderFieldsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to create and deploy a basic module so that I can test
      * that the functionality of functionality each field is working. Given that I have already created a module I expect to deploy
      * the module before testing.
      */
     public function testScenarioCreateFieldsModule(
-       \AcceptanceTester $I,
-       \Step\Acceptance\ModuleBuilder $moduleBuilder,
-       \Helper\WebDriverHelper $webDriverHelper
+        \AcceptanceTester $I,
+        \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a module for testing fields');
 
@@ -67,21 +59,17 @@ class ModuleBuilderFieldsCest
             \Page\ModuleFields::$NAME,
             \SuiteCRM\Enumerator\SugarObjectType::basic
         );
-
-        $this->lastView = 'ModuleBuilder';
     }
 
     /**
      * @param AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
-     * @param \Helper\WebDriverHelper $webDriverHelper
      * As an administrator I want to add a relate field to the basic module so that I can test relating records to the
      * accounts module
      */
     public function testScenarioAddRelateField(
         \AcceptanceTester $I,
-        \Step\Acceptance\ModuleBuilder $moduleBuilder,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Add relate field');
 
@@ -157,14 +145,12 @@ class ModuleBuilderFieldsCest
     /**
      * @param AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
-     * @param \Helper\WebDriverHelper $webDriverHelper
      * As an administrator I want to add a html field to the basic module so that I can test relating records to the
      * accounts module
      */
     public function testScenarioAddHtmlField(
         \AcceptanceTester $I,
-        \Step\Acceptance\ModuleBuilder $moduleBuilder,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Add html field');
 
@@ -238,20 +224,14 @@ class ModuleBuilderFieldsCest
     /**
      * @param AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
-     * @param \Helper\WebDriverHelper $webDriverHelper
      * As an administrator I want to add a html field to the basic module so that I can test relating records to the
      * accounts module
      */
     public function testScenarioAddIntField(
         \AcceptanceTester $I,
-        \Step\Acceptance\ModuleBuilder $moduleBuilder,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Add int field');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 
@@ -323,21 +303,16 @@ class ModuleBuilderFieldsCest
      * @param AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
      * @param \Step\Acceptance\Repair $repair
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to test deploying a module
      */
     public function testScenarioDeployModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ModuleBuilder $moduleBuilder,
-        \Step\Acceptance\Repair $repair,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Repair $repair
     ) {
         $I->wantTo('Deploy Test Module');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         $I->loginAsAdmin();
 
         $moduleBuilder->deployPackage(\Page\ModuleFields::$PACKAGE_NAME, true);
@@ -352,8 +327,7 @@ class ModuleBuilderFieldsCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\EditView $editView
      * @param \Step\Acceptance\DetailView $detailView
-     * @param \Step\Acceptance\AccountsTester $accounts
-     * @param \Helper\WebDriverHelper $webDriverHelper
+     * @param \Step\Acceptance\Accounts $accounts
      *
      * As an administrator I want to test relating to the accounts module
      */
@@ -362,8 +336,7 @@ class ModuleBuilderFieldsCest
         \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\EditView $editView,
-        \Step\Acceptance\DetailView $detailView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\DetailView $detailView
     ) {
         return; // test failing behaviour is not similar in different environments
         $I->wantTo('Relate a record to accounts');

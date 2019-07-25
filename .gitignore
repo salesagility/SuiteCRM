@@ -113,3 +113,6 @@ include/Imap/ImapTestSettings.txt
 
 # Ignore php-cs-fixer cache
 .php_cs.cache
+
+# Ignore custom codeception environments so they won't be committed.
+tests/_envs/custom.yml

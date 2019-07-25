@@ -180,10 +180,10 @@ EOQ;
 <script type="text/javascript" language="javascript">
 function confirm_massassign(del,start_string, end_string) {
 	if (del == 1) {
-		return confirm( start_string + sugarListView.get_num_selected()  + end_string);
+		return confirm( start_string + sugarListView.get_num_selected_string()  + end_string);
 	}
 	else {
-		return confirm( start_string + sugarListView.get_num_selected()  + end_string);
+		return confirm( start_string + sugarListView.get_num_selected_string()  + end_string);
 	}
 }
 

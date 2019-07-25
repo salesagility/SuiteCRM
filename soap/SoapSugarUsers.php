@@ -70,9 +70,8 @@ function is_user_admin($session)
         global $current_user;
 
         return is_admin($current_user);
-    } else {
-        return 0;
     }
+    return 0;
 }
 
 
@@ -137,18 +136,17 @@ function login($user_auth, $application)
             $GLOBALS['logic_hook']->call_custom_logic('Users', 'login_failed');
 
             return array('id' => -1, 'error' => $error);
-        } else {
-            if (function_exists('openssl_decrypt')) {
-                $password = decrypt_string($user_auth['password']);
-                $authController = new AuthenticationController();
-                if ($authController->login(
-                    $user_auth['user_name'],
-                        $password
+        }
+        if (function_exists('openssl_decrypt')) {
+            $password = decrypt_string($user_auth['password']);
+            $authController = new AuthenticationController();
+            if ($authController->login(
+                $user_auth['user_name'],
+                $password
                 ) && isset($_SESSION['authenticated_user_id'])
                 ) {
-                    $success = true;
-                } // if
-            }
+                $success = true;
+            } // if
         }
     } // else if
 
@@ -261,10 +259,9 @@ function is_valid_ip_address($session_var)
                     if ($session_parts[$i] == $client_parts[$i]) {
                         $classCheck = 1;
                         continue;
-                    } else {
-                        $classCheck = 0;
-                        break;
                     }
+                    $classCheck = 0;
+                    break;
                 }
             }
             // we have a different IP address
@@ -663,9 +660,8 @@ function set_entry($session, $module_name, $name_value_list)
                 $error->set_error('no_access');
 
                 return array('id' => -1, 'error' => $error->get_soap_array());
-            } else {
-                break;
             }
+            break;
         }
     }
     foreach ($name_value_list as $value) {
@@ -1026,15 +1022,14 @@ function get_module_fields($session, $module_name)
     $seed = new $class_name();
     if ($seed->ACLAccess('ListView', true) || $seed->ACLAccess('DetailView', true) || $seed->ACLAccess(
         'EditView',
-            true
+        true
     )
     ) {
         return get_return_module_fields($seed, $module_name, $error);
-    } else {
-        $error->set_error('no_access');
-
-        return array('module_fields' => $module_fields, 'error' => $error->get_soap_array());
     }
+    $error->set_error('no_access');
+
+    return array('module_fields' => $module_fields, 'error' => $error->get_soap_array());
 }
 
 $server->register(
@@ -1137,9 +1132,8 @@ function get_user_id($session)
         global $current_user;
 
         return $current_user->id;
-    } else {
-        return '-1';
     }
+    return '-1';
 }
 
 $server->register(
@@ -1161,9 +1155,8 @@ function get_user_team_id($session)
 {
     if (validate_authenticated($session)) {
         return 1;
-    } else {
-        return '-1';
     }
+    return '-1';
 }
 
 $server->register(
@@ -1185,9 +1178,8 @@ function get_user_team_set_id($session)
 {
     if (validate_authenticated($session)) {
         return 1;
-    } else {
-        return '-1';
     }
+    return '-1';
 }
 
 $server->register(
@@ -1265,9 +1257,8 @@ function get_server_version()
     $admin->retrieveSettings('info');
     if (isset($admin->settings['info_sugar_version'])) {
         return $admin->settings['info_sugar_version'];
-    } else {
-        return '1.0';
     }
+    return '1.0';
 }
 
 $server->register(
@@ -2224,11 +2215,10 @@ function get_document_revision($session, $id)
             ),
             'error' => $error->get_soap_array()
         );
-    } else {
-        $error->set_error('no_records');
-
-        return array('id' => -1, 'error' => $error->get_soap_array());
     }
+    $error->set_error('no_records');
+
+    return array('id' => -1, 'error' => $error->get_soap_array());
 }
 
 $server->register(
@@ -2615,10 +2605,9 @@ function handle_set_entries($module_name, $name_value_lists, $select_fields = fa
             'name_value_lists' => $ret_values,
             'error' => $error->get_soap_array()
         );
-    } else {
-        return array(
+    }
+    return array(
             'ids' => $ids,
             'error' => $error->get_soap_array()
         );
-    }
 }

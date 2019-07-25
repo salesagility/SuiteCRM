@@ -732,8 +732,8 @@ class HTML5
 
         if (($this->content_model === self::RCDATA || $this->content_model === self::CDATA) &&
             (!$the_same || ($the_same && (!preg_match(
-                            '/[\t\n\x0b\x0c >\/]/',
-                            $this->character($this->char + 1 + strlen($next_node))
+                '/[\t\n\x0b\x0c >\/]/',
+                $this->character($this->char + 1 + strlen($next_node))
                         ) || $this->EOF === $this->char)))
         ) {
             /* If the content model flag is set to the RCDATA or CDATA states then
@@ -1773,8 +1773,8 @@ class HTML5TreeConstructer
             U+000A LINE FEED (LF), U+000B LINE TABULATION, U+000C FORM FEED (FF),
             or U+0020 SPACE */
         } elseif (isset($token['data']) && preg_match(
-                '/^[\t\n\x0b\x0c ]+$/',
-                $token['data']
+            '/^[\t\n\x0b\x0c ]+$/',
+            $token['data']
             )
         ) {
             /* Append that character  to the Document node. */
@@ -1953,8 +1953,8 @@ class HTML5TreeConstructer
         } elseif ($token['type'] === HTML5::STARTTAG ||
             ($token['type'] === HTML5::ENDTAG && $token['name'] === 'html') ||
             ($token['type'] === HTML5::CHARACTR && !preg_match(
-                    '/^[\t\n\x0b\x0c ]$/',
-                    $token['data']
+                '/^[\t\n\x0b\x0c ]$/',
+                $token['data']
                 ))
         ) {
             /* Act as if a start tag token with the tag name "head" and no
@@ -1988,7 +1988,7 @@ class HTML5TreeConstructer
         of its content. */
         if (($token['type'] === HTML5::CHARACTR &&
                 preg_match('/^[\t\n\x0b\x0c ]+$/', $token['data'])) || (
-                $token['type'] === HTML5::CHARACTR && in_array(
+                    $token['type'] === HTML5::CHARACTR && in_array(
                     end($this->stack)->nodeName,
                     array('title', 'style', 'script')
                 ))
@@ -2051,8 +2051,8 @@ class HTML5TreeConstructer
 
             /* A start tag with the tag name "base", "link", or "meta" */
         } elseif ($token['type'] === HTML5::STARTTAG && in_array(
-                $token['name'],
-                array('base', 'link', 'meta')
+            $token['name'],
+            array('base', 'link', 'meta')
             )
         ) {
             /* Create an element for the token and append the new element to the
@@ -2148,8 +2148,8 @@ class HTML5TreeConstructer
             /* A start tag token whose tag name is one of: "base", "link", "meta",
             "script", "style", "title" */
         } elseif ($token['type'] === HTML5::STARTTAG && in_array(
-                $token['name'],
-                array('base', 'link', 'meta', 'script', 'style', 'title')
+            $token['name'],
+            array('base', 'link', 'meta', 'script', 'style', 'title')
             )
         ) {
             /* Parse error. Switch the insertion mode back to "in head" and
@@ -3378,8 +3378,8 @@ class HTML5TreeConstructer
 
             /* A start tag whose tag name is one of: "tbody", "tfoot", "thead" */
         } elseif ($token['type'] === HTML5::STARTTAG && in_array(
-                $token['name'],
-                array('tbody', 'tfoot', 'thead')
+            $token['name'],
+            array('tbody', 'tfoot', 'thead')
             )
         ) {
             /* Clear the stack back to a table context. */
@@ -3459,8 +3459,8 @@ class HTML5TreeConstructer
             /* An end tag whose tag name is one of: "body", "caption", "col",
             "colgroup", "html", "tbody", "td", "tfoot", "th", "thead", "tr" */
         } elseif ($token['type'] === HTML5::ENDTAG && in_array(
-                $token['name'],
-                array(
+            $token['name'],
+            array(
                     'body',
                     'caption',
                     'col',
@@ -3567,8 +3567,8 @@ class HTML5TreeConstructer
             "tbody", "td", "tfoot", "th", "thead", "tr", or an end tag whose tag
             name is "table" */
         } elseif (($token['type'] === HTML5::STARTTAG && in_array(
-                    $token['name'],
-                    array(
+            $token['name'],
+            array(
                         'caption',
                         'col',
                         'colgroup',
@@ -3597,8 +3597,8 @@ class HTML5TreeConstructer
             /* An end tag whose tag name is one of: "body", "col", "colgroup",
             "html", "tbody", "td", "tfoot", "th", "thead", "tr" */
         } elseif ($token['type'] === HTML5::ENDTAG && in_array(
-                $token['name'],
-                array(
+            $token['name'],
+            array(
                     'body',
                     'col',
                     'colgroup',
@@ -3736,8 +3736,8 @@ class HTML5TreeConstructer
             /* A start tag whose tag name is one of: "caption", "col", "colgroup",
             "tbody", "tfoot", "thead", or an end tag whose tag name is "table" */
         } elseif (($token['type'] === HTML5::STARTTAG && in_array(
-                    $token['name'],
-                    array('caption', 'col', 'colgroup', 'tbody', 'tfoor', 'thead')
+            $token['name'],
+            array('caption', 'col', 'colgroup', 'tbody', 'tfoor', 'thead')
                 )) ||
             ($token['type'] === HTML5::STARTTAG && $token['name'] === 'table')
         ) {
@@ -3768,8 +3768,8 @@ class HTML5TreeConstructer
             /* An end tag whose tag name is one of: "body", "caption", "col",
             "colgroup", "html", "td", "th", "tr" */
         } elseif ($token['type'] === HTML5::ENDTAG && in_array(
-                $token['name'],
-                array('body', 'caption', 'col', 'colgroup', 'html', 'td', 'th', 'tr')
+            $token['name'],
+            array('body', 'caption', 'col', 'colgroup', 'html', 'td', 'th', 'tr')
             )
         ) {
             /* Parse error. Ignore the token. */
@@ -3824,8 +3824,8 @@ class HTML5TreeConstructer
             /* A start tag whose tag name is one of: "caption", "col", "colgroup",
             "tbody", "tfoot", "thead", "tr" or an end tag whose tag name is "table" */
         } elseif ($token['type'] === HTML5::STARTTAG && in_array(
-                $token['name'],
-                array('caption', 'col', 'colgroup', 'tbody', 'tfoot', 'thead', 'tr')
+            $token['name'],
+            array('caption', 'col', 'colgroup', 'tbody', 'tfoot', 'thead', 'tr')
             )
         ) {
             /* Act as if an end tag with the tag name "tr" had been seen, then,
@@ -3866,8 +3866,8 @@ class HTML5TreeConstructer
             /* An end tag whose tag name is one of: "body", "caption", "col",
             "colgroup", "html", "td", "th" */
         } elseif ($token['type'] === HTML5::ENDTAG && in_array(
-                $token['name'],
-                array('body', 'caption', 'col', 'colgroup', 'html', 'td', 'th', 'tr')
+            $token['name'],
+            array('body', 'caption', 'col', 'colgroup', 'html', 'td', 'th', 'tr')
             )
         ) {
             /* Parse error. Ignore the token. */
@@ -3924,8 +3924,8 @@ class HTML5TreeConstructer
             /* A start tag whose tag name is one of: "caption", "col", "colgroup",
             "tbody", "td", "tfoot", "th", "thead", "tr" */
         } elseif ($token['type'] === HTML5::STARTTAG && in_array(
-                $token['name'],
-                array(
+            $token['name'],
+            array(
                     'caption',
                     'col',
                     'colgroup',
@@ -3954,8 +3954,8 @@ class HTML5TreeConstructer
             /* A start tag whose tag name is one of: "caption", "col", "colgroup",
             "tbody", "td", "tfoot", "th", "thead", "tr" */
         } elseif ($token['type'] === HTML5::STARTTAG && in_array(
-                $token['name'],
-                array(
+            $token['name'],
+            array(
                     'caption',
                     'col',
                     'colgroup',
@@ -3984,8 +3984,8 @@ class HTML5TreeConstructer
             /* An end tag whose tag name is one of: "body", "caption", "col",
             "colgroup", "html" */
         } elseif ($token['type'] === HTML5::ENDTAG && in_array(
-                $token['name'],
-                array('body', 'caption', 'col', 'colgroup', 'html')
+            $token['name'],
+            array('body', 'caption', 'col', 'colgroup', 'html')
             )
         ) {
             /* Parse error. Ignore the token. */
@@ -3993,8 +3993,8 @@ class HTML5TreeConstructer
             /* An end tag whose tag name is one of: "table", "tbody", "tfoot",
             "thead", "tr" */
         } elseif ($token['type'] === HTML5::ENDTAG && in_array(
-                $token['name'],
-                array('table', 'tbody', 'tfoot', 'thead', 'tr')
+            $token['name'],
+            array('table', 'tbody', 'tfoot', 'thead', 'tr')
             )
         ) {
             /* If the stack of open elements does not have an element in table
@@ -4162,8 +4162,8 @@ class HTML5TreeConstructer
             /* An end tag whose tag name is one of: "caption", "table", "tbody",
             "tfoot", "thead", "tr", "td", "th" */
         } elseif (in_array(
-                $token['name'],
-                array(
+            $token['name'],
+            array(
                     'caption',
                     'table',
                     'tbody',
@@ -4492,8 +4492,8 @@ class HTML5TreeConstructer
                 return false;
 
             } elseif ($table === true && in_array(
-                    $node->tagName,
-                    array(
+                $node->tagName,
+                array(
                         'caption',
                         'td',
                         'th',
