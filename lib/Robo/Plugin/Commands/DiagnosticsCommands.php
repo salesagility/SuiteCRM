@@ -53,21 +53,38 @@ class DiagnosticsCommands extends \Robo\Tasks
 
         $this->io()->section('Versions');
 
-        $versionsList = [];
+        $versionList = [];
         $listing = [];
 
-        $versionsList["Operating System"] = $this->getOperatingSystem();
-        $versionsList["SuiteCRM"] = $this->getSuiteCrmVersion();
-        $versionsList["PHP"] = $this->getPhpVersion();
-        $versionsList["Composer"] = $this->getComposerVersion();
-        $versionsList["Apache"] = $this->getApacheVersion();
-        $versionsList["Database"] = $this->getDatabaseVersion();
+        $versionList["Operating System"] = $this->getOperatingSystem();
+        $versionList["SuiteCRM"] = $this->getSuiteCrmVersion();
+        $versionList["PHP"] = $this->getPhpVersion();
+        $versionList["Composer"] = $this->getComposerVersion();
+        $versionList["Apache"] = $this->getApacheVersion();
+        $versionList["Database"] = $this->getDatabaseVersion();
 
-        foreach ($versionsList as $key => $value) {
+        foreach ($versionList as $key => $value) {
             $listing[] = "{$key}: {$value}";
         }
-        
+
         $this->io()->listing($listing);
+
+        $this->io()->section('PHP/SuiteCRM Files');
+
+        $fileList = [];
+
+        $fileList["SuiteCRM Directory"] = $this->getSuiteCrmDirectory();
+        $fileList["SuiteCRM Config"] = $this->getSuiteCrmConfig();
+        $fileList["SuiteCRM Log"] = $this->getSuiteCrmLog();
+        $fileList["PHP INI"] = $this->getPhpIniFile();
+        $fileList["PHP Errors"] = $this->getPhpErrorsFile();
+        $fileList["PHP Binary"] = $this->getPhpBinary();
+
+        foreach ($fileList as $key => $value) {
+            $fileListing[] = "{$key}: {$value}";
+        }
+
+        $this->io()->listing($fileListing);
 
         $this->say('Diagnostics Complete');
     }
@@ -133,6 +150,54 @@ class DiagnosticsCommands extends \Robo\Tasks
      * @return String
      */
     protected function getDatabaseVersion() {
+        return 'Not implemented.';
+    }
+
+    /**
+     * Returns the path for the root of the SuiteCRM instance.
+     * @return String
+     */
+    protected function getSuiteCrmDirectory() {
+        return 'Not implemented.';
+    }
+    
+    /**
+     * Returns the path for the SuiteCRM config.php.
+     * @return String
+     */
+    protected function getSuiteCrmConfig() {
+        return 'Not implemented.';
+    }
+    
+    /**
+     * Returns the path for the suitecrm.log.
+     * @return String
+     */
+    protected function getSuiteCrmLog() {
+        return 'Not implemented.';
+    }
+    
+    /**
+     * Returns the path for the php.ini.
+     * @return String
+     */
+    protected function getPhpIniFile() {
+        return 'Not implemented.';
+    }
+    
+    /**
+     * Returns the path for the PHP errors.log.
+     * @return String
+     */
+    protected function getPhpErrorsFile() {
+        return 'Not implemented.';
+    }
+    
+    /**
+     * Returns the path for the PHP binary.
+     * @return String
+     */
+    protected function getPhpBinary() {
         return 'Not implemented.';
     }
 }
