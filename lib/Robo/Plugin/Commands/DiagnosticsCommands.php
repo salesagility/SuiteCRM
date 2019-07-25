@@ -39,13 +39,26 @@
  */
 namespace SuiteCRM\Robo\Plugin\Commands;
 
+use Robo\Task\Base\loadTasks;
 use SuiteCRM\Utility\OperatingSystem;
 use SuiteCRM\Utility\Paths;
+use DBManagerFactory;
 
 class DiagnosticsCommands extends \Robo\Tasks
 {
+    use loadTasks;
     use \SuiteCRM\Robo\Traits\RoboTrait;
+    use \SuiteCRM\Robo\Traits\CliRunnerTrait;
 
+    /**
+     * @var DBManager
+     */
+    protected $db;
+
+    public function __construct() {
+        $this->bootstrap();
+        $this->db = DBManagerFactory::getInstance();
+    }
     /**
      * Print diagnostic information about SuiteCRM.
      * Useful for reporting issues.
@@ -118,7 +131,7 @@ class DiagnosticsCommands extends \Robo\Tasks
      * @return String
      */
     protected function getSuiteCrmVersion() {
-        require_once('suitecrm_version.php');
+        global $suitecrm_version;
         return $suitecrm_version;
     }
 
@@ -158,7 +171,18 @@ class DiagnosticsCommands extends \Robo\Tasks
      * @return String
      */
     protected function getDatabaseVersion() {
-        return 'Not implemented.';
+        $dbInfo = $this->db->getDbInfo();
+        // Determine the database adapter based on the keys that exist in
+        // the array returned by getDbInfo().
+        if (array_key_exists("MySQLi Server Info", $dbInfo)) {
+            return "MySQL {$dbInfo["MySQLi Server Info"]}";
+        } else if (array_key_exists("MySQL Server Info", $dbInfo)) {
+            return "MySQL {$dbInfo["MySQL Server Info"]}";
+        } else if (array_key_exists("version", $dbInfo)) {
+            return "MSSQL {$dbInfo["version"]}";
+        } else {
+            return 'Unable to determine the database';
+        }
     }
 
     /**
