@@ -105,6 +105,7 @@ class DiagnosticsCommands extends \Robo\Tasks
 
     /**
      * Returns the current PHP version.
+     * TODO: Make sure this returns the PHP version of the CRM and not the PHP CLI version.
      * @return String
      */
     protected function getPhpVersion() {
