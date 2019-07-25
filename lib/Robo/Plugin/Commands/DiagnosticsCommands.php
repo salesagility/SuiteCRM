@@ -40,6 +40,7 @@
 namespace SuiteCRM\Robo\Plugin\Commands;
 
 use SuiteCRM\Utility\OperatingSystem;
+use SuiteCRM\Utility\Paths;
 
 class DiagnosticsCommands extends \Robo\Tasks
 {
@@ -54,7 +55,6 @@ class DiagnosticsCommands extends \Robo\Tasks
         $this->io()->section('Versions');
 
         $versionList = [];
-        $listing = [];
 
         $versionList["Operating System"] = $this->getOperatingSystem();
         $versionList["SuiteCRM"] = $this->getSuiteCrmVersion();
@@ -64,10 +64,10 @@ class DiagnosticsCommands extends \Robo\Tasks
         $versionList["Database"] = $this->getDatabaseVersion();
 
         foreach ($versionList as $key => $value) {
-            $listing[] = "{$key}: {$value}";
+            $versionListing[] = "{$key}: {$value}";
         }
 
-        $this->io()->listing($listing);
+        $this->io()->listing($versionListing);
 
         $this->io()->section('PHP/SuiteCRM Files');
 
@@ -117,7 +117,8 @@ class DiagnosticsCommands extends \Robo\Tasks
      * @return String
      */
     protected function getSuiteCrmVersion() {
-        return 'Not implemented.';
+        require_once('suitecrm_version.php');
+        return $suitecrm_version;
     }
 
     /**
@@ -158,15 +159,16 @@ class DiagnosticsCommands extends \Robo\Tasks
      * @return String
      */
     protected function getSuiteCrmDirectory() {
-        return 'Not implemented.';
+        return $this->getBasePath();
     }
     
     /**
      * Returns the path for the SuiteCRM config.php.
+     * TODO: Is it possible to set the config file to be somewhere else?
      * @return String
      */
     protected function getSuiteCrmConfig() {
-        return 'Not implemented.';
+        return $this->getBasePath() . DIRECTORY_SEPARATOR . 'config.php';
     }
     
     /**
@@ -174,7 +176,12 @@ class DiagnosticsCommands extends \Robo\Tasks
      * @return String
      */
     protected function getSuiteCrmLog() {
-        return 'Not implemented.';
+        global $sugar_config;
+        if ($sugar_config['log_dir'] === '.') {
+            return $this->getBasePath() . DIRECTORY_SEPARATOR . $sugar_config['log_file'];
+        } else {
+            return $this->getBasePath() . DIRECTORY_SEPARATOR . $sugar_config['log_dir'] . $sugar_config['log_file'];
+        }
     }
     
     /**
@@ -199,5 +206,15 @@ class DiagnosticsCommands extends \Robo\Tasks
      */
     protected function getPhpBinary() {
         return 'Not implemented.';
+    }
+
+    /**
+     * Returns the absolute path of the CRM root directory.
+     * @return String
+     */
+    protected function getBasePath() {
+        $os = new OperatingSystem();
+        $paths = new Paths();
+        return $os->toOsPath($paths->getProjectPath());
     }
 }
