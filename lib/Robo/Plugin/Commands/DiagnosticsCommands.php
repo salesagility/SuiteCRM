@@ -137,6 +137,7 @@ class DiagnosticsCommands extends \Robo\Tasks
      */
     protected function getComposerVersion() {
         // Take a string like 'Composer version 1.8.6 2019-06-11 15:03:05' and get the version string from it.
+        // TODO: This won't work for pre-release/beta versions.
         $composerVersionString = exec('composer --version');
         $re = '/Composer version (\d+\.\d+\.\d+)/';
         preg_match($re, $composerVersionString, $matches);
