@@ -212,7 +212,7 @@ class DiagnosticsCommands extends \Robo\Tasks
      * @return String
      */
     protected function getPhpBinary() {
-        return 'Not implemented.';
+        return PHP_BINARY;
     }
 
     /**
