@@ -57,9 +57,14 @@ class DiagnosticsCommands extends \Robo\Tasks
         $listing = [];
 
         $versionsList["Operating System"] = $this->getOperatingSystem();
+        $versionsList["SuiteCRM"] = $this->getSuiteCrmVersion();
+        $versionsList["PHP"] = $this->getPhpVersion();
+        $versionsList["Composer"] = $this->getComposerVersion();
+        $versionsList["Apache"] = $this->getApacheVersion();
+        $versionsList["Database"] = $this->getDatabaseVersion();
 
         foreach ($versionsList as $key => $value) {
-          $listing[] = "{$key}: {$value}";
+            $listing[] = "{$key}: {$value}";
         }
         
         $this->io()->listing($listing);
@@ -88,5 +93,45 @@ class DiagnosticsCommands extends \Robo\Tasks
         } else {
             return 'Unable to detect operating system';
         }
+    }
+
+    /**
+     * Returns the current SuiteCRM version.
+     * @return String
+     */
+    protected function getSuiteCrmVersion() {
+        return 'Not implemented.';
+    }
+
+    /**
+     * Returns the current PHP version.
+     * @return String
+     */
+    protected function getPhpVersion() {
+        return phpversion();
+    }
+
+    /**
+     * Returns the current Composer version.
+     * @return String
+     */
+    protected function getComposerVersion() {
+        return 'Not implemented.';
+    }
+
+    /**
+     * Returns the current Apache version.
+     * @return String
+     */
+    protected function getApacheVersion() {
+        return 'Not implemented.';
+    }
+
+    /**
+     * Returns the current database type and version.
+     * @return String
+     */
+    protected function getDatabaseVersion() {
+        return 'Not implemented.';
     }
 }
