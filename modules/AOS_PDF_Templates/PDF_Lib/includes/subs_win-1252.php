@@ -1,6 +1,6 @@
 <?php
 
-$subsarray = array (
+$subsarray = array(
   913 => '<tts>65</tts>',
   914 => '<tts>66</tts>',
   915 => '<tts>71</tts>',
@@ -304,5 +304,3 @@ $subsarray = array (
   10173 => '<ttz>253</ttz>',
   10174 => '<ttz>254</ttz>',
 );
-
-?>

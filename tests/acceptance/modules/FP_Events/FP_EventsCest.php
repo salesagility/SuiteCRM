@@ -30,16 +30,12 @@ class EventsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Events $events
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the events module.
      */
     public function testScenarioViewEventsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Events $events,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the events module for testing');
 
@@ -57,7 +53,6 @@ class EventsCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Events $event
      * @param \Step\Acceptance\Locations $location
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create an event so that I can test
      * the standard fields.
@@ -67,8 +62,7 @@ class EventsCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Events $event,
-        \Step\Acceptance\Locations $location,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Locations $location
     ) {
         $I->wantTo('Create an Event');
 

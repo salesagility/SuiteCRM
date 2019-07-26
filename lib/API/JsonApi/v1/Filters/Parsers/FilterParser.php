@@ -270,7 +270,7 @@ class FilterParser
                             $operatorsArray[] = $operator;
                         } else {
                             throw new Exception(
-                               '[JsonApi][v1][Filters][Parsers][FilterParser]' .
+                                '[JsonApi][v1][Filters][Parsers][FilterParser]' .
                                '[parserFieldFilters][operator not found] please ensure that an operator has been added to '.
                                'containers '
                            );

@@ -530,7 +530,7 @@ class OutboundEmail
             }
             $q = "UPDATE outbound_email SET " . implode(
                 ', ',
-                    $updvalues
+                $updvalues
             ) . " WHERE id = " . $this->db->quoted($this->id);
         }
 

@@ -34,7 +34,6 @@ class ActivitiesCest
      * @param \Step\Acceptance\AccountsTester $accounts
      * @param \Step\Acceptance\Calls $calls
      * @param \Step\Acceptance\NavigationBarTester $NavigationBar
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As a user I want to see the due date on the activities module
      */
@@ -44,8 +43,7 @@ class ActivitiesCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\AccountsTester $accounts,
         \Step\Acceptance\Calls $calls,
-        \Step\Acceptance\NavigationBarTester $NavigationBar,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\NavigationBarTester $NavigationBar
     ) {
         $I->wantTo('See the due date field on Account Activities subpanel');
 

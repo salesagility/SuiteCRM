@@ -225,7 +225,6 @@ EOQ;
      */
     public static function handleLeadAccountName($leadBean)
     {
-
         if (isset($leadBean->account_name)) {
             $account_query =
                 "SELECT id FROM accounts WHERE deleted != 1 AND name = '" .

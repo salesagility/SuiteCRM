@@ -58,8 +58,6 @@ class ElasticsearchCest
     public function testSearchSetup(AcceptanceTester $I, WebDriverHelper $helper)
     {        
         // login..
-        
-        $I->amOnUrl($helper->getInstanceURL());
         $I->loginAsAdmin();
         
         // setup elasticsearch..
@@ -102,20 +100,14 @@ class ElasticsearchCest
     /**
      *
      * @param AcceptanceTester $I
-     * @param WebDriverHelper $helper
      */
-    public function testSearchNotFound(AcceptanceTester $I, WebDriverHelper $helper)
+    public function testSearchNotFound(AcceptanceTester $I)
     {
         
         // login..
-        
-        $I->amOnUrl($helper->getInstanceURL());
         $I->loginAsAdmin();
         
         // lets try out elasticsearch..
-        
-        $I->amOnUrl($helper->getInstanceURL());
-        
         // TODO [Selenium browser Logs] 12:47:10.930 SEVERE - http://localhost/SuiteCRM/index.php?action=Login&module=Users - [DOM] Found 2 elements with non-unique id #form: (More info: https://goo.gl/9p2vKq)
         $I->fillField('div.desktop-bar ul#toolbar li #searchform .input-group #query_string', 'I_bet_there_is_nothing_to_contains_this');
         
@@ -147,7 +139,7 @@ class ElasticsearchCest
         $navi->clickAllMenuItem('Accounts');
         
         for ($i=$from; $i<$max; $i++) {
-            $accounts->createAccount('acc_for_test ' . $i, false, false);
+            $accounts->createAccountForElasticSearch('acc_for_test ' . $i);
             // waiting few second to elasticsearch indexer makes the job done:
             $accounts->wait(3);
         }
@@ -182,16 +174,13 @@ class ElasticsearchCest
     /**
      *
      * @param AcceptanceTester $I
-     * @param WebDriverHelper $helper
      * @param AccountsTester $accounts
      */
-    public function testSearchFounds(AcceptanceTester $I, WebDriverHelper $helper, AccountsTester $accounts)
+    public function testSearchFounds(AcceptanceTester $I, AccountsTester $accounts)
     {
         $max = 15;
         
         // login..
-        
-        $I->amOnUrl($helper->getInstanceURL());
         $I->loginAsAdmin();
         
         // adding some account..
