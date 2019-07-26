@@ -14,7 +14,7 @@
                         {$SECURITY_GROUPS}
                     </div>
                     <div class="col-xs-12 col-sm-8 edit-view-field " type="enum" field="securitygroups_panel">
-                        <select title="" id="securitygroup_list" name="securitygroup_list[]" multiple="multiple" size="${{$SECURITY_GROUP_COUNT}}" style="height: 100%">
+                        <select title="" id="securitygroup_list" name="securitygroup_list[]" multiple="multiple" size="{$SECURITY_GROUP_COUNT}" style="height: 100%">
                             {$SECURITY_GROUP_OPTIONS}
                         </select>
                     </div>

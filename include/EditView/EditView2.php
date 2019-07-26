@@ -950,7 +950,7 @@ class EditView
 
                 $group_count = SecurityGroup::getMembershipCount($current_user->id);
                 if($group_count > 1) {
-                
+
                     //https://www.sugaroutfitters.com/support/securitysuite/2313
                     //if there is a parent then use the groups on that record as the default selected
                     //note: only the user's groups show in the drop down. A request may be made to include any already on parent
@@ -968,7 +968,7 @@ class EditView
                     $lbl_securitygroups_select = $ss_mod_strings['LBL_GROUP_SELECT'];
                     $lbl_securitygroups = $ss_mod_strings['LBL_LIST_FORM_TITLE'];
 
-                    $smarty = new Smarty;
+                    $smarty = new Sugar_Smarty();
                     $smarty->assign('SECURITY_GROUP_SELECT', $lbl_securitygroups_select);
                     $smarty->assign('SECURITY_GROUPS', $lbl_securitygroups);
                     $smarty->assign('SECURITY_GROUP_OPTIONS', $group_options);
@@ -984,7 +984,7 @@ EOQ;
                 }
             }
         }
-        /* END - SECURITY GROUPS */  
+        /* END - SECURITY GROUPS */
 
         return $str;
     }
