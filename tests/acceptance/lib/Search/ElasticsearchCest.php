@@ -147,7 +147,7 @@ class ElasticsearchCest
         $navi->clickAllMenuItem('Accounts');
         
         for ($i=$from; $i<$max; $i++) {
-            $accounts->createAccount('acc_for_test ' . $i, false, false);
+            $accounts->createAccount('acc_for_test ' . $i);
             // waiting few second to elasticsearch indexer makes the job done:
             $accounts->wait(3);
         }
