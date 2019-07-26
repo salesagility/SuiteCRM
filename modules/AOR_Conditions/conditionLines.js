@@ -312,6 +312,10 @@ function showConditionCurrentModuleFields(ln, value){
 
 var moduleFieldsPendingFinished = 0;
 
+var setModuleFieldsPendingFinishedCallback = function(callback) {
+	moduleFieldsPendingFinishedCallback = callback;
+}
+
 var testModuleFieldsPendingFinished = function () {
   moduleFieldsPendingFinished--;
   if (moduleFieldsPendingFinished <= 0) {
