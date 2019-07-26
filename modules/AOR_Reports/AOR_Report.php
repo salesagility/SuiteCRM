@@ -901,7 +901,8 @@ class AOR_Report extends Basic
                     $related_bean->retrieve($group_value);
                     $moduleFieldByGroupValues[] = ($related_bean instanceof Person) ? $related_bean->full_name : $related_bean->name;
                 } else {
-                    $moduleFieldByGroupValues[] = $app_list_strings[$field_def['options']][$group_value];
+                    $moduleFieldByGroupValues[] = $group_value; // re-introduced from 7.11.5
+                   // $moduleFieldByGroupValues[] = $app_list_strings[$field_def['options']][$group_value];
                 }
                 continue;
                 // End
