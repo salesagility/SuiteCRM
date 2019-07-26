@@ -795,12 +795,11 @@ order by securitygroups_users.primary_group desc ";
     }
 
     //used in EditView2 to figure out what the parent security groups are set to
-    static function getParentGroups($focus)
+    public static function getParentGroups($focus)
     {
-        $parent_groups = array();
+        $parent_groups = [];
 
-        if(empty($_REQUEST['return_module']) || empty($_REQUEST['return_id']))
-        {
+        if (empty($_REQUEST['return_module']) || empty($_REQUEST['return_id'])) {
             //not a subpanel create so bounce
             return $parent_groups;
         }
@@ -808,56 +807,51 @@ order by securitygroups_users.primary_group desc ";
         $parent_type = $_REQUEST['return_module'];
         $parent_id = $_REQUEST['return_id'];
 
-        if(!empty($parent_type) && !empty($parent_id)) {
-            $parent_bean = BeanFactory::getBean($parent_type,$parent_id);
-            if(!empty($parent_bean))
-            {
-                $rel_name = 'SecurityGroups';
-                if($parent_type != 'Users') {
-                    $rel_name = SecurityGroup::getLinkName($parent_type,'SecurityGroups');
-                }
+        $parent_bean = self::getParentBean($parent_id, $parent_type);
 
-                $parent_bean->load_relationship($rel_name);
-                if(!empty($parent_bean->$rel_name))
-                {
-                    $groups = $parent_bean->$rel_name->getBeans();
-                    //reorganize to index by id
-                    if(!empty($groups))
-                    {
-                        foreach($groups as $group)
-                        {
-                            $parent_groups[$group->id] = $group;
-                        }
+        if (!empty($parent_bean)) {
+            $rel_name = 'SecurityGroups';
+            if ($parent_type !== 'Users') {
+                $rel_name = self::getLinkName($parent_type, 'SecurityGroups');
+            }
+
+            $parent_bean->load_relationship($rel_name);
+            if (!empty($parent_bean->$rel_name)) {
+                $groups = $parent_bean->$rel_name->getBeans();
+                //reorganize to index by id
+                if (!empty($groups)) {
+                    foreach ($groups as $group) {
+                        $parent_groups[$group->id] = $group;
                     }
                 }
             }
         }
 
+
         return $parent_groups;
     }
 
     //for displaying on the list, detail, edit views
-    static function getRecordGroups($focus)
+    public static function getRecordGroups($focus)
     {
-        $parent_groups = array();
-        
-        if(empty($focus)) return $parent_groups;
+        $parent_groups = [];
+
+        if (empty($focus)) {
+            return $parent_groups;
+        }
 
         $rel_name = 'SecurityGroups';
-        if($focus->module_dir != 'Users') {
-            $rel_name = SecurityGroup::getLinkName($focus->module_dir,'SecurityGroups');
+        if ($focus->module_dir !== 'Users') {
+            $rel_name = self::getLinkName($focus->module_dir, 'SecurityGroups');
         }
 
         $focus->load_relationship($rel_name);
 
-        if(!empty($focus->$rel_name))
-        {
+        if (!empty($focus->$rel_name)) {
             $groups = $focus->$rel_name->getBeans();
             //reorganize to index by id
-            if(!empty($groups))
-            {
-                foreach($groups as $group)
-                {
+            if (!empty($groups)) {
+                foreach ($groups as $group) {
                     $parent_groups[$group->id] = $group;
                 }
             }
@@ -866,4 +860,13 @@ order by securitygroups_users.primary_group desc ";
         return $parent_groups;
     }
 
+    public static function getParentBean($parent_id, $parent_type)
+    {
+
+        if (empty($parent_id) || empty($parent_type)) {
+            return false;
+        }
+
+        return BeanFactory::getBean($parent_type, $parent_id);
+    }
 }
