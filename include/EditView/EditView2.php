@@ -967,75 +967,19 @@ class EditView
                     
                     $lbl_securitygroups_select = $ss_mod_strings['LBL_GROUP_SELECT'];
                     $lbl_securitygroups = $ss_mod_strings['LBL_LIST_FORM_TITLE'];
-                    
-                    //SuiteCRM: check which theme this is for.
-                    if($theme == 'SuiteP' || $theme == 'SuitePImproved')
-                    {
-                        $group_panel = <<<EOQ
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <a class="" role="button" data-toggle="collapse" aria-expanded="false">
-            <div class="col-xs-10 col-sm-11 col-md-11">
-                $lbl_securitygroups_select
-            </div>
-        </a>
-    </div>
-    <div class="panel-body panel-collapse collapse in" id="detailpanel_0">
-        <div class="tab-content">
-            <div class="row edit-view-row">
-                <div class="col-xs-12 col-sm-6 edit-view-row-item">
-                    <div class="col-xs-12 col-sm-4 label">
-                        $lbl_securitygroups:
-                    </div>
-                    <div class="col-xs-12 col-sm-8 edit-view-field " type="enum" field="securitygroups_panel">
-                        <select title="" id="securitygroup_list" name="securitygroup_list[]" multiple="multiple" size="${group_count}" style="height: 100%">
-                        $group_options
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-EOQ;
-                        $group_panel = preg_replace("/[\r\n]+/", "", $group_panel);
 
-                        $group_panel_append = <<<EOQ
+                    $smarty = new Smarty;
+                    $smarty->assign('SECURITY_GROUP_SELECT', $lbl_securitygroups_select);
+                    $smarty->assign('SECURITY_GROUPS', $lbl_securitygroups);
+                    $smarty->assign('SECURITY_GROUP_OPTIONS', $group_options);
+                    $smarty->assign('SECURITY_GROUP_COUNT', $group_count);
+                    $group_panel = $smarty->fetch('include/EditView/SecurityGroups.tpl');
+                    $group_panel = preg_replace("/[\r\n]+/", '', $group_panel);
+                    $group_panel_append = <<<EOQ
     <script>
         $('#${form_name}_tabs .panel-content').append($('${group_panel}'));
     </script>
 EOQ;
-                    }
-                    else
-                    {
-                        $group_panel = <<<EOQ
-<div class="edit view edit508 " id="detailpanel_securitygroups">
-    <h4>&nbsp;&nbsp;
-    $lbl_securitygroups_select
-    </h4>
-    <table width="100%" cellspacing="1" cellpadding="0" border="0" class="edit view panelContainer" id="LBL_PANEL_SECURITYGROUPS">
-    <tbody><tr>
-    <td width="12.5%" valign="top" scope="col" id="account_type_label">
-        $lbl_securitygroups:
-    </td>
-    <td width="37.5%" valign="top">
-        <select title="" id="securitygroup_list" name="securitygroup_list[]" multiple="multiple" size="${group_count}" style="height: 100%">
-        $group_options
-        </select>
-    </td>
-    </tr>
-    </tbody></table>
-</div>
-EOQ;
-                        $group_panel = preg_replace("/[\r\n]+/", "", $group_panel);
-
-                        $group_panel_append = <<<EOQ
-    <script>
-        $('#${form_name}_tabs div:first').append($('${group_panel}'));
-    </script>
-EOQ;
-                    }
-
                     $str .= $group_panel_append;
                 }
             }
