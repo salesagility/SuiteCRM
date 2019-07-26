@@ -1634,7 +1634,7 @@ class MysqlManager extends DBManager
         return 'UUID()';
     }
 
-    public function getForeignKeys($tablename) :array
+    public function getForeignKeys($tablename)
     {
         $db_name = SugarConfig::getInstance()->get('dbconfig.db_name');
         $sql = "SELECT * FROM information_schema.TABLE_CONSTRAINTS

@@ -3862,7 +3862,7 @@ abstract class DBManager
      * @param  string $tablename
      * @return array
      */
-    abstract public function getForeignKeys($tablename) :array;
+    abstract public function getForeignKeys($tablename);
 
     /**
      * Generates alter constraint statement given a table name and vardef definition.
