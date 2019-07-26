@@ -1,4 +1,4 @@
-<?php
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,47 +37,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+*}
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+<div>
+    {if $attachments}
+            <div><span>{$attachments}</span></div>
 
-/**
- * @param $focus
- * @param $field
- * @param $value
- * @param $view
- * @return string
- */
-function displayIndicatorField($focus, $field, $value, $view)
-{
-    $result = '';
-
-    if (empty($view)) {
-        return $result;
-    }
-
-    if (strtolower($field) !== 'indicator') {
-        return $result;
-    }
-
-    if (is_object($focus)) {
-        $focus = get_object_vars($focus);
-    } elseif (is_array($focus)) {
-        $focus = array_change_key_case($focus, CASE_LOWER);
-    }
-
-    if (!empty($focus['id'])) {
-        $bean = BeanFactory::getBean('Emails', $focus['id']);
-        if (is_object($bean)) {
-            $bean = get_object_vars($bean);
-        }
-    } else {
-        $bean = $focus;
-    }
-
-    $template = new Sugar_Smarty();
-    $template->assign('bean', $bean);
-
-    return $template->fetch('modules/Emails/templates/displayIndicatorField.tpl');
-}
+    {/if}
+</div>

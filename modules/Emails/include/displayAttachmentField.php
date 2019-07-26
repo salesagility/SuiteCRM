@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+
 /**
  * @param $focus
  * @param $field
@@ -49,15 +50,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @param $view
  * @return string
  */
-function displayIndicatorField($focus, $field, $value, $view)
+function displayAttachmentField($focus, $field, $value, $view)
 {
+    global $db;
     $result = '';
+    $attachments = [];
 
-    if (empty($view)) {
+    if ($view !== 'DetailView') {
         return $result;
     }
 
-    if (strtolower($field) !== 'indicator') {
+    if (strtolower($field) !== 'attachment') {
         return $result;
     }
 
@@ -67,17 +70,23 @@ function displayIndicatorField($focus, $field, $value, $view)
         $focus = array_change_key_case($focus, CASE_LOWER);
     }
 
-    if (!empty($focus['id'])) {
-        $bean = BeanFactory::getBean('Emails', $focus['id']);
-        if (is_object($bean)) {
-            $bean = get_object_vars($bean);
+    if (!empty($focus['inbound_email_record'] && empty($focus['id']))) {
+        $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($focus['inbound_email_record']));
+        $structure = $inboundEmail->getImap()->fetchStructure($focus['uid'], FT_UID);
+
+        if ($inboundEmail->messageStructureHasAttachment($structure)) {
+            foreach ($structure->parts as $part) {
+                if (is_string($part->dparameters[0]->value)) {
+                    $attachments[] = $part->dparameters[0]->value;
+                }
+            }
         }
-    } else {
-        $bean = $focus;
     }
 
-    $template = new Sugar_Smarty();
-    $template->assign('bean', $bean);
+    $attachmentString = implode(',', $attachments);
 
-    return $template->fetch('modules/Emails/templates/displayIndicatorField.tpl');
+    $template = new Sugar_Smarty();
+    $template->assign('attachments', $attachmentString);
+
+    return $template->fetch('modules/Emails/templates/displayAttachmentField.tpl');
 }
