@@ -30,16 +30,12 @@ class DocumentsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Documents $documents
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the documents module.
      */
     public function testScenarioViewDocumentsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Documents $documents,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the documents module for testing');
 

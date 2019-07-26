@@ -70,7 +70,7 @@ if (isset($_FILES['file_1'])) {
             sugar_cleanup();
             exit();
         }
-        $file_name = $upload_dir."/".$upload->get_stored_file_name();
+        $file_name = $upload_dir . '/' . str_replace(' ', '_', $upload->get_stored_file_name());
         if ($upload->final_move($file_name)) {
             $upload_ok = true;
         }
@@ -83,7 +83,7 @@ if (!$upload_ok) {
     exit();
 }
 if (file_exists($file_name) && is_file($file_name)) {
-    $encoded_file_name = rawurlencode($upload->get_stored_file_name());
+    $encoded_file_name = rawurlencode(str_replace(' ', '_', $upload->get_stored_file_name()));
     $returnArray['path'] = $upload_path . '/' . $encoded_file_name;
     $returnArray['url']= 'cache/images/'.$encoded_file_name;
     if (!verify_uploaded_image($file_name, $returnArray['forQuotes'] == 'quotes')) {
@@ -101,7 +101,7 @@ if (file_exists($file_name) && is_file($file_name)) {
         if (($test>20 || $test<3)&& $returnArray['forQuotes'] == 'quotes') {
             $returnArray['data']='size';
         }
-        copy($file_name, sugar_cached('images/'.$upload->get_stored_file_name()));
+        copy($file_name, sugar_cached('images/' . str_replace(' ', '_', $upload->get_stored_file_name())));
     }
     if (!empty($returnArray['data'])) {
         echo $json->encode($returnArray);

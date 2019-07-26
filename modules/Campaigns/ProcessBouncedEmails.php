@@ -66,7 +66,7 @@ function retrieveErrorReportAttachment(Email $email)
                 // assume it's quoted-printable.
                 $contents .= quoted_printable_decode($note_content);
             }
-        } else if ($note->file_mime_type == 'message/delivery-status') {
+        } elseif ($note->file_mime_type == 'message/delivery-status') {
             $note_content = $note->getAttachmentContent();
             if ($note_content !== false) {
                 $contents .= $note_content;

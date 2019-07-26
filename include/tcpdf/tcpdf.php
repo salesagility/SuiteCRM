@@ -9623,11 +9623,11 @@ if (!class_exists('TCPDF', false)) {
         * @since 2.9.000 (2008-03-26)
         */
         public function setUserRights(
-                $enable=true,
-                $document='/FullSave',
-                $annots='/Create/Delete/Modify/Copy/Import/Export',
-                $form='/Add/Delete/FillIn/Import/Export/SubmitStandalone/SpawnTemplate',
-                $signature='/Modify'
+            $enable=true,
+            $document='/FullSave',
+            $annots='/Create/Delete/Modify/Copy/Import/Export',
+            $form='/Add/Delete/FillIn/Import/Export/SubmitStandalone/SpawnTemplate',
+            $signature='/Modify'
         ) {
             $this->ur = $enable;
             $this->ur_document = $document;

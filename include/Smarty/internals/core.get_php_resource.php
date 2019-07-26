@@ -42,7 +42,7 @@ function smarty_core_get_php_resource(&$params, &$smarty)
         $_readable = is_callable($smarty->_plugins['resource'][$params['resource_type']][0][0])
             && call_user_func_array(
                 $smarty->_plugins['resource'][$params['resource_type']][0][0],
-                                    array($params['resource_name'], &$_template_source, &$smarty)
+                array($params['resource_name'], &$_template_source, &$smarty)
             );
     }
 

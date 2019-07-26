@@ -516,8 +516,10 @@ class ViewConvertLead extends SugarView
                 !empty($beans['Contacts']->id) && !empty($beans['Contacts']->photo)) {
                 $bCopied = false;
                 if (($lead->photo === $beans['Contacts']->photo) && is_readable('upload/' . $lead->id . '_photo')) {
-                    $bCopied = copy('upload/' . $lead->id . '_photo',
-                                   'upload/' . $beans['Contacts']->id . '_photo');
+                    $bCopied = copy(
+                        'upload/' . $lead->id . '_photo',
+                        'upload/' . $beans['Contacts']->id . '_photo'
+                    );
                 }
                 if ($bCopied) {
                     $beans['Contacts']->photo = $lead->photo;

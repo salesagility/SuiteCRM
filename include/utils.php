@@ -139,7 +139,7 @@ function make_sugar_config(&$sugar_config)
             'chown' => '',
             'chgrp' => '',
         ),
-        'default_theme' => empty($default_theme) ? 'Sugar5' : $default_theme,
+        'default_theme' => empty($default_theme) ? 'SuiteP' : $default_theme,
         'default_time_format' => empty($defaultTimeFormat) ? 'h:ia' : $defaultTimeFormat,
         'default_user_is_admin' => empty($default_user_is_admin) ? false : $default_user_is_admin,
         'default_user_name' => empty($default_user_name) ? '' : $default_user_name,
@@ -190,7 +190,7 @@ function make_sugar_config(&$sugar_config)
         'lock_subpanels' => false,
         'max_dashlets_homepage' => 15,
         'dashlet_display_row_options' => array('1', '3', '5', '10'),
-        'default_max_tabs' => empty($max_tabs) ? '7' : $max_tabs,
+        'default_max_tabs' => empty($max_tabs) ? 10 : $max_tabs,
         'default_subpanel_tabs' => empty($subpanel_tabs) ? true : $subpanel_tabs,
         'default_subpanel_links' => empty($subpanel_links) ? false : $subpanel_links,
         'default_swap_last_viewed' => empty($swap_last_viewed) ? false : $swap_last_viewed,
@@ -280,7 +280,7 @@ function get_sugar_config_defaults()
             'user' => '',
             'group' => '',
         ),
-        'default_theme' => return_session_value_or_default('site_default_theme', 'Sugar5'),
+        'default_theme' => return_session_value_or_default('site_default_theme', 'SuiteP'),
         'default_time_format' => 'h:ia',
         'default_user_is_admin' => false,
         'default_user_name' => '',
@@ -370,7 +370,7 @@ function get_sugar_config_defaults()
         'lock_homepage' => false,
         'lock_subpanels' => false,
         'max_dashlets_homepage' => '15',
-        'default_max_tabs' => '7',
+        'default_max_tabs' => 10,
         'dashlet_display_row_options' => array('1', '3', '5', '10'),
         'default_subpanel_tabs' => true,
         'default_subpanel_links' => false,
@@ -451,8 +451,7 @@ function getRunningUser()
     if ($runningUser == null) {  // matches null, false and ""
         if (is_windows()) {
             $runningUser = getenv('USERDOMAIN').'\\'.getenv('USERNAME');
-        }
-        elseif (function_exists('posix_getpwuid') && function_exists('posix_geteuid')) {
+        } elseif (function_exists('posix_getpwuid') && function_exists('posix_geteuid')) {
             $usr = posix_getpwuid(posix_geteuid());
             $runningUser = $usr['name'];
         }
@@ -655,6 +654,22 @@ function get_language_display($key)
     global $sugar_config;
 
     return $sugar_config['languages'][$key];
+}
+
+/**
+ * Returns the currently active language string.
+ *
+ * @return string
+ */
+function get_current_language()
+{
+    global $sugar_config;
+
+    if (!empty($_SESSION['authenticated_user_language'])) {
+        return $_SESSION['authenticated_user_language'];
+    } else {
+        return $sugar_config['default_language'];
+    }
 }
 
 function get_assigned_user_name($assigned_user_id, $is_group = '')
@@ -1189,7 +1204,7 @@ function return_module_language($language, $module, $refresh = false)
     // cn: bug 6048 - merge en_us with requested language
     if ($language != $sugar_config['default_language']) {
         $loaded_mod_strings = sugarLangArrayMerge(
-                LanguageManager::loadModuleLanguage($module, $sugar_config['default_language'], $refresh),
+            LanguageManager::loadModuleLanguage($module, $sugar_config['default_language'], $refresh),
             $loaded_mod_strings
         );
     }
@@ -1197,7 +1212,7 @@ function return_module_language($language, $module, $refresh = false)
     // Load in en_us strings by default
     if ($language != 'en_us' && $sugar_config['default_language'] != 'en_us') {
         $loaded_mod_strings = sugarLangArrayMerge(
-                LanguageManager::loadModuleLanguage($module, 'en_us', $refresh),
+            LanguageManager::loadModuleLanguage($module, 'en_us', $refresh),
             $loaded_mod_strings
         );
     }
@@ -1680,7 +1695,7 @@ function get_select_options_with_id_separate_key($label_list, $key_list, $select
         // The bug was only happening with one of the users in the drop down.  It was being replaced by none.
         if (
                 ($option_key != '' && $selected_key == $option_key) || (
-                $option_key == '' && (($selected_key == '' && !$massupdate) || $selected_key == '__SugarMassUpdateClearField__')
+                    $option_key == '' && (($selected_key == '' && !$massupdate) || $selected_key == '__SugarMassUpdateClearField__')
                 ) || (is_array($selected_key) && in_array($option_key, $selected_key))
         ) {
             $selected_string = 'selected ';
@@ -4662,7 +4677,7 @@ function ajaxInit()
  * @return string
  */
 function getAbsolutePath(
-$path,
+    $path,
     $currentServer = false
 ) {
     $path = trim($path);
@@ -4686,7 +4701,7 @@ $path,
  * @return object
  */
 function loadBean(
-$module
+    $module
 ) {
     return SugarModule::get($module)->loadBean();
 }

@@ -166,7 +166,7 @@ class EmailsViewCompose extends ViewEdit
             return $email;
         }
         $GLOBALS['log']->warn(
-                'EmailsController::composeSignature() was unable to get the signature id for user: '.
+            'EmailsController::composeSignature() was unable to get the signature id for user: '.
                 $user->name
             );
         return false;

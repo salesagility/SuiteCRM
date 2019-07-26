@@ -100,8 +100,8 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Term extends Zend_Search_Luc
             foreach ($searchFields as $fieldName) {
                 $subquery = new Zend_Search_Lucene_Search_Query_Preprocessing_Term(
                     $this->_word,
-                                                                                   $this->_encoding,
-                                                                                   $fieldName
+                    $this->_encoding,
+                    $fieldName
                 );
                 $rewrittenSubquery = $subquery->rewrite($index);
                 foreach ($rewrittenSubquery->getQueryTerms() as $term) {

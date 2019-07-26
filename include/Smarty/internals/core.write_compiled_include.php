@@ -20,7 +20,7 @@ function smarty_core_write_compiled_include($params, &$smarty)
 
     preg_match_all(
         '!('.$_tag_start.'(.*)'.$_tag_end.')!Us',
-                   $params['compiled_content'],
+        $params['compiled_content'],
         $_match_source,
         PREG_SET_ORDER
     );

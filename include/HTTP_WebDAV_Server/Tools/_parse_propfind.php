@@ -86,14 +86,14 @@ class _parse_propfind
         // set tag and data handlers
         xml_set_element_handler(
             $xml_parser,
-                                array(&$this, "_startElement"),
-                                array(&$this, "_endElement")
+            array(&$this, "_startElement"),
+            array(&$this, "_endElement")
         );
 
         // we want a case sensitive parser
         xml_parser_set_option(
             $xml_parser,
-                              XML_OPTION_CASE_FOLDING,
+            XML_OPTION_CASE_FOLDING,
             false
         );
 

@@ -41,15 +41,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+require_once("include/utils.php");
+
 $sm = sm_build_array();
 $sm_smarty = new Sugar_Smarty();
 
-global $sugar_config;
-if (isset($_SESSION['authenticated_user_language']) && $_SESSION['authenticated_user_language'] != '') {
-    $current_language = $_SESSION['authenticated_user_language'];
-} else {
-    $current_language = $sugar_config['default_language'];
-}
+$current_language = get_current_language();
 
 $mod_strings = return_module_language($current_language, 'Home');
 $sm_smarty->assign('CLOSE', isset($mod_strings['LBL_CLOSE_SITEMAP']) ? $mod_strings['LBL_CLOSE_SITEMAP'] : '');
@@ -87,7 +84,7 @@ function sm_build_array()
 
 
     include("include/modules.php");
-    global $sugar_config,$mod_strings;
+    global $mod_strings;
 
 
     // Need to set up mod_strings when we iterate through module menus.
@@ -95,11 +92,9 @@ function sm_build_array()
     if (!empty($mod_strings)) {
         $orig_modstrings = $mod_strings;
     }
-    if (isset($_SESSION['authenticated_user_language']) && $_SESSION['authenticated_user_language'] != '') {
-        $current_language = $_SESSION['authenticated_user_language'];
-    } else {
-        $current_language = $sugar_config['default_language'];
-    }
+
+    $current_language = get_current_language();
+
     $exclude= array();		// in case you want to exclude any.
     $mstr_array = array();
 
