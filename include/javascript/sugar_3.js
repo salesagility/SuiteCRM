@@ -364,7 +364,7 @@ if(typeof return_info!='undefined'&&return_info!=''){var params=return_info.spli
 document.MassUpdate.parentNode.appendChild(newForm);if(ajax){var _callback=callback?callback:null;$.post($('form[name="newForm"]').attr('action'),$('form[name="newForm"]').serialize(),function(resp){if(_callback){_callback(resp);}});return false;}else{newForm.submit();}
 document.MassUpdate.uid.value='';return false;}
 sugarListView.get_checks_count=function(){ar=new Array();if(document.MassUpdate.uid.value!=''){oldUids=document.MassUpdate.uid.value.split(',');for(uid in oldUids){if(typeof(oldUids[uid])!='function'){ar[oldUids[uid]]=1;}}}
-inputs=document.MassUpdate.elements;for(i=0;i<inputs.length;i++){if(inputs[i].name=='mass[]'){ar[inputs[i].value]=(inputs[i].checked)?1:0;}}
+inputs=document.MassUpdate.elements;for(i=0;i<inputs.length;i++){if(inputs[i].name==='mass[]'){if(inputs[i].value!==''){ar[inputs[i].value]=(inputs[i].checked)?1:0;}else{ar[i]=(inputs[i].checked)?1:0;}}}
 uids=new Array();for(i in ar){if((typeof(ar[i])!='function')&&ar[i]==1){uids.push(i);}}
 return uids.length;}
 sugarListView.get_checks=function(){ar=new Array();if(typeof document.MassUpdate!='undefined'){if(document.MassUpdate.uid.value!=''){oldUids=document.MassUpdate.uid.value.split(',');for(uid in oldUids){if(typeof(oldUids[uid])!='function'){ar[oldUids[uid]]=1;}}}
