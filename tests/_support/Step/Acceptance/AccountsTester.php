@@ -26,6 +26,29 @@ class AccountsTester extends \AcceptanceTester
         ));
         return $id;
     }
+
+    /**
+     * Creates accounts that can be indexed by elasticsearch
+     * @param $name
+     */
+    public function createAccountForElasticSearch($name)
+    {
+        $I = new EditView($this->getScenario());
+        $DetailView = new DetailView($this->getScenario());
+        $Sidebar = new SideBar($this->getScenario());
+
+        $I->waitForText('Create Account', 5, '.actionmenulink');
+        $Sidebar->clickSideBarAction('Create');
+        $I->waitForEditViewVisible();
+        $I->fillField('#name', $name);
+
+        $I->seeElement('#assigned_user_name');
+        $I->seeElement('#parent_name');
+        $I->seeElement('#campaign_name');
+
+        $I->clickSaveButton();
+        $DetailView->waitForDetailViewVisible();
+    }
     
     /**
      *
