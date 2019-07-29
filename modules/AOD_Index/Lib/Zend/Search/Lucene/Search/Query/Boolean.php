@@ -143,7 +143,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
         foreach ($this->_subqueries as $subqueryId => $subquery) {
             $query->addSubquery(
                 $subquery->rewrite($index),
-                                ($this->_signs === null)?  true : $this->_signs[$subqueryId]
+                ($this->_signs === null)?  true : $this->_signs[$subqueryId]
             );
         }
 
@@ -503,10 +503,10 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
             $resVectorsSizes,
             SORT_ASC,
             SORT_NUMERIC,
-                        $resVectorsIds,
+            $resVectorsIds,
             SORT_ASC,
             SORT_NUMERIC,
-                        $resVectors
+            $resVectors
         );
 
         foreach ($resVectors as $nextResVector) {
@@ -573,10 +573,10 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
             $requiredVectorsSizes,
             SORT_ASC,
             SORT_NUMERIC,
-                        $requiredVectorsIds,
+            $requiredVectorsIds,
             SORT_ASC,
             SORT_NUMERIC,
-                        $requiredVectors
+            $requiredVectors
         );
 
         $required = null;
@@ -627,7 +627,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
         if ($this->_coord === null) {
             $this->_coord = $reader->getSimilarity()->coord(
                 count($this->_subqueries),
-                                                            count($this->_subqueries)
+                count($this->_subqueries)
             );
         }
 

@@ -109,11 +109,11 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8 extends Zend_Search_Lucen
             $startPos = $this->_position +
                         iconv_strlen(
                             substr(
-                            $this->_input,
-                                            $this->_bytePosition,
-                                            $binStartPos - $this->_bytePosition
+                                $this->_input,
+                                $this->_bytePosition,
+                                $binStartPos - $this->_bytePosition
                         ),
-                                     'UTF-8'
+                            'UTF-8'
                         );
             // character postion of the end of matched word in the input stream
             $endPos = $startPos + iconv_strlen($matchedWord, 'UTF-8');

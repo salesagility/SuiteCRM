@@ -392,6 +392,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'Project',
             'FP_events',
             'AOR_Reports',
+            'AOR_Scheduled_Reports',
             'Prospects',
             'ACLRoles',
             'jjwg_Maps',

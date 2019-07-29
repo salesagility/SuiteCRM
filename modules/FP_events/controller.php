@@ -52,8 +52,7 @@ class FP_eventsController extends SugarController
         $entire_list = $_POST['entire_list'];
         $eventIDQuoted = $db->quote($_POST['event_id']);
 
-        if($entire_list != '1'){
-
+        if ($entire_list != '1') {
             $contacts = explode(',', $ids);
 
             foreach ($contacts as $contact) {
@@ -92,8 +91,7 @@ class FP_eventsController extends SugarController
         if ($entire_list != '1') {
             $contacts = explode(',', $ids);
 
-            foreach($contacts as $contact){
-
+            foreach ($contacts as $contact) {
                 $query = 'UPDATE fp_events_contacts_c SET invite_status="Attended" WHERE fp_events_contactsfp_events_ida="'.$eventIDQuoted.'" AND fp_events_contactscontacts_idb="'. $db->quote($contact) .'"';
                 $res = $db->query($query);
                 //update Leads query
@@ -128,8 +126,7 @@ class FP_eventsController extends SugarController
         if ($entire_list != '1') {
             $contacts = explode(',', $ids);
 
-            foreach($contacts as $contact){
-
+            foreach ($contacts as $contact) {
                 $query = 'UPDATE fp_events_contacts_c SET invite_status="Not Attended" WHERE fp_events_contactsfp_events_ida="'.$eventIDQuoted.'" AND fp_events_contactscontacts_idb="'. $db->quote($contact) .'"';
                 $res = $db->query($query);
                 //update Leads query
@@ -164,8 +161,7 @@ class FP_eventsController extends SugarController
         if ($entire_list != '1') {
             $contacts = explode(',', $ids);
 
-            foreach($contacts as $contact){
-
+            foreach ($contacts as $contact) {
                 $query = 'UPDATE fp_events_contacts_c SET invite_status="Not Invited", email_responded="0" WHERE fp_events_contactsfp_events_ida="'.$eventIDQuoted.'" AND fp_events_contactscontacts_idb="'. $db->quote($contact) .'"';
                 $res = $db->query($query);
                 //update Leads query
@@ -200,8 +196,7 @@ class FP_eventsController extends SugarController
         if ($entire_list != '1') {
             $contacts = explode(',', $ids);
 
-            foreach($contacts as $contact){
-
+            foreach ($contacts as $contact) {
                 $query = 'UPDATE fp_events_contacts_c SET accept_status="Accepted" WHERE fp_events_contactsfp_events_ida="'.$eventIDQuoted.'" AND fp_events_contactscontacts_idb="'. $db->quote($contact) .'"';
                 $res = $db->query($query);
                 //update Leads query
@@ -235,12 +230,12 @@ class FP_eventsController extends SugarController
         if ($entire_list != '1') {
             $contacts = explode(',', $ids);
 
-            foreach($contacts as $contact){
-
+            foreach ($contacts as $contact) {
                 $query = 'UPDATE fp_events_contacts_c SET accept_status="Declined" WHERE fp_events_contactsfp_events_ida="'.$eventIDQuoted.'" AND fp_events_contactscontacts_idb="'. $db->quote($contact) .'"';
                 $res = $db->query($query);
                 //update Leads query
-                $query2 = 'UPDATE fp_events_leads_1_c SET accept_status="Declined" WHERE fp_events_leads_1fp_events_ida="'.$eventIDQuoted.'" AND fp_events_leads_1leads_idb="'. $db->quote($contact) .'"';            $res = $db->query($query2);
+                $query2 = 'UPDATE fp_events_leads_1_c SET accept_status="Declined" WHERE fp_events_leads_1fp_events_ida="'.$eventIDQuoted.'" AND fp_events_leads_1leads_idb="'. $db->quote($contact) .'"';
+                $res = $db->query($query2);
                 $res = $db->query($query2);
                 //update targets query
                 $query3 = 'UPDATE fp_events_prospects_1_c SET accept_status="Declined" WHERE fp_events_prospects_1fp_events_ida="'.$eventIDQuoted.'" AND fp_events_prospects_1prospects_idb="'. $db->quote($contact) .'"';

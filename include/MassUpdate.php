@@ -202,8 +202,8 @@ eoq;
                         $_POST[$post] = 0;
                     }
                     if (!empty($this->sugarbean->field_defs[$post]['dbType']) && strcmp(
-                            $this->sugarbean->field_defs[$post]['dbType'],
-                            'varchar'
+                        $this->sugarbean->field_defs[$post]['dbType'],
+                        'varchar'
                         ) == 0
                     ) {
                         if (strcmp($value, '1') == 0) {
@@ -452,9 +452,9 @@ eoq;
         $sugar_config = $configurator->config;
 
         if ($this->sugarbean->bean_implements('ACL') && (!ACLController::checkAccess(
-                    $this->sugarbean->module_dir,
-                    'edit',
-                    true
+            $this->sugarbean->module_dir,
+            'edit',
+            true
                 ) || !ACLController::checkAccess($this->sugarbean->module_dir, 'massupdate', true))
         ) {
             return '';

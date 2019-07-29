@@ -125,7 +125,7 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
                     } else {
                         $docNorms[$field->name] = chr($similarity->encodeNorm($similarity->lengthNorm(
                             $field->name,
-                                                                                                       $tokenCounter
+                            $tokenCounter
                         )*
                                                                                $document->boost*
                                                                                $field->boost));
@@ -170,7 +170,7 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
             if (!isset($this->_norms[$fieldName])) {
                 $this->_norms[$fieldName] = str_repeat(
                     chr($similarity->encodeNorm($similarity->lengthNorm($fieldName, 0))),
-                                                       $this->_docCount
+                    $this->_docCount
                 );
             }
 
@@ -223,12 +223,12 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
 
         return new Zend_Search_Lucene_Index_SegmentInfo(
             $this->_directory,
-                                                        $this->_name,
-                                                        $this->_docCount,
-                                                        -1,
-                                                        null,
-                                                        true,
-                                                        true
+            $this->_name,
+            $this->_docCount,
+            -1,
+            null,
+            true,
+            true
         );
     }
 }

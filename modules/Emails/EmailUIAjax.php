@@ -572,7 +572,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 isset($_REQUEST['folder']) && !empty($_REQUEST['folder']) &&
                 isset($_REQUEST['ieId']) && (!empty($_REQUEST['ieId']) || (empty($_REQUEST['ieId']) && strpos(
                     $_REQUEST['folder'],
-                            'sugar::'
+                    'sugar::'
                 ) !== false))
             ) {
                 $uid = $json->decode(from_html($_REQUEST['uids']));
@@ -592,10 +592,10 @@ if (isset($_REQUEST['emailUIAction'])) {
                 $ret = array();
                 if (strpos(
                     $_REQUEST['folder'],
-                        'sugar::'
+                    'sugar::'
                 ) !== false && ($_REQUEST['type'] == 'deleted') && !ACLController::checkAccess(
-                            'Emails',
-                        'delete'
+                    'Emails',
+                    'delete'
                         )
                 ) {
                     $ret['status'] = false;
@@ -984,7 +984,7 @@ eoq;
                     $sortArray = sugar_unserialize($sortSerial);
                     $GLOBALS['log']->debug("********** EMAIL 2.0********** ary=" . print_r(
                         $sortArray,
-                            true
+                        true
                     ) . ' id=' . $_REQUEST['ieId'] . '; box=' . $_REQUEST['mbox']);
                     $sort = $sortArray[$_REQUEST['ieId']][$_REQUEST['mbox']]['current']['sort'];
                     $direction = $sortArray[$_REQUEST['ieId']][$_REQUEST['mbox']]['current']['direction'];

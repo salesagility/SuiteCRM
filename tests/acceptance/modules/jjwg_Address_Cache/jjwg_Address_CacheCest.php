@@ -30,16 +30,12 @@ class jjwg_Address_CacheCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\MapsAddressCache $mapsAddressCache
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the mapsAddressCache module.
      */
     public function testScenarioViewMapsAddressCacheModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\MapsAddressCache $mapsAddressCache,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the mapsAddressCache module for testing');
 
@@ -56,7 +52,6 @@ class jjwg_Address_CacheCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\MapsAddressCache $mapsAddressCache
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a maps address cache so that I can test
      * the standard fields.
@@ -65,8 +60,7 @@ class jjwg_Address_CacheCest
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\MapsAddressCache $mapsAddressCache,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\MapsAddressCache $mapsAddressCache
     ) {
         $I->wantTo('Create maps address cache');
 

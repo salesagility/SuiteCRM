@@ -3005,7 +3005,7 @@ abstract class DBManager
                 //if the type and values match, do nothing.
                 if (!($this->_emptyValue($before_value, $field_type) && $this->_emptyValue(
                     $after_value,
-                        $field_type
+                    $field_type
                 ))
                 ) {
                     $change = false;

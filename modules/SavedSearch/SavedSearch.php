@@ -306,7 +306,7 @@ class SavedSearch extends SugarBean
         }
 
         SugarApplication::headerRedirect(
-                $header .
+            $header .
                 '&saved_search_select=' . $saved_search_id .
                 '&saved_search_select_name=' . $saved_search_name .
                 '&orderBy=' . $orderBy .

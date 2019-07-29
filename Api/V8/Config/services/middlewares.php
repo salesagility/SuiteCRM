@@ -45,7 +45,9 @@ return CustomLoader::mergeCustomArray([
                 $apiConfig
             );
             file_put_contents(
-                'Api/Core/Config/ApiConfig.php', $configFileContents, LOCK_EX
+                'Api/Core/Config/ApiConfig.php',
+                $configFileContents,
+                LOCK_EX
             );
         }
 

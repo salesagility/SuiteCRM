@@ -81,9 +81,9 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     $db = DBManagerFactory::getInstance();
     $marketing = new EmailMarketing();
     $marketing_query = $marketing->create_new_list_query(
-                'date_start desc, date_modified desc',
-                "campaign_id = '{$campaign_id}' and status = 'active' and date_start < " . $db->convert('', 'today'),
-                array('id')
+        'date_start desc, date_modified desc',
+        "campaign_id = '{$campaign_id}' and status = 'active' and date_start < " . $db->convert('', 'today'),
+        array('id')
         );
     $marketing_result = $db->limitQuery($marketing_query, 0, 1, true);
     $marketing_data = $db->fetchByAssoc($marketing_result);

@@ -437,10 +437,10 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
             $resVectorsSizes,
             SORT_ASC,
             SORT_NUMERIC,
-                        $resVectorsIds,
+            $resVectorsIds,
             SORT_ASC,
             SORT_NUMERIC,
-                        $resVectors
+            $resVectors
         );
 
         foreach ($resVectors as $nextResVector) {
