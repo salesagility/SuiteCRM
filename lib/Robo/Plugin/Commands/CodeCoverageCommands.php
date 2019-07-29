@@ -37,6 +37,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 namespace SuiteCRM\Robo\Plugin\Commands;
 
 use SuiteCRM\Utility\OperatingSystem;
@@ -51,7 +52,7 @@ class CodeCoverageCommands extends \Robo\Tasks
 
     /**
      * Runs code coverage
-     * @param array $opts
+     * @param array $opts optional command line argument if using a continuous integration environment
      * @throws RuntimeException
      */
     public function codeCoverage($opts = ['ci' => false])
@@ -63,7 +64,7 @@ class CodeCoverageCommands extends \Robo\Tasks
             if ($this->isEnvironmentTravisCI()) {
                 $range = $this->getCommitRangeForTravisCi();
             } else {
-                throw new \RuntimeException('unable to detect continuous integration environment');
+                throw new \RuntimeException('Unable to detect continuous integration environment');
             }
         }
 
@@ -96,6 +97,7 @@ class CodeCoverageCommands extends \Robo\Tasks
     private function generateCodeCoverageFile()
     {
         $this->_exec($this->getCodeCoverageCommand());
+        $this->say('Code coverage xml outputted to ./tests/_output/coverage.xml');
     }
 
     /**
@@ -121,6 +123,7 @@ class CodeCoverageCommands extends \Robo\Tasks
         $command =
             $os->toOsPath('./vendor/bin/phpunit')
             . ' --configuration ./tests/phpunit.xml.dist --coverage-clover ./tests/_output/coverage.xml ./tests/unit/phpunit';
+
         return $command;
     }
 }
