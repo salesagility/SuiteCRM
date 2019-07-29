@@ -728,8 +728,7 @@ class User extends Person implements EmailInterface
             $this->is_group = 0;
             $this->portal_only = 0;
 
-            if ((isset($_POST['is_admin']) && ($_POST['is_admin'] == 'on' || $_POST['is_admin'] == '1')) ||
-              (isset($_POST['UserType']) && $_POST['UserType'] == "Administrator")) {
+            if (is_admin($current_user) && ((isset($_POST['is_admin']) && ($_POST['is_admin'] === 'on' || $_POST['is_admin'] === '1')) || (isset($_POST['UserType']) && $_POST['UserType'] === 'Administrator'))) {
                 $this->is_admin = 1;
             } elseif (isset($_POST['is_admin']) && empty($_POST['is_admin'])) {
                 $this->is_admin = 0;
