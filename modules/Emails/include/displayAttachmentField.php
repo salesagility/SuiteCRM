@@ -1,10 +1,11 @@
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,6 +37,56 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-initmySugarCharts=function(){SUGAR.mySugar.sugarCharts=function(){var activeTab=activePage,charts=new Object();return{loadSugarCharts:function(activeTab){var chartFound=false;for(id in charts[activeTab]){if(id!='undefined'){chartFound=true;loadSugarChart(charts[activeTab][id]['chartId'],charts[activeTab][id]['jsonFilename'],charts[activeTab][id]['css'],charts[activeTab][id]['chartConfig']);}}
-charts=new Object();},addToChartsArrayJson:function(json,activeTab){for(id in json){if(json[id]['supported']=="true"){SUGAR.mySugar.sugarCharts.addToChartsArray(json[id]['chartId'],json[id]['filename'],json[id]['css'],json[id]['chartConfig'],activeTab);}}},addToChartsArray:function(chartId,jsonFilename,css,chartConfig,activeTab){if(charts[activeTab]==null){charts[activeTab]=new Object();}
-charts[activeTab][chartId]=new Object();charts[activeTab][chartId]['chartId']=chartId;charts[activeTab][chartId]['jsonFilename']=jsonFilename;charts[activeTab][chartId]['css']=css;charts[activeTab][chartId]['chartConfig']=chartConfig;}}}();};
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+
+/**
+ * @param $focus
+ * @param $field
+ * @param $value
+ * @param $view
+ * @return string
+ */
+function displayAttachmentField($focus, $field, $value, $view)
+{
+    global $db;
+    $result = '';
+    $attachments = [];
+
+    if ($view !== 'DetailView') {
+        return $result;
+    }
+
+    if (strtolower($field) !== 'attachment') {
+        return $result;
+    }
+
+    if (is_object($focus)) {
+        $focus = get_object_vars($focus);
+    } elseif (is_array($focus)) {
+        $focus = array_change_key_case($focus, CASE_LOWER);
+    }
+
+    if (!empty($focus['inbound_email_record'] && empty($focus['id']))) {
+        $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($focus['inbound_email_record']));
+        $structure = $inboundEmail->getImap()->fetchStructure($focus['uid'], FT_UID);
+
+        if ($inboundEmail->messageStructureHasAttachment($structure)) {
+            foreach ($structure->parts as $part) {
+                if (is_string($part->dparameters[0]->value)) {
+                    $attachments[] = $part->dparameters[0]->value;
+                }
+            }
+        }
+    }
+
+    $attachmentString = implode(',', $attachments);
+
+    $template = new Sugar_Smarty();
+    $template->assign('attachments', $attachmentString);
+
+    return $template->fetch('modules/Emails/templates/displayAttachmentField.tpl');
+}

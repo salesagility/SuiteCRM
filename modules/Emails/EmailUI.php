@@ -3223,7 +3223,7 @@ eoq;
         $ieAccountsFull = $ie->retrieveAllByGroupId($current_user->id);
         $ieAccountsShowOptionsMeta = array();
         $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
-        $defaultIEAccount = (new SugarFolder())->getUsersDefaultOutboundServerId($current_user);
+        $defaultIEAccount = $ie->getUsersDefaultOutboundServerId($current_user);
 
         foreach ($ieAccountsFull as $k => $v) {
             $default = $defaultIEAccount == $v->id;
