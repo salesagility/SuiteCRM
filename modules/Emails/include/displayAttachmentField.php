@@ -1,11 +1,11 @@
-{*
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,52 +38,55 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-*}
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-{if !$error}
-<script type="text/javascript">
-	{literal}
-	SUGAR.util.doWhen(
-		"((SUGAR && SUGAR.mySugar && SUGAR.mySugar.sugarCharts)   || (SUGAR.loadChart && typeof loadSugarChart == 'function')  || document.getElementById('showHideChartButton') != null) && typeof(loadSugarChart) != undefined",
-		function(){
-			{/literal}
-			var css = new Array();
-			var chartConfig = new Array();
-			{foreach from=$css key=selector item=property}
-				css["{$selector}"] = '{$property}';
-			{/foreach}
-			{foreach from=$config key=name item=value}
-				chartConfig["{$name}"] = '{$value}';
-			{/foreach}
-			{if $height > 480}
-				chartConfig["scroll"] = true;
-			{/if}
-			loadCustomChartForReports = function(){ldelim}
-				loadSugarChart('{$chartId}','{$filename}',css,chartConfig);
-			{rdelim};
-			// bug51857: fixed issue on report running in a loop when clicking on hide chart then run report in IE8 only
-			// When hide chart button is clicked, the value of element showHideChartButton is set to $showchart.
-			// Don't need to call the loadCustomChartForReports() function when hiding the chart.
-			{if !isset($showchart)}
-				loadCustomChartForReports();
-			{else}
-			     if($('#showHideChartButton').attr('value') != '{$showchart}')
-			        loadCustomChartForReports();
-			{/if}
-			{literal}
-		}
-	);
-	{/literal}
-</script>
 
-<div class="chartContainer">
-	<div id="sb{$chartId}" class="scrollBars">
-    <div id="{$chartId}" class="chartCanvas" style="width: {$width}; height: {$height}px;"></div>  
-    </div>
-	<div id="legend{$chartId}" class="legend"></div>
-</div>
-<div class="clear"></div>
-{else}
+/**
+ * @param $focus
+ * @param $field
+ * @param $value
+ * @param $view
+ * @return string
+ */
+function displayAttachmentField($focus, $field, $value, $view)
+{
+    global $db;
+    $result = '';
+    $attachments = [];
 
-{$error}
-{/if}
+    if ($view !== 'DetailView') {
+        return $result;
+    }
+
+    if (strtolower($field) !== 'attachment') {
+        return $result;
+    }
+
+    if (is_object($focus)) {
+        $focus = get_object_vars($focus);
+    } elseif (is_array($focus)) {
+        $focus = array_change_key_case($focus, CASE_LOWER);
+    }
+
+    if (!empty($focus['inbound_email_record'] && empty($focus['id']))) {
+        $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($focus['inbound_email_record']));
+        $structure = $inboundEmail->getImap()->fetchStructure($focus['uid'], FT_UID);
+
+        if ($inboundEmail->messageStructureHasAttachment($structure)) {
+            foreach ($structure->parts as $part) {
+                if (is_string($part->dparameters[0]->value)) {
+                    $attachments[] = $part->dparameters[0]->value;
+                }
+            }
+        }
+    }
+
+    $attachmentString = implode(',', $attachments);
+
+    $template = new Sugar_Smarty();
+    $template->assign('attachments', $attachmentString);
+
+    return $template->fetch('modules/Emails/templates/displayAttachmentField.tpl');
+}

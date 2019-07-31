@@ -1244,7 +1244,6 @@ class SugarFolder
             $query3 = "UPDATE folders SET has_child = 1 WHERE id = " . $this->db->quoted($this->parent_folder);
             $r3 = $this->db->query($query3);
         } else {
-
             $query = "UPDATE folders SET " .
                 "name = " . $this->db->quoted($this->name) . ", " .
                 "parent_folder = " . $this->db->quoted($this->parent_folder) . ", " .

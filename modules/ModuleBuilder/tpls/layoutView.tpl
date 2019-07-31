@@ -87,14 +87,6 @@
             {if isset($col.type) && ($col.type == 'phone')}
                 {$icon_phone}
             {/if}
-            {* BEGIN SUGARCRM flav=pro ONLY *}
-            {if isset($field_defs.$field.calculated) && $field_defs.$field.calculated}
-                {sugar_getimage name="SugarLogic/icon_calculated" alt=$mod_strings.LBL_CALCULATED ext=".png" other_attributes='class="right_icon" '}
-            {/if}
-            {if isset($field_defs.$field.dependency) && $field_defs.$field.dependency}
-                {sugar_getimage name="SugarLogic/icon_dependent" ext=".png" alt=$mod_strings.LBL_DEPENDANT other_attributes='class="right_icon" '}
-            {/if}
-            {* END SUGARCRM flav=pro ONLY *}
             <span id='le_label_{$idCount}'>
             {if !empty($translate) && !empty($col.label)}
                 {eval var=$col.label assign='newLabel'}
@@ -185,14 +177,6 @@
                     {if isset($col.type) && ($col.type == 'phone')}
                         {$icon_phone}
                     {/if}
-                    {* BEGIN SUGARCRM flav=pro ONLY *}
-                    {if isset($field_defs.$field.calculated) && $field_defs.$field.calculated}
-                        {sugar_getimage name="SugarLogic/icon_calculated" alt=$mod_strings.LBL_CALCULATED ext=".png" other_attributes='class="right_icon"'}
-                    {/if}
-                    {if isset($field_defs.$field.dependency) && $field_defs.$field.dependency}
-                        {sugar_getimage name="SugarLogic/icon_dependent" ext=".png" alt=$mod_strings.LBL_DEPENDANT other_attributes='class="right_icon"'}
-                    {/if}
-                    {* END SUGARCRM flav=pro ONLY *}
                     <span id='le_label_{$idCount}'>
                     {sugar_translate label=$col.label}
                     </span>

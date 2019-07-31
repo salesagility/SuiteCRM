@@ -1,4 +1,4 @@
-<?php
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,5 +37,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+*}
 
-// This file is no longer in use. Included for compatibility only. 
+<div>
+    {if $attachments}
+            <div><span>{$attachments}</span></div>
+
+    {/if}
+</div>

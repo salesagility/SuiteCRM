@@ -17,20 +17,21 @@
 //  limitations under the License.
 //
 
-class FilterLZW {
-    
-    var $sTable = array();
-    var $data = null;
-    var $dataLength = 0;
-    var $tIdx;
-    var $bitsToGet = 9;
-    var $bytePointer;
-    var $bitPointer;
-    var $nextData = 0;
-    var $nextBits = 0;
-    var $andTable = array(511, 1023, 2047, 4095);
+class FilterLZW
+{
+    public $sTable = array();
+    public $data = null;
+    public $dataLength = 0;
+    public $tIdx;
+    public $bitsToGet = 9;
+    public $bytePointer;
+    public $bitPointer;
+    public $nextData = 0;
+    public $nextBits = 0;
+    public $andTable = array(511, 1023, 2047, 4095);
 
-    function error($msg) {
+    public function error($msg)
+    {
         die($msg);
     }
     
@@ -39,9 +40,9 @@ class FilterLZW {
      *
      * @param string data    The compressed data.
      */
-    function decode($data) {
-
-        if($data[0] == 0x00 && $data[1] == 0x01) {
+    public function decode($data)
+    {
+        if ($data[0] == 0x00 && $data[1] == 0x01) {
             $this->error('LZW flavour not supported.');
         }
 
@@ -73,9 +74,7 @@ class FilterLZW {
 
                 $uncompData .= $this->sTable[$code];
                 $oldCode = $code;
-
             } else {
-
                 if ($code < $this->tIdx) {
                     $string = $this->sTable[$code];
                     $uncompData .= $string;
@@ -100,11 +99,13 @@ class FilterLZW {
     /**
      * Initialize the string table.
      */
-    function initsTable() {
+    public function initsTable()
+    {
         $this->sTable = array();
 
-        for ($i = 0; $i < 256; $i++)
+        for ($i = 0; $i < 256; $i++) {
             $this->sTable[$i] = chr($i);
+        }
 
         $this->tIdx = 258;
         $this->bitsToGet = 9;
@@ -113,7 +114,8 @@ class FilterLZW {
     /**
      * Add a new string to the string table.
      */
-    function addStringToTable ($oldString, $newString='') {
+    public function addStringToTable($oldString, $newString='')
+    {
         $string = $oldString.$newString;
 
         // Add this new String to the table
@@ -121,15 +123,16 @@ class FilterLZW {
 
         if ($this->tIdx == 511) {
             $this->bitsToGet = 10;
-        } else if ($this->tIdx == 1023) {
+        } elseif ($this->tIdx == 1023) {
             $this->bitsToGet = 11;
-        } else if ($this->tIdx == 2047) {
+        } elseif ($this->tIdx == 2047) {
             $this->bitsToGet = 12;
         }
     }
 
     // Returns the next 9, 10, 11 or 12 bits
-    function getNextCode() {
+    public function getNextCode()
+    {
         if ($this->bytePointer == $this->dataLength) {
             return 257;
         }
@@ -148,7 +151,8 @@ class FilterLZW {
         return $code;
     }
     
-    function encode($in) {
+    public function encode($in)
+    {
         $this->error("LZW encoding not implemented.");
     }
 }

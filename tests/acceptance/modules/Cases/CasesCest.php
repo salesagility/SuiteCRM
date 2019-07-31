@@ -30,16 +30,12 @@ class CasesCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Cases $cases
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the cases module.
      */
     public function testScenarioViewCasesModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Cases $cases,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the cases module for testing');
 
@@ -57,7 +53,6 @@ class CasesCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Cases $cases
      * @param \Step\Acceptance\Cases $account
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a case so that I can test
      * the standard fields.
@@ -67,8 +62,7 @@ class CasesCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Cases $cases,
-        \Step\Acceptance\AccountsTester $account,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\AccountsTester $account
     ) {
         $I->wantTo('Create a Case');
 

@@ -336,36 +336,33 @@ class AOR_Report extends Basic
                 }
 
                 return $this->buildMultiGroupReport($offset, $links, $level + 1, $path);
-            } else {
-                if (!$rows) {
-                    if ($path) {
-                        $html = '';
-                        foreach ($path as $pth) {
-                            $_fieldIdName = $this->db->quoteIdentifier($pth['field_id_name']);
-                            $query = "SELECT $_fieldIdName FROM " . $this->db->quoteIdentifier($pth['module_path'][0]) . " GROUP BY $_fieldIdName;";
-                            $values = $this->dbSelect($query);
-
-                            foreach ($values as $value) {
-                                $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue(
-                                    $beanList,
-                                    $value[$pth['field_id_name']]
-                                );
-                                $moduleFieldByGroupValue = $this->addDataIdValueToInnertext($moduleFieldByGroupValue);
-                                $html .= $this->getMultiGroupFrameHTML(
-                                    $moduleFieldByGroupValue,
-                                    $this->build_group_report($offset, $links)
-                                );
-                            }
-                        }
-
-                        return $html;
-                    } else {
-                        return $this->build_group_report($offset, $links, array());
-                    }
-                } else {
-                    throw new Exception('incorrect results');
-                }
             }
+            if (!$rows) {
+                if ($path) {
+                    $html = '';
+                    foreach ($path as $pth) {
+                        $_fieldIdName = $this->db->quoteIdentifier($pth['field_id_name']);
+                        $query = "SELECT $_fieldIdName FROM " . $this->db->quoteIdentifier($pth['module_path'][0]) . " GROUP BY $_fieldIdName;";
+                        $values = $this->dbSelect($query);
+
+                        foreach ($values as $value) {
+                            $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue(
+                                $beanList,
+                                $value[$pth['field_id_name']]
+                                );
+                            $moduleFieldByGroupValue = $this->addDataIdValueToInnertext($moduleFieldByGroupValue);
+                            $html .= $this->getMultiGroupFrameHTML(
+                                $moduleFieldByGroupValue,
+                                $this->build_group_report($offset, $links)
+                                );
+                        }
+                    }
+
+                    return $html;
+                }
+                return $this->build_group_report($offset, $links, array());
+            }
+            throw new Exception('incorrect results');
         }
         throw new Exception('incorrect state');
     }
@@ -481,7 +478,7 @@ class AOR_Report extends Basic
 
             if ($data['type'] == 'currency' && !stripos(
                 $field->field,
-                    '_USD'
+                '_USD'
             ) && isset($field_module->field_defs['currency_id'])
             ) {
                 if ((isset($field_module->field_defs['currency_id']['source']) && $field_module->field_defs['currency_id']['source'] == 'custom_fields')) {
@@ -886,7 +883,7 @@ class AOR_Report extends Basic
 
     private function getModuleFieldByGroupValue($beanList, $group_value)
     {
-		global $app_list_strings;
+        global $app_list_strings;
         $moduleFieldByGroupValues = array();
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND group_display = 1 AND deleted = 0 ORDER BY field_order ASC";
@@ -1022,7 +1019,7 @@ class AOR_Report extends Basic
                                         $total,
                                         null,
                                         null,
-                                            array('convert' => true)
+                                        array('convert' => true)
                                     );
                                 }
                                 break;
@@ -1130,14 +1127,27 @@ class AOR_Report extends Basic
                     if ($att['function'] != '' || $att['format'] != '') {
                         $csv .= $this->encloseForCSV($row[$name]);
                     } else {
-                        $t = getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name], '',
-                            $currency_id);
+                        $t = getModuleField(
+                            $att['module'],
+                            $att['field'],
+                            $att['field'],
+                            'DetailView',
+                            $row[$name],
+                            '',
+                            $currency_id
+                        );
                         if (false !== strpos($t, 'checkbox')) {
                             $csv .= $row[$name];
                         } else {
-                            $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'],
+                            $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField(
+                                $att['module'],
                                 $att['field'],
-                                'DetailView', $row[$name], '', $currency_id))));
+                                $att['field'],
+                                'DetailView',
+                                $row[$name],
+                                '',
+                                $currency_id
+                            ))));
                         }
                     }
                     $csv .= $delimiter;
@@ -1977,7 +1987,7 @@ class AOR_Report extends Basic
             }
             $query['where'][] = $module->table_name . ".deleted = 0 " . $this->build_report_access_query(
                 $module,
-                    $module->table_name
+                $module->table_name
             );
         }
 

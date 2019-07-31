@@ -30,16 +30,12 @@ class MeetingsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Meetings $meetings
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the meetings module.
      */
     public function testScenarioViewMeetingsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Meetings $meetings,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the meetings module for testing');
 
@@ -56,7 +52,6 @@ class MeetingsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Meetings $meeting
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a meeting so that I can test
      * the standard fields.
@@ -65,8 +60,7 @@ class MeetingsCest
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Meetings $meeting,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Meetings $meeting
     ) {
         $I->wantTo('Create a meeting');
 
@@ -90,7 +84,6 @@ class MeetingsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Meetings $meeting
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to inline edit the start date
      */
@@ -98,8 +91,7 @@ class MeetingsCest
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Meetings $meeting,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Meetings $meeting
     ) {
         $I->wantTo('Create a meeting');
 
