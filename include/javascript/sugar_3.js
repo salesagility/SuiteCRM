@@ -363,7 +363,8 @@ newForm.appendChild(uidTa);var moduleInput=document.createElement('input');modul
 if(typeof return_info!='undefined'&&return_info!=''){var params=return_info.split('&');if(params.length>0){for(var i=0;i<params.length;i++){if(params[i].length>0){var param_nv=params[i].split('=');if(param_nv.length==2){returnModule=document.createElement('input');returnModule.name=param_nv[0];returnModule.type='hidden';returnModule.value=param_nv[1];newForm.appendChild(returnModule);}}}}}
 document.MassUpdate.parentNode.appendChild(newForm);if(ajax){var _callback=callback?callback:null;$.post($('form[name="newForm"]').attr('action'),$('form[name="newForm"]').serialize(),function(resp){if(_callback){_callback(resp);}});return false;}else{newForm.submit();}
 document.MassUpdate.uid.value='';return false;}
-sugarListView.get_checks_count=function(){ar=new Array();if(document.MassUpdate.uid.value!=''){oldUids=document.MassUpdate.uid.value.split(',');for(uid in oldUids){if(typeof(oldUids[uid])!='function'){ar[oldUids[uid]]=1;}}}
+sugarListView.get_checks_count=function(){if(typeof document.MassUpdate=='undefined'){return 0;}
+ar=new Array();if(document.MassUpdate.uid.value!=''){oldUids=document.MassUpdate.uid.value.split(',');for(uid in oldUids){if(typeof(oldUids[uid])!='function'){ar[oldUids[uid]]=1;}}}
 inputs=document.MassUpdate.elements;for(i=0;i<inputs.length;i++){if(inputs[i].name==='mass[]'){if(inputs[i].value!==''){ar[inputs[i].value]=(inputs[i].checked)?1:0;}else{ar[i]=(inputs[i].checked)?1:0;}}}
 uids=new Array();for(i in ar){if((typeof(ar[i])!='function')&&ar[i]==1){uids.push(i);}}
 return uids.length;}

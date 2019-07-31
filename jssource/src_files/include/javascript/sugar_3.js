@@ -2223,6 +2223,11 @@ sugarListView.prototype.send_form = function (select, currentModule, action, no_
 }
 //return a count of checked row.
 sugarListView.get_checks_count = function () {
+  // Return 0 if MassUpdate is undefined, to prevent an undefined property error.
+  if (typeof document.MassUpdate == 'undefined') {
+    return 0;
+  }
+
   ar = new Array();
 
   if (document.MassUpdate.uid.value != '') {
