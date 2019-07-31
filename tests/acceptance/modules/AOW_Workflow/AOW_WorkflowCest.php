@@ -44,7 +44,6 @@ class AOW_WorkflowCest
     // tests
     public function testScenarioCreateWorkflow(
         AcceptanceTester $I,
-        \Helper\WebDriverHelper $webDriverHelper,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\SideBar $sideBar,
@@ -109,10 +108,9 @@ class AOW_WorkflowCest
     // TODO: This test relied on state from the previous test, so it breaks when
     // the test order is randomized or cookies are cleared between tests. This should
     // be fixed.
-    // 
+    //
     // public function testScenarioDeleteWorkflow(
     //     AcceptanceTester $I,
-    //     \Helper\WebDriverHelper $webDriverHelper,
     //     \Step\Acceptance\NavigationBar $navigationBar,
     //     \Step\Acceptance\ListView $listView,
     //     \Step\Acceptance\SideBar $sideBar,
@@ -123,15 +121,14 @@ class AOW_WorkflowCest
     // ) {
     //     $I->wantTo('Delete workflow');
     //     $I->loginAsAdmin();
-    // 
+    //
     //     $dashboard->waitForDashboardVisible();
     //     // TODO: Create a workflow and navigate to its DetailView here.
     //
     //     // Delete Record
     //     $detailView->clickActionMenuItem('Delete');
     //     $detailView->acceptPopup();
-    // 
+    //
     //     $listView->waitForListViewVisible();
-    //     $this->lastView = 'ListView';
     // }
 }

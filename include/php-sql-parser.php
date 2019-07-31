@@ -209,7 +209,7 @@ EOREGEX
                     $trim=trim(substr(
                         $trim,
                         0,
-                                strpos($trim, '(')
+                        strpos($trim, '(')
                     ));
                 }
                 $tokens[$i]=$trim;

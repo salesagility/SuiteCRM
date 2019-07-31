@@ -42,8 +42,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once dirname(dirname(__FILE__)).'/SAML2Authenticate/lib/onelogin/php-saml/_toolkit_loader.php';
 require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
+
+/* Starting with 3.x php-saml switched to using namespaces. Create aliases
+ * to not break any existing code depending on the old class name. */
+$saml2_class_names = [
+    'Auth', 'AuthnRequest', 'Constants', 'Error', 'ValidationError',
+    'IdPMetadataParser', 'LogoutRequest', 'LogoutResponse', 'Metadata',
+    'Response', 'Settings', 'Utils',
+];
+foreach ($saml2_class_names as $name) {
+    class_alias("OneLogin\\Saml2\\" . $name, 'OneLogin_Saml2_' . $name);
+}
 
 /**
  * Class SAML2Authenticate for SAML2 auth

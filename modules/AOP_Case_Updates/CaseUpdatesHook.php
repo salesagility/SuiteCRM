@@ -66,7 +66,7 @@ class CaseUpdatesHook
         foreach ($_FILES['case_update_file'] as $key => $vals) {
             foreach ($vals as $index => $val) {
                 if (!array_key_exists('case_update_file' . $index, $_FILES)) {
-                    $_FILES['case_update_file' . $index] = array();
+                    $_FILES['case_update_file' . $index] = [];
                     ++$count;
                 }
                 $_FILES['case_update_file' . $index][$key] = $val;
@@ -458,12 +458,12 @@ class CaseUpdatesHook
     {
         global $app_strings, $sugar_config;
         //Order of beans seems to matter here so we place contact first.
-        $beans = array(
+        $beans = [
             'Contacts' => $contact->id,
-            'Cases'    => $bean->id,
-            'Users'    => $bean->assigned_user_id,
-        );
-        $ret = array();
+            'Cases' => $bean->id,
+            'Users' => $bean->assigned_user_id,
+        ];
+        $ret = [];
         $ret['subject'] = from_html(aop_parse_template($template->subject, $beans));
         $ret['body'] = from_html(
             $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] . aop_parse_template(
@@ -498,7 +498,7 @@ class CaseUpdatesHook
     {
         global $sugar_config;
         if (!array_key_exists('aop', $sugar_config)) {
-            return array();
+            return [];
         }
 
         return $sugar_config['aop'];
@@ -616,17 +616,20 @@ class CaseUpdatesHook
         if ($module === 'Import') {
             //Don't send email on import
             LoggerManager::getLogger()->warn("Don't send email on import");
+
             return;
         }
         if (!isAOPEnabled()) {
             LoggerManager::getLogger()->warn("Don't send email if AOP enabled");
+
             return;
         }
         if ($caseUpdate->internal) {
             LoggerManager::getLogger()->warn("Don't send email if case update is internal");
+
             return;
         }
-        $signature = array();
+        $signature = [];
         $addDelimiter = true;
         $aop_config = $sugar_config['aop'];
         if ($caseUpdate->assigned_user_id) {
@@ -637,7 +640,7 @@ class CaseUpdatesHook
             if ($email_template->id) {
                 foreach ($caseUpdate->getContacts() as $contact) {
                     $GLOBALS['log']->info('AOPCaseUpdates: Calling send email');
-                    $emails = array();
+                    $emails = [];
                     $emails[] = $contact->emailAddress->getPrimaryAddress($contact);
                     $caseUpdate->sendEmail(
                         $emails,
@@ -655,8 +658,8 @@ class CaseUpdatesHook
                 $email_template = $email_template->retrieve($aop_config['user_email_template_id']);
             }
             $addDelimiter = false;
-            if ($emails && $email_template) {
-                $GLOBALS['log']->info('AOPCaseUpdates: Calling send email');
+            if ($emails && $email_template->id) {
+                LoggerManager::getLogger()->info('AOPCaseUpdates: Calling send email');
                 $caseUpdate->sendEmail(
                     $emails,
                     $email_template,

@@ -232,7 +232,7 @@ class User extends Person implements EmailInterface
      * @throws \RuntimeException
      */
     public function getSignatures(
-    $live = false,
+        $live = false,
         $defaultSig = '',
         $forSettings = false,
         $elementId = 'signature_id',
@@ -268,7 +268,7 @@ class User extends Person implements EmailInterface
      * @throws \RuntimeException
      */
     public function getEmailAccountSignatures(
-    $live = false,
+        $live = false,
         $defaultSig = '',
         $forSettings = false,
         $elementId = 'account_signature_id',
@@ -373,7 +373,7 @@ class User extends Person implements EmailInterface
      * @param string $category Name of the category to retrieve
      */
     public function setPreference(
-    $name,
+        $name,
         $value,
         $nosession = 0,
         $category = 'global'
@@ -397,7 +397,7 @@ class User extends Person implements EmailInterface
      * @param string $category category to reset
      */
     public function resetPreferences(
-    $category = null
+        $category = null
     ) {
         // for BC
         if (func_num_args() > 1) {
@@ -467,7 +467,7 @@ class User extends Person implements EmailInterface
      * @return bool successful?
      */
     public function loadPreferences(
-    $category = 'global'
+        $category = 'global'
     ) {
         // for BC
         if (func_num_args() > 1) {
@@ -512,7 +512,7 @@ class User extends Person implements EmailInterface
      * @internal param bool $useRequestedRecord
      */
     public function getPreference(
-    $name,
+        $name,
         $category = 'global'
     ) {
         // for BC
@@ -728,8 +728,7 @@ class User extends Person implements EmailInterface
             $this->is_group = 0;
             $this->portal_only = 0;
 
-            if ((isset($_POST['is_admin']) && ($_POST['is_admin'] == 'on' || $_POST['is_admin'] == '1')) ||
-              (isset($_POST['UserType']) && $_POST['UserType'] == "Administrator")) {
+            if (is_admin($current_user) && ((isset($_POST['is_admin']) && ($_POST['is_admin'] === 'on' || $_POST['is_admin'] === '1')) || (isset($_POST['UserType']) && $_POST['UserType'] === 'Administrator'))) {
                 $this->is_admin = 1;
             } elseif (isset($_POST['is_admin']) && empty($_POST['is_admin'])) {
                 $this->is_admin = 0;
@@ -1400,7 +1399,7 @@ EOQ;
     }
 
     public function retrieve_user_id(
-    $user_name
+        $user_name
     ) {
         $userFocus = new User;
         $userFocus->retrieve_by_string_fields(array('user_name' => $user_name));
@@ -1795,7 +1794,7 @@ EOQ;
      * @param class
      */
     public function getEmailLink2(
-    $emailAddress,
+        $emailAddress,
         &$focus,
         $contact_id = '',
         $ret_module = '',
@@ -1858,7 +1857,7 @@ EOQ;
      * @param class
      */
     public function getEmailLink(
-    $attribute,
+        $attribute,
         &$focus,
         $contact_id = '',
         $ret_module = '',
@@ -2114,7 +2113,7 @@ EOQ;
     }
 
     public function create_new_list_query(
-    $order_by,
+        $order_by,
         $where,
         $filter = array(),
         $params = array(),

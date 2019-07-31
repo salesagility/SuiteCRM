@@ -348,7 +348,7 @@ class Note extends File
          */
         if (!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess(
             $this->parent_type,
-                'view',
+            'view',
             $is_owner,
             'module',
             $in_group

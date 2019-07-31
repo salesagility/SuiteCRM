@@ -1,4 +1,4 @@
-## SuiteCRM 7.10.18
+## SuiteCRM 7.10.19
 
 [![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=hotfix-7.10.x)](https://travis-ci.org/salesagility/SuiteCRM)
 [![codecov](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix/graph/badge.svg)](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix)
