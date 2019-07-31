@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $current_user;
 
 
-if(!isset($_POST['dashName'])){
+if (!isset($_POST['dashName'])) {
     $html  ='<form method="post" name="addpageform" id="addpageform" action="index.php?module=Home&action=AddDashboardPages"/>';
     $html .='<table>';
     $html .='<tr>';
@@ -65,10 +65,10 @@ if(!isset($_POST['dashName'])){
     $html .='</form>';
 
     echo $html;
-}else{
+} else {
     $type = 'Home';
 
-    $existingPages = $current_user->getPreference('pages',$type);
+    $existingPages = $current_user->getPreference('pages', $type);
     $dashboardPage = array();
     $numberColumns = $_POST['numColumns'];
     $pageName = $_POST['dashName'];
@@ -104,23 +104,23 @@ if(!isset($_POST['dashName'])){
     $dashboardPage['pageTitle'] = $pageName;
     $dashboardPage['numColumns'] = $numberColumns;
 
-    array_push($existingPages,$dashboardPage);
+    array_push($existingPages, $dashboardPage);
 
     $current_user->setPreference('pages', $existingPages, 0, $type);
 
     $display = array();
 
-    foreach($dashboardPage['columns'] as $colNum => $column)
+    foreach ($dashboardPage['columns'] as $colNum => $column) {
         $display[$colNum]['width'] = $column['width'];
+    }
 
     $home_mod_strings = return_module_language($current_language, $type);
 
     $sugar_smarty = new Sugar_Smarty();
     $sugar_smarty->assign('columns', $display);
     $sugar_smarty->assign('selectedPage', sizeof($pages) - 1);
-    $sugar_smarty->assign('mod',$home_mod_strings);
-    $sugar_smarty->assign('app',$GLOBALS['app_strings']);
+    $sugar_smarty->assign('mod', $home_mod_strings);
+    $sugar_smarty->assign('app', $GLOBALS['app_strings']);
     $sugar_smarty->assign('lblAddDashlets', $home_mod_strings['LBL_ADD_DASHLETS']);
     $sugar_smarty->assign('numCols', $dashboardPage['numColumns']);
-
 }

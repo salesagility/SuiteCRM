@@ -24,7 +24,8 @@ class SugarViewTest extends StateCheckerPHPUnitTestCaseAbstract
 //        $current_user = new User();
     }
     
-    protected function tearDown() {
+    protected function tearDown()
+    {
         $this->state->popGlobals();
         
         parent::tearDown();
@@ -185,6 +186,7 @@ class SugarViewTest extends StateCheckerPHPUnitTestCaseAbstract
         $state = new StateSaver();
         $state->pushTable('tracker');
         $state->pushGlobals();
+        $state->pushPHPConfigOptions();
 
         // test
         
@@ -209,7 +211,8 @@ class SugarViewTest extends StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
+
+        $state->popPHPConfigOptions();
         $state->popGlobals();
         $state->popTable('tracker');
     }

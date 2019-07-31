@@ -278,8 +278,16 @@ $dictionary['Campaign'] = array('audited' => true,
             'link_class' => 'ProspectLink',
             'link_file' => 'modules/Campaigns/ProspectLink.php'
         ),
+        'notes' =>
+            array(
+                'name' => 'notes',
+                'type' => 'link',
+                'relationship' => 'campaign_notes',
+                'source' => 'non-db',
+                'vname' => 'LBL_NOTES',
+            ),
 
-        "survey" => array (
+        "survey" => array(
                 'name' => 'survey',
                 'type' => 'link',
                 'relationship' => 'surveys_campaigns',
@@ -291,7 +299,7 @@ $dictionary['Campaign'] = array('audited' => true,
                 'link_type'=>'one',
                 'side' => 'left',
         ),
-        "survey_name" => array (
+        "survey_name" => array(
                 'name' => 'survey_name',
                 'type' => 'relate',
                 'source' => 'non-db',
@@ -303,13 +311,13 @@ $dictionary['Campaign'] = array('audited' => true,
                 'module' => 'Surveys',
                 'rname' => 'name',
         ),
-        "survey_id" => array (
+        "survey_id" => array(
                 'name' => 'survey_id',
                 'type' => 'id',
                 'reportable' => false,
                 'vname' => 'LBL_CAMPAIGN_SURVEYS',
         ),
-        "surveyresponses_campaigns" => array (
+        "surveyresponses_campaigns" => array(
                 'name' => 'surveyresponses_campaigns',
                 'type' => 'link',
                 'relationship' => 'surveyresponses_campaigns',
@@ -358,6 +366,11 @@ $dictionary['Campaign'] = array('audited' => true,
         'campaign_opportunities' => array('lhs_module' => 'Campaigns', 'lhs_table' => 'campaigns', 'lhs_key' => 'id',
             'rhs_module' => 'Opportunities', 'rhs_table' => 'opportunities', 'rhs_key' => 'campaign_id',
             'relationship_type' => 'one-to-many'),
+
+        'campaign_notes' => array('lhs_module' => 'Campaigns', 'lhs_table' => 'campaigns', 'lhs_key' => 'id',
+            'rhs_module' => 'Notes', 'rhs_table' => 'notes', 'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many', 'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'Campaigns'),
 
         'campaign_email_marketing' => array('lhs_module' => 'Campaigns', 'lhs_table' => 'campaigns', 'lhs_key' => 'id',
             'rhs_module' => 'EmailMarketing', 'rhs_table' => 'email_marketing', 'rhs_key' => 'campaign_id',

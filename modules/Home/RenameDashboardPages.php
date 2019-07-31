@@ -48,7 +48,6 @@ $pages = $current_user->getPreference('pages', $type);
 
 
 if (count($pages) > 1) {
-
     if (!isset($_POST['dashName'])) {
         $html = "<form method='post' name='removepageform'/>";
         $html .= "<table>";
@@ -61,9 +60,7 @@ if (count($pages) > 1) {
         $html .="</form>";
 
         echo $html;
-
     } else {
-
         $pages[$_POST['page_id']]['pageTitle'] = $_POST['dashName'];
 
         $current_user->setPreference('pages', $pages, 0, $type);
@@ -73,9 +70,8 @@ if (count($pages) > 1) {
             'page_id' => $_POST['page_id'],
         );
 
-       $return_params = json_encode($return_params,true);
+        $return_params = json_encode($return_params, true);
 
-       echo $return_params;
+        echo $return_params;
     }
-
 }

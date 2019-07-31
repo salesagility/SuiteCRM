@@ -270,6 +270,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
                 [
                     'mobile' => '9788363300',
                     'work' => '7111123512',
+                    'home' => '4451633872',
                 ],
             'address' => [
                 'primary' => [
@@ -546,7 +547,6 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
 
     public function testCreateIndexWithBody()
     {
-
         $index = 'test';
         $body = ["mappings" => ['my_type' => ['_source' => ['enabled' => true]]]];
         $params = ['index' => $index, 'body' => $body];

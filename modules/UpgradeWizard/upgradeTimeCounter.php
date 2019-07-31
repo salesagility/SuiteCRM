@@ -57,7 +57,7 @@ require_once('include/JSON.php');
 
 require_once('include/utils/db_utils.php');
 
-require_once('include/utils/zip_utils.php');
+require_once('include/utils/php_zip_utils.php');
 
 require_once('modules/UpgradeWizard/uw_utils.php');
 
@@ -67,7 +67,7 @@ $json = getJSONobj();
 /*
 $upgradeStepTime = $json->decode(html_entity_decode($_REQUEST['upgradeStepTime']));
 if(isset($tagdata['jsonObject']) && $tagdata['jsonObject'] != null){
-	$upgradeStepTime = $upgradeStepTime['jsonObject'];
+    $upgradeStepTime = $upgradeStepTime['jsonObject'];
  }
 
  if(!isset($_SESSION['totalUpgradeTime'])){
@@ -84,8 +84,8 @@ $GLOBALS['log']->fatal('TOTAL TIME .....'.$_SESSION['totalUpgradeTime']);
 
 
  if (!empty($response)) {
-    $json = getJSONobj();
-	print $json->encode($response);
+     $json = getJSONobj();
+     print $json->encode($response);
  }
 
 sugar_cleanup();

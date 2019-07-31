@@ -38,13 +38,11 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once('include/MVC/View/views/view.ajax.php');
 require_once('include/EditView/EditView2.php');
 
 
-class CalendarViewCreateInvitee extends SugarView 
+class CalendarViewCreateInvitee extends SugarView
 {
-   
     public function preDisplay()
     {
         global $beanFiles, $beanList;
@@ -94,4 +92,3 @@ class CalendarViewCreateInvitee extends SugarView
         sugar_cleanup(true);
     }
 }
-

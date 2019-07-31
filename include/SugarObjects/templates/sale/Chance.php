@@ -53,7 +53,6 @@ class Chance extends Basic
     public function __construct()
     {
         parent::__construct();
-
     }
 
     /**
@@ -71,5 +70,4 @@ class Chance extends Basic
         }
         self::__construct();
     }
-
 }

@@ -54,43 +54,45 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
-class EmptyRowRule extends BaseRule {
+class EmptyRowRule extends BaseRule
+{
+    public function __construct()
+    {
+    }
 
-function __construct() {
 
-}
+    public function parsePanels($panels, $view)
+    {
+        foreach ($panels as $name=>$panel) {
+            foreach ($panel as $rowCount=>$row) {
+                $emptyCount = 0;
 
+                foreach ($row as $key=>$column) {
+                    if (is_array($column) && (!isset($column['name']) || empty($column['name']))) {
+                        $emptyCount++;
+                    } else {
+                        if (!is_array($column) && (!isset($column) || empty($column))) {
+                            $emptyCount++;
+                        }
+                    }
+                } //foreach
 
-function parsePanels($panels, $view) {
-
-   foreach($panels as $name=>$panel) {
-
-   	  foreach($panel as $rowCount=>$row) {
-         $emptyCount = 0;
-
-   	  	 foreach($row as $key=>$column) {
-   	  	 	if(is_array($column) && (!isset($column['name']) || empty($column['name']))) {
-   	  	 	    $emptyCount++;
-   	  	 	} else if(!is_array($column) && (!isset($column) || empty($column))) {
-				$emptyCount++;
-   	  	 	}
-   	  	 } //foreach
-
-	  	 // If we have unset everything, then just remove the whole row entirely
-   	  	 if($emptyCount == count($row)) {
-   	  	 	unset($panels[$name][$rowCount]);
-   	  	 	continue;
-   	  	 } else if(count($row) > 2) {
-   	  	    foreach($row as $key=>$column) {
-   	  	        if(empty($column) || $column == '') {
-   	  	           unset($panels[$name][$rowCount][$key]);
-   	  	        }
-   	  	    }
-   	  	 }
-   	  } //foreach
-   } //foreach
+                // If we have unset everything, then just remove the whole row entirely
+                if ($emptyCount == count($row)) {
+                    unset($panels[$name][$rowCount]);
+                    continue;
+                } else {
+                    if (count($row) > 2) {
+                        foreach ($row as $key=>$column) {
+                            if (empty($column) || $column == '') {
+                                unset($panels[$name][$rowCount][$key]);
+                            }
+                        }
+                    }
+                }
+            } //foreach
+        } //foreach
 
    return $panels;
-}
-
+    }
 }

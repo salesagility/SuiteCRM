@@ -101,4 +101,3 @@ $mod_strings = array(
     'LBL_WIDTH' => 'Width Default',
     'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
 );
-

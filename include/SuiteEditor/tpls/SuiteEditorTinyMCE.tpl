@@ -39,7 +39,7 @@
 
 <!-- [TinyMCE Editor implementation] -->
 
-<script src='include/javascript/mozaik/vendor/tinymce/tinymce/tinymce.min.js'></script>
+<script src='vendor/tinymce/tinymce/tinymce.min.js'></script>
 <script>
 
     /**

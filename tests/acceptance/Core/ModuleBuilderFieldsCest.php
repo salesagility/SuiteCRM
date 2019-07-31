@@ -308,7 +308,7 @@ class ModuleBuilderFieldsCest
         $I->waitForElementVisible('#layoutEditor', 30);
 
         // Drag a new row into the last panel
-        $I->dragAndDrop('.le_row.special:not(#ygddfdiv)', '.le_panel:last-of-type' );
+        $I->dragAndDrop('.le_row.special:not(#ygddfdiv)', '.le_panel:last-of-type');
         $I->makeScreenshot('DnD.Row');
 
         // Drag field to

@@ -649,6 +649,7 @@ $mod_strings = array(
         'datetimecombo' => 'Datetime',
         'decimal' => 'Decimal',
         'image' => 'Image',
+        'wysiwyg' => 'WYSIWYG',
     ),
     'labelTypes' => array(
         "frequently_used" => "Frequently used labels",
@@ -662,4 +663,3 @@ $mod_strings = array(
     'LBL_ALL_MODULES' => 'All Modules',
     'LBL_RELATED_FIELD_ID_NAME_LABEL' => '{0} (related {1} ID)',
 );
-

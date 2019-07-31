@@ -49,14 +49,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-function get_configsettings_js() {
-	global $mod_strings;
-	global $app_strings;
+function get_configsettings_js()
+{
+    global $mod_strings;
+    global $app_strings;
 
-	$lbl_last_name = $mod_strings['LBL_NOTIFY_FROMADDRESS'];
-	$err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
+    $lbl_last_name = $mod_strings['LBL_NOTIFY_FROMADDRESS'];
+    $err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
 
-	return <<<EOQ
+    return <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 <!--  to hide script contents from old browsers

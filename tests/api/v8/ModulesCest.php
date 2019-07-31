@@ -261,16 +261,16 @@ class ModulesCest
         $I->loginAsAdmin();
     }
 
-     /**
-      * Create a existing entry
-      * @param ApiTester $I
-      * @see http://jsonapi.org/format/1.0/#crud-creating
-      *
-      * HTTP Verb: POST
-      * URL: /api/v8/modules/{module_name} (with id in $_POST)
-      * URL: /api/v8/modules/{module_name}/{id}
-      *
-      */
+    /**
+     * Create a existing entry
+     * @param ApiTester $I
+     * @see http://jsonapi.org/format/1.0/#crud-creating
+     *
+     * HTTP Verb: POST
+     * URL: /api/v8/modules/{module_name} (with id in $_POST)
+     * URL: /api/v8/modules/{module_name}/{id}
+     *
+     */
     public function TestScenarioCreateExisting(ApiTester $I)
     {
         $faker = \Faker\Factory::create();

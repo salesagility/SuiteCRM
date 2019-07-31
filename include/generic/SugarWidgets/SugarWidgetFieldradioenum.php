@@ -43,6 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-class SugarWidgetFieldRadioEnum extends SugarWidgetFieldEnum {
-
+class SugarWidgetFieldRadioEnum extends SugarWidgetFieldEnum
+{
 }

@@ -11,6 +11,21 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $current_user = new User();
     }
 
+    public function testaddDomainToRelativeImagesSrc()
+    {
+        global $sugar_config;
+
+        $template = new EmailTemplate();
+        $html = '<img style="font-family:Arial, Helvetica, sans-serif;font-size:14px;line-height:22.4px;color:#444444;padding:0px;margin:0px;" src="public/c1270a2d-a083-495e-7c61-5c8a9046ec0d.png" alt="c1270a2d-a083-495e-7c61-5c8a9046ec0d.png" width="267" height="200">';
+        $template->body_html = to_html($html);
+        $sugar_config['site_url'] = 'https://foobar.com';
+
+        $template->addDomainToRelativeImagesSrc();
+
+        $result = from_html($template->body_html);
+        $this->assertContains('src="https://foobar.com/public/c1270a2d-a083-495e-7c61-5c8a9046ec0d.png" alt="c1270a2d-a083-495e-7c61-5c8a9046ec0d.png"', $result);
+    }
+
     public function testEmailTemplate()
     {
 
@@ -126,6 +141,45 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('Administrator', $emailTemplate->modified_by_name);
         $this->assertEquals('Administrator', $emailTemplate->assigned_user_name);
         $this->assertEquals('some html text', $emailTemplate->body);
+    }
+
+    public function testfill_in_additional_detail_fields_body_to_text()
+    {
+        // simple examples
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->body_html = htmlentities('<h1>Hello</h1><br><a href="https://suitecrm.com">text</b>');
+        $emailTemplate->fill_in_additional_detail_fields();
+        $this->assertEquals("Hello\n\n[text](https://suitecrm.com)", $emailTemplate->body);
+
+        // entities and tags
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->body_html = htmlentities('&#60;a&#62;<b>');
+        $emailTemplate->fill_in_additional_detail_fields();
+        $this->assertEquals("<a>", $emailTemplate->body);
+
+        // invalid html
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->body_html = htmlentities('foo<bar');
+        $emailTemplate->fill_in_additional_detail_fields();
+        $this->assertEquals("foo", $emailTemplate->body);
+
+        // variables
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->body_html = htmlentities('Hello <b>$foo</b>bar');
+        $emailTemplate->fill_in_additional_detail_fields();
+        $this->assertEquals('Hello $foo bar', $emailTemplate->body);
+
+        // variables in URLs (opt-in confirmation emails etc)
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->body_html = htmlentities('<a href="$url/index.php?foo=$bar&quux=$baz">text</a>');
+        $emailTemplate->fill_in_additional_detail_fields();
+        $this->assertEquals('[text]($url/index.php?foo=$bar&quux=$baz)', $emailTemplate->body);
+
+        // decoding latin-1 html
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->body_html = htmlentities('<meta charset="ISO-8859-1">' . "\xe4", ENT_QUOTES, "ISO-8859-1");
+        $emailTemplate->fill_in_additional_detail_fields();
+        $this->assertEquals("\xc3\xa4", $emailTemplate->body);
     }
 
     public function testfill_in_additional_parent_fields()

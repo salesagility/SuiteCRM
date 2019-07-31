@@ -33,7 +33,7 @@ class UsersCest
         $this->fakeDataSeed = rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
-    
+  
     public function testEmailSettingsMailAccountAdd(AcceptanceTester $I, UsersTester $Users, WebDriverHelper $webDriverHelper)
     {
         $instanceUrl = $webDriverHelper->getInstanceURL();
@@ -50,7 +50,7 @@ class UsersCest
         $I->fillField('email_user', 'testuser_name');
         $I->fillField('email_password', 'testuser_pass');
         $I->click('Test Settings');
-        $I->wait(10);
+        $I->wait(20);
         $I->see('Connection completed successfully.');
     }
 

@@ -1,31 +1,34 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-require_once('include/MVC/View/views/view.edit.php');
 
-class AOS_Product_CategoriesViewEdit extends ViewEdit {
-    function __construct(){
+class AOS_Product_CategoriesViewEdit extends ViewEdit
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Product_CategoriesViewEdit(){
+    public function AOS_Product_CategoriesViewEdit()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    function display(){
-        parent::display();
-        ?>
+    public function display()
+    {
+        parent::display(); ?>
         <script>
             function update_parent_display(){
                 var name_elem = document.getElementById("parent_category_name");

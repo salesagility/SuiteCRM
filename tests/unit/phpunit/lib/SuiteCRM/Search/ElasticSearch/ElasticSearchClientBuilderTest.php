@@ -43,7 +43,6 @@ use SuiteCRM\StateSaver;
 
 class ElasticSearchClientBuilderTest extends SearchTestAbstract
 {
-
     public function testGetClient()
     {
         $client = ElasticSearchClientBuilder::getClient();
@@ -271,7 +270,6 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
 
     public function testUrlParserBadUrls()
     {
-
         $url1 = ['host' => 'http:///example.com'];
         $url2 = ['host' => 'http://:80'];
         $url3 = ['host' => 'http://user@:80'];
@@ -294,5 +292,4 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
         } catch (InvalidArgumentException $e) {
         }
     }
-
 }

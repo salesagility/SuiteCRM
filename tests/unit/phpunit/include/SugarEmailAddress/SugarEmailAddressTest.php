@@ -742,9 +742,8 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testPopulateAddresses()
     {
-        if (!empty($_REQUEST)) {
-            $req = $_REQUEST;
-        }
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
 
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
@@ -962,11 +961,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $GLOBALS['log'] = $logger;
 
-        if (!empty($req)) {
-            $_REQUEST = $req;
-        } else {
-            unset($_REQUEST);
-        }
+        $state->popGlobals();
     }
 
     /**
@@ -1842,7 +1837,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testGetEmailAddressWidgetDuplicatesView()
     {
 //        self::markTestIncomplete('environment dependecy in test');
-//        
+//
 //        $logger = $GLOBALS['log'];
 //        $GLOBALS['log'] = new TestLogger();
 //
@@ -2171,7 +2166,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testGetEmailAddressWidget()
     {
 //        self::markTestIncomplete('environment dependecy in test');
-//        
+//
 //        $query = "SELECT * FROM accounts_cstm";
 //        $resource = DBManagerFactory::getInstance()->query($query);
 //        $rows = [];
@@ -2179,8 +2174,8 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //            $rows[] = $row;
 //        }
 //        $tableAccountsCstm = $rows;
-//        
-//        
+//
+//
 //        // test
 //        $c = BeanFactory::getBean('Contacts');
 //        $c->id = 'test_contact_1';
@@ -2227,10 +2222,10 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //
 //        // test
 //        $GLOBALS['log'] = $logger;
-//        
-//        
+//
+//
 //        // clean up
-//        
+//
 //        DBManagerFactory::getInstance()->query("DELETE FROM accounts_cstm");
 //        foreach ($tableAccountsCstm as $row) {
 //            $query = "INSERT accounts_cstm INTO (";
@@ -2248,13 +2243,13 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 //        self::markTestIncomplete('COI_STAT_CONFIRMED_OPT_IN');
 //        // store state
-//        
+//
 //        $state = new SuiteCRM\StateSaver();
 //        $state->pushGlobals();
 //        $state->pushTable('email_addresses');
-//        
+//
 //        // test
-//        
+//
 //
 //        global $sugar_config;
 //
@@ -2460,9 +2455,9 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //            SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED,
 //            $emailAddress->getOptInStatus()
 //        );
-//        
+//
 //        // clean up
-//        
+//
 //        $state->popTable('email_addresses');
 //        $state->popGlobals();
     }

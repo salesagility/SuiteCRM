@@ -38,7 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
 require_once('modules/AOS_PDF_Templates/templateParser.php');
 require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates.php');
 
@@ -46,7 +45,7 @@ global $sugar_config, $current_user;
 
 $bean = BeanFactory::getBean($_REQUEST['module']);
 
-if(!$bean){
+if (!$bean) {
     sugar_die("Invalid Module");
 }
 
@@ -69,9 +68,9 @@ if (isset($_REQUEST['current_post']) && $_REQUEST['current_post'] != '') {
 }
 
 
-$template = BeanFactory::getBean('AOS_PDF_Templates',$_REQUEST['templateID']);
+$template = BeanFactory::getBean('AOS_PDF_Templates', $_REQUEST['templateID']);
 
-if(!$template){
+if (!$template) {
     sugar_die("Invalid Template");
 }
 
@@ -117,11 +116,13 @@ foreach ($recordIds as $recordId) {
     );
 
     $text = preg_replace($search, $replace, $template->description);
-    $text = preg_replace_callback('/\{DATE\s+(.*?)\}/',
+    $text = preg_replace_callback(
+        '/\{DATE\s+(.*?)\}/',
         function ($matches) {
             return date($matches[1]);
         },
-        $text);
+        $text
+    );
     $header = preg_replace($search, $replace, $template->pdfheader);
     $footer = preg_replace($search, $replace, $template->pdffooter);
 
@@ -151,7 +152,7 @@ foreach ($recordIds as $recordId) {
         $fp = fopen($sugar_config['upload_dir'] . 'nfile.pdf', 'wb');
         fclose($fp);
 
-        $pdf_history->SetAutoFont();
+        $pdf_history->autoLangToFont = true;
         $pdf_history->SetHTMLHeader($header);
         $pdf_history->SetHTMLFooter($footer);
         $pdf_history->WriteHTML($printable);
@@ -159,13 +160,12 @@ foreach ($recordIds as $recordId) {
 
         $pdf->SetHTMLHeader($header);
         $pdf->AddPage();
-        $pdf->setAutoFont();
+        $pdf->autoLangToFont = true;
         $pdf->SetHTMLFooter($footer);
         $pdf->writeHTML($printable);
 
         rename($sugar_config['upload_dir'] . 'nfile.pdf', $sugar_config['upload_dir'] . $note->id);
-
-    } catch (mPDF_exception $e) {
+    } catch (MpdfException $e) {
         echo $e;
     }
 }

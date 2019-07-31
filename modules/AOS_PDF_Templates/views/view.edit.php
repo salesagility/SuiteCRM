@@ -1,35 +1,40 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-require_once('include/MVC/View/views/view.edit.php');
 
-class AOS_PDF_TemplatesViewEdit extends ViewEdit {
-    function __construct(){
+class AOS_PDF_TemplatesViewEdit extends ViewEdit
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_PDF_TemplatesViewEdit(){
+    public function AOS_PDF_TemplatesViewEdit()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    function display(){
+    public function display()
+    {
         $this->setFields();
         parent::display();
         $this->displayTMCE();
     }
 
-    function setFields(){
+    public function setFields()
+    {
         global $app_list_strings, $mod_strings, $beanList;
 
         //Loading Sample Files
@@ -38,9 +43,9 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit {
         if ($handle = opendir('modules/AOS_PDF_Templates/samples')) {
             $sample_options_array[] = ' ';
             while (false !== ($file = readdir($handle))) {
-                if($value = ltrim(rtrim($file,'.php'),'smpl_')){
+                if ($value = ltrim(rtrim($file, '.php'), 'smpl_')) {
                     require_once('modules/AOS_PDF_Templates/samples/'.$file);
-                    $file = rtrim($file,'.php');
+                    $file = rtrim($file, '.php');
                     $file = new $file();
                     $fileArray =
                         array(
@@ -54,11 +59,11 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit {
                     $sample_options_array[$fileArray] = $value;
                 }
             }
-            $samples = get_select_options($sample_options_array,'');
+            $samples = get_select_options($sample_options_array, '');
             closedir($handle);
         }
 
-        $this->ss->assign('CUSTOM_SAMPLE','<select id="sample" name="sample" onchange="insertSample(this.options[this.selectedIndex].value)">'.
+        $this->ss->assign('CUSTOM_SAMPLE', '<select id="sample" name="sample" onchange="insertSample(this.options[this.selectedIndex].value)">'.
             $samples.
             '</select>');
 
@@ -67,54 +72,50 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit {
         $insert_fields_js2 ="<script>var regularOptions = {\n";
         $modules = $app_list_strings['pdf_template_type_dom'];
 
-        foreach($modules as $moduleName => $value) {
-
+        foreach ($modules as $moduleName => $value) {
             $options_array = array(''=>'');
             $mod_options_array = array();
 
             //Getting Fields
-            if(!$beanList[$moduleName]){
+            if (!$beanList[$moduleName]) {
                 continue;
             }
             $module = new $beanList[$moduleName]();
 
-            foreach($module->field_defs as $name => $arr){
-                if(!((isset($arr['dbType']) && strtolower($arr['dbType']) == 'id') || (isset($arr['type']) && $arr['type'] == 'id') || (isset($arr['type']) && $arr['type'] == 'link'))){
-                    if(!isset($arr['reportable']) || $arr['reportable']){
-                        $options_array['$'.$module->table_name.'_'.$name] = translate($arr['vname'],$module->module_dir);
-
+            foreach ($module->field_defs as $name => $arr) {
+                if (!((isset($arr['dbType']) && strtolower($arr['dbType']) == 'id') || (isset($arr['type']) && $arr['type'] == 'id') || (isset($arr['type']) && $arr['type'] == 'link'))) {
+                    if (!isset($arr['reportable']) || $arr['reportable']) {
+                        $options_array['$'.$module->table_name.'_'.$name] = translate($arr['vname'], $module->module_dir);
                     }
                 }
             } //End loop.
 
             $options = json_encode($options_array);
-            $mod_options_array[$module->module_dir] = translate('LBL_MODULE_NAME',$module->module_dir);
+            $mod_options_array[$module->module_dir] = translate('LBL_MODULE_NAME', $module->module_dir);
             $insert_fields_js2 .="'$moduleName':$options,\n";
             $firstOptions = $options;
 
             $fmod_options_array = array();
-            foreach($module->field_defs as $module_name => $module_arr){
-
-                if(isset($module_arr['type']) && $module_arr['type'] == 'relate' && isset($module_arr['source']) && $module_arr['source'] == 'non-db'){
-
+            foreach ($module->field_defs as $module_name => $module_arr) {
+                if (isset($module_arr['type']) && $module_arr['type'] == 'relate' && isset($module_arr['source']) && $module_arr['source'] == 'non-db') {
                     $options_array = array(''=>'');
-                    if(isset($module_arr['module']) &&  $module_arr['module'] != '' && $module_arr['module'] != 'EmailAddress'){
+                    if (isset($module_arr['module']) &&  $module_arr['module'] != '' && $module_arr['module'] != 'EmailAddress') {
                         $relate_module_name = $beanList[$module_arr['module']];
                         $relate_module = new $relate_module_name();
 
-                        foreach($relate_module->field_defs as $relate_name => $relate_arr){
-                            if(!((isset($relate_arr['dbType']) && strtolower($relate_arr['dbType']) == 'id') || $relate_arr['type'] == 'id' || $relate_arr['type'] == 'link')){
-                                if((!isset($relate_arr['reportable']) || $relate_arr['reportable']) && isset($relate_arr['vname'])){
-                                    $options_array['$'.$module_arr['name'].'_'.$relate_name] = translate($relate_arr['vname'],$relate_module->module_dir);
+                        foreach ($relate_module->field_defs as $relate_name => $relate_arr) {
+                            if (!((isset($relate_arr['dbType']) && strtolower($relate_arr['dbType']) == 'id') || $relate_arr['type'] == 'id' || $relate_arr['type'] == 'link')) {
+                                if ((!isset($relate_arr['reportable']) || $relate_arr['reportable']) && isset($relate_arr['vname'])) {
+                                    $options_array['$'.$module_arr['name'].'_'.$relate_name] = translate($relate_arr['vname'], $relate_module->module_dir);
                                 }
                             }
                         } //End loop.
 
                         $options = json_encode($options_array);
 
-                        if($module_arr['vname'] != 'LBL_DELETED'){
-                            $options_array['$'.$module->table_name.'_'.$name] = translate($module_arr['vname'],$module->module_dir);
-                            $fmod_options_array[$module_arr['vname']] = translate($relate_module->module_dir).' : '.translate($module_arr['vname'],$module->module_dir);
+                        if ($module_arr['vname'] != 'LBL_DELETED') {
+                            $options_array['$'.$module->table_name.'_'.$name] = translate($module_arr['vname'], $module->module_dir);
+                            $fmod_options_array[$module_arr['vname']] = translate($relate_module->module_dir).' : '.translate($module_arr['vname'], $module->module_dir);
                         }
                         $test = $module_arr['vname'];
                         $insert_fields_js2 .="'$test':$options,\n";
@@ -123,15 +124,15 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit {
             }
 
             //LINE ITEMS CODE!
-            if(isset($module->lineItems) && $module->lineItems){
+            if (isset($module->lineItems) && $module->lineItems) {
 
                 //add group fields
                 $options_array = array(''=>'');
                 $group_quote = new AOS_Line_Item_Groups();
-                foreach($group_quote->field_defs as $line_name => $line_arr){
-                    if(!((isset($line_arr['dbType']) && strtolower($line_arr['dbType']) == 'id') || $line_arr['type'] == 'id' || $line_arr['type'] == 'link')){
-                        if((!isset($line_arr['reportable']) || $line_arr['reportable']) ){//&& $line_arr['vname']  != 'LBL_NAME'
-                            $options_array['$'.$group_quote->table_name.'_'.$line_name] = translate($line_arr['vname'],$group_quote->module_dir);
+                foreach ($group_quote->field_defs as $line_name => $line_arr) {
+                    if (!((isset($line_arr['dbType']) && strtolower($line_arr['dbType']) == 'id') || $line_arr['type'] == 'id' || $line_arr['type'] == 'link')) {
+                        if ((!isset($line_arr['reportable']) || $line_arr['reportable'])) {//&& $line_arr['vname']  != 'LBL_NAME'
+                            $options_array['$'.$group_quote->table_name.'_'.$line_name] = translate($line_arr['vname'], $group_quote->module_dir);
                         }
                     }
                 }
@@ -139,26 +140,26 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit {
                 $options = json_encode($options_array);
 
                 $line_module_name = $beanList['AOS_Line_Item_Groups'];
-                $fmod_options_array[$line_module_name] = translate('LBL_LINE_ITEMS','AOS_Quotes').' : '.translate('LBL_MODULE_NAME','AOS_Line_Item_Groups');
+                $fmod_options_array[$line_module_name] = translate('LBL_LINE_ITEMS', 'AOS_Quotes').' : '.translate('LBL_MODULE_NAME', 'AOS_Line_Item_Groups');
                 $insert_fields_js2 .="'$line_module_name':$options,\n";
 
                 //PRODUCTS
                 $options_array = array(''=>'');
 
                 $product_quote = new AOS_Products_Quotes();
-                foreach($product_quote->field_defs as $line_name => $line_arr){
-                    if(!((isset($line_arr['dbType']) && strtolower($line_arr['dbType']) == 'id') || $line_arr['type'] == 'id' || $line_arr['type'] == 'link')){
-                        if(!isset($line_arr['reportable']) || $line_arr['reportable']){
-                            $options_array['$'.$product_quote->table_name.'_'.$line_name] = translate($line_arr['vname'],$product_quote->module_dir);
+                foreach ($product_quote->field_defs as $line_name => $line_arr) {
+                    if (!((isset($line_arr['dbType']) && strtolower($line_arr['dbType']) == 'id') || $line_arr['type'] == 'id' || $line_arr['type'] == 'link')) {
+                        if (!isset($line_arr['reportable']) || $line_arr['reportable']) {
+                            $options_array['$'.$product_quote->table_name.'_'.$line_name] = translate($line_arr['vname'], $product_quote->module_dir);
                         }
                     }
                 }
 
                 $product_quote = new AOS_Products();
-                foreach($product_quote->field_defs as $line_name => $line_arr){
-                    if(!((isset($line_arr['dbType']) && strtolower($line_arr['dbType']) == 'id') || $line_arr['type'] == 'id' || $line_arr['type'] == 'link')){
-                        if((!isset($line_arr['reportable']) || $line_arr['reportable']) && $line_arr['vname']  != 'LBL_NAME'){
-                            $options_array['$'.$product_quote->table_name.'_'.$line_name] = translate($line_arr['vname'],$product_quote->module_dir);
+                foreach ($product_quote->field_defs as $line_name => $line_arr) {
+                    if (!((isset($line_arr['dbType']) && strtolower($line_arr['dbType']) == 'id') || $line_arr['type'] == 'id' || $line_arr['type'] == 'link')) {
+                        if ((!isset($line_arr['reportable']) || $line_arr['reportable']) && $line_arr['vname']  != 'LBL_NAME') {
+                            $options_array['$'.$product_quote->table_name.'_'.$line_name] = translate($line_arr['vname'], $product_quote->module_dir);
                         }
                     }
                 }
@@ -166,42 +167,41 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit {
                 $options = json_encode($options_array);
 
                 $line_module_name = $beanList['AOS_Products_Quotes'];
-                $fmod_options_array[$line_module_name] = translate('LBL_LINE_ITEMS','AOS_Quotes').' : '.translate('LBL_MODULE_NAME','AOS_Products');
+                $fmod_options_array[$line_module_name] = translate('LBL_LINE_ITEMS', 'AOS_Quotes').' : '.translate('LBL_MODULE_NAME', 'AOS_Products');
                 $insert_fields_js2 .="'$line_module_name':$options,\n";
 
                 //Services
                 $options_array = array(''=>'');
-                $options_array['$aos_services_quotes_name'] = translate('LBL_SERVICE_NAME','AOS_Quotes');
-                $options_array['$aos_services_quotes_number'] = translate('LBL_LIST_NUM','AOS_Products_Quotes');
-                $options_array['$aos_services_quotes_service_list_price'] = translate('LBL_SERVICE_LIST_PRICE','AOS_Quotes');
-                $options_array['$aos_services_quotes_service_discount'] = translate('LBL_SERVICE_DISCOUNT','AOS_Quotes');
-                $options_array['$aos_services_quotes_service_unit_price'] = translate('LBL_SERVICE_PRICE','AOS_Quotes');
-                $options_array['$aos_services_quotes_vat_amt'] = translate('LBL_VAT_AMT','AOS_Quotes');
-                $options_array['$aos_services_quotes_vat'] = translate('LBL_VAT','AOS_Quotes');
-                $options_array['$aos_services_quotes_service_total_price'] = translate('LBL_TOTAL_PRICE','AOS_Quotes');
+                $options_array['$aos_services_quotes_name'] = translate('LBL_SERVICE_NAME', 'AOS_Quotes');
+                $options_array['$aos_services_quotes_number'] = translate('LBL_LIST_NUM', 'AOS_Products_Quotes');
+                $options_array['$aos_services_quotes_service_list_price'] = translate('LBL_SERVICE_LIST_PRICE', 'AOS_Quotes');
+                $options_array['$aos_services_quotes_service_discount'] = translate('LBL_SERVICE_DISCOUNT', 'AOS_Quotes');
+                $options_array['$aos_services_quotes_service_unit_price'] = translate('LBL_SERVICE_PRICE', 'AOS_Quotes');
+                $options_array['$aos_services_quotes_vat_amt'] = translate('LBL_VAT_AMT', 'AOS_Quotes');
+                $options_array['$aos_services_quotes_vat'] = translate('LBL_VAT', 'AOS_Quotes');
+                $options_array['$aos_services_quotes_service_total_price'] = translate('LBL_TOTAL_PRICE', 'AOS_Quotes');
 
                 $options = json_encode($options_array);
 
                 $s_line_module_name = 'AOS_Service_Quotes';
-                $fmod_options_array[$s_line_module_name] = translate('LBL_LINE_ITEMS','AOS_Quotes').' : '.translate('LBL_SERVICE_MODULE_NAME','AOS_Products_Quotes');
+                $fmod_options_array[$s_line_module_name] = translate('LBL_LINE_ITEMS', 'AOS_Quotes').' : '.translate('LBL_SERVICE_MODULE_NAME', 'AOS_Products_Quotes');
                 $insert_fields_js2 .="'$s_line_module_name':$options,\n";
 
 
                 $options_array = array(''=>'');
                 $currencies = new currency();
-                foreach($currencies->field_defs as $name => $arr){
-                    if(!((isset($arr['dbType']) && strtolower($arr['dbType']) == 'id') || $arr['type'] == 'id' || $arr['type'] == 'link' || $arr['type'] == 'bool' || $arr['type'] == 'datetime' || (isset($arr['link_type']) && $arr['link_type'] == 'relationship_info'))){
-                        if(isset($arr['vname']) && $arr['vname'] != 'LBL_DELETED' && $arr['vname'] != 'LBL_CURRENCIES_HASH' && $arr['vname'] != 'LBL_LIST_ACCEPT_STATUS' && $arr['vname'] != 'LBL_AUTHENTICATE_ID' && $arr['vname'] != 'LBL_MODIFIED_BY' && $arr['name'] != 'created_by_name'){
-                            $options_array['$currencies_'.$name] = translate($arr['vname'],'Currencies');
+                foreach ($currencies->field_defs as $name => $arr) {
+                    if (!((isset($arr['dbType']) && strtolower($arr['dbType']) == 'id') || $arr['type'] == 'id' || $arr['type'] == 'link' || $arr['type'] == 'bool' || $arr['type'] == 'datetime' || (isset($arr['link_type']) && $arr['link_type'] == 'relationship_info'))) {
+                        if (isset($arr['vname']) && $arr['vname'] != 'LBL_DELETED' && $arr['vname'] != 'LBL_CURRENCIES_HASH' && $arr['vname'] != 'LBL_LIST_ACCEPT_STATUS' && $arr['vname'] != 'LBL_AUTHENTICATE_ID' && $arr['vname'] != 'LBL_MODIFIED_BY' && $arr['name'] != 'created_by_name') {
+                            $options_array['$currencies_'.$name] = translate($arr['vname'], 'Currencies');
                         }
                     }
                 }
                 $options = json_encode($options_array);
 
                 $line_module_name = $beanList['Currencies'];
-                $fmod_options_array[$line_module_name] = translate('LBL_MODULE_NAME','Currencies').' : '.translate('LBL_MODULE_NAME','Currencies');
+                $fmod_options_array[$line_module_name] = translate('LBL_MODULE_NAME', 'Currencies').' : '.translate('LBL_MODULE_NAME', 'Currencies');
                 $insert_fields_js2 .="'$line_module_name':$options,\n";
-
             }
             array_multisort($fmod_options_array, SORT_ASC, $fmod_options_array);
             $mod_options_array = array_merge($mod_options_array, $fmod_options_array);
@@ -216,9 +216,9 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit {
         $insert_fields_js .= "} ;</script>";
         $insert_fields_js2 .= "} ;</script>";
         //echo $this->bean->type;
-        if($this->bean->type=='') {
+        if ($this->bean->type=='') {
             $type = key($app_list_strings['pdf_template_type_dom']);
-        }else{
+        } else {
             $type = $this->bean->type;
         }
 
@@ -241,10 +241,11 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit {
 
 HTML;
 
-        $this->ss->assign('INSERT_FIELDS',$insert_fields);
+        $this->ss->assign('INSERT_FIELDS', $insert_fields);
     }
 
-    function displayTMCE(){
+    public function displayTMCE()
+    {
         require_once("include/SugarTinyMCE.php");
         global $locale;
 
@@ -311,5 +312,4 @@ HTML;
 JS;
         echo $js;
     }
-
 }
