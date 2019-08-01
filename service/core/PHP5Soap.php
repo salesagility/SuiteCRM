@@ -39,7 +39,6 @@
 
 <?php
 require('service/core/SugarSoapService.php');
-require('include/nusoap/nusoap.php');
 
 abstract class PHP5Soap extends SugarSoapService
 {

@@ -42,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 require_once('include/connectors/sources/default/source.php');
-require_once('include/nusoap/nusoap.php');
 
 /**
  * ext_soap
