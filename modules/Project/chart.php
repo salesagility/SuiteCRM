@@ -68,7 +68,8 @@ class chart
 
     public function draw($start_date, $end_date, $sel_projects, $sel_users, $sel_contacts, $resources, $chart_type)
     {
-        global $current_user, $db, $mod_strings;
+        global $current_user, $mod_strings;
+        $db = DBManagerFactory::getInstance();
 
         if ($chart_type == "monthly") {
             list($time_span, $day_count) = $this->year_week($start_date, $end_date);

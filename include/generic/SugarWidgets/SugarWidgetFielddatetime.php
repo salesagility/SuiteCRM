@@ -726,8 +726,8 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $column = $this->_get_column_select($layout_def);
         return $this->reporter->db->convert(
             $this->reporter->db->convert($column, "date_format", array('%Y')),
-                'CONCAT',
-                array("'-'", $this->reporter->db->convert($column, "quarter"))
+            'CONCAT',
+            array("'-'", $this->reporter->db->convert($column, "quarter"))
         )
             ." ".$this->_get_column_alias($layout_def)."\n";
     }
@@ -747,8 +747,8 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $column = $this->_get_column_select($layout_def);
         return $this->reporter->db->convert(
             $this->reporter->db->convert($column, "date_format", array('%Y')),
-                'CONCAT',
-                array("'-'", $this->reporter->db->convert($column, "quarter"))
+            'CONCAT',
+            array("'-'", $this->reporter->db->convert($column, "quarter"))
         );
     }
 

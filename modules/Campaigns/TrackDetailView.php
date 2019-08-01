@@ -227,8 +227,10 @@ $chart= new campaign_charts();
 //custom chart code
     require_once('include/SugarCharts/SugarChartFactory.php');
     $sugarChart = SugarChartFactory::getInstance();
-    $resources = $sugarChart->getChartResources();
-    $smarty->assign('chartResources', $resources);
+    if ($sugarChart) {
+        $resources = $sugarChart->getChartResources();
+        $smarty->assign('chartResources', $resources);
+    }
 
 echo $smarty->fetch('modules/Campaigns/TrackDetailView.tpl');
 

@@ -358,8 +358,11 @@ class StateSaver
     public function popTable($table, $namespace = 'db_table')
     {
         $rows = $this->pop($table, $namespace);
-        
-        DBManagerFactory::getInstance()->query("TRUNCATE TABLE " . DBManagerFactory::getInstance()->quote($table));
+
+        $db = DBManagerFactory::getInstance();
+        if (!$db->query("TRUNCATE TABLE " . $db->quote($table))) {
+            throw new StateSaverException('Truncate failed for table: ' . $table);
+        }
         
         if (!is_array($rows)) {
             throw new StateSaverException('Table information is not an array. Are you sure you pushed this table "' . $table . '" previously?');
@@ -369,10 +372,12 @@ class StateSaver
             $query .= (implode(', ', array_keys($row)) . ') VALUES (');
             $quoteds = [];
             foreach ($row as $value) {
-                $quoteds[] = (null === $value) ? 'NULL' : "'$value'";
+                $quoteds[] = (null === $value) ? 'NULL' : $db->quoted($value);
             }
             $query .= (implode(', ', $quoteds)) . ')';
-            DBManagerFactory::getInstance()->query($query);
+            if (!$db->query($query)) {
+                throw new StateSaverException('Restore failed for table: ' . $table);
+            }
         }
         
         return $rows;

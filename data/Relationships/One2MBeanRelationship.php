@@ -116,7 +116,7 @@ class One2MBeanRelationship extends One2MRelationship
         if (empty($GLOBALS['resavingRelatedBeans'])) {
             SugarRelationship::resaveRelatedBeans();
         }
-        
+
         return true;
     }
 
@@ -261,7 +261,13 @@ class One2MBeanRelationship extends One2MRelationship
             $order_by = $relatedSeed->process_order_by($params['order_by']);
         }
 
-        $from = $this->def['rhs_table'];
+        $from = $rhsTable;
+        if (!empty($params['where']) || !empty($params['order_by'])) {
+            if (isset($relatedSeed->custom_fields)) {
+                $customJoin = $relatedSeed->getCustomJoin();
+                $from .= $customJoin['join'];
+            }
+        }
 
         if (empty($params['return_as_array'])) {
             //Limit is not compatible with return_as_array
@@ -274,14 +280,13 @@ class One2MBeanRelationship extends One2MRelationship
                 $query = DBManagerFactory::getInstance()->limitQuery($query, $offset, $params['limit'], false, "", false);
             }
             return $query;
-        } else {
-            return array(
-                    'select' => "SELECT {$this->def['rhs_table']}.id",
-                    'from' => "FROM {$this->def['rhs_table']}",
+        }
+        return array(
+                    'select' => "SELECT {$rhsTable}.id",
+                    'from' => "FROM $from",
                     'where' => $where,
                     'order_by' => $order_by
                 );
-        }
     }
 
     public function getJoin($link, $params = array(), $return_array = false)
@@ -405,8 +410,7 @@ class One2MBeanRelationship extends One2MRelationship
     {
         if (isset($this->def['table'])) {
             return $this->def['table'];
-        } else {
-            return $this->def['rhs_table'];
         }
+        return $this->def['rhs_table'];
     }
 }

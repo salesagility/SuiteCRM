@@ -336,7 +336,8 @@ class Project extends SugarBean
 
     public function save($check_notify = false)
     {
-        global $current_user, $db;
+        global $current_user;
+        $db = DBManagerFactory::getInstance();
         $focus = $this;
 
         //--- check if project template is same or changed.

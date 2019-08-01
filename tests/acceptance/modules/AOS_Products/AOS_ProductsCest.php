@@ -30,26 +30,18 @@ class ProductsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Products $products
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the products module.
      */
     public function testScenarioViewProductsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Products $products,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the products module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to products list-view
         $I->loginAsAdmin();
-        $products->gotoProducts();
+        $I->visitPage('AOS_Products', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Products', '.module-title-text');
@@ -60,7 +52,6 @@ class ProductsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Products $product
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a product so that I can test
      * the standard fields.
@@ -69,18 +60,13 @@ class ProductsCest
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Products $product,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Products $product
     ) {
         $I->wantTo('Create a product');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to products list-view
         $I->loginAsAdmin();
-        $product->gotoProducts();
+        $I->visitPage('AOS_Products', 'index');
         $listView->waitForListViewVisible();
 
         // Create product
