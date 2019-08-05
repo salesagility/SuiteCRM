@@ -1144,16 +1144,16 @@ class EmailMan extends SugarBean
 
                     $email_id=$this->create_ref_email(
                         $this->marketing_id,
-                                            $this->current_emailtemplate->subject,
-                                            $this->current_emailtemplate->body,
-                                            $this->current_emailtemplate->body_html,
-                                            $this->current_campaign->name,
-                                            $this->mailbox_from_addr,
-                                            $this->user_id,
-                                            $this->notes_array,
-                                            $macro_nv,
-                                            $this->newmessage,
-                                            $fromAddressName
+                        $this->current_emailtemplate->subject,
+                        $this->current_emailtemplate->body,
+                        $this->current_emailtemplate->body_html,
+                        $this->current_campaign->name,
+                        $this->mailbox_from_addr,
+                        $this->user_id,
+                        $this->notes_array,
+                        $macro_nv,
+                        $this->newmessage,
+                        $fromAddressName
                      );
                     $this->newmessage = false;
                 }

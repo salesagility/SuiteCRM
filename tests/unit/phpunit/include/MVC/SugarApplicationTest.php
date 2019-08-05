@@ -51,11 +51,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testACLFilter()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
+
         if (isset($_SESSION)) {
             $session = $_SESSION;
         }
@@ -70,13 +66,8 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        
-        
+
         // clean up
-        
-        
-        
         if (isset($session)) {
             $_SESSION = $session;
         } else {
@@ -87,11 +78,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsetupResourceManagement()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
+
         $SugarApplication = new SugarApplication();
 
         //execute the method with invalid input and test if it works and does not throws an exception.
@@ -116,11 +103,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsetupPrint()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
+
         $SugarApplication = new SugarApplication();
 
         //execute the method and test if it works and does not throws an exception.
@@ -138,11 +121,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testpreProcess()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
+
         if (isset($_SESSION)) {
             $session = $_SESSION;
         }
@@ -158,13 +137,8 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        
-        
+
         // clean up
-        
-        
-        
         if (isset($session)) {
             $_SESSION = $session;
         } else {
@@ -175,11 +149,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testhandleOfflineClient()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
+
         $SugarApplication = new SugarApplication();
 
         //execute the method and test if it works and does not throws an exception.
@@ -211,11 +181,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testpreLoadLanguages()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
+
         try {
             SugarApplication::preLoadLanguages();
 
@@ -234,11 +200,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testloadLanguages()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
+
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
@@ -291,11 +253,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testloadDisplaySettings()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
+
         $SugarApplication = new SugarApplication();
 
         //execute the method and test if it works and does not throws an exception.
@@ -313,11 +271,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testloadLicense()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
+
         $SugarApplication = new SugarApplication();
 
         //execute the method and test if it works and does not throws an exception.
@@ -335,11 +289,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testloadGlobals()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
+
         if (isset($_REQUEST)) {
             $request = $_REQUEST;
         }
@@ -355,13 +305,9 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        
-        
+
         // clean up
-        
-        
-        
+
         if (isset($request)) {
             $_REQUEST = $request;
         } else {
@@ -495,11 +441,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreateLoginVars()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
+
         $SugarApplication = new SugarApplication();
 
         //execute the method and test if it works and does not throws an exception.

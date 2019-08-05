@@ -93,4 +93,29 @@ class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(array('foo'), unencodeMultienum('^foo^'));
         $this->assertEquals(array('foo', 'bar'), unencodeMultienum('^foo^,^bar^'));
     }
+
+    public function testget_languages()
+    {
+        $this->assertEquals(get_languages(), ['en_us' => 'English (US)']);
+        $this->assertEquals(get_all_languages(), ['en_us' => 'English (US)']);
+        $this->assertEquals(get_language_display('en_us'), 'English (US)');
+    }
+
+    public function testget_current_language()
+    {
+        global $sugar_config;
+        $state = new StateSaver();
+        $state->pushGlobals();
+
+        $_SESSION['authenticated_user_language'] = 'foo';
+        $this->assertEquals(get_current_language(), 'foo');
+        $this->assertEquals(get_current_language(), 'foo');
+
+        $sugar_config['default_language'] = 'bar';
+        $this->assertEquals(get_current_language(), 'foo');
+        unset($_SESSION['authenticated_user_language']);
+        $this->assertEquals(get_current_language(), 'bar');
+
+        $state->popGlobals();
+    }
 }

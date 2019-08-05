@@ -711,6 +711,13 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $email->delete($email->id);
     }
 
+    public function testgetNotesSqlEscape()
+    {
+        $email = new Email();
+        $email->getNotes("'=");
+        $this->assertFalse(DBManagerFactory::getInstance()->lastError());
+    }
+
     public function testcleanEmails()
     {
         $email = new Email();

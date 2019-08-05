@@ -24,10 +24,8 @@ class AOR_ChartTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $state = new SuiteCRM\StateSaver();
         
-        
         $this->markTestSkipped('Skipping AOR Charts Tests');
         
-
         $aorChart = new AOR_Chart();
 
         //preset the required data

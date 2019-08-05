@@ -453,7 +453,7 @@ class ModuleController extends ApiController
 
                 if ($bean instanceof SugarBean) {
                     throw new IdAlreadyExistsException(sprintf(
-                    'Bean id %s already exists in %s module',
+                        'Bean id %s already exists in %s module',
                         $beanID,
                         $moduleName
                 ), ExceptionCode::API_ID_ALREADY_EXISTS);
@@ -1047,8 +1047,8 @@ class ModuleController extends ApiController
 
             if ($sugarBean->load_relationship($args['link']) === false) {
                 throw new NotFoundException(
-                '[ModuleController] [Relationship does not exist] ' . $args['link'],
-                ExceptionCode::API_RELATIONSHIP_NOT_FOUND
+                    '[ModuleController] [Relationship does not exist] ' . $args['link'],
+                    ExceptionCode::API_RELATIONSHIP_NOT_FOUND
             );
             }
 
@@ -1092,7 +1092,7 @@ class ModuleController extends ApiController
                     /** @var Resource $resource */
                     $resource = $this->containers->get('Resource');
                     $related = $sugarBeanRelationship->query(
-                         array(
+                        array(
                               'include_middle_table_fields' => true
                          )
                     );
