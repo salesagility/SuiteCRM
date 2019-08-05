@@ -51,7 +51,7 @@ class HTMLPurifier_Printer
     protected function start($tag, $attr = array())
     {
         return $this->generator->generateFromToken(
-            new HTMLPurifier_Token_Start($tag, $attr ? $attr : array())
+            new HTMLPurifier_Token_Start($tag, $attr ?: array())
         );
     }
 
@@ -171,7 +171,7 @@ class HTMLPurifier_Printer
     {
         static $five = null;
         if ($five === null) {
-            $five = version_compare(PHP_VERSION, '5', '>=');
+            $five = PHP_VERSION_ID >= 50000;
         }
         $prefix = 'HTMLPurifier_' . $sec_prefix;
         if (!$five) {

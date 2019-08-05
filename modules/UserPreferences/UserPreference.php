@@ -112,7 +112,7 @@ class UserPreference extends SugarBean
         // check to see if a default preference ( i.e. $sugar_config setting ) exists for this value )
         // if so, return it
         $value = $this->getDefaultPreference($name, $category);
-        if (!is_null($value)) {
+        if ($value !== null) {
             return $value;
         }
         return null;

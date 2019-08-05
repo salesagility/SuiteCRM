@@ -264,7 +264,7 @@ class SMTP
         static $streamok;
         //This is enabled by default since 5.0.0 but some providers disable it
         //Check this once and cache the result
-        if (is_null($streamok)) {
+        if ($streamok === null) {
             $streamok = function_exists('stream_socket_client');
         }
         // Clear errors to avoid confusion
@@ -411,7 +411,7 @@ class SMTP
                 return false;
             }
 
-            self::edebug('Auth method requested: ' . ($authtype ? $authtype : 'UNKNOWN'), self::DEBUG_LOWLEVEL);
+            self::edebug('Auth method requested: ' . ($authtype ?: 'UNKNOWN'), self::DEBUG_LOWLEVEL);
             self::edebug(
                 'Auth methods available on the server: ' . implode(',', $this->server_caps['AUTH']),
                 self::DEBUG_LOWLEVEL
@@ -469,7 +469,7 @@ class SMTP
             case 'XOAUTH2':
                 //If the OAuth Instance is not set. Can be a case when PHPMailer is used
                 //instead of PHPMailerOAuth
-                if (is_null($OAuth)) {
+                if ($OAuth === null) {
                     return false;
                 }
                 $oauth = $OAuth->getOauth64();

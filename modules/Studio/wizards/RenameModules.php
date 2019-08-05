@@ -924,7 +924,7 @@ class RenameModules
     private function getModuleSingularKey($moduleName)
     {
         $className = isset($GLOBALS['beanList'][$moduleName]) ? $GLOBALS['beanList'][$moduleName] : null;
-        if (is_null($className) || ! class_exists($className)) {
+        if ($className === null || ! class_exists($className)) {
             $GLOBALS['log']->error("Unable to get module singular key for class: $className");
             return $moduleName;
         }

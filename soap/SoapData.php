@@ -143,7 +143,7 @@ function sync_get_modified_relationships($session, $module_name, $related_module
         $output_list[] = $val;
     }
     $xml .= '</items>';
-    $next_offset = $offset + sizeof($output_list);
+    $next_offset = $offset + count($output_list);
 
     if ($php_serialize == 0) {
         $myoutput = base64_encode($xml);
@@ -151,7 +151,7 @@ function sync_get_modified_relationships($session, $module_name, $related_module
         $myoutput = get_encoded($output_list);
     }
 
-    return array('result_count'=>sizeof($output_list),'next_offset'=>0, 'total_count'=>sizeof($output_list), 'field_list'=>array(), 'entry_list'=>$myoutput , 'error'=>$error->get_soap_array());
+    return array('result_count'=>count($output_list),'next_offset'=>0, 'total_count'=>count($output_list), 'field_list'=>array(), 'entry_list'=>$myoutput , 'error'=>$error->get_soap_array());
 }
 
 
@@ -240,7 +240,7 @@ function get_modified_entries($session, $module_name, $ids, $select_fields)
 
     $xml = '<?xml version="1.0" encoding="utf-8"?><items>';
     while ($row = $seed->db->fetchByAssoc($result)) {
-        if (version_compare(phpversion(), '5.0') < 0) {
+        if (version_compare(PHP_VERSION, '5.0') < 0) {
             $temp = $seed;
         } else {
             $temp = @clone($seed);

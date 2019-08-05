@@ -160,7 +160,7 @@ class javascript
                         break;
                     // Bug #47961 Adding new type of validation: through callback function
                     case 'callback':
-                        $dispField = $displayField ? $displayField : $field;
+                        $dispField = $displayField ?: $field;
                         $this->addFieldCallback($dispField, $this->sugarbean->field_name_map[$field]['type'], $vname, $required, $prefix, $this->sugarbean->field_name_map[$field]['validation']['callback']);
                         break;
                     default:

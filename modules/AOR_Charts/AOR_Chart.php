@@ -685,7 +685,7 @@ EOF;
 
         $zName = null;
         foreach ($reportData[0] as $key => $value) {
-            $field = str_replace(' ', '_', is_null($mainGroupField) ? 'no data' : $mainGroupField->label);
+            $field = str_replace(' ', '_', $mainGroupField === null ? 'no data' : $mainGroupField->label);
             if (preg_match('/^' . $field . '[0-9]+/', $key)) {
                 $zName = $key;
                 break;

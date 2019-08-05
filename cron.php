@@ -43,11 +43,11 @@
 
 //change directories to where this file is located.
 //this is to make sure it can find dce_config.php
-chdir(dirname(__FILE__));
+chdir(__DIR__);
 
 require_once('include/entryPoint.php');
 
-$sapi_type = php_sapi_name();
+$sapi_type = PHP_SAPI;
 if (substr($sapi_type, 0, 3) != 'cli') {
     sugar_die("cron.php is CLI only.");
 }

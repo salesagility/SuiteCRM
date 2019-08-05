@@ -328,7 +328,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
         } // foreach
 
         // Calculate the offset for the start of the next page
-        $next_offset = $offset + sizeof($output_list);
+        $next_offset = $offset + count($output_list);
 
         $returnRelationshipList = array();
         foreach ($linkoutput_list as $rel) {
@@ -349,7 +349,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
         }
 
         $GLOBALS['log']->info('End: SugarWebServiceImpl->get_entry_list - SUCCESS');
-        return array('result_count'=>sizeof($output_list), 'total_count' => $totalRecordCount, 'next_offset'=>$next_offset, 'entry_list'=>$output_list, 'relationship_list' => $returnRelationshipList);
+        return array('result_count'=>count($output_list), 'total_count' => $totalRecordCount, 'next_offset'=>$next_offset, 'entry_list'=>$output_list, 'relationship_list' => $returnRelationshipList);
     } // fn
 
     /**

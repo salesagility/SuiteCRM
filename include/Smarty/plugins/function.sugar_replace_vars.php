@@ -62,7 +62,7 @@ function smarty_function_sugar_replace_vars($params, &$smarty)
         }
 
         $value = isset($fields[$match]) ? $fields[$match] : null;
-        if (!is_null($value)) {
+        if ($value !== null) {
             if (isset($value['function']['returns']) && $value['function']['returns'] == 'html') {
                 $bean  = $smarty->get_template_vars('bean');
                 $value = $bean->$match;

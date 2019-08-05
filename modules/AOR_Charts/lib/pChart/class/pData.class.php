@@ -128,7 +128,7 @@
      public function getSerieCount($Serie)
      {
          if (isset($this->Data["Series"][$Serie]["Data"])) {
-             return(sizeof($this->Data["Series"][$Serie]["Data"]));
+             return(count($this->Data["Series"][$Serie]["Data"]));
          }
          return(0);
      }
@@ -405,7 +405,7 @@
      {
          if (isset($this->Data["Series"][$Serie])) {
              $SerieData = $this->stripVOID($this->Data["Series"][$Serie]["Data"]);
-             return(array_sum($SerieData)/sizeof($SerieData));
+             return(array_sum($SerieData)/count($SerieData));
          }
          return(null);
      }
@@ -419,7 +419,7 @@
              foreach ($SerieData as $Key => $Value) {
                  $Seriesum = $Seriesum * $Value;
              }
-             return(pow($Seriesum, 1/sizeof($SerieData)));
+             return(pow($Seriesum, 1/count($SerieData)));
          }
          return(null);
      }
@@ -433,7 +433,7 @@
              foreach ($SerieData as $Key => $Value) {
                  $Seriesum = $Seriesum + 1/$Value;
              }
-             return(sizeof($SerieData)/$Seriesum);
+             return(count($SerieData)/$Seriesum);
          }
          return(null);
      }
@@ -478,7 +478,7 @@
          if (isset($this->Data["Series"][$Serie])) {
              $SerieData = $this->stripVOID($this->Data["Series"][$Serie]["Data"]);
              sort($SerieData);
-             $SerieCenter = floor(sizeof($SerieData)/2);
+             $SerieCenter = floor(count($SerieData)/2);
 
              if (isset($SerieData[$SerieCenter])) {
                  return($SerieData[$SerieCenter]);

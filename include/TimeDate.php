@@ -951,7 +951,7 @@ class TimeDate
     {
         $zero = new DateTime("@0", self::$gmtTimezone);
 
-        return $zero->format($format ? $format : $this->get_time_format());
+        return $zero->format($format ?: $this->get_time_format());
     }
 
     /**
@@ -2008,7 +2008,7 @@ class TimeDate
         $result = array();
         $transitions = $tz->getTransitions($year_date->ts, $year_end->ts);
         $idx = 0;
-        if (version_compare(PHP_VERSION, '5.3.0', '<')) {
+        if (PHP_VERSION_ID < 50300) {
             // <5.3.0 ignores parameters, advance manually to current year
             $start_ts = $year_date->ts;
             while (isset($transitions[$idx]) && $transitions[$idx]["ts"] < $start_ts) {

@@ -133,7 +133,7 @@ class ListView
         if (!isset($_REQUEST['action'])) {
             $this->shouldProcess=false;
         } else {
-            $this->shouldProcess = is_subclass_of($seed, "SugarBean")
+            $this->shouldProcess = $seed instanceof \SugarBean
         && (($_REQUEST['action'] == 'index') || ('ListView' == substr($_REQUEST['action'], 0, 8)) /* cn: to include all ListViewXXX.php type views */)
         && ($_REQUEST['module'] == $seed->module_dir);
         }
@@ -146,7 +146,7 @@ class ListView
         if (!$this->show_mass_update) {
             $this->shouldProcess = false;
         }
-        if (is_subclass_of($seed, "SugarBean")) {
+        if ($seed instanceof \SugarBean) {
             if ($seed->bean_implements('ACL')) {
                 if (!ACLController::checkAccess($seed->module_dir, 'list', true)) {
                     if ($_REQUEST['module'] != 'Home') {
@@ -966,7 +966,7 @@ class ListView
         );
 
         foreach ($priority_map as $p) {
-            if (key_exists($p, $sortOrderList)) {
+            if (array_key_exists($p, $sortOrderList)) {
                 $order = strtolower($sortOrderList[$p]);
                 if (in_array($order, array('asc', 'desc'))) {
                     return $order;
@@ -1874,7 +1874,7 @@ class ListView
             $this->createXTemplate();
         }
 
-        $isSugarBean = is_subclass_of($seed, "SugarBean");
+        $isSugarBean = $seed instanceof \SugarBean;
         $list = null;
 
         if ($isSugarBean) {

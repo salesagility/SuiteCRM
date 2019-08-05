@@ -335,7 +335,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 }
 
                 if (function_exists('sugar_fopen') && $fh = @sugar_fopen($to_path, 'w')) {
-                    fputs($fh, $out);
+                    fwrite($fh, $out);
                     fclose($fh);
                 } else {
                     file_put_contents($to_path, $out);

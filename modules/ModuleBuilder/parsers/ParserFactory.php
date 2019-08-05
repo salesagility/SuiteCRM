@@ -125,7 +125,7 @@ class ParserFactory
     protected static function checkForParserClass($view, $moduleName, $packageName, $nameOverride = false)
     {
         $prefix = '';
-        if (!is_null($packageName)) {
+        if ($packageName !== null) {
             $prefix = empty($packageName) ? 'build' :'modify';
         }
         $fileNames = array(

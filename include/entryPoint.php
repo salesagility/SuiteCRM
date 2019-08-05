@@ -45,12 +45,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $GLOBALS['starttTime'] = microtime(true);
 
 set_include_path(
-    dirname(__FILE__).'/..'.PATH_SEPARATOR.
+    __DIR__ .'/..'.PATH_SEPARATOR.
     get_include_path()
 );
 
 if (!defined('PHP_VERSION_ID')) {
-    $version_array = explode('.', phpversion());
+    $version_array = explode('.', PHP_VERSION);
     define('PHP_VERSION_ID', ($version_array[0] * 10000 + $version_array[1] * 100 + $version_array[2]));
 }
 
@@ -146,7 +146,7 @@ UploadStream::register();
 ///////////////////////////////////////////////////////////////////////////////
 ////    Handle loading and instantiation of various Sugar* class
 if (!defined('SUGAR_PATH')) {
-    define('SUGAR_PATH', realpath(dirname(__FILE__).'/..'));
+    define('SUGAR_PATH', realpath(__DIR__ .'/..'));
 }
 require_once 'include/SugarObjects/SugarRegistry.php';
 

@@ -961,7 +961,7 @@ class wsdl extends nusoap_base
         }
         $xml .= '>';
         // imports
-        if (sizeof($this->import) > 0) {
+        if (count($this->import) > 0) {
             foreach ($this->import as $ns => $list) {
                 foreach ($list as $ii) {
                     if ($ii['location'] != '') {
@@ -1195,9 +1195,9 @@ class wsdl extends nusoap_base
 
         // set input params
         $xml = '';
-        if (isset($opData[$direction]['parts']) && sizeof($opData[$direction]['parts']) > 0) {
+        if (isset($opData[$direction]['parts']) && count($opData[$direction]['parts']) > 0) {
             $parts = &$opData[$direction]['parts'];
-            $part_count = sizeof($parts);
+            $part_count = count($parts);
             $style = $opData['style'];
             $use = $opData[$direction]['use'];
             $this->debug("have $part_count part(s) to serialize using $style/$use");
@@ -1297,7 +1297,7 @@ class wsdl extends nusoap_base
 
         // set input params
         $xml = '';
-        if (isset($opData[$direction]['parts']) && sizeof($opData[$direction]['parts']) > 0) {
+        if (isset($opData[$direction]['parts']) && count($opData[$direction]['parts']) > 0) {
             $use = $opData[$direction]['use'];
             $this->debug("use=$use");
             $this->debug('got ' . count($opData[$direction]['parts']) . ' part(s)');
@@ -1403,7 +1403,7 @@ class wsdl extends nusoap_base
                 } else {
                     $elementNS = '';
                 }
-                if (is_null($value)) {
+                if ($value === null) {
                     if ($use == 'literal') {
                         // TODO: depends on minOccurs
                         $xml = "<$name$elementNS/>";
@@ -1523,7 +1523,7 @@ class wsdl extends nusoap_base
                     $elementNS = '';
                 }
             }
-            if (is_null($value)) {
+            if ($value === null) {
                 if ($use == 'literal') {
                     // TODO: depends on minOccurs and nillable
                     $xml = "<$elementName$elementNS/>";
@@ -1575,7 +1575,7 @@ class wsdl extends nusoap_base
                     $elementNS = '';
                 }
             }
-            if (is_null($value)) {
+            if ($value === null) {
                 if ($use == 'literal') {
                     // TODO: depends on minOccurs
                     $xml = "<$name$elementNS/>";
@@ -1595,15 +1595,15 @@ class wsdl extends nusoap_base
             if (isset($typeDef['multidimensional'])) {
                 $nv = array();
                 foreach ($value as $v) {
-                    $cols = ',' . sizeof($v);
+                    $cols = ',' . count($v);
                     $nv = array_merge($nv, $v);
                 }
                 $value = $nv;
             } else {
                 $cols = '';
             }
-            if (is_array($value) && sizeof($value) >= 1) {
-                $rows = sizeof($value);
+            if (is_array($value) && count($value) >= 1) {
+                $rows = count($value);
                 $contents = '';
                 foreach ($value as $k => $v) {
                     $this->debug("serializing array element: $k, $v of type: $typeDef[arrayType]");
@@ -1804,9 +1804,9 @@ class wsdl extends nusoap_base
                             }
                         }
                     } else {
-                        if (is_null($v) && isset($attrs['minOccurs']) && $attrs['minOccurs'] == '0') {
+                        if ($v === null && isset($attrs['minOccurs']) && $attrs['minOccurs'] == '0') {
                             // do nothing
-                        } elseif (is_null($v) && isset($attrs['nillable']) && $attrs['nillable'] == 'true') {
+                        } elseif ($v === null && isset($attrs['nillable']) && $attrs['nillable'] == 'true') {
                             // TODO: serialize a nil correctly, but for now serialize schema-defined type
                             $xml .= $this->serializeType($eName, isset($attrs['type']) ? $attrs['type'] : $attrs['ref'], $v, $use, $encodingStyle, $unqualified);
                         } elseif (isset($attrs['type']) || isset($attrs['ref'])) {

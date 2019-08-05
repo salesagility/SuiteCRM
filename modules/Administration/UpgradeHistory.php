@@ -287,7 +287,7 @@ class UpgradeHistory extends SugarBean
             $found = false;
             $query = "SELECT id FROM $this->table_name WHERE id_name = '".$dependent['id_name']."'";
             $matches = $this->getList($query);
-            if (0 != sizeof($matches)) {
+            if (0 != count($matches)) {
                 foreach ($matches as $match) {
                     if ($this->is_right_version_greater(explode('.', $match->version), explode('.', $dependent['version']))) {
                         $found = true;

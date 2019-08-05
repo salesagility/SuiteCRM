@@ -339,7 +339,7 @@ class AbstractRelationships
                             // some save methods (e.g., saveRelateFieldDefinition) handle the installDefs internally and so return null
 
                         
-                            if (! is_null($installDef)) {
+                            if ($installDef !== null) {
                                 foreach ($installDef as $moduleName => $def) {
                                     $installDefs [ $key ] [ ] = $def ;
                                 }
@@ -403,7 +403,7 @@ class AbstractRelationships
             }
             
             $fh = fopen($filename, 'w') ;
-            fputs($fh, $out, strlen($out)) ;
+            fwrite($fh, $out, strlen($out)) ;
             fclose($fh) ;
             
             

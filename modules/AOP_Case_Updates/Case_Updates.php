@@ -153,7 +153,7 @@ function caseUpdates(record){
 A;
 
     $updates = $focus->get_linked_beans('aop_case_updates', 'AOP_Case_Updates');
-    if (!$updates || is_null($focus->id)) {
+    if (!$updates || $focus->id === null) {
         $html .= quick_edit_case_updates($focus);
 
         return $html;

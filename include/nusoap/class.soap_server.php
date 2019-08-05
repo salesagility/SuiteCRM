@@ -620,7 +620,7 @@ class nusoap_server extends nusoap_base
                 return;
             }
         } else {
-            $method_to_compare = (substr(phpversion(), 0, 2) == '4.') ? strtolower($method) : $method;
+            $method_to_compare = (substr(PHP_VERSION, 0, 2) == '4.') ? strtolower($method) : $method;
             if (!in_array($method_to_compare, get_class_methods($class))) {
                 $this->debug("in invoke_method, method '$this->methodname' not found in class '$class'!");
                 $this->result = 'fault: method not found';
@@ -722,10 +722,10 @@ class nusoap_server extends nusoap_base
             $this->debug('got a(n) '.gettype($this->methodreturn).' from method');
             $this->debug('serializing return value');
             if ($this->wsdl) {
-                if (sizeof($this->opData['output']['parts']) > 1) {
+                if (count($this->opData['output']['parts']) > 1) {
                     $this->debug('more than one output part, so use the method return unchanged');
                     $opParams = $this->methodreturn;
-                } elseif (sizeof($this->opData['output']['parts']) == 1) {
+                } elseif (count($this->opData['output']['parts']) == 1) {
                     $this->debug('exactly one output part, so wrap the method return in a simple array');
                     // TODO: verify that it is not already wrapped!
                     //foreach ($this->opData['output']['parts'] as $name => $type) {
@@ -876,7 +876,7 @@ class nusoap_server extends nusoap_base
             header($hdr, false);
         }
         print $payload;
-        $this->response = join("\r\n", $this->outgoing_headers)."\r\n\r\n".$payload;
+        $this->response = implode("\r\n", $this->outgoing_headers)."\r\n\r\n".$payload;
     }
 
     /**

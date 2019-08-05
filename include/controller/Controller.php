@@ -199,7 +199,7 @@ class Controller extends SugarBean
             $result = $this->db->query($query, true, " Error capturing max start order: ");
             $row = $this->db->fetchByAssoc($result);
 
-            if (!is_null($row['max_start'])) {
+            if ($row['max_start'] !== null) {
                 if ($this->focus->controller_def['start_axis']=="x") {
                     $this->focus->list_order_x = $row['max_start'] + 1;
                     if ($this->focus->controller_def['list_y']=="Y") {

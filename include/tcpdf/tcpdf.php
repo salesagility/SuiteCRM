@@ -177,19 +177,19 @@ r46451 - 2009-04-23 16:57:40 -0700 (Thu, 23 Apr 2009) - jenny - tcpdf initial ch
 /**
  * main configuration file
  */
-require_once(dirname(__FILE__).'/config/tcpdf_config.php');
+require_once(__DIR__ .'/config/tcpdf_config.php');
 
 // includes some support files
 
 /**
  * unicode data
  */
-require_once(dirname(__FILE__).'/unicode_data.php');
+require_once(__DIR__ .'/unicode_data.php');
 
 /**
  * html colors table
  */
-require_once(dirname(__FILE__).'/htmlcolors.php');
+require_once(__DIR__ .'/htmlcolors.php');
 
 if (!class_exists('TCPDF', false)) {
     /**
@@ -3688,13 +3688,13 @@ if (!class_exists('TCPDF', false)) {
                         // get string width without spaces
                         $width = $this->GetStringWidth(str_replace(' ', '', $txt));
                         // calculate average space width
-                        $spacewidth = ($w - $width - (2 * $this->cMargin)) / ($ns?$ns:1) / $this->FontSize / $this->k;
+                        $spacewidth = ($w - $width - (2 * $this->cMargin)) / ($ns?:1) / $this->FontSize / $this->k;
                         // set word position to be used with TJ operator
                         $txt2 = str_replace(chr(0).' ', ') '.(-2830 * $spacewidth).' (', $txt2);
                     } else {
                         // get string width
                         $width = $this->GetStringWidth($txt);
-                        $spacewidth = (($w - $width - (2 * $this->cMargin)) / ($ns?$ns:1)) * $this->k;
+                        $spacewidth = (($w - $width - (2 * $this->cMargin)) / ($ns?:1)) * $this->k;
                         $rs .= sprintf('BT %.3F Tw ET ', $spacewidth);
                     }
                 }
@@ -5229,7 +5229,7 @@ if (!class_exists('TCPDF', false)) {
                     if (ob_get_contents()) {
                         $this->Error('Some data has already been output, can\'t send PDF file');
                     }
-                    if (php_sapi_name() != 'cli') {
+                    if (PHP_SAPI != 'cli') {
                         //We send to a browser
                         header('Content-Type: application/pdf');
                         if (headers_sent()) {
@@ -5349,8 +5349,8 @@ if (!class_exists('TCPDF', false)) {
         */
         protected function _getfontpath()
         {
-            if (!defined('K_PATH_FONTS') and is_dir(dirname(__FILE__).'/fonts')) {
-                define('K_PATH_FONTS', dirname(__FILE__).'/fonts/');
+            if (!defined('K_PATH_FONTS') and is_dir(__DIR__ .'/fonts')) {
+                define('K_PATH_FONTS', __DIR__ .'/fonts/');
             }
             return defined('K_PATH_FONTS') ? K_PATH_FONTS : '';
         }
@@ -6654,7 +6654,7 @@ if (!class_exists('TCPDF', false)) {
             $this->y = $this->tMargin;
             if (isset($this->newpagegroup[$this->page])) {
                 // start a new group
-                $n = sizeof($this->pagegroups) + 1;
+                $n = count($this->pagegroups) + 1;
                 $alias = '{nb'.$n.'}';
                 $this->pagegroups[$alias] = 1;
                 $this->currpagegroup = $alias;
@@ -9655,7 +9655,7 @@ if (!class_exists('TCPDF', false)) {
             $this->sign = true;
             $this->signature_data = array();
             if (strlen($signing_cert) == 0) {
-                $signing_cert = 'file://'.dirname(__FILE__).'/tcpdf.pem';
+                $signing_cert = 'file://'. __DIR__ .'/tcpdf.pem';
             }
             if (strlen($private_key) == 0) {
                 $private_key = $signing_cert;
@@ -10670,7 +10670,7 @@ if (!class_exists('TCPDF', false)) {
             if ($this->empty_string($code)) {
                 return;
             }
-            require_once(dirname(__FILE__).'/barcodes.php');
+            require_once(__DIR__ .'/barcodes.php');
             // save current graphic settings
             $gvars = $this->getGraphicVars();
             // create new barcode object
@@ -10925,7 +10925,7 @@ if (!class_exists('TCPDF', false)) {
             if ($this->empty_string($code)) {
                 return;
             }
-            require_once(dirname(__FILE__).'/2dbarcodes.php');
+            require_once(__DIR__ .'/2dbarcodes.php');
             // save current graphic settings
             $gvars = $this->getGraphicVars();
             // create new barcode object
@@ -11847,8 +11847,8 @@ if (!class_exists('TCPDF', false)) {
                                         $t_x = $this->lMargin - $this->endlinex - (($no - $ns - 1) * $this->GetStringWidth(chr(32)));
                                     }
                                     // calculate additional space to add to each space
-                                    $spacewidth = (($tw - $linew + (($no - $ns) * $this->GetStringWidth(chr(32)))) / ($ns?$ns:1)) * $this->k;
-                                    $spacewidthu = ($tw - $linew + ($no * $this->GetStringWidth(chr(32)))) / ($ns?$ns:1) / $this->FontSize / $this->k;
+                                    $spacewidth = (($tw - $linew + (($no - $ns) * $this->GetStringWidth(chr(32)))) / ($ns?:1)) * $this->k;
+                                    $spacewidthu = ($tw - $linew + ($no * $this->GetStringWidth(chr(32)))) / ($ns?:1) / $this->FontSize / $this->k;
                                     $nsmax = $ns;
                                     $ns = 0;
                                     reset($lnstring);
@@ -14348,7 +14348,7 @@ if (!class_exists('TCPDF', false)) {
         */
         public function empty_string($str)
         {
-            return (is_null($str) or (is_string($str) and (strlen($str) == 0)));
+            return ($str === null or (is_string($str) and (strlen($str) == 0)));
         }
     } // END OF TCPDF CLASS
 }

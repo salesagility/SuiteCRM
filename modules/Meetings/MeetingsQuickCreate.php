@@ -79,10 +79,10 @@ class MeetingsQuickCreate extends QuickCreate
         $this->javascript->setSugarBean($focus);
         $this->javascript->addAllFields('');
 
-        if (is_null($focus->date_start)) {
+        if ($focus->date_start === null) {
             $focus->date_start = $timedate->to_display_date(TimeDate::getInstance()->nowDb());
         }
-        if (is_null($focus->time_start)) {
+        if ($focus->time_start === null) {
             $focus->time_start = $timedate->to_display_time(TimeDate::getInstance()->nowDb(), true);
         }
         if (!isset($focus->duration_hours)) {

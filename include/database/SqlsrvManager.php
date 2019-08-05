@@ -157,7 +157,7 @@ class SqlsrvManager extends MssqlManager
     {
         global $sugar_config;
 
-        if (is_null($configOptions)) {
+        if ($configOptions === null) {
             $configOptions = $sugar_config['dbconfig'];
         }
 
@@ -546,7 +546,7 @@ EOSQL;
         }
 
         if (!empty($messages)) {
-            return join("\n", $messages);
+            return implode("\n", $messages);
         }
 
         return false;

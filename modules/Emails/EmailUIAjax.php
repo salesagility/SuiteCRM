@@ -659,7 +659,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                             $GLOBALS['log']->info("[EMAIL] - Start checking email for GUID [{$ieId}] for user [{$current_user->user_name}]");
                             $ie->disconnectMailserver();
                             // If I-E not exist - skip check
-                            if (is_null($ie->retrieve($ieId))) {
+                            if ($ie->retrieve($ieId) === null) {
                                 $GLOBALS['log']->info("[EMAIL] - Inbound with GUID [{$ieId}] not exist");
                                 continue;
                             }

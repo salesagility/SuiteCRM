@@ -175,7 +175,7 @@ class ImportDuplicateCheck
                 $newfocus = loadBean($this->_focus->module_dir);
                 $result = $newfocus->retrieve_by_string_fields($index_fields, true);
 
-                if (!is_null($result)) {
+                if ($result !== null) {
                     return true;
                 }
             }
@@ -231,7 +231,7 @@ class ImportDuplicateCheck
             $newfocus = loadBean($this->_focus->module_dir);
             $result = $newfocus->retrieve_by_string_fields(array('deleted' =>'0', 'first_name'=>$this->_focus->first_name, 'last_name'=>$this->_focus->last_name), true);
 
-            if (!is_null($result)) {
+            if ($result !== null) {
                 //set dupe field to full_name and name fields
                 $this->_dupedFields[] = 'full_name';
                 $this->_dupedFields[] = 'first_name';
@@ -290,7 +290,7 @@ class ImportDuplicateCheck
                 $newfocus = loadBean($this->_focus->module_dir);
                 $result = $newfocus->retrieve_by_string_fields($index_fields, true);
 
-                if (!is_null($result)) {
+                if ($result !== null) {
                     //remove deleted as a duped field
                     unset($index_fields['deleted']);
 

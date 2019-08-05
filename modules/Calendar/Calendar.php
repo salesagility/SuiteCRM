@@ -167,18 +167,18 @@ class Calendar
         $this->date_time = $GLOBALS['timedate']->fromString($current_date_db);
         
         $this->show_tasks = $current_user->getPreference('show_tasks');
-        if (is_null($this->show_tasks)) {
+        if ($this->show_tasks === null) {
             $this->show_tasks = SugarConfig::getInstance()->get('calendar.show_tasks_by_default', true);
         }
         
         $this->show_calls = $current_user->getPreference('show_calls');
-        if (is_null($this->show_calls)) {
+        if ($this->show_calls === null) {
             $this->show_calls = SugarConfig::getInstance()->get('calendar.show_calls_by_default', true);
         }
         
         // Show completed Meetings, Calls, Tasks
         $this->show_completed = $current_user->getPreference('show_completed');
-        if (is_null($this->show_completed)) {
+        if ($this->show_completed === null) {
             $this->show_completed = SugarConfig::getInstance()->get('calendar.show_completed_by_default', true);
         }
         
@@ -188,7 +188,7 @@ class Calendar
             $this->style = "basic";
         } else {
             $displayTimeslots = $GLOBALS['current_user']->getPreference('calendar_display_timeslots');
-            if (is_null($displayTimeslots)) {
+            if ($displayTimeslots === null) {
                 $displayTimeslots = SugarConfig::getInstance()->get('calendar.display_timeslots', true);
             }
             if (!$displayTimeslots) {
@@ -213,11 +213,11 @@ class Calendar
         }
         
         $this->day_start_time = $current_user->getPreference('day_start_time');
-        if (is_null($this->day_start_time)) {
+        if ($this->day_start_time === null) {
             $this->day_start_time = SugarConfig::getInstance()->get('calendar.default_day_start', "08:00");
         }
         $this->day_end_time = $current_user->getPreference('day_end_time');
-        if (is_null($this->day_end_time)) {
+        if ($this->day_end_time === null) {
             $this->day_end_time = SugarConfig::getInstance()->get('calendar.default_day_end', "19:00");
         }
             
@@ -246,7 +246,7 @@ class Calendar
         foreach ($this->acts_arr as $user_id => $acts) {
             if (isset($acts) && empty($acts)) {
                 $shared_calendar_separate = $GLOBALS['current_user']->getPreference('calendar_display_shared_separate');
-                if (is_null($shared_calendar_separate)) {
+                if ($shared_calendar_separate === null) {
                     $shared_calendar_separate = SugarConfig::getInstance()->get('calendar.calendar_display_shared_separate', true);
                 }
                 //if no calendar items we add the user to the list.
@@ -328,7 +328,7 @@ class Calendar
 
 
                 $shared_calendar_separate = $GLOBALS['current_user']->getPreference('calendar_display_shared_separate');
-                if (is_null($shared_calendar_separate)) {
+                if ($shared_calendar_separate === null) {
                     $shared_calendar_separate = SugarConfig::getInstance()->get('calendar.calendar_display_shared_separate', true);
                 }
                 //if no calendar items we add the user to the list.

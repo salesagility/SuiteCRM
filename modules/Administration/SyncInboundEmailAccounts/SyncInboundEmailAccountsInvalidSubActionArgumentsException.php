@@ -92,7 +92,7 @@ class SyncInboundEmailAccountsInvalidSubActionArgumentsException extends Excepti
     protected function getCallerMethod($step = 2)
     {
         $trace = debug_backtrace();
-        $function = $trace[$step ? $step : $this->callerMethodDistance]['function'];
+        $function = $trace[$step ?: $this->callerMethodDistance]['function'];
 
         return $function;
     }

@@ -394,7 +394,7 @@ class SugarFieldRelate extends SugarFieldBase
             // Bug 24075 - clear out id field value if it is invalid
             if (isset($focus->$idField)) {
                 $checkfocus = loadBean($vardef['module']);
-                if ($checkfocus && is_null($checkfocus->retrieve($focus->$idField))) {
+                if ($checkfocus && $checkfocus->retrieve($focus->$idField) === null) {
                     $focus->$idField = '';
                 }
             }

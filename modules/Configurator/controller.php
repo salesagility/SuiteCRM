@@ -220,7 +220,7 @@ class ConfiguratorController extends SugarController
                 }
             }
             //Have a 'core' options, with accounts / contacts if no other scenario is selected
-            if (!is_null($_SESSION['scenarios'])) {
+            if ($_SESSION['scenarios'] !== null) {
                 unset($GLOBALS['tabStructure']['LBL_TABGROUP_DEFAULT']);
             }
             //Write the tabstructure to custom so that the grouping are not shown for the un-selected scenarios

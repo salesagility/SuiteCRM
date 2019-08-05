@@ -244,10 +244,10 @@ class SugarWebServiceImpl
         } // foreach
 
         // Calculate the offset for the start of the next page
-        $next_offset = $offset + sizeof($output_list);
+        $next_offset = $offset + count($output_list);
 
         $GLOBALS['log']->info('End: SugarWebServiceImpl->get_entry_list');
-        return array('result_count'=>sizeof($output_list), 'next_offset'=>$next_offset, 'entry_list'=>$output_list, 'relationship_list' => $linkoutput_list);
+        return array('result_count'=>count($output_list), 'next_offset'=>$next_offset, 'entry_list'=>$output_list, 'relationship_list' => $linkoutput_list);
     } // fn
 
 
@@ -326,7 +326,7 @@ class SugarWebServiceImpl
         } // if
 
         if ((empty($module_names) || empty($module_ids) || empty($link_field_names) || empty($related_ids)) ||
-        (sizeof($module_names) != (sizeof($module_ids) || sizeof($link_field_names) || sizeof($related_ids)))) {
+        (count($module_names) != (count($module_ids) || count($link_field_names) || count($related_ids)))) {
             $error->set_error('invalid_data_format');
             self::$helperObject->setFaultObject($error);
             $GLOBALS['log']->info('End: SugarWebServiceImpl->set_relationships');
@@ -414,7 +414,7 @@ class SugarWebServiceImpl
             $list = $result['rows'];
             $filterFields = $result['fields_set_on_rows'];
 
-            if (sizeof($list) > 0) {
+            if (count($list) > 0) {
                 // get the related module name and instantiate a bean for that.
                 $submodulename = $mod->$link_field_name->getRelatedModuleName();
                 $submoduleclass = $beanList[$submodulename];

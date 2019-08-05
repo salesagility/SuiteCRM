@@ -352,7 +352,7 @@ class LayoutManager
     {
         $theclass = $this->getClassFromWidgetDef($widget_def, $use_default);
         $label = isset($widget_def['module']) ? $widget_def['module'] : '';
-        if (is_subclass_of($theclass, 'SugarWidgetSubPanelTopButton')) {
+        if ($theclass instanceof \SugarWidgetSubPanelTopButton) {
             $label = $theclass->get_subpanel_relationship_name($widget_def);
         }
         $theclass->setWidgetId($label);

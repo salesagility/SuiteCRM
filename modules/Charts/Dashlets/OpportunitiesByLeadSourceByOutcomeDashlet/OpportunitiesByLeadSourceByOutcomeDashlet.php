@@ -64,7 +64,7 @@ class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
         global $app_list_strings;
 
         $selected_datax = array();
-        if (!empty($this->lsbo_lead_sources) && sizeof($this->lsbo_lead_sources) > 0) {
+        if (!empty($this->lsbo_lead_sources) && count($this->lsbo_lead_sources) > 0) {
             foreach ($this->lsbo_lead_sources as $key) {
                 $selected_datax[] = $key;
             }

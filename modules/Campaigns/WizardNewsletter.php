@@ -748,7 +748,7 @@ function create_wiz_menu_items($steps, $type, $mrkt_string, $summ_url, $view = n
             }
 
             $steps[$mod_strings['LBL_NAVIGATION_MENU_MARKETING']] = $marketingLink;
-            $steps[$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL_AND_SUMMARY']] = $summ_url ? $summ_url : false;
+            $steps[$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL_AND_SUMMARY']] = $summ_url ?: false;
         //$steps[$summ_url] = '#';
         } else {
             $steps[$summ_url] = false; //'#';

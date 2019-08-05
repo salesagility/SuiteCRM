@@ -25,7 +25,7 @@ class SuiteInvocationStrategy implements InvocationStrategyInterface
             $request,
             $response,
             $routeArguments,
-            $request->getAttribute('params') ? $request->getAttribute('params') : null
+            $request->getAttribute('params') ?: null
         );
     }
 }

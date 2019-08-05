@@ -98,7 +98,7 @@ class SugarCache
      */
     public static function instance()
     {
-        if (!is_subclass_of(self::$_cacheInstance, 'SugarCacheAbstract')) {
+        if (!self::$_cacheInstance instanceof \SugarCacheAbstract) {
             self::_init();
         }
 

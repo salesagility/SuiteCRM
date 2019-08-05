@@ -817,7 +817,7 @@ class SugarBean
         $show_deleted = 0,
         $subpanel_def= null
     ) {
-        if (is_null($subpanel_def)) {
+        if ($subpanel_def === null) {
             $GLOBALS['log']->fatal('subpanel_def is null');
         }
         $secondary_queries = array();
@@ -1218,7 +1218,7 @@ class SugarBean
         $query_row_count = '',
         $secondary_queries = array()
     ) {
-        if (is_null($subpanel_def)) {
+        if ($subpanel_def === null) {
             $GLOBALS['log']->fatal('subpanel_def is null');
         }
 

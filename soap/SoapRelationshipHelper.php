@@ -382,7 +382,7 @@ function server_save_relationships($list, $from_date, $to_date)
 function get_from_statement($query)
 {
     $query = explode('FROM', $query);
-    if (sizeof($query) == 1) {
+    if (count($query) == 1) {
         $query = explode('from', $query[0]);
     }
     $query = explode('ORDER BY', $query[1]);

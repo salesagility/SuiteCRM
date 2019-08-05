@@ -137,7 +137,7 @@ class nusoap_xmlschema extends nusoap_base
     {
         // parse xml file
         if ($xml != "") {
-            $xmlStr = @join("", @file($xml));
+            $xmlStr = @implode("", @file($xml));
             if ($xmlStr == "") {
                 $msg = 'Error reading XML from '.$xml;
                 $this->setError($msg);
@@ -570,17 +570,17 @@ class nusoap_xmlschema extends nusoap_base
         }
         // move on...
         if ($name == 'complexType') {
-            $this->xdebug('done processing complexType ' . ($this->currentComplexType ? $this->currentComplexType : '(unknown)'));
+            $this->xdebug('done processing complexType ' . ($this->currentComplexType ?: '(unknown)'));
             $this->xdebug($this->varDump($this->complexTypes[$this->currentComplexType]));
             $this->currentComplexType = array_pop($this->complexTypeStack);
             //$this->currentElement = false;
         }
         if ($name == 'element') {
-            $this->xdebug('done processing element ' . ($this->currentElement ? $this->currentElement : '(unknown)'));
+            $this->xdebug('done processing element ' . ($this->currentElement ?: '(unknown)'));
             $this->currentElement = array_pop($this->elementStack);
         }
         if ($name == 'simpleType') {
-            $this->xdebug('done processing simpleType ' . ($this->currentSimpleType ? $this->currentSimpleType : '(unknown)'));
+            $this->xdebug('done processing simpleType ' . ($this->currentSimpleType ?: '(unknown)'));
             $this->xdebug($this->varDump($this->simpleTypes[$this->currentSimpleType]));
             $this->currentSimpleType = array_pop($this->simpleTypeStack);
         }
@@ -609,7 +609,7 @@ class nusoap_xmlschema extends nusoap_base
         $schemaPrefix = $this->getPrefixFromNamespace($this->XMLSchemaVersion);
         $xml = '';
         // imports
-        if (sizeof($this->imports) > 0) {
+        if (count($this->imports) > 0) {
             foreach ($this->imports as $ns => $list) {
                 foreach ($list as $ii) {
                     if ($ii['location'] != '') {

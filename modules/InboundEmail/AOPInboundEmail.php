@@ -94,7 +94,7 @@ class AOPInboundEmail extends InboundEmail
 
             $GLOBALS['log']->debug('finding related accounts with address ' . $contactAddr);
             if ($accountIds = $this->getRelatedId($contactAddr, 'accounts')) {
-                if (sizeof($accountIds) == 1) {
+                if (count($accountIds) == 1) {
                     $c->account_id = $accountIds[0];
 
                     $acct = new Account();

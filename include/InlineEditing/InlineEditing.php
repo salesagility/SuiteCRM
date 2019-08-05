@@ -161,7 +161,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
 
         // Save it to the cache file
         if ($fh = @sugar_fopen($file, 'w')) {
-            fputs($fh, $contents);
+            fwrite($fh, $contents);
             fclose($fh);
         }
     }
@@ -490,7 +490,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
         //To fix github bug 880 (the rname was null and was causing a 500 error in the getFieldValueFromModule call to $fieldname
         $fieldName = 'name';//$vardef['name'];
-        if (!is_null($vardef['rname'])) {
+        if ($vardef['rname'] !== null) {
             $fieldName = $vardef['rname'];
         }
 
@@ -530,7 +530,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 function getFieldValueFromModule($fieldname, $module, $id)
 {
     //Github bug 880, if the fieldname is null, do no call from bean
-    if (is_null($fieldname)) {
+    if ($fieldname === null) {
         return '';
     }
 

@@ -84,7 +84,7 @@ function build_related_list_by_user_id($bean, $user_id, $where)
              * Need to clone it if we're using 5.0+
              * clone() not supported by 4.x
              */
-            if (version_compare(phpversion(), "5.0", ">=")) {
+            if (PHP_VERSION_ID >= 50000) {
                 $newBean = clone($bean);
             } else {
                 $newBean = $bean;
@@ -131,7 +131,7 @@ function build_related_list_by_user_id($bean, $user_id, $where)
          * Need to clone it if we're using 5.0+
          * clone() not supported by 4.x
          */
-        if (version_compare(phpversion(), "5.0", ">=")) {
+        if (PHP_VERSION_ID >= 50000) {
             $newBean = clone($bean);
         } else {
             $newBean = $bean;

@@ -891,7 +891,7 @@ function showFullName()
     global $current_user;
     static $showFullName = null;
 
-    if (is_null($showFullName)) {
+    if ($showFullName === null) {
         $sysPref = !empty($sugar_config['use_real_names']);
         $userPref = (is_object($current_user)) ? $current_user->getPreference('use_real_names') : null;
 
@@ -933,7 +933,7 @@ function safe_map($request_var, &$focus, $always_copy = false)
  */
 function safe_map_named($request_var, &$focus, $member_var, $always_copy)
 {
-    if (isset($_REQUEST[$request_var]) && ($always_copy || is_null($focus->$member_var))) {
+    if (isset($_REQUEST[$request_var]) && ($always_copy || $focus->$member_var === null)) {
         $GLOBALS['log']->debug("safe map named called assigning '{$_REQUEST[$request_var]}' to $member_var");
         $focus->$member_var = $_REQUEST[$request_var];
     }
@@ -3313,8 +3313,8 @@ function sugar_cleanup($exit = false)
         return;
     }
     $called = true;
-    set_include_path(realpath(dirname(__FILE__) . '/..') . PATH_SEPARATOR . get_include_path());
-    chdir(realpath(dirname(__FILE__) . '/..'));
+    set_include_path(realpath(__DIR__ . '/..') . PATH_SEPARATOR . get_include_path());
+    chdir(realpath(__DIR__ . '/..'));
     global $sugar_config;
     require_once 'include/utils/LogicHook.php';
     LogicHook::initialize();

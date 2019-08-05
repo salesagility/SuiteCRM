@@ -1115,7 +1115,7 @@ class PHPSDKTestCase extends PHPUnit_Framework_TestCase
 
         // use the bundled cert from the start
         Facebook::$CURL_OPTS[CURLOPT_CAINFO] =
-      dirname(__FILE__) . '/../src/fb_ca_chain_bundle.crt';
+      __DIR__ . '/../src/fb_ca_chain_bundle.crt';
         $response = $facebook->api('/naitik');
 
         unset(Facebook::$CURL_OPTS[CURLOPT_CAINFO]);

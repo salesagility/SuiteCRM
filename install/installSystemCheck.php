@@ -72,7 +72,7 @@ function runCheck($install_script, $mod_strings = array())
     // check IIS and FastCGI
     $server_software = $_SERVER["SERVER_SOFTWARE"];
     if ((strpos($_SERVER["SERVER_SOFTWARE"], 'Microsoft-IIS') !== false)
-        && php_sapi_name() == 'cgi-fcgi'
+        && PHP_SAPI == 'cgi-fcgi'
         && ini_get('fastcgi.logging') != '0') {
         installLog($mod_strings['ERR_CHECKSYS_FASTCGI_LOGGING']);
         $iisVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_FASTCGI_LOGGING']}</span></b>";
@@ -98,7 +98,7 @@ function runCheck($install_script, $mod_strings = array())
             <p><b>'.$mod_strings['LBL_CHECKSYS_IISVER'].'</b></p>
             <p><span class="error">'.$iisVersion.'</span></p>
         ';
-        } elseif (php_sapi_name() != 'cgi-fcgi') {
+        } elseif (PHP_SAPI != 'cgi-fcgi') {
             installLog($mod_strings['ERR_CHECKSYS_FASTCGI'].' '.$iis_version);
             $iisVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_FASTCGI']}</span></b>";
             $error_found = true;

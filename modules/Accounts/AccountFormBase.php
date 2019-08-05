@@ -118,7 +118,7 @@ class AccountFormBase
             global $mod_strings;
         }
         global $app_strings;
-        $cols = sizeof($rows[0]) * 2 + 1;
+        $cols = count($rows[0]) * 2 + 1;
         if ($action != 'ShowDuplicates') {
             $form = "<form action='index.php' method='post' id='dupAccounts'  name='dupAccounts'><input type='hidden' name='selectedAccount' value=''>";
             $form .= '<table width="100%"><tr><td>'.$mod_strings['MSG_DUPLICATE']. '</td></tr><tr><td height="20"></td></tr></table>';

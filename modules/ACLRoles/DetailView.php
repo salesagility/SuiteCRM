@@ -63,7 +63,7 @@ $role->retrieve($_REQUEST['record']);
 $categories = ACLRole::getRoleActions($_REQUEST['record']);
 $names = ACLAction::setupCategoriesMatrix($categories);
 if (!empty($names)) {
-    $tdwidth = 100 / sizeof($names);
+    $tdwidth = 100 / count($names);
 }
 $sugar_smarty->assign('ROLE', $role->toArray());
 $sugar_smarty->assign('CATEGORIES', $categories);

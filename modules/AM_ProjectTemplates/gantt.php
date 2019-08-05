@@ -80,7 +80,7 @@ class Gantt
         }
         //for each task generate a row of empty days
         $i=1;
-        if (!is_null($tasks)) {
+        if ($tasks !== null) {
             foreach ($tasks as $task) {
                 echo '</tr><tr class="task_row">';
                 echo '<td colspan="'.$month_count.'"><table id="task'.$i.'" class="table_inner"><tr>';
@@ -232,7 +232,7 @@ class Gantt
 
     public function substr_unicode($str, $s, $l = null)
     {
-        return join("", array_slice(
+        return implode("", array_slice(
             preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY),
             $s,
             $l

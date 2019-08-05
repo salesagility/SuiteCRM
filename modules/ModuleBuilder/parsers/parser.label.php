@@ -125,7 +125,7 @@ class ParserLabel
     public static function removeLabel($language, $label, $labelvalue, $moduleName, $basepath = null, $forRelationshipLabel = false)
     {
         $GLOBALS [ 'log' ]->debug("ParserLabel::removeLabels($language, \$label, \$labelvalue, $moduleName, $basepath );");
-        if (is_null($basepath)) {
+        if ($basepath === null) {
             $deployedModule = true;
             $basepath = "custom/modules/$moduleName/language";
             if ($forRelationshipLabel) {
@@ -304,7 +304,7 @@ class ParserLabel
 
                 try {
                     $file_contents = fopen($extension_filename, 'w');
-                    fputs($file_contents, $out, strlen($out));
+                    fwrite($file_contents, $out, strlen($out));
                     fclose($file_contents);
                 } catch (Exception $e) {
                     $GLOBALS ['log']->fatal("Could not write $filename");
@@ -350,7 +350,7 @@ class ParserLabel
                 $failed_to_write = false;
                 try {
                     $file_contents = fopen($relationships_filename, 'w');
-                    fputs($file_contents, $out, strlen($out));
+                    fwrite($file_contents, $out, strlen($out));
                     fclose($file_contents);
                 } catch (Exception $e) {
                     $GLOBALS ['log']->fatal("Could not write $filename");

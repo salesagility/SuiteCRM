@@ -248,7 +248,7 @@ class SugarHtml
     public static function parseHtmlTag($code, $appendTo = array())
     {
         $code = ltrim($code);
-        $start_pos = strpos($code, ' ') ? strpos($code, ' ') : strpos($code, self::HTML_TAG_END);
+        $start_pos = strpos($code, ' ') ?: strpos($code, self::HTML_TAG_END);
         $output = array();
         if (substr($code, 0, 1) != self::HTML_TAG_BEGIN || $start_pos === false) {
             $offset = 0;

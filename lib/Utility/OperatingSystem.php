@@ -46,7 +46,7 @@ class OperatingSystem
      */
     public function isOsBSD()
     {
-        return stristr(php_uname('s'), 'BSD') !== false;
+        return stristr(PHP_OS, 'BSD') !== false;
     }
 
     /**
@@ -54,7 +54,7 @@ class OperatingSystem
      */
     public function isOsLinux()
     {
-        return stristr(php_uname('s'), 'Linux') !== false;
+        return stristr(PHP_OS, 'Linux') !== false;
     }
 
     /**
@@ -62,7 +62,7 @@ class OperatingSystem
      */
     public function isOsMacOSX()
     {
-        return stristr(php_uname('s'), 'Darwin') !== false;
+        return stristr(PHP_OS, 'Darwin') !== false;
     }
 
     /**
@@ -70,7 +70,7 @@ class OperatingSystem
      */
     public function isOsSolaris()
     {
-        return stristr(php_uname('s'), 'Solaris') !== false;
+        return stristr(PHP_OS, 'Solaris') !== false;
     }
 
     /**
@@ -78,7 +78,7 @@ class OperatingSystem
      */
     public function isOsUnknown()
     {
-        return php_uname('s') === 'Unknown';
+        return PHP_OS === 'Unknown';
     }
 
     /**
@@ -86,7 +86,7 @@ class OperatingSystem
      */
     public function isOsWindows()
     {
-        return stristr(php_uname('s'), 'Windows') !== false;
+        return stristr(PHP_OS, 'Windows') !== false;
     }
 
     /**

@@ -76,7 +76,7 @@ class Zend_Gdata_App_Util
         $foundKey = $maximumKey;
 
         // Sanity check: Make sure that the collection isn't empty
-        if (sizeof($collection) == 0) {
+        if (count($collection) == 0) {
             require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception("Empty namespace collection encountered.");
         }

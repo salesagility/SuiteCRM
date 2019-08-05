@@ -186,7 +186,7 @@ class SugarFieldBase
      */
     public function getSmartyView($parentFieldArray, $vardef, $displayParams, $tabindex, $view)
     {
-        if (is_null($tabindex) || !is_numeric($tabindex)) {
+        if ($tabindex === null || !is_numeric($tabindex)) {
             $tabindex = 0;
         }
 

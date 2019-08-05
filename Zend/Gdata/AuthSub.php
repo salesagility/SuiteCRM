@@ -130,9 +130,9 @@ class Zend_Gdata_AuthSub
         if ($response->isSuccessful()) {
             $goog_resp = array();
             foreach (explode("\n", $response->getBody()) as $l) {
-                $l = chop($l);
+                $l = rtrim($l);
                 if ($l) {
-                    list($key, $val) = explode('=', chop($l), 2);
+                    list($key, $val) = explode('=', rtrim($l), 2);
                     $goog_resp[$key] = $val;
                 }
             }

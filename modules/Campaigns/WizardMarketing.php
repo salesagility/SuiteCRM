@@ -251,7 +251,7 @@ foreach ($mailboxes as $id=>$name) {
 }
 $ss->assign("FROM_EMAILS", $from_emails);
 $ss->assign("DEFAULT_FROM_EMAIL", $default_email_address);
-$ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['email_marketing_status_dom'], $mrkt_focus->status ? $mrkt_focus->status : 'active'));
+$ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['email_marketing_status_dom'], $mrkt_focus->status ?: 'active'));
 if (empty($mrkt_focus->inbound_email_id)) {
     $defaultMailboxId = '';
     $mailboxIds = array();

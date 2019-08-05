@@ -651,7 +651,7 @@ class ConnectorUtils
                                 $newDisplayParam = $viewdefs[$module]['DetailView']['panels'][$panel_id][$row_id][$field_id]['displayParams'];
                                 $newDisplayParam['module'] = $module;
                                 $newDisplayParam['enableConnectors'] = true;
-                                if (!is_null($source_id) && !in_array($source_id, $newDisplayParam['connectors'])) {
+                                if ($source_id !== null && !in_array($source_id, $newDisplayParam['connectors'])) {
                                     $newDisplayParam['connectors'][] = $source_id;
                                 }
                                 $viewdefs[$module]['DetailView']['panels'][$panel_id][$row_id][$field_id]['displayParams'] = $newDisplayParam;
@@ -690,7 +690,7 @@ class ConnectorUtils
                         if (!empty($viewdefs[$module]['DetailView']['panels'][$panel_id][$row_id][$field_id]['displayParams'])) {
                             $viewdefs[$module]['DetailView']['panels'][$panel_id][$row_id][$field_id]['displayParams']['enableConnectors'] = true;
                             $viewdefs[$module]['DetailView']['panels'][$panel_id][$row_id][$field_id]['displayParams']['module'] = $module;
-                            if (!is_null($source_id) && !in_array($source_id, $viewdefs[$module]['DetailView']['panels'][$panel_id][$row_id][$field_id]['displayParams']['connectors'])) {
+                            if ($source_id !== null && !in_array($source_id, $viewdefs[$module]['DetailView']['panels'][$panel_id][$row_id][$field_id]['displayParams']['connectors'])) {
                                 $viewdefs[$module]['DetailView']['panels'][$panel_id][$row_id][$field_id]['displayParams']['connectors'][] = $source_id;
                             }
                         } else {
@@ -898,7 +898,7 @@ class ConnectorUtils
             if (!empty($modules_sources) && !empty($modules_sources[$module])) {
                 foreach ($modules_sources[$module] as $id) {
                     $source = SourceFactory::getSource($id, false);
-                    if (!is_null($source) && $source->isEnabledInWizard() && $source->isRequiredConfigFieldsForButtonSet()) {
+                    if ($source !== null && $source->isEnabledInWizard() && $source->isRequiredConfigFieldsForButtonSet()) {
                         return true;
                     }
                 }

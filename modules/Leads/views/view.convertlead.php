@@ -206,7 +206,7 @@ class ViewConvertLead extends SugarView
                         if ($module == "Contacts") {
                             $focus->$field = $this->focus->$field;
                         }
-                    } elseif (is_a($focus, "Company") && $field == 'phone_office') {
+                    } elseif ($focus instanceof \Company && $field == 'phone_office') {
                         //Special case where company and person have the same field with a different name
                         $focus->phone_office = $this->focus->phone_work;
                     } elseif (strpos($field, "billing_address") !== false && $focus->field_defs[$field]["type"] == "varchar") /* Bug 42219 fix */

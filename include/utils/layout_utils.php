@@ -222,7 +222,7 @@ function getClassicModuleTitle($module, $params, $show_create=false, $index_url_
     }
 
     $new_params = array_pop($params);
-    if (!is_null($new_params) && ($new_params !== "")) {
+    if ($new_params !== null && ($new_params !== "")) {
         $module_title = $new_params;
     }
     if (!empty($module_title)) {

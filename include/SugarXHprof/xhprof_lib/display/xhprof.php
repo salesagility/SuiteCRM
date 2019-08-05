@@ -33,7 +33,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 if (!isset($GLOBALS['XHPROF_LIB_ROOT'])) {
     // by default, the parent directory is XHPROF lib root
-    $GLOBALS['XHPROF_LIB_ROOT'] = realpath(dirname(__FILE__) . '/..');
+    $GLOBALS['XHPROF_LIB_ROOT'] = realpath(__DIR__ . '/..');
 }
 
 require_once $GLOBALS['XHPROF_LIB_ROOT'].'/utils/xhprof_lib.php';

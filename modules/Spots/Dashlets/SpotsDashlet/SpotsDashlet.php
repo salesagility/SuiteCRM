@@ -104,7 +104,7 @@ class SpotsDashlet extends Dashlet
 
         //As the dashlet may point to a pivot that has been marked as deleted, check this here
 
-        if (is_null($this->spotId) || $this->spotId === '') {
+        if ($this->spotId === null || $this->spotId === '') {
             return parent::display('').'<span style="margin-left:10px;" class="dashletAnalyticMessage">'.$this->dashletStrings['LBL_NO_SPOTS_SELECTED'].'</span><br />'; // return parent::display for title and such
         }
         if ($this->checkIfSpotHasBeenDeleted($this->spotId)) {
@@ -170,7 +170,7 @@ class SpotsDashlet extends Dashlet
         $spotBean = BeanFactory::getBean('Spots');
         $beanList = $spotBean->get_full_list('name');
         $returnArray = [];
-        if (!is_null($beanList)) {
+        if ($beanList !== null) {
             foreach ($beanList as $b) {
                 $bean = new stdClass();
                 $bean->type = $b->type;

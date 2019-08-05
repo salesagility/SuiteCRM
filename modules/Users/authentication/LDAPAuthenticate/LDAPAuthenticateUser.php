@@ -167,7 +167,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
                 $group_attr = $GLOBALS['ldap_config']->settings['ldap_group_attr'];
                 if (!isset($info[0][$group_user_attr])) {
                     $GLOBALS['log']->fatal("ldapauth: $group_user_attr not found for user $name cannot authenticate against an LDAP group");
-                    ldap_close($ldapconn);
+                    ldap_unbind($ldapconn);
                     return '';
                 }
                 $user_uid = $info[0][$group_user_attr];
@@ -203,14 +203,14 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
                         . " Group Attribute: $group_attr  User Attribute: $group_user_attr :(" . $user_uid . ")"
                     );
 
-                    ldap_close($ldapconn);
+                    ldap_unbind($ldapconn);
                     return '';
                 }
             }
 
 
 
-            ldap_close($ldapconn);
+            ldap_unbind($ldapconn);
             $dbresult = DBManagerFactory::getInstance()->query("SELECT id, status FROM users WHERE user_name='" . $name . "' AND deleted = 0");
 
             //user already exists use this one
@@ -229,7 +229,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
         }
         $GLOBALS['log']->fatal("SECURITY: failed LDAP bind (login) by $this->user_name using bind_user=$bind_user");
         $GLOBALS['log']->fatal("ldapauth: failed LDAP bind (login) by $this->user_name using bind_user=$bind_user");
-        ldap_close($ldapconn);
+        ldap_unbind($ldapconn);
         return '';
     }
 

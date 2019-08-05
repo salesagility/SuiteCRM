@@ -77,7 +77,7 @@ abstract class PersonFormBase extends FormBase
 
         $newLinkLabel = 'LNK_NEW_' . strtoupper($this->objectName);
     
-        $cols = sizeof($rows[0]) * 2 + 1;
+        $cols = count($rows[0]) * 2 + 1;
     
         if ($action != 'ShowDuplicates') {
             $duplicateLabel = string_format($app_strings['MSG_DUPLICATE'], array(strtolower($this->objectName), $this->moduleName));

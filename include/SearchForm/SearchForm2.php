@@ -393,12 +393,12 @@ class SearchForm
                 $value = isset($defs['value']) ? $defs['value'] : null;
                 if (($vname || $label) && $value) {
                     $type = isset($defs['type']) ? $defs['type'] : null;
-                    if (isset($app_strings[$vname ? $vname : $label])) {
-                        $labelText = $app_strings[$vname ? $vname : $label];
-                    } elseif (isset($mod_strings[$vname ? $vname : $label])) {
-                        $labelText = $mod_strings[$vname ? $vname : $label];
+                    if (isset($app_strings[$vname ?: $label])) {
+                        $labelText = $app_strings[$vname ?: $label];
+                    } elseif (isset($mod_strings[$vname ?: $label])) {
+                        $labelText = $mod_strings[$vname ?: $label];
                     } else {
-                        $labelText = $vname ? $vname : $label;
+                        $labelText = $vname ?: $label;
                     }
                     if (!preg_match('/\:\s*/', $labelText)) {
                         $labelText .= ':';
@@ -1197,7 +1197,7 @@ class SearchForm
                                 $values[] = $tmpfield_value;
                             }
 
-                            $field_value = join('<>', $values);
+                            $field_value = implode('<>', $values);
 
                             if (!empty($parms['enable_range_search']) && $parms['operator'] == '=' && $type != 'int') {
                                 // Databases can't really search for floating point numbers, because they can't be accurately described in binary,

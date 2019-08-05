@@ -40,7 +40,7 @@ if (array_key_exists("aop", $sugar_config) && array_key_exists("joomla_url", $su
     $wbsv = file_get_contents($portalURL.'/index.php?option=com_advancedopenportal&task=disable_user&sug='.$_REQUEST['record'].'&uid='.$bean->joomla_account_id);
     $res = json_decode($wbsv);
     if (!$res->success) {
-        $msg = $res->error ? $res->error : $mod_strings['LBL_DISABLE_PORTAL_USER_FAILED'];
+        $msg = $res->error ?: $mod_strings['LBL_DISABLE_PORTAL_USER_FAILED'];
         SugarApplication::appendErrorMessage($msg);
     } else {
         $bean->portal_account_disabled = 1;

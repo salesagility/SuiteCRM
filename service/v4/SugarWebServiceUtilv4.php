@@ -329,7 +329,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
         require_once($beanFiles[$class_name]);
         $ids = array();
         $count = 1;
-        $total = sizeof($name_value_lists);
+        $total = count($name_value_lists);
         foreach ($name_value_lists as $name_value_list) {
             $seed = new $class_name();
 

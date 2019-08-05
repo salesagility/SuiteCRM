@@ -191,7 +191,7 @@ class vCard
         $bean->assigned_user_id = $current_user->id;
         $email_suffix = 1;
 
-        for ($index = 0; $index < sizeof($lines); $index++) {
+        for ($index = 0; $index < count($lines); $index++) {
             $line = $lines[$index];
 
             // check the encoding and change it if needed
@@ -220,9 +220,9 @@ class vCard
                 }
 
                 $keyvalue = explode(':', $line);
-                if (sizeof($keyvalue) == 2) {
+                if (count($keyvalue) == 2) {
                     $value = $keyvalue[1];
-                    for ($newindex = $index + 1;  $newindex < sizeof($lines), substr_count($lines[$newindex], ':') == 0; $newindex++) {
+                    for ($newindex = $index + 1; $newindex < count($lines), substr_count($lines[$newindex], ':') == 0; $newindex++) {
                         $value .= $lines[$newindex];
                         $index = $newindex;
                     }
@@ -269,13 +269,13 @@ class vCard
                     }
 
                     if ($keys[0] == 'N') {
-                        if (sizeof($values) > 0) {
+                        if (count($values) > 0) {
                             $bean->last_name = $values[0];
                         }
-                        if (sizeof($values) > 1) {
+                        if (count($values) > 1) {
                             $bean->first_name = $values[1];
                         }
-                        if (sizeof($values) > 2) {
+                        if (count($values) > 2) {
                             $bean->salutation = $values[2];
                         }
                     }
@@ -287,21 +287,21 @@ class vCard
 
                 if ($keys[0] == 'ADR') {
                     if (substr_count($key, 'WORK') > 0 && (substr_count($key, 'POSTAL') > 0|| substr_count($key, 'PARCEL') == 0)) {
-                        if (!isset($bean->primary_address_street) && sizeof($values) > 2) {
+                        if (!isset($bean->primary_address_street) && count($values) > 2) {
                             $textBreaks = array("\n", "\r");
                             $vcardBreaks = array("=0A", "=0D");
                             $bean->primary_address_street = str_replace($vcardBreaks, $textBreaks, $values[2]);
                         }
-                        if (!isset($bean->primary_address_city) && sizeof($values) > 3) {
+                        if (!isset($bean->primary_address_city) && count($values) > 3) {
                             $bean->primary_address_city = $values[3];
                         }
-                        if (!isset($bean->primary_address_state) && sizeof($values) > 4) {
+                        if (!isset($bean->primary_address_state) && count($values) > 4) {
                             $bean->primary_address_state = $values[4];
                         }
-                        if (!isset($bean->primary_address_postalcode) && sizeof($values) > 5) {
+                        if (!isset($bean->primary_address_postalcode) && count($values) > 5) {
                             $bean->primary_address_postalcode = $values[5];
                         }
-                        if (!isset($bean->primary_address_country) && sizeof($values) > 6) {
+                        if (!isset($bean->primary_address_country) && count($values) > 6) {
                             $bean->primary_address_country = $values[6];
                         }
                     }
@@ -325,7 +325,7 @@ class vCard
                     $GLOBALS['log']->debug('I found a company name');
                     if (!empty($value)) {
                         $GLOBALS['log']->debug('I found a company name (fer real)');
-                        if (is_a($bean, "Contact") || is_a($bean, "Lead")) {
+                        if ($bean instanceof \Contact || $bean instanceof \Lead) {
                             $GLOBALS['log']->debug('And Im dealing with a person!');
                             $accountBean = BeanFactory::getBean('Accounts');
                             // It's a contact, we better try and match up an account
@@ -350,7 +350,7 @@ class vCard
                                 $result = $accountBean->retrieve_by_string_fields(array('name' => $short_company_name, 'deleted' => 0));
                             }
 
-                            if (is_a($bean, "Lead") || ! isset($result->id)) {
+                            if ($bean instanceof \Lead || ! isset($result->id)) {
                                 // We could not find a parent account, or this is a lead so only copy the name, no linking
                                 $GLOBALS['log']->debug("Did not find a matching company ($full_company_name)");
                                 $bean->account_id = '';
@@ -381,7 +381,7 @@ class vCard
             }
         }
 
-        if (is_a($bean, "Contact") && empty($bean->account_id) && !empty($bean->account_name)) {
+        if ($bean instanceof \Contact && empty($bean->account_id) && !empty($bean->account_name)) {
             $GLOBALS['log']->debug("Look ma! I'm creating a new account: " . $bean->account_name);
             // We need to create a new account
             $accountBean = BeanFactory::getBean('Accounts');

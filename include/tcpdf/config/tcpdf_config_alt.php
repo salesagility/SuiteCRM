@@ -68,7 +68,7 @@ if ((!isset($_SERVER['DOCUMENT_ROOT'])) or (empty($_SERVER['DOCUMENT_ROOT']))) {
 }
 
 // Automatic calculation for the following K_PATH_MAIN constant
-$k_path_main = str_replace('\\', '/', realpath(substr(dirname(__FILE__), 0, 0-strlen('config'))));
+$k_path_main = str_replace('\\', '/', realpath(substr(__DIR__, 0, 0-strlen('config'))));
 if (substr($k_path_main, -1) != '/') {
     $k_path_main .= '/';
 }

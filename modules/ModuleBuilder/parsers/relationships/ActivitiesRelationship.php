@@ -105,7 +105,7 @@ class ActivitiesRelationship extends OneToManyRelationship
                         'module' => 'application',
                         'system_label' => $typeDisplay,
                         'display_label' => array(
-                            $this->lhs_module => $this->lhs_label ? $this->lhs_label : ucfirst($this->lhs_module)
+                            $this->lhs_module => $this->lhs_label ?: ucfirst($this->lhs_module)
                         ),
                     );
                 }
