@@ -107,3 +107,6 @@ build/tmp/
 # IMAP testing
 fakeImapResource
 include/Imap/ImapTestSettings.txt
+
+# Ignore custom codeception environments so they won't be committed.
+tests/_envs/custom.yml

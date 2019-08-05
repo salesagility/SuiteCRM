@@ -310,11 +310,11 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
             $fieldBits = $fnmFile->readByte();
             $this->_fields[$count] = new Zend_Search_Lucene_Index_FieldInfo(
                 $fieldName,
-                                                                            $fieldBits & 0x01 /* field is indexed */,
-                                                                            $count,
-                                                                            $fieldBits & 0x02 /* termvectors are stored */,
-                                                                            $fieldBits & 0x10 /* norms are omitted */,
-                                                                            $fieldBits & 0x20 /* payloads are stored */
+                $fieldBits & 0x01 /* field is indexed */,
+                $count,
+                $fieldBits & 0x02 /* termvectors are stored */,
+                $fieldBits & 0x10 /* norms are omitted */,
+                $fieldBits & 0x20 /* payloads are stored */
             );
             if ($fieldBits & 0x10) {
                 // norms are omitted for the indexed field
@@ -1424,7 +1424,7 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
 
             return str_repeat(
                 chr($similarity->encodeNorm($similarity->lengthNorm($fieldName, 0))),
-                              $this->_docCount
+                $this->_docCount
             );
         }
 
@@ -1941,13 +1941,13 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
 
         $this->_lastTerm     = new Zend_Search_Lucene_Index_Term(
             $prevTerm[1] /* text */,
-                                                                 ($prevTerm[0] == -1) ? '' : $this->_fields[$prevTerm[0] /* field */]->name
+            ($prevTerm[0] == -1) ? '' : $this->_fields[$prevTerm[0] /* field */]->name
         );
         $this->_lastTermInfo = new Zend_Search_Lucene_Index_TermInfo(
             $prevTermInfo[0] /* docFreq */,
-                                                                     $prevTermInfo[1] /* freqPointer */,
-                                                                     $prevTermInfo[2] /* proxPointer */,
-                                                                     $prevTermInfo[3] /* skipOffset */
+            $prevTermInfo[1] /* freqPointer */,
+            $prevTermInfo[2] /* proxPointer */,
+            $prevTermInfo[3] /* skipOffset */
         );
         $this->_termCount  =  $this->_termNum - $prevPosition*$this->_indexInterval;
 

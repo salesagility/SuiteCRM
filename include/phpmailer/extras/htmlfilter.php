@@ -886,12 +886,12 @@ function tln_sanitize(
                 if (!empty($attary)) {
                     $attary = tln_fixatts(
                         $tagname,
-                                         $attary,
-                                         $rm_attnames,
-                                         $bad_attvals,
-                                         $add_attr_to_tag,
-                                         $trans_image_path,
-                                         $block_external_images
+                        $attary,
+                        $rm_attnames,
+                        $bad_attvals,
+                        $add_attr_to_tag,
+                        $trans_image_path,
+                        $block_external_images
                                          );
                 }
                 $trusted .= tln_tagprint($tagname, $attary, $tagtype);

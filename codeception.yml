@@ -30,10 +30,8 @@ coverage:
         - soap/*.php
         - themes/*.php
     exclude:
-        - include/timezone/*
         - include/SuiteGraphs/*
         - include/social/*
-        - include/Smarty/*
         - include/reCaptcha/*
         - include/phpmailer/*
         - include/Pear/*

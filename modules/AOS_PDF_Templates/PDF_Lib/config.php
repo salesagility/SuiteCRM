@@ -61,15 +61,15 @@ $this->maxTTFFilesize = 2000;
 $this->percentSubset = 30;
 
 $this->useAdobeCJK = true;		// Uses Adobe CJK fonts for CJK languages
-			// default TRUE; only set false if you have defined some available fonts that support CJK
-			// If true this will not stop use of other CJK fonts if specified by font-family:
-			// and vice versa i.e. only dictates behaviour when specified by lang="" incl. AutoFont()
+            // default TRUE; only set false if you have defined some available fonts that support CJK
+            // If true this will not stop use of other CJK fonts if specified by font-family:
+            // and vice versa i.e. only dictates behaviour when specified by lang="" incl. AutoFont()
 
 // When embedding full TTF font files, remakes the font file using only core tables
 // May improve function with some PostScript printers (GhostScript/GSView)
 // Does not work with TTC font collections
 // Slightly smaller file; increased processing time
-$this->repackageTTF = false; 
+$this->repackageTTF = false;
 
 // Allows automatic character set conversion if "charset=xxx" detected in html header (WriteHTML() )
 $this->allow_charset_conversion = true;
@@ -89,8 +89,8 @@ $this->collapseBlockMargins = true; 	// Allows top and bottom margins to collaps
 $this->progressBar = 0;				// Shows progress-bars whilst generating file 0 off, 1 simple, 2 advanced
 $this->progbar_heading = 'mPDF file progress';
 $this->progbar_altHTML = '';			// Should include <html> and <body> but NOT end tags
-							// Can incude <head> and link to stylesheet etc.
-							// e.g. '<html><body><p><img src="loading.gif" /> Creating PDF file. Please wait...</p>';
+                            // Can incude <head> and link to stylesheet etc.
+                            // e.g. '<html><body><p><img src="loading.gif" /> Creating PDF file. Please wait...</p>';
 
 $this->dpi = 96;					// To interpret "px" pixel values in HTML/CSS (see img_dpi below)
 
@@ -121,18 +121,18 @@ $this->restrictColorSpace = 0;
 
 // PDFX/1-a Compliant files
 $this->PDFX = false;				// true=Forces compliance with PDFX-1a spec
-							// Cannot be used with $this->restrictColorSpace (i.e. no RGB)
+                            // Cannot be used with $this->restrictColorSpace (i.e. no RGB)
 $this->PDFXauto = false;			// Overrides warnings making changes when possible to force PDFX1-a compliance
 
 
 // PDFA1-b Compliant files
 $this->PDFA = false;				// true=Forces compliance with PDFA-1b spec
-							// Can use with $this->restrictColorSpace=3 (for a CMYK file)
-							// Any other settings, uses RGB profile
+                            // Can use with $this->restrictColorSpace=3 (for a CMYK file)
+                            // Any other settings, uses RGB profile
 $this->PDFAauto = false;			// Overrides warnings making changes when possible to force PDFA1-b compliance
 $this->ICCProfile = '';				// Colour profile OutputIntent
-							// sRGB_IEC61966-2-1 (=default if blank and PDFA),  or other added .icc profile
-							// Must be CMYK for PDFX, or appropriate type for PDFA(RGB or CMYK)
+                            // sRGB_IEC61966-2-1 (=default if blank and PDFA),  or other added .icc profile
+                            // Must be CMYK for PDFX, or appropriate type for PDFA(RGB or CMYK)
 
 
 
@@ -158,9 +158,9 @@ $this->anchor2Bookmark = 0;	// makes <a name=""> into a bookmark as well as inte
 /*
  Example:
 $this->bookmarkStyles = array(
-	0 => array('color'=> array(0,64,128), 'style'=>'B'),
-	1 => array('color'=> array(128,0,0), 'style'=>''),
-	2 => array('color'=> array(0,128,0), 'style'=>'I'),
+    0 => array('color'=> array(0,64,128), 'style'=>'B'),
+    1 => array('color'=> array(128,0,0), 'style'=>''),
+    2 => array('color'=> array(0,128,0), 'style'=>'I'),
 );
 */
 $this->bookmarkStyles = array();
@@ -183,8 +183,8 @@ $this->header_line_spacing = 0.25;	// spacing between bottom of header and line 
 $this->footer_line_spacing = 0.25;	// spacing between bottom of header and line (if present) - function of fontsize
 // If 'pad' margin-top sets fixed distance in mm (padding) between bottom of header and top of text.
 // If 'stretch' margin-top sets a minimum distance in mm between top of page and top of text, which expands if header is too large to fit.
-$this->setAutoTopMargin = false;	
-$this->setAutoBottomMargin = false;	
+$this->setAutoTopMargin = false;
+$this->setAutoBottomMargin = false;
 $this->autoMarginPadding = 2;		// distance in mm used as padding if 'stretch' mode is used
 
 
@@ -192,38 +192,38 @@ $this->autoMarginPadding = 2;		// distance in mm used as padding if 'stretch' mo
 // TABLES
 $this->simpleTables = false; // Forces all cells to have same border, background etc. Improves performance
 $this->packTableData = false; // Reduce memory usage processing tables (but with increased processing time)
-// Using disk to cache table data can reduce memory usage dramatically, but at a cost of increased 
+// Using disk to cache table data can reduce memory usage dramatically, but at a cost of increased
 // executon time and disk access (read and write)
 $this->cacheTables = false;
 
 $this->ignore_table_percents = false;
 $this->ignore_table_widths = false;
 $this->keep_table_proportions = false;	// If table width set > page width, force resizing but keep relative sizes
-							// Also forces respect of cell widths set by %
+                            // Also forces respect of cell widths set by %
 $this->shrink_tables_to_fit = 1.4;	// automatically reduce fontsize in table if words would have to split ( not in CJK)
-						// 0 or false to disable; value (if set) gives maximum factor to reduce fontsize
+                        // 0 or false to disable; value (if set) gives maximum factor to reduce fontsize
 
-$this->tableMinSizePriority = false;	// If page-break-inside:avoid but cannot fit on full page without 
-							// exceeding autosize; setting this value to true will force respsect for
-							// autosize, and disable the page-break-inside:avoid
+$this->tableMinSizePriority = false;	// If page-break-inside:avoid but cannot fit on full page without
+                            // exceeding autosize; setting this value to true will force respsect for
+                            // autosize, and disable the page-break-inside:avoid
 
 $this->use_kwt = false;				// "Keep-with-table"
 $this->iterationCounter = false;		// Set to TRUE to use table Head iteration counter
 $this->splitTableBorderWidth = 0;		// Use table border (using this width in mm) when table breaks across pages
-							// Recommended to use small value e.g. 0.01
+                            // Recommended to use small value e.g. 0.01
 
 
 // IMAGES
 $this->img_dpi = 96;	// Default dpi to output images if size not defined
-				// See also above "dpi"
+                // See also above "dpi"
 
 // TEXT SPACING & JUSTIFICATION
 $this->useKerning = false;	// true to use kerning
 $this->justifyB4br = false;	// In justified text, <BR> does not cause the preceding text to be justified in browsers
-					// Change to true to force justification (as in MS Word)
+                    // Change to true to force justification (as in MS Word)
 
 $this->tabSpaces = 8;	// Number of spaces to replace for a TAB in <pre> sections
-				// Notepad uses 6, HTML specification recommends 8
+                // Notepad uses 6, HTML specification recommends 8
 $this->jSWord = 0.4;	// Proportion (/1) of space (when justifying margins) to allocate to Word vs. Character
 $this->jSmaxChar = 2;	// Maximum spacing to allocate to character spacing. (0 = no maximum)
 
@@ -271,9 +271,9 @@ $this->watermark_font = '';
 $this->watermarkTextAlpha = 0.2;
 $this->watermarkImageAlpha = 0.2;
 $this->watermarkImgAlphaBlend = 'Normal';
-	// Accepts any PDF spec. value: Normal, Multiply, Screen, Overlay, Darken, Lighten, ColorDodge, ColorBurn, 
-	// HardLight, SoftLight, Difference, Exclusion
-	// "Multiply" works well for watermark image on top
+    // Accepts any PDF spec. value: Normal, Multiply, Screen, Overlay, Darken, Lighten, ColorDodge, ColorBurn,
+    // HardLight, SoftLight, Difference, Exclusion
+    // "Multiply" works well for watermark image on top
 
 // BORDERS
 $this->autoPadding = false; // Automatically increases padding in block elements when border-radius set - if required
@@ -283,210 +283,210 @@ $this->autoPadding = false; // Automatically increases padding in block elements
 
 // Default values if no style sheet offered	(cf. http://www.w3.org/TR/CSS21/sample.html)
 $this->defaultCSS = array(
-	'BODY' => array(
-		'FONT-FAMILY' => 'serif',
-		'FONT-SIZE' => '11pt',
-		'TEXT-INDENT' => '0pt',
-		'LINE-HEIGHT' => 'normal',
-		'MARGIN-COLLAPSE' => 'collapse', /* Custom property to collapse top/bottom margins at top/bottom of page - ignored in tables/lists */
-		'HYPHENS' => 'manual',	/* mPDF 5.6.08 */
-	),
-	'P' => array(
-		'MARGIN' => '1.12em 0',
-	),
-	'H1' => array(
-		'FONT-SIZE' => '2em',
-		'FONT-WEIGHT' => 'bold',
-		'MARGIN' => '0.67em 0',
-		'PAGE-BREAK-AFTER' => 'avoid',
-	),
-	'H2' => array(
-		'FONT-SIZE' => '1.5em',
-		'FONT-WEIGHT' => 'bold',
-		'MARGIN' => '0.75em 0',
-		'PAGE-BREAK-AFTER' => 'avoid',
-	),
-	'H3' => array(
-		'FONT-SIZE' => '1.17em',
-		'FONT-WEIGHT' => 'bold',
-		'MARGIN' => '0.83em 0',
-		'PAGE-BREAK-AFTER' => 'avoid',
-	),
-	'H4' => array(
-		'FONT-WEIGHT' => 'bold',
-		'MARGIN' => '1.12em 0',
-		'PAGE-BREAK-AFTER' => 'avoid',
-	),
-	'H5' => array(
-		'FONT-SIZE' => '0.83em',
-		'FONT-WEIGHT' => 'bold',
-		'MARGIN' => '1.5em 0',
-		'PAGE-BREAK-AFTER' => 'avoid',
-	),
-	'H6' => array(
-		'FONT-SIZE' => '0.75em',
-		'FONT-WEIGHT' => 'bold',
-		'MARGIN' => '1.67em 0',
-		'PAGE-BREAK-AFTER' => 'avoid',
-	),
-	'HR' => array(
-		'COLOR' => '#888888',
-		'TEXT-ALIGN' => 'center',
-		'WIDTH' => '100%',
-		'HEIGHT' => '0.2mm',
-		'MARGIN-TOP' => '0.83em',
-		'MARGIN-BOTTOM' => '0.83em',
-	),
-	'PRE' => array(
-		'MARGIN' => '0.83em 0',
-		'FONT-FAMILY' => 'monospace',
-	),
-	'S' => array(
-		'TEXT-DECORATION' => 'line-through',
-	),
-	'STRIKE' => array(
-		'TEXT-DECORATION' => 'line-through',
-	),
-	'DEL' => array(
-		'TEXT-DECORATION' => 'line-through',
-	),
-	'SUB' => array(
-		'VERTICAL-ALIGN' => 'sub',
-		'FONT-SIZE' => '55%',	/* Recommended 0.83em */
-	),
-	'SUP' => array(
-		'VERTICAL-ALIGN' => 'super',
-		'FONT-SIZE' => '55%',	/* Recommended 0.83em */
-	),
-	'U' => array(
-		'TEXT-DECORATION' => 'underline',
-	),
-	'INS' => array(
-		'TEXT-DECORATION' => 'underline',
-	),
-	'B' => array(
-		'FONT-WEIGHT' => 'bold',
-	),
-	'STRONG' => array(
-		'FONT-WEIGHT' => 'bold',
-	),
-	'I' => array(
-		'FONT-STYLE' => 'italic',
-	),
-	'CITE' => array(
-		'FONT-STYLE' => 'italic',
-	),
-	'Q' => array(
-		'FONT-STYLE' => 'italic',
-	),
-	'EM' => array(
-		'FONT-STYLE' => 'italic',
-	),
-	'VAR' => array(
-		'FONT-STYLE' => 'italic',
-	),
-	'SAMP' => array(
-		'FONT-FAMILY' => 'monospace',
-	),
-	'CODE' => array(
-		'FONT-FAMILY' => 'monospace',
-	),
-	'KBD' => array(
-		'FONT-FAMILY' => 'monospace',
-	),
-	'TT' => array(
-		'FONT-FAMILY' => 'monospace',
-	),
-	'SMALL' => array(
-		'FONT-SIZE' => '83%',
-	),
-	'BIG' => array(
-		'FONT-SIZE' => '117%',
-	),
-	'ACRONYM' => array(
-		'FONT-SIZE' => '77%',
-		'FONT-WEIGHT' => 'bold',
-	),
-	'ADDRESS' => array(
-		'FONT-STYLE' => 'italic',
-	),
-	'BLOCKQUOTE' => array(
-		'MARGIN-LEFT' => '40px',
-		'MARGIN-RIGHT' => '40px',
-		'MARGIN-TOP' => '1.12em',
-		'MARGIN-BOTTOM' => '1.12em',
-	),
-	'A' => array(
-		'COLOR' => '#0000FF',
-		'TEXT-DECORATION' => 'underline',
-	),
-	'UL' => array(
-		'MARGIN' => '0.83em 0',		/* only applied to top-level of nested lists */
-		'TEXT-INDENT' => '1.3em',	/* Custom effect - list indent */
-	),
-	'OL' => array(
-		'MARGIN' => '0.83em 0',		/* only applied to top-level of nested lists */
-		'TEXT-INDENT' => '1.3em',	/* Custom effect - list indent */
-	),
-	'DL' => array(
-		'MARGIN' => '1.67em 0',
-	),
-	'DT' => array(
-	),
-	'DD' => array(
-		'PADDING-LEFT' => '40px',
-	),
-	'TABLE' => array(
-		'MARGIN' => '0',
-		'BORDER-COLLAPSE' => 'separate',
-		'BORDER-SPACING' => '2px',
-		'EMPTY-CELLS' => 'show',
-		'LINE-HEIGHT' => '1.2',
-		'VERTICAL-ALIGN' => 'middle',
-	),
-	'THEAD' => array(
-	),
-	'TFOOT' => array(
-	),
-	'TH' => array(
-		'FONT-WEIGHT' => 'bold',
-		'TEXT-ALIGN' => 'center',
-		'PADDING-LEFT' => '0.1em',
-		'PADDING-RIGHT' => '0.1em',
-		'PADDING-TOP' => '0.1em',
-		'PADDING-BOTTOM' => '0.1em',
-	),
-	'TD' => array(
-		'PADDING-LEFT' => '0.1em',
-		'PADDING-RIGHT' => '0.1em',
-		'PADDING-TOP' => '0.1em',
-		'PADDING-BOTTOM' => '0.1em',
-	),
-	'CAPTION' => array(
-		'TEXT-ALIGN' => 'center',
-	),
-	'IMG' => array(
-		'MARGIN' => '0',
-		'VERTICAL-ALIGN' => 'baseline',
-	),
-	'INPUT' => array(
-		'FONT-FAMILY' => 'sans-serif',
-		'VERTICAL-ALIGN' => 'middle',
-		'FONT-SIZE' => '0.9em',
-	),
-	'SELECT' => array(
-		'FONT-FAMILY' => 'sans-serif',
-		'FONT-SIZE' => '0.9em',
-		'VERTICAL-ALIGN' => 'middle',
-	),
-	'TEXTAREA' => array(
-		'FONT-FAMILY' => 'monospace',
-		'FONT-SIZE' => '0.9em',
-		'VERTICAL-ALIGN' => 'text-bottom',
-	),
-	'MARK' => array(	/* mPDF 5.5.09 */
-		'BACKGROUND-COLOR' => 'yellow',
-	),
+    'BODY' => array(
+        'FONT-FAMILY' => 'serif',
+        'FONT-SIZE' => '11pt',
+        'TEXT-INDENT' => '0pt',
+        'LINE-HEIGHT' => 'normal',
+        'MARGIN-COLLAPSE' => 'collapse', /* Custom property to collapse top/bottom margins at top/bottom of page - ignored in tables/lists */
+        'HYPHENS' => 'manual',	/* mPDF 5.6.08 */
+    ),
+    'P' => array(
+        'MARGIN' => '1.12em 0',
+    ),
+    'H1' => array(
+        'FONT-SIZE' => '2em',
+        'FONT-WEIGHT' => 'bold',
+        'MARGIN' => '0.67em 0',
+        'PAGE-BREAK-AFTER' => 'avoid',
+    ),
+    'H2' => array(
+        'FONT-SIZE' => '1.5em',
+        'FONT-WEIGHT' => 'bold',
+        'MARGIN' => '0.75em 0',
+        'PAGE-BREAK-AFTER' => 'avoid',
+    ),
+    'H3' => array(
+        'FONT-SIZE' => '1.17em',
+        'FONT-WEIGHT' => 'bold',
+        'MARGIN' => '0.83em 0',
+        'PAGE-BREAK-AFTER' => 'avoid',
+    ),
+    'H4' => array(
+        'FONT-WEIGHT' => 'bold',
+        'MARGIN' => '1.12em 0',
+        'PAGE-BREAK-AFTER' => 'avoid',
+    ),
+    'H5' => array(
+        'FONT-SIZE' => '0.83em',
+        'FONT-WEIGHT' => 'bold',
+        'MARGIN' => '1.5em 0',
+        'PAGE-BREAK-AFTER' => 'avoid',
+    ),
+    'H6' => array(
+        'FONT-SIZE' => '0.75em',
+        'FONT-WEIGHT' => 'bold',
+        'MARGIN' => '1.67em 0',
+        'PAGE-BREAK-AFTER' => 'avoid',
+    ),
+    'HR' => array(
+        'COLOR' => '#888888',
+        'TEXT-ALIGN' => 'center',
+        'WIDTH' => '100%',
+        'HEIGHT' => '0.2mm',
+        'MARGIN-TOP' => '0.83em',
+        'MARGIN-BOTTOM' => '0.83em',
+    ),
+    'PRE' => array(
+        'MARGIN' => '0.83em 0',
+        'FONT-FAMILY' => 'monospace',
+    ),
+    'S' => array(
+        'TEXT-DECORATION' => 'line-through',
+    ),
+    'STRIKE' => array(
+        'TEXT-DECORATION' => 'line-through',
+    ),
+    'DEL' => array(
+        'TEXT-DECORATION' => 'line-through',
+    ),
+    'SUB' => array(
+        'VERTICAL-ALIGN' => 'sub',
+        'FONT-SIZE' => '55%',	/* Recommended 0.83em */
+    ),
+    'SUP' => array(
+        'VERTICAL-ALIGN' => 'super',
+        'FONT-SIZE' => '55%',	/* Recommended 0.83em */
+    ),
+    'U' => array(
+        'TEXT-DECORATION' => 'underline',
+    ),
+    'INS' => array(
+        'TEXT-DECORATION' => 'underline',
+    ),
+    'B' => array(
+        'FONT-WEIGHT' => 'bold',
+    ),
+    'STRONG' => array(
+        'FONT-WEIGHT' => 'bold',
+    ),
+    'I' => array(
+        'FONT-STYLE' => 'italic',
+    ),
+    'CITE' => array(
+        'FONT-STYLE' => 'italic',
+    ),
+    'Q' => array(
+        'FONT-STYLE' => 'italic',
+    ),
+    'EM' => array(
+        'FONT-STYLE' => 'italic',
+    ),
+    'VAR' => array(
+        'FONT-STYLE' => 'italic',
+    ),
+    'SAMP' => array(
+        'FONT-FAMILY' => 'monospace',
+    ),
+    'CODE' => array(
+        'FONT-FAMILY' => 'monospace',
+    ),
+    'KBD' => array(
+        'FONT-FAMILY' => 'monospace',
+    ),
+    'TT' => array(
+        'FONT-FAMILY' => 'monospace',
+    ),
+    'SMALL' => array(
+        'FONT-SIZE' => '83%',
+    ),
+    'BIG' => array(
+        'FONT-SIZE' => '117%',
+    ),
+    'ACRONYM' => array(
+        'FONT-SIZE' => '77%',
+        'FONT-WEIGHT' => 'bold',
+    ),
+    'ADDRESS' => array(
+        'FONT-STYLE' => 'italic',
+    ),
+    'BLOCKQUOTE' => array(
+        'MARGIN-LEFT' => '40px',
+        'MARGIN-RIGHT' => '40px',
+        'MARGIN-TOP' => '1.12em',
+        'MARGIN-BOTTOM' => '1.12em',
+    ),
+    'A' => array(
+        'COLOR' => '#0000FF',
+        'TEXT-DECORATION' => 'underline',
+    ),
+    'UL' => array(
+        'MARGIN' => '0.83em 0',		/* only applied to top-level of nested lists */
+        'TEXT-INDENT' => '1.3em',	/* Custom effect - list indent */
+    ),
+    'OL' => array(
+        'MARGIN' => '0.83em 0',		/* only applied to top-level of nested lists */
+        'TEXT-INDENT' => '1.3em',	/* Custom effect - list indent */
+    ),
+    'DL' => array(
+        'MARGIN' => '1.67em 0',
+    ),
+    'DT' => array(
+    ),
+    'DD' => array(
+        'PADDING-LEFT' => '40px',
+    ),
+    'TABLE' => array(
+        'MARGIN' => '0',
+        'BORDER-COLLAPSE' => 'separate',
+        'BORDER-SPACING' => '2px',
+        'EMPTY-CELLS' => 'show',
+        'LINE-HEIGHT' => '1.2',
+        'VERTICAL-ALIGN' => 'middle',
+    ),
+    'THEAD' => array(
+    ),
+    'TFOOT' => array(
+    ),
+    'TH' => array(
+        'FONT-WEIGHT' => 'bold',
+        'TEXT-ALIGN' => 'center',
+        'PADDING-LEFT' => '0.1em',
+        'PADDING-RIGHT' => '0.1em',
+        'PADDING-TOP' => '0.1em',
+        'PADDING-BOTTOM' => '0.1em',
+    ),
+    'TD' => array(
+        'PADDING-LEFT' => '0.1em',
+        'PADDING-RIGHT' => '0.1em',
+        'PADDING-TOP' => '0.1em',
+        'PADDING-BOTTOM' => '0.1em',
+    ),
+    'CAPTION' => array(
+        'TEXT-ALIGN' => 'center',
+    ),
+    'IMG' => array(
+        'MARGIN' => '0',
+        'VERTICAL-ALIGN' => 'baseline',
+    ),
+    'INPUT' => array(
+        'FONT-FAMILY' => 'sans-serif',
+        'VERTICAL-ALIGN' => 'middle',
+        'FONT-SIZE' => '0.9em',
+    ),
+    'SELECT' => array(
+        'FONT-FAMILY' => 'sans-serif',
+        'FONT-SIZE' => '0.9em',
+        'VERTICAL-ALIGN' => 'middle',
+    ),
+    'TEXTAREA' => array(
+        'FONT-FAMILY' => 'monospace',
+        'FONT-SIZE' => '0.9em',
+        'VERTICAL-ALIGN' => 'text-bottom',
+    ),
+    'MARK' => array(	/* mPDF 5.5.09 */
+        'BACKGROUND-COLOR' => 'yellow',
+    ),
 );
 
 
@@ -498,65 +498,65 @@ $this->pdf_version = '1.4';
 // Hyphenation
 $this->SHYlanguages = array('en','de','es','fi','fr','it','nl','pl','ru','sv');	// existing defined patterns
 
-$this->default_lineheight_correction=1.2;	// Value 1 sets lineheight=fontsize height; 
-							// Value used if line-height not set by CSS (usuallly is)
+$this->default_lineheight_correction=1.2;	// Value 1 sets lineheight=fontsize height;
+                            // Value used if line-height not set by CSS (usuallly is)
 
 $this->fontsizes = array('XX-SMALL'=>0.7, 'X-SMALL'=>0.77, 'SMALL'=>0.86, 'MEDIUM'=>1, 'LARGE'=>1.2, 'X-LARGE'=>1.5, 'XX-LARGE'=>2);
 
 // CHARACTER PATTERN MATCHES TO DETECT LANGUAGES
-	// pattern used to detect RTL characters -> force RTL
-	$this->pregRTLchars = "\x{0590}-\x{06FF}\x{0700}-\x{083E}\x{FB00}-\x{FDFD}\x{FE70}-\x{FEFF}";	
+    // pattern used to detect RTL characters -> force RTL
+    $this->pregRTLchars = "\x{0590}-\x{06FF}\x{0700}-\x{083E}\x{FB00}-\x{FDFD}\x{FE70}-\x{FEFF}";
 
-	// CJK Chars which require changing and are distinctive of specific charset
-	$this->pregUHCchars = "\x{1100}-\x{11FF}\x{3130}-\x{318F}\x{AC00}-\x{D7AF}";
-	$this->pregSJISchars = "\x{3040}-\x{309F}\x{30A0}-\x{30FF}\x{3190}-\x{319F}\x{31F0}-\x{31FF}";	
+    // CJK Chars which require changing and are distinctive of specific charset
+    $this->pregUHCchars = "\x{1100}-\x{11FF}\x{3130}-\x{318F}\x{AC00}-\x{D7AF}";
+    $this->pregSJISchars = "\x{3040}-\x{309F}\x{30A0}-\x{30FF}\x{3190}-\x{319F}\x{31F0}-\x{31FF}";
 
-	// Chars which distinguish CJK but not between different
-	$this->pregCJKchars = "\x{1100}-\x{11FF}\x{2E80}-\x{A4CF}\x{A800}-\x{D7AF}\x{F900}-\x{FAFF}\x{FE30}-\x{FE6F}\x{FF00}-\x{FFEF}\x{20000}-\x{2FA1F}";
+    // Chars which distinguish CJK but not between different
+    $this->pregCJKchars = "\x{1100}-\x{11FF}\x{2E80}-\x{A4CF}\x{A800}-\x{D7AF}\x{F900}-\x{FAFF}\x{FE30}-\x{FE6F}\x{FF00}-\x{FFEF}\x{20000}-\x{2FA1F}";
 
-	// For CJK Line-breaking
-	//Leading characters - Not allowed at end of line
-	$this->CJKleading = "\$\(\*\[\{\x{00a3}\x{00a5}\x{00ab}\x{00b7}\x{2018}\x{201c}\x{2035}\x{3005}\x{3007}\x{3008}\x{300a}\x{300c}\x{300e}\x{3010}\x{3014}\x{3016}\x{3018}\x{301d}\x{fe34}\x{fe57}\x{fe59}\x{fe5b}\x{ff04}\x{ff08}\x{ff0e}\x{ff3b}\x{ff5b}\x{ff5f}\x{ffe1}\x{ffe5}\x{ffe6}";
-	// Following characters - Not allowed at start
-	$this->CJKfollowing = "!%\),\.:;>\?\]\}\x{00a2}\x{00a8}\x{00b0}\x{00b7}\x{00bb}\x{02c7}\x{02c9}\x{2010}\x{2013}-\x{2016}\x{2019}\x{201d}-\x{201f}\x{2020}-\x{2022}\x{2025}\x{2027}\x{203a}\x{203c}\x{2047}-\x{2049}\x{2103}\x{2236}\x{2574}\x{3001}-\x{3003}\x{3005}\x{3006}\x{3009}\x{300b}\x{300d}\x{300f}\x{3011}\x{3015}\x{3017}\x{3019}\x{301c}\x{301e}\x{301f}\x{303b}\x{3041}\x{3043}\x{3045}\x{3047}\x{3049}\x{3063}\x{3083}\x{3085}\x{3087}\x{308e}\x{3095}\x{3096}\x{30a0}\x{30a1}\x{30a3}\x{30a5}\x{30a7}\x{30a9}\x{30c3}\x{30e3}\x{30e5}\x{30e7}\x{30ee}\x{30f5}\x{30f6}\x{30fb}-\x{30fe}\x{31f0}-\x{31ff}\x{fe30}-\x{fe33}\x{fe50}-\x{fe56}\x{fe58}\x{fe5a}\x{fe5c}\x{ff01}\x{ff02}\x{ff05}\x{ff07}\x{ff09}\x{ff0c}\x{ff0e}\x{ff1a}\x{ff1b}\x{ff1f}\x{ff3d}\x{ff40}\x{ff5c}-\x{ff5e}\x{ff60}\x{ff64}";
-	// Characters which are allowed to overflow the right margin
-	$this->CJKoverflow = "\.,\x{ff61}\x{ff64}\x{3001}\x{3002}\x{ff0c}\x{ff0e}";
+    // For CJK Line-breaking
+    //Leading characters - Not allowed at end of line
+    $this->CJKleading = "\$\(\*\[\{\x{00a3}\x{00a5}\x{00ab}\x{00b7}\x{2018}\x{201c}\x{2035}\x{3005}\x{3007}\x{3008}\x{300a}\x{300c}\x{300e}\x{3010}\x{3014}\x{3016}\x{3018}\x{301d}\x{fe34}\x{fe57}\x{fe59}\x{fe5b}\x{ff04}\x{ff08}\x{ff0e}\x{ff3b}\x{ff5b}\x{ff5f}\x{ffe1}\x{ffe5}\x{ffe6}";
+    // Following characters - Not allowed at start
+    $this->CJKfollowing = "!%\),\.:;>\?\]\}\x{00a2}\x{00a8}\x{00b0}\x{00b7}\x{00bb}\x{02c7}\x{02c9}\x{2010}\x{2013}-\x{2016}\x{2019}\x{201d}-\x{201f}\x{2020}-\x{2022}\x{2025}\x{2027}\x{203a}\x{203c}\x{2047}-\x{2049}\x{2103}\x{2236}\x{2574}\x{3001}-\x{3003}\x{3005}\x{3006}\x{3009}\x{300b}\x{300d}\x{300f}\x{3011}\x{3015}\x{3017}\x{3019}\x{301c}\x{301e}\x{301f}\x{303b}\x{3041}\x{3043}\x{3045}\x{3047}\x{3049}\x{3063}\x{3083}\x{3085}\x{3087}\x{308e}\x{3095}\x{3096}\x{30a0}\x{30a1}\x{30a3}\x{30a5}\x{30a7}\x{30a9}\x{30c3}\x{30e3}\x{30e5}\x{30e7}\x{30ee}\x{30f5}\x{30f6}\x{30fb}-\x{30fe}\x{31f0}-\x{31ff}\x{fe30}-\x{fe33}\x{fe50}-\x{fe56}\x{fe58}\x{fe5a}\x{fe5c}\x{ff01}\x{ff02}\x{ff05}\x{ff07}\x{ff09}\x{ff0c}\x{ff0e}\x{ff1a}\x{ff1b}\x{ff1f}\x{ff3d}\x{ff40}\x{ff5c}-\x{ff5e}\x{ff60}\x{ff64}";
+    // Characters which are allowed to overflow the right margin
+    $this->CJKoverflow = "\.,\x{ff61}\x{ff64}\x{3001}\x{3002}\x{ff0c}\x{ff0e}";
 
 
 
-	// ASCII Chars which shouldn't break string
-	// Use for very specific words
-	$this->pregASCIIchars1 = "\x{0021}-\x{002E}\x{0030}-\x{003B}?";	// no [SPACE]
-	// Use for words+
-	$this->pregASCIIchars2 = "\x{0020}-\x{002E}\x{0030}-\x{003B}?";	// [SPACE] punctuation and 0-9
-	// Use for chunks > words
-	$this->pregASCIIchars3 = "\x{0000}-\x{002E}\x{0030}-\x{003B}\x{003F}-\x{007E}";	// all except <>
-	// Vietnamese - specific
-	$this->pregVIETchars = "\x{01A0}\x{01A1}\x{01AF}\x{01B0}\x{1EA0}-\x{1EF1}";	
-	// Vietnamese -  Chars which shouldn't break string 
-	$this->pregVIETPluschars = "\x{0000}-\x{003B}\x{003F}-\x{00FF}\x{0300}-\x{036F}\x{0102}\x{0103}\x{0110}\x{0111}\x{0128}\x{0129}\x{0168}\x{0169}\x{1EF1}-\x{1EF9}";	// omits < >
+    // ASCII Chars which shouldn't break string
+    // Use for very specific words
+    $this->pregASCIIchars1 = "\x{0021}-\x{002E}\x{0030}-\x{003B}?";	// no [SPACE]
+    // Use for words+
+    $this->pregASCIIchars2 = "\x{0020}-\x{002E}\x{0030}-\x{003B}?";	// [SPACE] punctuation and 0-9
+    // Use for chunks > words
+    $this->pregASCIIchars3 = "\x{0000}-\x{002E}\x{0030}-\x{003B}\x{003F}-\x{007E}";	// all except <>
+    // Vietnamese - specific
+    $this->pregVIETchars = "\x{01A0}\x{01A1}\x{01AF}\x{01B0}\x{1EA0}-\x{1EF1}";
+    // Vietnamese -  Chars which shouldn't break string
+    $this->pregVIETPluschars = "\x{0000}-\x{003B}\x{003F}-\x{00FF}\x{0300}-\x{036F}\x{0102}\x{0103}\x{0110}\x{0111}\x{0128}\x{0129}\x{0168}\x{0169}\x{1EF1}-\x{1EF9}";	// omits < >
 
-	// Arabic
-	$this->pregARABICchars = "\x{0600}-\x{06FF}\x{0750}-\x{077F}\x{FB50}-\x{FDFD}\x{FE70}-\x{FEFF}";
-	// Characters of Urdu, Pashto, Sindhi (but NOT arabic or persian/farsi) [not covered by DejavuSans font]
-	$this->pregNonARABICchars = "\x{0671}-\x{067D}\x{067F}-\x{0685}\x{0687}-\x{0697}\x{0699}-\x{06A8}\x{06AA}-\x{06AE}\x{06B0}-\x{06CB}\x{06CD}-\x{06D3}";
+    // Arabic
+    $this->pregARABICchars = "\x{0600}-\x{06FF}\x{0750}-\x{077F}\x{FB50}-\x{FDFD}\x{FE70}-\x{FEFF}";
+    // Characters of Urdu, Pashto, Sindhi (but NOT arabic or persian/farsi) [not covered by DejavuSans font]
+    $this->pregNonARABICchars = "\x{0671}-\x{067D}\x{067F}-\x{0685}\x{0687}-\x{0697}\x{0699}-\x{06A8}\x{06AA}-\x{06AE}\x{06B0}-\x{06CB}\x{06CD}-\x{06D3}";
 
-	$this->pregHEBchars = "\x{0590}-\x{05FF}\x{FB00}-\x{FB49}";	// Hebrew
+    $this->pregHEBchars = "\x{0590}-\x{05FF}\x{FB00}-\x{FB49}";	// Hebrew
 
-	// INDIC
-	$this->pregHIchars = "\x{0900}-\x{0963}\x{0966}-\x{097F}";	// Devanagari (Hindi) minus the common indic punctuation 0964,0965
-	$this->pregBNchars = "\x{0980}-\x{09FF}";	// Bengali 
-	$this->pregPAchars = "\x{0A00}-\x{0A7F}";	// Gurmukhi (Punjabi)
-	$this->pregGUchars = "\x{0A80}-\x{0AFF}";	// Gujarati
-	$this->pregORchars = "\x{0B00}-\x{0B7F}";	// Oriya 
-	$this->pregTAchars = "\x{0B80}-\x{0BFF}";	// Tamil 
-	$this->pregTEchars = "\x{0C00}-\x{0C7F}";	// Telugu 
-	$this->pregKNchars = "\x{0C80}-\x{0CFF}";	// Kannada 
-	$this->pregMLchars = "\x{0D00}-\x{0D7F}";	// Malayalam 
-	$this->pregSHchars = "\x{0D80}-\x{0DFF}";	// Sinhala 
+    // INDIC
+    $this->pregHIchars = "\x{0900}-\x{0963}\x{0966}-\x{097F}";	// Devanagari (Hindi) minus the common indic punctuation 0964,0965
+    $this->pregBNchars = "\x{0980}-\x{09FF}";	// Bengali
+    $this->pregPAchars = "\x{0A00}-\x{0A7F}";	// Gurmukhi (Punjabi)
+    $this->pregGUchars = "\x{0A80}-\x{0AFF}";	// Gujarati
+    $this->pregORchars = "\x{0B00}-\x{0B7F}";	// Oriya
+    $this->pregTAchars = "\x{0B80}-\x{0BFF}";	// Tamil
+    $this->pregTEchars = "\x{0C00}-\x{0C7F}";	// Telugu
+    $this->pregKNchars = "\x{0C80}-\x{0CFF}";	// Kannada
+    $this->pregMLchars = "\x{0D00}-\x{0D7F}";	// Malayalam
+    $this->pregSHchars = "\x{0D80}-\x{0DFF}";	// Sinhala
 
-	$this->pregINDextra = "\x{200B}-\x{200D}\x{0964}\x{0965}\x{0020}-\x{0022}\x{0024}-\x{002E}\x{003A}-\x{003F}\x{005B}-\x{0060}\x{007B}-\x{007E}\x{00A0}";
-	// 200B-D=Zero-width joiners; 0964,0965=Generic Indic punctuation; NBSP & general punctuation (excludes # and / so can use in autoFont() )
+    $this->pregINDextra = "\x{200B}-\x{200D}\x{0964}\x{0965}\x{0020}-\x{0022}\x{0024}-\x{002E}\x{003A}-\x{003F}\x{005B}-\x{0060}\x{007B}-\x{007E}\x{00A0}";
+    // 200B-D=Zero-width joiners; 0964,0965=Generic Indic punctuation; NBSP & general punctuation (excludes # and / so can use in autoFont() )
 
 $this->allowedCSStags = 'DIV|P|H1|H2|H3|H4|H5|H6|FORM|IMG|A|BODY|TABLE|HR|THEAD|TFOOT|TBODY|TH|TR|TD|UL|OL|LI|PRE|BLOCKQUOTE|ADDRESS|DL|DT|DD';
 $this->allowedCSStags .= '|ARTICLE|ASIDE|FIGURE|FIGCAPTION|FOOTER|HEADER|HGROUP|NAV|SECTION|MARK|DETAILS|SUMMARY|METER|PROGRESS|TIME'; // mPDF 5.5.09
@@ -566,7 +566,3 @@ $this->allowedCSStags .= '|TEXTCIRCLE|DOTTAB';	// mPDF 5.5.23	// mPDF 5.6.33
 
 $this->outerblocktags = array('DIV','FORM','CENTER','DL','FIELDSET','ARTICLE','ASIDE','FIGURE','FIGCAPTION', 'FOOTER','HEADER','HGROUP','NAV','SECTION','DETAILS','SUMMARY');	// mPDF 5.5.09 // mPDF 5.5.22
 $this->innerblocktags = array('P','BLOCKQUOTE','ADDRESS','PRE','H1','H2','H3','H4','H5','H6','DT','DD','CAPTION');
-
-
-
-?>

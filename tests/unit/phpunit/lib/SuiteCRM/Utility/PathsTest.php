@@ -1,6 +1,5 @@
 <?php
 
-
 class PathsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     /**
@@ -29,8 +28,6 @@ class PathsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             self::$projectPath = dirname(dirname(dirname(dirname(dirname(dirname(__DIR__))))));
         }
     }
-
-
 
     public function testGetProjectPath()
     {

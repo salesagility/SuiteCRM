@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Fields extends BaseOption
 {
-    const REGEX_FIELD_PATTERN = '/[^\w-,]/';
+    const REGEX_FIELD_PATTERN = '/[^\w\-,]/';
 
     /**
      * @inheritdoc

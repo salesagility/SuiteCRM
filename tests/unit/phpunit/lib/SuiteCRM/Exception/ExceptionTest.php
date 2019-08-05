@@ -24,8 +24,6 @@ class ExceptionTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
     }
 
-
-
     public function testGetDetail()
     {
         $this->assertEquals(
@@ -37,7 +35,7 @@ class ExceptionTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testGetLogLevel()
     {
         $this->assertEquals(
-           LogLevel::CRITICAL,
+            LogLevel::CRITICAL,
             self::$exception->getLogLevel()
         );
     }

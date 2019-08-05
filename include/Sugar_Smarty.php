@@ -41,9 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-require_once('include/Smarty/Smarty.class.php');
-
 if (!defined('SUGAR_SMARTY_DIR')) {
     define('SUGAR_SMARTY_DIR', sugar_cached('smarty/'));
 }

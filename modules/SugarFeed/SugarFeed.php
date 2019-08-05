@@ -387,35 +387,6 @@ class SugarFeed extends Basic
     {
         $data = parent::get_list_view_data();
         $delete = '';
-        /* BEGIN - SECURITY GROUPS */
-        /**
-        if (ACLController::moduleSupportsACL($data['RELATED_MODULE']) && !ACLController::checkAccess($data['RELATED_MODULE'], 'view', $data['CREATED_BY'] == $GLOBALS['current_user']->id) && !ACLController::checkAccess($data['RELATED_MODULE'], 'list', $data['CREATED_BY'] == $GLOBALS['current_user']->id)){
-        */
-
-        if (!isset($data['RELATED_MODULE'])) {
-            LoggerManager::getLogger()->warn('SugarFeed get_list_view_data: Undefined index: RELATED_MODULE');
-            $dataRelatedModule = null;
-        } else {
-            $dataRelatedModule = $data['RELATED_MODULE'];
-        }
-
-        if (ACLController::moduleSupportsACL($dataRelatedModule)) {
-            $in_group = 'not_set';
-            require_once("modules/SecurityGroups/SecurityGroup.php");
-            $in_group = SecurityGroup::groupHasAccess($data['RELATED_MODULE'], $data['RELATED_ID'], 'list');
-            if (
-             !ACLController::checkAccess($data['RELATED_MODULE'], 'view', $data['CREATED_BY'] == $GLOBALS['current_user']->id, 'module', $in_group)
-            && !ACLController::checkAccess($data['RELATED_MODULE'], 'list', $data['CREATED_BY'] == $GLOBALS['current_user']->id, 'module', $in_group)
-
-            ) {
-                $data['NAME'] = '';
-                return $data;
-            }
-        }
-        if (is_admin($GLOBALS['current_user']) || (isset($data['CREATED_BY']) && $data['CREATED_BY'] == $GLOBALS['current_user']->id)) {
-            $delete = ' - <a id="sugarFeedDeleteLink'.$data['ID'].'" href="#" onclick=\'SugarFeed.deleteFeed("'. $data['ID'] . '", "{this.id}"); return false;\'>'. $GLOBALS['app_strings']['LBL_DELETE_BUTTON_LABEL'].'</a>';
-        }
-        /* END - SECURITY GROUPS */
 
         if (!isset($data['DESCRIPTION'])) {
             LoggerManager::getLogger()->warn('SugarFeed get_list_view_data: Undefined index: DESCRIPTION ');

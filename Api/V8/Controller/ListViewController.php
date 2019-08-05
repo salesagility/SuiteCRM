@@ -63,7 +63,7 @@ class ListViewController extends BaseController
     /**
      * @var ListViewService
      */
-    private $listViewService;
+    protected $listViewService;
 
     /**
      * @param ListViewService $listViewService

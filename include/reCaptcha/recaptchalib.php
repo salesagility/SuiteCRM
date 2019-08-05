@@ -178,7 +178,7 @@ function recaptcha_check_answer($privkey, $remoteip, $challenge, $response, $ext
     $response = _recaptcha_http_post(
         RECAPTCHA_VERIFY_SERVER,
         "/verify",
-                                          array(
+        array(
                                                  'privatekey' => $privkey,
                                                  'remoteip' => $remoteip,
                                                  'challenge' => $challenge,

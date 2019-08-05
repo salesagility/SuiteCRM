@@ -1,25 +1,48 @@
 language: php
-php:
-  - 5.5
-  - 5.6
-  - 7.0
-  - 7.1
-  - 7.2
+os: linux
+sudo: required
 
 matrix:
   fast_finish: true
-jobs:
   include:
-      - stage: codecoverage
-        if: type IN (pull_request) OR branch in (master, develop, hotfix)
-        php: 7.0
-        script: ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 1;" >> config_override.php  ; ./vendor/bin/robo code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f ./_output/coverage.xml
-sudo: required
-dist: trusty
+    - name: "PHP 5.5 / MySQL 5.6"
+      php: "5.5"
+      dist: trusty
+    - name: "PHP 5.6 / MySQL 5.6"
+      php: "5.6"
+      dist: trusty
+    - name: "PHP 7.0 / MySQL 5.7"
+      php: "7.0"
+      dist: xenial
+    - name: "PHP 7.1 / MySQL 5.7"
+      php: "7.1"
+      dist: xenial
+    - name: "PHP 7.2 / MySQL 5.7"
+      php: "7.2"
+      dist: xenial
+    - name: "PHP 7.3 / MySQL 5.7"
+      php: "7.3"
+      dist: xenial
+    # Run composer validate to make sure the composer.json and composer.lock are in sync.
+    - name: "composer validate"
+      php: "7.2"
+      dist: xenial
+      before_script: composer install
+      script: composer validate
+    - stage: codecoverage
+      if: type IN (pull_request) OR branch in (master, develop, hotfix)
+      php: "7.0"
+      dist: xenial
+      script: ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 1;" >> config_override.php  ; ./vendor/bin/robo code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
+
 services:
   - mysql
 addons:
   chrome: stable
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
 
 env:
   - INSTANCE_URL=http://localhost DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1 COMPOSER_MEMORY_LIMIT=-1
@@ -70,10 +93,8 @@ script:
   - ./build/push_output.sh
   
   # Run the unit tests
-  # - ./vendor/bin/codecept run unit --steps -f
-  - cd tests
-  - ../vendor/bin/phpunit --stop-on-failure --stop-on-error --colors --configuration $(pwd)/phpunit.xml.dist ./tests/unit/phpunit
-  - cd ..
+  - sudo chmod -R 777 .
+  - ./vendor/bin/phpunit --stop-on-failure --stop-on-error --colors --configuration ./tests/phpunit.xml.dist ./tests/unit/phpunit
   # Install OAuth2 demo data
   - mysql -u root -D automated_tests -v -e "source tests/_data/api_data.sql"
   # Install demo user data
