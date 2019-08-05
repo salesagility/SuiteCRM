@@ -1268,7 +1268,15 @@ class SugarEmailAddress extends SugarBean
             $isValidEmailAddress
             && (int)$optInFlag === 1
         ) {
-            $new_confirmed_opt_in = self::COI_STAT_OPT_IN;
+            // In case optInFlag is set and there is a duplicate,
+            // copy the opt-in state from it if it has some kind of opt-in set.
+            // This prevents losing the confirmed opt-in state in case we
+            // update an existing record with "confirmed-opt-in"
+            if (!empty($duplicate_email['id']) && $duplicate_email['confirm_opt_in'] != self::COI_STAT_DISABLED) {
+                $new_confirmed_opt_in = $duplicate_email['confirm_opt_in'];
+            } else {
+                $new_confirmed_opt_in = self::COI_STAT_OPT_IN;
+            }
         } else {
             // Reset the opt in status
             $new_confirmed_opt_in = self::COI_STAT_DISABLED;
@@ -1526,11 +1534,11 @@ class SugarEmailAddress extends SugarBean
                     'primary_address' => isset($_REQUEST['emailAddressPrimaryFlag']) && $_REQUEST['emailAddressPrimaryFlag'] == $key,
                     'invalid_email' => isset($_REQUEST['emailAddressInvalidFlag']) && in_array(
                         $key,
-                            $_REQUEST['emailAddressInvalidFlag']
+                        $_REQUEST['emailAddressInvalidFlag']
                     ),
                     'opt_out' => isset($_REQUEST['emailAddressOptOutFlag']) && in_array(
                         $key,
-                            $_REQUEST['emailAddressOptOutFlag']
+                        $_REQUEST['emailAddressOptOutFlag']
                     ),
                     'reply_to_address' => false
                 );

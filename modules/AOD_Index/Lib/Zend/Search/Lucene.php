@@ -394,8 +394,8 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
             $this->_segmentInfos[$segName] =
                                 new Zend_Search_Lucene_Index_SegmentInfo(
                                     $this->_directory,
-                                                                         $segName,
-                                                                         $segSize
+                                    $segName,
+                                    $segSize
                                 );
         }
 
@@ -489,12 +489,12 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
             $this->_segmentInfos[$segName] =
                                 new Zend_Search_Lucene_Index_SegmentInfo(
                                     $this->_directory,
-                                                                         $segName,
-                                                                         $segSize,
-                                                                         $delGen,
-                                                                         $docStoreOptions,
-                                                                         $hasSingleNormFile,
-                                                                         $isCompound
+                                    $segName,
+                                    $segSize,
+                                    $delGen,
+                                    $docStoreOptions,
+                                    $hasSingleNormFile,
+                                    $isCompound
                                 );
         }
     }
@@ -644,8 +644,8 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
             require_once 'Zend/Search/Lucene/Index/Writer.php';
             $this->_writer = new Zend_Search_Lucene_Index_Writer(
                 $this->_directory,
-                                                                 $this->_segmentInfos,
-                                                                 $this->_formatVersion
+                $this->_segmentInfos,
+                $this->_formatVersion
             );
         }
 
@@ -987,10 +987,10 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
                 $scores,
                 SORT_DESC,
                 SORT_NUMERIC,
-                            $ids,
+                $ids,
                 SORT_ASC,
                 SORT_NUMERIC,
-                            $hits
+                $hits
             );
         } else {
             // sort by given field names
@@ -1146,21 +1146,21 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
             if (!($bits & 2)) { // Text data
                 $field = new Zend_Search_Lucene_Field(
                     $fieldInfo->name,
-                                                      $fdtFile->readString(),
-                                                      'UTF-8',
-                                                      true,
-                                                      $fieldInfo->isIndexed,
-                                                      $bits & 1
+                    $fdtFile->readString(),
+                    'UTF-8',
+                    true,
+                    $fieldInfo->isIndexed,
+                    $bits & 1
                 );
             } else {            // Binary data
                 $field = new Zend_Search_Lucene_Field(
                     $fieldInfo->name,
-                                                      $fdtFile->readBinary(),
-                                                      '',
-                                                      true,
-                                                      $fieldInfo->isIndexed,
-                                                      $bits & 1,
-                                                      true
+                    $fdtFile->readBinary(),
+                    '',
+                    true,
+                    $fieldInfo->isIndexed,
+                    $bits & 1,
+                    true
                 );
             }
 

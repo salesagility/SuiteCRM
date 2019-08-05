@@ -10,7 +10,7 @@ class RelationshipObjectHelper
     /**
      * @var VarDefHelper
      */
-    private $varDefHelper;
+    protected $varDefHelper;
 
     /**
      * @param VarDefHelper $varDefHelper
@@ -35,7 +35,7 @@ class RelationshipObjectHelper
         foreach (array_unique($relationships) as $relationshipName => $module) {
             $linkResponse = new LinksResponse();
             $linkResponse->setRelated(
-                sprintf('/%s/%s/%s', $uriPath, 'relationships', $relationshipName)
+                sprintf('%s/%s/%s', $uriPath, 'relationships', $relationshipName)
             );
 
             $relationshipsLinks[$module] = ['links' => $linkResponse];

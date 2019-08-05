@@ -333,8 +333,8 @@ class TemplateField
     public function get_db_delete_alter_table($table)
     {
         return DBManagerFactory::getInstance()->getHelper()->dropColumnSQL(
-        $table,
-        $this->get_field_def()
+            $table,
+            $this->get_field_def()
         );
     }
 

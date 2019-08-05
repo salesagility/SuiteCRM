@@ -377,7 +377,7 @@ class Zend_Search_Lucene_Index_Writer
         require_once 'Zend/Search/Lucene/Index/SegmentMerger.php';
         $merger = new Zend_Search_Lucene_Index_SegmentMerger(
             $this->_directory,
-                                                             $newName
+            $newName
         );
         foreach ($segments as $segmentInfo) {
             $merger->addSource($segmentInfo);
@@ -524,12 +524,12 @@ class Zend_Search_Lucene_Index_Writer
                         $this->_segmentInfos[$segName] =
                                     new Zend_Search_Lucene_Index_SegmentInfo(
                                         $this->_directory,
-                                                                             $segName,
-                                                                             $segSize,
-                                                                             $delGen,
-                                                                             $docStoreOptions,
-                                                                             $hasSingleNormFile,
-                                                                             $isCompound
+                                        $segName,
+                                        $segSize,
+                                        $delGen,
+                                        $docStoreOptions,
+                                        $hasSingleNormFile,
+                                        $isCompound
                                     );
                     } else {
                         // Retrieve actual deletions file generation number
@@ -712,10 +712,10 @@ class Zend_Search_Lucene_Index_Writer
                 $filesTypes,
                 SORT_ASC,
                 SORT_NUMERIC,
-                            $filesNumbers,
+                $filesNumbers,
                 SORT_ASC,
                 SORT_NUMERIC,
-                            $filesToDelete,
+                $filesToDelete,
                 SORT_ASC,
                 SORT_STRING
             );

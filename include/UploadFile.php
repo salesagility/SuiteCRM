@@ -459,7 +459,7 @@ class UploadFile
             }
         } elseif (!UploadStream::move_uploaded_file($_FILES[$this->field_name]['tmp_name'], $destination)) {
             $log->fatal(
-                    'Unable to move move_uploaded_file to ' . $destination .
+                'Unable to move move_uploaded_file to ' . $destination .
                     ' You should try making the directory writable by the webserver'
                 );
 

@@ -1,7 +1,0 @@
-modules:
-  enabled:
-    - \SuiteCRM\Test\Driver\WebDriver
-  config:
-    \SuiteCRM\Test\Driver\WebDriver:
-      capabilities:
-              'browserstack.local': true

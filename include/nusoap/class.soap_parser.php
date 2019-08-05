@@ -160,8 +160,8 @@ class nusoap_parser extends nusoap_base
                 // Display an error message.
                 $err = sprintf(
                     'XML error parsing SOAP payload on line %d: %s',
-                xml_get_current_line_number($this->parser),
-                xml_error_string(xml_get_error_code($this->parser))
+                    xml_get_current_line_number($this->parser),
+                    xml_error_string(xml_get_error_code($this->parser))
                 );
                 $this->debug($err);
                 $this->debug("XML payload:\n" . $xml);

@@ -47,7 +47,7 @@ class Filter
 
         $where = [];
         foreach ($params as $field => $expr) {
-            if (!property_exists($bean, $field)) {
+            if (empty($bean->field_defs[$field])) {
                 throw new \InvalidArgumentException(sprintf(
                     'Filter field %s in %s module is not found',
                     $field,

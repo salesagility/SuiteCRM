@@ -52,9 +52,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 function displayHasAttachmentField($focus, $field, $value, $view)
 {
-    global $app_strings, $app_list_strings, $mod_strings;
     $result = '';
-    $bean = array();
 
     if (empty($view)) {
         return $result;
@@ -84,13 +82,7 @@ function displayHasAttachmentField($focus, $field, $value, $view)
     }
 
     $template = new Sugar_Smarty();
-    $template->assign('APP', $app_strings);
-    $template->assign('APP_LIST_STRINGS', $app_list_strings);
-    $template->assign('MOD', $mod_strings);
     $template->assign('bean', $bean);
 
-    $result = $template->fetch('modules/Emails/templates/displayHasAttachmentField.tpl');
-
-
-    return $result;
+    return $template->fetch('modules/Emails/templates/displayHasAttachmentField.tpl');
 }

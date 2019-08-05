@@ -181,16 +181,16 @@ function create_custom_directory($file)
 
 /**
  * This function will recursively generates md5s of files and returns an array of all md5s.
- *
- * @param	$path The path of the root directory to scan - must end with '/'
- * @param	$ignore_dirs array of filenames/directory names to ignore running md5 on - default 'cache' and 'upload'
- * @result	$md5_array an array containing path as key and md5 as value
+ * @param string $path The path of the root directory to scan - must end with '/'
+ * @param array $ignore_dirs array of filenames/directory names to ignore running md5 on - default 'cache' and 'upload'
+ * @return array
  */
-function generateMD5array($path, $ignore_dirs = array('cache', 'upload'))
+function generateMD5array($path, $ignore_dirs = ['cache', 'upload', '.git', 'vendor', '.idea'])
 {
-    $dh  = opendir($path);
+    $current_dir_content = [];
+    $dh = opendir($path);
     if (!$dh) {
-        return array();
+        return [];
     }
     while (false !== ($filename = readdir($dh))) {
         $current_dir_content[] = $filename;
@@ -200,23 +200,23 @@ function generateMD5array($path, $ignore_dirs = array('cache', 'upload'))
     $current_dir_content = array_diff($current_dir_content, $ignore_dirs);
 
     sort($current_dir_content);
-    $md5_array = array();
+    $md5_array = [];
 
     foreach ($current_dir_content as $file) {
         // make sure that it's not dir '.' or '..'
-        if (strcmp($file, ".") && strcmp($file, "..")) {
-            if (is_dir($path.$file)) {
+        if (strcmp($file, '.') && strcmp($file, '..')) {
+            if (is_dir($path . $file)) {
                 // For testing purposes - uncomment to see all files and md5s
                 //echo "<BR>Dir:  ".$path.$file."<br>";
                 //generateMD5array($path.$file."/");
 
-                $md5_array += generateMD5array($path.$file."/", $ignore_dirs);
+                $md5_array += generateMD5array($path . $file . '/', $ignore_dirs);
             } else {
                 // For testing purposes - uncomment to see all files and md5s
                 //echo "   File: ".$path.$file."<br>";
                 //echo md5_file($path.$file)."<BR>";
 
-                $md5_array[$path.$file] = md5_file($path.$file);
+                $md5_array[$path . $file] = md5_file($path . $file);
             }
         }
     }
