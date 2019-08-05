@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,14 +38,58 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+namespace SuiteCRM\Robo\Plugin\Commands;
 
-require_once 'php-saml/extlib/xmlseclibs/xmlseclibs.php';
-require_once 'php-saml/lib/Saml2/AuthnRequest.php';
-require_once 'php-saml/lib/Saml2/Utils.php';
-require_once 'php-saml/lib/Saml2/Error.php';
-require_once 'php-saml/lib/Saml2/Settings.php';
-require_once 'php-saml/lib/Saml2/Response.php';
-require_once 'php-saml/compatibility.php';
+/**
+ * Class CleanCacheCommands
+ *
+ * @category RoboTasks
+ * @package  SuiteCRM\Robo\Plugin\Commands
+ * @author   Jose C. Massón <jose@gcoop.coop>
+ * @license  GNU GPLv3
+ * @link     CleanCacheCommands
+ */
+class CleanCacheCommands extends \Robo\Tasks
+{
+
+    /**
+     * Clean 'cache/' directory
+     * @throws \RuntimeException
+     */
+    public function cleanCache()
+    {
+        $toDelete = [];
+        $doNotDelete = ['Emails', 'emails', '.', '..'];
+        $cacheToDelete = [
+            'cache/Relationships',
+            'cache/csv',
+            'cache/dashlets',
+            'cache/diagnostics',
+            'cache/dynamic_fields',
+            'cache/feeds',
+            'cache/import',
+            'cache/include/javascript',
+            'cache/jsLanguage',
+            'cache/pdf',
+            'cache/themes',
+            'cache/xml',
+        ];
+
+        foreach ($cacheToDelete as $dir) {
+            if (file_exists($dir) && is_dir($dir)) {
+                $toDelete[] = $dir;
+            }
+        }
+
+        $cacheModules = 'cache/modules';
+        foreach (scandir($cacheModules, SCANDIR_SORT_NONE) as $module) {
+            if (file_exists($cacheModules . '/' . $module)
+                && is_dir($cacheModules . '/' . $module)
+                && !in_array($module, $doNotDelete, true)
+            ) {
+                $toDelete[] = $cacheModules . '/' . $module;
+            }
+        }
+        $this->_cleanDir($toDelete);
+    }
+}

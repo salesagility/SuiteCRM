@@ -869,20 +869,21 @@ class ListView
         $this->xTemplate->assign($name, $value);
     }
 
-    /**INTERNAL FUNCTION returns the offset first checking the query then checking the session if the where clause has changed from the last time it returns 0
-     * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
-     * All Rights Reserved.
-     * Contributor(s): ______________________________________.
-    */
+    /**
+     * INTERNAL FUNCTION returns the offset first checking the query then checking the session if the where clause has changed from the last time it returns 0
+     * @param $localVarName
+     * @return int
+     */
     public function getOffset($localVarName)
     {
         if ($this->query_where_has_changed || isset($GLOBALS['record_has_changed'])) {
-            $this->setSessionVariable($localVarName, "offset", 0);
+            $this->setSessionVariable($localVarName, 'offset', 0);
         }
-        $offset = $this->getSessionVariable($localVarName, "offset");
+        $offset = $this->getSessionVariable($localVarName, 'offset');
         if (isset($offset)) {
-            return $offset;
+            return (int)$offset;
         }
+
         return 0;
     }
 

@@ -1,11 +1,10 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,4 +37,43 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-// This file is no longer in use. Included for compatibility only.
+namespace SuiteCRM\Robo\Traits;
+
+/**
+ * This Trait creates a fully working instance of SugarCRM.
+ *
+ * The main advantage of this class is that it establish a working database connection to be used from your CLIs.
+ *
+ * To make the instance work properly, bootstrap() must be invoked first.
+ */
+trait CliRunnerTrait
+{
+    /**
+     * Sets up the missing global variables to make SugarCRM works from CLI.
+     */
+    protected function bootstrap()
+    {
+        global $current_language, $app_list_strings, $sugar_config;
+
+        if (!defined('sugarEntry')) {
+            define('sugarEntry', true);
+            define('SUITE_CLI_RUNNER', true);
+        }
+
+        /*
+         * The following file inclusions have been moved here
+         * since they have side effects and can make other
+         * Robo Tasks fail (i.e. failed database connection).
+         */
+
+        $root = __DIR__ . '/../../../';
+
+        require $root . 'config.php';
+        require $root . 'config_override.php';
+        require_once $root . 'include/entryPoint.php';
+
+        $current_language = 'en_us';
+        $app_list_strings = return_app_list_strings_language($current_language);
+        $sugar_config['resource_management']['default_limit'] = 999999;
+    }
+}

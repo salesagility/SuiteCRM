@@ -1,11 +1,11 @@
-{*
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,52 +38,52 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-*}
+namespace SuiteCRM\Robo\Plugin\Commands;
 
-{if !$error}
-<script type="text/javascript">
-	{literal}
-	SUGAR.util.doWhen(
-		"((SUGAR && SUGAR.mySugar && SUGAR.mySugar.sugarCharts)   || (SUGAR.loadChart && typeof loadSugarChart == 'function')  || document.getElementById('showHideChartButton') != null) && typeof(loadSugarChart) != undefined",
-		function(){
-			{/literal}
-			var css = new Array();
-			var chartConfig = new Array();
-			{foreach from=$css key=selector item=property}
-				css["{$selector}"] = '{$property}';
-			{/foreach}
-			{foreach from=$config key=name item=value}
-				chartConfig["{$name}"] = '{$value}';
-			{/foreach}
-			{if $height > 480}
-				chartConfig["scroll"] = true;
-			{/if}
-			loadCustomChartForReports = function(){ldelim}
-				loadSugarChart('{$chartId}','{$filename}',css,chartConfig);
-			{rdelim};
-			// bug51857: fixed issue on report running in a loop when clicking on hide chart then run report in IE8 only
-			// When hide chart button is clicked, the value of element showHideChartButton is set to $showchart.
-			// Don't need to call the loadCustomChartForReports() function when hiding the chart.
-			{if !isset($showchart)}
-				loadCustomChartForReports();
-			{else}
-			     if($('#showHideChartButton').attr('value') != '{$showchart}')
-			        loadCustomChartForReports();
-			{/if}
-			{literal}
-		}
-	);
-	{/literal}
-</script>
+use Robo\Task\Base\loadTasks;
+use SuiteCRM\Robo\Traits\RoboTrait;
 
-<div class="chartContainer">
-	<div id="sb{$chartId}" class="scrollBars">
-    <div id="{$chartId}" class="chartCanvas" style="width: {$width}; height: {$height}px;"></div>  
-    </div>
-	<div id="legend{$chartId}" class="legend"></div>
-</div>
-<div class="clear"></div>
-{else}
+class UpgradeCommands extends \Robo\Tasks
+{
+    use loadTasks;
+    use RoboTrait;
 
-{$error}
-{/if}
+    /**
+     * @var string
+     */
+    protected $upgradeZip;
+
+    /**
+     * @var string
+     */
+    protected $logFile;
+
+    /**
+     * @var string
+     */
+    protected $crmPath;
+
+    /**
+     * @var string
+     */
+    protected $adminUser;
+
+    /**
+     * [upgradeZipFile] [logFile] [pathToSuiteCRMInstance] [adminUser]
+     * @param string $upgradeZip The full path to the upgrade zip
+     * @param string $logFile The full path to the upgrade log
+     * @param string $crmPath The full path to the CRM
+     * @param string $adminUser The username of the admin user
+     */
+    public function upgradeSuite($upgradeZip, $logFile, $crmPath, $adminUser)
+    {
+        $this->upgradeZip = $upgradeZip;
+        $this->logFile = $logFile;
+        $this->crmPath = $crmPath;
+        $this->adminUser = $adminUser;
+
+        $this->say('Upgrade SuiteCRM');
+        $this->_exec('php modules/UpgradeWizard/silentUpgrade.php ' . $this->upgradeZip . ' ' . $this->logFile . ' ' . $this->crmPath . ' ' . $this->adminUser);
+        $this->say('Upgrade Complete!');
+    }
+}

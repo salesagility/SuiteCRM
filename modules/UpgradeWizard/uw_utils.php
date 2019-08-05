@@ -3209,7 +3209,7 @@ function upgradeUserPreferences()
         $localization->createInvalidLocaleNameFormatUpgradeNotice();
     }
 
-    $db = &DBManagerFactory::getInstance();
+    $db = DBManagerFactory::getInstance();
     $result = $db->query("SELECT id FROM users where deleted = '0'");
     while ($row = $db->fetchByAssoc($result)) {
         $current_user = new User();
