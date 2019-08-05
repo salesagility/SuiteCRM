@@ -5,7 +5,7 @@
 //	http://www.godisaduck.com/svg2pdf_with_fpdf
 //	http://rhodopsin.blogspot.com
 //
-//	cette class etendue est open source, toute modification devra cependant etre repertoriée~
+//	cette class etendue est open source, toute modification devra cependant etre repertoriï¿½e~
 
 
 // NB UNITS - Works in pixels as main units - converting to PDF units when outputing to PDF string
@@ -13,12 +13,12 @@
 
 class SVG
 {
-    public $svg_gradient;	//	array - contient les infos sur les gradient fill du svg classé par id du svg
+    public $svg_gradient;	//	array - contient les infos sur les gradient fill du svg classï¿½ par id du svg
     public $svg_shadinglist;	//	array - contient les ids des objet shading
     public $svg_info;		//	array contenant les infos du svg voulue par l'utilisateur
     public $svg_attribs;		//	array - holds all attributes of root <svg> tag
     public $svg_style;		//	array contenant les style de groupes du svg
-    public $svg_string;		//	String contenant le tracage du svg en lui même.
+    public $svg_string;		//	String contenant le tracage du svg en lui mï¿½me.
     public $txt_data;		//    array - holds string info to write txt to image
     public $txt_style;		// 	array - current text style
     public $mpdf_ref;
@@ -114,7 +114,7 @@ class SVG
             $pts = preg_split('/[ ,]+/', trim($attribs['points']));
             $maxr=$maxb=0;
             $minl=$mint=999999;
-            for ($i=0;$i<count($pts); $i++) {
+            for ($i=0, $iMax = count($pts); $i< $iMax; $i++) {
                 if ($i % 2 == 0) {	// x values
                     $minl = min($minl, $pts[$i]);
                     $maxr = max($maxr, $pts[$i]);
@@ -143,7 +143,7 @@ class SVG
                         list($tmp, $cmd, $arg) = $c;
                         if ($cmd=='M' || $cmd=='L' || $cmd=='C' || $cmd=='S' || $cmd=='Q' || $cmd=='T') {
                             $pts = preg_split('/[ ,]+/', trim($arg));
-                            for ($i=0;$i<count($pts); $i++) {
+                            for ($i=0, $iMax = count($pts); $i< $iMax; $i++) {
                                 if ($i % 2 == 0) {	// x values
                                     $minl = min($minl, $pts[$i]);
                                     $maxr = max($maxr, $pts[$i]);
@@ -188,7 +188,7 @@ class SVG
         if (isset($gradient_info['transform'])) {
             preg_match_all('/(matrix|translate|scale|rotate|skewX|skewY)\((.*?)\)/is', $gradient_info['transform'], $m);
             if (count($m[0])) {
-                for ($i=0; $i<count($m[0]); $i++) {
+                for ($i=0, $iMax = count($m[0]); $i< $iMax; $i++) {
                     $c = strtolower($m[1][$i]);
                     $v = trim($m[2][$i]);
                     $vv = preg_split('/[ ,]+/', $v);
@@ -858,7 +858,7 @@ class SVG
         if (isset($critere_style['transform'])) {
             preg_match_all('/(matrix|translate|scale|rotate|skewX|skewY)\((.*?)\)/is', $critere_style['transform'], $m);
             if (count($m[0])) {
-                for ($i=0; $i<count($m[0]); $i++) {
+                for ($i=0, $iMax = count($m[0]); $i< $iMax; $i++) {
                     $c = strtolower($m[1][$i]);
                     $v = trim($m[2][$i]);
                     $vv = preg_split('/[ ,]+/', $v);
@@ -1057,7 +1057,7 @@ class SVG
         $path_style = '';
         if (substr_count($critere_style['fill'], 'url')>0) {
             //
-            // couleur degradé
+            // couleur degradï¿½
             $id_gradient = preg_replace("/url\(#([\w_]*)\)/i", "$1", $critere_style['fill']);
             if ($id_gradient != $critere_style['fill']) {
                 if (isset($this->svg_gradient[$id_gradient])) {
@@ -1188,7 +1188,7 @@ class SVG
                         $d = array_merge($d, $d);
                     }	// 5, 3, 1 => 5,3,1,5,3,1  OR 3 => 3,3
                     $arr = '';
-                    for ($i=0; $i<count($d); $i+=2) {
+                    for ($i=0, $iMax = count($d); $i< $iMax; $i+=2) {
                         $arr .= sprintf('%.3F %.3F ', $d[$i]*$this->kp, $d[$i+1]*$this->kp);
                     }
                     if (isset($critere_style['stroke-dashoffset'])) {
@@ -1887,7 +1887,7 @@ class SVG
 
     //
     //	fonction retracant les <ellipse /> et <circle />
-    //	 le cercle est tracé grave a 4 bezier cubic, les poitn de controles
+    //	 le cercle est tracï¿½ grave a 4 bezier cubic, les poitn de controles
     //	sont deduis grace a la constante kappa * rayon
     public function svgEllipse($arguments)
     {
@@ -1939,7 +1939,7 @@ class SVG
             $ybase = - $this->ConvertSVGSizePixels($arguments[1], 'y');	// mPDF 4.4.003
         }
         $path_cmd = sprintf('%.3F %.3F m ', $xbase*$this->kp, $ybase*$this->kp);
-        for ($i = 2; $i<count($arguments);$i += 2) {
+        for ($i = 2, $iMax = count($arguments); $i< $iMax; $i += 2) {
             if ($ispolyline) {
                 $tmp_x = $arguments[$i] ;
                 $tmp_y = - $arguments[($i+1)] ;
@@ -1961,7 +1961,7 @@ class SVG
         $xbase = $arguments[0] ;
         $ybase = - $arguments[1] ;
         $path_cmd = sprintf('%.3F %.3F m ', $xbase*$this->kp, $ybase*$this->kp);
-        for ($i = 2; $i<count($arguments);$i += 2) {
+        for ($i = 2, $iMax = count($arguments); $i< $iMax; $i += 2) {
             $tmp_x = $arguments[$i] ;
             $tmp_y = - $arguments[($i+1)] ;
 
@@ -2331,7 +2331,7 @@ class SVG
             // Get User-defined entities
             preg_match_all('/<!ENTITY\s+([a-z]+)\s+\"(.*?)\">/si', $data, $ent);
             // Replace entities
-            for ($i=0; $i<count($ent[0]); $i++) {
+            for ($i=0, $iMax = count($ent[0]); $i< $iMax; $i++) {
                 $data = preg_replace('/&'.preg_quote($ent[1][$i], '/').';/is', $ent[2][$i], $data);
             }
         }
@@ -2345,7 +2345,7 @@ class SVG
                 $links[5] = array();
             }	// mPDF 4.5.010
             // Delete links from data - keeping in $links
-            for ($i=0; $i<count($links[0]); $i++) {
+            for ($i=0, $iMax = count($links[0]); $i< $iMax; $i++) {
                 $links[5][$i] = 'tmpLink'.RAND(100000, 9999999);	// mPDF 4.5.010
                 $data = preg_replace('/'.preg_quote($links[0][$i], '/').'/is', '<MYLINKS'.$links[5][$i].'>', $data);	// mPDF 4.5.010
             }
@@ -2354,11 +2354,11 @@ class SVG
             $targets = array();
             $stops = array();
             // keeping in $targets
-            for ($i=0; $i<count($m[0]); $i++) {
+            for ($i=0, $iMax = count($m[0]); $i< $iMax; $i++) {
                 $stops[$m[3][$i]] = $m[5][$i];
             }
             // Add back links this time as targets (gradients)
-            for ($i=0; $i<count($links[0]); $i++) {
+            for ($i=0, $iMax = count($links[0]); $i< $iMax; $i++) {
                 $def = $links[1][$i] .' '.$links[4][$i].'>'. $stops[$links[3][$i]].'</'.$links[2][$i] .'>' ;	// mPDF 4.5.010
                 $data = preg_replace('/<MYLINKS'.$links[5][$i].'>/is', $def, $data);	// mPDF 4.5.010
             }
@@ -2509,7 +2509,7 @@ class SVG
                     $path = $attribs['points'];
                     preg_match_all('/[0-9\-\.]*/', $path, $tmp, PREG_SET_ORDER);
                     $arguments = array();
-                    for ($i=0;$i<count($tmp);$i++) {
+                    for ($i=0, $iMax = count($tmp); $i< $iMax; $i++) {
                         if ($tmp[$i][0] !='') {
                             array_push($arguments, $tmp[$i][0]);
                         }
@@ -2524,7 +2524,7 @@ class SVG
                     $path = $attribs['points'];
                     preg_match_all('/([\-]*[0-9\.]+)/', $path, $tmp);
                     $arguments = array();
-                    for ($i=0;$i<count($tmp[0]);$i++) {
+                    for ($i=0, $iMax = count($tmp[0]); $i< $iMax; $i++) {
                         if ($tmp[0][$i] !='') {
                             array_push($arguments, $tmp[0][$i]);
                         }
@@ -2663,7 +2663,7 @@ class SVG
                 }
 
                 //
-                //insertion des path et du style dans le flux de donné general.
+                //insertion des path et du style dans le flux de donnï¿½ general.
                 if (isset($path_cmd) && $path_cmd) {	// mPDF 4.4.003
                     // mPDF 5.0
                     list($prestyle, $poststyle) = $svg_class->svgStyle($path_style, $attribs, strtolower($name));

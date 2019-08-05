@@ -806,7 +806,7 @@ class PackageManager
     {
         $uh = new UpgradeHistory();
         $in = "";
-        for ($i = 0; $i < count($types); $i++) {
+        for ($i = 0, $iMax = count($types); $i < $iMax; $i++) {
             $in .= "'".$types[$i]."'";
             if (($i+1) < count($types)) {
                 $in .= ",";

@@ -1468,7 +1468,7 @@ HTML;
 
         if (count($exMbox) >= 2) {
             $mailbox = "";
-            for ($i = 2; $i < count($exMbox); $i++) {
+            for ($i = 2, $iMax = count($exMbox); $i < $iMax; $i++) {
                 if ($mailbox != "") {
                     $mailbox .= ".";
                 }
@@ -1923,7 +1923,7 @@ HTML;
         }
 
         $attachments = '';
-        for ($i = 0; $i < count($notes_list); $i++) {
+        for ($i = 0, $iMax = count($notes_list); $i < $iMax; $i++) {
             $the_note = $notes_list[$i];
             $attachments .= "<a href=\"index.php?entryPoint=download&id={$the_note->id}&type=Notes\">" . $the_note->name . "</a><br />";
             $focus->cid2Link($the_note->id, $the_note->file_mime_type);
@@ -3210,7 +3210,7 @@ eoq;
 
         $ret = "";
 
-        for ($i = 0; $i < count($a); $i++) {
+        for ($i = 0, $iMax = count($a); $i < $iMax; $i++) {
             $email = $a[$i];
             $ret .= "\n<{$paramName}>";
 

@@ -337,7 +337,7 @@ class SugarHtml
         $queue = 0;
         $is_literal = false;
         $current_literal_string = '';
-        for ($seq = 0; $seq < count($clauses); $seq++) {
+        for ($seq = 0, $seqMax = count($clauses); $seq < $seqMax; $seq++) {
             $is_reserved = false;
 
             $current_literal_string = !empty($current_literal_string) ? $current_literal_string : (isset($reserved_functions[trim($clauses[$seq])]) ? trim($clauses[$seq]) : '');
@@ -370,7 +370,7 @@ class SugarHtml
         //Split phrases for the conditional statement
         $count = 0;
         $queue = 0;
-        for ($seq = 0; $seq < count($clauses); $seq++) {
+        for ($seq = 0, $seqMax = count($clauses); $seq < $seqMax; $seq++) {
             if ($seq > 0 && substr(ltrim($clauses[$seq]), 0, 2) == 'if') {
                 $count++;
             }
@@ -429,7 +429,7 @@ class SugarHtml
         $smarty_encoded = false;
         $cache = array();
         $code = rtrim($code);
-        for ($i = 0; $i < strlen($code) ; $i ++) {
+        for ($i = 0, $iMax = strlen($code); $i < $iMax; $i ++) {
             $char = $code[$i];
             if (!$smarty_encoded && ($char == self::SINGLE_QUOTE || $char == self::DOUBLE_QUOTE)) {
                 if (empty($quote_type)) {

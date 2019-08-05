@@ -853,7 +853,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         //test with valid mailbox
         $result = $inboundEmail->getCacheCount('INBOX');
         $this->assertGreaterThanOrEqual(1, $result);
-        
+
 
     }
 

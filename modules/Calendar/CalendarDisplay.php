@@ -126,7 +126,7 @@ class CalendarDisplay
         $ss->assign('activityColors', json_encode($this->checkActivity($this->activity_colors)));
         $ss->assign('dashlet', $cal->dashlet);
         $ss->assign('grid_start_ts', (int)$cal->grid_start_ts);
-        
+
         $ss->assign('year', $cal->date_time->format('Y'));
         $ss->assign('month', $cal->date_time->format('m'));
         $ss->assign('day', $cal->date_time->format('d'));
@@ -137,7 +137,7 @@ class CalendarDisplay
 
 
         $ss->assign('basic_min_height', "'auto'");
-        
+
         $ss->assign('isPrint', $this->cal->isPrint() ? 'true': 'false');
 
 
@@ -371,7 +371,7 @@ class CalendarDisplay
         $dateFormat = $current_user->getUserDateTimePreferences();
 
         if ($view == 'month' || $view == 'sharedMonth') {
-            for ($i=0; $i<strlen($dateFormat['date']); $i++) {
+            for ($i=0, $iMax = strlen($dateFormat['date']); $i< $iMax; $i++) {
                 switch ($dateFormat['date'][$i]) {
                     case "Y":
                         $str .= " ".$date_time->year;
@@ -387,7 +387,7 @@ class CalendarDisplay
             $first_day = CalendarUtils::get_first_day_of_week($date_time);
             $last_day = $first_day->get("+6 days");
 
-            for ($i=0; $i<strlen($dateFormat['date']); $i++) {
+            for ($i=0, $iMax = strlen($dateFormat['date']); $i< $iMax; $i++) {
                 switch ($dateFormat['date'][$i]) {
                         case "Y":
                             $str .= " ".$first_day->year;
@@ -401,7 +401,7 @@ class CalendarDisplay
                     }
             }
             $str .= " - ";
-            for ($i=0; $i<strlen($dateFormat['date']); $i++) {
+            for ($i=0, $iMax = strlen($dateFormat['date']); $i< $iMax; $i++) {
                 switch ($dateFormat['date'][$i]) {
                         case "Y":
                             $str .= " ".$last_day->year;
@@ -417,7 +417,7 @@ class CalendarDisplay
         } elseif ($view == 'agendaDay') {
             $str .= $date_time->get_day_of_week()." ";
 
-            for ($i=0; $i<strlen($dateFormat['date']); $i++) {
+            for ($i=0, $iMax = strlen($dateFormat['date']); $i< $iMax; $i++) {
                 switch ($dateFormat['date'][$i]) {
                             case "Y":
                                 $str .= " ".$date_time->year;
@@ -433,7 +433,7 @@ class CalendarDisplay
         } elseif ($view == 'mobile') {
             $str .= $date_time->get_day_of_week()." ";
 
-            for ($i=0; $i<strlen($dateFormat['date']); $i++) {
+            for ($i=0, $iMax = strlen($dateFormat['date']); $i< $iMax; $i++) {
                 switch ($dateFormat['date'][$i]) {
                         case "Y":
                             $str .= " ".$date_time->year;
@@ -455,7 +455,7 @@ class CalendarDisplay
             $first_day = CalendarUtils::get_first_day_of_week($date_time);
             $last_day = $first_day->get("+6 days");
 
-            for ($i=0; $i<strlen($dateFormat['date']); $i++) {
+            for ($i=0, $iMax = strlen($dateFormat['date']); $i< $iMax; $i++) {
                 switch ($dateFormat['date'][$i]) {
                         case "Y":
                             $str .= " ".$first_day->year;
@@ -469,7 +469,7 @@ class CalendarDisplay
                     }
             }
             $str .= " - ";
-            for ($i=0; $i<strlen($dateFormat['date']); $i++) {
+            for ($i=0, $iMax = strlen($dateFormat['date']); $i< $iMax; $i++) {
                 switch ($dateFormat['date'][$i]) {
                         case "Y":
                             $str .= " ".$last_day->year;

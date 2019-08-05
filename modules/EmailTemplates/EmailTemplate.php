@@ -393,7 +393,7 @@ class EmailTemplate extends SugarBean
         $result = array();
         $ind = 0;
         $switch = false;
-        for ($i = 0; $i < strlen($text); $i++) {
+        for ($i = 0, $iMax = strlen($text); $i < $iMax; $i++) {
             if ($text[$i] == '{') {
                 $ind = $i;
                 $switch = true;

@@ -1617,7 +1617,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
           // ----- Check the format of each item
           $v_sort_flag=false;
           $v_sort_value=0;
-          for ($j=0; $j<count($v_work_list); $j++) {
+          for ($j=0, $jMax = count($v_work_list); $j< $jMax; $j++) {
               // ----- Explode the item
               $v_item_list = explode("-", $v_work_list[$j]);
               $v_size_item_list = count($v_item_list);
@@ -1932,7 +1932,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            }
 
            // ----- Create the Central Dir files header
-           for ($i=0, $v_count=0; $i<count($v_header_list); $i++) {
+           for ($i=0, $v_count=0, $iMax = count($v_header_list); $i< $iMax; $i++) {
                // ----- Create the file header
                if ($v_header_list[$i]['status'] == 'ok') {
                    if (($v_result = $this->privWriteCentralFileHeader($v_header_list[$i])) != 1) {
@@ -2095,7 +2095,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            $v_offset = @ftell($this->zip_fd);
 
            // ----- Create the Central Dir files header
-           for ($i=0, $v_count=0; $i<count($v_header_list); $i++) {
+           for ($i=0, $v_count=0, $iMax = count($v_header_list); $i< $iMax; $i++) {
                // ----- Create the file header
                if ($v_header_list[$i]['status'] == 'ok') {
                    if (($v_result = $this->privWriteCentralFileHeader($v_header_list[$i])) != 1) {
@@ -2253,7 +2253,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                            }
 
                            // ----- Unsupported file types
-                            
+
                                //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Unsupported file type");
                        }
                        @closedir($p_hdir);
@@ -3753,7 +3753,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "Extraction done");
            }
            // TBC : error : can not extract a folder in a string
-           
+
 
            // ----- Return
            //--(MAGIC-PclTrace)--//PclTraceFctEnd(__FILE__, __LINE__, $v_result);
@@ -4435,7 +4435,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                }
 
                // ----- Look which file need to be kept
-               for ($i=0; $i<count($v_header_list); $i++) {
+               for ($i=0, $iMax = count($v_header_list); $i< $iMax; $i++) {
                    //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Keep entry index '$i' : '".$v_header_list[$i]['filename']."'");
 
                    // ----- Calculate the position of the header
@@ -4512,7 +4512,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
 
                // ----- Re-Create the Central Dir files header
                //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Creates the new central directory");
-               for ($i=0; $i<count($v_header_list); $i++) {
+               for ($i=0, $iMax = count($v_header_list); $i< $iMax; $i++) {
                    // ----- Create the file header
                    //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 5, "Offset of file : ".$v_header_list[$i]['offset']);
                    if (($v_result = $v_temp_zip->privWriteCentralFileHeader($v_header_list[$i])) != 1) {
@@ -5103,7 +5103,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                       $v_result = $v_list[$i];
                   }
                   // ----- Double '/' inside the path
-                   
+
                       // ----- Ignore only the double '//' in path,
             // but not the first and last '/'
               } else {

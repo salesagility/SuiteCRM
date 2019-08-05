@@ -244,7 +244,7 @@ class AOD_Index extends AOD_Index_sugar
         if ($indexEvents) {
             $indexEvent = $indexEvents[0];
             if (count($indexEvents) > 1) {
-                for ($x = 1; $x < count($indexEvents); $x++) {
+                for ($x = 1, $xMax = count($indexEvents); $x < $xMax; $x++) {
                     $duplicateIE = $indexEvents[$x];
                     $duplicateIE->mark_deleted($duplicateIE->id);
                 }

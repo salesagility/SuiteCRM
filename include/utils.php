@@ -3170,7 +3170,7 @@ function javascript_escape($str)
 {
     $new_str = '';
 
-    for ($i = 0; $i < strlen($str); ++$i) {
+    for ($i = 0, $iMax = strlen($str); $i < $iMax; ++$i) {
         if (ord(substr($str, $i, 1)) == 10) {
             $new_str .= '\n';
         } elseif (ord(substr($str, $i, 1)) == 13) {
@@ -4088,7 +4088,7 @@ function getPhpInfo($level = -1)
         $returnInfo['PHP Version'] = $version[1];
     }
 
-    for ($i = 1; $i < count($parsedInfo); ++$i) {
+    for ($i = 1, $iMax = count($parsedInfo); $i < $iMax; ++$i) {
         if (preg_match('/<h.>([^<]+)<\/h.>/', $parsedInfo[$i], $match)) {
             $vName = trim($match[1]);
             $parsedInfo2 = explode("\n", $parsedInfo[$i + 1]);
@@ -4140,7 +4140,7 @@ function string_format($format, $args, $escape = true)
     if ($escape) {
         $db = DBManagerFactory::getInstance();
     }
-    for ($i = 0; $i < count($args); ++$i) {
+    for ($i = 0, $iMax = count($args); $i < $iMax; ++$i) {
         if (strpos($args[$i], ',') !== false) {
             $values = explode(',', $args[$i]);
             if ($escape) {

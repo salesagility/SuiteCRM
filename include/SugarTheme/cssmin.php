@@ -92,7 +92,7 @@ class cssmin
         $items = array();
         preg_match_all("/(.+){(.+:.+);}/U", $css, $items);
         if (count($items[0]) > 0) {
-            for ($i = 0; $i < count($items[0]); $i++) {
+            for ($i = 0, $iMax = count($items[0]); $i < $iMax; $i++) {
                 $keys		= explode(",", $items[1][$i]);
                 $styles_tmp	= explode(";", $items[2][$i]);
                 $styles = array();

@@ -176,7 +176,7 @@ function createRTFDocument($path)
 function rtf_isPlainText($s)
 {
     $arrfailAt = array("*", "fonttbl", "colortbl", "datastore", "themedata");
-    for ($i = 0; $i < count($arrfailAt); $i++) {
+    for ($i = 0, $iMax = count($arrfailAt); $i < $iMax; $i++) {
         if (!empty($s[$arrfailAt[$i]])) {
             return false;
         }
@@ -236,7 +236,7 @@ function rtf2text($filename)
                     $param = null;
 
                     // Start reading characters after the backslash.
-                    for ($k = $i + 1, $m = 0; $k < strlen($text); $k++, $m++) {
+                    for ($k = $i + 1, $m = 0, $kMax = strlen($text); $k < $kMax; $k++, $m++) {
                         $nc = $text[$k];
                         // If the current character is a letter and there were no digits before it,
                         // then we’re still reading the control word. If there were digits, we should stop

@@ -254,7 +254,7 @@ if (isset($_REQUEST['step']) && $_REQUEST['step'] !=null) {
         //echo 'Previous run '.$previouUpgradeRun.'</br>';
         $upgradeStepFile = $previouUpgradeRun;
         //reset REQUEST
-        for ($i=0; $i<count($steps['files']); $i++) {
+        for ($i=0, $iMax = count($steps['files']); $i< $iMax; $i++) {
             if ($steps['files'][$i]== $previouUpgradeRun) {
                 $_REQUEST['step']=$i;
                 break;

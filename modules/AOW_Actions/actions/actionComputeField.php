@@ -103,7 +103,7 @@ class actionComputeField extends actionBase
 
             $relateFields = $this->getAllRelatedFields($bean);
 
-            for ($i = 0; $i < count($formulas); $i++) {
+            for ($i = 0, $iMax = count($formulas); $i < $iMax; $i++) {
                 if (array_key_exists($formulas[$i], $relateFields) && isset($relateFields[$formulas[$i]]['id_name'])) {
                     $bean->{$relateFields[$formulas[$i]]['id_name']} =
                         $calculator->calculateFormula($formulaContents[$i]);
@@ -148,7 +148,7 @@ class actionComputeField extends actionBase
     {
         $resolvedParameters = array();
 
-        for ($i = 0; $i < count($parameters); $i++) {
+        for ($i = 0, $iMax = count($parameters); $i < $iMax; $i++) {
             if ($parameterTypes[$i] == actionComputeField::FORMATTED_VALUE) {
                 $dataType = $bean->field_name_map[$parameters[$i]]['type'];
 
@@ -228,7 +228,7 @@ class actionComputeField extends actionBase
 
         $relateFields = $this->getAllRelatedFields($bean);
 
-        for ($i = 0; $i < count($relationParameters); $i++) {
+        for ($i = 0, $iMax = count($relationParameters); $i < $iMax; $i++) {
             $entity = null;
 
             if (isset($relateFields[$relationParameters[$i]]) &&

@@ -4649,12 +4649,12 @@ public $aliasNbPgHex;
             $space=$this->_escape($space);
             $s = sprintf(' BT '.$aix, $x*_MPDFK, ($this->h-$y)*_MPDFK);
             $t = explode(' ', $txt);
-            for ($i=0;$i<count($t);$i++) {
+            for ($i=0, $iMax = count($t); $i< $iMax; $i++) {
                 $tx = $t[$i];
 
                 $tj = '(';
                 $unicode = $this->UTF8StringToArray($tx);
-                for ($ti=0;$ti<count($unicode);$ti++) {
+                for ($ti=0, $tiMax = count($unicode); $ti< $tiMax; $ti++) {
                     if ($ti > 0 && isset($this->CurrentFont['kerninfo'][$unicode[($ti-1)]][$unicode[$ti]])) {
                         $kern = -$this->CurrentFont['kerninfo'][$unicode[($ti-1)]][$unicode[$ti]];
                         $tj .= sprintf(')%d(', $kern);
@@ -4676,7 +4676,7 @@ public $aliasNbPgHex;
             $s = '';
             $tj = '(';
             $unicode = $this->UTF8StringToArray($txt);
-            for ($i=0;$i<count($unicode);$i++) {
+            for ($i=0, $iMax = count($unicode); $i< $iMax; $i++) {
                 if ($i > 0 && isset($this->CurrentFont['kerninfo'][$unicode[($i-1)]][$unicode[$i]])) {
                     $kern = -$this->CurrentFont['kerninfo'][$unicode[($i-1)]][$unicode[$i]];
                     $tj .= sprintf(')%d(', $kern);
@@ -4745,7 +4745,7 @@ public $aliasNbPgHex;
                 }
             }
         } else {
-            for ($i=0;$i<strlen($txt);$i++) {
+            for ($i=0, $iMax = strlen($txt); $i< $iMax; $i++) {
                 if (isset($this->upperCase[ord($txt[$i])]) && $this->upperCase[ord($txt[$i])] < 256) {
                     if (!$upp) {
                         if (count($str)) {
@@ -5175,7 +5175,7 @@ public $aliasNbPgHex;
         } else {
             $this->minwSpacing = 0;
         }
-  
+
         $this->SetFont($FontFamily, $saved[ 'style' ].($this->U ? 'U' : '').($this->S ? 'S' : ''), $saved[ 'sizePt' ], false);
 
         $this->currentfontstyle = $saved[ 'style' ].($this->U ? 'U' : '').($this->S ? 'S' : '');
@@ -5609,7 +5609,7 @@ public $aliasNbPgHex;
         if ($this->ColActive && $check_h > ($this->PageBreakTrigger - $this->y0)) {
             $this->SetCol($this->NbCol-1);
         }
- 
+
         //	mPDF 5.4.04
         // Avoid just border/background-color moved on to next page
         if ($endofblock && $blockstate > 1 && !$content) {
@@ -6713,7 +6713,7 @@ public $aliasNbPgHex;
                 $currContent = mb_substr($currContent, 0, mb_strlen($currContent, $this->mb_enc)+1-mb_strlen($post, $this->mb_enc), $this->mb_enc) . '-';
             }
         }
-        
+
         /*-- HYPHENATION --*/
         // Soft Hyphens chr(173)
         elseif ($this->textparam['hyphens'] != 2 && (!$this->usingCoreFont && preg_match("/\xc2\xad/", $currWord)) || ($this->usingCoreFont && preg_match("/".chr(173)."/", $currWord) && ($this->FontFamily!='csymbol' && $this->FontFamily!='czapfdingbats'))) {	// mPDF 5.6.06
@@ -6776,7 +6776,7 @@ public $aliasNbPgHex;
                 $m0 = $lastchar;
             }
             $lastContent = '';
-            for ($w = 0; $w < count($words) ; $w++) {
+            for ($w = 0, $wMax = count($words); $w < $wMax; $w++) {
                 $lastContent .= $words[ $w ]." ";
             }
             $savedFont = $this->saveFont();
@@ -6812,7 +6812,7 @@ public $aliasNbPgHex;
                 $m0 = $lastchar;
             }
             $lastContent = '';
-            for ($w = 0; $w < count($words) ; $w++) {
+            for ($w = 0, $wMax = count($words); $w < $wMax; $w++) {
                 $lastContent .= $words[ $w ]." ";
             }
             $savedFont = $this->saveFont();
@@ -6836,7 +6836,7 @@ public $aliasNbPgHex;
                 }
             }
             $lastContent = '';
-            for ($w = 0; $w < count($words) ; $w++) {
+            for ($w = 0, $wMax = count($words); $w < $wMax; $w++) {
                 $lastContent .= $words[ $w ]." ";
             }
             $savedFont = $this->saveFont();
@@ -7244,7 +7244,7 @@ public $aliasNbPgHex;
         $arraysize = count($content);
 
         $margins = ($this->cMarginL+$this->cMarginR) + ($ipaddingL+$ipaddingR + $fpaddingR + $fpaddingR);
- 
+
         // PAINT BACKGROUND FOR THIS LINE
         if (!$is_table) {
             $this->DivLn($lineHeight, $this->blklvl, false);
@@ -7623,7 +7623,7 @@ public $aliasNbPgHex;
                     if ($forcewrap) {
                         while ($wordwidth > $maxwidth) {
                             $chw = 0;	// check width
-                            for ($i = 0; $i < mb_strlen($word, $this->mb_enc); $i++) {
+                            for ($i = 0, $iMax = mb_strlen($word, $this->mb_enc); $i < $iMax; $i++) {
                                 $chw = $this->GetStringWidth(mb_substr($word, 0, $i+1, $this->mb_enc));
                                 if ($chw > $maxwidth) {
                                     if ($text) {
@@ -8852,7 +8852,7 @@ public $aliasNbPgHex;
                 }
                 $r2 = $nb;
                 if (preg_match_all('/{mpdfheadernbpg (C|R) ff=(\S*) fs=(\S*) fz=(.*?)}/', $thispage, $m)) {
-                    for ($hi=0;$hi<count($m[0]);$hi++) {
+                    for ($hi=0, $hiMax = count($m[0]); $hi< $hiMax; $hi++) {
                         $pos = $m[1][$hi];
                         $hff = $m[2][$hi];
                         $hfst = $m[3][$hi];
@@ -8876,8 +8876,8 @@ public $aliasNbPgHex;
                 // And now for any SMP/SIP fonts subset using <HH> format
                 $r = '';
                 $nstr = (string)$nb;
-                for ($i=0;$i<strlen($nstr);$i++) {
-                    $r .= sprintf("%02s", strtoupper(dechex((int)$nstr[$i] +48)));
+                for ($i = 0, $iMax = strlen($nstr); $i < $iMax; $i++) {
+                    $r .= sprintf("%02s", strtoupper(dechex((int)($nstr[$i]) + 48)));
                 }
                 $thispage=str_replace($this->aliasNbPgHex, $r, $thispage);
             }
@@ -8893,7 +8893,7 @@ public $aliasNbPgHex;
                 }
                 $r2 = $nbt;
                 if (preg_match_all('/{mpdfheadernbpggp (C|R) ff=(\S*) fs=(\S*) fz=(.*?)}/', $thispage, $m)) {
-                    for ($hi=0;$hi<count($m[0]);$hi++) {
+                    for ($hi=0, $hiMax = count($m[0]); $hi< $hiMax; $hi++) {
                         $pos = $m[1][$hi];
                         $hff = $m[2][$hi];
                         $hfst = $m[3][$hi];
@@ -8917,8 +8917,8 @@ public $aliasNbPgHex;
                 // And now for any SMP/SIP fonts subset using <HH> format
                 $r = '';
                 $nstr = (string)$nbt;
-                for ($i=0;$i<strlen($nstr);$i++) {
-                    $r .= sprintf("%02s", strtoupper(dechex((int)$nstr[$i] +48)));
+                for ($i = 0, $iMax = strlen($nstr); $i < $iMax; $i++) {
+                    $r .= sprintf("%02s", strtoupper(dechex((int)($nstr[$i]) + 48)));
                 }
                 $thispage=str_replace($this->aliasNbPgGpHex, $r, $thispage);
             }
@@ -9513,7 +9513,7 @@ public $aliasNbPgHex;
                     include(_MPDF_PATH .'classes/ttfontsuni.php');
                 }
                 $ttf = new TTFontFile();
-                for ($sfid=0;$sfid<count($font['subsetfontids']);$sfid++) {
+                for ($sfid=0, $sfidMax = count($font['subsetfontids']); $sfid< $sfidMax; $sfid++) {
                     $this->fonts[$k]['n'][$sfid]=$this->n+1;		// NB an array for subset
                     $subsetname = 'MPDF'.$ssfaid.'+'.$font['name'];
                     $ssfaid++;
@@ -10076,7 +10076,7 @@ public $aliasNbPgHex;
             }
             if (isset($info['trns']) and is_array($info['trns'])) {
                 $trns='';
-                for ($i=0;$i<count($info['trns']);$i++) {
+                for ($i=0, $iMax = count($info['trns']); $i< $iMax; $i++) {
                     $trns.=$info['trns'][$i].' '.$info['trns'][$i].' ';
                 }
                 $this->_out('/Mask ['.$trns.']');
@@ -10466,7 +10466,7 @@ public $aliasNbPgHex;
                 }
                 if (count($m[0])) {
                     $sortarr = array();
-                    for ($i=0;$i<count($m[0]);$i++) {
+                    for ($i=0, $iMax = count($m[0]); $i< $iMax; $i++) {
                         $key = $m[1][$i]*2;
                         if ($m[3][$i]=='EMCZ') {
                             $key +=2;
@@ -14568,7 +14568,7 @@ public $aliasNbPgHex;
             include(_MPDF_PATH."patterns/" . $this->SHYlang . ".php");
             $patterns = explode(' ', $patterns);
             $new_patterns = array();
-            for ($i = 0; $i < count($patterns); $i++) {
+            for ($i = 0, $iMax = count($patterns); $i < $iMax; $i++) {
                 $value = $patterns[$i];
                 $new_patterns[preg_replace('/[0-9]/', '', $value)] = $value;
             }
@@ -14863,14 +14863,14 @@ public $aliasNbPgHex;
 
         /*-- HTMLHEADERS-FOOTERS --*/
         preg_match_all('/<htmlpageheader([^>]*)>(.*?)<\/htmlpageheader>/si', $html, $h);
-        for ($i=0;$i<count($h[1]);$i++) {
+        for ($i=0, $iMax = count($h[1]); $i< $iMax; $i++) {
             if (preg_match('/name=[\'|\"](.*?)[\'|\"]/', $h[1][$i], $n)) {
                 $this->pageHTMLheaders[$n[1]]['html'] = $h[2][$i];
                 $this->pageHTMLheaders[$n[1]]['h'] = $this->_gethtmlheight($h[2][$i]);
             }
         }
         preg_match_all('/<htmlpagefooter([^>]*)>(.*?)<\/htmlpagefooter>/si', $html, $f);
-        for ($i=0;$i<count($f[1]);$i++) {
+        for ($i=0, $iMax = count($f[1]); $i< $iMax; $i++) {
             if (preg_match('/name=[\'|\"](.*?)[\'|\"]/', $f[1][$i], $n)) {
                 $this->pageHTMLfooters[$n[1]]['html'] = $f[2][$i];
                 $this->pageHTMLfooters[$n[1]]['h'] = $this->_gethtmlheight($f[2][$i]);
@@ -15137,7 +15137,7 @@ public $aliasNbPgHex;
                     }
                 }
             } else { // TAG **
-           
+
                 if ($e[0]=='/') {
                     /*-- PROGRESS-BAR --*/
                     if ($this->progressBar) { 	// 10% increments
@@ -16575,10 +16575,10 @@ public $aliasNbPgHex;
         $resetpagenum = $pagenumstyle = $suppress = '';
         $marks = '';
         $bg = array();
- 
+
         $newformat = '';
 
- 
+
         if (isset($p['SHEET-SIZE']) && is_array($p['SHEET-SIZE'])) {
             $newformat = $p['SHEET-SIZE'];
             if ($newformat[0] > $newformat[1]) { // landscape
@@ -16707,7 +16707,7 @@ public $aliasNbPgHex;
         }
         $this->page_box['outer_width_LR'] = $outer_width_LR;	// Used in MARKS:crop etc.
         $this->page_box['outer_width_TB'] = $outer_width_TB;
- 
+
         return array($orientation,$mgl,$mgr,$mgt,$mgb,$mgh,$mgf,$header,$footer,$bg,$resetpagenum,$pagenumstyle,$suppress,$marks,$newformat);
     }
     /*-- END CSS-PAGE --*/
@@ -17419,7 +17419,7 @@ public $aliasNbPgHex;
     }
     break;
 
-     
+
      case 'INDEXINSERT':
     if (isset($attr['FONT-SIZE'])) {
         $reffontsize = $attr['FONT-SIZE'];
@@ -17478,7 +17478,7 @@ public $aliasNbPgHex;
 /*-- END INDEX --*/
 
 /*-- WATERMARK --*/
-     
+
      case 'WATERMARKTEXT':
     if (isset($attr['CONTENT']) && $attr['CONTENT']) {
         $txt = htmlspecialchars_decode($attr['CONTENT'], ENT_QUOTES);
@@ -17493,7 +17493,7 @@ public $aliasNbPgHex;
     $this->SetWatermarkText($txt, $alpha);
     break;
 
-     
+
      case 'WATERMARKIMAGE':
     if (isset($attr['SRC'])) {
         $src = $attr['SRC'];
@@ -18231,7 +18231,7 @@ public $aliasNbPgHex;
 
 /*-- TABLES --*/
     if ($this->tableLevel) {
-       
+
        // If already something on the line
         if ($this->cell[$this->row][$this->col]['s'] > 0  && !$this->nestedtablejustfinished) {
             $this->_saveCellTextBuffer("\n");
@@ -18836,7 +18836,7 @@ public $aliasNbPgHex;
 
 
 /*-- BARCODES --*/
-    
+
     case 'BARCODE':
     if (isset($attr['CODE']) && $attr['CODE']) {
         $objattr = array();
@@ -19332,7 +19332,7 @@ public $aliasNbPgHex;
             $objattr['background-col'] = $this->ConvertColor($properties['BACKGROUND-COLOR']);
         }
     }
- 
+
     $type = '';
       $texto='';
     $height = $this->FontSize;
@@ -20269,7 +20269,7 @@ public $aliasNbPgHex;
     $this->col=-1; //int
     $this->row=-1; //int
     $table = &$this->table[$this->tableLevel][$this->tbctr[$this->tableLevel]];
- 
+
     // New table - any level
     if ($this->cacheTables) {
         $this->packTableData = true;	// required for cacheTables
@@ -21459,7 +21459,7 @@ public $aliasNbPgHex;
         if (isset($properties['MARGIN-BOTTOM'])) {
             $this->list_margin_bottom = $this->ConvertSize($properties['MARGIN-BOTTOM'], $this->blk[$this->blklvl]['inner_width'], $this->FontSize, false);
         }
-       
+
         if (isset($this->blk[$this->blklvl]['line_height'])) {
             $this->list_lineheight[$this->listlvl][$occur] = $this->blk[$this->blklvl]['line_height'];
         }
@@ -21860,7 +21860,7 @@ public $aliasNbPgHex;
             if (count($this->textbuffer)==1) {
                 $content = $this->textbuffer[0][0];
             } else {
-                for ($i=0;$i<count($this->textbuffer);$i++) {
+                for ($i=0, $iMax = count($this->textbuffer); $i< $iMax; $i++) {
                     if (substr($this->textbuffer[$i][0], 0, 3) != "\xbb\xa4\xac") { //inline object
                         $content .= $this->textbuffer[$i][0];
                     }
@@ -22845,7 +22845,7 @@ public $aliasNbPgHex;
                                     $this->kwt_moved = true;
                                     $this->tbrot_maxw = $this->h - ($this->y + $this->bMargin + 5) - $this->kwt_height;
                                 }
-                 
+
                                 //$recalculate = $this->tbsqrt($tableheight / $fullpage, $iteration); $iteration++;
                     $recalculate = (1 / $this->shrin_k) + 0.001; 	// undo any shrink
                             }
@@ -23256,7 +23256,7 @@ public $aliasNbPgHex;
           } else {
               $list_item_marker = $anum . $this->list_number_suffix;
           }
-          
+
           if ($maxnum>87) {
               $bbit = 87;
           } elseif ($maxnum>86) {
@@ -23292,7 +23292,7 @@ public $aliasNbPgHex;
           } else {
               $list_item_marker = $anum . $this->list_number_suffix;
           }
-          
+
           if ($maxnum>87) {
               $bbit = 87;
           } elseif ($maxnum>86) {
@@ -23319,7 +23319,7 @@ public $aliasNbPgHex;
               $bbit = $maxnum;
           }
               $maxlnum = $this->dec2roman($bbit, false);
-          
+
             $blt_width = $this->GetStringWidth($maxlnum.$this->list_number_suffix);
               break;
           case 'disc':
@@ -23489,7 +23489,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
                 $this->x = $x;
             } else {
                 /*-- END RTL --*/
-      
+
                 if ($this->list_align_style == 'L') {
                     $lalign = 'L';
                 } else {
@@ -23847,7 +23847,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
         //Print-out special content
 
         if (substr($vetor[0], 0, 3) == "\xbb\xa4\xac") { //identifier has been identified!
-      
+
             $objattr = $this->_getObjAttr($vetor[0]);
 
             /*-- TABLES --*/
@@ -24961,7 +24961,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
                 if ($sh['x'] || $sh['y']) {
                     $shadow .= sprintf(' q 1 0 0 1 %.4F %.4F cm', $sh['x']*_MPDFK, -$sh['y']*_MPDFK)."\n";
                 }
- 
+
                 // Set path for INNER shadow
                 $shadow .= ' q 0 w ';
                 $shadow .= $this->SetFColor($col1, true)."\n";
@@ -25724,7 +25724,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
         preg_match_all('/<meta [^>]*?(name|content)="([^>]*?)" [^>]*?(name|content)="([^>]*?)".*?>/si', $html, $aux);
         $firstattr = $aux[1];
         $secondattr = $aux[3];
-        for ($i = 0 ; $i < count($aux[0]) ; $i++) {
+        for ($i = 0, $iMax = count($aux[0]); $i < $iMax; $i++) {
             $name = (strtoupper($firstattr[$i]) == "NAME")? strtoupper($aux[2][$i]) : strtoupper($aux[4][$i]);
             $content = (strtoupper($firstattr[$i]) == "CONTENT")? $aux[2][$i] : $aux[4][$i];
             switch ($name) {
@@ -26418,7 +26418,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
         $width = 0;
         $ln = 1;	// Counts line number
         $mxw = $this->GetCharWidth('W', false);
-        for ($cctr=0;$cctr<count($textbuffer);$cctr++) {	// mPDF 5.6.22
+        for ($cctr=0, $cctrMax = count($textbuffer); $cctr< $cctrMax; $cctr++) {	// mPDF 5.6.22
     $chunk = $textbuffer[$cctr];	// mPDF 5.6.22
     $line = $chunk[0];
             //IMAGE
@@ -28798,7 +28798,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
         } elseif ($bord) {
             if (!$bSeparate && $buffer) {
                 $priority = 'LRTB';
-                for ($p=0;$p<strlen($priority);$p++) {
+                for ($p=0, $pMax = strlen($priority); $p< $pMax; $p++) {
                     $side = $priority[$p];
                     $details['p'] = $side ;
 
@@ -28926,7 +28926,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
             $y2 = $y + $h;
             $oldlinewidth = $this->LineWidth;
 
-            for ($p=0;$p<strlen($priority);$p++) {
+            for ($p=0, $pMax = strlen($priority); $p< $pMax; $p++) {
                 $side = $priority[$p];
                 $xadj = 0;
                 $xadj2 = 0;
@@ -29921,7 +29921,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
                         $col -= ($cell['colspan']-1);
                     }
                     // Nested content
-                    for ($n=0; $n < count($cell['textbuffer']); $n++) {
+                    for ($n=0, $nMax = count($cell['textbuffer']); $n < $nMax; $n++) {
                         $t = $cell['textbuffer'][$n][0];
                         if (substr($t, 0, 19) == "\xbb\xa4\xactype=nestedtable") {
                             $objattr = $this->_getObjAttr($t);
@@ -30326,7 +30326,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
                             } elseif ($tablestartpageno != $this->page && !empty($tableheader)) {
                                 $by += $maxbwtop /2;
                             }
-    
+
                             $by -= $tableheaderadj;
                             $bh = $this->y - $by + $tablefooteradj;
                             if (!$table['borders_separate']) {
@@ -31185,7 +31185,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
                     $tbw = $w;
                     $tbh = $h;
                     $tab_bord = 0;
-               
+
                     $corner = '';
                     if ($i == 0) {		// Top
                         $tby -= $halfspaceT + ($table['border_details']['T']['w']/2);
@@ -31249,7 +31249,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
             $this->printcellbuffer();
         }
 
- 
+
         if ($this->tableClipPath) {
             $this->_out("Q");
         }
@@ -31427,7 +31427,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
 
     public function _putextgstates()
     {
-        for ($i = 1; $i <= count($this->extgstates); $i++) {
+        for ($i = 1, $iMax = count($this->extgstates); $i <= $iMax; $i++) {
             $this->_newobj();
             $this->extgstates[$i]['n'] = $this->n;
             $this->_out('<</Type /ExtGState');
@@ -31574,7 +31574,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
 
     public function _putpatterns()
     {
-        for ($i = 1; $i <= count($this->patterns); $i++) {
+        for ($i = 1, $iMax = count($this->patterns); $i <= $iMax; $i++) {
             $x = $this->patterns[$i]['x'];
             $y = $this->patterns[$i]['y'];
             $w = $this->patterns[$i]['w'];
@@ -32427,7 +32427,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
         $bmo = $this->BMoutlines;
         $this->BMoutlines = array();
         $lastlevel = -1;
-        for ($i=0;$i<count($bmo);$i++) {
+        for ($i=0, $iMax = count($bmo); $i< $iMax; $i++) {
             if ($bmo[$i]['l']>0) {
                 while ($bmo[$i]['l']-$lastlevel > 1) {	// If jump down more than one level, insert a new entry
                     $new = $bmo[$i];
@@ -33377,7 +33377,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
                         $sep = ', ';
                         $joiner = '-';
                     }
-                    for ($zi=1;$zi<count($ppp);$zi++) {
+                    for ($zi=1, $ziMax = count($ppp); $zi< $ziMax; $zi++) {
                         // RTL - Each number separately
                         if ($this->directionality == 'rtl') {
                             /*-- RTL --*/
@@ -33510,7 +33510,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         if ($this->directionality == 'rtl') {
             $this->ChangeColumn = -($this->ChangeColumn);
         }	// *RTL*
- 
+
            //Stay on the page
                 return false;
             } else {
@@ -33857,7 +33857,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
             foreach ($this->col_Reference as $v) {
                 $Present=0;
                 //Search the reference (AND Ref/PageNo) in the array
-                for ($i=0;$i<count($this->Reference);$i++) {
+                for ($i=0, $iMax = count($this->Reference); $i< $iMax; $i++) {
                     if ($this->Reference[$i]['t']==$v['t']) {
                         $Present=1;
                         if (!in_array($v['op'], $this->Reference[$i]['p'])) {
@@ -33872,7 +33872,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
             /*-- END INDEX --*/
 
             /*-- TOC --*/
-     
+
             // Adjust ToC
             foreach ($this->col_toc as $v) {
                 $this->tocontents->_toc[]=array('t'=>$v['t'],'l'=>$v['l'],'p'=>$v['p'],'link'=>$v['link'],'toc_id'=>$v['toc_id']);
@@ -34049,7 +34049,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
             foreach ($this->col_Reference as $v) {
                 $Present=0;
                 //Search the reference (AND Ref/PageNo) in the array
-                for ($i=0;$i<count($this->Reference);$i++) {
+                for ($i=0, $iMax = count($this->Reference); $i< $iMax; $i++) {
                     if ($this->Reference[$i]['t']==$v['t']) {
                         $Present=1;
                         if (!in_array($v['op'], $this->Reference[$i]['p'])) {
@@ -34064,7 +34064,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
             /*-- END INDEX --*/
 
             /*-- TOC --*/
-     
+
             // Adjust ToC
             foreach ($this->col_toc as $v) {
                 $this->tocontents->_toc[]=array('t'=>$v['t'],'l'=>$v['l'],'p'=>$v['p'],'link'=>$v['link'],'toc_id'=>$v['toc_id']);
@@ -34142,7 +34142,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
             // Output Reference (index)
             foreach ($this->col_Reference as $v) {
                 $Present=0;
-                for ($i=0;$i<count($this->Reference);$i++) {
+                for ($i=0, $iMax = count($this->Reference); $i< $iMax; $i++) {
                     if ($this->Reference[$i]['t']==$v['t']) {
                         $Present=1;
                         if (!in_array($v['op'], $this->Reference[$i]['p'])) {
@@ -34182,7 +34182,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         $this->columnLinks = array();
         $this->columnAnnots = array();
         $this->columnForms = array();
-   
+
         $this->col_Reference = array();
         $this->col_BMoutlines = array();
         $this->col_toc = array();
@@ -34270,7 +34270,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
             // Output Reference (index)
             foreach ($this->tbrot_Reference as $v) {
                 $Present=0;
-                for ($i=0;$i<count($this->Reference);$i++) {
+                for ($i=0, $iMax = count($this->Reference); $i< $iMax; $i++) {
                     if ($this->Reference[$i]['t']==$v['t']) {
                         $Present=1;
                         if (!in_array($v['op'], $this->Reference[$i]['p'])) {
@@ -34406,7 +34406,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         foreach ($this->tbrot_Reference as $v) {
             $Present=0;
             //Search the reference (AND Ref/PageNo) in the array
-            for ($i=0;$i<count($this->Reference);$i++) {
+            for ($i=0, $iMax = count($this->Reference); $i< $iMax; $i++) {
                 if ($this->Reference[$i]['t']==$v['t']) {
                     $Present=1;
                     if (!in_array($this->page, $this->Reference[$i]['p'])) {
@@ -34472,7 +34472,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
             // Output Reference (index)
             foreach ($this->kwt_Reference as $v) {
                 $Present=0;
-                for ($i=0;$i<count($this->Reference);$i++) {
+                for ($i=0, $iMax = count($this->Reference); $i< $iMax; $i++) {
                     if ($this->Reference[$i]['t']==$v['t']) {
                         $Present=1;
                         if (!in_array($v['op'], $this->Reference[$i]['p'])) {
@@ -34570,7 +34570,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         foreach ($this->kwt_Reference as $v) {
             $Present=0;
             //Search the reference (AND Ref/PageNo) in the array
-            for ($i=0;$i<count($this->Reference);$i++) {
+            for ($i=0, $iMax = count($this->Reference); $i< $iMax; $i++) {
                 if ($this->Reference[$i]['t']==$v['t']) {
                     $Present=1;
                     if (!in_array($this->page, $this->Reference[$i]['p'])) {
@@ -34673,7 +34673,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
             foreach ($this->ktReference as $v) {
                 $Present=0;
                 //Search the reference (AND Ref/PageNo) in the array
-                for ($i=0;$i<count($this->Reference);$i++) {
+                for ($i=0, $iMax = count($this->Reference); $i< $iMax; $i++) {
                     if ($this->Reference[$i]['t']==$v['t']) {
                         $Present=1;
                         if (!in_array($p2, $this->Reference[$i]['p'])) {
@@ -34789,7 +34789,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
             foreach ($this->ktReference as $v) {
                 $Present=0;
                 //Search the reference (AND Ref/PageNo) in the array
-                for ($i=0;$i<count($this->Reference);$i++) {
+                for ($i=0, $iMax = count($this->Reference); $i< $iMax; $i++) {
                     if ($this->Reference[$i]['t']==$v['t']) {
                         $Present=1;
                         if (!in_array($p2, $this->Reference[$i]['p'])) {
@@ -34926,7 +34926,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
             $bdo=array();
             preg_match_all('/([\x{202A}\x{202B}])(.*?)([\x{202C}])/u', $chunk, $m);
             if (count($m[0])) {
-                for ($i=0;$i<count($m[0]);$i++) {
+                for ($i=0, $iMax = count($m[0]); $i< $iMax; $i++) {
                     if ($m[1][$i]=="\xe2\x80\xab") {	// Right-to-Left Embedding [RLE] U+202B &#8235;
                         $mark = code2utf(0xf800+$i);
                         $bdo[$i] = $this->reverse_letters($m[2][$i]);
@@ -35025,8 +35025,8 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
 
             // mPDF 5.6.43
             if (count($bdo)) {
-                for ($i=0;$i<count($bdo);$i++) {
-                    $chunk = preg_replace('/[\x{'.dechex((int)(0xf800 + $i)).'}\x{'.dechex((int)(0xf880 + $i)).'}]/u', $bdo[$i], $chunk);
+                for ($i=0, $iMax = count($bdo); $i< $iMax; $i++) {
+                    $chunk = preg_replace('/[\x{'.dechex((int)(0xf800+$i)).'}\x{'.dechex((int)(0xf880+$i)).'}]/u', $bdo[$i], $chunk);
                 }
             }
 
@@ -35695,7 +35695,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
             } else {
                 $this->SetFont('sans');
             }
-               
+
             if ($bgcol) {
                 $this->SetFColor($bgcol);
             } else {
@@ -37152,7 +37152,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
   } else {
       $size *= (25.4/$this->dpi);
   } //nothing == px
-  
+
         return $size;
     }
 
@@ -37186,7 +37186,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         /*-- ANNOTATIONS --*/
         preg_match_all("/(<annotation.*?>)/si", $html, $m);
         if (count($m[1])) {
-            for ($i=0;$i<count($m[1]);$i++) {
+            for ($i=0, $iMax = count($m[1]); $i< $iMax; $i++) {
                 $sub = preg_replace("/\n/si", "\xbb\xa4\xac", $m[1][$i]);
                 $html = preg_replace('/'.preg_quote($m[1][$i], '/').'/si', $sub, $html);
             }
@@ -37195,7 +37195,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
 
         preg_match_all("/(<svg.*?<\/svg>)/si", $html, $svgi);
         if (count($svgi[0])) {
-            for ($i=0;$i<count($svgi[0]);$i++) {
+            for ($i=0, $iMax = count($svgi[0]); $i< $iMax; $i++) {
                 $file = _MPDF_TEMP_PATH.'_tempSVG'.RAND(1, 10000).'_'.$i.'.svg';
                 //Save to local file
                 file_put_contents($file, $svgi[0][$i]);
@@ -37327,9 +37327,9 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
     {
         $nstr = (string) $num;
         $rnum = '';
-        for ($i=0;$i<strlen($nstr);$i++) {
-            if ($this->_charDefined($this->CurrentFont['cw'], $cp+ (int)$nstr[$i])) { // contains arabic-indic numbers
-                $rnum .= code2utf($cp+ (int)$nstr[$i]);
+        for ($i=0, $iMax = strlen($nstr); $i< $iMax; $i++) {
+            if ($this->_charDefined($this->CurrentFont['cw'], $cp+(int)($nstr[$i]))) { // contains arabic-indic numbers
+                $rnum .= code2utf($cp+(int)($nstr[$i]));
             } else {
                 $rnum .= $nstr[$i];
             }
@@ -37471,13 +37471,13 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
     {
         return pack("H*", str_replace(array("\r","\n"," "), "", $hex));
     }
-    
+
     public function str2hex($str)
     {
         return current(unpack("H*", $str));
     }
 
-    
+
     public function pdf_write_value(&$value)
     {
         switch ($value[0]) {
@@ -37492,7 +37492,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
             // An array. Output the proper
             // structure and move on.
             $this->_out("[", false);
-            for ($i = 0; $i < count($value[1]); $i++) {
+            for ($i = 0, $iMax = count($value[1]); $i < $iMax; $i++) {
                 $this->pdf_write_value($value[1][$i]);
             }
             $this->_out("]");
@@ -37595,8 +37595,8 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         preg_match("/xref\n0 (\d+)\n(.*?)\ntrailer/s", $pdf, $m);
         $xref_objid = $m[1];
         preg_match_all('/(\d{10}) (\d{5}) (f|n)/', $m[2], $x);
-        for ($i=0; $i<count($x[0]); $i++) {
-            $xref[] = array((int)$x[1][$i], $x[2][$i], $x[3][$i]);
+        for ($i=0, $iMax = count($x[0]); $i< $iMax; $i++) {
+            $xref[] = array((int)($x[1][$i]), $x[2][$i], $x[3][$i]);
         }
 
         $changes = array();

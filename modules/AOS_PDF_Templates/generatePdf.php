@@ -345,7 +345,7 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
             }
         }
 
-        for ($i = 1; $i < count($parts); $i++) {
+        for ($i = 1, $iMax = count($parts); $i < $iMax; $i++) {
             $text .= $parts[$i];
         }
     }
@@ -422,7 +422,7 @@ function populate_service_lines($text, $lineItems, $element = 'tr')
             }
         }
 
-        for ($i = 1; $i < count($parts); $i++) {
+        for ($i = 1, $iMax = count($parts); $i < $iMax; $i++) {
             $text .= $parts[$i];
         }
     }

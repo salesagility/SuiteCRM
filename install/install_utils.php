@@ -1214,7 +1214,7 @@ function handleWebConfig()
     $xmldoc->startElement('system.webServer');
     $xmldoc->startElement('rewrite');
     $xmldoc->startElement('rules');
-    for ($i = 0; $i < count($config_array); $i++) {
+    for ($i = 0, $iMax = count($config_array); $i < $iMax; $i++) {
         $xmldoc->startElement('rule');
         $xmldoc->writeAttribute('name', "redirect$i");
         $xmldoc->writeAttribute('stopProcessing', 'true');

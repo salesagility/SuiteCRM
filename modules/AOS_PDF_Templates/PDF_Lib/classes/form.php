@@ -316,7 +316,7 @@ class form
                 $js = '';
             }	// mPDF 5.3.37
             $data = array('VAL' => array(), 'OPT' => array(), 'SEL' => array(), );
-            for ($i=0; $i<count($objattr['items']); $i++) {
+            for ($i=0, $iMax = count($objattr['items']); $i< $iMax; $i++) {
                 $item = $objattr['items'][$i];
                 $data['VAL'][] = $item['exportValue'];
                 $data['OPT'][] = $item['content'];
@@ -769,7 +769,7 @@ class form
 
     public function SetFormTextJS($name, $js)
     {
-        for ($i=0; $i<count($js); $i++) {
+        for ($i=0, $iMax = count($js); $i< $iMax; $i++) {
             $j = str_replace("\t", ' ', trim($js[$i][1]));
             $format = $js[$i][0];
             if ($name) {
@@ -901,12 +901,12 @@ class form
             $this->mpdf->Error("Field [".$name."] must have a name attribute, which can only contain letters, numbers, colon(:), undersore(_) or hyphen(-)");
         }
         if ($this->mpdf->onlyCoreFonts) {
-            for ($i=0;$i<count($array['VAL']);$i++) {
+            for ($i=0, $iMax = count($array['VAL']); $i< $iMax; $i++) {
                 $array['VAL'][$i] = $this->Win1252ToPDFDocEncoding($array['VAL'][$i]);
                 $array['OPT'][$i] = $this->Win1252ToPDFDocEncoding($array['OPT'][$i]);
             }
         } else {
-            for ($i=0;$i<count($array['VAL']);$i++) {
+            for ($i=0, $iMax = count($array['VAL']); $i< $iMax; $i++) {
                 if (isset($this->mpdf->CurrentFont['subset'])) {
                     $this->mpdf->UTF8StringToArray($array['VAL'][$i], true);	// Add characters to font subset
                     $this->mpdf->UTF8StringToArray($array['OPT'][$i], true);	// Add characters to font subset
@@ -1602,7 +1602,7 @@ f Q ';
         $this->mpdf->_out('/DA (/F'.$this->mpdf->fonts[$form['style']['font']]['i'].' '.$form['style']['fontsize'].' Tf '.$form['style']['fontcolor'].')');
 
         $opt = '';
-        for ($i = 0; $i < count($form['OPT']['VAL']) ; $i++) {
+        for ($i = 0, $iMax = count($form['OPT']['VAL']); $i < $iMax; $i++) {
             $opt .= '[ '.$this->mpdf->_textstring($form['OPT']['VAL'][$i]).' '.$this->mpdf->_textstring($form['OPT']['OPT'][$i]).' ] ';
         }
         $this->mpdf->_out('/Opt [ '.$opt.']');

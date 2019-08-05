@@ -58,7 +58,7 @@ class PHPSQLParser
 
             if (strtoupper($token) == "UNION") {
                 $union = 'UNION';
-                for ($i=$key+1;$i<count($in);++$i) {
+                for ($i=$key+1, $iMax = count($in); $i< $iMax; ++$i) {
                     if (trim($in[$i]) == '') {
                         continue;
                     }
@@ -680,7 +680,7 @@ EOREGEX
             $pos = 0;
         }
 
-        for ($i=$pos;$i<count($tokens);++$i) {
+        for ($i=$pos, $iMax = count($tokens); $i< $iMax; ++$i) {
             if ($tokens[$i] != '') {
                 $end = $tokens[$i];
                 break;
@@ -2059,7 +2059,7 @@ EOREGEX
             'zerofill'
             );
 
-        for ($i=0;$i<count($this->reserved);++$i) {
+        for ($i=0, $iMax = count($this->reserved); $i< $iMax; ++$i) {
             $this->reserved[$i]=strtoupper($this->reserved[$i]);
             if (!empty($this->functions[$i])) {
                 $this->functions[$i] = strtoupper($this->functions[$i]);

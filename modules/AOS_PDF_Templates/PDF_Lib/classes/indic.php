@@ -238,7 +238,7 @@ class indic
             $knmatraIligature = preg_split('/\|/', "E082|E083|E084|E085|E086|E087|E088|E089|E08A|E08B|E08C|E08D|E08E|E08F|E090|E091|E092|E093|E094|E095|E096|E097|E098|E099|E09A|E09B|E09C|E09D|E09E|E09F|E0A0|E0A4|E0A1|E0A2");
             $belowbase1 = "E02E|E02F|E030|E031|E032|E033|E034|E035|E036|E037|E038|E039|E03A|E03B|E03C|E03D|E03E|E03F|E040|E041|E042|E043|E044|E045|E046|E047|E048|E049|E04A|E04B|E04C|E04D|E04E|E04F|E050|E081";
             $belowbase2 = "E052|E053|E054|E055|E056|E057|E058|E059|E05A|E05B|E05C|E05D|E05E|E05F|E060|E061|E062|E063|E064|E065|E066|E067|E068|E069|E06A|E06B|E06C|E06D|E06E|E06F|E070|E071|E072|E073|E074|E081";
-            for ($i=0; $i<count($knbase);$i++) {
+            for ($i=0, $iMax = count($knbase); $i< $iMax; $i++) {
                 $vstr = preg_replace('/'.$knbase[$i].' ('.$belowbase1.') ('.$belowbase2.') '.$matraI.'/', $knmatraIligature[$i].' \\1 \\2', $vstr);
                 $vstr = preg_replace('/'.$knbase[$i].' ('.$belowbase1.') '.$matraI.'/', $knmatraIligature[$i].' \\1', $vstr);
             }

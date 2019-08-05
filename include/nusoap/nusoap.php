@@ -1917,7 +1917,7 @@ class nusoap_xmlschema extends nusoap_base
     public function CreateTypeName($ename)
     {
         $scope = '';
-        for ($i = 0; $i < count($this->complexTypeStack); $i++) {
+        for ($i = 0, $iMax = count($this->complexTypeStack); $i < $iMax; $i++) {
             $scope .= $this->complexTypeStack[$i] . '_';
         }
         return $scope . $ename . '_ContainedType';
@@ -6259,7 +6259,7 @@ class wsdl extends nusoap_base
                 foreach ($list as $xs) {
                     $wsdlparts = parse_url($this->wsdl);	// this is bogusly simple!
                     foreach ($xs->imports as $ns2 => $list2) {
-                        for ($ii = 0; $ii < count($list2); $ii++) {
+                        for ($ii = 0, $iiMax = count($list2); $ii < $iiMax; $ii++) {
                             if (! $list2[$ii]['loaded']) {
                                 $this->schemas[$ns]->imports[$ns2][$ii]['loaded'] = true;
                                 $url = $list2[$ii]['location'];
@@ -6285,7 +6285,7 @@ class wsdl extends nusoap_base
             // WSDL imports
             $wsdlparts = parse_url($this->wsdl);	// this is bogusly simple!
             foreach ($this->import as $ns => $list) {
-                for ($ii = 0; $ii < count($list); $ii++) {
+                for ($ii = 0, $iiMax = count($list); $ii < $iiMax; $ii++) {
                     if (! $list[$ii]['loaded']) {
                         $this->import[$ns][$ii]['loaded'] = true;
                         $url = $list[$ii]['location'];
@@ -6868,7 +6868,7 @@ class wsdl extends nusoap_base
         }
         if (isset($this->schemas[$ns])) {
             $this->debug("in getTypeDef: have schema for namespace $ns");
-            for ($i = 0; $i < count($this->schemas[$ns]); $i++) {
+            for ($i = 0, $iMax = count($this->schemas[$ns]); $i < $iMax; $i++) {
                 $xs = &$this->schemas[$ns][$i];
                 $t = $xs->getTypeDef($type);
                 $this->appendDebug($xs->getDebug());
@@ -10152,7 +10152,7 @@ class nusoap_client extends nusoap_base
             $newName = $newCookie['name'];
 
             $found = false;
-            for ($i = 0; $i < count($this->cookies); $i++) {
+            for ($i = 0, $iMax = count($this->cookies); $i < $iMax; $i++) {
                 $cookie = $this->cookies[$i];
                 if (!is_array($cookie)) {
                     continue;

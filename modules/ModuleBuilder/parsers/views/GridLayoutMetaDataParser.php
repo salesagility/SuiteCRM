@@ -446,7 +446,7 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         $firstNewPanelId = 0;
         foreach ($this->_viewdefs ['panels'] as $panelID => $panel) {
             // strip out all but the numerics from the panelID - can't just use a cast as numbers may not be first in the string
-            for ($i = 0, $result = ''; $i < strlen($panelID); $i++) {
+            for ($i = 0, $result = '', $iMax = strlen($panelID); $i < $iMax; $i++) {
                 if (is_numeric($panelID [$i])) {
                     $result .= $panelID [$i];
                 }

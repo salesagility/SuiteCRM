@@ -90,7 +90,7 @@ function smarty_function_mailto($params, &$smarty)
     }
 
     $mail_parm_vals = '';
-    for ($i=0; $i<count($mail_parms); $i++) {
+    for ($i=0, $iMax = count($mail_parms); $i< $iMax; $i++) {
         $mail_parm_vals .= (0==$i) ? '?' : '&';
         $mail_parm_vals .= $mail_parms[$i];
     }
@@ -106,7 +106,7 @@ function smarty_function_mailto($params, &$smarty)
         $string = 'document.write(\'<a href="mailto:'.$address.'" '.$extra.'>'.$text.'</a>\');';
 
         $js_encode = '';
-        for ($x=0; $x < strlen($string); $x++) {
+        for ($x=0, $xMax = strlen($string); $x < $xMax; $x++) {
             $js_encode .= '%' . bin2hex($string[$x]);
         }
 
@@ -135,7 +135,7 @@ function smarty_function_mailto($params, &$smarty)
             return;
         }
         $address_encode = '';
-        for ($x=0; $x < strlen($address); $x++) {
+        for ($x=0, $xMax = strlen($address); $x < $xMax; $x++) {
             if (preg_match('!\w!', $address[$x])) {
                 $address_encode .= '%' . bin2hex($address[$x]);
             } else {
@@ -143,7 +143,7 @@ function smarty_function_mailto($params, &$smarty)
             }
         }
         $text_encode = '';
-        for ($x=0; $x < strlen($text); $x++) {
+        for ($x=0, $xMax = strlen($text); $x < $xMax; $x++) {
             $text_encode .= '&#x' . bin2hex($text[$x]).';';
         }
 

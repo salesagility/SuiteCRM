@@ -84,7 +84,7 @@ function searchReplace($value, &$rowData)
 {
     preg_match_all('/\{\$(.*)\}/U', $value, $matches);
 
-    for ($wp = 0; $wp < count($matches[0]); $wp++) {
+    for ($wp = 0, $wpMax = count($matches[0]); $wp < $wpMax; $wp++) {
         if (isset($rowData[$matches[1][$wp]])) {
             $value = str_replace($matches[0][$wp], $rowData[$matches[1][$wp]], $value);
         } else {

@@ -83,7 +83,7 @@ function smarty_function_sugarvar($params, &$smarty)
     } else {
         $members = explode('.', $params['memberName']);
         $member =  $smarty->get_template_vars($members[0]);
-        for ($i = 1; $i < count($members); $i++) {
+        for ($i = 1, $iMax = count($members); $i < $iMax; $i++) {
             $member = $member[$members[$i]];
         }
     }

@@ -122,7 +122,7 @@ function commitMakeBackupFiles($rest_dir, $install_file, $unzip_dir, $zip_from_d
                 RecursiveDirectoryIterator::SKIP_DOTS | RecursiveIteratorIterator::SELF_FIRST
             )
         );
-	    
+
         // keep this around for canceling
         $_SESSION['uw_restore_dir'] = getUploadRelativeName($rest_dir);
 
@@ -3091,7 +3091,7 @@ function didThisStepRunBefore($step, $SubStep='')
     $stepRan = false;
     if (file_exists($upgrade_progress_file)) {
         include($upgrade_progress_file);
-        if (isset($upgrade_config) && $upgrade_config != null && is_array($upgrade_config) && count($upgrade_config) >0) {
+        if (isset($upgrade_config) && $upgrade_config != null && is_array($upgrade_config) && sizeof($upgrade_config) >0) {
             for ($i=1, $iMax = count($upgrade_config); $i<= $iMax; $i++) {
                 if (is_array($upgrade_config[$i])) {
                     foreach ($upgrade_config[$i] as $key=>$val) {

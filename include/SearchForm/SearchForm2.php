@@ -1298,7 +1298,7 @@ class SearchForm
                                         $concat_fields = $parms['db_field'];
 
                                         // If db_fields (e.g. contacts.first_name) contain table name, need to remove it
-                                        for ($i = 0; $i < count($concat_fields); $i++) {
+                                        for ($i = 0, $iMax = count($concat_fields); $i < $iMax; $i++) {
                                             if (strpos($concat_fields[$i], $concat_table) !== false) {
                                                 $concat_fields[$i] = substr($concat_fields[$i], strlen($concat_table) + 1);
                                             }

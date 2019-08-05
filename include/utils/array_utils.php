@@ -212,7 +212,7 @@ function array_merge_values($arr1, $arr2)
         return false;
     }
 
-    for ($i = 0; $i < count($arr1); $i++) {
+    for ($i = 0, $iMax = count($arr1); $i < $iMax; $i++) {
         $arr1[$i] .= $arr2[$i];
     }
 

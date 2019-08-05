@@ -1124,7 +1124,7 @@ abstract class BaseFacebook
         }
 
         $result = 0;
-        for ($i = 0; $i < strlen($expected_sig); $i++) {
+        for ($i = 0, $iMax = strlen($expected_sig); $i < $iMax; $i++) {
             $result |= ord($expected_sig[$i]) ^ ord($sig[$i]);
         }
 

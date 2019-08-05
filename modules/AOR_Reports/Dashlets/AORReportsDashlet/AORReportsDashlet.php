@@ -152,7 +152,7 @@ class AORReportsDashlet extends Dashlet
         ));
 
         // Fix for issue #1700 - save value as db type
-        for ($i = 0; $i < count($req['parameter_value']); $i++) {
+        for ($i = 0, $iMax = count($req['parameter_value']); $i < $iMax; $i++) {
             if (isset($req['parameter_value'][$i]) && $req['parameter_value'][$i] != '') {
                 global $current_user, $timedate;
                 $user_date_format = $timedate->get_date_format($current_user);

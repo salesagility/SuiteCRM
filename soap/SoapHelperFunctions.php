@@ -917,7 +917,7 @@ function filter_field_list(&$field_list, $select_fields, $module_name)
  */
 function filter_return_list(&$output_list, $select_fields, $module_name)
 {
-    for ($sug = 0; $sug < count($output_list); $sug++) {
+    for ($sug = 0, $sugMax = count($output_list); $sug < $sugMax; $sug++) {
         if ($module_name == 'Contacts') {
             global $invalid_contact_fields;
             if (is_array($invalid_contact_fields)) {

@@ -513,7 +513,7 @@
          if ($RestoreShadow && ($this->pChartObject->ShadowX != 0 || $this->pChartObject->ShadowY !=0)) {
              foreach ($Slices as $SliceID => $Plots) {
                  $ShadowPie = "";
-                 for ($i=0;$i<count($Plots);$i=$i+2) {
+                 for ($i=0, $iMax = count($Plots); $i< $iMax; $i=$i+2) {
                      $ShadowPie[] = $Plots[$i]+$this->pChartObject->ShadowX;
                      $ShadowPie[] = $Plots[$i+1]+$this->pChartObject->ShadowY;
                  }
@@ -687,7 +687,7 @@
              $Settings["B"]+= 20;
 
              $Top = "";
-             for ($j=0;$j<count($Plots);$j=$j+2) {
+             for ($j=0, $jMax = count($Plots); $j< $jMax; $j=$j+2) {
                  $Top[] = $Plots[$j];
                  $Top[] = $Plots[$j+1]- $SliceHeight;
              }
