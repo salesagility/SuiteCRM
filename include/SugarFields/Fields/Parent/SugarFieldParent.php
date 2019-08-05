@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,12 +36,9 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
-
-if (!defined('sugarEntry') || !sugarEntry) {
+ */if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 require_once('include/SugarFields/Fields/Relate/SugarFieldRelate.php');
 
@@ -219,7 +216,6 @@ class SugarFieldParent extends SugarFieldRelate
      */
     public function createQuickSearchCode($formName = 'EditView', $vardef = array())
     {
-
         require_once('include/QuickSearchDefaults.php');
         $json = getJSONobj();
 
@@ -235,8 +231,11 @@ class SugarFieldParent extends SugarFieldRelate
         //Build the javascript
         $quicksearch_js = '<script language="javascript">';
         $quicksearch_js .= "if(typeof sqs_objects == 'undefined'){var sqs_objects = new Array;}";
-        $quicksearch_js .= "sqs_objects['$qsFieldName']=" . str_replace($dynamicParentTypePlaceHolder,
-                $dynamicParentType, $json::encode($sqsFieldArray)) . ';';
+        $quicksearch_js .= "sqs_objects['$qsFieldName']=" . str_replace(
+            $dynamicParentTypePlaceHolder,
+            $dynamicParentType,
+            $json::encode($sqsFieldArray)
+        ) . ';';
         $quicksearch_js .= '</script>';
         return $quicksearch_js;
     }

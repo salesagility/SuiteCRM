@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -48,10 +48,8 @@ $mod_strings['LBL_ID'] = 'ID';
 $mod_strings['LBL_DATE_ENTERED'] = 'Date Created';
 $mod_strings['LBL_DATE_MODIFIED'] = 'Date Modified';
 $mod_strings['LBL_MODIFIED'] = 'Modified By';
-$mod_strings['LBL_MODIFIED_ID'] = 'Modified By Id';
 $mod_strings['LBL_MODIFIED_NAME'] = 'Modified By Name';
 $mod_strings['LBL_CREATED'] = 'Created By';
-$mod_strings['LBL_CREATED_ID'] = 'Created By Id';
 $mod_strings['LBL_DESCRIPTION'] = 'Description';
 $mod_strings['LBL_DELETED'] = 'Deleted';
 $mod_strings['LBL_NAME'] = 'Name';
@@ -64,11 +62,9 @@ $mod_strings['LBL_MODULE_TITLE'] = 'Areas';
 $mod_strings['LBL_HOMEPAGE_TITLE'] = 'My Areas';
 $mod_strings['LNK_NEW_RECORD'] = 'Create Areas';
 $mod_strings['LNK_LIST'] = 'View Areas';
-$mod_strings['LNK_IMPORT_JJWG_AREAS'] = 'Import Areas';
 $mod_strings['LBL_SEARCH_FORM_TITLE'] = 'Search Areas';
 $mod_strings['LBL_HISTORY_SUBPANEL_TITLE'] = 'View History';
 $mod_strings['LBL_ACTIVITIES_SUBPANEL_TITLE'] = 'Activities';
-$mod_strings['LBL_JJWG_AREAS_SUBPANEL_TITLE'] = 'Areas';
 $mod_strings['LBL_NEW_FORM_TITLE'] = 'New Areas';
 $mod_strings['LBL_CITY'] = 'City';
 $mod_strings['LBL_STATE'] = 'State';

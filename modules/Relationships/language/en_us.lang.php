@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,23 +42,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array (
-  'LBL_ID' => 'Relationship Id',
-  'LBL_RELATIONSHIP_NAME' => 'Relationship Name',
-  'LBL_LHS_MODULE' => 'LHS Module Name',
-  'LBL_LHS_TABLE' => 'LHS Table Name',
-  'LBL_LHS_KEY' => 'LHS Key Name',
-  'LBL_RHS_MODULE' => 'RHS Module Name',
-  'LBL_RHS_TABLE' => 'RHS Table Name',
-  'LBL_RHS_KEY' => 'RHS Key Name',
-  'LBL_JOIN_TABLE' => 'Join Table Name',
-  'LBL_JOIN_KEY_LHS' => 'Join Key LHS',
-  'LBL_JOIN_KEY_RHS' => 'Join Key RHS',
-  'LBL_RELATIONSHIP_TYPE' => 'Relationship Type',
-  'LBL_RELATIONSHIP_ROLE_COLUMN' => 'Relationship Role Column Name',
-  'LBL_RELATIONSHIP_ROLE_COLUMN_VALUE' => 'Relationship Role Column Value',
-  'LBL_REVERSE' => 'Reverse' ,
-  'LBL_DELETED' => 'Deleted',
+$mod_strings = array(
+    'LBL_ID' => 'Relationship Id',
+    'LBL_RELATIONSHIP_NAME' => 'Relationship Name',
+    'LBL_LHS_MODULE' => 'LHS Module Name',
+    'LBL_LHS_TABLE' => 'LHS Table Name',
+    'LBL_LHS_KEY' => 'LHS Key Name',
+    'LBL_RHS_MODULE' => 'RHS Module Name',
+    'LBL_RHS_TABLE' => 'RHS Table Name',
+    'LBL_RHS_KEY' => 'RHS Key Name',
+    'LBL_JOIN_TABLE' => 'Join Table Name',
+    'LBL_JOIN_KEY_LHS' => 'Join Key LHS',
+    'LBL_JOIN_KEY_RHS' => 'Join Key RHS',
+    'LBL_RELATIONSHIP_TYPE' => 'Relationship Type',
+    'LBL_RELATIONSHIP_ROLE_COLUMN' => 'Relationship Role Column Name',
+    'LBL_RELATIONSHIP_ROLE_COLUMN_VALUE' => 'Relationship Role Column Value',
+    'LBL_REVERSE' => 'Reverse',
+    'LBL_DELETED' => 'Deleted',
 );
-  
-?>

@@ -1,10 +1,10 @@
 <?php
  /**
- * 
- * 
- * @package 
+ *
+ *
+ * @package
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -20,20 +20,25 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/MVC/View/SugarView.php');
-require_once('include/MVC/View/views/view.list.php');
 
-class AOD_IndexViewIndexData extends SugarView {
+class AOD_IndexViewIndexData extends SugarView
+{
 
     /**
      * display the form
      */
-    public function display(){
-        global $db, $timedate, $current_language;
+    public function display()
+    {
+        global $timedate, $current_language;
+        $db = DBManagerFactory::getInstance();
+
         parent::display();
 
         $index = BeanFactory::getBean("AOD_Index");
@@ -44,9 +49,9 @@ class AOD_IndexViewIndexData extends SugarView {
 
         $moduleCounts = array();
 
-        foreach($beanList as $beanModule => $beanName){
+        foreach ($beanList as $beanModule => $beanName) {
             $bean = BeanFactory::getBean($beanModule);
-            if(!$bean || !method_exists($bean,"getTableName") || !$bean->getTableName()){
+            if (!$bean || !method_exists($bean, "getTableName") || !$bean->getTableName()) {
                 continue;
             }
             $query = "SELECT COUNT(DISTINCT b.id) FROM ".$bean->getTableName()." b WHERE b.deleted = 0";
@@ -60,19 +65,17 @@ class AOD_IndexViewIndexData extends SugarView {
 
         $indexFiles = count(glob($index->location."/*.cfs"));
 
-        $this->ss->assign("revisionCount",$revisionCount);
-        $this->ss->assign("indexedCount",$indexedCount);
-        $this->ss->assign("failedCount",$failedCount);
-        $this->ss->assign("index",$index);
-        $this->ss->assign("indexFiles",$indexFiles);
+        $this->ss->assign("revisionCount", $revisionCount);
+        $this->ss->assign("indexedCount", $indexedCount);
+        $this->ss->assign("failedCount", $failedCount);
+        $this->ss->assign("index", $index);
+        $this->ss->assign("indexFiles", $indexFiles);
         echo $this->ss->fetch('modules/AOD_Index/tpls/indexdata.tpl');
 
 
 
 
-        if($failedCount){
-
-
+        if ($failedCount) {
             $seed = BeanFactory::newBean("AOD_IndexEvent");
 
             $lv = new ListViewSmarty();
@@ -81,8 +84,7 @@ class AOD_IndexViewIndexData extends SugarView {
 
             require('modules/'.$seed->module_dir.'/metadata/listviewdefs.php');
 
-            if(file_exists('custom/modules/'.$seed->module_dir.'/metadata/listviewdefs.php'))
-            {
+            if (file_exists('custom/modules/'.$seed->module_dir.'/metadata/listviewdefs.php')) {
                 require('custom/modules/'.$seed->module_dir.'/metadata/listviewdefs.php');
             }
 
@@ -100,7 +102,7 @@ class AOD_IndexViewIndexData extends SugarView {
             $lv->setup($seed, 'include/ListView/ListViewNoMassUpdate.tpl', 'success = 0', '', 0, 10);
 
             echo '<br /><br />' . get_form_header($GLOBALS['mod_strings']['LBL_FAILED_RECORDS'] . ' (' . $lv->data['pageData']['offsets']['total'] . ')', '', false);
-            if($lv->data['pageData']['offsets']['total'] == 0) {
+            if ($lv->data['pageData']['offsets']['total'] == 0) {
                 echo "No data";
             } else {
                 echo $lv->display();

@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,14 +34,14 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description:
- ********************************************************************************/
+ */
 -->
 
 <!-- BEGIN: main -->
@@ -202,7 +203,7 @@
 		<td><span>
 		<table  cellpadding="0" cellspacing="0">
 			<tr>
-				<td nowrap><input name='date_start' id='jscal_start_date' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" tabindex='8' size='11' maxlength='10' type="text" value="{DATE_START}"> <img src="index.php?entryPoint=getImage&themeName={THEME}&imageName=jscalendar.gif" alt="{CALENDAR_DATEFORMAT}"  id="start_date_jscal_trigger" align="absmiddle">&nbsp;</td>
+				<td nowrap><input name='date_start' id='jscal_start_date' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" tabindex='8' size='11' maxlength='10' type="text" value="{DATE_START}"> <span id="start_date_jscal_trigger" class="suitepicon suitepicon-module-calendar" title="{CALENDAR_DATEFORMAT}"></span>&nbsp;</td>
 				<td nowrap><select name='time_hour_start' tabindex="9">{TIME_START_HOUR_OPTIONS}</select>{TIME_SEPARATOR}<select name='time_minute_start' tabindex="10">{TIME_START_MINUTE_OPTIONS}</select>{TIME_MERIDIEM_START}</td>
 			</tr><tr>
 				<td nowrap><span class="dateFormat">{USER_DATEFORMAT}</span></td>
@@ -228,7 +229,7 @@
 		<td><span>
 		<table  cellpadding="0" cellspacing="0">
 			<tr>
-				<td nowrap><input name='date_end' id='jscal_end_date' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" tabindex='12' size='11' maxlength='10' type="text" value="{DATE_END}"> <img src="index.php?entryPoint=getImage&themeName={THEME}&imageName=jscalendar.gif" alt="{CALENDAR_DATEFORMAT}"  id="end_date_jscal_trigger" align="absmiddle">&nbsp;</td>
+				<td nowrap><input name='date_end' id='jscal_end_date' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" tabindex='12' size='11' maxlength='10' type="text" value="{DATE_END}"> <span id="end_date_jscal_trigger" class="suitepicon suitepicon-module-calendar" title="{CALENDAR_DATEFORMAT}"></span>&nbsp;</td>
 				<td nowrap><select name='time_hour_end' tabindex="13">{TIME_END_HOUR_OPTIONS}</select>{TIME_SEPARATOR}<select name='time_minute_end' tabindex="14">{TIME_END_MINUTE_OPTIONS}</select>{TIME_MERIDIEM_END}</td>
 			</tr><tr>
 				<td nowrap><span class="dateFormat">{USER_DATEFORMAT}</span></td>

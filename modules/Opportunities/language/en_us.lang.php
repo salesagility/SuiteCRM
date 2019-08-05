@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -46,7 +46,6 @@ $mod_strings = array(
     'LBL_MODULE_NAME' => 'Opportunities',
     'LBL_MODULE_TITLE' => 'Opportunities: Home',
     'LBL_SEARCH_FORM_TITLE' => 'Opportunity Search',
-    'LBL_VIEW_FORM_TITLE' => 'Opportunity View',
     'LBL_LIST_FORM_TITLE' => 'Opportunity List',
     'LBL_OPPORTUNITY_NAME' => 'Opportunity Name:',
     'LBL_OPPORTUNITY' => 'Opportunity:',
@@ -60,15 +59,9 @@ $mod_strings = array(
     'LBL_LIST_DATE_CLOSED' => 'Close',
     'LBL_LIST_SALES_STAGE' => 'Sales Stage',
     'LBL_ACCOUNT_ID' => 'Account ID',
-    'LBL_CURRENCY_ID' => 'Currency ID',
     'LBL_CURRENCY_NAME' => 'Currency Name',
     'LBL_CURRENCY_SYMBOL' => 'Currency Symbol',
-//DON'T CONVERT THESE THEY ARE MAPPINGS
-    'db_sales_stage' => 'LBL_LIST_SALES_STAGE',
-    'db_name' => 'LBL_NAME',
-    'db_amount' => 'LBL_LIST_AMOUNT',
-    'db_date_closed' => 'LBL_LIST_DATE_CLOSED',
-//END DON'T CONVERT
+
     'UPDATE' => 'Opportunity - Currency Update',
     'LBL_ACCOUNT_NAME' => 'Account Name:',
     'LBL_AMOUNT' => 'Opportunity Amount:',
@@ -104,14 +97,11 @@ $mod_strings = array(
     'LBL_TOTAL_OPPORTUNITIES' => 'Total Opportunities',
     'LBL_CLOSED_WON_OPPORTUNITIES' => 'Closed Won Opportunities',
     'LBL_ASSIGNED_TO_ID' => 'Assigned User:',
-    'LBL_CREATED_ID' => 'Created by ID',
-    'LBL_MODIFIED_ID' => 'Modified by ID',
     'LBL_MODIFIED_NAME' => 'Modified by User Name',
     'LBL_CREATED_USER' => 'Created User',
     'LBL_MODIFIED_USER' => 'Modified User',
     'LBL_CAMPAIGN_OPPORTUNITY' => 'Campaigns',
     'LBL_PROJECT_SUBPANEL_TITLE' => 'Projects',
-    'LABEL_PANEL_ASSIGNMENT' => 'Assignment',
     'LNK_IMPORT_OPPORTUNITIES' => 'Import Opportunities',
     'LBL_EDITLAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
 
@@ -120,5 +110,3 @@ $mod_strings = array(
     'LBL_AOS_CONTRACTS' => 'Contracts',
     'LBL_AOS_QUOTES' => 'Quotes',
 );
-
-?>

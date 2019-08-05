@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -65,39 +65,6 @@ $dictionary['Email'] = array(
             'required' => false,
             'reportable' => false,
         ),
-        /**
-         * DEPRECATED FOR 5.0
-         * 'from_addr' => array (
-         * 'name' => 'from_addr',
-         * 'vname' => 'LBL_FROM',
-         * 'type' => 'id',
-         * 'comment' => 'Email address of the person sending the email',
-         * ),
-         * 'reply_to_addr' => array (
-         * 'name' => 'reply_to_addr',
-         * 'vname' => 'LBL_REPLY_TO_ADDRESS',
-         * 'type' => 'id',
-         * 'comment' => 'Email address of person indicated in the Reply-to email field',
-         * ),
-         * 'to_addrs' => array (
-         * 'name' => 'to_addrs',
-         * 'vname' => 'LBL_TO',
-         * 'type' => 'id',
-         * 'comment' => 'Email address(es) of person(s) to receive the email',
-         * ),
-         * 'cc_addrs' => array (
-         * 'name' => 'cc_addrs',
-         * 'vname' => 'LBL_CC',
-         * 'type' => 'id',
-         * 'comment' => 'Email address(es) of person(s) to receive a carbon copy of the email',
-         * ),
-         * 'bcc_addrs' => array (
-         * 'name' => 'bcc_addrs',
-         * 'vname' => 'LBL_BCC',
-         * 'type' => 'id',
-         * 'comment' => 'Email address(es) of person(s) to receive a blind carbon copy of the email',
-         * ),
-         */
         'from_addr_name' => array(
             'name' => 'from_addr_name',
             'type' => 'varchar',
@@ -151,7 +118,7 @@ $dictionary['Email'] = array(
         ),
         'description_html' => array(
             'name' => 'description_html',
-            'type' => 'html',
+            'type' => 'emailbody',
             'vname' => 'description_html',
             'source' => 'non-db',
             'inline_edit' => false,
@@ -164,9 +131,9 @@ $dictionary['Email'] = array(
             'inline_edit' => false,
 
         ),
-        'date_sent' => array(
-            'name' => 'date_sent',
-            'vname' => 'LBL_DATE_SENT',
+        'date_sent_received' => array(
+            'name' => 'date_sent_received',
+            'vname' => 'LBL_DATE_SENT_RECEIVED',
             'type' => 'datetime',
             'inline_edit' => false,
         ),
@@ -351,6 +318,24 @@ $dictionary['Email'] = array(
                 'name' => 'displaySubjectField',
                 'returns' => 'html',
                 'include' => 'modules/Emails/include/displaySubjectField.php',
+                'onListView' =>  true
+            ),
+        ),
+
+        'attachment' => array(
+            'name' => 'attachment',
+            'vname' => 'LBL_ATTACHMENTS',
+            'type' => 'function',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'studio' => 'visible',
+            'inline_edit' => false,
+            'function' => array(
+                'name' => 'displayAttachmentField',
+                'returns' => 'html',
+                'include' => 'modules/Emails/include/displayAttachmentField.php',
                 'onListView' =>  true
             ),
         ),
@@ -585,7 +570,7 @@ $dictionary['Email'] = array(
             'reportable' => true,
         ),
 
-        "emails_email_templates" => array (
+        "emails_email_templates" => array(
             'name' => 'emails_email_templates',
             'type' => 'link',
             'relationship' => 'emails_email_templates',
@@ -595,7 +580,7 @@ $dictionary['Email'] = array(
             'vname' => 'LBL_EMAIL_TEMPLATE',
             'id_name' => 'emails_email_templates_idb',
         ),
-        "emails_email_templates_name" => array (
+        "emails_email_templates_name" => array(
             'name' => 'emails_email_templates_name',
             'type' => 'relate',
             'source' => 'non-db',
@@ -607,7 +592,7 @@ $dictionary['Email'] = array(
             'module' => 'EmailTemplates',
             'rname' => 'name',
         ),
-        "emails_email_templates_idb" => array (
+        "emails_email_templates_idb" => array(
             'name' => 'emails_email_templates_idb',
             'type' => 'link',
             'relationship' => 'emails_email_templates',
@@ -615,6 +600,23 @@ $dictionary['Email'] = array(
             'reportable' => false,
             'side' => 'left',
             'vname' => 'LBL_EMAIL_TEMPLATE',
+        ),
+        'opt_in' => array(
+            'name' => 'opt_in',
+            'vname' => 'LBL_OPT_IN',
+            'type' => 'function',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'studio' => 'visible',
+            'inline_edit' => false,
+            'function' => array(
+                'name' => 'displayEmailAddressOptInField',
+                'returns' => 'html',
+                'include' => 'modules/Emails/include/displayEmailAddressOptInField.php',
+                'onListView' =>  true
+            ),
         ),
     ), /* end fields() array */
     'relationships' => array(
@@ -625,7 +627,7 @@ $dictionary['Email'] = array(
             'rhs_module' => 'Emails',
             'rhs_table' => 'emails',
             'rhs_key' => 'assigned_user_id',
-            'relationship_type' => 'one-to-many'
+            'relationship_type' => 'one-to-many',
         ),
         'emails_modified_user' => array(
             'lhs_module' => 'Users',
@@ -634,7 +636,7 @@ $dictionary['Email'] = array(
             'rhs_module' => 'Emails',
             'rhs_table' => 'emails',
             'rhs_key' => 'modified_user_id',
-            'relationship_type' => 'one-to-many'
+            'relationship_type' => 'one-to-many',
         ),
         'emails_created_by' => array(
             'lhs_module' => 'Users',
@@ -643,7 +645,7 @@ $dictionary['Email'] = array(
             'rhs_module' => 'Emails',
             'rhs_table' => 'emails',
             'rhs_key' => 'created_by',
-            'relationship_type' => 'one-to-many'
+            'relationship_type' => 'one-to-many',
         ),
         'emails_notes_rel' => array(
             'lhs_module' => 'Emails',
@@ -717,30 +719,35 @@ $dictionary['Email'] = array(
             'lhs_key' => 'id',
             'rhs_module' => 'Meetings',
             'rhs_table' => 'meetings',
-            'rhs_key' => 'parent_id',
-            'relationship_type' => 'one-to-many',
+            'rhs_key' => 'id',
+            'relationship_type' => 'many-to-many',
+            'join_table' => 'emails_beans',
+            'join_key_lhs' => 'email_id',
+            'join_key_rhs' => 'bean_id',
+            'relationship_role_column' => 'bean_module',
+            'relationship_role_column_value' => 'Meetings',
         ),
     ), // end relationships
     'indices' => array(
         array(
             'name' => 'idx_email_name',
             'type' => 'index',
-            'fields' => array('name')
+            'fields' => array('name'),
         ),
         array(
             'name' => 'idx_message_id',
             'type' => 'index',
-            'fields' => array('message_id')
+            'fields' => array('message_id'),
         ),
         array(
             'name' => 'idx_email_parent_id',
             'type' => 'index',
-            'fields' => array('parent_id')
+            'fields' => array('parent_id'),
         ),
         array(
             'name' => 'idx_email_assigned',
             'type' => 'index',
-            'fields' => array('assigned_user_id', 'type', 'status')
+            'fields' => array('assigned_user_id', 'type', 'status'),
         ),
         array(
             'name' => 'idx_email_cat',
@@ -750,13 +757,7 @@ $dictionary['Email'] = array(
     ) // end indices
 );
 
-VardefManager::createVardef(
-    'Emails',
-    'Email',
-    array(
-        'default',
+VardefManager::createVardef('Emails', 'Email', array('default',
         'basic',
-        'assignable',
-        'security_groups',
-    )
-);
+        'assignable','security_groups',
+));

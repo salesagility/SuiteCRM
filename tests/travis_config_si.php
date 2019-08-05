@@ -1,7 +1,7 @@
 <?php
-$sugar_config_si  = array (
+$sugar_config_si  = array(
     'dbUSRData' => 'create',
-    'default_date_format' => 'Y-m-d',
+    'default_date_format' => 'd/m/Y',
     'default_decimal_seperator' => '.',
     'default_export_charset' => 'ISO-8859-1',
     'default_language' => 'en_us',
@@ -23,4 +23,5 @@ $sugar_config_si  = array (
     'setup_site_sugarbeet_automatic_checks' => true,
     'setup_site_url' => 'http://localhost',
     'setup_system_name' => 'SuiteCRM Travis Build',
+    'show_log_trace' => false,
 );

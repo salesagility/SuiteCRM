@@ -365,10 +365,6 @@
     display: inline!important;
     width: 58%!important;
  }
-#Duration_unit, #Lag_unit {
-    display: inline;
-    padding: .3em;
-}
 #Resources {
     width: 60%;
     padding: .3em;

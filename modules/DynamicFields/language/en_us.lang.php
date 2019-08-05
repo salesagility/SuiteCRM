@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -52,7 +52,6 @@ $mod_strings = array(
     'LNK_MEETING_LIST' => 'Meetings',
     'LNK_TASK_LIST' => 'Tasks',
     'LNK_NOTE_LIST' => 'Notes',
-    'LNK_EMAIL_LIST' => 'Emails',
     'LBL_ADD_FIELD' => 'Add Field:',
     'LBL_SEARCH_FORM_TITLE' => 'Module Search',
     'COLUMN_TITLE_NAME' => 'Field Name',
@@ -95,21 +94,11 @@ $mod_strings = array(
     'LBL_BTN_EDIT' => 'Edit',
     'LBL_GENERATE_URL' => 'Generate URL',
     'LBL_CALCULATED' => 'Calculated Value',
-    'LBL_FORMULA' => 'Formula',
-    'LBL_DYNAMIC_VALUES_CHECKBOX' => 'Dependent',
-    'LBL_BTN_EDIT_VISIBILITY' => 'Edit Visibility',
     'LBL_LINK_TARGET' => 'Open Link In',
     'LBL_IMAGE_WIDTH' => 'Width',
     'LBL_IMAGE_HEIGHT' => 'Height',
     'LBL_IMAGE_BORDER' => 'Border',
-    'COLUMN_TITLE_VALIDATE_US_FORMAT' => 'U.S. Format',
-    'LBL_DEPENDENT' => 'Dependent',
-    'LBL_VISIBLE_IF' => 'Visible If',
-    'LBL_ENFORCED' => 'Enforced',
     'LBL_HELP' => 'Help' /*for 508 compliance fix*/,
     'COLUMN_TITLE_INLINE_EDIT_TEXT' => 'Inline Edit',
     'COLUMN_TITLE_PARENT_ENUM' => 'Parent DropDown',
 );
-
-
-?>

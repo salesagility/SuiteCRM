@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array (
+$mod_strings = array(
     'LBL_ASSIGNED_TO_NAME' => 'Contract Manager',
     'LBL_CONTRACT_ACCOUNT' => 'Account',
     'LBL_OPPORTUNITY' => 'Opportunity',
@@ -50,10 +50,8 @@ $mod_strings = array (
     'LBL_DATE_ENTERED' => 'Date Created',
     'LBL_DATE_MODIFIED' => 'Date Modified',
     'LBL_MODIFIED' => 'Modified By',
-    'LBL_MODIFIED_ID' => 'Modified By Id',
     'LBL_MODIFIED_NAME' => 'Modified By Name',
     'LBL_CREATED' => 'Created By',
-    'LBL_CREATED_ID' => 'Created By Id',
     'LBL_DESCRIPTION' => 'Description',
     'LBL_DELETED' => 'Deleted',
     'LBL_NAME' => 'Contract Title',
@@ -66,11 +64,9 @@ $mod_strings = array (
     'LBL_HOMEPAGE_TITLE' => 'My Contracts',
     'LNK_NEW_RECORD' => 'Create Contract',
     'LNK_LIST' => 'View Contracts',
-    'LNK_IMPORT_AOS_CONTRACTS' => 'Import Contracts',
     'LBL_SEARCH_FORM_TITLE' => 'Search Contracts',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-    'LBL_AOS_CONTRACTS_SUBPANEL_TITLE' => 'Contracts',
     'LBL_NEW_FORM_TITLE' => 'New Contract',
     'LBL_CONTRACT_NAME' => 'Contract Name',
     'LBL_REFERENCE_CODE ' => 'Reference Code ',
@@ -93,7 +89,6 @@ $mod_strings = array (
     'LBL_PRODUCT_NOTE' => 'Note',
     'LBL_PRODUCT_DESCRIPTION' => 'Description',
     'LBL_LIST_PRICE' => 'List',
-    'LBL_DISCOUNT_TYPE' => 'Type',
     'LBL_DISCOUNT_AMT' => 'Discount',
     'LBL_UNIT_PRICE' => 'Sale Price',
     'LBL_TOTAL_PRICE' => 'Total',
@@ -125,7 +120,6 @@ $mod_strings = array (
     'LBL_TAX_AMOUNT_USDOLLAR' => 'Tax (Default Currency)',
     'LBL_SHIPPING_AMOUNT_USDOLLAR' => 'Shipping (Default Currency)',
     'LBL_TOTAL_AMT_USDOLLAR' => 'Total (Default Currency)',
-    'LBL_SHIPPING_TAX_USDOLLAR' => 'Shipping Tax (Default Currency)',
     'LBL_SHIPPING_TAX_AMT_USDOLLAR' => 'Shipping Tax (Default Currency)',
     'LBL_GRAND_TOTAL_USDOLLAR' => 'Grand Total (Default Currency)',
 
@@ -134,4 +128,3 @@ $mod_strings = array (
     'LBL_AOS_PRODUCT_QUOTES' => 'Product Quotes',
     'LBL_AOS_QUOTES_AOS_CONTRACTS' => 'Quotes: Contracts',
 );
-?>

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -43,11 +43,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $dashletStrings['InvadersDashlet'] = array(
-    'LBL_TITLE'         => 'Invaders!',
-    'LBL_DESCRIPTION'   => 'A little way to pass the time',
+    'LBL_TITLE' => 'Invaders!',
+    'LBL_DESCRIPTION' => 'A little way to pass the time',
     'LBL_DBLCLICK_HELP' => 'Use A and D to move, S to fire.',
-    'LBL_START'         => 'Click To Start',
-    'LBL_GAME_OVER'     => 'Game Over<br>(Click to play again)',
+    'LBL_START' => 'Click To Start',
+    'LBL_GAME_OVER' => 'Game Over<br>(Click to play again)',
 
 );
-?>

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -49,10 +49,8 @@ $mod_strings = array(
     'LBL_DATE_ENTERED' => 'Date Created',
     'LBL_DATE_MODIFIED' => 'Date Modified',
     'LBL_MODIFIED' => 'Modified By',
-    'LBL_MODIFIED_ID' => 'Modified By Id',
     'LBL_MODIFIED_NAME' => 'Modified By Name',
     'LBL_CREATED' => 'Created By',
-    'LBL_CREATED_ID' => 'Created By Id',
     'LBL_DESCRIPTION' => 'Description',
     'LBL_DELETED' => 'Deleted',
     'LBL_NAME' => 'Name',
@@ -67,7 +65,6 @@ $mod_strings = array(
     'LBL_HOMEPAGE_TITLE' => 'My Favorites',
     'LNK_NEW_RECORD' => 'Create Favorite',
     'LNK_LIST' => 'View Favorites',
-    'LNK_IMPORT_FP_FAVORITES' => 'Import Favorites',
     'LBL_SEARCH_FORM_TITLE' => 'Search Favorites',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',

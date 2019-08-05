@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/App/Extension/Text.php';
  */
 class Zend_Gdata_App_Extension_Content extends Zend_Gdata_App_Extension_Text
 {
-
     protected $_rootElement = 'content';
     protected $_src = null;
 
@@ -84,5 +83,4 @@ class Zend_Gdata_App_Extension_Content extends Zend_Gdata_App_Extension_Text
         $this->_src = $value;
         return $this;
     }
-
 }

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -51,7 +51,7 @@ $mod_strings = array(
     'LBL_OOTB_CAMPAIGN' => 'Run Nightly Mass Email Campaigns',
     'LBL_OOTB_PRUNE' => 'Prune Database on 1st of Month',
     'LBL_OOTB_TRACKER' => 'Prune Tracker Tables',
-    'LBL_OOTB_SUGARFEEDS' => 'Prune SuiteCRM Feed Tables',
+    'LBL_OOTB_SUITEFEEDS' => 'Prune SuiteCRM Feed Tables',
     'LBL_OOTB_LUCENE_INDEX' => 'Perform Lucene Index',
     'LBL_OOTB_OPTIMISE_INDEX' => 'Optimise AOD Index',
     'LBL_OOTB_SEND_EMAIL_REMINDERS' => 'Run Email Reminder Notifications',
@@ -63,10 +63,8 @@ $mod_strings = array(
     'LBL_LIST_LIST_ORDER' => 'Schedulers:',
     'LBL_LIST_NAME' => 'Scheduler:',
     'LBL_LIST_RANGE' => 'Range:',
-    'LBL_LIST_REMOVE' => 'Remove:',
     'LBL_LIST_STATUS' => 'Status:',
     'LBL_LIST_TITLE' => 'Schedule List:',
-    'LBL_LIST_EXECUTE_TIME' => 'Will Run At:',
 // human readable:
     'LBL_SUN' => 'Sunday',
     'LBL_MON' => 'Monday',
@@ -76,19 +74,14 @@ $mod_strings = array(
     'LBL_FRI' => 'Friday',
     'LBL_SAT' => 'Saturday',
     'LBL_ALL' => 'Every Day',
-    'LBL_EVERY_DAY' => 'Every day ',
-    'LBL_AT_THE' => 'At the ',
     'LBL_EVERY' => 'Every ',
     'LBL_FROM' => 'From ',
     'LBL_ON_THE' => 'On the ',
     'LBL_RANGE' => ' to ',
-    'LBL_AT' => ' at ',
-    'LBL_IN' => ' in ',
     'LBL_AND' => ' and ',
     'LBL_MINUTES' => ' minutes ',
     'LBL_HOUR' => ' hours',
     'LBL_HOUR_SING' => ' hour',
-    'LBL_MONTH' => ' month',
     'LBL_OFTEN' => ' As often as possible.',
     'LBL_MIN_MARK' => ' minute mark',
 
@@ -131,7 +124,6 @@ $mod_strings = array(
 // Links
     'LNK_LIST_SCHEDULER' => 'Schedulers',
     'LNK_NEW_SCHEDULER' => 'Create Scheduler',
-    'LNK_LIST_SCHEDULED' => 'Scheduled Jobs',
 // Messages
     'ERR_CRON_SYNTAX' => 'Invalid Cron syntax',
     'NTC_LIST_ORDER' => 'Set the order this schedule will appear in the Scheduler dropdown lists',
@@ -146,8 +138,26 @@ $mod_strings = array(
     'LBL_EXECUTE_TIME' => 'Execute Time',
 
 //jobstrings
+    'LBL_REFRESHJOBS' => 'Refresh Jobs',
+    'LBL_POLLMONITOREDINBOXES' => 'Check Inbound Mail Accounts',
+    'LBL_PERFORMFULLFTSINDEX' => 'Full-text Search Index System',
+
+    'LBL_RUNMASSEMAILCAMPAIGN' => 'Run Nightly Mass Email Campaigns',
+    'LBL_POLLMONITOREDINBOXESFORBOUNCEDCAMPAIGNEMAILS' => 'Run Nightly Process Bounced Campaign Emails',
+    'LBL_PRUNEDATABASE' => 'Prune Database on 1st of Month',
+    'LBL_TRIMTRACKER' => 'Prune Tracker Tables',
+    'LBL_TRIMSUGARFEEDS' => 'Prune SuiteCRM Feed Tables',
+    'LBL_SENDEMAILREMINDERS' => 'Run Email Reminders Sending',
+    'LBL_CLEANJOBQUEUE' => 'Cleanup Job Queue',
+    'LBL_REMOVEDOCUMENTSFROMFS' => 'Removal of documents from filesystem',
+
+    'LBL_AODOPTIMISEINDEX' => 'Optimise Advanced OpenDiscovery Index',
+    'LBL_AODINDEXUNINDEXED' => 'Index unindexed documents',
+    'LBL_POLLMONITOREDINBOXESAOP' => 'AOP Poll Monitored Inboxes',
+    'LBL_AORRUNSCHEDULEDREPORTS' => 'Run scheduled reports',
+    'LBL_PROCESSAOW_WORKFLOW' => 'Process AOW Workflow',
+
     'LBL_SCHEDULER_TIMES' => 'Scheduler Times',
 );
 
 global $sugar_config;
-?>

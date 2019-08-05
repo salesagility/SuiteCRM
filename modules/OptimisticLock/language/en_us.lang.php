@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,15 +42,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array (
-   'LBL_YOURS' => 'Yours',
-   'LBL_IN_DATABASE' => 'In Database',
-   'LBL_CONFLICT_EXISTS' => 'A Conflict Exists For - ',
-   'LBL_ACCEPT_DATABASE' => 'Accept Database',
-   'LBL_ACCEPT_YOURS' => 'Accept Yours',
-   'LBL_RECORDS_MATCH' => 'Records Match',
-   'LBL_NO_LOCKED_OBJECTS' => 'No Locked Objects',
-   
-);
+$mod_strings = array(
+    'LBL_YOURS' => 'Yours',
+    'LBL_IN_DATABASE' => 'In Database',
+    'LBL_CONFLICT_EXISTS' => 'A Conflict Exists For - ',
+    'LBL_ACCEPT_DATABASE' => 'Accept Database',
+    'LBL_ACCEPT_YOURS' => 'Accept Yours',
+    'LBL_RECORDS_MATCH' => 'Records Match',
+    'LBL_NO_LOCKED_OBJECTS' => 'No Locked Objects',
 
-?>
+);

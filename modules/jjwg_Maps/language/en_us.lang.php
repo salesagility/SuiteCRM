@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -43,7 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $mod_strings['LBL_MAP'] = 'Map';
-$mod_strings['LBL_MAPS'] = 'Maps';
 $mod_strings['LBL_MODULE_NAME'] = 'Maps';
 $mod_strings['LBL_MODULE_TITLE'] = 'Maps: Home';
 $mod_strings['LBL_MODULE_ID'] = 'Maps';
@@ -59,7 +58,6 @@ $mod_strings['LBL_UNIT_TYPE'] = 'Unit Type:';
 
 $mod_strings['LBL_MAP_DISPLAY'] = 'Map Display';
 $mod_strings['LBL_MAP_LEGEND'] = 'Legend:';
-$mod_strings['LBL_MAP_USERS'] = 'Users:';
 $mod_strings['LBL_MAP_USER_GROUPS'] = 'Groups:';
 $mod_strings['LBL_MAP_GROUP'] = 'Group';
 $mod_strings['LBL_MAP_TYPE'] = 'Type';
@@ -70,10 +68,6 @@ $mod_strings['LBL_MAP_GOOGLE_MAPS_VIEW'] = 'Google Maps View';
 $mod_strings['LNK_NEW_MAP'] = 'Add New Map';
 $mod_strings['LNK_NEW_RECORD'] = 'Add New Map';
 $mod_strings['LNK_MAP_LIST'] = 'List Maps';
-$mod_strings['LNK_IMPORT_MAPS'] = 'Import Maps';
-$mod_strings['LBL_MAP_GEOCODE_ADDRESSES'] = 'Geocode Addresses';
-$mod_strings['LBL_MAP_DONATE'] = 'Donate';
-$mod_strings['LBL_MAP_DONATE_TO_THIS_PROJECT'] = 'Donate to this Project';
 
 $mod_strings['LBL_MAP_ADDRESS_TEST'] = 'Geocoding Test';
 $mod_strings['LBL_MAP_QUICK_RADIUS'] = 'Quick Radius Map';
@@ -82,10 +76,17 @@ $mod_strings['LBL_MAP_ADDRESS'] = 'Address';
 $mod_strings['LBL_MAP_PROCESS'] = 'Process It!';
 
 $mod_strings['LBL_MAP_LAST_STATUS'] = 'Last Geocode Status';
-$mod_strings['LBL_MAP_GEOCODED_COUNTS'] = 'Geocoded Counts';
 $mod_strings['LBL_GEOCODED_COUNTS'] = 'Module Geocoded Counts';
 $mod_strings['LBL_CRON_URL'] = 'Cron URL:';
 $mod_strings['LBL_MODULE_HEADING'] = 'Module';
+
+$mod_strings['LBL_N/A'] = 'N/A';
+$mod_strings['LBL_ZERO_RESULTS'] = 'Zero Results';
+$mod_strings['LBL_OK'] = 'Ok';
+$mod_strings['LBL_INVALID_REQUEST'] = 'Invalid Request';
+$mod_strings['LBL_APPROXIMATE'] = 'Approximate';
+$mod_strings['LBL_EMPTY'] = 'Empty';
+
 $mod_strings['LBL_MODULE_TOTAL_HEADING'] = 'Total';
 $mod_strings['LBL_MODULE_RESET_HEADING'] = 'Reset';
 $mod_strings['LBL_GEOCODED_COUNTS_DESCRIPTION'] = 'The table shown belown shows the number of module objects geocoded, grouped by geocoding response. Keep in mind that the standard Google Maps usage limit is 2500 requests per day . This module will cache the addresses geocoding information during processing to reduce the overall number of requests needed.';
@@ -95,7 +96,6 @@ $mod_strings['LBL_EXPORT_ADDRESS_URL'] = 'Export URLs';
 $mod_strings['LBL_EXPORT_INSTRUCTIONS'] = 'Use the links below to export full addresses in need of geocodeing information. Then use an online or offline batch geocoding tool to geocode the addresses. When you are finished geocoding, import the addresses into the Address Cache module to be used with your maps. Note, the Address Cache module is optional. All geocoding information is stored in the representative module.';
 $mod_strings['LBL_ADDRESS_CACHE'] = 'Address Cache';
 $mod_strings['LBL_ADD_TO_TARGET_LIST'] = 'Add to Target List';
-$mod_strings['LBL_ADD_TO_TARGET_LIST_CONFIRM'] = 'Are you sure you want to add the Selected Items to the Target List?';
 $mod_strings['LBL_ADD_TO_TARGET_LIST_PROCESSING'] = 'Processing...';
 
 

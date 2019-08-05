@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -49,39 +52,40 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('modules/EmailTemplates/EmailTemplate.php');
 
 $focus = new EmailTemplate();
-if($_REQUEST['from'] == 'DetailView') {
-	if(!isset($_REQUEST['record']))
-		sugar_die("A record number must be specified to delete the template.");
-	$focus->retrieve($_REQUEST['record']);
-	if(check_email_template_in_use($focus)) {
-		echo 'true';
-		return;
-	}
-	echo 'false';
-} else if($_REQUEST['from'] == 'ListView') {
-	$returnString = '';
-	$idArray = explode(',', $_REQUEST['records']);
-	foreach($idArray as $key => $value) {
-		if($focus->retrieve($value)) {
-			if(check_email_template_in_use($focus)) {
-				$returnString .= $focus->name . ',';
-			}
-		}
-	}
-	$returnString = substr($returnString, 0, -1);
-	echo $returnString;
+if ($_REQUEST['from'] == 'DetailView') {
+    if (!isset($_REQUEST['record'])) {
+        sugar_die("A record number must be specified to delete the template.");
+    }
+    $focus->retrieve($_REQUEST['record']);
+    if (check_email_template_in_use($focus)) {
+        echo 'true';
+        return;
+    }
+    echo 'false';
+} elseif ($_REQUEST['from'] == 'ListView') {
+    $returnString = '';
+    $idArray = explode(',', $_REQUEST['records']);
+    foreach ($idArray as $key => $value) {
+        if ($focus->retrieve($value)) {
+            if (check_email_template_in_use($focus)) {
+                $returnString .= $focus->name . ',';
+            }
+        }
+    }
+    $returnString = substr($returnString, 0, -1);
+    echo $returnString;
 } else {
-	echo '';
+    echo '';
 }
 
 function check_email_template_in_use($focus)
 {
-	if($focus->is_used_by_email_marketing()) {
-		return true;
-	}
-	$system = $GLOBALS['sugar_config']['passwordsetting'];
-	if($focus->id == $system['generatepasswordtmpl'] || $focus->id == $system['lostpasswordtmpl']) {
-	    return true;
-	}
+    if ($focus->is_used_by_email_marketing()) {
+        return true;
+    }
+    $system = $GLOBALS['sugar_config']['passwordsetting'];
+    if ($focus->id == $system['generatepasswordtmpl'] || $focus->id == $system['lostpasswordtmpl']) {
+        return true;
+    }
     return false;
 }

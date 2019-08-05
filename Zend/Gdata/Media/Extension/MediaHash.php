@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/App/Extension.php';
  */
 class Zend_Gdata_Media_Extension_MediaHash extends Zend_Gdata_Extension
 {
-
     protected $_rootElement = 'hash';
     protected $_rootNamespace = 'media';
     protected $_algo = null;
@@ -111,5 +110,4 @@ class Zend_Gdata_Media_Extension_MediaHash extends Zend_Gdata_Extension
         $this->_algo = $value;
         return $this;
     }
-
 }

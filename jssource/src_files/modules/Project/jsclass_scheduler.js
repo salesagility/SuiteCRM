@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 //////////////////////////////////////////////////
@@ -101,7 +102,7 @@ SugarWidgetListView.prototype.display = function() {
 		}
 
 		html += '<tr class="'+className+'">';
-		html += '<td><img src="'+GLOBAL_REGISTRY.config['site_url']+'/index.php?entryPoint=getImage&themeName='+SUGAR.themes.theme_name+'&imageName='+bean.module+'s.gif"/></td>';
+		html += '<td><span class="suitepicon suitepicon-module-' + bean.module.toLowerCase().replace('_', '-') + '"></span></td>';
 		html += '<td>'+bean.fields.full_name+'</td>';
 		html += '<td>'+bean.fields.email1+'</td>';
 		html += '<td>'+bean.fields.phone_work+'</td>';
@@ -470,7 +471,8 @@ SugarWidgetSchedulerSearch.createInvitee = function(form){
 	var callback = {
 		success: function (response) {
 
-			var rObj = eval("("+response.responseText+")");
+          SUGAR.util.globalEval("e=("+response.responseText+")");
+			var rObj = e;
 
 			ajaxStatus.hideStatus();
 
@@ -795,7 +797,7 @@ SugarWidgetScheduler.getScheduleDetails = function(beans, ids) {
         $.each(arguments, function(index, value) {
                 //console.log('value:');
                 //console.log(value);
-                eval(value[0]);
+          SUGAR.util.globalEval(value[0]);
                 //console.log('div:');
                 var container = result.body;
                 //console.log(container);
@@ -1041,8 +1043,7 @@ SugarWidgetScheduleRow.prototype.display = function() {
 
         // icon + full name
         td.scope = 'row';
-        var img = '<img align="absmiddle" src="index.php?entryPoint=getImage&themeName='
-                + SUGAR.themes.theme_name+'&imageName='+this.focus_bean.module+'s.gif"/>&nbsp;';
+        var img = '<span class="suitepicon suitepicon-module-' + this.focus_bean.module.toLowerCase().replace('_', '-') + '"></span>';
 
         td.innerHTML = img;
 

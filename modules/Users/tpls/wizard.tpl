@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,10 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html {$langHeader}>
@@ -288,14 +288,14 @@
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
                                         <tr><td><img src=include/images/configure.png style="margin-right: 5px;"></td><td><a onclick='document.UserWizard.whatnext.value="studio";document.UserWizard.submit()' href="#"  ><b> {$MOD.LBL_WIZARD_FINISH9} </b></a><br>{$MOD.LBL_WIZARD_FINISH10}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-                                        <tr><td><img src=include/images/university.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/forum/index" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
+                                        <tr><td><img src=include/images/university.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/suitecrm/forum/suite-forum" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
                                     {else}
-                                        <tr><td><img src=include/images/university2.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/forum/index" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
+                                        <tr><td><img src=include/images/university2.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/suitecrm/forum/suite-forum" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-                                        <tr><td><img src=include/images/docs.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/wiki/index.php/Userguide" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH14} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH15}</td></tr>
+                                        <tr><td><img src=include/images/docs.png style="margin-right: 5px;"></td><td><a href="https://docs.suitecrm.com/user/" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH14} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH15}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-                                        <tr><td><img src=include/images/forums.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/forum/index" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH18} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH19}</td></tr>
+                                        <tr><td><img src=include/images/forums.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/suitecrm/forum/suite-forum" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH18} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH19}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
                                     {/if}
                                 </table>
@@ -386,13 +386,21 @@ var SugarWizard = new function()
         this.currentScreen = screen;
     }
 }
-{/literal}
-{if $SKIP_WELCOME}
-SugarWizard.changeScreen('personalinfo');
-{else}
-SugarWizard.changeScreen('welcome');
-{/if}
-{literal}
+
+$(document).ready(function() {
+  $('.screen').each(function() {
+    $(this).hide();
+  });
+
+  {/literal}
+  {if $SKIP_WELCOME}
+  SugarWizard.changeScreen('personalinfo');
+  {else}
+  SugarWizard.changeScreen('welcome');
+  {/if}
+  {literal}
+});
+
 document.onkeypress = SugarWizard.handleKeyStroke;
 
 var mail_smtpport = '{/literal}{$MAIL_SMTPPORT}{literal}';

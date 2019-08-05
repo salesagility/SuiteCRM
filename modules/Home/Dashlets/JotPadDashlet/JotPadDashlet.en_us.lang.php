@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -43,13 +43,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $defaultText = "";
-$dashletStrings['JotPadDashlet'] = array('LBL_TITLE'            => 'JotPad',
-                                         'LBL_DESCRIPTION'      => 'A dashlet to keep your notes',
-                                         'LBL_SAVING'           => 'Saving JotPad ...',
-                                         'LBL_SAVED'            => 'Saved',
-                                         'LBL_CONFIGURE_TITLE'  => 'Title',
-                                         'LBL_CONFIGURE_HEIGHT' => 'Height (1 - 300)',
-                                         'LBL_DBLCLICK_HELP'    => 'Double click below to Edit.',
-                                         'LBL_DEFAULT_TEXT'     => $defaultText,
+$dashletStrings['JotPadDashlet'] = array(
+    'LBL_TITLE' => 'JotPad',
+    'LBL_DESCRIPTION' => 'A dashlet to keep your notes',
+    'LBL_SAVING' => 'Saving JotPad...',
+    'LBL_SAVED' => 'Saved',
+    'LBL_CONFIGURE_TITLE' => 'Title',
+    'LBL_CONFIGURE_HEIGHT' => 'Height (1 - 300)',
+    'LBL_DBLCLICK_HELP' => 'Double click below to Edit.',
+    'LBL_DEFAULT_TEXT' => $defaultText,
 );
-?>
