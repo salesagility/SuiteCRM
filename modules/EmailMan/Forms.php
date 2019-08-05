@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -49,22 +52,23 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  */
-function get_validate_record_js () {
-global $mod_strings;
-global $app_strings;
+function get_validate_record_js()
+{
+    global $mod_strings;
+    global $app_strings;
 
-$lbl_email_per_run = $mod_strings['LBL_EMAILS_PER_RUN'];
-$lbl_location = $mod_strings['LBL_LOCATION_ONLY'];
-$err_int_only=$mod_strings['ERR_INT_ONLY_EMAIL_PER_RUN'];
-$err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
-$err_from_name = $mod_strings['LBL_LIST_FROM_NAME'];
-$err_from_addr = $app_strings['LBL_EMAIL_SETTINGS_FROM_ADDR'];
-$err_smtpport = $mod_strings['LBL_MAIL_SMTPPORT'];
-$err_mailserver = $mod_strings['LBL_MAIL_SMTPSERVER'];
-$err_smtpuser = $mod_strings['LBL_MAIL_SMTPUSER'];
-$err_smtppass = $mod_strings['LBL_MAIL_SMTPPASS'];
+    $lbl_email_per_run = $mod_strings['LBL_EMAILS_PER_RUN'];
+    $lbl_location = $mod_strings['LBL_LOCATION_ONLY'];
+    $err_int_only=$mod_strings['ERR_INT_ONLY_EMAIL_PER_RUN'];
+    $err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
+    $err_from_name = $mod_strings['LBL_LIST_FROM_NAME'];
+    $err_from_addr = $app_strings['LBL_EMAIL_SETTINGS_FROM_ADDR'];
+    $err_smtpport = $mod_strings['LBL_MAIL_SMTPPORT'];
+    $err_mailserver = $mod_strings['LBL_MAIL_SMTPSERVER'];
+    $err_smtpuser = $mod_strings['LBL_MAIL_SMTPUSER'];
+    $err_smtppass = $mod_strings['LBL_MAIL_SMTPPASS'];
 
-$the_script  = <<<EOQ
+    $the_script  = <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 <!--  to hide script contents from old browsers
@@ -153,6 +157,5 @@ function add_checks(f) {
 // end hiding contents from old browsers  -->
 </script>
 EOQ;
-return $the_script;
+    return $the_script;
 }
-?>

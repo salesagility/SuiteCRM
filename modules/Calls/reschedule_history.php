@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,18 +34,17 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('modules/Calls_Reschedule/Calls_Reschedule.php');
 
-function reschedule_history($focus, $field, $value, $view){
-
+function reschedule_history($focus, $field, $value, $view)
+{
     global $app_list_strings;
 
-    if($view == 'DetailView'){
-
+    if ($view == 'DetailView') {
         $html = '';
         $html .= '<ul id="history_list">';
 
@@ -55,25 +55,21 @@ function reschedule_history($focus, $field, $value, $view){
         $reschedule = new Calls_Reschedule();
 
         while ($row = $focus->db->fetchByAssoc($result)) {
-        
-        	$reschedule->retrieve($row['id']);
+            $reschedule->retrieve($row['id']);
                        
             $html .= '<li>'.$app_list_strings["call_reschedule_dom"][$reschedule->reason].' - '.$reschedule->date_entered.' by '.$reschedule->created_by_name.'</li>';
-
         }
 
         $html .= '</ul>';
 
         return $html;
     }
-
 }
 
-function reschedule_count($focus, $field, $value, $view){
+function reschedule_count($focus, $field, $value, $view)
+{
+    $query = "SELECT COUNT(*) FROM calls_reschedule WHERE call_id='".$focus->id."'";
+    $result = $focus->db->getOne($query);
 
-        $query = "SELECT COUNT(*) FROM calls_reschedule WHERE call_id='".$focus->id."'";
-        $result = $focus->db->getOne($query);
-
-        $focus->reschedule_count = $result;
-
-    }
+    $focus->reschedule_count = $result;
+}

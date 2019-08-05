@@ -9,12 +9,12 @@ require_once 'modules/AOR_Reports/aor_utils.php';
 
 class AORReportsDashlet extends Dashlet
 {
-    var $def;
-    var $report;
-    var $charts;
-    var $onlyCharts;
+    public $def;
+    public $report;
+    public $charts;
+    public $onlyCharts;
 
-    function __construct($id, $def = array())
+    public function __construct($id, $def = array())
     {
         global $current_user, $app_strings;
 
@@ -49,7 +49,7 @@ class AORReportsDashlet extends Dashlet
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AORReportsDashlet($id, $def = array())
+    public function AORReportsDashlet($id, $def = array())
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -62,7 +62,7 @@ class AORReportsDashlet extends Dashlet
 
     public function display()
     {
-        global $current_language;
+        global $current_language,$mod_strings;
         $mod_strings = return_module_language($current_language, 'AOR_Reports');
         $dashletSmarty = new Sugar_Smarty();
         $dashletTemplate = get_custom_file_if_exists('modules/AOR_Reports/Dashlets/AORReportsDashlet/dashlet.tpl');
@@ -81,7 +81,7 @@ class AORReportsDashlet extends Dashlet
         return $dashletSmarty->fetch($dashletTemplate);
     }
 
-    function getChartHTML()
+    public function getChartHTML()
     {
         if (!empty($this->report->id)) {
             //return $this->report->build_report_chart($this->charts, AOR_Report::CHART_TYPE_CHARTJS);
@@ -91,14 +91,14 @@ class AORReportsDashlet extends Dashlet
         }
     }
 
-    function process()
+    public function process()
     {
     }
 
     public function displayOptions()
     {
         ob_start();
-        global $current_language, $app_list_strings, $datetime;
+        global $current_language, $app_list_strings, $datetime,$mod_strings;
         $mod_strings = return_module_language($current_language, 'AOR_Reports');
         $optionsSmarty = new Sugar_Smarty();
         $optionsSmarty->assign('MOD', $mod_strings);

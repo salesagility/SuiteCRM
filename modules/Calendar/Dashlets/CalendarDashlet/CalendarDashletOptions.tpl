@@ -1,11 +1,12 @@
 {*
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +35,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 *}
@@ -51,23 +52,23 @@
 <input type='hidden' name='configure' value='true'>
 <table width="400" cellpadding="0" cellspacing="0" border="0" class="edit view" align="center">
 <tr>
-    <td valign='top' nowrap class='dataLabel'>{$MOD.LBL_CONFIGURE_TITLE}</td>
+    <td valign='top' nowrap class='dataLabel'>{$titleLbl}</td>
     <td valign='top' class='dataField'>
     <input type="text" class="text" name="title" size='20' value='{$title}'>
     </td>
 </tr>
 <tr>
-    <td valign='top' nowrap class='dataLabel'>{$MOD.LBL_CONFIGURE_VIEW}</td>
+    <td valign='top' nowrap class='dataLabel'>{$configureView}</td>
     <td valign='top' class='dataField'>
     <select name="view">
-    		<option value="agendaDay" {if $view == "agendaDay"} selected {/if}>{$MOD.LBL_VIEW_DAY}</option>
-    		<option value="agendaWeek" {if $view == "agendaWeek"} selected {/if}>{$MOD.LBL_VIEW_WEEK}</option>
+    		<option value="agendaDay" {if $view == "agendaDay"} selected {/if}>{$viewDay}</option>
+    		<option value="agendaWeek" {if $view == "agendaWeek"} selected {/if}>{$viewWeek}</option>
     </select>
     </td>
 </tr>
 <tr>
     <td align="right" colspan="2">
-        <input type='submit' class='button' value='{$MOD.LBL_SAVE_BUTTON_LABEL}'>
+        <input type='submit' class='button' value='{$saveLbl}'>
    	</td>
 </tr>
 </table>

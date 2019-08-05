@@ -1,6 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -11,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -28,11 +32,10 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
-function toggleSiteDefaults(){var theForm=document.forms[0];var elem=document.getElementById('setup_site_session');if(theForm.setup_site_defaults.checked){document.getElementById('setup_site_session_section_pre').style.display='none';document.getElementById('setup_site_session_section').style.display='none';document.getElementById('setup_site_log_dir_pre').style.display='none';document.getElementById('setup_site_log_dir').style.display='none';document.getElementById('setup_site_guid_section_pre').style.display='none';document.getElementById('setup_site_guid_section').style.display='none';}
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */function toggleSiteDefaults(){var theForm=document.forms[0];var elem=document.getElementById('setup_site_session');if(theForm.setup_site_defaults.checked){document.getElementById('setup_site_session_section_pre').style.display='none';document.getElementById('setup_site_session_section').style.display='none';document.getElementById('setup_site_log_dir_pre').style.display='none';document.getElementById('setup_site_log_dir').style.display='none';document.getElementById('setup_site_guid_section_pre').style.display='none';document.getElementById('setup_site_guid_section').style.display='none';}
 else{document.getElementById('setup_site_session_section_pre').style.display='';document.getElementById('setup_site_log_dir_pre').style.display='';document.getElementById('setup_site_guid_section_pre').style.display='';toggleSession();toggleGUID();}}
 function toggleSession(){var theForm=document.forms[0];var elem=document.getElementById('setup_site_session_section');if(theForm.setup_site_custom_session_path.checked){elem.style.display='';}
 else{elem.style.display='none';}}

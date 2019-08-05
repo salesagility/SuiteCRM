@@ -1,11 +1,14 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $dictionary['Meeting'] = array('table' => 'meetings',
     'unified_search' => true, 'full_text_search' => true, 'unified_search_default_enabled' => true,
@@ -418,7 +421,7 @@ $dictionary['Meeting'] = array('table' => 'meetings',
                 'vname' => 'LBL_CASE',
             ),
         'aos_contracts' =>
-            array (
+            array(
                 'name' => 'aos_contracts',
                 'type' => 'link',
                 'relationship' => 'aos_contracts_meetings',
@@ -537,6 +540,31 @@ $dictionary['Meeting'] = array('table' => 'meetings',
                 'reportable' => false,
                 'importable' => false,
             ),
+        'gsync_id' =>
+            array(
+                'name' => 'gsync_id',
+                'vname' => 'LBL_GSYNC_ID',
+                'type' => 'varchar',
+                'len' => 1024,
+                'comment' => 'The internal Google ID of the event record',
+                'isnull' => 'true',
+                'massupdate' => false,
+                'reportable' => false,
+                'importable' => false,
+                'studio' => false,
+            ),
+        'gsync_lastsync' =>
+            array(
+                'name' => 'gsync_lastsync',
+                'vname' => 'LBL_GSYNC_LASTSYNC',
+                'type' => 'int',
+                'comment' => 'The last time this record was synced with Google Account as unix time',
+                'isnull' => 'true',
+                'massupdate' => false,
+                'reportable' => false,
+                'importable' => false,
+                'studio' => false,
+            ),
     ),
     'relationships' => array(
         'meetings_assigned_user' =>
@@ -573,4 +601,3 @@ $dictionary['Meeting'] = array('table' => 'meetings',
 
 VardefManager::createVardef('Meetings', 'Meeting', array('default', 'assignable', 'security_groups',
 ));
-?>

@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,35 +34,35 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-$searchdefs ['Notes'] = 
-array (
-  'layout' => 
-  array (
-    'basic_search' => 
-    array (
-      'name' => 
-      array (
+$searchdefs ['Notes'] =
+array(
+  'layout' =>
+  array(
+    'basic_search' =>
+    array(
+      'name' =>
+      array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-	  array ('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),             
-      array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
+      array('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),
+      array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
     ),
-    'advanced_search' => 
-    array (
-      'name' => 
-      array (
+    'advanced_search' =>
+    array(
+      'name' =>
+      array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'contact_name' => 
-      array (
+      'contact_name' =>
+      array(
         'type' => 'name',
         'link' => 'contact',
         'label' => 'LBL_CONTACT_NAME',
@@ -69,23 +70,23 @@ array (
         'default' => true,
         'name' => 'contact_name',
       ),
-      'parent_name' => 
-      array (
+      'parent_name' =>
+      array(
         'type' => 'parent',
         'label' => 'LBL_RELATED_TO',
         'width' => '10%',
         'default' => true,
         'name' => 'parent_name',
       ),
-      'filename' => 
-      array (
+      'filename' =>
+      array(
         'type' => 'name',
         'name' => 'filename',
         'default' => true,
         'width' => '10%',
       ),
-      'date_entered' => 
-      array (
+      'date_entered' =>
+      array(
         'type' => 'datetime',
         'label' => 'LBL_DATE_ENTERED',
         'width' => '10%',
@@ -95,15 +96,14 @@ array (
       
     ),
   ),
-  'templateMeta' => 
-  array (
+  'templateMeta' =>
+  array(
     'maxColumns' => '3',
-    'maxColumnsBasic' => '4', 
-    'widths' => 
-    array (
+    'maxColumnsBasic' => '4',
+    'widths' =>
+    array(
       'label' => '10',
       'field' => '30',
     ),
   ),
 );
-?>
