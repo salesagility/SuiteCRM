@@ -1,6 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -11,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -28,11 +32,10 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
-var yahooSlots=new Array();function addNewRowToView(id){var curRow=document.getElementById(id);var parent=curRow.parentNode;var newRow=document.createElement('tr');var newRow=parent.insertRow(parent.rows.length);var re=/studiorow[0-9]+/g;var cell=newRow.insertCell(0);cell.innerHTML=curRow.cells[0].innerHTML.replace(re,'studiorow'+slotCount);cell.className=curRow.cells[0].className;for(var j=1;j<curRow.cells.length;j++){var cell=newRow.insertCell(j);cell.innerHTML='&nbsp;';cell.className=curRow.cells[j].className;}
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */var yahooSlots=new Array();function addNewRowToView(id){var curRow=document.getElementById(id);var parent=curRow.parentNode;var newRow=document.createElement('tr');var newRow=parent.insertRow(parent.rows.length);var re=/studiorow[0-9]+/g;var cell=newRow.insertCell(0);cell.innerHTML=curRow.cells[0].innerHTML.replace(re,'studiorow'+slotCount);cell.className=curRow.cells[0].className;for(var j=1;j<curRow.cells.length;j++){var cell=newRow.insertCell(j);cell.innerHTML='&nbsp;';cell.className=curRow.cells[j].className;}
 var index=parent.rows.length;for(var i=0;i<parent.rows.length;i++){if(parent.rows[i].id==id){index=i+1;}}
 newRow.id='studiorow'+slotCount;if(typeof(curRow.parentId)=='undefined'){newRow.parentId=id;}else{newRow.parentId=curRow.parentId;}
 if(index<parent.rows.length){parent.insertBefore(newRow,parent.rows[index]);}else{parent.appendChild(newRow);}
@@ -50,8 +53,7 @@ function addNewField(id,name,label,html,fieldType,isCustom,table_id,top){html=re
 var cell=row.insertCell(0);var div=document.createElement('div');div.className='slot';div.setAttribute('id',id);div.fieldType=fieldType;addNewFieldType(fieldType);div.isCustom=isCustom;div.style.width='100%';var textEl=document.createElement('input');textEl.setAttribute('type','hidden')
 textEl.setAttribute('name','slot_field_'+field_count_MSI);textEl.setAttribute('id','slot_field_'+field_count_MSI);textEl.setAttribute('value','add:'+name);field_list_MSI['form_'+name]=textEl;document.studio.appendChild(textEl);div.innerHTML=label;var cell2=row.insertCell(1);var div2=document.createElement('div');setMouseOverForField(div,true);div2.style.display='none';div2.setAttribute('id',id+'b');html=html.replace(/(<input)([^>]*)/g,'$1 disabled readonly $2');html=html.replace(/(<select)([^>]*)/g,'$1 disabled readonly $2');html=html.replace(/(onclick=')([^']*)/g,'$1');div2.innerHTML+=html;cell.appendChild(div);cell2.appendChild(div2);field_count_MSI++;if(top){yahooSlots[id]=new ygDDSlot(id,"studio");}else{dyn_field_count++;}
 return name;}
-function removeFieldFromTable(field,table)
-{var table=document.getElementById(table);var rows=table.rows;for(i=0;i<rows.length;i++){cells=rows[i].cells;for(j=0;j<cells.length;j++){cell=rows[i].cells[j];children=cell.childNodes;for(k=0;k<children.length;k++){child=children[k];if(child.nodeType==1){if(child.getAttribute('id')=='slot_'+field){table.deleteRow(i);return;}}}}}}
+function removeFieldFromTable(field,table){var table=document.getElementById(table);var rows=table.rows;for(i=0;i<rows.length;i++){cells=rows[i].cells;for(j=0;j<cells.length;j++){cell=rows[i].cells[j];children=cell.childNodes;for(k=0;k<children.length;k++){child=children[k];if(child.nodeType==1){if(child.getAttribute('id')=='slot_'+field){table.deleteRow(i);return;}}}}}}
 function setMouseOverForField(field,on){if(on){field.onmouseover=function(){$(this).tipTip({maxWidth:"auto",edgeOffset:10,content:document.getElementById(this.id+'b').innerHTML});};field.onmouseout=function(){return nd();};}else{field.onmouseover=function(){};field.onmouseout=function(){};}}
 var lastIDClick='';var lastIDClickTime=0;var dblDelay=500;function wasDoubleClick(id){var d=new Date();var now=d.getTime();if(lastIDClick==id&&(now-lastIDClickTime)<dblDelay){lastIDClick='';return true;}
 lastIDClickTime=now;lastIDClick=id;return false;}
@@ -72,8 +74,7 @@ function deleteCustomFieldForm(isPopup){if(confirm("WARNING\nDeleting a custom f
 function dropdownChanged(value){if(typeof(app_list_strings[value])=='undefined')return;var select=document.getElementById('default_value').options;select.length=0;var count=0;for(var key in app_list_strings[value]){select[count]=new Option(app_list_strings[value][key],key);count++;}}
 function customFieldChanged(){}
 var populateCustomField=function(response){var div=document.getElementById('customfieldbody');if(response.status=0){div.innerHTML='Server Connection Failed';}else{validate['popup_form']=new Array();inputsWithErrors=new Array();div.innerHTML=response.responseText;studiopopup.evalScript(response.responseText);if(studiojs.popupAvailable){var region=YAHOO.util.Dom.getRegion('custom_field_table');studiojs.popup.cfg.setProperty('width',region.right-region.left+30+'px');studiojs.popup.cfg.setProperty('height',region.bottom-region.top+30+'px');studiojs.popup.render(document.body);studiojs.popup.center();studiojs.popup.show();}}};var populateCustomFieldCallback={success:populateCustomField,failure:populateCustomField,argument:1};var COBJ=false;function changeTypeData(type){document.getElementById('customfieldbody').innerHTML='<h2>Loading...</h2>';COBJ=YAHOO.util.Connect.asyncRequest('GET','index.php?module=Studio&popup=true&action=index&&ajax=editcustomfield&to_pdf=true&type='+type,populateCustomFieldCallback,null);}
-function typeChanged(obj)
-{changeTypeData(obj.options[obj.selectedIndex].value);}
+function typeChanged(obj){changeTypeData(obj.options[obj.selectedIndex].value);}
 function handle_duplicate(){document.popup_form.action.value='EditView';document.popup_form.duplicate.value='true';document.popup_form.submit();}
 function forceRange(field,min,max){field.value=parseInt(field.value);if(field.value=='NaN')field.value=max;if(field.value>max)field.value=max;if(field.value<min)field.value=min;}
 function changeMaxLength(field,length){field.maxLength=parseInt(length);field.value=field.value.substr(0,field.maxLength);}

@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -148,7 +149,16 @@
 										</tr>
 									</table>
 
-						<table id="userResetPassId" name="userResetPassName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+			<!-- PASSWORD SECURITY SETTINGS -->
+			<table id="pwdsec_table" width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
+				<tr>
+					<td>{include file="modules/Administration/PasswordManagerSecurity.tpl"}</td>
+				</tr>
+			</table>
+			<!-- END PASSWORD SECURITY SETTINGS -->
+
+
+			<table id="userResetPassId" name="userResetPassName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 							<tr>
 								<th align="left" scope="row" colspan="2"><h4>{$MOD.LBL_PASSWORD_USER_RESET}</h4>
 								</th>
@@ -286,6 +296,28 @@
 									        <td ></td>
 									        <td ></td>
 										</tr>
+
+
+							<tr>
+								<td  scope="row">{$MOD.LBL_TWO_FACTOR_AUTH_EMAIL_TPL}: </td>
+								<td>
+									<span>
+										<select tabindex='251' id="factoremailtmpl"
+                                                name="passwordsetting_factoremailtmpl" {$IE_DISABLED}>{$TMPL_DRPDWN_FACTOR}</select>
+										<input type="button" class="button"
+                                               onclick="open_email_template_form('factoremailtmpl')"
+                                               value="{$MOD.LBL_PASSWORD_CREATE_TEMPLATE}" {$IE_DISABLED}>
+										<input type="button" value="{$MOD.LBL_PASSWORD_EDIT_TEMPLATE}" class="button"
+                                               onclick="edit_email_template_form('factoremailtmpl')"
+                                               name='edit_factoremailtmpl' id='edit_factoremailtmpl'
+                                               style="{$EDIT_TEMPLATE}">
+									</span>
+                        </td>
+								<td ></td>
+								<td ></td>
+							</tr>
+
+
 									</table>
 
 
@@ -432,7 +464,9 @@
 							</table>
 
 						             <!-- start SAML -->
-						   {if !empty($config.authenticationClass) && $config.authenticationClass == 'SAMLAuthenticate'}
+                            {if !empty($config.authenticationClass)
+                                && ($config.authenticationClass == 'SAMLAuthenticate'
+                                || $config.authenticationClass == 'SAML2Authenticate')}
                            {assign var='saml_enabled_checked' value='CHECKED'}
                            {assign var='saml_display' value='inline'}
                         {else}
@@ -624,7 +658,7 @@ function refresh_email_template_list(template_id, template_name) {
 		newElement.value=template_id;
 		field.options.add(newElement);
 	} // else
-	-->
+        
 }
 
 function testregex(customregex)

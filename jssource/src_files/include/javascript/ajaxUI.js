@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,12 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 SUGAR.ajaxUI = {
     loadingWindow : false,
@@ -167,14 +165,26 @@ SUGAR.ajaxUI = {
     {
         if(YAHOO.lang.trim(url) != "")
         {
-            //Don't ajax load certain modules
+
+          // ajaxUILoc XSS protection:
+          // window.location = url; is vulnerable to XSS attack
+          // Check for valid url
+          // Expects url encoded versions of index.php?module=Home&action=index&parentTab=All
+          var testUrl = decodeURIComponent(url);
+          if (
+            /^index.php?(([A-Z]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+[%=+#&\[\]\.]*)+/i.test(testUrl) === false
+          ) {
+            throw "Invalid url";
+          }
+
+          //Don't ajax load certain modules
             var mRegex = /module=([^&]*)/.exec(url);
             var module = mRegex ? mRegex[1] : false;
             if (module && SUGAR.ajaxUI.canAjaxLoadModule(module))
             {
                 YAHOO.util.History.navigate('ajaxUILoc',  url);
             } else {
-                window.location = url;
+              window.location = url;
             }
         }
     },
@@ -185,8 +195,21 @@ SUGAR.ajaxUI = {
         if(YAHOO.lang.trim(url) != "")
         {
             var con = YAHOO.util.Connect, ui = SUGAR.ajaxUI;
-            if (ui.lastURL == url)
-                return;
+            if (ui.lastURL == url) {
+              return;
+            }
+
+          // ajaxUILoc XSS protection:
+          // window.location = url; is vulnerable to XSS attack
+          // Check for valid url
+          // Expects url encoded versions of index.php?module=Home&action=index&parentTab=All
+          var testUrl = decodeURIComponent(url);
+          if (
+            /^index.php?(([A-Z]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+[%=+#&\[\]\.]*)+/i.test(testUrl) === false
+          ) {
+            throw "Invalid url";
+          }
+
             var inAjaxUI = /action=ajaxui/.exec(window.location);
             if (typeof (window.onbeforeunload) == "function" && window.onbeforeunload())
             {
@@ -213,8 +236,7 @@ SUGAR.ajaxUI = {
             var module = mRegex ? mRegex[1] : false;
             //If we can't ajax load the module (blacklisted), set the URL directly.
             if (!ui.canAjaxLoadModule(module)) {
-                window.location = url;
-                return;
+              window.location = url;
             }
             ui.lastURL = url;
             ui.cleanGlobals();
@@ -226,11 +248,11 @@ SUGAR.ajaxUI = {
             if (!inAjaxUI) {
                 //If we aren't in the ajaxUI yet, we need to reload the page to get setup properly
                 if (!SUGAR.isIE)
-                    window.location.replace("index.php?action=ajaxui#ajaxUILoc=" + encodeURIComponent(url));
+                  window.location.replace("index.php?action=ajaxui#ajaxUILoc=" + encodeURIComponent(url));
                 else {
-                    //if we use replace under IE, it will cache the page as the replaced version and thus no longer load the previous page.
-                    window.location.hash = "#";
-                    window.location.assign("index.php?action=ajaxui#ajaxUILoc=" + encodeURIComponent(url));
+                  //if we use replace under IE, it will cache the page as the replaced version and thus no longer load the previous page.
+                  window.location.hash = "#";
+                  window.location.assign("index.php?action=ajaxui#ajaxUILoc=" + encodeURIComponent(url));
                 }
             }
             else {

@@ -19,24 +19,24 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 $module_name = 'AOP_Case_Updates';
 $viewdefs[$module_name]['QuickCreate'] = array(
-    'templateMeta' => array('maxColumns' => '2', 
+    'templateMeta' => array('maxColumns' => '2',
                             'widths' => array(
-                                            array('label' => '10', 'field' => '30'), 
+                                            array('label' => '10', 'field' => '30'),
                                             array('label' => '10', 'field' => '30')
-                                            ),                                                                                                                                    
+                                            ),
                                             ),
                                             
                                             
- 'panels' =>array (
-  'default' => 
-  array (
+ 'panels' =>array(
+  'default' =>
+  array(
     
-    array (
+    array(
       'name',
       'assigned_user_name',
     ),
@@ -45,4 +45,3 @@ $viewdefs[$module_name]['QuickCreate'] = array(
 ),
                         
 );
-?>

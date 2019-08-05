@@ -4,6 +4,7 @@ Onelogin PHP Toolkit expects certs for the SP stored at:
 
  * sp.key   Private Key
  * sp.crt  Public cert
+ * sp_new.crt Future Public cert
 
 Also you can use other cert to sign the metadata of the SP using the:
 

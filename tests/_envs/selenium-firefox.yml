@@ -1,0 +1,7 @@
+# `firefox` environment config goes here
+modules:
+  enabled:
+    - \SuiteCRM\Test\Driver\WebDriver
+  config:
+    \SuiteCRM\Test\Driver\WebDriver:
+#      window_size: 1024x768

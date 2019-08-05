@@ -1,7 +1,7 @@
 {
-  "sugar_version": "6.5.24",
-  "sugar_db_version": "6.5.24",
+  "sugar_version": "6.5.25",
+  "sugar_db_version": "6.5.25",
   "sugar_flavor": "CE",
-  "sugar_build": "509",
-  "sugar_timestamp": "2016-07-14 06:10AM"
+  "sugar_build": "344",
+  "sugar_timestamp": "2017-02-06 12:07PM"
 }

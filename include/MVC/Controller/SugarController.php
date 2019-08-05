@@ -1,9 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/MVC/View/SugarView.php');
 
@@ -171,8 +177,9 @@ class SugarController
     /**
      * This can be set from the application to tell us whether we have authorization to
      * process the action. If this is set we will default to the noaccess view.
+     *@var bool
      */
-    public $hasAccess = true;
+    public $hasAccess ;
 
     /**
      * Map case sensitive filenames to action.  This is used for linux/unix systems
@@ -190,6 +197,7 @@ class SugarController
      */
     public function __construct()
     {
+        $this->hasAccess = true;
     }
 
     /**
@@ -361,7 +369,6 @@ class SugarController
      */
     final public function execute()
     {
-
         try {
             $this->process();
             if (!empty($this->view)) {
@@ -372,8 +379,6 @@ class SugarController
         } catch (Exception $e) {
             $this->handleException($e);
         }
-
-
     }
 
     protected function showException(Exception $e)
@@ -412,8 +417,13 @@ class SugarController
         if (!isset($this->view_object_map['remap_action']) && isset($this->action_view_map[strtolower($this->action)])) {
             $this->view_object_map['remap_action'] = $this->action_view_map[strtolower($this->action)];
         }
-        $view = ViewFactory::loadView($this->view, $this->module, $this->bean, $this->view_object_map,
-            $this->target_module);
+        $view = ViewFactory::loadView(
+            $this->view,
+            $this->module,
+            $this->bean,
+            $this->view_object_map,
+            $this->target_module
+        );
         $GLOBALS['current_view'] = $view;
         if (!empty($this->bean) && !$this->bean->ACLAccess($view->type) && $view->type != 'list') {
             ACLController::displayNoAccess(true);
@@ -509,7 +519,6 @@ class SugarController
      */
     private function do_action()
     {
-
         $function = $this->getActionMethodName();
         if ($this->hasFunction($function)) {
             $GLOBALS['log']->debug('Performing action: ' . $function . ' MODULE: ' . $this->module);
@@ -611,7 +620,6 @@ class SugarController
      */
     protected function redirect()
     {
-
         if (!empty($this->redirect_url)) {
             SugarApplication::redirect($this->redirect_url);
         }
@@ -653,7 +661,7 @@ class SugarController
                 }
             }
             if ($sf != null) {
-                $sf->save($this->bean, $_POST, $field, $properties);
+                $sf->save($this->bean, isset($_POST) ? $_POST : null, $field, $properties);
             }
         }
 
@@ -761,7 +769,7 @@ class SugarController
 
             set_time_limit(0);//I'm wondering if we will set it never goes timeout here.
             // until we have more efficient way of handling MU, we have to disable the limit
-            $GLOBALS['db']->setQueryLimit(0);
+            DBManagerFactory::getInstance()->setQueryLimit(0);
             require_once("include/MassUpdate.php");
             require_once('modules/MySettings/StoreQuery.php');
             $seed = loadBean($_REQUEST['module']);
@@ -854,8 +862,10 @@ class SugarController
             if (!empty($dashletDefs[$id])) {
                 require_once($dashletDefs[$id]['fileLocation']);
 
-                $dashlet = new $dashletDefs[$id]['className']($id,
-                    (isset($dashletDefs[$id]['options']) ? $dashletDefs[$id]['options'] : array()));
+                $dashlet = new $dashletDefs[$id]['className'](
+                    $id,
+                    (isset($dashletDefs[$id]['options']) ? $dashletDefs[$id]['options'] : array())
+                );
 
                 if (method_exists($dashlet, $requestedMethod) || method_exists($dashlet, '__call')) {
                     echo $dashlet->$requestedMethod();
@@ -878,8 +888,10 @@ class SugarController
             $dashletDefs = $current_user->getPreference('dashlets', $_REQUEST['module']); // load user's dashlets config
             require_once($dashletDefs[$id]['fileLocation']);
 
-            $dashlet = new $dashletDefs[$id]['className']($id,
-                (isset($dashletDefs[$id]['options']) ? $dashletDefs[$id]['options'] : array()));
+            $dashlet = new $dashletDefs[$id]['className'](
+                $id,
+                (isset($dashletDefs[$id]['options']) ? $dashletDefs[$id]['options'] : array())
+            );
             if (!empty($_REQUEST['configure']) && $_REQUEST['configure']) { // save settings
                 $dashletDefs[$id]['options'] = $dashlet->saveOptions($_REQUEST);
                 $current_user->setPreference('dashlets', $dashletDefs, 0, $_REQUEST['module']);
@@ -890,7 +902,6 @@ class SugarController
                         'header' => $dashlet->title . ' : ' . $mod_strings['LBL_OPTIONS'],
                         'body' => $dashlet->displayOptions()
                     )));
-
             }
         } else {
             return '0';
@@ -960,8 +971,10 @@ class SugarController
                 $GLOBALS['admin_access_control_links'] = $this->file_access_control_map['modules'][$module]['links'];
             }
 
-            if (!empty($this->file_access_control_map['modules'][$module]['actions']) && (in_array($action,
-                        $this->file_access_control_map['modules'][$module]['actions']) || !empty($this->file_access_control_map['modules'][$module]['actions'][$action]))
+            if (!empty($this->file_access_control_map['modules'][$module]['actions']) && (in_array(
+                $action,
+                        $this->file_access_control_map['modules'][$module]['actions']
+            ) || !empty($this->file_access_control_map['modules'][$module]['actions'][$action]))
             ) {
                 //check params
                 if (!empty($this->file_access_control_map['modules'][$module]['actions'][$action]['params'])) {
@@ -1093,7 +1106,51 @@ class SugarController
             $this->do_action = $this->action;
         }
     }
+    
+        
+    /**
+     * action: Send Confirm Opt In Email to Contact/Lead/Account/Prospect
+     *
+     * @global array $app_strings using for user messages about error/success status of action
+     */
+    public function action_sendConfirmOptInEmail()
+    {
+        global $app_strings;
 
+        if (!($this->bean instanceof Company || $this->bean instanceof Person)) {
+            $msg = $app_strings['LBL_CONFIRM_OPT_IN_ONLY_FOR_PERSON'];
+            SugarApplication::appendErrorMessage($msg);
+        } else {
+            $configurator = new Configurator();
+            $confirmOptInEnabled = $configurator->isConfirmOptInEnabled();
+            if (!$confirmOptInEnabled) {
+                $msg = $app_strings['LBL_CONFIRM_OPT_IN_IS_DISABLED'];
+                SugarApplication::appendErrorMessage($msg);
+            } else {
+                $emailAddressStringCaps = strtoupper($this->bean->email1);
+                if ($emailAddressStringCaps) {
+                    $emailAddress = new EmailAddress();
+                    $emailAddress->retrieve_by_string_fields(array(
+                        'email_address_caps' => $emailAddressStringCaps,
+                    ));
+
+                    $emailMan = new EmailMan();
+
+                    $success = $emailMan->sendOptInEmail($emailAddress, $this->bean->module_name, $this->bean->id);
+
+                    if (!$success) {
+                        $msg = $app_strings['LBL_CONFIRM_EMAIL_SENDING_FAILED'];
+                        SugarApplication::appendErrorMessage($msg);
+                    } else {
+                        $msg = $app_strings['LBL_CONFIRM_EMAIL_SENT'];
+                        SugarApplication::appendSuccessMessage($msg);
+                    }
+                } else {
+                    $msg = $app_strings['LBL_CONTACT_HAS_NO_PRIMARY_EMAIL'];
+                    SugarApplication::appendErrorMessage($msg);
+                }
+            }
+        }
+        $this->view = 'detail';
+    }
 }
-
-?>

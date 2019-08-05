@@ -53,6 +53,9 @@ function updateCRONFields(id){
     }
     if(weekday !== '*' && day !== '*'){
         canShowBasic = false;
+    } else if (mins !== '*' && hours !== '*' && day === '*' && month === '*' && weekday === '*') {
+        $('#'+id+'_type').val('daily');
+        $('#'+id+'_type').change();
     }else if(weekday !== '*'){
         $('#'+id+'_weekdays').val(weekday.split(','));
         $('#'+id+'_type').val('weekly');

@@ -27,7 +27,7 @@ e:function(){
         var ret = this.B.CallFunction('<invoke name="executeCommand" returntype="javascript"><arguments><string>'+a.join("&#0;")+"</string></arguments></invoke>");
         /*
          * Bug #47097 : Dashlets not displayed after moving them
-         * IE8 in some cases generate excaption b/s CallFunction returns invalud response
+         * IE8 in some cases generate excaption b/s CallFunction returns invalid response
          * if returned value is invalid don't eval it and return false
          */
         if ( ret != 'undefined' ) { return eval(this.B.CallFunction(ret)); } else { return; }

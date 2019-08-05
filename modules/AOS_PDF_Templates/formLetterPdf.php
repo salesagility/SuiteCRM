@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,11 +34,10 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
 require_once('modules/AOS_PDF_Templates/templateParser.php');
 require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates.php');
 
@@ -46,7 +45,7 @@ global $sugar_config, $current_user;
 
 $bean = BeanFactory::getBean($_REQUEST['module']);
 
-if(!$bean){
+if (!$bean) {
     sugar_die("Invalid Module");
 }
 
@@ -59,9 +58,9 @@ if (isset($_REQUEST['current_post']) && $_REQUEST['current_post'] != '') {
     $mass->generateSearchWhere($_REQUEST['module'], $_REQUEST['current_post']);
     $ret_array = create_export_query_relate_link_patch($_REQUEST['module'], $mass->searchFields, $mass->where_clauses);
     $query = $bean->create_export_query($order_by, $ret_array['where'], $ret_array['join']);
-    $result = $GLOBALS['db']->query($query, true);
+    $result = DBManagerFactory::getInstance()->query($query, true);
     $uids = array();
-    while ($val = $GLOBALS['db']->fetchByAssoc($result, false)) {
+    while ($val = DBManagerFactory::getInstance()->fetchByAssoc($result, false)) {
         array_push($recordIds, $val['id']);
     }
 } else {
@@ -69,19 +68,21 @@ if (isset($_REQUEST['current_post']) && $_REQUEST['current_post'] != '') {
 }
 
 
-$template = BeanFactory::getBean('AOS_PDF_Templates',$_REQUEST['templateID']);
+$template = BeanFactory::getBean('AOS_PDF_Templates', $_REQUEST['templateID']);
 
-if(!$template){
+if (!$template) {
     sugar_die("Invalid Template");
 }
 
 $file_name = str_replace(" ", "_", $template->name) . ".pdf";
 
-$pdf = new mPDF('en', 'A4', '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
+$format = $template->page_size . ($template->orientation === 'Landscape' ? '-L' : '');
+
+$pdf = new mPDF('en', $format, '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
 
 foreach ($recordIds as $recordId) {
     $bean->retrieve($recordId);
-    $pdf_history = new mPDF('en', 'A4', '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
+    $pdf_history = new mPDF('en', $format, '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
 
     $object_arr = array();
     $object_arr[$bean->module_dir] = $bean->id;
@@ -115,11 +116,13 @@ foreach ($recordIds as $recordId) {
     );
 
     $text = preg_replace($search, $replace, $template->description);
-    $text = preg_replace_callback('/\{DATE\s+(.*?)\}/',
+    $text = preg_replace_callback(
+        '/\{DATE\s+(.*?)\}/',
         function ($matches) {
             return date($matches[1]);
         },
-        $text);
+        $text
+    );
     $header = preg_replace($search, $replace, $template->pdfheader);
     $footer = preg_replace($search, $replace, $template->pdffooter);
 
@@ -149,7 +152,7 @@ foreach ($recordIds as $recordId) {
         $fp = fopen($sugar_config['upload_dir'] . 'nfile.pdf', 'wb');
         fclose($fp);
 
-        $pdf_history->SetAutoFont();
+        $pdf_history->autoLangToFont = true;
         $pdf_history->SetHTMLHeader($header);
         $pdf_history->SetHTMLFooter($footer);
         $pdf_history->WriteHTML($printable);
@@ -157,13 +160,12 @@ foreach ($recordIds as $recordId) {
 
         $pdf->SetHTMLHeader($header);
         $pdf->AddPage();
-        $pdf->setAutoFont();
+        $pdf->autoLangToFont = true;
         $pdf->SetHTMLFooter($footer);
         $pdf->writeHTML($printable);
 
         rename($sugar_config['upload_dir'] . 'nfile.pdf', $sugar_config['upload_dir'] . $note->id);
-
-    } catch (mPDF_exception $e) {
+    } catch (MpdfException $e) {
         echo $e;
     }
 }

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,35 +34,29 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
- /*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
-$mod_strings = array (
-  'LBL_ID' => 'Relationship Id',
-  'LBL_RELATIONSHIP_NAME' => 'Relationship Name',
-  'LBL_LHS_MODULE' => 'LHS Module Name',
-  'LBL_LHS_TABLE' => 'LHS Table Name',
-  'LBL_LHS_KEY' => 'LHS Key Name',
-  'LBL_RHS_MODULE' => 'RHS Module Name',
-  'LBL_RHS_TABLE' => 'RHS Table Name',
-  'LBL_RHS_KEY' => 'RHS Key Name',
-  'LBL_JOIN_TABLE' => 'Join Table Name',
-  'LBL_JOIN_KEY_LHS' => 'Join Key LHS',
-  'LBL_JOIN_KEY_RHS' => 'Join Key RHS',
-  'LBL_RELATIONSHIP_TYPE' => 'Relationship Type',
-  'LBL_RELATIONSHIP_ROLE_COLUMN' => 'Relationship Role Column Name',
-  'LBL_RELATIONSHIP_ROLE_COLUMN_VALUE' => 'Relationship Role Column Value',
-  'LBL_REVERSE' => 'Reverse' ,
-  'LBL_DELETED' => 'Deleted',
+$mod_strings = array(
+    'LBL_ID' => 'Relationship Id',
+    'LBL_RELATIONSHIP_NAME' => 'Relationship Name',
+    'LBL_LHS_MODULE' => 'LHS Module Name',
+    'LBL_LHS_TABLE' => 'LHS Table Name',
+    'LBL_LHS_KEY' => 'LHS Key Name',
+    'LBL_RHS_MODULE' => 'RHS Module Name',
+    'LBL_RHS_TABLE' => 'RHS Table Name',
+    'LBL_RHS_KEY' => 'RHS Key Name',
+    'LBL_JOIN_TABLE' => 'Join Table Name',
+    'LBL_JOIN_KEY_LHS' => 'Join Key LHS',
+    'LBL_JOIN_KEY_RHS' => 'Join Key RHS',
+    'LBL_RELATIONSHIP_TYPE' => 'Relationship Type',
+    'LBL_RELATIONSHIP_ROLE_COLUMN' => 'Relationship Role Column Name',
+    'LBL_RELATIONSHIP_ROLE_COLUMN_VALUE' => 'Relationship Role Column Value',
+    'LBL_REVERSE' => 'Reverse',
+    'LBL_DELETED' => 'Deleted',
 );
-  
-?>

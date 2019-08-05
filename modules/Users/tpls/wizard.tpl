@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,10 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html {$langHeader}>
@@ -86,13 +86,7 @@
                         </tr>
                         <tr>
                             <td scope="row">
-
-                                {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
-                                    <p> {$MOD.LBL_WIZARD_WELCOME}</p>
-                                {else}
-                                    <p> {$MOD.LBL_WIZARD_WELCOME_NOSMTP}</p>
-                                {/if}
-
+                                <p> {$MOD.LBL_WIZARD_WELCOME_NOSMTP}</p>
                                 <div class="userWizWelcome"><img src='include/images/sugar_wizard_welcome.jpg' border='0' alt='{$MOD.LBL_WIZARD_WELCOME_TAB}' width='765px' height='325px'></div>
                             </td>
                         </tr>
@@ -266,68 +260,9 @@
                onclick="SugarWizard.changeScreen('personalinfo',true);" id="previous_tab_personalinfo" />&nbsp;
         <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
                class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
-                {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
-               onclick="SugarWizard.changeScreen('smtp',false);" id="next_tab_smtp" />
-        {else}
         onclick="SugarWizard.changeScreen('finish',false);" id="next_tab_finish" />
-        {/if}
     </div>
 </div>
-{if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
-    <div id="smtp" class="screen">
-        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-                <td>
-                    <div class="edit view">
-                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                            <tr>
-                                <th align="left" scope="row" colspan="4">
-                                    <h2>{$MOD.LBL_WIZARD_SMTP}</h2>
-                                </th>
-                            </tr>
-                            <tr>
-                                <td align="left" scope="row" colspan="4"><i>{$MOD.LBL_WIZARD_SMTP_DESC}</i></td>
-                            </tr>
-                            <tr>
-                                <td width="20%" scope="row"><span id="mail_smtpserver_label">{$MOD.LBL_EMAIL_PROVIDER}</span></td>
-                                <td width="30%" ><span>{$mail_smtpdisplay}<input id='mail_smtpserver' name='mail_smtpserver' type="hidden" value='{$mail_smtpserver}' /></span></td>
-                                <td scope="row">&nbsp;</td>
-                                <td >&nbsp;</td>
-                            </tr>
-                            {if !empty($mail_smtpauth_req)}
-                                <tr>
-                                    <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtpuser_label">{$MOD.LBL_MAIL_SMTPUSER}</span></td>
-                                    <td width="30%" ><span><input type="text" id="mail_smtpuser" name="mail_smtpuser" size="25" maxlength="64" value="{$mail_smtpuser}" tabindex='1' ></span></td>
-                                    <td scope="row">&nbsp;</td>
-                                    <td >&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtppass_label">{$MOD.LBL_MAIL_SMTPPASS}</span></td>
-                                    <td width="30%" ><span><input type="password" id="mail_smtppass" name="mail_smtppass" size="25" maxlength="64" value="{$mail_smtppass}" tabindex='1'></span></td>
-                                    <td scope="row">&nbsp;</td>
-                                    <td >&nbsp;</td>
-                                </tr>
-                            {/if}
-                            <tr>
-                                <td width="17%" scope="row"><input type="button" class="button" value="{$APP.LBL_EMAIL_TEST_OUTBOUND_SETTINGS}" onclick="startOutBoundEmailSettingsTest();"></td>
-                                <td width="33%" >&nbsp;</td>
-                                <td width="17%" scope="row">&nbsp;</td>
-                                <td width="33%" >&nbsp;</td>
-                            </tr>
-                        </table>
-                    </div>
-                </td>
-        </table>
-        <div class="nav-buttons">
-            <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
-                   class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
-                   onclick="SugarWizard.changeScreen('locale',true);" id="previous_tab_locale" />&nbsp;
-            <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
-                   class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
-                   onclick="SugarWizard.changeScreen('finish',false);" id="next_tab_finish" />
-        </div>
-    </div>
-{/if}
 <div id="finish" class="screen">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
@@ -353,14 +288,14 @@
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
                                         <tr><td><img src=include/images/configure.png style="margin-right: 5px;"></td><td><a onclick='document.UserWizard.whatnext.value="studio";document.UserWizard.submit()' href="#"  ><b> {$MOD.LBL_WIZARD_FINISH9} </b></a><br>{$MOD.LBL_WIZARD_FINISH10}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-                                        <tr><td><img src=include/images/university.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/forum/index" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
+                                        <tr><td><img src=include/images/university.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/suitecrm/forum/suite-forum" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
                                     {else}
-                                        <tr><td><img src=include/images/university2.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/forum/index" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
+                                        <tr><td><img src=include/images/university2.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/suitecrm/forum/suite-forum" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-                                        <tr><td><img src=include/images/docs.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/wiki/index.php/Userguide" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH14} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH15}</td></tr>
+                                        <tr><td><img src=include/images/docs.png style="margin-right: 5px;"></td><td><a href="https://docs.suitecrm.com/user/" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH14} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH15}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-                                        <tr><td><img src=include/images/forums.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/forum/index" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH18} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH19}</td></tr>
+                                        <tr><td><img src=include/images/forums.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/suitecrm/forum/suite-forum" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH18} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH19}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
                                     {/if}
                                 </table>
@@ -374,11 +309,7 @@
     <div class="nav-buttons">
         <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
                class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
-                {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
-               onclick="SugarWizard.changeScreen('smtp',true);" id="previous_tab_smtp" />&nbsp;
-        {else}
         onclick="SugarWizard.changeScreen('locale',true);" id="previous_tab_locale" />&nbsp;
-        {/if}
         <input title="{$MOD.LBL_WIZARD_FINISH_BUTTON}" class="button primary"
                type="submit" name="save" value="  {$MOD.LBL_WIZARD_FINISH_BUTTON}  " />&nbsp;
     </div>
@@ -455,13 +386,21 @@ var SugarWizard = new function()
         this.currentScreen = screen;
     }
 }
-{/literal}
-{if $SKIP_WELCOME}
-SugarWizard.changeScreen('personalinfo');
-{else}
-SugarWizard.changeScreen('welcome');
-{/if}
-{literal}
+
+$(document).ready(function() {
+  $('.screen').each(function() {
+    $(this).hide();
+  });
+
+  {/literal}
+  {if $SKIP_WELCOME}
+  SugarWizard.changeScreen('personalinfo');
+  {else}
+  SugarWizard.changeScreen('welcome');
+  {/if}
+  {literal}
+});
+
 document.onkeypress = SugarWizard.handleKeyStroke;
 
 var mail_smtpport = '{/literal}{$MAIL_SMTPPORT}{literal}';
