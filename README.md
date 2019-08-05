@@ -1,7 +1,8 @@
-## SuiteCRM 7.8.18  LTS
+## SuiteCRM 7.10.19
 
-[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=hotfix)](https://travis-ci.org/salesagility/SuiteCRM)
-
+[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=hotfix-7.10.x)](https://travis-ci.org/salesagility/SuiteCRM)
+[![codecov](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix/graph/badge.svg)](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix)
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/suitecrm/Lobby)	
 
 ### What's in this repository ###
 
@@ -10,6 +11,10 @@ This is the git repository for the SuiteCRM project, the award-winning, enterpri
 This repository has been created to allow community members to collaborate and contribute to the project, helping to develop the SuiteCRM ecosystem.
 
 ### Contributing to the project ###
+
+#### Making a Pull Request ####
+
+The [contributing code](https://docs.suitecrm.com/community/contributing-code/) documentation page will provide all the details you need to know about coding standards, which branch to direct your PR to (depending on whether it's a bug fix or a new feature), testing, etc.
 
 #### Security ####
 
@@ -66,7 +71,7 @@ The following links offer various ways to view, contribute and collaborate to th
 
 [ View the Community Roadmap here and get involved][suitecrm_roadmap]
 
-[suitecrm_roadmap]: https://suitecrm.com/community/roadmap
+[suitecrm_roadmap]: https://suitecrm.com/roadmap
 
 [More detailed SuiteCRM Community LTS Roadmap][suitecrm_detailed_roadmap]
 

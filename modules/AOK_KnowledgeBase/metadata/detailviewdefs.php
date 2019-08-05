@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,21 +34,21 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $module_name = 'AOK_KnowledgeBase';
-$viewdefs [$module_name] = 
-array (
-  'DetailView' => 
-  array (
-    'templateMeta' => 
-    array (
-      'form' => 
-      array (
-        'buttons' => 
-        array (
+$viewdefs [$module_name] =
+array(
+  'DetailView' =>
+  array(
+    'templateMeta' =>
+    array(
+      'form' =>
+      array(
+        'buttons' =>
+        array(
           0 => 'EDIT',
           1 => 'DUPLICATE',
           2 => 'DELETE',
@@ -55,86 +56,86 @@ array (
         ),
       ),
       'maxColumns' => '2',
-      'widths' => 
-      array (
-        0 => 
-        array (
+      'widths' =>
+      array(
+        0 =>
+        array(
           'label' => '10',
           'field' => '30',
         ),
-        1 => 
-        array (
+        1 =>
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'useTabs' => false,
-      'tabDefs' => 
-      array (
-        'DEFAULT' => 
-        array (
+      'tabDefs' =>
+      array(
+        'DEFAULT' =>
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
       'syncDetailEditViews' => true,
     ),
-    'panels' => 
-    array (
-      'default' => 
-      array (
-        0 => 
-        array (
+    'panels' =>
+    array(
+      'default' =>
+      array(
+        0 =>
+        array(
           0 => 'name',
         ),
-        1 => 
-        array (
-          0 => 
-          array (
+        1 =>
+        array(
+          0 =>
+          array(
             'name' => 'status',
             'studio' => 'visible',
             'label' => 'LBL_STATUS',
           ),
-          1 => 
-          array (
+          1 =>
+          array(
             'name' => 'revision',
             'label' => 'LBL_REVISION',
           ),
         ),
-        2 => 
-        array (
-          0 => 
-          array (
+        2 =>
+        array(
+          0 =>
+          array(
             'name' => 'description',
             'label' => 'LBL_DESCRIPTION',
             'customCode' => '{$fields.description.value}',
           ),
         ),
-        3 => 
-        array (
-          0 => 
-          array (
+        3 =>
+        array(
+          0 =>
+          array(
             'name' => 'additional_info',
             'comment' => 'Full text of the note',
             'studio' => 'visible',
             'label' => 'LBL_ADDITIONAL_INFO',
           ),
         ),
-        4 => 
-        array (
+        4 =>
+        array(
           0 => 'date_entered',
-          1 => 
-          array (
+          1 =>
+          array(
             'name' => 'author',
             'studio' => 'visible',
             'label' => 'LBL_AUTHOR',
           ),
         ),
-        5 => 
-        array (
+        5 =>
+        array(
           0 => 'date_modified',
-          1 => 
-          array (
+          1 =>
+          array(
             'name' => 'approver',
             'studio' => 'visible',
             'label' => 'LBL_APPROVER',
@@ -144,4 +145,3 @@ array (
     ),
   ),
 );
-?>

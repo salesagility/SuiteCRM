@@ -48,7 +48,6 @@ require_once 'Zend/Gdata/Geo/Extension/GmlPoint.php';
  */
 class Zend_Gdata_Geo_Extension_GeoRssWhere extends Zend_Gdata_Extension
 {
-
     protected $_rootNamespace = 'georss';
     protected $_rootElement = 'where';
 
@@ -101,7 +100,7 @@ class Zend_Gdata_Geo_Extension_GeoRssWhere extends Zend_Gdata_Extension
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
 
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gml') . ':' . 'Point';
+            case $this->lookupNamespace('gml') . ':' . 'Point':
                 $point = new Zend_Gdata_Geo_Extension_GmlPoint();
                 $point->transferFromDOM($child);
                 $this->_point = $point;
@@ -131,5 +130,4 @@ class Zend_Gdata_Geo_Extension_GeoRssWhere extends Zend_Gdata_Extension
         $this->_point = $value;
         return $this;
     }
-
 }

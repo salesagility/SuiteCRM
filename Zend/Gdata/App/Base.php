@@ -92,7 +92,7 @@ abstract class Zend_Gdata_App_Base
      * @see registerAllNamespaces()
      * @var array
      */
-   protected $_namespaces = array(
+    protected $_namespaces = array(
         'atom'      => array(
             1 => array(
                 0 => 'http://www.w3.org/2005/Atom'
@@ -261,7 +261,8 @@ abstract class Zend_Gdata_App_Base
     protected function takeAttributeFromDOM($attribute)
     {
         $arrayIndex = ($attribute->namespaceURI != '')?(
-                $attribute->namespaceURI . ':' . $attribute->name):
+                $attribute->namespaceURI . ':' . $attribute->name
+        ):
                 $attribute->name;
         $this->_extensionAttributes[$arrayIndex] =
                 array('namespaceUri' => $attribute->namespaceURI,
@@ -369,16 +370,18 @@ abstract class Zend_Gdata_App_Base
      *        Defaults to null (use latest).
      * @return string
      */
-    public function lookupNamespace($prefix,
+    public function lookupNamespace(
+        $prefix,
                                     $majorVersion = 1,
-                                    $minorVersion = null)
-    {
+                                    $minorVersion = null
+    ) {
         // Check for a memoized result
         $key = $prefix . ' ' .
                (is_null($majorVersion) ? 'NULL' : $majorVersion) .
                ' '. (is_null($minorVersion) ? 'NULL' : $minorVersion);
-        if (array_key_exists($key, self::$_namespaceLookupCache))
-          return self::$_namespaceLookupCache[$key];
+        if (array_key_exists($key, self::$_namespaceLookupCache)) {
+            return self::$_namespaceLookupCache[$key];
+        }
         // If no match, return the prefix by default
         $result = $prefix;
 
@@ -387,11 +390,15 @@ abstract class Zend_Gdata_App_Base
             // Major version search
             $nsData = $this->_namespaces[$prefix];
             $foundMajorV = Zend_Gdata_App_Util::findGreatestBoundedValue(
-                    $majorVersion, $nsData);
+                    $majorVersion,
+                $nsData
+            );
             // Minor version search
             $nsData = $nsData[$foundMajorV];
             $foundMinorV = Zend_Gdata_App_Util::findGreatestBoundedValue(
-                    $minorVersion, $nsData);
+                    $minorVersion,
+                $nsData
+            );
             // Extract NS
             $result = $nsData[$foundMinorV];
         }
@@ -423,11 +430,12 @@ abstract class Zend_Gdata_App_Base
      *        Defaults to null (use latest).
      * @return void
      */
-    public function registerNamespace($prefix,
+    public function registerNamespace(
+        $prefix,
                                       $namespaceUri,
                                       $majorVersion = 1,
-                                      $minorVersion = 0)
-    {
+                                      $minorVersion = 0
+    ) {
         $this->_namespaces[$prefix][$majorVersion][$minorVersion] =
         $namespaceUri;
     }
@@ -456,9 +464,13 @@ abstract class Zend_Gdata_App_Base
      */
     public function registerAllNamespaces($namespaceArray)
     {
-        foreach($namespaceArray as $namespace) {
-                $this->registerNamespace(
-                    $namespace[0], $namespace[1], $namespace[2], $namespace[3]);
+        foreach ($namespaceArray as $namespace) {
+            $this->registerNamespace(
+                    $namespace[0],
+                    $namespace[1],
+                    $namespace[2],
+                    $namespace[3]
+                );
         }
     }
 
@@ -477,12 +489,13 @@ abstract class Zend_Gdata_App_Base
         $method = 'get'.ucfirst($name);
         if (method_exists($this, $method)) {
             return call_user_func(array(&$this, $method));
-        } else if (property_exists($this, "_${name}")) {
+        } elseif (property_exists($this, "_${name}")) {
             return $this->{'_' . $name};
         } else {
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
-                    'Property ' . $name . ' does not exist');
+                    'Property ' . $name . ' does not exist'
+            );
         }
     }
 
@@ -503,12 +516,13 @@ abstract class Zend_Gdata_App_Base
         $method = 'set'.ucfirst($name);
         if (method_exists($this, $method)) {
             return call_user_func(array(&$this, $method), $val);
-        } else if (isset($this->{'_' . $name}) || ($this->{'_' . $name} === null)) {
+        } elseif (isset($this->{'_' . $name}) || ($this->{'_' . $name} === null)) {
             $this->{'_' . $name} = $val;
         } else {
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
-                    'Property ' . $name . '  does not exist');
+                    'Property ' . $name . '  does not exist'
+            );
         }
     }
 
@@ -524,7 +538,8 @@ abstract class Zend_Gdata_App_Base
         if (!($rc->hasProperty($privName))) {
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
-                    'Property ' . $name . ' does not exist');
+                    'Property ' . $name . ' does not exist'
+            );
         } else {
             if (isset($this->{$privName})) {
                 if (is_array($this->{$privName})) {
@@ -568,5 +583,4 @@ abstract class Zend_Gdata_App_Base
     {
         return $this->getText();
     }
-
 }

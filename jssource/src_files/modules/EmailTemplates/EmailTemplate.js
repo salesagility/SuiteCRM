@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 var focus_obj = false;
 var label = SUGAR.language.get('app_strings', 'LBL_DEFAULT_LINK_TEXT');
@@ -155,14 +156,8 @@ function insert_variable_text(myField, myValue) {
  */
 function insert_variable_html(text) {
 
-	tinyMCE.activeEditor.execCommand('mceInsertRawHTML', false, text);
+	SuiteEditor.insert(text);
 
-	//var inst = tinyMCE.getInstanceById("body_text");
-	//if (inst)
-	//               inst.getWin().focus();
-	////var html = inst.getContent(true);
-	////inst.setContent(html + text);
-	//inst.execCommand('mceInsertRawHTML', false, text);
 }
 
 function insert_variable_html_link(text, url) {
@@ -174,32 +169,34 @@ function insert_variable_html_link(text, url) {
  * If so, the it will call the text insert function, if not, then it
  * will call the html (tinyMCE eidtor) insert function
  */
-function insert_variable(text, mozaikId) {
-	if(mozaikId == 'template_subject') {
+function insert_variable(text, elemId, forceIntoSubject) {
+	if(typeof forceIntoSubject === 'undefined') {
+		forceIntoSubject = false;
+	}
+	if(elemId == 'template_subject' || forceIntoSubject) {
 		// insert into the subject instead of the body
-		//$('#template_subject').val($('#template_subject').val()+$('select[name=variable_name]').val());
+		var $subject = $('#'+elemId);
 
-    var value = $('#template_subject').val();
-    var caret = parseInt($('#template_subject').attr('data-caret-position'));
+    var value = $subject.val();
+    var caret = parseInt($subject.attr('data-caret-position'));
     var before = value.substring(0, caret);
     var after = value.substring(caret);
-    $('#template_subject').val(before + $('select[name=variable_name]').val() + after);
+		$subject.val(before + $('select[name=variable_name]').val() + after);
     return;
 	}
 
-	if(!mozaikId) {
-		mozaikId = 'mozaik';
+	if(!elemId) {
+		throw 'not element for insert variable';
 	}
-	if($('#'+mozaikId+' .mozaik-list .mozaik-elem').length > 0) {
-		//if text only flag is checked, then insert into text field
-		if (document.getElementById('toggle_textonly') && document.getElementById('toggle_textonly').checked == true) {
-			//use text version insert
-			insert_variable_text(document.getElementById('body_text_plain'), text);
-		} else {
-			//use html version insert
-			insert_variable_html(text);
-		}
-	}
+
+  //if text only flag is checked, then insert into text field
+  if (document.getElementById('toggle_textonly') && document.getElementById('toggle_textonly').checked == true) {
+    //use text version insert
+    insert_variable_text(document.getElementById('body_text_plain'), text);
+  } else {
+    //use html version insert
+    SuiteEditor.insert(text, elemId);
+  }
 }
 
 
@@ -308,7 +305,7 @@ function EmailTemplateController(action) {
 		$.post('index.php?entryPoint=emailTemplateData&func=wizardUpdate&rand='+Math.random(), {
 			'func': func,
 			'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
-			'body_html': $('#email_template_editor').getMozaikValue(),
+			'body_html': SuiteEditor.getValue(),
 			'name': $('#template_name').val(),
 			'subject': $('#template_subject').val(),
 		}, function(resp){
@@ -363,7 +360,7 @@ function EmailTemplateController(action) {
 		$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
 			'func': func,
 			'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
-			'body_html': $('#email_template_editor').getMozaikValue(),
+			'body_html': SuiteEditor.getValue(),
 			'name': $('#template_name').val(),
 			'subject': $('#template_subject').val(),
 		}, function(resp){

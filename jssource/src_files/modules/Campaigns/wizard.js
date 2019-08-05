@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -452,8 +452,8 @@ var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault, 
                 //document.getElementById("html_frame").contentWindow.document.close();
 
                 var htmlCode = $('<textarea />').html(results.data.body_html).text();
-                $('#email_template_editor').html(htmlCode);
-                $('#email_template_editor').mozaik(window.mozaikSettings.email_template_editor);
+
+                SuiteEditor.apply(htmlCode);
 
                 $('#template_id').val(results.data.id);
                 $('input[name="update_exists_template"]').prop('checked', true);
@@ -499,6 +499,10 @@ var onSendAsTestClick = function(e, campaignId, marketingId) {
     $('#show_wizard_summary').val('1');
     $('#sendMarketingEmailSchedule').val('0');
     $('#sendMarketingEmailTest').val('1');
+    if ($('#wizform input[name="marketing_id"]').length == 0) {
+      $('#wizform').append('<input type="hidden" name="marketing_id">');
+    }
+    $('#wizform input[name="marketing_id"]').val(marketingId);
     $('#wizform').submit();
 };
 

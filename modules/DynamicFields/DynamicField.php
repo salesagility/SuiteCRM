@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -64,7 +64,7 @@ class DynamicField
         global $sugar_config;
         $this->module = (!empty($module)) ? $module : ((isset($_REQUEST['module']) && !empty($_REQUEST['module'])) ? $_REQUEST ['module'] : '');
         $this->base_path = "custom/Extension/modules/{$this->module}/Ext/Vardefs";
-        if(isset($sugar_config['dbconfig'])) {
+        if (isset($sugar_config['dbconfig'])) {
             $this->db = DBManagerFactory::getInstance();
         }
     }
@@ -131,8 +131,13 @@ class DynamicField
      * @param $key
      * @param $value
      */
-    public function setLabel($language = 'en_us', $key = null, $value = null)
+    public function setLabel($language, $key = null, $value = null)
     {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
+
         $params ['label_' . $key] = $value;
         require_once 'modules/ModuleBuilder/parsers/parser.label.php';
         $parser = new ParserLabel($this->module);
@@ -577,12 +582,10 @@ class DynamicField
                 }
 
                 return false;
-            } else {
-                return !empty($vardefs[$name]) && ($vardefs[$name]['type'] == $type);
             }
-        } else {
-            return false;
+            return !empty($vardefs[$name]) && ($vardefs[$name]['type'] == $type);
         }
+        return false;
     }
 
     /**
@@ -745,7 +748,7 @@ class DynamicField
     {
         //Hack for the broken cases module
         $vBean = $bean_name == 'aCase' ? 'Case' : $bean_name;
-        $file_loc = "$this->base_path/sugarfield_{$field->name}.php";
+        $file_loc = "$this->base_path/_override_sugarfield_{$field->name}.php";
 
         $out = "<?php\n // created: " . date('Y-m-d H:i:s') . "\n";
         foreach ($def_override as $property => $val) {
@@ -763,9 +766,8 @@ class DynamicField
             fclose($fh);
 
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

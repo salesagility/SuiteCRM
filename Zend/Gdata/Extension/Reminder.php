@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_Extension_Reminder extends Zend_Gdata_Extension
 {
-
     protected $_rootElement = 'reminder';
     protected $_absoluteTime = null;
     protected $_method = null;
@@ -45,9 +44,13 @@ class Zend_Gdata_Extension_Reminder extends Zend_Gdata_Extension
     protected $_hours = null;
     protected $_minutes = null;
 
-    public function __construct($absoluteTime = null, $method = null, $days = null,
-            $hours = null, $minutes = null)
-    {
+    public function __construct(
+        $absoluteTime = null,
+        $method = null,
+        $days = null,
+            $hours = null,
+        $minutes = null
+    ) {
         parent::__construct();
         $this->_absoluteTime = $absoluteTime;
         $this->_method = $method;
@@ -103,14 +106,15 @@ class Zend_Gdata_Extension_Reminder extends Zend_Gdata_Extension
     public function __toString()
     {
         $s = '';
-        if ($this->_absoluteTime)
+        if ($this->_absoluteTime) {
             $s = " at " . $this->_absoluteTime;
-        else if ($this->_days)
+        } elseif ($this->_days) {
             $s = " in " . $this->_days . " days";
-        else if ($this->_hours)
+        } elseif ($this->_hours) {
             $s = " in " . $this->_hours . " hours";
-        else if ($this->_minutes)
+        } elseif ($this->_minutes) {
             $s = " in " . $this->_minutes . " minutes";
+        }
         return $this->_method . $s;
     }
 
@@ -167,5 +171,4 @@ class Zend_Gdata_Extension_Reminder extends Zend_Gdata_Extension
         $this->_method = $value;
         return $this;
     }
-
 }

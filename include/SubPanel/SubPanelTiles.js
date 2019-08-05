@@ -70,13 +70,13 @@ function got_data(args,inline){var list_subpanel=document.getElementById('list_s
 SUGAR.util.evalScript(args.responseText);subpanel.style.display='';set_div_cookie(subpanel.cookie_name,'');if(current_child_field!=''&&child_field!=current_child_field){}
 current_child_field=child_field;$("ul.clickMenu").each(function(index,node){$(node).sugarActionMenu();});}}
 function showSubPanel(child_field,url,force_load,layout_def_key){var inline=1;if(typeof(force_load)=='undefined'||force_load==null){force_load=false;}
+function checkRefreshPage(url){if(typeof(url)!='undefined'&&url!=null&&url.indexOf('refresh_page=1')>0){document.location.reload();}}
 if(force_load||typeof(child_field_loaded[child_field])=='undefined'){request_map[request_id]=child_field;if(typeof(url)=='undefined'||url==null){var module=get_module_name();var id=get_record_id();if(typeof(layout_def_key)=='undefined'||layout_def_key==null){layout_def_key=get_layout_def_key();}
 url='index.php?sugar_body_only=1&module='+module+'&subpanel='+child_field+'&action=SubPanelViewer&inline='+inline+'&record='+id+'&layout_def_key='+layout_def_key;}
 if(url.indexOf('http://')!=0&&url.indexOf('https://')!=0){url=''+url;}
 current_subpanel_url=url;var loadingImg='<img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif">';$("#list_subpanel_"+child_field.toLowerCase()).html(loadingImg);$.ajax({type:"GET",async:true,cache:false,url:url+'&inline='+inline+'&ajaxSubpanel=true',success:function(data){request_map[request_id]=child_field;var returnstuff={"responseText":data,"responseXML":'',"request_id":request_id};got_data(returnstuff,inline);if($('#whole_subpanel_'+child_field).hasClass('useFooTable')){$('#whole_subpanel_'+child_field+' .table-responsive').footable();}
-request_id++;}});}else{var subpanel=document.getElementById('subpanel_'+child_field);subpanel.style.display='';set_div_cookie(subpanel.cookie_name,'');if(current_child_field!=''&&child_field!=current_child_field){hideSubPanel(current_child_field);}
-current_child_field=child_field;}
-if(typeof(url)!='undefined'&&url!=null&&url.indexOf('refresh_page=1')>0){document.location.reload();}}
+request_id++;checkRefreshPage(url);}});}else{var subpanel=document.getElementById('subpanel_'+child_field);subpanel.style.display='';set_div_cookie(subpanel.cookie_name,'');if(current_child_field!=''&&child_field!=current_child_field){hideSubPanel(current_child_field);}
+current_child_field=child_field;checkRefreshPage(url);}}
 function toggleSubpanelCookie(tab){set_div_cookie(get_module_name()+'_'+tab+'_v',!$('#subpanel_'+tab).is(":visible"));}
 function markSubPanelLoaded(child_field){child_field_loaded[child_field]=2;}
 function hideSubPanel(child_field){var subpanel=document.getElementById('subpanel_'+child_field);subpanel.style.display='none';set_div_cookie(subpanel.cookie_name,'none');}
@@ -121,4 +121,4 @@ SUGAR.subpanelUtils.menu.spPopupMenu(id,menu,top,left,leftOffset);},spPopupMenu:
 left+=parseInt(leftOffset);}
 if(top==""){var top=0;p=menuHandle;top+=p.offsetHeight;while(p&&p.tagName.toUpperCase()!='BODY'){top+=p.offsetTop;p=p.offsetParent;}}
 if(left+menuWidth>bw){left=left-menuWidth+imgWidth;}
-setMenuVisible(menu,left,top,false);}}};}();
+setMenuVisible(menu,left,top,false);}}};}();$(function(){$('.subPanelCountHint.incomplete').each(function(i,e){var module=$(e).attr('data-module');var subpanel=$(e).attr('data-subpanel');var record=$(e).attr('data-record');$.get('index.php?sugar_body_only=1&module='+module+'&subpanel='+subpanel+'&action=SubPanelViewer&inline=1&record='+record+'&layout_def_key=&inline=1&ajaxSubpanel=true&countOnly=1',function(resp,success){if(!success){console.error('Subpanel Row Count loading error');}else{$(e).html(resp);if(resp&&resp!='0'){$(e).closest('.collapsed').addClass('collapsed-override');}}});});});

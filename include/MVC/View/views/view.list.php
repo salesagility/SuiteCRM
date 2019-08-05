@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 require_once('include/MVC/View/SugarView.php');
@@ -46,17 +46,62 @@ require_once('modules/MySettings/StoreQuery.php');
 
 class ViewList extends SugarView
 {
-    var $type = 'list';
-    var $lv;
-    var $searchForm;
-    var $use_old_search;
-    var $headers;
-    var $seed;
-    var $params;
-    var $listViewDefs;
-    var $storeQuery;
-    var $where = '';
+    /**
+     * @var string $type
+     */
+    public $type = 'list';
 
+    /**
+     * @var ListViewSmartyEmails $lv
+     */
+    public $lv;
+
+    /**
+     * @var SearchForm $searchForm
+     */
+    public $searchForm;
+
+    /** @var  array $savedSearchData */
+    public $savedSearchData;
+
+    /**
+     * @var
+     */
+    public $use_old_search;
+
+    /**
+     * @var bool $headers
+     */
+    public $headers;
+
+    /**
+     * @var SugarBean
+     */
+    public $seed;
+
+    /**
+     * @var array $params
+     */
+    public $params;
+
+    /**
+     * @var array $listViewDefs
+     */
+    public $listViewDefs;
+
+    /**
+     * @var StoreQuery $storeQuery
+     */
+    public $storeQuery;
+
+    /**
+     * @var string $where
+     */
+    public $where = '';
+
+    /**
+     * ViewList constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -76,29 +121,31 @@ class ViewList extends SugarView
         self::__construct();
     }
 
-
-    function oldSearch()
+    /**
+     * Prepare List View
+     */
+    public function listViewPrepare()
     {
+        $module = isset($GLOBALS['module']) ? $GLOBALS['module'] : null;
 
-    }
-
-    function newSearch()
-    {
-
-    }
-
-    function listViewPrepare()
-    {
-        $module = $GLOBALS['module'];
+        if (!isset($module)) {
+            LoggerManager::getLogger()->fatal('Undefined module for list view prepare');
+            return false;
+        }
 
         $metadataFile = $this->getMetaDataFile();
 
-        if (!file_exists($metadataFile))
-            sugar_die($GLOBALS['app_strings']['LBL_NO_ACTION']);
+        if (!file_exists($metadataFile)) {
+            sugar_die(sprintf($GLOBALS['app_strings']['LBL_NO_ACTION'], $this->do_action));
+        }
 
         require($metadataFile);
 
         $this->listViewDefs = $listViewDefs;
+
+        if (isset($viewdefs[$this->module]['ListView']['templateMeta'])) {
+            $this->lv->templateMeta = $viewdefs[$this->module]['ListView']['templateMeta'];
+        }
 
         if (!empty($this->bean->object_name) && isset($_REQUEST[$module . '2_' . strtoupper($this->bean->object_name) . '_offset'])) {//if you click the pagination button, it will populate the search criteria here
             if (!empty($_REQUEST['current_query_by_page'])) {//The code support multi browser tabs pagination
@@ -134,7 +181,7 @@ class ViewList extends SugarView
                     //Reset the current display columns to default.
                     $current_user->setPreference('ListViewDisplayColumns', array(), 0, $mod);
                 }
-            } else if (empty($_REQUEST['button']) && (empty($_REQUEST['clear_query']) || $_REQUEST['clear_query'] != 'true')) {
+            } elseif (empty($_REQUEST['button']) && (empty($_REQUEST['clear_query']) || $_REQUEST['clear_query'] != 'true')) {
                 $this->saved_search = loadBean('SavedSearch');
                 $this->saved_search->retrieveSavedSearch($_REQUEST['saved_search_select']);
                 $this->saved_search->populateRequest();
@@ -149,11 +196,25 @@ class ViewList extends SugarView
             $this->storeQuery->loadQuery($this->module);
             $this->storeQuery->populateRequest();
         } elseif (!empty($_REQUEST['update_stored_query'])) {
-            $updateKey = $_REQUEST['update_stored_query_key'];
-            $updateValue = $_REQUEST[$updateKey];
+            $updateKey = null;
+            if (isset($_REQUEST['update_stored_query_key'])) {
+                $updateKey = $_REQUEST['update_stored_query_key'];
+            } else {
+                LoggerManager::getLogger()->warn('update_stored_query_key is not defined for list view at listViewPrepare');
+            }
+
+            $updateValue = null;
+            if (isset($_REQUEST[$updateKey])) {
+                $updateValue = $_REQUEST[$updateKey];
+            } else {
+                LoggerManager::getLogger()->warn('requested update key is not defined for list view at listViewPrepare: ' . $updateKey);
+            }
+
+
             $this->storeQuery->loadQuery($this->module);
             $this->storeQuery->populateRequest();
             $_REQUEST[$updateKey] = $updateValue;
+            unset($_REQUEST['update_stored_query']);
             $this->storeQuery->saveFromRequest($this->module);
         } else {
             $this->storeQuery->saveFromRequest($this->module);
@@ -164,21 +225,38 @@ class ViewList extends SugarView
         $displayColumns = array();
         if (!empty($_REQUEST['displayColumns'])) {
             foreach (explode('|', $_REQUEST['displayColumns']) as $num => $col) {
-                if (!empty($this->listViewDefs[$module][$col]))
+                if (!empty($this->listViewDefs[$module][$col])) {
                     $displayColumns[$col] = $this->listViewDefs[$module][$col];
+                }
             }
         } else {
-            foreach ($this->listViewDefs[$module] as $col => $this->params) {
-                if (!empty($this->params['default']) && $this->params['default'])
-                    $displayColumns[$col] = $this->params;
+            if (!isset($this->listViewDefs[$module])) {
+                LoggerManager::getLogger()->warn('Listview definition is not set for module: ' . $module);
+            } else {
+                foreach ($this->listViewDefs[$module] as $col => $this->params) {
+                    if (!empty($this->params['default']) && $this->params['default']) {
+                        $displayColumns[$col] = $this->params;
+                    }
+                }
             }
         }
         $this->params = array('massupdate' => true);
         if (!empty($_REQUEST['orderBy'])) {
             $this->params['orderBy'] = $_REQUEST['orderBy'];
             $this->params['overrideOrder'] = true;
-            if (!empty($_REQUEST['sortOrder'])) $this->params['sortOrder'] = $_REQUEST['sortOrder'];
+            if (!empty($_REQUEST['sortOrder'])) {
+                $this->params['sortOrder'] = $_REQUEST['sortOrder'];
+            }
         }
+        if (!isset($this->lv) || !$this->lv) {
+            $this->lv = new stdClass();
+        }
+
+        if (!isset($this->lv)) {
+            $this->lv = new stdClass();
+            LoggerManager::getLogger()->warn('List view is not defined');
+        }
+
         $this->lv->displayColumns = $displayColumns;
 
         $this->module = $module;
@@ -186,18 +264,29 @@ class ViewList extends SugarView
         $this->prepareSearchForm();
 
         if (isset($this->options['show_title']) && $this->options['show_title']) {
-            $moduleName = isset($this->seed->module_dir) ? $this->seed->module_dir : $GLOBALS['mod_strings']['LBL_MODULE_NAME'];
+            $modStrings = null;
+            if (isset($GLOBALS['mod_strings'])) {
+                $modStrings = $GLOBALS['mod_strings'];
+            } else {
+                LoggerManager::getLogger()->warn('Undefined index: mod_strings');
+            }
+
+            $moduleName = isset($this->seed->module_dir) ? $this->seed->module_dir : $modStrings['LBL_MODULE_NAME'];
             echo $this->getModuleTitle(true);
         }
     }
 
-    function listViewProcess()
+    /**
+     * Process List View
+     */
+    public function listViewProcess()
     {
         $this->processSearchForm();
         $this->lv->searchColumns = $this->searchForm->searchColumns;
 
-        if (!$this->headers)
+        if (!$this->headers) {
             return;
+        }
         if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
             $this->lv->ss->assign("SEARCH", true);
             $this->lv->ss->assign('savedSearchData', $this->searchForm->getSavedSearchData());
@@ -207,19 +296,23 @@ class ViewList extends SugarView
         }
     }
 
-    function prepareSearchForm()
+    /**
+     * Setup Search Form
+     */
+    public function prepareSearchForm()
     {
         $this->searchForm = null;
 
         //search
         $view = 'basic_search';
-        if (!empty($_REQUEST['search_form_view']) && $_REQUEST['search_form_view'] == 'advanced_search')
+        if (!empty($_REQUEST['search_form_view']) && $_REQUEST['search_form_view'] == 'advanced_search') {
             $view = $_REQUEST['search_form_view'];
+        }
         $this->headers = true;
 
-        if (!empty($_REQUEST['search_form_only']) && $_REQUEST['search_form_only'])
+        if (!empty($_REQUEST['search_form_only']) && $_REQUEST['search_form_only']) {
             $this->headers = false;
-        elseif (!isset($_REQUEST['search_form']) || $_REQUEST['search_form'] != 'false') {
+        } elseif (!isset($_REQUEST['search_form']) || $_REQUEST['search_form'] != 'false') {
             if (isset($_REQUEST['searchFormTab']) && $_REQUEST['searchFormTab'] == 'advanced_search') {
                 $view = 'advanced_search';
             } else {
@@ -247,7 +340,10 @@ class ViewList extends SugarView
         }
     }
 
-    function processSearchForm()
+    /**
+     * Process Search Form
+     */
+    public function processSearchForm()
     {
         if (isset($_REQUEST['query'])) {
             // we have a query
@@ -259,11 +355,13 @@ class ViewList extends SugarView
 
             $where_clauses = $this->searchForm->generateSearchWhere(true, $this->seed->module_dir);
 
-            if (count($where_clauses) > 0) $this->where = '(' . implode(' ) AND ( ', $where_clauses) . ')';
+            if (count($where_clauses) > 0) {
+                $this->where = '(' . implode(' ) AND ( ', $where_clauses) . ')';
+            }
             $GLOBALS['log']->info("List View Where Clause: $this->where");
         }
         if ($this->use_old_search) {
-            switch ($view) {
+            switch (isset($view) ? $view : null) {
                 case 'basic_search':
                     $this->searchForm->setup();
                     $this->searchForm->displayBasic($this->headers);
@@ -283,12 +381,18 @@ class ViewList extends SugarView
         }
     }
 
-    function preDisplay()
+    /**
+     * Setup View
+     */
+    public function preDisplay()
     {
         $this->lv = new ListViewSmarty();
     }
 
-    function display()
+    /**
+     * Display View
+     */
+    public function display()
     {
         if (!$this->bean || !$this->bean->ACLAccess('list')) {
             ACLController::displayNoAccess();
@@ -309,5 +413,3 @@ class ViewList extends SugarView
         return new SearchForm($seed, $module, $action);
     }
 }
-
-?>

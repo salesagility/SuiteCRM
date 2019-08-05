@@ -1,0 +1,17 @@
+modules:
+  enabled:
+    - \SuiteCRM\Test\Driver\WebDriver
+  config:
+    \SuiteCRM\Test\Driver\WebDriver:
+      url: "http://localhost/"
+      wait: 0
+      port: 9515 # ChromeDriver port
+      browser: chrome
+      window_size: false
+      clear_cookies: true
+      capabilities:
+        chromeOptions:
+            args: ["--headless", "--disable-gpu", "window-size=1920x1080"]
+            binary: "/usr/bin/google-chrome-stable"
+
+#google-chrome-stable: /usr/bin/google-chrome-stable /usr/bin/X11/google-chrome-stable /usr/share/man/man1/google-chrome-stable.1.gz

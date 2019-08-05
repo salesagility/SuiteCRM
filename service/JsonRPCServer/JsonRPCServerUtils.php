@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -66,7 +66,6 @@ class JsonRPCServerUtils
                 continue;
             }
             if ($condition['name'] === 'email1' || $condition['name'] === 'email2') {
-
                 $email1_value = strtoupper($condition['value']);
                 $email1_condition = " {$table}id in ( SELECT  er.bean_id AS id FROM email_addr_bean_rel er, " .
                     'email_addresses ea WHERE ea.id = er.email_address_id ' .
@@ -75,20 +74,20 @@ class JsonRPCServerUtils
                 $cond_arr[] = $email1_condition;
             } else {
                 if ($condition['op'] === 'contains') {
-                    $cond_arr[] = $table . $GLOBALS['db']->getValidDBName($condition['name']) . " like '%" . $GLOBALS['db']->quote($condition['value']) . "%'";
+                    $cond_arr[] = $table . DBManagerFactory::getInstance()->getValidDBName($condition['name']) . " like '%" . DBManagerFactory::getInstance()->quote($condition['value']) . "%'";
                 }
                 if ($condition['op'] === 'like_custom') {
                     $like = '';
                     if (!empty($condition['begin'])) {
-                        $like .= $GLOBALS['db']->quote($condition['begin']);
+                        $like .= DBManagerFactory::getInstance()->quote($condition['begin']);
                     }
-                    $like .= $GLOBALS['db']->quote($condition['value']);
+                    $like .= DBManagerFactory::getInstance()->quote($condition['value']);
                     if (!empty($condition['end'])) {
-                        $like .= $GLOBALS['db']->quote($condition['end']);
+                        $like .= DBManagerFactory::getInstance()->quote($condition['end']);
                     }
-                    $cond_arr[] = $table . $GLOBALS['db']->getValidDBName($condition['name']) . " like '$like'";
+                    $cond_arr[] = $table . DBManagerFactory::getInstance()->getValidDBName($condition['name']) . " like '$like'";
                 } else { // starts_with
-                    $cond_arr[] = $table . $GLOBALS['db']->getValidDBName($condition['name']) . " like '" . $GLOBALS['db']->quote($condition['value']) . "%'";
+                    $cond_arr[] = $table . DBManagerFactory::getInstance()->getValidDBName($condition['name']) . " like '" . DBManagerFactory::getInstance()->quote($condition['value']) . "%'";
                 }
             }
         }

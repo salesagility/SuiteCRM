@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,17 +34,17 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
  * Description:
  * Created On: Oct 17, 2005
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): Chris Nojima
- ********************************************************************************/
+ */
 -->
 
 <div id="testSettingsDiv"></div>
@@ -95,83 +96,83 @@
 		</tr>
 		<tr>
 			<td valign="top" scope="row" width="15%" NOWRAP>
-				<slot>{MOD.LBL_NAME}: <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+				<span>{MOD.LBL_NAME}: <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="35%">
-				<slot><input name='name' id='name' tabindex='10' size='30' maxlength='255' type="text" value="{NAME}" {IE_DISABLED}></slot></td>
+				<span><input name='name' id='name' tabindex='10' size='30' maxlength='255' type="text" value="{NAME}" {IE_DISABLED}></span></td>
 			<td valign="top" scope="row">
-				<slot>{MOD.LBL_STATUS}:&nbsp;</slot></td>
-			<td valign="top"  width="35%"><slot>
-				<select name='status' tabindex='60' {IE_DISABLED}>{STATUS}</select></slot></td>
+				<span>{MOD.LBL_STATUS}:&nbsp;</span></td>
+			<td valign="top"  width="35%"><span>
+				<select name='status' tabindex='60' {IE_DISABLED}>{STATUS}</select></span></td>
 		</tr>
 		<tr>
 			<td valign="top" scope="row">
-					<slot>{MOD.LBL_SERVER_URL}: <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+					<span>{MOD.LBL_SERVER_URL}: <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="35%">
-				<slot><input id='server_url' name='server_url' tabindex='20' size='30' maxlength='100' type="text" value="{SERVER_URL}" {IE_DISABLED}></slot></td>
+				<span><input id='server_url' name='server_url' tabindex='20' size='30' maxlength='100' type="text" value="{SERVER_URL}" {IE_DISABLED}></span></td>
 			<td valign="top" scope="row">
-				<slot>{MOD.LBL_LOGIN}:
-				<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+				<span>{MOD.LBL_LOGIN}:
+				<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="35%">
-				<slot><input name='email_user' id='email_user' tabindex='70' size='30' maxlength='100' type="text" value="{USER}" autocomplete="off" {IE_DISABLED}></slot></td>
+				<span><input name='email_user' id='email_user' tabindex='70' size='30' maxlength='100' type="text" value="{USER}" autocomplete="off" {IE_DISABLED}></span></td>
 		</tr>
 		<tr>
 			<td valign="top" scope="row" width="15%" NOWRAP>
-				<slot>{MOD.LBL_SERVER_TYPE}:
-				<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+				<span>{MOD.LBL_SERVER_TYPE}:
+				<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="35%">
-				<slot>
-				<select name='protocol' id="protocol" tabindex='30' onchange="toggle_monitored_folder(this); setPortDefault();" {IE_DISABLED}>{PROTOCOL}</select></slot></td>
+				<span>
+				<select name='protocol' id="protocol" tabindex='30' onchange="toggle_monitored_folder(this); setPortDefault();" {IE_DISABLED}>{PROTOCOL}</select></span></td>
 			<td valign="top" scope="row">
-				<slot>{MOD.LBL_PASSWORD}:
-				<span class="required">{EMAIL_PASS_REQ_SYMB}&nbsp;</slot></td>
+				<span>{MOD.LBL_PASSWORD}:
+				<span class="required">{EMAIL_PASS_REQ_SYMB}&nbsp;</span></td>
 			<td valign="top"  width="35%">
-				<slot>
+				<span>
 				<input name='email_password' id="email_password" tabindex='80' size='30' maxlength='100' type="password" autocomplete="off" {IE_DISABLED}>
 				<a href="javascript:void(0)" id='email_password_link' onClick="SUGAR.util.setEmailPasswordEdit('email_password')" style="display: none">{APP.LBL_CHANGE_PASSWORD}</a>
-				</slot></td>
+				</span></td>
 		</tr>
 		<tr>
 			<td valign="top" scope="row" width="15%" NOWRAP>
-				<slot>{MOD.LBL_PORT}:
-				<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+				<span>{MOD.LBL_PORT}:
+				<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="35%">
-				<slot>
+				<span>
 				<input name='port' id='port' tabindex="40" value="{PORT}" size='10' {IE_DISABLED}>
 			<td valign="top" scope="row" width="15%" NOWRAP>
-				<slot><span id="label_inbox" >{MOD.LBL_MAILBOX}: <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span>&nbsp;</slot></td>
+				<span><span id="label_inbox" >{MOD.LBL_MAILBOX}: <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span>&nbsp;</span></td>
 			<td valign="top"  width="35%">
-				<slot><input id="mailbox" name='mailbox' tabindex='90' size='30' maxlength='500' type="text" value="{MAILBOX}">
+				<span><input id="mailbox" name='mailbox' tabindex='90' size='30' maxlength='500' type="text" value="{MAILBOX}">
 					<input type="button" id="subscribeFolderButton" style="display:none;" class="button" onclick='javascript:getFoldersListForInboundAccount("InboundEmail", "ShowInboundFoldersList", "Popup", 400, 300, this.form.server_url.value, this.form.protocol.value, this.form.port.value, this.form.email_user.value, Rot13.write(this.form.email_password.value), this.form.mailbox.value, this.form.ssl.checked, this.form.personal.value, this.form.searchField.value, "EditView");' value="{MOD.LBL_SELECT}">
-				</slot></td>
+				</span></td>
 		</tr>
 		<tr>
 			<td valign="top" scope="row" width="15%" NOWRAP>
-				<slot><span>{MOD.LBL_SSL}:&nbsp;{TIPS.LBL_SSL_DESC}</span></slot>
+				<span><span>{MOD.LBL_SSL}:&nbsp;{TIPS.LBL_SSL_DESC}</span></span>
 			</td>
 			<td valign="top"  width="35%">
-				<slot>
+				<span>
 				<input name='ssl' id='ssl' tabindex='45' {CERT} value='1' type='checkbox' {SSL} onClick="setPortDefault();" {IE_DISABLED}>
-				</slot>
+				</span>
 			</td>
 			<td id="trashFolderRow" valign="top" scope="row" width="15%" NOWRAP>
-				<slot>{MOD.LBL_TRASH_FOLDER}:
-				<span name="trashRequiredSpan" id="trashRequiredSpan" class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+				<span>{MOD.LBL_TRASH_FOLDER}:
+				<span name="trashRequiredSpan" id="trashRequiredSpan" class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td id="trashFolderRow1" valign="top"  width="35%">
-				<slot>
+				<span>
 				<input name='trashFolder' id='trashFolder' tabindex="92" value="{TRASHFOLDER}" size='30' maxlength='100' type="text">
 				<input type="button" id="trashFolderButton" class="button" onclick='javascript:getFoldersListForInboundAccount("InboundEmail", "ShowInboundFoldersList", "Popup", 400, 300, this.form.server_url.value, this.form.protocol.value, this.form.port.value, this.form.email_user.value, Rot13.write(this.form.email_password.value), this.form.trashFolder.value, this.form.ssl.checked, this.form.personal.value, "trash", "EditView");' value="{MOD.LBL_SELECT}">
 		</tr>
 		<tr id="sentFolderRow">
 			<td valign="top" scope="row">
-				<slot>&nbsp;</slot></td>
-			<td valign="top"  width="35%"><slot>
-				&nbsp;</slot></td>
+				<span>&nbsp;</span></td>
+			<td valign="top"  width="35%"><span>
+				&nbsp;</span></td>
 			<td valign="top" scope="row" width="15%" NOWRAP>
-				<slot>{MOD.LBL_SENT_FOLDER}:</slot></td>
+				<span>{MOD.LBL_SENT_FOLDER}:</span></td>
 			<td valign="top"  width="35%">
-				<slot><input id="sentFolder" name='sentFolder' tabindex='95' size='30' maxlength='100' type="text" value="{SENTFOLDER}">
+				<span><input id="sentFolder" name='sentFolder' tabindex='95' size='30' maxlength='100' type="text" value="{SENTFOLDER}">
 					<input type="button" id="sentFolderButton" class="button" onclick='javascript:getFoldersListForInboundAccount("InboundEmail", "ShowInboundFoldersList", "Popup", 400, 300, this.form.server_url.value, this.form.protocol.value, this.form.port.value, this.form.email_user.value, Rot13.write(this.form.email_password.value), this.form.sentFolder.value, this.form.ssl.checked, this.form.personal.value, "sent", "EditView");' value="{MOD.LBL_SELECT}">
-				</slot>
+				</span>
 			</td>
 		</tr>
 	</table>
@@ -183,34 +184,34 @@
 		</tr>
 		<tr>
 			<td valign="top" scope="row" width="15%" NOWRAP>
-				<slot>
-				&nbsp;</slot></td>
+				<span>
+				&nbsp;</span></td>
 
 			<td valign="top"  width="35%">
-				<slot>
-				&nbsp;</slot></td>
+				<span>
+				&nbsp;</span></td>
 			<td valign="top" scope="row" width="15%" NOWRAP>
-				<slot>{MOD.LBL_FROM_NAME}:<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+				<span>{MOD.LBL_FROM_NAME}:<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="35%">
-				<slot><input tabindex="300" name="from_name" id="from_name" value="{FROM_NAME}" {IE_DISABLED}>&nbsp;</slot></td>
+				<span><input tabindex="300" name="from_name" id="from_name" value="{FROM_NAME}" {IE_DISABLED}>&nbsp;</span></td>
 		</tr>
 		<tr>
 			<td valign="top" scope="row" width="15%" NOWRAP>
-			<slot><span style="{AUTO_IMPORT_STYLE}">{MOD.LBL_ENABLE_AUTO_IMPORT}:&nbsp;{TIPS.LBL_ASSIGN_TO_GROUP_FOLDER_DESC}</span></slot>&nbsp;
+			<span><span style="{AUTO_IMPORT_STYLE}">{MOD.LBL_ENABLE_AUTO_IMPORT}:&nbsp;{TIPS.LBL_ASSIGN_TO_GROUP_FOLDER_DESC}</span></span>&nbsp;
 			</td>
 			<td valign="top"  width="15%" NOWRAP>
 			 <input name='is_auto_import' style="{AUTO_IMPORT_STYLE}" id='is_auto_import' onclick="showWarningsIfChaningAutoImport();"tabindex='45' type='checkbox' {IS_AUTO_IMPORT}>
 			</td>
 			<td valign="top" scope="row" width="15%" NOWRAP>
-				<slot>{MOD.LBL_FROM_ADDR}:<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>{TIPS.LBL_FROM_ADDR_DESC}</slot></td>
+				<span>{MOD.LBL_FROM_ADDR}:<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>{TIPS.LBL_FROM_ADDR_DESC}</span></td>
 			<td valign="top"  width="35%">
-				<slot><input tabindex="310" name="from_addr" id="from_addr" value="{FROM_ADDR}" {IE_DISABLED}></slot></td>
+				<span><input tabindex="310" name="from_addr" id="from_addr" value="{FROM_ADDR}" {IE_DISABLED}></span></td>
 		</tr>
 		<tr>
 			<td valign="top" scope="row">
-				<slot style="{MAILBOX_TYPE_STYLE}">{MOD.LBL_CREATE_CASE}:&nbsp;{TIPS.LBL_CREATE_CASE_HELP}</slot></td>
+				<slot style="{MAILBOX_TYPE_STYLE}">{MOD.LBL_CREATE_CASE}:&nbsp;{TIPS.LBL_CREATE_CASE_HELP}</span></td>
 			<td valign="top"  width="35%"><slot style="{MAILBOX_TYPE_STYLE}">
-			     <input name='is_create_case' id='is_create_case' onclick="showCreateCaseRow();"tabindex='45' type='checkbox' {IS_CREATE_CASE} {IE_DISABLED}></slot></td>
+			     <input name='is_create_case' id='is_create_case' onclick="showCreateCaseRow();"tabindex='45' type='checkbox' {IS_CREATE_CASE} {IE_DISABLED}></span></td>
 			<td valign="top" scope="row" width="15%" NOWRAP>
 				{MOD.LBL_REPLY_TO_NAME}:&nbsp;
 			</td>
@@ -220,8 +221,8 @@
 		</tr>
 		<tr id="createCaseRow" style="{CREATE_CASE_ROW_STYLE}">
 			<td valign="top" scope="row">
-				<slot>{MOD.LBL_DISTRIBUTION_METHOD}:&nbsp;</slot></td>
-			<td valign="top"  width="35%"><slot>
+				<span>{MOD.LBL_DISTRIBUTION_METHOD}:&nbsp;</span></td>
+			<td valign="top"  width="35%"><span>
 				<select id='distrib_method' name='distrib_method' tabindex='241'>{DISTRIBUTION_METHOD}</select>&nbsp;&nbsp;
 
                 <span id="distribution_user">
@@ -240,8 +241,8 @@
                 "single",
                 true
                 );' >
-    <img src="themes/default/images/id-ff-select.png"></button><button type="button" name="btn_clr_distribution_user_name" id="btn_clr_distribution_user_name" tabindex="0" title="Clear User"  class="button lastChild"
-                                                                       onclick="SUGAR.clearRelateField(this.form, 'distribution_user_name', 'distribution_user_id');"  value="Clear User" ><img src="themes/default/images/id-ff-clear.png"></button>
+    <span class="suitepicon suitepicon-action-select"></span></button><button type="button" name="btn_clr_distribution_user_name" id="btn_clr_distribution_user_name" tabindex="0" title="Clear User"  class="button lastChild"
+                                                                       onclick="SUGAR.clearRelateField(this.form, 'distribution_user_name', 'distribution_user_id');"  value="Clear User" ><span class="suitepicon suitepicon-action-clear"></span></button>
 </span>
                 <script type="text/javascript">
                     if(typeof sqs_objects == 'undefined'){
@@ -264,28 +265,28 @@
                 </span>
                 &nbsp;&nbsp;
 
-                {DISTRIBUTION_OPTIONS}</slot></td>
+                {DISTRIBUTION_OPTIONS}</span></td>
 			<td valign="top" scope="row">
-				<slot>&nbsp;</slot></td>
-			<td valign="top"  width="35%"><slot>
-				&nbsp;</slot></td>
+				<span>&nbsp;</span></td>
+			<td valign="top"  width="35%"><span>
+				&nbsp;</span></td>
 		</tr>
 		<tr id="createCaseRow1" style="{CREATE_CASE_ROW_STYLE}">
 			<td valign="top" scope="row" width="15%" NOWRAP >
-				<slot>{MOD.LBL_CREATE_CASE_REPLY_TEMPLATE}:&nbsp;{TIPS.LBL_CREATE_CASE_REPLY_TEMPLATE_HELP}</slot></td>
+				<span>{MOD.LBL_CREATE_CASE_REPLY_TEMPLATE}:&nbsp;{TIPS.LBL_CREATE_CASE_REPLY_TEMPLATE_HELP}</span></td>
 			<td colspan="3" valign="top"  width="35%">
-				<slot>
+				<span>
 					<select tabindex='330' id="create_case_template_id" name='create_case_template_id' onchange="show_edit_template_link(this, 'create_case_edit_template');" {IE_DISABLED}>{CREATE_CASE_EMAIL_TEMPLATE_OPTIONS}</select>
 					<input type="button" class="button" onclick="javascript:open_email_template_form('create_case_template_id')" value="{MOD.LBL_CREATE_TEMPLATE}" {IE_DISABLED}>
 					<input type="button" class="button" name='create_case_edit_template' id='create_case_edit_template' style="{CREATE_CASE_EDIT_TEMPLATE}" onclick="javascript:edit_email_template_form('create_case_template_id')" value="{MOD.LBL_EDIT_TEMPLATE}">
-				</slot>
+				</span>
 			</td>
 		</tr>
 		<tr>
 			<td valign="top" scope="row">
-				<slot>&nbsp;</slot></td>
-			<td valign="top"  width="35%"><slot>
-				&nbsp;</slot></td>
+				<span>&nbsp;</span></td>
+			<td valign="top"  width="35%"><span>
+				&nbsp;</span></td>
 			<td valign="top" scope="row" width="15%" NOWRAP>
 				{MOD.LBL_REPLY_TO_ADDR}:&nbsp;
 			</td>
@@ -295,46 +296,46 @@
 		</tr>
 		<tr style="MAILBOX_TYPE_STYLE">
 			<td valign="top" scope="row">
-				<slot>&nbsp;</slot></td>
-			<td valign="top"  width="35%"><slot>
-				&nbsp;</slot></td>
+				<span>&nbsp;</span></td>
+			<td valign="top"  width="35%"><span>
+				&nbsp;</span></td>
 			<td valign="top" scope="row" width="15%" >
-			 <slot style="{MAILBOX_TYPE_STYLE}">{MOD.LBL_ALLOW_OUTBOUND_GROUP_USAGE}:&nbsp;{TIPS.LBL_ALLOW_OUTBOUND_GROUP_USAGE_DESC}</slot>
+			 <slot style="{MAILBOX_TYPE_STYLE}">{MOD.LBL_ALLOW_OUTBOUND_GROUP_USAGE}:&nbsp;{TIPS.LBL_ALLOW_OUTBOUND_GROUP_USAGE_DESC}</span>
 		  </td>
 			<td valign="top"  width="35%">
-			 <slot style="{MAILBOX_TYPE_STYLE}"><input name='allow_outbound_group_usage' id='allow_outbound_group_usage' tabindex='45' value='1' type='checkbox' {ALLOW_OUTBOUND_USAGE} ></slot>
+			 <slot style="{MAILBOX_TYPE_STYLE}"><input name='allow_outbound_group_usage' id='allow_outbound_group_usage' tabindex='45' value='1' type='checkbox' {ALLOW_OUTBOUND_USAGE} ></span>
 			</td>
 		</tr>
 		<tr>
 			<td valign="top" scope="row" width="15%" NOWRAP>
-				<slot style="{CREATE_GROUP_FOLDER_STYLE}">{MOD.LBL_AUTOREPLY}:&nbsp;{TIPS.LBL_AUTOREPLY_HELP}</slot></td>
+				<slot style="{CREATE_GROUP_FOLDER_STYLE}">{MOD.LBL_AUTOREPLY}:&nbsp;{TIPS.LBL_AUTOREPLY_HELP}</span></td>
 			<td colspan="3" valign="top"  width="35%">
 				<slot style="{CREATE_GROUP_FOLDER_STYLE}">
 					<select tabindex='251' id="template_id" name='template_id' onchange="show_edit_template_link(this, 'edit_template');" {IE_DISABLED}>{EMAIL_TEMPLATE_OPTIONS}</select>
 					<input type="button" class="button" onclick="javascript:open_email_template_form('template_id')" value="{MOD.LBL_CREATE_TEMPLATE}" {IE_DISABLED}>
 					<input type="button" value="{MOD.LBL_EDIT_TEMPLATE}" class="button" onclick="javascript:edit_email_template_form('template_id')" name='edit_template' id='edit_template' style="{EDIT_TEMPLATE}">
-				</slot>
+				</span>
 			</td>
 		</tr>
 		<tr>
 			<td valign="top" scope="row" width="18%" NOWRAP>
-				<slot style="{CREATE_GROUP_FOLDER_STYLE}">{MOD.LBL_FILTER_DOMAIN}:&nbsp;{TIPS.LBL_FILTER_DOMAIN_DESC}</slot></td>
+				<slot style="{CREATE_GROUP_FOLDER_STYLE}">{MOD.LBL_FILTER_DOMAIN}:&nbsp;{TIPS.LBL_FILTER_DOMAIN_DESC}</span></td>
 			<td valign="top"  width="35%">
-				<slot style="{CREATE_GROUP_FOLDER_STYLE}"><input tabindex="270" name="filter_domain" value="{FILTER_DOMAIN}" {IE_DISABLED}></slot></td>
+				<slot style="{CREATE_GROUP_FOLDER_STYLE}"><input tabindex="270" name="filter_domain" value="{FILTER_DOMAIN}" {IE_DISABLED}></span></td>
 			<td valign="top" scope="row">
-				<slot><span style="{CREATE_GROUP_FOLDER_STYLE}">{MOD.LBL_MAX_AUTO_REPLIES}:&nbsp;{TIPS.LBL_MAX_AUTO_REPLIES_DESC}</span></slot></td>
+				<span><span style="{CREATE_GROUP_FOLDER_STYLE}">{MOD.LBL_MAX_AUTO_REPLIES}:&nbsp;{TIPS.LBL_MAX_AUTO_REPLIES_DESC}</span></span></td>
 			<td valign="top"  width="35%">
-				<slot><input tabindex="271" style="{CREATE_GROUP_FOLDER_STYLE}" name="email_num_autoreplies_24_hours" value="{EMAIL_NUM_AUTOREPLIES_24_HOURS}"></slot></td>
+				<span><input tabindex="271" style="{CREATE_GROUP_FOLDER_STYLE}" name="email_num_autoreplies_24_hours" value="{EMAIL_NUM_AUTOREPLIES_24_HOURS}"></span></td>
 		</tr>
 		<tr id = "leaveMessagesOnMailServerRow" style="{LEAVEMESSAGESONMAILSERVER_STYLE}">
 			<td valign="top" scope="row" width='20%'>
-				<slot>{MOD.LBL_MARK_READ}:</slot></td>
+				<span>{MOD.LBL_MARK_READ}:</span></td>
 			<td valign="top"  width='30%'>
 				<select name='leaveMessagesOnMailServer' tabindex='253'>{LEAVEMESSAGESONMAILSERVER}</select></td>
 			<td valign="top" scope="row">
-				<slot>&nbsp;</slot></td>
-			<td valign="top"  width="35%"><slot>
-				&nbsp;</slot></td>
+				<span>&nbsp;</span></td>
+			<td valign="top"  width="35%"><span>
+				&nbsp;</span></td>
 		</tr>
 	</table>
 	</div>

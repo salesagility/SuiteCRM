@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,13 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
- ********************************************************************************/
+ */
 -->
 <!-- BEGIN: main -->
 {ERROR_STRING}
@@ -69,71 +70,71 @@
 <td>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	<td width="15%" scope="row"><slot>{MOD.LBL_NAME} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td width="35%" ><slot><input name='name' {DISABLED} tabindex='1' size='25' maxlength='25' type="text" value="{NAME}"></slot></td>
-	<td scope="row"><slot>{MOD.LBL_STATUS_TEXT} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td ><slot><select tabindex='2' id='status' name='status'>{STATUS_OPTIONS}</select></slot></td>
+	<td width="15%" scope="row"><span>{MOD.LBL_NAME} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td width="35%" ><span><input name='name' {DISABLED} tabindex='1' size='25' maxlength='25' type="text" value="{NAME}"></span></td>
+	<td scope="row"><span>{MOD.LBL_STATUS_TEXT} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td ><span><select tabindex='2' id='status' name='status'>{STATUS_OPTIONS}</select></span></td>
 	</tr>
 	<tr>
-	<td scope="row"><slot>{MOD.LBL_START_DATE_TIME} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td class="datafield"><slot><table  cellpadding="0" cellspacing="0"><tr><td nowrap><input name='date_start' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" id='date_start_date' size='11' tabindex='1' maxlength='10' type="text" value="{DATE_START}"> <img src="index.php?entryPoint=getImage&themeName={THEME}&imageName=jscalendar.gif" alt="{CALENDAR_DATEFORMAT}"  id="jscal_trigger" align="absmiddle">&nbsp;</td>
-    <td nowrap><input type="text" size='5' maxlength='5' name='time_start' tabindex="1" value="{TIME_START}"/>{TIME_MERIDIEM}</td></tr><tr><td nowrap><span class="dateFormat">{USER_DATEFORMAT}</span></td><td nowrap><span class="dateFormat">{TIME_FORMAT}</span></td></tr></table></slot></td>
-	<td scope="row"><slot>{MOD.LBL_TEMPLATE} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
+	<td scope="row"><span>{MOD.LBL_START_DATE_TIME} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td class="datafield"><span><table  cellpadding="0" cellspacing="0"><tr><td nowrap><input name='date_start' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" id='date_start_date' size='11' tabindex='1' maxlength='10' type="text" value="{DATE_START}"> <span id="jscal_trigger" class="suitepicon suitepicon-module-calendar"></span>&nbsp;</td>
+    <td nowrap><input type="text" size='5' maxlength='5' name='time_start' tabindex="1" value="{TIME_START}"/>{TIME_MERIDIEM}</td></tr><tr><td nowrap><span class="dateFormat">{USER_DATEFORMAT}</span></td><td nowrap><span class="dateFormat">{TIME_FORMAT}</span></td></tr></table></span></td>
+	<td scope="row"><span>{MOD.LBL_TEMPLATE} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span></td>
 	<td class="datafield">
-		<slot>
+		<span>
 			<select  id="template_id" name='template_id' tabindex='2' onchange="show_edit_template_link(this);">{EMAIL_TEMPLATE_OPTIONS}</select>
 			&nbsp;
 			<A href="javascript:open_email_template_form()"   >{MOD.LBL_CREATE_EMAIL_TEMPLATE}</A>
 			<span name='edit_template' id='edit_template' style="{EDIT_TEMPLATE}">&nbsp;<A href="javascript:edit_email_template_form()"   >{MOD.LBL_EDIT_EMAIL_TEMPLATE}</A>
 			</span>		
-		</slot>
+		</span>
 	</td>
 	</tr>
 	<tr>
-	<td width="15%" scope="row"><slot>{MOD.LBL_MESSAGE_FOR} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td width="35%" class="datafield"><slot><input type="checkbox"  tabindex='1' onclick="toggle_message_for(this);" id="all_prospect_lists" {ALL_PROSPECT_LISTS_CHECKED} name='all_prospect_lists'>{MOD.LBL_ALL_PROSPECT_LISTS}</slot></td>
-	<td scope="row"><slot>&nbsp;</slot></td>
-	<td><slot>&nbsp;</slot></td>
+	<td width="15%" scope="row"><span>{MOD.LBL_MESSAGE_FOR} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td width="35%" class="datafield"><span><input type="checkbox"  tabindex='1' onclick="toggle_message_for(this);" id="all_prospect_lists" {ALL_PROSPECT_LISTS_CHECKED} name='all_prospect_lists'>{MOD.LBL_ALL_PROSPECT_LISTS}</span></td>
+	<td scope="row"><span>&nbsp;</span></td>
+	<td><span>&nbsp;</span></td>
 	</tr>
     <tr>
-        <td scope="row"><slot>{MOD.LBL_FROM_MAILBOX_NAME}</slot></td>
-        <td ><slot><select  id='inbound_email_id' tabindex='1' onchange='set_from_email_and_name(this);' name='inbound_email_id'>{MAILBOXES}</select>&nbsp;<SPAN id='from_email' style="font-style:italic">{DEFAULT_FROM_EMAIL}</SPAN></slot></td>
-        <td scope="row"><slot>&nbsp;</slot></td>
-        <td class="datafield"><slot>&nbsp;</slot></td>
+        <td scope="row"><span>{MOD.LBL_FROM_MAILBOX_NAME}</span></td>
+        <td ><span><select  id='inbound_email_id' tabindex='1' onchange='set_from_email_and_name(this);' name='inbound_email_id'>{MAILBOXES}</select>&nbsp;<SPAN id='from_email' style="font-style:italic">{DEFAULT_FROM_EMAIL}</SPAN></span></td>
+        <td scope="row"><span>&nbsp;</span></td>
+        <td class="datafield"><span>&nbsp;</span></td>
     </tr>
 
 		<tr>
-			<td scope="row"><slot>{MOD.LBL_OUTBOUND_EMAIL_ACCOUNT_NAME}</slot></td>
-			<td ><slot><select name="outbound_email_id">{outboundEmailAccountOptionsHTML}</select><br></slot></td>
-			<td scope="row"><slot>&nbsp;</slot></td>
-			<td class="datafield"><slot>&nbsp;</slot></td>
+			<td scope="row"><span>{MOD.LBL_OUTBOUND_EMAIL_ACCOUNT_NAME}</span></td>
+			<td ><span><select name="outbound_email_id">{outboundEmailAccountOptionsHTML}</select><br></span></td>
+			<td scope="row"><span>&nbsp;</span></td>
+			<td class="datafield"><span>&nbsp;</span></td>
 		</tr>
 
     <tr>
-        <td scope="row"><slot>{MOD.LBL_FROM_NAME} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-        <td ><slot><input name='from_name' id='from_name' tabindex='2' size='25' maxlength='100' type="text" value="{FROM_NAME}"></slot></td>
-        <td scope="row"><slot>{MOD.LBL_FROM_ADDR}</slot></td>
-        <td class="datafield"><slot><input name='from_addr' id='from_addr' title='{MOD.LBL_FROM_ADDR}' tabindex='2' size='25' maxlength='100' type="text" value="{FROM_ADDR}"></slot></td>
+        <td scope="row"><span>{MOD.LBL_FROM_NAME} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+        <td ><span><input name='from_name' id='from_name' tabindex='2' size='25' maxlength='100' type="text" value="{FROM_NAME}"></span></td>
+        <td scope="row"><span>{MOD.LBL_FROM_ADDR}</span></td>
+        <td class="datafield"><span><input name='from_addr' id='from_addr' title='{MOD.LBL_FROM_ADDR}' tabindex='2' size='25' maxlength='100' type="text" value="{FROM_ADDR}"></span></td>
     </tr>
     <tr>
-        <td width="15%" scope="row"><slot>{MOD.LBL_REPLY_NAME}</slot></td>
-        <td width="35%" class="datafield"><slot><input name='reply_to_name' id='reply_to_name' title='{MOD.LBL_REPLY_NAME}' tabindex='2' size='25' maxlength='100' type="text" value="{REPLY_NAME}"></slot></td>
-        <td scope="row"><slot>{MOD.LBL_REPLY_ADDR}</slot></td>
-        <td class="datafield"><slot><input name='reply_to_addr' id='reply_to_addr' title='{MOD.LBL_REPLY_ADDR}' tabindex='2' size='25' maxlength='100' type="text" value="{REPLY_ADDR}"></slot></td>
+        <td width="15%" scope="row"><span>{MOD.LBL_REPLY_NAME}</span></td>
+        <td width="35%" class="datafield"><span><input name='reply_to_name' id='reply_to_name' title='{MOD.LBL_REPLY_NAME}' tabindex='2' size='25' maxlength='100' type="text" value="{REPLY_NAME}"></span></td>
+        <td scope="row"><span>{MOD.LBL_REPLY_ADDR}</span></td>
+        <td class="datafield"><span><input name='reply_to_addr' id='reply_to_addr' title='{MOD.LBL_REPLY_ADDR}' tabindex='2' size='25' maxlength='100' type="text" value="{REPLY_ADDR}"></span></td>
     </tr>
 
 	<tr>
-	<td scope="row"><slot>&nbsp;</slot></td>
-	<td width="35%" class="datafield"><slot><select {MESSAGE_FOR_DISABLED}  tabindex='1' multiple size="5" id="message_for" name='message_for[]'>{SCOPE_OPTIONS}</select></slot></td>
-	<td scope="row"><slot>&nbsp;</slot></td>
-	<td><slot>&nbsp;</slot></td>
+	<td scope="row"><span>&nbsp;</span></td>
+	<td width="35%" class="datafield"><span><select {MESSAGE_FOR_DISABLED}  tabindex='1' multiple size="5" id="message_for" name='message_for[]'>{SCOPE_OPTIONS}</select></span></td>
+	<td scope="row"><span>&nbsp;</span></td>
+	<td><span>&nbsp;</span></td>
 	</tr>
 
 	<tr>
-	<td scope="row"><slot>&nbsp;</slot></td>
-	<td><slot>&nbsp;</slot></td>
-	<td scope="row"><slot>&nbsp;</slot></td>
-	<td><slot>&nbsp;</slot></td>
+	<td scope="row"><span>&nbsp;</span></td>
+	<td><span>&nbsp;</span></td>
+	<td scope="row"><span>&nbsp;</span></td>
+	<td><span>&nbsp;</span></td>
 	</tr>
 	</table>
 </td>

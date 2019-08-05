@@ -6,7 +6,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,8 +35,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 /**
@@ -73,10 +73,10 @@ class FormulaNode
  */
 class FormulaCalculator
 {
-    const startTerminal = "{";
-    const endTerminal = "}";
-    const parameterSeparatorTerminal = ";";
-    const configuratorName = "SweeterCalc";
+    const START_TERMINAL = "{";
+    const END_TERMINAL = "}";
+    const PARAMETER_SEPARATOR_TERMINAL = ";";
+    const CONFIGURATOR_NAME = "SweeterCalc";
 
     private $parameters;
     private $relationParameters;
@@ -105,8 +105,8 @@ class FormulaCalculator
         $this->configurator = new Configurator();
         $this->configurator->loadConfig();
 
-        $this->debugEnabled = $this->configurator->config[FormulaCalculator::configuratorName]['DebugEnabled'] == 1;
-        $this->debugFileName = isset($this->configurator->config[FormulaCalculator::configuratorName]['DebugFileName']) ? $this->configurator->config[FormulaCalculator::configuratorName]['DebugFileName'] : 'SweeterCalc.log';
+        $this->debugEnabled = $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DebugEnabled'] == 1;
+        $this->debugFileName = isset($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DebugFileName']) ? $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DebugFileName'] : 'SweeterCalc.log';
     }
 
     /**
@@ -186,13 +186,13 @@ class FormulaCalculator
                 $currentText .= $char;
             }
 
-            if ($char === FormulaCalculator::startTerminal) {
+            if ($char === FormulaCalculator::START_TERMINAL) {
                 if ($terminalLevel == 0) {
                     $currentText .= $char;
                 }
 
                 $terminalLevel++;
-            } elseif ($char === FormulaCalculator::endTerminal) {
+            } elseif ($char === FormulaCalculator::END_TERMINAL) {
                 $terminalLevel--;
 
                 if ($terminalLevel == 0) {
@@ -245,8 +245,12 @@ class FormulaCalculator
                 $pos = strpos($evaluatedValue, $childItem['value']);
                 if ($pos !== false) {
                     $this->log("Going to replace child value '" . $childItem['value'] . "' in expression: " . $evaluatedValue);
-                    $evaluatedValue = substr_replace($evaluatedValue, $childItem['evaluatedValue'], $pos,
-                        strlen($childItem['value']));
+                    $evaluatedValue = substr_replace(
+                        $evaluatedValue,
+                        $childItem['evaluatedValue'],
+                        $pos,
+                        strlen($childItem['value'])
+                    );
                     $this->log("Replaced child value '" . $childItem['evaluatedValue'] . "'. New expression: " . $evaluatedValue);
                 }
             }
@@ -327,9 +331,8 @@ class FormulaCalculator
             // Workaround for PHP < 5.4.8
             if (isset($params[2])) {
                 return mb_substr($params[0], intval($params[1]), intval($params[2]));
-            } else {
-                return mb_substr($params[0], intval($params[1]));
             }
+            return mb_substr($params[0], intval($params[1]));
         }
 
         if (($params = $this->evaluateFunctionParams("length", $text, $childItems)) != null) {
@@ -588,15 +591,15 @@ class FormulaCalculator
         for ($i = 0; $i < count($characters); $i++) {
             $char = $characters[$i];
 
-            if ($char === FormulaCalculator::startTerminal) {
+            if ($char === FormulaCalculator::START_TERMINAL) {
                 $terminalLevel++;
                 $currentParam .= $char;
             } else {
-                if ($char === FormulaCalculator::endTerminal) {
+                if ($char === FormulaCalculator::END_TERMINAL) {
                     $terminalLevel--;
                     $currentParam .= $char;
                 } else {
-                    if ($char === FormulaCalculator::parameterSeparatorTerminal) {
+                    if ($char === FormulaCalculator::PARAMETER_SEPARATOR_TERMINAL) {
                         if ($terminalLevel == 0) {
                             $params [] = $currentParam;
                             $currentParam = "";
@@ -748,46 +751,50 @@ class FormulaCalculator
     {
         switch ($globalVariableType) {
             case 'GlobalCounter':
-                return $this->configurator->config[FormulaCalculator::configuratorName]['GlobalCounter'][$parameterText];
+                return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounter'][$parameterText];
             case 'GlobalCounterPerUser':
-                return $this->configurator->config[FormulaCalculator::configuratorName]['GlobalCounterPerUser'][$this->creatorUserId][$parameterText];
+                return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounterPerUser'][$this->creatorUserId][$parameterText];
             case 'GlobalCounterPerModule':
-                return $this->configurator->config[FormulaCalculator::configuratorName]['GlobalCounterPerModule'][$this->currentModule][$parameterText];
+                return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounterPerModule'][$this->currentModule][$parameterText];
             case 'GlobalCounterPerUserPerModule':
-                return $this->configurator->config[FormulaCalculator::configuratorName]['GlobalCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText];
+                return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText];
 
             case 'DailyCounter':
-                if ($this->configurator->config[FormulaCalculator::configuratorName]['DailyCounter'][$parameterText]['date'] ===
+                if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounter'][$parameterText]['date'] ===
                     date('Y-m-d')
                 ) {
-                    return $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounter'][$parameterText]['value'];
-                } else {
-                    return 0;
+                    return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounter'][$parameterText]['value'];
                 }
+
+                return 0;
+
             case 'DailyCounterPerUser':
-                if ($this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['date'] ===
+                if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['date'] ===
                     date('Y-m-d')
                 ) {
-                    return $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['value'];
-                } else {
-                    return 0;
+                    return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['value'];
                 }
+
+                return 0;
+
             case 'DailyCounterPerModule':
-                if ($this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUser'][$this->currentModule][$parameterText]['date'] ===
+                if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->currentModule][$parameterText]['date'] ===
                     date('Y-m-d')
                 ) {
-                    return $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUser'][$this->currentModule][$parameterText]['value'];
-                } else {
-                    return 0;
+                    return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->currentModule][$parameterText]['value'];
                 }
+
+                return 0;
+
             case 'DailyCounterPerUserPerModule':
-                if ($this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['date'] ===
+                if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['date'] ===
                     date('Y-m-d')
                 ) {
-                    return $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['value'];
-                } else {
-                    return 0;
+                    return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['value'];
                 }
+
+                return 0;
+
         }
     }
 
@@ -800,32 +807,32 @@ class FormulaCalculator
     {
         switch ($globalVariableType) {
             case 'GlobalCounter':
-                $this->configurator->config[FormulaCalculator::configuratorName]['GlobalCounter'][$parameterText] = $value;
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounter'][$parameterText] = $value;
                 break;
             case 'GlobalCounterPerUser':
-                $this->configurator->config[FormulaCalculator::configuratorName]['GlobalCounterPerUser'][$this->creatorUserId][$parameterText] = $value;
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounterPerUser'][$this->creatorUserId][$parameterText] = $value;
                 break;
             case 'GlobalCounterPerModule':
-                $this->configurator->config[FormulaCalculator::configuratorName]['GlobalCounterPerModule'][$this->currentModule][$parameterText] = $value;
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounterPerModule'][$this->currentModule][$parameterText] = $value;
                 break;
             case 'GlobalCounterPerUserPerModule':
-                $this->configurator->config[FormulaCalculator::configuratorName]['GlobalCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText] = $value;
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['GlobalCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText] = $value;
                 break;
             case 'DailyCounter':
-                $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounter'][$parameterText]['date'] = date('Y-m-d');
-                $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounter'][$parameterText]['value'] = $value;
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounter'][$parameterText]['date'] = date('Y-m-d');
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounter'][$parameterText]['value'] = $value;
                 break;
             case 'DailyCounterPerUser':
-                $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['date'] = date('Y-m-d');
-                $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['value'] = $value;
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['date'] = date('Y-m-d');
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['value'] = $value;
                 break;
             case 'DailyCounterPerModule':
-                $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUser'][$this->currentModule][$parameterText]['date'] = date('Y-m-d');
-                $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUser'][$this->currentModule][$parameterText]['value'] = $value;
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->currentModule][$parameterText]['date'] = date('Y-m-d');
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->currentModule][$parameterText]['value'] = $value;
                 break;
             case 'DailyCounterPerUserPerModule':
-                $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['date'] = date('Y-m-d');
-                $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['value'] = $value;
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['date'] = date('Y-m-d');
+                $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['value'] = $value;
                 break;
         }
 

@@ -137,7 +137,6 @@ require_once 'Zend/Gdata/Media/Extension/MediaThumbnail.php';
  */
 class Zend_Gdata_YouTube_UserProfileEntry extends Zend_Gdata_Entry
 {
-
     protected $_entryClassName = 'Zend_Gdata_YouTube_UserProfileEntry';
 
     /**
@@ -1037,5 +1036,4 @@ class Zend_Gdata_YouTube_UserProfileEntry extends Zend_Gdata_Entry
     {
         return $this->getFeedLinkHref(Zend_Gdata_YouTube::USER_FAVORITES_REL);
     }
-
 }

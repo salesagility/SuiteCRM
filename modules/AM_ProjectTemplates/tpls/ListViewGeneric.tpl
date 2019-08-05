@@ -138,8 +138,7 @@
                 {if $colHeader == 'NAME' || $params.bold}
                     <th scope='col' data-toggle="true">
                 {else}<th scope='col' data-hide="{$datahide}">{/if}
-                <div style='white-space: normal; align='
-                {$params.align|default:'left'}'>
+                <div style='white-space: normal; width:100%; text-align:{$params.align|default:'left'}'>
                 {if $params.sortable|default:true}
                     {if $params.url_sort}
                         <a href='{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}'
@@ -212,7 +211,7 @@
                                href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
                             >
                                 {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
-                                {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
+                            <span class="suitepicon suitepicon-action-edit"></span>
                         {/if}
                     </td>
                 {/if}

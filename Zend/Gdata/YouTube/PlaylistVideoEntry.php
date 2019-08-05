@@ -42,7 +42,6 @@ require_once 'Zend/Gdata/YouTube/Extension/Position.php';
  */
 class Zend_Gdata_YouTube_PlaylistVideoEntry extends Zend_Gdata_YouTube_VideoEntry
 {
-
     protected $_entryClassName = 'Zend_Gdata_YouTube_PlaylistVideoEntry';
 
     /**
@@ -128,5 +127,4 @@ class Zend_Gdata_YouTube_PlaylistVideoEntry extends Zend_Gdata_YouTube_VideoEntr
     {
         return $this->_position;
     }
-
 }

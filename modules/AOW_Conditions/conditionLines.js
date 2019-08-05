@@ -217,7 +217,7 @@ function showModuleFieldType(ln, value){
 function insertConditionHeader(){
     tablehead = document.createElement("thead");
     tablehead.id = "conditionLines_head";
-    document.getElementById('conditionLines').appendChild(tablehead);
+    document.getElementById('aow_conditionLines').appendChild(tablehead);
 
     var x=tablehead.insertRow(-1);
     x.id='conditionLines_head';
@@ -257,7 +257,7 @@ function insertConditionLine(){
 
     tablebody = document.createElement("tbody");
     tablebody.id = "aow_conditions_body" + condln;
-    document.getElementById('conditionLines').appendChild(tablebody);
+    document.getElementById('aow_conditionLines').appendChild(tablebody);
 
 
     var x = tablebody.insertRow(-1);
@@ -265,7 +265,7 @@ function insertConditionLine(){
 
     var a = x.insertCell(0);
     if(action_sugar_grp1 == 'EditView'){
-        a.innerHTML = "<button type='button' id='aow_conditions_delete_line" + condln + "' class='button' value='' tabindex='116' onclick='markConditionLineDeleted(" + condln + ")'><img src='themes/default/images/id-ff-remove-nobg.png' alt=''></button><br>";
+        a.innerHTML = "<button type='button' id='aow_conditions_delete_line" + condln + "' class='button' value='' tabindex='116' onclick='markConditionLineDeleted(" + condln + ")'><span class='suitepicon suitepicon-action-minus'></span></button><br>";
         a.innerHTML += "<input type='hidden' name='aow_conditions_deleted[" + condln + "]' id='aow_conditions_deleted" + condln + "' value='0'><input type='hidden' name='aow_conditions_id[" + condln + "]' id='aow_conditions_id" + condln + "' value=''>";
     } else{
         a.innerHTML = condln +1;
@@ -279,7 +279,7 @@ function insertConditionLine(){
     b.innerHTML += "<span style='"+viewStyle+"' id='aow_conditions_module_path_label" + condln + "' ></span>";
 
     var c = x.insertCell(2);
-    var viewStyle = 'display:none';
+    viewStyle = 'display:none';
     if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
     c.innerHTML = "<select style='"+viewStyle+"' name='aow_conditions_field["+ condln +"]' id='aow_conditions_field" + condln + "' value='' title='' tabindex='116' onchange='showModuleField(" + condln + ");'>" + flow_fields + "</select>";
     if(action_sugar_grp1 == 'EditView'){viewStyle = 'display:none';}else{viewStyle = '';}
@@ -298,7 +298,7 @@ function insertConditionLine(){
     condln++;
     condln_count++;
 
-    $('.edit-view-field #conditionLines').find('tbody').last().find('select').change(function () {
+    $('.edit-view-field #aow_conditionLines').find('tbody').last().find('select').change(function () {
         $(this).find('td').last().removeAttr("style");
         $(this).find('td').height($(this).find('td').last().height() + 8);
     });
@@ -337,8 +337,8 @@ function markConditionLineDeleted(ln)
 
 function clearConditionLines(){
 
-    if(document.getElementById('conditionLines') != null){
-        var cond_rows = document.getElementById('conditionLines').getElementsByTagName('tr');
+    if(document.getElementById('aow_conditionLines') != null){
+        var cond_rows = document.getElementById('aow_conditionLines').getElementsByTagName('tr');
         var cond_row_length = cond_rows.length;
         var i;
         for (i=0; i < cond_row_length; i++) {
