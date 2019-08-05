@@ -721,7 +721,7 @@
              $this->Palette = "";
          }
 
-         $fileHandle = @fopen($FileName, "r");
+         $fileHandle = @fopen($FileName, 'rb');
          if (!$fileHandle) {
              return(-1);
          }
@@ -867,7 +867,7 @@
          $SkipColumns	= isset($Options["SkipColumns"]) ? $Options["SkipColumns"] : array(-1);
          $DefaultSerieName	= isset($Options["DefaultSerieName"]) ? $Options["DefaultSerieName"] : "Serie";
 
-         $Handle = @fopen($FileName, "r");
+         $Handle = @fopen($FileName, 'rb');
          if ($Handle) {
              $HeaderParsed = false;
              $SerieNames = "";

@@ -3510,7 +3510,7 @@ public $aliasNbPgHex;
             }
             $s.="?>";
             if (is_writable(dirname(_MPDF_TTFONTDATAPATH.'x'))) {
-                $fh = fopen(_MPDF_TTFONTDATAPATH.$fontkey.'.mtx.php', "w");
+                $fh = fopen(_MPDF_TTFONTDATAPATH.$fontkey.'.mtx.php', 'wb');
                 fwrite($fh, $s, strlen($s));
                 fclose($fh);
                 $fh = fopen(_MPDF_TTFONTDATAPATH.$fontkey.'.cw.dat', "wb");

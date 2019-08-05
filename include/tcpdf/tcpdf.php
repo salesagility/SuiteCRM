@@ -14317,7 +14317,7 @@ if (!class_exists('TCPDF', false)) {
                     // truncate files to previous values
                     foreach ($this->objcopy->cache_file_lenght as $file => $lenght) {
                         $file = substr($file, 1);
-                        $handle = fopen($file, 'r+');
+                        $handle = fopen($file, 'rb+');
                         ftruncate($handle, $lenght);
                     }
                 }

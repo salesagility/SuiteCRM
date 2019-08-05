@@ -90,7 +90,7 @@ RedirectMatch 403 {$ignoreCase}/+files\.md5\$
 EOQ;
 
 if (file_exists($htaccess_file)) {
-    $fp = fopen($htaccess_file, 'r');
+    $fp = fopen($htaccess_file, 'rb');
     $skip = false;
     while ($line = fgets($fp)) {
         if (preg_match('/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i', $line)) {

@@ -402,7 +402,7 @@ class AbstractRelationships
                 }
             }
             
-            $fh = fopen($filename, 'w') ;
+            $fh = fopen($filename, 'wb') ;
             fputs($fh, $out, strlen($out)) ;
             fclose($fh) ;
             

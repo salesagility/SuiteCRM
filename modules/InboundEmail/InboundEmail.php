@@ -1426,7 +1426,7 @@ class InboundEmail extends SugarBean
                     }
                     $results = array_slice(array_keys($diff), 0, 50);
                     $data = serialize($newDiff);
-                    if ($fh = @fopen($cacheFilePath, "w")) {
+                    if ($fh = @fopen($cacheFilePath, 'wb')) {
                         fputs($fh, $data);
                         fclose($fh);
                     } // if
@@ -1456,7 +1456,7 @@ class InboundEmail extends SugarBean
 
                 $results = array_slice(array_keys($diff), 0, 50);
                 $data = serialize($newDiff);
-                if ($fh = @fopen($cacheFilePath, "w")) {
+                if ($fh = @fopen($cacheFilePath, 'wb')) {
                     fputs($fh, $data);
                     fclose($fh);
                 } // if
@@ -1893,7 +1893,7 @@ class InboundEmail extends SugarBean
                 if (count($searchResults) > 0) {
                     $results = $searchResults;
                     $data = serialize($searchResults);
-                    if ($fh = @fopen($cacheFilePath, "w")) {
+                    if ($fh = @fopen($cacheFilePath, 'wb')) {
                         fputs($fh, $data);
                         fclose($fh);
                     } // if

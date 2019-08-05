@@ -333,7 +333,7 @@ class nusoap_server extends nusoap_base
                     } else {
                         $filename = substr($this->externalWSDLURL, $pos + 7);
                     }
-                    $fp = fopen($this->externalWSDLURL, 'r');
+                    $fp = fopen($this->externalWSDLURL, 'rb');
                     fpassthru($fp);
                 }
             } elseif ($this->wsdl) {

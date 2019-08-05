@@ -5072,7 +5072,7 @@ class nusoap_server extends nusoap_base
                     } else {
                         $filename = substr($this->externalWSDLURL, $pos + 7);
                     }
-                    $fp = fopen($this->externalWSDLURL, 'r');
+                    $fp = fopen($this->externalWSDLURL, 'rb');
                     fpassthru($fp);
                 }
             } elseif ($this->wsdl) {
@@ -6392,7 +6392,7 @@ class wsdl extends nusoap_base
                 $path = $wsdl;
             }
             $this->debug('getting WSDL file ' . $path);
-            if ($fp = @fopen($path, 'r')) {
+            if ($fp = @fopen($path, 'rb')) {
                 $wsdl_string = '';
                 while ($data = fread($fp, 32768)) {
                     $wsdl_string .= $data;
