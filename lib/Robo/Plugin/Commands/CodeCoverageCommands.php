@@ -52,8 +52,8 @@ class CodeCoverageCommands extends \Robo\Tasks
 
     /**
      * Runs code coverage
-     * @param array $opts optional command line argument if using a continuous integration environment
-     * @throws RuntimeException
+     * @param array $opts
+     * @option bool $ci Should be set to true if using a Continuous Integration environment.
      */
     public function codeCoverage($opts = ['ci' => false])
     {
