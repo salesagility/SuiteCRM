@@ -105,7 +105,7 @@ class Zend_Search_Lucene_Search_BooleanExpressionRecognizer extends Zend_Search_
                                    self::ST_NOT_OPERATOR,
                                    self::ST_AND_OPERATOR,
                                    self::ST_OR_OPERATOR),
-                             array(self::IN_LITERAL,
+            array(self::IN_LITERAL,
                                    self::IN_NOT_OPERATOR,
                                    self::IN_AND_OPERATOR,
                                    self::IN_OR_OPERATOR));

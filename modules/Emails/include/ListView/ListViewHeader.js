@@ -45,7 +45,7 @@ if(!SUGAR.Emails) {
  * @param {string} moduleName
  * @param {string} actionUrl
  * @param {function} successCallback
- * @param {function} errorCallback (optional)
+ * @param {boolean} errorCallback (optional)
  * @param {string} loadingTitle (optional)
  * @param {string} errorMessage (optional)
  */

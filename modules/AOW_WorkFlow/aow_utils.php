@@ -80,7 +80,7 @@ function getModuleFields(
                     if (array_key_exists($mod->module_dir, $blockedModuleFields)) {
                         if (in_array(
                             $arr['name'],
-                                $blockedModuleFields[$mod->module_dir]
+                            $blockedModuleFields[$mod->module_dir]
                             ) && !$current_user->isAdmin()
                         ) {
                             $GLOBALS['log']->debug('hiding ' . $arr['name'] . ' field from ' . $current_user->name);
@@ -622,7 +622,11 @@ function getModuleField(
         } else {
             if (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')) {
                 $value = $focus->convertField($value, $fieldlist[$fieldname]);
-                $displayValue = $timedate->to_display_date_time($value);
+                if($fieldlist[$fieldname]['type'] == 'date') {
+                    $displayValue = $timedate->to_display_date($value, false);
+                }else{
+                    $displayValue = $timedate->to_display_date_time($value, true, true);
+                }
                 $fieldlist[$fieldname]['value'] = $fieldlist[$aow_field]['value'] = $displayValue;
                 $fieldlist[$fieldname]['name'] = $aow_field;
             } else {

@@ -193,6 +193,27 @@ class WebDriverHelper extends \Codeception\Module
     }
 
     /**
+     * Gets the 'INSTANCE_ELASTIC_SEARCH_HOST' environment variable or 'instance_elastic_search_host' in a yaml file.
+     * @return string
+     */
+    public function getElasticSearchHost()
+    {
+        $envElasticSearchHost = getenv('INSTANCE_ELASTIC_SEARCH_HOST');
+        if ($envElasticSearchHost === false) {
+            $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
+            $config = $webDriver->_getConfig();
+            if (empty($config['INSTANCE_ELASTIC_SEARCH_HOST'])) {
+                // return default
+                return 'localhost';
+            } else {
+                return $config['instance_elastic_search_host'];
+            }
+        } else {
+            return $envElasticSearchHost;
+        }
+    }
+
+    /**
      * Gets the 'BROWSERSTACK_USERNAME' environment variable or 'browserstack.user' in a yaml file.
      * @url https://www.browserstack.com/automate/codeception
      * @return string.

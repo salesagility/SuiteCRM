@@ -197,12 +197,6 @@ initMySugar = function () {
           configureDlg.configFixedCenter(null, false);
           SUGAR.util.evalScript(result['body']);
 
-          // calculate the scroll and dashlet popup positions
-          var rlTop = 200;
-          var newTop = $("#dashlet_" + dashletId).offset().top - rlTop;
-          if (newTop + $('#dlg').outerHeight(true) > $('#dlg_mask').height()) {
-            newTop -= (newTop + $('#dlg').outerHeight(true) - $('#dlg_mask').height() + rlTop);
-          }
 
           // animate to position
           $('html, body').animate({

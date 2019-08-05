@@ -425,6 +425,7 @@ function handle_invited() {
   else {
     showNoCheck();
   }
+  $("body").removeClass('modal-open');
 }
 
 function handle_not_invited() {
@@ -451,6 +452,7 @@ function handle_not_invited() {
   else {
     showNoCheck();
   }
+  $("body").removeClass('modal-open');
 }
 
 function handle_attended() {
@@ -477,6 +479,8 @@ function handle_attended() {
   else {
     showNoCheck();
   }
+  $("body").removeClass('modal-open');
+
 }
 
 function handle_not_attended() {
@@ -503,6 +507,7 @@ function handle_not_attended() {
   else {
     showNoCheck();
   }
+  $("body").removeClass('modal-open');
 }
 
 function manage_acceptances() {

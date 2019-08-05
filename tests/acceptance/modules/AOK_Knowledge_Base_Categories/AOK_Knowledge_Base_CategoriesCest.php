@@ -31,25 +31,19 @@ class AOK_Knowledge_Base_CategoriesCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\KnowledgeBaseCategories $knowledgeBaseCategory
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the knowledgeBaseCategory module.
      */
     public function testScenarioViewKnowledgeBaseCategoriesModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\KnowledgeBaseCategories $knowledgeBaseCategory,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\KnowledgeBaseCategories $knowledgeBaseCategory
     ) {
         $I->wantTo('View the knowledgeBaseCategory module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to knowledgeBaseCategory list-view
         $I->loginAsAdmin();
-        $knowledgeBaseCategory->gotoKnowledgeBaseCategories();
+        $I->visitPage('AOK_Knowledge_Base_Categories', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('KB - Categories', '.module-title-text');
@@ -60,7 +54,6 @@ class AOK_Knowledge_Base_CategoriesCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\KnowledgeBaseCategories $knowledgeBaseCategories
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a knowledge base category so that I can test
      * the standard fields.
@@ -69,18 +62,13 @@ class AOK_Knowledge_Base_CategoriesCest
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\KnowledgeBaseCategories $knowledgeBaseCategories,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\KnowledgeBaseCategories $knowledgeBaseCategories
     ) {
         $I->wantTo('Create KnowledgeBaseCategory');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to knowledge base category list-view
         $I->loginAsAdmin();
-        $knowledgeBaseCategories->gotoKnowledgeBaseCategories();
+        $I->visitPage('AOK_Knowledge_Base_Categories', 'index');
         $listView->waitForListViewVisible();
 
         // Create knowledge base category

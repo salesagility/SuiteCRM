@@ -78,13 +78,21 @@ class SugarChartFactory
             if (file_exists($file)) {
                 require_once($file);
             } else {
-                $GLOBALS['log']->debug("using default engine include/SugarCharts/".$defaultEngine."/".$defaultEngine.$module.".php");
-                require_once("include/SugarCharts/".$defaultEngine."/".$defaultEngine.$module.".php");
-                $chartEngine = $defaultEngine;
+                $defaultFile = "include/SugarCharts/".$defaultEngine."/".$defaultEngine.$module.".php";
+                $GLOBALS['log']->debug("using default engine $defaultFile");
+                if (file_exists($defaultFile)) {
+                    require_once($defaultFile);
+                    $chartEngine = $defaultEngine;
+                }
             }
         }
 
         $className = $chartEngine.$module;
-        return new $className();
+        if (class_exists($className)) {
+            return new $className();
+        } else {
+            LoggerManager::getLogger()->fatal('Chart class not found.');
+            return null;
+        }
     }
 }
