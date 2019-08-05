@@ -130,14 +130,17 @@ class templateParser
                 $sep = get_number_seperators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
             }
-            if ($focus->field_defs[$name]['dbType'] == 'datetime' &&
-                (strpos($name, 'date') > 0 || strpos($name, 'expiration') > 0)) {
-                if ($value != '') {
+            if ($focus->field_defs[$name]['dbType'] === 'datetime' &&
+                (strpos($name, 'date') > 0 || strpos($name, 'expiration') > 0)
+            ) {
+                if (strpos($name, 'dates') > 0) {
+                    break;
+                } elseif ($value !== '') {
                     $dt = explode(' ', $value);
                     $value = $dt[0];
-                    if (isset($dt[1]) && $dt[1]!='') {
+                    if (isset($dt[1]) && $dt[1] != '') {
                         if (strpos($dt[1], 'am') > 0 || strpos($dt[1], 'pm') > 0) {
-                            $value = $dt[0].' '.$dt[1];
+                            $value = $dt[0] . ' ' . $dt[1];
                         }
                     }
                 }
