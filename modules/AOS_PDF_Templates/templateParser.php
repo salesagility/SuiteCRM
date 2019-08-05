@@ -101,8 +101,10 @@ class templateParser
                         $link = $secureLink;
                         $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="'.$field_def['width'].'" height="'.$field_def['height'].'"/>';
                     }
-                } else {
+                } elseif (isset($focus->$fieldName)) {
                     $repl_arr[$key . "_" . $fieldName] = $focus->$fieldName;
+                } else {
+                    LoggerManager::getLogger()->warn('PDF Template property does not exist: ' . $fieldName);
                 }
             }
         } // end foreach()
