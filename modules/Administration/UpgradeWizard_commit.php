@@ -335,9 +335,9 @@ switch ($install_type) {
             case "Install":
             //here we can determine if this is an upgrade or a new version
                 if (!empty($previous_version)) {
-                    $mi->install("$unzip_dir", true, $previous_version);
+                    $mi->install((string)$unzip_dir, true, $previous_version);
                 } else {
-                    $mi->install("$unzip_dir");
+                    $mi->install((string)$unzip_dir);
                 }
 
                 $file = "$unzip_dir/" . constant('SUGARCRM_POST_INSTALL_FILE');
@@ -353,7 +353,7 @@ switch ($install_type) {
                 } else {
                     $GLOBALS['mi_remove_tables'] = true;
                 }
-                $mi->uninstall("$unzip_dir");
+                $mi->uninstall((string)$unzip_dir);
                 break;
              case "Disable":
                 if (!$overwrite_files) {
@@ -361,7 +361,7 @@ switch ($install_type) {
                 } else {
                     $GLOBALS['mi_overwrite_files'] = true;
                 }
-                $mi->disable("$unzip_dir");
+                $mi->disable((string)$unzip_dir);
                 break;
              case "Enable":
                 if (!$overwrite_files) {
@@ -369,7 +369,7 @@ switch ($install_type) {
                 } else {
                     $GLOBALS['mi_overwrite_files'] = true;
                 }
-                $mi->enable("$unzip_dir");
+                $mi->enable((string)$unzip_dir);
                 break;
             default:
                 break;

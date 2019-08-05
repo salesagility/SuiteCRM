@@ -201,7 +201,7 @@
                      $DBPos       = $Settings[1];
                      $PicSize     = $Settings[2];
                      $GeneratedTS = $Settings[3];
-                     $Hits        = intval($Settings[4]);
+                     $Hits        = (int)$Settings[4];
 
                      if ($UpdateHitsCount) {
                          $Hits++;

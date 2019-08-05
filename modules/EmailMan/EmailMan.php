@@ -1281,7 +1281,7 @@ class EmailMan extends SugarBean
      */
     public function mark_deleted($id)
     {
-        $this->db->query("DELETE FROM {$this->table_name} WHERE id=" . intval($id));
+        $this->db->query("DELETE FROM {$this->table_name} WHERE id=" . (int)$id);
     }
 
     /**

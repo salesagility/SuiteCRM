@@ -654,7 +654,7 @@ class EditViewMerge
                             }
                         }
 
-                        $fields[$field_name] = array('data'=>$col, 'loc'=>array('panel'=>"{$panel_id}", 'row'=>"{$row_id}", 'col'=>"{$col_id}"));
+                        $fields[$field_name] = array('data'=>$col, 'loc'=>array('panel'=> (string)($panel_id), 'row'=> (string)($row_id), 'col'=> (string)($col_id)));
                     }
                 }
             }

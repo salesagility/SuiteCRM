@@ -4329,7 +4329,7 @@ class soap_transport_http extends nusoap_base
         $this->response_status_line = $header_array[0];
         $arr = explode(' ', $this->response_status_line, 3);
         $http_version = $arr[0];
-        $http_status = intval($arr[1]);
+        $http_status = (int)$arr[1];
         $http_reason = count($arr) > 2 ? $arr[2] : '';
 
         // see if we need to resend the request with http digest authentication
@@ -5424,7 +5424,7 @@ class nusoap_server extends nusoap_base
         } else {
             if ($class == '') {
                 $this->debug('in invoke_method, calling function using call_user_func_array()');
-                $call_arg = "$this->methodname";	// straight assignment changes $this->methodname to lower case after call_user_func_array()
+                $call_arg = (string)$this->methodname;	// straight assignment changes $this->methodname to lower case after call_user_func_array()
             } elseif ($delim == '..') {
                 $this->debug('in invoke_method, calling class method using call_user_func_array()');
                 $call_arg = array($class, $method);

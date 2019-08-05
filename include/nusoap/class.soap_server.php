@@ -676,7 +676,7 @@ class nusoap_server extends nusoap_base
         } else {
             if ($class == '') {
                 $this->debug('in invoke_method, calling function using call_user_func_array()');
-                $call_arg = "$this->methodname";	// straight assignment changes $this->methodname to lower case after call_user_func_array()
+                $call_arg = (string)$this->methodname;	// straight assignment changes $this->methodname to lower case after call_user_func_array()
             } elseif ($delim == '..') {
                 $this->debug('in invoke_method, calling class method using call_user_func_array()');
                 $call_arg = array($class, $method);

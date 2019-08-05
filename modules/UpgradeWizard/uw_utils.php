@@ -2089,7 +2089,7 @@ function getImageForType($type)
 if (!function_exists('getLanguagePackName')) {
     function getLanguagePackName($the_file)
     {
-        require_once("$the_file");
+        require_once((string)$the_file);
         if (isset($app_list_strings["language_pack_name"])) {
             return($app_list_strings["language_pack_name"]);
         }
@@ -2670,7 +2670,7 @@ function checkFiles($files, $echo=false)
     // not a stop error
     $errors['files']['filesNotWritable'] = (count($filesNotWritable) > 0) ? true : false;
     if (count($filesNotWritable) < 1) {
-        $filesOut = "{$mod_strings['LBL_UW_FILE_NO_ERRORS']}";
+        $filesOut = (string)($mod_strings['LBL_UW_FILE_NO_ERRORS']);
     }
 
     return $filesOut;

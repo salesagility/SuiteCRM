@@ -68,16 +68,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
         
             if ($_REQUEST['js_admin_repair'] == 'replace') {
                 //should replace compressed JS with source js
-                reverseScripts("$from/jssource/src_files", "$from");
+                reverseScripts("$from/jssource/src_files", (string)$from);
             } elseif ($_REQUEST['js_admin_repair'] == 'mini') {
                 //should replace compressed JS with minified version of source js
-                reverseScripts("$from/jssource/src_files", "$from");
-                BackUpAndCompressScriptFiles("$from", "", false);
-                ConcatenateFiles("$from");
+                reverseScripts("$from/jssource/src_files", (string)$from);
+                BackUpAndCompressScriptFiles((string)$from, "", false);
+                ConcatenateFiles((string)$from);
             } elseif ($_REQUEST['js_admin_repair'] == 'repair') {
                 //should compress existing javascript (including changes done) without overwriting original source files
-                BackUpAndCompressScriptFiles("$from", "", false);
-                ConcatenateFiles("$from");
+                BackUpAndCompressScriptFiles((string)$from, "", false);
+                ConcatenateFiles((string)$from);
             }
         }
     //set execution time back to what it was

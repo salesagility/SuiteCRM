@@ -489,7 +489,7 @@ function uninstallLangPack()
 if (!function_exists('getLanguagePackName')) {
     function getLanguagePackName($the_file)
     {
-        require_once("$the_file");
+        require_once((string)$the_file);
         if (isset($app_list_strings["language_pack_name"])) {
             return($app_list_strings["language_pack_name"]);
         }
