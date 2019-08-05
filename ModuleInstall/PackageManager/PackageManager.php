@@ -44,7 +44,7 @@ define("CREDENTIAL_USERNAME", "username");
 define("CREDENTIAL_PASSWORD", "password");
 
 require_once('include/nusoap/nusoap.php'); // TODO: is it needed?
-require_once('include/utils/zip_utils.php');
+require_once('include/utils/php_zip_utils.php');
 require_once('ModuleInstall/PackageManager/PackageManagerDisplay.php');
 require_once('ModuleInstall/ModuleInstaller.php');
 require_once('include/entryPoint.php');

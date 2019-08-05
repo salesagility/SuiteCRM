@@ -55,7 +55,6 @@
     "tedivm/jshrink": "^1.3",
     "tuupola/slim-jwt-auth": "^2.0",
     "wikimedia/composer-merge-plugin": "^1.4",
-    "fullcalendar/fullcalendar": "^3.9",
     "tinymce/tinymce": "^4.9"
   },
   "require-dev": {
