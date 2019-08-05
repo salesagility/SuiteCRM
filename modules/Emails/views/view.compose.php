@@ -6,7 +6,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,8 +35,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -104,14 +104,18 @@ class EmailsViewCompose extends ViewEdit
             $attachment = BeanFactory::getBean($_GET['return_module'], $_GET['return_id']);
             if (!$attachment) {
                 SugarApplication::appendErrorMessage($mod_strings['ERR_NO_RETURN_ID']);
-                $log->fatal('Attacment is not found. Requested return id is not related to an exists Bean.');
+                $log->fatal('Attachment not found. Requested return ID is not related to an existing Bean.');
             } else {
                 if (isset($attachment->name) && $attachment->name) {
                     $attachmentName = $attachment->name;
-                } elseif (isset($attachment->title) && $attachment->title) {
-                    $attachmentName = $attachment->title;
-                } elseif (isset($attachment->subject) && $attachment->subject) {
-                    $attachmentName = $attachment->subject;
+                } else {
+                    if (isset($attachment->title) && $attachment->title) {
+                        $attachmentName = $attachment->title;
+                    } else {
+                        if (isset($attachment->subject) && $attachment->subject) {
+                            $attachmentName = $attachment->subject;
+                        }
+                    }
                 }
             }
         }
@@ -164,11 +168,12 @@ class EmailsViewCompose extends ViewEdit
             $email->description .= $emailSignatures['signature'];
             $email->description_html .= html_entity_decode($emailSignatures['signature_html']);
             return $email;
-        }
-        $GLOBALS['log']->warn(
+        } else {
+            $GLOBALS['log']->warn(
                 'EmailsController::composeSignature() was unable to get the signature id for user: '.
                 $user->name
             );
-        return false;
+            return false;
+        }
     }
 }

@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /**
  * SugarHtml is a static class that provides a collection of helper methods for creating HTML DOM elements.
@@ -154,51 +155,55 @@ class SugarHtml
             foreach ($dom_tree as $dom) {
                 $out .= is_array($dom) ? self::createHtml($dom) : $dom;
             }
-        } elseif (isset($dom_tree['tag'])) {
-            $tagName = $dom_tree['tag'];
-            $self_closing = $dom_tree['self_closing'];
-            unset($dom_tree['tag']);
-            unset($dom_tree['self_closing']);
-            if (isset($dom_tree['container'])) {
-                $container = $dom_tree['container'];
-                unset($dom_tree['container']);
-            }
-            $out .= self::HTML_TAG_BEGIN."{$tagName} ";
-            if (isset($dom_tree['smarty'])) {
-                $out .= self::createHtml(array(
+        } else {
+            if (isset($dom_tree['tag'])) {
+                $tagName = $dom_tree['tag'];
+                $self_closing = $dom_tree['self_closing'];
+                unset($dom_tree['tag']);
+                unset($dom_tree['self_closing']);
+                if (isset($dom_tree['container'])) {
+                    $container = $dom_tree['container'];
+                    unset($dom_tree['container']);
+                }
+                $out .= self::HTML_TAG_BEGIN."{$tagName} ";
+                if (isset($dom_tree['smarty'])) {
+                    $out .= self::createHtml(array(
                     'smarty' => $dom_tree['smarty']
                 )).' ';
-                unset($dom_tree['smarty']);
-            }
-            $out .= self::createHtml($dom_tree);
-            if ($self_closing) {
-                $out .= '/>';
+                    unset($dom_tree['smarty']);
+                }
+                $out .= self::createHtml($dom_tree);
+                if ($self_closing) {
+                    $out .= '/>';
+                } else {
+                    $out .= self::HTML_TAG_END;
+                    $out .= (is_array($container)) ? self::createHtml($container) : $container;
+                    $out .= self::createCloseTag($tagName);
+                }
             } else {
-                $out .= self::HTML_TAG_END;
-                $out .= (is_array($container)) ? self::createHtml($container) : $container;
-                $out .= self::createCloseTag($tagName);
-            }
-        } elseif (isset($dom_tree['smarty'])) { //dom contains smarty function
-            $count = 0;
-            foreach ($dom_tree['smarty'] as $blocks) {
-                $template = $blocks['template'];
-                unset($blocks['template']);
-                $replacement = array();
-                foreach ($blocks as $key => $value) {
-                    $replacement[$key] = is_array($value) ? self::createHtml($value) : $value;
+                if (isset($dom_tree['smarty'])) { //dom contains smarty function
+                    $count = 0;
+                    foreach ($dom_tree['smarty'] as $blocks) {
+                        $template = $blocks['template'];
+                        unset($blocks['template']);
+                        $replacement = array();
+                        foreach ($blocks as $key => $value) {
+                            $replacement[$key] = is_array($value) ? self::createHtml($value) : $value;
+                        }
+                        if ($count++ > 0) {
+                            $out .= ' ';
+                        }
+                        $out .= strtr($template, $replacement);
+                    }
+                } else {
+                    $count = 0;
+                    foreach ($dom_tree as $attr => $value) {
+                        if ($count++ > 0) {
+                            $out .= ' ';
+                        }
+                        $out .= (empty($value)) ? $attr : $attr.'="'.$value.'"';
+                    }
                 }
-                if ($count++ > 0) {
-                    $out .= ' ';
-                }
-                $out .= strtr($template, $replacement);
-            }
-        } else {
-            $count = 0;
-            foreach ($dom_tree as $attr => $value) {
-                if ($count++ > 0) {
-                    $out .= ' ';
-                }
-                $out .= (empty($value)) ? $attr : $attr.'="'.$value.'"';
             }
         }
 
@@ -397,16 +402,18 @@ class SugarHtml
                 } else {
                     $smarty_template['template'] .= '{'.$clause.'}';
                 }
-            } elseif (!empty($clause)) {
-                $key = '[CONTENT'.($seq++).']';
-                $smarty_template['template'] .= $key;
-                $params = array();
-                if ($is_attr) {
-                    self::extractAttributes($clause, $params);
-                } else {
-                    $params = self::parseHtmlTag($clause);
+            } else {
+                if (!empty($clause)) {
+                    $key = '[CONTENT'.($seq++).']';
+                    $smarty_template['template'] .= $key;
+                    $params = array();
+                    if ($is_attr) {
+                        self::extractAttributes($clause, $params);
+                    } else {
+                        $params = self::parseHtmlTag($clause);
+                    }
+                    $smarty_template[$key] = $params;
                 }
-                $smarty_template[$key] = $params;
             }
         }
         $output['smarty'][] = $smarty_template;
@@ -434,58 +441,76 @@ class SugarHtml
                 if (empty($quote_type)) {
                     $quote_encoded = true;
                     $quote_type = $char;
-                } elseif ($quote_type == $char) {
-                    if (!empty($cache)) {
-                        $string = implode('', $cache);
-                        if (empty($var_name)) {
-                            $var_name = $string;
-                        } elseif ($var_assign) {
-                            $output[trim($var_name)] = $string;
-                            unset($var_name);
+                } else {
+                    if ($quote_type == $char) {
+                        if (!empty($cache)) {
+                            $string = implode('', $cache);
+                            if (empty($var_name)) {
+                                $var_name = $string;
+                            } else {
+                                if ($var_assign) {
+                                    $output[trim($var_name)] = $string;
+                                    unset($var_name);
+                                }
+                            }
+                        }
+                        $quote_type = '';
+                        $var_assign = false;
+                        $cache = array();
+                        $quote_encoded = false;
+                    } else {
+                        array_push($cache, $char);
+                    }
+                }
+            } else {
+                if ($quote_encoded && $char == self::SMARTY_TAG_BEGIN) {
+                    $smarty_encoded = true;
+                    array_push($cache, $char);
+                } else {
+                    if ($quote_encoded && $char == self::SMARTY_TAG_END) {
+                        $smarty_encoded = false;
+                        array_push($cache, $char);
+                    } else {
+                        if (!$quote_encoded && $char == ' ') {
+                            if (!empty($cache)) {
+                                $string = implode('', $cache);
+                                if (empty($var_name)) {
+                                    $var_name = $string;
+                                } else {
+                                    if ($var_assign) {
+                                        $output[trim($var_name)] = $string;
+                                        unset($var_name);
+                                    }
+                                }
+                                $quote_encoded = false;
+                                $var_assign = false;
+                                $cache = array();
+                            }
+                        } else {
+                            if (!$quote_encoded && $char == self::ASSIGN_SIGN) {
+                                if (!empty($var_name)) {
+                                    $output[$var_name] = '';
+                                }
+                                $string = implode('', $cache);
+                                if (trim($string) != "") {
+                                    $var_name = $string;
+                                }
+                                $var_assign = true;
+                                $cache = array();
+                            } else {
+                                if (!$quote_encoded && $char == self::SMARTY_TAG_BEGIN) {
+                                    self::parseSmartyTag($code, $output, $i, true);
+                                } else {
+                                    if (!$quote_encoded && $char == self::HTML_TAG_END) {
+                                        break;
+                                    } else {
+                                        array_push($cache, $char);
+                                    }
+                                }
+                            }
                         }
                     }
-                    $quote_type = '';
-                    $var_assign = false;
-                    $cache = array();
-                    $quote_encoded = false;
-                } else {
-                    array_push($cache, $char);
                 }
-            } elseif ($quote_encoded && $char == self::SMARTY_TAG_BEGIN) {
-                $smarty_encoded = true;
-                array_push($cache, $char);
-            } elseif ($quote_encoded && $char == self::SMARTY_TAG_END) {
-                $smarty_encoded = false;
-                array_push($cache, $char);
-            } elseif (!$quote_encoded && $char == ' ') {
-                if (!empty($cache)) {
-                    $string = implode('', $cache);
-                    if (empty($var_name)) {
-                        $var_name = $string;
-                    } elseif ($var_assign) {
-                        $output[trim($var_name)] = $string;
-                        unset($var_name);
-                    }
-                    $quote_encoded = false;
-                    $var_assign = false;
-                    $cache = array();
-                }
-            } elseif (!$quote_encoded && $char == self::ASSIGN_SIGN) {
-                if (!empty($var_name)) {
-                    $output[$var_name] = '';
-                }
-                $string = implode('', $cache);
-                if (trim($string) != "") {
-                    $var_name = $string;
-                }
-                $var_assign = true;
-                $cache = array();
-            } elseif (!$quote_encoded && $char == self::SMARTY_TAG_BEGIN) {
-                self::parseSmartyTag($code, $output, $i, true);
-            } elseif (!$quote_encoded && $char == self::HTML_TAG_END) {
-                break;
-            } else {
-                array_push($cache, $char);
             }
         }
         if (!empty($cache)) {

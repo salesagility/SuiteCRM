@@ -110,10 +110,7 @@ if (empty($focus->id)) {
 
 echo getClassicModuleTitle($focus->module_dir, $params, true);
 
-if (!$focus->ACLAccess('EditView')) {
-    ACLController::displayNoAccess(true);
-    sugar_cleanup(true);
-} elseif (!is_admin($current_user) && $focus->type === 'system') {
+if (!$focus->ACLAccess('EditView') || (!is_admin($current_user) && isset($focus->type) && $focus->type === 'system')) {
     ACLController::displayNoAccess(true);
     sugar_cleanup(true);
 }
@@ -207,11 +204,13 @@ if (isset($focus->name)) {
  */
 if (isset($focus->assigned_user_id)) {
     $xtpl->assign("ASSIGNED_USER_ID", $focus->assigned_user_id);
-} elseif (empty($focus->id) && empty($focus->assigned_user_id)) {
-    $xtpl->assign("ASSIGNED_USER_ID", $current_user->id);
-    $xtpl->assign("ASSIGNED_USER_NAME", get_assigned_user_name($current_user->id));
 } else {
-    $xtpl->assign("ASSIGNED_USER_ID", "");
+    if (empty($focus->id) && empty($focus->assigned_user_id)) {
+        $xtpl->assign("ASSIGNED_USER_ID", $current_user->id);
+        $xtpl->assign("ASSIGNED_USER_NAME", get_assigned_user_name($current_user->id));
+    } else {
+        $xtpl->assign("ASSIGNED_USER_ID", "");
+    }
 }
 /* END - SECURITY GROUPS */
 //Bug45632

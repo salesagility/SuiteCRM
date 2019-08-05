@@ -37,6 +37,7 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
 {
+
     protected $_rootElement = 'link';
     protected $_href = null;
     protected $_rel = null;
@@ -45,14 +46,9 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
     protected $_title = null;
     protected $_length = null;
 
-    public function __construct(
-        $href = null,
-        $rel = null,
-        $type = null,
-            $hrefLang = null,
-        $title = null,
-        $length = null
-    ) {
+    public function __construct($href = null, $rel = null, $type = null,
+            $hrefLang = null, $title = null, $length = null)
+    {
         parent::__construct();
         $this->_href = $href;
         $this->_rel = $rel;
@@ -219,4 +215,5 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
         $this->_length = $value;
         return $this;
     }
+
 }

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -113,6 +113,18 @@ if ($bean_name === 'Team') {
      }
      $focus->db->query($query);
  }
+if ($bean_name === "Account" && $linked_field === 'leads') {
+    // for Accounts-Leads non-standard relationship, after clearing account_id form Lead's bean, clear also account_name
+    $focus->retrieve($record);
+    $lead = new Lead();
+    $lead->retrieve($linked_id);
+    if ($focus->name === $lead->account_name) {
+        $lead->account_name = '';
+    }
+    $lead->save();
+    unset($lead);
+}
+
 if ($bean_name === "Meeting") {
     $focus->retrieve($record);
     $user = new User();

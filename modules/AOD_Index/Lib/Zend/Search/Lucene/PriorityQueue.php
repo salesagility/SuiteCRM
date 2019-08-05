@@ -168,3 +168,4 @@ abstract class Zend_Search_Lucene_PriorityQueue
      */
     abstract protected function _less($el1, $el2);
 }
+

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -98,22 +98,26 @@ function runCheck($install_script, $mod_strings = array())
             <p><b>'.$mod_strings['LBL_CHECKSYS_IISVER'].'</b></p>
             <p><span class="error">'.$iisVersion.'</span></p>
         ';
-        } elseif (php_sapi_name() != 'cgi-fcgi') {
-            installLog($mod_strings['ERR_CHECKSYS_FASTCGI'].' '.$iis_version);
-            $iisVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_FASTCGI']}</span></b>";
-            $error_found = true;
-            $error_txt .= '
+        } else {
+            if (php_sapi_name() != 'cgi-fcgi') {
+                installLog($mod_strings['ERR_CHECKSYS_FASTCGI'].' '.$iis_version);
+                $iisVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_FASTCGI']}</span></b>";
+                $error_found = true;
+                $error_txt .= '
             <p><b>'.$mod_strings['LBL_CHECKSYS_FASTCGI'].'</b></p>
             <p><span class="error">'.$iisVersion.'</span></p>
         ';
-        } elseif (ini_get('fastcgi.logging') != '0') {
-            installLog($mod_strings['ERR_CHECKSYS_FASTCGI_LOGGING'].' '.$iis_version);
-            $iisVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_FASTCGI_LOGGING']}</span></b>";
-            $error_found = true;
-            $error_txt .= '
+            } else {
+                if (ini_get('fastcgi.logging') != '0') {
+                    installLog($mod_strings['ERR_CHECKSYS_FASTCGI_LOGGING'].' '.$iis_version);
+                    $iisVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_FASTCGI_LOGGING']}</span></b>";
+                    $error_found = true;
+                    $error_txt .= '
             <p><b>'.$mod_strings['LBL_CHECKSYS_FASTCGI'].'</b></p>
             <p ><span class="error">'.$iisVersion.'</span></p>
         ';
+                }
+            }
         }
     }
 
@@ -397,10 +401,11 @@ function runCheck($install_script, $mod_strings = array())
     </div>
 EOQ;
         return $out;
+    } else {
+        installLog("Outputting HTML for System check");
+        installLog("No Errors were found *************");
+        return 'passed';
     }
-    installLog("Outputting HTML for System check");
-    installLog("No Errors were found *************");
-    return 'passed';
 }
 ////    END PAGEOUTPUT
 ///////////////////////////////////////////////////////////////////////////////

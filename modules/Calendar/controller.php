@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
  
 require_once("modules/Calendar/CalendarUtils.php");
@@ -72,8 +73,9 @@ class CalendarController extends SugarController
             foreach ($repeat_fields as $suffix) {
                 unset($_POST['repeat_' . $suffix]);
             }
-        } elseif (!empty($_REQUEST['repeat_type']) && !empty($_REQUEST['date_start'])) {
-            $params = array(
+        } else {
+            if (!empty($_REQUEST['repeat_type']) && !empty($_REQUEST['date_start'])) {
+                $params = array(
                     'type' => $_REQUEST['repeat_type'],
                     'interval' => $_REQUEST['repeat_interval'],
                     'count' => $_REQUEST['repeat_count'],
@@ -81,18 +83,19 @@ class CalendarController extends SugarController
                     'dow' => $_REQUEST['repeat_dow'],
             );
                 
-            $repeatArr = CalendarUtils::build_repeat_sequence($_REQUEST['date_start'], $params);
-            $limit = SugarConfig::getInstance()->get('calendar.max_repeat_count', 1000);
+                $repeatArr = CalendarUtils::build_repeat_sequence($_REQUEST['date_start'], $params);
+                $limit = SugarConfig::getInstance()->get('calendar.max_repeat_count', 1000);
             
-            if (count($repeatArr) > ($limit - 1)) {
-                ob_clean();
-                $jsonData = array(
+                if (count($repeatArr) > ($limit - 1)) {
+                    ob_clean();
+                    $jsonData = array(
                     'access' => 'yes',
                     'limit_error' => 'true',
                     'limit' => $limit,
                 );
-                $this->view_object_map['jsonData'] = $jsonData;
-                return;
+                    $this->view_object_map['jsonData'] = $jsonData;
+                    return;
+                }
             }
         }
         
@@ -316,12 +319,14 @@ class CalendarController extends SugarController
         
         if (in_array($cal->view, array('day', 'week', 'month'))) {
             $cal->add_activities($GLOBALS['current_user']);
-        } elseif ($cal->view == 'shared') {
-            $cal->init_shared();
-            $sharedUser = new User();
-            foreach ($cal->shared_ids as $member) {
-                $sharedUser->retrieve($member);
-                $cal->add_activities($sharedUser);
+        } else {
+            if ($cal->view == 'shared') {
+                $cal->init_shared();
+                $sharedUser = new User();
+                foreach ($cal->shared_ids as $member) {
+                    $sharedUser->retrieve($member);
+                    $cal->add_activities($sharedUser);
+                }
             }
         }
         $cal->load_activities();

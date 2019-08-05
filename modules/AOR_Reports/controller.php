@@ -139,6 +139,7 @@ class AOR_ReportsController extends SugarController
 
         $key = Relationship::retrieve_by_modules($this->bean->report_module, 'ProspectLists', $GLOBALS['db']);
         if (!empty($key)) {
+            $this->bean->user_parameters = requestToUserParameters();
             $sql = $this->bean->build_report_query();
             $result = $this->bean->db->query($sql);
             $beans = array();
@@ -190,7 +191,6 @@ class AOR_ReportsController extends SugarController
         $state = new \SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         error_reporting(0);
-        require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
         $state->popErrorLevel();
 
         $d_image = explode('?', SugarThemeRegistry::current()->getImageURL('company_logo.png'));
@@ -255,13 +255,15 @@ class AOR_ReportsController extends SugarController
         ob_clean();
         try {
             $pdf = new mPDF('en', 'A4', '', 'DejaVuSansCondensed');
-            $pdf->SetAutoFont();
+            $pdf->autoLangToFont = true;
             $pdf->WriteHTML($stylesheet, 1);
             $pdf->SetDefaultBodyCSS('background-color', '#FFFFFF');
+            unset($pdf->cssmgr->CSS['INPUT']['FONT-SIZE']);
             $pdf->WriteHTML($head, 2);
             $pdf->WriteHTML($printable, 3);
+            $pdf->setFooter('{PAGENO}');
             $pdf->Output($this->bean->name . '.pdf', "D");
-        } catch (mPDF_exception $e) {
+        } catch (MpdfException $e) {
             echo $e;
         }
 

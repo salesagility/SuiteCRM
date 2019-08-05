@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -134,18 +134,21 @@ function get_module_title(
     $iconPath = "";
     if (is_file(SugarThemeRegistry::current()->getImageURL('icon_'.$module.'_32.png', false))) {
         $iconPath = SugarThemeRegistry::current()->getImageURL('icon_'.$module.'_32.png');
-    } elseif (is_file(SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png', false))) {
-        $iconPath = SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png');
+    } else {
+        if (is_file(SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png', false))) {
+            $iconPath = SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png');
+        }
     }
     if (!empty($iconPath)) {
         $the_title .= '<h2>';
+        $sw = new SugarView();
         if (SugarThemeRegistry::current()->directionality == "ltr") {
             $the_title .= "<a href='index.php?module={$module}&action=index'><img src='{$iconPath}' " . "alt='".$module."' title='".$module."' align='absmiddle'></a>";
-            $the_title .= ($count >= 1) ? SugarView::getBreadCrumbSymbol() : "";
+            $the_title .= ($count >= 1) ? $sw->getBreadCrumbSymbol() : "";
             $the_title .=  $module_title.'';
         } else {
             $the_title .= $module_title;
-            $the_title .= ($count > 1) ? SugarView::getBreadCrumbSymbol() : "";
+            $the_title .= ($count > 1) ? $sw->getBreadCrumbSymbol() : "";
             $the_title .= "<a href='index.php?module={$module}&action=index'><img src='{$iconPath}' "  . "alt='".$module."' title='".$module."' align='absmiddle'></a>";
         }
         $the_title .= '</h2>';
@@ -207,11 +210,14 @@ function getClassicModuleTitle($module, $params, $show_create=false, $index_url_
     $iconPath = "";
     $the_title = "<div class='moduleTitle'>\n";
 
-    if (is_file(SugarThemeRegistry::current()->getImageURL('icon_'.$module.'_32.png', false))) {
-        $iconPath = SugarThemeRegistry::current()->getImageURL('icon_'.$module.'_32.png');
-    } elseif (is_file(SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png', false))) {
-        $iconPath = SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png');
+    if (!empty($module)) {
+        if (is_file(SugarThemeRegistry::current()->getImageURL('icon_' . $module . '_32.png', false))) {
+            $iconPath = SugarThemeRegistry::current()->getImageURL('icon_' . $module . '_32.png');
+        } elseif (is_file(SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.png', false))) {
+            $iconPath = SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.png');
+        }
     }
+
     if (!empty($iconPath)) {
         $url = (!empty($index_url_override)) ? $index_url_override : "index.php?module={$module}&action=index";
         array_unshift($params, "<a href='{$url}'><img src='{$iconPath}' ". "alt='".$module."' title='".$module."' align='absmiddle'></a>");

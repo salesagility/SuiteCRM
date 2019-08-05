@@ -429,8 +429,10 @@ class SugarApplication
             $theme = $GLOBALS['sugar_config']['default_theme'];
             if (!empty($_SESSION['authenticated_user_theme'])) {
                 $theme = $_SESSION['authenticated_user_theme'];
-            } elseif (!empty($_COOKIE['sugar_user_theme'])) {
-                $theme = $_COOKIE['sugar_user_theme'];
+            } else {
+                if (!empty($_COOKIE['sugar_user_theme'])) {
+                    $theme = $_COOKIE['sugar_user_theme'];
+                }
             }
 
             if (isset($_SESSION['authenticated_user_theme']) && $_SESSION['authenticated_user_theme'] != '') {
@@ -444,7 +446,7 @@ class SugarApplication
         }
 
         if (!is_null($theme) && !headers_sent()) {
-            setcookie('sugar_user_theme', $theme, time() + 31536000, null, null, false, true); // expires in a year
+            setcookie('sugar_user_theme', $theme, time() + 31536000, null, null, isSSL(), true); // expires in a year
         }
 
         SugarThemeRegistry::set($theme);
@@ -581,24 +583,26 @@ class SugarApplication
                 sugar_cleanup(true);
             }
             return false;
-        } elseif (!empty($_SERVER['HTTP_REFERER']) && !empty($_SERVER['SERVER_NAME'])) {
-            $http_ref = parse_url($_SERVER['HTTP_REFERER']);
-            if ($http_ref['host'] !== $_SERVER['SERVER_NAME'] && !in_array($this->controller->action, $this->whiteListActions) &&
+        } else {
+            if (!empty($_SERVER['HTTP_REFERER']) && !empty($_SERVER['SERVER_NAME'])) {
+                $http_ref = parse_url($_SERVER['HTTP_REFERER']);
+                if ($http_ref['host'] !== $_SERVER['SERVER_NAME'] && !in_array($this->controller->action, $this->whiteListActions) &&
                     (empty($whiteListReferers) || !in_array($http_ref['host'], $whiteListReferers))) {
-                if ($dieIfInvalid) {
-                    header("Cache-Control: no-cache, must-revalidate");
-                    $whiteListActions = $this->whiteListActions;
-                    $whiteListActions[] = $this->controller->action;
-                    $whiteListString = "'" . implode("', '", $whiteListActions) . "'";
+                    if ($dieIfInvalid) {
+                        header("Cache-Control: no-cache, must-revalidate");
+                        $whiteListActions = $this->whiteListActions;
+                        $whiteListActions[] = $this->controller->action;
+                        $whiteListString = "'" . implode("', '", $whiteListActions) . "'";
 
-                    $ss = new Sugar_Smarty;
-                    $ss->assign('host', $http_ref['host']);
-                    $ss->assign('action', $this->controller->action);
-                    $ss->assign('whiteListString', $whiteListString);
-                    $ss->display('include/MVC/View/tpls/xsrf.tpl');
-                    sugar_cleanup(true);
+                        $ss = new Sugar_Smarty;
+                        $ss->assign('host', $http_ref['host']);
+                        $ss->assign('action', $this->controller->action);
+                        $ss->assign('whiteListString', $whiteListString);
+                        $ss->display('include/MVC/View/tpls/xsrf.tpl');
+                        sugar_cleanup(true);
+                    }
+                    return false;
                 }
-                return false;
             }
         }
         return true;
@@ -643,7 +647,7 @@ class SugarApplication
     {
         session_destroy();
     }
-
+    
     /**
      * Redirect to another URL
      *
@@ -657,6 +661,7 @@ class SugarApplication
          * If the headers have been sent, then we cannot send an additional location header
          * so we will output a javascript redirect statement.
          */
+        
         if (!empty($_REQUEST['ajax_load'])) {
             ob_get_clean();
             $ajax_ret = array(
@@ -678,7 +683,9 @@ class SugarApplication
                 header("Location: " . $url);
             }
         }
-        exit();
+        if (!defined('SUITE_PHPUNIT_RUNNER')) {
+            exit();
+        }
     }
 
     /**
@@ -715,7 +722,7 @@ class SugarApplication
         $messages = self::getMessages('user_error_message');
         return $messages;
     }
-    
+
     /**
      * Storing messages into session
      *
@@ -736,7 +743,7 @@ class SugarApplication
         $messages = self::getMessages('user_success_message');
         return $messages;
     }
-    
+
     /**
      * Storing messages into session
      * @param string $message
@@ -744,7 +751,7 @@ class SugarApplication
     protected static function appendMessage($type, $message)
     {
         self::validateMessageType($type);
-        
+
         if (empty($_SESSION[$type]) || !is_array($_SESSION[$type])) {
             $_SESSION[$type] = array();
         }
@@ -752,7 +759,7 @@ class SugarApplication
             $_SESSION[$type][] = $message;
         }
     }
-    
+
     /**
      * picking up the messages from the session and clearing session storage array
      * @return array messages
@@ -760,15 +767,16 @@ class SugarApplication
     protected static function getMessages($type)
     {
         self::validateMessageType($type);
-        
+
         if (isset($_SESSION[$type]) && is_array($_SESSION[$type])) {
             $msgs = $_SESSION[$type];
             unset($_SESSION[$type]);
             return $msgs;
+        } else {
+            return array();
         }
-        return array();
     }
-    
+
     /**
      *
      * @param string $type possible message types: ['user_error_message', 'user_success_message']
@@ -794,6 +802,9 @@ class SugarApplication
         $secure = false,
         $httponly = true
     ) {
+        if(isSSL()){
+	        $secure = true;
+        }
         if (is_null($domain)) {
             if (isset($_SERVER["HTTP_HOST"])) {
                 $domain = $_SERVER["HTTP_HOST"];
@@ -876,7 +887,8 @@ class SugarApplication
         }
         if (empty($vars)) {
             return "index.php?module=Home&action=index";
+        } else {
+            return "index.php?" . http_build_query($vars);
         }
-        return "index.php?" . http_build_query($vars);
     }
 }

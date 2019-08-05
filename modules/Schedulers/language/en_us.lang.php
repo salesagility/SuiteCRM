@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -51,12 +51,13 @@ $mod_strings = array(
     'LBL_OOTB_CAMPAIGN' => 'Run Nightly Mass Email Campaigns',
     'LBL_OOTB_PRUNE' => 'Prune Database on 1st of Month',
     'LBL_OOTB_TRACKER' => 'Prune Tracker Tables',
-    'LBL_OOTB_SUGARFEEDS' => 'Prune SuiteCRM Feed Tables',
+    'LBL_OOTB_SUITEFEEDS' => 'Prune SuiteCRM Feed Tables',
     'LBL_OOTB_LUCENE_INDEX' => 'Perform Lucene Index',
     'LBL_OOTB_OPTIMISE_INDEX' => 'Optimise AOD Index',
     'LBL_OOTB_SEND_EMAIL_REMINDERS' => 'Run Email Reminder Notifications',
     'LBL_OOTB_CLEANUP_QUEUE' => 'Clean Jobs Queue',
     'LBL_OOTB_REMOVE_DOCUMENTS_FROM_FS' => 'Removal of documents from filesystem',
+    'LBL_OOTB_GOOGLE_CAL_SYNC' => 'Google Calendar Sync',
 
 // List Labels
     'LBL_LIST_JOB_INTERVAL' => 'Interval:',
@@ -157,7 +158,10 @@ $mod_strings = array(
     'LBL_AORRUNSCHEDULEDREPORTS' => 'Run scheduled reports',
     'LBL_PROCESSAOW_WORKFLOW' => 'Process AOW Workflow',
 
+    'LBL_RUNELASTICSEARCHINDEXERSCHEDULER' => 'Elasticsearch indexer',
+
     'LBL_SCHEDULER_TIMES' => 'Scheduler Times',
+    'LBL_SYNCGOOGLECALENDAR' => 'Sync Google Calendars',
 );
 
 global $sugar_config;

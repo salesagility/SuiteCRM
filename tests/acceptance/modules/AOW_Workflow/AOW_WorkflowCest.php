@@ -45,7 +45,7 @@ class AOW_WorkflowCest
     public function testScenarioCreateWorkflow(
         AcceptanceTester $I,
         \Helper\WebDriverHelper $webDriverHelper,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\SideBar $sideBar,
         \Step\Acceptance\DetailView $detailView,
@@ -113,7 +113,7 @@ class AOW_WorkflowCest
     public function testScenarioDeleteWorkflow(
         AcceptanceTester $I,
         \Helper\WebDriverHelper $webDriverHelper,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\SideBar $sideBar,
         \Step\Acceptance\DetailView $detailView,

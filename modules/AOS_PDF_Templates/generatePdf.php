@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,14 +41,17 @@
 if (!isset($_REQUEST['uid']) || empty($_REQUEST['uid']) || !isset($_REQUEST['templateID']) || empty($_REQUEST['templateID'])) {
     die('Error retrieving record. This record may be deleted or you may not be authorized to view it.');
 }
+$level = error_reporting();
 $state = new \SuiteCRM\StateSaver();
 $state->pushErrorLevel();
 error_reporting(0);
-require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
 require_once('modules/AOS_PDF_Templates/templateParser.php');
 require_once('modules/AOS_PDF_Templates/sendEmail.php');
 require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates.php');
 $state->popErrorLevel();
+if ($level !== error_reporting()) {
+    throw new Exception('Incorrect error reporting level');
+}
 
 global $mod_strings, $sugar_config;
 
@@ -146,7 +149,7 @@ if ($task == 'pdf' || $task == 'emailpdf') {
     try {
         $orientation = ($template->orientation == "Landscape") ? "-L" : "";
         $pdf = new mPDF('en', $template->page_size . $orientation, '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
-        $pdf->SetAutoFont();
+        $pdf->autoLangToFont = true;
         $pdf->SetHTMLHeader($header);
         $pdf->SetHTMLFooter($footer);
         $pdf->WriteHTML($printable);
@@ -159,7 +162,7 @@ if ($task == 'pdf' || $task == 'emailpdf') {
             $sendEmail = new sendEmail();
             $sendEmail->send_email($bean, $bean->module_dir, '', $file_name, true);
         }
-    } catch (mPDF_exception $e) {
+    } catch (MpdfException $e) {
         echo $e;
     }
 } elseif ($task == 'email') {

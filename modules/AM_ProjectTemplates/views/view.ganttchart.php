@@ -23,7 +23,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/MVC/View/views/view.detail.php');
 class AM_ProjectTemplatesViewGanttChart extends ViewDetail
 {
 
@@ -36,7 +35,8 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
 
     public function display()
     {
-        global $db, $mod_strings, $app_list_strings;
+        global $mod_strings, $app_list_strings;
+        $db = DBManagerFactory::getInstance();
 
         echo '<link rel="stylesheet" type="text/css" href="modules/AM_ProjectTemplates/css/style.css" />';
         echo '<link rel="stylesheet" type="text/css" href="modules/AM_ProjectTemplates/qtip/jquery.qtip.min.css" />';
@@ -101,13 +101,16 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
 							<label id="Subtask_label" for="Subtask"><?php echo $mod_strings['LBL_SUBTASK']; ?></label>
 							<input type="radio" name="Milestone" value="Milestone" id="Milestone" />
 							<label id="Milestone_label" for="Milestone"><?php echo $mod_strings['LBL_MILESTONE_FLAG']; ?></label>&nbsp;<br /><br />
-							<label id="parent_task_id" for="parent_task" style="display: none;"><?php echo $mod_strings['LBL_PARENT_TASK_ID']; ?></label>
+							<label id="parent_task_id" for="parent_task" style="display: none;"><?php echo isset($mod_strings['LBL_PARENT_TASK_ID']) ? $mod_strings['LBL_PARENT_TASK_ID'] : ''; ?></label>
 							<input id="parent_task" class="text ui-widget-content ui-corner-all" style="display: none;" type="text" name="parent_task" value="" />
 							<label for="task_name"><?php echo $mod_strings['LBL_TASK_NAME']; ?></label>
 							<input type="text" name="task_name" id="task_name" class="text ui-widget-content ui-corner-all" />
 							<label for="Predecessor"><?php echo $mod_strings['LBL_PREDECESSORS']; ?></label>
 							<?php
                             echo '<select id="Predecessor" name="Predecessor" class="text ui-widget-content ui-corner-all" />';
+        if (!isset($tasks)) {
+            $tasks = [];
+        }
         foreach ($tasks as $task) {
             echo '<option rel="'.$task->id.'" value="'.$task->order_number.'">'.$task->name.'</opion>';
         }

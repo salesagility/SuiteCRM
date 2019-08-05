@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,16 +37,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description: view handler for step 3 of the import process
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
- ********************************************************************************/
+ */
 require_once('modules/Import/views/ImportView.php');
 require_once('modules/Import/sources/ImportFile.php');
 require_once('modules/Import/ImportFileSplitter.php');
@@ -224,10 +225,12 @@ class ImportViewStep3 extends ImportView
                 // get field name
                 if (!empty($moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)])) {
                     $displayname = str_replace(":", "", $moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)]);
-                } elseif (!empty($properties['vname'])) {
-                    $displayname = str_replace(":", "", translate($properties['vname'], $this->bean->module_dir));
                 } else {
-                    $displayname = str_replace(":", "", translate($properties['name'], $this->bean->module_dir));
+                    if (!empty($properties['vname'])) {
+                        $displayname = str_replace(":", "", translate($properties['vname'], $this->bean->module_dir));
+                    } else {
+                        $displayname = str_replace(":", "", translate($properties['name'], $this->bean->module_dir));
+                    }
                 }
                 // see if this is required
                 $req_mark  = "";
@@ -456,13 +459,19 @@ class ImportViewStep3 extends ImportView
         if (file_exists("custom/modules/Import/maps/{$customName}.php")) {
             require_once("custom/modules/Import/maps/{$customName}.php");
             return $customName;
-        } elseif (file_exists("custom/modules/Import/maps/{$name}.php")) {
-            require_once("custom/modules/Import/maps/{$name}.php");
-        } elseif (file_exists("modules/Import/maps/{$name}.php")) {
-            require_once("modules/Import/maps/{$name}.php");
-        } elseif (file_exists('custom/modules/Import/maps/ImportMapOther.php')) {
-            require_once('custom/modules/Import/maps/ImportMapOther.php');
-            return 'ImportMapOther';
+        } else {
+            if (file_exists("custom/modules/Import/maps/{$name}.php")) {
+                require_once("custom/modules/Import/maps/{$name}.php");
+            } else {
+                if (file_exists("modules/Import/maps/{$name}.php")) {
+                    require_once("modules/Import/maps/{$name}.php");
+                } else {
+                    if (file_exists('custom/modules/Import/maps/ImportMapOther.php')) {
+                        require_once('custom/modules/Import/maps/ImportMapOther.php');
+                        return 'ImportMapOther';
+                    }
+                }
+            }
         }
 
         return $name;

@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 /**
@@ -96,10 +97,12 @@ abstract class PersonFormBase extends FormBase
             }
 
             //Bug 1074, if the action is detailview and the id is empty, then do not show detailview
-            elseif (!empty($_POST['return_module']) && !empty($_POST['return_action'])    &&(($_POST['return_action'] == "DetailView" && !empty($_REQUEST['return_id'])) || $_POST['return_action'] != "DetailView")) {
-                $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='".$_POST['return_module']."';this.form.action.value='". $_POST['return_action']."';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
-            } else {
-                $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='ListView';\" type='submit' type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
+            else {
+                if (!empty($_POST['return_module']) && !empty($_POST['return_action'])    &&(($_POST['return_action'] == "DetailView" && !empty($_REQUEST['return_id'])) || $_POST['return_action'] != "DetailView")) {
+                    $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='".$_POST['return_module']."';this.form.action.value='". $_POST['return_action']."';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
+                } else {
+                    $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='ListView';\" type='submit' type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
+                }
             }
         } else {
             $form .= "<input type='submit' class='button' name='Continue{$this->objectName}' value='{$mod_strings[$newLinkLabel]}'>";
@@ -115,13 +118,13 @@ abstract class PersonFormBase extends FormBase
         if (isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') {
             $_POST['return_action'] = 'DetailView';
         }
-    
+
         if (isset($_POST['return_action']) && $_POST['return_action'] == 'DetailView' && empty($_REQUEST['return_id'])) {
             unset($_POST['return_action']);
         }
-        
+
         $form .= getPostToForm();
-    
+
         if (isset($rows[0])) {
             foreach ($rows[0] as $key=>$value) {
                 if ($key != 'id') {
@@ -144,11 +147,13 @@ abstract class PersonFormBase extends FormBase
                 if ($key != 'id') {
                     if (isset($_POST['popup']) && $_POST['popup']==true) {
                         $form .= "<td scope='row'><a  href='#' onclick=\"window.opener.location='index.php?module={$this->moduleName}&action=DetailView&record=${row['id']}'\">$value</a></td>\n";
-                    } elseif (!$wasSet) {
-                        $form .= "<td scope='row'><a target='_blank' href='index.php?module={$this->moduleName}&action=DetailView&record=${row['id']}'>$value</a></td>\n";
-                        $wasSet = true;
                     } else {
-                        $form .= "<td><a target='_blank' href='index.php?module={$this->moduleName}&action=DetailView&record=${row['id']}'>$value</a></td>\n";
+                        if (!$wasSet) {
+                            $form .= "<td scope='row'><a target='_blank' href='index.php?module={$this->moduleName}&action=DetailView&record=${row['id']}'>$value</a></td>\n";
+                            $wasSet = true;
+                        } else {
+                            $form .= "<td><a target='_blank' href='index.php?module={$this->moduleName}&action=DetailView&record=${row['id']}'>$value</a></td>\n";
+                        }
                     }
                 }
             }
@@ -165,10 +170,12 @@ abstract class PersonFormBase extends FormBase
             $form .= "<input title='${app_strings['LBL_SAVE_BUTTON_TITLE']}' accessKey='${app_strings['LBL_SAVE_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='Save';\" type='submit' name='button' value='  ${app_strings['LBL_SAVE_BUTTON_LABEL']}  '>\n";
             if (!empty($_REQUEST['return_module']) && !empty($_REQUEST['return_action']) && !empty($_REQUEST['return_id'])) {
                 $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='".$_REQUEST['return_module']."';this.form.action.value='".$_REQUEST['return_action']."';this.form.record.value='".$_REQUEST['return_id']."';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
-            } elseif (!empty($_POST['return_module']) && !empty($_POST['return_action'])) {
-                $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='".$_POST['return_module']."';this.form.action.value='". $_POST['return_action']."';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
             } else {
-                $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='ListView';\" type='submit' type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
+                if (!empty($_POST['return_module']) && !empty($_POST['return_action'])) {
+                    $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='".$_POST['return_module']."';this.form.action.value='". $_POST['return_action']."';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
+                } else {
+                    $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='ListView';\" type='submit' type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
+                }
             }
         } else {
             $form .= "<input type='submit' class='button' name='Continue{$this->objectName}' value='{$mod_strings[$newLinkLabel]}'></form>";

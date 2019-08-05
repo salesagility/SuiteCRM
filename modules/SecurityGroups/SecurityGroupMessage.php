@@ -108,8 +108,10 @@ class SecurityGroupMessage extends Basic
         global $current_user;
         if (empty($securitygroup_id) && !is_admin($current_user)) {
             return;
-        } elseif (empty($securitygroup_id)) {
-            $securitygroup_id = null; //6.4.0
+        } else {
+            if (empty($securitygroup_id)) {
+                $securitygroup_id = null; //6.4.0
+            }
         }
         $message = new SecurityGroupMessage();
         if (empty($text)) {
@@ -143,35 +145,39 @@ class SecurityGroupMessage extends Basic
         if ($weeks == 1) {
             $result = translate('LBL_TIME_LAST_WEEK', 'SugarFeed').' ';
             return $result;
-        } elseif ($weeks > 1) {
-            $result .= $weeks . ' '.translate('LBL_TIME_WEEKS', 'SugarFeed').' ';
-            if ($days > 0) {
-                $result .= $days . ' '.translate('LBL_TIME_DAYS', 'SugarFeed').' ';
-            }
         } else {
-            if ($days == 1) {
-                $result = translate('LBL_TIME_YESTERDAY', 'SugarFeed').' ';
-                return $result;
-            } elseif ($days > 1) {
-                $result .= $days . ' '. translate('LBL_TIME_DAYS', 'SugarFeed').' ';
+            if ($weeks > 1) {
+                $result .= $weeks . ' '.translate('LBL_TIME_WEEKS', 'SugarFeed').' ';
+                if ($days > 0) {
+                    $result .= $days . ' '.translate('LBL_TIME_DAYS', 'SugarFeed').' ';
+                }
             } else {
-                if ($hours == 1) {
-                    $result .= $hours . ' '.translate('LBL_TIME_HOUR', 'SugarFeed').' ';
+                if ($days == 1) {
+                    $result = translate('LBL_TIME_YESTERDAY', 'SugarFeed').' ';
+                    return $result;
                 } else {
-                    $result .= $hours . ' '.translate('LBL_TIME_HOURS', 'SugarFeed').' ';
-                }
-                if ($hours < 6) {
-                    if ($minutes == 1) {
-                        $result .= $minutes . ' ' . translate('LBL_TIME_MINUTE', 'SugarFeed'). ' ';
+                    if ($days > 1) {
+                        $result .= $days . ' '. translate('LBL_TIME_DAYS', 'SugarFeed').' ';
                     } else {
-                        $result .= $minutes . ' ' . translate('LBL_TIME_MINUTES', 'SugarFeed'). ' ';
-                    }
-                }
-                if ($hours == 0 && $minutes == 0) {
-                    if ($seconds == 1) {
-                        $result = $seconds . ' ' . translate('LBL_TIME_SECOND', 'SugarFeed');
-                    } else {
-                        $result = $seconds . ' ' . translate('LBL_TIME_SECONDS', 'SugarFeed');
+                        if ($hours == 1) {
+                            $result .= $hours . ' '.translate('LBL_TIME_HOUR', 'SugarFeed').' ';
+                        } else {
+                            $result .= $hours . ' '.translate('LBL_TIME_HOURS', 'SugarFeed').' ';
+                        }
+                        if ($hours < 6) {
+                            if ($minutes == 1) {
+                                $result .= $minutes . ' ' . translate('LBL_TIME_MINUTE', 'SugarFeed'). ' ';
+                            } else {
+                                $result .= $minutes . ' ' . translate('LBL_TIME_MINUTES', 'SugarFeed'). ' ';
+                            }
+                        }
+                        if ($hours == 0 && $minutes == 0) {
+                            if ($seconds == 1) {
+                                $result = $seconds . ' ' . translate('LBL_TIME_SECOND', 'SugarFeed');
+                            } else {
+                                $result = $seconds . ' ' . translate('LBL_TIME_SECONDS', 'SugarFeed');
+                            }
+                        }
                     }
                 }
             }

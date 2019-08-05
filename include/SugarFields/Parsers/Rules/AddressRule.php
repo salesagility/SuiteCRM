@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 /**
@@ -72,33 +73,39 @@ class AddressRule extends BaseRule
                     if ($this->matches($column, '/_address_(city|state|country|postalcode)$/si')) {
                         if ($view == 'DetailView' && !is_array($column)) {
                             $panels[$name][$rowCount][$key] = '';
-                        } elseif ($view == 'DetailView' && $this->matches($column, '/_address_country$/') && is_array($column)) {
-                            $match = $this->getMatch($column, '/(.*?)_address_country$/');
-                            $panels[$name][$rowCount][$key]['name'] = $match[1] . '_address_street';
-                            $panels[$name][$rowCount][$key]['label'] = 'LBL_' . strtoupper($match[1]) . '_ADDRESS';
-                        } elseif ($view == 'EditView' && $isAddressPanel) {
-                            $field = is_array($column) ? $column['name'] : $column;
-                            preg_match('/^(.*?)_address_/si', $field, $matches);
+                        } else {
+                            if ($view == 'DetailView' && $this->matches($column, '/_address_country$/') && is_array($column)) {
+                                $match = $this->getMatch($column, '/(.*?)_address_country$/');
+                                $panels[$name][$rowCount][$key]['name'] = $match[1] . '_address_street';
+                                $panels[$name][$rowCount][$key]['label'] = 'LBL_' . strtoupper($match[1]) . '_ADDRESS';
+                            } else {
+                                if ($view == 'EditView' && $isAddressPanel) {
+                                    $field = is_array($column) ? $column['name'] : $column;
+                                    preg_match('/^(.*?)_address_/si', $field, $matches);
 
-                            if (empty($searchedAddressPanel[$matches[1]])) {
-                                $intact = $this->hasAddressFieldsIntact($panel, $matches[1]);
+                                    if (empty($searchedAddressPanel[$matches[1]])) {
+                                        $intact = $this->hasAddressFieldsIntact($panel, $matches[1]);
 
-                                //now we actually have to go back in and replace the street field
-                                if (!$intact) {
-                                    $panels = $this->removeStreetFieldOverride($panels, $matches[1]);
+                                        //now we actually have to go back in and replace the street field
+                                        if (!$intact) {
+                                            $panels = $this->removeStreetFieldOverride($panels, $matches[1]);
+                                        }
+
+                                        $addressFieldsIntact[$matches[1]] = $intact;
+                                        $searchedAddressPanel[$matches[1]] = true;
+                                    }
+
+                                    //Only remove in address panel if the street field is in there by itself
+                                    if ($addressFieldsIntact[$matches[1]]) {
+                                        $panels[$name][$rowCount][$key] = '';
+                                    }
                                 }
-
-                                $addressFieldsIntact[$matches[1]] = $intact;
-                                $searchedAddressPanel[$matches[1]] = true;
-                            }
-
-                            //Only remove in address panel if the street field is in there by itself
-                            if ($addressFieldsIntact[$matches[1]]) {
-                                $panels[$name][$rowCount][$key] = '';
                             }
                         }
-                    } elseif ($this->matches($column, '/^push_.*?_(shipping|billing)$/si')) {
-                        $panels[$name][$rowCount][$key] = '';
+                    } else {
+                        if ($this->matches($column, '/^push_.*?_(shipping|billing)$/si')) {
+                            $panels[$name][$rowCount][$key] = '';
+                        }
                     }
                 } //foreach
             } //foreach

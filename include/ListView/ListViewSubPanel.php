@@ -129,7 +129,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
         }
 
 
-        public function process_dynamic_listview($source_module, $sugarbean, $subpanel_def)
+        public function process_dynamic_listview($source_module, $sugarbean, $subpanel_def, $countOnly = false)
         {
             $this->source_module = $source_module;
             $this->subpanel_module = $subpanel_def->name;
@@ -139,7 +139,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
             $html_var = $this->subpanel_module . "_CELL";
 
-            $list_data = $this->processUnionBeans($sugarbean, $subpanel_def, $html_var);
+            $list_data = $this->processUnionBeans($sugarbean, $subpanel_def, $html_var, $countOnly);
+            
+            if ($countOnly) {
+                return $list_data;
+            }
 
             $list = $list_data['list'];
             $parent_data = $list_data['parent_data'];
@@ -304,9 +308,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 $fields = $aItem->get_list_view_data();
                 if (isset($processed_ids[$aItem->id])) {
                     continue;
+                } else {
+                    $processed_ids[$aItem->id] = 1;
                 }
-                $processed_ids[$aItem->id] = 1;
-                
 
 
                 //ADD OFFSET TO ARRAY
@@ -855,7 +859,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 $this->smartyTemplate->assign("ORDER_BY", $sort_URL_base);
 
                 return $sort_URL_base;
+            } else {
+                return '';
             }
-            return '';
         }
     }

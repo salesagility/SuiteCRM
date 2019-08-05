@@ -28,13 +28,13 @@ require_once __DIR__ . '/../../AOW_WorkFlow/aow_utils.php';
 class actionSendEmail extends actionBase
 {
     private $emailableModules = array();
-    
+
     /**
      *
      * @var int
      */
     protected $lastEmailsFailed;
-    
+
     /**
      *
      * @var int
@@ -267,16 +267,20 @@ class actionSendEmail extends actionBase
                             $idName = $field['id_name'];
                             $id = $bean->$idName;
                             $linkedBeans[] = BeanFactory::getBean($field['module'], $id);
-                        } elseif ($field['type'] == 'link') {
-                            $relField = $field['name'];
-                            if (isset($field['module']) && $field['module'] != '') {
-                                $rel_module = $field['module'];
-                            } elseif ($bean->load_relationship($relField)) {
-                                $rel_module = $bean->$relField->getRelatedModuleName();
-                            }
-                            $linkedBeans = $bean->get_linked_beans($relField, $rel_module);
                         } else {
-                            $linkedBeans = $bean->get_linked_beans($field['link'], $field['module']);
+                            if ($field['type'] == 'link') {
+                                $relField = $field['name'];
+                                if (isset($field['module']) && $field['module'] != '') {
+                                    $rel_module = $field['module'];
+                                } else {
+                                    if ($bean->load_relationship($relField)) {
+                                        $rel_module = $bean->$relField->getRelatedModuleName();
+                                    }
+                                }
+                                $linkedBeans = $bean->get_linked_beans($relField, $rel_module);
+                            } else {
+                                $linkedBeans = $bean->get_linked_beans($field['link'], $field['module']);
+                            }
                         }
                         if ($linkedBeans) {
                             foreach ($linkedBeans as $linkedBean) {
@@ -318,9 +322,9 @@ class actionSendEmail extends actionBase
     public function run_action(SugarBean $bean, $params = array(), $in_save = false)
     {
         include_once __DIR__ . '/../../EmailTemplates/EmailTemplate.php';
-        
+
         $this->clearLastEmailsStatus();
-        
+
         $emailTemp = new EmailTemplate();
         $emailTemp->retrieve($params['email_template']);
 
@@ -367,7 +371,7 @@ class actionSendEmail extends actionBase
         }
         return $ret;
     }
-    
+
     /**
      *  clear last email sending status
      */
@@ -376,7 +380,7 @@ class actionSendEmail extends actionBase
         $this->lastEmailsFailed = 0;
         $this->lastEmailsSuccess = 0;
     }
-    
+
     /**
      * failed emails count at last run_action
      * @return int
@@ -385,7 +389,7 @@ class actionSendEmail extends actionBase
     {
         return $this->lastEmailsFailed;
     }
-    
+
     /**
      * successfully sent emails count at last run_action
      * @return type
@@ -413,16 +417,18 @@ class actionSendEmail extends actionBase
                         }
                     }
                 }
-            } elseif ($bean_arr['type'] == 'link') {
-                if (!isset($bean_arr['module']) || $bean_arr['module'] == '') {
-                    $bean_arr['module'] = getRelatedModule($bean->module_dir, $bean_arr['name']);
-                }
-                if (isset($bean_arr['module']) &&  $bean_arr['module'] != ''&& !isset($object_arr[$bean_arr['module']])&& $bean_arr['module'] != 'EmailAddress') {
-                    $linkedBeans = $bean->get_linked_beans($bean_arr['name'], $bean_arr['module'], array(), 0, 1);
-                    if ($linkedBeans) {
-                        $linkedBean = $linkedBeans[0];
-                        if (!isset($object_arr[$linkedBean->module_dir])) {
-                            $object_arr[$linkedBean->module_dir] = $linkedBean->id;
+            } else {
+                if ($bean_arr['type'] == 'link') {
+                    if (!isset($bean_arr['module']) || $bean_arr['module'] == '') {
+                        $bean_arr['module'] = getRelatedModule($bean->module_dir, $bean_arr['name']);
+                    }
+                    if (isset($bean_arr['module']) &&  $bean_arr['module'] != ''&& !isset($object_arr[$bean_arr['module']])&& $bean_arr['module'] != 'EmailAddress') {
+                        $linkedBeans = $bean->get_linked_beans($bean_arr['name'], $bean_arr['module'], array(), 0, 1);
+                        if ($linkedBeans) {
+                            $linkedBean = $linkedBeans[0];
+                            if (!isset($object_arr[$linkedBean->module_dir])) {
+                                $object_arr[$linkedBean->module_dir] = $linkedBean->id;
+                            }
                         }
                     }
                 }
@@ -526,7 +532,7 @@ class actionSendEmail extends actionBase
                 $emailObj->parent_type = $relatedBean->module_dir;
                 $emailObj->parent_id = $relatedBean->id;
             }
-            $emailObj->date_sent = TimeDate::getInstance()->nowDb();
+            $emailObj->date_sent_received = TimeDate::getInstance()->nowDb();
             $emailObj->modified_user_id = '1';
             $emailObj->created_by = '1';
             $emailObj->status = 'sent';

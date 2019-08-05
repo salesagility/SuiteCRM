@@ -23,7 +23,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/MVC/View/views/view.detail.php');
 class ProjectViewGanttChart extends ViewDetail
 {
 
@@ -36,7 +35,8 @@ class ProjectViewGanttChart extends ViewDetail
 
     public function display()
     {
-        global $db, $mod_strings, $app_list_strings;
+        global $mod_strings, $app_list_strings;
+        $db = DBManagerFactory::getInstance();
 
         echo '<link rel="stylesheet" type="text/css" href="modules/Project/css/style.css" />';
         echo '<link rel="stylesheet" type="text/css" href="modules/Project/qtip/jquery.qtip.min.css" />';

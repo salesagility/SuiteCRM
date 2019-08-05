@@ -3,7 +3,7 @@ if (!defined('sugarEntry')) {
     define('sugarEntry', true);
 }
 
-//assumes jsmin.php is in same directory
+//assumes SugarMin.php is in same directory
     if (isset($_REQUEST['root_directory'])) {
         require_once('jssource/minify_utils.php');
     } else {
@@ -64,11 +64,11 @@ if (isset($_REQUEST['root_directory'])) {
         if ($forceReb) {
             ConcatenateFiles("$from");
         }
+    } else {
+        //We are only allowing rebuilding of concat files from browser.
     }
-    //We are only allowing rebuilding of concat files from browser.
-    
     return;
-}
+} else {
     //run via command line
     //print_r($argv);
     $from="";
@@ -161,3 +161,4 @@ if (isset($_REQUEST['root_directory'])) {
         BackUpAndCompressScriptFiles($from, '', true, true);
         ConcatenateFiles($from, true);
     }
+}

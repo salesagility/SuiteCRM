@@ -15,7 +15,7 @@ FILE=$1;
 # html extension is not supported
 echo -n "Error: ScreenShot $FILE: open ";
 echo -ne $BLUE;
-curl -F "files[]=@$FILE" https://rokket.space/upload\?output\=text;
+curl -i -F file=@$FILE https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
 echo -en $NC;
 echo " in your favorite web browser";
 echo " "

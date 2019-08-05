@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use SuiteCRM\Utility\SuiteValidator;
 
 /**
  * handle requested subscriptions
@@ -58,11 +59,11 @@ function handleSubs($subs, $email, $json, $user = null)
     // flows into next case statement
     $db = DBManagerFactory::getInstance();
     global $current_user;
-    
+
     if (!$user) {
         $user = $current_user;
     }
-    
+
     $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: setFolderViewSelection");
     $viewFolders = $subs;
     $user->setPreference('showFolders', base64_encode(serialize($viewFolders)), '', 'Emails');
@@ -160,9 +161,9 @@ if (isset($_REQUEST['emailUIAction'])) {
                 $ie->mailbox = $_REQUEST['mbox'];
                 global $timedate;
                 $ie->setEmailForDisplay($_REQUEST['uid']);
-                $ie->email->date_start = $timedate->to_display_date($ie->email->date_sent);
-                $ie->email->time_start = $timedate->to_display_time($ie->email->date_sent);
-                $ie->email->date_sent = $timedate->to_display_date_time($ie->email->date_sent);
+                $ie->email->date_start = $timedate->to_display_date($ie->email->date_sent_received);
+                $ie->email->time_start = $timedate->to_display_time($ie->email->date_sent_received);
+                $ie->email->date_sent_received = $timedate->to_display_date_time($ie->email->date_sent_received);
                 $email = $ie->email->et->handleReplyType($ie->email, $_REQUEST['composeType']);
                 $ret = $ie->email->et->displayComposeEmail($email);
                 if ($_REQUEST['composeType'] == 'forward') {
@@ -425,7 +426,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 $ie->connectMailserver();
                 $uid = $_REQUEST['uid'];
                 if ($ie->protocol == 'imap') {
-                    $_REQUEST['uid'] = imap_msgno($ie->conn, $_REQUEST['uid']);
+                    $_REQUEST['uid'] = $ie->getImap()->getMessageNo($_REQUEST['uid']);
                 } else {
                     $_REQUEST['uid'] = $ie->getCorrectMessageNoForPop3($_REQUEST['uid']);
                 }
@@ -561,7 +562,7 @@ if (isset($_REQUEST['emailUIAction'])) {
             ) {
                 $email->et->markEmails("deleted", $_REQUEST['ieId'], $_REQUEST['folder'], $_REQUEST['uids']);
             }
-            
+
             break;
         case "markEmail":
             global $app_strings;
@@ -605,8 +606,9 @@ if (isset($_REQUEST['emailUIAction'])) {
                 }
                 $out = trim($json->encode($ret, false));
                 echo $out;
+            } else {
             }
-            
+
             break;
 
         case "checkEmail2":
@@ -735,7 +737,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 foreach ($exUids as $msgNo) {
                     $uid = $msgNo;
                     if ($ie->protocol == 'imap') {
-                        $msgNo = imap_msgno($ie->conn, $msgNo);
+                        $msgNo = $ie->getImap()->getMessageNo($msgNo);
                         $status = $ie->returnImportedEmail($msgNo, $uid);
                     } else {
                         $status = $ie->returnImportedEmail($ie->getCorrectMessageNoForPop3($msgNo), $uid);
@@ -750,7 +752,7 @@ if (isset($_REQUEST['emailUIAction'])) {
             } else {
                 $msgNo = $_REQUEST['uid'];
                 if ($ie->protocol == 'imap') {
-                    $msgNo = imap_msgno($ie->conn, $_REQUEST['uid']);
+                    $msgNo = $ie->getImap()->getMessageNo($_REQUEST['uid']);
                     $status = $ie->returnImportedEmail($msgNo, $_REQUEST['uid']);
                 } else {
                     $status = $ie->returnImportedEmail($ie->getCorrectMessageNoForPop3($msgNo), $_REQUEST['uid']);
@@ -1128,14 +1130,14 @@ eoq;
             break;
 
         case "setFolderViewSelection":
-            
+            $isValidator = new SuiteValidator();
             $user =
-                isset($_REQUEST['user']) && $_REQUEST['user'] && isValidId($_REQUEST['user']) ?
+                isset($_REQUEST['user']) && $_REQUEST['user'] && $isValidator->isValidId($_REQUEST['user']) ?
                     BeanFactory::getBean('Users', $_REQUEST['user']) :
                     $current_user;
-            
+
             $out = handleSubs($_REQUEST['ieIdShow'], $email, $json, $user);
-            
+
             echo $out;
             break;
 
@@ -1314,9 +1316,9 @@ eoq;
                 echo $out;
                 ob_end_flush();
                 die();
-            }
+            } else {
                 echo "NOOP";
-            
+            }
             break;
 
         case "saveOutbound":
@@ -1576,9 +1578,10 @@ eoq;
                 echo $out;
                 ob_end_flush();
                 die();
-            }
+            } else {
                 echo "NOOP: no search criteria found";
-            
+            }
+
             break;
 
         case "searchAdvanced":

@@ -8,7 +8,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -19,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -37,8 +37,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 
@@ -160,8 +160,10 @@ class MySugar
             foreach ($_REQUEST as $k => $v) {
                 if ($k == 'lvso') {
                     $sortOrder = $v;
-                } elseif (preg_match('/Home2_.+_ORDER_BY/', $k)) {
-                    $orderBy = $v;
+                } else {
+                    if (preg_match('/Home2_.+_ORDER_BY/', $k)) {
+                        $orderBy = $v;
+                    }
                 }
             }
             if (!empty($sortOrder) && !empty($orderBy)) {
@@ -376,8 +378,10 @@ EOJS;
 
         if ($category == 'module' || $category == 'tools') {
             $html = $this->searchModuleToolsDashlets($searchStr, $category);
-        } elseif ($category == 'chart') {
-            $html = $this->searchChartsDashlets($searchStr);
+        } else {
+            if ($category == 'chart') {
+                $html = $this->searchChartsDashlets($searchStr);
+            }
         }
 
         $json = getJSONobj();
@@ -433,7 +437,8 @@ EOJS;
             $current_user->setPreference('pages', $pages, 0, $this->type);
 
             return '1';
+        } else {
+            return '0';
         }
-        return '0';
     }
 }

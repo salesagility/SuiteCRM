@@ -224,8 +224,9 @@ class TestEnvironmentCommands extends \Robo\Tasks
                 if (stristr($line, $optionKeyReplaced) !== false) {
                     $self->say('Removed: ' . $optionKeyReplaced);
                     return '';
+                } else {
+                    return $line;
                 }
-                return $line;
             }, $bashAliasesLines);
         }
 
@@ -341,8 +342,9 @@ class TestEnvironmentCommands extends \Robo\Tasks
             throw new \DomainException('Unsupported Operating system');
         } elseif ($os->isOsUnknown()) {
             throw new \DomainException('Unknown Operating system');
+        } else {
+            throw new \DomainException('Unable to detect Operating system');
         }
-        throw new \DomainException('Unable to detect Operating system');
     }
 
     /**
@@ -373,8 +375,9 @@ class TestEnvironmentCommands extends \Robo\Tasks
             $zip->extractTo($unzippedPath);
             $zip->close();
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**

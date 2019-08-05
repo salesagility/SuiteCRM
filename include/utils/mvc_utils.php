@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,17 +34,19 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 function loadParentView($type)
 {
     if (file_exists('custom/include/MVC/View/views/view.'.$type.'.php')) {
         require_once('custom/include/MVC/View/views/view.'.$type.'.php');
-    } elseif (file_exists('include/MVC/View/views/view.'.$type.'.php')) {
-        require_once('include/MVC/View/views/view.'.$type.'.php');
+    } else {
+        if (file_exists('include/MVC/View/views/view.'.$type.'.php')) {
+            require_once('include/MVC/View/views/view.'.$type.'.php');
+        }
     }
 }
 
@@ -53,9 +56,12 @@ function getPrintLink()
     if (isset($_REQUEST['action']) && $_REQUEST['action'] == "ajaxui") {
         return "javascript:SUGAR.ajaxUI.print();";
     }
-    
-    $requestString = isset($GLOBALS['request_string']) ? $GLOBALS['request_string'] : null;
-    
+    $requestString = null;
+    if (isset($GLOBALS['request_string'])) {
+        $requestString = $GLOBALS['request_string'];
+    } else {
+        LoggerManager::getLogger()->warn('Undefined index: request_string');
+    }
     return "javascript:void window.open('index.php?{$requestString}',"
          . "'printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')";
 }
@@ -128,12 +134,17 @@ function ajaxLink($url)
 
     if (!empty($sugar_config['disableAjaxUI'])) {
         return $url;
-    } elseif (isset($match[1]) && in_array($match[1], ajaxBannedModules())) {
-        return $url;
+    } else {
+        if (isset($match[1]) && in_array($match[1], ajaxBannedModules())) {
+            return $url;
+        }
+        //Don't modify javascript calls.
+        else {
+            if (isset($javascriptMatch[0])) {
+                return $url;
+            } else {
+                return "?action=ajaxui#ajaxUILoc=" . urlencode($url);
+            }
+        }
     }
-    //Don't modify javascript calls.
-    elseif (isset($javascriptMatch[0])) {
-        return $url;
-    }
-    return "?action=ajaxui#ajaxUILoc=" . urlencode($url);
 }

@@ -98,6 +98,10 @@
   background-color: $panel-collapsed-bg ;
 }
 
+div.panel-heading a.collapsed-override {
+  background-color: $panel-expanded-bg ;
+}
+
 
 .panel-heading a.collapsed {
   @extend .suitepicon;

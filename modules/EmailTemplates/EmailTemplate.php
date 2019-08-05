@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
  * Description:  TODO: To be written.
@@ -306,15 +307,16 @@ class EmailTemplate extends SugarBean
         if (empty($this->body) && !empty($this->body_html)) {
             global $sugar_config;
 
-            $bodyCleanup = html_entity_decode($this->body_html, ENT_COMPAT, $sugar_config['default_charset']);
+            $bodyCleanup = $this->body_html;
+
+            $bodyCleanup = html_entity_decode($bodyCleanup, ENT_COMPAT, $sugar_config['default_charset']);
 
             // Template contents should contains at least one
             // white space character at after the variable names
             // to recognise it when parsing and replacing variables
+            $bodyCleanup = preg_replace('/(\$\w+\b)([^\s\/&"\'])/', '$1 $2', $bodyCleanup);
 
-            $bodyCleanup = preg_replace('/(\$\w+\b)([^\s])/', '$1 $2', $bodyCleanup);
-
-            $bodyCleanup = strip_tags($bodyCleanup);
+            $bodyCleanup = Html2Text\Html2Text::convert($bodyCleanup, true);
 
             $this->body = $bodyCleanup;
         }
@@ -680,7 +682,7 @@ class EmailTemplate extends SugarBean
                     } else {
                         $contactFieldName = $contact->$fieldName;
                     }
-                    
+
                     $translated = translate($field_def['options'], 'Accounts', $contactFieldName);
 
                     if (isset($translated) && !is_array($translated)) {
@@ -902,7 +904,7 @@ class EmailTemplate extends SugarBean
     {
         global $sugar_config;
         $domain = $sugar_config['site_url'] . '/';
-        $ret = $this->body_html = preg_replace('/(&lt;img src=&quot;)(public\/[^.]*.(jpg|jpeg|png|gif|bmp))(&quot;)/', "$1" . $domain . "$2$4", $this->body_html);
+        $ret = $this->body_html = preg_replace('/(src=&quot;)(public\/[^.]*.(jpg|jpeg|png|gif|bmp))(&quot;)/', "$1" . $domain . "$2$4", $this->body_html);
         return $ret;
     }
 

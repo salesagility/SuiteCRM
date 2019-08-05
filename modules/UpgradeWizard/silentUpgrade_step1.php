@@ -1,8 +1,11 @@
 <?php
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -13,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -30,15 +33,15 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //// This is a stand alone file that can be run from the command prompt for upgrading a
-//// Sugar Instance. Three parameters are required to be defined in order to execute this file.
+//// SuiteCRM Instance. Three parameters are required to be defined in order to execute this file.
 //// php.exe -f silentUpgrade.php [Path to Upgrade Package zip] [Path to Log file] [Path to Instance]
 //// See below the Usage for more details.
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -276,8 +279,9 @@ function merge_passwordsetting($sugar_config, $sugar_version)
 
     if (write_array_to_file("sugar_config", $sugar_config, "config.php")) {
         return true;
+    } else {
+        return false;
     }
-    return false;
 }
 
 function addDefaultModuleRoles($defaultRoles = array())
@@ -445,7 +449,7 @@ if ($upgradeType != constant('DCE_INSTANCE')) {
     ini_set('error_reporting', 1);
     require_once('include/entryPoint.php');
     require_once('include/SugarLogger/SugarLogger.php');
-    require_once('include/utils/zip_utils.php');
+    require_once('include/utils/php_zip_utils.php');
 
 
     if (!function_exists('sugar_cached')) {
@@ -479,7 +483,7 @@ if ($upgradeType != constant('DCE_INSTANCE')) {
 
     require_once("{$cwd}/sugar_version.php"); // provides $sugar_version & $sugar_flavor
 
-    $GLOBALS['log']	= LoggerManager::getLogger('SugarCRM');
+    $GLOBALS['log']	= LoggerManager::getLogger();
     $patchName		= basename($argv[1]);
     $zip_from_dir	= substr($patchName, 0, strlen($patchName) - 4); // patch folder name (minus ".zip")
     $path			= $argv[2]; // custom log file, if blank will use ./upgradeWizard.log
@@ -598,14 +602,15 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
         if (!isset($manifest)) {
             fwrite(STDERR, "\nThe patch did not contain a proper manifest.php file.  Cannot continue.\n\n");
             exit(1);
-        }
-        copy("$unzip_dir/manifest.php", $sugar_config['upload_dir']."/upgrades/patch/{$zip_from_dir}-manifest.php");
+        } else {
+            copy("$unzip_dir/manifest.php", $sugar_config['upload_dir']."/upgrades/patch/{$zip_from_dir}-manifest.php");
 
-        $error = validate_manifest($manifest);
-        if (!empty($error)) {
-            $error = strip_tags(br2nl($error));
-            fwrite(STDERR, "\n{$error}\n\nFAILURE\n");
-            exit(1);
+            $error = validate_manifest($manifest);
+            if (!empty($error)) {
+                $error = strip_tags(br2nl($error));
+                fwrite(STDERR, "\n{$error}\n\nFAILURE\n");
+                exit(1);
+            }
         }
     } else {
         fwrite(STDERR, "\nThe patch did not contain a proper manifest.php file.  Cannot continue.\n\n");
@@ -928,8 +933,10 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
         ob_start();
         if (!isset($_REQUEST['silent'])) {
             $_REQUEST['silent'] = true;
-        } elseif (isset($_REQUEST['silent']) && $_REQUEST['silent'] != true) {
-            $_REQUEST['silent'] = true;
+        } else {
+            if (isset($_REQUEST['silent']) && $_REQUEST['silent'] != true) {
+                $_REQUEST['silent'] = true;
+            }
         }
 
         //logThis('Checking for leads_assigned_user relationship and if not found then create.', $path);

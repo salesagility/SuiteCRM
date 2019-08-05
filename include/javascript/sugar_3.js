@@ -35,8 +35,7 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
-if(typeof(SUGAR)=="undefined"){SUGAR={namespace:function(ns){SUGAR[ns]=SUGAR[ns]||{};return((typeof SUGAR[ns]==="object")&&(SUGAR[ns]!==null))?SUGAR[ns]:false;},append:function(target,obj){for(var prop in obj){if(obj[prop]!==void 0)target[prop]=obj[prop];}
+ */if(typeof(SUGAR)=="undefined"){SUGAR={namespace:function(ns){SUGAR[ns]=SUGAR[ns]||{};return((typeof SUGAR[ns]==="object")&&(SUGAR[ns]!==null))?SUGAR[ns]:false;},append:function(target,obj){for(var prop in obj){if(obj[prop]!==void 0)target[prop]=obj[prop];}
 return target;}};}
 SUGAR.namespace("themes");SUGAR.namespace("tour");SUGAR.namespace("sugarHome");SUGAR.namespace("subpanelUtils");SUGAR.namespace("ajaxStatusClass");SUGAR.namespace("tabChooser");SUGAR.namespace("utils");SUGAR.namespace("savedViews");SUGAR.namespace("dashlets");SUGAR.namespace("unifiedSearchAdvanced");SUGAR.namespace("searchForm");SUGAR.namespace("language");SUGAR.namespace("Studio");SUGAR.namespace("contextMenu");SUGAR.namespace("config");var nameIndex=0;var typeIndex=1;var requiredIndex=2;var msgIndex=3;var jstypeIndex=5;var minIndex=10;var maxIndex=11;var altMsgIndex=15;var compareToIndex=7;var arrIndex=12;var operatorIndex=13;var callbackIndex=16;var allowblank=8;var validate=new Array();var maxHours=24;var requiredTxt='Missing Required Field:';var invalidTxt='Invalid Value:';var scriptStartedTime=Date.now();var alertsTimeoutId;var inputsWithErrors=new Array();var tabsWithErrors=new Array();var lastSubmitTime=0;var alertList=new Array();var oldStartsWith='';function isSupportedIE(){var userAgent=navigator.userAgent.toLowerCase();if(userAgent.indexOf("msie")!=-1&&userAgent.indexOf("mac")==-1&&userAgent.indexOf("opera")==-1){var version=navigator.appVersion.match(/MSIE (\d+\.\d+)/)[1];if(version>=5.5&&version<10){return true;}else{return false;}}}
 function checkMinSupported(c,s){var current=c.split(".");var supported=s.split(".");for(var i in supported){if(current[i]&&parseInt(current[i])>parseInt(supported[i]))return true;else if(current[i]&&parseInt(current[i])<parseInt(supported[i]))return false;}
@@ -87,8 +86,6 @@ function removeFromValidate(formname,name){for(i=0;i<validate[formname].length;i
 function checkValidate(formname,name){if(validate[formname]){for(i=0;i<validate[formname].length;i++){if(validate[formname][i][nameIndex]==name){return true;}}}
 return false;}
 var formsWithFieldLogic=null;var formWithPrecision=null;function addToValidateFieldLogic(formId,minFieldId,maxFieldId,defaultFieldId,lenFieldId,type,msg){this.formId=document.getElementById(formId);this.min=document.getElementById(minFieldId);this.max=document.getElementById(maxFieldId);this._default=document.getElementById(defaultFieldId);this.len=document.getElementById(lenFieldId);this.msg=msg;this.type=type;}
-
-//@params: formid- Dom id of the form containing the precision and float fields
 function addToValidatePrecision(formId,valueId,precisionId){this.form=document.getElementById(formId);this.float=document.getElementById(valueId);this.precision=document.getElementById(precisionId);}
 function isValidPrecision(value,precision){value=trim(value.toString());if(precision=='')
 return true;if(value=='')
@@ -224,12 +221,9 @@ add_error_style(formname,showErrorsOn[error].value,formsWithFieldLogic.msg);}
 else if(!isError)
 formsWithFieldLogic=null;}}
 if(formWithPrecision){if(!isValidPrecision(formWithPrecision.float.value,formWithPrecision.precision.value)){isError=true;add_error_style(formname,'default',SUGAR.language.get('app_strings','ERR_COMPATIBLE_PRECISION_VALUE'));}else if(!isError){isError=false;}}
-if(isError==true){var nw,ne,sw,se;if(self.pageYOffset)
-{nwX=self.pageXOffset;seX=self.innerWidth;nwY=self.pageYOffset;seY=self.innerHeight;}
-else if(document.documentElement&&document.documentElement.scrollTop)
-{nwX=document.documentElement.scrollLeft;seX=document.documentElement.clientWidth;nwY=document.documentElement.scrollTop;seY=document.documentElement.clientHeight;}
-else if(document.body)
-{nwX=document.body.scrollLeft;seX=document.body.clientWidth;nwY=document.body.scrollTop;seY=document.body.clientHeight;}
+if(isError==true){var nw,ne,sw,se;if(self.pageYOffset){nwX=self.pageXOffset;seX=self.innerWidth;nwY=self.pageYOffset;seY=self.innerHeight;}
+else if(document.documentElement&&document.documentElement.scrollTop){nwX=document.documentElement.scrollLeft;seX=document.documentElement.clientWidth;nwY=document.documentElement.scrollTop;seY=document.documentElement.clientHeight;}
+else if(document.body){nwX=document.body.scrollLeft;seX=document.body.clientWidth;nwY=document.body.scrollTop;seY=document.body.clientHeight;}
 var inView=true;for(var wp=0;wp<inputsWithErrors.length;wp++){var elementCoor=findElementPos(inputsWithErrors[wp]);if(!(elementCoor.x>=nwX&&elementCoor.y>=nwY&&elementCoor.x<=seX+nwX&&elementCoor.y<=seY+nwY)){inView=false;scrollToTop=elementCoor.y-75;scrollToLeft=elementCoor.x-75;}
 else{break;}}
 if(!inView)window.scrollTo(scrollToLeft,scrollToTop);return false;}
@@ -285,12 +279,9 @@ function findElementPos(obj){var x=0;var y=0;if(obj.offsetParent){while(obj.offs
 else if(obj.x&&obj.y){y+=obj.y
 x+=obj.x}
 return new coordinate(x,y);}
-function getClientDim(){var nwX,nwY,seX,seY;if(self.pageYOffset)
-{nwX=self.pageXOffset;seX=self.innerWidth+nwX;nwY=self.pageYOffset;seY=self.innerHeight+nwY;}
-else if(document.documentElement&&document.documentElement.scrollTop)
-{nwX=document.documentElement.scrollLeft;seX=document.documentElement.clientWidth+nwX;nwY=document.documentElement.scrollTop;seY=document.documentElement.clientHeight+nwY;}
-else if(document.body)
-{nwX=document.body.scrollLeft;seX=document.body.clientWidth+nwX;nwY=document.body.scrollTop;seY=document.body.clientHeight+nwY;}
+function getClientDim(){var nwX,nwY,seX,seY;if(self.pageYOffset){nwX=self.pageXOffset;seX=self.innerWidth+nwX;nwY=self.pageYOffset;seY=self.innerHeight+nwY;}
+else if(document.documentElement&&document.documentElement.scrollTop){nwX=document.documentElement.scrollLeft;seX=document.documentElement.clientWidth+nwX;nwY=document.documentElement.scrollTop;seY=document.documentElement.clientHeight+nwY;}
+else if(document.body){nwX=document.body.scrollLeft;seX=document.body.clientWidth+nwX;nwY=document.body.scrollTop;seY=document.body.clientHeight+nwY;}
 return{'nw':new coordinate(nwX,nwY),'se':new coordinate(seX,seY)};}
 function freezeEvent(e){if(e){if(e.preventDefault)e.preventDefault();e.returnValue=false;e.cancelBubble=true;if(e.stopPropagation)e.stopPropagation();return false;}}
 function coordinate(_x,_y){var x=_x;var y=_y;this.add=add;this.sub=sub;this.x=x;this.y=y;function add(rh){return new position(this.x+rh.x,this.y+rh.y);}
@@ -333,8 +324,8 @@ return false;}
 function sugarListView(){}
 sugarListView.prototype.confirm_action=function(del){if(del==1){return confirm(SUGAR.language.get('app_strings','NTC_DELETE_CONFIRMATION_NUM')+sugarListView.get_num_selected()+SUGAR.language.get('app_strings','NTC_DELETE_SELECTED_RECORDS'));}
 else{return confirm(SUGAR.language.get('app_strings','NTC_UPDATE_CONFIRMATION_NUM')+sugarListView.get_num_selected()+SUGAR.language.get('app_strings','NTC_DELETE_SELECTED_RECORDS'));}}
-sugarListView.get_num_selected=function(){var selectCount=$("input[name='selectCount[]']:first");if(selectCount.length>0)
-return parseInt(selectCount.val().replace("+",""));return 0;}
+sugarListView.get_num_selected=function(){var selectCount=sugarListView.get_checks_count();if(selectCount>0)
+return selectCount;return 0;}
 sugarListView.update_count=function(count,add){if(typeof document.MassUpdate!='undefined'){the_form=document.MassUpdate;for(var wp=0;wp<the_form.elements.length;wp++){if(typeof the_form.elements[wp].name!='undefined'&&the_form.elements[wp].name=='selectCount[]'){if(add){the_form.elements[wp].value=parseInt(the_form.elements[wp].value,10)+count;if(the_form.select_entire_list.value==1&&the_form.show_plus.value){the_form.elements[wp].value+='+';}}else{if(the_form.select_entire_list.value==1&&the_form.show_plus.value){the_form.elements[wp].value=count+'+';}else{the_form.elements[wp].value=count;}}}}}}
 sugarListView.prototype.use_external_mail_client=function(no_record_txt,module){selected_records=sugarListView.get_checks_count();if(selected_records<1){alert(no_record_txt);return false;}
 if(document.MassUpdate.select_entire_list.value==1){if(totalCount>10){alert(totalCountError);return;}
@@ -502,7 +493,7 @@ if(action=='save'){if(document.search_form.saved_search_name.value.replace(/^\s*
 if(document.search_form.saved_search_action){document.search_form.saved_search_action.value=action;document.search_form.search_module.value=document.search_form.module.value;document.search_form.module.value='SavedSearch';document.search_form.action.value='index';}
 SUGAR.ajaxUI.submitForm(document.search_form);},shortcut_select:function(selectBox,module){this.shortcutDropdown(selectBox.options[selectBox.selectedIndex].value,module);},shortcutDropdown:function(value,module){selecturl='index.php?module=SavedSearch&search_module='+module+'&action=index&saved_search_select='+value
 if(typeof(document.getElementById('searchFormTab'))!='undefined'){selecturl=selecturl+'&searchFormTab='+document.search_form.searchFormTab.value;}
-if(document.getElementById('showSSDIV')&&typeof(document.getElementById('showSSDIV')!='undefined')){selecturl=selecturl+'&showSSDIV='+document.getElementById('showSSDIV').value;}
+if(document.getElementById('showSSDIV')&&(typeof(document.getElementById('showSSDIV'))!='undefined')){selecturl=selecturl+'&showSSDIV='+document.getElementById('showSSDIV').value;}
 document.location.href=selecturl;},handleForm:function(){SUGAR.tabChooser.movementCallback=function(left_side,right_side){while(document.getElementById('orderBySelect').childNodes.length!=0){document.getElementById('orderBySelect').removeChild(document.getElementById('orderBySelect').lastChild);}
 var selectedIndex=0;var nodeCount=-1;for(i in left_side.childNodes){if(typeof left_side.childNodes[i].nodeName!='undefined'&&left_side.childNodes[i].nodeName.toLowerCase()=='option'&&typeof SUGAR.savedViews.columnsMeta[left_side.childNodes[i].value]!='undefined'&&typeof SUGAR.savedViews.columnsMeta[left_side.childNodes[i].value]['sortable']=='undefined'&&SUGAR.savedViews.columnsMeta[left_side.childNodes[i].value]['sortable']!=false){nodeCount++;optionNode=document.createElement('option');optionNode.value=left_side.childNodes[i].value;optionNode.innerHTML=left_side.childNodes[i].innerHTML;document.getElementById('orderBySelect').appendChild(optionNode);if(optionNode.value==SUGAR.savedViews.selectedOrderBy)
 selectedIndex=nodeCount;}}
@@ -624,7 +615,7 @@ continue;if(typeof(c.nodeName)=="string"&&c.nodeName=="#text")
 t+=c.nodeValue;else
 t+=SUGAR.util.innerText(c);}
 return t;},callOnChangeListers:function(field){var listeners=YAHOO.util.Event.getListeners(field,'change');if(listeners!=null){for(var i=0;i<listeners.length;i++){var l=listeners[i];l.fn.call(l.scope?l.scope:this,l.obj);}}},closeActivityPanel:{show:function(module,id,new_status,viewType,parentContainerId){if(SUGAR.util.closeActivityPanel.panel)
-SUGAR.util.closeActivityPanel.panel.destroy();var singleModule=SUGAR.language.get("app_list_strings","moduleListSingular")[module];singleModule=typeof(singleModule!='undefined')?singleModule.toLowerCase():'';var closeText=SUGAR.language.get("app_strings","LBL_CLOSE_ACTIVITY_CONFIRM").replace("#module#",singleModule);SUGAR.util.closeActivityPanel.panel=new YAHOO.widget.SimpleDialog("closeActivityDialog",{width:"300px",fixedcenter:true,visible:false,draggable:false,close:true,text:closeText,constraintoviewport:true,buttons:[{text:SUGAR.language.get("app_strings","LBL_EMAIL_OK"),handler:function(){if(SUGAR.util.closeActivityPanel.panel)
+SUGAR.util.closeActivityPanel.panel.destroy();var singleModule=SUGAR.language.get("app_list_strings","moduleListSingular")[module];singleModule=(typeof(singleModule)!='undefined')?singleModule.toLowerCase():'';var closeText=SUGAR.language.get("app_strings","LBL_CLOSE_ACTIVITY_CONFIRM").replace("#module#",singleModule);SUGAR.util.closeActivityPanel.panel=new YAHOO.widget.SimpleDialog("closeActivityDialog",{width:"300px",fixedcenter:true,visible:false,draggable:false,close:true,text:closeText,constraintoviewport:true,buttons:[{text:SUGAR.language.get("app_strings","LBL_EMAIL_OK"),handler:function(){if(SUGAR.util.closeActivityPanel.panel)
 SUGAR.util.closeActivityPanel.panel.hide();ajaxStatus.showStatus(SUGAR.language.get('app_strings','LBL_SAVING'));var args="action=save&id="+id+"&record="+id+"&status="+new_status+"&module="+module;var callback={success:function(){var parent=$('div[id^="dashlet_entire_"]').has($("#"+id));if(parent.length===0){window.location.reload(true)}
 else{SUGAR.mySugar.retrieveDashlet(parent.attr('id').replace("dashlet_entire_",""));}}}
 YAHOO.util.Connect.asyncRequest('POST','index.php',callback,args);},isDefault:true},{text:SUGAR.language.get("app_strings","LBL_EMAIL_CANCEL"),handler:function(){SUGAR.util.closeActivityPanel.panel.hide();}}]});SUGAR.util.closeActivityPanel.panel.setHeader(SUGAR.language.get("app_strings","LBL_CLOSE_ACTIVITY_HEADER"));SUGAR.util.closeActivityPanel.panel.render(document.body);SUGAR.util.closeActivityPanel.panel.show();}},setEmailPasswordDisplay:function(id,exists,formName){link=document.getElementById(id+'_link');pwd=document.getElementById(id);if(!pwd||!link)return;if(exists){pwd.disabled=true;pwd.style.display='none';link.style.display='';if(typeof(formName)!='undefined')

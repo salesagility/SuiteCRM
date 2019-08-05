@@ -48,6 +48,16 @@ require_once("include/JSON.php");
 
 class SugarEmailAddress extends SugarBean
 {
+    const ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION = 1;
+    const ERR_INVALID_REQUEST_NO_REQUEST = 2;
+    const ERR_INVALID_REQUEST_NO_EMAIL_INFOS = 3;
+    const ERR_INVALID_REQUEST_NO_VALID_EMAIL_ADDR_IN_REQUEST = 4;
+    const ERR_INVALID_REQUEST_VALID_USER_IS_SET_BUT_NO_IN_REQUEST = 5;
+    const ERR_PRIMARY_EMAIL_IS_NOT_SELECTED = 6;
+    const ERR_REPLYTO_EMAIL_IS_NOT_SELECTED = 7;
+    const ERR_INVALID_REQUEST_NO_VALID_USER_IN_REQUEST = 8;
+    const ERR_INVALID_REQUEST_MORE_THAN_ONE_USER_IN_REQUEST = 9;
+    const ERR_SOME_EMAILS_WERE_NOT_SAVED_OR_UPDATED = 10;
 
     // Opt In Flags (for Ticks)
     const COI_FLAG_OPT_IN = 'OPT_IN';
@@ -68,7 +78,7 @@ class SugarEmailAddress extends SugarBean
 
     /** @var boolean $tracker_visibility */
     public $tracker_visibility = false;
-    
+
     /**
      * @var string $table_name
      */
@@ -168,7 +178,7 @@ class SugarEmailAddress extends SugarBean
      * @var TimeDate $confirm_opt_in_fail_date
      */
     public $confirm_opt_in_fail_date;
-    
+
     /**
      *
      * @var string
@@ -182,6 +192,14 @@ class SugarEmailAddress extends SugarBean
         'Users',
         'Employees'
     );
+    
+    /**
+     * For saveAtUserProfile() method to telling what
+     * went wrong at the last call.
+     *
+     * @var array
+     */
+    public $lastSaveAtUserProfileErrors = [];
 
     /**
      * Sole constructor
@@ -260,22 +278,32 @@ class SugarEmailAddress extends SugarBean
      * true - success
      * false - error
      *
+     * Note:
+     * This function could head to many errors but return
+     * value is false in each case.
+     * It is confusing because the ambiguous return value.
+     * This function also stores the error code(s) in
+     * array SugarEmailAddress::$lastSaveAtUserProfileErrors
+     *
      * @param array $request $_REQUEST
      * @return bool
      */
     public function saveAtUserProfile($request)
     {
+        $this->lastSaveAtUserProfileErrors = [];
 
         // validate the request first
 
         if (!$this->isUserProfileEditViewPageSaveAction($request)) {
             $GLOBALS['log']->error('Invalid Referrer: '.
                 'expected the Save action to be called from the User\'s Profile Edit View');
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION;
             return false;
         }
 
         if (!$request) {
             $GLOBALS['log']->error('This function requires a request array');
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_INVALID_REQUEST_NO_REQUEST;
             return false;
         }
 
@@ -290,6 +318,7 @@ class SugarEmailAddress extends SugarBean
 
         if (!$neededRequest) {
             $GLOBALS['log']->error('Email info is not found in request');
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_INVALID_REQUEST_NO_EMAIL_INFOS;
             return false;
         }
 
@@ -309,11 +338,13 @@ class SugarEmailAddress extends SugarBean
 
         if (!$usefulRequest) {
             $GLOBALS['log']->error('Cannot find valid email address(es) in request');
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_INVALID_REQUEST_NO_VALID_EMAIL_ADDR_IN_REQUEST;
             return false;
         }
 
         if (!isset($usefulRequest['Users']) || !$usefulRequest['Users']) {
             $GLOBALS['log']->error('Cannot find valid user in request');
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_INVALID_REQUEST_VALID_USER_IS_SET_BUT_NO_IN_REQUEST;
             return false;
         }
 
@@ -350,21 +381,25 @@ class SugarEmailAddress extends SugarBean
             $usefulRequest['Users'][$matches[1]]['emailAddress'][$matches[2]]['primary'] = true;
         } else {
             $GLOBALS['log']->warn("Primary email is not selected.");
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_PRIMARY_EMAIL_IS_NOT_SELECTED;
         }
 
         if ($replyTo && preg_match('/^Users(\d+)emailAddress(\d+)$/', $replyTo, $matches)) {
             $usefulRequest['Users'][$matches[1]]['emailAddress'][$matches[2]]['replyTo'] = true;
         } else {
             $GLOBALS['log']->warn("Reply-to email is not selected.");
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_REPLYTO_EMAIL_IS_NOT_SELECTED;
         }
 
         if (count($usefulRequest['Users']) < 1) {
             $GLOBALS['log']->error("Cannot find valid user in request");
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_INVALID_REQUEST_NO_VALID_USER_IN_REQUEST;
             return false;
         }
 
         if (count($usefulRequest['Users']) > 1) {
             $GLOBALS['log']->warn("Expected only one user in request");
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_INVALID_REQUEST_MORE_THAN_ONE_USER_IN_REQUEST;
         }
 
         $return = true;
@@ -377,6 +412,9 @@ class SugarEmailAddress extends SugarBean
             }
         }
 
+        if ($return === false) {
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_SOME_EMAILS_WERE_NOT_SAVED_OR_UPDATED;
+        }
 
         return $return;
     }
@@ -770,8 +808,9 @@ class SugarEmailAddress extends SugarBean
         }
         if (count($returnArray) > 0) {
             return $returnArray;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -1181,17 +1220,18 @@ class SugarEmailAddress extends SugarBean
 
         if (!empty($a) && !empty($a['id'])) {
             return $a['id'];
-        }
-        $guid = '';
-        if (!empty($address)) {
-            $guid = create_guid();
-            $now = TimeDate::getInstance()->nowDb();
-            $query = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted)
+        } else {
+            $guid = '';
+            if (!empty($address)) {
+                $guid = create_guid();
+                $now = TimeDate::getInstance()->nowDb();
+                $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted)
                         VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0)";
-            $this->db->query($query);
-        }
+                $ra = $this->db->query($qa);
+            }
 
-        return $guid;
+            return $guid;
+        }
     }
 
     /**
@@ -1268,7 +1308,15 @@ class SugarEmailAddress extends SugarBean
             $isValidEmailAddress
             && (int)$optInFlag === 1
         ) {
-            $new_confirmed_opt_in = self::COI_STAT_OPT_IN;
+            // In case optInFlag is set and there is a duplicate,
+            // copy the opt-in state from it if it has some kind of opt-in set.
+            // This prevents losing the confirmed opt-in state in case we
+            // update an existing record with "confirmed-opt-in"
+            if (!empty($duplicate_email['id']) && $duplicate_email['confirm_opt_in'] != self::COI_STAT_DISABLED) {
+                $new_confirmed_opt_in = $duplicate_email['confirm_opt_in'];
+            } else {
+                $new_confirmed_opt_in = self::COI_STAT_OPT_IN;
+            }
         } else {
             // Reset the opt in status
             $new_confirmed_opt_in = self::COI_STAT_DISABLED;
@@ -1322,21 +1370,22 @@ class SugarEmailAddress extends SugarBean
             $this->auditBean(true);
 
             return $duplicate_email['id'];
-        }
-        // no case-insensitive address match - it's new, or undeleted.
-        $guid = '';
-        $isUpdate = true;
-        if (!empty($address)) {
-            $guid = create_guid();
-            $now = TimeDate::getInstance()->nowDb();
-            $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted, invalid_email, opt_out" . (!is_null($optInFlag) ? ", confirm_opt_in" : '') . ")
+        } else {
+            // no case-insensitive address match - it's new, or undeleted.
+            $guid = '';
+            $isUpdate = true;
+            if (!empty($address)) {
+                $guid = create_guid();
+                $now = TimeDate::getInstance()->nowDb();
+                $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted, invalid_email, opt_out" . (!is_null($optInFlag) ? ", confirm_opt_in" : '') . ")
                         VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0 , $new_invalid, $new_opt_out" . (!is_null($optInFlag) ? ", '" . $this->db->quote($new_confirmed_opt_in) ."'" : '') . ")";
-            $this->db->query($qa);
-            $isUpdate = false;
-        }
+                $this->db->query($qa);
+                $isUpdate = false;
+            }
 
-        $this->auditBean($isUpdate);
-        return $guid;
+            $this->auditBean($isUpdate);
+            return $guid;
+        }
     }
 
     /**
@@ -1925,9 +1974,7 @@ class SugarEmailAddress extends SugarBean
      */
     public function confirmOptIn()
     {
-        global $timedate;
-        $date = new DateTime();
-        $this->confirm_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
+        $this->confirm_opt_in_date = TimeDate::getInstance()->nowDb();
         $this->confirm_opt_in = self::COI_STAT_CONFIRMED_OPT_IN;
     }
 
@@ -2058,14 +2105,14 @@ class SugarEmailAddress extends SugarBean
     public function getOptInStatus()
     {
         $configurator = new Configurator();
-        
+
         $enableConfirmedOptIn = null;
         if (isset($configurator->config['email_enable_confirm_opt_in'])) {
             $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
         } else {
             LoggerManager::getLogger()->warn('EmailUI::populateComposeViewFields: $configurator->config[email_enable_confirm_opt_in] is not set');
         }
-        
+
         $optInFromFlags = $this->getOptInIndicationFromFlags();
 
         if ($enableConfirmedOptIn === self::COI_STAT_DISABLED) {
@@ -2153,8 +2200,9 @@ class SugarEmailAddress extends SugarBean
                 return false;
             } elseif ($maxdate === $this->confirm_opt_in_sent_date) {
                 return true;
+            } else {
+                throw new Exception('its impossible email sending state');
             }
-            throw new Exception('its impossible email sending state');
         } catch (RuntimeException $e) {
             if (!empty($this->confirm_opt_in_fail_date)) {
                 throw $e;
@@ -2179,8 +2227,9 @@ class SugarEmailAddress extends SugarBean
                 return true;
             } elseif ($maxdate === $this->confirm_opt_in_sent_date) {
                 return false;
+            } else {
+                throw new Exception('its impossible email sending state');
             }
-            throw new Exception('its impossible email sending state');
         } catch (RuntimeException $e) {
             if (!empty($this->confirm_opt_in_sent_date)) {
                 throw $e;
@@ -2342,7 +2391,7 @@ class SugarEmailAddress extends SugarBean
 
         return $tickHtml;
     }
-    
+
     /**
      *
      * @return string

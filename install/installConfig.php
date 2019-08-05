@@ -297,8 +297,8 @@ EOQ2;
                 if (!empty($value)) {
                     if (!empty($value['required'])) {
                         $form .= "<span class=\"required\">*</span>";
+                    } else {
                     }
-                    
                     if (!empty($_SESSION[$name])) {
                         $sessval = $_SESSION[$name];
                     } else {
@@ -382,13 +382,13 @@ FORM;
 </div>
 <div class='install_block'>
     <div class="formrow">
-        <label>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}<i> i <div class="tooltip">{$mod_strings['LBL_DBCONFIG_SECURITY']}</div></i></label>
+        <label>{$mod_strings['LBL_DBCONF_SUITE_DB_USER']}<i> i <div class="tooltip">{$mod_strings['LBL_DBCONFIG_SECURITY']}</div></i></label>
         $dbUSRDD
     </div>
     <div class="clear"></div>
     <span id='connection_user_div' style="display:none">
         <div class="formrow">
-            <label>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']} <span class="required">*</span></label>
+            <label>{$mod_strings['LBL_DBCONF_SUITE_DB_USER']} <span class="required">*</span></label>
             <input type="text" name="setup_db_sugarsales_user" maxlength="16" value="{$_SESSION['setup_db_sugarsales_user']}" />
         </div>
         <div class="clear"></div>
@@ -1141,7 +1141,7 @@ EOQ;
         $out .= <<<EOQ
    <tr style='display:none'><td></td>
        <td><input type="checkbox" class="checkbox" name="setup_site_sugarbeet_automatic_checks" value="yes" /></td>
-       <td><b>{$mod_strings['LBL_SITECFG_SUGAR_UP']}</b><br><i>{$mod_strings['LBL_SITECFG_SUGAR_UP_DIRECTIONS']}</i><br>&nbsp;</td></tr>
+       <td><b>{$mod_strings['LBL_SITECFG_SUITE_UP']}</b><br><i>{$mod_strings['LBL_SITECFG_SUITE_UP_DIRECTIONS']}</i><br>&nbsp;</td></tr>
    <tbody id="setup_site_session_section_pre">
    <tr><td></td>
        <td><input type="checkbox" class="checkbox" name="setup_site_custom_session_path" value="yes" onclick="javascript:$('#setup_site_session_section').toggle();" {$customSession} /></td>

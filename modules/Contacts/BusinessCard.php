@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -121,8 +122,10 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
     if (!empty($_POST['selectedAccount'])) {
         $account = new Account();
         $account->retrieve($_POST['selectedAccount']);
-    } elseif (isset($_POST['newaccount']) && $_POST['newaccount']=='on') {
-        $account= $accountForm->handleSave('Accounts', false, false);
+    } else {
+        if (isset($_POST['newaccount']) && $_POST['newaccount']=='on') {
+            $account= $accountForm->handleSave('Accounts', false, false);
+        }
     }
     if (isset($_POST['newopportunity']) && $_POST['newopportunity']=='on') {
         if (!empty($_POST['selectedOpportunity'])) {
@@ -172,45 +175,59 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
         if (isset($contact)) {
             $call->load_relationship('contacts');
             $call->contacts->add($contact->id);
-        } elseif (isset($account)) {
-            $call->load_relationship('account');
-            $call->account->add($account->id);
-        } elseif (isset($opportunity)) {
-            $call->load_relationship('opportunity');
-            $call->opportunity->add($opportunity->id);
+        } else {
+            if (isset($account)) {
+                $call->load_relationship('account');
+                $call->account->add($account->id);
+            } else {
+                if (isset($opportunity)) {
+                    $call->load_relationship('opportunity');
+                    $call->opportunity->add($opportunity->id);
+                }
+            }
         }
     }
     if (isset($meeting)) {
         if (isset($contact)) {
             $meeting->load_relationship('contacts');
             $meeting->contacts->add($contact->id);
-        } elseif (isset($account)) {
-            $meeting->load_relationship('account');
-            $meeting->account->add($account->id);
-        } elseif (isset($opportunity)) {
-            $meeting->load_relationship('opportunity');
-            $meeting->opportunity->add($opportunity->id);
+        } else {
+            if (isset($account)) {
+                $meeting->load_relationship('account');
+                $meeting->account->add($account->id);
+            } else {
+                if (isset($opportunity)) {
+                    $meeting->load_relationship('opportunity');
+                    $meeting->opportunity->add($opportunity->id);
+                }
+            }
         }
     }
     if (isset($account)) {
         if (isset($contact)) {
             $account->load_relationship('contacts');
             $account->contacts->add($contact->id);
-        } elseif (isset($accountnote)) {
-            $account->load_relationship('notes');
-            $account->notes->add($accountnote->id);
-        } elseif (isset($opportunity)) {
-            $account->load_relationship('opportunities');
-            $account->opportunities->add($opportunity->id);
+        } else {
+            if (isset($accountnote)) {
+                $account->load_relationship('notes');
+                $account->notes->add($accountnote->id);
+            } else {
+                if (isset($opportunity)) {
+                    $account->load_relationship('opportunities');
+                    $account->opportunities->add($opportunity->id);
+                }
+            }
         }
     }
     if (isset($opportunity)) {
         if (isset($contact)) {
             $opportunity->load_relationship('contacts');
             $opportunity->contacts->add($contact->id);
-        } elseif (isset($accountnote)) {
-            $opportunity->load_relationship('notes');
-            $opportunity->notes->add($accountnote->id);
+        } else {
+            if (isset($accountnote)) {
+                $opportunity->load_relationship('notes');
+                $opportunity->notes->add($accountnote->id);
+            }
         }
     }
     if (isset($contact)) {

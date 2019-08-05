@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('modules/Administration/UpgradeWizardCommon.php');
@@ -185,23 +186,25 @@ if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
                 die($mod_strings['ERR_UW_NO_MANIFEST']);
             }
         }
-    } elseif ($run == $mod_strings['LBL_UW_BTN_DELETE_PACKAGE']) {
-        if (!empty($_REQUEST['install_file'])) {
-            die($mod_strings['ERR_UW_NO_UPLOAD_FILE']);
-        }
+    } else {
+        if ($run == $mod_strings['LBL_UW_BTN_DELETE_PACKAGE']) {
+            if (!empty($_REQUEST['install_file'])) {
+                die($mod_strings['ERR_UW_NO_UPLOAD_FILE']);
+            }
 
-        $delete_me = hashToFile($delete_me);
+            $delete_me = hashToFile($delete_me);
 
-        $checkFile = strtolower($delete_me);
+            $checkFile = strtolower($delete_me);
 
-        if (substr($delete_me, -4) != ".zip" || substr($delete_me, 0, 9) != "upload://" ||
+            if (substr($delete_me, -4) != ".zip" || substr($delete_me, 0, 9) != "upload://" ||
         strpos($checkFile, "..") !== false || !file_exists($checkFile)) {
-            die("<span class='error'>File is not a zipped archive.</span>");
-        }
-        if (unlink($delete_me)) { // successful deletion?
-            echo "Package $delete_me has been removed.<br>";
-        } else {
-            die("Problem removing package $delete_me.");
+                die("<span class='error'>File is not a zipped archive.</span>");
+            }
+            if (unlink($delete_me)) { // successful deletion?
+                echo "Package $delete_me has been removed.<br>";
+            } else {
+                die("Problem removing package $delete_me.");
+            }
         }
     }
 }

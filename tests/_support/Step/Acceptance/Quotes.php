@@ -9,7 +9,7 @@ class Quotes extends \AcceptanceTester
      */
     public function gotoQuotes()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Quotes');
     }
 }

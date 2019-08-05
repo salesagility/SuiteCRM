@@ -1,11 +1,12 @@
 <?php
 //if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +35,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 /**
@@ -115,23 +116,27 @@ class SugarSpot
                 //Determine a name to use
                 if (!empty($row['NAME'])) {
                     $name = $row['NAME'];
-                } elseif (!empty($row['DOCUMENT_NAME'])) {
-                    $name = $row['DOCUMENT_NAME'];
                 } else {
-                    $foundName = '';
-                    foreach ($row as $k=>$v) {
-                        if (strpos($k, 'NAME') !== false) {
-                            if (!empty($row[$k])) {
-                                $name = $v;
-                                break;
-                            } elseif (empty($foundName)) {
-                                $foundName = $v;
+                    if (!empty($row['DOCUMENT_NAME'])) {
+                        $name = $row['DOCUMENT_NAME'];
+                    } else {
+                        $foundName = '';
+                        foreach ($row as $k=>$v) {
+                            if (strpos($k, 'NAME') !== false) {
+                                if (!empty($row[$k])) {
+                                    $name = $v;
+                                    break;
+                                } else {
+                                    if (empty($foundName)) {
+                                        $foundName = $v;
+                                    }
+                                }
                             }
                         }
-                    }
 
-                    if (empty($name)) {
-                        $name = $foundName;
+                        if (empty($name)) {
+                            $name = $foundName;
+                        }
                     }
                 }
 
@@ -322,13 +327,17 @@ class SugarSpot
                             unset($searchFields[$moduleName][$k]);
                         }
                     }
-                } elseif (empty($GLOBALS['dictionary'][$class]['fields'][$k])) {
-                    //If module did not have unified_search defined, then check the exception for an email search before we unset
-                    if (strpos($k, 'email') === false || !$searchEmail) {
-                        unset($searchFields[$moduleName][$k]);
+                } else {
+                    if (empty($GLOBALS['dictionary'][$class]['fields'][$k])) {
+                        //If module did not have unified_search defined, then check the exception for an email search before we unset
+                        if (strpos($k, 'email') === false || !$searchEmail) {
+                            unset($searchFields[$moduleName][$k]);
+                        }
+                    } else {
+                        if (!$this->filterSearchType($GLOBALS['dictionary'][$class]['fields'][$k]['type'], $query)) {
+                            unset($searchFields[$moduleName][$k]);
+                        }
                     }
-                } elseif (!$this->filterSearchType($GLOBALS['dictionary'][$class]['fields'][$k]['type'], $query)) {
-                    unset($searchFields[$moduleName][$k]);
                 }
             } //foreach
 

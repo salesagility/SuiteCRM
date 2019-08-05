@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +41,8 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+
+use SuiteCRM\Utility\SuiteValidator;
 
 require_once('include/ListView/ListViewData.php');
 
@@ -121,6 +123,7 @@ class ListViewDataEmails extends ListViewData
         'subject' => 'name',
         'has_attachment' => 'has_attachment',
         'status' => 'emails.status',
+        'date_sent_received' => 'emails.date_sent_received'
     );
 
 
@@ -147,7 +150,8 @@ class ListViewDataEmails extends ListViewData
             $inboundEmailID = $folder->getId();
         }
 
-        if ($inboundEmailID && !isValidId($inboundEmailID)) {
+        $isValidator = new SuiteValidator();
+        if ($inboundEmailID && !$isValidator->isValidId($inboundEmailID)) {
             throw new SuiteException("Invalid Inbound Email ID" . ($inboundEmailID ? " ($inboundEmailID)" : ''));
         }
 
@@ -171,7 +175,7 @@ class ListViewDataEmails extends ListViewData
 
                 WHERE
                   inbound_email.status = 'Active' AND
-                  inbound_email.mailbox_type = 'pick' AND
+                  inbound_email.mailbox_type not like 'bounce' AND
                   inbound_email.is_personal = 0 AND
                   inbound_email.deleted = 0";
 
@@ -199,10 +203,9 @@ class ListViewDataEmails extends ListViewData
      * set $inboundEmail->mailbox and return $this->searchType
      *
      * @param Folder $folder
-     * @param InboundEmail $inboundEmail
      * @return string $this->searchType
      */
-    protected function getSearchType($folder, $inboundEmail)
+    protected function getSearchType($folder)
     {
         switch ($folder->getType()) {
 
@@ -234,12 +237,16 @@ class ListViewDataEmails extends ListViewData
     private function setInboundEmailMailbox(Folder $folder, InboundEmail $inboundEmail)
     {
         switch ($folder->getType()) {
-            case "sent":
-                $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
+            case "inbound":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('mailbox');
                 break;
 
             case "draft":
                 $inboundEmail->mailbox = $inboundEmail->get_stored_options('draftFolder');
+                break;
+
+            case "sent":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
                 break;
 
             case "trash":
@@ -315,12 +322,14 @@ class ListViewDataEmails extends ListViewData
                     } else {
                         if (!empty($request[$filteredField.'_advanced'])) {
                             $filter[self::$mapServerFields[$filteredField]] = $request[$filteredField.'_advanced'];
-                        } elseif (!empty($request[$filteredField.'_basic'])) {
-                            $filter[self::$mapServerFields[$filteredField]] = $request[$filteredField.'_basic'];
                         } else {
-                            $f = str_ireplace('_advanced', '', $filteredField);
-                            $f = str_ireplace('_basic', '', $f);
-                            $filter[self::$mapServerFields[$filteredField]] = $f;
+                            if (!empty($request[$filteredField.'_basic'])) {
+                                $filter[self::$mapServerFields[$filteredField]] = $request[$filteredField.'_basic'];
+                            } else {
+                                $f = str_ireplace('_advanced', '', $filteredField);
+                                $f = str_ireplace('_basic', '', $f);
+                                $filter[self::$mapServerFields[$filteredField]] = $f;
+                            }
                         }
                     }
                 }
@@ -346,20 +355,24 @@ class ListViewDataEmails extends ListViewData
             if (array_search($EmailSearchField, self::$alwaysIncludeSearchFields) !== false) {
                 $filterFields[$EmailSearchField] = true;
                 continue;
-            } elseif (
+            } else {
+                if (
                 array_key_exists($EmailSearchField . '_advanced', $request) &&
                 empty($request[$EmailSearchField . '_advanced'])
             ) {
-                $pos = array_search($EmailSearchField, $filterFields);
-                unset($filterFields[$pos]);
-                continue;
-            } elseif (
+                    $pos = array_search($EmailSearchField, $filterFields);
+                    unset($filterFields[$pos]);
+                    continue;
+                } else {
+                    if (
                 array_key_exists($EmailSearchField . '_basic', $request) &&
                 empty($request[$EmailSearchField . '_basic'])
             ) {
-                $pos = array_search($EmailSearchField, $filterFields);
-                unset($filterFields[$pos]);
-                continue;
+                        $pos = array_search($EmailSearchField, $filterFields);
+                        unset($filterFields[$pos]);
+                        continue;
+                    }
+                }
             }
 
             if (!array_key_exists($EmailSearchField, $filterFields)) {
@@ -517,46 +530,83 @@ class ListViewDataEmails extends ListViewData
                 $ret = html_entity_decode($inboundEmail->handleMimeHeaderDecode($emailHeader['subject']));
                 break;
             case 'date_entered':
-                $date = preg_replace('/(\ \([A-Z]+\))/', '', $emailHeader['date']);
+                $db = DBManagerFactory::getInstance();
 
-                $dateTime = DateTime::createFromFormat(
-                    'D, d M Y H:i:s O',
-                    $date
+                $ret = '';
+                $uid = $emailHeader['uid'];
+
+                $emailBean = BeanFactory::getBean('Emails');
+
+                $emails = $emailBean->get_full_list(
+                    '',
+                    'emails.uid LIKE ' . $db->quoted($uid) . ' AND emails.mailbox_id = ' . $db->quoted($inboundEmail->id)
                 );
-                if ($dateTime == false) {
-                    // TODO: TASK: UNDEFINED - This needs to be more generic to dealing with different formats from IMap
+
+                if (!empty($emails) && !empty($emails[0]->date_entered)) {
+                    $date = preg_replace('/(\ \([A-Z]+\))/', '', $emails[0]->date_entered);
+
                     $dateTime = DateTime::createFromFormat(
-                        'd M Y H:i:s O',
+                        'Y-m-d H:i:s',
                         $date
                     );
-                }
 
-                if ($dateTime == false) {
-                    $ret = '';
-                } else {
-                    $timeDate = new TimeDate();
-                    $ret = $timeDate->asUser($dateTime, $currentUser);
+                    if ($dateTime) {
+                        $timeDate = new TimeDate();
+                        $ret = $timeDate->asUser($dateTime, $currentUser);
+                    }
                 }
                 break;
+            case 'date_sent_received':
+                if (!isset($emailHeader['date'])) {
+                    LoggerManager::getLogger()->warn('Given email header does not contains date field.');
+                    $ret = '';
+                } else {
+                    $ret = '';
+                    $dateTime = false;
+
+                    $date = preg_replace('/(\ \([A-Z]+\))/', '', $emailHeader['date']);
+
+                    $formats = array(
+                        'D, d M Y H:i:s O',
+                        'd M Y H:i:s O'
+                    );
+
+                    foreach ($formats as $format) {
+                        $dateTime = DateTime::createFromFormat(
+                            $format,
+                            $date
+                        );
+
+                        if ($dateTime) {
+                            $timeDate = new TimeDate();
+                            $ret = $timeDate->asUser($dateTime, $currentUser);
+                            break;
+                        }
+                    }
+                }
+
+                break;
             case 'is_imported':
+                $db = DBManagerFactory::getInstance();
+
                 $uid = $emailHeader['uid'];
                 $importedEmailBeans = BeanFactory::getBean('Emails');
                 $is_imported = $importedEmailBeans->get_full_list(
                     '',
-                    'emails.uid LIKE "' . $uid . '"'
+                    'emails.uid LIKE ' . $db->quoted($uid) . ' AND emails.mailbox_id = ' . $db->quoted($inboundEmail->id)
                 );
-                
+
                 if (null === $is_imported) {
                     $is_imported = [];
                 }
-                
-                if ($is_imported instanceof Countable) {
+
+                if (is_array($is_imported) || $is_imported instanceof Countable) {
                     $count = count($is_imported);
                 } else {
                     LoggerManager::getLogger()->warn('ListViewDataEmails::getEmailRecordFieldValue: email list should be a Countable');
                     $count = count((array)$is_imported);
                 }
-                
+
                 if ($count > 0) {
                     $ret = true;
                 } else {
@@ -579,7 +629,7 @@ class ListViewDataEmails extends ListViewData
                 $ret = $emailHeader['msgno'];
                 break;
             case 'has_attachment':
-                $ret = $emailHeader['has_attachment'];
+                $ret = isset($emailHeader['has_attachment']) ? $emailHeader['has_attachment'] : false;
                 break;
             case 'status':
                 $ret = $this->getEmailHeaderStatus($emailHeader);
@@ -650,7 +700,8 @@ class ListViewDataEmails extends ListViewData
     public function getEmailUIds($data)
     {
         $emailUIds = array();
-        foreach ($data as $row) {
+
+        foreach ((array)$data as $row) {
             $emailUIds[] = $row['UID'];
         }
 
@@ -692,10 +743,18 @@ class ListViewDataEmails extends ListViewData
             $folderObj->retrieveFromRequest($request);
 
             $inboundEmail = $this->getInboundEmail($current_user, $folderObj);
+            if (!$inboundEmail || $inboundEmail && !$inboundEmail->id) {
+                LoggerManager::getLogger()->warn('Unable get Inbound Email for List View. Please check your settings and try again.');
+                return false;
+            }
 
 
-            $this->searchType = $this->getSearchType($folderObj, $inboundEmail);
+            $this->searchType = $this->getSearchType($folderObj);
             $this->setInboundEmailMailbox($folderObj, $inboundEmail);
+            if (!$inboundEmail) {
+                $folder = null;
+                LoggerManager::getLogger()->warn('Unable to set Inbound Email mailbox: Inbound Email is not found.');
+            }
 
 
             // search in draft in CRM db?
@@ -709,6 +768,10 @@ class ListViewDataEmails extends ListViewData
 
 
             $folder = $inboundEmail->mailbox;
+            if (!$inboundEmail) {
+                $folder = null;
+                LoggerManager::getLogger()->warn('Unable to retrive mailbox folder: Inbound Email is not found.');
+            }
 
             $filter = $this->getFilter($filter_fields, $where, $request);
 
@@ -759,6 +822,7 @@ class ListViewDataEmails extends ListViewData
                         $pageData,
                         $filter_fields
                     );
+
                     break;
 
                 default:

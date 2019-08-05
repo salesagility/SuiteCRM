@@ -1,9 +1,9 @@
 <?php
  /**
-*
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-*
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
  if (!defined('sugarEntry')) {
      define('sugarEntry', true);
@@ -116,7 +116,7 @@ if (get_magic_quotes_gpc() == 1) {
 }
 
 
-$GLOBALS['log'] = LoggerManager::getLogger('SugarCRM');
+$GLOBALS['log'] = LoggerManager::getLogger();
 $setup_sugar_version = $suitecrm_version;
 $install_script = true;
 
@@ -266,7 +266,10 @@ if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") 
 
         // TODO--low: validate file size & image width/height and save, show status result to client js
 
-        echo "<script>window.top.window.{$_REQUEST['callback']}(" . json_encode($result) . ");</script>";
+        if (!empty($_REQUEST['callback'] === 'uploadLogoCallback')) {
+            echo "<script>window.top.window.uploadLogoCallback" . json_encode($result) . ");</script>";
+        }
+
         return;
     }
 
@@ -641,13 +644,15 @@ EOQ;
 
     if ($next_step == 9999) {
         $the_file = 'SilentInstall';
-    } elseif ($next_step == 9191) {
-        $_SESSION['oc_server_url']	= $_REQUEST['oc_server_url'];
-        $_SESSION['oc_username']    = $_REQUEST['oc_username'];
-        $_SESSION['oc_password']   	= $_REQUEST['oc_password'];
-        $the_file = 'oc_convert.php';
     } else {
-        $the_file = $workflow[$next_step];
+        if ($next_step == 9191) {
+            $_SESSION['oc_server_url']	= $_REQUEST['oc_server_url'];
+            $_SESSION['oc_username']    = $_REQUEST['oc_username'];
+            $_SESSION['oc_password']   	= $_REQUEST['oc_password'];
+            $the_file = 'oc_convert.php';
+        } else {
+            $the_file = $workflow[$next_step];
+        }
     }
 
     switch ($the_file) {

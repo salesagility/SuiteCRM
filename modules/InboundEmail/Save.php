@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('include/SugarFolders/SugarFolders.php');
 
@@ -134,6 +135,7 @@ $stored_options['email_num_autoreplies_24_hours'] = $_REQUEST['email_num_autorep
 $stored_options['allow_outbound_group_usage'] = isset($_REQUEST['allow_outbound_group_usage']) ? true : false;
 
 if (!$focus->isPop3Protocol()) {
+    $stored_options['mailbox'] = (isset($_REQUEST['mailbox']) ? trim($_REQUEST['mailbox']) : "");
     $stored_options['trashFolder'] = (isset($_REQUEST['trashFolder']) ? trim($_REQUEST['trashFolder']) : "");
     $stored_options['sentFolder'] = (isset($_REQUEST['sentFolder']) ? trim($_REQUEST['sentFolder']) : "");
 } // if
@@ -413,8 +415,10 @@ function syncSugarFoldersWithBeanChanges($fieldName, $focus)
         case 'status':
             if ($focus->status == 'Inactive') {
                 $f->clearSubscriptionsForFolder($focus->groupfolder_id);
-            } elseif ($focus->mailbox_type != 'bounce') {
-                $f->addSubscriptionsToGroupFolder();
+            } else {
+                if ($focus->mailbox_type != 'bounce') {
+                    $f->addSubscriptionsToGroupFolder();
+                }
             }
             break;
     }

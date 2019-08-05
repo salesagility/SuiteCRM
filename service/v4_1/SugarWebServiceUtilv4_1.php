@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('service/v4/SugarWebServiceUtilv4.php');
 
@@ -132,13 +133,14 @@ class SugarWebServiceUtilv4_1 extends SugarWebServiceUtilv4
                 $params['where'] = $optional_where;
             }
 
+            if (!empty($order_by)) {
+                $params['order_by'] = $order_by;
+            }
+
             $related_beans = $bean->$link_field_name->getBeans($params);
             //Create a list of field/value rows based on $link_module_fields
             $list = array();
             $filterFields = array();
-            if (!empty($order_by) && !empty($related_beans)) {
-                $related_beans = order_beans($related_beans, $order_by);
-            }
             foreach ($related_beans as $id => $bean) {
                 if (empty($filterFields) && !empty($link_module_fields)) {
                     $filterFields = $this->filter_fields($bean, $link_module_fields);

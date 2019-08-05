@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -214,6 +214,7 @@ if (typeof('console') == 'undefined') {
         //Setup Browser History
         var mbContent = YAHOO.util.History.getBookmarkedState('mbContent');
 
+
         if (ModuleBuilder.mode == 'mb') {
           mp.getUnitByPosition('left').header.firstChild.innerHTML = SUGAR.language.get('ModuleBuilder', 'LBL_SECTION_PACKAGES');
           mbContent = mbContent ? mbContent : 'module=ModuleBuilder&action=package&package=';
@@ -231,6 +232,7 @@ if (typeof('console') == 'undefined') {
           mp.getUnitByPosition('left').collapse(false);
           mbContent = mbContent ? mbContent : 'module=ModuleBuilder&action=home';
         }
+
 
         YAHOO.util.History.register('mbContent', mbContent, ModuleBuilder.navigate);
         YAHOO.util.History.initialize("yui-history-field", "yui-history-iframe");
@@ -693,30 +695,32 @@ if (typeof('console') == 'undefined') {
             formname != "dropdown_form" && formname != "popup_form" &&
             // user came from studio/fields layout by ajax urls
             ((urlVars.module == 'ModuleBuilder' && urlVars.action == 'modulefields' && urlVars.view_package == 'studio') ||
-            // user refresh the page or came from direct url
-            (urlVars.module == 'ModuleBuilder' && urlVars.action == 'modulefield' && urlVars.view_package == ''))
+              // user refresh the page or came from direct url
+              (urlVars.module == 'ModuleBuilder' && urlVars.action == 'modulefield' && urlVars.view_package == ''))
           ) {
-            // switch on the preloader message
-            ModuleBuilder.preloader.on();
+            if(!(document.popup_form.action.value == 'CloneField')) {
+              // switch on the preloader message
+              ModuleBuilder.preloader.on();
 
-            // set callback functions
-            onSuccess = function (o) {
-              // switch off preloader
-              ModuleBuilder.preloader.off();
-              // call the original callback
-              if (ModuleBuilder.updateContent(o)) {
+              // set callback functions
+              onSuccess = function (o) {
+                // switch off preloader
+                ModuleBuilder.preloader.off();
+                // call the original callback
+                if (ModuleBuilder.updateContent(o)) {
+                  // refresh page content
+                  ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
+                }
+              };
+              onFailure = function (o) {
+                // switch off preloader
+                ModuleBuilder.preloader.off();
+                // call the original callback
+                ModuleBuilder.failed(o);
                 // refresh page content
                 ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
-              }
-            };
-            onFailure = function (o) {
-              // switch off preloader
-              ModuleBuilder.preloader.off();
-              // call the original callback
-              ModuleBuilder.failed(o);
-              // refresh page content
-              ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
-            };
+              };
+            }
           }
         }
         else {
@@ -1005,7 +1009,7 @@ if (typeof('console') == 'undefined') {
 
         //check if the deploy completed
         if (!resp.match(/^\s*(\s*(Table already exists : [\w_]*)(<br>)*\s*)*complete$/m)) {
-          //Unknown error occured, warn the user
+          //Unknown error occurred, warn the user
           alert(SUGAR.language.get("ModuleBuilder", "LBL_DEPLOY_FAILED"));
         }
         //Cleanup in the background

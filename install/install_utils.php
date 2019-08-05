@@ -42,10 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/utils/zip_utils.php');
-
+require_once('include/utils/php_zip_utils.php');
 require_once('include/upload_file.php');
-
 
 ////////////////
 ////  GLOBAL utility
@@ -70,13 +68,15 @@ function installerHook($function_name, $options = array())
 
     if ($GLOBALS['customInstallHooksExist'] === false) {
         return 'undefined';
+    } else {
+        if (function_exists($function_name)) {
+            installLog("installerHook: function {$function_name} found, calling and returning the return value");
+            return $function_name($options);
+        } else {
+            installLog("installerHook: function {$function_name} not found in custom install hooks file");
+            return 'undefined';
+        }
     }
-    if (function_exists($function_name)) {
-        installLog("installerHook: function {$function_name} found, calling and returning the return value");
-        return $function_name($options);
-    }
-    installLog("installerHook: function {$function_name} not found in custom install hooks file");
-    return 'undefined';
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -91,12 +91,13 @@ function parseAcceptLanguage()
     if (strpos($lang, ';')) {
         $exLang = explode(';', $lang);
         return strtolower(str_replace('-', '_', $exLang[0]));
+    } else {
+        $match = array();
+        if (preg_match("#\w{2}\-?\_?\w{2}#", $lang, $match)) {
+            return strtolower(str_replace('-', '_', $match[0]));
+        }
     }
-    $match = array();
-    if (preg_match("#\w{2}\-?\_?\w{2}#", $lang, $match)) {
-        return strtolower(str_replace('-', '_', $match[0]));
-    }
-    
+
     return '';
 }
 
@@ -167,8 +168,10 @@ function commitLanguagePack($uninstall=false)
     while ($f = $d->read()) {
         if ($f == "." || $f == "..") {
             continue;
-        } elseif (preg_match("/(.*)\.lang\.php\$/", $f, $match)) {
-            $new_lang_name = $match[1];
+        } else {
+            if (preg_match("/(.*)\.lang\.php\$/", $f, $match)) {
+                $new_lang_name = $match[1];
+            }
         }
     }
     if ($new_lang_name == "") {
@@ -966,8 +969,8 @@ function handleHtaccess()
 {
     global $mod_strings;
     global $sugar_config;
-    $ignoreCase = (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2') > 0)?'(?i)':'';
-    $htaccess_file   = ".htaccess";
+    $ignoreCase = (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2') > 0) ? '(?i)' : '';
+    $htaccess_file = ".htaccess";
     $contents = '';
     $basePath = parse_url($sugar_config['site_url'], PHP_URL_PATH);
     if (empty($basePath)) {
@@ -996,13 +999,20 @@ EOQ;
     $cache_headers = <<<EOQ
 
 <IfModule mod_rewrite.c>
-    Options +FollowSymLinks
+    Options +SymLinksIfOwnerMatch
     RewriteEngine On
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
+
+    # --------- DEPRECATED --------
     RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
     RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    # -----------------------------
+
+    RewriteRule ^Api/access_token$ Api/index.php/access_token [L]
+    RewriteRule ^Api/V8/(.*?)$ Api/index.php/V8/$1 [L]
+    RewriteRule ^Api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
 <FilesMatch "\.(jpg|png|gif|js|css|ico)$">
         <IfModule mod_headers.c>
@@ -1019,13 +1029,25 @@ EOQ;
         ExpiresByType image/jpg "access plus 1 month"
         ExpiresByType image/png "access plus 1 month"
 </IfModule>
+<IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_URI} (.+)/$
+        RewriteRule ^ %1 [R=301,L]
+</IfModule>
 EOQ;
     if (file_exists($htaccess_file)) {
         $fp = fopen($htaccess_file, 'r');
         $skip = false;
         while ($line = fgets($fp)) {
             if (preg_match("/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
+                if (!$skip) {
+                    $contents .= $line;
+                }
                 $skip = true;
+                if (preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
+                    $skip = false;
+                }
             }
             if (!$skip) {
                 $contents .= $line;
@@ -1035,12 +1057,13 @@ EOQ;
             }
         }
     }
-    $status =  file_put_contents($htaccess_file, $contents . $restrict_str . $cache_headers);
+    $status = file_put_contents($htaccess_file, $contents . $restrict_str . $cache_headers);
     if (!$status) {
         echo "<p>{$mod_strings['ERR_PERFORM_HTACCESS_1']}<span class=stop>{$htaccess_file}</span> {$mod_strings['ERR_PERFORM_HTACCESS_2']}</p>\n";
         echo "<p>{$mod_strings['ERR_PERFORM_HTACCESS_3']}</p>\n";
         echo $restrict_str;
     }
+
     return $status;
 }
 
@@ -1154,9 +1177,10 @@ function drop_table_install(&$focus)
         $focus->drop_tables();
         $GLOBALS['log']->info("Dropped old ".$focus->table_name." table.");
         return 1;
+    } else {
+        $GLOBALS['log']->info("Did not need to drop old ".$focus->table_name." table.  It doesn't exist.");
+        return 0;
     }
-    $GLOBALS['log']->info("Did not need to drop old ".$focus->table_name." table.  It doesn't exist.");
-    return 0;
 }
 
 // Creating new tables if they don't exist.
@@ -1396,8 +1420,9 @@ function get_boolean_from_request($field)
 
     if (($_REQUEST[$field] == 'on') || ($_REQUEST[$field] == 'yes')) {
         return(true);
+    } else {
+        return(false);
     }
-    return(false);
 }
 
 function stripslashes_checkstrings($value)
@@ -1535,8 +1560,10 @@ function pullSilentInstallVarsIntoSession()
 
     if (file_exists('config_si.php')) {
         require_once('config_si.php');
-    } elseif (empty($sugar_config_si)) {
-        die($mod_strings['ERR_SI_NO_CONFIG']);
+    } else {
+        if (empty($sugar_config_si)) {
+            die($mod_strings['ERR_SI_NO_CONFIG']);
+        }
     }
 
     $config_subset = array(
@@ -1878,12 +1905,13 @@ function langPackUnpack($unpack_type, $full_file)
             copy($manifest_file, $target_manifest);
             unlink($full_file); // remove tempFile
             return "The file $base_filename has been uploaded.<br>\n";
+        } else {
+            unlinkTempFiles($manifest_file, $full_file);
+            return "There was an error uploading the file, please try again!<br>\n";
         }
-        unlinkTempFiles($manifest_file, $full_file);
-        return "There was an error uploading the file, please try again!<br>\n";
+    } else {
+        die("The zip file is missing a manifest.php file.  Cannot proceed.");
     }
-    die("The zip file is missing a manifest.php file.  Cannot proceed.");
-    
     unlinkTempFiles($manifest_file, '');
 }
 
@@ -2177,6 +2205,23 @@ function create_writable_dir($dirname)
     if (empty($ok)) {
         installLog("ERROR: Cannot create writable dir $dirname");
     }
+}
+
+/**
+ * Create default OAuth2 encryption key
+ * @throws Exception
+ */
+function createEncryptionKey() {
+    $key = "OAUTH2_ENCRYPTION_KEY = '" . base64_encode(random_bytes(32));
+    $apiConfig = file_get_contents('Api/Core/Config/ApiConfig.php');
+    $configFileContents = str_replace(
+        "OAUTH2_ENCRYPTION_KEY = '",
+        $key,
+        $apiConfig
+    );
+    file_put_contents(
+        'Api/Core/Config/ApiConfig.php', $configFileContents, LOCK_EX
+    );
 }
 
 /**

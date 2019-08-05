@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('include/ListView/ListViewSubPanel.php');
 require_once('include/SubPanel/registered_layout_defs.php');
@@ -154,7 +155,7 @@ class SubPanel
     }
 
 
-    public function ProcessSubPanelListView($xTemplatePath, &$mod_strings)
+    public function ProcessSubPanelListView($xTemplatePath, &$mod_strings, $countOnly = false)
     {
         global $app_strings;
         global $current_user;
@@ -216,20 +217,29 @@ class SubPanel
 
         //function returns the query that was used to populate sub-panel data.
 
-        $query=$ListView->process_dynamic_listview($this->parent_module, $this->parent_bean, $this->subpanel_defs);
+        $query=$ListView->process_dynamic_listview($this->parent_module, $this->parent_bean, $this->subpanel_defs, $countOnly);
+        
+        
         $this->subpanel_query=$query;
         $ob_contents = ob_get_contents();
         ob_end_clean();
+        if ($countOnly) {
+            return $query;
+        }
         return $ob_contents;
     }
 
-    public function display()
+    public function display($countOnly = false)
     {
         $result_array = array();
 
-        $return_string = $this->ProcessSubPanelListView($this->template_file, $result_array);
-
-        print $return_string;
+        $return_string = $this->ProcessSubPanelListView($this->template_file, $result_array, $countOnly);
+        
+        if ($countOnly) {
+            print $return_string['row_count'];
+        } else {
+            print $return_string;
+        }
     }
 
     public function getModulesWithSubpanels()

@@ -71,7 +71,6 @@ class AOR_Report extends Basic
     public function __construct()
     {
         parent::__construct();
-        $this->load_report_beans();
         require_once('modules/AOW_WorkFlow/aow_utils.php');
         require_once('modules/AOR_Reports/aor_utils.php');
     }
@@ -112,7 +111,7 @@ class AOR_Report extends Basic
             unset($_POST['aor_fields_id']);
         }
 
-        parent::save($check_notify);
+        $return_id = parent::save($check_notify);
 
         require_once('modules/AOR_Fields/AOR_Field.php');
         $field = new AOR_Field();
@@ -125,6 +124,8 @@ class AOR_Report extends Basic
         require_once('modules/AOR_Charts/AOR_Chart.php');
         $chart = new AOR_Chart();
         $chart->save_lines($_POST, $this, 'aor_chart_');
+
+        return $return_id;
     }
 
     /**
@@ -143,6 +144,11 @@ class AOR_Report extends Basic
         return $result;
     }
 
+    public function fill_in_additional_detail_fields()
+    {
+        parent::fill_in_additional_detail_fields();
+        $this->load_report_beans();
+    }
 
     public function load_report_beans()
     {
@@ -152,6 +158,9 @@ class AOR_Report extends Basic
 
         foreach ($app_list_strings['aor_moduleList'] as $mkey => $mvalue) {
             if (!isset($beanList[$mkey]) || str_begin($mkey, 'AOR_') || str_begin($mkey, 'AOW_')) {
+                unset($app_list_strings['aor_moduleList'][$mkey]);
+            }
+            if (!ACLController::checkAccess($mkey, 'list', true)) {
                 unset($app_list_strings['aor_moduleList'][$mkey]);
             }
         }
@@ -231,7 +240,7 @@ class AOR_Report extends Basic
             $fields[$label]['total'] = $field->total;
 
 
-            $fields[$label]['params'] = $field->format;
+            $fields[$label]['format'] = $field->format;
 
             // get the main group
 
@@ -256,7 +265,7 @@ class AOR_Report extends Basic
             foreach ($fields as $name => $att) {
                 $currency_id = isset($row[$att['alias'] . '_currency_id']) ? $row[$att['alias'] . '_currency_id'] : '';
 
-                if ($att['function'] != 'COUNT' && empty($att['params']) && !is_numeric($row[$name])) {
+                if ($att['function'] != 'COUNT' && empty($att['format']) && !is_numeric($row[$name])) {
                     $row[$name] = trim(strip_tags(getModuleField(
                         $att['module'],
                         $att['field'],
@@ -327,33 +336,36 @@ class AOR_Report extends Basic
                 }
 
                 return $this->buildMultiGroupReport($offset, $links, $level + 1, $path);
-            }
-            if (!$rows) {
-                if ($path) {
-                    $html = '';
-                    foreach ($path as $pth) {
-                        $_fieldIdName = $this->db->quoteIdentifier($pth['field_id_name']);
-                        $query = "SELECT $_fieldIdName FROM " . $this->db->quoteIdentifier($pth['module_path'][0]) . " GROUP BY $_fieldIdName;";
-                        $values = $this->dbSelect($query);
+            } else {
+                if (!$rows) {
+                    if ($path) {
+                        $html = '';
+                        foreach ($path as $pth) {
+                            $_fieldIdName = $this->db->quoteIdentifier($pth['field_id_name']);
+                            $query = "SELECT $_fieldIdName FROM " . $this->db->quoteIdentifier($pth['module_path'][0]) . " GROUP BY $_fieldIdName;";
+                            $values = $this->dbSelect($query);
 
-                        foreach ($values as $value) {
-                            $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue(
+                            foreach ($values as $value) {
+                                $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue(
                                     $beanList,
                                     $value[$pth['field_id_name']]
                                 );
-                            $moduleFieldByGroupValue = $this->addDataIdValueToInnertext($moduleFieldByGroupValue);
-                            $html .= $this->getMultiGroupFrameHTML(
+                                $moduleFieldByGroupValue = $this->addDataIdValueToInnertext($moduleFieldByGroupValue);
+                                $html .= $this->getMultiGroupFrameHTML(
                                     $moduleFieldByGroupValue,
                                     $this->build_group_report($offset, $links)
                                 );
+                            }
                         }
-                    }
 
-                    return $html;
+                        return $html;
+                    } else {
+                        return $this->build_group_report($offset, $links, array());
+                    }
+                } else {
+                    throw new Exception('incorrect results');
                 }
-                return $this->build_group_report($offset, $links, array());
             }
-            throw new Exception('incorrect results');
         }
         throw new Exception('incorrect state');
     }
@@ -664,7 +676,7 @@ class AOR_Report extends Basic
         }
         $html = '<div class="list-view-rounded-corners" style="' . $report_style . '">';
         //End
-        
+
         $html.='<table id="report_table_'.$tableIdentifier.$group_value.'" cellpadding="0" cellspacing="0" width="100%" border="0" class="list view table-responsive aor_reports">';
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND deleted = 0 ORDER BY field_order ASC";
@@ -704,7 +716,7 @@ class AOR_Report extends Basic
             $fields[$label]['link'] = $field->link;
             $fields[$label]['total'] = $field->total;
 
-            $fields[$label]['params'] = $field->format;
+            $fields[$label]['format'] = $field->format;
 
 
             if ($fields[$label]['display']) {
@@ -814,10 +826,10 @@ class AOR_Report extends Basic
 
                     $currency_id = isset($row[$att['alias'] . '_currency_id']) ? $row[$att['alias'] . '_currency_id'] : '';
 
-                    if ($att['function'] == 'COUNT' || !empty($att['params'])) {
+                    if ($att['function'] == 'COUNT' || !empty($att['format'])) {
                         $html .= $row[$name];
                     } else {
-                        $att['params']['record_id'] = $row[$att['alias'] . '_id'];
+                        $params = array('record_id' => $row[$att['alias'] . '_id']);
                         $html .= getModuleField(
                             $att['module'],
                             $att['field'],
@@ -826,7 +838,7 @@ class AOR_Report extends Basic
                             $row[$name],
                             '',
                             $currency_id,
-                            $att['params']
+                            $params
                         );
                     }
 
@@ -843,11 +855,11 @@ class AOR_Report extends Basic
 
             $row_class = $row_class == 'oddListRowS1' ? 'evenListRowS1' : 'oddListRowS1';
         }
-        $html .= "</tbody>";
+        $html .= "</tbody></table>";
 
         $html .= $this->getTotalHTML($fields, $totals);
 
-        $html .= '</table></div>';
+        $html .= '</div>';
 
         $html .= "    <script type=\"text/javascript\">
                             groupedReportToggler = {
@@ -938,33 +950,33 @@ class AOR_Report extends Basic
         $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
 
         $showTotal = false;
-        $html = '';
+        $html = '<table>';
         $html .= "<thead class='fc-head'>";
         $html .= "<tr>";
         foreach ($fields as $label => $field) {
             if (!$field['display']) {
                 continue;
             }
-            
+
             $fieldTotal = null;
             if (!isset($field['total'])) {
                 LoggerManager::getLogger()->warn('AOR_Report problem: field[total] is not set for getTotalHTML()');
             } else {
                 $fieldTotal = $field['total'];
             }
-            
+
             $appListStringsAorTotalOptionsFieldTotal = null;
             if (!isset($app_list_strings['aor_total_options'][$fieldTotal])) {
                 LoggerManager::getLogger()->warn('AOR_Report problem: app_list_strings[aor_total_options][fieldTotal] is not set for getTotalHTML()');
             } else {
                 $appListStringsAorTotalOptionsFieldTotal = $app_list_strings['aor_total_options'][$fieldTotal];
             }
-            
-            
+
+
             if ($fieldTotal) {
                 $showTotal = true;
                 $totalLabel = $field['label'] . ' ' . $appListStringsAorTotalOptionsFieldTotal;
-                $html .= "<th>{$totalLabel}</td>";
+                $html .= "<th>{$totalLabel}</th>";
             } else {
                 $html .= '<th></th>';
             }
@@ -975,7 +987,7 @@ class AOR_Report extends Basic
             return '';
         }
 
-        $html .= "</body><tr class='oddListRowS1'>";
+        $html .= "<tbody><tr class='oddListRowS1'>";
         foreach ($fields as $label => $field) {
             if (!$field['display']) {
                 continue;
@@ -1027,7 +1039,7 @@ class AOR_Report extends Basic
             }
         }
         $html .= '</tr>';
-        $html .= '</body>';
+        $html .= '</tbody></table>';
 
         return $html;
     }
@@ -1092,7 +1104,7 @@ class AOR_Report extends Basic
             $fields[$label]['function'] = $field->field_function;
             $fields[$label]['module'] = $field_module;
             $fields[$label]['alias'] = $field_alias;
-            $fields[$label]['params'] = $field->format;
+            $fields[$label]['format'] = $field->format;
 
             if ($field->display) {
                 $csv .= $this->encloseForCSV($field->label);
@@ -1105,27 +1117,27 @@ class AOR_Report extends Basic
         if ($field->display) {
             $csv = substr($csv, 0, strlen($csv) - strlen($delimiter));
         }
-            
+
         $sql = $this->build_report_query();
         $result = $this->db->query($sql);
 
-        while ($row = $this->db->fetchByAssoc($result)) {
+        while ($row = $this->db->fetchByAssoc($result, false)) {
             $csv .= "\r\n";
             foreach ($fields as $name => $att) {
                 $currency_id = isset($row[$att['alias'] . '_currency_id']) ? $row[$att['alias'] . '_currency_id'] : '';
                 if ($att['display']) {
-                    if ($att['function'] != '' || $att['params'] != '') {
+                    if ($att['function'] != '' || $att['format'] != '') {
                         $csv .= $this->encloseForCSV($row[$name]);
                     } else {
-                        $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField(
-                            $att['module'],
-                            $att['field'],
-                            $att['field'],
-                            'DetailView',
-                            $row[$name],
-                            '',
-                            $currency_id
-                        ))));
+                        $t = getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name], '',
+                            $currency_id);
+                        if (false !== strpos($t, 'checkbox')) {
+                            $csv .= $row[$name];
+                        } else {
+                            $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'],
+                                $att['field'],
+                                'DetailView', $row[$name], '', $currency_id))));
+                        }
                     }
                     $csv .= $delimiter;
                 }
@@ -1733,15 +1745,25 @@ class AOR_Report extends Basic
                             $multi_values = unencodeMultienum($condition->value);
                             if (!empty($multi_values)) {
                                 $value = '(';
-                                foreach ($multi_values as $multi_value) {
-                                    if ($value != '(') {
-                                        $value .= $sep;
+                                if ($data['type'] == 'multienum') {
+                                    $multi_operator =  $condition->operator == 'Equal_To' ? 'LIKE' : 'NOT LIKE';
+                                    foreach ($multi_values as $multi_value) {
+                                        if ($value != '(') {
+                                            $value .= $sep;
+                                        }
+                                        $value .= $field . ' ' . $multi_operator . ' \'%' . $this->db->quote(encodeMultienumValue(array($multi_value))) . '%\'';
                                     }
-                                    $value .= $field . ' ' . $aor_sql_operator_list[$condition->operator] . " '" . $multi_value . "'";
+                                } else {
+                                    foreach ($multi_values as $multi_value) {
+                                        if ($value != '(') {
+                                            $value .= $sep;
+                                        }
+                                        $value .= $field . ' ' . $aor_sql_operator_list[$condition->operator] . " '" . $multi_value . "'";
+                                    }
                                 }
                                 $value .= ')';
+                                $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $value;
                             }
-                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $value;
                             $where_set = true;
                             break;
                         case "Period":
@@ -1907,17 +1929,17 @@ class AOR_Report extends Basic
                                 $params = base64_decode($condition->value);
                             }
                             $date = getPeriodEndDate($params)->format('Y-m-d H:i:s');
-                            $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
+                            $value = "'" . $this->db->quote(getPeriodDate($params)->format('Y-m-d H:i:s')) . "'";
 
                             $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND '));
                             $tiltLogicOp = false;
 
                             switch ($aor_sql_operator_list[$condition->operator]) {
                                 case "=":
-                                    $query['where'][] = $field . ' BETWEEN ' . $value . ' AND ' . '"' . $date . '"';
+                                    $query['where'][] = $field . " BETWEEN " . $value . " AND " . "'" . $this->db->quote($date) . "'";
                                     break;
                                 case "!=":
-                                    $query['where'][] = $field . ' NOT BETWEEN ' . $value . ' AND ' . '"' . $date . '"';
+                                    $query['where'][] = $field . " NOT BETWEEN " . $value . " AND " . "'" . $this->db->quote($date)  . "'";
                                     break;
                                 case ">":
                                 case "<":

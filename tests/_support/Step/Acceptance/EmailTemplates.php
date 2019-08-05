@@ -9,7 +9,7 @@ class EmailTemplates extends \AcceptanceTester
      */
     public function gotoEmailTemplates()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Email - Templates');
     }
 }

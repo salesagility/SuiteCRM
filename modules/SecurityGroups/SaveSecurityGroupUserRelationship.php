@@ -20,12 +20,6 @@ foreach ($focus->additional_column_fields as $field) {
     safe_map($field, $focus, true);
 }
 
-if (!is_admin($GLOBALS['current_user']) && (empty($focus->fetched_row['id'])
-        || $focus->fetched_row['securitygroup_id'] != $focus->securitygroup_id
-        || $focus->fetched_row['user_id'] != $focus->user_id)) {
-    sugar_die('Access denied');
-}
-
 // send them to the edit screen.
 if (isset($_REQUEST['record']) && $_REQUEST['record'] != "") {
     $recordID = $_REQUEST['record'];

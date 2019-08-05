@@ -1,8 +1,11 @@
 <?php
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -13,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -30,15 +33,15 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //// This is a stand alone file that can be run from the command prompt for upgrading a
-//// Sugar Instance. Three parameters are required to be defined in order to execute this file.
+//// SuiteCRM Instance. Three parameters are required to be defined in order to execute this file.
 //// php.exe -f silentUpgrade.php [Path to Upgrade Package zip] [Path to Log file] [Path to Instance]
 //// See below the Usage for more details.
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -235,8 +238,9 @@ function merge_passwordsetting($sugar_config, $sugar_version)
 
     if (write_array_to_file("sugar_config", $sugar_config, "config.php")) {
         return true;
+    } else {
+        return false;
     }
-    return false;
 }
 
 function addDefaultModuleRoles($defaultRoles = array())
@@ -295,10 +299,11 @@ function verifyArguments($argv, $usage_dce, $usage_regular)
             echo "FAILURE\n";
             exit(1);
         }
-    } elseif (is_file("{$cwd}/include/entryPoint.php")) {
-        //this should be a regular sugar install
-        $upgradeType = constant('SUGARCRM_INSTALL');
-        //check if this is a valid zip file
+    } else {
+        if (is_file("{$cwd}/include/entryPoint.php")) {
+            //this should be a regular sugar install
+            $upgradeType = constant('SUGARCRM_INSTALL');
+            //check if this is a valid zip file
         if (!is_file($argv[1])) { // valid zip?
             echo "*******************************************************************************\n";
             echo "*** ERROR: First argument must be a full path to the patch file. Got [ {$argv[1]} ].\n";
@@ -306,18 +311,19 @@ function verifyArguments($argv, $usage_dce, $usage_regular)
             echo "FAILURE\n";
             exit(1);
         }
-        if (count($argv) < 5) {
+            if (count($argv) < 5) {
+                echo "*******************************************************************************\n";
+                echo "*** ERROR: Missing required parameters.  Received ".count($argv)." argument(s), require 5.\n";
+                echo $usage_regular;
+                echo "FAILURE\n";
+                exit(1);
+            }
+        } else {
+            //this should be a regular sugar install
             echo "*******************************************************************************\n";
-            echo "*** ERROR: Missing required parameters.  Received ".count($argv)." argument(s), require 5.\n";
-            echo $usage_regular;
-            echo "FAILURE\n";
+            echo "*** ERROR: Tried to execute in a non-SugarCRM root directory.\n";
             exit(1);
         }
-    } else {
-        //this should be a regular sugar install
-        echo "*******************************************************************************\n";
-        echo "*** ERROR: Tried to execute in a non-SugarCRM root directory.\n";
-        exit(1);
     }
 
     if (isset($argv[7]) && file_exists($argv[7].'SugarTemplateUtilties.php')) {
@@ -446,8 +452,6 @@ $upgradeType = verifyArguments($argv, $usage_dce, $usage_regular);
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	PREP LOCALLY USED PASSED-IN VARS & CONSTANTS
-//$GLOBALS['log']	= LoggerManager::getLogger('SugarCRM');
-//require_once('/var/www/html/eddy/sugarnode/SugarTemplateUtilities.php');
 
 $path			= $argv[2]; // custom log file, if blank will use ./upgradeWizard.log
 //$db				= &DBManagerFactory::getInstance();  //<---------
@@ -492,7 +496,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
 
     //load up entrypoint from original template
     require_once("{$argv[4]}/include/entryPoint.php");
-    require_once("{$argv[4]}/include/utils/zip_utils.php");
+    require_once("{$argv[4]}/include/utils/php_zip_utils.php");
     require_once("{$argv[4]}/modules/Administration/UpgradeHistory.php");
     // We need to run the silent upgrade as the admin user,
     global $current_user;
@@ -510,7 +514,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
     /////retrieve admin user
     $configOptions = $sugar_config['dbconfig'];
 
-    $GLOBALS['log']	= LoggerManager::getLogger('SugarCRM');
+    $GLOBALS['log']	= LoggerManager::getLogger();
     $db				= &DBManagerFactory::getInstance();
     ///////////////////////////////////////////////////////////////////////////////
     ////	MAKE SURE PATCH IS COMPATIBLE
@@ -542,12 +546,13 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
         if (!isset($manifest)) {
             fwrite(STDERR, "\nThe patch did not contain a proper manifest.php file.  Cannot continue.\n\n");
             exit(1);
-        }
-        $error = validate_manifest($manifest);
-        if (!empty($error)) {
-            $error = strip_tags(br2nl($error));
-            fwrite(STDERR, "\n{$error}\n\nFAILURE\n");
-            exit(1);
+        } else {
+            $error = validate_manifest($manifest);
+            if (!empty($error)) {
+                $error = strip_tags(br2nl($error));
+                fwrite(STDERR, "\n{$error}\n\nFAILURE\n");
+                exit(1);
+            }
         }
     } else {
         fwrite(STDERR, "\nThe patch did not contain a proper manifest.php file.  Cannot continue.\n\n");
@@ -601,8 +606,9 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
                 echo 'Stop and Exit Upgrade. There are customized files. Take a look in the upgrade log';
                 logThis("Stop and Exit Upgrade. There are customized files. Take a look in the upgrade log", $path);
                 exit(1);
+            } else {
+                upgradeDCEFiles($argv, $instanceUpgradePath);
             }
-            upgradeDCEFiles($argv, $instanceUpgradePath);
         } else {
             //copy and update following files from upgrade package
             upgradeDCEFiles($argv, $instanceUpgradePath);

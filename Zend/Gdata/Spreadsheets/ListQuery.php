@@ -44,6 +44,7 @@ require_once('Zend/Gdata/Query.php');
  */
 class Zend_Gdata_Spreadsheets_ListQuery extends Zend_Gdata_Query
 {
+
     const SPREADSHEETS_LIST_FEED_URI = 'http://spreadsheets.google.com/feeds/list';
 
     protected $_defaultFeedUri = self::SPREADSHEETS_LIST_FEED_URI;
@@ -238,6 +239,8 @@ class Zend_Gdata_Spreadsheets_ListQuery extends Zend_Gdata_Query
      */
     public function getReverse()
     {
+
+
         if (array_key_exists('reverse', $this->_params)) {
             return $this->_params['reverse'];
         } else {
@@ -251,6 +254,7 @@ class Zend_Gdata_Spreadsheets_ListQuery extends Zend_Gdata_Query
      */
     public function getQueryUrl()
     {
+
         $uri = $this->_defaultFeedUri;
 
         if ($this->_spreadsheetKey != null) {
@@ -297,4 +301,5 @@ class Zend_Gdata_Spreadsheets_ListQuery extends Zend_Gdata_Query
     {
         return parent::getQueryString();
     }
+
 }

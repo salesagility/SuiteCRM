@@ -131,9 +131,9 @@ $dictionary['Email'] = array(
             'inline_edit' => false,
 
         ),
-        'date_sent' => array(
-            'name' => 'date_sent',
-            'vname' => 'LBL_DATE_SENT',
+        'date_sent_received' => array(
+            'name' => 'date_sent_received',
+            'vname' => 'LBL_DATE_SENT_RECEIVED',
             'type' => 'datetime',
             'inline_edit' => false,
         ),
@@ -701,8 +701,13 @@ $dictionary['Email'] = array(
             'lhs_key' => 'id',
             'rhs_module' => 'Meetings',
             'rhs_table' => 'meetings',
-            'rhs_key' => 'parent_id',
-            'relationship_type' => 'one-to-many',
+            'rhs_key' => 'id',
+            'relationship_type' => 'many-to-many',
+            'join_table' => 'emails_beans',
+            'join_key_lhs' => 'email_id',
+            'join_key_rhs' => 'bean_id',
+            'relationship_role_column' => 'bean_module',
+            'relationship_role_column_value' => 'Meetings',
         ),
     ), // end relationships
     'indices' => array(

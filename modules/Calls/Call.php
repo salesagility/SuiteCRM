@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -180,7 +181,7 @@ class Call extends SugarBean
         }
         return parent::ACLAccess($view, $is_owner, $in_group);
     }
-    
+
     // save date_end by calculating user input
     // this is for calendar
     public function save($check_notify = false)
@@ -354,8 +355,10 @@ class Call extends SugarBean
         $where_auto = '1=1';
         if ($show_deleted == 0) {
             $where_auto = " $this->table_name.deleted=0  ";
-        } elseif ($show_deleted == 1) {
-            $where_auto = " $this->table_name.deleted=1 ";
+        } else {
+            if ($show_deleted == 1) {
+                $where_auto = " $this->table_name.deleted=1 ";
+            }
         }
 
         //$where_auto .= " GROUP BY calls.id";
@@ -540,10 +543,12 @@ class Call extends SugarBean
                 }
                 $call_fields['DATE_START']= "<font class='overdueTask'>".$dateStart."</font>";
             }
-        } elseif ($date_db < $nextday) {
-            $call_fields['DATE_START'] = "<font class='todaysTask'>".$call_fields['DATE_START']."</font>";
         } else {
-            $call_fields['DATE_START'] = "<font class='futureTask'>".$call_fields['DATE_START']."</font>";
+            if ($date_db < $nextday) {
+                $call_fields['DATE_START'] = "<font class='todaysTask'>".$call_fields['DATE_START']."</font>";
+            } else {
+                $call_fields['DATE_START'] = "<font class='futureTask'>".$call_fields['DATE_START']."</font>";
+            }
         }
         $this->fill_in_additional_detail_fields();
 
@@ -669,14 +674,18 @@ class Call extends SugarBean
             if ($this->update_vcal) {
                 vCal::cache_sugar_vcal($user);
             }
-        } elseif ($user->object_name == 'Contact') {
-            $relate_values = array('contact_id'=>$user->id,'call_id'=>$this->id);
-            $data_values = array('accept_status'=>$status);
-            $this->set_relationship($this->rel_contacts_table, $relate_values, true, true, $data_values);
-        } elseif ($user->object_name == 'Lead') {
-            $relate_values = array('lead_id'=>$user->id,'call_id'=>$this->id);
-            $data_values = array('accept_status'=>$status);
-            $this->set_relationship($this->rel_leads_table, $relate_values, true, true, $data_values);
+        } else {
+            if ($user->object_name == 'Contact') {
+                $relate_values = array('contact_id'=>$user->id,'call_id'=>$this->id);
+                $data_values = array('accept_status'=>$status);
+                $this->set_relationship($this->rel_contacts_table, $relate_values, true, true, $data_values);
+            } else {
+                if ($user->object_name == 'Lead') {
+                    $relate_values = array('lead_id'=>$user->id,'call_id'=>$this->id);
+                    $data_values = array('accept_status'=>$status);
+                    $this->set_relationship($this->rel_leads_table, $relate_values, true, true, $data_values);
+                }
+            }
         }
     }
 
@@ -756,11 +765,13 @@ class Call extends SugarBean
             }
             /* BEGIN - SECURITY GROUPS */
             //parent_name_owner not being set for whatever reason so we need to figure this out
-            elseif (!empty($this->parent_type) && !empty($this->parent_id)) {
-                global $current_user;
-                $parent_bean = BeanFactory::getBean($this->parent_type, $this->parent_id);
-                if ($parent_bean !== false) {
-                    $is_owner = $current_user->id == $parent_bean->assigned_user_id;
+            else {
+                if (!empty($this->parent_type) && !empty($this->parent_id)) {
+                    global $current_user;
+                    $parent_bean = BeanFactory::getBean($this->parent_type, $this->parent_id);
+                    if ($parent_bean !== false) {
+                        $is_owner = $current_user->id == $parent_bean->assigned_user_id;
+                    }
                 }
             }
             require_once("modules/SecurityGroups/SecurityGroup.php");
@@ -835,13 +846,14 @@ class Call extends SugarBean
         $def = $this->field_defs['status'];
         if (isset($def['default'])) {
             return $def['default'];
+        } else {
+            $app = return_app_list_strings_language($GLOBALS['current_language']);
+            if (isset($def['options']) && isset($app[$def['options']])) {
+                $keys = array_keys($app[$def['options']]);
+                return $keys[0];
+            }
         }
-        $app = return_app_list_strings_language($GLOBALS['current_language']);
-        if (isset($def['options']) && isset($app[$def['options']])) {
-            $keys = array_keys($app[$def['options']]);
-            return $keys[0];
-        }
-        
+
         return '';
     }
 

@@ -20,14 +20,13 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 require_once('include/MVC/View/SugarView.php');
-require_once('include/MVC/View/views/view.list.php');
 
 class AOD_IndexViewIndexData extends SugarView
 {
@@ -37,7 +36,9 @@ class AOD_IndexViewIndexData extends SugarView
      */
     public function display()
     {
-        global $db, $timedate, $current_language;
+        global $timedate, $current_language;
+        $db = DBManagerFactory::getInstance();
+
         parent::display();
 
         $index = BeanFactory::getBean("AOD_Index");

@@ -95,6 +95,7 @@ function getDisplayForField($modulePath, $field, $reportModule)
 
 function requestToUserParameters($reportBean = null)
 {
+    global $app_list_strings;
     $params = array();
     if (!empty($_REQUEST['parameter_id'])) {
         $dateCount = 0;
@@ -108,7 +109,7 @@ function requestToUserParameters($reportBean = null)
 
             $condition = BeanFactory::getBean('AOR_Conditions', $_REQUEST['parameter_id'][$key]);
             $value = $_REQUEST['parameter_value'][$key];
-            if ($reportBean && $condition) {
+            if ($reportBean && $condition && !array_key_exists($value,$app_list_strings['date_time_period_list'])){
                 $value = fixUpFormatting($reportBean->report_module, $condition->field, $value);
             }
 
@@ -248,7 +249,7 @@ function getPeriodDate($date_time_period_list_selected)
     } elseif ($date_time_period_list_selected == 'this_month') {
         $datetime_period = $datetime_period->setDate(
             $datetime_period->format('Y'),
-                            $datetime_period->format('m'),
+            $datetime_period->format('m'),
             1
         );
     } elseif ($date_time_period_list_selected == 'last_month') {
@@ -256,42 +257,42 @@ function getPeriodDate($date_time_period_list_selected)
     } elseif ($date_time_period_list_selected == 'this_quarter') {
         $thisMonth = $datetime_period->setDate(
             $datetime_period->format('Y'),
-                                    $datetime_period->format('m'),
+            $datetime_period->format('m'),
             1
         );
         if ($thisMonth >= $q[1]['start'] && $thisMonth <= $q[1]['end']) {
             // quarter 1
             $datetime_period = $datetime_period->setDate(
                 $q[1]['start']->format('Y'),
-                                        $q[1]['start']->format('m'),
+                $q[1]['start']->format('m'),
                 $q[1]['start']->format('d')
             );
         } elseif ($thisMonth >= $q[2]['start'] && $thisMonth <= $q[2]['end']) {
             // quarter 2
             $datetime_period = $datetime_period->setDate(
                 $q[2]['start']->format('Y'),
-                                            $q[2]['start']->format('m'),
+                $q[2]['start']->format('m'),
                 $q[2]['start']->format('d')
             );
         } elseif ($thisMonth >= $q[3]['start'] && $thisMonth <= $q[3]['end']) {
             // quarter 3
             $datetime_period = $datetime_period->setDate(
                 $q[3]['start']->format('Y'),
-                                                $q[3]['start']->format('m'),
+                $q[3]['start']->format('m'),
                 $q[3]['start']->format('d')
             );
         } elseif ($thisMonth >= $q[4]['start'] && $thisMonth <= $q[4]['end']) {
             // quarter 4
             $datetime_period = $datetime_period->setDate(
                 $q[4]['start']->format('Y'),
-                                                    $q[4]['start']->format('m'),
+                $q[4]['start']->format('m'),
                 $q[4]['start']->format('d')
             );
         }
     } elseif ($date_time_period_list_selected == 'last_quarter') {
         $thisMonth = $datetime_period->setDate(
             $datetime_period->format('Y'),
-                                        $datetime_period->format('m'),
+            $datetime_period->format('m'),
             1
         );
         if ($thisMonth >= $q[1]['start'] && $thisMonth <= $q[1]['end']) {
@@ -310,13 +311,13 @@ function getPeriodDate($date_time_period_list_selected)
     } elseif ($date_time_period_list_selected == 'this_year') {
         $datetime_period = $datetime_period = $datetime_period->setDate(
             $datetime_period->format('Y'),
-                                            1,
+            1,
             1
         );
     } elseif ($date_time_period_list_selected == 'last_year') {
         $datetime_period = $datetime_period = $datetime_period->setDate(
             $datetime_period->format('Y') - 1,
-                                                1,
+            1,
             1
         );
     }

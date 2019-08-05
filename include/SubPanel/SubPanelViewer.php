@@ -92,13 +92,16 @@ $subpanel_object->setTemplateFile('include/SubPanel/tpls/SubPanelDynamic.tpl');
 
 echo empty($_REQUEST['inline']) ? $subpanel_object->get_buttons() : '';
 
-$subpanel_object->display();
+$countOnly = isset($_REQUEST['countOnly']) && $_REQUEST['countOnly'];
+$subpanel_object->display($countOnly);
 
-$jsAlerts = new jsAlerts();
-if (!isset($_SESSION['isMobile'])) {
-    echo $jsAlerts->getScript();
-}
+if (!$countOnly) {
+    $jsAlerts = new jsAlerts();
+    if (!isset($_SESSION['isMobile'])) {
+        echo $jsAlerts->getScript();
+    }
 
-if (empty($_REQUEST['inline'])) {
-    insert_popup_footer();
+    if (empty($_REQUEST['inline'])) {
+        insert_popup_footer();
+    }
 }

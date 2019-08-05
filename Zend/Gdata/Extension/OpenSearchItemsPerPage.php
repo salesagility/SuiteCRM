@@ -37,6 +37,7 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_Extension_OpenSearchItemsPerPage extends Zend_Gdata_Extension
 {
+
     protected $_rootElement = 'itemsPerPage';
     protected $_rootNamespace = 'openSearch';
 
@@ -45,4 +46,5 @@ class Zend_Gdata_Extension_OpenSearchItemsPerPage extends Zend_Gdata_Extension
         parent::__construct();
         $this->_text = $text;
     }
+
 }

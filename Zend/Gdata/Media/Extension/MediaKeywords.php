@@ -48,4 +48,5 @@ class Zend_Gdata_Media_Extension_MediaKeywords extends Zend_Gdata_Extension
         $this->registerAllNamespaces(Zend_Gdata_Media::$namespaces);
         parent::__construct();
     }
+
 }

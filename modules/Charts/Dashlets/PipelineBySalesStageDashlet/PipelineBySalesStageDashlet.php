@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -51,6 +52,7 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
     public $pbss_date_start;
     public $pbss_date_end;
     public $pbss_sales_stages = array();
+    private $currency;
 
     public $maxLabelSizeBeforeTotal = 18;
     public $labelReplacementString = '...';
@@ -114,9 +116,11 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
         $is_currency = true;
         $thousands_symbol = translate('LBL_OPP_THOUSANDS', 'Charts');
 
-        $currency_symbol = $sugar_config['default_currency_symbol'];
+        $this->currency = new Currency();
+        $currency = $this->currency;
+        $currency_symbol = $currency->getDefaultCurrencySymbol();
+        $currency->retrieve($currency->retrieveIDBySymbol($currency_symbol));
         if ($current_user->getPreference('currency')) {
-            $currency = new Currency();
             $currency->retrieve($current_user->getPreference('currency'));
             $currency_symbol = $currency->symbol;
         }
@@ -319,15 +323,15 @@ EOD;
     */
     protected function constructQuery()
     {
+        $conversion_rate = $this->currency->conversion_rate;
         $query = "  SELECT opportunities.sales_stage,
                         count(*) AS opp_count,
-                        sum(amount_usdollar/1000) AS total
+                        sum((amount_usdollar*".$conversion_rate.")/1000) AS total
                     FROM users,opportunities  ";
         $query .= " WHERE opportunities.date_closed >= ". db_convert("'".$this->pbss_date_start."'", 'date').
             " AND opportunities.date_closed <= ".db_convert("'".$this->pbss_date_end."'", 'date') .
             " AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
         $query .= " GROUP BY opportunities.sales_stage";
-
         return $query;
     }
 

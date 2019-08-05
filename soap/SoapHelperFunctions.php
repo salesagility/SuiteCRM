@@ -606,9 +606,9 @@ function getRelationshipResults($bean, $link_field_name, $link_module_fields)
         }
 
         return array('rows' => $list, 'fields_set_on_rows' => $filterFields);
-    }
-    return false;
-    // else
+    } else {
+        return false;
+    } // else
 } // fn
 
 function get_return_value_for_link_fields($bean, $module, $link_name_to_value_fields_array)
@@ -692,8 +692,9 @@ function new_handle_set_relationship($module_name, $module_id, $link_field_name,
         $mod->$link_field_name->add($related_ids);
 
         return true;
+    } else {
+        return false;
     }
-    return false;
 }
 
 function new_handle_set_entries($module_name, $name_value_lists, $select_fields = false)
@@ -816,10 +817,11 @@ function new_handle_set_entries($module_name, $name_value_lists, $select_fields 
         return array(
             'name_value_lists' => $ret_values,
         );
-    }
-    return array(
+    } else {
+        return array(
             'ids' => $ids,
         );
+    }
 }
 
 function get_return_value($value, $module, $returnDomValue = false)
@@ -1041,10 +1043,10 @@ function check_for_duplicate_contacts($seed)
         $contacts = array_merge($contacts, $contacts2);
         if (count($contacts) == 0) {
             return null;
-        }
-        foreach ($contacts as $contact) {
-            if (!empty($trimmed_last) && strcmp($trimmed_last, $contact->last_name) == 0) {
-                if ((!empty($trimmed_email) || !empty($trimmed_email2)) && (strcmp(
+        } else {
+            foreach ($contacts as $contact) {
+                if (!empty($trimmed_last) && strcmp($trimmed_last, $contact->last_name) == 0) {
+                    if ((!empty($trimmed_email) || !empty($trimmed_email2)) && (strcmp(
                         $trimmed_email,
                                 $contact->email1
                     ) == 0 || strcmp(
@@ -1055,34 +1057,36 @@ function check_for_duplicate_contacts($seed)
                                 $contact->email
                                 ) == 0 || strcmp($trimmed_email2, $contact->email2) == 0)
                     ) {
-                    //bug: 39234 - check if the account names are the same
-                    //if the incoming contact's account_name is empty OR it is not empty and is the same
-                    //as an existing contact's account name, then find the match.
-                    $contact->load_relationship('accounts');
-                    if (empty($seed->account_name) || strcmp($seed->account_name, $contact->account_name) == 0) {
-                        $GLOBALS['log']->info('End: SoapHelperWebServices->check_for_duplicate_contacts - duplicte found ' . $contact->id);
+                        //bug: 39234 - check if the account names are the same
+                        //if the incoming contact's account_name is empty OR it is not empty and is the same
+                        //as an existing contact's account name, then find the match.
+                        $contact->load_relationship('accounts');
+                        if (empty($seed->account_name) || strcmp($seed->account_name, $contact->account_name) == 0) {
+                            $GLOBALS['log']->info('End: SoapHelperWebServices->check_for_duplicate_contacts - duplicte found ' . $contact->id);
 
-                        return $contact->id;
+                            return $contact->id;
+                        }
                     }
                 }
             }
+
+            return null;
         }
+    } else {
+        //This section of code is executed if no emails are supplied in the $seed instance
 
-        return null;
-    }
-    //This section of code is executed if no emails are supplied in the $seed instance
-
-    //This query is looking for the id of Contact records that do not have a primary email address based on the matching
-    //first and last name and the record being not deleted.  If any such records are found we will take the first one and assume
-    //that it is the duplicate record
-    $query = "SELECT c.id as id FROM contacts c
+        //This query is looking for the id of Contact records that do not have a primary email address based on the matching
+        //first and last name and the record being not deleted.  If any such records are found we will take the first one and assume
+        //that it is the duplicate record
+        $query = "SELECT c.id as id FROM contacts c
 LEFT OUTER JOIN email_addr_bean_rel eabr ON eabr.bean_id = c.id
 WHERE c.first_name = '{$trimmed_first}' AND c.last_name = '{$trimmed_last}' AND c.deleted = 0 AND eabr.id IS NULL";
 
-    //Apply the limit query filter to this since we only need the first record
-    $result = DBManagerFactory::getInstance()->getOne($query);
+        //Apply the limit query filter to this since we only need the first record
+        $result = DBManagerFactory::getInstance()->getOne($query);
 
-    return !empty($result) ? $result : null;
+        return !empty($result) ? $result : null;
+    }
 }
 
 /*
@@ -1107,8 +1111,9 @@ function is_server_version_greater($left, $right)
         return is_server_version_greater($left, $right);
     } elseif ($left[0] < $right[0]) {
         return true;
+    } else {
+        return false;
     }
-    return false;
 }
 
 function getFile($zip_file, $file_in_zip)
@@ -1146,7 +1151,7 @@ if (!function_exists("get_encoded")) {
      *
      * @param $string - the string to decrypt
      *
-     * @return a decrypted string if we can decrypt, the original string otherwise
+     * @return string decrypted string if we can decrypt, the original string otherwise
      */
     function decrypt_string($string)
     {
@@ -1164,9 +1169,8 @@ if (!function_exists("get_encoded")) {
             $key = substr(md5($key), 0, 24);
             $iv = "password";
 
-            return openssl_decrypt($buffer, OPENSSL_CIPHER_3DES, $key, OPENSSL_ZERO_PADDING, $iv);
+            return openssl_decrypt(pack("H*", $buffer), 'des-ede3-cbc', $key, OPENSSL_NO_PADDING, $iv);
         }
-        return $string;
     }
 }
 

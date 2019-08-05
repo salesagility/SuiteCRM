@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -2958,10 +2958,10 @@
         acctMbox = (ds.baseParams.acct) ? ds.baseParams.acct + " " + ds.baseParams.mbox : ds.baseParams.mbox;
         var cm = SE.grid.getColumnModel();
         if (ds.baseParams.mbox == mod_strings.LBL_LIST_FORM_SENT_TITLE) {
-          cm.setColumnHeader(4, mod_strings.LBL_LIST_DATE_SENT);
+          cm.setColumnHeader(4, mod_strings.LBL_LIST_DATE_SENT_RECEIVED);
           //SE.grid.render();
-        } else if (cm.config[4].header != app_strings.LBL_EMAIL_DATE_SENT_BY_SENDER) {
-          cm.setColumnHeader(4, app_strings.LBL_EMAIL_DATE_SENT_BY_SENDER);
+        } else if (cm.config[4].header != app_strings.LBL_EMAIL_DATE_SENT_RECEIVED_BY_SENDER) {
+          cm.setColumnHeader(4, app_strings.LBL_EMAIL_DATE_SENT_RECEIVED_BY_SENDER);
           //SE.grid.render();
         }
       }

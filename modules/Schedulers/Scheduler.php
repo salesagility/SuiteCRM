@@ -159,9 +159,10 @@ class Scheduler extends SugarBean
         if (is_array($validTimes) && in_array($now, $validTimes)) {
             $GLOBALS['log']->debug('----->Scheduler found valid job ('.$this->name.') for time GMT('.$now.')');
             return true;
+        } else {
+            $GLOBALS['log']->debug('----->Scheduler did NOT find valid job ('.$this->name.') for time GMT('.$now.')');
+            return false;
         }
-        $GLOBALS['log']->debug('----->Scheduler did NOT find valid job ('.$this->name.') for time GMT('.$now.')');
-        return false;
     }
 
     /**
@@ -174,16 +175,15 @@ class Scheduler extends SugarBean
         $job->scheduler_id = $this->id;
         $job->name = $this->name;
         $job->execute_time = $GLOBALS['timedate']->nowDb();
-        
+
         $user = $this->getUser();
-        
         if (!is_object($user)) {
             LoggerManager::getLogger()->warn('Scheduler / create job: User object not found.');
             $job->assigned_user_id = null;
         } else {
             $job->assigned_user_id = $user->id;
         }
-        
+
         $job->target = $this->job;
         return $job;
     }
@@ -513,15 +513,19 @@ class Scheduler extends SugarBean
                             if ($tsGmt <= $timeEndTs) { // this is taken care of by the initial query - start is less than the date spec'd by admin
                                 if ($tsGmt <= $timeToTs) { // start is less than the time_to
                                     $validJobTime[] = $dateobj->asDb();
+                                } else {
+                                    //_pp('Job Time is NOT smaller that TimeTO: '.$tsGmt .'<='. $timeToTs);
                                 }
-                                //_pp('Job Time is NOT smaller that TimeTO: '.$tsGmt .'<='. $timeToTs);
+                            } else {
+                                //_pp('Job Time is NOT smaller that DateTimeEnd: '.date('Y-m-d H:i:s',$tsGmt) .'<='. $dateTimeEnd); //_pp( $tsGmt .'<='. $timeEndTs );
                             }
-                            //_pp('Job Time is NOT smaller that DateTimeEnd: '.date('Y-m-d H:i:s',$tsGmt) .'<='. $dateTimeEnd); //_pp( $tsGmt .'<='. $timeEndTs );
                         }
+                    } else {
+                        //_pp('Job Time is NOT bigger that TimeFrom: '.$tsGmt .'>='. $timeFromTs);
                     }
-                    //_pp('Job Time is NOT bigger that TimeFrom: '.$tsGmt .'>='. $timeFromTs);
+                } else {
+                    //_pp('Job Time is NOT Bigger than DateTimeStart: '.date('Y-m-d H:i',$tsGmt) .'>='. $dateTimeStart);
                 }
-                //_pp('Job Time is NOT Bigger than DateTimeStart: '.date('Y-m-d H:i',$tsGmt) .'>='. $dateTimeStart);
             }
         }
         //_ppd($validJobTime);
@@ -593,8 +597,10 @@ class Scheduler extends SugarBean
                     $value = str_replace('*/', '', $value);
 
                     return $value . $mod_strings['LBL_HOUR'];
-                } elseif (preg_match('/[^0-9]/',
-                    $mins)) { // got a range, or multiple of mins, so we return an 'Hours' label
+                } elseif (preg_match(
+                    '/[^0-9]/',
+                    $mins
+                )) { // got a range, or multiple of mins, so we return an 'Hours' label
                     return $value;
                 }    // got a "minutes" setting, so it will be at some o'clock.
                 $datef = $current_user->getUserDateTimePreferences();
@@ -988,7 +994,7 @@ class Scheduler extends SugarBean
         $sched14->save();
 
         $sched15 = new Scheduler();
-        $sched15->name               = $mod_strings['LBL_OOTB_SUGARFEEDS'];
+        $sched15->name               = $mod_strings['LBL_OOTB_SUITEFEEDS'];
         $sched15->job                = 'function::trimSugarFeeds';
         $sched15->date_time_start    = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
         $sched15->date_time_end      = null;
@@ -998,6 +1004,18 @@ class Scheduler extends SugarBean
         $sched15->modified_user_id   = '1';
         $sched15->catch_up           = '1';
         $sched15->save();
+
+        $sched16 = new Scheduler();
+        $sched16->name               = $mod_strings['LBL_OOTB_GOOGLE_CAL_SYNC'];
+        $sched16->job                = 'function::syncGoogleCalendar';
+        $sched16->date_time_start    = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
+        $sched16->date_time_end      = null;
+        $sched16->job_interval       = '*/15::*::*::*::*';
+        $sched16->status             = 'Active';
+        $sched16->created_by         = '1';
+        $sched16->modified_user_id   = '1';
+        $sched16->catch_up           = '0';
+        $sched16->save();
     }
 
     ////	END SCHEDULER HELPER FUNCTIONS

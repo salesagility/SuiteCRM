@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,16 +34,17 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once 'include/phpmailer/class.phpmailer.php';
-require_once 'include/phpmailer/class.smtp.php';
+use PHPMailer\PHPMailer\PHPMailer;
+
 require_once 'include/OutboundEmail/OutboundEmail.php';
 
 /**
@@ -96,8 +97,7 @@ class SugarPHPMailer extends PHPMailer
         $this->oe = new OutboundEmail();
         $this->oe->getUserMailerSettings($current_user);
 
-        $this->setLanguage('en', 'include/phpmailer/language/');
-        $this->PluginDir = 'include/phpmailer/';
+        $this->setLanguage('en', 'vendor/phpmailer/phpmailer/language/');
         $this->Mailer = 'smtp';
         // cn: i18n
         $this->CharSet = $locale->getPrecedentPreference('default_email_charset');
@@ -455,7 +455,8 @@ eoq;
         //$this->Sender   = 'me@here.com';
         //$this->Password = 'wrong';
         //$GLOBALS['log']->debug("PHPMailer Send Function: { FromName: $this->FromName From: $this->From Host: $this->Host UserName: $this->Username }");
-
+       
+        
         $ret = null;
         
         $this->fullSmtpLog='';

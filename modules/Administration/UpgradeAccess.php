@@ -63,15 +63,28 @@ RedirectMatch 403 {$ignoreCase}/+upload
 RedirectMatch 403 {$ignoreCase}/+cache/+diagnostic
 RedirectMatch 403 {$ignoreCase}/+files\.md5\$
 <IfModule mod_rewrite.c>
-    Options +FollowSymLinks
+    Options +SymLinksIfOwnerMatch
     RewriteEngine On
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&module=app_strings&lang=$1 [L,QSA]
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&module=$1&lang=$2 [L,QSA]
+
+    # --------- DEPRECATED --------
     RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
     RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    # -----------------------------
+
+    RewriteRule ^Api/access_token$ Api/index.php/access_token [L]
+    RewriteRule ^Api/V8/(.*?)$ Api/index.php/V8/$1 [L]
+    RewriteRule ^Api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
+<IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_URI} (.+)/$
+        RewriteRule ^ %1 [R=301,L]
 </IfModule>
 # END SUGARCRM RESTRICTIONS
 EOQ;
@@ -91,7 +104,6 @@ if (file_exists($htaccess_file)) {
         }
     }
 }
-
 if (substr($contents, -1) != "\n") {
     $restrict_str = "\n" . $restrict_str;
 }
@@ -142,7 +154,6 @@ if (file_exists($uploadHta) && filesize($uploadHta)) {
         $htaccess_failed = true;
     }
 }
-
 
 if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'UpgradeAccess') {
     // only display message in the repair tool and not during the upgrade process

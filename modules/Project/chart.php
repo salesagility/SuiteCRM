@@ -72,11 +72,13 @@ class chart
 
         if ($chart_type == "monthly") {
             list($time_span, $day_count) = $this->year_week($start_date, $end_date);
-        } elseif ($chart_type == "quarterly") {
-            list($time_span, $day_count) = $this->year_quarter($start_date, $end_date);
         } else {
-            $time_span = $this->year_month($start_date, $end_date);
-            $day_count = $this->count_days($start_date, $end_date) + 1;
+            if ($chart_type == "quarterly") {
+                list($time_span, $day_count) = $this->year_quarter($start_date, $end_date);
+            } else {
+                $time_span = $this->year_month($start_date, $end_date);
+                $day_count = $this->count_days($start_date, $end_date) + 1;
+            }
         }
 
 
@@ -332,11 +334,13 @@ class chart
                     $user_obj->retrieve($resource->id);
 
                     echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$user_obj->full_name.'</a></td>';
-                } elseif ($resource->type == 'project_contacts_1_c') {
-                    $contact_obj = new Contact();
-                    $contact_obj->retrieve($resource->id);
+                } else {
+                    if ($resource->type == 'project_contacts_1_c') {
+                        $contact_obj = new Contact();
+                        $contact_obj->retrieve($resource->id);
 
-                    echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$contact_obj->full_name.'</a></td>';
+                        echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$contact_obj->full_name.'</a></td>';
+                    }
                 }
 
                 $i=0;
@@ -359,9 +363,11 @@ class chart
                         if ($x == $resource->tasks[$c]['start_day']) {
                             $dup++;
                             $square =  '<td class="inner_td"><div style="color: #ffffff;" rel="'.$dateq.'|'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
-                        } elseif ($x > $resource->tasks[$c]['start_day'] && $x <= $resource->tasks[$c]['end_day']) {
-                            $dup++;
-                            $square =  '<td class="inner_td"><div rel="'.$dateq.'|'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
+                        } else {
+                            if ($x > $resource->tasks[$c]['start_day'] && $x <= $resource->tasks[$c]['end_day']) {
+                                $dup++;
+                                $square =  '<td class="inner_td"><div rel="'.$dateq.'|'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
+                            }
                         }
                     }
 
@@ -374,183 +380,193 @@ class chart
             }
         }//end weekly view
 
-        elseif ($chart_type == "monthly") {
-            echo '<td class="main_table week">'.$mod_strings['LBL_RESOURCE_CHART_MONTH'].'</td>';
-            /*foreach ($weeks as $week)
+        else {
+            if ($chart_type == "monthly") {
+                echo '<td class="main_table week">'.$mod_strings['LBL_RESOURCE_CHART_MONTH'].'</td>';
+                /*foreach ($weeks as $week)
             {
-                echo '<td class="main_table weeks" colspan="7">'.$week.'</td>';
-            }*/
+                    echo '<td class="main_table weeks" colspan="7">'.$week.'</td>';
+                }*/
 
-            foreach ($time_span as $year => $months) {
-                foreach ($months as $month => $weeks) {//count the number of days in each month
+                foreach ($time_span as $year => $months) {
+                    foreach ($months as $month => $weeks) {//count the number of days in each month
 
-                    echo '<td class="main_table weeks" colspan="' . count($weeks) . '">'.$month .'</td>';
+                        echo '<td class="main_table weeks" colspan="' . count($weeks) . '">'.$month .'</td>';
+                    }
                 }
-            }
 
-            echo '</tr><tr><td rowspan="3" class="main_table day">'.$mod_strings['LBL_RESOURCE_CHART_WEEK'].'</td>';
-            foreach ($time_span as $year => $months) {
-                $wcount= 0;
-                foreach ($months as $month => $weeks) {//count the number of weeks in each month
-                    /*foreach ($weeks as $week)
+                echo '</tr><tr><td rowspan="3" class="main_table day">'.$mod_strings['LBL_RESOURCE_CHART_WEEK'].'</td>';
+                foreach ($time_span as $year => $months) {
+                    $wcount= 0;
+                    foreach ($months as $month => $weeks) {//count the number of weeks in each month
+                        /*foreach ($weeks as $week)
                     {
-                        $wcount++;
-                    }*/
-                    $wcount+= count($weeks);
+                            $wcount++;
+                        }*/
+                        $wcount+= count($weeks);
+                    }
+                    $width = $wcount * 26; //used to set width on years row. width needed for css text clipping
+                    echo '<td colspan="'.$wcount.'" class="main_table years"><div style="width: '.$width.'px;" class="year_div">' . $year.'</div></td>';
                 }
-                $width = $wcount * 26; //used to set width on years row. width needed for css text clipping
-                echo '<td colspan="'.$wcount.'" class="main_table years"><div style="width: '.$width.'px;" class="year_div">' . $year.'</div></td>';
-            }
-            echo '</tr><tr class="days_row">';
+                echo '</tr><tr class="days_row">';
 
-            $month_count = 0;//start month count
-            foreach ($time_span as $year => $months) {
-                foreach ($months as $weeks) {
-                    foreach ($weeks as $week => $w) {
-                        echo '<td class="inner_td"><div class="cell_width">'.$w.'</div></td>';//day number shown
+                $month_count = 0;//start month count
+                foreach ($time_span as $year => $months) {
+                    foreach ($months as $weeks) {
+                        foreach ($weeks as $week => $w) {
+                            echo '<td class="inner_td"><div class="cell_width">'.$w.'</div></td>';//day number shown
+                        }
                     }
                 }
-            }
 
-            echo '</tr><tr class="days_row">';
+                echo '</tr><tr class="days_row">';
 
-            foreach ($time_span as $year => $months) {
-                foreach ($months as $weeks) {
-                    foreach ($weeks as $week => $d) {
-                        echo '<td class="inner_td"><div class="cell_width">'. ($week + 1) .'</div></td>';//First letter of the days name shown
+                foreach ($time_span as $year => $months) {
+                    foreach ($months as $weeks) {
+                        foreach ($weeks as $week => $d) {
+                            echo '<td class="inner_td"><div class="cell_width">'. ($week + 1) .'</div></td>';//First letter of the days name shown
+                        }
                     }
                 }
-            }
 
-            echo '</tr>';
+                echo '</tr>';
 
-            foreach ($resources as $resource) {
-                $count = $resource->task_count;
+                foreach ($resources as $resource) {
+                    $count = $resource->task_count;
 
-                if ($resource->type == 'project_users_1_c') {
-                    $user_obj = new User();
-                    $user_obj->retrieve($resource->id);
+                    if ($resource->type == 'project_users_1_c') {
+                        $user_obj = new User();
+                        $user_obj->retrieve($resource->id);
 
-                    echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$user_obj->full_name.'</a></td>';
-                } elseif ($resource->type == 'project_contacts_1_c') {
-                    $contact_obj = new Contact();
-                    $contact_obj->retrieve($resource->id);
+                        echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$user_obj->full_name.'</a></td>';
+                    } else {
+                        if ($resource->type == 'project_contacts_1_c') {
+                            $contact_obj = new Contact();
+                            $contact_obj->retrieve($resource->id);
 
-                    echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$contact_obj->full_name.'</a></td>';
-                }
-
-                $i=0;
-                for ($x=0; $x< $day_count; $x++) {
-                    //Get dates for each week
-                    $dateq = $this->get_week_dates($start_date, $x);
-
-                    $class = '';
-
-                    $square = '';
-                    $dup = 0;
-
-                    for ($c=0; $c < $count; $c++) {
-                        if ($x == floor($resource->tasks[$c]['start_day'] /7) && ($resource->tasks[$c]['start_day'] /7) > 0) {
-                            $dup++;
-                            $square =  '<td class="inner_td"><div style="color: #ffffff;"  rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
-                        } elseif ($x > floor($resource->tasks[$c]['start_day']/7) && $x <= floor($resource->tasks[$c]['end_day']/7)) {
-                            $dup++;
-                            $square =  '<td class="inner_td"><div rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
+                            echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$contact_obj->full_name.'</a></td>';
                         }
                     }
 
-                    if ($square == '') {
-                        $square = '<td class="inner_td"><div class="cell_width day_block"><div class="'.$class.'"></div></div></td>';
+                    $i=0;
+                    for ($x=0; $x< $day_count; $x++) {
+                        //Get dates for each week
+                        $dateq = $this->get_week_dates($start_date, $x);
+
+                        $class = '';
+
+                        $square = '';
+                        $dup = 0;
+
+                        for ($c=0; $c < $count; $c++) {
+                            if ($x == floor($resource->tasks[$c]['start_day'] /7) && ($resource->tasks[$c]['start_day'] /7) > 0) {
+                                $dup++;
+                                $square =  '<td class="inner_td"><div style="color: #ffffff;"  rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
+                            } else {
+                                if ($x > floor($resource->tasks[$c]['start_day']/7) && $x <= floor($resource->tasks[$c]['end_day']/7)) {
+                                    $dup++;
+                                    $square =  '<td class="inner_td"><div rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
+                                }
+                            }
+                        }
+
+                        if ($square == '') {
+                            $square = '<td class="inner_td"><div class="cell_width day_block"><div class="'.$class.'"></div></div></td>';
+                        }
+                        echo $square;
+                        $i++;
                     }
-                    echo $square;
-                    $i++;
                 }
             }
-        }
-        //end monthly view
+            //end monthly view
 
-        elseif ($chart_type == "quarterly") {
-            echo '<td class="main_table week">'.$mod_strings['LBL_RESOURCE_CHART_QUARTER'].'</td>';
-            foreach ($time_span as $year => $quarters) {
-                foreach ($quarters as $quarter => $months) {//count the number of days in each month
+            else {
+                if ($chart_type == "quarterly") {
+                    echo '<td class="main_table week">'.$mod_strings['LBL_RESOURCE_CHART_QUARTER'].'</td>';
+                    foreach ($time_span as $year => $quarters) {
+                        foreach ($quarters as $quarter => $months) {//count the number of days in each month
                     
-                    echo '<td class="main_table weeks" colspan="' . count($months) . '">'.$quarter .'</td>';
-                }
-            }
-
-            echo '</tr><tr><td rowspan="3" class="main_table day">'.$mod_strings['LBL_RESOURCE_CHART_MONTH'].'</td>';
-            foreach ($time_span as $year => $quarters) {
-                $qcount= 0;
-                foreach ($quarters as $quarter => $months) {//count the number of months in each quarter
-                
-                    $qcount+= count($months);
-                }
-                $width = $qcount * 26; //used to set width on years row. width needed for css text clipping
-                echo '<td colspan="'.$qcount.'" class="main_table years"><div style="width: '.$width.'px;" class="year_div">' . $year.'</div></td>';
-            }
-            echo '</tr><tr class="days_row">';
-
-            $month_count = 0;//start month count
-            foreach ($time_span as $year => $quarters) {
-                foreach ($quarters as $quarter) {
-                    foreach ($quarter as $month => $m) {
-                        echo '<td class="inner_td"><div class="cell_width">'.$month.'</div></td>';//day number shown
-                    }
-                }
-            }
-
-            echo '</tr><tr class="days_row">';
-
-            foreach ($time_span as $year => $quarters) {
-                foreach ($quarters as $quarter) {
-                    foreach ($quarter as $month => $m) {
-                        echo '<td class="inner_td"><div class="cell_width">'. $m .'</div></td>';//First letter of the days name shown
-                    }
-                }
-            }
-
-            echo '</tr>';
-
-            foreach ($resources as $resource) {
-                $count = $resource->task_count;
-
-                if ($resource->type == 'project_users_1_c') {
-                    $user_obj = new User();
-                    $user_obj->retrieve($resource->id);
-
-                    echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$user_obj->full_name.'</a></td>';
-                } elseif ($resource->type == 'project_contacts_1_c') {
-                    $contact_obj = new Contact();
-                    $contact_obj->retrieve($resource->id);
-
-                    echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$contact_obj->full_name.'</a></td>';
-                }
-
-
-                $i=0;
-                for ($x=0; $x< $day_count; $x++) {
-                    //Get date for each day
-                    $dateq = $this->get_month_dates($start_date, $x);
-
-                    $class = '';
-                    $square = '';
-                    $dup = 0;
-
-                    for ($c=0; $c < $count; $c++) {
-                        $ds_month = $this->count_months($start_date, $resource->tasks[$c]['start_day'], $x);
-                        $de_month = $this->count_months($start_date, $resource->tasks[$c]['end_day'], $x);
-
-                        if (($ds_month == 0 || $de_month == 0) && $resource->tasks[$c]['start_day'] <= $resource->tasks[$c]['end_day'] && $resource->tasks[$c]['start_day'] >=0 && $resource->tasks[$c]['end_day']>=0) {
-                            $dup++;
-                            $square =  '<td class="inner_td"><div rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
+                            echo '<td class="main_table weeks" colspan="' . count($months) . '">'.$quarter .'</td>';
                         }
                     }
 
-                    if ($square == '') {
-                        $square = '<td class="inner_td"><div class="cell_width day_block"><div class="'.$class.'"></div></div></td>';
+                    echo '</tr><tr><td rowspan="3" class="main_table day">'.$mod_strings['LBL_RESOURCE_CHART_MONTH'].'</td>';
+                    foreach ($time_span as $year => $quarters) {
+                        $qcount= 0;
+                        foreach ($quarters as $quarter => $months) {//count the number of months in each quarter
+                
+                            $qcount+= count($months);
+                        }
+                        $width = $qcount * 26; //used to set width on years row. width needed for css text clipping
+                        echo '<td colspan="'.$qcount.'" class="main_table years"><div style="width: '.$width.'px;" class="year_div">' . $year.'</div></td>';
                     }
-                    echo $square;
-                    $i++;
+                    echo '</tr><tr class="days_row">';
+
+                    $month_count = 0;//start month count
+                    foreach ($time_span as $year => $quarters) {
+                        foreach ($quarters as $quarter) {
+                            foreach ($quarter as $month => $m) {
+                                echo '<td class="inner_td"><div class="cell_width">'.$month.'</div></td>';//day number shown
+                            }
+                        }
+                    }
+
+                    echo '</tr><tr class="days_row">';
+
+                    foreach ($time_span as $year => $quarters) {
+                        foreach ($quarters as $quarter) {
+                            foreach ($quarter as $month => $m) {
+                                echo '<td class="inner_td"><div class="cell_width">'. $m .'</div></td>';//First letter of the days name shown
+                            }
+                        }
+                    }
+
+                    echo '</tr>';
+
+                    foreach ($resources as $resource) {
+                        $count = $resource->task_count;
+
+                        if ($resource->type == 'project_users_1_c') {
+                            $user_obj = new User();
+                            $user_obj->retrieve($resource->id);
+
+                            echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$user_obj->full_name.'</a></td>';
+                        } else {
+                            if ($resource->type == 'project_contacts_1_c') {
+                                $contact_obj = new Contact();
+                                $contact_obj->retrieve($resource->id);
+
+                                echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$contact_obj->full_name.'</a></td>';
+                            }
+                        }
+
+
+                        $i=0;
+                        for ($x=0; $x< $day_count; $x++) {
+                            //Get date for each day
+                            $dateq = $this->get_month_dates($start_date, $x);
+
+                            $class = '';
+                            $square = '';
+                            $dup = 0;
+
+                            for ($c=0; $c < $count; $c++) {
+                                $ds_month = $this->count_months($start_date, $resource->tasks[$c]['start_day'], $x);
+                                $de_month = $this->count_months($start_date, $resource->tasks[$c]['end_day'], $x);
+
+                                if (($ds_month == 0 || $de_month == 0) && $resource->tasks[$c]['start_day'] <= $resource->tasks[$c]['end_day'] && $resource->tasks[$c]['start_day'] >=0 && $resource->tasks[$c]['end_day']>=0) {
+                                    $dup++;
+                                    $square =  '<td class="inner_td"><div rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
+                                }
+                            }
+
+                            if ($square == '') {
+                                $square = '<td class="inner_td"><div class="cell_width day_block"><div class="'.$class.'"></div></div></td>';
+                            }
+                            echo $square;
+                            $i++;
+                        }
+                    }
                 }
             }
         }
@@ -663,8 +679,9 @@ class chart
 
         if ($sdate->format('m') != $edate->format('m')) {
             return -1;
+        } else {
+            return 0;
         }
-        return 0;
     }
 
 
@@ -676,8 +693,10 @@ class chart
         //If the task's end date is before chart's start date return -1 to make sure task starts on first day of the chart
         if ($d2 < $d1) {
             return -1;
-        } elseif ($d2 == $d1) {
-            return 1;
+        } else {
+            if ($d2 == $d1) {
+                return 1;
+            }
         }
         // $d2->add(new DateInterval('P1D')); //Add 1 day to include the end date as a day
         $difference = $d1->diff($d2);
@@ -734,16 +753,25 @@ class chart
 
         if ($date1->format('l') == 'Sunday' && $date == $now) {
             return 'weekend-today';
-        } elseif ($date1->format('l') == 'Saturday' && $date == $now) {
-            return 'weekend-today';
-        } elseif ($date1->format('l') == 'Sunday') {
-            return 'weekend';
-        } elseif ($date1->format('l') == 'Saturday') {
-            return 'weekend';
-        } elseif ($date == $now) {
-            return 'today';
+        } else {
+            if ($date1->format('l') == 'Saturday' && $date == $now) {
+                return 'weekend-today';
+            } else {
+                if ($date1->format('l') == 'Sunday') {
+                    return 'weekend';
+                } else {
+                    if ($date1->format('l') == 'Saturday') {
+                        return 'weekend';
+                    } else {
+                        if ($date == $now) {
+                            return 'today';
+                        } else {
+                            return false;
+                        }
+                    }
+                }
+            }
         }
-        return false;
     }
 
 
@@ -762,7 +790,8 @@ class chart
     {
         if ($days > 1) {
             return " d";
+        } else {
+            return " h";
         }
-        return " h";
     }
 }
