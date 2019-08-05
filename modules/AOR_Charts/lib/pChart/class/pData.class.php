@@ -520,9 +520,9 @@
 
          for ($i=0;$i<=$Values;$i++) {
              if ($withFloat) {
-                 $Value = rand($Min*100, $Max*100)/100;
+                 $Value = mt_rand($Min*100, $Max*100)/100;
              } else {
-                 $Value = rand($Min, $Max);
+                 $Value = mt_rand($Min, $Max);
              }
              $this->addPoints($Value, $SerieName);
          }
@@ -769,9 +769,9 @@
          if (isset($this->Palette[$ID])) {
              $this->Data["ScatterSeries"][$ID]["Color"] = $this->Palette[$ID];
          } else {
-             $this->Data["ScatterSeries"][$ID]["Color"]["R"] = rand(0, 255);
-             $this->Data["ScatterSeries"][$ID]["Color"]["G"] = rand(0, 255);
-             $this->Data["ScatterSeries"][$ID]["Color"]["B"] = rand(0, 255);
+             $this->Data["ScatterSeries"][$ID]["Color"]["R"] = mt_rand(0, 255);
+             $this->Data["ScatterSeries"][$ID]["Color"]["G"] = mt_rand(0, 255);
+             $this->Data["ScatterSeries"][$ID]["Color"]["B"] = mt_rand(0, 255);
              $this->Data["ScatterSeries"][$ID]["Color"]["Alpha"] = 100;
          }
      }
@@ -798,9 +798,9 @@
          if (isset($this->Palette[$ID])) {
              $this->Data["Series"][$Serie]["Color"] = $this->Palette[$ID];
          } else {
-             $this->Data["Series"][$Serie]["Color"]["R"] = rand(0, 255);
-             $this->Data["Series"][$Serie]["Color"]["G"] = rand(0, 255);
-             $this->Data["Series"][$Serie]["Color"]["B"] = rand(0, 255);
+             $this->Data["Series"][$Serie]["Color"]["R"] = mt_rand(0, 255);
+             $this->Data["Series"][$Serie]["Color"]["G"] = mt_rand(0, 255);
+             $this->Data["Series"][$Serie]["Color"]["B"] = mt_rand(0, 255);
              $this->Data["Series"][$Serie]["Color"]["Alpha"] = 100;
          }
      }

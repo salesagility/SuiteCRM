@@ -62,7 +62,7 @@
      public function writeToCache($ID, $pChartObject)
      {
          /* Compute the paths */
-         $TemporaryFile = $this->CacheFolder."/tmp_".rand(0, 1000).".png";
+         $TemporaryFile = $this->CacheFolder."/tmp_".mt_rand(0, 1000).".png";
          $Database      = $this->CacheFolder."/".$this->CacheDB;
          $Index         = $this->CacheFolder."/".$this->CacheIndex;
 

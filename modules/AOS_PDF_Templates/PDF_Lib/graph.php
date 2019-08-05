@@ -322,7 +322,7 @@ function print_graph($g, $pgwidth)
 
 
     if (count($data)>0 && $type) {
-        $figure_file = "graph_cache/".rand(11111, 999999999).".".$img_type;
+        $figure_file = "graph_cache/".mt_rand(11111, 999999999).".".$img_type;
         if ($bandw) {
             $colours = array('snow1','black','snow4','snow3','snow2','cadetblue4','cadetblue3','cadetblue1','bisque4','bisque2','beige');
         } else {
