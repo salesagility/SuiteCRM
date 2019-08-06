@@ -148,7 +148,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
     }
         $doQuery = true;
 
-        if ($file_type == 'documents') {
+        if ($file_type == 'documents' && !isset($image_field)) {
             // cn: bug 9674 document_revisions table has no 'name' column.
             $query = "SELECT filename name FROM document_revisions INNER JOIN documents ON documents.id = document_revisions.document_id ";
             $query .= "WHERE document_revisions.id = '" . $db->quote($_REQUEST['id']) . "' ";
