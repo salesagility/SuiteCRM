@@ -1,14 +1,25 @@
-## SuiteCRM 7.11.7
+<a href="https://suitecrm.com">
+  <img width="180px" height="41px" src="https://suitecrm.com/wp-content/uploads/2017/12/logo.png" align="right" />
+</a>
+
+# SuiteCRM 7.11.7
 
 [![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=hotfix)](https://travis-ci.org/salesagility/SuiteCRM)
 [![codecov](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix/graph/badge.svg)](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/suitecrm/Lobby)
+[![LICENSE](https://img.shields.io/github/license/suitecrm/suitecrm.svg)](https://github.com/salesagility/suitecrm/blob/master/LICENSE.txt)
+[![Twitter](https://img.shields.io/twitter/follow/suitecrm.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=suitecrm)
 
-### What's in this repository ###
+[Website](https://suitecrm.com) |
+[Maintainers](https://salesagility.com) |
+[Contributors](https://github.com/salesagility/SuiteCRM/graphs/contributors) |
+[Community & Forum](https://suitecrm.com/suitecrm/forum) |
+[Partners](https://suitecrm.com/about/about-us/partners/) |
+[Translations](https://crowdin.com/project/suitecrmtranslations)
 
-This is the git repository for the SuiteCRM project, the award-winning, enterprise-class open source CRM.
+SuiteCRM is the award winning open source, enterprise ready Customer Relationship Management (CRM) software application.
 
-This repository has been created to allow community members to collaborate and contribute to the project, helping to develop the SuiteCRM ecosystem.
+Our vision is to be the most adopted open source enterprise CRM in the world, giving users full control of their data and freedom to own and customise their business solution
 
 ### Contributing to the project ###
 
