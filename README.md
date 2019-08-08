@@ -8,89 +8,58 @@
 [![codecov](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix/graph/badge.svg)](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/suitecrm/Lobby)
 [![LICENSE](https://img.shields.io/github/license/suitecrm/suitecrm.svg)](https://github.com/salesagility/suitecrm/blob/master/LICENSE.txt)
+![GitHub contributors](https://img.shields.io/github/contributors/salesagility/suitecrm)
 [![Twitter](https://img.shields.io/twitter/follow/suitecrm.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=suitecrm)
 
-[Website](https://suitecrm.com) |
+[Website](https://suitecrm.com) | 
+[Demo](https://suitecrm.com/demo/) |
 [Maintainers](https://salesagility.com) |
 [Contributors](https://github.com/salesagility/SuiteCRM/graphs/contributors) |
 [Community & Forum](https://suitecrm.com/suitecrm/forum) |
 [Partners](https://suitecrm.com/about/about-us/partners/) |
-[Translations](https://crowdin.com/project/suitecrmtranslations)
+[Extensions Directory](https://store.suitecrm.com/) |
+[Translations](https://crowdin.com/project/suitecrmtranslations) | [Code of Conduct](https://docs.suitecrm.com/community/code-of-conduct/)
 
-SuiteCRM is the award winning open source, enterprise ready Customer Relationship Management (CRM) software application.
+[SuiteCRM](https://suitecrm.com) is the award winning open source, enterprise ready Customer Relationship Management (CRM) software application.
 
 Our vision is to be the most adopted open source enterprise CRM in the world, giving users full control of their data and freedom to own and customise their business solution
 
-### Contributing to the project ###
+Try out a free fully working [SuiteCRM demo available here](https://suitecrm.com/demo/)
 
-#### Making a Pull Request ####
+### Contribute [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/salesagility/SuiteCRM/issues)
 
-The [contributing code](https://docs.suitecrm.com/community/contributing-code/) documentation page will provide all the details you need to know about coding standards, which branch to direct your PR to (depending on whether it's a bug fix or a new feature), testing, etc.
+There are lots of ways to [contribute](https://docs.suitecrm.com/community/) to SuiteCRM
 
-#### Security ####
+* [Submit bug](https://docs.suitecrm.com/community/raising-issues/) reports and help us [verify fixes](https://docs.suitecrm.com/community/contributing-code/test-pull-requests/) as they are pushed up
+* Review and collaborate [source code](https://github.com/salesagility/SuiteCRM/pulls) changes
+* Join and engage with other SuiteCRM users and developers on the [forums](https://suitecrm.com/suitecrm/forum)
+* [Contribute bug fixes](https://docs.suitecrm.com/community/contributing-code/bugs/)
+* Help [translate](https://docs.suitecrm.com/community/contributing-to-docs/contributing-to-translation/) language packs
+* [Write and improve](https://docs.suitecrm.com/community/contributing-to-docs/) SuiteCRM documentation
+* [Signing CLA](https://www.clahub.com/agreements/salesagility/SuiteCRM) - Only needs to be done once for all PRs and contributions.
+
+### Security ###
 
 We take Security seriously here at SuiteCRM so if you have discovered a security risk report it by
-emailing security@suitecrm.com. This will be delivered to the product team who handle security issues.
+emailing [security@suitecrm.com](mailto:security@suitecrm.com). This will be delivered to the product team who handle security issues.
 Please don't disclose security bugs publicly until they have been handled by the security team.
 
 Your email will be acknowledged within 24 hours during the business week (Mon - Fri), and you’ll receive a more
 detailed response to your email within 72 hours during the business week (Mon - Fri) indicating the next steps in
 handling your report.
 
-##### Important: Please read before developing code intended for inclusion in the SuiteCRM project. #####
+### Roadmap ### 
 
-Please read and sign the following [contributor agreement][cont_agrmt]
+View the [Roadmap](https://suitecrm.com/roadmap/) and [LTS](https://suitecrm.com/lts/) for details on our planned features and future direction.
 
-[cont_agrmt]: https://www.clahub.com/agreements/salesagility/SuiteCRM
-
-The Contributor Agreement only needs to be signed once for all pull requests and contributions. 
-
-Once signed and confirmed, any pull requests will be considered for inclusion in the SuiteCRM project.
-
-
-### Translations ###
-SuiteCRM in your language: [ Download and install language packs from][suitecrm_languages]
-
-[suitecrm_languages]: https://crowdin.com/project/suitecrmtranslations
-
-
-### Code of Conduct ###
-
-See our [Code of Conduct][code_of_conduct] on our Wiki.
-
-[code_of_conduct]: https://docs.suitecrm.com/community/code-of-conduct/
-
-
-### Helpful links for the community ###
-
-The following links offer various ways to view, contribute and collaborate to the SuiteCRM project:
-
-
-+ [SuiteCRM Demo - A fully working SuiteCRM demo available for people to try before downloading the full SuiteCRM package][suitecrm_demo]
-+ [SuiteCRM Forums - Forums dedicated to discussions about SuiteCRM with various topics and subjects about SuiteCRM][suitecrm_forums]
-+ [SuiteCRM Documentation - A wiki containing relevant documentation to SuiteCRM, constantly being added to][suitecrm_docs]
-+ [SuiteCRM Partners - Our partner section where partners of SuiteCRM can be viewed][suitecrm_partners]
-+ [SuiteCRM Extensions Directory - An extensions directory where community members can submit extensions built for SuiteCRM][suitecrm_ext]
-
-[suitecrm_demo]: https://suitecrm.com/demo
-[suitecrm_forums]: https://suitecrm.com/suitecrm/forum/suite-forum
-[suitecrm_docs]: https://docs.suitecrm.com/
-[suitecrm_partners]: https://suitecrm.com/about/about-us/partners
-[suitecrm_ext]: https://store.suitecrm.com/
-
-### Development Roadmap ###
-
-[ View the Community Roadmap here and get involved][suitecrm_roadmap]
-
-[suitecrm_roadmap]: https://suitecrm.com/roadmap
-
-[More detailed SuiteCRM Community LTS Roadmap][suitecrm_detailed_roadmap]
-
-[suitecrm_detailed_roadmap]: https://suitecrm.com/lts/
-
-### Support & Licensing ###
+### Support ###
 
 SuiteCRM is an open source project. As such please do not contact us directly via email or phone for SuiteCRM support. Instead please use our support forum. By using the forum the knowledge is shared with everyone in the community. Our developers answer questions on the forum daily but it also gives the other members of the community the opportunity to contribute. If you would like customisations to specifically fit your SuiteCRM  needs then please use our contact form.
 
+### License [![AGPLv3](https://img.shields.io/github/license/suitecrm/suitecrm.svg)](./LICENSE.txt)
+
 SuiteCRM is published under the AGPLv3 license.
+
+
+
 
