@@ -5377,20 +5377,33 @@ class InboundEmail extends SugarBean
                 $this->imagePrefix = 'cid:';
             }
             // handle multi-part email bodies
-            $email->description_html = $this->getMessageTextWithUid(
-                $uid,
-                'HTML',
-                $structure,
-                $fullHeader,
-                $clean_email
-            ); // runs through handleTranserEncoding() already
-            $email->description = $this->getMessageTextWithUid(
-                $uid,
-                'PLAIN',
-                $structure,
-                $fullHeader,
-                $clean_email
-            ); // runs through handleTranserEncoding() already
+            $subtypeArray = [
+                'MIXED',
+                'ALTERNATIVE',
+                'RELATED',
+                'REPORT',
+                'HTML'
+            ];
+
+            if (in_array(strtoupper($structure->subtype), $subtypeArray, true)) {
+                $email->description_html = $this->getMessageTextWithUid(
+                    $uid,
+                    $structure->subtype,
+                    $structure,
+                    $fullHeader,
+                    $clean_email
+                );
+            } elseif ($structure->subtype === 'PLAIN') {
+                $email->description = $this->getMessageTextWithUid(
+                    $uid,
+                    'PLAIN',
+                    $structure,
+                    $fullHeader,
+                    $clean_email
+                );
+            } else {
+                $log->warn('Unknown MIME subtype in fetch request');
+            }
             $this->imagePrefix = $oldPrefix;
 
 
