@@ -184,7 +184,7 @@ function buildEditField() {
                 }
 
                 //We can only edit one field at a time currently so turn off the on dblclick event
-                $(".inlineEdit").off("click");
+                $(".inlineEdit a").off("click");
                 $(".inlineEdit").off("dblclick");
 
                 //Call the click away function to handle if the user has clicked off the field, if they have it will close the form.
