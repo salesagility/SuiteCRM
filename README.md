@@ -42,8 +42,7 @@ There are lots of ways to [contribute](https://docs.suitecrm.com/community/) to 
 ### Code Contributors
 
 This project exists thanks to all the people who contribute and more. [[Contribute](https://docs.suitecrm.com/community/)].
-<a href="https://github.com/salesagility/SuiteCRM/graphs/contributors"><img src="https://opencollective.com/SuiteCRM/contributors.svg?width=890&button=false" /></a>
-
+<a href="https://github.com/salesagility/SuiteCRM/graphs/contributors"><img src="https://opencollective.com/SuiteCRM/contributors.svg?avatarHeight=36&width=890&button=false" /></a>
 
 You wanna buy the **core team** a coffee :coffee: or beer :beer:? Then consider a small [[monthly donation](https://opencollective.com/SuiteCRM/contribute)] to help fuel our activities :heart:
 
