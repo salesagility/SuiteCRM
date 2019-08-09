@@ -4027,6 +4027,16 @@ class InboundEmail extends SugarBean
             if (is_array($upperCaseKeyDecodeHeader['CONTENT-TYPE']) && isset($upperCaseKeyDecodeHeader['CONTENT-TYPE']['charset']) && !empty($upperCaseKeyDecodeHeader['CONTENT-TYPE']['charset'])) {
                 // we have an explicit content type, use it
                 $msgPart = $this->handleCharsetTranslation($text, $upperCaseKeyDecodeHeader['CONTENT-TYPE']['charset']);
+            } elseif (is_array($upperCaseKeyDecodeHeader['CONTENT-TYPE']) && isset($upperCaseKeyDecodeHeader['CONTENT-TYPE']['boundary'])) {
+                $email_segments = explode('--' . $upperCaseKeyDecodeHeader['CONTENT-TYPE']['boundary'], $text);
+                array_shift($email_segments);
+                foreach ($email_segments as $segment)
+                {
+                    if (false !== stripos($segment, 'Content-Type: text/plain'))
+                    {
+                        $msgPart = preg_replace('/Content-(Type|ID|Disposition|Transfer-Encoding):.*?\r\n/is', '', $segment);
+                    }
+                }
             } else {
                 // make a best guess as to what our content type is
                 $msgPart = $this->convertToUtf8($text);
@@ -5637,7 +5647,7 @@ class InboundEmail extends SugarBean
                 if (in_array(strtoupper($structure->subtype), $subtypeArray, true)) {
                     $email->description_html = $this->getMessageTextWithUid(
                         $uid,
-                        'HTML',
+                        $structure->subtype,
                         $structure,
                         $fullHeader,
                         true
