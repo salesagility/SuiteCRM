@@ -1,7 +1,3 @@
-<?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,48 +36,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-/**
- * Chart factory
- * @api
- */
-class SugarChartFactory
-{
-    /**
-     * Returns a reference to the ChartEngine object for instance $chartEngine, or the default
-     * instance if one is not specified
-     *
-     * @param string $chartEngine optional, name of the chart engine from $sugar_config['chartEngine']
-     * @param string $module optional, name of module extension for chart engine (see JitReports or SugarFlashReports)
-     * @return object ChartEngine instance
-     */
-    public static function getInstance(
-        $chartEngine = '',
-        $module = ''
-    ) {
-        global $sugar_config;
-        $defaultEngine = 'JsChart';
-        $className = '';
-        //fall back to the default Js Engine if config is not defined
-        if (empty($sugar_config['chartEngine'])) {
-            $sugar_config['chartEngine'] = $defaultEngine;
-        }
-
-        if (empty($chartEngine)) {
-            $chartEngine = $sugar_config['chartEngine'];
-        }
-
-        $file = 'include/SugarCharts/' . $defaultEngine . '.php';
-        $customfile = 'include/SugarCharts/' . $chartEngine . '/' . $chartEngine . $module . '.php';
-
-        if (file_exists('custom/' . $customfile)) {
-            require_once 'custom/' . $customfile;
-            $className = $chartEngine . $module;
-        } elseif (file_exists($file)) {
-            require_once $file;
-            $className = $defaultEngine;
-        }
-
-        return new $className();
-    }
-}
+initmySugarCharts=function(){SUGAR.mySugar.sugarCharts=function(){var activeTab=activePage,charts=new Object();return{loadSugarCharts:function(activeTab){var chartFound=false;for(id in charts[activeTab]){if(id!='undefined'){chartFound=true;loadSugarChart(charts[activeTab][id]['chartId'],charts[activeTab][id]['jsonFilename'],charts[activeTab][id]['css'],charts[activeTab][id]['chartConfig']);}}
+charts=new Object();},addToChartsArrayJson:function(json,activeTab){for(id in json){if(json[id]['supported']=="true"){SUGAR.mySugar.sugarCharts.addToChartsArray(json[id]['chartId'],json[id]['filename'],json[id]['css'],json[id]['chartConfig'],activeTab);}}},addToChartsArray:function(chartId,jsonFilename,css,chartConfig,activeTab){if(charts[activeTab]==null){charts[activeTab]=new Object();}
+charts[activeTab][chartId]=new Object();charts[activeTab][chartId]['chartId']=chartId;charts[activeTab][chartId]['jsonFilename']=jsonFilename;charts[activeTab][chartId]['css']=css;charts[activeTab][chartId]['chartConfig']=chartConfig;}}}();};

@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,47 +38,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Chart factory
- * @api
- */
-class SugarChartFactory
+require_once("include/SugarCharts/JsChart.php");
+
+class Jit extends JsChart
 {
     /**
-     * Returns a reference to the ChartEngine object for instance $chartEngine, or the default
-     * instance if one is not specified
-     *
-     * @param string $chartEngine optional, name of the chart engine from $sugar_config['chartEngine']
-     * @param string $module optional, name of module extension for chart engine (see JitReports or SugarFlashReports)
-     * @return object ChartEngine instance
+     * This class is kept for backwards compatibility only.
+     * Jit constructor.
      */
-    public static function getInstance(
-        $chartEngine = '',
-        $module = ''
-    ) {
-        global $sugar_config;
-        $defaultEngine = 'JsChart';
-        $className = '';
-        //fall back to the default Js Engine if config is not defined
-        if (empty($sugar_config['chartEngine'])) {
-            $sugar_config['chartEngine'] = $defaultEngine;
-        }
-
-        if (empty($chartEngine)) {
-            $chartEngine = $sugar_config['chartEngine'];
-        }
-
-        $file = 'include/SugarCharts/' . $defaultEngine . '.php';
-        $customfile = 'include/SugarCharts/' . $chartEngine . '/' . $chartEngine . $module . '.php';
-
-        if (file_exists('custom/' . $customfile)) {
-            require_once 'custom/' . $customfile;
-            $className = $chartEngine . $module;
-        } elseif (file_exists($file)) {
-            require_once $file;
-            $className = $defaultEngine;
-        }
-
-        return new $className();
+    public function __construct()
+    {
+        parent::__construct();
     }
 }
