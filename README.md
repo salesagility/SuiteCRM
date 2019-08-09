@@ -38,6 +38,20 @@ There are lots of ways to [contribute](https://docs.suitecrm.com/community/) to 
 * [Write and improve](https://docs.suitecrm.com/community/contributing-to-docs/) SuiteCRM documentation
 * [Signing CLA](https://www.clahub.com/agreements/salesagility/SuiteCRM) - Only needs to be done once for all PRs and contributions.
 
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute and more. [[Contribute](https://docs.suitecrm.com/community/)].
+<a href="https://github.com/salesagility/SuiteCRM/graphs/contributors"><img src="https://opencollective.com/SuiteCRM/contributors.svg?width=890&button=false" /></a>
+
+
+You wanna buy the **core team** a coffee :coffee: or beer :beer:? Then consider a small [[monthly donation](https://opencollective.com/SuiteCRM/contribute)] to help fuel our activities :heart:
+
+<img src="https://github.com/samus-aran.png" width="50"> <img src="https://github.com/dillon-brown.png" width="50"> <img src="https://github.com/cameronblaikie.png" width="50"> <img src="https://github.com/code-ph0y.png" width="50"> <img src="https://github.com/gymad.png" width="50"> <img src="https://github.com/willrennie.png" width="50"> <img src="https://github.com/Mac-Rae.png" width="50">
+
+
+
+
 ### Security ###
 
 We take Security seriously here at SuiteCRM so if you have discovered a security risk report it by
@@ -54,7 +68,7 @@ View the [Roadmap](https://suitecrm.com/roadmap/) and [LTS](https://suitecrm.com
 
 ### Support ###
 
-SuiteCRM is an open source project. As such please do not contact us directly via email or phone for SuiteCRM support. Instead please use our support forum. By using the forum the knowledge is shared with everyone in the community. Our developers answer questions on the forum daily but it also gives the other members of the community the opportunity to contribute. If you would like customisations to specifically fit your SuiteCRM  needs then please use our contact form.
+SuiteCRM is an open source project. If you require help with support then please use our [support forum](https://suitecrm.com/suitecrm/forum/). By using the forums the knowledge is shared with everyone in the community. Our developer and community team members answer questions on the forum daily but it also gives the other members of the community the opportunity to contribute. If you would like customisations to specifically fit your SuiteCRM  needs then please visit the [website](https://suitecrm.com/).
 
 ### License [![AGPLv3](https://img.shields.io/github/license/suitecrm/suitecrm.svg)](./LICENSE.txt)
 
