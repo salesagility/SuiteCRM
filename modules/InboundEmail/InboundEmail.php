@@ -5402,7 +5402,7 @@ class InboundEmail extends SugarBean
                     $clean_email
                 );
             } else {
-                $log->warn('Unknown MIME subtype in fetch request');
+                LoggerManager::getLogger()->warn('Unknown MIME subtype in fetch request');
             }
             $this->imagePrefix = $oldPrefix;
 
