@@ -99,6 +99,7 @@ class ApiCommands extends Tasks
         $this->apiSetKeyPermissions();
         $this->apiUpdateEncryptionKey();
         $this->apiRebuildHtaccessFile();
+        $this->apiExportPostmanENV();
         $this->apiCreateClient($name);
         $this->apiCreateUser($name, $password);
     }
@@ -245,6 +246,38 @@ class ApiCommands extends Tasks
         $this->outputUserCredentials(!empty($userBean->fetched_row['id'])
             ? compact('userBean', 'password')
             : []);
+    }
+
+    /**
+     * Export a postman environment.
+     * @param array $opts
+     * @option string $postmanENV set a custom path to output a postman environment.
+     */
+    public function apiExportPostmanENV(
+        $opts = ['postmanENV' => __DIR__ . '/../../../../Api/docs/postman/V8_API_Postman_Environment.json']
+    ) {
+        $rows = [
+            'name' => 'SuiteCRM V8 API Environment',
+            'values' => [
+                [
+                    'key' => 'suitecrm.url',
+                    'value' => '{instance}/Api',
+                    'description' => 'Used for API Operations.',
+                    'enabled' => true
+                ],
+                [
+                    'key' => 'token.url',
+                    'value' => '{instance}/Api/access_token',
+                    'description' => 'Used to get Access Tokens.',
+                    'enabled' => true
+                ]
+            ]
+        ];
+        $json = json_encode($rows, JSON_UNESCAPED_SLASHES);
+
+        file_put_contents($opts['postmanENV'], $json, LOCK_EX);
+
+        $this->say('POSTMAN ENV Exported to ' . $opts['postmanENV']);
     }
 
     /**
