@@ -44,7 +44,6 @@ use Api\Core\Config\ApiConfig;
 use DateTime;
 use DBManager;
 use OAuth2Clients;
-use Robo\Task\Base\loadTasks;
 use Robo\Tasks;
 use SuiteCRM\Robo\Traits\RoboTrait;
 use SuiteCRM\Robo\Traits\CliRunnerTrait;
@@ -54,7 +53,6 @@ use User;
 
 class ApiCommands extends Tasks
 {
-    use loadTasks;
     use RoboTrait;
     use CliRunnerTrait;
 
@@ -87,31 +85,33 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Configure SuiteCRM V8 API
+     * Configures the SuiteCRM V8 API with all defaults
      * @param string $name
      * @param string $password
      * @throws \Exception
      */
-    public function configureV8Api($name, $password)
+    public function apiConfigureV8($name, $password)
     {
         $this->say('Configure V8 Api');
 
         $this->taskComposerInstall()->noDev()->noInteraction()->run();
-        $this->generateKeys();
-        $this->setKeyPermissions();
-        $this->updateEncryptionKey();
-        $this->rebuildHtaccessFile();
-        $client = $this->createClient($name);
-        $user = $this->createAPIUser($name, $password);
-        $this->outputClientCredentials($client);
-        $this->outputUserCredentials($user);
+        $this->apiGenerateKeys();
+        $this->apiSetKeyPermissions();
+        $this->apiUpdateEncryptionKey();
+        $this->apiRebuildHtaccessFile();
+        $this->apiCreateClient($name);
+        $this->apiCreateUser($name, $password);
     }
 
     /**
      * Generate OAuth2 public/private keys
+     * @param array $opts
+     * @option string $privateKey set a custom path to the oauth2 private key.
+     * @option string $publicKey set a custom path to the oauth2 public key.
      */
-    private function generateKeys()
-    {
+    public function apiGenerateKeys(
+        $opts = ['privateKey' => ApiConfig::OAUTH2_PRIVATE_KEY, 'publicKey' => ApiConfig::OAUTH2_PUBLIC_KEY]
+    ) {
         $privateKey = openssl_pkey_new(
             [
                 'private_key_bits' => 2048,
@@ -126,40 +126,48 @@ class ApiCommands extends Tasks
         $publicKeyExport = $publicKey['key'];
 
         file_put_contents(
-            ApiConfig::OAUTH2_PRIVATE_KEY,
+            $opts['privateKey'],
             $privateKeyExport
         );
 
         file_put_contents(
-            ApiConfig::OAUTH2_PUBLIC_KEY,
+            $opts['publicKey'],
             $publicKeyExport
         );
     }
 
     /**
      * Sets the Oauth2 key permissions
+     * @param array $opts
+     * @option string $privateKey set a custom path to the oauth2 private key.
+     * @option string $publicKey set a custom path to the oauth2 public key.
      */
-    private function setKeyPermissions()
-    {
+    public function apiSetKeyPermissions(
+        $opts = ['privateKey' => ApiConfig::OAUTH2_PRIVATE_KEY, 'publicKey' => ApiConfig::OAUTH2_PUBLIC_KEY]
+    ) {
         chmod(
-            ApiConfig::OAUTH2_PRIVATE_KEY,
+            $opts['privateKey'],
             0600
         ) &&
         chmod(
-            ApiConfig::OAUTH2_PUBLIC_KEY,
+            $opts['publicKey'],
             0600
         );
     }
 
     /**
      * Update OAuth2 encryption keys
+     * @param array $opts
+     * @option string $privateKey set a custom path to the oauth2 encryption key.
+     * @option string $apiConfig set a custom path to ApiConfig file.
      * @throws \Exception
      */
-    private function updateEncryptionKey()
-    {
-        $oldKey = ApiConfig::OAUTH2_ENCRYPTION_KEY;
+    public function apiUpdateEncryptionKey(
+        $opts = ['encryptionKey' => ApiConfig::OAUTH2_ENCRYPTION_KEY, 'apiConfig' => 'Api/Core/Config/ApiConfig.php']
+    ) {
+        $oldKey = $opts['encryptionKey'];
         $key = base64_encode(random_bytes(32));
-        $apiConfig = file_get_contents('Api/Core/Config/ApiConfig.php');
+        $apiConfig = file_get_contents($opts['apiConfig']);
 
         $configFileContents = str_replace(
             $oldKey,
@@ -168,28 +176,28 @@ class ApiCommands extends Tasks
         );
 
         file_put_contents(
-            'Api/Core/Config/ApiConfig.php', $configFileContents, LOCK_EX
+            $opts['apiConfig'], $configFileContents, LOCK_EX
         );
     }
 
     /**
      * Rebuild .Htaccess file
      */
-    private function rebuildHtaccessFile()
+    public function apiRebuildHtaccessFile()
     {
-        @require_once __DIR__ . '/../../../../modules/Administration/UpgradeAccess.php';
+        @require __DIR__ . '/../../../../modules/Administration/UpgradeAccess.php';
     }
 
 
     /**
      * Creates OAuth2 client
-     * @param string $userName
-     * @return array
+     * @param string $name
+     * @return void
      * @throws \Exception
      */
-    public function createClient($userName)
+    public function apiCreateClient($name)
     {
-        $count = $this->getNameCount($userName, 'oauth2clients', 'name');
+        $count = $this->getNameCount($name, 'oauth2clients', 'name');
         $dateTime = new DateTime();
 
         $clientSecret = base_convert(
@@ -208,16 +216,17 @@ class ApiCommands extends Tasks
         $clientBean->save();
         $clientBean->retrieve($clientBean->id);
 
-        return !empty($clientBean->fetched_row['id']) ? compact('clientBean', 'clientSecret') : [];
+        $this->outputClientCredentials(!empty($clientBean->fetched_row['id']) ? compact('clientBean',
+            'clientSecret') : []);
     }
 
     /**
      * Creates a SuiteCRM user for the V8 API
      * @param string $name
      * @param string $password
-     * @return array
+     * @return void
      */
-    public function createAPIUser($name, $password)
+    public function apiCreateUser($name, $password)
     {
         $count = $this->getNameCount($name, 'users', 'user_name');
 
@@ -233,9 +242,9 @@ class ApiCommands extends Tasks
         $userBean->setNewPassword($password, 1);
         $userBean->retrieve($userBean->id);
 
-        return !empty($userBean->fetched_row['id'])
+        $this->outputUserCredentials(!empty($userBean->fetched_row['id'])
             ? compact('userBean', 'password')
-            : [];
+            : []);
     }
 
     /**
