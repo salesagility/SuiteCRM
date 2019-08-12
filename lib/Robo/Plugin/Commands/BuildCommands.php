@@ -51,6 +51,9 @@ class BuildCommands extends \Robo\Tasks
 
     // define public methods as commands
 
+    /**
+     * Copies original Full JS Source Files and minifies them, then moves them to corresponding non-jssource directories.
+     */
     public function buildJS()
     {
         $this->say('Compile JS Source');
