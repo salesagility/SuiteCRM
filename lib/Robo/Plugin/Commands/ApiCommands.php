@@ -249,7 +249,7 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Export a postman environment.
+     * Export a postman environment for the V8 API
      * @param array $opts
      * @option string $postmanENV set a custom path to output a postman environment.
      */
