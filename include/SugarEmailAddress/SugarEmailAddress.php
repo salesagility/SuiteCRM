@@ -1534,11 +1534,11 @@ class SugarEmailAddress extends SugarBean
                     'primary_address' => isset($_REQUEST['emailAddressPrimaryFlag']) && $_REQUEST['emailAddressPrimaryFlag'] == $key,
                     'invalid_email' => isset($_REQUEST['emailAddressInvalidFlag']) && in_array(
                         $key,
-                            $_REQUEST['emailAddressInvalidFlag']
+                        $_REQUEST['emailAddressInvalidFlag']
                     ),
                     'opt_out' => isset($_REQUEST['emailAddressOptOutFlag']) && in_array(
                         $key,
-                            $_REQUEST['emailAddressOptOutFlag']
+                        $_REQUEST['emailAddressOptOutFlag']
                     ),
                     'reply_to_address' => false
                 );

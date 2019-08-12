@@ -680,8 +680,8 @@ class EmailsDataAddressCollector
         foreach ($dataAddresses as $address => $userAddress) {
             if ($userAddress['type'] !== 'system') {
                 $emailInfo = $userAddress['attributes'];
-                $fromString = $this->addCurrentUserToEmailString($emailInfo['from']);
-                $replyString = $this->addCurrentUserToEmailString($emailInfo['reply_to']);
+                $fromString = $emailInfo['from'];
+                $replyString = $emailInfo['reply_to'];
 
                 $dataAddresses[$address]['attributes'] = [
                     'from' => $fromString,

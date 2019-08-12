@@ -48,16 +48,12 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testpreDisplay()
     {
-        
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
         // test
-        
-
         //execute the method with required attributes preset, it will initialize the dv(detail view) attribute.
         $view = new ViewDetail();
         $view->module = 'Users';
@@ -92,9 +88,6 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_addresses');
         
         // test
-        
-
-        
 
         //execute the method with essential parameters set. it should return some html.
         $view = new ViewDetail();

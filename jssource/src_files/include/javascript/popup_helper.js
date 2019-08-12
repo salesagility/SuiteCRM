@@ -227,6 +227,20 @@ function send_back_selected(module, form, field, error_message, request_data) {
 
   SUGAR.util.globalEval("var selection_list_array = {" + array_contents.join(",") + "}");
 
+  let form_request_data = window.document.forms['popup_query_form'].request_data.value;
+
+  if (/^[\],:{}\s]*$/.test(form_request_data.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+    SUGAR.util.globalEval("var temp_request_data = " + window.document.forms['popup_query_form'].request_data.value);
+  } else {
+    return;
+  }
+
+  if (temp_request_data.jsonObject) {
+    var request_data = temp_request_data.jsonObject;
+  } else {
+    var request_data = temp_request_data; // passed data that is NOT incorrectly encoded via JSON.encode();
+  }
+
   let passthru_data = Object();
   if (typeof(request_data.passthru_data) != 'undefined') {
     passthru_data = request_data.passthru_data;

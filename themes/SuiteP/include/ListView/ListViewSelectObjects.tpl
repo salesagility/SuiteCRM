@@ -44,17 +44,9 @@
 <script>
 {literal}
     $(document).ready(function () {
-        function update_selectedRecordsTopValue() {
-            var selectedNum = sugarListView.get_num_selected();
-            if(!selectedNum) {
-                $('.selectedRecords').addClass('hidden');
-            }
-            else {
-                $('.selectedRecords').removeClass('hidden');
-            }
-            $('.selectedRecords.value').html(selectedNum);
-        }
-        setInterval(update_selectedRecordsTopValue, 100);
+        setInterval(function () {
+            sListView.toggleSelected();
+        }, 100);
     });
 {/literal}
 </script>

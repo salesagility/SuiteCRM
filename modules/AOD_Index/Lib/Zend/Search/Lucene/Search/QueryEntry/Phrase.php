@@ -101,8 +101,8 @@ class Zend_Search_Lucene_Search_QueryEntry_Phrase extends Zend_Search_Lucene_Sea
         require_once 'Zend/Search/Lucene/Search/Query/Preprocessing/Phrase.php';
         $query = new Zend_Search_Lucene_Search_Query_Preprocessing_Phrase(
             $this->_phrase,
-                                                                          $encoding,
-                                                                          ($this->_field !== null)?
+            $encoding,
+            ($this->_field !== null)?
                                                                               iconv($encoding, 'UTF-8', $this->_field) :
                                                                               null
         );

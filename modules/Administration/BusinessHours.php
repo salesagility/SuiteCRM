@@ -33,7 +33,7 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     foreach ($days as $day) {
         $bh = $businessHours->getOrCreate($day);
         $bh->day = $day;
-        $bh->open_status = array_key_exists("open_status_".$day,$_REQUEST) ? $_REQUEST["open_status_".$day] : false;
+        $bh->open_status = array_key_exists("open_status_".$day, $_REQUEST) ? $_REQUEST["open_status_".$day] : false;
         $bh->opening_hours = $_REQUEST["opening_time_".$day];
         $bh->closing_hours = $_REQUEST["closing_time_".$day];
         $bh->save();

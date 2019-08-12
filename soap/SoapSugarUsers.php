@@ -141,8 +141,8 @@ function login($user_auth, $application)
             $password = decrypt_string($user_auth['password']);
             $authController = new AuthenticationController();
             if ($authController->login(
-                    $user_auth['user_name'],
-                        $password
+                $user_auth['user_name'],
+                $password
                 ) && isset($_SESSION['authenticated_user_id'])
                 ) {
                 $success = true;
@@ -1022,7 +1022,7 @@ function get_module_fields($session, $module_name)
     $seed = new $class_name();
     if ($seed->ACLAccess('ListView', true) || $seed->ACLAccess('DetailView', true) || $seed->ACLAccess(
         'EditView',
-            true
+        true
     )
     ) {
         return get_return_module_fields($seed, $module_name, $error);
@@ -1357,6 +1357,22 @@ function get_relationships($session, $module_name, $module_id, $related_module, 
     if (!empty($related_module_query)) {
         $sql .= " AND ( {$related_module_query} )";
     }
+
+	/* BEGIN - SECURITY GROUPS */
+	global $current_user;
+	if($mod->bean_implements('ACL') && ACLController::requireSecurityGroup($mod->module_dir, 'list') )
+	{
+		require_once('modules/SecurityGroups/SecurityGroup.php');
+		global $current_user;
+		$owner_where = $mod->getOwnerWhere($current_user->id);
+		$group_where = SecurityGroup::getGroupWhere($mod->table_name,$mod->module_dir,$current_user->id);
+    	if(!empty($owner_where)){
+    		$sql .= " AND (".  $owner_where." or ".$group_where.") ";
+		} else {
+			$sql .= ' AND '.  $group_where;
+		}
+	}
+	/* END - SECURITY GROUPS */
 
     $result = $related_mod->db->query($sql);
     while ($row = $related_mod->db->fetchByAssoc($result)) {

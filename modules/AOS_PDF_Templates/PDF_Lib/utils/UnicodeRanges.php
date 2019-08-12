@@ -214,5 +214,3 @@ array('starthex'=> '2A700', 'endhex'=>'2B734', 'startdec'=> 173824 , 'enddec'=> 
 array('starthex'=> '2F800', 'endhex'=>'2FA1F', 'startdec'=> 194560 , 'enddec'=> 195103, 'range'=>'CJK Compatibility Ideographs Supplement'),
 
 );
-
-?>
