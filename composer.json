@@ -43,7 +43,8 @@
     "symfony/options-resolver": "^3.4",
     "symfony/validator": "^3.4",
     "tuupola/slim-jwt-auth": "^2.0",
-    "wikimedia/composer-merge-plugin": "^1.4"
+    "wikimedia/composer-merge-plugin": "^1.4",
+    "zf1/zend-oauth": "^1.12"
   },
   "require-dev": {
     "codeception/codeception": "^2.0",
