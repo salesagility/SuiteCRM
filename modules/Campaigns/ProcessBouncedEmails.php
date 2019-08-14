@@ -213,8 +213,8 @@ function checkBouncedEmailForIdentifier($email_description)
     $identifiers = array();
     $found = false;
     //Check if the identifier is present in the header.
-    if (preg_match('/X-CampTrackID: [a-z0-9\-]*/', $email_description, $matches)) {
-        $identifiers = preg_split('/X-CampTrackID: /', $matches[0], -1, PREG_SPLIT_NO_EMPTY);
+    if (preg_match('/X-CampTrackID: [a-z0-9\-]*/i', $email_description, $matches)) {
+        $identifiers = preg_split('/X-CampTrackID: /i', $matches[0], -1, PREG_SPLIT_NO_EMPTY);
         $found = true;
         $GLOBALS['log']->debug("Found campaign identifier in header of email");
     } elseif (preg_match('/index.php\?entryPoint=removeme&identifier=[a-z0-9\-]*/', $email_description, $matches)) {
