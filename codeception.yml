@@ -44,6 +44,7 @@ coverage:
         - include/php-sql-parser.php
         - include/parsecsv.lib.php
         - modules/AOS_PDF_Templates/PDF_Lib/*
+        - Zend/*
         - modules/AOD_Index/Lib/*
         - modules/Users/authentication/SAML2Authenticate/lib/*
         - install/demoData.en_us.php

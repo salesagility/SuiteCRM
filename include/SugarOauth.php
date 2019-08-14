@@ -39,6 +39,7 @@
  */
 
 
+    require_once 'Zend/Oauth/Consumer.php';
     // use ZF oauth
     /**
      * Sugar Oauth consumer
