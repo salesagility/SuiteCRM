@@ -59,6 +59,9 @@
   "scripts": {},
   "prefer-stable": true,
   "autoload": {
+    "files": [
+      "deprecated.php"
+    ],
     "psr-4": {
       "SuiteCRM\\": [
         "lib/",
