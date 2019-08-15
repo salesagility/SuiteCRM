@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "48cf0d3db8818f89b543cf8885ee37e3",
+    "content-hash": "fc589ecb036dc2e3bf8c2762bb89bee4",
     "packages": [
         {
             "name": "consolidation/annotated-command",
@@ -2864,6 +2864,51 @@
             "time": "2015-04-30T11:10:20+00:00"
         },
         {
+            "name": "zf1/zend-gdata",
+            "version": "1.12.20",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zf1/zend-gdata.git",
+                "reference": "f9d9878c82743fa7e2d5b07247ea684af5acd047"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zf1/zend-gdata/zipball/f9d9878c82743fa7e2d5b07247ea684af5acd047",
+                "reference": "f9d9878c82743fa7e2d5b07247ea684af5acd047",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.11",
+                "zf1/zend-exception": "self.version",
+                "zf1/zend-http": "self.version",
+                "zf1/zend-mime": "self.version",
+                "zf1/zend-version": "self.version",
+                "zf1/zend-xml": "self.version"
+            },
+            "suggest": {
+                "zf1/zend-loader": "Used in special situations or with special adapters"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Zend_Gdata": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Zend Framework 1 Gdata package",
+            "homepage": "http://framework.zend.com/",
+            "keywords": [
+                "ZF1",
+                "framework",
+                "gdata",
+                "zend"
+            ],
+            "time": "2017-07-12T00:37:51+00:00"
+        },
+        {
             "name": "zf1/zend-http",
             "version": "1.12.20",
             "source": {
@@ -2985,6 +3030,44 @@
             "time": "2017-07-11T23:32:54+00:00"
         },
         {
+            "name": "zf1/zend-mime",
+            "version": "1.12.20",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zf1/zend-mime.git",
+                "reference": "1ad54a9851dadfb0b1dc67268baf0db4fb0112b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zf1/zend-mime/zipball/1ad54a9851dadfb0b1dc67268baf0db4fb0112b0",
+                "reference": "1ad54a9851dadfb0b1dc67268baf0db4fb0112b0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.11",
+                "zf1/zend-exception": "self.version"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Zend_Mime": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Zend Framework 1 Mime package",
+            "homepage": "http://framework.zend.com/",
+            "keywords": [
+                "ZF1",
+                "framework",
+                "mime",
+                "zend"
+            ],
+            "time": "2015-04-30T11:08:38+00:00"
+        },
+        {
             "name": "zf1/zend-oauth",
             "version": "1.12.20",
             "source": {
@@ -3027,6 +3110,47 @@
                 "zend"
             ],
             "time": "2015-04-30T11:10:25+00:00"
+        },
+        {
+            "name": "zf1/zend-registry",
+            "version": "1.12.20",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zf1/zend-registry.git",
+                "reference": "1737419285b800728c27063318509fb2d00057ba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zf1/zend-registry/zipball/1737419285b800728c27063318509fb2d00057ba",
+                "reference": "1737419285b800728c27063318509fb2d00057ba",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.11",
+                "zf1/zend-exception": "self.version"
+            },
+            "suggest": {
+                "zf1/zend-loader": "Used in special situations or with special adapters"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Zend_Registry": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Zend Framework 1 Registry package",
+            "homepage": "http://framework.zend.com/",
+            "keywords": [
+                "ZF1",
+                "framework",
+                "registry",
+                "zend"
+            ],
+            "time": "2017-07-11T23:55:24+00:00"
         },
         {
             "name": "zf1/zend-uri",
@@ -3118,6 +3242,43 @@
                 "zend"
             ],
             "time": "2017-07-12T00:41:31+00:00"
+        },
+        {
+            "name": "zf1/zend-version",
+            "version": "1.12.20",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zf1/zend-version.git",
+                "reference": "8e69ac4b262482e3980012d7be4a35a89f76da63"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zf1/zend-version/zipball/8e69ac4b262482e3980012d7be4a35a89f76da63",
+                "reference": "8e69ac4b262482e3980012d7be4a35a89f76da63",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.11"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Zend_Version": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Zend Framework 1 Version package",
+            "homepage": "http://framework.zend.com/",
+            "keywords": [
+                "ZF1",
+                "framework",
+                "version",
+                "zend"
+            ],
+            "time": "2017-07-12T00:54:38+00:00"
         },
         {
             "name": "zf1/zend-xml",
@@ -3891,9 +4052,9 @@
             "authors": [
                 {
                     "name": "Jeroen Desloovere",
+                    "role": "Developer",
                     "email": "info@jeroendesloovere.be",
-                    "homepage": "http://jeroendesloovere.be",
-                    "role": "Developer"
+                    "homepage": "http://jeroendesloovere.be"
                 }
             ],
             "description": "This VCard PHP class can generate a vCard with some data. When using an iOS device it will export as a .ics file because iOS devices don't support the default .vcf files.",
@@ -4382,8 +4543,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
@@ -4430,8 +4591,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "FilterIterator implementation that filters files based on a list of suffixes.",
@@ -4472,8 +4633,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Simple template engine.",
@@ -4521,8 +4682,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "Utility class for timing",
@@ -4640,8 +4801,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "The PHP Unit Testing framework.",
@@ -5114,8 +5275,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
