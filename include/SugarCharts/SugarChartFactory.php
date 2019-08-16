@@ -58,9 +58,9 @@ class SugarChartFactory
     public static function getInstance(
         $chartEngine = '',
         $module = ''
-        ) {
+    ) {
         global $sugar_config;
-        $defaultEngine = "Jit";
+        $defaultEngine = 'JsChart';
         //fall back to the default Js Engine if config is not defined
         if (empty($sugar_config['chartEngine'])) {
             $sugar_config['chartEngine'] = $defaultEngine;
@@ -70,29 +70,20 @@ class SugarChartFactory
             $chartEngine = $sugar_config['chartEngine'];
         }
 
-        $file = "include/SugarCharts/".$chartEngine."/".$chartEngine.$module.".php";
+        $file = 'include/SugarCharts/' . $chartEngine . '/' . $chartEngine . $module . '.php';
 
         if (file_exists('custom/' . $file)) {
-            require_once('custom/' . $file);
+            require_once 'custom/' . $file;
+        } elseif (file_exists($file)) {
+            require_once $file;
         } else {
-            if (file_exists($file)) {
-                require_once($file);
-            } else {
-                $defaultFile = "include/SugarCharts/".$defaultEngine."/".$defaultEngine.$module.".php";
-                $GLOBALS['log']->debug("using default engine $defaultFile");
-                if (file_exists($defaultFile)) {
-                    require_once($defaultFile);
-                    $chartEngine = $defaultEngine;
-                }
-            }
+            $GLOBALS['log']->debug('using default engine include/SugarCharts/' . $defaultEngine . $module . '.php');
+            require_once 'include/SugarCharts/' . $defaultEngine . $module . '.php';
+            $chartEngine = $defaultEngine;
         }
 
-        $className = $chartEngine.$module;
-        if (class_exists($className)) {
-            return new $className();
-        } else {
-            LoggerManager::getLogger()->fatal('Chart class not found.');
-            return null;
-        }
+        $className = $chartEngine . $module;
+
+        return new $className();
     }
 }
