@@ -81,23 +81,29 @@ class RelationshipService
     public function createRelationship(CreateRelationshipParams $params)
     {
         $sourceBean = $params->getSourceBean();
+
         $relatedBean = $params->getRelatedBean();
+
         $linkFieldName = $params->getLinkedFieldName();
 
         $this->beanManager->createRelationshipSafe($sourceBean, $relatedBean, $linkFieldName);
 
         $response = new DocumentResponse();
-        $response->setMeta(new MetaResponse(
-            [
-                'message' => sprintf(
-                    '%s with id %s has been added to %s with id %s',
-                    $relatedBean->getObjectName(),
-                    $relatedBean->id,
-                    $sourceBean->getObjectName(),
-                    $sourceBean->id
-                )
-            ]
-        ));
+
+        $response->setMeta(
+            new MetaResponse(
+                [
+                    'message' => sprintf(
+                        '%s with id %s has been related to %s with id %s using link %s',
+                        $relatedBean->getObjectName(),
+                        $relatedBean->id,
+                        $sourceBean->getObjectName(),
+                        $sourceBean->id,
+                        $linkFieldName
+                    )
+                ]
+            )
+        );
 
         return $response;
     }

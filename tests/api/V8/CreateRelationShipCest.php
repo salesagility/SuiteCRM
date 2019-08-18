@@ -2,6 +2,7 @@
 namespace Test\Api\V8;
 
 use ApiTester;
+use \Exception;
 
 class CreateRelationShipCest
 {
@@ -18,44 +19,69 @@ class CreateRelationShipCest
     /**
      * @param ApiTester $I
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function shouldWork(ApiTester $I)
     {
         $accountId = $I->createAccount();
+
         $contactId = $I->createContact();
 
         $linkName = 'contacts';
 
+        $expectedMessage = sprintf(
+            'Contact with id %s has been related to Account with id %s using link %s',
+            $contactId,
+            $accountId,
+            $linkName
+        );
+
         $endpoint = $I->getInstanceURL() . '/Api/V8/module/Accounts/{id}/relationships/{linkFieldName}';
-        $endpoint = str_replace(['{id}','{linkFieldName}'], [$accountId, $linkName], $endpoint);
+
+        $endpoint = str_replace(
+            [
+                '{id}',
+                '{linkFieldName}'
+            ],
+            [
+                $accountId,
+                $linkName
+            ],
+            $endpoint
+        );
 
         $payload = [
             'data' => [
                 'type' => 'Contacts',
-                'id' => '{id}',
+                'id' => $contactId,
             ]
         ];
-        $payload['data']['id'] = str_replace('{id}', $contactId, $payload['data']['id']);
 
         $I->sendPOST($endpoint, $payload);
 
         $I->seeResponseCodeIs(201);
+
         $I->seeResponseIsJson();
-        $I->seeResponseJsonMatchesJsonPath('$.meta.message');
-        $I->seeResponseContainsJson(
-            [
-                'message' => sprintf(
-                    'Contact with id %s has been added to Account with id %s using link %s',
-                    $contactId,
-                    $accountId,
-                    $linkName
-                )
-            ]
+
+        $responseJson = $I->grabResponse();
+
+        $responseArray = json_decode($responseJson, true);
+
+        $I->assertNotEmpty($responseArray);
+
+        $I->assertArrayHasKey('meta', $responseArray);
+
+        $I->assertNotEmpty($responseArray['meta']);
+
+        $I->assertArrayHasKey('message', $responseArray['meta']);
+
+        $I->assertNotEmpty($responseArray['meta']['message']);
+
+        $I->assertEquals(
+            $expectedMessage,
+            $responseArray['meta']['message']
         );
 
-        $I->deleteBean('accounts', $accountId);
-        $I->deleteBean('contacts', $contactId);
         $I->deleteRelationship(
             [
                 'tableName' => 'accounts_contacts',
@@ -67,5 +93,9 @@ class CreateRelationShipCest
                 'relatedId' => $contactId,
             ]
         );
+
+        $I->deleteBean('accounts', $accountId);
+
+        $I->deleteBean('contacts', $contactId);
     }
 }
