@@ -11,6 +11,9 @@ use Api\V8\Param\CreateRelationshipParams;
 use Api\V8\Param\DeleteRelationshipParams;
 use Api\V8\Param\GetRelationshipParams;
 
+use \SugarBean;
+use \DomainException;
+
 class RelationshipService
 {
     /**
@@ -57,7 +60,7 @@ class RelationshipService
             ));
         } else {
             $data = [];
-            /** @var \SugarBean $relatedBean */
+            /** @var SugarBean $relatedBean */
             foreach ($relatedBeans as $relatedBean) {
                 $linkResponse = new LinksResponse();
                 $linkResponse->setSelf(sprintf('/V8/module/%s/%s', $relatedBean->getObjectName(), $relatedBean->id));
@@ -84,6 +87,10 @@ class RelationshipService
 
         $relatedBean = $params->getRelatedBean();
 
+        $sourceLabel = translate($sourceBean->module_dir);
+
+        $relatedLabel = translate($relatedBean->module_dir);
+
         $linkFieldName = $params->getLinkedFieldName();
 
         $this->beanManager->createRelationshipSafe($sourceBean, $relatedBean, $linkFieldName);
@@ -94,13 +101,20 @@ class RelationshipService
             new MetaResponse(
                 [
                     'message' => sprintf(
-                        '%s with id %s has been related to %s with id %s using link %s',
-                        $relatedBean->getObjectName(),
+                        '%s record with id %s has been related to %s record with id %s using link %s',
+                        $relatedLabel,
                         $relatedBean->id,
-                        $sourceBean->getObjectName(),
+                        $sourceLabel,
                         $sourceBean->id,
                         $linkFieldName
-                    )
+                    ),
+                    'sourceModule' => $sourceBean->module_dir,
+                    'sourceModuleLabel' => $sourceLabel,
+                    'sourceId' => $sourceBean->id,
+                    'relatedModule' => $relatedBean->module_dir,
+                    'relatedModuleLabel' => $relatedLabel,
+                    'relatedId' => $relatedBean->id,
+                    'relationshipLink' => $linkFieldName,
                 ]
             )
         );
@@ -112,7 +126,7 @@ class RelationshipService
      * @param DeleteRelationshipParams $params
      *
      * @return DocumentResponse
-     * @throws \DomainException When the source module is not related to the target module.
+     * @throws DomainException When the source module is not related to the target module.
      */
     public function deleteRelationship(DeleteRelationshipParams $params)
     {
@@ -126,7 +140,7 @@ class RelationshipService
         });
 
         if (!$relatedBean) {
-            throw new \DomainException(
+            throw new DomainException(
                 sprintf(
                     'Module with %s id is not related to %s',
                     $relatedBeanId,

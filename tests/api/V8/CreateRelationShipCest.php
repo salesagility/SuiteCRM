@@ -3,13 +3,16 @@ namespace Test\Api\V8;
 
 use ApiTester;
 use \Exception;
+use \Codeception\Exception\ModuleException;
+
+require_once __DIR__ . '/../../../include/utils.php';
 
 class CreateRelationShipCest
 {
     /**
      * @param ApiTester $I
      *
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function _before(ApiTester $I)
     {
@@ -27,11 +30,17 @@ class CreateRelationShipCest
 
         $contactId = $I->createContact();
 
+        $accountLabel = translate('Accounts');
+
+        $contactLabel = translate('Contacts');
+
         $linkName = 'contacts';
 
         $expectedMessage = sprintf(
-            'Contact with id %s has been related to Account with id %s using link %s',
+            '%s record with id %s has been related to %s record with id %s using link %s',
+            $contactLabel,
             $contactId,
+            $accountLabel,
             $accountId,
             $linkName
         );
@@ -80,6 +89,55 @@ class CreateRelationShipCest
         $I->assertEquals(
             $expectedMessage,
             $responseArray['meta']['message']
+        );
+
+        $I->assertArrayHasKey('sourceModule', $responseArray['meta']);
+
+        $I->assertEquals(
+            'Accounts',
+            $responseArray['meta']['sourceModule']
+        );
+
+        $I->assertArrayHasKey('sourceModuleLabel', $responseArray['meta']);
+
+        $I->assertEquals(
+            $accountLabel,
+            $responseArray['meta']['sourceModuleLabel']
+        );
+
+        $I->assertArrayHasKey('sourceId', $responseArray['meta']);
+
+        $I->assertEquals(
+            $accountId,
+            $responseArray['meta']['sourceId']
+        );
+
+        $I->assertArrayHasKey('relatedModule', $responseArray['meta']);
+
+        $I->assertEquals(
+            'Contacts',
+            $responseArray['meta']['relatedModule']
+        );
+
+        $I->assertArrayHasKey('relatedModuleLabel', $responseArray['meta']);
+
+        $I->assertEquals(
+            $contactLabel,
+            $responseArray['meta']['relatedModuleLabel']
+        );
+
+        $I->assertArrayHasKey('relatedId', $responseArray['meta']);
+
+        $I->assertEquals(
+            $contactId,
+            $responseArray['meta']['relatedId']
+        );
+
+        $I->assertArrayHasKey('relationshipLink', $responseArray['meta']);
+
+        $I->assertEquals(
+            $linkName,
+            $responseArray['meta']['relationshipLink']
         );
 
         $I->deleteRelationship(
