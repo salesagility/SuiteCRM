@@ -82,8 +82,12 @@ class SugarChartFactory
             $chartEngine = $defaultEngine;
         }
 
-        $className = $chartEngine . $module;
-
-        return new $className();
+        $className = $chartEngine.$module;    
+        if (class_exists($className)) {    
+            return new $className();    
+        } else {    
+            LoggerManager::getLogger()->fatal('Chart class not found.');    
+            return null;    
+        }
     }
 }
