@@ -219,12 +219,12 @@ class Minifier
                                 echo $this->a;
                                 $this->saveString();
                                 break;
-                            }
+                            } else {
                                 if (self::isAlphaNumeric($this->a)) {
                                     echo $this->a;
                                     $this->saveString();
                                 }
-                            
+                            }
                             break;
 
                         case ' ':

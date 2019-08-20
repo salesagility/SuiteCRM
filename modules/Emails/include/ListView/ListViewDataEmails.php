@@ -322,12 +322,14 @@ class ListViewDataEmails extends ListViewData
                     } else {
                         if (!empty($request[$filteredField.'_advanced'])) {
                             $filter[self::$mapServerFields[$filteredField]] = $request[$filteredField.'_advanced'];
-                        } elseif (!empty($request[$filteredField.'_basic'])) {
-                            $filter[self::$mapServerFields[$filteredField]] = $request[$filteredField.'_basic'];
                         } else {
-                            $f = str_ireplace('_advanced', '', $filteredField);
-                            $f = str_ireplace('_basic', '', $f);
-                            $filter[self::$mapServerFields[$filteredField]] = $f;
+                            if (!empty($request[$filteredField.'_basic'])) {
+                                $filter[self::$mapServerFields[$filteredField]] = $request[$filteredField.'_basic'];
+                            } else {
+                                $f = str_ireplace('_advanced', '', $filteredField);
+                                $f = str_ireplace('_basic', '', $f);
+                                $filter[self::$mapServerFields[$filteredField]] = $f;
+                            }
                         }
                     }
                 }
@@ -353,20 +355,24 @@ class ListViewDataEmails extends ListViewData
             if (array_search($EmailSearchField, self::$alwaysIncludeSearchFields) !== false) {
                 $filterFields[$EmailSearchField] = true;
                 continue;
-            } elseif (
+            } else {
+                if (
                 array_key_exists($EmailSearchField . '_advanced', $request) &&
                 empty($request[$EmailSearchField . '_advanced'])
             ) {
-                $pos = array_search($EmailSearchField, $filterFields);
-                unset($filterFields[$pos]);
-                continue;
-            } elseif (
+                    $pos = array_search($EmailSearchField, $filterFields);
+                    unset($filterFields[$pos]);
+                    continue;
+                } else {
+                    if (
                 array_key_exists($EmailSearchField . '_basic', $request) &&
                 empty($request[$EmailSearchField . '_basic'])
             ) {
-                $pos = array_search($EmailSearchField, $filterFields);
-                unset($filterFields[$pos]);
-                continue;
+                        $pos = array_search($EmailSearchField, $filterFields);
+                        unset($filterFields[$pos]);
+                        continue;
+                    }
+                }
             }
 
             if (!array_key_exists($EmailSearchField, $filterFields)) {
@@ -816,7 +822,7 @@ class ListViewDataEmails extends ListViewData
                         $pageData,
                         $filter_fields
                     );
-                    
+
                     break;
 
                 default:

@@ -75,8 +75,9 @@ class JsChart extends SugarChart
 
         if (in_array($chartType, $charts)) {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     public function tab($str, $depth)
@@ -213,8 +214,9 @@ class JsChart extends SugarChart
             return array("orientation" => "horizontal", "barType" => "stacked", "tip" => "name","chartType" => "barChart");
         } elseif ($chartType == "horizontal bar chart" || "horizontal") {
             return array("orientation" => "horizontal","barType" => "basic","tip" => "label","chartType" => "barChart");
+        } else {
+            return array("orientation" => "vertical","barType" => "stacked","tip" => "name","chartType" => "barChart");
         }
-        return array("orientation" => "vertical","barType" => "stacked","tip" => "name","chartType" => "barChart");
     }
     public function getChartDimensions($xmlStr)
     {
@@ -222,10 +224,12 @@ class JsChart extends SugarChart
             if ($this->chartType == "horizontal group by chart" || $this->chartType == "horizontal bar chart") {
                 $height = ($this->getNumNodes($xmlStr) * 60) + 100;
                 return array("width"=>$this->width, "height"=>($height));
+            } else {
+                return array("width"=>($this->width * 2), "height"=>$this->height);
             }
-            return array("width"=>($this->width * 2), "height"=>$this->height);
+        } else {
+            return array("width"=>"100%", "height"=>$this->height);
         }
-        return array("width"=>"100%", "height"=>$this->height);
     }
 
     public function checkData($xmlstr)
@@ -233,8 +237,9 @@ class JsChart extends SugarChart
         $xml = new SimpleXMLElement($xmlstr);
         if (sizeof($xml->data->group) > 0) {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     public function getNumNodes($xmlstr)
@@ -585,8 +590,9 @@ class JsChart extends SugarChart
             }
             $content .= "\n}";
             return $content;
+        } else {
+            return "No Data";
         }
-        return "No Data";
     }
 
     public function buildHTMLLegend($xmlFile)

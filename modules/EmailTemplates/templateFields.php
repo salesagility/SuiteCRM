@@ -130,14 +130,16 @@ function genDropDownJS2()
                 $dropdown .= "<option value='" . $key . "'>
 						" . $lblContactAndOthers . "
 		  	       </option>";
-            } elseif (isset($app_list_strings['moduleListSingular'][$key])) {
-                $dropdown .= "<option value='" . $key . "'>
+            } else {
+                if (isset($app_list_strings['moduleListSingular'][$key])) {
+                    $dropdown .= "<option value='" . $key . "'>
 						" . $app_list_strings['moduleListSingular'][$key] . "
 		  	       </option>";
-            } else {
-                $dropdown .= "<option value='" . $key . "'>
+                } else {
+                    $dropdown .= "<option value='" . $key . "'>
 						" . $app_list_strings['moduleList'][$key] . "
 		  	       </option>";
+                }
             }
         }
     }

@@ -63,10 +63,12 @@ if ($sugar_config['disable_export'] 	|| (!empty($sugar_config['admin_export_only
 if (!empty($_REQUEST['sample'])) {
     //call special method that will create dummy data for bean as well as insert standard help message.
     $content = exportSample(clean_string($_REQUEST['module']));
-} elseif (!empty($_REQUEST['uid'])) {
-    $content = export(clean_string($_REQUEST['module']), $_REQUEST['uid'], isset($_REQUEST['members']) ? $_REQUEST['members'] : false);
 } else {
-    $content = export(clean_string($_REQUEST['module']));
+    if (!empty($_REQUEST['uid'])) {
+        $content = export(clean_string($_REQUEST['module']), $_REQUEST['uid'], isset($_REQUEST['members']) ? $_REQUEST['members'] : false);
+    } else {
+        $content = export(clean_string($_REQUEST['module']));
+    }
 }
 $filename = $_REQUEST['module'];
 //use label if one is defined

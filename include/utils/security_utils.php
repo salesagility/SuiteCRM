@@ -117,9 +117,10 @@ function query_client_ip()
         return $_SERVER['HTTP_FROM'];
     } elseif (isset($_SERVER['REMOTE_ADDR'])) {
         return $_SERVER['REMOTE_ADDR'];
+    } else {
+        $GLOBALS['log']->warn('query_client_ip(): Unable to detect the IP address of the client.');
+        return null;
     }
-    $GLOBALS['log']->warn('query_client_ip(): Unable to detect the IP address of the client.');
-    return null;
 }
 
 // sets value to key value

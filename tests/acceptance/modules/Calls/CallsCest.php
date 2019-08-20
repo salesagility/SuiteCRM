@@ -48,6 +48,7 @@ class CallsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\NavigationBarTester $NavigationBar
      * @param \Step\Acceptance\Calls $calls
      * @param \Step\Acceptance\DetailView $detailView
      *
@@ -56,6 +57,7 @@ class CallsCest
     public function testScenarioCallDate(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\NavigationBarTester $NavigationBar,
         \Step\Acceptance\Calls $calls,
         \Step\Acceptance\DetailView $detailView
     ) {

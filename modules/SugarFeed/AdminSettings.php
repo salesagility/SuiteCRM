@@ -100,12 +100,14 @@ if (!empty($_REQUEST['process'])) {
 
         $admin->retrieveSettings(false, true);
         SugarFeed::flushBackendCache();
-    } elseif ($_REQUEST['process'] == 'deleteRecords') {
-        if (! isset($db)) {
-            $db = DBManagerFactory::getInstance();
+    } else {
+        if ($_REQUEST['process'] == 'deleteRecords') {
+            if (! isset($db)) {
+                $db = DBManagerFactory::getInstance();
+            }
+            $db->query("UPDATE sugarfeed SET deleted = '1'");
+            echo(translate('LBL_RECORDS_DELETED', 'SugarFeed'));
         }
-        $db->query("UPDATE sugarfeed SET deleted = '1'");
-        echo(translate('LBL_RECORDS_DELETED', 'SugarFeed'));
     }
 
 
@@ -140,9 +142,9 @@ foreach ($possible_feeds as $module) {
         // Fake module, need to handle specially
         $userFeedEnabled = $currModule['enabled'];
         continue;
+    } else {
+        $currModule['label'] = $GLOBALS['app_list_strings']['moduleList'][$module];
     }
-    $currModule['label'] = $GLOBALS['app_list_strings']['moduleList'][$module];
-    
 
     $module_list[] = $currModule;
 }

@@ -331,8 +331,9 @@ class FormulaCalculator
             // Workaround for PHP < 5.4.8
             if (isset($params[2])) {
                 return mb_substr($params[0], intval($params[1]), intval($params[2]));
+            } else {
+                return mb_substr($params[0], intval($params[1]));
             }
-            return mb_substr($params[0], intval($params[1]));
         }
 
         if (($params = $this->evaluateFunctionParams("length", $text, $childItems)) != null) {
@@ -764,37 +765,36 @@ class FormulaCalculator
                     date('Y-m-d')
                 ) {
                     return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounter'][$parameterText]['value'];
+                } else {
+                    return 0;
                 }
-
-                return 0;
-
+                // no break
             case 'DailyCounterPerUser':
                 if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['date'] ===
                     date('Y-m-d')
                 ) {
                     return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['value'];
+                } else {
+                    return 0;
                 }
-
-                return 0;
-
+                // no break
             case 'DailyCounterPerModule':
                 if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->currentModule][$parameterText]['date'] ===
                     date('Y-m-d')
                 ) {
                     return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->currentModule][$parameterText]['value'];
+                } else {
+                    return 0;
                 }
-
-                return 0;
-
+                // no break
             case 'DailyCounterPerUserPerModule':
                 if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['date'] ===
                     date('Y-m-d')
                 ) {
                     return $this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['value'];
+                } else {
+                    return 0;
                 }
-
-                return 0;
-
         }
     }
 

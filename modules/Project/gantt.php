@@ -124,89 +124,105 @@ class Gantt
                 for ($x=1; $x<= $day_count; $x++) {
                     if ($x==1 && $x != $task_start_day) {
                         echo '<td class="inner_td"><div class="cell_width day_block"></div></td>';
-                    } elseif ($x==1 && $x == $task_start_day) {
-                        if ($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)) {
-                            echo '<td class="task_td2"><div class="cell_width task_block1">
+                    } else {
+                        if ($x==1 && $x == $task_start_day) {
+                            if ($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)) {
+                                echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
                                         <div class="milestone link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                            <img src="custom/modules/Project/images/add_milestone.png" />
                                         </div>
                                     </div>
                                   </div></td><td class="inner_td"><div class="cell_width day_block"></div></td>';
-                        } elseif ($task_duration == 0 || $task_duration == 1) {
-                            echo '<td class="task_td2"><div class="cell_width task_block1">
+                            } else {
+                                if ($task_duration == 0 || $task_duration == 1) {
+                                    echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
                                         <div class="task1 link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                             <div class="task_percent" rel="'.$task->percent_complete.'"></div>
                                         </div>
                                     </div>
                                   </div></td><td class="inner_td"><div class="cell_width day_block"></div></td>';
-                        } else {
-                            echo '<td class="task_td" colspan="'.$task_duration.'"><div class="cell_width task_block">
+                                } else {
+                                    echo '<td class="task_td" colspan="'.$task_duration.'"><div class="cell_width task_block">
                                     <div class="task_block_inner">
                                         <div class="task link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                             <div class="task_percent" rel="'.$task->percent_complete.'">'.$task->name.'</div>
                                         </div>
                                     </div>
                                   </div></td>';
-                        }
-                    } elseif ($x == $task_start_day && $x == $day_count) {
-                        if ($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)) {
-                            echo '<td class="task_td2"><div class="cell_width task_block1">
+                                }
+                            }
+                        } else {
+                            if ($x == $task_start_day && $x == $day_count) {
+                                if ($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)) {
+                                    echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
                                         <div class="milestone link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                             <img src="custom/modules/Project/images/add_milestone.png" />
                                         </div>
                                     </div>
                                   </div></td>';
-                        } elseif ($task_duration == 0 || $task_duration == 1) {
-                            echo '<td class="task_td2"><div class="cell_width task_block1">
+                                } else {
+                                    if ($task_duration == 0 || $task_duration == 1) {
+                                        echo '<td class="task_td2"><div class="cell_width task_block1">
                                 <div class="task_block_inner">
                                      <div class="task1 link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                         <div class="task_percent" rel="'.$task->percent_complete.'"></div>
                                     </div>
                                 </div>
                               </div></td>';
-                        } else {
-                            echo '<td class="task_td" colspan="'.$task_duration.'"><div class="cell_width task_block">
+                                    } else {
+                                        echo '<td class="task_td" colspan="'.$task_duration.'"><div class="cell_width task_block">
                                     <div class="task_block_inner">
                                         <div class="task link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                             <div class="task_percent" rel="'.$task->percent_complete.'">'.$task->name.'</div>
                                         </div>
                                     </div>
                                   </div></td>';
-                        }
-                    } elseif ($x == $task_start_day) {
-                        if ($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)) {
-                            echo '<td class="task_td2"><div class="cell_width task_block1">
+                                    }
+                                }
+                            } else {
+                                if ($x == $task_start_day) {
+                                    if ($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)) {
+                                        echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
                                         <div class="milestone link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                             <img src="custom/modules/Project/images/add_milestone.png" />
                                         </div>
                                     </div>
                                   </div></td><td class="inner_td"><div class="cell_width day_block"></div></td>';
-                        } elseif ($task_duration == 0 || $task_duration == 1) {
-                            echo '<td class="task_td2"><div class="cell_width task_block1">
+                                    } else {
+                                        if ($task_duration == 0 || $task_duration == 1) {
+                                            echo '<td class="task_td2"><div class="cell_width task_block1">
                                 <div class="task_block_inner">
                                      <div class="task1 link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                         <div class="task_percent" rel="'.$task->percent_complete.'"></div>
                                     </div>
                                 </div>
                               </div></td><td class="inner_td"><div class="cell_width day_block"></div></td>';
-                        } else {
-                            echo '<td class="task_td" colspan="'.$task_duration.'"><div class="cell_width task_block">
+                                        } else {
+                                            echo '<td class="task_td" colspan="'.$task_duration.'"><div class="cell_width task_block">
                                 <div class="task_block_inner">
                                      <div class="task link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                         <div class="task_percent" rel="'.$task->percent_complete.'"></div>
                                     </div>
                                 </div>
                               </div></td>';
+                                        }
+                                    }
+                                } else {
+                                    if ($x == $day_count) {
+                                    } else {
+                                        if ($x > $task_start_day && $x < $task_end_day) {
+                                            //leave blank
+                                        } else {
+                                            echo '<td class="inner_td"><div class="cell_width day_block"></div></td>';
+                                        }
+                                    }
+                                }
+                            }
                         }
-                    } elseif ($x == $day_count) {
-                    } elseif ($x > $task_start_day && $x < $task_end_day) {
-                        //leave blank
-                    } else {
-                        echo '<td class="inner_td"><div class="cell_width day_block"></div></td>';
                     }
                 }
 

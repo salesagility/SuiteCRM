@@ -68,12 +68,16 @@ class DatabaseStore implements Store
                 $columns[] = $name;
                 if ($metrics[$name]->_type == 'int') {
                     $values[] = intval($monitor->$name);
-                } elseif ($metrics[$name]->_type == 'double') {
-                    $values[] = floatval($monitor->$name);
-                } elseif ($metrics[$name]->_type == 'datetime') {
-                    $values[] = DBManagerFactory::getInstance()->convert(DBManagerFactory::getInstance()->quoted($monitor->$name), "datetime");
                 } else {
-                    $values[] = DBManagerFactory::getInstance()->quoted($monitor->$name);
+                    if ($metrics[$name]->_type == 'double') {
+                        $values[] = floatval($monitor->$name);
+                    } else {
+                        if ($metrics[$name]->_type == 'datetime') {
+                            $values[] = DBManagerFactory::getInstance()->convert(DBManagerFactory::getInstance()->quoted($monitor->$name), "datetime");
+                        } else {
+                            $values[] = DBManagerFactory::getInstance()->quoted($monitor->$name);
+                        }
+                    }
                 }
             }
         } //foreach

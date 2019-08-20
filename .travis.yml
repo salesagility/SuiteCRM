@@ -5,9 +5,6 @@ sudo: required
 matrix:
   fast_finish: true
   include:
-    - name: "PHP 5.5 / MySQL 5.6"
-      php: "5.5"
-      dist: trusty
     - name: "PHP 5.6 / MySQL 5.6"
       php: "5.6"
       dist: trusty
@@ -37,6 +34,7 @@ matrix:
 
 services:
   - mysql
+  - elasticsearch
 addons:
   chrome: stable
 
@@ -117,6 +115,9 @@ after_script:
   - ./build/push_output.sh
   - curl -i -F file=@suitecrm.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
   - curl -i -F file=@var/log/apache2/error.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
+  # ElasticSearch Indexing logs
+  - cat search_index.log
+  - sudo cat /var/log/apache2/error.log
   - echo $TRAVIS_COMMIT_RANGE
 
 branches:

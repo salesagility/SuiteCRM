@@ -52,10 +52,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
         $focus = new Meeting();
         $focus->id = $_REQUEST['object_id'];
         $test = $focus->set_accept_status($current_user, $_REQUEST['accept_status']);
-    } elseif ($_REQUEST['object_type'] == "Call") {
-        $focus = new Call();
-        $focus->id = $_REQUEST['object_id'];
-        $test = $focus->set_accept_status($current_user, $_REQUEST['accept_status']);
+    } else {
+        if ($_REQUEST['object_type'] == "Call") {
+            $focus = new Call();
+            $focus->id = $_REQUEST['object_id'];
+            $test = $focus->set_accept_status($current_user, $_REQUEST['accept_status']);
+        }
     }
     print 1;
     exit;

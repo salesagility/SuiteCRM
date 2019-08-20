@@ -249,8 +249,9 @@ abstract class ExternalAPIBase implements ExternalAPIPlugin
         $language_key = $this->_appStringErrorPrefix . $error_numb;
         if (isset($GLOBALS['app_strings'][$language_key])) {
             return $GLOBALS['app_strings'][$language_key];
+        } else {
+            return $GLOBALS['app_strings']['ERR_EXTERNAL_API_SAVE_FAIL'];
         }
-        return $GLOBALS['app_strings']['ERR_EXTERNAL_API_SAVE_FAIL'];
     }
 
     /**

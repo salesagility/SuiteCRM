@@ -157,8 +157,10 @@ BSOFR;
             $return .= '{';
             if (!empty($v['displayname'])) {
                 $return .= 'name:"'.$v['displayname'].'"';
-            } elseif (!empty($v['name'])) {
-                $return .= 'name:"'.$v['name'].'"';
+            } else {
+                if (!empty($v['name'])) {
+                    $return .= 'name:"'.$v['name'].'"';
+                }
             }
             $return .= ', filename:"'.$v['filename'].'"';
             $return .= ', fontpath:"'.$v['fontpath'].'"';

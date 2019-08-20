@@ -299,28 +299,30 @@ switch ($install_type) {
 
         if ($mode == "Install" || $mode=="Enable") {
             $sugar_config['languages'] = $sugar_config['languages'] + array( $_REQUEST['new_lang_name'] => $_REQUEST['new_lang_desc'] );
-        } elseif ($mode == "Uninstall" || $mode=="Disable") {
-            $new_langs = array();
-            $old_langs = $sugar_config['languages'];
-            foreach ($old_langs as $key => $value) {
-                if ($key != $_REQUEST['new_lang_name']) {
-                    $new_langs += array( $key => $value );
+        } else {
+            if ($mode == "Uninstall" || $mode=="Disable") {
+                $new_langs = array();
+                $old_langs = $sugar_config['languages'];
+                foreach ($old_langs as $key => $value) {
+                    if ($key != $_REQUEST['new_lang_name']) {
+                        $new_langs += array( $key => $value );
+                    }
                 }
-            }
-            $sugar_config['languages'] = $new_langs;
+                $sugar_config['languages'] = $new_langs;
 
-            $default_sugar_instance_lang = 'en_us';
-            if ($current_language == $_REQUEST['new_lang_name']) {
-                $_SESSION['authenticated_user_language'] =$default_sugar_instance_lang;
-                $lang_changed_string = $mod_strings['LBL_CURRENT_LANGUAGE_CHANGE'].$sugar_config['languages'][$default_sugar_instance_lang].'<br/>';
-            }
+                $default_sugar_instance_lang = 'en_us';
+                if ($current_language == $_REQUEST['new_lang_name']) {
+                    $_SESSION['authenticated_user_language'] =$default_sugar_instance_lang;
+                    $lang_changed_string = $mod_strings['LBL_CURRENT_LANGUAGE_CHANGE'].$sugar_config['languages'][$default_sugar_instance_lang].'<br/>';
+                }
 
-            if ($sugar_config['default_language'] == $_REQUEST['new_lang_name']) {
-                $cfg = new Configurator();
-                $cfg->config['languages'] = $new_langs;
-                $cfg->config['default_language'] = $default_sugar_instance_lang;
-                $cfg->handleOverride();
-                $lang_changed_string .= $mod_strings['LBL_DEFAULT_LANGUAGE_CHANGE'].$sugar_config['languages'][$default_sugar_instance_lang].'<br/>';
+                if ($sugar_config['default_language'] == $_REQUEST['new_lang_name']) {
+                    $cfg = new Configurator();
+                    $cfg->config['languages'] = $new_langs;
+                    $cfg->config['default_language'] = $default_sugar_instance_lang;
+                    $cfg->handleOverride();
+                    $lang_changed_string .= $mod_strings['LBL_DEFAULT_LANGUAGE_CHANGE'].$sugar_config['languages'][$default_sugar_instance_lang].'<br/>';
+                }
             }
         }
         ksort($sugar_config);
@@ -535,8 +537,10 @@ if ($install_type != "module" && $install_type != "langpack") {
         }
         print("</ul>\n");
         echo '</div>';
-    } elseif ($mode != 'Disable' && $mode !='Enable') {
-        print("{$mod_strings['LBL_UW_NO_FILES_SELECTED']} $file_action.<br>\n");
+    } else {
+        if ($mode != 'Disable' && $mode !='Enable') {
+            print("{$mod_strings['LBL_UW_NO_FILES_SELECTED']} $file_action.<br>\n");
+        }
     }
 
     print($mod_strings['LBL_UW_UPGRADE_SUCCESSFUL']);

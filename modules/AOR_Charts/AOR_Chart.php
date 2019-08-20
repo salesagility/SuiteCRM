@@ -357,7 +357,7 @@ class AOR_Chart extends Basic
             // exception
             LoggerManager::getLogger()->error("Invalid char data labels detected for chart type: $this->type");
         }
-        
+
         return $chart;
     }
 

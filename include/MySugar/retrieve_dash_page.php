@@ -259,8 +259,10 @@ foreach ($pages[$activePage]['columns'] as $colNum => $column) {
                     foreach ($_REQUEST as $k => $v) {
                         if ($k == 'lvso') {
                             $sortOrder = $v;
-                        } elseif (preg_match('/Home2_.+_ORDER_BY/', $k)) {
-                            $orderBy = $v;
+                        } else {
+                            if (preg_match('/Home2_.+_ORDER_BY/', $k)) {
+                                $orderBy = $v;
+                            }
                         }
                     }
                     if (!empty($sortOrder) && !empty($orderBy)) {
@@ -328,15 +330,18 @@ $sugar_smarty->assign('module', 'Home');
 //custom chart code
 require_once('include/SugarCharts/SugarChartFactory.php');
 $sugarChart = SugarChartFactory::getInstance();
-$resources = $sugarChart->getChartResources();
-$mySugarResources = $sugarChart->getMySugarChartResources();
-$sugar_smarty->assign('chartResources', $resources);
-$sugar_smarty->assign('mySugarChartResources', $mySugarResources);
+if ($sugarChart) {
+    $resources = $sugarChart->getChartResources();
+    $mySugarResources = $sugarChart->getMySugarChartResources();
+    $sugar_smarty->assign('chartResources', $resources);
+    $sugar_smarty->assign('mySugarChartResources', $mySugarResources);
+}
 if (file_exists("custom/include/MySugar/tpls/MySugar2.tpl")) {
     echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar2.tpl');
 } else {
     echo $sugar_smarty->fetch('include/MySugar/tpls/MySugar2.tpl');
 }
+
 
 //init the quickEdit listeners after the dashlets have loaded on home page the first time
 echo"<script>if(typeof(qe_init) != 'undefined'){qe_init();}</script>";

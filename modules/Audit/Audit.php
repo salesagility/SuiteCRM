@@ -124,9 +124,9 @@ class Audit extends SugarBean
             }
         }
 
-        if ($focus && $focus->is_AuditEnabled()) {
+        if ($focus->is_AuditEnabled()) {
             $order= ' order by '.$focus->get_audit_table_name().'.date_created desc' ;//order by contacts_audit.date_created desc
-            $query = "SELECT ".$focus->get_audit_table_name().".*, users.user_name FROM ".$focus->get_audit_table_name()." LEFT JOIN users ON ".$focus->get_audit_table_name().".created_by = users.id WHERE ".$focus->get_audit_table_name().".parent_id = '$focus->id'".$order;
+            $query = "SELECT ".$focus->get_audit_table_name().".*, users.user_name FROM ".$focus->get_audit_table_name().", users WHERE ".$focus->get_audit_table_name().".created_by = users.id AND ".$focus->get_audit_table_name().".parent_id = '$focus->id'".$order;
 
             $result = $focus->db->query($query);
             // We have some data.
@@ -200,10 +200,12 @@ class Audit extends SugarBean
 
         if (!empty($moduleAssocFieldsArray[$focus->object_name]) && array_key_exists($fieldName, $moduleAssocFieldsArray[$focus->object_name])) {
             $assocFieldsArray =  $moduleAssocFieldsArray[$focus->object_name];
-        } elseif (array_key_exists($fieldName, $genericAssocFieldsArray)) {
-            $assocFieldsArray =  $genericAssocFieldsArray;
         } else {
-            return $fieldValue;
+            if (array_key_exists($fieldName, $genericAssocFieldsArray)) {
+                $assocFieldsArray =  $genericAssocFieldsArray;
+            } else {
+                return $fieldValue;
+            }
         }
         $query = "";
         $field_arr = $assocFieldsArray[$fieldName];
@@ -233,8 +235,9 @@ class Audit extends SugarBean
                         $returnVal .= $row[$col]." ";
                     }
                     return $returnVal;
+                } else {
+                    return $row[$field_arr['select_field_name']];
                 }
-                return $row[$field_arr['select_field_name']];
             }
         }
     }

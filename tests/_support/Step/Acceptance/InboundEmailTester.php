@@ -9,7 +9,7 @@ class InboundEmailTester extends \AcceptanceTester
      */
     public function gotoEmailSettings()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickUserMenuItem('#admin_link');
         $I->click('#mailboxes');
     }
@@ -20,7 +20,7 @@ class InboundEmailTester extends \AcceptanceTester
      */
     public function createBounceEmail()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $EditView = new EditView($this->getScenario());
         $sideBar = new SideBar($this->getScenario());
         $faker = $this->getFaker();

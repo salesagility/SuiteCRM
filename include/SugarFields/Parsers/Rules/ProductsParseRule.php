@@ -73,12 +73,18 @@ class ProductsParseRule extends BaseRule
                     foreach ($row as $key=>$column) {
                         if ($this->matches($column, '/^url$/i')) {
                             $panels[$name][$rowCount][$key] = 'website';
-                        } elseif ($this->matches($column, '/^manufacturer$/i')) {
-                            $panels[$name][$rowCount][$key] = 'manufacturer_name';
-                        } elseif ($this->matches($column, '/^category$/i')) {
-                            $panels[$name][$rowCount][$key] = 'category_name';
-                        } elseif ($this->matches($column, '/^type$/i')) {
-                            $panels[$name][$rowCount][$key] = 'type_name';
+                        } else {
+                            if ($this->matches($column, '/^manufacturer$/i')) {
+                                $panels[$name][$rowCount][$key] = 'manufacturer_name';
+                            } else {
+                                if ($this->matches($column, '/^category$/i')) {
+                                    $panels[$name][$rowCount][$key] = 'category_name';
+                                } else {
+                                    if ($this->matches($column, '/^type$/i')) {
+                                        $panels[$name][$rowCount][$key] = 'type_name';
+                                    }
+                                }
+                            }
                         }
                     } //foreach
                 } //foreach

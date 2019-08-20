@@ -199,11 +199,13 @@ if (isset($_REQUEST['show_wizard_summary']) && $_REQUEST['show_wizard_summary'])
         $_POST['wiz_mass'] = $marketing->id;
         if (isset($_REQUEST['sendMarketingEmailTest']) && $_REQUEST['sendMarketingEmailTest']) {
             $_POST['mode'] = 'test';
-        } elseif (isset($_REQUEST['sendMarketingEmailSchedule']) && $_REQUEST['sendMarketingEmailSchedule']) {
-            $_POST['mode'] = 'send';
-            $_SESSION['msg'] = 'LBL_EMAILS_SCHEDULED';
         } else {
-            throw new Exception('request error');
+            if (isset($_REQUEST['sendMarketingEmailSchedule']) && $_REQUEST['sendMarketingEmailSchedule']) {
+                $_POST['mode'] = 'send';
+                $_SESSION['msg'] = 'LBL_EMAILS_SCHEDULED';
+            } else {
+                throw new Exception('request error');
+            }
         }
 
         //$_POST['SUBMIT'] = 'Send Test';

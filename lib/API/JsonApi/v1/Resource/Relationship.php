@@ -121,11 +121,13 @@ class Relationship extends ResourceIdentifier
         $payload = array();
         if ($this->getRelationshipType() === RelationshipType::TO_ONE) {
             $payload = $this->link->toJsonApiResponse();
-        } elseif ($this->getRelationshipType() === RelationshipType::TO_MANY) {
-            foreach ($this->link as $link) {
-                $response =  $link->toJsonApiResponse();
-                if (empty($response) === false) {
-                    $payload[] = $response;
+        } else {
+            if ($this->getRelationshipType() === RelationshipType::TO_MANY) {
+                foreach ($this->link as $link) {
+                    $response =  $link->toJsonApiResponse();
+                    if (empty($response) === false) {
+                        $payload[] = $response;
+                    }
                 }
             }
         }

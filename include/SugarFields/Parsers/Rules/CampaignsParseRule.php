@@ -75,11 +75,13 @@ class CampaignsParseRule extends BaseRule
                             //Add the frequency label
                             $panels[$name][$rowCount][$key] = 'frequency';
                             $frequencyAdded = true;
-                        } elseif ($this->matches($column, '/^deleted$/')) {
-                            //This is to fix the error where the Created By field
-                            //in Campaigns EditView.html actually references the deleted field
-                            //We will just remove the field since you shouldn't be able to edit this information anyway
-                            $panels[$name][$rowCount][$key] = '';
+                        } else {
+                            if ($this->matches($column, '/^deleted$/')) {
+                                //This is to fix the error where the Created By field
+                                //in Campaigns EditView.html actually references the deleted field
+                                //We will just remove the field since you shouldn't be able to edit this information anyway
+                                $panels[$name][$rowCount][$key] = '';
+                            }
                         }
                     } //foreach
                 } //foreach

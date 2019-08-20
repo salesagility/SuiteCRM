@@ -226,12 +226,14 @@ $currency = new ListCurrency();
 if (isset($focus->currency_id) && !empty($focus->currency_id)) {
     $selectCurrency = $currency->getSelectOptions($focus->currency_id);
     $ss->assign("CURRENCY", $selectCurrency);
-} elseif ($current_user->getPreference('currency') && !isset($focus->id)) {
-    $selectCurrency = $currency->getSelectOptions($current_user->getPreference('currency'));
-    $ss->assign("CURRENCY", $selectCurrency);
 } else {
-    $selectCurrency = $currency->getSelectOptions();
-    $ss->assign("CURRENCY", $selectCurrency);
+    if ($current_user->getPreference('currency') && !isset($focus->id)) {
+        $selectCurrency = $currency->getSelectOptions($current_user->getPreference('currency'));
+        $ss->assign("CURRENCY", $selectCurrency);
+    } else {
+        $selectCurrency = $currency->getSelectOptions();
+        $ss->assign("CURRENCY", $selectCurrency);
+    }
 }
 global $current_user;
 if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {

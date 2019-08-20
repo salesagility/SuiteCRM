@@ -216,9 +216,10 @@ class SchedulersJob extends Basic
             $GLOBALS['log']->debug("----->Firing was successful: $job");
             $GLOBALS['log']->debug('----->WTIH RESULT: '.strip_tags($result).' AND '.strip_tags(print_r($cInfo, true)));
             return true;
+        } else {
+            $GLOBALS['log']->fatal("Job failed: $job");
+            return false;
         }
-        $GLOBALS['log']->fatal("Job failed: $job");
-        return false;
     }
     ////	END SCHEDULERSJOB HELPER FUNCTIONS
     ///////////////////////////////////////////////////////////////////////////
@@ -544,11 +545,13 @@ class SchedulersJob extends Basic
                 if ($res) {
                     $this->resolveJob(self::JOB_SUCCESS);
                     return true;
+                } else {
+                    $this->resolveJob(self::JOB_FAILURE);
+                    return false;
                 }
-                $this->resolveJob(self::JOB_FAILURE);
-                return false;
+            } else {
+                return $this->resolution != self::JOB_FAILURE;
             }
-            return $this->resolution != self::JOB_FAILURE;
         } elseif ($exJob[0] == 'url') {
             if (function_exists('curl_init')) {
                 $GLOBALS['log']->debug('----->SchedulersJob firing URL job: '.$exJob[1]);
@@ -557,12 +560,14 @@ class SchedulersJob extends Basic
                     restore_error_handler();
                     $this->resolveJob(self::JOB_SUCCESS);
                     return true;
+                } else {
+                    restore_error_handler();
+                    $this->resolveJob(self::JOB_FAILURE);
+                    return false;
                 }
-                restore_error_handler();
-                $this->resolveJob(self::JOB_FAILURE);
-                return false;
+            } else {
+                $this->resolveJob(self::JOB_FAILURE, translate('ERR_CURL', 'SchedulersJobs'));
             }
-            $this->resolveJob(self::JOB_FAILURE, translate('ERR_CURL', 'SchedulersJobs'));
         } elseif ($exJob[0] == 'class') {
             $tmpJob = new $exJob[1]();
             if ($tmpJob instanceof RunnableSchedulerJob) {
@@ -578,13 +583,16 @@ class SchedulersJob extends Basic
                     if ($result) {
                         $this->resolveJob(self::JOB_SUCCESS);
                         return true;
+                    } else {
+                        $this->resolveJob(self::JOB_FAILURE);
+                        return false;
                     }
-                    $this->resolveJob(self::JOB_FAILURE);
-                    return false;
+                } else {
+                    return $this->resolution != self::JOB_FAILURE;
                 }
-                return $this->resolution != self::JOB_FAILURE;
+            } else {
+                return $this->resolveJob(self::JOB_FAILURE, sprintf(translate('ERR_JOBTYPE', 'SchedulersJobs'), strip_tags($this->target)));
             }
-            return $this->resolveJob(self::JOB_FAILURE, sprintf(translate('ERR_JOBTYPE', 'SchedulersJobs'), strip_tags($this->target)));
         } else {
             return $this->resolveJob(self::JOB_FAILURE, sprintf(translate('ERR_JOBTYPE', 'SchedulersJobs'), strip_tags($this->target)));
         }

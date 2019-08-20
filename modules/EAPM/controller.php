@@ -103,8 +103,9 @@ class EAPMController extends SugarController
                 $reply = $this->api->checkLogin();
                 if (!$reply['success']) {
                     return $this->failed(translate('LBL_AUTH_ERROR', $this->bean->module_dir));
+                } else {
+                    $this->bean->validated();
                 }
-                $this->bean->validated();
             }
         }
         if ($this->return_module == 'Users') {
@@ -148,18 +149,21 @@ class EAPMController extends SugarController
             $reply = $this->api->checkLogin($this->bean);
             if (!$reply['success']) {
                 return $this->failed(translate('LBL_AUTH_ERROR', $this->bean->module_dir));
+            } else {
+                $this->bean->validated();
             }
-            $this->bean->validated();
         }
         
         // This is a tweak so that we can automatically close windows if requested by the external account system
         if (isset($_REQUEST['closeWhenDone']) && $_REQUEST['closeWhenDone'] == 1) {
             if (!empty($_REQUEST['callbackFunction']) && !empty($_REQUEST['application'])) {
                 $js = '<script type="text/javascript">window.opener.' . $_REQUEST['callbackFunction'] . '("' . $_REQUEST['application'] . '"); window.close();</script>';
-            } elseif (!empty($_REQUEST['refreshParentWindow'])) {
-                $js = '<script type="text/javascript">window.opener.location.reload();window.close();</script>';
             } else {
-                $js = '<script type="text/javascript">window.close();</script>';
+                if (!empty($_REQUEST['refreshParentWindow'])) {
+                    $js = '<script type="text/javascript">window.opener.location.reload();window.close();</script>';
+                } else {
+                    $js = '<script type="text/javascript">window.close();</script>';
+                }
             }
             echo($js);
             return;
@@ -213,8 +217,9 @@ class EAPMController extends SugarController
             $reply = $this->api->checkLogin();
             if (!$reply['success']) {
                 return $this->failed(translate('LBL_AUTH_ERROR', $this->bean->module_dir));
+            } else {
+                $this->bean->validated();
             }
-            $this->bean->validated();
         } else {
             // Normal auth methods go through this.
             $this->action_save();

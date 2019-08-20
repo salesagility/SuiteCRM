@@ -52,8 +52,10 @@ if (isset($_GET["entryPoint"])) {
         require_once('include/utils.php');
         include("include/SugarTheme/getImage.php");
         die();
-    } elseif ($_GET["entryPoint"] == "getYUIComboFile") {
-        include("include/javascript/getYUIComboFile.php");
-        die();
+    } else {
+        if ($_GET["entryPoint"] == "getYUIComboFile") {
+            include("include/javascript/getYUIComboFile.php");
+            die();
+        }
     }
 }

@@ -601,13 +601,15 @@ class SugarDateTime extends DateTime
                 if ($data["tm_hour"] != 12) {
                     $data["tm_hour"] += 12;
                 }
-            } elseif ($ampm == 'am') {
-                if ($data["tm_hour"] == 12) {
-                    // 12:00am is 00:00
-                    $data["tm_hour"] = 0;
-                }
             } else {
-                return false;
+                if ($ampm == 'am') {
+                    if ($data["tm_hour"] == 12) {
+                        // 12:00am is 00:00
+                        $data["tm_hour"] = 0;
+                    }
+                } else {
+                    return false;
+                }
             }
         }
 
@@ -617,13 +619,15 @@ class SugarDateTime extends DateTime
                 if ($data["tm_hour"] != 12) {
                     $data["tm_hour"] += 12;
                 }
-            } elseif ($ampm == 'AM') {
-                if ($data["tm_hour"] == 12) {
-                    // 12:00am is 00:00
-                    $data["tm_hour"] = 0;
-                }
             } else {
-                return false;
+                if ($ampm == 'AM') {
+                    if ($data["tm_hour"] == 12) {
+                        // 12:00am is 00:00
+                        $data["tm_hour"] = 0;
+                    }
+                } else {
+                    return false;
+                }
             }
         }
 

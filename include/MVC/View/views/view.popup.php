@@ -125,10 +125,14 @@ class ViewPopup extends SugarView
                 //otherwise include the file
                 require_once($popupMeta['searchdefs']);
             }
-        } elseif (empty($searchdefs) && file_exists('custom/modules/'.$this->module.'/metadata/searchdefs.php')) {
-            require_once('custom/modules/'.$this->module.'/metadata/searchdefs.php');
-        } elseif (empty($searchdefs) && file_exists('modules/'.$this->module.'/metadata/searchdefs.php')) {
-            require_once('modules/'.$this->module.'/metadata/searchdefs.php');
+        } else {
+            if (empty($searchdefs) && file_exists('custom/modules/'.$this->module.'/metadata/searchdefs.php')) {
+                require_once('custom/modules/'.$this->module.'/metadata/searchdefs.php');
+            } else {
+                if (empty($searchdefs) && file_exists('modules/'.$this->module.'/metadata/searchdefs.php')) {
+                    require_once('modules/'.$this->module.'/metadata/searchdefs.php');
+                }
+            }
         }
 
         //if you click the pagination button, it will populate the search criteria here
@@ -223,9 +227,9 @@ class ViewPopup extends SugarView
             echo $popup->display();
         } else {
             if (file_exists('modules/' . $this->module . '/Popup_picker.php')) {
-                require_once(get_custom_file_if_exists('modules/' . $this->module . '/Popup_picker.php'));
+                require_once('modules/' . $this->module . '/Popup_picker.php');
             } else {
-                require_once(get_custom_file_if_exists('include/Popups/Popup_picker.php'));
+                require_once('include/Popups/Popup_picker.php');
             }
 
             $popup = new Popup_Picker();

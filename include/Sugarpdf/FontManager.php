@@ -94,11 +94,13 @@ class FontManager
     {
         if (file_exists(K_PATH_CUSTOM_FONTS.$this->filename)) {
             $this->fontPath = K_PATH_CUSTOM_FONTS;
-        } elseif (file_exists(K_PATH_FONTS.$this->filename)) {
-            $this->fontPath = K_PATH_FONTS;
         } else {
-            $this->fontPath = "";
-            array_push($this->errors, "Unable to find the font!");
+            if (file_exists(K_PATH_FONTS.$this->filename)) {
+                $this->fontPath = K_PATH_FONTS;
+            } else {
+                $this->fontPath = "";
+                array_push($this->errors, "Unable to find the font!");
+            }
         }
     }
     /**
@@ -133,14 +135,21 @@ class FontManager
         }
         if (preg_match("/bi.php$/i", $this->filename)) {
             return array("bold","italic");
-        } elseif (preg_match("/ib.php$/i", $this->filename)) {
-            return array("bold","italic");
-        } elseif (preg_match("/b.php$/i", $this->filename)) {
-            return array("bold");
-        } elseif (preg_match("/i.php$/i", $this->filename)) {
-            return array("italic");
+        } else {
+            if (preg_match("/ib.php$/i", $this->filename)) {
+                return array("bold","italic");
+            } else {
+                if (preg_match("/b.php$/i", $this->filename)) {
+                    return array("bold");
+                } else {
+                    if (preg_match("/i.php$/i", $this->filename)) {
+                        return array("italic");
+                    } else {
+                        return array("regular");
+                    }
+                }
+            }
         }
-        return array("regular");
     }
     /**
      * This method calculate the font size of $this->filename in KB
@@ -256,8 +265,9 @@ class FontManager
         ksort($this->fontList);
         if (count($this->fontList)>0) {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
     /**
      * This method fill the fontList with all the fonts available
@@ -269,13 +279,13 @@ class FontManager
             require $cachedfile;
             $this->fontList=$cachedFontList;
             return true;
+        } else {
+            if ($this->parseFolder()) {
+                $cacheDir = create_cache_directory('Sugarpdf/');
+                write_array_to_file('cachedFontList', $this->fontList, $cacheDir . 'cachedFontList.php');
+                return true;
+            }
         }
-        if ($this->parseFolder()) {
-            $cacheDir = create_cache_directory('Sugarpdf/');
-            write_array_to_file('cachedFontList', $this->fontList, $cacheDir . 'cachedFontList.php');
-            return true;
-        }
-        
         return false;
     }
     /**
@@ -330,8 +340,9 @@ class FontManager
                 }
                 $this->clearCachedFile();
                 return true;
+            } else {
+                array_push($this->errors, $this->fontPath.$this->filename . " " . translate("ERR_FONT_NOT_WRITABLE", "Configurator"));
             }
-            array_push($this->errors, $this->fontPath.$this->filename . " " . translate("ERR_FONT_NOT_WRITABLE", "Configurator"));
         } else {
             array_push($this->errors, $this->fontPath . " " . translate("ERR_FONT_FILE_DO_NOT_EXIST", "Configurator"));
         }

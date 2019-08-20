@@ -72,10 +72,12 @@ class ModuleBuilderController extends SugarController
                 return $mod_strings['LBL_DROPDOWNEDITOR'];
             } elseif ($_REQUEST['type'] == 'home') {
                 return $mod_strings['LBL_HOME'];
+            } else {
+                return $mod_strings['LBL_DEVELOPER_TOOLS'];
             }
+        } else {
             return $mod_strings['LBL_DEVELOPER_TOOLS'];
         }
-        return $mod_strings['LBL_DEVELOPER_TOOLS'];
     }
 
     public function fromModuleBuilder()
@@ -296,10 +298,12 @@ class ModuleBuilderController extends SugarController
             $mb->save() ;
             if (! empty($_REQUEST [ 'duplicate' ])) {
                 $module->copy($_REQUEST [ 'name' ]) ;
-            } elseif (! empty($_REQUEST [ 'original_name' ]) && $_REQUEST [ 'original_name' ] != $_REQUEST [ 'name' ]) {
-                if (! $module->rename($_REQUEST [ 'name' ])) {
-                    $module->name = $_REQUEST [ 'original_name' ] ;
-                    $_REQUEST [ 'name' ] = $_REQUEST [ 'original_name' ] ;
+            } else {
+                if (! empty($_REQUEST [ 'original_name' ]) && $_REQUEST [ 'original_name' ] != $_REQUEST [ 'name' ]) {
+                    if (! $module->rename($_REQUEST [ 'name' ])) {
+                        $module->name = $_REQUEST [ 'original_name' ] ;
+                        $_REQUEST [ 'name' ] = $_REQUEST [ 'original_name' ] ;
+                    }
                 }
             }
 
@@ -516,9 +520,9 @@ class ModuleBuilderController extends SugarController
                     $parser->handleSaveRelationshipLabels($metadata, $selected_lang) ;
                 }
             }
+        } else {
+            //TODO FOR MB
         }
-        //TODO FOR MB
-        
         $this->view = 'relationships' ;
     }
 

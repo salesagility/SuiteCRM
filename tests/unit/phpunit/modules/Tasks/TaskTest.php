@@ -8,7 +8,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     protected $state;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 

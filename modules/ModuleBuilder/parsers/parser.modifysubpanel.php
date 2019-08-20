@@ -1,6 +1,6 @@
 <?php
-if (! defined('sugarEntry') || ! sugarEntry) {
-    die('Not A Valid Entry Point') ;
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
 /**
  *
@@ -220,8 +220,10 @@ class ParserModifySubPanel extends ParserModifyListView
                 if ($width < 101 && $width > 0) {
                     $newFields [ $field ] [ 'width' ] = $width ;
                 }
-            } elseif (isset($this->listViewDefs [ $field ] [ 'width' ])) {
-                $newFields [ $field ] [ 'width' ] = $this->listViewDefs [ $field ] [ 'width' ] ;
+            } else {
+                if (isset($this->listViewDefs [ $field ] [ 'width' ])) {
+                    $newFields [ $field ] [ 'width' ] = $this->listViewDefs [ $field ] [ 'width' ] ;
+                }
             }
         }
         $subpanel->saveSubPanelDefOverride($this->panel, 'list_fields', $newFields) ;

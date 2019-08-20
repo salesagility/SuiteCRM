@@ -75,14 +75,16 @@ class SugarWidgetSubPanelRemoveButtonMeetings extends SugarWidgetField
         }
         
         /* Handle case where we generate subpanels from MySettings/LoadTabSubpanels.php */
-        elseif ($return_module == 'MySettings') {
-            global $beanList, $beanFiles;
-            $return_module = $_REQUEST['loadModule'];
+        else {
+            if ($return_module == 'MySettings') {
+                global $beanList, $beanFiles;
+                $return_module = $_REQUEST['loadModule'];
             
-            $class = $beanList[$return_module];
-            require_once($beanFiles[$class]);
-            $focus = new $class();
-            $focus->retrieve($return_id);
+                $class = $beanList[$return_module];
+                require_once($beanFiles[$class]);
+                $focus = new $class();
+                $focus->retrieve($return_id);
+            }
         }
         
         //CCL - Comment out restriction to not remove assigned user
@@ -114,7 +116,8 @@ class SugarWidgetSubPanelRemoveButtonMeetings extends SugarWidgetField
         if ($layout_def['ListView']) {
             return "<a href=\"javascript:sub_p_rem('$subpanel', '$linked_field'" .", '$record', $refresh_page);\""
                     . ' class="listViewTdToolsS1"' . " onclick=\"return sp_rem_conf();\"" . ">$icon_remove_text</a>";
+        } else {
+            return '';
         }
-        return '';
     }
 }

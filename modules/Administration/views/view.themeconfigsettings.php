@@ -84,8 +84,10 @@ class AdministrationViewThemeConfigSettings extends SugarView
                 if (isset($_REQUEST[$name])) {
                     if ($_REQUEST[$name] == 'true') {
                         $_REQUEST[$name] = true;
-                    } elseif ($_REQUEST[$name] == 'false') {
-                        $_REQUEST[$name] = false;
+                    } else {
+                        if ($_REQUEST[$name] == 'false') {
+                            $_REQUEST[$name] = false;
+                        }
                     }
                     $configurator->config['theme_settings'][$_REQUEST['theme']][$name] = $_REQUEST[$name];
                 }

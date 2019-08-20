@@ -331,10 +331,12 @@ EOJS;
             foreach ($seed_bean->field_defs as $field=>$value) {
                 if (isset($row[$field])) {
                     $seed_bean->$field = $row[$field];
-                } elseif (isset($row[$seed_bean->table_name .'.'.$field])) {
-                    $seed_bean->$field = $row[$seed_bean->table_name .'.'.$field];
                 } else {
-                    $seed_bean->$field = "";
+                    if (isset($row[$seed_bean->table_name .'.'.$field])) {
+                        $seed_bean->$field = $row[$seed_bean->table_name .'.'.$field];
+                    } else {
+                        $seed_bean->$field = "";
+                    }
                 }
             }
             $seed_bean->fill_in_additional_list_fields();

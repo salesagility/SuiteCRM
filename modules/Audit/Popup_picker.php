@@ -51,7 +51,6 @@ require_once __DIR__ . '/../../include/utils/layout_utils.php';
 global $beanList, $beanFiles, $currentModule, $focus, $action, $app_strings, $app_list_strings, $current_language, $timedate, $mod_strings;
 //we don't want the parent module's string file, but rather the string file specific to this subpanel
 
-
 if (!isset($_REQUEST['module_name'])) {
     LoggerManager::getLogger()->warn("Popup picker needs requested module name but \$_REQUEST[module_name] is not set.");
 } else {
@@ -113,13 +112,12 @@ class Popup_Picker
 
         //output header
         echo "<table width='100%' cellpadding='0' cellspacing='0'><tr><td>";
-                
-                
+        
         if (!isset($focus->module_dir)) {
             LoggerManager::getLogger()->fatal("Popup picker needs module dir from focus bean but global focus is none.");
             throw new Exception('There is not selected focus bean for popup picker process page.');
         }
-                
+          
         $mod_strings = return_module_language($current_language, $focus->module_dir);
 
         $printImageURL = SugarThemeRegistry::current()->getImageURL('print.gif');

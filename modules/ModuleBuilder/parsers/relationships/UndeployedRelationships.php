@@ -1,6 +1,6 @@
 <?php
-if (! defined('sugarEntry') || ! sugarEntry) {
-    die('Not A Valid Entry Point') ;
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
 /**
  *
@@ -376,9 +376,11 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
                         $fieldsToAdd [$parsedName [ 'moduleName' ]] = $fieldName;
                     }
                     //Bug 22348: We should add in the field for custom modules not in this package, if they have been deployed.
-                    elseif ($parsedName [ 'packageName' ] != $this->packageName
+                    else {
+                        if ($parsedName [ 'packageName' ] != $this->packageName
                             && isset($GLOBALS [ 'beanList' ] [ $deployedModuleName ])) {
-                        $fieldsToAdd [$deployedModuleName] = $fieldName;
+                            $fieldsToAdd [$deployedModuleName] = $fieldName;
+                        }
                     }
                 }
             }

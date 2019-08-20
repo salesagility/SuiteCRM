@@ -2,6 +2,7 @@
 
 function check_enabled($db, $type)
 {
+
     $query = "SELECT * FROM config where name = 'module_" . $type . "' and value =  1;";
     $results = $db->query($query);
 
@@ -14,45 +15,57 @@ function check_enabled($db, $type)
 
 function format_feed_tweets($db, $array, $limit)
 {
+
     if (strlen($array['text']) > $limit) {
         $array['text'] = '<br /><p style=line-height:30px;>' . substr($array['text'], 0, $limit) . '. . .<br /><a href=https://twitter.com/' . $array['user']['screen_name'] . '/status/' . $array['id'] . '>View full Tweet</a></p>';
+
     } else {
         $array['text'] = '<br /><p style=line-height:30px;>' . $array['text'] . '<br /><a href=https://twitter.com/' . $array['user']['screen_name'] . '/status/' . $array['id'] . '>View on Twitter</a></p>';
+
     }
 
     $array['text'] = $db->quote($array['text']);
 
     return $array['text'];
+
 }
 
 function replace_hashtags($db, $array)
 {
+
     $i = 0;
     $count = count($array['entities']['hashtags']);
 
     while ($i < $count) {
+
         $array['text'] = str_replace('#' . $array['entities']['hashtags'][$i]['text'], "<a href=http://twitter.com/#" . $array['entities']['hashtags'][$i]['text'] . ">" . "#" . $array['entities']['hashtags'][$i]['text'] . "</a>", $array['text']);
         $i++;
     }
 
     return $array['text'];
+
 }
 
 function replace_users($db, $array)
 {
+
     $i = 0;
     $count = count($array['entities']['user_mentions']);
 
     while ($i < $count) {
+
         $array['text'] = str_replace('@' . $array['entities']['user_mentions'][$i]['screen_name'], "<a href=http://twitter.com/" . $array['entities']['user_mentions'][$i]['screen_name'] . ">" . "@" . $array['entities']['user_mentions'][$i]['screen_name'] . "</a>", $array['text']);
         $i++;
     }
 
     return $array['text'];
+
+
 }
 
 function duplicate_check($db, $text, $date)
 {
+
     $sql_check = "SELECT * FROM sugarfeed WHERE description = '" . $text . "' AND date_entered = '" . $date . "'";
     $results = $db->query($sql_check);
 
@@ -66,6 +79,7 @@ function duplicate_check($db, $text, $date)
 
 function check_auth($url)
 {
+
     $url = $url . "/include/social/twitter/twitter_auth/callback.php";
 
     $config = '';
@@ -100,4 +114,6 @@ function check_auth($url)
     $_REQUEST['request_token'] = $request_token;
 
     return $connection;
+
+
 }

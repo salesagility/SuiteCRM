@@ -118,8 +118,9 @@ class DashletsDialog
                         if ((!in_array($dashletMeta[$files['class']]['module'], $GLOBALS['moduleList']) && !in_array($dashletMeta[$files['class']]['module'], $GLOBALS['modInvisList'])) && (!in_array('Activities', $GLOBALS['moduleList']))) {
                             unset($dashletMeta[$files['class']]);
                             continue;
+                        } else {
+                            $icon = get_dashlets_dialog_icon($dashletMeta[$files['class']]['module']);
                         }
-                        $icon = get_dashlets_dialog_icon($dashletMeta[$files['class']]['module']);
                     }
                 }
 
@@ -174,8 +175,10 @@ class DashletsDialog
 
                     if (!empty($category) && $dashletMeta[$files['class']]['category'] == $categories[$category]) {
                         array_push($dashletsList[$categories[$category]], $cell);
-                    } elseif (empty($category)) {
-                        array_push($dashletsList[$dashletMeta[$files['class']]['category']], $cell);
+                    } else {
+                        if (empty($category)) {
+                            array_push($dashletsList[$dashletMeta[$files['class']]['category']], $cell);
+                        }
                     }
                 }
             }

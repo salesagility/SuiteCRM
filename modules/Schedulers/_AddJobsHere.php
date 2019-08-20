@@ -80,7 +80,8 @@ $job_strings = array(
     14 => 'cleanJobQueue',
     15 => 'removeDocumentsFromFS',
     16 => 'trimSugarFeeds',
-
+    17 => 'syncGoogleCalendar',
+    18 => 'runElasticSearchIndexerScheduler',
 );
 
 /**
@@ -520,6 +521,20 @@ function trimSugarFeeds()
 }
 
 
+/**
+ * + * Job 17
+ * + * this will sync the Google Calendars of users who are configured to do so
+ * + */
+function syncGoogleCalendar()
+{
+    global $sugar_config;
+    require_once 'include/GoogleSync/GoogleSync.php';
+    $googleSync = new GoogleSync($sugar_config);
+    $googleSync->syncAllUsers();
+
+    return true;
+}
+
 function cleanJobQueue($job)
 {
     $td = TimeDate::getInstance();
@@ -862,6 +877,11 @@ EOF;
         $bean->save();
         return true;
     }
+}
+
+function runElasticSearchIndexerScheduler($data)
+{
+    return \SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer::schedulerJob(json_decode($data));
 }
 
 if (file_exists('custom/modules/Schedulers/_AddJobsHere.php')) {

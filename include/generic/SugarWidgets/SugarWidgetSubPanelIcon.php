@@ -147,8 +147,10 @@ class SugarWidgetSubPanelIcon extends SugarWidgetField
             }
         }
         // now handle attachments for Emails
-        elseif (!empty($layout_def['module']) && $layout_def['module'] == 'Emails' && !empty($layout_def['fields']['ATTACHMENT_IMAGE'])) {
-            $ret.= $layout_def['fields']['ATTACHMENT_IMAGE'];
+        else {
+            if (!empty($layout_def['module']) && $layout_def['module'] == 'Emails' && !empty($layout_def['fields']['ATTACHMENT_IMAGE'])) {
+                $ret.= $layout_def['fields']['ATTACHMENT_IMAGE'];
+            }
         }
         return $ret;
     }

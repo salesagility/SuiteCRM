@@ -62,4 +62,6 @@ abstract class Zend_Search_Lucene_Search_QueryEntry
     {
         $this->_boost *= $boostFactor;
     }
+
+
 }

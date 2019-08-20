@@ -112,11 +112,13 @@ class ViewSugarFieldCollection
             if ($rel->lhs_module == $this->module_dir) {
                 $this->related_module = $rel->rhs_module;
                 $module_dir = $rel->lhs_module;
-            } elseif ($rel->rhs_module == $this->module_dir) {
-                $this->related_module = $rel->lhs_module;
-                $module_dir = $rel->rhs_module;
             } else {
-                die("this field has no relationships mapped with this module");
+                if ($rel->rhs_module == $this->module_dir) {
+                    $this->related_module = $rel->lhs_module;
+                    $module_dir = $rel->rhs_module;
+                } else {
+                    die("this field has no relationships mapped with this module");
+                }
             }
             if ($module_dir != $this->module_dir) {
                 die('These modules do not match : '. $this->module_dir . ' and ' . $module_dir);
@@ -209,8 +211,10 @@ class ViewSugarFieldCollection
     {
         if ($this->action_type == 'editview') {
             $this->process_editview();
-        } elseif ($this->action_type == 'detailview') {
-            $this->process_detailview();
+        } else {
+            if ($this->action_type == 'detailview') {
+                $this->process_detailview();
+            }
         }
     }
     public function process_detailview()
@@ -340,8 +344,10 @@ FRA;
             $this->ss->assign('quickSearchCode', $this->createQuickSearchCode());
             $this->createPopupCode();// this code populate $this->displayParams with popupdata.
             $this->tpl_path = $this->edit_tpl_path;
-        } elseif ($this->action_type == 'detailview') {
-            $this->tpl_path = $this->detail_tpl_path;
+        } else {
+            if ($this->action_type == 'detailview') {
+                $this->tpl_path = $this->detail_tpl_path;
+            }
         }
 
         $this->ss->assign('displayParams', $this->displayParams);
@@ -397,25 +403,33 @@ FRA;
             if (!$this->skipModuleQuickSearch && preg_match('/(Campaigns|Teams|Users|Accounts)/si', $this->related_module, $matches)) {
                 if ($matches[0] == 'Users') {
                     $sqs_objects[$name1] = $qsd->getQSUser();
-                } elseif ($matches[0] == 'Campaigns') {
-                    $sqs_objects[$name1] = $qsd->getQSCampaigns();
-                } elseif ($matches[0] == 'Users') {
-                    $sqs_objects[$name1] = $qsd->getQSUser();
-                } elseif ($matches[0] == 'Accounts') {
-                    $nameKey = "{$this->name}_collection_{$i}";
-                    $idKey = "id_{$this->name}_collection_{$i}";
+                } else {
+                    if ($matches[0] == 'Campaigns') {
+                        $sqs_objects[$name1] = $qsd->getQSCampaigns();
+                    } else {
+                        if ($matches[0] == 'Users') {
+                            $sqs_objects[$name1] = $qsd->getQSUser();
+                        } else {
+                            if ($matches[0] == 'Accounts') {
+                                $nameKey = "{$this->name}_collection_{$i}";
+                                $idKey = "id_{$this->name}_collection_{$i}";
 
-                    //There are billingKey, shippingKey and additionalFields entries you can define in editviewdefs.php
-                    //entry to allow quick search to autocomplete fields with a suffix value of the
-                    //billing/shippingKey value (i.e. 'billingKey' => 'primary' in Contacts will populate
-                    //primary_XXX fields with the Account's billing address values).
-                    //addtionalFields are key/value pair of fields to fill from Accounts(key) to Contacts(value)
-                    $billingKey = isset($this->displayParams['billingKey']) ? $this->displayParams['billingKey'] : null;
-                    $shippingKey = isset($this->displayParams['shippingKey']) ? $this->displayParams['shippingKey'] : null;
-                    $additionalFields = isset($this->displayParams['additionalFields']) ? $this->displayParams['additionalFields'] : null;
-                    $sqs_objects[$name1] = $qsd->getQSAccount($nameKey, $idKey, $billingKey, $shippingKey, $additionalFields);
-                } elseif ($matches[0] == 'Contacts') {
-                    $sqs_objects[$name1] = $qsd->getQSContact($name1, "id_".$name1);
+                                //There are billingKey, shippingKey and additionalFields entries you can define in editviewdefs.php
+                                //entry to allow quick search to autocomplete fields with a suffix value of the
+                                //billing/shippingKey value (i.e. 'billingKey' => 'primary' in Contacts will populate
+                                //primary_XXX fields with the Account's billing address values).
+                                //addtionalFields are key/value pair of fields to fill from Accounts(key) to Contacts(value)
+                                $billingKey = isset($this->displayParams['billingKey']) ? $this->displayParams['billingKey'] : null;
+                                $shippingKey = isset($this->displayParams['shippingKey']) ? $this->displayParams['shippingKey'] : null;
+                                $additionalFields = isset($this->displayParams['additionalFields']) ? $this->displayParams['additionalFields'] : null;
+                                $sqs_objects[$name1] = $qsd->getQSAccount($nameKey, $idKey, $billingKey, $shippingKey, $additionalFields);
+                            } else {
+                                if ($matches[0] == 'Contacts') {
+                                    $sqs_objects[$name1] = $qsd->getQSContact($name1, "id_".$name1);
+                                }
+                            }
+                        }
+                    }
                 }
 
 
@@ -460,12 +474,14 @@ FRA;
                         $sqs_objects[$name1]['primary_populate_list'][] = $v;
                         $sqs_objects[$name1]['primary_field_list'][] = $k;
                     }
-                } elseif (isset($field['field_list']) && isset($field['populate_list'])) {
-                    $sqs_objects[$name1]['primary_populate_list'] = array_merge($sqs_objects[$name1]['populate_list'], $field['field_list']);
-                    $sqs_objects[$name1]['primary_field_list'] = array_merge($sqs_objects[$name1]['field_list'], $field['populate_list']);
                 } else {
-                    $sqs_objects[$name1]['primary_populate_list'] = array();
-                    $sqs_objects[$name1]['primary_field_list'] = array();
+                    if (isset($field['field_list']) && isset($field['populate_list'])) {
+                        $sqs_objects[$name1]['primary_populate_list'] = array_merge($sqs_objects[$name1]['populate_list'], $field['field_list']);
+                        $sqs_objects[$name1]['primary_field_list'] = array_merge($sqs_objects[$name1]['field_list'], $field['populate_list']);
+                    } else {
+                        $sqs_objects[$name1]['primary_populate_list'] = array();
+                        $sqs_objects[$name1]['primary_field_list'] = array();
+                    }
                 }
             }
         }
@@ -485,8 +501,9 @@ FRA;
                 }
 
                 return $quicksearch_js .= '</script>';
+            } else {
+                return $sqs_objects;
             }
-            return $sqs_objects;
         }
         return '';
     }
@@ -501,10 +518,14 @@ FRA;
 
             if (isset($this->displayParams['formName'])) {
                 $form = $this->displayParams['formName'];
-            } elseif ($this->action_type == 'editview') {
-                $form = 'EditView';
-            } elseif ($this->action_type == 'quickcreate') {
-                $form = "QuickCreate_{$this->module_dir}";
+            } else {
+                if ($this->action_type == 'editview') {
+                    $form = 'EditView';
+                } else {
+                    if ($this->action_type == 'quickcreate') {
+                        $form = "QuickCreate_{$this->module_dir}";
+                    }
+                }
             }
 
             if (isset($this->displayParams['call_back_function'])) {

@@ -136,61 +136,69 @@ class QuickCreateMetaParser extends MetaParser
                     if (!empty($customField)) {
                         // If it's a custom field we just set the name
                         $name = $customField;
-                    } elseif (empty($formElementNames) && preg_match_all('/[\{]([^\}]*?)[\}]/s', $spanValue, $matches, PREG_SET_ORDER)) {
-                        // We are here if the $spanValue did not contain a form element for editing.
-                        // We will assume that it is read only (since there were no edit form elements)
+                    } else {
+                        if (empty($formElementNames) && preg_match_all('/[\{]([^\}]*?)[\}]/s', $spanValue, $matches, PREG_SET_ORDER)) {
+                            // We are here if the $spanValue did not contain a form element for editing.
+                            // We will assume that it is read only (since there were no edit form elements)
 
 
-                        // If there is more than one matching {} value then try to find the right one to key off
-                        // based on vardefs.php file.  Also, use the entire spanValue as customCode
-                        if (count($matches) > 1) {
-                            $name = $matches[0][1];
-                            $customCode = $spanValue;
-                            foreach ($matches as $pair) {
-                                if (preg_match("/^(mod[\.]|app[\.]).*?/s", $pair[1])) {
-                                    $customCode = str_replace($pair[1], '$'.strtoupper($pair[1]), $customCode);
-                                } elseif (!empty($vardefs[$pair[1]])) {
-                                    $name = $pair[1];
-                                    $customCode = str_replace($pair[1], '$fields.'.$pair[1].'.value', $customCode);
-                                }
-                            } //foreach
-                        } else {
-                            //If it is only a label, skip
-                            if (preg_match("/^(mod[\.]|app[\.]).*?/s", $matches[0][1])) {
-                                continue;
-                            } elseif (preg_match("/^[\$].*?/s", $matches[0][1])) {
-                                $name = '{' . strtoupper($matches[0][1]) . '}';
-                            } else {
+                            // If there is more than one matching {} value then try to find the right one to key off
+                            // based on vardefs.php file.  Also, use the entire spanValue as customCode
+                            if (count($matches) > 1) {
                                 $name = $matches[0][1];
-                            }
-                        }
-
-                        $readOnly = true;
-                    } elseif (is_array($formElementNames)) {
-                        if (count($formElementNames) == 1) {
-                            if (!empty($vardefs[$formElementNames[0]])) {
-                                $name = $formElementNames[0];
-                            }
-                        } else {
-                            $fields = array();
-                            foreach ($formElementNames as $elementName) {
-                                // What we are doing here is saying that we will add all your fields assuming
-                                // there are none that are of type relate or link.  However, if we find such a type
-                                // we'll take the first one found and assume that is the field you want (the SugarFields
-                                // library will handle rendering the popup and select and clear buttons for you).
-                                if (isset($vardefs[$elementName])) {
-                                    $type = $vardefs[$elementName]['type'];
-                                    if ($type != 'relate' && $type != 'link') {
-                                        $fields[] = $elementName;
-                                        $name = $elementName;
+                                $customCode = $spanValue;
+                                foreach ($matches as $pair) {
+                                    if (preg_match("/^(mod[\.]|app[\.]).*?/s", $pair[1])) {
+                                        $customCode = str_replace($pair[1], '$'.strtoupper($pair[1]), $customCode);
                                     } else {
-                                        unset($fields);
-                                        $name = $elementName;
-                                        break;
+                                        if (!empty($vardefs[$pair[1]])) {
+                                            $name = $pair[1];
+                                            $customCode = str_replace($pair[1], '$fields.'.$pair[1].'.value', $customCode);
+                                        }
+                                    }
+                                } //foreach
+                            } else {
+                                //If it is only a label, skip
+                                if (preg_match("/^(mod[\.]|app[\.]).*?/s", $matches[0][1])) {
+                                    continue;
+                                } else {
+                                    if (preg_match("/^[\$].*?/s", $matches[0][1])) {
+                                        $name = '{' . strtoupper($matches[0][1]) . '}';
+                                    } else {
+                                        $name = $matches[0][1];
                                     }
                                 }
                             }
-                        } //if-else
+
+                            $readOnly = true;
+                        } else {
+                            if (is_array($formElementNames)) {
+                                if (count($formElementNames) == 1) {
+                                    if (!empty($vardefs[$formElementNames[0]])) {
+                                        $name = $formElementNames[0];
+                                    }
+                                } else {
+                                    $fields = array();
+                                    foreach ($formElementNames as $elementName) {
+                                        // What we are doing here is saying that we will add all your fields assuming
+                                        // there are none that are of type relate or link.  However, if we find such a type
+                                        // we'll take the first one found and assume that is the field you want (the SugarFields
+                                        // library will handle rendering the popup and select and clear buttons for you).
+                                        if (isset($vardefs[$elementName])) {
+                                            $type = $vardefs[$elementName]['type'];
+                                            if ($type != 'relate' && $type != 'link') {
+                                                $fields[] = $elementName;
+                                                $name = $elementName;
+                                            } else {
+                                                unset($fields);
+                                                $name = $elementName;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                } //if-else
+                            }
+                        }
                     }
 
                     // Build the entry
@@ -208,29 +216,31 @@ class QuickCreateMetaParser extends MetaParser
                             $field = $name;
                         }
                         $col[] = $field;
-                    } elseif ($readOnly) {
-                        $field = array();
-                        $field['name'] = $name;
-                        $field['type'] = 'readonly';
-                        if (isset($customCode)) {
-                            $field['customCode'] = $customCode;
-                        } //if
-                        $col[] = $field;
                     } else {
-                        if (isset($fields) || isset($customCode)) {
+                        if ($readOnly) {
                             $field = array();
                             $field['name'] = $name;
-                            if (isset($fields)) {
-                                $field['fields'] = $fields;
-                            }
+                            $field['type'] = 'readonly';
                             if (isset($customCode)) {
                                 $field['customCode'] = $customCode;
-                            }
-
+                            } //if
                             $col[] = $field;
                         } else {
-                            $emptyCount = $name == '' ? $emptyCount + 1 : $emptyCount;
-                            $col[] = $name;
+                            if (isset($fields) || isset($customCode)) {
+                                $field = array();
+                                $field['name'] = $name;
+                                if (isset($fields)) {
+                                    $field['fields'] = $fields;
+                                }
+                                if (isset($customCode)) {
+                                    $field['customCode'] = $customCode;
+                                }
+
+                                $col[] = $field;
+                            } else {
+                                $emptyCount = $name == '' ? $emptyCount + 1 : $emptyCount;
+                                $col[] = $name;
+                            }
                         }
                     } //if-else if-else block
                 } //if($sugarAttrValue)

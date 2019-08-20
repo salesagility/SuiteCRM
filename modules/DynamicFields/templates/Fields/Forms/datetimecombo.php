@@ -75,8 +75,10 @@ function get_body(&$ss, $vardef)
             preg_match('/(am|pm)$/i', $meridiem, $matches);
             if (strtolower($matches[0]) == 'am' && $hours == 12) {
                 $hours = '00';
-            } elseif (strtolower($matches[0]) == 'pm' && $hours != 12) {
-                $hours += 12;
+            } else {
+                if (strtolower($matches[0]) == 'pm' && $hours != 12) {
+                    $hours += 12;
+                }
             }
         }
         $ss->assign('default_date', $date);

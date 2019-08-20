@@ -64,11 +64,13 @@ class StudioModuleFactory
         if (file_exists("custom/modules/{$module}/{$studioModClass}.php")) {
             require_once "custom/modules/{$module}/{$studioModClass}.php";
             $sm = new $studioModClass($module);
-        } elseif (file_exists("modules/{$module}/{$studioModClass}.php")) {
-            require_once "modules/{$module}/{$studioModClass}.php";
-            $sm = new $studioModClass($module);
         } else {
-            $sm = new StudioModule($module);
+            if (file_exists("modules/{$module}/{$studioModClass}.php")) {
+                require_once "modules/{$module}/{$studioModClass}.php";
+                $sm = new $studioModClass($module);
+            } else {
+                $sm = new StudioModule($module);
+            }
         }
         self::$loadedMods[$module] = $sm;
         return $sm;

@@ -81,8 +81,9 @@ if (isset($_SESSION['o_lock_object'])) {
         $_SESSION['o_lock_fs'] = true;
         echo  $_SESSION['o_lock_save'];
         die();
+    } else {
+        display_conflict_between_objects($object, $current_state, $current_state->field_defs, $current_state->module_dir, $_SESSION['o_lock_class']);
     }
-    display_conflict_between_objects($object, $current_state, $current_state->field_defs, $current_state->module_dir, $_SESSION['o_lock_class']);
 } else {
     echo $mod_strings['LBL_NO_LOCKED_OBJECTS'];
 }

@@ -1,6 +1,6 @@
 <?php
-if (! defined('sugarEntry') || ! sugarEntry) {
-    die('Not A Valid Entry Point') ;
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
 /**
  *
@@ -144,12 +144,16 @@ class StandardField extends DynamicField
                 //Switch on type of the property to find what the correct 'empty' is.
                 if (is_string($this->base_def[$property])) {
                     $this->custom_def[$property] = "";
-                } elseif (is_array($this->base_def[$property])) {
-                    $this->custom_def[$property] = array();
-                } elseif (is_bool($this->base_def[$property])) {
-                    $this->custom_def[$property] = false;
                 } else {
-                    $this->custom_def[$property] = null;
+                    if (is_array($this->base_def[$property])) {
+                        $this->custom_def[$property] = array();
+                    } else {
+                        if (is_bool($this->base_def[$property])) {
+                            $this->custom_def[$property] = false;
+                        } else {
+                            $this->custom_def[$property] = null;
+                        }
+                    }
                 }
             }
         }

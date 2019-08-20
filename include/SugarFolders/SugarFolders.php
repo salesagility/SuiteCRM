@@ -186,10 +186,10 @@ class SugarFolder
         $this->db = DBManagerFactory::getInstance();
 
         $this->core = "SELECT f.id, f.name, f.has_child, f.is_group, f.is_dynamic, f.dynamic_query," .
-            " f.folder_type, f.created_by, f.deleted FROM folders f ";
+        " f.folder_type, f.created_by, f.deleted FROM folders f ";
         $this->coreSubscribed = "SELECT f.id, f.name, f.has_child, f.is_group, f.is_dynamic,".
-            " f.dynamic_query, f.folder_type, f.created_by, f.deleted FROM folders f LEFT JOIN folders_subscriptions".
-            " fs ON f.id = fs.folder_id ";
+        " f.dynamic_query, f.folder_type, f.created_by, f.deleted FROM folders f LEFT JOIN folders_subscriptions".
+        " fs ON f.id = fs.folder_id ";
         $this->coreWhere = "WHERE f.deleted != 1 ";
         $this->coreWhereSubscribed = "WHERE f.deleted != 1 AND fs.assigned_user_id = ";
         $this->coreOrderBy = " ORDER BY f.is_dynamic, f.is_group, f.name ASC ";
@@ -226,9 +226,9 @@ class SugarFolder
     public function deleteEmailFromFolder($id)
     {
         $query = "DELETE FROM folders_rel " .
-            "WHERE polymorphic_module = 'Emails' " .
-            "AND polymorphic_id = " . $this->db->quoted($id) . " " .
-            "AND folder_id = " . $this->db->quoted($this->id);
+             "WHERE polymorphic_module = 'Emails' " .
+             "AND polymorphic_id = " . $this->db->quoted($id) . " " .
+             "AND folder_id = " . $this->db->quoted($this->id);
 
         return $this->db->query($query);
     }
@@ -264,8 +264,8 @@ class SugarFolder
     public function move($fromFolder, $toFolder, $beanId)
     {
         $query = "UPDATE folders_rel SET folder_id = " . $this->db->quoted($toFolder) . " " .
-            "WHERE folder_id = " . $this->db->quoted($fromFolder) . " " .
-            "AND polymorphic_id = " . $this->db->quoted($beanId) . " AND deleted = 0";
+             "WHERE folder_id = " . $this->db->quoted($fromFolder) . " " .
+             "AND polymorphic_id = " . $this->db->quoted($beanId) . " AND deleted = 0";
 
         return $this->db->query($query);
     }
@@ -284,8 +284,8 @@ class SugarFolder
         $guid = create_guid();
 
         $query = "INSERT INTO folders_rel (id, folder_id, polymorphic_module, polymorphic_id, deleted) " .
-            "VALUES(" . $this->db->quoted($guid) . ", " . $this->db->quoted($toFolder) .
-            ", " . $this->db->quoted($module) . ", " . $this->db->quoted($beanId) . ", 0)";
+              "VALUES(" . $this->db->quoted($guid) . ", " . $this->db->quoted($toFolder) .
+              ", " . $this->db->quoted($module) . ", " . $this->db->quoted($beanId) . ", 0)";
 
         return $this->db->query($query);
     }
@@ -1222,18 +1222,18 @@ class SugarFolder
             }
 
             $query = "INSERT INTO folders (id, name, folder_type, parent_folder, has_child, is_group, " .
-                "is_dynamic, dynamic_query, assign_to_id, created_by, modified_by, deleted) VALUES (" .
-                $this->db->quoted($this->id) . ", " .
-                $this->db->quoted($this->name) . ", " .
-                $this->db->quoted($this->folder_type) . ", " .
-                $this->db->quoted($this->parent_folder) . ", " .
-                $this->db->quoted($this->has_child) . ", " .
-                $this->db->quoted($this->is_group) . ", " .
-                $this->db->quoted($this->is_dynamic) . ", " .
-                $this->db->quoted($this->dynamic_query) . ", " .
-                $this->db->quoted($this->assign_to_id) . ", " .
-                $this->db->quoted($this->currentUser->id) . ", " .
-                $this->db->quoted($this->currentUser->id) . ", 0)";
+                 "is_dynamic, dynamic_query, assign_to_id, created_by, modified_by, deleted) VALUES (" .
+                    $this->db->quoted($this->id) . ", " .
+                    $this->db->quoted($this->name) . ", " .
+                    $this->db->quoted($this->folder_type) . ", " .
+                    $this->db->quoted($this->parent_folder) . ", " .
+                    $this->db->quoted($this->has_child) . ", " .
+                    $this->db->quoted($this->is_group) . ", " .
+                    $this->db->quoted($this->is_dynamic) . ", " .
+                    $this->db->quoted($this->dynamic_query) . ", " .
+                    $this->db->quoted($this->assign_to_id) . ", " .
+                    $this->db->quoted($this->currentUser->id) . ", " .
+                    $this->db->quoted($this->currentUser->id) . ", 0)";
 
             if ($addSubscriptions) {
                 // create default subscription
@@ -1360,11 +1360,11 @@ class SugarFolder
     }
 
     /**
-     * Retrieves and populates object
-     *
-     * @param string    $id  ID of folder
-     * @return boolean       True on success
-     */
+    * Retrieves and populates object
+    *
+    * @param string    $id  ID of folder
+    * @return boolean       True on success
+    */
     public function retrieve($id)
     {
         $query = "SELECT * FROM folders WHERE id = " . $this->db->quoted($id) . " AND deleted = 0";

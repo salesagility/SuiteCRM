@@ -165,20 +165,20 @@ class SearchMerge extends ListViewMerge
         $this->log('custom file:'  . $custom_file);
         if (empty($custom_file) && $save) {
             return true;
-        }
-        $this->loadData($module, $original_file, $new_file, $custom_file);
+        } else {
+            $this->loadData($module, $original_file, $new_file, $custom_file);
                         
-        if (!isset($this->originalData[$module])) {
-            return false;
-        }
+            if (!isset($this->originalData[$module])) {
+                return false;
+            }
             
-        $this->mergeMetaData();
-        if ($save && !empty($this->newData) && !empty($custom_file)) {
-            //backup the file
-            copy($custom_file, $custom_file . '.suback.php');
-            return $this->save($custom_file);
+            $this->mergeMetaData();
+            if ($save && !empty($this->newData) && !empty($custom_file)) {
+                //backup the file
+                copy($custom_file, $custom_file . '.suback.php');
+                return $this->save($custom_file);
+            }
         }
-        
         if (!$save) {
             return true;
         }

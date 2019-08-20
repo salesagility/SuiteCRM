@@ -162,8 +162,10 @@ class ImportViewConfirm extends ImportView
             $hasHeader = !empty($_REQUEST['has_header']) ? $_REQUEST['has_header'] : $hasHeader;
             if ($hasHeader == 'on') {
                 $hasHeader = true;
-            } elseif ($hasHeader == 'off') {
-                $hasHeader = false;
+            } else {
+                if ($hasHeader == 'off') {
+                    $hasHeader = false;
+                }
             }
         }
 
@@ -246,8 +248,9 @@ class ImportViewConfirm extends ImportView
     {
         if (empty($importSource) || $importSource == 'csv') {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     private function getImportMap($importSource)

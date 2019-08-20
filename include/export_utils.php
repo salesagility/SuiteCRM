@@ -878,18 +878,24 @@ function get_field_order_mapping($name='', $reorderArr = '', $exclude = true)
                 $name = 'contacts';
             }
             //if module is of type company
-            elseif ($focus instanceof Company) {
-                $name = 'accounts';
-            }
-            //if module is of type Sale
-            elseif ($focus instanceof Sale) {
-                $name = 'opportunities';
-            }//if module is of type File
-            elseif ($focus instanceof Issue) {
-                $name = 'bugs';
-            }//all others including type File can use basic
             else {
-                $name = 'Notes';
+                if ($focus instanceof Company) {
+                    $name = 'accounts';
+                }
+                //if module is of type Sale
+                else {
+                    if ($focus instanceof Sale) {
+                        $name = 'opportunities';
+                    }//if module is of type File
+                    else {
+                        if ($focus instanceof Issue) {
+                            $name = 'bugs';
+                        }//all others including type File can use basic
+                        else {
+                            $name = 'Notes';
+                        }
+                    }
+                }
             }
         }
 
@@ -931,6 +937,7 @@ function get_field_order_mapping($name='', $reorderArr = '', $exclude = true)
     //if no array was passed in, pass back either the list of ordered columns by module, or the entireorder array
     if (empty($name)) {
         return $field_order_array;
+    } else {
+        return $field_order_array[strtolower($name)];
     }
-    return $field_order_array[strtolower($name)];
 }

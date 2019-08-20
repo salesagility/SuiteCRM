@@ -76,8 +76,9 @@ class SugarWidgetField extends SugarWidget
 
         if (!empty($context) && method_exists($this, $func_name)) {
             return $this-> $func_name($layout_def);
+        } else {
+            return 'display not found:'.$func_name;
         }
-        return 'display not found:'.$func_name;
     }
 
     public function _get_column_alias($layout_def)
@@ -235,7 +236,8 @@ class SugarWidgetField extends SugarWidget
         if (!isset($vardef)) {
             // No vardef, return an empty array
             return array();
+        } else {
+            return $vardef;
         }
-        return $vardef;
     }
 }

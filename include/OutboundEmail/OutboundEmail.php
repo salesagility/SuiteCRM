@@ -128,8 +128,9 @@ class OutboundEmail
             $oe->retrieve($row['id']);
 
             return $oe;
+        } else {
+            return null;
         }
-        return null;
     }
 
     /**
@@ -656,8 +657,9 @@ class OutboundEmail
             $oe = $this->getUsersMailerForSystemOverride($user->id);
             if (!empty($oe) && !empty($oe->id)) {
                 return $oe;
+            } else {
+                return $this->getSystemMailerSettings();
             }
-            return $this->getSystemMailerSettings();
         }
         $res = $this->db->query("SELECT id FROM outbound_email WHERE user_id = '{$user->id}' AND name='" . $this->db->quote($name) . "'");
         $a = $this->db->fetchByAssoc($res);

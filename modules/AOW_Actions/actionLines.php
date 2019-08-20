@@ -48,10 +48,12 @@ function display_action_lines(SugarBean $focus, $field, $value, $view)
 
             if (file_exists('custom/modules/AOW_Actions/actions/'.$action_name.'.php')) {
                 require_once('custom/modules/AOW_Actions/actions/'.$action_name.'.php');
-            } elseif (file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')) {
-                require_once('modules/AOW_Actions/actions/'.$action_name.'.php');
             } else {
-                continue;
+                if (file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')) {
+                    require_once('modules/AOW_Actions/actions/'.$action_name.'.php');
+                } else {
+                    continue;
+                }
             }
 
             $action = new $action_name();
@@ -87,18 +89,20 @@ function display_action_lines(SugarBean $focus, $field, $value, $view)
                 }
             }
         }
-    } elseif ($view == 'DetailView') {
-        $html .= "<table border='0' width='100%' cellpadding='0' cellspacing='0'>";
-        $sql = "SELECT id FROM aow_actions WHERE aow_workflow_id = '".$focus->id."' AND deleted = 0 ORDER BY action_order ASC";
-        $result = $focus->db->query($sql);
+    } else {
+        if ($view == 'DetailView') {
+            $html .= "<table border='0' width='100%' cellpadding='0' cellspacing='0'>";
+            $sql = "SELECT id FROM aow_actions WHERE aow_workflow_id = '".$focus->id."' AND deleted = 0 ORDER BY action_order ASC";
+            $result = $focus->db->query($sql);
 
-        while ($row = $focus->db->fetchByAssoc($result)) {
-            $action_name = new AOW_Action();
-            $action_name->retrieve($row['id']);
+            while ($row = $focus->db->fetchByAssoc($result)) {
+                $action_name = new AOW_Action();
+                $action_name->retrieve($row['id']);
 
-            $html .= "<tr><td>". $action_name->action_order ."</td><td>".$action_name->name."</td><td>". translate('LBL_'.strtoupper($action_name->action), 'AOW_Actions')."</td></tr>";
+                $html .= "<tr><td>". $action_name->action_order ."</td><td>".$action_name->name."</td><td>". translate('LBL_'.strtoupper($action_name->action), 'AOW_Actions')."</td></tr>";
+            }
+            $html .= "</table>";
         }
-        $html .= "</table>";
     }
     return $html;
 }

@@ -237,6 +237,7 @@ class Localization
         return $this->currencies;
     }
 
+
     /**
      * retrieves default OOTB currencies for sugar_config and installer.
      * @return array ret Array of default currencies keyed by ISO4217 code
@@ -244,51 +245,51 @@ class Localization
     public function getDefaultCurrencies()
     {
         $ret = array(
-            'AUD' => array(    'name'        => 'Australian Dollars',
-                            'iso4217'    => 'AUD',
-                            'symbol'    => '$'),
-            'BRL' => array(    'name'        => 'Brazilian Reais',
-                            'iso4217'    => 'BRL',
-                            'symbol'    => 'R$'),
-            'GBP' => array(    'name'        => 'British Pounds',
-                            'iso4217'    => 'GBP',
-                            'symbol'    => '£'),
-            'CAD' => array(    'name'        => 'Canadian Dollars',
-                            'iso4217'    => 'CAD',
-                            'symbol'    => '$'),
-            'CNY' => array(    'name'        => 'Chinese Yuan',
-                            'iso4217'    => 'CNY',
-                            'symbol'    => '￥'),
-            'EUR' => array(    'name'        => 'Euro',
-                            'iso4217'    => 'EUR',
-                            'symbol'    => '€'),
-            'HKD' => array(    'name'        => 'Hong Kong Dollars',
-                            'iso4217'    => 'HKD',
-                            'symbol'    => '$'),
-            'INR' => array(    'name'        => 'Indian Rupees',
-                            'iso4217'    => 'INR',
-                            'symbol'    => '₨'),
-            'KRW' => array(    'name'        => 'Korean Won',
-                            'iso4217'    => 'KRW',
-                            'symbol'    => '₩'),
-            'YEN' => array(    'name'        => 'Japanese Yen',
-                            'iso4217'    => 'JPY',
-                            'symbol'    => '¥'),
-            'MXN' => array(    'name'        => 'Mexican Pesos',
-                            'iso4217'    => 'MXN',
-                            'symbol'    => '$'),
-            'SGD' => array(    'name'        => 'Singaporean Dollars',
-                            'iso4217'    => 'SGD',
-                            'symbol'    => '$'),
-            'CHF' => array(    'name'        => 'Swiss Franc',
-                            'iso4217'    => 'CHF',
-                            'symbol'    => 'SFr.'),
-            'THB' => array(    'name'        => 'Thai Baht',
-                            'iso4217'    => 'THB',
-                            'symbol'    => '฿'),
-            'USD' => array(    'name'        => 'US Dollars',
-                            'iso4217'    => 'USD',
-                            'symbol'    => '$'),
+            'AUD' => array(	'name'		=> 'Australian Dollars',
+                            'iso4217'	=> 'AUD',
+                            'symbol'	=> '$'),
+            'BRL' => array(	'name'		=> 'Brazilian Reais',
+                            'iso4217'	=> 'BRL',
+                            'symbol'	=> 'R$'),
+            'GBP' => array(	'name'		=> 'British Pounds',
+                            'iso4217'	=> 'GBP',
+                            'symbol'	=> '£'),
+            'CAD' => array(	'name'		=> 'Canadian Dollars',
+                            'iso4217'	=> 'CAD',
+                            'symbol'	=> '$'),
+            'CNY' => array(	'name'		=> 'Chinese Yuan',
+                            'iso4217'	=> 'CNY',
+                            'symbol'	=> '￥'),
+            'EUR' => array(	'name'		=> 'Euro',
+                            'iso4217'	=> 'EUR',
+                            'symbol'	=> '€'),
+            'HKD' => array(	'name'		=> 'Hong Kong Dollars',
+                            'iso4217'	=> 'HKD',
+                            'symbol'	=> '$'),
+            'INR' => array(	'name'		=> 'Indian Rupees',
+                            'iso4217'	=> 'INR',
+                            'symbol'	=> '₨'),
+            'KRW' => array(	'name'		=> 'Korean Won',
+                            'iso4217'	=> 'KRW',
+                            'symbol'	=> '₩'),
+            'YEN' => array(	'name'		=> 'Japanese Yen',
+                            'iso4217'	=> 'JPY',
+                            'symbol'	=> '¥'),
+            'MXN' => array(	'name'		=> 'Mexican Pesos',
+                            'iso4217'	=> 'MXN',
+                            'symbol'	=> '$'),
+            'SGD' => array(	'name'		=> 'Singaporean Dollars',
+                            'iso4217'	=> 'SGD',
+                            'symbol'	=> '$'),
+            'CHF' => array(	'name'		=> 'Swiss Franc',
+                            'iso4217'	=> 'CHF',
+                            'symbol'	=> 'SFr.'),
+            'THB' => array(	'name'		=> 'Thai Baht',
+                            'iso4217'	=> 'THB',
+                            'symbol'	=> '฿'),
+            'USD' => array(	'name'		=> 'US Dollars',
+                            'iso4217'	=> 'USD',
+                            'symbol'	=> '$'),
         );
 
         return $ret;
@@ -397,9 +398,9 @@ class Localization
                 $GLOBALS['log']->debug("Localization: iconv using charset {$newToCharset} instead of {$toCharset}");
             }
             return iconv($newFromCharset, $newToCharset, $string);
-        }
-        return $string;
-        // end else clause
+        } else {
+            return $string;
+        } // end else clause
     }
 
     /**
@@ -496,13 +497,13 @@ class Localization
      */
     public function getLocaleFormattedNumber($number, $currencySymbol='', $is_currency=true, $user=null)
     {
-        $fnum            = $number;
-        $majorDigits    = '';
-        $minorDigits    = '';
-        $dec            = $this->getDecimalSeparator($user);
-        $thou            = $this->getNumberGroupingSeparator($user);
-        $precision        = $this->getPrecision($user);
-        $symbol            = empty($currencySymbol) ? $this->getCurrencySymbol($user) : $currencySymbol;
+        $fnum			= $number;
+        $majorDigits	= '';
+        $minorDigits	= '';
+        $dec			= $this->getDecimalSeparator($user);
+        $thou			= $this->getNumberGroupingSeparator($user);
+        $precision		= $this->getPrecision($user);
+        $symbol			= empty($currencySymbol) ? $this->getCurrencySymbol($user) : $currencySymbol;
 
         $exNum = explode($dec, $number);
         // handle grouping

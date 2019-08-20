@@ -89,10 +89,12 @@ if ($func == 'getTemplateValidation') {
     if (!$marketingId) {
         if (!empty($_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId']) && $func != 'createEmailMarketing') {
             $marketingId = $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'];
-        } elseif ($func != 'createEmailMarketing') {
-            $marketing = new EmailMarketing();
-            $marketing->save();
-            $marketingId = $marketing->id;
+        } else {
+            if ($func != 'createEmailMarketing') {
+                $marketing = new EmailMarketing();
+                $marketing->save();
+                $marketingId = $marketing->id;
+            }
         }
     }
     if (!empty($_POST['templateId'])) {

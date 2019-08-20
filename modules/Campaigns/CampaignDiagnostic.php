@@ -282,8 +282,9 @@ function define_image($num, $total)
         //if health number is zero, then all checks passed, set green image
         //green
         return SugarThemeRegistry::current()->getImage('green_camp', "align='absmiddle'", null, null, ".gif", $mod_strings['LBL_VALID']);
+    } else {
+        //if health number is between total and num params, then some checks failed but not all, set yellow image
+        //yellow
+        return SugarThemeRegistry::current()->getImage('yellow_camp', "align='absmiddle'", null, null, ".gif", $mod_strings['LBL_ALERT']);
     }
-    //if health number is between total and num params, then some checks failed but not all, set yellow image
-    //yellow
-    return SugarThemeRegistry::current()->getImage('yellow_camp', "align='absmiddle'", null, null, ".gif", $mod_strings['LBL_ALERT']);
 }

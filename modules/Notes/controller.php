@@ -80,8 +80,10 @@
              $this->bean->file_mime_type = $upload_file->mime_type;
 
              $do_final_move = 1;
-         } elseif (isset($_REQUEST['old_filename'])) {
-             $this->bean->filename = $_REQUEST['old_filename'];
+         } else {
+             if (isset($_REQUEST['old_filename'])) {
+                 $this->bean->filename = $_REQUEST['old_filename'];
+             }
          }
         
          $check_notify = false;
@@ -94,8 +96,10 @@
         
          if ($do_final_move) {
              $upload_file->final_move($this->bean->id);
-         } elseif (! empty($_REQUEST['old_id'])) {
-             $upload_file->duplicate_file($_REQUEST['old_id'], $this->bean->id, $this->bean->filename);
+         } else {
+             if (! empty($_REQUEST['old_id'])) {
+                 $upload_file->duplicate_file($_REQUEST['old_id'], $this->bean->id, $this->bean->filename);
+             }
          }
      }
     

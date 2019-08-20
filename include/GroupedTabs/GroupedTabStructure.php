@@ -93,8 +93,10 @@ class GroupedTabStructure
             foreach ($frames as $key => $values) {
                 $moduleExtraMenu[$key] = $values;
             }
-        } elseif (isset($modList['iFrames'])) {
-            unset($modList['iFrames']);
+        } else {
+            if (isset($modList['iFrames'])) {
+                unset($modList['iFrames']);
+            }
         }
                 
         $modList = array_merge($modList, $moduleExtraMenu);

@@ -287,8 +287,10 @@ class DetailView extends ListView
             if ($current_offset != 0 && $this->isRequestFromListView($html_varName)) {
                 if ($current_offset < 0) {
                     $current_offset = 1;
-                } elseif ($current_offset > $row_count) {
-                    $current_offset = $row_count;
+                } else {
+                    if ($current_offset > $row_count) {
+                        $current_offset = $row_count;
+                    }
                 }
 
                 $this->set_base_URL($html_varName);
@@ -314,8 +316,10 @@ class DetailView extends ListView
             if ($current_offset != 0 && $this->isRequestFromListView($html_varName)) {
                 if ($current_offset < 0) {
                     $current_offset = 1;
-                } elseif ($current_offset > $row_count) {
-                    $current_offset = $row_count;
+                } else {
+                    if ($current_offset > $row_count) {
+                        $current_offset = $row_count;
+                    }
                 }
 
                 $next_offset = $current_offset + 1;
@@ -441,8 +445,9 @@ class DetailView extends ListView
         $varList = $this->getLocalSessionVariable($html_varName, "FROM_LIST_VIEW");
         if (isset($_GET['stamp']) && isset($varList) && $varList == $_GET['stamp']) {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -455,7 +460,8 @@ class DetailView extends ListView
     {
         if (isset($_SESSION[$name."2_".$value])) {
             return $_SESSION[$name."2_".$value];
+        } else {
+            return "";
         }
-        return "";
     }
 }

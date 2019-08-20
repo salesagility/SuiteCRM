@@ -110,18 +110,20 @@ class SugarFieldHandler
                 $file = 'custom/include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php';
                 $type = $field;
             //else check the fields directory
-            } elseif (file_exists('include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php')) {
-                $file = 'include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php';
-                $type = $field;
             } else {
-                // No direct class, check the directories to see if they are defined
-                if ($returnNullIfBase &&
+                if (file_exists('include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php')) {
+                    $file = 'include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php';
+                    $type = $field;
+                } else {
+                    // No direct class, check the directories to see if they are defined
+                    if ($returnNullIfBase &&
                     !is_dir('custom/include/SugarFields/Fields/'.$field) &&
                     !is_dir('include/SugarFields/Fields/'.$field)) {
-                    return null;
+                        return null;
+                    }
+                    $file = 'include/SugarFields/Fields/Base/SugarFieldBase.php';
+                    $type = 'Base';
                 }
-                $file = 'include/SugarFields/Fields/Base/SugarFieldBase.php';
-                $type = 'Base';
             }
             require_once($file);
 

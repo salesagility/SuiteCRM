@@ -293,8 +293,9 @@ class ImportFile extends ImportDataSource
             $this->_delimiter = $delimiter;
             $this->_enclosure = $enclosure;
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     public function getFieldDelimeter()
@@ -474,7 +475,8 @@ class ImportFile extends ImportDataSource
         $this->rewind();
         if ($this->hasHeaderRow(false)) {
             return $this->_currentRow;
+        } else {
+            return false;
         }
-        return false;
     }
 }

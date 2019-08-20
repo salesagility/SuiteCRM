@@ -541,13 +541,15 @@ EOQ;
                     ob_clean();
                     $json = getJSONobj();
                     echo $json->encode(array('status' => 'dupe', 'get' => $location));
-                } elseif (!empty($_REQUEST['ajax_load'])) {
-                    echo "<script>SUGAR.ajaxUI.loadContent('index.php?$location');</script>";
                 } else {
-                    if (!empty($_POST['to_pdf'])) {
-                        $location .= '&to_pdf='.urlencode($_POST['to_pdf']);
+                    if (!empty($_REQUEST['ajax_load'])) {
+                        echo "<script>SUGAR.ajaxUI.loadContent('index.php?$location');</script>";
+                    } else {
+                        if (!empty($_POST['to_pdf'])) {
+                            $location .= '&to_pdf='.urlencode($_POST['to_pdf']);
+                        }
+                        header("Location: index.php?$location");
                     }
-                    header("Location: index.php?$location");
                 }
                 return null;
             }

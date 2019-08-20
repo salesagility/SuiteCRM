@@ -5,7 +5,7 @@ require_once 'modules/Campaigns/utils.php';
 
 class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 

@@ -293,10 +293,10 @@ class Relationship extends SugarBean
             $rel_module2 = $this->get_other_module($rel_attribute2_name, $rel_module1_bean->module_dir, $rel_module1_bean->db);
             $rel_module2_bean = get_module_info($rel_module2);
             return $rel_module2_bean;
+        } else {
+            //no rel_module2, so return rel_module2 bean
+            return $rel_module1_bean;
         }
-        //no rel_module2, so return rel_module2 bean
-        return $rel_module1_bean;
-        
 
         //end function trace_relationship_module
     }

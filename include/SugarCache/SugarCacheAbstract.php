@@ -176,12 +176,14 @@ abstract class SugarCacheAbstract
 
         if ($ttl === null) {
             $this->_setExternal($this->_keyPrefix.$key, $value);
-        } elseif ($ttl > 0) {
-            //For BC reasons the setExternal signature will remain the same.
-            $previousExpireTimeout = $this->_expireTimeout;
-            $this->_expireTimeout = $ttl;
-            $this->_setExternal($this->_keyPrefix.$key, $value);
-            $this->_expireTimeout = $previousExpireTimeout;
+        } else {
+            if ($ttl > 0) {
+                //For BC reasons the setExternal signature will remain the same.
+                $previousExpireTimeout = $this->_expireTimeout;
+                $this->_expireTimeout = $ttl;
+                $this->_setExternal($this->_keyPrefix.$key, $value);
+                $this->_expireTimeout = $previousExpireTimeout;
+            }
         }
     }
     /**

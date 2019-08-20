@@ -152,14 +152,16 @@ class TemplateDatetimecombo extends TemplateRange
                 if ($hours == '00') {
                     $hours = 12;
                     $meridiem = 'am';
-                } elseif ($hours >= 12) {
-                    //lets add the PM meridiem, but only subtract 12 if hours is greater than 12
-                    if ($hours > 12) {
-                        $hours -= 12;
-                    }
-                    $meridiem = 'pm';
                 } else {
-                    $meridiem = 'am';
+                    if ($hours >= 12) {
+                        //lets add the PM meridiem, but only subtract 12 if hours is greater than 12
+                        if ($hours > 12) {
+                            $hours -= 12;
+                        }
+                        $meridiem = 'pm';
+                    } else {
+                        $meridiem = 'am';
+                    }
                 }
                 //lets format the string to make sure the leading 0's are added back in for hours and minutes
                 $_REQUEST['default'] = $_REQUEST['defaultDate'] . '&' . sprintf('%02d:%02d%s', $hours, $minutes, $meridiem);

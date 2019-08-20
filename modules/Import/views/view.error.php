@@ -88,8 +88,9 @@ class ImportViewError extends SugarView
         // Default anonymous pages to be under Home
         elseif (!isset($app_list_strings['moduleList'][$_REQUEST['import_module']])) {
             return 'Home';
+        } else {
+            return $_REQUEST['import_module'];
         }
-        return $_REQUEST['import_module'];
     }
     
     /**

@@ -515,7 +515,7 @@ abstract class DBManager
         $sql = $this->insertSQL($bean);
         $tablename = $bean->getTableName();
         $msg = "Error inserting into table: $tablename:";
-
+        
         return $this->query($sql, true, $msg);
     }
 
@@ -838,6 +838,11 @@ abstract class DBManager
             if (isset($value['name']) == false || $value['name'] == false) {
                 $sql .= "/* NAME IS MISSING IN VARDEF $tablename::$name */\n";
                 continue;
+            } else {
+                if (isset($value['type']) == false || $value['type'] == false) {
+                    $sql .= "/* TYPE IS MISSING IN VARDEF $tablename::$name */\n";
+                    continue;
+                }
             }
             if (isset($value['type']) == false || $value['type'] == false) {
                 $sql .= "/* TYPE IS MISSING IN VARDEF $tablename::$name */\n";
@@ -1200,8 +1205,9 @@ abstract class DBManager
         }
         if (!empty($sqls)) {
             return join(";\n", $sqls) . ";";
+        } else {
+            return '';
         }
-        return '';
     }
 
     /**
@@ -1911,8 +1917,9 @@ abstract class DBManager
                 }//switch
             }//foreach
             return $this->query($query);
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -2202,8 +2209,9 @@ abstract class DBManager
                 }
 
                 return $this->emptyValue($type);
+            } else {
+                return "NULL";
             }
-            return "NULL";
         }
         if ($type == "datetimecombo") {
             $type = "datetime";
@@ -2301,14 +2309,17 @@ abstract class DBManager
         }
         if (stripos($string, " as ") !== false) { //"as" used for an alias
             return trim(substr($string, strripos($string, " as ") + 4));
+        } else {
+            if (strrpos($string, " ") != 0) { //Space used as a delimiter for an alias
+                return trim(substr($string, strrpos($string, " ")));
+            } else {
+                if (strpos($string, ".") !== false) { //No alias, but a table.field format was used
+                    return substr($string, strpos($string, ".") + 1);
+                } else { //Give up and assume the whole thing is the field name
+                    return $string;
+                }
+            }
         }
-        if (strrpos($string, " ") != 0) { //Space used as a delimiter for an alias
-            return trim(substr($string, strrpos($string, " ")));
-        }
-        if (strpos($string, ".") !== false) { //No alias, but a table.field format was used
-            return substr($string, strpos($string, ".") + 1);
-        }   //Give up and assume the whole thing is the field name
-        return $string;
     }
 
     /**
@@ -2521,8 +2532,9 @@ abstract class DBManager
             }
 
             return $return;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -2623,8 +2635,9 @@ abstract class DBManager
                 'auto_increment' => $auto_increment,
                 'full' => "$name $colType $default $required $auto_increment",
             );
+        } else {
+            return "$name $colType $default $required $auto_increment";
         }
-        return "$name $colType $default $required $auto_increment";
     }
 
     /**
@@ -2822,35 +2835,36 @@ abstract class DBManager
             }
 
             return $result;
-        }
-        if (strchr($name, ".")) {
-            // this is a compound name with dots, handle separately
-            $parts = explode(".", $name);
-            if (count($parts) > 2) {
-                // some weird name, cut to table.name
-                array_splice($parts, 0, count($parts) - 2);
-            }
-            $parts = $this->getValidDBName($parts, $ensureUnique, $type, $force);
-
-            return join(".", $parts);
-        }
-        // first strip any invalid characters - all but word chars (which is alphanumeric and _)
-        $name = preg_replace('/[^\w]+/i', '', $name);
-        $len = strlen($name);
-        $maxLen = empty($this->maxNameLengths[$type]) ? $this->maxNameLengths[$type]['column'] : $this->maxNameLengths[$type];
-        if ($len <= $maxLen && !$force) {
-            return strtolower($name);
-        }
-        if ($ensureUnique) {
-            $md5str = md5($name);
-            $tail = substr($name, -11);
-            $temp = substr($md5str, strlen($md5str) - 4);
-            $result = substr($name, 0, 10) . $temp . $tail;
         } else {
-            $result = substr($name, 0, 11) . substr($name, 11 - $maxLen);
-        }
+            if (strchr($name, ".")) {
+                // this is a compound name with dots, handle separately
+                $parts = explode(".", $name);
+                if (count($parts) > 2) {
+                    // some weird name, cut to table.name
+                    array_splice($parts, 0, count($parts) - 2);
+                }
+                $parts = $this->getValidDBName($parts, $ensureUnique, $type, $force);
 
-        return strtolower($result);
+                return join(".", $parts);
+            }
+            // first strip any invalid characters - all but word chars (which is alphanumeric and _)
+            $name = preg_replace('/[^\w]+/i', '', $name);
+            $len = strlen($name);
+            $maxLen = empty($this->maxNameLengths[$type]) ? $this->maxNameLengths[$type]['column'] : $this->maxNameLengths[$type];
+            if ($len <= $maxLen && !$force) {
+                return strtolower($name);
+            }
+            if ($ensureUnique) {
+                $md5str = md5($name);
+                $tail = substr($name, -11);
+                $temp = substr($md5str, strlen($md5str) - 4);
+                $result = substr($name, 0, 10) . $temp . $tail;
+            } else {
+                $result = substr($name, 0, 11) . substr($name, 11 - $maxLen);
+            }
+
+            return strtolower($result);
+        }
     }
 
     /**
@@ -2981,7 +2995,7 @@ abstract class DBManager
             $field_defs = array_intersect_key($field_defs, (array)$bean);
 
             foreach ($field_defs as $field => $properties) {
-                $before_value = from_html($fetched_row[$field]);
+                $before_value = $fetched_row[$field];
                 $after_value = $bean->$field;
                 if (isset($properties['type'])) {
                     $field_type = $properties['type'];
@@ -3022,21 +3036,23 @@ abstract class DBManager
                         // Bug #42475: Don't directly compare numeric values, instead do the subtract and see if the comparison comes out to be "close enough", it is necessary for floating point numbers.
                         // Manual merge of fix 95727f2eed44852f1b6bce9a9eccbe065fe6249f from DBHelper
                         // This fix also fixes Bug #44624 in a more generic way and therefore eliminates the need for fix 0a55125b281c4bee87eb347709af462715f33d2d in DBHelper
-                        elseif ($this->isNumericType($field_type)) {
-                            $numerator = abs(2 * ((trim($before_value) + 0) - (trim($after_value) + 0)));
-                            $denominator = abs(((trim($before_value) + 0) + (trim($after_value) + 0)));
-                            // detect whether to use absolute or relative error. use absolute if denominator is zero to avoid division by zero
-                            $error = ($denominator == 0) ? $numerator : $numerator / $denominator;
-                            if ($error >= 0.0000000001) {    // Smaller than 10E-10
-                                $change = true;
-                            }
-                        } else {
-                            if ($this->isBooleanType($field_type)) {
-                                if ($this->_getBooleanValue($before_value) != $this->_getBooleanValue($after_value)) {
+                        else {
+                            if ($this->isNumericType($field_type)) {
+                                $numerator = abs(2 * ((trim($before_value) + 0) - (trim($after_value) + 0)));
+                                $denominator = abs(((trim($before_value) + 0) + (trim($after_value) + 0)));
+                                // detect whether to use absolute or relative error. use absolute if denominator is zero to avoid division by zero
+                                $error = ($denominator == 0) ? $numerator : $numerator / $denominator;
+                                if ($error >= 0.0000000001) {    // Smaller than 10E-10
                                     $change = true;
                                 }
                             } else {
-                                $change = true;
+                                if ($this->isBooleanType($field_type)) {
+                                    if ($this->_getBooleanValue($before_value) != $this->_getBooleanValue($after_value)) {
+                                        $change = true;
+                                    }
+                                } else {
+                                    $change = true;
+                                }
                             }
                         }
                         if ($change) {
@@ -3478,8 +3494,9 @@ abstract class DBManager
                     $table = $this->extractTableName($query);
                     if (!in_array($table, $skipTables)) {
                         return call_user_func(array($this, $check), $table, $query);
+                    } else {
+                        $this->log->debug("Skipping table $table as blacklisted");
                     }
-                    $this->log->debug("Skipping table $table as blacklisted");
                 } else {
                     $this->log->debug("No verification for $qstart on {$this->dbType}");
                 }
@@ -3568,8 +3585,9 @@ abstract class DBManager
         $row = $this->fetchRow($result);
         if (!empty($row) && $encode && $this->encode) {
             return array_map('to_html', $row);
+        } else {
+            return $row;
         }
-        return $row;
     }
 
     /**
@@ -4045,15 +4063,4 @@ abstract class DBManager
      * @return string
      */
     abstract public function getGuidSQL();
-
-
-    /**
-     * Returns a string without line breaks.
-     * @param string $sql A SQL statement
-     * @return string
-     */
-    public function removeLineBreaks($sql)
-    {
-        return trim(str_replace(array("\r", "\n"), " ", $sql));
-    }
 }

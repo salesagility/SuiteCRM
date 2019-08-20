@@ -58,8 +58,10 @@ if (!empty($_REQUEST['merge_module']) && ($GLOBALS['action'] == 'Step1' || $GLOB
     $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], $merge_module);
     if (file_exists("custom/modules/{$merge_module}/Menu.php")) {
         require("custom/modules/{$merge_module}/Menu.php");
-    } elseif (file_exists("modules/{$merge_module}/Menu.php")) {
-        require("modules/{$merge_module}/Menu.php");
+    } else {
+        if (file_exists("modules/{$merge_module}/Menu.php")) {
+            require("modules/{$merge_module}/Menu.php");
+        }
     }
     $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], $GLOBALS['module']);
 }

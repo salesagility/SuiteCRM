@@ -375,8 +375,9 @@ class ModuleInstaller
     {
         if ($module == 'application') {
             return "custom/Extension/application/Ext";
+        } else {
+            return "custom/Extension/modules/$module/Ext";
         }
-        return "custom/Extension/modules/$module/Ext";
     }
 
     /**
@@ -409,10 +410,12 @@ class ModuleInstaller
                 }
                 if (isset($item["name"])) {
                     $target = $item["name"];
-                } elseif (!empty($from)) {
-                    $target = basename($from, ".php");
                 } else {
-                    $target = $this->id_name;
+                    if (!empty($from)) {
+                        $target = basename($from, ".php");
+                    } else {
+                        $target = $this->id_name;
+                    }
                 }
                 if (!empty($from)) {
                     copy_recursive($from, "$path/$target.php");
@@ -448,20 +451,28 @@ class ModuleInstaller
                 }
                 if (isset($item["name"])) {
                     $target = $item["name"];
-                } elseif (!empty($from)) {
-                    $target = basename($from, ".php");
                 } else {
-                    $target = $this->id_name;
+                    if (!empty($from)) {
+                        $target = basename($from, ".php");
+                    } else {
+                        $target = $this->id_name;
+                    }
                 }
                 $disabled_path = $path.'/'.DISABLED_PATH;
                 if (file_exists("$path/$target.php")) {
                     rmdir_recursive("$path/$target.php");
-                } elseif (file_exists("$disabled_path/$target.php")) {
-                    rmdir_recursive("$disabled_path/$target.php");
-                } elseif (!empty($from) && file_exists($path . '/'. basename($from))) {
-                    rmdir_recursive($path . '/'. basename($from));
-                } elseif (!empty($from) && file_exists($disabled_path . '/'. basename($from))) {
-                    rmdir_recursive($disabled_path . '/'. basename($from));
+                } else {
+                    if (file_exists("$disabled_path/$target.php")) {
+                        rmdir_recursive("$disabled_path/$target.php");
+                    } else {
+                        if (!empty($from) && file_exists($path . '/'. basename($from))) {
+                            rmdir_recursive($path . '/'. basename($from));
+                        } else {
+                            if (!empty($from) && file_exists($disabled_path . '/'. basename($from))) {
+                                rmdir_recursive($disabled_path . '/'. basename($from));
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -504,18 +515,22 @@ class ModuleInstaller
                 }
                 if (isset($item["name"])) {
                     $target = $item["name"];
-                } elseif (!empty($from)) {
-                    $target = basename($from, ".php");
                 } else {
-                    $target = $this->id_name;
+                    if (!empty($from)) {
+                        $target = basename($from, ".php");
+                    } else {
+                        $target = $this->id_name;
+                    }
                 }
                 $disabled_path = $path.'/'.DISABLED_PATH;
                 if (file_exists("$path/$target.php")) {
                     mkdir_recursive($disabled_path, true);
                     rename("$path/$target.php", "$disabled_path/$target.php");
-                } elseif (!empty($from) && file_exists($path . '/'. basename($from))) {
-                    mkdir_recursive($disabled_path, true);
-                    rename($path . '/'. basename($from), $disabled_path.'/'. basename($from));
+                } else {
+                    if (!empty($from) && file_exists($path . '/'. basename($from))) {
+                        mkdir_recursive($disabled_path, true);
+                        rename($path . '/'. basename($from), $disabled_path.'/'. basename($from));
+                    }
                 }
             }
         }
@@ -548,10 +563,12 @@ class ModuleInstaller
                 }
                 if (isset($item["name"])) {
                     $target = $item["name"];
-                } elseif (!empty($from)) {
-                    $target = basename($from, ".php");
                 } else {
-                    $target = $this->id_name;
+                    if (!empty($from)) {
+                        $target = basename($from, ".php");
+                    } else {
+                        $target = $this->id_name;
+                    }
                 }
                 if (!file_exists($path)) {
                     mkdir_recursive($path, true);
@@ -844,8 +861,10 @@ class ModuleInstaller
                 $path = 'custom/Extension/application/Ext/DashletContainer/Containers';
                 if (is_file($path . '/'. $this->id_name . '.php')) {
                     rmdir_recursive($path . '/'. $this->id_name . '.php');
-                } elseif (is_file($path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php')) {
-                    rmdir_recursive($path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php');
+                } else {
+                    if (is_file($path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php')) {
+                        rmdir_recursive($path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php');
+                    }
                 }
             }
             $this->rebuild_dashletcontainers();
@@ -978,8 +997,10 @@ class ModuleInstaller
                 }
                 if (is_file($path.'/'.$packs['language'].'.'. $this->id_name . '.php')) {
                     rmdir_recursive($path.'/'.$packs['language'].'.'. $this->id_name . '.php');
-                } elseif (is_file($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php')) {
-                    rmdir_recursive($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php');
+                } else {
+                    if (is_file($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php')) {
+                        rmdir_recursive($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php');
+                    }
                 }
             }
             $this->rebuild_languages($languages, $modules);
@@ -1012,9 +1033,11 @@ class ModuleInstaller
                 if (file_exists("$path/$target.php")) {
                     mkdir_recursive($disabled_path, true);
                     rename("$path/$target.php", "$disabled_path/$target.php");
-                } elseif (file_exists($path . '/'. basename($from))) {
-                    mkdir_recursive($disabled_path, true);
-                    rename($path . '/'. basename($from), $disabled_path.'/'. basename($from));
+                } else {
+                    if (file_exists($path . '/'. basename($from))) {
+                        mkdir_recursive($disabled_path, true);
+                        rename($path . '/'. basename($from), $disabled_path.'/'. basename($from));
+                    }
                 }
             }
             $this->rebuild_languages($languages, $modules);
@@ -2011,35 +2034,39 @@ class ModuleInstaller
                         sugar_touch($dest, filemtime($source));
                     }
                     return(unlink($source));
-                }
-                $GLOBALS['log']->debug("Can't restore file: " . $source);
-                return true;
-            }
-            if (file_exists($dest)) {
-                $rest = clean_path($backup_path."/$dest");
-                if (!is_dir(dirname($rest))) {
-                    mkdir_recursive(dirname($rest), true);
-                }
-
-                $GLOBALS['log']->debug("Backup ... " . $dest.  " to " .$rest);
-                if (copy($dest, $rest)) {
-                    if (is_writable($rest)) {
-                        sugar_touch($rest, filemtime($dest));
-                    }
                 } else {
-                    $GLOBALS['log']->debug("Can't backup file: " . $dest);
+                    $GLOBALS['log']->debug("Can't restore file: " . $source);
+                    return true;
                 }
+            } else {
+                if (file_exists($dest)) {
+                    $rest = clean_path($backup_path."/$dest");
+                    if (!is_dir(dirname($rest))) {
+                        mkdir_recursive(dirname($rest), true);
+                    }
+
+                    $GLOBALS['log']->debug("Backup ... " . $dest.  " to " .$rest);
+                    if (copy($dest, $rest)) {
+                        if (is_writable($rest)) {
+                            sugar_touch($rest, filemtime($dest));
+                        }
+                    } else {
+                        $GLOBALS['log']->debug("Can't backup file: " . $dest);
+                    }
+                }
+                return(copy($source, $dest));
             }
-            return(copy($source, $dest));
         } elseif (!is_dir($source)) {
             if ($uninstall) {
                 if (is_file($dest)) {
                     return(unlink($dest));
+                } else {
+                    //don't do anything we already cleaned up the files using uninstall_new_files
+                    return true;
                 }
-                //don't do anything we already cleaned up the files using uninstall_new_files
-                return true;
+            } else {
+                return false;
             }
-            return false;
         }
 
         if (!is_dir($dest) && !$uninstall) {
@@ -2138,8 +2165,9 @@ class ModuleInstaller
             $errors = $_SESSION['MODULEINSTALLER_ERRORS'];
             unset($_SESSION['MODULEINSTALLER_ERRORS']);
             return $errors;
+        } else {
+            return null;
         }
-        return null;
     }
 
     /*

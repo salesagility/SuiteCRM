@@ -292,8 +292,10 @@ class CalendarDisplay
             if ($d_start_hour == 0) {
                 $d_start_hour = 12;
                 $start_m = 'am';
-            } elseif ($d_start_hour == 12) {
-                $start_m = 'pm';
+            } else {
+                if ($d_start_hour == 12) {
+                    $start_m = 'pm';
+                }
             }
             if ($d_start_hour > 12) {
                 $d_start_hour = $d_start_hour - 12;
@@ -303,8 +305,10 @@ class CalendarDisplay
             if ($d_end_hour == 0) {
                 $d_end_hour = 12;
                 $end_m = 'am';
-            } elseif ($d_end_hour == 12) {
-                $end_m = 'pm';
+            } else {
+                if ($d_end_hour == 12) {
+                    $end_m = 'pm';
+                }
             }
 
             if ($d_end_hour > 12) {
@@ -381,14 +385,15 @@ class CalendarDisplay
                         break;
                 }
             }
-        } elseif ($view == 'agendaWeek' || $view == 'sharedWeek') {
-            $first_day = $date_time;
+        } else {
+            if ($view == 'agendaWeek' || $view == 'sharedWeek') {
+                $first_day = $date_time;
 
-            $first_day = CalendarUtils::get_first_day_of_week($date_time);
-            $last_day = $first_day->get("+6 days");
+                $first_day = CalendarUtils::get_first_day_of_week($date_time);
+                $last_day = $first_day->get("+6 days");
 
-            for ($i=0; $i<strlen($dateFormat['date']); $i++) {
-                switch ($dateFormat['date']{$i}) {
+                for ($i=0; $i<strlen($dateFormat['date']); $i++) {
+                    switch ($dateFormat['date']{$i}) {
                         case "Y":
                             $str .= " ".$first_day->year;
                             break;
@@ -399,10 +404,10 @@ class CalendarDisplay
                             $str .= " ".$first_day->get_day();
                             break;
                     }
-            }
-            $str .= " - ";
-            for ($i=0; $i<strlen($dateFormat['date']); $i++) {
-                switch ($dateFormat['date']{$i}) {
+                }
+                $str .= " - ";
+                for ($i=0; $i<strlen($dateFormat['date']); $i++) {
+                    switch ($dateFormat['date']{$i}) {
                         case "Y":
                             $str .= " ".$last_day->year;
                             break;
@@ -413,12 +418,13 @@ class CalendarDisplay
                             $str .= " ".$last_day->get_day();
                             break;
                     }
-            }
-        } elseif ($view == 'agendaDay') {
-            $str .= $date_time->get_day_of_week()." ";
+                }
+            } else {
+                if ($view == 'agendaDay') {
+                    $str .= $date_time->get_day_of_week()." ";
 
-            for ($i=0; $i<strlen($dateFormat['date']); $i++) {
-                switch ($dateFormat['date']{$i}) {
+                    for ($i=0; $i<strlen($dateFormat['date']); $i++) {
+                        switch ($dateFormat['date']{$i}) {
                             case "Y":
                                 $str .= " ".$date_time->year;
                                 break;
@@ -429,12 +435,13 @@ class CalendarDisplay
                                 $str .= " ".$date_time->get_day();
                                 break;
                         }
-            }
-        } elseif ($view == 'mobile') {
-            $str .= $date_time->get_day_of_week()." ";
+                    }
+                } else {
+                    if ($view == 'mobile') {
+                        $str .= $date_time->get_day_of_week()." ";
 
-            for ($i=0; $i<strlen($dateFormat['date']); $i++) {
-                switch ($dateFormat['date']{$i}) {
+                        for ($i=0; $i<strlen($dateFormat['date']); $i++) {
+                            switch ($dateFormat['date']{$i}) {
                         case "Y":
                             $str .= " ".$date_time->year;
                             break;
@@ -445,18 +452,19 @@ class CalendarDisplay
                             $str .= " ".$date_time->get_day();
                             break;
                     }
-            }
-        } elseif ($view == 'year') {
-            $str .= $date_time->year;
-        } else {
-            //could be a custom view.
-            $first_day = $date_time;
+                        }
+                    } else {
+                        if ($view == 'year') {
+                            $str .= $date_time->year;
+                        } else {
+                            //could be a custom view.
+                            $first_day = $date_time;
 
-            $first_day = CalendarUtils::get_first_day_of_week($date_time);
-            $last_day = $first_day->get("+6 days");
+                            $first_day = CalendarUtils::get_first_day_of_week($date_time);
+                            $last_day = $first_day->get("+6 days");
 
-            for ($i=0; $i<strlen($dateFormat['date']); $i++) {
-                switch ($dateFormat['date']{$i}) {
+                            for ($i=0; $i<strlen($dateFormat['date']); $i++) {
+                                switch ($dateFormat['date']{$i}) {
                         case "Y":
                             $str .= " ".$first_day->year;
                             break;
@@ -467,10 +475,10 @@ class CalendarDisplay
                             $str .= " ".$first_day->get_day();
                             break;
                     }
-            }
-            $str .= " - ";
-            for ($i=0; $i<strlen($dateFormat['date']); $i++) {
-                switch ($dateFormat['date']{$i}) {
+                            }
+                            $str .= " - ";
+                            for ($i=0; $i<strlen($dateFormat['date']); $i++) {
+                                switch ($dateFormat['date']{$i}) {
                         case "Y":
                             $str .= " ".$last_day->year;
                             break;
@@ -481,6 +489,10 @@ class CalendarDisplay
                             $str .= " ".$last_day->get_day();
                             break;
                     }
+                            }
+                        }
+                    }
+                }
             }
         }
         return $str;

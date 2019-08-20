@@ -156,8 +156,10 @@ class Opportunity extends SugarBean
 			($this->rel_account_table.deleted is null OR $this->rel_account_table.deleted=0)
 			AND (accounts.deleted is null OR accounts.deleted=0)
 			AND opportunities.deleted=0";
-        } elseif ($show_deleted == 1) {
-            $where_auto = " opportunities.deleted=1";
+        } else {
+            if ($show_deleted == 1) {
+                $where_auto = " opportunities.deleted=1";
+            }
         }
 
         if ($where != "") {
@@ -275,6 +277,8 @@ class Opportunity extends SugarBean
         return $this->build_related_list2($query, $contact, $temp);
     }
 
+        
+
     public function update_currency_id($fromid, $toid)
     {
         $idequals = '';
@@ -331,8 +335,8 @@ class Opportunity extends SugarBean
 
 
     /**
-        builds a generic search based on the query string using or
-        do not include any $this-> because this is called on without having the class instantiated
+    	builds a generic search based on the query string using or
+    	do not include any $this-> because this is called on without having the class instantiated
     */
     public function build_generic_where_clause($the_query_string)
     {

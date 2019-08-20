@@ -88,5 +88,6 @@ if (isset($_POST['response_json']) && $_POST['response_json']) {
     $results['data'] = array('id' => $focus->id);
     echo json_encode($results);
     die();
-}
+} else {
     handleRedirect('', '');
+}

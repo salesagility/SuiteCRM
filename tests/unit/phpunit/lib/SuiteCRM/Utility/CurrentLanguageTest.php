@@ -13,7 +13,8 @@ class CurrentLanguageTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     private static $language;
 
-    public function setUp()
+
+    protected function setUp()
     {
         parent::setUp();
         if (self::$language === null) {

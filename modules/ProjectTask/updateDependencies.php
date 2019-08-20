@@ -72,21 +72,23 @@ class updateDependencies
                         $task->date_start = $startdate;
                         $task->date_finish = $enddate;
                         $task->save();
-                    } elseif ($rel_type == 'SS') {//if its a start to start
-                        //check if the tasks duration has not been changed so that it does not update when the parent tasks duration is changed
-                        if ($bean->fetched_row['duration'] == $bean->duration) {
-                            $start = new DateTime($task->date_start);
-                            $start = $start->modify($diff);
-                            $startdate = $start->format('Y-m-d');
+                    } else {
+                        if ($rel_type == 'SS') {//if its a start to start
+                            //check if the tasks duration has not been changed so that it does not update when the parent tasks duration is changed
+                            if ($bean->fetched_row['duration'] == $bean->duration) {
+                                $start = new DateTime($task->date_start);
+                                $start = $start->modify($diff);
+                                $startdate = $start->format('Y-m-d');
 
-                            $duration = $task->duration - 1;
+                                $duration = $task->duration - 1;
 
-                            $enddate = $start->modify('+' . $duration . ' days');
-                            $enddate = $enddate->format('Y-m-d');
+                                $enddate = $start->modify('+' . $duration . ' days');
+                                $enddate = $enddate->format('Y-m-d');
 
-                            $task->date_start = $startdate;
-                            $task->date_finish = $enddate;
-                            $task->save();
+                                $task->date_start = $startdate;
+                                $task->date_finish = $enddate;
+                                $task->save();
+                            }
                         }
                     }
                 }
@@ -102,7 +104,8 @@ class updateDependencies
         $difference = $d1->diff($d2);
         if ($difference->invert == 1) {
             return '+'.$difference->d.' days'; //returns positive days
+        } else {
+            return -$difference->d.' days';//returns negative days
         }
-        return -$difference->d.' days';//returns negative days
     }
 }

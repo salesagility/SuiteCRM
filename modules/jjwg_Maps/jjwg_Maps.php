@@ -1003,9 +1003,10 @@ class jjwg_Maps extends jjwg_Maps_sugar
         if ($return_full_array) {
             $GLOBALS['log']->debug(__METHOD__.' $googlemaps: '.print_r($googlemaps, true));
             return $googlemaps;
+        } else {
+            $GLOBALS['log']->debug(__METHOD__.' $aInfo: '.print_r($aInfo, true));
+            return $aInfo;
         }
-        $GLOBALS['log']->debug(__METHOD__.' $aInfo: '.print_r($aInfo, true));
-        return $aInfo;
     }
 
     /**
@@ -1178,8 +1179,9 @@ class jjwg_Maps extends jjwg_Maps_sugar
             );
             $GLOBALS['log']->debug(__METHOD__.' $address Found $aInfo: '.print_r($aInfo, true));
             return $aInfo;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -1228,8 +1230,9 @@ class jjwg_Maps extends jjwg_Maps_sugar
             $address = preg_replace("/[\t\s]+/", ' ', $address);
             $GLOBALS['log']->debug(__METHOD__.' $address: '.print_r($address, true));
             return trim($address);
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**

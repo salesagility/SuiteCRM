@@ -81,9 +81,11 @@ if (isset($_REQUEST['save_type'])) {
     if ($_REQUEST['save_type'] == 'TemplateToProject') {
         $sugarbean->name = $_REQUEST['project_name'];
         $sugarbean->is_template = 0;
-    } elseif ($_REQUEST['save_type'] == 'ProjectToTemplate') {
-        $sugarbean->name = $_REQUEST['template_name'];
-        $sugarbean->is_template = true;
+    } else {
+        if ($_REQUEST['save_type'] == 'ProjectToTemplate') {
+            $sugarbean->name = $_REQUEST['template_name'];
+            $sugarbean->is_template = true;
+        }
     }
 } else {
     if (isset($_REQUEST['is_template']) && $_REQUEST['is_template'] == '1') {

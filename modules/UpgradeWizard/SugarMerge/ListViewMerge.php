@@ -179,17 +179,19 @@ class ListViewMerge extends EditViewMerge
                 
                 
             //if it's not set in the new fields then it was a custom field or an original field so we take the custom fields data and set the location source to custom
-            } elseif (!isset($this->newFields[$field])) {
-                $this->mergedFields[$field] = $data;
-                $this->mergedFields[$field]['loc']['source'] = 'custom';
             } else {
-                //otherwise  the field is in both new and custom but not in the orignal so we merge the new and custom data together and take the location from the custom
-                $this->mergedFields[$field] = array(
+                if (!isset($this->newFields[$field])) {
+                    $this->mergedFields[$field] = $data;
+                    $this->mergedFields[$field]['loc']['source'] = 'custom';
+                } else {
+                    //otherwise  the field is in both new and custom but not in the orignal so we merge the new and custom data together and take the location from the custom
+                    $this->mergedFields[$field] = array(
                     'data'=>$this->mergeField('', $this->newFields[$field]['data'], $this->customFields[$field]['data']),
                     'loc'=>$this->customFields[$field]['loc']);
                 
-                $this->mergedFields[$field]['loc']['source'] = 'custom';
-                //echo var_export($this->mergedFields[$field], true);
+                    $this->mergedFields[$field]['loc']['source'] = 'custom';
+                    //echo var_export($this->mergedFields[$field], true);
+                }
             }
             
             //then we clear out the field from
@@ -262,10 +264,11 @@ class ListViewMerge extends EditViewMerge
                 $this->log($new);
                 $new['default'] = $custom['default'];
                 return $new;
+            } else {
+                //otherwise we know that new is not an array and custom has been 'customized' so let's keep those customizations.
+                $this->log($custom);
+                return $custom;
             }
-            //otherwise we know that new is not an array and custom has been 'customized' so let's keep those customizations.
-            $this->log($custom);
-            return $custom;
         }
         
         //default to returning the New version of the field

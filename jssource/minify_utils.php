@@ -423,9 +423,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
             //log error
             echo "The from directory, $from_path Does Not Exist<p>\n";
             return;
+        } else {
+            $from_path = str_replace('\\', '/', $from_path);
         }
-        $from_path = str_replace('\\', '/', $from_path);
-        
 
         if (empty($to_path)) {
             $to_path = $from_path;

@@ -127,8 +127,10 @@ class UnifiedSearchAdvanced
         foreach ($unified_search_modules_display as $module=>$data) {
             if (!isset($modules_to_search[$module]) && $data['visible'] && ACLController::checkAccess($module, 'list', true)) {
                 $modules_to_search[$module]['checked'] = false;
-            } elseif (isset($modules_to_search[$module]) && !$data['visible']) {
-                unset($modules_to_search[$module]);
+            } else {
+                if (isset($modules_to_search[$module]) && !$data['visible']) {
+                    unset($modules_to_search[$module]);
+                }
             }
         }
 
@@ -355,9 +357,11 @@ class UnifiedSearchAdvanced
             foreach ($module_counts as $name=>$value) {
                 echo $module_results[$name];
             }
-        } elseif (empty($_REQUEST['form_only'])) {
-            echo $home_mod_strings['LBL_NO_RESULTS'];
-            echo $home_mod_strings['LBL_NO_RESULTS_TIPS'];
+        } else {
+            if (empty($_REQUEST['form_only'])) {
+                echo $home_mod_strings['LBL_NO_RESULTS'];
+                echo $home_mod_strings['LBL_NO_RESULTS_TIPS'];
+            }
         }
     }
 
@@ -386,8 +390,10 @@ class UnifiedSearchAdvanced
 
             if (!empty($metafiles[$moduleName]['searchfields'])) {
                 require $metafiles[$moduleName]['searchfields'] ;
-            } elseif (file_exists("modules/{$moduleName}/metadata/SearchFields.php")) {
-                require "modules/{$moduleName}/metadata/SearchFields.php" ;
+            } else {
+                if (file_exists("modules/{$moduleName}/metadata/SearchFields.php")) {
+                    require "modules/{$moduleName}/metadata/SearchFields.php" ;
+                }
             }
 
             //Load custom SearchFields.php if it exists

@@ -74,16 +74,20 @@ class SugarpdfFactory
         $path = '/sugarpdf/sugarpdf.'.$type.'.php';
         if (file_exists('custom/modules/'.$module.$path)) {
             $sugarpdf = SugarpdfFactory::_buildFromFile('custom/modules/'.$module.$path, $bean, $sugarpdf_object_map, $type, $module);
-        } elseif (file_exists('modules/'.$module.$path)) {
-            $sugarpdf = SugarpdfFactory::_buildFromFile('modules/'.$module.$path, $bean, $sugarpdf_object_map, $type, $module);
-        } elseif (file_exists('custom/include/Sugarpdf'.$path)) {
-            $sugarpdf = SugarpdfFactory::_buildFromFile('custom/include/Sugarpdf'.$path, $bean, $sugarpdf_object_map, $type, $module);
         } else {
-            //if the module does not handle this Sugarpdf, then check if Sugar handles it OOTB
-            $file = 'include/Sugarpdf'.$path;
-            if (file_exists($file)) {
-                //it appears Sugar does have the proper logic for this file.
-                $sugarpdf = SugarpdfFactory::_buildFromFile($file, $bean, $sugarpdf_object_map, $type, $module);
+            if (file_exists('modules/'.$module.$path)) {
+                $sugarpdf = SugarpdfFactory::_buildFromFile('modules/'.$module.$path, $bean, $sugarpdf_object_map, $type, $module);
+            } else {
+                if (file_exists('custom/include/Sugarpdf'.$path)) {
+                    $sugarpdf = SugarpdfFactory::_buildFromFile('custom/include/Sugarpdf'.$path, $bean, $sugarpdf_object_map, $type, $module);
+                } else {
+                    //if the module does not handle this Sugarpdf, then check if Sugar handles it OOTB
+                    $file = 'include/Sugarpdf'.$path;
+                    if (file_exists($file)) {
+                        //it appears Sugar does have the proper logic for this file.
+                        $sugarpdf = SugarpdfFactory::_buildFromFile($file, $bean, $sugarpdf_object_map, $type, $module);
+                    }
+                }
             }
         }
         // Default to Sugarpdf if still nothing found/built
@@ -162,7 +166,8 @@ class SugarpdfFactory
         //$sugarpdf->init($bean, $sugarpdf_object_map);
         if ($sugarpdf instanceof Sugarpdf) {
             return $sugarpdf;
+        } else {
+            return new Sugarpdf($bean, $sugarpdf_object_map);
         }
-        return new Sugarpdf($bean, $sugarpdf_object_map);
     }
 }
