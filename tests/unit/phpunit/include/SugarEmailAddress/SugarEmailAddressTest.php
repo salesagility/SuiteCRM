@@ -34,7 +34,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 //        global $current_user;
 //        get_sugar_config_defaults();
-//        $current_user = new User();
+//        $current_user = BeanFactory::newBean('Users');
 
         $this->ea = new SugarEmailAddress();
     }
@@ -164,7 +164,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         
-        $c = new Contact();
+        $c = BeanFactory::newBean('Contacts');
 
         // test
         if (!empty($_REQUEST)) {
@@ -215,7 +215,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testHandleLegacyRetrieve()
     {
-        $c = new Contact();
+        $c = BeanFactory::newBean('Contacts');
 
         // test
         $this->ea->handleLegacyRetrieve($c);
@@ -235,7 +235,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testPopulateLegacyFields()
     {
-        $c = new Contact();
+        $c = BeanFactory::newBean('Contacts');
 
         // test
         $this->ea->populateLegacyFields($c);
@@ -1395,7 +1395,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $db = DBManagerFactory::getInstance();
 
-        $c = new Contact();
+        $c = BeanFactory::newBean('Contacts');
 
         // test
         $result = $this->ea->getPrimaryAddress($c);
@@ -2027,7 +2027,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $env['$_REQUEST'] = $_REQUEST;
         }
 
-        $focus = new Contact();
+        $focus = BeanFactory::newBean('Contacts');
 
 
         // test
@@ -2150,7 +2150,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $db = DBManagerFactory::getInstance();
 
-        $c = new Contact();
+        $c = BeanFactory::newBean('Contacts');
 
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
