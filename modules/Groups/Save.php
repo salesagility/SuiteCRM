@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 //_ppd($_REQUEST);
-$focus = new Group();
+$focus = BeanFactory::newBean('Groups');
 
 // New user
 
