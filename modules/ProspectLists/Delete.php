@@ -53,7 +53,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-$focus = new ProspectList();
+$focus = BeanFactory::newBean('ProspectLists');
 
 if (!isset($_REQUEST['record'])) {
     sugar_die("A record number must be specified to delete the prospect list.");
