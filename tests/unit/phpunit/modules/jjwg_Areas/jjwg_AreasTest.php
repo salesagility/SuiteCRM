@@ -7,7 +7,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $jjwgAreas = new jjwg_Areas();
+        $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
         $this->assertInstanceOf('jjwg_Areas', $jjwgAreas);
         $this->assertInstanceOf('Basic', $jjwgAreas);
@@ -34,7 +34,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $jjwgAreas = new jjwg_Areas();
+        $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
         $jjwgAreas->configuration();
 
         $this->assertInstanceOf('jjwg_Maps', $jjwgAreas->jjwg_Maps);
@@ -47,7 +47,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testretrieve()
     {
         $this->markTestSkipped('Skipped pending feedback on the area behaviour.');
-        $jjwgAreas = new jjwg_Areas();
+        $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
         //test without pre settting attributes
         $jjwgAreas->retrieve();
@@ -74,7 +74,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdefine_polygon()
     {
-        $jjwgAreas = new jjwg_Areas();
+        $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
         //test without pre settting attributes
         $actual = $jjwgAreas->define_polygon();
@@ -93,7 +93,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdefine_area_loc()
     {
-        $jjwgAreas = new jjwg_Areas();
+        $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
         //test without pre settting attributes
         $result = $jjwgAreas->define_area_loc();
@@ -113,7 +113,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testdefine_centroid()
     {
         $this->markTestSkipped('Skipped pending feedback on the area behaviour.');
-        $jjwgAreas = new jjwg_Areas();
+        $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
         //test without setting up coordinates
         $result = $jjwgAreas->define_centroid();
@@ -130,7 +130,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testdefine_area()
     {
         $this->markTestSkipped('Skipped pending feedback on the area behaviour.');
-        $jjwgAreas = new jjwg_Areas();
+        $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
         //test without setting up coordinates
         $result = $jjwgAreas->define_area();
@@ -145,7 +145,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdefine_loc()
     {
-        $jjwgAreas = new jjwg_Areas();
+        $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
         //test without pre settting attributes
         $result = $jjwgAreas->define_loc(array());
@@ -161,7 +161,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testis_valid_lng()
     {
-        $jjwgAreas = new jjwg_Areas();
+        $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
         //test with invalid values
         $this->assertEquals(false, $jjwgAreas->is_valid_lng(''));
@@ -175,7 +175,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testis_valid_lat()
     {
-        $jjwgAreas = new jjwg_Areas();
+        $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
         //test with invalid values
         $this->assertEquals(false, $jjwgAreas->is_valid_lat(''));
@@ -189,7 +189,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testis_marker_in_area()
     {
-        $jjwgAreas = new jjwg_Areas();
+        $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
         $marker = array('name' => 'test', 'lat' => 100, 'lng' => 40);
 
@@ -203,7 +203,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testis_point_in_area()
     {
-        $jjwgAreas = new jjwg_Areas();
+        $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
         //test without setting up coordinates
         $this->assertEquals(false, $jjwgAreas->is_point_in_area(100, 40));
@@ -216,7 +216,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testpoint_in_polygon()
     {
-        $jjwgAreas = new jjwg_Areas();
+        $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
         //test without setting up coordinates
         $this->assertEquals(false, $jjwgAreas->point_in_polygon('100,40,0.0'));
@@ -228,7 +228,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testpoint_on_vertex()
     {
-        $jjwgAreas = new jjwg_Areas();
+        $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
         $vertices = array('100,40,10', '101,81,11', '102,82,12');
         $this->assertEquals(false, $jjwgAreas->point_on_vertex('100,40,0.0', $vertices));
@@ -237,7 +237,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testpoint_string_to_coordinates()
     {
-        $jjwgAreas = new jjwg_Areas();
+        $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
         $expected = array('x' => 100, 'y' => 40);
         $actual = $jjwgAreas->point_string_to_coordinates('100,40,10');
