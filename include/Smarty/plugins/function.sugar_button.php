@@ -371,7 +371,7 @@ function smarty_function_sugar_button($params, &$smarty)
                 global $current_user, $sugar_config;
                 if(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true) {
                     require_once('modules/SecurityGroups/SecurityGroup.php');
-                    $groupFocus = new SecurityGroup();
+                    $groupFocus = BeanFactory::newBean('SecurityGroups');
 
                     if($groupFocus->getMembershipCount($current_user->id) > 1) {
                         $output = '{if $bean->aclAccess("save")}<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" class="button" onclick="'.$js_form.' disableOnUnloadEditView(); _form.action.value=\'Save\';_form.module.value=\'{$module}\';_form.return_module.value=\'{$module}\';_form.return_action.value=\'DetailView\';_form.return_id.value=\'\';" type="submit" name="' . $params['module'] . '_subpanel_save_button" id="' . $params['module'] . '_subpanel_save_button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">{/if} ';
