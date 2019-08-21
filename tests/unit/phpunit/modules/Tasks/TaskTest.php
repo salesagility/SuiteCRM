@@ -22,7 +22,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function tearDown()
@@ -41,7 +41,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $task = new Task();
+        $task = BeanFactory::newBean('Tasks');
 
         $this->assertInstanceOf('Task', $task);
         $this->assertInstanceOf('SugarBean', $task);
@@ -56,7 +56,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        $task = new Task();
+        $task = BeanFactory::newBean('Tasks');
 
         $task->name = 'test';
         $task->priority = 'Medium';
@@ -77,7 +77,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        $task = new Task();
+        $task = BeanFactory::newBean('Tasks');
 
         //test without setting name
         $this->assertEquals(null, $task->get_summary_text());
@@ -89,7 +89,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreate_export_query()
     {
-        $task = new Task();
+        $task = BeanFactory::newBean('Tasks');
 
         //test with empty string params
         $expected = 'SELECT tasks.*, users.user_name as assigned_user_name  FROM tasks   LEFT JOIN users ON tasks.assigned_user_id=users.id where tasks.deleted=0 ORDER BY tasks.name';
@@ -104,7 +104,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_list_fields()
     {
-        $task = new Task();
+        $task = BeanFactory::newBean('Tasks');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -119,7 +119,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_detail_fields()
     {
-        $task = new Task();
+        $task = BeanFactory::newBean('Tasks');
         $task->contact_id = 1;
 
         //execute the method and test if it works and does not throws an exception.
@@ -135,7 +135,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_parent_fields()
     {
-        $task = new Task();
+        $task = BeanFactory::newBean('Tasks');
         $task->parent_type = 'Accounts';
         $task->parent_id = '1';
 
@@ -152,7 +152,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_list_view_data()
     {
-        $task = new Task();
+        $task = BeanFactory::newBean('Tasks');
         $current_theme = SugarThemeRegistry::current();
 
         $task->name = 'test';
@@ -185,7 +185,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testset_notification_body()
     {
-        $task = new Task();
+        $task = BeanFactory::newBean('Tasks');
 
         //test with attributes preset and verify template variables are set accordingly
 
@@ -208,7 +208,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        $task = new Task();
+        $task = BeanFactory::newBean('Tasks');
 
         $this->assertEquals(false, $task->bean_implements('')); //test with blank value
         $this->assertEquals(false, $task->bean_implements('test')); //test with invalid value
@@ -217,7 +217,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
-        $task = new Task();
+        $task = BeanFactory::newBean('Tasks');
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $task->listviewACLHelper();
@@ -226,7 +226,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetDefaultStatus()
     {
-        $task = new Task();
+        $task = BeanFactory::newBean('Tasks');
 
         $result = $task->getDefaultStatus();
         $this->assertEquals('Not Started', $result);
