@@ -8,14 +8,14 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testEmployee()
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $employee = new Employee();
+        $employee = BeanFactory::newBean('Employees');
         $this->assertInstanceOf('Employee', $employee);
         $this->assertInstanceOf('Person', $employee);
         $this->assertInstanceOf('SugarBean', $employee);
@@ -34,7 +34,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $employee = new Employee();
+        $employee = BeanFactory::newBean('Employees');
 
         //test without setting name
         $this->assertEquals(' ', $employee->get_summary_text());
@@ -55,7 +55,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $employee = new Employee();
+        $employee = BeanFactory::newBean('Employees');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -70,7 +70,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_detail_fields()
     {
-        $employee = new Employee();
+        $employee = BeanFactory::newBean('Employees');
 
 
         //test with a empty employee bean
@@ -86,7 +86,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testretrieve_employee_id()
     {
-        $employee = new Employee();
+        $employee = BeanFactory::newBean('Employees');
         //$this->assertEquals('1' ,$employee->retrieve_employee_id('admin'));
 
         $this->markTestSkipped('Bug in query: employee_name parameter is wrongly used as user_name');
@@ -103,7 +103,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $employee = new Employee();
+        $employee = BeanFactory::newBean('Employees');
         $this->assertEquals(true, $employee->verify_data());
 
         
@@ -123,7 +123,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         
         
-        $employee = new Employee();
+        $employee = BeanFactory::newBean('Employees');
 
         $expected = array(
             'SUGAR_LOGIN' => '1',
@@ -164,7 +164,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $employee = new Employee();
+        $employee = BeanFactory::newBean('Employees');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -181,7 +181,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreate_export_query()
     {
-        $employee = new Employee();
+        $employee = BeanFactory::newBean('Employees');
 
         //test with empty string params
         $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE  users.deleted = 0 ORDER BY users.user_name";
@@ -203,7 +203,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $employee = new Employee();
+        $employee = BeanFactory::newBean('Employees');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -222,7 +222,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreate_new_list_query()
     {
         /*
-    	$employee = new Employee();
+    	$employee = BeanFactory::newBean('Employees');
 
     	//test with empty string params
     	$expected = " SELECT  users.* , '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt2.last_name reports_to_name , jt2.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id  FROM users   LEFT JOIN  users jt2 ON users.reports_to_id=jt2.id AND jt2.deleted=0\n\n AND jt2.deleted=0 where ( users.portal_only = 0 ) AND users.deleted=0";
@@ -249,7 +249,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test
         
         
-        $employee = new Employee();
+        $employee = BeanFactory::newBean('Employees');
         $result = $employee->hasCustomFields();
         $this->assertEquals(false, $result);
         
