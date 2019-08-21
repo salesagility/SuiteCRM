@@ -116,7 +116,7 @@ class AOW_Condition extends Basic
             if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
-                $condition = new AOW_Condition();
+                $condition = BeanFactory::newBean('AOW_Conditions');
                 foreach ($this->field_defs as $field_def) {
                     $field_name = $field_def['name'];
                     if (isset($post_data[$key . $field_name][$i])) {
