@@ -9,14 +9,14 @@ class CampaignLogTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testCampaignLog()
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $campaignLog = new CampaignLog();
+        $campaignLog = BeanFactory::newBean('CampaignLog');
         $this->assertInstanceOf('CampaignLog', $campaignLog);
         $this->assertInstanceOf('SugarBean', $campaignLog);
 
@@ -33,7 +33,7 @@ class CampaignLogTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $campaignLog = new CampaignLog();
+        $campaignLog = BeanFactory::newBean('CampaignLog');
 
         //execute the method and verify it returns an array
         $actual = $campaignLog->get_list_view_data();
@@ -45,14 +45,14 @@ class CampaignLogTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testretrieve_email_address()
     {
-        $campaignLog = new CampaignLog();
+        $campaignLog = BeanFactory::newBean('CampaignLog');
         $actual = $campaignLog->retrieve_email_address();
         $this->assertGreaterThanOrEqual('', $actual);
     }
 
     public function testget_related_name()
     {
-        $campaignLog = new CampaignLog();
+        $campaignLog = BeanFactory::newBean('CampaignLog');
 
         //execute the method and verify that it retunrs expected results for all type parameters
 
