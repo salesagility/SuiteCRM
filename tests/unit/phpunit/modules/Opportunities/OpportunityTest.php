@@ -8,14 +8,14 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testOpportunity()
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         $this->assertInstanceOf('Opportunity', $opportunity);
         $this->assertInstanceOf('SugarBean', $opportunity);
@@ -37,7 +37,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         //test without setting name
         $this->assertEquals(null, $opportunity->get_summary_text());
@@ -52,7 +52,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreate_list_query()
     {
         $this->markTestIncomplete('Breaks on php 7.1');
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         //test with empty string params
         $expected = "SELECT \n                            accounts.id as account_id,\n                            accounts.name as account_name,\n                            accounts.assigned_user_id account_id_owner,\n                            users.user_name as assigned_user_name ,opportunities_cstm.* ,opportunities.*\n                            FROM opportunities LEFT JOIN users\n                            ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities\n                            ON opportunities.id=accounts_opportunities.opportunity_id\n                            LEFT JOIN accounts\n                            ON accounts_opportunities.account_id=accounts.id  LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where \n			(accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0)\n			AND (accounts.deleted is null OR accounts.deleted=0)\n			AND opportunities.deleted=0 ORDER BY opportunities.name";
@@ -68,7 +68,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreate_export_query()
     {
         $this->markTestIncomplete('Breaks on php 7.1');
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         //test with empty string params
         $expected = "SELECT \n                            accounts.id as account_id,\n                            accounts.name as account_name,\n                            accounts.assigned_user_id account_id_owner,\n                            users.user_name as assigned_user_name ,opportunities_cstm.* ,opportunities.*\n                            FROM opportunities LEFT JOIN users\n                            ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities\n                            ON opportunities.id=accounts_opportunities.opportunity_id\n                            LEFT JOIN accounts\n                            ON accounts_opportunities.account_id=accounts.id  LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where \n			(accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0)\n			AND (accounts.deleted is null OR accounts.deleted=0)\n			AND opportunities.deleted=0 ORDER BY opportunities.name";
@@ -89,7 +89,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -117,7 +117,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -132,7 +132,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_contacts()
     {
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         $result = $opportunity->get_contacts();
         $this->assertTrue(is_array($result));
@@ -146,7 +146,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -161,7 +161,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_list_view_data()
     {
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         $opportunity->name = 'test';
 
@@ -182,7 +182,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_currency_symbol()
     {
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         //te4st without currency id
         $this->assertEquals('', $opportunity->get_currency_symbol());
@@ -194,7 +194,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_generic_where_clause()
     {
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         //test with empty string params
         $expected = "opportunities.name like '%' or accounts.name like '%'";
@@ -217,7 +217,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         $opportunity->name = 'test';
         $opportunity->description = 'test description';
@@ -255,7 +255,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
         $opportunity->account_id = 1;
 
         try {
@@ -276,7 +276,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         try {
             $opportunity->set_opportunity_contact_relationship('1');
@@ -290,7 +290,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testset_notification_body()
     {
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         //test with attributes preset and verify template variables are set accordingly
 
@@ -311,7 +311,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         $this->assertEquals(false, $opportunity->bean_implements('')); //test with blank value
         $this->assertEquals(false, $opportunity->bean_implements('test')); //test with invalid value
@@ -328,7 +328,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         $expected = array('MAIN' => 'a', 'ACCOUNT' => 'a');
         $actual = $opportunity->listviewACLHelper();
@@ -341,7 +341,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_account_detail()
     {
-        $opportunity = new Opportunity();
+        $opportunity = BeanFactory::newBean('Opportunities');
 
         $result = $opportunity->get_account_detail('1');
         $this->assertTrue(is_array($result));
