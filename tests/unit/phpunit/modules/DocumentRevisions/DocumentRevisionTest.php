@@ -8,13 +8,13 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testDocumentRevision()
     {
         //execute the contructor and check for the Object type and  attributes
-        $documentRevision = new DocumentRevision();
+        $documentRevision = BeanFactory::newBean('DocumentRevisions');
         $this->assertInstanceOf('DocumentRevision', $documentRevision);
         $this->assertInstanceOf('SugarBean', $documentRevision);
 
@@ -37,7 +37,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $documentRevision = new DocumentRevision();
+        $documentRevision = BeanFactory::newBean('DocumentRevisions');
 
         $documentRevision->document_id = '1';
         $documentRevision->doc_id = '1';
@@ -83,7 +83,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('document_revisions');
         
         
-        $documentRevision = new DocumentRevision();
+        $documentRevision = BeanFactory::newBean('DocumentRevisions');
 
         //test without setting name
         $this->assertEquals(null, $documentRevision->get_summary_text());
@@ -109,7 +109,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('document_revisions');
         
         
-        $documentRevision = new DocumentRevision();
+        $documentRevision = BeanFactory::newBean('DocumentRevisions');
 
         //test wihout setting attributes
         $this->assertEquals(null, $documentRevision->is_authenticated());
@@ -138,7 +138,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $documentRevision = new DocumentRevision();
+        $documentRevision = BeanFactory::newBean('DocumentRevisions');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -167,7 +167,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $documentRevision = new DocumentRevision();
+        $documentRevision = BeanFactory::newBean('DocumentRevisions');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -191,7 +191,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('cron_remove_documents');
         $state->pushTable('document_revisions');
         
-        $documentRevision = new DocumentRevision();
+        $documentRevision = BeanFactory::newBean('DocumentRevisions');
 
         //test wihout setting attributes
         $result = $documentRevision->getDocumentRevisionNameForDisplay();
@@ -221,7 +221,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $documentRevision = new DocumentRevision();
+        $documentRevision = BeanFactory::newBean('DocumentRevisions');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -249,7 +249,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $documentRevision = new DocumentRevision();
+        $documentRevision = BeanFactory::newBean('DocumentRevisions');
         
         $xTemplateSection = null;
 
@@ -277,7 +277,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('document_revisions');
         
         
-        $documentRevision = new DocumentRevision();
+        $documentRevision = BeanFactory::newBean('DocumentRevisions');
         $result = $documentRevision->get_list_view_data();
         $this->assertEquals(array('DELETED' => 0), $result);
         
@@ -295,7 +295,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('cron_remove_documents');
         $state->pushTable('document_revisions');
         
-        $documentRevision = new DocumentRevision();
+        $documentRevision = BeanFactory::newBean('DocumentRevisions');
         $result = $documentRevision->get_document_revision_name(1);
         $this->assertEquals(null, $result);
         
@@ -313,7 +313,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('cron_remove_documents');
         $state->pushTable('document_revisions');
         
-        $documentRevision = new DocumentRevision();
+        $documentRevision = BeanFactory::newBean('DocumentRevisions');
         $results = $documentRevision->get_document_revisions(1);
         $this->assertTrue(is_array($results));
         
@@ -331,7 +331,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('cron_remove_documents');
         $state->pushTable('document_revisions');
         
-        $documentRevision = new DocumentRevision();
+        $documentRevision = BeanFactory::newBean('DocumentRevisions');
         $this->assertEquals(false, $documentRevision->bean_implements('')); //test with blank value
         $this->assertEquals(false, $documentRevision->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $documentRevision->bean_implements('FILE')); //test with valid value
