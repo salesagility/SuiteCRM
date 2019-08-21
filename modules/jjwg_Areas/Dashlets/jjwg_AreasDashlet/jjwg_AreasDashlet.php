@@ -22,7 +22,7 @@ class jjwg_AreasDashlet extends DashletGeneric
         $this->searchFields = $dashletData['jjwg_AreasDashlet']['searchFields'];
         $this->columns = $dashletData['jjwg_AreasDashlet']['columns'];
 
-        $this->seedBean = new jjwg_Areas();
+        $this->seedBean = BeanFactory::newBean('jjwg_Areas');
     }
 
     /**
