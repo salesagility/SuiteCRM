@@ -313,7 +313,7 @@ function gen_xml_pipeline_by_sales_stage(
         $symbol = $sugar_config['default_currency_symbol'];
         global $current_user;
         if ($current_user->getPreference('currency')) {
-            $currency = new Currency();
+            $currency = BeanFactory::newBean('Currencies');
             $currency->retrieve($current_user->getPreference('currency'));
             $div = $currency->conversion_rate;
             $symbol = $currency->symbol;
