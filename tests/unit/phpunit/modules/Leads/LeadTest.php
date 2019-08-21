@@ -8,7 +8,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testLead()
@@ -188,7 +188,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
 
         // test
-        $lead = new Lead();
+        $lead = BeanFactory::newBean('Leads');
 
         $lead->first_name = "firstn";
         $lead->last_name = "lastn";
@@ -376,7 +376,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $form = "";
         $prefix = "";
-        $tempBean = new Contact();
+        $tempBean = BeanFactory::newBean('Contacts');
 
         $result = $lead->convertCustomFieldsForm($form, $tempBean, $prefix);
 
