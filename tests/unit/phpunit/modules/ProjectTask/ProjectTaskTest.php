@@ -8,12 +8,12 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
     
     public function testcreate_export_query()
     {
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         //test with empty string params
         $expected = "SELECT
@@ -35,7 +35,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testProjectTask()
     {
         //execute the contructor and check for the Object type and  attributes
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         $this->assertInstanceOf('ProjectTask', $projectTask);
         $this->assertInstanceOf('SugarBean', $projectTask);
@@ -57,7 +57,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         //test with default parameter value
         $projectTask->skipParentUpdate();
@@ -83,7 +83,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         $projectTask->name = 'test';
         //$projectTask->project_id = "1";
@@ -116,7 +116,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function _get_depends_on_name($id)
     {
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         $result = $projectTask->_get_depends_on_name($id);
 
@@ -133,7 +133,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -148,7 +148,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetProjectTaskParent()
     {
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         $projectTask->parent_task_id = 1;
         $result = $projectTask->getProjectTaskParent();
@@ -157,7 +157,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetAllSubProjectTasks()
     {
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         $result = $projectTask->getAllSubProjectTasks();
         $this->assertTrue(is_array($result));
@@ -172,7 +172,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -189,7 +189,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_detail_fields()
     {
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         //test without setting assigned_user_id
         $projectTask->fill_in_additional_detail_fields();
@@ -203,7 +203,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_list_fields()
     {
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         //test without setting assigned_user_id
         $projectTask->fill_in_additional_list_fields();
@@ -217,7 +217,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         //test without setting name
         $this->assertEquals(null, $projectTask->get_summary_text());
@@ -229,7 +229,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function test_get_project_name()
     {
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         //test with a empty string
         $result = $projectTask->_get_project_name('');
@@ -242,7 +242,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function test_get_parent_name()
     {
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         //test with a empty string
         $result = $projectTask->_get_parent_name('');
@@ -255,7 +255,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_generic_where_clause()
     {
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         //test with empty string params
         $expected = "project_task.name like '%'";
@@ -270,7 +270,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_list_view_data()
     {
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         $projectTask->name = 'tes user';
         $projectTask->description = 'test assigned user';
@@ -296,7 +296,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         $this->assertEquals(false, $projectTask->bean_implements('')); //test with blank value
         $this->assertEquals(false, $projectTask->bean_implements('test')); //test with invalid value
@@ -312,7 +312,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'PARENT_TASK' => 'a');
         $actual = $projectTask->listviewACLHelper();
@@ -327,7 +327,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetUtilizationDropdown()
     {
-        $projectTask = new ProjectTask();
+        $projectTask = BeanFactory::newBean('ProjectTask');
 
         $expected = "<select name=\"utilization\">\n<OPTION value='0'>none</OPTION>\n<OPTION value='25'>25</OPTION>\n<OPTION value='50'>50</OPTION>\n<OPTION value='75'>75</OPTION>\n<OPTION value='100'>100</OPTION></select>";
         $actual = getUtilizationDropdown($projectTask, 'utilization', '0', 'EditView');
