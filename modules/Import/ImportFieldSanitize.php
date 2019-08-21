@@ -191,7 +191,7 @@ class ImportFieldSanitize
 
         // cache this object since we'll be reusing it a bunch
         if (!($focus_user instanceof User)) {
-            $focus_user = new User();
+            $focus_user = BeanFactory::newBean('Users');
         }
 
 
