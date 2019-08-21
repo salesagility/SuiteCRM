@@ -89,7 +89,7 @@ class TrackerManager
     private function setup()
     {
         if (!empty($this->metadata) && empty($GLOBALS['installing'])) {
-            $admin = new Administration();
+            $admin = BeanFactory::newBean('Administration');
             $admin->retrieveSettings('tracker');
             foreach ($this->metadata as $key=>$entry) {
                 if (isset($entry['bean'])) {
