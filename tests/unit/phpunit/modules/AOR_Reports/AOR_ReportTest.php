@@ -11,7 +11,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
 
         //execute the contructor and check for the Object type and  attributes
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $this->assertInstanceOf('AOR_Report', $aor_Report);
         $this->assertInstanceOf('Basic', $aor_Report);
         $this->assertInstanceOf('SugarBean', $aor_Report);
@@ -28,7 +28,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
 
         $this->assertEquals(false, $aor_Report->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aor_Report->bean_implements('test')); //test with invalid value
@@ -62,7 +62,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushPHPConfigOptions();
         
         
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
 
         //populate value for aor_fields related/child object
         $_POST['aor_fields_field'][] = 'last_name';
@@ -131,7 +131,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -148,7 +148,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetReportFields()
     {
         //execute the method and verify that it returns an array
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $result = $aor_Report->getReportFields();
         $this->assertTrue(is_array($result));
     }
@@ -163,7 +163,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // test
         
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
         
         $chartBean = BeanFactory::getBean('AOR_Charts');
@@ -198,7 +198,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
         
         // test
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
         $aor_Report->id = '1';
 
@@ -228,7 +228,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
 
         //execute the method without any parameters and verify it returns html string
@@ -258,7 +258,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $totals = array('label' => array(10, 20, 30));
         $expected = "<table><thead class='fc-head'><tr><th>total Sum</th></tr></thead><tbody><tr class='oddListRowS1'><td>60</td></tr></tbody></table>";
 
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $actual = $aor_Report->getTotalHTML($fields, $totals);
 
         $this->assertSame($expected, $actual);
@@ -269,7 +269,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //execute the method with data preset and verify it returns expected result
         $totals = array(10, 20, 30);
 
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
 
         $this->assertEquals('', $aor_Report->calculateTotal('', $totals));
         $this->assertEquals(60, $aor_Report->calculateTotal('SUM', $totals));
@@ -282,7 +282,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //this method uses exit so it cannot be tested
 
-        /*$aor_Report = new AOR_Report();
+        /*$aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = "Accounts";
         $aor_Report->build_report_csv();
         */
@@ -296,7 +296,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
         
         
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
 
         //execute the method without any parameters and verify that it returns a non empty string
@@ -313,7 +313,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_report_query_select()
     {
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
         $query_array = array();
 
@@ -324,7 +324,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_report_query_join()
     {
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
 
         //test with type custom and verify that it retunrs expected results
@@ -333,7 +333,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'contacts',
             'accounts_contacts',
             'accounts',
-            new Account(),
+            BeanFactory::newBean('Accounts'),
             'custom',
             array()
         );
@@ -349,7 +349,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'contacts',
             'accounts_contacts',
             'accounts',
-            new Account(),
+            BeanFactory::newBean('Accounts'),
             'relationship',
             array()
         );
@@ -361,14 +361,14 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
 
         //test without alias and verify that it retunrs expected results
-        $result = $aor_Report->build_report_access_query(new AOR_Report(), '');
+        $result = $aor_Report->build_report_access_query(BeanFactory::newBean('AOR_Reports'), '');
         $this->assertEquals('', $result);
 
         //test with alias and verify that it retunrs expected results
-        $result = $aor_Report->build_report_access_query(new AOR_Report(), 'rep');
+        $result = $aor_Report->build_report_access_query(BeanFactory::newBean('AOR_Reports'), 'rep');
         $this->assertEquals('', $result);
         
         // clean up
@@ -380,7 +380,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
 
         //execute the method and verify that it retunrs expected results
