@@ -33,7 +33,7 @@
 
     global $timedate;
     //Setting values in Quotes
-    $quote = new AOS_Quotes();
+    $quote = BeanFactory::newBean('AOS_Quotes');
     $quote->retrieve($_REQUEST['record']);
     $quote->invoice_status = 'Invoiced';
     $quote->total_amt = format_number($quote->total_amt);
@@ -47,7 +47,7 @@
     $quote->save();
 
     //Setting Invoice Values
-    $invoice = new AOS_Invoices();
+    $invoice = BeanFactory::newBean('AOS_Invoices');
     $rawRow = $quote->fetched_row;
     $rawRow['id'] = '';
     $rawRow['template_ddown_c'] = ' ';
@@ -105,7 +105,7 @@
         if ($row['total_amount'] != null) {
             $row['total_amount'] = format_number($row['total_amount']);
         }
-        $group_invoice = new AOS_Line_Item_Groups();
+        $group_invoice = BeanFactory::newBean('AOS_Line_Item_Groups');
         $group_invoice->populateFromRow($row);
         $group_invoice->save();
         $quoteToInvoiceGroupIds[$quoteGroupId] = $group_invoice->id;
@@ -131,7 +131,7 @@
         $row['vat_amt'] = format_number($row['vat_amt']);
         $row['product_total_price'] = format_number($row['product_total_price']);
         $row['product_qty'] = format_number($row['product_qty']);
-        $prod_invoice = new AOS_Products_Quotes();
+        $prod_invoice = BeanFactory::newBean('AOS_Products_Quotes');
         $prod_invoice->populateFromRow($row);
         $prod_invoice->save();
     }
