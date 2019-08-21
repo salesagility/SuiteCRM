@@ -58,7 +58,7 @@ $sugar_smarty->assign('APP_LIST', $app_list_strings);
 /*foreach($modInvisList as $modinvisname){
     unset($app_list_strings['moduleList'][$modinvisname]);
 }*/
-$role = new ACLRole();
+$role = BeanFactory::newBean('ACLRoles');
 $role->retrieve($_REQUEST['record']);
 $categories = ACLRole::getRoleActions($_REQUEST['record']);
 $names = ACLAction::setupCategoriesMatrix($categories);
