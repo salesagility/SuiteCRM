@@ -7,7 +7,7 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $jjwgMarkers = new jjwg_Markers();
+        $jjwgMarkers = BeanFactory::newBean('jjwg_Markers');
 
         $this->assertInstanceOf('jjwg_Markers', $jjwgMarkers);
         $this->assertInstanceOf('Basic', $jjwgMarkers);
@@ -29,7 +29,7 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $jjwgMarkers = new jjwg_Markers();
+        $jjwgMarkers = BeanFactory::newBean('jjwg_Markers');
 
         $jjwgMarkers->configuration();
 
@@ -42,7 +42,7 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdefine_loc()
     {
-        $jjwgMarkers = new jjwg_Markers();
+        $jjwgMarkers = BeanFactory::newBean('jjwg_Markers');
 
         //test without pre settting attributes
         $result = $jjwgMarkers->define_loc(array());
@@ -59,7 +59,7 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testis_valid_lng()
     {
-        $jjwgMarkers = new jjwg_Markers();
+        $jjwgMarkers = BeanFactory::newBean('jjwg_Markers');
 
         //test with invalid values
         $this->assertEquals(false, $jjwgMarkers->is_valid_lng(''));
@@ -73,7 +73,7 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testis_valid_lat()
     {
-        $jjwgMarkers = new jjwg_Markers();
+        $jjwgMarkers = BeanFactory::newBean('jjwg_Markers');
 
         //test with invalid values
         $this->assertEquals(false, $jjwgMarkers->is_valid_lat(''));
