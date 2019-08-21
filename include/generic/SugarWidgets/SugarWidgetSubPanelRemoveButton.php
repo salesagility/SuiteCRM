@@ -78,7 +78,7 @@ class SugarWidgetSubPanelRemoveButton extends SugarWidgetField
             }
 
             //We also cannot remove the user whose private team is set to the parent_record_id value
-            $user = new User();
+            $user = BeanFactory::newBean('Users');
             $user->retrieve($layout_def['fields']['ID']);
             if ($parent_record_id === $user->getPrivateTeamID()) {
                 $hideremove = true;
