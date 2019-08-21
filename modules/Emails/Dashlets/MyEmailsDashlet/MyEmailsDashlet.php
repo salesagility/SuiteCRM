@@ -66,7 +66,7 @@ class MyEmailsDashlet extends DashletGeneric
 
         $this->columns = $dashletData['MyEmailsDashlet']['columns'];
 
-        $this->seedBean = new Email();
+        $this->seedBean = BeanFactory::newBean('Emails');
     }
 
     /**
