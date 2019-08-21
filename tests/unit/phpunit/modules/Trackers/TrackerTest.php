@@ -8,13 +8,13 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
     
     public function testTracker()
     {
         //execute the contructor and check for the Object type and  attributes
-        $tracker = new Tracker();
+        $tracker = BeanFactory::newBean('Trackers');
 
         $this->assertInstanceOf('Tracker', $tracker);
         $this->assertInstanceOf('SugarBean', $tracker);
@@ -39,7 +39,7 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $tracker = new Tracker();
+        $tracker = BeanFactory::newBean('Trackers');
 
         $result = $tracker->get_recently_viewed(1);
 
@@ -59,7 +59,7 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $tracker = new Tracker();
+        $tracker = BeanFactory::newBean('Trackers');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -74,7 +74,7 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        $tracker = new Tracker();
+        $tracker = BeanFactory::newBean('Trackers');
 
         $this->assertEquals(false, $tracker->bean_implements('')); //test with blank value
         $this->assertEquals(false, $tracker->bean_implements('test')); //test with invalid value
