@@ -51,7 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-$focus = new Release();
+$focus = BeanFactory::newBean('Releases');
 
 
 $focus->retrieve($_REQUEST['record']);
