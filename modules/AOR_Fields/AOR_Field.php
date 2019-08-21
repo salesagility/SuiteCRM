@@ -114,7 +114,7 @@ class AOR_Field extends Basic
             if ($postDataKeyDeleted == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
-                $field = new AOR_Field();
+                $field = BeanFactory::newBean('AOR_Fields');
                 $field->group_display = false;
 
                 if ($key == 'aor_fields_') {
