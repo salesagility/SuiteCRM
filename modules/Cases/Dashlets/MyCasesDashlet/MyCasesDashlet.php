@@ -61,7 +61,7 @@ class MyCasesDashlet extends DashletGeneric
         }
         $this->searchFields = $dashletData['MyCasesDashlet']['searchFields'];
         $this->columns = $dashletData['MyCasesDashlet']['columns'];
-        $this->seedBean = new aCase();
+        $this->seedBean = BeanFactory::newBean('Cases');
     }
 
     /**
