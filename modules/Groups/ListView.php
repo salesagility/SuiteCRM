@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $mod_strings;
 global $current_language;
 
-$focus = new Group();
+$focus = BeanFactory::newBean('Groups');
 $where = ' users.users.is_group = 1 ';
 
 $current_module_strings = return_module_language($current_language, 'Users');
