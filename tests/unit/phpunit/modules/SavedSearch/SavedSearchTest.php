@@ -8,14 +8,14 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testSavedSearch()
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $savedSearch = new SavedSearch();
+        $savedSearch = BeanFactory::newBean('SavedSearch');
 
         $this->assertInstanceOf('SavedSearch', $savedSearch);
         $this->assertInstanceOf('SugarBean', $savedSearch);
@@ -57,7 +57,7 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 //    public function testMain()
 //    {
-//        $savedSearch = new SavedSearch();
+//        $savedSearch = BeanFactory::newBean('SavedSearch');
 //
 //        $savedSearch->name = 'test';
 //        $savedSearch->search_module = 'Leads';
@@ -88,8 +88,8 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function handleSaveAndRetrieveSavedSearch($id)
     {
-        $savedSearch = new SavedSearch();
-        $searchModuleBean = new Lead();
+        $savedSearch = BeanFactory::newBean('SavedSearch');
+        $searchModuleBean = BeanFactory::newBean('Leads');
 
         $_REQUEST['search_module'] = 'Leads';
         $_REQUEST['description'] = 'test description';
@@ -105,7 +105,7 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function handleDelete($id)
     {
-        $savedSearch = new SavedSearch();
+        $savedSearch = BeanFactory::newBean('SavedSearch');
 
         $savedSearch->handleDelete($id);
 
@@ -121,7 +121,7 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $savedSearch = new SavedSearch();
+        $savedSearch = BeanFactory::newBean('SavedSearch');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -142,7 +142,7 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $savedSearch = new SavedSearch();
+        $savedSearch = BeanFactory::newBean('SavedSearch');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -157,7 +157,7 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testhandleRedirect()
     {
-        $savedSearch = new SavedSearch();
+        $savedSearch = BeanFactory::newBean('SavedSearch');
 
         $search_query = '&orderBy=&sortOrder=&query=&searchFormTab=&showSSDIV=';
 
@@ -174,7 +174,7 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $savedSearch = new SavedSearch();
+        $savedSearch = BeanFactory::newBean('SavedSearch');
 
         $savedSearch->assigned_user_id = 1;
         $savedSearch->contents = array('search_module' => 'Leads');
@@ -199,7 +199,7 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $savedSearch = new SavedSearch();
+        $savedSearch = BeanFactory::newBean('SavedSearch');
 
         $savedSearch->contents = array('search_module' => 'Accounts',
                                         'description' => 'test text',
