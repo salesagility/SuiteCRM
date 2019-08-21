@@ -135,7 +135,7 @@ foreach ($recordIds as $recordId) {
 
     ob_clean();
     try {
-        $note = new Note();
+        $note = BeanFactory::newBean('Notes');
         $note->modified_user_id = $current_user->id;
         $note->created_by = $current_user->id;
         $note->name = $file_name;
