@@ -322,7 +322,7 @@ EOT;
 
         echo sprintf(
             '<p>%s</p>',
-            $commitOutput
+            !empty($commitOutput) ? $commitOutput : 'Commit Failed.'
         );
 
         ob_end_flush();
