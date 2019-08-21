@@ -9,14 +9,14 @@ class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testAOW_Action()
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $aowAction = new AOW_Action();
+        $aowAction = BeanFactory::newBean('AOW_Actions');
         $this->assertInstanceOf('AOW_Action', $aowAction);
         $this->assertInstanceOf('Basic', $aowAction);
         $this->assertInstanceOf('SugarBean', $aowAction);
@@ -38,7 +38,7 @@ class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $aowAction = new AOW_Action();
+        $aowAction = BeanFactory::newBean('AOW_Actions');
 
         //populate required values
         $post_data = array();
@@ -47,7 +47,7 @@ class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $post_data['param'] = array(array('param1' => 'value'), array('value' => array('param2' => 'value')));
 
         //create parent bean
-        $aowWorkFlow = new AOW_WorkFlow();
+        $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
         $aowWorkFlow->id = 1;
 
         $aowAction->save_lines($post_data, $aowWorkFlow);
@@ -73,7 +73,7 @@ class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $aowAction = new AOW_Action();
+        $aowAction = BeanFactory::newBean('AOW_Actions');
         $this->assertEquals(false, $aowAction->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aowAction->bean_implements('test')); //test with invalid value
         $this->assertEquals(false, $aowAction->bean_implements('ACL')); //test with valid value
