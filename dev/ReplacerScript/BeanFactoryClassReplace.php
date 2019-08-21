@@ -304,7 +304,7 @@ EOT;
             );
 
 
-            if (++$moduleClassCount === count($moduleClassList)) {
+            if (++$moduleClassCount === count($occurrencesFound)) {
                 $commitModuleListItem = rtrim($commitModuleListItem, '\\');
             }
 
