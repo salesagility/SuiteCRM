@@ -7,7 +7,7 @@ class AM_ProjectTemplatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
     {
 
         //execute the contructor and check for the Object type and type attribute
-        $am_projectTemplate = new AM_ProjectTemplates();
+        $am_projectTemplate = BeanFactory::newBean('AM_ProjectTemplates');
         $this->assertInstanceOf('AM_ProjectTemplates', $am_projectTemplate);
         $this->assertInstanceOf('Basic', $am_projectTemplate);
         $this->assertInstanceOf('SugarBean', $am_projectTemplate);
