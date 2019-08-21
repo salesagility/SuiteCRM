@@ -68,6 +68,6 @@ class OutboundEmailAccountsDashlet extends DashletGeneric
         $this->searchFields = $dashletData['OutboundEmailAccountsDashlet']['searchFields'];
         $this->columns = $dashletData['OutboundEmailAccountsDashlet']['columns'];
 
-        $this->seedBean = new OutboundEmailAccounts();
+        $this->seedBean = BeanFactory::newBean('OutboundEmailAccounts');
     }
 }
