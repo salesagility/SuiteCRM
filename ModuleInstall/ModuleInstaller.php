@@ -599,7 +599,7 @@ class ModuleInstaller
             return true;
         }
 
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $users = get_user_array();
         $unified_search_modules_display = array();
         require('custom/modules/unified_search_modules_display.php');
@@ -1325,7 +1325,7 @@ class ModuleInstaller
     {
         global $beanList, $beanFiles;
         require_once('modules/DynamicFields/DynamicField.php');
-        $dyField = new DynamicField();
+        $dyField = BeanFactory::newBean('DynamicFields');
 
         foreach ($fields as $field) {
             $class = $beanList[ $field['module']];
