@@ -79,7 +79,7 @@ class SugarChart
 
 
         if ($GLOBALS['current_user']->getPreference('currency')) {
-            $currency = new Currency();
+            $currency = BeanFactory::newBean('Currencies');
             $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
             $this->div = $currency->conversion_rate;
             $this->currency_symbol = $currency->symbol;
