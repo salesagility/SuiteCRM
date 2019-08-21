@@ -114,13 +114,13 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
         }
     }
     if (!empty($_POST['selectedContact'])) {
-        $contact = new Contact();
+        $contact = BeanFactory::newBean('Contacts');
         $contact->retrieve($_POST['selectedContact']);
     } else {
         $contact= $contactForm->handleSave('Contacts', false, false);
     }
     if (!empty($_POST['selectedAccount'])) {
-        $account = new Account();
+        $account = BeanFactory::newBean('Accounts');
         $account->retrieve($_POST['selectedAccount']);
     } else {
         if (isset($_POST['newaccount']) && $_POST['newaccount']=='on') {
@@ -129,7 +129,7 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
     }
     if (isset($_POST['newopportunity']) && $_POST['newopportunity']=='on') {
         if (!empty($_POST['selectedOpportunity'])) {
-            $opportunity = new Opportunity();
+            $opportunity = BeanFactory::newBean('Opportunities');
             $opportunity->retrieve($_POST['selectedOpportunity']);
         } else {
             if (isset($account)) {
