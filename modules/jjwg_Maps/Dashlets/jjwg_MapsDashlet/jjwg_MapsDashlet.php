@@ -20,7 +20,7 @@ class jjwg_MapsDashlet extends DashletGeneric
         $this->searchFields = $dashletData['jjwg_MapsDashlet']['searchFields'];
         $this->columns = $dashletData['jjwg_MapsDashlet']['columns'];
 
-        $this->seedBean = new jjwg_Maps();
+        $this->seedBean = BeanFactory::newBean('jjwg_Maps');
     }
 
     /**
