@@ -360,17 +360,15 @@ class User extends Person implements EmailInterface
         $userPrivGuid = $this->getPreference('userPrivGuid', 'global', $this);
         if ($userPrivGuid) {
             return $userPrivGuid;
-        } else {
-            $this->setUserPrivGuid();
-            if (!isset($_SESSION['setPrivGuid'])) {
-                $_SESSION['setPrivGuid'] = true;
-                $userPrivGuid = $this->getUserPrivGuid();
-
-                return $userPrivGuid;
-            } else {
-                sugar_die("Breaking Infinite Loop Condition: Could not setUserPrivGuid.");
-            }
         }
+        $this->setUserPrivGuid();
+        if (!isset($_SESSION['setPrivGuid'])) {
+            $_SESSION['setPrivGuid'] = true;
+            $userPrivGuid = $this->getUserPrivGuid();
+
+            return $userPrivGuid;
+        }
+        sugar_die("Breaking Infinite Loop Condition: Could not setUserPrivGuid.");
     }
 
     public function setUserPrivGuid()
@@ -739,7 +737,7 @@ class User extends Person implements EmailInterface
         if (!$this->is_group && !$this->portal_only) {
             require_once('modules/MySettings/TabController.php');
 
-            global $current_user;
+            global $current_user, $sugar_config;
 
             $display_tabs_def = isset($_REQUEST['display_tabs_def']) ? urldecode($_REQUEST['display_tabs_def']) : '';
             $hide_tabs_def = isset($_REQUEST['hide_tabs_def']) ? urldecode($_REQUEST['hide_tabs_def']) : '';
@@ -983,6 +981,15 @@ class User extends Person implements EmailInterface
             } else {
                 $this->setPreference('syncGCal', 0, 0, 'GoogleSync');
             }
+            if ($this->user_hash === null) {
+                $newUser = true;
+                clear_register_value('user_array', $this->object_name);
+            } else {
+                $newUser = false;
+            }
+            if ($newUser && !$this->is_group && !$this->portal_only && isset($sugar_config['passwordsetting']['SystemGeneratedPasswordON'])) {
+                require_once 'modules/Users/GeneratePassword.php';
+            }
         }
     }
 
@@ -1034,9 +1041,8 @@ class User extends Person implements EmailInterface
         // If the role doesn't exist in the list of the user's roles
         if (!empty($role_array) && in_array($role_name, $role_array)) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function get_summary_text()
@@ -1072,11 +1078,10 @@ class User extends Person implements EmailInterface
         $row = self::findUserPassword($this->user_name, $password);
         if (empty($row)) {
             return false;
-        } else {
-            $this->id = $row['id'];
-
-            return true;
         }
+        $this->id = $row['id'];
+
+        return true;
     }
 
     /**
@@ -2143,9 +2148,8 @@ EOQ;
         $localeFormat = $locale->getLocaleFormatMacro($this);
         if (strpos($localeFormat, 'l') > strpos($localeFormat, 'f')) {
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
     public function create_new_list_query(
@@ -2401,9 +2405,8 @@ EOQ;
     {
         if (!empty($this->email1) && !empty($email) && strcasecmp($this->email1, $email) == 0) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function getEditorType()

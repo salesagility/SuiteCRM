@@ -81,6 +81,9 @@ class Administration extends SugarBean
         $smtp_error = false;
         $this->retrieveSettings();
 
+        if (!$sugar_config['email_warning_notifications']) {
+            $displayWarning = false;
+        }
 
         //If sendmail has been configured by setting the config variable ignore this warning
         $sendMailEnabled = isset($sugar_config['allow_sendmail_outbound']) && $sugar_config['allow_sendmail_outbound'];

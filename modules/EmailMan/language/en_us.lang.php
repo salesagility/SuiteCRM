@@ -55,6 +55,7 @@ $mod_strings = array(
     'LBL_DEFAULT_LOCATION' => 'Default',
 
     'LBL_EMAIL_DEFAULT_DELETE_ATTACHMENTS' => 'Delete related notes & attachments with deleted Emails',
+    'LBL_EMAIL_WARNING_NOTIFICATIONS' => 'Email warning notifications',
     'LBL_EMAIL_ENABLE_CONFIRM_OPT_IN' => 'Opt In Settings',
     'LBL_EMAIL_ENABLE_SEND_OPT_IN' => 'Automatically Send Opt In Email',
     'LBL_EMAIL_CONFIRM_OPT_IN_TEMPLATE_ID' => 'Confirm Opt In Email Template',
