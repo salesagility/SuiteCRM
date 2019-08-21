@@ -73,7 +73,7 @@ class DocumentSoap
     {
         global $sugar_config;
 
-        $focus = new Document();
+        $focus = BeanFactory::newBean('Documents');
 
 
 
@@ -97,7 +97,7 @@ class DocumentSoap
                 $this->upload_file->file_ext = "txt";
             }
 
-            $revision = new DocumentRevision();
+            $revision = BeanFactory::newBean('DocumentRevisions');
             $revision->filename = $this->upload_file->get_stored_file_name();
             $revision->file_mime_type = $this->upload_file->getMimeSoap($revision->filename);
             $revision->file_ext = $this->upload_file->file_ext;
