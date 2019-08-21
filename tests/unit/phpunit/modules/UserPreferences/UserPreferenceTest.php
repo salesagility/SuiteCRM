@@ -8,7 +8,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
     
 
@@ -22,7 +22,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->retrieve('1');
 
         $userPreference = new UserPreference($user);
@@ -49,7 +49,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         global $sugar_config;
 
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->retrieve('1');
 
         $userPreference = new UserPreference($user);
@@ -93,7 +93,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         
 
-        $userPreference = new UserPreference();
+        $userPreference = BeanFactory::newBean('UserPreferences');
 
         //test with non global category
         $result = $userPreference->getDefaultPreference('chartEngine', 'Home');
@@ -131,7 +131,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test
         
         //execute the contructor and check for the Object type and  attributes
-        $userPreference = new UserPreference();
+        $userPreference = BeanFactory::newBean('UserPreferences');
 
         $this->assertInstanceOf('UserPreference', $userPreference);
         $this->assertInstanceOf('SugarBean', $userPreference);
@@ -162,7 +162,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->retrieve('1');
 
         $userPreference = new UserPreference($user);
@@ -203,7 +203,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         global $current_user;
 
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
         $current_user->retrieve('1');
 
         //UserPreference::updateAllUserPrefs("test","test val");
