@@ -322,7 +322,7 @@ class CalendarController extends SugarController
         } else {
             if ($cal->view == 'shared') {
                 $cal->init_shared();
-                $sharedUser = new User();
+                $sharedUser = BeanFactory::newBean('Users');
                 foreach ($cal->shared_ids as $member) {
                     $sharedUser->retrieve($member);
                     $cal->add_activities($sharedUser);
