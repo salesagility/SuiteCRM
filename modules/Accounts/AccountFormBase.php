@@ -55,7 +55,7 @@ class AccountFormBase
     {
         require_once('include/formbase.php');
 
-        $focus = new Account();
+        $focus = BeanFactory::newBean('Accounts');
         $query = '';
         $baseQuery = 'select id, name, website, billing_address_city  from accounts where deleted!=1 and ';
         if (!empty($_POST[$prefix.'name'])) {
@@ -289,7 +289,7 @@ EOQ;
 
         $javascript = new javascript();
         $javascript->setFormName($formname);
-        $javascript->setSugarBean(new Account());
+        $javascript->setSugarBean(BeanFactory::newBean('Accounts'));
         $javascript->addRequiredFields($prefix);
         $form .=$javascript->getScript();
         $mod_strings = $temp_strings;
@@ -305,7 +305,7 @@ EOQ;
         }
 
         if (empty($contact)) {
-            $contact = new Contact();
+            $contact = BeanFactory::newBean('Contacts');
         }
         global $mod_strings;
         $temp_strings = $mod_strings;
@@ -315,7 +315,7 @@ EOQ;
         }
         global $app_strings;
         global $current_user;
-        $account = new Account();
+        $account = BeanFactory::newBean('Accounts');
 
         $lbl_required_symbol = $app_strings['LBL_REQUIRED_SYMBOL'];
         $lbl_account_name = $mod_strings['LBL_ACCOUNT_NAME'];
@@ -378,7 +378,7 @@ EOQ;
 		</tr>
 EOQ;
         //carry forward custom lead fields common to accounts during Lead Conversion
-        $tempAccount = new Account();
+        $tempAccount = BeanFactory::newBean('Accounts');
         if (method_exists($contact, 'convertCustomFieldsForm')) {
             $contact->convertCustomFieldsForm($form, $tempAccount, $prefix);
         }
@@ -390,7 +390,7 @@ EOQ;
 
         $javascript = new javascript();
         $javascript->setFormName($formname);
-        $javascript->setSugarBean(new Account());
+        $javascript->setSugarBean(BeanFactory::newBean('Accounts'));
         $javascript->addRequiredFields($prefix);
         $form .=$javascript->getScript();
         $mod_strings = $temp_strings;
@@ -402,7 +402,7 @@ EOQ;
     {
         require_once('include/formbase.php');
 
-        $focus = new Account();
+        $focus = BeanFactory::newBean('Accounts');
 
         if ($useRequired &&  !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
