@@ -268,13 +268,13 @@ class FP_eventsController extends SugarController
         //Target lists. Can incliude contacts, leads and targets as part of the target list
         if ($type == 'target_list') {
             foreach ($ids as $list) {
-                $event = new FP_events();
+                $event = BeanFactory::newBean('FP_events');
                 $event->retrieve($eventIDQuoted);
                 $event->load_relationship('fp_events_prospects_1');
                 $event->load_relationship('fp_events_contacts');
                 $event->load_relationship('fp_events_leads_1');
 
-                $target_list = new ProspectList();
+                $target_list = BeanFactory::newBean('ProspectLists');
                 $target_list->retrieve($list);
                 $target_list->load_relationship('prospects');
                 $target_list->load_relationship('contacts');
@@ -310,7 +310,7 @@ class FP_eventsController extends SugarController
         //Targets
         elseif ($type == 'targets') {
             foreach ($ids as $target) {
-                $event = new FP_events();
+                $event = BeanFactory::newBean('FP_events');
                 $event->retrieve($eventIDQuoted);
                 $event->load_relationship('fp_events_prospects_1');
 
@@ -325,7 +325,7 @@ class FP_eventsController extends SugarController
         //leads
         elseif ($type == 'leads') {
             foreach ($ids as $lead) {
-                $event = new FP_events();
+                $event = BeanFactory::newBean('FP_events');
                 $event->retrieve($eventIDQuoted);
                 $event->load_relationship('fp_events_leads_1');
 
@@ -340,7 +340,7 @@ class FP_eventsController extends SugarController
         //contacts
         elseif ($type == 'contacts') {
             foreach ($ids as $contact) {
-                $event = new FP_events();
+                $event = BeanFactory::newBean('FP_events');
                 $event->retrieve($eventIDQuoted);
                 $event->load_relationship('fp_events_contacts');
 
@@ -363,7 +363,7 @@ class FP_eventsController extends SugarController
 
         $id = $_GET['record'];
         //get event
-        $event = new FP_events();
+        $event = BeanFactory::newBean('FP_events');
         $event->retrieve($id);
 
         $event->load_relationship('fp_events_contacts'); // get related contacts
@@ -405,7 +405,7 @@ class FP_eventsController extends SugarController
                 $rcpt_name = $contact->first_name . ' ' . $contact->last_name;
                 $rcpt_email = $contact->email1;
 
-                $emailTemp = new EmailTemplate();
+                $emailTemp = BeanFactory::newBean('EmailTemplates');
                 $emailTemp->disable_row_level_security = true;
                 $emailTemp->retrieve($event->invite_templates);  //Use the ID value of the email template record
 
@@ -424,7 +424,7 @@ class FP_eventsController extends SugarController
                 $alt_emailbody = wordwrap($emailTemp->parse_template_bean($firstpass, 'FP_events', $event), 900);
 
                 //get attachments
-                $attachmentBean = new Note();
+                $attachmentBean = BeanFactory::newBean('Notes');
                 $attachment_list = $attachmentBean->get_full_list('', "parent_type = 'Emails' AND parent_id = '".$event->invite_templates."'");
 
                 $attachments = array();
@@ -469,7 +469,7 @@ class FP_eventsController extends SugarController
                 $rcpt_name = $target->first_name . ' ' . $target->last_name;
                 $rcpt_email = $target->email1;
 
-                $emailTemp = new EmailTemplate();
+                $emailTemp = BeanFactory::newBean('EmailTemplates');
                 $emailTemp->disable_row_level_security = true;
                 $emailTemp->retrieve($event->invite_templates);  //Use the ID value of the email template record
 
@@ -481,7 +481,7 @@ class FP_eventsController extends SugarController
                 $alt_emailbody = wordwrap($emailTemp->parse_template_bean($firstpass, 'FP_events', $event), 900);
 
                 //get attachments
-                $attachmentBean = new Note();
+                $attachmentBean = BeanFactory::newBean('Notes');
                 $attachment_list = $attachmentBean->get_full_list('', "parent_type = 'Emails' AND parent_id = '".$event->invite_templates."'");
 
                 $attachments = array();
@@ -525,7 +525,7 @@ class FP_eventsController extends SugarController
                 $rcpt_name = $lead->first_name . ' ' . $lead->last_name;
                 $rcpt_email = $lead->email1;
 
-                $emailTemp = new EmailTemplate();
+                $emailTemp = BeanFactory::newBean('EmailTemplates');
                 $emailTemp->disable_row_level_security = true;
                 $emailTemp->retrieve($event->invite_templates);  //Use the ID value of the email template record
 
@@ -537,7 +537,7 @@ class FP_eventsController extends SugarController
                 $alt_emailbody = wordwrap($emailTemp->parse_template_bean($firstpass, 'FP_events', $event), 900);
 
                 //get attachments
-                $attachmentBean = new Note();
+                $attachmentBean = BeanFactory::newBean('Notes');
                 $attachment_list = $attachmentBean->get_full_list('', "parent_type = 'Emails' AND parent_id = '".$event->invite_templates."'");
 
                 $attachments = array();
@@ -592,7 +592,7 @@ class FP_eventsController extends SugarController
     //handles sending the emails
     public function sendEmail($emailTo, $emailSubject, $emailToname, $emailBody, $altemailBody, SugarBean $relatedBean = null, $attachments = array())
     {
-        $emailObj = new Email();
+        $emailObj = BeanFactory::newBean('Emails');
         $defaults = $emailObj->getSystemDefaultEmail();
         $mail = new SugarPHPMailer();
         $mail->setMailerForSystem();
