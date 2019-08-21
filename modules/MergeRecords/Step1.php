@@ -69,7 +69,7 @@ if (!isset($where)) {
     $where = "";
 }
 
-$focus = new MergeRecord();
+$focus = BeanFactory::newBean('MergeRecords');
 
 ////////////////////////////////////////////////////////////
 //get instance of master record and retrieve related record
