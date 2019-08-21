@@ -9,14 +9,14 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testDocument()
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
         $this->assertInstanceOf('Document', $document);
         $this->assertInstanceOf('File', $document);
         $this->assertInstanceOf('SugarBean', $document);
@@ -40,7 +40,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
 
         $document->filename = 'test';
         $document->file_url = 'test_url';
@@ -81,7 +81,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('cron_remove_documents');
         
         
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
 
         //test without setting name
         $this->assertEquals(null, $document->get_summary_text());
@@ -102,7 +102,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_indexevent');
         $state->pushTable('cron_remove_documents');
         
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
 
         //test without presetting attributes
         $this->assertEquals(null, $document->is_authenticated());
@@ -129,7 +129,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -156,7 +156,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
         
         
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
         $current_theme = SugarThemeRegistry::current();
         $document->id = 'abcde-12345';
 
@@ -184,7 +184,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
 
         $xTemplateSection = null;
         
@@ -206,7 +206,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('environment dependency');
         
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
 
         //test with empty string parameters
         $expected = "SELECT\n						documents.* FROM documents  WHERE  documents.deleted = 0 ORDER BY documents.document_name";
@@ -223,7 +223,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete();
         
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
         $current_theme = SugarThemeRegistry::current();
         //execute the method and verify that it retunrs expected results
 
@@ -273,7 +273,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -288,7 +288,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
         $this->assertEquals(false, $document->bean_implements('')); //test with blank value
         $this->assertEquals(false, $document->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $document->bean_implements('ACL')); //test with valid value
