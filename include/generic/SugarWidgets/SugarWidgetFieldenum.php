@@ -140,8 +140,8 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
                 $div_id = $field_def['module'] ."&$record&$field_name";
                 $str = "<div id='$div_id'>" . $cell . "&nbsp;"
                      . SugarThemeRegistry::current()->getImage(
-                        "edit_inline",
-                        "border='0' alt='Edit Layout' align='bottom' onClick='SUGAR.reportsInlineEdit.inlineEdit(" .
+                         "edit_inline",
+                         "border='0' alt='Edit Layout' align='bottom' onClick='SUGAR.reportsInlineEdit.inlineEdit(" .
                         "\"$div_id\",\"$cell\",\"$module\",\"$record\",\"$field_name\",\"$field_type\");'"
                        )
                      . "</div>";

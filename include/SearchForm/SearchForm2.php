@@ -682,10 +682,11 @@ class SearchForm
                         $function_name = $this->fieldDefs[$fvName]['function'];
                     }
 
+                    if (!empty($this->fieldDefs[$fvName]['function']['include'])) {
+                        require_once($this->fieldDefs[$fvName]['function']['include']);
+                    }
+
                     if (!empty($this->fieldDefs[$fvName]['function']['returns']) && $this->fieldDefs[$fvName]['function']['returns'] == 'html') {
-                        if (!empty($this->fieldDefs[$fvName]['function']['include'])) {
-                            require_once($this->fieldDefs[$fvName]['function']['include']);
-                        }
                         $value = call_user_func($function_name, $this->seed, $name, $value, $this->view);
                         $this->fieldDefs[$fvName]['value'] = $value;
                     } else {

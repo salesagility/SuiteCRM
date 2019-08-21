@@ -193,7 +193,7 @@ class SubPanelTiles
         $default_div_display = 'inline';
         if (!empty($sugar_config['hide_subpanels_on_login'])) {
             if (!isset($_SESSION['visited_details'][$this->focus->module_dir])) {
-                setcookie($this->focus->module_dir . '_divs', '', 0, null, null, false, true);
+                setcookie($this->focus->module_dir . '_divs', '', 0, null, null, isSSL(), true);
                 unset($_COOKIE[$this->focus->module_dir . '_divs']);
                 $_SESSION['visited_details'][$this->focus->module_dir] = true;
             }

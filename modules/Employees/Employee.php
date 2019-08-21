@@ -111,6 +111,20 @@ class Employee extends Person
     }
 
     /**
+     * @param $interface
+     * @return bool
+     */
+    public function bean_implements($interface)
+    {
+        switch ($interface) {
+            case 'ACL':
+                return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function Employee()

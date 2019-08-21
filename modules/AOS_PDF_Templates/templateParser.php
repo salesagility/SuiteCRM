@@ -106,12 +106,12 @@ class templateParser
 
         foreach ($repl_arr as $name => $value) {
             if (strpos($name, 'product_discount') !== false || strpos($name, 'quotes_discount') !== false) {
-                if ($value != '' && $value != '0.00') {
+                if ($value !== '') {
                     if ($isValidator->isPercentageField($repl_arr['aos_products_quotes_discount'])) {
                         $sep = get_number_seperators();
                         $value = rtrim(
                             rtrim(format_number($value), '0'),
-                                $sep[1]
+                            $sep[1]
                         ) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
                     }
                 } else {
@@ -130,12 +130,12 @@ class templateParser
                 $sep = get_number_seperators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
             }
-            if ($focus->field_defs[$name][dbType] == 'datetime' &&
+            if ($focus->field_defs[$name]['dbType'] == 'datetime' &&
                 (strpos($name, 'date') > 0 || strpos($name, 'expiration') > 0)) {
                 if ($value != '') {
                     $dt = explode(' ', $value);
                     $value = $dt[0];
-                    if(isset($dt[1]) && $dt[1]!=''){
+                    if (isset($dt[1]) && $dt[1]!='') {
                         if (strpos($dt[1], 'am') > 0 || strpos($dt[1], 'pm') > 0) {
                             $value = $dt[0].' '.$dt[1];
                         }

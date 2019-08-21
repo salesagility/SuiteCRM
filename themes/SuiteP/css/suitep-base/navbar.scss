@@ -19,6 +19,15 @@
 
 //Style
 
+.navbar .query_string::selection { /* Safari */
+  background-color: $nav-selection-bg !important;
+  color: $nav-selection-color !important;
+}
+
+.navbar .query_string::-moz-selection { /* Firefox */
+  background-color: $nav-selection-bg !important;
+  color: $nav-selection-color !important;
+}
 
 .navbar-left {
   float: left!important;

@@ -242,10 +242,11 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'CONVERTED' => '0',
             'ENCODED_NAME' => ' ',
             'EMAIL1' => '',
-            'EMAIL1_LINK' =>
-                '<a class="email-link"'
-                . ' onclick="$(document).openComposeViewModal(this);" data-module="Leads"'
-                . ' data-record-id="" data-module-name=" " data-email-address=""></a>',
+            'EMAIL1_LINK' => '            <a class="email-link" href="mailto:"
+                    onclick="$(document).openComposeViewModal(this);"
+                    data-module="Leads" data-record-id=""
+                    data-module-name=" " data-email-address=""
+                ></a>',
             'ACC_NAME_FROM_ACCOUNTS' => null,
         );
 

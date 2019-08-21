@@ -106,13 +106,25 @@ if ($bean_name === 'Team') {
      while (($row = $focus->db->fetchByAssoc($result)) != null) {
          $del_query = " update email_marketing_prospect_lists set email_marketing_prospect_lists.deleted=1, email_marketing_prospect_lists.date_modified=" . $focus->db->convert(
              "'" . TimeDate::getInstance()->nowDb() . "'",
-                'datetime'
+             'datetime'
          );
          $del_query .= " WHERE  email_marketing_prospect_lists.id='{$row['id']}'";
          $focus->db->query($del_query);
      }
      $focus->db->query($query);
  }
+if ($bean_name === "Account" && $linked_field === 'leads') {
+    // for Accounts-Leads non-standard relationship, after clearing account_id form Lead's bean, clear also account_name
+    $focus->retrieve($record);
+    $lead = new Lead();
+    $lead->retrieve($linked_id);
+    if ($focus->name === $lead->account_name) {
+        $lead->account_name = '';
+    }
+    $lead->save();
+    unset($lead);
+}
+
 if ($bean_name === "Meeting") {
     $focus->retrieve($record);
     $user = new User();

@@ -161,9 +161,9 @@ if (isset($_REQUEST['emailUIAction'])) {
                 $ie->mailbox = $_REQUEST['mbox'];
                 global $timedate;
                 $ie->setEmailForDisplay($_REQUEST['uid']);
-                $ie->email->date_start = $timedate->to_display_date($ie->email->date_sent);
-                $ie->email->time_start = $timedate->to_display_time($ie->email->date_sent);
-                $ie->email->date_sent = $timedate->to_display_date_time($ie->email->date_sent);
+                $ie->email->date_start = $timedate->to_display_date($ie->email->date_sent_received);
+                $ie->email->time_start = $timedate->to_display_time($ie->email->date_sent_received);
+                $ie->email->date_sent_received = $timedate->to_display_date_time($ie->email->date_sent_received);
                 $email = $ie->email->et->handleReplyType($ie->email, $_REQUEST['composeType']);
                 $ret = $ie->email->et->displayComposeEmail($email);
                 if ($_REQUEST['composeType'] == 'forward') {
@@ -572,7 +572,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 isset($_REQUEST['folder']) && !empty($_REQUEST['folder']) &&
                 isset($_REQUEST['ieId']) && (!empty($_REQUEST['ieId']) || (empty($_REQUEST['ieId']) && strpos(
                     $_REQUEST['folder'],
-                            'sugar::'
+                    'sugar::'
                 ) !== false))
             ) {
                 $uid = $json->decode(from_html($_REQUEST['uids']));
@@ -592,10 +592,10 @@ if (isset($_REQUEST['emailUIAction'])) {
                 $ret = array();
                 if (strpos(
                     $_REQUEST['folder'],
-                        'sugar::'
+                    'sugar::'
                 ) !== false && ($_REQUEST['type'] == 'deleted') && !ACLController::checkAccess(
-                            'Emails',
-                        'delete'
+                    'Emails',
+                    'delete'
                         )
                 ) {
                     $ret['status'] = false;
@@ -984,7 +984,7 @@ eoq;
                     $sortArray = sugar_unserialize($sortSerial);
                     $GLOBALS['log']->debug("********** EMAIL 2.0********** ary=" . print_r(
                         $sortArray,
-                            true
+                        true
                     ) . ' id=' . $_REQUEST['ieId'] . '; box=' . $_REQUEST['mbox']);
                     $sort = $sortArray[$_REQUEST['ieId']][$_REQUEST['mbox']]['current']['sort'];
                     $direction = $sortArray[$_REQUEST['ieId']][$_REQUEST['mbox']]['current']['direction'];
@@ -1508,7 +1508,7 @@ eoq;
             $ieId = $_REQUEST['ieId'];
             $ie->retrieve($ieId);
 
-            if ($ie->group_id == $current_user->id) {
+            if (($ie->group_id == $current_user->id) || ($current_user->is_admin)) {
                 $ret = array();
 
                 foreach ($ie->field_defs as $k => $v) {

@@ -52,10 +52,7 @@ class UserWizardCest
         // ---------- Email Settings ---------------
         
         $I2->wantTo('Save an outgoing email configuration');
-        $I2->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-         // Navigate to email configuration and save settings
+        // Navigate to email configuration and save settings
         $I2->loginAsAdmin();
         $I2->createEmailSettings();
         $I2->dontSee('Note: To send record assignment notifications, an SMTP server must be configured in Email Settings.');

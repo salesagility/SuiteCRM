@@ -61,7 +61,7 @@ if (!is_admin($current_user) && !is_admin_for_any_module($current_user)) {
 
 echo getClassicModuleTitle(
     translate('LBL_MODULE_NAME', 'Administration'),
-                      array(translate('LBL_MODULE_NAME', 'Administration')),
+    array(translate('LBL_MODULE_NAME', 'Administration')),
     false
 );
 

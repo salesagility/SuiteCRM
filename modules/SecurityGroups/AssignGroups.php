@@ -22,12 +22,11 @@ class AssignGroups
 
             if (!empty($_REQUEST['securitygroup_list'])) {
                 require_once('modules/SecurityGroups/SecurityGroup.php');
-                $groupFocus = new SecurityGroup();
-                $security_modules = $groupFocus->getSecurityModules();
+                $security_modules = SecurityGroup::getSecurityModules();
                 //sanity check
                 if (in_array($bean->module_dir, array_keys($security_modules))) {
                     //add each group in securitygroup_list to new record
-                    $rel_name = $groupFocus->getLinkName($bean->module_dir, "SecurityGroups");
+                    $rel_name = SecurityGroup::getLinkName($bean->module_dir,"SecurityGroups");
 
                     $bean->load_relationship($rel_name);
                     foreach ($_REQUEST['securitygroup_list'] as $group_id) {
@@ -109,11 +108,10 @@ class AssignGroups
                 unset($_SESSION['securitygroups_popup'][$popup_index]);
 
                 require_once('modules/SecurityGroups/SecurityGroup.php');
-                $groupFocus = new SecurityGroup();
                 if ($module == 'Users') {
                     $rel_name = "SecurityGroups";
                 } else {
-                    $rel_name = $groupFocus->getLinkName($module, "SecurityGroups");
+                    $rel_name = SecurityGroup::getLinkName($module,"SecurityGroups");
                 }
 
                 //this only works if on the detail view of the record actually saved...
@@ -158,7 +156,7 @@ EOQ;
             if (is_admin($current_user) || ACLAction::getUserAccessLevel($current_user->id, "SecurityGroups", 'access') == ACL_ALLOW_ENABLED) {
                 require_once('modules/SecurityGroups/SecurityGroup.php');
                 $groupFocus = new SecurityGroup();
-                $security_modules = $groupFocus->getSecurityModules();
+                $security_modules = SecurityGroup::getSecurityModules();
                 //if(in_array($module,$security_modules)) {
                 if (in_array($module, array_keys($security_modules))) {
                     global $app_strings;
@@ -175,15 +173,18 @@ EOQ;
                     }
                     $group_options =  get_select_options_with_id($options, "");
 
+				    $export_where = !empty($_SESSION['export_where']) ? $_SESSION['export_where'] : '';
+				    $export_where_md5 = md5($export_where);
+
                     $mass_assign = <<<EOQ
 
 <script type="text/javascript" language="javascript">
 function confirm_massassign(del,start_string, end_string) {
 	if (del == 1) {
-		return confirm( start_string + sugarListView.get_num_selected()  + end_string);
+		return confirm( start_string + sugarListView.get_num_selected_string()  + end_string);
 	}
 	else {
-		return confirm( start_string + sugarListView.get_num_selected()  + end_string);
+		return confirm( start_string + sugarListView.get_num_selected_string()  + end_string);
 	}
 }
 
@@ -265,6 +266,7 @@ function send_massassign(mode, no_record_txt, start_string, end_string, del) {
 			<input type='hidden' name='module' value='SecurityGroups' />
 			<input type='hidden' name='return_action' value='${action}' />
 			<input type='hidden' name='return_module' value='${module}' />
+			<input type="hidden" name="export_where_md5" value="{$export_where_md5}">
 			<textarea style='display: none' name='uid'></textarea>
 
 

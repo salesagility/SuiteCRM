@@ -80,7 +80,7 @@ function getModuleFields(
                     if (array_key_exists($mod->module_dir, $blockedModuleFields)) {
                         if (in_array(
                             $arr['name'],
-                                $blockedModuleFields[$mod->module_dir]
+                            $blockedModuleFields[$mod->module_dir]
                             ) && !$current_user->isAdmin()
                         ) {
                             $GLOBALS['log']->debug('hiding ' . $arr['name'] . ' field from ' . $current_user->name);
@@ -182,7 +182,7 @@ function getModuleTreeData($module)
                         'module_label'=> $module_label)
     );
 
-    if ($module != '') {
+    if ($module != '' && ACLController::checkAccess($module, 'list', true)) {
         if (isset($beanList[$module]) && $beanList[$module]) {
             $mod = new $beanList[$module]();
 
@@ -191,6 +191,10 @@ function getModuleTreeData($module)
                     $rel_module = $arr['module'];
                 } elseif ($mod->load_relationship($name)) {
                     $rel_module = $mod->$name->getRelatedModuleName();
+                }
+
+                if (!ACLController::checkAccess($rel_module, 'list', true)) {
+                    continue;
                 }
 
                 $rel_module_label = isset($app_list_strings['moduleList'][$rel_module]) ? $app_list_strings['moduleList'][$rel_module] : $rel_module;
@@ -975,7 +979,7 @@ function fixUpFormatting($module, $field, $value)
         case 'currency':
         case 'float':
             if ($value === '' || $value == null || $value == 'NULL') {
-                continue;
+                break;
             }
             if (is_string($value)) {
                 $value = (float)unformat_number($value);
@@ -988,7 +992,7 @@ function fixUpFormatting($module, $field, $value)
         case 'tinyint':
         case 'int':
             if ($value === '' || $value == null || $value == 'NULL') {
-                continue;
+                break;
             }
             if (is_string($value)) {
                 $value = (int)unformat_number($value);

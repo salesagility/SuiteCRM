@@ -81,7 +81,7 @@ class Sugarpdf extends TCPDF
      */
     public $bean = null;
     /**
-    * Any errors that occured this can either be set by the view or the controller or the model
+    * Any errors that occurred this can either be set by the view or the controller or the model
     */
     public $errors = array();
     /**

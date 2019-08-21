@@ -87,7 +87,7 @@ function getDisplayForField($modulePath, $field, $reportModule)
     $fieldDisplay = trim($fieldDisplay, ':');
     foreach ($modulePathDisplay as &$module) {
         $module = isset($app_list_strings['aor_moduleList'][$module]) ? $app_list_strings['aor_moduleList'][$module] : (
-        isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
+            isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
         );
     }
     return array('field' => $fieldDisplay, 'type'=>$fieldType, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
@@ -95,6 +95,7 @@ function getDisplayForField($modulePath, $field, $reportModule)
 
 function requestToUserParameters($reportBean = null)
 {
+    global $app_list_strings;
     $params = array();
     if (!empty($_REQUEST['parameter_id'])) {
         $dateCount = 0;
@@ -108,7 +109,7 @@ function requestToUserParameters($reportBean = null)
 
             $condition = BeanFactory::getBean('AOR_Conditions', $_REQUEST['parameter_id'][$key]);
             $value = $_REQUEST['parameter_value'][$key];
-            if ($reportBean && $condition) {
+            if ($reportBean && $condition && !array_key_exists($value, $app_list_strings['date_time_period_list'])) {
                 $value = fixUpFormatting($reportBean->report_module, $condition->field, $value);
             }
 

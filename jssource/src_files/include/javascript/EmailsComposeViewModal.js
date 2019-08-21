@@ -116,6 +116,9 @@
   $.fn.openComposeViewModal = function (source) {
     "use strict";
 
+    window.event.preventDefault();
+    window.event.stopImmediatePropagation();
+
     var self = this;
     self.emailComposeView = null;
     var opts = $.extend({}, $.fn.EmailsComposeViewModal.defaults);

@@ -337,6 +337,10 @@ function saveField($field, $id, $module, $value)
             } else {
                 $bean->$field = $value;
             }
+        } elseif ($module === 'Leads' && $field === 'account_name') {
+            require_once('modules/Leads/LeadFormBase.php');
+            $bean->$field = $value;
+            $bean->account_id = LeadFormBase::handleLeadAccountName($bean);
         } else {
             $bean->$field = $value;
         }
@@ -417,23 +421,21 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
         $value = "<b>" . $SugarWidgetSubPanelDetailViewLink->displayList($vardef) . "</b>";
     }
 
-    //If field is of type date time, datetimecombo or date
-    if ($vardef['type'] == "datetimecombo" || $vardef['type'] == "datetime" || $vardef['type'] == "date") {
-        if ($method != "close") {
-            if ($method != "save") {
-                $value = convertDateUserToDB($value);
-            }
-            $datetime_format = $timedate->get_date_time_format();
-
-            if ($vardef['type'] == "date") {
-                $value = $value . ' 00:00:00';
-            }
-            // create utc date (as it's utc in db)
-            // use the calculated datetime_format
-            $datetime = DateTime::createFromFormat($datetime_format, $value,new DateTimeZone('UTC'));
-
-            $value = $datetime->format($datetime_format);
+    if ($method !== 'close' && ($vardef['type'] === 'datetimecombo' || $vardef['type'] === 'datetime' || $vardef['type'] === 'date')) {
+        if ($method !== 'save') {
+            $value = convertDateUserToDB($value);
         }
+        $datetime_format = $timedate->get_date_time_format();
+
+        if ($vardef['type'] === 'date') {
+            $value = date('Y-m-d', strtotime($value));
+            $value .= ' 00:00:00';
+            $datetime = DateTime::createFromFormat('Y-m-d H:i:s', $value, new DateTimeZone('UTC'));
+        } else {
+            $datetime = DateTime::createFromFormat($datetime_format, $value, new DateTimeZone('UTC'));
+        }
+
+        $value = $datetime->format($datetime_format);
     }
 
     //If field is of type bool, checkbox.
@@ -517,9 +519,11 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             $value = format_number($value);
         }
     }
-    if ($vardef['type'] == "date" && $method == "save") {
-        $value = substr($value, 0, strlen($value) - 6);
+    if ($method === 'save' && $vardef['type'] === 'date') {
+        $value = explode(' ', $value);
+        $value = $value[0];
     }
+
     return $value;
 }
 

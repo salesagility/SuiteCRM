@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SugarObjects/templates/person/Person.php');
 require_once __DIR__ . '/../../include/EmailInterface.php';
+require_once __DIR__ . '/../Emails/EmailUI.php';
 
 // User is used to store customer information.
 class User extends Person implements EmailInterface
@@ -231,7 +232,7 @@ class User extends Person implements EmailInterface
      * @throws \RuntimeException
      */
     public function getSignatures(
-    $live = false,
+        $live = false,
         $defaultSig = '',
         $forSettings = false,
         $elementId = 'signature_id',
@@ -267,7 +268,7 @@ class User extends Person implements EmailInterface
      * @throws \RuntimeException
      */
     public function getEmailAccountSignatures(
-    $live = false,
+        $live = false,
         $defaultSig = '',
         $forSettings = false,
         $elementId = 'account_signature_id',
@@ -372,7 +373,7 @@ class User extends Person implements EmailInterface
      * @param string $category Name of the category to retrieve
      */
     public function setPreference(
-    $name,
+        $name,
         $value,
         $nosession = 0,
         $category = 'global'
@@ -396,7 +397,7 @@ class User extends Person implements EmailInterface
      * @param string $category category to reset
      */
     public function resetPreferences(
-    $category = null
+        $category = null
     ) {
         // for BC
         if (func_num_args() > 1) {
@@ -466,7 +467,7 @@ class User extends Person implements EmailInterface
      * @return bool successful?
      */
     public function loadPreferences(
-    $category = 'global'
+        $category = 'global'
     ) {
         // for BC
         if (func_num_args() > 1) {
@@ -511,7 +512,7 @@ class User extends Person implements EmailInterface
      * @internal param bool $useRequestedRecord
      */
     public function getPreference(
-    $name,
+        $name,
         $category = 'global'
     ) {
         // for BC
@@ -578,9 +579,25 @@ class User extends Person implements EmailInterface
         return "1<>1";
     }
 
+    /**
+     * Normally a bean returns ID from save() method if it was
+     * success and false (or maybe null) is something went wrong.
+     * BUT (for some reason) if User bean saved properly except
+     * the email addresses of it, this User::save() method also
+     * return a false.
+     * It's a confusing ambiguous return value for caller method.
+     *
+     * To handle this issue when save method can not save email
+     * addresses and return false it also set the variable called
+     * User::$lastSaveErrorIsEmailAddressSaveError to true.
+     *
+     * @param bool $check_notify
+     * @return bool|string
+     * @throws SuiteException
+     */
     public function save($check_notify = false)
     {
-        global $current_user, $sugar_config, $mod_strings;
+        global $current_user, $mod_strings;
 
         $msg = '';
 
@@ -614,8 +631,6 @@ class User extends Person implements EmailInterface
         }
 
         if ($this->factor_auth && $isUpdate && is_admin($current_user)) {
-            $tmpUser = BeanFactory::getBean('Users', $this->id);
-
             $factorAuthFactory = new FactorAuthFactory();
             $factorAuth = $factorAuthFactory->getFactorAuth($this);
 
@@ -623,10 +638,6 @@ class User extends Person implements EmailInterface
                 $this->factor_auth = false;
             }
         }
-
-
-        $query = "SELECT count(id) as total from users WHERE " . self::getLicensedUsersWhere();
-
 
         // is_group & portal should be set to 0 by default
         if (!isset($this->is_group)) {
@@ -649,6 +660,11 @@ class User extends Person implements EmailInterface
         // set some default preferences when creating a new user
         $setNewUserPreferences = empty($this->id) || !empty($this->new_with_id);
 
+        if (!$this->verify_data()) {
+            SugarApplication::appendErrorMessage($this->error_string);
+            header('Location: index.php?action=Error&module=Users');
+            exit;
+        }
 
         parent::save($check_notify);
 
@@ -663,6 +679,24 @@ class User extends Person implements EmailInterface
 
         $this->savePreferencesToDB();
 
+
+        if ((isset($_POST['old_password']) || $this->portal_only) &&
+            (isset($_POST['new_password']) && !empty($_POST['new_password'])) &&
+            (isset($_POST['password_change']) && $_POST['password_change'] === 'true')) {
+            if (!$this->change_password($_POST['old_password'], $_POST['new_password'])) {
+                if (isset($_POST['page']) && $_POST['page'] === 'EditView') {
+                    SugarApplication::appendErrorMessage($this->error_string);
+                    header("Location: index.php?action=EditView&module=Users&record=" . $_POST['record']);
+                    exit;
+                }
+                if (isset($_POST['page']) && $_POST['page'] === 'Change') {
+                    SugarApplication::appendErrorMessage($this->error_string);
+                    header("Location: index.php?action=ChangePassword&module=Users&record=" . $_POST['record']);
+                    exit;
+                }
+            }
+        }
+
         // User Profile specific save for Email addresses
         if (!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
             $GLOBALS['log']->error('Email address save error');
@@ -672,12 +706,12 @@ class User extends Person implements EmailInterface
         return $this->id;
     }
 
-    public function saveFormPreferences(){
+    public function saveFormPreferences()
+    {
         if (!$this->is_group && !$this->portal_only) {
-
             require_once('modules/MySettings/TabController.php');
 
-            global $current_user;
+            global $current_user, $sugar_config;
 
             $display_tabs_def = isset($_REQUEST['display_tabs_def']) ? urldecode($_REQUEST['display_tabs_def']) : '';
             $hide_tabs_def = isset($_REQUEST['hide_tabs_def']) ? urldecode($_REQUEST['hide_tabs_def']) : '';
@@ -694,11 +728,11 @@ class User extends Person implements EmailInterface
             $this->is_group = 0;
             $this->portal_only = 0;
 
-            if ((isset($_POST['is_admin']) && ($_POST['is_admin'] == 'on' || $_POST['is_admin'] == '1')) ||
-              (isset($_POST['UserType']) && $_POST['UserType'] == "Administrator"))
+            if (is_admin($current_user) && ((isset($_POST['is_admin']) && ($_POST['is_admin'] === 'on' || $_POST['is_admin'] === '1')) || (isset($_POST['UserType']) && $_POST['UserType'] === 'Administrator'))) {
                 $this->is_admin = 1;
-            elseif (isset($_POST['is_admin']) && empty($_POST['is_admin']))
+            } elseif (isset($_POST['is_admin']) && empty($_POST['is_admin'])) {
                 $this->is_admin = 0;
+            }
 
             if (isset($_POST['mailmerge_on']) && !empty($_POST['mailmerge_on'])) {
                 $this->setPreference('mailmerge_on', 'on', 0, 'global');
@@ -721,7 +755,7 @@ class User extends Person implements EmailInterface
             if (isset($_POST['use_group_tabs'])) {
                 $this->setPreference('navigation_paradigm', $_POST['use_group_tabs'], 0, 'global');
             } else {
-                $this->setPreference('navigation_paradigm', $GLOBALS['sugar_config']['default_navigation_paradigm'] , 0, 'global');
+                $this->setPreference('navigation_paradigm', $GLOBALS['sugar_config']['default_navigation_paradigm'], 0, 'global');
             }
 
             if (isset($_POST['sort_modules_by_name'])) {
@@ -754,8 +788,9 @@ class User extends Person implements EmailInterface
             }
 
             $tabs = new TabController();
-            if (isset($_POST['display_tabs']))
+            if (isset($_POST['display_tabs'])) {
                 $tabs->set_user_tabs($DISPLAY_ARR['display_tabs'], $this, 'display');
+            }
             if (isset($HIDE_ARR['hide_tabs'])) {
                 $tabs->set_user_tabs($HIDE_ARR['hide_tabs'], $this, 'hide');
             } else {
@@ -788,48 +823,68 @@ class User extends Person implements EmailInterface
                 $this->setPreference('email_reminder_checked', $_POST['email_reminder_checked'], 0, 'global');
             }
 
-            if (isset($_POST['timezone']))
+            if (isset($_POST['timezone'])) {
                 $this->setPreference('timezone', $_POST['timezone'], 0, 'global');
-            if (isset($_POST['ut']))
+            }
+            if (isset($_POST['ut'])) {
                 $this->setPreference('ut', '0', 0, 'global');
-            else
+            } else {
                 $this->setPreference('ut', '1', 0, 'global');
-            if (isset($_POST['currency']))
+            }
+            if (isset($_POST['currency'])) {
                 $this->setPreference('currency', $_POST['currency'], 0, 'global');
-            if (isset($_POST['default_currency_significant_digits']))
+            }
+            if (isset($_POST['default_currency_significant_digits'])) {
                 $this->setPreference('default_currency_significant_digits', $_POST['default_currency_significant_digits'], 0, 'global');
-            if (isset($_POST['num_grp_sep']))
+            }
+            if (isset($_POST['num_grp_sep'])) {
                 $this->setPreference('num_grp_sep', $_POST['num_grp_sep'], 0, 'global');
-            if (isset($_POST['dec_sep']))
+            }
+            if (isset($_POST['dec_sep'])) {
                 $this->setPreference('dec_sep', $_POST['dec_sep'], 0, 'global');
-            if (isset($_POST['fdow']))
+            }
+            if (isset($_POST['fdow'])) {
                 $this->setPreference('fdow', $_POST['fdow'], 0, 'global');
-            if (isset($_POST['dateformat']))
+            }
+            if (isset($_POST['dateformat'])) {
                 $this->setPreference('datef', $_POST['dateformat'], 0, 'global');
-            if (isset($_POST['timeformat']))
+            }
+            if (isset($_POST['timeformat'])) {
                 $this->setPreference('timef', $_POST['timeformat'], 0, 'global');
-            if (isset($_POST['timezone']))
+            }
+            if (isset($_POST['timezone'])) {
                 $this->setPreference('timezone', $_POST['timezone'], 0, 'global');
-            if (isset($_POST['mail_fromname']))
+            }
+            if (isset($_POST['mail_fromname'])) {
                 $this->setPreference('mail_fromname', $_POST['mail_fromname'], 0, 'global');
-            if (isset($_POST['mail_fromaddress']))
+            }
+            if (isset($_POST['mail_fromaddress'])) {
                 $this->setPreference('mail_fromaddress', $_POST['mail_fromaddress'], 0, 'global');
-            if (isset($_POST['mail_sendtype']))
+            }
+            if (isset($_POST['mail_sendtype'])) {
                 $this->setPreference('mail_sendtype', $_POST['mail_sendtype'], 0, 'global');
-            if (isset($_POST['mail_smtpserver']))
+            }
+            if (isset($_POST['mail_smtpserver'])) {
                 $this->setPreference('mail_smtpserver', $_POST['mail_smtpserver'], 0, 'global');
-            if (isset($_POST['mail_smtpport']))
+            }
+            if (isset($_POST['mail_smtpport'])) {
                 $this->setPreference('mail_smtpport', $_POST['mail_smtpport'], 0, 'global');
-            if (isset($_POST['mail_smtpuser']))
+            }
+            if (isset($_POST['mail_smtpuser'])) {
                 $this->setPreference('mail_smtpuser', $_POST['mail_smtpuser'], 0, 'global');
-            if (isset($_POST['mail_smtppass']))
+            }
+            if (isset($_POST['mail_smtppass'])) {
                 $this->setPreference('mail_smtppass', $_POST['mail_smtppass'], 0, 'global');
-            if (isset($_POST['default_locale_name_format']))
+            }
+            if (isset($_POST['default_locale_name_format'])) {
                 $this->setPreference('default_locale_name_format', $_POST['default_locale_name_format'], 0, 'global');
-            if (isset($_POST['export_delimiter']))
+            }
+            if (isset($_POST['export_delimiter'])) {
                 $this->setPreference('export_delimiter', $_POST['export_delimiter'], 0, 'global');
-            if (isset($_POST['default_export_charset']))
+            }
+            if (isset($_POST['default_export_charset'])) {
                 $this->setPreference('default_export_charset', $_POST['default_export_charset'], 0, 'global');
+            }
             if (isset($_POST['use_real_names'])) {
                 $this->setPreference('use_real_names', 'on', 0, 'global');
             } elseif (!isset($_POST['use_real_names']) && !isset($_POST['from_dcmenu'])) {
@@ -860,33 +915,49 @@ class User extends Person implements EmailInterface
             ///////////////////////////////////////////////////////////////////////////
             ///////////////////////////////////////////////////////////////////////////
             ////	SIGNATURES
-            if (isset($_POST['signature_id']))
+            if (isset($_POST['signature_id'])) {
                 $this->setPreference('signature_default', $_POST['signature_id'], 0, 'global');
+            }
 
-            if (isset($_POST['signature_prepend']))
+            if (isset($_POST['signature_prepend'])) {
                 $this->setPreference('signature_prepend', $_POST['signature_prepend'], 0, 'global');
+            }
             ////	END SIGNATURES
             ///////////////////////////////////////////////////////////////////////////
 
 
-            if (isset($_POST['email_link_type']))
+            if (isset($_POST['email_link_type'])) {
                 $this->setPreference('email_link_type', $_REQUEST['email_link_type']);
-            if (isset($_POST['editor_type']))
+            }
+            if (isset($_POST['editor_type'])) {
                 $this->setPreference('editor_type', $_REQUEST['editor_type']);
+            }
             if (isset($_REQUEST['email_show_counts'])) {
                 $this->setPreference('email_show_counts', $_REQUEST['email_show_counts'], 0, 'global');
             } else {
                 $this->setPreference('email_show_counts', 0, 0, 'global');
             }
-            if (isset($_REQUEST['email_editor_option']))
+            if (isset($_REQUEST['email_editor_option'])) {
                 $this->setPreference('email_editor_option', $_REQUEST['email_editor_option'], 0, 'global');
-            if (isset($_REQUEST['default_email_charset']))
+            }
+            if (isset($_REQUEST['default_email_charset'])) {
                 $this->setPreference('default_email_charset', $_REQUEST['default_email_charset'], 0, 'global');
+            }
 
-            if (isset($_POST['calendar_publish_key']))
+            if (isset($_POST['calendar_publish_key'])) {
                 $this->setPreference('calendar_publish_key', $_POST['calendar_publish_key'], 0, 'global');
+            }
             if (isset($_POST['subtheme'])) {
                 $this->setPreference('subtheme', $_POST['subtheme'], 0, 'global');
+            }
+            if ($this->user_hash === null) {
+                $newUser = true;
+                clear_register_value('user_array', $this->object_name);
+            } else {
+                $newUser = false;
+            }
+            if ($newUser && !$this->is_group && !$this->portal_only && isset($sugar_config['passwordsetting']['SystemGeneratedPasswordON'])) {
+                require_once 'modules/Users/GeneratePassword.php';
             }
         }
     }
@@ -1090,49 +1161,54 @@ EOQ;
     /**
      * Generate a new hash from plaintext password
      * @param string $password
+     * @return bool|string
      */
     public static function getPasswordHash($password)
     {
-        if (!defined('CRYPT_MD5') || !constant('CRYPT_MD5')) {
-            // does not support MD5 crypt - leave as is
-            if (defined('CRYPT_EXT_DES') && constant('CRYPT_EXT_DES')) {
-                return crypt(strtolower(md5($password)), "_.012" . substr(str_shuffle('./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'), -4));
-            }
-            // plain crypt cuts password to 8 chars, which is not enough
-            // fall back to old md5
-            return strtolower(md5($password));
-        }
+        return self::getPasswordHashMD5(md5($password));
+    }
 
-        return @crypt(strtolower(md5($password)));
+    /**
+     * Generate a new hash from MD5 password
+     * @param string $passwordMd5
+     * @return bool|string
+     */
+    public static function getPasswordHashMD5($passwordMd5)
+    {
+        return password_hash(strtolower($passwordMd5), PASSWORD_DEFAULT);
     }
 
     /**
      * Check that password matches existing hash
      * @param string $password Plaintext password
-     * @param string $user_hash DB hash
+     * @param string $userHash DB hash
+     * @return bool
      */
-    public static function checkPassword($password, $user_hash)
+    public static function checkPassword($password, $userHash)
     {
-        return self::checkPasswordMD5(md5($password), $user_hash);
+        return self::checkPasswordMD5(md5($password), $userHash);
     }
 
     /**
      * Check that md5-encoded password matches existing hash
-     * @param string $password MD5-encoded password
-     * @param string $user_hash DB hash
+     * @param string $passwordMd5 MD5-encoded password
+     * @param string $userHash DB hash
      * @return bool Match or not?
      */
-    public static function checkPasswordMD5($password_md5, $user_hash)
+    public static function checkPasswordMD5($passwordMd5, $userHash)
     {
-        if (empty($user_hash)) {
+        if (empty($userHash)) {
             return false;
         }
-        if ($user_hash[0] != '$' && strlen($user_hash) == 32) {
-            // Old way - just md5 password
-            return strtolower($password_md5) == $user_hash;
+
+        if ($userHash[0] !== '$' && strlen($userHash) === 32) {
+            // Legacy md5 password
+            $valid = strtolower($passwordMd5) === $userHash;
+        } else {
+            $valid = password_verify(strtolower($passwordMd5), $userHash);
         }
 
-        return crypt(strtolower($password_md5), $user_hash) == $user_hash;
+        return $valid;
     }
 
     /**
@@ -1141,7 +1217,7 @@ EOQ;
      * @param string $password MD5-encoded password
      * @param string $where Limiting query
      * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (default is true)
-     * @return bool|arraythe matching User of false if not found
+     * @return bool|array the matching User of false if not found
      */
     public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
     {
@@ -1160,7 +1236,7 @@ EOQ;
         if (!empty($where)) {
             $query .= " AND $where";
         }
-	$query .= " AND deleted=0"; 
+        $query .= " AND deleted=0";
         $result = $db->limitQuery($query, 0, 1, false);
         if (!empty($result)) {
             $row = $db->fetchByAssoc($result);
@@ -1332,7 +1408,7 @@ EOQ;
     }
 
     public function retrieve_user_id(
-    $user_name
+        $user_name
     ) {
         $userFocus = new User;
         $userFocus->retrieve_by_string_fields(array('user_name' => $user_name));
@@ -1727,7 +1803,7 @@ EOQ;
      * @param class
      */
     public function getEmailLink2(
-    $emailAddress,
+        $emailAddress,
         &$focus,
         $contact_id = '',
         $ret_module = '',
@@ -1736,6 +1812,30 @@ EOQ;
         $class = ''
     ) {
         $emailLink = '';
+
+        $emailUI = new EmailUI();
+        for ($i = 0; $i < count($focus->emailAddress->addresses); $i++) {
+            $emailField = 'email' . (string) ($i + 1);
+            $optOut = (bool)$focus->emailAddress->addresses[$i]['opt_out'];
+            if (!$optOut && $focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
+                $focus->$emailField = $emailAddress;
+                $emailLink = $emailUI->populateComposeViewFields($focus, $emailField);
+                break;
+            }
+        }
+
+        return $emailLink;
+    }
+
+    /**
+     * Returns the email client type that should be used for this user.
+     * Either "sugar" for the "SuiteCRM E-mail Client" or "mailto" for the
+     * "External Email Client".
+     *
+     * @return string
+     */
+    public function getEmailClient()
+    {
         global $sugar_config;
 
         if (!isset($sugar_config['email_default_client'])) {
@@ -1750,24 +1850,7 @@ EOQ;
             $client = $defaultPref;
         }
 
-        if ($client == 'sugar') {
-            require_once('modules/Emails/EmailUI.php');
-            $emailUI = new EmailUI();
-            for ($i = 0; $i < count($focus->emailAddress->addresses); $i++) {
-                $emailField = 'email' . (string) ($i + 1);
-                $optOut = (bool)$focus->emailAddress->addresses[$i]['opt_out'];
-                if (!$optOut && $focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
-                    $focus->$emailField = $emailAddress;
-                    $emailLink = $emailUI->populateComposeViewFields($focus, $emailField);
-                    break;
-                }
-            }
-        } else {
-            // straight mailto:
-            $emailLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $emailAddress);
-        }
-
-        return $emailLink;
+        return $client;
     }
 
     /**
@@ -1783,7 +1866,7 @@ EOQ;
      * @param class
      */
     public function getEmailLink(
-    $attribute,
+        $attribute,
         &$focus,
         $contact_id = '',
         $ret_module = '',
@@ -1791,30 +1874,8 @@ EOQ;
         $ret_id = '',
         $class = ''
     ) {
-        require_once('modules/Emails/EmailUI.php');
-        $emailLink = '';
-        global $sugar_config;
-
-
-        if (!isset($sugar_config['email_default_client'])) {
-            $this->setDefaultsInConfig();
-        }
-
-        $userPref = $this->getPreference('email_link_type');
-        $defaultPref = $sugar_config['email_default_client'];
-        if ($userPref != '') {
-            $client = $userPref;
-        } else {
-            $client = $defaultPref;
-        }
-
-        if ($client == 'sugar') {
-            $emailUI = new EmailUI();
-            $emailLink = $emailUI->populateComposeViewFields($focus);
-        } else {
-            // straight mailto:
-            $emailLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $focus->$attribute);
-        }
+        $emailUI = new EmailUI();
+        $emailLink = $emailUI->populateComposeViewFields($focus);
 
         return $emailLink;
     }
@@ -2061,7 +2122,7 @@ EOQ;
     }
 
     public function create_new_list_query(
-    $order_by,
+        $order_by,
         $where,
         $filter = array(),
         $params = array(),
@@ -2271,7 +2332,7 @@ EOQ;
             $emailObj->from_addr = $mail->From;
             isValidEmailAddress($emailObj->from_addr);
             $emailObj->parent_type = 'User';
-            $emailObj->date_sent = TimeDate::getInstance()->nowDb();
+            $emailObj->date_sent_received = TimeDate::getInstance()->nowDb();
             $emailObj->modified_user_id = '1';
             $emailObj->created_by = '1';
             $emailObj->status = 'sent';

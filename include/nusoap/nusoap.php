@@ -1892,8 +1892,8 @@ class nusoap_xmlschema extends nusoap_base
                 // Display an error message.
                 $errstr = sprintf(
                     'XML error parsing XML schema on line %d: %s',
-                xml_get_current_line_number($this->parser),
-                xml_error_string(xml_get_error_code($this->parser))
+                    xml_get_current_line_number($this->parser),
+                    xml_error_string(xml_get_error_code($this->parser))
                 );
                 $this->debug($errstr);
                 $this->debug("XML payload:\n" . $xml);
@@ -5839,7 +5839,7 @@ class nusoap_server extends nusoap_base
 
     /**
     * Specify a fault to be returned to the client.
-    * This also acts as a flag to the server that a fault has occured.
+    * This also acts as a flag to the server that a fault has occurred.
     *
     * @param	string $faultcode
     * @param	string $faultstring
@@ -8406,8 +8406,8 @@ class nusoap_parser extends nusoap_base
                 // Display an error message.
                 $err = sprintf(
                     'XML error parsing SOAP payload on line %d: %s',
-                xml_get_current_line_number($this->parser),
-                xml_error_string(xml_get_error_code($this->parser))
+                    xml_get_current_line_number($this->parser),
+                    xml_error_string(xml_get_error_code($this->parser))
                 );
                 $this->debug($err);
                 $this->debug("XML payload:\n" . $xml);

@@ -45,6 +45,8 @@ if (!is_admin($current_user)) {
     sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }
 
+include_once __DIR__ . '/../../include/Imap/ImapHandlerFactory.php';
+
 function clearPasswordSettings()
 {
     $_POST['passwordsetting_SystemGeneratedPasswordON'] = '';
@@ -63,7 +65,7 @@ function clearPasswordSettings()
 
 require_once('modules/Administration/Forms.php');
 echo getClassicModuleTitle(
-        "Administration",
+    "Administration",
     array(
     "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME', 'Administration') . "</a>",
     $mod_strings['LBL_MANAGE_PASSWORD_TITLE'],
@@ -130,6 +132,7 @@ if (!empty($_POST['saveConfig'])) {
         $configurator->config['passwordsetting']['onelower'] = $_POST['passwordsetting_onelower'];
         $configurator->config['passwordsetting']['onenumber'] = $_POST['passwordsetting_onenumber'];
         $configurator->config['passwordsetting']['onespecial'] = $_POST['passwordsetting_onespecial'];
+		$configurator->config['passwordsetting']['minpwdlength'] = $_POST['passwordsetting_minpwdlength'];
 
         $configurator->saveConfig();
 

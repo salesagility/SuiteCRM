@@ -1595,7 +1595,7 @@ class SugarBean
                                 " FROM " . $templates[$child_info['parent_type']]->table_name .
                                 " WHERE id IN ('$childInfoParentId'";
                         }
-                    } else{
+                    } else {
                         if (isset($child_info['parent_id']) && empty($parent_child_map[$child_info['parent_id']]) && isset($child_info['parent_type'])) {
                             $queries[$child_info['parent_type']] .= " ,'{$child_info['parent_id']}'";
                         }
@@ -2532,7 +2532,7 @@ class SugarBean
                     case 'currency':
                     case 'float':
                         if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
-                            continue;
+                            break;
                         }
                         if (is_string($this->$field)) {
                             $this->$field = (float)unformat_number($this->$field);
@@ -2546,7 +2546,7 @@ class SugarBean
                     case 'tinyint':
                     case 'int':
                         if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
-                            continue;
+                            break;
                         }
                         if (is_string($this->$field)) {
                             $this->$field = (int)unformat_number($this->$field);
@@ -3028,10 +3028,10 @@ class SugarBean
             }
             require_once('data/Link2.php');
             $rel = Relationship::retrieve_by_modules(
-                        $new_rel_link,
-                        $this->module_dir,
-                        $this->db,
-                        'many-to-many'
+                $new_rel_link,
+                $this->module_dir,
+                $this->db,
+                'many-to-many'
                     );
 
             if (!empty($rel)) {
@@ -3295,11 +3295,8 @@ class SugarBean
             $locale->translateCharsetMIME(trim($notify_name), 'UTF-8', $OBCharset)
         );
 
-        if (empty($_SESSION['authenticated_user_language'])) {
-            $current_language = $sugar_config['default_language'];
-        } else {
-            $current_language = $_SESSION['authenticated_user_language'];
-        }
+
+        $current_language = get_current_language();
         $xtpl = new XTemplate(get_notify_template_file($current_language));
         if ($this->module_dir == "Cases") {
             //we should use Case, you can refer to the en_us.notify_template.html.
@@ -4983,6 +4980,8 @@ class SugarBean
                                         $this->$name = $mod->name;
                                     }
                                 }
+                                // The related bean is incomplete due to $fill_in_rel_depth, we don't want to cache it
+                                BeanFactory::unregisterBean($related_module, $this->$id_name);
                             }
                         }
                     }

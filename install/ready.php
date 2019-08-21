@@ -102,7 +102,7 @@ if (empty($memory_limit)) {
     $memory_limit = "-1";
 }
 if (!defined('SUGARCRM_MIN_MEM')) {
-    define('SUGARCRM_MIN_MEM', 40*1024*1024);
+    define('SUGARCRM_MIN_MEM', 64*1024*1024);
 }
 $sugarMinMem = constant('SUGARCRM_MIN_MEM');
 // logic based on: http://us2.php.net/manual/en/ini.core.php#ini.memory-limit
@@ -385,7 +385,7 @@ $out = <<<EOQ
     </script>
 </div>
 <footer id="install_footer">
-    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
+    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/suitecrm/forum" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>
 </div>
 </body>
