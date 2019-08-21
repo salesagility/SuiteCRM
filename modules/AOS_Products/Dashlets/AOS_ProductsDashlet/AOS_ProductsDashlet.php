@@ -54,7 +54,7 @@ class AOS_ProductsDashlet extends DashletGeneric
         $this->searchFields = $dashletData['AOS_ProductsDashlet']['searchFields'];
         $this->columns = $dashletData['AOS_ProductsDashlet']['columns'];
 
-        $this->seedBean = new AOS_Products();
+        $this->seedBean = BeanFactory::newBean('AOS_Products');
     }
 
     /**
