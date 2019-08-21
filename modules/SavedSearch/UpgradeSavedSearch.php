@@ -47,7 +47,7 @@ class UpgradeSavedSearch
     {
         $result = DBManagerFactory::getInstance()->query("SELECT id FROM saved_search");
         while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
-            $focus = new SavedSearch();
+            $focus = BeanFactory::newBean('SavedSearch');
             $focus->retrieve($row['id']);
             $contents = unserialize(base64_decode($focus->contents));
             $has_team_name_saved = isset($contents['team_name_advanced']) || isset($contents['team_name_basic']) ? true : false;
