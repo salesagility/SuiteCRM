@@ -46,7 +46,7 @@ global $mod_strings;
 global $app_list_strings;
 global $current_user;
 
-$focus = new InboundEmail();
+$focus = BeanFactory::newBean('InboundEmail');
 $focus->checkImap();
 
 ///////////////////////////////////////////////////////////////////////////////
