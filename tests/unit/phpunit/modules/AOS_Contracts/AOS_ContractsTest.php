@@ -8,14 +8,14 @@ class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testAOS_Contracts()
     {
 
         //execute the contructor and check for the Object type and attributes
-        $aosContracts = new AOS_Contracts();
+        $aosContracts = BeanFactory::newBean('AOS_Contracts');
         $this->assertInstanceOf('AOS_Contracts', $aosContracts);
         $this->assertInstanceOf('Basic', $aosContracts);
         $this->assertInstanceOf('SugarBean', $aosContracts);
@@ -42,7 +42,7 @@ class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $aosContracts = new AOS_Contracts();
+        $aosContracts = BeanFactory::newBean('AOS_Contracts');
         $aosContracts->name = 'test';
 
         $aosContracts->save();
@@ -76,7 +76,7 @@ class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $call = new call();
 
-        $aosContracts = new AOS_Contracts();
+        $aosContracts = BeanFactory::newBean('AOS_Contracts');
         $aosContracts->name = 'test';
 
         //test createReminder()
