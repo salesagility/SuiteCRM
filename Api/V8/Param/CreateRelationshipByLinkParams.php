@@ -6,46 +6,14 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CreateRelationshipParams extends BaseParam
+class CreateRelationshipByLinkParams extends CreateRelationshipParams
 {
     /**
      * @return string
      */
-    public function getModuleName()
+    public function getLinkedFieldName()
     {
-        return $this->parameters['moduleName'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->parameters['id'];
-    }
-
-    /**
-     * @return GetRelationshipDataParams
-     */
-    public function getData()
-    {
-        return $this->parameters['data'];
-    }
-
-    /**
-     * @return \SugarBean
-     */
-    public function getSourceBean()
-    {
-        return $this->parameters['sourceBean'];
-    }
-
-    /**
-     * @return \SugarBean
-     */
-    public function getRelatedBean()
-    {
-        return $this->parameters['relatedBean'];
+        return $this->parameters['linkFieldName'];
     }
 
     /**
@@ -95,5 +63,7 @@ class CreateRelationshipParams extends BaseParam
                 );
             })
             ->setAllowedTypes('relatedBean', \SugarBean::class);
+
+        $this->setOptions($resolver, [ParamOption\LinkFieldName::class]);
     }
 }

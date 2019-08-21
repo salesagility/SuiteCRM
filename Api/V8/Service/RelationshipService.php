@@ -8,6 +8,7 @@ use Api\V8\JsonApi\Response\DocumentResponse;
 use Api\V8\JsonApi\Response\LinksResponse;
 use Api\V8\JsonApi\Response\MetaResponse;
 use Api\V8\Param\CreateRelationshipParams;
+use Api\V8\Param\CreateRelationshipByLinkParams;
 use Api\V8\Param\DeleteRelationshipParams;
 use Api\V8\Param\GetRelationshipParams;
 
@@ -82,6 +83,35 @@ class RelationshipService
      * @return DocumentResponse
      */
     public function createRelationship(CreateRelationshipParams $params)
+    {
+        $sourceBean = $params->getSourceBean();
+        $relatedBean = $params->getRelatedBean();
+        $linkFieldName = $this->beanManager->getLinkedFieldName($sourceBean, $relatedBean);
+
+        $this->beanManager->createRelationshipSafe($sourceBean, $relatedBean, $linkFieldName);
+
+        $response = new DocumentResponse();
+        $response->setMeta(new MetaResponse(
+            [
+                'message' => sprintf(
+                    '%s with id %s has been added to %s with id %s',
+                    $relatedBean->getObjectName(),
+                    $relatedBean->id,
+                    $sourceBean->getObjectName(),
+                    $sourceBean->id
+                )
+            ]
+        ));
+
+        return $response;
+    }
+
+    /**
+     * @param CreateRelationshipByLinkParams $params
+     *
+     * @return DocumentResponse
+     */
+    public function createRelationshipByLink(CreateRelationshipByLinkParams $params)
     {
         $sourceBean = $params->getSourceBean();
 

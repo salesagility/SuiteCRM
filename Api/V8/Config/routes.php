@@ -4,6 +4,8 @@ use Api\V8\Controller\LogoutController;
 use Api\V8\Factory\ParamsMiddlewareFactory;
 use Api\V8\Param\CreateModuleParams;
 use Api\V8\Param\CreateRelationshipParams;
+use Api\V8\Param\CreateRelationshipByLinkParams;
+use Api\V8\Param\DeleteRelationshipParams;
 use Api\V8\Param\DeleteModuleParams;
 use Api\V8\Param\GetModuleParams;
 use Api\V8\Param\GetModulesParams;
@@ -98,10 +100,20 @@ $app->group('', function () use ($app) {
          */
         $app
             ->post(
-                '/module/{moduleName}/{id}/relationships/{linkFieldName}',
+                '/module/{moduleName}/{id}/relationships',
                 'Api\V8\Controller\RelationshipController:createRelationship'
             )
             ->add($paramsMiddlewareFactory->bind(CreateRelationshipParams::class));
+
+        /**
+         * Create relationship by link
+         */
+        $app
+            ->post(
+                '/module/{moduleName}/{id}/relationships/{linkFieldName}',
+                'Api\V8\Controller\RelationshipController:createRelationshipByLink'
+            )
+            ->add($paramsMiddlewareFactory->bind(CreateRelationshipByLinkParams::class));
 
         /**
          * Delete relationship
@@ -111,7 +123,7 @@ $app->group('', function () use ($app) {
                 '/module/{moduleName}/{id}/relationships/{linkFieldName}/{relatedBeanId}',
                 'Api\V8\Controller\RelationshipController:deleteRelationship'
             )
-            ->add($paramsMiddlewareFactory->bind(DeleteRelationShipParams::class));
+            ->add($paramsMiddlewareFactory->bind(DeleteRelationshipParams::class));
         
         // add custom routes        
         $app->group('/custom', function () use ($app) {
