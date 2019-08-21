@@ -54,7 +54,7 @@ class AOS_InvoicesDashlet extends DashletGeneric
         $this->searchFields = $dashletData['AOS_InvoicesDashlet']['searchFields'];
         $this->columns = $dashletData['AOS_InvoicesDashlet']['columns'];
 
-        $this->seedBean = new AOS_Invoices();
+        $this->seedBean = BeanFactory::newBean('AOS_Invoices');
     }
 
     /**
