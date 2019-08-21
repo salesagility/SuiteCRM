@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/Configurator/Configurator.php');
 
 
-$admin = new Administration();
+$admin = BeanFactory::newBean('Administration');
 $admin->retrieveSettings();
 
 // Handle posts
