@@ -63,7 +63,7 @@ class LeadsController extends SugarController
     {
         //IF we have a prospect id leads convert it to a lead
         if (empty($this->bean->id) && !empty($_REQUEST['return_module']) &&$_REQUEST['return_module'] == 'Prospects') {
-            $prospect=new Prospect();
+            $prospect=BeanFactory::newBean('Prospects');
             $prospect->retrieve($_REQUEST['return_id']);
             foreach ($prospect->field_defs as $key=>$value) {
                 if ($key == 'id' or $key=='deleted') {
