@@ -11,14 +11,14 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function test__construct()
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $scheduler = new Scheduler();
+        $scheduler = BeanFactory::newBean('Schedulers');
 
         $this->assertInstanceOf('Scheduler', $scheduler);
         $this->assertInstanceOf('SugarBean', $scheduler);
@@ -44,7 +44,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $scheduler = new Scheduler();
+        $scheduler = BeanFactory::newBean('Schedulers');
 
         //test without setting any attributes
         $result = $scheduler->fireQualified();
@@ -63,7 +63,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreateJob()
     {
-        $scheduler = new Scheduler();
+        $scheduler = BeanFactory::newBean('Schedulers');
         $result = $scheduler->createJob();
 
         $this->assertInstanceOf('SchedulersJob', $result);
@@ -80,7 +80,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $scheduler = new Scheduler();
+        $scheduler = BeanFactory::newBean('Schedulers');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -101,7 +101,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $this->markTestIncomplete('Need to implement!');
 
-//        $scheduler = new Scheduler();
+//        $scheduler = BeanFactory::newBean('Schedulers');
 //
 //        $scheduler->id = 1;
 //        $scheduler->date_time_start = '2016-01-01 10:30:01';
@@ -124,7 +124,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testhandleIntervalType()
     {
-        $scheduler = new Scheduler();
+        $scheduler = BeanFactory::newBean('Schedulers');
 
         //execute the method with different job intervals
 
@@ -137,7 +137,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsetIntervalHumanReadable()
     {
-        $scheduler = new Scheduler();
+        $scheduler = BeanFactory::newBean('Schedulers');
 
         //execute the method with different job intervals
 
@@ -154,7 +154,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsetStandardArraysAttributes()
     {
-        $scheduler = new Scheduler();
+        $scheduler = BeanFactory::newBean('Schedulers');
 
         //execute the method and verify related attributes
 
@@ -169,7 +169,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testparseInterval()
     {
-        $scheduler = new Scheduler();
+        $scheduler = BeanFactory::newBean('Schedulers');
 
         $scheduler->job_interval = '0::3::3::*::*';
 
@@ -194,7 +194,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $scheduler = new Scheduler();
+        $scheduler = BeanFactory::newBean('Schedulers');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -216,7 +216,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $scheduler = new Scheduler();
+        $scheduler = BeanFactory::newBean('Schedulers');
 
         //execute the method and capture the echo output
         ob_start();
@@ -246,7 +246,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $scheduler = new Scheduler();
+        $scheduler = BeanFactory::newBean('Schedulers');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -274,7 +274,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $scheduler = new Scheduler();
+        $scheduler = BeanFactory::newBean('Schedulers');
 
         //test with empty string params
         $expected = " SELECT  schedulers.*  , jt0.user_name created_by_name , jt0.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt1.user_name modified_by_name , jt1.created_by modified_by_name_owner  , 'Users' modified_by_name_mod FROM schedulers   LEFT JOIN  users jt0 ON jt0.id=schedulers.created_by AND jt0.deleted=0\n AND jt0.deleted=0  LEFT JOIN  users jt1 ON schedulers.modified_user_id=jt1.id AND jt1.deleted=0\n\n AND jt1.deleted=0 where schedulers.deleted=0";
@@ -301,7 +301,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $scheduler = new Scheduler();
+        $scheduler = BeanFactory::newBean('Schedulers');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -324,7 +324,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $scheduler = new Scheduler();
+        $scheduler = BeanFactory::newBean('Schedulers');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -350,7 +350,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $scheduler = new Scheduler();
+        $scheduler = BeanFactory::newBean('Schedulers');
 
         //preset required attributes
         $scheduler->job_interval = '0::3::*::*::*';
@@ -389,7 +389,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $scheduler = new Scheduler();
+        $scheduler = BeanFactory::newBean('Schedulers');
 
         //test without setting name
         $this->assertEquals(null, $scheduler->get_summary_text());
