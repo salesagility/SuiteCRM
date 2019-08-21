@@ -5,7 +5,7 @@ function install_aoe()
     require_once('modules/Administration/Administration.php');
     require_once('modules/EmailTemplates/EmailTemplate.php');
 
-    $emailTemp = new EmailTemplate();
+    $emailTemp = BeanFactory::newBean('EmailTemplates');
     //$emailTemp->id = '7b618b3d-913b-6d2d-6bfb-519f7948a271';
     $emailTemp->date_entered = '2013-05-24 14:31:45';
     $emailTemp->date_modified = '2013-05-30 14:37:12';
