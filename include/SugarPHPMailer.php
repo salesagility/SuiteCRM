@@ -86,7 +86,7 @@ class SugarPHPMailer extends PHPMailer
         global $current_user;
         global $sugar_config;
 
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
 
         if (isset($admin->settings['disclosure_enable']) && !empty($admin->settings['disclosure_enable'])) {
