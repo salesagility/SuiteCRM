@@ -68,7 +68,7 @@ class AM_TaskTemplatesDashlet extends DashletGeneric
         $this->searchFields = $dashletData['AM_TaskTemplatesDashlet']['searchFields'];
         $this->columns = $dashletData['AM_TaskTemplatesDashlet']['columns'];
 
-        $this->seedBean = new AM_TaskTemplates();
+        $this->seedBean = BeanFactory::newBean('AM_TaskTemplates');
     }
 
     /**
