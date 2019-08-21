@@ -8,7 +8,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testSaveAndGet_email_recipients()
@@ -19,7 +19,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
-        $aorScheduledReports = new AOR_Scheduled_Reports();
+        $aorScheduledReports = BeanFactory::newBean('AOR_Scheduled_Reports');
         $aorScheduledReports->name = "test";
         $aorScheduledReports->description = "test description";
         $_POST['email_recipients']= array('email_target_type'=> array('Email Address','all','Specify User')  ,'email' =>array('test@test.com','','1') );
@@ -55,7 +55,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $aorScheduledReports = new AOR_Scheduled_Reports();
+        $aorScheduledReports = BeanFactory::newBean('AOR_Scheduled_Reports');
         $this->assertInstanceOf('AOR_Scheduled_Reports', $aorScheduledReports);
         $this->assertInstanceOf('Basic', $aorScheduledReports);
         $this->assertInstanceOf('SugarBean', $aorScheduledReports);
@@ -70,7 +70,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
 
     public function testbean_implements()
     {
-        $aorScheduledReports = new AOR_Scheduled_Reports();
+        $aorScheduledReports = BeanFactory::newBean('AOR_Scheduled_Reports');
         $this->assertEquals(false, $aorScheduledReports->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aorScheduledReports->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $aorScheduledReports->bean_implements('ACL')); //test with valid value
@@ -78,7 +78,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
 
     public function testshouldRun()
     {
-        $aorScheduledReports = new AOR_Scheduled_Reports();
+        $aorScheduledReports = BeanFactory::newBean('AOR_Scheduled_Reports');
         $aorScheduledReports->schedule = " 8 * * * *";
 
         //test without a last_run date
