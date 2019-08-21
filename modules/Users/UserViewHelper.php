@@ -712,7 +712,7 @@ class UserViewHelper
         $currencySymbolJSON = json_encode($currencyList);
         $this->ss->assign('currencySymbolJSON', $currencySymbolJSON);
 
-        $currencyDisplay = new Currency();
+        $currencyDisplay = BeanFactory::newBean('Currencies');
         if (isset($cur_id)) {
             $currencyDisplay->retrieve($cur_id);
             $this->ss->assign('CURRENCY_DISPLAY', $currencyDisplay->iso4217 . ' ' . $currencyDisplay->symbol);
