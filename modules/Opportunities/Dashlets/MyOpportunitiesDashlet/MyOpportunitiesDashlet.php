@@ -64,7 +64,7 @@ class MyOpportunitiesDashlet extends DashletGeneric
         $this->searchFields = $dashletData['MyOpportunitiesDashlet']['searchFields'];
         $this->columns = $dashletData['MyOpportunitiesDashlet']['columns'];
 
-        $this->seedBean = new Opportunity();
+        $this->seedBean = BeanFactory::newBean('Opportunities');
     }
 
     /**
