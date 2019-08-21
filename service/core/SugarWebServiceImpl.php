@@ -545,13 +545,13 @@ class SugarWebServiceImpl
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->login');
         global $sugar_config, $system_config;
         $error = new SoapError();
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $success = false;
         if (!empty($user_auth['encryption']) && $user_auth['encryption'] === 'PLAIN') {
             $user_auth['password'] = md5($user_auth['password']);
         }
         //rrs
-        $system_config = new Administration();
+        $system_config = BeanFactory::newBean('Administration');
         $system_config->retrieveSettings('system');
         $authController = new AuthenticationController();
         //rrs
@@ -610,7 +610,7 @@ class SugarWebServiceImpl
         $nameValueArray['user_language'] = self::$helperObject->get_name_value('user_language', $current_language);
         $cur_id = $current_user->getPreference('currency');
         $nameValueArray['user_currency_id'] = self::$helperObject->get_name_value('user_currency_id', $cur_id);
-        $currencyObject = new Currency();
+        $currencyObject = BeanFactory::newBean('Currencies');
         $currencyObject->retrieve($cur_id);
         $nameValueArray['user_currency_name'] = self::$helperObject->get_name_value('user_currency_name', $currencyObject->name);
         $_SESSION['user_language'] = $current_language;
@@ -663,7 +663,7 @@ class SugarWebServiceImpl
         require_once('sugar_version.php');
         require_once('modules/Administration/Administration.php');
 
-        $admin  = new Administration();
+        $admin  = BeanFactory::newBean('Administration');
         $admin->retrieveSettings('info');
         $sugar_version = '';
         if (isset($admin->settings['info_sugar_version'])) {
@@ -805,7 +805,7 @@ class SugarWebServiceImpl
             return;
         } // if
         require_once('modules/Notes/Note.php');
-        $note = new Note();
+        $note = BeanFactory::newBean('Notes');
 
         $note->retrieve($id);
         if (!self::$helperObject->checkACLAccess($note, 'DetailView', $error, 'no_access')) {
@@ -879,7 +879,7 @@ class SugarWebServiceImpl
         } // if
 
         require_once('modules/DocumentRevisions/DocumentRevision.php');
-        $dr = new DocumentRevision();
+        $dr = BeanFactory::newBean('DocumentRevisions');
         $dr->retrieve($id);
         if (!empty($dr->filename)) {
             $filename = "upload://{$dr->id}";
