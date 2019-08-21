@@ -114,7 +114,7 @@ class ViewConvertLead extends SugarView
         $qsd = QuickSearchDefaults::getQuickSearchDefaults();
         $qsd->setFormName("ConvertLead");
 
-        $this->contact = new Contact();
+        $this->contact = BeanFactory::newBean('Contacts');
         
         /*
          * Setup filter for Account/Contact popup picker
@@ -260,7 +260,7 @@ class ViewConvertLead extends SugarView
 
     protected function getRecord()
     {
-        $this->focus = new Lead();
+        $this->focus = BeanFactory::newBean('Leads');
         if (isset($_REQUEST['record'])) {
             $this->focus->retrieve($_REQUEST['record']);
         }
@@ -362,7 +362,7 @@ class ViewConvertLead extends SugarView
         require_once("include/formbase.php");
         $lead = false;
         if (!empty($_REQUEST['record'])) {
-            $lead = new Lead();
+            $lead = BeanFactory::newBean('Leads');
             $lead->retrieve($_REQUEST['record']);
         }
 
@@ -373,7 +373,7 @@ class ViewConvertLead extends SugarView
         $selects = array();
         
         // Make sure the contact object is availible for relationships.
-        $beans['Contacts'] = new Contact();
+        $beans['Contacts'] = BeanFactory::newBean('Contacts');
         
         // Contacts
         if (!empty($_REQUEST['selectedContact'])) {
@@ -678,7 +678,7 @@ class ViewConvertLead extends SugarView
 
         $lead = null;
         if (!empty($_REQUEST['record'])) {
-            $lead = new Lead();
+            $lead = BeanFactory::newBean('Leads');
             $lead->retrieve($_REQUEST['record']);
         }
 
@@ -995,7 +995,7 @@ class ViewConvertLead extends SugarView
             $q = "SELECT id, first_name, last_name FROM contacts WHERE first_name LIKE '{$lead->first_name}' AND last_name LIKE '{$lead->last_name}' AND deleted = 0";
             $result = $lead->db->query($q);
             while ($row = $lead->db->fetchByAssoc($result)) {
-                $contact = new Contact();
+                $contact = BeanFactory::newBean('Contacts');
                 $contact->retrieve($row['id']);
                 $dupes[$row['id']] = $contact->name;
             }
