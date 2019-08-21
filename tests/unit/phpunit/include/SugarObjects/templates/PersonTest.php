@@ -55,7 +55,7 @@ class PersonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('sugarfeed');
 
 
-        $person = new Contact();
+        $person = BeanFactory::newBean('Contacts');
         $person->last_name = 'Smith';
 
         // Test when  basis is not a string
