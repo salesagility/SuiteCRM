@@ -54,7 +54,7 @@ class AOS_PDF_TemplatesDashlet extends DashletGeneric
         $this->searchFields = $dashletData['AOS_PDF_TemplatesDashlet']['searchFields'];
         $this->columns = $dashletData['AOS_PDF_TemplatesDashlet']['columns'];
 
-        $this->seedBean = new AOS_PDF_Templates();
+        $this->seedBean = BeanFactory::newBean('AOS_PDF_Templates');
     }
 
     /**
