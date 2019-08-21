@@ -99,7 +99,7 @@ class AOD_Index extends AOD_Index_sugar
         if (!empty($index) && !empty($index->id)) {
             return $index;
         } else {
-            $index = new AOD_Index();
+            $index = BeanFactory::newBean('AOD_Index');
             $index->id = 1;
             $index->new_with_id = true;
             $index->name = "Index";
