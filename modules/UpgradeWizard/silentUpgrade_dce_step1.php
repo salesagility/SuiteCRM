@@ -500,7 +500,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
     require_once("{$argv[4]}/modules/Administration/UpgradeHistory.php");
     // We need to run the silent upgrade as the admin user,
     global $current_user;
-    $current_user = new User();
+    $current_user = BeanFactory::newBean('Users');
     $current_user->retrieve('1');
 
     //This is DCE instance
