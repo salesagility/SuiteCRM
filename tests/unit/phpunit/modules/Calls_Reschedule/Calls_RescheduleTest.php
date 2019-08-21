@@ -8,14 +8,14 @@ class Calls_RescheduleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testCalls_Reschedule()
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $callsReschedule = new Calls_Reschedule();
+        $callsReschedule = BeanFactory::newBean('Calls_Reschedule');
         $this->assertInstanceOf('Calls_Reschedule', $callsReschedule);
         $this->assertInstanceOf('Basic', $callsReschedule);
         $this->assertInstanceOf('SugarBean', $callsReschedule);
