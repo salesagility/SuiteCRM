@@ -8,7 +8,7 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testpreDisplay()
@@ -66,7 +66,7 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $view = new ViewQuickcreate();
 
         $_REQUEST['module'] = 'Accounts';
-        $view->bean = new Account();
+        $view->bean = BeanFactory::newBean('Accounts');
 
         ob_start();
 
