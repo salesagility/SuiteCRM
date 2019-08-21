@@ -91,7 +91,7 @@ class ElasticSearchInstallTest extends SearchTestAbstract
     {
 //        self::markTestIncomplete('environment dependency');
 //
-//        $scheduler = new Scheduler();
+//        $scheduler = BeanFactory::newBean('Schedulers');
 //
 //        $jobs = $scheduler->getJobsList();
 //
