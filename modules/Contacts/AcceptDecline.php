@@ -47,7 +47,7 @@ global $sugar_config, $dbconfig, $beanList, $beanFiles, $app_strings, $app_list_
 global $currentModule, $focus;
 
 if (!empty($_REQUEST['user_id'])) {
-    $current_user = new User();
+    $current_user = BeanFactory::newBean('Users');
     $result = $current_user->retrieve($_REQUEST['user_id']);
     if ($result == null) {
         session_destroy();
@@ -56,7 +56,7 @@ if (!empty($_REQUEST['user_id'])) {
     }
     $current_entity = $current_user;
 } elseif (! empty($_REQUEST['contact_id'])) {
-    $current_entity = new Contact();
+    $current_entity = BeanFactory::newBean('Contacts');
     $current_entity->disable_row_level_security = true;
     $result = $current_entity->retrieve($_REQUEST['contact_id']);
     if ($result == null) {
@@ -65,7 +65,7 @@ if (!empty($_REQUEST['user_id'])) {
         die("The contact id doesn't exist");
     }
 } elseif (! empty($_REQUEST['lead_id'])) {
-    $current_entity = new Lead();
+    $current_entity = BeanFactory::newBean('Leads');
     $current_entity->disable_row_level_security = true;
     $result = $current_entity->retrieve($_REQUEST['lead_id']);
     if ($result == null) {
