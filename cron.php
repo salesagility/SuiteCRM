@@ -83,7 +83,7 @@ $app_list_strings = return_app_list_strings_language($current_language);
 $app_strings = return_application_language($current_language);
 
 global $current_user;
-$current_user = new User();
+$current_user = BeanFactory::newBean('Users');
 $current_user->getSystemUser();
 
 $GLOBALS['log']->debug('--------------------------------------------> at cron.php <--------------------------------------------');
