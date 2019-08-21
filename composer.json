@@ -68,8 +68,7 @@
     "jeroendesloovere/vcard": "v1.5",
     "leafo/scssphp": "^0.7.7",
     "mikey179/vfsstream": "1.6.*",
-    "mockery/mockery": "^1.1.0",
-    "roave/security-advisories": "dev-master"
+    "mockery/mockery": "^1.1.0"
   },
   "scripts": {
     "post-install-cmd": [
@@ -100,18 +99,18 @@
     ]
   },
   "extra": {
-      "merge-plugin": {
-          "include": [
-              "composer.ext.json",
-              "custom/Extension/application/Ext/Composer/*/*.json"
-          ],
-          "recurse": true,
-          "replace": false,
-          "ignore-duplicates": false,
-          "merge-dev": true,
-          "merge-extra": false,
-          "merge-extra-deep": false,
-          "merge-scripts": false
-      }
+    "merge-plugin": {
+      "include": [
+        "composer.ext.json",
+        "custom/Extension/application/Ext/Composer/*/*.json"
+      ],
+      "recurse": true,
+      "replace": false,
+      "ignore-duplicates": false,
+      "merge-dev": true,
+      "merge-extra": false,
+      "merge-extra-deep": false,
+      "merge-scripts": false
+    }
   }
 }
