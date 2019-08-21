@@ -249,7 +249,7 @@ class PackageManager
 
     public function setCredentials($username, $password, $systemname)
     {
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
         $admin->saveSetting(CREDENTIAL_CATEGORY, CREDENTIAL_USERNAME, $username);
         $admin->saveSetting(CREDENTIAL_CATEGORY, CREDENTIAL_PASSWORD, $password);
@@ -260,7 +260,7 @@ class PackageManager
 
     public static function getCredentials()
     {
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings(CREDENTIAL_CATEGORY, true);
         $credentials = array();
         $credentials['username'] = '';
