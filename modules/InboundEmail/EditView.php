@@ -57,10 +57,10 @@ global $app_strings;
 global $app_list_strings;
 global $current_user;
 
-$focus = new InboundEmail();
+$focus = BeanFactory::newBean('InboundEmail');
 $focus->checkImap();
 $javascript = new Javascript();
-$email = new Email();
+$email = BeanFactory::newBean('Emails');
 /* Start standard EditView setup logic */
 
 $domMailBoxType = $app_list_strings['dom_mailbox_type'];
