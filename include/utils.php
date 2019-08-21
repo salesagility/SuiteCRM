@@ -4475,7 +4475,7 @@ function array_depth($array, $depth_count = -1, $depth_array = array())
  */
 function createGroupUser($name)
 {
-    $group = new User();
+    $group = BeanFactory::newBean('Users');
     $group->user_name = $name;
     $group->last_name = $name;
     $group->is_group = 1;
