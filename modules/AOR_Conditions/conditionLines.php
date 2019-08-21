@@ -54,7 +54,7 @@ function display_condition_lines($focus, $field, $value, $view)
                 $result = $focus->db->query($sql);
 
                 while ($row = $focus->db->fetchByAssoc($result)) {
-                    $condition_name = new AOR_Condition();
+                    $condition_name = BeanFactory::newBean('AOR_Conditions');
                     $condition_name->retrieve($row['id']);
                     $condition_name->module_path = unserialize(base64_decode($condition_name->module_path));
                     $html .= "report_fields = \"".trim(preg_replace('/\s+/', ' ', getModuleFields(getRelatedModule($focus->report_module, $condition_name->module_path[0]))))."\";";
@@ -82,7 +82,7 @@ function display_condition_lines($focus, $field, $value, $view)
             $result = $focus->db->query($sql);
 
             while ($row = $focus->db->fetchByAssoc($result)) {
-                $condition_name = new AOR_Condition();
+                $condition_name = BeanFactory::newBean('AOR_Conditions');
                 $condition_name->retrieve($row['id']);
                 $condition_name->module_path = unserialize(base64_decode($condition_name->module_path));
                 if ($condition_name->value_type == 'Date') {
