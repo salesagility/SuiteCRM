@@ -89,7 +89,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
             return null;
         }
 
-        $this->assigned_user = new User();
+        $this->assigned_user = BeanFactory::newBean('Users');
         $this->assigned_user->retrieve($report_def_str['assigned_user_id']);
         return $this->assigned_user;
     }
