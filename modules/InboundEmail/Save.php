@@ -45,7 +45,7 @@ require_once('include/SugarFolders/SugarFolders.php');
 
 global $current_user, $mod_strings;
 
-$focus = new InboundEmail();
+$focus = BeanFactory::newBean('InboundEmail');
 if (!empty($_REQUEST['record'])) {
     $focus->retrieve($_REQUEST['record']);
 } elseif (!empty($_REQUEST['origin_id'])) {
