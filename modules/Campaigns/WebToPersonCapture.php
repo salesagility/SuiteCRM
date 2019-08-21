@@ -61,7 +61,7 @@ $mod_strings = return_module_language($sugar_config['default_language'], $module
 if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     //adding the client ip address
     $_POST['client_id_address'] = query_client_ip();
-    $campaign = new Campaign();
+    $campaign = BeanFactory::newBean('Campaigns');
     $campaign_id = $campaign->db->quote($_POST['campaign_id']);
     $isValidator = new SuiteValidator();
     if (!$isValidator->isValidId($campaign_id)) {
@@ -73,7 +73,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     $camp_data = $campaign->db->fetchByAssoc($camp_result);
     // Bug 41292 - have to select marketing_id for new lead
     $db = DBManagerFactory::getInstance();
-    $marketing = new EmailMarketing();
+    $marketing = BeanFactory::newBean('EmailMarketing');
     $marketing_query = $marketing->create_new_list_query(
         'date_start desc, date_modified desc',
         "campaign_id = '{$campaign_id}' and status = 'active' and date_start < ".$db->convert('', 'today'),
@@ -83,7 +83,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     $marketing_data = $db->fetchByAssoc($marketing_result);
     // .Bug 41292
     if (isset($_REQUEST['assigned_user_id']) && !empty($_REQUEST['assigned_user_id'])) {
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
         $current_user->retrieve($_REQUEST['assigned_user_id']);
     }
 
@@ -155,7 +155,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         if (!empty($person)) {
 
             //create campaign log
-            $camplog = new CampaignLog();
+            $camplog = BeanFactory::newBean('CampaignLog');
             $camplog->campaign_id = $campaign_id;
             $camplog->related_id = $person->id;
             $camplog->related_type = $person->module_dir;
@@ -230,7 +230,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
             foreach ($optInEmailFields as $optInEmailField) {
                 if (isset($person->$optInEmailField) && !empty($person->$optInEmailField)) {
-                    $sea = new EmailAddress();
+                    $sea = BeanFactory::newBean('EmailAddresses');
                     $emailId = $sea->AddUpdateEmailAddress($person->$optInEmailField);
                     if ($sea->retrieve($emailId)) {
                         if (in_array($optInEmailField, $optedOut)) {
@@ -242,7 +242,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
                         $configurator = new Configurator();
                         if ($configurator->isConfirmOptInEnabled()) {
-                            $emailman = new EmailMan();
+                            $emailman = BeanFactory::newBean('EmailMan');
 
                             if (!$emailman->sendOptInEmail($sea, $person->module_name, $person->id)) {
                                 $errors[] = 'Confirm Opt In email sending failed, please check email address is correct: ' . $sea->email_address;
