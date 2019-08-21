@@ -55,7 +55,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $mod_strings;
 
 
-$focus = new ProspectList();
+$focus = BeanFactory::newBean('ProspectLists');
 
 $focus->retrieve($_POST['record']);
 if (isset($_POST['isDuplicate']) && $_POST['isDuplicate'] == true) {
