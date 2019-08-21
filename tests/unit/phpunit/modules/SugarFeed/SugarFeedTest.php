@@ -8,7 +8,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testSugarFeed()
@@ -19,7 +19,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
 
         //execute the contructor and check for the Object type and  attributes
-        $sugarFeed = new SugarFeed();
+        $sugarFeed = BeanFactory::newBean('SugarFeed');
 
         $this->assertInstanceOf('SugarFeed', $sugarFeed);
         $this->assertInstanceOf('Basic', $sugarFeed);
@@ -46,7 +46,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
 
         //test activateModuleFeed method
         SugarFeed::activateModuleFeed('Accounts');
@@ -136,14 +136,14 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $lead = new Lead();
+        $lead = BeanFactory::newBean('Leads');
         $lead->id = 1;
         $lead->assigned_user_id = 1;
 
         SugarFeed::pushFeed2('some text 2', $lead, 'Link', 'some url');
 
         //retrieve newly created bean
-        $sugarFeed = new SugarFeed();
+        $sugarFeed = BeanFactory::newBean('SugarFeed');
         $result = $sugarFeed->retrieve_by_string_fields(array('related_id' => '1', 'related_module' => 'Leads'));
 
         //test for record ID to verify that record is saved
@@ -171,7 +171,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         SugarFeed::pushFeed('some text', 'SugarFeed', 1, 1, 'Link', 'some url');
 
         //retrieve newly created bean
-        $sugarFeed = new SugarFeed();
+        $sugarFeed = BeanFactory::newBean('SugarFeed');
         $result = $sugarFeed->retrieve_by_string_fields(array('related_id' => '1', 'related_module' => 'SugarFeed'));
 
         //test for record ID to verify that record is saved
@@ -191,7 +191,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function fetchReplies()
     {
-        $sugarFeed = new SugarFeed();
+        $sugarFeed = BeanFactory::newBean('SugarFeed');
 
         $actual = $sugarFeed->fetchReplies(array('ID' => '1'));
         $this->assertGreaterThan(0, strlen($actual));
@@ -231,7 +231,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_list_view_data()
     {
-        $sugarFeed = new SugarFeed();
+        $sugarFeed = BeanFactory::newBean('SugarFeed');
 
         $result = $sugarFeed->get_list_view_data();
         $this->assertTrue(is_array($result));
