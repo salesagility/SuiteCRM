@@ -103,7 +103,7 @@ class jjwg_MapsController extends SugarController
      */
     public function configuration()
     {
-        $this->bean = new jjwg_Maps();
+        $this->bean = BeanFactory::newBean('jjwg_Maps');
         $this->jjwg_Maps = &$this->bean; // Set deprecated reference
         $this->settings = $GLOBALS['jjwg_config'];
     }
