@@ -95,7 +95,7 @@ class ViewConfig extends SugarView
         echo $this->getModuleTitle(false);
         global $currentModule;
 
-        $focus = new Administration();
+        $focus = BeanFactory::newBean('Administration');
         $focus->retrieveSettings(); //retrieve all admin settings.
         $GLOBALS['log']->info("Mass Emailer(EmailMan) ConfigureSettings view");
 
@@ -274,7 +274,7 @@ class ViewConfig extends SugarView
         ///////////////////////////////////////////////////////////////////////////////
 
         require_once('modules/Emails/Email.php');
-        $email = new Email();
+        $email = BeanFactory::newBean('Emails');
         $this->ss->assign('ROLLOVER', $email->rolloverStyle);
         $this->ss->assign('THEME', $GLOBALS['theme']);
 
