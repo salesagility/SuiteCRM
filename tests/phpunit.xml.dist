@@ -8,8 +8,8 @@
     convertWarningsToExceptions     = "true"
     convertErrorsToExceptions       = "true"
     processIsolation                = "false"
-    stopOnFailure                   = "true"
-    stopOnError                     = "true"
+    stopOnFailure                   = "false"
+    stopOnError                     = "false"
     syntaxCheck                     = "true"
     bootstrap                       = "bootstrap.php">
 
@@ -26,7 +26,6 @@
                 <directory>../.git</directory>
                 <directory>../.github</directory>
                 <directory>../XTemplate</directory>
-                <directory>../Zend</directory>
                 <directory>../cache</directory>
                 <directory>../vendor</directory>
                 <directory>../tests</directory>

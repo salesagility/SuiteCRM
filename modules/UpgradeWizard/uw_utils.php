@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once __DIR__ . '/../../include/Imap/ImapHandlerFactory.php';
+
 /**
  * Implodes some parts of version with specified delimiter, beta & rc parts are removed all time
  *
@@ -2445,7 +2447,7 @@ function executeConvertTablesSql($tables)
         $query = "ALTER TABLE " . $table . " CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci";
         if (!empty($table)) {
             logThis("Sending query: ".$query);
-            $db->query($query);//, true, "An error has occured while performing db query.  See log file for details.<br>");
+            $db->query($query);//, true, "An error has occurred while performing db query.  See log file for details.<br>");
         }
     }
     return true;
@@ -2651,8 +2653,8 @@ function checkFiles($files, $echo=false)
                 // don't warn yet - we're going to use this to check against replacement files
                 $filesNotWritable[$i] = $file;
                 $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
-                $owner = posix_getpwuid(fileowner($file));
-                $group = posix_getgrgid(filegroup($file));
+                $owner = function_exists('posix_getpwuid') ? posix_getpwuid(fileowner($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_USER'];
+                $group = function_exists('posix_getgrgid') ? posix_getgrgid(filegroup($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP'];
                 $filesOut .= "<tr>".
                     "<td><span class='error'>{$file}</span></td>".
                     "<td>{$filesNWPerms[$i]}</td>".
@@ -2868,7 +2870,7 @@ function set_upgrade_vars()
         if (is_writable($upgrade_progress_file) && write_array_to_file(
             "upgrade_config",
             $upgrade_config,
-                $upgrade_progress_file
+            $upgrade_progress_file
         )) {
             //writing to the file
         }
@@ -2963,7 +2965,7 @@ function set_upgrade_progress($currStep, $currState, $currStepSub='', $currStepS
         if (is_writable($upgrade_progress_file) && write_array_to_file(
             "upgrade_config",
             $upgrade_config,
-                $upgrade_progress_file
+            $upgrade_progress_file
         )) {
             //writing to the file
         }
@@ -3113,7 +3115,7 @@ function post_install_progress($progArray='', $action='')
         if (is_writable($upgrade_progress_file) && write_array_to_file(
             "upgrade_config",
             $upgrade_config,
-                $upgrade_progress_file
+            $upgrade_progress_file
         )) {
             //writing to the file
         }
@@ -3207,7 +3209,7 @@ function upgradeUserPreferences()
         $localization->createInvalidLocaleNameFormatUpgradeNotice();
     }
 
-    $db = &DBManagerFactory::getInstance();
+    $db = DBManagerFactory::getInstance();
     $result = $db->query("SELECT id FROM users where deleted = '0'");
     while ($row = $db->fetchByAssoc($result)) {
         $current_user = new User();

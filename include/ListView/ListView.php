@@ -869,20 +869,21 @@ class ListView
         $this->xTemplate->assign($name, $value);
     }
 
-    /**INTERNAL FUNCTION returns the offset first checking the query then checking the session if the where clause has changed from the last time it returns 0
-     * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
-     * All Rights Reserved.
-     * Contributor(s): ______________________________________.
-    */
+    /**
+     * INTERNAL FUNCTION returns the offset first checking the query then checking the session if the where clause has changed from the last time it returns 0
+     * @param $localVarName
+     * @return int
+     */
     public function getOffset($localVarName)
     {
         if ($this->query_where_has_changed || isset($GLOBALS['record_has_changed'])) {
-            $this->setSessionVariable($localVarName, "offset", 0);
+            $this->setSessionVariable($localVarName, 'offset', 0);
         }
-        $offset = $this->getSessionVariable($localVarName, "offset");
+        $offset = $this->getSessionVariable($localVarName, 'offset');
         if (isset($offset)) {
-            return $offset;
+            return (int)$offset;
         }
+
         return 0;
     }
 
@@ -1045,7 +1046,7 @@ class ListView
                 $this->child_focus,
                 $related_field_name,
                 $this->query_orderby,
-            $this->query_where,
+                $this->query_where,
                 $current_offset,
                 $this->query_limit
             );
@@ -1130,14 +1131,14 @@ class ListView
             echo 'cached';
         } else {
             $response = SugarBean::get_union_related_list(
-                $sugarbean, 
-                $this->sortby, 
-                $this->sort_order, 
-                $this->query_where, 
-                $current_offset, 
-                -1, 
-                $this->records_per_page, 
-                $this->query_limit, 
+                $sugarbean,
+                $this->sortby,
+                $this->sort_order,
+                $this->query_where,
+                $current_offset,
+                -1,
+                $this->records_per_page,
+                $this->query_limit,
                 $subpanel_def
             );
             $this->response =& $response;
@@ -1470,7 +1471,7 @@ class ListView
                 || (!empty($sugar_config['disable_export']))
                 || (!empty($sugar_config['admin_export_only'])
                 && !(
-                        is_admin($current_user)
+                    is_admin($current_user)
                         || (ACLController::moduleSupportsACL($_REQUEST['module'])
                             && ACLAction::getUserAccessLevel($current_user->id, $_REQUEST['module'], 'access') == ACL_ALLOW_ENABLED
                             && (ACLAction::getUserAccessLevel($current_user->id, $_REQUEST['module'], 'admin') == ACL_ALLOW_ADMIN ||

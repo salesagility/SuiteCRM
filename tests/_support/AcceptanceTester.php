@@ -39,16 +39,13 @@ class AcceptanceTester extends \Codeception\Actor
     public function login($username, $password)
     {
         $I = $this;
-        if ($I->loadSessionSnapshot('login')) {
-            return;
-        }
-        // Log In
-        $I->seeElement('#loginform');
+
+        $I->amOnUrl($I->getInstanceURL());
+        $I->waitForElementVisible('#loginform');
         $I->fillField('#user_name', $username);
         $I->fillField('#username_password', $password);
         $I->click('Log In');
-        $I->waitForElementNotVisible('#loginform', 120);
-        $I->saveSessionSnapshot('login');
+        $I->waitForElementNotVisible('#loginform');
     }
 
     public function loginAsAdmin()
@@ -84,5 +81,24 @@ class AcceptanceTester extends \Codeception\Actor
         $I->dontSee('Error');
         $I->dontSee('error');
         $I->dontSee('PHP');
+    }
+
+    /**
+     * Helper for navigating to a page.
+     *
+     * @param string $module SuiteCRM module name
+     * @param string $action View action name, e.g. index, EditView, DetailView.
+     * @param string|null $record The id of a record, used for EditView and DetailView routes.
+     */
+    public function visitPage($module, $action, $record = null)
+    {
+        $I = $this;
+        $url = $I->getInstanceURL();
+        if ($record !== null) {
+            $url .= "/index.php?module={$module}&action={$action}&record={$record}";
+        } else {
+            $url .= "/index.php?module={$module}&action={$action}";
+        }
+        $I->amOnUrl($url);
     }
 }

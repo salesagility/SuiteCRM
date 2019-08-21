@@ -160,7 +160,7 @@ class UpgradeMetaHelper
         if (is_writable($file_queries_file) && write_array_to_file(
             "file_queries",
             $file_queries,
-        $file_queries_file
+            $file_queries_file
         )) {
             //writing to the file
         }
@@ -344,10 +344,10 @@ class UpgradeMetaHelper
                 $bean_name = $bean_name == 'aCase' ? 'Case' : $bean_name;
                 fwrite($evfp, $parser->parse(
                     $file,
-                                            $dictionary[$bean_name]['fields'],
-                                            $module_name,
-                                            true,
-                                            $this->path_to_master_copy.'/modules/'.$module_name.'/metadata/'.$lowerCaseView.'defs.php'
+                    $dictionary[$bean_name]['fields'],
+                    $module_name,
+                    true,
+                    $this->path_to_master_copy.'/modules/'.$module_name.'/metadata/'.$lowerCaseView.'defs.php'
                 ));
                 fclose($evfp);
             } //if

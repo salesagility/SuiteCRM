@@ -24,7 +24,7 @@ class EmailManTester extends \AcceptanceTester
      */
     public function createEmailSettings()
     {
-//        
+//
 //        $I = new AcceptanceTester($scenario);
 //        $I->amOnPage('/SuiteCRM/index.php');
 //        $I->click('Gmail');

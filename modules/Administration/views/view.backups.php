@@ -146,7 +146,7 @@ class ViewBackups extends SugarView
         } else {
             ?>
         
-            <?php 
+            <?php
             echo getClassicModuleTitle(
                 "Administration",
                 array(

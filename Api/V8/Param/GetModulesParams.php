@@ -49,6 +49,14 @@ class GetModulesParams extends BaseParam
     }
 
     /**
+     * @return bool
+     */
+    public function getDeleted()
+    {
+        return strpos($this->getFilter(), ".deleted = '1'") !== false;
+    }
+
+    /**
      * @inheritdoc
      */
     protected function configureParameters(OptionsResolver $resolver)

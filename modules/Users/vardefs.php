@@ -141,14 +141,14 @@ $dictionary['User'] = array(
             'vname' => 'LBL_FIRST_NAME',
             'dbType' => 'varchar',
             'type' => 'name',
-            'len' => '30',
+            'len' => '255',
         ),
         'last_name' => array(
             'name' => 'last_name',
             'vname' => 'LBL_LAST_NAME',
             'dbType' => 'varchar',
             'type' => 'name',
-            'len' => '30',
+            'len' => '255',
             'importable' => 'required',
             'required' => true,
         ),
@@ -762,8 +762,8 @@ $dictionary['User'] = array(
                 'user_name',
                 'is_group',
                 'status',
-                'last_name',
-                'first_name',
+                'last_name (30)',
+                'first_name (30)',
                 'id'
             )
         ),

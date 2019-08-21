@@ -155,12 +155,12 @@ function xhprof_render_link(
     $class='',
     $id='',
     $title='',
-                            $target='',
-                            $onclick='',
+    $target='',
+    $onclick='',
     $style='',
     $access='',
     $onmouseover='',
-                            $onmouseout='',
+    $onmouseout='',
     $onmousedown=''
 ) {
     if (!$content) {
@@ -455,14 +455,14 @@ function stat_description($stat)
  */
 function profiler_report(
     $url_params,
-                          $rep_symbol,
-                          $sort,
-                          $run1,
-                          $run1_desc,
-                          $run1_data,
-                          $run2 = 0,
-                          $run2_desc = "",
-                          $run2_data = array()
+    $rep_symbol,
+    $sort,
+    $run1,
+    $run1_desc,
+    $run1_data,
+    $run2 = 0,
+    $run2_desc = "",
+    $run2_data = array()
 ) {
     global $totals;
     global $totals_1;
@@ -494,16 +494,16 @@ function profiler_report(
 
     $run1_txt = sprintf(
         "<b>Run #%s:</b> %s",
-                      $run1,
+        $run1,
         $run1_desc
     );
 
     $base_url_params = xhprof_array_unset(
         xhprof_array_unset(
-        $url_params,
-                                                           'symbol'
+            $url_params,
+            'symbol'
     ),
-                                        'all'
+        'all'
     );
 
     $top_link_query_string = "$base_path/?" . http_build_query($base_url_params);
@@ -514,26 +514,26 @@ function profiler_report(
         $base_url_params = xhprof_array_unset($base_url_params, 'run2');
         $run1_link = xhprof_render_link(
             'View Run #' . $run1,
-                           "$base_path/?" .
+            "$base_path/?" .
                            http_build_query(xhprof_array_set(
                                $base_url_params,
-                                                      'run',
-                                                      $run1
+                               'run',
+                               $run1
                            ))
         );
         $run2_txt = sprintf(
             "<b>Run #%s:</b> %s",
-                        $run2,
+            $run2,
             $run2_desc
         );
 
         $run2_link = xhprof_render_link(
             'View Run #' . $run2,
-                                    "$base_path/?" .
+            "$base_path/?" .
                         http_build_query(xhprof_array_set(
                             $base_url_params,
-                                                          'run',
-                                                          $run2
+                            'run',
+                            $run2
                         ))
         );
     } else {
@@ -544,7 +544,7 @@ function profiler_report(
     $links = array();
     $links [] =  xhprof_render_link(
         "View Top Level $diff_text Report",
-                                 $top_link_query_string
+        $top_link_query_string
     );
 
     if ($diff_mode) {
@@ -557,7 +557,7 @@ function profiler_report(
         $links [] = $run2_link;
         $links [] = xhprof_render_link(
             'Invert ' . $diff_text . ' Report',
-                           "$base_path/?".
+            "$base_path/?".
                            http_build_query($inverted_params)
         );
     }
@@ -598,11 +598,11 @@ function profiler_report(
                 $url_params,
                 $run_delta,
                 $symbol_tab[$rep_symbol],
-                    $sort,
+                $sort,
                 $rep_symbol,
-                    $run1,
+                $run1,
                 $info1,
-                    $run2,
+                $run2,
                 $info2
             );
         } else {
@@ -610,7 +610,7 @@ function profiler_report(
                 $url_params,
                 $run1_data,
                 $symbol_tab[$rep_symbol],
-                    $sort,
+                $sort,
                 $rep_symbol,
                 $run1
             );
@@ -728,7 +728,7 @@ function print_function_info($url_params, $info, $sort, $run1, $run2)
     $href = "$base_path/?" .
            http_build_query(xhprof_array_set(
                $url_params,
-                                             'symbol',
+               'symbol',
                $info["fn"]
            ));
 
@@ -749,24 +749,24 @@ function print_function_info($url_params, $info, $sort, $run1, $run2)
         print_td_num(
             $info[$metric],
             $format_cbk[$metric],
-                 ($sort_col == $metric)
+            ($sort_col == $metric)
         );
         print_td_pct(
             $info[$metric],
             $totals[$metric],
-                 ($sort_col == $metric)
+            ($sort_col == $metric)
         );
 
         // Exclusive Metric
         print_td_num(
             $info["excl_" . $metric],
-                 $format_cbk["excl_" . $metric],
-                 ($sort_col == "excl_" . $metric)
+            $format_cbk["excl_" . $metric],
+            ($sort_col == "excl_" . $metric)
         );
         print_td_pct(
             $info["excl_" . $metric],
-                 $totals[$metric],
-                 ($sort_col == "excl_" . $metric)
+            $totals[$metric],
+            ($sort_col == "excl_" . $metric)
         );
     }
 
@@ -792,10 +792,10 @@ function print_flat_data($url_params, $title, $flat_data, $sort, $run1, $run2, $
     } else {
         $display_link = xhprof_render_link(
             " [ <b class=bubble>display all </b>]",
-                                       "$base_path/?" .
+            "$base_path/?" .
                                        http_build_query(xhprof_array_set(
                                            $url_params,
-                                                                         'all',
+                                           'all',
                                            1
                                        ))
         );
@@ -870,21 +870,21 @@ function full_report($url_params, $symbol_tab, $sort, $run1, $run2)
     if ($diff_mode) {
         $base_url_params = xhprof_array_unset(
             xhprof_array_unset(
-            $url_params,
-                                                             'run1'
+                $url_params,
+                'run1'
         ),
-                                          'run2'
+            'run2'
         );
         $href1 = "$base_path/?" .
       http_build_query(xhprof_array_set(
           $base_url_params,
-                                        'run',
+          'run',
           $run1
       ));
         $href2 = "$base_path/?" .
       http_build_query(xhprof_array_set(
           $base_url_params,
-                                        'run',
+          'run',
           $run2
       ));
 
@@ -957,7 +957,7 @@ function full_report($url_params, $symbol_tab, $sort, $run1, $run2)
     print("<center><br><h3>" .
         xhprof_render_link(
             $callgraph_report_title,
-                    "$base_path/callgraph.php" . "?" . http_build_query($url_params)
+            "$base_path/callgraph.php" . "?" . http_build_query($url_params)
         )
         . "</h3></center>");
 
@@ -1041,14 +1041,14 @@ function pc_info($info, $base_ct, $base_info, $parent)
         print_td_num(
             $info[$metric],
             $format_cbk[$metric],
-                 ($sort_col == $metric),
-                 get_tooltip_attributes($type, $metric)
+            ($sort_col == $metric),
+            get_tooltip_attributes($type, $metric)
         );
         print_td_pct(
             $info[$metric],
             $base_info[$metric],
             ($sort_col == $metric),
-                 get_tooltip_attributes($type, $metric)
+            get_tooltip_attributes($type, $metric)
         );
     }
 }
@@ -1059,7 +1059,7 @@ function print_pc_array(
     $base_ct,
     $base_info,
     $parent,
-                        $run1,
+    $run1,
     $run2
 ) {
     global $base_path;
@@ -1083,7 +1083,7 @@ function print_pc_array(
         $href = "$base_path/?" .
       http_build_query(xhprof_array_set(
           $url_params,
-                                        'symbol',
+          'symbol',
           $info["fn"]
       ));
 
@@ -1108,8 +1108,8 @@ function print_source_link($info)
     if (strncmp($info['fn'], 'run_init', 8) && $info['fn'] !== 'main()') {
         if (defined('XHPROF_SYMBOL_LOOKUP_URL')) {
             $link = xhprof_render_link(
-        'source',
-        XHPROF_SYMBOL_LOOKUP_URL . '?symbol='.rawurlencode($info["fn"])
+                'source',
+                XHPROF_SYMBOL_LOOKUP_URL . '?symbol='.rawurlencode($info["fn"])
             );
             print(' ('.$link.')');
         }
@@ -1139,14 +1139,14 @@ function print_symbol_summary($symbol_info, $stat, $base)
  */
 function symbol_report(
     $url_params,
-                       $run_data,
+    $run_data,
     $symbol_info,
     $sort,
     $rep_symbol,
-                       $run1,
-                       $symbol_info1 = null,
-                       $run2 = 0,
-                       $symbol_info2 = null
+    $run1,
+    $symbol_info1 = null,
+    $run2 = 0,
+    $symbol_info2 = null
 ) {
     global $vwbar;
     global $vbar;
@@ -1174,10 +1174,10 @@ function symbol_report(
     if ($diff_mode) {
         $base_url_params = xhprof_array_unset(
             xhprof_array_unset(
-            $url_params,
-                                                             'run1'
+                $url_params,
+                'run1'
         ),
-                                          'run2'
+            'run2'
         );
         $href1 = "$base_path?"
       . http_build_query(xhprof_array_set($base_url_params, 'run', $run1));
@@ -1202,12 +1202,12 @@ function symbol_report(
             print_td_num($symbol_info2["ct"], $format_cbk["ct"]);
             print_td_num(
                 $symbol_info2["ct"] - $symbol_info1["ct"],
-                   $format_cbk["ct"],
+                $format_cbk["ct"],
                 true
             );
             print_td_pct(
                 $symbol_info2["ct"] - $symbol_info1["ct"],
-                   $symbol_info1["ct"],
+                $symbol_info1["ct"],
                 true
             );
             print('</tr>');
@@ -1277,7 +1277,7 @@ function symbol_report(
             $href = "$base_path/?" .
         http_build_query(xhprof_array_set(
             $url_params,
-                                          'sort',
+            'sort',
             $stat
         ));
             $header = xhprof_render_link($desc, $href);
@@ -1331,14 +1331,14 @@ function symbol_report(
         print_td_num(
             $symbol_info["excl_" . $metric],
             $format_cbk["excl_" . $metric],
-                 ($sort_col == $metric),
-                 get_tooltip_attributes("Child", $metric)
+            ($sort_col == $metric),
+            get_tooltip_attributes("Child", $metric)
         );
         print_td_pct(
             $symbol_info["excl_" . $metric],
             $symbol_info[$metric],
-                 ($sort_col == $metric),
-                 get_tooltip_attributes("Child", $metric)
+            ($sort_col == $metric),
+            get_tooltip_attributes("Child", $metric)
         );
     }
     print("</tr>");
@@ -1370,7 +1370,7 @@ function symbol_report(
             $base_ct,
             $base_info,
             true,
-                   $run1,
+            $run1,
             $run2
         );
     }
@@ -1398,7 +1398,7 @@ function symbol_report(
             $base_ct,
             $base_info,
             false,
-                   $run1,
+            $run1,
             $run2
         );
     }
@@ -1442,11 +1442,11 @@ function symbol_report(
  */
 function profiler_single_run_report(
     $url_params,
-                                     $xhprof_data,
-                                     $run_desc,
-                                     $rep_symbol,
-                                     $sort,
-                                     $run
+    $xhprof_data,
+    $run_desc,
+    $rep_symbol,
+    $sort,
+    $run
 ) {
     init_metrics($xhprof_data, $rep_symbol, $sort, false);
 
@@ -1456,7 +1456,7 @@ function profiler_single_run_report(
         $sort,
         $run,
         $run_desc,
-                  $xhprof_data
+        $xhprof_data
     );
 }
 
@@ -1469,14 +1469,14 @@ function profiler_single_run_report(
  */
 function profiler_diff_report(
     $url_params,
-                              $xhprof_data1,
-                              $run1_desc,
-                              $xhprof_data2,
-                              $run2_desc,
-                              $rep_symbol,
-                              $sort,
-                              $run1,
-                              $run2
+    $xhprof_data1,
+    $run1_desc,
+    $xhprof_data2,
+    $run2_desc,
+    $rep_symbol,
+    $sort,
+    $run1,
+    $run2
 ) {
 
 
@@ -1485,14 +1485,14 @@ function profiler_diff_report(
 
     profiler_report(
         $url_params,
-                  $rep_symbol,
-                  $sort,
-                  $run1,
-                  $run1_desc,
-                  $xhprof_data1,
-                  $run2,
-                  $run2_desc,
-                  $xhprof_data2
+        $rep_symbol,
+        $sort,
+        $run1,
+        $run1_desc,
+        $xhprof_data1,
+        $run2,
+        $run2_desc,
+        $xhprof_data2
     );
 }
 
@@ -1535,7 +1535,7 @@ function displayXHProfReport(
     $xhprof_runs_impl,
     $url_params,
     $source,
-                             $run,
+    $run,
     $wts,
     $symbol,
     $sort,
@@ -1554,8 +1554,8 @@ function displayXHProfReport(
         if (count($runs_array) == 1) {
             $xhprof_data = $xhprof_runs_impl->get_run(
                 $runs_array[0],
-                                                $source,
-                                                $description
+                $source,
+                $description
             );
         } else {
             if (!empty($wts)) {
@@ -1565,7 +1565,7 @@ function displayXHProfReport(
             }
             $data = xhprof_aggregate_runs(
                 $xhprof_runs_impl,
-                                    $runs_array,
+                $runs_array,
                 $wts_array,
                 $source,
                 false
@@ -1577,11 +1577,11 @@ function displayXHProfReport(
 
         profiler_single_run_report(
             $url_params,
-                               $xhprof_data,
-                               $description,
-                               $symbol,
-                               $sort,
-                               $run
+            $xhprof_data,
+            $description,
+            $symbol,
+            $sort,
+            $run
         );
     } elseif ($run1 && $run2) {                  // diff report for two runs
 
@@ -1590,14 +1590,14 @@ function displayXHProfReport(
 
         profiler_diff_report(
             $url_params,
-                         $xhprof_data1,
-                         $description1,
-                         $xhprof_data2,
-                         $description2,
-                         $symbol,
-                         $sort,
-                         $run1,
-                         $run2
+            $xhprof_data1,
+            $description1,
+            $xhprof_data2,
+            $description2,
+            $symbol,
+            $sort,
+            $run1,
+            $run2
         );
     } else {
         echo "No XHProf runs specified in the URL.";

@@ -142,8 +142,8 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
         foreach ($metaNodes as $metaNode) {
             $this->addField(Zend_Search_Lucene_Field::Text(
                 $metaNode->getAttribute('name'),
-                                                           $metaNode->getAttribute('content'),
-                                                           'UTF-8'
+                $metaNode->getAttribute('content'),
+                'UTF-8'
             ));
         }
 
@@ -327,7 +327,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
                                        . '</body></html>');
             if (!$success) {
                 require_once 'Zend/Search/Lucene/Exception.php';
-                throw new Zend_Search_Lucene_Exception("Error occured while loading highlighted text fragment: '$highlightedWordNodeSetHtml'.");
+                throw new Zend_Search_Lucene_Exception("Error occurred while loading highlighted text fragment: '$highlightedWordNodeSetHtml'.");
             }
             $highlightedWordNodeSetXpath = new DOMXPath($highlightedWordNodeSetDomDocument);
             $highlightedWordNodeSet      = $highlightedWordNodeSetXpath->query('/html/body')->item(0)->childNodes;
@@ -336,7 +336,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
                 $nodeToImport = $highlightedWordNodeSet->item($count);
                 $node->parentNode->insertBefore(
                     $this->_doc->importNode($nodeToImport, true /* deep copy */),
-                                                $matchedWordNode
+                    $matchedWordNode
                 );
             }
 

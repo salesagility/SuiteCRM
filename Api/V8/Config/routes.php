@@ -34,7 +34,12 @@ $app->group('', function () use ($app) {
             ->add($paramsMiddlewareFactory->bind(Param\ListViewColumnsParams::class));
         
         $app->get('/current-user', 'Api\V8\Controller\UserController:getCurrentUser');
-        
+
+        $app->get('/meta/modules', 'Api\V8\Controller\MetaController:getModuleList');
+
+        $app->get('/meta/fields/{moduleName}', 'Api\V8\Controller\MetaController:getFieldList')
+            ->add($paramsMiddlewareFactory->bind(GetFieldListParams::class));
+
         $app
             ->get('/user-preferences/{id}', 'Api\V8\Controller\UserPreferencesController:getUserPreferences')
             ->add($paramsMiddlewareFactory->bind(Param\GetUserPreferencesParams::class));
@@ -114,11 +119,9 @@ $app->group('', function () use ($app) {
             )
             ->add($paramsMiddlewareFactory->bind(Param\DeleteRelationshipParams::class));
         
-        // add custom routes        
+        // add custom routes
         $app->group('/custom', function () use ($app) {
             $app = CustomLoader::loadCustomRoutes($app);
         });
-        
     })->add(new ResourceServerMiddleware($app->getContainer()->get(ResourceServer::class)));
 });
-

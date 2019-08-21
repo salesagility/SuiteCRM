@@ -379,7 +379,7 @@ function check_modules_access($user, $module_name, $action = 'write')
             return false;
         } elseif ($action == 'write' && strcmp(
             strtolower($module_name),
-                'users'
+            'users'
         ) == 0 && !$user->isAdminForModule($module_name)
         ) {
             //rrs bug: 46000 - If the client is trying to write to the Users module and is not an admin then we need to stop them
@@ -1045,14 +1045,14 @@ function check_for_duplicate_contacts($seed)
         foreach ($contacts as $contact) {
             if (!empty($trimmed_last) && strcmp($trimmed_last, $contact->last_name) == 0) {
                 if ((!empty($trimmed_email) || !empty($trimmed_email2)) && (strcmp(
-                        $trimmed_email,
-                                $contact->email1
+                    $trimmed_email,
+                    $contact->email1
                     ) == 0 || strcmp(
-                                    $trimmed_email,
-                                $contact->email2
+                        $trimmed_email,
+                        $contact->email2
                                 ) == 0 || strcmp(
                                     $trimmed_email2,
-                                $contact->email
+                                    $contact->email
                                 ) == 0 || strcmp($trimmed_email2, $contact->email2) == 0)
                     ) {
                     //bug: 39234 - check if the account names are the same
@@ -1146,7 +1146,7 @@ if (!function_exists("get_encoded")) {
      *
      * @param $string - the string to decrypt
      *
-     * @return a decrypted string if we can decrypt, the original string otherwise
+     * @return string decrypted string if we can decrypt, the original string otherwise
      */
     function decrypt_string($string)
     {
@@ -1163,10 +1163,8 @@ if (!function_exists("get_encoded")) {
             $buffer = $string;
             $key = substr(md5($key), 0, 24);
             $iv = "password";
-
-            return openssl_decrypt($buffer, OPENSSL_CIPHER_3DES, $key, OPENSSL_ZERO_PADDING, $iv);
+            return openssl_decrypt(pack("H*", $buffer), 'des-ede3-cbc', $key, OPENSSL_NO_PADDING, $iv);
         }
-        return $string;
     }
 }
 

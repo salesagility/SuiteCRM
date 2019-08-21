@@ -20,12 +20,12 @@ class RelationshipService
     /**
      * @var BeanManager
      */
-    private $beanManager;
+    protected $beanManager;
 
     /**
      * @var AttributeObjectHelper
      */
-    private $attributeHelper;
+    protected $attributeHelper;
 
     /**
      * @param BeanManager $beanManager
@@ -64,7 +64,7 @@ class RelationshipService
             /** @var SugarBean $relatedBean */
             foreach ($relatedBeans as $relatedBean) {
                 $linkResponse = new LinksResponse();
-                $linkResponse->setSelf(sprintf('/V8/module/%s/%s', $relatedBean->getObjectName(), $relatedBean->id));
+                $linkResponse->setSelf(sprintf('V8/module/%s/%s', $relatedBean->getObjectName(), $relatedBean->id));
 
                 $dataResponse = new DataResponse($relatedBean->getObjectName(), $relatedBean->id);
                 $dataResponse->setLinks($linkResponse);

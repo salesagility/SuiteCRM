@@ -2920,7 +2920,7 @@ abstract class DBManager
         $values['parent_id'] = $this->massageValue($bean->id, $fieldDefs['parent_id']);
         $values['field_name'] = $this->massageValue($changes['field_name'], $fieldDefs['field_name']);
         $values['data_type'] = $this->massageValue($changes['data_type'], $fieldDefs['data_type']);
-        if ($changes['data_type'] == 'text') {
+        if ($changes['data_type'] == 'text' || $changes['data_type'] == 'multienum') {
             $values['before_value_text'] = $this->massageValue($changes['before'], $fieldDefs['before_value_text']);
             $values['after_value_text'] = $this->massageValue($changes['after'], $fieldDefs['after_value_text']);
         } else {
@@ -3005,7 +3005,7 @@ abstract class DBManager
                 //if the type and values match, do nothing.
                 if (!($this->_emptyValue($before_value, $field_type) && $this->_emptyValue(
                     $after_value,
-                        $field_type
+                    $field_type
                 ))
                 ) {
                     $change = false;

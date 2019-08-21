@@ -152,9 +152,8 @@ class AOW_WorkFlow extends Basic
     {
         global $beanList, $app_list_strings;
 
-        $app_list_strings['aow_moduleList'] = $app_list_strings['moduleList'];
-
-        if (!empty($app_list_strings['aow_moduleList'])) {
+        if (!empty($app_list_strings['moduleList'])) {
+            $app_list_strings['aow_moduleList'] = $app_list_strings['moduleList'];
             foreach ($app_list_strings['aow_moduleList'] as $mkey => $mvalue) {
                 if (!isset($beanList[$mkey]) || str_begin($mkey, 'AOW_')) {
                     unset($app_list_strings['aow_moduleList'][$mkey]);
@@ -273,7 +272,7 @@ class AOW_WorkFlow extends Basic
         $name,
         $custom_name,
         SugarBean $module,
-            $query = array()
+        $query = array()
     ) {
         if (!isset($query['join'][$custom_name])) {
             $query['join'][$custom_name] = 'LEFT JOIN '.$module->get_custom_table_name()
@@ -285,7 +284,7 @@ class AOW_WorkFlow extends Basic
     public function build_flow_relationship_query_join(
         $name,
         SugarBean $module,
-            $query = array()
+        $query = array()
     ) {
         if (!isset($query['join'][$name])) {
             if ($module->load_relationship($name)) {
@@ -373,7 +372,7 @@ class AOW_WorkFlow extends Basic
             foreach ($path as $rel) {
                 $query = $this->build_flow_relationship_query_join(
                     $rel,
-                        $condition_module,
+                    $condition_module,
                     $query
                 );
                 $condition_module = new $beanList[getRelatedModule($condition_module->module_dir, $rel)];
@@ -422,9 +421,9 @@ class AOW_WorkFlow extends Basic
                     if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                         $value = $module->table_name.'_cstm.'.$condition->value;
                         $query = $this->build_flow_custom_query_join(
-                                $module->table_name,
+                            $module->table_name,
                             $module->table_name.'_cstm',
-                                $module,
+                            $module,
                             $query
                         );
                     } else {
@@ -467,9 +466,9 @@ class AOW_WorkFlow extends Basic
                         if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                             $value = $module->table_name.'_cstm.'.$params[0];
                             $query = $this->build_flow_custom_query_join(
-                                    $module->table_name,
+                                $module->table_name,
                                 $module->table_name.'_cstm',
-                                    $module,
+                                $module,
                                 $query
                             );
                         } else {
@@ -694,7 +693,9 @@ class AOW_WorkFlow extends Basic
                             && isset($condition_bean->rel_fields_before_value[$condition->field])) {
                             $value = $condition_bean->rel_fields_before_value[$condition->field];
                         } else {
-                            $value = $condition_bean->fetched_row[$condition->field];
+                            $value = from_html($condition_bean->fetched_row[$condition->field]);
+                            // Bug - on delete bean action CRM load bean in a different way and bean can contain html characters
+                            $field = from_html($field);
                         }
                         if (in_array($data['type'], $dateFields)) {
                             $value = strtotime($value);

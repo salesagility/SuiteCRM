@@ -139,7 +139,7 @@ class ACLRole extends SugarBean
      * returns a list of Role names for a given user id
      *
      * @param GUID $user_id
-     * @return a list of ACLRole Names
+     * @return array a list of ACLRole Names
      */
     public function getUserRoleNames($user_id)
     {
