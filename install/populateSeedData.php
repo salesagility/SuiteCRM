@@ -94,7 +94,7 @@ if ($memory_limit != "" && $memory_limit != "-1") { // if memory_limit is set
 $large_scale_test = empty($sugar_config['large_scale_test']) ?
     false : $sugar_config['large_scale_test'];
 
-$seed_user = new User();
+$seed_user = BeanFactory::newBean('Users');
 $user_demo_data = new UserDemoData($seed_user, $large_scale_test);
 $user_demo_data->create_demo_data();
 $number_contacts = 200;
@@ -126,7 +126,7 @@ if (!empty($sugar_config['default_user_name']) &&
 }
 
 // Look up the user id for the assigned user
-$seed_user = new User();
+$seed_user = BeanFactory::newBean('Users');
 $assigned_user_id = $seed_user->retrieve_user_id($assigned_user_name);
 $patterns[] = '/ /';
 $patterns[] = '/\./';
@@ -143,7 +143,7 @@ $replacements[] = '';
 for ($i = 0; $i < $number_companies; $i++) {
     $account_name = $sugar_demodata['company_name_array'][mt_rand(0, $company_name_count-1)];
     // Create new accounts.
-    $account = new Account();
+    $account = BeanFactory::newBean('Accounts');
     $account->name = $account_name;
     $account->phone_office = create_phone_number();
     $account->assigned_user_id = $assigned_user_id;
@@ -192,7 +192,7 @@ for ($i = 0; $i < $number_companies; $i++) {
     $accounts[] = $account;
 
     // Create a case for the account
-    $case = new aCase();
+    $case = BeanFactory::newBean('Cases');
     $case->account_id = $account->id;
     $case->priority = array_rand($app_list_strings['case_priority_dom']);
     $case->status = array_rand($app_list_strings['case_status_dom']);
@@ -202,7 +202,7 @@ for ($i = 0; $i < $number_companies; $i++) {
     $case->save();
 
     // Create a bug for the account
-    $bug = new Bug();
+    $bug = BeanFactory::newBean('Bugs');
     $bug->account_id = $account->id;
     $bug->priority = array_rand($app_list_strings['bug_priority_dom']);
     $bug->status = array_rand($app_list_strings['bug_status_dom']);
@@ -211,7 +211,7 @@ for ($i = 0; $i < $number_companies; $i++) {
     $bug->assigned_user_name = $account->assigned_user_name;
     $bug->save();
 
-    $note = new Note();
+    $note = BeanFactory::newBean('Notes');
     $note->parent_type = 'Accounts';
     $note->parent_id = $account->id;
     $seed_data_index = mt_rand(0, 3);
@@ -221,7 +221,7 @@ for ($i = 0; $i < $number_companies; $i++) {
     $note->assigned_user_name = $account->assigned_user_name;
     $note->save();
 
-    $call = new Call();
+    $call = BeanFactory::newBean('Calls');
     $call->parent_type = 'Accounts';
     $call->parent_id = $account->id;
     $call->name = $sugar_demodata['call_seed_data_names'][mt_rand(0, 3)];
@@ -240,7 +240,7 @@ for ($i = 0; $i < $number_companies; $i++) {
     $call->set_accept_status($seed_user, 'accept');
 
     //Create new opportunities
-    $opp = new Opportunity();
+    $opp = BeanFactory::newBean('Opportunities');
     $opp->assigned_user_id = $account->assigned_user_id;
     $opp->assigned_user_name = $account->assigned_user_name;
     $opp->name = substr($account_name." - 1000 units", 0, 50);
@@ -276,7 +276,7 @@ $title_max = count($titles) - 1;
 ///////////////////////////////////////////////////////////////////////////////
 ////	DEMO CONTACTS
 for ($i=0; $i<$number_contacts; $i++) {
-    $contact = new Contact();
+    $contact = BeanFactory::newBean('Contacts');
     $contact->first_name = $sugar_demodata['first_name_array'][mt_rand(0, $first_name_max)];
     $contact->last_name = $sugar_demodata['last_name_array'][mt_rand(0, $last_name_max)];
     $contact->assigned_user_id = $account->assigned_user_id;
@@ -286,7 +286,7 @@ for ($i=0; $i<$number_contacts; $i++) {
     $contact->title = $titles[mt_rand(0, $title_max)];
     $contact->emailAddress->addAddress(createEmailAddress(), true, true);
     $contact->emailAddress->addAddress(createEmailAddress(), false, false, false, true);
-    $assignedUser = new User();
+    $assignedUser = BeanFactory::newBean('Users');
     $assignedUser->retrieve($contact->assigned_user_id);
     $contact->assigned_user_id = $assigned_user_id;
     $contact->email1 = createEmailAddress();
@@ -316,7 +316,7 @@ for ($i=0; $i<$number_contacts; $i++) {
     $contact->set_relationship('opportunities_contacts', array('contact_id'=>$contact->id ,'opportunity_id'=> $opportunity_ids[$opportunity_key], 'contact_role'=>$app_list_strings['opportunity_relationship_type_default_key']), false);
 
     //Create new tasks
-    $task = new Task();
+    $task = BeanFactory::newBean('Tasks');
     $key = array_rand($sugar_demodata['task_seed_data_names']);
     $task->name = $sugar_demodata['task_seed_data_names'][$key];
     //separate date and time field have been merged into one.
@@ -334,7 +334,7 @@ for ($i=0; $i<$number_contacts; $i++) {
     $task->save();
 
     //Create new meetings
-    $meeting = new Meeting();
+    $meeting = BeanFactory::newBean('Meetings');
     $key = array_rand($sugar_demodata['meeting_seed_data_names']);
     $meeting->name = $sugar_demodata['meeting_seed_data_names'][$key];
     $meeting->date_start = create_date(). ' ' . create_time();
@@ -357,7 +357,7 @@ for ($i=0; $i<$number_contacts; $i++) {
     $meeting->set_accept_status($seed_user, 'accept');
 
     //Create new emails
-    $email = new Email();
+    $email = BeanFactory::newBean('Emails');
     $key = array_rand($sugar_demodata['email_seed_data_subjects']);
     $email->name = $sugar_demodata['email_seed_data_subjects'][$key];
     $email->date_start = create_date();
@@ -385,7 +385,7 @@ for ($i=0; $i<$number_contacts; $i++) {
 }
 
 for ($i=0; $i<$number_leads; $i++) {
-    $lead = new Lead();
+    $lead = BeanFactory::newBean('Leads');
     $lead->account_name = $sugar_demodata['company_name_array'][mt_rand(0, $company_name_count-1)];
     $lead->first_name = $sugar_demodata['first_name_array'][mt_rand(0, $first_name_max)];
     $lead->last_name = $sugar_demodata['last_name_array'][mt_rand(0, $last_name_max)];
@@ -451,7 +451,7 @@ for ($i=0; $i<$number_leads; $i++) {
 ///
 if (!empty($sugar_demodata['emailtemplates_seed_data'])) {
     foreach ($sugar_demodata['emailtemplates_seed_data'] as $v) {
-        $EmailTemp = new EmailTemplate();
+        $EmailTemp = BeanFactory::newBean('EmailTemplates');
         $EmailTemp->name = $v['name'];
         $EmailTemp->description = $v['description'];
         $EmailTemp->subject = $v['subject'];
@@ -469,7 +469,7 @@ if (!empty($sugar_demodata['emailtemplates_seed_data'])) {
 include_once('modules/Project/Project.php');
 include_once('modules/ProjectTask/ProjectTask.php');
 // Project: Audit Plan
-$project = new Project();
+$project = BeanFactory::newBean('Project');
 $project->name = $sugar_demodata['project_seed_data']['audit']['name'];
 $project->description = $sugar_demodata['project_seed_data']['audit']['description'];
 $project->assigned_user_id = 1;
@@ -481,7 +481,7 @@ $audit_plan_id = $project->save();
 
 $project_task_id_counter = 1;  // all the project task IDs cannot be 1, so using couter
 foreach ($sugar_demodata['project_seed_data']['audit']['project_tasks'] as $v) {
-    $project_task = new ProjectTask();
+    $project_task = BeanFactory::newBean('ProjectTask');
     $project_task->assigned_user_id = 1;
     $project_task->name = $v['name'];
     $project_task->date_start = $v['date_start'];
