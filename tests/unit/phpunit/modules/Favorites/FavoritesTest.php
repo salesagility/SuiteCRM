@@ -6,7 +6,7 @@ class FavoritesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $favorites = new Favorites();
+        $favorites = BeanFactory::newBean('Favorites');
         $this->assertInstanceOf('Favorites', $favorites);
         $this->assertInstanceOf('Basic', $favorites);
         $this->assertInstanceOf('SugarBean', $favorites);
@@ -24,7 +24,7 @@ class FavoritesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $favorites = new Favorites();
+        $favorites = BeanFactory::newBean('Favorites');
 
         //testing with an empty ID
         $result = $favorites->deleteFavorite('');
@@ -35,7 +35,7 @@ class FavoritesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetFavoriteID()
     {
-        $favorites = new Favorites();
+        $favorites = BeanFactory::newBean('Favorites');
 
         //test with blank string parameters
         $result = $favorites->getFavoriteID('', '');
@@ -48,7 +48,7 @@ class FavoritesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetCurrentUserSidebarFavorites()
     {
-        $favorites = new Favorites();
+        $favorites = BeanFactory::newBean('Favorites');
 
         //test with empty string parameter
         $result = $favorites->getCurrentUserSidebarFavorites();
