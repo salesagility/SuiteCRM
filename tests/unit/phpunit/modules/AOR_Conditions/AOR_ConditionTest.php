@@ -6,7 +6,7 @@ class AOR_ConditionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $aor_Condition = new AOR_Condition();
+        $aor_Condition = BeanFactory::newBean('AOR_Conditions');
         $this->assertInstanceOf('AOR_Condition', $aor_Condition);
         $this->assertInstanceOf('Basic', $aor_Condition);
         $this->assertInstanceOf('SugarBean', $aor_Condition);
@@ -31,7 +31,7 @@ class AOR_ConditionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $aor_Condition = new AOR_Condition();
+        $aor_Condition = BeanFactory::newBean('AOR_Conditions');
 
         //preset the required data
         $post_data = array();
@@ -44,7 +44,7 @@ class AOR_ConditionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            $aor_Condition->save_lines($post_data, new AOR_Report());
+            $aor_Condition->save_lines($post_data, BeanFactory::newBean('AOR_Reports'));
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
