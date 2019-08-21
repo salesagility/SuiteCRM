@@ -129,7 +129,7 @@ function commitAjaxFinalTouches($persistence)
         if ($_REQUEST['addTaskReminder'] == 'remind') {
             logThis('Adding Task for admin for manual merge.');
 
-            $task = new Task();
+            $task = BeanFactory::newBean('Tasks');
             $task->name = $mod_strings['LBL_UW_COMMIT_ADD_TASK_NAME'];
             $task->description = $desc;
             $task->date_due = $nowDate;
@@ -146,7 +146,7 @@ function commitAjaxFinalTouches($persistence)
         if ($_REQUEST['addEmailReminder'] == 'remind') {
             logThis('Sending Reminder for admin for manual merge.');
 
-            $email = new Email();
+            $email = BeanFactory::newBean('Emails');
             $email->assigned_user_id = $current_user->id;
             $email->name = $mod_strings['LBL_UW_COMMIT_ADD_TASK_NAME'];
             $email->description = $desc;
