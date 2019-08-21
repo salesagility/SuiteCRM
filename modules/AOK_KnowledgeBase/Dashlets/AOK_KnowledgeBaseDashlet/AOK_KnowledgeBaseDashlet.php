@@ -68,7 +68,7 @@ class AOK_KnowledgeBaseDashlet extends DashletGeneric
         $this->searchFields = $dashletData['AOK_KnowledgeBaseDashlet']['searchFields'];
         $this->columns = $dashletData['AOK_KnowledgeBaseDashlet']['columns'];
 
-        $this->seedBean = new AOK_KnowledgeBase();
+        $this->seedBean = BeanFactory::newBean('AOK_KnowledgeBase');
     }
 
     /**
