@@ -57,7 +57,7 @@ class AM_ProjectTemplatesTable
 
 
         //Get resources
-        $project_template = new AM_ProjectTemplates();
+        $project_template = BeanFactory::newBean('AM_ProjectTemplates');
         $project_template->retrieve($project_template_id);
         //Get project resources (users & contacts)
         $resources1 = $project_template->get_linked_beans('am_projecttemplates_users_1', 'User');
