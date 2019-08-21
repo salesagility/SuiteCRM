@@ -72,7 +72,7 @@ class CallsQuickCreate extends QuickCreate
         $this->javascript = new javascript();
         $this->javascript->setFormName('callsQuickCreate');
 
-        $focus = new Call();
+        $focus = BeanFactory::newBean('Calls');
         $this->javascript->setSugarBean($focus);
         $this->javascript->addAllFields('');
 
