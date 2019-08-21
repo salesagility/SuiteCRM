@@ -158,7 +158,7 @@ class SugarApplication
             $authController->authController->redirectToLogin($this);
         }
 
-        $GLOBALS['current_user'] = new User();
+        $GLOBALS['current_user'] = BeanFactory::newBean('Users');
         if (isset($_SESSION['authenticated_user_id'])) {
             // set in modules/Users/Authenticate.php
             if (!$authController->sessionAuthenticate()) {
