@@ -21,7 +21,7 @@ class jjwg_MarkersDashlet extends DashletGeneric
         $this->searchFields = $dashletData['jjwg_MarkersDashlet']['searchFields'];
         $this->columns = $dashletData['jjwg_MarkersDashlet']['columns'];
 
-        $this->seedBean = new jjwg_Markers();
+        $this->seedBean = BeanFactory::newBean('jjwg_Markers');
     }
 
     /**
