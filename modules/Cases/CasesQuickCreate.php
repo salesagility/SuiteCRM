@@ -69,7 +69,7 @@ class CasesQuickCreate extends QuickCreate
         $this->javascript = new javascript();
         $this->javascript->setFormName('casesQuickCreate');
         
-        $focus = new aCase();
+        $focus = BeanFactory::newBean('Cases');
         $this->javascript->setSugarBean($focus);
         $this->javascript->addAllFields('');
 
