@@ -79,7 +79,7 @@ class AOS_Quotes extends AOS_Quotes_sugar
         $return_id = parent::save($check_notify);
 
         require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
-        $productQuoteGroup = new AOS_Line_Item_Groups();
+        $productQuoteGroup = BeanFactory::newBean('AOS_Line_Item_Groups');
         $productQuoteGroup->save_groups($_POST, $this, 'group_');
 
         return $return_id;
@@ -87,7 +87,7 @@ class AOS_Quotes extends AOS_Quotes_sugar
 
     public function mark_deleted($id)
     {
-        $productQuote = new AOS_Products_Quotes();
+        $productQuote = BeanFactory::newBean('AOS_Products_Quotes');
         $productQuote->mark_lines_deleted($this);
         parent::mark_deleted($id);
     }
