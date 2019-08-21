@@ -119,7 +119,7 @@ class SoapHelperWebServices
 
         if ($value->module_dir == 'Bugs') {
             require_once('modules/Releases/Release.php');
-            $seedRelease = new Release();
+            $seedRelease = BeanFactory::newBean('Releases');
             $options = $seedRelease->get_releases(true, "Active");
             $options_ret = array();
             foreach ($options as $name => $value) {
@@ -179,9 +179,9 @@ class SoapHelperWebServices
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->validate_user');
         global $server, $current_user, $sugar_config, $system_config;
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->user_name = $user_name;
-        $system_config = new Administration();
+        $system_config = BeanFactory::newBean('Administration');
         $system_config->retrieveSettings('system');
         $authController = new AuthenticationController();
         // Check to see if the user name and password are consistent.
@@ -231,7 +231,7 @@ class SoapHelperWebServices
             if (!empty($_SESSION['is_valid_session']) && $this->is_valid_ip_address('ip_address') && $_SESSION['type'] == 'user') {
                 global $current_user;
                 require_once('modules/Users/User.php');
-                $current_user = new User();
+                $current_user = BeanFactory::newBean('Users');
                 $current_user->retrieve($_SESSION['user_id']);
                 $this->login_success();
                 $GLOBALS['log']->info('Begin: SoapHelperWebServices->validate_authenticated - passed');
@@ -1061,7 +1061,7 @@ class SoapHelperWebServices
         $assigned_user_id = $current_user->id;
 
         // check if it already exists
-        $focus = new Account();
+        $focus = BeanFactory::newBean('Accounts');
         if ($focus->ACLAccess('Save')) {
             $class = get_class($seed);
             $temp = new $class();
@@ -1204,7 +1204,7 @@ class SoapHelperWebServices
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->decrypt_string');
         if (function_exists('openssl_decrypt')) {
             require_once('modules/Administration/Administration.php');
-            $focus = new Administration();
+            $focus = BeanFactory::newBean('Administration');
             $focus->retrieveSettings();
             $key = '';
             if (!empty($focus->settings['ldap_enc_key'])) {
