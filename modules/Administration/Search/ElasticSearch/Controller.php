@@ -194,7 +194,7 @@ class Controller extends AbstractController
      */
     protected function scheduleIndex($partial)
     {
-        $job = new SchedulersJob();
+        $job = BeanFactory::newBean('SchedulersJobs');
 
         $job->name = 'Index requested by an administrator';
         $job->target = 'function::runElasticSearchIndexerScheduler';
