@@ -64,7 +64,7 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
     public function __construct()
     {
         $this->vcal_focus = new iCal();
-        $this->user_focus = new User();
+        $this->user_focus = BeanFactory::newBean('Users');
     }
 
     /**
