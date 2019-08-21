@@ -8,13 +8,13 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testAOS_Products()
     {
         //execute the contructor and check for the Object type and  attributes
-        $aosProducts = new AOS_Products();
+        $aosProducts = BeanFactory::newBean('AOS_Products');
         $this->assertInstanceOf('AOS_Products', $aosProducts);
         $this->assertInstanceOf('Basic', $aosProducts);
         $this->assertInstanceOf('SugarBean', $aosProducts);
@@ -37,7 +37,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $aosProducts = new AOS_Products();
+        $aosProducts = BeanFactory::newBean('AOS_Products');
 
         $aosProducts->name = 'test';
         $aosProducts->category = 1;
@@ -68,7 +68,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('environment dependency');
         
-        $aosProducts = new AOS_Products();
+        $aosProducts = BeanFactory::newBean('AOS_Products');
         $aosProducts->id = 1;
 
         //execute the method and verify that it returns expected results
