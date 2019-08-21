@@ -144,7 +144,7 @@ class ConfiguratorController extends SugarController
         if (!is_admin($current_user)) {
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
-        $focus = new Administration();
+        $focus = BeanFactory::newBean('Administration');
         $focus->retrieveSettings();
         $focus->saveConfig();
 
@@ -256,7 +256,7 @@ class ConfiguratorController extends SugarController
             return;
         }
 
-        $focus = new Administration();
+        $focus = BeanFactory::newBean('Administration');
         $focus->saveConfig();
 
         $rc = new RepairAndClear();
