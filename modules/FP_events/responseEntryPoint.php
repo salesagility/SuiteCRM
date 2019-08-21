@@ -11,7 +11,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     $response = $_GET['response'];
 
     //get event
-    $event = new FP_events();
+    $event = BeanFactory::newBean('FP_events');
     $event->retrieve($even_id);
     
     if ($type == 'c') {
