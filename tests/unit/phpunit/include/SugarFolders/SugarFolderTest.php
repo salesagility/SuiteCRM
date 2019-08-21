@@ -96,7 +96,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testGenerateArchiveFolderQuery()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $sugarfolder = new SugarFolder($user);
@@ -110,7 +110,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testGenerateSugarsDynamicFolderQuery()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $sugarfolder = new SugarFolder($user);
@@ -143,7 +143,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testFolderSubscriptions()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $sugarfolder = new SugarFolder($user);
@@ -185,7 +185,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testClearSubscriptionsForFolder()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $sugarfolder = new SugarFolder($user);
@@ -206,7 +206,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testGetFoldersForSettings()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $sugarfolder = new SugarFolder($user);
@@ -246,7 +246,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testCrudFolder()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $sugarfolder = new SugarFolder($user);
@@ -313,7 +313,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testCopyBean()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $parentFolderOne = new SugarFolder($user);
@@ -359,7 +359,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testMoveFolder()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $parentFolderOne = new SugarFolder($user);
@@ -408,7 +408,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testGetListItemsForEmailXML()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $sugarFolder = new SugarFolder($user);
@@ -452,7 +452,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testCountOfItems()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $parentFolder = new SugarFolder($user);
@@ -500,7 +500,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // create with dynamic and group
 
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $parentFolder = new SugarFolder($user);
@@ -532,7 +532,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testNonExistingRetrieve()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $parentFolder = new SugarFolder($user);
@@ -546,7 +546,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testDeleteEmailsFromFolder()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $parentFolder = new SugarFolder($user);
@@ -575,7 +575,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testDeleteEmailsFromAllFolders()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $parentFolderOne = new SugarFolder($user);
@@ -627,7 +627,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testGetUserFolders()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $parentFolderOne = new SugarFolder($user);
@@ -679,10 +679,10 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $subs = array($anotherChildFolder->id, $parentFolderOne->id, $childFolder->id, $subChildFolderOne->id, $subChildFolderTwo->id);
         $parentFolderOne->setSubscriptions($subs);
 
-        $email = new Email();
+        $email = BeanFactory::newBean('Emails');
         $email->email2init();
 
-        $ie = new InboundEmail();
+        $ie = BeanFactory::newBean('InboundEmail');
         $ie->email = $email;
 
         $rootNode = new ExtNode('', '');
@@ -697,7 +697,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSetSubscriptionWithNoUser()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $parentFolderOne = new SugarFolder($user);
@@ -720,7 +720,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testUpdateSave()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $parentFolderOne = new SugarFolder($user);
