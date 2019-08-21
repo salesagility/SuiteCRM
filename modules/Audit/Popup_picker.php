@@ -102,7 +102,7 @@ class Popup_Picker
         global $audit;
         global $current_language;
 
-        $auditObject = new Audit();
+        $auditObject = BeanFactory::newBean('Audit');
         $audit_list =  $auditObject->get_audit_list();
         $xtpl=new XTemplate('modules/Audit/Popup_picker.html');
 
