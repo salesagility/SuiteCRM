@@ -606,7 +606,7 @@ function commitHandleReminders($skippedFiles, $path='')
         if ($_REQUEST['addTaskReminder'] == 'remind') {
             logThis('Adding Task for admin for manual merge.', $path);
 
-            $task = new Task();
+            $task = BeanFactory::newBean('Tasks');
             $task->name = $mod_strings['LBL_UW_COMMIT_ADD_TASK_NAME'];
             $task->description = $desc;
             $task->date_due = $nowDate;
@@ -623,7 +623,7 @@ function commitHandleReminders($skippedFiles, $path='')
         if ($_REQUEST['addEmailReminder'] == 'remind') {
             logThis('Sending Reminder for admin for manual merge.', $path);
 
-            $email = new Email();
+            $email = BeanFactory::newBean('Emails');
             $email->assigned_user_id = $current_user->id;
             $email->name = $mod_strings['LBL_UW_COMMIT_ADD_TASK_NAME'];
             $email->description = $desc;
@@ -3212,7 +3212,7 @@ function upgradeUserPreferences()
     $db = DBManagerFactory::getInstance();
     $result = $db->query("SELECT id FROM users where deleted = '0'");
     while ($row = $db->fetchByAssoc($result)) {
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
         $current_user->retrieve($row['id']);
 
         // get the user's name locale format, check if it's in our list, add it if it's not, keep it as user's default
@@ -3515,7 +3515,7 @@ function upgradeModulesForTeam()
         if (!$assoc = DBManagerFactory::getInstance()->fetchByAssoc($results2)) {
             //if team does not exist, then lets create the team for this user
             $team = new Team();
-            $user = new User();
+            $user = BeanFactory::newBean('Users');
             $user->retrieve($row['id']);
             $team->new_user_created($user);
             $team_id = $team->id;
@@ -3827,7 +3827,7 @@ function update_iframe_dashlets()
         $assigned_user_id = $row['assigned_user_id'];
         $record_id = $row['id'];
 
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
         $current_user->retrieve($row['assigned_user_id']);
 
         if (!empty($content['dashlets']) && !empty($content['pages'])) {
