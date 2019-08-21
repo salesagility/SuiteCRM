@@ -53,7 +53,7 @@ global $current_language;
 $current_module_strings = return_module_language($current_language, 'Leads');
 
 $ListView = new ListView();
-$seedLeads = new Lead();
+$seedLeads = BeanFactory::newBean('Leads');
 $header_text = '';
 if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
     $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=MyLeads&from_module=Leads'>".SugarThemeRegistry::current()->getImage("EditLayout", "border='0' alt='Edit Layout' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDITLAYOUT'])."</a>";
