@@ -6,7 +6,7 @@ class EmailTextTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $emailText = new EmailText();
+        $emailText = BeanFactory::newBean('EmailText');
 
         $this->assertInstanceOf('EmailText', $emailText);
         $this->assertInstanceOf('SugarBean', $emailText);
