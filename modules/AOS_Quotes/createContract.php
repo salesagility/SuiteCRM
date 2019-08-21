@@ -31,11 +31,11 @@
     require_once('modules/AOS_Contracts/AOS_Contracts.php');
 
     //Setting values in Quotes
-    $quote = new AOS_Quotes();
+    $quote = BeanFactory::newBean('AOS_Quotes');
     $quote->retrieve($_REQUEST['record']);
 
     //Setting Contract Values
-    $contract = new AOS_Contracts();
+    $contract = BeanFactory::newBean('AOS_Contracts');
     $contract->name = $quote->name;
     $contract->assigned_user_id = $quote->assigned_user_id;
     $contract->total_contract_value = format_number($quote->total_amount);
@@ -84,7 +84,7 @@
         if ($row['total_amount'] != null) {
             $row['total_amount'] = format_number($row['total_amount']);
         }
-        $group_contract = new AOS_Line_Item_Groups();
+        $group_contract = BeanFactory::newBean('AOS_Line_Item_Groups');
         $group_contract->populateFromRow($row);
         $group_contract->save();
         $group_id_map[$old_id] = $group_contract->id;
@@ -112,7 +112,7 @@
         $row['product_qty'] = format_number($row['product_qty']);
         $row['group_id'] = $group_id_map[$row['group_id']];
 
-        $prod_contract = new AOS_Products_Quotes();
+        $prod_contract = BeanFactory::newBean('AOS_Products_Quotes');
         $prod_contract->populateFromRow($row);
         $prod_contract->save();
     }
