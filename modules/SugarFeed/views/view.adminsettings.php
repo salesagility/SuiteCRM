@@ -71,7 +71,7 @@ class ViewAdminsettings extends SugarView
     {
         global $mod_strings, $app_strings;
 
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
 
         // Handle posts
