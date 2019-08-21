@@ -68,7 +68,7 @@ function getSystemInfo($send_usage_info=true)
         }
 
         if (empty($administration)) {
-            $administration = new Administration();
+            $administration = BeanFactory::newBean('Administration');
         }
         $administration->retrieveSettings('system');
         $info['system_name'] = (!empty($administration->settings['system_name']))?substr($administration->settings['system_name'], 0, 255):'';
@@ -263,7 +263,7 @@ function compareVersions($ver1, $ver2)
 }
 function set_CheckUpdates_config_setting($value)
 {
-    $admin=new Administration();
+    $admin=BeanFactory::newBean('Administration');
     $admin->saveSetting('Update', 'CheckUpdates', $value);
 }
 /* return's value for the 'CheckUpdates' config setting
@@ -274,7 +274,7 @@ function get_CheckUpdates_config_setting()
     $checkupdates='automatic';
 
 
-    $admin=new Administration();
+    $admin=BeanFactory::newBean('Administration');
     $admin=$admin->retrieveSettings('Update', true);
     if (empty($admin->settings) or empty($admin->settings['Update_CheckUpdates'])) {
         $admin->saveSetting('Update', 'CheckUpdates', 'automatic');
@@ -286,12 +286,12 @@ function get_CheckUpdates_config_setting()
 
 function set_last_check_version_config_setting($value)
 {
-    $admin=new Administration();
+    $admin=BeanFactory::newBean('Administration');
     $admin->saveSetting('Update', 'last_check_version', $value);
 }
 function get_last_check_version_config_setting()
 {
-    $admin=new Administration();
+    $admin=BeanFactory::newBean('Administration');
     $admin=$admin->retrieveSettings('Update');
     if (empty($admin->settings) or empty($admin->settings['Update_last_check_version'])) {
         return null;
@@ -303,12 +303,12 @@ function get_last_check_version_config_setting()
 
 function set_last_check_date_config_setting($value)
 {
-    $admin=new Administration();
+    $admin=BeanFactory::newBean('Administration');
     $admin->saveSetting('Update', 'last_check_date', $value);
 }
 function get_last_check_date_config_setting()
 {
-    $admin=new Administration();
+    $admin=BeanFactory::newBean('Administration');
     $admin=$admin->retrieveSettings('Update');
     if (empty($admin->settings) or empty($admin->settings['Update_last_check_date'])) {
         return 0;
@@ -353,7 +353,7 @@ function shouldCheckSugar()
 
 function loadLicense($firstLogin=false)
 {
-    $GLOBALS['license']=new Administration();
+    $GLOBALS['license']=BeanFactory::newBean('Administration');
     $GLOBALS['license']=$GLOBALS['license']->retrieveSettings('license', $firstLogin);
 }
 
