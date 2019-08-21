@@ -54,7 +54,7 @@ class SugarWidgetFieldcurrency_id extends SugarWidgetFieldEnum
     {
         static $list = false;
         if ($list === false || $refresh == true) {
-            $currency = new Currency();
+            $currency = BeanFactory::newBean('Currencies');
             $list = $currency->get_full_list('name');
             $currency->retrieve('-99');
             if (is_array($list)) {
@@ -77,7 +77,7 @@ class SugarWidgetFieldcurrency_id extends SugarWidgetFieldEnum
         static $currencies;
         $value = $this->_get_list_value($layout_def);
         if (empty($currencies[$value])) {
-            $currency = new Currency();
+            $currency = BeanFactory::newBean('Currencies');
             $currency->retrieve($value);
             $currencies[$value] = $currency->symbol . ' ' . $currency->iso4217;
         }
