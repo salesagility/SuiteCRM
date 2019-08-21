@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $mod_strings;
 
-$focus = new User();
+$focus = BeanFactory::newBean('Users');
 
 // Add in defensive code here.
 $focus->user_name = $_REQUEST['user_name'];
