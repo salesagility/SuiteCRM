@@ -165,7 +165,7 @@ class chart
 
         //From the query above, populates the select box
         foreach ($user_list as $user) {
-            $user_obj = new User();
+            $user_obj = BeanFactory::newBean('Users');
             $user_obj->retrieve($user->id);
             var_dump($user_obj->id);
             if (in_array($user->id, $sel_users)) {//Check if the select box option matches the resource passed in.
@@ -193,7 +193,7 @@ class chart
 
         //From the query above, populates the select box
         foreach ($contact_list as $contact) {
-            $contact_obj = new Contact();
+            $contact_obj = BeanFactory::newBean('Contacts');
             $contact_obj->retrieve($contact->id);
 
             if (in_array($contact->id, $sel_contacts)) {//Check if the select box option matches the resource passed in.
@@ -329,12 +329,12 @@ class chart
                 $count = $resource->task_count;
 
                 if ($resource->type == 'project_users_1_c') {
-                    $user_obj = new User();
+                    $user_obj = BeanFactory::newBean('Users');
                     $user_obj->retrieve($resource->id);
 
                     echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$user_obj->full_name.'</a></td>';
                 } elseif ($resource->type == 'project_contacts_1_c') {
-                    $contact_obj = new Contact();
+                    $contact_obj = BeanFactory::newBean('Contacts');
                     $contact_obj->retrieve($resource->id);
 
                     echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$contact_obj->full_name.'</a></td>';
@@ -429,12 +429,12 @@ class chart
                 $count = $resource->task_count;
 
                 if ($resource->type == 'project_users_1_c') {
-                    $user_obj = new User();
+                    $user_obj = BeanFactory::newBean('Users');
                     $user_obj->retrieve($resource->id);
 
                     echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$user_obj->full_name.'</a></td>';
                 } elseif ($resource->type == 'project_contacts_1_c') {
-                    $contact_obj = new Contact();
+                    $contact_obj = BeanFactory::newBean('Contacts');
                     $contact_obj->retrieve($resource->id);
 
                     echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$contact_obj->full_name.'</a></td>';
@@ -516,12 +516,12 @@ class chart
                 $count = $resource->task_count;
 
                 if ($resource->type == 'project_users_1_c') {
-                    $user_obj = new User();
+                    $user_obj = BeanFactory::newBean('Users');
                     $user_obj->retrieve($resource->id);
 
                     echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$user_obj->full_name.'</a></td>';
                 } elseif ($resource->type == 'project_contacts_1_c') {
-                    $contact_obj = new Contact();
+                    $contact_obj = BeanFactory::newBean('Contacts');
                     $contact_obj->retrieve($resource->id);
 
                     echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$contact_obj->full_name.'</a></td>';
