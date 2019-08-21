@@ -186,7 +186,7 @@ abstract class ImportDataSource implements Iterator
         static $last_import;
 
         if (!($last_import instanceof UsersLastImport)) {
-            $last_import = new UsersLastImport();
+            $last_import = BeanFactory::newBean('Import_2');
         }
 
         $last_import->id = null;
