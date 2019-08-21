@@ -55,7 +55,7 @@ function display_condition_lines($focus, $field, $value, $view)
                 $result = $focus->db->query($sql);
 
                 while ($row = $focus->db->fetchByAssoc($result)) {
-                    $condition_name = new AOW_Condition();
+                    $condition_name = BeanFactory::newBean('AOW_Conditions');
                     $condition_name->retrieve($row['id']);
                     $condition_name->module_path = unserialize(base64_decode($condition_name->module_path));
                     if ($condition_name->module_path == '') {
@@ -86,7 +86,7 @@ function display_condition_lines($focus, $field, $value, $view)
             $result = $focus->db->query($sql);
 
             while ($row = $focus->db->fetchByAssoc($result)) {
-                $condition_name = new AOW_Condition();
+                $condition_name = BeanFactory::newBean('AOW_Conditions');
                 $condition_name->retrieve($row['id']);
                 $condition_name->module_path = unserialize(base64_decode($condition_name->module_path));
                 if (empty($condition_name->module_path)) {
