@@ -60,7 +60,7 @@ global $mod_strings;
 if (!isset($_REQUEST['record'])) {
     sugar_die($mod_strings['ERR_DELETE_RECORD']);
 }
-$focus = new Document();
+$focus = BeanFactory::newBean('Documents');
 $focus->retrieve($_REQUEST['record']);
 if (!$focus->ACLAccess('Delete')) {
     ACLController::displayNoAccess(true);
@@ -68,7 +68,7 @@ if (!$focus->ACLAccess('Delete')) {
 }
 if (isset($_REQUEST['object']) && $_REQUEST['object']="documentrevision") {
     //delete document revision.
-    $focus = new DocumentRevision();
+    $focus = BeanFactory::newBean('DocumentRevisions');
     UploadFile::unlink_file($_REQUEST['revision_id'], $_REQUEST['filename']);
 }
 
