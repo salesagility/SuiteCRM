@@ -9,14 +9,14 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testProspect()
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $prospect = new Prospect();
+        $prospect = BeanFactory::newBean('Prospects');
 
         $this->assertInstanceOf('Prospect', $prospect);
         $this->assertInstanceOf('Person', $prospect);
@@ -37,7 +37,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $prospect = new Prospect();
+        $prospect = BeanFactory::newBean('Prospects');
 
         $prospect->salutation = 'mr';
         $prospect->title = 'lastn firstn';
@@ -55,7 +55,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_detail_fields()
     {
-        $prospect = new Prospect();
+        $prospect = BeanFactory::newBean('Prospects');
 
         $prospect->salutation = 'mr';
         $prospect->title = 'lastn firstn';
@@ -70,7 +70,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_generic_where_clause()
     {
-        $prospect = new Prospect();
+        $prospect = BeanFactory::newBean('Prospects');
 
         //test with empty string params
         $expected = "prospects.last_name like '%' or prospects.first_name like '%' or prospects.assistant like '%'";
@@ -91,7 +91,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $prospect = new Prospect();
+        $prospect = BeanFactory::newBean('Prospects');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -108,7 +108,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        $prospect = new Prospect();
+        $prospect = BeanFactory::newBean('Prospects');
 
         $this->assertEquals(false, $prospect->bean_implements('')); //test with blank value
         $this->assertEquals(false, $prospect->bean_implements('test')); //test with invalid value
@@ -117,7 +117,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testretrieveTargetList()
     {
-        $prospect = new Prospect();
+        $prospect = BeanFactory::newBean('Prospects');
 
         $result = $prospect->retrieveTargetList('', array('id', 'first_name'), 0, 1, 1, 0, 'Accounts');
         $this->assertTrue(is_array($result));
@@ -125,7 +125,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testretrieveTarget()
     {
-        $prospect = new Prospect();
+        $prospect = BeanFactory::newBean('Prospects');
 
         $result = $prospect->retrieveTarget('');
         $this->assertEquals(null, $result);
@@ -135,7 +135,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('environment dependency (CRLF2)');
         
-        $prospect = new Prospect();
+        $prospect = BeanFactory::newBean('Prospects');
 
         $expected = "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear\n\n	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Prospects' and\n	eabr.email_address_id = eear.email_address_id and eabr.deleted=0\n	where eear.deleted=0 and eear.email_id not in\n	(select eb.email_id from emails_beans eb where eb.bean_module ='Prospects' and eb.bean_id = '')\n	) derivedemails on derivedemails.email_id = emails.id";
         $actual = $prospect->get_unlinked_email_query();
