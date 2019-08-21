@@ -68,7 +68,7 @@ class FP_Event_LocationsDashlet extends DashletGeneric
         $this->searchFields = $dashletData['FP_Event_LocationsDashlet']['searchFields'];
         $this->columns = $dashletData['FP_Event_LocationsDashlet']['columns'];
 
-        $this->seedBean = new FP_Event_Locations();
+        $this->seedBean = BeanFactory::newBean('FP_Event_Locations');
     }
 
     /**
