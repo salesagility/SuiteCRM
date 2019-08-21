@@ -78,7 +78,7 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
             if ($postData == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
-                $product_quote_group = new AOS_Line_Item_Groups();
+                $product_quote_group = BeanFactory::newBean('AOS_Line_Item_Groups');
                 foreach ($this->field_defs as $field_def) {
                     $field_name = $field_def['name'];
                     if (isset($post_data[$key . $field_name][$i])) {
@@ -108,7 +108,7 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
         }
 
         require_once('modules/AOS_Products_Quotes/AOS_Products_Quotes.php');
-        $productQuote = new AOS_Products_Quotes();
+        $productQuote = BeanFactory::newBean('AOS_Products_Quotes');
         $productQuote->save_lines($post_data, $parent, $groups, 'product_');
         $productQuote->save_lines($post_data, $parent, $groups, 'service_');
     }
