@@ -68,7 +68,7 @@ class SuiteMozaik
             if (count($this->getThumbs())==0 || self::$devMode) {
                 $ord = 0;
                 foreach (self::$defaultThumbnails as $thumbName => $thumbData) {
-                    $templateSectionLine = new TemplateSectionLine();
+                    $templateSectionLine = BeanFactory::newBean('TemplateSectionLine');
                     $templateSectionLine->name = $thumbData['label'];
                     $templateSectionLine->description = preg_replace('/^string:/', '', $thumbData['tpl']);
                     $templateSectionLine->description = str_replace('{lipsum}', $this->getContentLipsum(), $templateSectionLine->description);
