@@ -50,7 +50,7 @@ require_once('include/formbase.php');
 
 global $current_user;
 
-$sugarbean = new Project();
+$sugarbean = BeanFactory::newBean('Project');
 $sugarbean = populateFromPost('', $sugarbean);
 
 $projectTasks = array();
@@ -65,7 +65,7 @@ if (isset($_REQUEST['save_type']) || isset($_REQUEST['duplicateSave']) && $_REQU
     $row = $sugarbean->db->fetchByAssoc($result);
 
     while ($row != null) {
-        $projectTaskBean = new ProjectTask();
+        $projectTaskBean = BeanFactory::newBean('ProjectTask');
         $projectTaskBean->id = $row['id'];
         $projectTaskBean->retrieve();
         $projectTaskBean->date_entered = '';
