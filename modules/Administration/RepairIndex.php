@@ -209,7 +209,7 @@ if ((count($drop_index) > 0 or count($add_index) > 0 or count($change_index) > 0
         echo ($_REQUEST['silent']) ? "" : "<a href='index.php?module=Administration&action=RepairIndex&mode=execute'>Execute Script</a>";
     }
 
-    $focus = new Account();
+    $focus = BeanFactory::newBean('Accounts');
     if (count($drop_index) > 0) {
         if (isset($_REQUEST['mode']) and $_REQUEST['mode']=='execute') {
             echo ($_REQUEST['silent']) ? "" : $mod_strings['LBL_REPAIR_INDEX_DROPPING'];
