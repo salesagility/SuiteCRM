@@ -9,7 +9,7 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testAudit()
@@ -20,7 +20,7 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
 
         //execute the contructor and check for the Object type and  attributes
-        $audit = new Audit();
+        $audit = BeanFactory::newBean('Audit');
         $this->assertInstanceOf('Audit', $audit);
         $this->assertInstanceOf('SugarBean', $audit);
         $this->assertAttributeEquals('Audit', 'module_dir', $audit);
@@ -31,7 +31,7 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        $audit = new Audit();
+        $audit = BeanFactory::newBean('Audit');
 
         //test without setting name
         $this->assertEquals(null, $audit->get_summary_text());
@@ -49,7 +49,7 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $audit = new Audit();
+        $audit = BeanFactory::newBean('Audit');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -72,7 +72,7 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $audit = new Audit();
+        $audit = BeanFactory::newBean('Audit');
         //execute the method and test if it works and does not throws an exception.
         try {
             $audit->fill_in_additional_list_fields();
@@ -94,7 +94,7 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $audit = new Audit();
+        $audit = BeanFactory::newBean('Audit');
         //execute the method and test if it works and does not throws an exception.
         try {
             $audit->fill_in_additional_detail_fields();
@@ -116,7 +116,7 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $audit = new Audit();
+        $audit = BeanFactory::newBean('Audit');
         //execute the method and test if it works and does not throws an exception.
         try {
             $audit->fill_in_additional_parent_fields();
@@ -138,7 +138,7 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $audit = new Audit();
+        $audit = BeanFactory::newBean('Audit');
         //execute the method and test if it works and does not throws an exception.
         try {
             $audit->get_list_view_data();
@@ -160,7 +160,7 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $audit = new Audit();
+        $audit = BeanFactory::newBean('Audit');
         //execute the method and test if it works and does not throws an exception.
         try {
             $audit->get_audit_link();
@@ -177,9 +177,9 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testget_audit_list()
     {
         global $focus;
-        $focus = new Account(); //use audit enabbled module object
+        $focus = BeanFactory::newBean('Accounts'); //use audit enabbled module object
 
-        $audit = new Audit();
+        $audit = BeanFactory::newBean('Audit');
 
         //execute the method and verify that it returns an array
         $result = $audit->get_audit_list();
@@ -189,9 +189,9 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetAssociatedFieldName()
     {
         global $focus;
-        $focus = new Account(); //use audit enabbled module object
+        $focus = BeanFactory::newBean('Accounts'); //use audit enabbled module object
 
-        $audit = new Audit();
+        $audit = BeanFactory::newBean('Audit');
 
         //test with name field
         $result = $audit->getAssociatedFieldName('name', '1');
