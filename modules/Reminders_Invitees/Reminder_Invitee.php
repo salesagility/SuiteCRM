@@ -100,7 +100,7 @@ class Reminder_Invitee extends Basic
     public static function loadRemindersInviteesData($reminderId, $isDuplicate = false)
     {
         $ret = array();
-        $reminderInviteeBeen = new Reminder_Invitee();
+        $reminderInviteeBeen = BeanFactory::newBean('Reminders_Invitees');
         $reminderInvitees = $reminderInviteeBeen->get_full_list("reminders_invitees.date_entered", "reminders_invitees.reminder_id = '$reminderId'");
         if ($reminderInvitees) {
             foreach ($reminderInvitees as $reminderInvitee) {
