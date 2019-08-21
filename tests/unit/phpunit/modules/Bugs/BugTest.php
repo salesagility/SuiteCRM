@@ -9,13 +9,13 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testBug()
     {
         //execute the contructor and check for the Object type and  attributes
-        $bug = new Bug();
+        $bug = BeanFactory::newBean('Bugs');
         $this->assertInstanceOf('Bug', $bug);
         $this->assertInstanceOf('SugarBean', $bug);
 
@@ -35,7 +35,7 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $bug = new Bug();
+        $bug = BeanFactory::newBean('Bugs');
 
         //test without setting name
         $this->assertEquals(null, $bug->get_summary_text());
@@ -50,7 +50,7 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreate_list_query()
     {
         self::markTestIncomplete('#Warning: Strings contain different line endings!');
-        $bug = new Bug();
+        $bug = BeanFactory::newBean('Bugs');
 
         //test with empty string params
         $expected = "SELECT \n                               bugs.*\n\n                                ,users.user_name as assigned_user_name, releases.id release_id, releases.name release_name FROM bugs 				LEFT JOIN releases ON bugs.found_in_release=releases.id\n								LEFT JOIN users\n                                ON bugs.assigned_user_id=users.id  where  bugs.deleted=0  ORDER BY bugs.name";
@@ -66,7 +66,7 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreate_export_query()
     {
         self::markTestIncomplete('#Warning: Strings contain different line endings!');
-        $bug = new Bug();
+        $bug = BeanFactory::newBean('Bugs');
 
         //test with empty string params
         $expected = "SELECT\n                                bugs.*,\n                                r1.name found_in_release_name,\n                                r2.name fixed_in_release_name,\n                                users.user_name assigned_user_name FROM bugs 				LEFT JOIN releases r1 ON bugs.found_in_release = r1.id\n								LEFT JOIN releases r2 ON bugs.fixed_in_release = r2.id\n								LEFT JOIN users\n                                ON bugs.assigned_user_id=users.id where   bugs.deleted=0\n                 ORDER BY bugs.bug_number";
@@ -87,7 +87,7 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        $bug = new Bug();
+        $bug = BeanFactory::newBean('Bugs');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -102,7 +102,7 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_detail_fields()
     {
-        $bug = new Bug();
+        $bug = BeanFactory::newBean('Bugs');
         $bug->assigned_user_id = 1;
         $bug->created_by = 1;
         $bug->modified_user_id = 1;
@@ -117,7 +117,7 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testset_release()
     {
-        $bug = new Bug();
+        $bug = BeanFactory::newBean('Bugs');
         $bug->found_in_release = '1';
 
         $bug->set_release();
@@ -127,7 +127,7 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testset_fixed_in_release()
     {
-        $bug = new Bug();
+        $bug = BeanFactory::newBean('Bugs');
         $bug->found_in_release = '1';
 
         $bug->set_release();
@@ -137,7 +137,7 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_list_view_data()
     {
-        $bug = new Bug();
+        $bug = BeanFactory::newBean('Bugs');
 
         //execute the method and verify that it retunrs expected results
         $expected = array(
@@ -157,7 +157,7 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_generic_where_clause()
     {
-        $bug = new Bug();
+        $bug = BeanFactory::newBean('Bugs');
 
         //execute with blank parameters
         $expected = "bugs.name like '%'";
@@ -172,7 +172,7 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testset_notification_body()
     {
-        $bug = new Bug();
+        $bug = BeanFactory::newBean('Bugs');
 
         $bug->name = 'test';
         $bug->type = 'Defect';
@@ -194,7 +194,7 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        $bug = new Bug();
+        $bug = BeanFactory::newBean('Bugs');
         $this->assertEquals(false, $bug->bean_implements('')); //test with blank value
         $this->assertEquals(false, $bug->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $bug->bean_implements('ACL')); //test with valid value
@@ -213,7 +213,7 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         
-        $bug = new Bug();
+        $bug = BeanFactory::newBean('Bugs');
 
         $bug->name = 'test';
         $bug->bug_number = '1';
