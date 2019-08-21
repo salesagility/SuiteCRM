@@ -339,7 +339,7 @@ function quick_edit_case_updates($case)
     require_once 'modules/ACLRoles/ACLRole.php';
     $user = $GLOBALS['current_user'];
     $id = $user->id;
-    $acl = new ACLRole();
+    $acl = BeanFactory::newBean('ACLRoles');
     $roles = $acl->getUserRoles($id);
 
     //Return if user cannot edit cases
