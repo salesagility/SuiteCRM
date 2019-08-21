@@ -73,7 +73,7 @@ class MyCallsDashlet extends DashletGeneric
                                               'sortable' => false,
                                               'related_fields' => array('status'),
                                               'default' => 'true');*/
-        $this->seedBean = new Call();
+        $this->seedBean = BeanFactory::newBean('Calls');
     }
 
     /**
