@@ -6,7 +6,7 @@ class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testEmailAddress()
     {
         //execute the contructor and check for the Object type and  attributes
-        $email = new EmailAddress();
+        $email = BeanFactory::newBean('EmailAddresses');
         $this->assertInstanceOf('EmailAddress', $email);
         $this->assertInstanceOf('SugarEmailAddress', $email);
         $this->assertInstanceOf('SugarBean', $email);
@@ -30,7 +30,7 @@ class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // test
         
-        $email = new EmailAddress();
+        $email = BeanFactory::newBean('EmailAddresses');
 
         $email->email_address = 'test@test.com';
         $email->invaid_email = 0;
