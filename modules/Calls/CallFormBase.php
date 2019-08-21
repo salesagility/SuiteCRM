@@ -139,7 +139,7 @@ EOQ;
 
         $javascript = new javascript();
         $javascript->setFormName($formname);
-        $javascript->setSugarBean(new Call());
+        $javascript->setSugarBean(BeanFactory::newBean('Calls'));
         $javascript->addRequiredFields($prefix);
         $form .=$javascript->getScript();
         $form .= "<td align=\"left\" valign=top><input title='$lbl_save_button_title' accessKey='$lbl_save_button_key' class='button' type='submit' name='button' value=' $lbl_save_button_label ' ></td></tr></table></form>";
@@ -216,7 +216,7 @@ EOQ;
             $_POST[$prefix.'duration_hours'] = trim($_POST[$prefix.'duration_hours']);
         }
 
-        $focus = new Call();
+        $focus = BeanFactory::newBean('Calls');
 
         if ($useRequired && !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
@@ -646,7 +646,7 @@ EOQ;
 
         $javascript = new javascript();
         $javascript->setFormName($formname);
-        $javascript->setSugarBean(new Call());
+        $javascript->setSugarBean(BeanFactory::newBean('Calls'));
         $javascript->addRequiredFields($prefix);
         $form .=$javascript->getScript();
         $mod_strings = $temp_strings;
