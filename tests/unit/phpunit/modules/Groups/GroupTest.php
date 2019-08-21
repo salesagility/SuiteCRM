@@ -7,7 +7,7 @@ class GroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         parent::setUp();
 
         global $current_user;
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
         get_sugar_config_defaults();
     }
 
@@ -15,7 +15,7 @@ class GroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $group = new Group();
+        $group = BeanFactory::newBean('Groups');
         $this->assertInstanceOf('Group', $group);
         $this->assertInstanceOf('User', $group);
         $this->assertInstanceOf('SugarBean', $group);
@@ -36,7 +36,7 @@ class GroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $group = new Group();
+        $group = BeanFactory::newBean('Groups');
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -55,7 +55,7 @@ class GroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreate_export_query()
     {
-        $group = new Group();
+        $group = BeanFactory::newBean('Groups');
 
         //test with empty string params
         $expected = 'SELECT users.* FROM users  WHERE  users.deleted = 0 ORDER BY users.user_name';
