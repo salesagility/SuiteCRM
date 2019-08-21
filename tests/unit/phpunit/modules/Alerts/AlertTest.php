@@ -9,14 +9,14 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testAlert()
     {
 
         //execute the contructor and check for the Object type and type attribute
-        $alert = new Alert();
+        $alert = BeanFactory::newBean('Alerts');
         $this->assertInstanceOf('Alert', $alert);
         $this->assertInstanceOf('Basic', $alert);
         $this->assertInstanceOf('SugarBean', $alert);
@@ -31,7 +31,7 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        $alert = new Alert();
+        $alert = BeanFactory::newBean('Alerts');
 
         $this->assertEquals(false, $alert->bean_implements('')); //test with empty value
         $this->assertEquals(false, $alert->bean_implements('test')); //test with invalid value
