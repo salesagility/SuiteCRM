@@ -75,7 +75,7 @@ foreach ($modules as $the_module => $fields) {
     require_once($beanFiles[$class_name]);
     $mod = new $class_name();
     if (!$db->tableExists($mod->table_name."_cstm")) {
-        $mod->custom_fields = new DynamicField();
+        $mod->custom_fields = BeanFactory::newBean('DynamicFields');
         $mod->custom_fields->setup($mod);
         $mod->custom_fields->createCustomTable();
     }
