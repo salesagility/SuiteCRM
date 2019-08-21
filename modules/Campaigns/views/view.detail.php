@@ -116,7 +116,7 @@ class CampaignsViewDetail extends ViewDetail
             $this->ss->assign("TARGET_BUTTON_STATE", "submit");
         }
 
-        $currency = new Currency();
+        $currency = BeanFactory::newBean('Currencies');
         if (isset($this->bean->currency_id) && !empty($this->bean->currency_id)) {
             $currency->retrieve($this->bean->currency_id);
             if ($currency->deleted != 1) {
