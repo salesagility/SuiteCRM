@@ -114,7 +114,7 @@ class SugarWidgetFieldRelate extends SugarWidgetReportField
     {
         $ids = array();
 
-        $relation = new Relationship();
+        $relation = BeanFactory::newBean('Relationships');
         $relation->retrieve_by_name($layout_def['link']);
 
         global $beanList;
@@ -143,7 +143,7 @@ class SugarWidgetFieldRelate extends SugarWidgetReportField
     {
         $ids = array();
         if (isset($layout_def['link'])) {
-            $relation = new Relationship();
+            $relation = BeanFactory::newBean('Relationships');
             $relation->retrieve_by_name($layout_def['link']);
         }
         $module = isset($layout_def['custom_module']) ? $layout_def['custom_module'] : $layout_def['module'];
