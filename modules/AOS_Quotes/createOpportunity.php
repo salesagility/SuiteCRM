@@ -33,11 +33,11 @@
     require_once('modules/Opportunities/Opportunity.php');
     
     //Setting values in Quotes
-    $quote = new AOS_Quotes();
+    $quote = BeanFactory::newBean('AOS_Quotes');
     $quote->retrieve($_REQUEST['record']);
 
     //Setting Opportunity Values
-    $opportunity = new Opportunity();
+    $opportunity = BeanFactory::newBean('Opportunities');
     $opportunity->name = $quote->name;
     $opportunity->assigned_user_id = $quote->assigned_user_id;
     $opportunity->amount = format_number($quote->total_amount);
