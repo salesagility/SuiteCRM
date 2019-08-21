@@ -133,14 +133,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
             if (!empty($params['currency_id'])) {
                 if ($override_currency_id != $params['currency_id']) {
                     $override_currency_id = $params['currency_id'];
-                    $currency = new Currency();
+                    $currency = BeanFactory::newBean('Currencies');
                     $currency->retrieve($override_currency_id);
                     $last_override_currency = $currency;
                 } else {
                     $currency = $last_override_currency;
                 }
             } elseif (!isset($current_users_currency)) { // else use current user's
-                $current_users_currency = new Currency();
+                $current_users_currency = BeanFactory::newBean('Currencies');
                 if ($current_user->getPreference('currency')) {
                     $current_users_currency->retrieve($current_user->getPreference('currency'));
                 } else {
