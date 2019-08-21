@@ -278,7 +278,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
             $symbol = $sugar_config['default_currency_symbol'];
             global $current_user;
             if ($current_user->getPreference('currency')) {
-                $currency = new Currency();
+                $currency = BeanFactory::newBean('Currencies');
                 $currency->retrieve($current_user->getPreference('currency'));
                 $div = $currency->conversion_rate;
                 $symbol = $currency->symbol;
