@@ -76,13 +76,13 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->login');
         global $sugar_config, $system_config;
         $error = new SoapError();
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $success = false;
         if (!empty($user_auth['encryption']) && $user_auth['encryption'] === 'PLAIN') {
             $user_auth['password'] = md5($user_auth['password']);
         }
         //rrs
-        $system_config = new Administration();
+        $system_config = BeanFactory::newBean('Administration');
         $system_config->retrieveSettings('system');
         $authController = new AuthenticationController();
         //rrs
@@ -146,7 +146,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
             $nameValueArray['user_default_team_id'] = self::$helperObject->get_name_value('user_default_team_id', $current_user->default_team);
             $nameValueArray['user_default_dateformat'] = self::$helperObject->get_name_value('user_default_dateformat', $current_user->getPreference('datef'));
             $nameValueArray['user_default_timeformat'] = self::$helperObject->get_name_value('user_default_timeformat', $current_user->getPreference('timef'));
-            $currencyObject = new Currency();
+            $currencyObject = BeanFactory::newBean('Currencies');
             $currencyObject->retrieve($cur_id);
             $nameValueArray['user_currency_name'] = self::$helperObject->get_name_value('user_currency_name', $currencyObject->name);
             $_SESSION['user_language'] = $current_language;
@@ -329,7 +329,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
             if ($module == 'Home') {
                 $module = '';
             }
-            $tracker = new Tracker();
+            $tracker = BeanFactory::newBean('Trackers');
             $entryList = $tracker->get_recently_viewed($GLOBALS['current_user']->id, $module);
             foreach ($entryList as $entry) {
                 $results[] = $entry;
