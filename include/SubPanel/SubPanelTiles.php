@@ -239,7 +239,7 @@ class SubPanelTiles
             if (!class_exists('Relationship')) {
                 require('modules/Relationships/Relationship.php');
             }
-            $rel= new Relationship();
+            $rel= BeanFactory::newBean('Relationships');
             $rel->load_relationship_meta();
         }
 
