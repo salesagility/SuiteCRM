@@ -8,14 +8,14 @@ class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testAOS_Quotes()
     {
 
         //execute the contructor and check for the Object type and  attributes
-        $aosQuotes = new AOS_Quotes();
+        $aosQuotes = BeanFactory::newBean('AOS_Quotes');
         $this->assertInstanceOf('AOS_Quotes', $aosQuotes);
         $this->assertInstanceOf('Basic', $aosQuotes);
         $this->assertInstanceOf('SugarBean', $aosQuotes);
@@ -37,7 +37,7 @@ class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $aosQuotes = new AOS_Quotes();
+        $aosQuotes = BeanFactory::newBean('AOS_Quotes');
 
         $aosQuotes->name = 'test';
         $aosQuotes->total_amt = 100;
