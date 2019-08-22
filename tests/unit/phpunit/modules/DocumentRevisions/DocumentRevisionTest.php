@@ -65,7 +65,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(null, $result);
         
         // clean up
-        
         $state->popGlobals();
         $state->popTable('tracker');
         $state->popTable('document_revisions');
@@ -93,7 +92,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('test', $documentRevision->get_summary_text());
         
         // clean up
-        
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
@@ -119,7 +117,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $documentRevision->is_authenticated());
         
         // clean up
-        
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
@@ -135,9 +132,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('cron_remove_documents');
         $state->pushTable('document_revisions');
         
-        
-        
-        
         $documentRevision = new DocumentRevision();
 
         //execute the method and test if it works and does not throws an exception.
@@ -149,7 +143,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
@@ -164,9 +157,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('cron_remove_documents');
         $state->pushTable('document_revisions');
         
-        
-        
-        
         $documentRevision = new DocumentRevision();
 
         //execute the method and test if it works and does not throws an exception.
@@ -178,7 +168,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
@@ -204,7 +193,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('-Revision_1.ext', $result);
         
         // clean up
-        
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
@@ -218,9 +206,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('cron_remove_documents');
         $state->pushTable('document_revisions');
         
-        
-        
-        
         $documentRevision = new DocumentRevision();
 
         //execute the method and test if it works and does not throws an exception.
@@ -232,7 +217,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
@@ -245,9 +229,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_indexevent');
         $state->pushTable('cron_remove_documents');
         $state->pushTable('document_revisions');
-        
-        
-        
         
         $documentRevision = new DocumentRevision();
         
@@ -263,7 +244,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
@@ -282,7 +262,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(array('DELETED' => 0), $result);
         
         // clean up
-        
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
@@ -300,7 +279,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(null, $result);
         
         // clean up
-        
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
@@ -318,7 +296,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(is_array($results));
         
         // clean up
-        
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
@@ -337,7 +314,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $documentRevision->bean_implements('FILE')); //test with valid value
         
         // clean up
-        
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');

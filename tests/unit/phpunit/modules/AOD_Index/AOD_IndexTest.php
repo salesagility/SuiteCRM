@@ -22,18 +22,11 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testisEnabled()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $aod_index = new AOD_Index();
 
-        //execute the method and verify that it returns true
+        // execute the method and verify that it returns true
         $result = $aod_index->isEnabled();
         $this->assertTrue($result);
-        
-        // clean up
     }
 
     public function testfind()
@@ -69,7 +62,6 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan($last_optimized, $aod_index->last_optimised);
         
         // clean up
-        
         $state->popTable('tracker');
     }
 

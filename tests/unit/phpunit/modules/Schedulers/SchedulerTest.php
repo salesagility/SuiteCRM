@@ -39,11 +39,6 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfireQualified()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $scheduler = new Scheduler();
 
         //test without setting any attributes
@@ -57,8 +52,6 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $scheduler->fireQualified();
         $this->assertEquals(true, $result);
-        
-        // clean up
     }
 
     public function testcreateJob()
@@ -72,14 +65,10 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcheckPendingJobs()
     {
         $state = new SuiteCRM\StateSaver();
-        
         $state->pushTable('job_queue');
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
-        
-        
-        
-        
+
         $scheduler = new Scheduler();
 
         //execute the method and test if it works and does not throws an exception.
@@ -91,7 +80,6 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         $state->popTable('tracker');
         $state->popTable('aod_index');
         $state->popTable('job_queue');
@@ -238,13 +226,9 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::markTestIncomplete('enviroment dependency');
         
         $state = new SuiteCRM\StateSaver();
-        
         $state->pushTable('schedulers');
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
-        
-        
-        
         
         $scheduler = new Scheduler();
 
@@ -268,12 +252,10 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::markTestIncomplete('environment dependency');
 
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('schedulers');
 
         // test
-        
         $scheduler = new Scheduler();
 
         //test with empty string params
@@ -287,7 +269,6 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
         
         // clean up
-        
         $state->popTable('schedulers');
     }
 
@@ -297,9 +278,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('schedulers');
-        
-        
-        
+
         
         $scheduler = new Scheduler();
 
@@ -312,18 +291,13 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         $state->popTable('schedulers');
     }
 
     public function testfill_in_additional_detail_fields()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
+
         $scheduler = new Scheduler();
 
         //execute the method and test if it works and does not throws an exception.

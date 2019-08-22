@@ -13,11 +13,6 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSugarFeed()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         //execute the contructor and check for the Object type and  attributes
         $sugarFeed = new SugarFeed();
 
@@ -31,8 +26,6 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertAttributeEquals(true, 'new_schema', $sugarFeed);
         $this->assertAttributeEquals(false, 'importable', $sugarFeed);
-        
-        // clean up
     }
 
     public function testactivateAndDisableModuleFeed()
@@ -40,7 +33,6 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::markTestIncomplete('environment dependency');
 
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('config');
 
@@ -65,11 +57,6 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testflushBackendCache()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
         
         //execute the method and test if it works and does not throws an exception.
         try {

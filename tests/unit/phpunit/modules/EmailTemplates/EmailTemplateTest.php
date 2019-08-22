@@ -114,11 +114,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgenerateFieldDefsJS()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $emailTemplate = new EmailTemplate();
 
         //execute the method and verify that it retunrs expected results
@@ -127,8 +122,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //$this->assertSame($expected,$actual);
 
         $this->assertGreaterThan(0, strlen($actual));
-        
-        // clean up
     }
 
     public function testget_summary_text()
@@ -145,16 +138,11 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreate_export_query()
     {
-
-
-    // save state
-
+        // save state
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
         // test
-        
-        
         $emailTemplate = new EmailTemplate();
 
         //test with empty string params
@@ -169,18 +157,11 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         // clean up
-        
         $state->popGlobals();
     }
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $emailTemplate = new EmailTemplate();
 
         //execute the method and test if it works and does not throws an exception.
@@ -190,8 +171,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfill_in_additional_detail_fields()
@@ -254,12 +233,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_parent_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $emailTemplate = new EmailTemplate();
 
         //execute the method and test if it works and does not throws an exception.
@@ -269,8 +242,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testget_list_view_data()
