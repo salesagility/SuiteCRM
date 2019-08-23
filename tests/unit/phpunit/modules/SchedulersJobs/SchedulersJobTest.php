@@ -33,25 +33,17 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'job_done', $schedulersJob);
         
         // clean up
-        
         $state->popTable('email_addresses');
     }
 
     public function testcheck_date_relationships_load()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $schedulersJob = new SchedulersJob();
         $schedulersJob->execute_time = '2015-01-01 00:00:00';
 
         $schedulersJob->check_date_relationships_load();
 
         $this->assertEquals('2015-01-01 00:00:00', $schedulersJob->execute_time_db);
-        
-        // clean up
     }
 
     public function testhandleDateFormat()
@@ -104,12 +96,6 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $schedulersJob = new SchedulersJob();
 
         //execute the method and test if it works and does not throws an exception.
@@ -119,14 +105,11 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfailJob()
     {
         // save state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
@@ -148,7 +131,6 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $schedulersJob->mark_deleted($schedulersJob->id);
         
         // clean up
-        
         $state->popTable('tracker');
         $state->popTable('aod_index');
     }

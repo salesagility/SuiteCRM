@@ -123,13 +123,11 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::markTestIncomplete('eapm table fails');
         
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $eapmTable = $state->pushTable('eapm');
         
         // test
-        
         $eapm = new EAPM();
 
         $eapm->name = 'test';
@@ -183,7 +181,6 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         DBManagerFactory::getInstance()->query("TRUNCATE TABLE eapm");
         
         $state->popTable('aod_index');
@@ -220,7 +217,6 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsave_cleanup()
     {
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $eapmTable = $state->pushTable('eapm');
@@ -245,7 +241,6 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testdelete_user_accounts()
     {
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $eapmTable = $state->pushTable('eapm');
@@ -278,8 +273,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test
         $result = getEAPMExternalApiDropDown();
         $this->assertEquals(array('' => ''), $result);
-        
-        
+
         // clean up
         DBManagerFactory::getInstance()->query("TRUNCATE TABLE eapm");
         

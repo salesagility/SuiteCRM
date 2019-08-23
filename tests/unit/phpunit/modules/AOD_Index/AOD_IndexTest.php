@@ -45,13 +45,12 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testoptimise()
     {
         self::markTestIncomplete('[Zend_Search_Lucene_Exception] File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
+        
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
 
         // test
-        
         $aod_index = new AOD_Index();
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';

@@ -354,12 +354,10 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testlistviewACLHelper()
     {
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
         // test
-        
         $meeting = new Meeting();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
@@ -367,7 +365,6 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
         
         // clean up
-        
         $state->popGlobals();
     }
 

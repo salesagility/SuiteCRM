@@ -340,19 +340,16 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
     public function testbean_implements()
     {
         // save state
-
         $state = new StateSaver();
         $state->pushTable('aod_indexevent');
 
         // test
-        
         $email = new Email();
         $this->assertEquals(false, $email->bean_implements('')); //test with blank value
         $this->assertEquals(false, $email->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $email->bean_implements('ACL')); //test with valid value
         
         // clean up
-        
         $state->popTable('aod_indexevent');
     }
 
