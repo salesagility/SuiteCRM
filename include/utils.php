@@ -293,6 +293,7 @@ function get_sugar_config_defaults()
         'email_default_editor' => 'html',
         'email_default_client' => 'sugar',
         'email_default_delete_attachments' => true,
+        'email_warning_notifications' => true,
         'email_enable_auto_send_opt_in' => false,
         'email_enable_confirm_opt_in' => SugarEmailAddress::COI_STAT_DISABLED,
         'filter_module_fields' => array(
@@ -5587,8 +5588,7 @@ function isValidEmailAddress($email, $message = 'Invalid email address given', $
 
 function displayAdminError($errorString)
 {
-    $output = '<p class="error">' . $errorString . '</p>';
-    SugarApplication::appendErrorMessage($output);
+    SugarApplication::appendErrorMessage($errorString);
 }
 
 function getAppString($key)
