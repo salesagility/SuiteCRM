@@ -1038,7 +1038,9 @@ abstract class DBManager
                         continue;
                     }
                 } else {
-                    if (array_map('strtolower', $fielddef1[$key]) == array_map('strtolower', $fielddef2[$key])) {
+                    $f1 = fixIndexArrayFormat($fielddef1[$key]);
+                    $f2 = fixIndexArrayFormat($fielddef2[$key]);
+                    if (array_map('strtolower', $f1) == array_map('strtolower', $f2)) {
                         continue;
                     }
                 }
