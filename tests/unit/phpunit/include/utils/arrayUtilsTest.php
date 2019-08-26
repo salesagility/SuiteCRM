@@ -259,7 +259,13 @@ class array_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
     }
 
-
+    /**
+     * This function tests fixIndexArrayFormat() function.
+     * The idea is that both arrays represents the same index definition, one defined in vardefs.php
+     * and the other obtained with get_indices() function.
+     * After applying fixIndexArrayFormat() to both arrays we compare it as compareVarDefs() function does:
+     *
+     */
     public function testfixIndexArrayFormat()
     {
         $index1 = [
