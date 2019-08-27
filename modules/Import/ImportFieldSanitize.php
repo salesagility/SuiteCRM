@@ -293,42 +293,42 @@ class ImportFieldSanitize
             return false;
         }
         if (isset($reg['positions']['h']) && (
-                !is_numeric($dateparts[$reg['positions']['h']])
+            !is_numeric($dateparts[$reg['positions']['h']])
                 || $dateparts[$reg['positions']['h']] < 1
                 || $dateparts[$reg['positions']['h']] > 12
         )) {
             return false;
         }
         if (isset($reg['positions']['H']) && (
-                !is_numeric($dateparts[$reg['positions']['H']])
+            !is_numeric($dateparts[$reg['positions']['H']])
                 || $dateparts[$reg['positions']['H']] < 0
                 || $dateparts[$reg['positions']['H']] > 23
         )) {
             return false;
         }
         if (isset($reg['positions']['i']) && (
-                !is_numeric($dateparts[$reg['positions']['i']])
+            !is_numeric($dateparts[$reg['positions']['i']])
                 || $dateparts[$reg['positions']['i']] < 0
                 || $dateparts[$reg['positions']['i']] > 59
         )) {
             return false;
         }
         if (isset($reg['positions']['s']) && (
-                !is_numeric($dateparts[$reg['positions']['s']])
+            !is_numeric($dateparts[$reg['positions']['s']])
                 || $dateparts[$reg['positions']['s']] < 0
                 || $dateparts[$reg['positions']['s']] > 59
         )) {
             return false;
         }
         if (isset($reg['positions']['d']) && (
-                !is_numeric($dateparts[$reg['positions']['d']])
+            !is_numeric($dateparts[$reg['positions']['d']])
                 || $dateparts[$reg['positions']['d']] < 1
                 || $dateparts[$reg['positions']['d']] > 31
         )) {
             return false;
         }
         if (isset($reg['positions']['m']) && (
-                !is_numeric($dateparts[$reg['positions']['m']])
+            !is_numeric($dateparts[$reg['positions']['m']])
                 || $dateparts[$reg['positions']['m']] < 1
                 || $dateparts[$reg['positions']['m']] > 12
         )) {

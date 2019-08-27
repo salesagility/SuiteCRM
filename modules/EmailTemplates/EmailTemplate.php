@@ -922,15 +922,16 @@ class EmailTemplate extends SugarBean
 
         // repair the images url at entry points, change to a public direct link for remote email clients..
 
-        $siteUrlQuoted = str_replace(array(':', '/'), array('\:', '\/'), $sugar_config['site_url']);
-        $regex = '/&lt;img src=&quot;(' . $siteUrlQuoted . '\/index\.php\?entryPoint=download&type=Notes&id=([a-f0-9]{8}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{12})&filename=[^&]+)&quot;/';
+        $html = from_html($this->body_html);
+        $siteUrl = $sugar_config['site_url'];
+        $regex = '#<img[^>]*[\s]+src=[\s]*["\'](' . preg_quote($siteUrl) . '\/index\.php\?entryPoint=download&type=Notes&id=([a-f0-9]{8}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{12})&filename=.+?)["\']#si';
 
-        if (preg_match($regex, $this->body_html, $match)) {
+        if (preg_match($regex, $html, $match)) {
             $splits = explode('.', $match[1]);
             $fileExtension = end($splits);
             $this->makePublicImage($match[2], $fileExtension);
-            $directLink = '&lt;img src=&quot;' . $sugar_config['site_url'] . '/public/' . $match[2] . '.' . $fileExtension . '&quot;';
-            $this->body_html = str_replace($match[0], $directLink, $this->body_html);
+            $newSrc = $sugar_config['site_url'] . '/public/' . $match[2] . '.' . $fileExtension;
+            $this->body_html = to_html(str_replace($match[1], $newSrc, $html));
             $this->imageLinkReplaced = true;
             $this->repairEntryPointImages();
         }

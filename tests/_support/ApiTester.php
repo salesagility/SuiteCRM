@@ -71,8 +71,8 @@ class ApiTester extends \Codeception\Actor
     public function loginAsAdminWithClientCredentials()
     {
         $this->loginWithClientCredentialsGrant(
-              $this->getClientCredentialsGrantClientId(),
-              $this->getClientCredentialsGrantClientSecret()
+            $this->getClientCredentialsGrantClientId(),
+            $this->getClientCredentialsGrantClientSecret()
         );
     }
 

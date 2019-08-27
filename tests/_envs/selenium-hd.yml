@@ -1,8 +1,0 @@
-# `selenium-hub` environment config goes here
-modules:
-  enabled:
-    - \SuiteCRM\Test\Driver\WebDriver
-  config:
-    \SuiteCRM\Test\Driver\WebDriver:
-      width: 1280
-      height: 720

@@ -50,12 +50,12 @@ require_once('modules/Configurator/Configurator.php');
 
 
 echo getClassicModuleTitle(
-        "Administration",
-        array(
+    "Administration",
+    array(
             "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
            $mod_strings['LBL_MANAGE_LOCALE'],
            ),
-        false
+    false
         );
 
 $cfg			= new Configurator();

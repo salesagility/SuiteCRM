@@ -1006,13 +1006,13 @@ EOQ;
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
 
     # --------- DEPRECATED --------
-    RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
     RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
     # -----------------------------
 
+    RewriteRule ^Api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
     RewriteRule ^Api/access_token$ Api/index.php/access_token [L]
     RewriteRule ^Api/V8/(.*?)$ Api/index.php/V8/$1 [L]
-    RewriteRule ^Api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
 <FilesMatch "\.(jpg|png|gif|js|css|ico)$">
         <IfModule mod_headers.c>
@@ -2211,7 +2211,8 @@ function create_writable_dir($dirname)
  * Create default OAuth2 encryption key
  * @throws Exception
  */
-function createEncryptionKey() {
+function createEncryptionKey()
+{
     $key = "OAUTH2_ENCRYPTION_KEY = '" . base64_encode(random_bytes(32));
     $apiConfig = file_get_contents('Api/Core/Config/ApiConfig.php');
     $configFileContents = str_replace(
@@ -2220,7 +2221,9 @@ function createEncryptionKey() {
         $apiConfig
     );
     file_put_contents(
-        'Api/Core/Config/ApiConfig.php', $configFileContents, LOCK_EX
+        'Api/Core/Config/ApiConfig.php',
+        $configFileContents,
+        LOCK_EX
     );
 }
 

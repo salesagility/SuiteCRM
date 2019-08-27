@@ -732,8 +732,8 @@ class SubPanelDefinitions
         $layout_defs [ $layout_def_key ] = array( ) ;
 
         if (empty($this->layout_defs) || $reload || (! empty($layout_def_key) && ! isset($layout_defs [ $layout_def_key ]))) {
-            if (file_exists('modules/' . $this->_focus->module_dir . '/metadata/subpaneldefs.php')) {
-                require('modules/' . $this->_focus->module_dir . '/metadata/subpaneldefs.php') ;
+            if (file_exists(get_custom_file_if_exists('modules/' . $this->_focus->module_dir . '/metadata/subpaneldefs.php'))) {
+                require get_custom_file_if_exists('modules/' . $this->_focus->module_dir . '/metadata/subpaneldefs.php');
             }
 
             if (! $original_only && file_exists('custom/modules/' . $this->_focus->module_dir . '/Ext/Layoutdefs/layoutdefs.ext.php')) {

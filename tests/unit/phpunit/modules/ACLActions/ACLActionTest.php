@@ -1,6 +1,5 @@
 <?php
 
-
 class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     protected function setUp()
@@ -67,7 +66,6 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testremoveActions()
     {
-
         //take count of actions initially and then after method execution and test if action count decreases
         $action_count = count(ACLAction::getDefaultActions());
         ACLAction::removeActions('Test');
@@ -77,15 +75,8 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAccessName()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $this->assertFalse(ACLAction::AccessName('')); //test with invalid value
         $this->assertEquals('All', ACLAction::AccessName(90)); //test with a valid value
-        
-        // clean up
     }
 
     public function testgetDefaultActions()

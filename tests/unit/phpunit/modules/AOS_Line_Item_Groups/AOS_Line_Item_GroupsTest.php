@@ -13,7 +13,6 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
 
     public function testAOS_Line_Item_Groups()
     {
-
         //execute the contructor and check for the Object type and  attributes
         $aosLineItemGroup = new AOS_Line_Item_Groups();
         $this->assertInstanceOf('AOS_Line_Item_Groups', $aosLineItemGroup);
@@ -37,8 +36,6 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
         
-        
-
         $aosLineItemGroup = new AOS_Line_Item_Groups();
 
         //populate required values
@@ -63,7 +60,6 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
         }
         
         // clean up
-        
         $state->popTable('aod_index');
         $state->popTable('tracker');
         $state->popTable('aos_line_item_groups');
@@ -93,7 +89,6 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
         $this->assertEquals(null, $result);
         
         // clean up
-        
         $state->popTable('tracker');
         $state->popTable('aos_line_item_groups');
     }

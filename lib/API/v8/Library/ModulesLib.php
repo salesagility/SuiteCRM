@@ -341,7 +341,7 @@ class ModulesLib
     ) {
         $config = $this->containers->get('ConfigurationManager');
         $query = new Query();
-        $pagination = array();
+        $pagination = [];
 
         if ($offset !== null) {
             $pagination['page']['offset'] = $offset;
@@ -353,16 +353,16 @@ class ModulesLib
 
 
         if ($filter !== null) {
-            $query->withContent(array('filter' => $filter));
+            $query->withContent(['filter' => $filter]);
         }
 
         if ($sort !== null) {
-            $query->withContent(array('sort' => implode(',', $sort)));
+            $query->withContent(['sort' => implode(',', $sort)]);
         }
 
 
         if ($fields !== null) {
-            $queryFields = array();
+            $queryFields = [];
             foreach ($fields as $module => $moduleFields) {
                 $queryFields['fields'][$module] = $fields[$module];
             }

@@ -248,7 +248,7 @@ class User extends Person implements EmailInterface
      * @throws \RuntimeException
      */
     public function getSignatures(
-    $live = false,
+        $live = false,
         $defaultSig = '',
         $forSettings = false,
         $elementId = 'signature_id',
@@ -284,7 +284,7 @@ class User extends Person implements EmailInterface
      * @throws \RuntimeException
      */
     public function getEmailAccountSignatures(
-    $live = false,
+        $live = false,
         $defaultSig = '',
         $forSettings = false,
         $elementId = 'account_signature_id',
@@ -391,7 +391,7 @@ class User extends Person implements EmailInterface
      * @param string $category Name of the category to retrieve
      */
     public function setPreference(
-    $name,
+        $name,
         $value,
         $nosession = 0,
         $category = 'global'
@@ -415,7 +415,7 @@ class User extends Person implements EmailInterface
      * @param string $category category to reset
      */
     public function resetPreferences(
-    $category = null
+        $category = null
     ) {
         // for BC
         if (func_num_args() > 1) {
@@ -485,7 +485,7 @@ class User extends Person implements EmailInterface
      * @return bool successful?
      */
     public function loadPreferences(
-    $category = 'global'
+        $category = 'global'
     ) {
         // for BC
         if (func_num_args() > 1) {
@@ -530,7 +530,7 @@ class User extends Person implements EmailInterface
      * @internal param bool $useRequestedRecord
      */
     public function getPreference(
-    $name,
+        $name,
         $category = 'global'
     ) {
         // for BC
@@ -756,8 +756,7 @@ class User extends Person implements EmailInterface
             $this->is_group = 0;
             $this->portal_only = 0;
 
-            if ((isset($_POST['is_admin']) && ($_POST['is_admin'] == 'on' || $_POST['is_admin'] == '1')) ||
-              (isset($_POST['UserType']) && $_POST['UserType'] == "Administrator")) {
+            if (is_admin($current_user) && ((isset($_POST['is_admin']) && ($_POST['is_admin'] === 'on' || $_POST['is_admin'] === '1')) || (isset($_POST['UserType']) && $_POST['UserType'] === 'Administrator'))) {
                 $this->is_admin = 1;
             } elseif (isset($_POST['is_admin']) && empty($_POST['is_admin'])) {
                 $this->is_admin = 0;
@@ -1188,49 +1187,54 @@ EOQ;
     /**
      * Generate a new hash from plaintext password
      * @param string $password
+     * @return bool|string
      */
     public static function getPasswordHash($password)
     {
-        if (!defined('CRYPT_MD5') || !constant('CRYPT_MD5')) {
-            // does not support MD5 crypt - leave as is
-            if (defined('CRYPT_EXT_DES') && constant('CRYPT_EXT_DES')) {
-                return crypt(strtolower(md5($password)), "_.012" . substr(str_shuffle('./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'), -4));
-            }
-            // plain crypt cuts password to 8 chars, which is not enough
-            // fall back to old md5
-            return strtolower(md5($password));
-        }
+        return self::getPasswordHashMD5(md5($password));
+    }
 
-        return @crypt(strtolower(md5($password)));
+    /**
+     * Generate a new hash from MD5 password
+     * @param string $passwordMd5
+     * @return bool|string
+     */
+    public static function getPasswordHashMD5($passwordMd5)
+    {
+        return password_hash(strtolower($passwordMd5), PASSWORD_DEFAULT);
     }
 
     /**
      * Check that password matches existing hash
      * @param string $password Plaintext password
-     * @param string $user_hash DB hash
+     * @param string $userHash DB hash
+     * @return bool
      */
-    public static function checkPassword($password, $user_hash)
+    public static function checkPassword($password, $userHash)
     {
-        return self::checkPasswordMD5(md5($password), $user_hash);
+        return self::checkPasswordMD5(md5($password), $userHash);
     }
 
     /**
      * Check that md5-encoded password matches existing hash
-     * @param string $password MD5-encoded password
-     * @param string $user_hash DB hash
+     * @param string $passwordMd5 MD5-encoded password
+     * @param string $userHash DB hash
      * @return bool Match or not?
      */
-    public static function checkPasswordMD5($password_md5, $user_hash)
+    public static function checkPasswordMD5($passwordMd5, $userHash)
     {
-        if (empty($user_hash)) {
+        if (empty($userHash)) {
             return false;
         }
-        if ($user_hash[0] != '$' && strlen($user_hash) == 32) {
-            // Old way - just md5 password
-            return strtolower($password_md5) == $user_hash;
+
+        if ($userHash[0] !== '$' && strlen($userHash) === 32) {
+            // Legacy md5 password
+            $valid = strtolower($passwordMd5) === $userHash;
+        } else {
+            $valid = password_verify(strtolower($passwordMd5), $userHash);
         }
 
-        return crypt(strtolower($password_md5), $user_hash) == $user_hash;
+        return $valid;
     }
 
     /**
@@ -1239,7 +1243,7 @@ EOQ;
      * @param string $password MD5-encoded password
      * @param string $where Limiting query
      * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (default is true)
-     * @return bool|arraythe matching User of false if not found
+     * @return bool|array the matching User of false if not found
      */
     public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
     {
@@ -1430,7 +1434,7 @@ EOQ;
     }
 
     public function retrieve_user_id(
-    $user_name
+        $user_name
     ) {
         $userFocus = new User;
         $userFocus->retrieve_by_string_fields(array('user_name' => $user_name));
@@ -1825,7 +1829,7 @@ EOQ;
      * @param class
      */
     public function getEmailLink2(
-    $emailAddress,
+        $emailAddress,
         &$focus,
         $contact_id = '',
         $ret_module = '',
@@ -1888,7 +1892,7 @@ EOQ;
      * @param class
      */
     public function getEmailLink(
-    $attribute,
+        $attribute,
         &$focus,
         $contact_id = '',
         $ret_module = '',
@@ -2145,7 +2149,7 @@ EOQ;
     }
 
     public function create_new_list_query(
-    $order_by,
+        $order_by,
         $where,
         $filter = array(),
         $params = array(),

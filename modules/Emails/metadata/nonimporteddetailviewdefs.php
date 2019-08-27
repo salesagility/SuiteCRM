@@ -55,6 +55,9 @@ $viewdefs[$module_name]['DetailView'] = array(
                 array(
                     'customCode' => '<input type=button onclick="window.location.href=\'index.php?module=Emails&action=Forward&folder=INBOX.TestInbox&folder=inbound&inbound_email_record={$bean->inbound_email_record}&uid={$bean->uid}&msgno={$bean->msgNo}&record={$bean->id}\';" value="{$MOD.LBL_BUTTON_FORWARD}">'
                 ),
+                [
+                    'customCode' => '<input type=button onclick="window.location.href=\'index.php?module=Emails&action=DeleteFromImap&folder=INBOX.TestInbox&folder=inbound&inbound_email_record={$bean->inbound_email_record}&uid={$bean->uid}&msgno={$bean->msgNo}&record={$bean->id}\';" value="{$MOD.LBL_BUTTON_DELETE_IMAP}">'
+                ],
             ),
         ),
         'includes' => array(
@@ -117,12 +120,19 @@ $viewdefs[$module_name]['DetailView'] = array(
                     'label' => 'LBL_BODY'
                 ),
             ),
-            array(
-                'date_entered' => array(
-                    'name' => 'date_entered',
-                    'label' => 'LBL_DATE_ENTERED',
-                )
-            )
+            [
+                'attachment' => [
+                    'name' => 'attachment',
+                    'label' => 'LBL_ATTACHMENTS',
+                  ]
+              ],
+            [
+                'date_sent_received' => [
+                    'name' => 'date_sent_received',
+                    'customCode' => '{$fields.date_entered.value}',
+                    'label' => 'LBL_DATE_SENT_RECEIVED',
+                ]
+            ]
         )
     )
 );

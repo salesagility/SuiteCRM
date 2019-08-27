@@ -33,6 +33,7 @@ $finder = PhpCsFixer\Finder::create()
     ->exclude('modules/Users/authentication/SAML2Authenticate/lib')
     ->exclude('modules/AOR_Charts/lib')
     ->exclude('install/demoData.en_us.php')
+    ->exclude('include/SugarObjects/templates')
     ->in($paths->getProjectPath());
 
 return PhpCsFixer\Config::create()

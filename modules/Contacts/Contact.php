@@ -215,7 +215,7 @@ class Contact extends Person implements EmailInterface
         if (!ACLController::moduleSupportsACL('Accounts') || ACLController::checkAccess(
             'Accounts',
             'view',
-                $is_owner
+            $is_owner
         )
         ) {
             $array_assign['ACCOUNT'] = 'a';
@@ -252,27 +252,26 @@ class Contact extends Person implements EmailInterface
                 $singleSelect,
                 $ifListForExport
             );
-        } else {
-            //any other action goes to parent function in sugarbean
-            if (strpos($order_by, 'sync_contact') !== false) {
-                //we have found that the user is ordering by the sync_contact field, it would be troublesome to sort by this field
-                //and perhaps a performance issue, so just remove it
-                $order_by = '';
-            }
-
-            return parent::create_new_list_query(
-                $order_by,
-                $where,
-                $filter,
-                $params,
-                $show_deleted,
-                $join_type,
-                $return_array,
-                $parentbean,
-                $singleSelect,
-                $ifListForExport
-            );
         }
+        //any other action goes to parent function in sugarbean
+        if (strpos($order_by, 'sync_contact') !== false) {
+            //we have found that the user is ordering by the sync_contact field, it would be troublesome to sort by this field
+            //and perhaps a performance issue, so just remove it
+            $order_by = '';
+        }
+
+        return parent::create_new_list_query(
+            $order_by,
+            $where,
+            $filter,
+            $params,
+            $show_deleted,
+            $join_type,
+            $return_array,
+            $parentbean,
+            $singleSelect,
+            $ifListForExport
+            );
     }
 
 
