@@ -1,4 +1,4 @@
-<?php
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,46 +38,22 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+*}
 
-require_once("include/SugarCharts/JsChart.php");
-
-class Jit extends JsChart
-{
-    public $supports_image_export = true;
-    public $print_html_legend_pdf = true;
-    
-    public function __construct()
-    {
-        parent::__construct();
-    }
-    
-    public function getChartResources()
-    {
-        return '
-		<script language="javascript" type="text/javascript" src="'.getJSPath('include/SugarCharts/Jit/js/Jit/jit.js').'"></script>
-		<script language="javascript" type="text/javascript" src="'.getJSPath('include/SugarCharts/Jit/js/sugarCharts.js').'"></script>
-		';
-    }
-    
-    public function getMySugarChartResources()
-    {
-        return '
-		<script language="javascript" type="text/javascript" src="'.getJSPath('include/SugarCharts/Jit/js/mySugarCharts.js').'"></script>
-		';
-    }
-    
-
-    public function display($name, $xmlFile, $width='320', $height='480', $resize=false)
-    {
-        parent::display($name, $xmlFile, $width, $height, $resize);
-
-        return $this->ss->fetch('include/SugarCharts/Jit/tpls/chart.tpl');
-    }
-    
-
-    public function getDashletScript($id, $xmlFile="")
-    {
-        parent::getDashletScript($id, $xmlFile);
-        return $this->ss->fetch('include/SugarCharts/Jit/tpls/DashletGenericChartScript.tpl');
-    }
-}
+<script>
+SUGAR.util.doWhen(
+	"SUGAR && SUGAR.mySugar && SUGAR.mySugar.sugarCharts",
+	function(){ldelim}
+		var customChart = true;
+		var css = new Array();
+		var chartConfig = new Array();
+		{foreach from=$css key=selector item=property}
+		css["{$selector}"] = '{$property}';
+		{/foreach}
+		{foreach from=$config key=name item=value}
+		chartConfig["{$name}"] = '{$value}';
+		{/foreach}
+    	SUGAR.mySugar.sugarCharts.addToChartsArray('{$chartId}','{$filename}',css,chartConfig,activePage);
+		{rdelim}
+	);
+</script>

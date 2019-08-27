@@ -1,4 +1,4 @@
-<?php
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,46 +38,52 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+*}
 
-require_once("include/SugarCharts/JsChart.php");
+{if !$error}
+<script type="text/javascript">
+	{literal}
+	SUGAR.util.doWhen(
+		"((SUGAR && SUGAR.mySugar && SUGAR.mySugar.sugarCharts)   || (SUGAR.loadChart && typeof loadSugarChart == 'function')  || document.getElementById('showHideChartButton') != null) && typeof(loadSugarChart) != undefined",
+		function(){
+			{/literal}
+			var css = new Array();
+			var chartConfig = new Array();
+			{foreach from=$css key=selector item=property}
+				css["{$selector}"] = '{$property}';
+			{/foreach}
+			{foreach from=$config key=name item=value}
+				chartConfig["{$name}"] = '{$value}';
+			{/foreach}
+			{if $height > 480}
+				chartConfig["scroll"] = true;
+			{/if}
+			loadCustomChartForReports = function(){ldelim}
+				loadSugarChart('{$chartId}','{$filename}',css,chartConfig);
+			{rdelim};
+			// bug51857: fixed issue on report running in a loop when clicking on hide chart then run report in IE8 only
+			// When hide chart button is clicked, the value of element showHideChartButton is set to $showchart.
+			// Don't need to call the loadCustomChartForReports() function when hiding the chart.
+			{if !isset($showchart)}
+				loadCustomChartForReports();
+			{else}
+			     if($('#showHideChartButton').attr('value') != '{$showchart}')
+			        loadCustomChartForReports();
+			{/if}
+			{literal}
+		}
+	);
+	{/literal}
+</script>
 
-class Jit extends JsChart
-{
-    public $supports_image_export = true;
-    public $print_html_legend_pdf = true;
-    
-    public function __construct()
-    {
-        parent::__construct();
-    }
-    
-    public function getChartResources()
-    {
-        return '
-		<script language="javascript" type="text/javascript" src="'.getJSPath('include/SugarCharts/Jit/js/Jit/jit.js').'"></script>
-		<script language="javascript" type="text/javascript" src="'.getJSPath('include/SugarCharts/Jit/js/sugarCharts.js').'"></script>
-		';
-    }
-    
-    public function getMySugarChartResources()
-    {
-        return '
-		<script language="javascript" type="text/javascript" src="'.getJSPath('include/SugarCharts/Jit/js/mySugarCharts.js').'"></script>
-		';
-    }
-    
+<div class="chartContainer">
+	<div id="sb{$chartId}" class="scrollBars">
+    <div id="{$chartId}" class="chartCanvas" style="width: {$width}; height: {$height}px;"></div>  
+    </div>
+	<div id="legend{$chartId}" class="legend"></div>
+</div>
+<div class="clear"></div>
+{else}
 
-    public function display($name, $xmlFile, $width='320', $height='480', $resize=false)
-    {
-        parent::display($name, $xmlFile, $width, $height, $resize);
-
-        return $this->ss->fetch('include/SugarCharts/Jit/tpls/chart.tpl');
-    }
-    
-
-    public function getDashletScript($id, $xmlFile="")
-    {
-        parent::getDashletScript($id, $xmlFile);
-        return $this->ss->fetch('include/SugarCharts/Jit/tpls/DashletGenericChartScript.tpl');
-    }
-}
+{$error}
+{/if}
