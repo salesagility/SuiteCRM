@@ -1,4 +1,4 @@
-<?php
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,59 +38,22 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+*}
 
-/**
- * Chart factory
- * @api
- */
-class SugarChartFactory
-{
-    /**
-     * Returns a reference to the ChartEngine object for instance $chartEngine, or the default
-     * instance if one is not specified
-     *
-     * @param string $chartEngine optional, name of the chart engine from $sugar_config['chartEngine']
-     * @param string $module optional, name of module extension for chart engine (see JitReports or SugarFlashReports)
-     * @return object ChartEngine instance
-     */
-    public static function getInstance($chartEngine = '', $module = '')
-    {
-        global $sugar_config;
-        $defaultEngine = "Jit";
-        //fall back to the default Js Engine if config is not defined
-        if (empty($sugar_config['chartEngine'])) {
-            $sugar_config['chartEngine'] = $defaultEngine;
-        }
-
-        if (empty($chartEngine)) {
-            $chartEngine = $sugar_config['chartEngine'];
-        }
-
-        $file = "include/SugarCharts/".$chartEngine."/".$chartEngine.$module.".php";
-        $customFile = 'custom/' . $file;
-
-        if (file_exists($customFile)) {
-            require_once($customFile);
-        } elseif (file_exists($file)) {
-            require_once($file);
-        } else {
-
-            LoggerManager::getLogger()->debug(
-                "Using default engine include/SugarCharts/" .
-                $defaultEngine . "/" .
-                $defaultEngine.$module.".php"
-            );
-
-            $defaultFile = "include/SugarCharts/".$defaultEngine."/".$defaultEngine.$module.".php";
-            require_once($defaultFile);
-
-            $chartEngine = $defaultEngine;
-        }
-
-        $className = $chartEngine.$module;
-        return new $className();
-    }
-}
+<script>
+SUGAR.util.doWhen(
+	"SUGAR && SUGAR.mySugar && SUGAR.mySugar.sugarCharts",
+	function(){ldelim}
+		var customChart = true;
+		var css = new Array();
+		var chartConfig = new Array();
+		{foreach from=$css key=selector item=property}
+		css["{$selector}"] = '{$property}';
+		{/foreach}
+		{foreach from=$config key=name item=value}
+		chartConfig["{$name}"] = '{$value}';
+		{/foreach}
+    	SUGAR.mySugar.sugarCharts.addToChartsArray('{$chartId}','{$filename}',css,chartConfig,activePage);
+		{rdelim}
+	);
+</script>

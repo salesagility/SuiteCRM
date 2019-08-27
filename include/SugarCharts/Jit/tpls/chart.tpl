@@ -1,4 +1,4 @@
-<?php
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,59 +38,52 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+*}
 
-/**
- * Chart factory
- * @api
- */
-class SugarChartFactory
-{
-    /**
-     * Returns a reference to the ChartEngine object for instance $chartEngine, or the default
-     * instance if one is not specified
-     *
-     * @param string $chartEngine optional, name of the chart engine from $sugar_config['chartEngine']
-     * @param string $module optional, name of module extension for chart engine (see JitReports or SugarFlashReports)
-     * @return object ChartEngine instance
-     */
-    public static function getInstance($chartEngine = '', $module = '')
-    {
-        global $sugar_config;
-        $defaultEngine = "Jit";
-        //fall back to the default Js Engine if config is not defined
-        if (empty($sugar_config['chartEngine'])) {
-            $sugar_config['chartEngine'] = $defaultEngine;
-        }
+{if !$error}
+<script type="text/javascript">
+	{literal}
+	SUGAR.util.doWhen(
+		"((SUGAR && SUGAR.mySugar && SUGAR.mySugar.sugarCharts)   || (SUGAR.loadChart && typeof loadSugarChart == 'function')  || document.getElementById('showHideChartButton') != null) && typeof(loadSugarChart) != undefined",
+		function(){
+			{/literal}
+			var css = new Array();
+			var chartConfig = new Array();
+			{foreach from=$css key=selector item=property}
+				css["{$selector}"] = '{$property}';
+			{/foreach}
+			{foreach from=$config key=name item=value}
+				chartConfig["{$name}"] = '{$value}';
+			{/foreach}
+			{if $height > 480}
+				chartConfig["scroll"] = true;
+			{/if}
+			loadCustomChartForReports = function(){ldelim}
+				loadSugarChart('{$chartId}','{$filename}',css,chartConfig);
+			{rdelim};
+			// bug51857: fixed issue on report running in a loop when clicking on hide chart then run report in IE8 only
+			// When hide chart button is clicked, the value of element showHideChartButton is set to $showchart.
+			// Don't need to call the loadCustomChartForReports() function when hiding the chart.
+			{if !isset($showchart)}
+				loadCustomChartForReports();
+			{else}
+			     if($('#showHideChartButton').attr('value') != '{$showchart}')
+			        loadCustomChartForReports();
+			{/if}
+			{literal}
+		}
+	);
+	{/literal}
+</script>
 
-        if (empty($chartEngine)) {
-            $chartEngine = $sugar_config['chartEngine'];
-        }
+<div class="chartContainer">
+	<div id="sb{$chartId}" class="scrollBars">
+    <div id="{$chartId}" class="chartCanvas" style="width: {$width}; height: {$height}px;"></div>  
+    </div>
+	<div id="legend{$chartId}" class="legend"></div>
+</div>
+<div class="clear"></div>
+{else}
 
-        $file = "include/SugarCharts/".$chartEngine."/".$chartEngine.$module.".php";
-        $customFile = 'custom/' . $file;
-
-        if (file_exists($customFile)) {
-            require_once($customFile);
-        } elseif (file_exists($file)) {
-            require_once($file);
-        } else {
-
-            LoggerManager::getLogger()->debug(
-                "Using default engine include/SugarCharts/" .
-                $defaultEngine . "/" .
-                $defaultEngine.$module.".php"
-            );
-
-            $defaultFile = "include/SugarCharts/".$defaultEngine."/".$defaultEngine.$module.".php";
-            require_once($defaultFile);
-
-            $chartEngine = $defaultEngine;
-        }
-
-        $className = $chartEngine.$module;
-        return new $className();
-    }
-}
+{$error}
+{/if}

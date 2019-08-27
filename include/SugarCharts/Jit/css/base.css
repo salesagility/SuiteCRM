@@ -1,4 +1,3 @@
-<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,59 +37,78 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
+/**
+ * Description:  Contains a variety of utility functions used to display UI
+ * components such as form headers and footers.  Intended to be modified on a per
+ * theme basis.
+ */
+
+.chartContainer {
+  float: left;
+  margin: auto;
+  width: 100%;
 }
 
-/**
- * Chart factory
- * @api
- */
-class SugarChartFactory
-{
-    /**
-     * Returns a reference to the ChartEngine object for instance $chartEngine, or the default
-     * instance if one is not specified
-     *
-     * @param string $chartEngine optional, name of the chart engine from $sugar_config['chartEngine']
-     * @param string $module optional, name of module extension for chart engine (see JitReports or SugarFlashReports)
-     * @return object ChartEngine instance
-     */
-    public static function getInstance($chartEngine = '', $module = '')
-    {
-        global $sugar_config;
-        $defaultEngine = "Jit";
-        //fall back to the default Js Engine if config is not defined
-        if (empty($sugar_config['chartEngine'])) {
-            $sugar_config['chartEngine'] = $defaultEngine;
-        }
+.chartContainer .scrollBars {
+  overflow: auto;
+  max-height: 600px;
+  position: relative;
+}
 
-        if (empty($chartEngine)) {
-            $chartEngine = $sugar_config['chartEngine'];
-        }
+.chartCanvas {
+  position: relative;
+  margin: auto;
+  overflow: hidden;
+  background-image: url(../../../../index.php?entryPoint=getImage&imageName=chartBg.png);
+  background-repeat: repeat-x;
+}
 
-        $file = "include/SugarCharts/".$chartEngine."/".$chartEngine.$module.".php";
-        $customFile = 'custom/' . $file;
+.query-color {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  margin-right: 10px;
+  border: 1px solid #999;
+}
 
-        if (file_exists($customFile)) {
-            require_once($customFile);
-        } elseif (file_exists($file)) {
-            require_once($file);
-        } else {
+.legend {
+  padding: 10px 20px;
+  float: left;
+}
 
-            LoggerManager::getLogger()->debug(
-                "Using default engine include/SugarCharts/" .
-                $defaultEngine . "/" .
-                $defaultEngine.$module.".php"
-            );
+.legend table td.label {
+  padding: 0 20px 5px 0;
+  text-align: left;
+}
 
-            $defaultFile = "include/SugarCharts/".$defaultEngine."/".$defaultEngine.$module.".php";
-            require_once($defaultFile);
+/* TOOLTIPS */
+.tip {
+  color: #111;
+  width: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  -moz-box-shadow: #555 2px 2px 8px;
+  -webkit-box-shadow: #555 2px 2px 8px;
+  -o-box-shadow: #555 2px 2px 8px;
+  box-shadow: #555 2px 2px 8px;
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+  font-size: 11px;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 7px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+}
 
-            $chartEngine = $defaultEngine;
-        }
+.rotatedLabel {
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  filter: progid:dximagetransform.microsoft.basicimage(rotation=3);
+}
 
-        $className = $chartEngine.$module;
-        return new $className();
-    }
+.rotatedLabelReverse {
+  -webkit-transform: rotate(-0deg);
+  -moz-transform: rotate(90deg);
+  filter: progid:dximagetransform.microsoft.basicimage(rotation=2);
 }
