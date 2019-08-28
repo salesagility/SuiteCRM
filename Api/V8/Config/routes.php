@@ -38,7 +38,7 @@ $app->group('', function () use ($app) {
         $app->get('/meta/modules', 'Api\V8\Controller\MetaController:getModuleList');
 
         $app->get('/meta/fields/{moduleName}', 'Api\V8\Controller\MetaController:getFieldList')
-            ->add($paramsMiddlewareFactory->bind(GetFieldListParams::class));
+            ->add($paramsMiddlewareFactory->bind(Param\GetFieldListParams::class));
 
         $app
             ->get('/user-preferences/{id}', 'Api\V8\Controller\UserPreferencesController:getUserPreferences')
