@@ -369,6 +369,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'FP_Event_Locations',
             'Tasks',
             'jjwg_Markers',
+            'EmailMarketing',
             'EmailTemplates',
             'Campaigns',
             'jjwg_Areas',
