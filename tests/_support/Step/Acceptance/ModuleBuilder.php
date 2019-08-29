@@ -76,8 +76,10 @@ class ModuleBuilder extends Administration
 
             $I->waitForElementVisible('[name="name"]');
 
+            $I->wantTo('Deploy the package');
             $I->deployPackage($packageName);
             // Redeploy @TODO seperate this out to new test
+            $I->wantTo('Deploy the package again');
             $I->deployPackage($packageName, true);
         } else {
             $I->getScenario()->skip($packageName . ' already exists. Please remove package and module manually.');
