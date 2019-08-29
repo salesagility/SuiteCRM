@@ -90,8 +90,8 @@ class ElasticsearchCest
         $I->acceptPopup();
 
         $I->click('Test connection');
-        $I->wait(15);
-        $I->acceptPopup();
+        $I->retry(5, 1000);
+        $I->retryAcceptPopup();
 
         $I->click('Save');
     }
