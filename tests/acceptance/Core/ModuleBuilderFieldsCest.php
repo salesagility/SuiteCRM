@@ -120,6 +120,8 @@ class ModuleBuilderFieldsCest
 
         // Click Edit View
         $I->waitForElementVisible('.bodywrapper');
+        // This occasionally needs a bit more time or it will fail.
+        $I->wait(2);
         $I->click('Edit View', '.bodywrapper');
         $I->waitForElementVisible('#layoutEditor');
 
@@ -279,6 +281,8 @@ class ModuleBuilderFieldsCest
 
         // Click Edit View
         $I->waitForElementVisible('.bodywrapper', 30);
+        // This occasionally needs a bit more time or else it fails.
+        $I->wait(2);
         $I->click('Edit View', '.bodywrapper');
         $I->waitForElementVisible('#layoutEditor', 30);
 
