@@ -39,7 +39,6 @@ class ModuleBuilder extends Administration
 
             // Create new module
             $I->waitForText('New Module');
-            $I->wait(2);
             $I->click('New Module');
             $I->waitForElement('[name="label"]');
             $I->fillField(['name' => 'name'], $moduleName);
