@@ -85,7 +85,7 @@ class AcceptanceTester extends \Codeception\Actor
 
     /**
      * Helper for navigating to a page.
-     * 
+     *
      * @param string $module SuiteCRM module name
      * @param string $action View action name, e.g. index, EditView, DetailView.
      * @param string|null $record The id of a record, used for EditView and DetailView routes.

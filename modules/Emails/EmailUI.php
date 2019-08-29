@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once("include/utils.php");
 require_once("include/ytree/Tree.php");
 require_once("include/ytree/ExtNode.php");
 require_once("include/SugarFolders/SugarFolders.php");
@@ -952,7 +953,7 @@ HTML;
             $this->smarty->assign("app_strings", $app_strings);
             $this->smarty->assign(
                 "contact_strings",
-                return_module_language($_SESSION['authenticated_user_language'], 'Contacts')
+                return_module_language(get_current_language(), 'Contacts')
             );
             $this->smarty->assign("contact", $contactMeta);
 
@@ -2200,6 +2201,23 @@ HTML;
         return true;
     }
 
+    /**
+     * @param array $userIds
+     * @return array
+     */
+    public function getAssignedEmailsCountForUsers($userIds)
+    {
+        $counts = [];
+        foreach ($userIds as $id) {
+            $idQuoted = $this->db->quoted($id);
+            $r = $this->db->query("SELECT count(*) AS c FROM emails WHERE assigned_user_id = $idQuoted AND status = 'unread'");
+            $a = $this->db->fetchByAssoc($r);
+            $counts[$id] = $a['c'];
+        }
+
+        return $counts;
+    }
+
     public function getLastRobin($ie)
     {
         $lastRobin = "";
@@ -2823,7 +2841,7 @@ eoq;
 
         $q = "SELECT * FROM folders f WHERE f.created_by = '{$user->id}' AND f.deleted = 0 AND coalesce(" . $user->db->convert(
             "f.folder_type",
-                "length"
+            "length"
         ) . ",0) > 0";
         $r = $user->db->query($q);
 
@@ -2936,7 +2954,7 @@ eoq;
 
         if (ACLController::checkAccess('EmailTemplates', 'list', true) && ACLController::checkAccess(
             'EmailTemplates',
-                'view',
+            'view',
             true
         )
         ) {
@@ -3205,7 +3223,7 @@ eoq;
         $ieAccountsFull = $ie->retrieveAllByGroupId($current_user->id);
         $ieAccountsShowOptionsMeta = array();
         $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
-        $defaultIEAccount = (new SugarFolder())->getUsersDefaultOutboundServerId($current_user);
+        $defaultIEAccount = $ie->getUsersDefaultOutboundServerId($current_user);
 
         foreach ($ieAccountsFull as $k => $v) {
             $default = $defaultIEAccount == $v->id;

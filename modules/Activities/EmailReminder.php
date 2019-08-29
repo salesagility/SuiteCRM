@@ -47,6 +47,7 @@ require_once("modules/Calls/Call.php");
 require_once("modules/Users/User.php");
 require_once("modules/Contacts/Contact.php");
 require_once("modules/Leads/Lead.php");
+require_once("include/utils.php");
 
 /**
  * Class for sending email reminders of meetings and call to invitees
@@ -129,11 +130,7 @@ class EmailReminder
      */
     public function sendReminders(SugarBean $bean, Administration $admin, $recipients)
     {
-        if (empty($_SESSION['authenticated_user_language'])) {
-            $current_language = $GLOBALS['sugar_config']['default_language'];
-        } else {
-            $current_language = $_SESSION['authenticated_user_language'];
-        }
+        $current_language = get_current_language();
 
         if (!empty($bean->created_by)) {
             $user_id = $bean->created_by;

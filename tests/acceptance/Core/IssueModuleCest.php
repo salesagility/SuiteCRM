@@ -4,13 +4,6 @@ use Faker\Generator;
 
 class IssueModuleCest
 {
-
-    /**
-     * @var string $lastView helps the test skip some repeated tests in order to make the test framework run faster at the
-     * potential cost of being accurate and reliable
-     */
-    protected $lastView;
-
     /**
      * @var Generator $fakeData
      */
@@ -50,8 +43,8 @@ class IssueModuleCest
      * the module before testing.
      */
     public function testScenarioCreateIssueModule(
-       \AcceptanceTester $I,
-       \Step\Acceptance\ModuleBuilder $moduleBuilder
+        \AcceptanceTester $I,
+        \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a issue module for testing');
         $I->loginAsAdmin();
@@ -61,8 +54,6 @@ class IssueModuleCest
             \Page\IssueModule::$NAME,
             \SuiteCRM\Enumerator\SugarObjectType::issue
         );
-
-        $this->lastView = 'ModuleBuilder';
     }
 
     /**
@@ -85,7 +76,6 @@ class IssueModuleCest
         $navigationBar->clickAllMenuItem(\Page\IssueModule::$NAME);
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 
     /**
@@ -122,7 +112,6 @@ class IssueModuleCest
         $editView->fillField('#description', $this->fakeData->paragraph);
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -156,7 +145,6 @@ class IssueModuleCest
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($this->fakeData->name);
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -199,7 +187,6 @@ class IssueModuleCest
         $editView->click('Save');
 
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -249,7 +236,6 @@ class IssueModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 
     /**
@@ -288,6 +274,5 @@ class IssueModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 }

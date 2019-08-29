@@ -30,14 +30,12 @@ class OpportunitiesCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Opportunities $opportunities
      *
      * As an administrator I want to view the opportunities module.
      */
     public function testScenarioViewOpportunitiesModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Opportunities $opportunities
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the opportunities module for testing');
 

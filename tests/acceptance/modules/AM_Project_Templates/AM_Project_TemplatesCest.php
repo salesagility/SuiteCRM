@@ -30,14 +30,12 @@ class AM_Project_TemplatesCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\ProjectTemplates $projectTemplates
      *
      * As an administrator I want to view the projectTemplates module.
      */
     public function testScenarioViewProjectTemplatesModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\ProjectTemplates $projectTemplates
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the projectTemplates module for testing');
         // Navigate to projectTemplates list-view

@@ -323,7 +323,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                        $v_arg_list,
                        $v_size,
                        $v_options,
-                                            array(PCLZIP_OPT_REMOVE_PATH => 'optional',
+                       array(PCLZIP_OPT_REMOVE_PATH => 'optional',
                                                    PCLZIP_OPT_REMOVE_ALL_PATH => 'optional',
                                                    PCLZIP_OPT_ADD_PATH => 'optional',
                                                    PCLZIP_CB_PRE_ADD => 'optional',
@@ -366,7 +366,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                        // ----- Error log
                        PclZip::privErrorLog(
                            PCLZIP_ERR_INVALID_PARAMETER,
-                               "Invalid number / type of arguments"
+                           "Invalid number / type of arguments"
                        );
 
                        // ----- Return
@@ -487,7 +487,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                        $v_arg_list,
                        $v_size,
                        $v_options,
-                                            array(PCLZIP_OPT_REMOVE_PATH => 'optional',
+                       array(PCLZIP_OPT_REMOVE_PATH => 'optional',
                                                    PCLZIP_OPT_REMOVE_ALL_PATH => 'optional',
                                                    PCLZIP_OPT_ADD_PATH => 'optional',
                                                    PCLZIP_CB_PRE_ADD => 'optional',
@@ -721,7 +721,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                        $v_arg_list,
                        $v_size,
                        $v_options,
-                                            array(PCLZIP_OPT_PATH => 'optional',
+                       array(PCLZIP_OPT_PATH => 'optional',
                                                    PCLZIP_OPT_REMOVE_PATH => 'optional',
                                                    PCLZIP_OPT_REMOVE_ALL_PATH => 'optional',
                                                    PCLZIP_OPT_ADD_PATH => 'optional',
@@ -794,7 +794,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                $p_list,
                $v_path,
                $v_remove_path,
-                                         $v_remove_all_path,
+               $v_remove_all_path,
                $v_options
            );
            if ($v_result < 1) {
@@ -892,7 +892,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                        $v_arg_list,
                        $v_size,
                        $v_options,
-                                            array(PCLZIP_OPT_PATH => 'optional',
+                       array(PCLZIP_OPT_PATH => 'optional',
                                                    PCLZIP_OPT_REMOVE_PATH => 'optional',
                                                    PCLZIP_OPT_REMOVE_ALL_PATH => 'optional',
                                                    PCLZIP_OPT_EXTRACT_AS_STRING => 'optional',
@@ -968,7 +968,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                $v_arg_trick,
                sizeof($v_arg_trick),
                $v_options_trick,
-                                        array(PCLZIP_OPT_BY_INDEX => 'optional' )
+               array(PCLZIP_OPT_BY_INDEX => 'optional' )
            );
            if ($v_result != 1) {
                //--(MAGIC-PclTrace)--//PclTraceFctEnd(__FILE__, __LINE__, 0);
@@ -1037,7 +1037,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                    $v_arg_list,
                    $v_size,
                    $v_options,
-                                        array(PCLZIP_OPT_BY_NAME => 'optional',
+                   array(PCLZIP_OPT_BY_NAME => 'optional',
                                                PCLZIP_OPT_BY_EREG => 'optional',
                                                PCLZIP_OPT_BY_PREG => 'optional',
                                                PCLZIP_OPT_BY_INDEX => 'optional' )
@@ -1544,7 +1544,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
               // ----- Error log
               PclZip::privErrorLog(
                   PCLZIP_ERR_MISSING_OPTION_VALUE,
-                                 "Missing parameter value for option '"
+                  "Missing parameter value for option '"
                                  .PclZipUtilOptionText($p_options_list[$i])
                                  ."'"
               );
@@ -1561,7 +1561,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
               // ----- Error log
               PclZip::privErrorLog(
                   PCLZIP_ERR_INVALID_OPTION_VALUE,
-                                 "Wrong parameter value for option '"
+                  "Wrong parameter value for option '"
                                  .PclZipUtilOptionText($p_options_list[$i])
                                  ."'"
               );
@@ -1744,7 +1744,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
           // ----- Error log
           PclZip::privErrorLog(
               PCLZIP_ERR_INVALID_PARAMETER,
-                               "Unknown parameter '"
+              "Unknown parameter '"
                                .$p_options_list[$i]."'"
           );
 
@@ -2242,9 +2242,9 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                                $v_result = $this->privAddFileList(
                                    $p_temp_list,
                                    $p_result_list,
-                                                 $p_add_dir,
+                                   $p_add_dir,
                                    $p_remove_dir,
-                                                 $p_remove_all_dir,
+                                   $p_remove_all_dir,
                                    $p_options
                                );
 
@@ -2483,7 +2483,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                    */
                    @fwrite(
                        $this->zip_fd,
-                $v_content_compressed,
+                       $v_content_compressed,
                        $p_header['compressed_size']
                    );
 
@@ -2569,16 +2569,16 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            $v_binary_data = pack(
                "VvvvvvVVVvv",
                0x04034b50,
-                          $p_header['version_extracted'],
+               $p_header['version_extracted'],
                $p_header['flag'],
-                          $p_header['compression'],
+               $p_header['compression'],
                $v_mtime,
                $v_mdate,
-                          $p_header['crc'],
+               $p_header['crc'],
                $p_header['compressed_size'],
-                          $p_header['size'],
-                          strlen($p_header['stored_filename']),
-                          $p_header['extra_len']
+               $p_header['size'],
+               strlen($p_header['stored_filename']),
+               $p_header['extra_len']
            );
 
            // ----- Write the first 148 bytes of the header in the archive
@@ -2624,21 +2624,21 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            $v_binary_data = pack(
                "VvvvvvvVVVvvvvvVV",
                0x02014b50,
-                          $p_header['version'],
+               $p_header['version'],
                $p_header['version_extracted'],
-                          $p_header['flag'],
+               $p_header['flag'],
                $p_header['compression'],
-                          $v_mtime,
+               $v_mtime,
                $v_mdate,
                $p_header['crc'],
-                          $p_header['compressed_size'],
+               $p_header['compressed_size'],
                $p_header['size'],
-                          strlen($p_header['stored_filename']),
-                          $p_header['extra_len'],
+               strlen($p_header['stored_filename']),
+               $p_header['extra_len'],
                $p_header['comment_len'],
-                          $p_header['disk'],
+               $p_header['disk'],
                $p_header['internal'],
-                          $p_header['external'],
+               $p_header['external'],
                $p_header['offset']
            );
 
@@ -2680,9 +2680,9 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                0,
                0,
                $p_nb_entries,
-                          $p_nb_entries,
+               $p_nb_entries,
                $p_size,
-                          $p_offset,
+               $p_offset,
                strlen($p_comment)
            );
 
@@ -3030,7 +3030,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
 
                        PclZip::privErrorLog(
                            PCLZIP_ERR_UNSUPPORTED_COMPRESSION,
-                                   "Filename '".$v_header['stored_filename']."' is "
+                           "Filename '".$v_header['stored_filename']."' is "
                                    ."compressed by an unsupported compression "
                                    ."method (".$v_header['compression'].") "
                        );
@@ -3054,7 +3054,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
 
                        PclZip::privErrorLog(
                            PCLZIP_ERR_UNSUPPORTED_ENCRYPTION,
-                                   "Unsupported encryption for "
+                           "Unsupported encryption for "
                                    ." filename '".$v_header['stored_filename']
                                    ."'"
                        );
@@ -3069,7 +3069,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                    //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "No need for extract");
                    $v_result = $this->privConvertHeader2FileInfo(
                        $v_header,
-                                                $p_file_list[$v_nb_extracted++]
+                       $p_file_list[$v_nb_extracted++]
                    );
                    if ($v_result != 1) {
                        $this->privCloseFd();
@@ -3167,10 +3167,10 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                        // ----- Extracting the file
                        $v_result1 = $this->privExtractFile(
                            $v_header,
-                                              $p_path,
+                           $p_path,
                            $p_remove_path,
-                                              $p_remove_all_path,
-                                              $p_options
+                           $p_remove_all_path,
+                           $p_options
                        );
                        if ($v_result1 < 1) {
                            $this->privCloseFd();
@@ -3339,7 +3339,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
 
                            PclZip::privErrorLog(
                                PCLZIP_ERR_ALREADY_A_DIRECTORY,
-                                 "Filename '".$p_entry['filename']."' is "
+                               "Filename '".$p_entry['filename']."' is "
                                  ."already used by an existing directory"
                            );
 
@@ -3363,7 +3363,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
 
                            PclZip::privErrorLog(
                                PCLZIP_ERR_WRITE_OPEN_FAIL,
-                                 "Filename '".$p_entry['filename']."' exists "
+                               "Filename '".$p_entry['filename']."' exists "
                                  ."and is write protected"
                            );
 
@@ -3392,7 +3392,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
 
                                PclZip::privErrorLog(
                                    PCLZIP_ERR_WRITE_OPEN_FAIL,
-                         "Newer version of '".$p_entry['filename']."' exists "
+                                   "Newer version of '".$p_entry['filename']."' exists "
                         ."and option PCLZIP_OPT_REPLACE_NEWER is not selected"
                                );
 
@@ -4205,7 +4205,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                    // ----- Error log
                    PclZip::privErrorLog(
                        PCLZIP_ERR_BAD_FORMAT,
-                           'The central dir is not at the end of the archive.'
+                       'The central dir is not at the end of the archive.'
                            .' Some trailing bytes exists after the archive.'
                    );
 
@@ -4474,7 +4474,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                    // ----- Check that local file header is same as central file header
                    if ($this->privCheckFileHeaders(
                        $v_local_header,
-                                            $v_header_list[$i]
+                       $v_header_list[$i]
                    ) != 1) {
                        // TBC
                    }
@@ -4968,7 +4968,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                $p_buffer,
                $p_size,
                $p_encryption_header,
-                                     $p_crc,
+               $p_crc,
                $v_pwd
            );
 

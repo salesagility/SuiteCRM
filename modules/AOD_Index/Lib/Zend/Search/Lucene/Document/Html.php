@@ -142,8 +142,8 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
         foreach ($metaNodes as $metaNode) {
             $this->addField(Zend_Search_Lucene_Field::Text(
                 $metaNode->getAttribute('name'),
-                                                           $metaNode->getAttribute('content'),
-                                                           'UTF-8'
+                $metaNode->getAttribute('content'),
+                'UTF-8'
             ));
         }
 
@@ -336,7 +336,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
                 $nodeToImport = $highlightedWordNodeSet->item($count);
                 $node->parentNode->insertBefore(
                     $this->_doc->importNode($nodeToImport, true /* deep copy */),
-                                                $matchedWordNode
+                    $matchedWordNode
                 );
             }
 

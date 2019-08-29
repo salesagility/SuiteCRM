@@ -30,14 +30,12 @@ class LeadsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Leads $leads
      *
      * As an administrator I want to view the leads module.
      */
     public function testScenarioViewLeadsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Leads $leads
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the leads module for testing');
 

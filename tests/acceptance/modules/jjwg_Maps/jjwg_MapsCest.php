@@ -30,14 +30,12 @@ class jjwg_MapsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Maps $maps
      *
      * As an administrator I want to view the maps module.
      */
     public function testScenarioViewMapsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Maps $maps
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the maps module for testing');
 

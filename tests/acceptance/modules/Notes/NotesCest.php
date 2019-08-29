@@ -30,14 +30,12 @@ class NotesCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Notes $notes
      *
      * As an administrator I want to view the notes module.
      */
     public function testScenarioViewNotesModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Notes $notes
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the notes module for testing');
 

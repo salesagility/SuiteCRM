@@ -944,6 +944,12 @@ class EmailMan extends SugarBean
                 }
             }
 
+            if (isset($this->restricted_addresses[$lower_email_address])) {
+                $this->set_as_sent($lower_email_address, true, null, null, 'blocked');
+
+                return true;
+            }
+
             //test for duplicate email address by marketing id.
             $dup_query = "select id from campaign_log where more_information='" . $this->db->quote($module->email1) . "' and marketing_id='" . $this->marketing_id . "'";
             $dup = $this->db->query($dup_query);
@@ -1144,16 +1150,16 @@ class EmailMan extends SugarBean
 
                     $email_id=$this->create_ref_email(
                         $this->marketing_id,
-                                            $this->current_emailtemplate->subject,
-                                            $this->current_emailtemplate->body,
-                                            $this->current_emailtemplate->body_html,
-                                            $this->current_campaign->name,
-                                            $this->mailbox_from_addr,
-                                            $this->user_id,
-                                            $this->notes_array,
-                                            $macro_nv,
-                                            $this->newmessage,
-                                            $fromAddressName
+                        $this->current_emailtemplate->subject,
+                        $this->current_emailtemplate->body,
+                        $this->current_emailtemplate->body_html,
+                        $this->current_campaign->name,
+                        $this->mailbox_from_addr,
+                        $this->user_id,
+                        $this->notes_array,
+                        $macro_nv,
+                        $this->newmessage,
+                        $fromAddressName
                      );
                     $this->newmessage = false;
                 }

@@ -30,14 +30,12 @@ class EmailTemplatesCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\EmailTemplates $emailTemplate
      *
      * As an administrator I want to view the emailTemplate module.
      */
     public function testScenarioViewEmailTemplatesModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\EmailTemplates $emailTemplate
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the emailTemplate module for testing');
 

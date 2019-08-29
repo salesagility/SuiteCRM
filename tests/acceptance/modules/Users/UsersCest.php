@@ -85,7 +85,10 @@ class UsersCest
 
         // Create account
         $this->fakeData->seed($this->fakeDataSeed);
-        $accounts->createAccount('Test_'. $this->fakeData->company());
+        $accountId = $accounts->createAccount('Test_'. $this->fakeData->company());
+
+        $I->visitPage('Accounts', 'DetailView', $accountId);
+        $DetailView->waitForDetailViewVisible();
 
         // View the Subpanels Hint
         $I->see('Leads (0)', '//*[@id="subpanel_title_leads"]/div/div');

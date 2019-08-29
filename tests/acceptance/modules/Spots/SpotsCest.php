@@ -30,14 +30,12 @@ class SpotsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Spots $spots
      *
      * As an administrator I want to view the spots module.
      */
     public function testScenarioViewSpotsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Spots $spots
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the spots module for testing');
 

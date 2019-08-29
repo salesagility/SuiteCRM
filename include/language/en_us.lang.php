@@ -447,6 +447,11 @@ $app_list_strings = array(
 
         'Tasks' => 'Task',
 
+        'AOS_Contracts' => 'Contract',
+        'AOS_Invoices' => 'Invoice',
+        'AOS_Quotes' => 'Quote',
+        'AOS_Products' => 'Product',
+
     ),
 
     'record_type_display_notes' => array(
@@ -465,6 +470,11 @@ $app_list_strings = array(
 
         'Meetings' => 'Meeting',
         'Calls' => 'Call',
+
+        'AOS_Contracts' => 'Contract',
+        'AOS_Invoices' => 'Invoice',
+        'AOS_Quotes' => 'Quote',
+        'AOS_Products' => 'Product',
     ),
 
     'parent_type_display' => array(
@@ -481,6 +491,11 @@ $app_list_strings = array(
         'ProjectTask' => 'Project Task',
 
         'Prospects' => 'Target',
+        
+        'AOS_Contracts' => 'Contract',
+        'AOS_Invoices' => 'Invoice',
+        'AOS_Quotes' => 'Quote',
+        'AOS_Products' => 'Product',        
 
     ),
     'parent_line_items' => array(
@@ -1176,7 +1191,7 @@ $app_strings = array(
     'LBL_EMAIL_FOLDERS' => SugarThemeRegistry::current()->getImage(
         'icon_email_folder',
         'align=absmiddle border=0',
-            null,
+        null,
         null,
         '.gif',
         ''

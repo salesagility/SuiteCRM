@@ -70,7 +70,8 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushPHPConfigOptions();
 
         // suppress output during the test
-        $this->setOutputCallback(function() {});
+        $this->setOutputCallback(function () {
+        });
 
         // test
         

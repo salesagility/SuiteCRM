@@ -5,12 +5,6 @@ use Faker\Generator;
 class CompanyModuleCest
 {
     /**
-     * @var string $lastView helps the test skip some repeated tests in order to make the test framework run faster at the
-     * potential cost of being accurate and reliable
-     */
-    protected $lastView;
-
-    /**
      * @var Generator $fakeData
      */
     protected $fakeData;
@@ -52,8 +46,8 @@ class CompanyModuleCest
      * the module before testing.
      */
     public function testScenarioCreateCompanyModule(
-       \AcceptanceTester $I,
-       \Step\Acceptance\ModuleBuilder $moduleBuilder
+        \AcceptanceTester $I,
+        \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a company module for testing');
         $I->loginAsAdmin();
@@ -63,8 +57,6 @@ class CompanyModuleCest
             \Page\CompanyModule::$NAME,
             \SuiteCRM\Enumerator\SugarObjectType::company
         );
-
-        $this->lastView = 'ModuleBuilder';
     }
 
     /**
@@ -88,7 +80,6 @@ class CompanyModuleCest
         $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 
     /**
@@ -141,7 +132,6 @@ class CompanyModuleCest
         $editView->fillField('#description', $this->fakeData->paragraph);
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -178,7 +168,6 @@ class CompanyModuleCest
         $listView->clickNameLink($this->fakeData->company);
 
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -223,7 +212,6 @@ class CompanyModuleCest
         $editView->click('Save');
 
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -275,7 +263,6 @@ class CompanyModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 
     /**
@@ -317,6 +304,5 @@ class CompanyModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 }

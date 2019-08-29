@@ -30,14 +30,12 @@ class LocationsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Locations $locations
      *
      * As an administrator I want to view the locations module.
      */
     public function testScenarioViewLocationsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Locations $locations
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the locations module for testing');
 

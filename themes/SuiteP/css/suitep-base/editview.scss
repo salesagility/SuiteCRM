@@ -1203,12 +1203,6 @@ p.error {
   margin: 0;
 }
 
-.error {
-  border: none;
-  color: $alert-danger-text;
-  background: transparent;
-}
-
 .error:empty {
   padding: 0;
 }
@@ -1226,7 +1220,7 @@ div.content p.error {
 
 .error a {
   font-weight: 600;
-  color: $link-color;
+  color: white;
   text-decoration: underline;
 }
 
@@ -1240,7 +1234,7 @@ div.content p.error {
 }
 
 .error a:hover {
-  color: $link-color-hover;
+  color: black;
 }
 
 .success {
@@ -5429,7 +5423,7 @@ body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shado
   top: 100px;
   padding: 20px;
   width: 100%;
-  z-index: 103100;
+  position: fixed;
 }
 
 body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow[id="container_pbss_date_start_trigger_c"] {

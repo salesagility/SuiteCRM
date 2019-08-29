@@ -106,11 +106,11 @@ class Zend_Search_Lucene_Search_QueryEntry_Term extends Zend_Search_Lucene_Searc
             require_once 'Zend/Search/Lucene/Search/Query/Preprocessing/Fuzzy.php';
             $query = new Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy(
                 $this->_term,
-                                                                             $encoding,
-                                                                             ($this->_field !== null)?
+                $encoding,
+                ($this->_field !== null)?
                                                                                   iconv($encoding, 'UTF-8', $this->_field) :
                                                                                   null,
-                                                                             $this->_similarity
+                $this->_similarity
                                                                              );
             $query->setBoost($this->_boost);
             return $query;
@@ -121,8 +121,8 @@ class Zend_Search_Lucene_Search_QueryEntry_Term extends Zend_Search_Lucene_Searc
         require_once 'Zend/Search/Lucene/Search/Query/Preprocessing/Term.php';
         $query = new Zend_Search_Lucene_Search_Query_Preprocessing_Term(
             $this->_term,
-                                                                        $encoding,
-                                                                        ($this->_field !== null)?
+            $encoding,
+            ($this->_field !== null)?
                                                                               iconv($encoding, 'UTF-8', $this->_field) :
                                                                               null
                                                                         );

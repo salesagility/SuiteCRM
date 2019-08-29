@@ -30,14 +30,12 @@ class jjwg_Address_CacheCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\MapsAddressCache $mapsAddressCache
      *
      * As an administrator I want to view the mapsAddressCache module.
      */
     public function testScenarioViewMapsAddressCacheModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\MapsAddressCache $mapsAddressCache
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the mapsAddressCache module for testing');
 

@@ -30,14 +30,12 @@ class TargetsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Targets $targets
      *
      * As an administrator I want to view the targets module.
      */
     public function testScenarioViewTargetsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Targets $targets
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the targets module for testing');
 
