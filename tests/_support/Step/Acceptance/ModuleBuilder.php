@@ -158,6 +158,7 @@ class ModuleBuilder extends Administration
         // Close popup
         $I->closePopupSuccess();
 
+        $I->wait(20);
         // Wait for page to refresh and look for new package link
         $I->waitForElement('#newPackageLink');
     }
