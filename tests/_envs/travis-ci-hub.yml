@@ -4,7 +4,7 @@ modules:
   config:
     \SuiteCRM\Test\Driver\WebDriver:
       url: "http://localhost/"
-      wait: 0
+      wait: 5
       port: 9515 # ChromeDriver port
       browser: chrome
       window_size: false
