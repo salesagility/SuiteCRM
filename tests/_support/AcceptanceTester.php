@@ -20,6 +20,8 @@ use Faker\Factory;
 class AcceptanceTester extends \Codeception\Actor
 {
     use _generated\AcceptanceTesterActions;
+    use \Codeception\Lib\Actor\Shared\Retry;
+ 
     /**
      * Define custom actions here
      */

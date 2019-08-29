@@ -6,6 +6,8 @@
 # Use the environmental config files to configure the driver
 
 class_name: AcceptanceTester
+step_decorators:
+  - \Codeception\Step\Retry
 modules:
     enabled:
         - \Helper\Acceptance

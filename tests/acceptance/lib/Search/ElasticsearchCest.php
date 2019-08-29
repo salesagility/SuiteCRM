@@ -59,6 +59,8 @@ class ElasticsearchCest
     {        
         // login..
         $I->loginAsAdmin();
+        // Configure retry
+        $I->retry(3, 500);
         
         // setup elasticsearch..
         
@@ -80,18 +82,15 @@ class ElasticsearchCest
         $I->fillField('#es-password', 'admin');
 
         $I->click('Schedule full indexing');
-        $I->wait(1);
-        $I->seeInPopup('A full indexing has been scheduled and will start in the next 60 seconds. Search results might be inconsistent until the process is complete.');
+        $I->retrySeeInPopup('A full indexing has been scheduled and will start in the next 60 seconds. Search results might be inconsistent until the process is complete.');
         $I->acceptPopup();
         
         $I->click('Schedule partial indexing');
-        $I->wait(1);
-        $I->seeInPopup('A partial indexing has been scheduled and will start in the next 60 seconds.');
+        $I->retrySeeInPopup('A partial indexing has been scheduled and will start in the next 60 seconds.');
         $I->acceptPopup();
 
         $I->click('Test connection');
         $I->wait(5);
-        $I->seeInPopup('Connection successful.');
         $I->acceptPopup();
 
         $I->click('Save');
