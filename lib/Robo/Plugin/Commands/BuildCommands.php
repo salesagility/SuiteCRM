@@ -60,7 +60,7 @@ class BuildCommands extends \Robo\Tasks
     public function buildSuiteP(array $opts = ['color_scheme' => ''])
     {
         $this->say('Compile SuiteP Theme (SASS)');
-        if (empty($this->$opts['color_scheme'])) {
+        if (empty($opts['color_scheme'])) {
             /** Look for Subthemes in the SuiteP theme Dir **/
             $std = 'themes/SuiteP/css/';
             $this->locateSubTheme($std);
@@ -71,18 +71,17 @@ class BuildCommands extends \Robo\Tasks
             $this->locateSubTheme($ctd);
 
             return;
-
         }
 
-        if (is_array($this->$opts['color_scheme'])) {
-            foreach ($this->$opts['color_scheme'] as $colorScheme) {
+        if (is_array($opts['color_scheme'])) {
+            foreach ($opts['color_scheme'] as $colorScheme) {
                 $this->buildSuitePColorScheme($colorScheme);
             }
 
             return;
         }
 
-        $this->buildSuitePColorScheme($this->$opts['color_scheme']);
+        $this->buildSuitePColorScheme($opts['color_scheme']);
         $this->say('Compile SuiteP Theme (SASS) Complete');
     }
 
