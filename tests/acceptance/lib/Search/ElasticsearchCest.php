@@ -90,7 +90,7 @@ class ElasticsearchCest
         $I->acceptPopup();
 
         $I->click('Test connection');
-        $I->wait(1);
+        $I->wait(5);
         $I->seeInPopup('Connection successful.');
         $I->acceptPopup();
 
