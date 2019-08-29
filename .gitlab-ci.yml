@@ -61,7 +61,7 @@ variables:
     # Override configured host for ElasticSearch so it will connect to the GitLab CI ElasticSearch service.
     - echo "\$sugar_config['search']['ElasticSearch']['host'] = 'elasticsearch';" >> config_override.php
     # Run PHPUnit Unit tests.
-    # - ./vendor/bin/phpunit --colors --configuration ./tests/phpunit.xml.dist ./tests/unit/phpunit
+    - ./vendor/bin/phpunit --colors --configuration ./tests/phpunit.xml.dist ./tests/unit/phpunit
     # Install OAuth2 demo data
     - mysql --host=mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -D${MYSQL_DATABASE} -v -e "source tests/_data/api_data.sql"
     # Install demo user data
@@ -74,7 +74,7 @@ variables:
     - openssl rsa -in Api/V8/OAuth2/private.key -pubout -out Api/V8/OAuth2/public.key
     - chmod 600 Api/V8/OAuth2/p*.key
     # Run API functional tests
-    - ./vendor/bin/codecept run tests/api/V8/ -d -vvv
+    # - ./vendor/bin/codecept run tests/api/V8/ -d -vvv
     # Run basic acceptance tests
     - echo "\$sugar_config['imap_test'] = true;" >> config_override.php
     - ./vendor/bin/codecept run acceptance --env travis-ci-hub -d -vvv
