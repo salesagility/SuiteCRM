@@ -1801,11 +1801,13 @@ div.qtip.qtip-default {
 .search_form .view .dateTimeRangeChoice {
   display: block;
   float: left;
+  margin-top: 5px;
 }
 
 .search_form .view .dateTimeRangeChoice select {
-  width: 90px;
+  width: auto;
   margin-right: 4px;
+  padding-right: 30px;
 }
 
 .search_form .view .dateTimeRangeChoiceClear {
