@@ -1857,7 +1857,7 @@ div.qtip.qtip-default {
 .search_form.non-popup select,
 .search_form.non-popup textarea {
   border: none;
-  height: 20px;
+  height: auto;
   min-height: 20px;
   padding: 5px;
   line-height: 20px;
@@ -1997,7 +1997,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
 .search_form.non-popup select,
 .search_form.non-popup textarea {
   border: none;
-  height: 20px;
+  height: auto;
   min-height: 20px;
   padding: 5px;
   line-height: 20px;
@@ -3406,7 +3406,7 @@ ul.clickMenu > li > span.searchAppliedAlert {
 
 .search_form.non-popup input[type="text"] {
   border: none;
-  height: 20px;
+  height: auto;
   min-height: 20px;
   padding: 5px;
   line-height: 20px;
@@ -3414,7 +3414,7 @@ ul.clickMenu > li > span.searchAppliedAlert {
 
 .search_form.non-popup select {
   border: none;
-  height: 20px;
+  height: auto;
   min-height: 20px;
   padding: 5px;
   line-height: 20px;
