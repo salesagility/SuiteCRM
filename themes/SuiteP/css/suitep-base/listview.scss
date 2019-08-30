@@ -1391,6 +1391,10 @@ form#MassAssign_SecurityGroups {
   height: 40px;
 }
 
+.search td input[type=text].date_input {
+  width: auto;
+}
+
 .search td input[type=password] {
   border: none;
   border-radius: 3px;
