@@ -54,13 +54,13 @@ class BuildCommands extends \Robo\Tasks
     /**
      * Build SuiteP theme
      * @param array $opts optional command line arguments
-     * color_scheme - set which color scheme you wish to build
+     * color-scheme - set which color scheme you wish to build
      * @throws \RuntimeException
      */
     public function buildSuiteP(array $opts = ['color-scheme' => ''])
     {
         $this->say('Compile SuiteP Theme (SASS)');
-        if (empty($opts['color_scheme'])) {
+        if (empty($opts['color-scheme'])) {
             /** Look for Subthemes in the SuiteP theme Dir **/
             $std = 'themes/SuiteP/css/';
             $this->locateSubTheme($std);
@@ -73,15 +73,15 @@ class BuildCommands extends \Robo\Tasks
             return;
         }
 
-        if (is_array($opts['color_scheme'])) {
-            foreach ($opts['color_scheme'] as $colorScheme) {
+        if (is_array($opts['color-scheme'])) {
+            foreach ($opts['color-scheme'] as $colorScheme) {
                 $this->buildSuitePColorScheme($colorScheme);
             }
 
             return;
         }
 
-        $this->buildSuitePColorScheme($opts['color_scheme']);
+        $this->buildSuitePColorScheme($opts['color-scheme']);
         $this->say('Compile SuiteP Theme (SASS) Complete');
     }
 
