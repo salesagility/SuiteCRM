@@ -1833,7 +1833,8 @@ div.qtip.qtip-default {
   width: 80%;
 }
 
-.search_form .view .col-xs-12 input[type="text"].dateRangeInput {
+.search_form .view .col-xs-12 input[type="text"].dateRangeInput,
+.search_form .view .col-xs-12 input[type="text"].date_input,{
     width: auto;
     margin-top: 5px;
 }
