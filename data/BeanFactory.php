@@ -108,23 +108,15 @@ class BeanFactory
         }
 
         // Pull values from $params array
-        $encode = isset($params['encode'])
-            ? $params['encode']
-            : true;
+        $encode = self::getEncodeFlag($params);
 
-        $deleted = isset($params['deleted'])
-            ? $params['deleted']
-            : $deleted;
+        $deleted = self::getDeletedFlag($params, $deleted);
 
-        if (!isset(self::$loadedBeans[$module])) {
-            self::$loadedBeans[$module] = [];
-
-            self::$touched[$module] = [];
-        }
+        self::initBeanRegistry($module);
 
         $beanClass = self::getBeanClass($module);
 
-        self::loadBeanFile($beanClass);
+        self::loadBeanFile($module);
 
         if (empty($beanClass) || !class_exists($beanClass)) {
             return false;
@@ -154,6 +146,51 @@ class BeanFactory
         }
 
         return $bean;
+    }
+
+    /**
+     * initialises loadedBeans and touched registry arrays.
+     *
+     * @param string $module
+     *
+     * @return void
+     */
+    protected static function initBeanRegistry($module)
+    {
+        if (!isset(self::$loadedBeans[$module])) {
+            self::$loadedBeans[$module] = [];
+
+            self::$touched[$module] = [];
+        }
+    }
+
+    /**
+     * Pulls encoded flag from params array if set or true if not.
+     *
+     * @param array $params
+     *
+     * @return bool|mixed
+     */
+    protected static function getEncodeFlag($params)
+    {
+        return isset($params['encode'])
+            ? $params['encode']
+            : true;
+    }
+
+    /**
+     * Pulls deleted flag from params array if set or the one given if not.
+     *
+     * @param array $params
+     * @param bool $deleted
+     *
+     * @return bool
+     */
+    protected static function getDeletedFlag($params, $deleted)
+    {
+        return isset($params['deleted'])
+            ? $params['deleted']
+            : $deleted;
     }
 
     /**
@@ -272,11 +309,13 @@ class BeanFactory
     {
         global $beanFiles;
 
-        if (empty($beanFiles[$module])) {
-            return false;
+        $beanClass = self::getBeanName($module);
+
+        if (!empty($beanFiles[$beanClass])) {
+            return $beanFiles[$beanClass];
         }
 
-        return $beanFiles[$module];
+        return false;
     }
 
     /**
@@ -290,52 +329,36 @@ class BeanFactory
     {
         global $customBeanFiles;
 
-        if (empty($customBeanFiles[$module])) {
-            return self::getBeanFile($module);
+        $beanClass = self::getBeanName($module);
+
+        $customBeanClass = self::getBeanClass($module);
+
+        if (!empty($customBeanFiles[$customBeanClass])) {
+            return $customBeanFiles[$customBeanClass];
         }
 
-        return $customBeanFiles[$module];
+        if (!empty($customBeanFiles[$beanClass])) {
+            return $customBeanFiles[$beanClass];
+        }
+
+        return false;
     }
 
     /**
      * Loads core bean class and then custom bean class if exists for given module.
      *
-     * @param string $beanClass
+     * @param string $module
      *
      * @return bool
      */
-    public static function loadBeanFile($beanClass)
+    public static function loadBeanFile($module)
     {
-        global $beanList, $customBeanList, $beanFiles, $customBeanFiles, $log;
+        global $log;
 
-        if (class_exists($beanClass)) {
-            return true;
-        }
-
-        if (empty($beanFiles[$beanClass]) && empty($customBeanFiles[$beanClass])) {
-            return false;
-        }
-
-        if (!empty($customBeanFiles[$beanClass])) {
-            $customBeanFile = $customBeanFiles[$beanClass];
-
-            if (empty($beanFiles[$beanClass])) {
-                $beanName = array_search(
-                    $beanClass,
-                    $customBeanList ,
-                    true
-                );
-
-                $beanClass = !empty($beanList[$beanName])
-                    ? $beanList[$beanName]
-                    : $beanClass;
-            }
-        }
-
-        $beanFile = $beanFiles[$beanClass];
+        $beanFile = self::getBeanFile($module);
 
         if (empty($beanFile)) {
-            $log->fatal('Cannot find bean file for bean class: ' . $beanClass);
+            $log->fatal('Cannot find bean file for module: ' . $module);
 
             return false;
         }
@@ -345,6 +368,8 @@ class BeanFactory
 
             return false;
         }
+
+        $customBeanFile = self::getCustomBeanFile($module);
 
         if (!empty($customBeanFile) && !file_exists($customBeanFile)) {
             $log->fatal('Custom Bean file does not exist in path: ' . $customBeanFile);
