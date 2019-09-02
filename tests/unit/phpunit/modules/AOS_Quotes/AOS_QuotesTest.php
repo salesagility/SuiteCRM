@@ -13,7 +13,6 @@ class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAOS_Quotes()
     {
-
         //execute the contructor and check for the Object type and  attributes
         $aosQuotes = new AOS_Quotes();
         $this->assertInstanceOf('AOS_Quotes', $aosQuotes);
@@ -31,11 +30,8 @@ class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndMark_deleted()
     {
-        $state = new SuiteCRM\StateSaver();
-        
+        $state = new SuiteCRM\StateSaver();        
         $state->pushTable('aos_quotes');
-        
-        
 
         $aosQuotes = new AOS_Quotes();
 
@@ -55,7 +51,6 @@ class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(null, $result);
         
         // clean up
-        
         $state->popTable('aos_quotes');
     }
 }

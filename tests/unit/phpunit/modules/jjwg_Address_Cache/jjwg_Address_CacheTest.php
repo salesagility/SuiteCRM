@@ -6,7 +6,6 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
     public function testjjwg_Address_Cache()
     {
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
@@ -27,10 +26,8 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $this->assertAttributeEquals(true, 'new_schema', $jjwgAddressCache);
         $this->assertAttributeEquals(true, 'importable', $jjwgAddressCache);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $jjwgAddressCache);
-        
-        
+
         // clean up
-        
         $state->popTable('email_addresses');
         $state->popGlobals();
     }
@@ -47,16 +44,13 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
 
     public function testSaveAndGetAddressCacheInfoAndDeleteAllAddressCache()
     {
-
-    // save state
-
+        // save state
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('jjwg_address_cache');
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
 
         // test
-        
         $jjwgAddressCache = new jjwg_Address_Cache();
 
         //test saveAddressCacheInfo() with empty info array
@@ -88,7 +82,6 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $this->assertEquals(false, $result);
         
         // clean up
-        
         $state->popTable('tracker');
         $state->popTable('aod_index');
         $state->popTable('jjwg_address_cache');
@@ -118,8 +111,6 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $state->pushTable('email_addresses');
         
         // test
-        
-
         $jjwgAddressCache = new jjwg_Address_Cache();
 
         //test with invalid values
@@ -131,9 +122,7 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $this->assertEquals(true, $jjwgAddressCache->is_valid_lat(90));
         $this->assertEquals(true, $jjwgAddressCache->is_valid_lat(-90));
 
-        
         // clean up
-        
         $state->popTable('email_addresses');
         $state->popGlobals();
     }

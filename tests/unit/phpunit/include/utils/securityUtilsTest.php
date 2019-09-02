@@ -67,18 +67,12 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
         
         // clean up
-        
         $state->popTable('aod_indexevent');
         $state->popGlobals();
     }
 
     public function testquery_user_has_roles()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         // execute the method and test it returns 1 role
         // if the test suite run runs RolesTest first.
         // otherwise it will be 0
@@ -87,8 +81,6 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = '0';
         $actual = query_user_has_roles('1');
         $this->assertSame($expected, $actual);
-        
-        // clean up
     }
 
     public function testget_user_allowed_modules()
@@ -140,7 +132,6 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame('1.1.1.1', query_client_ip());
         
         // clean up
-        
         $state->popGlobals();
     }
 

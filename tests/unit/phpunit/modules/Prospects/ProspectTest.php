@@ -32,11 +32,6 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $prospect = new Prospect();
 
         $prospect->salutation = 'mr';
@@ -49,8 +44,6 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertAttributeEquals('last', 'full_name', $prospect);
         $this->assertAttributeEquals('last &lt;email1@test.com&gt;', 'email_and_name1', $prospect);
-        
-        // clean up
     }
 
     public function testfill_in_additional_detail_fields()
@@ -86,10 +79,6 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testconverted_prospect()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
         
         $prospect = new Prospect();
 

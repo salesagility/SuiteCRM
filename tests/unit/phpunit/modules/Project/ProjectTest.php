@@ -29,24 +29,16 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_detail_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $project = new Project();
 
         //test without setting assigned_user_id
         $project->fill_in_additional_detail_fields();
         $this->assertEquals("", $project->assigned_user_name);
 
-
         //test with assigned_user_id set
         $project->assigned_user_id = 1;
         $project->fill_in_additional_detail_fields();
         $this->assertEquals("Administrator", $project->assigned_user_name);
-        
-        // clean up
     }
 
 
