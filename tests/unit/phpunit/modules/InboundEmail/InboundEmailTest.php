@@ -577,7 +577,7 @@ class InboundEmailTest extends SuitePHPUnit_Framework_TestCase
 
         //retrieve it back and verify the updates
         $inboundEmail->retrieve($id);
-        $this->assertEquals('mailbox1,mailbox2,mailbox3', $inboundEmail->mailbox);
+        $this->assertEquals('INBOX,TRASH', $inboundEmail->mailbox);
     }
 
     public function mark_deleted($id)
