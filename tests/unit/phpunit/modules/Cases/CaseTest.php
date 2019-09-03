@@ -45,7 +45,7 @@ class aCaseTest extends SuitePHPUnit_Framework_TestCase
         self::markTestIncomplete('environment dependency');
         
 
-        $state->pushGlobals();
+
         
         $aCase = new aCase();
         $expected = array('MAIN' => 'span', 'ACCOUNT' => 'span');
@@ -53,13 +53,13 @@ class aCaseTest extends SuitePHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
         
         // clean up
-        $state->popGlobals();
+
     }
 
     public function testsave_relationship_changes()
     {
 
-        $state->pushTable('aod_indexevent');
+
         
         $aCase = new aCase();
 
@@ -74,7 +74,7 @@ class aCaseTest extends SuitePHPUnit_Framework_TestCase
         }
         
         // clean up
-        $state->popTable('aod_indexevent');
+
     }
 
     public function testset_case_contact_relationship()
@@ -223,14 +223,6 @@ class aCaseTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave()
     {
-
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('aop_case_events');
-        $state->pushTable('cases');
-        $state->pushTable('sugarfeed');
-        $state->pushTable('tracker');
-        $state->pushTable('cases_cstm');
-        $state->pushGlobals();
         
         
         $aCase = new aCase();
@@ -247,16 +239,6 @@ class aCaseTest extends SuitePHPUnit_Framework_TestCase
         $aCase->mark_deleted($aCase->id);
         $result = $aCase->retrieve($aCase->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('cases_cstm');
-        $state->popTable('tracker');
-        $state->popTable('sugarfeed');
-        $state->popTable('cases');
-        $state->popTable('aop_case_events');
-        $state->popTable('aod_indexevent');
     }
 
     public function testgetEmailSubjectMacro()

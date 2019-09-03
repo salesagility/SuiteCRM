@@ -9,35 +9,15 @@ class iCalTest extends SuitePHPUnit_Framework_TestCase
     {
         self::markTestIncomplete('environment dependency');
         
-        // save state
-
-
-        $state->pushTable('email_addresses');
-        $state->pushGlobals();
-        
-        // test
-        
         //execute the contructor and check for the Object type and  attributes
         $ical = new iCal();
         $this->assertInstanceOf('iCal', $ical);
         $this->assertInstanceOf('vCal', $ical);
         $this->assertInstanceOf('SugarBean', $ical);
-        
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('email_addresses');
     }
 
 //    public function testgetVcalIcal()
 //    {
-//	// save state
-//
-//
-//        $state->pushTable('email_addresses');
-//        $state->pushGlobals();
-//
-//	// test
 //
 //
 //        //error_reporting(E_ERROR | E_PARSE);
@@ -57,7 +37,7 @@ class iCalTest extends SuitePHPUnit_Framework_TestCase
 //
 //        // clean up
 //
-//        $state->popGlobals();
-//        $state->popTable('email_addresses');
+//
+//
 //    }
 }

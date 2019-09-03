@@ -103,15 +103,6 @@ class ProspectListTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave()
     {
-        // save state
-
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('prospect_lists');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-
-        // test
         $prospectList = new ProspectList();
 
         $prospectList->name = "test";
@@ -136,13 +127,6 @@ class ProspectListTest extends SuitePHPUnit_Framework_TestCase
         $prospectList->mark_deleted($prospectList->id);
         $result = $prospectList->retrieve($prospectList->id);
         $this->assertEquals(null, $result);
-
-        // clean up
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('prospect_lists');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
 
 

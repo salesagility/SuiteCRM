@@ -123,12 +123,6 @@ class EmailManTest extends SuitePHPUnit_Framework_TestCase
 
     public function testset_as_sent()
     {
-
-        $state->pushTable('tracker');
-        $state->pushTable('campaign_log');
-        $state->pushTable('aod_index');
-        
-        // test
         $emailMan = new EmailMan();
 
         //execute the method and test if it works and does not throws an exception.
@@ -148,24 +142,10 @@ class EmailManTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popTable('aod_index');
-        $state->popTable('campaign_log');
-        $state->popTable('tracker');
     }
 
     public function testcreate_indiv_email()
     {
-        // save state
-
-        $state->pushTable('campaign_log');
-        $state->pushTable('emails');
-        $state->pushTable('emails_email_addr_rel');
-        $state->pushTable('emails_text');
-        $state->pushTable('tracker');
-        
-        // test
         $emailMan = new EmailMan();
 
         $result = $emailMan->create_indiv_email(new Contact(), new Email());
@@ -175,44 +155,18 @@ class EmailManTest extends SuitePHPUnit_Framework_TestCase
 
         $email = new Email();
         $email->mark_deleted($result);
-
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('emails_text');
-        $state->popTable('emails_email_addr_rel');
-        $state->popTable('emails');
-        $state->popTable('campaign_log');
     }
 
     public function testverify_campaign()
     {
-        // save state
-
-        $state->pushTable('campaign_log');
-        $state->pushTable('emails');
-        $state->pushTable('emails_email_addr_rel');
-
         // test
         $emailMan = new EmailMan();
         $result = $emailMan->verify_campaign('');
         $this->assertEquals(false, $result);
-
-        // clean up
-        $state->popTable('emails_email_addr_rel');
-        $state->popTable('emails');
-        $state->popTable('campaign_log');
     }
 
     public function testsendEmail()
     {
-        // save state
-
-        $state->pushTable('campaign_log');
-        $state->pushTable('emails');
-        $state->pushTable('emails_email_addr_rel');
-        $state->pushTable('tracker');
-
-        // test
         $emailMan = new EmailMan();
 
         //test without setting any attributes
@@ -224,66 +178,29 @@ class EmailManTest extends SuitePHPUnit_Framework_TestCase
         $emailMan->related_id = 1;
         $result = $emailMan->sendEmail(new SugarPHPMailer(), 1, true);
         $this->assertEquals(true, $result);
-
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('emails_email_addr_rel');
-        $state->popTable('emails');
-        $state->popTable('campaign_log');
     }
 
     public function testvalid_email_address()
     {
-        // save state
-
-        $state->pushTable('campaign_log');
-        $state->pushTable('emails');
-        $state->pushTable('emails_email_addr_rel');
-
-        // test
         $emailMan = new EmailMan();
 
         $this->assertEquals(false, $emailMan->valid_email_address(''));
         $this->assertEquals(false, $emailMan->valid_email_address('test'));
         $this->assertEquals(true, $emailMan->valid_email_address('test@test.com'));
-
-        // clean up
-        $state->popTable('emails_email_addr_rel');
-        $state->popTable('emails');
-        $state->popTable('campaign_log');
     }
 
     public function testis_primary_email_address()
     {
-        // save state
-
-        $state->pushTable('campaign_log');
-        $state->pushTable('emails');
-        $state->pushTable('emails_email_addr_rel');
-
-        // test
         $emailMan = new EmailMan();
 
         $bean = new Contact();
 
         //test without setting any email
         $this->assertEquals(false, $emailMan->is_primary_email_address($bean));
-
-        // clean up
-        $state->popTable('emails_email_addr_rel');
-        $state->popTable('emails');
-        $state->popTable('campaign_log');
     }
 
     public function testcreate_export_query()
     {
-        // save state
-
-        $state->pushTable('campaign_log');
-        $state->pushTable('emails');
-        $state->pushTable('emails_email_addr_rel');
-
-        // test
         $emailMan = new EmailMan();
 
         //test with empty string params
@@ -295,23 +212,10 @@ class EmailManTest extends SuitePHPUnit_Framework_TestCase
         $expected = 'SELECT emailman.* FROM emailman where (emailman.user_id="") AND ( emailman.deleted IS NULL OR emailman.deleted=0 )';
         $actual = $emailMan->create_export_query('emailman.id', 'emailman.user_id=""');
         $this->assertSame($expected, $actual);
-
-        // clean up
-        
-        $state->popTable('emails_email_addr_rel');
-        $state->popTable('emails');
-        $state->popTable('campaign_log');
     }
 
     public function testmark_deleted()
     {
-        // save state
-
-        $state->pushTable('campaign_log');
-        $state->pushTable('emails');
-        $state->pushTable('emails_email_addr_rel');
-
-        // test
         $emailMan = new EmailMan();
 
         //execute the method and test if it works and does not throws an exception.
@@ -321,28 +225,10 @@ class EmailManTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-
-        // clean up
-        $state->popTable('emails_email_addr_rel');
-        $state->popTable('emails');
-        $state->popTable('campaign_log');
     }
 
     public function testcreate_ref_email()
     {
-        // save state
-
-        $state->pushTable('campaign_log');
-        $state->pushTable('emails');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('emails_email_addr_rel');
-        $state->pushTable('emails_text');
-        $state->pushTable('notes');
-        $state->pushTable('email_addresses');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-
-        // test
         $emailMan = new EmailMan();
         $emailMan->test = true;
 
@@ -364,16 +250,5 @@ class EmailManTest extends SuitePHPUnit_Framework_TestCase
         $this->assertEquals(36, strlen($result));
         $email = new Email();
         $email->mark_deleted($result);
-
-        // clean up
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('email_addresses');
-        $state->popTable('notes');
-        $state->popTable('emails_text');
-        $state->popTable('emails_email_addr_rel');
-        $state->popTable('aod_indexevent');
-        $state->popTable('emails');
-        $state->popTable('campaign_log');
     }
 }

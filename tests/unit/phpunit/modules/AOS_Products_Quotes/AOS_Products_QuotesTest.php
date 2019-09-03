@@ -16,10 +16,6 @@ class AOS_Products_QuotesTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave()
     {
-
-        $state->pushTable('aos_products_quotes');
-        $state->pushTable('tracker');
-
         $aosProductsQuotes = new AOS_Products_Quotes();
 
         $aosProductsQuotes->name = 'test';
@@ -36,19 +32,10 @@ class AOS_Products_QuotesTest extends SuitePHPUnit_Framework_TestCase
         $aosProductsQuotes->mark_deleted($aosProductsQuotes->id);
         $result = $aosProductsQuotes->retrieve($aosProductsQuotes->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('aos_products_quotes');
     }
 
     public function testsave_lines()
     {
-
-        $state->pushTable('aos_products_quotes');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-        
         DBManagerFactory::getInstance()->query('DELETE FROM aos_products_quotes');
         
         
@@ -71,12 +58,6 @@ class AOS_Products_QuotesTest extends SuitePHPUnit_Framework_TestCase
         //get the linked beans and verify if records created
         $product_quote_lines = $aosQuote->get_linked_beans('aos_products_quotes', $aosQuote->object_name);
         $this->assertEquals(count($post_data['name']), count($product_quote_lines));
-        
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('aos_products_quotes');
     }
     
     

@@ -19,8 +19,8 @@ class security_utilsTest extends SuitePHPUnit_Framework_TestCase
         self::markTestIncomplete('Test fails only in travis and php 7, Test has environment specific issue.');
         
 
-        $state->pushGlobals();
-        $state->pushTable('aod_indexevent');
+
+
         
         //execute the method and test it it returns expected contents
 
@@ -69,8 +69,8 @@ class security_utilsTest extends SuitePHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
         
         // clean up
-        $state->popTable('aod_indexevent');
-        $state->popGlobals();
+
+
     }
 
     public function testquery_user_has_roles()
@@ -118,7 +118,7 @@ class security_utilsTest extends SuitePHPUnit_Framework_TestCase
     public function testquery_client_ip()
     {
 
-        $state->pushGlobals();
+
         
         //test without setting any server parameters
         $this->assertSame(null, query_client_ip());
@@ -134,7 +134,7 @@ class security_utilsTest extends SuitePHPUnit_Framework_TestCase
         $this->assertSame('1.1.1.1', query_client_ip());
         
         // clean up
-        $state->popGlobals();
+
     }
 
     public function testget_val_array()

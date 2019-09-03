@@ -67,15 +67,6 @@ class ProjectTaskTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave()
     {
-        // save state
-
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('project_task');
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-        $state->pushGlobals();
-
-        // test
         $projectTask = new ProjectTask();
 
         $projectTask->name = 'test';
@@ -97,13 +88,6 @@ class ProjectTaskTest extends SuitePHPUnit_Framework_TestCase
         $projectTask->mark_deleted($projectTask->id);
         $result = $projectTask->retrieve($projectTask->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('aod_index');
-        $state->popTable('tracker');
-        $state->popTable('project_task');
-        $state->popTable('aod_indexevent');
     }
 
     public function _get_depends_on_name($id)
@@ -149,10 +133,6 @@ class ProjectTaskTest extends SuitePHPUnit_Framework_TestCase
 
     public function testupdateStatistic()
     {
-
-        $state->pushGlobals();
-
-        // test
         $projectTask = new ProjectTask();
 
         //execute the method and test if it works and does not throws an exception.
@@ -162,9 +142,6 @@ class ProjectTaskTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popGlobals();
     }
 
     public function testfill_in_additional_detail_fields()
@@ -285,11 +262,7 @@ class ProjectTaskTest extends SuitePHPUnit_Framework_TestCase
 
     public function testlistviewACLHelper()
     {
-        // save state
 
-        $state->pushGlobals();
-
-        // test
         $projectTask = new ProjectTask();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'PARENT_TASK' => 'a');
@@ -297,7 +270,7 @@ class ProjectTaskTest extends SuitePHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
         
         // clean up
-        $state->popGlobals();
+
     }
 
     public function testgetUtilizationDropdown()

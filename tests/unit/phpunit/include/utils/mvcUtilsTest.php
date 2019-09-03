@@ -19,7 +19,7 @@ class mvc_utilsTest extends SuitePHPUnit_Framework_TestCase
     public function testgetPrintLink()
     {
 
-        $state->pushGlobals();
+
 
         //test without setting REQUEST param
         $expected = "javascript:void window.open('index.php?','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')";
@@ -33,7 +33,7 @@ class mvc_utilsTest extends SuitePHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
         
         // clean up
-        $state->popGlobals();
+
     }
 
     public function testajaxBannedModules()

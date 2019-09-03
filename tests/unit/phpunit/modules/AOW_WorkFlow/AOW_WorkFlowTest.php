@@ -39,15 +39,6 @@ class AOW_WorkFlowTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave()
     {
-
-        $state->pushTable('aow_conditions');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('aow_workflow');
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-        
-        // test
         $aowWorkFlow = new AOW_WorkFlow();
 
         $aowWorkFlow->name = 'test';
@@ -63,14 +54,6 @@ class AOW_WorkFlowTest extends SuitePHPUnit_Framework_TestCase
         $aowWorkFlow->mark_deleted($aowWorkFlow->id);
         $result = $aowWorkFlow->retrieve($aowWorkFlow->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
-        $state->popTable('aow_workflow');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aow_conditions');
     }
 
     public function testload_flow_beans()
@@ -88,16 +71,10 @@ class AOW_WorkFlowTest extends SuitePHPUnit_Framework_TestCase
 
     public function testrun_flows()
     {
-
-        $state->pushGlobals();
-
         $aowWorkFlow = new AOW_WorkFlow();
 
         $result = $aowWorkFlow->run_flows();
         $this->assertTrue($result);
-        
-        // clean up
-        $state->popGlobals();
     }
 
     public function testrun_flow()
@@ -233,13 +210,8 @@ class AOW_WorkFlowTest extends SuitePHPUnit_Framework_TestCase
         $expected = array(
                 'where' => array('.name = DATE_ADD(calls., INTERVAL   )'),
         );
-        
-        
-//        $tmpstate = new SuiteCRM\StateSaver();
-//        $tmpstate->pushErrorLevel();
-//        error_reporting(E_ERROR | E_PARSE);
+
         $query = $aowWorkFlow->build_query_where($aowCondition, $call);
-//        $tmpstate->popErrorLevel();
         
         $this->assertEquals($expected, $query);
 
@@ -304,11 +276,6 @@ class AOW_WorkFlowTest extends SuitePHPUnit_Framework_TestCase
 
     public function testrun_actions()
     {
-
-        $state->pushTable('aow_processed');
-        $state->pushTable('tracker');
-
-        // test
         $aowWorkFlow = new AOW_WorkFlow();
 
         //prepare the required objects and variables
@@ -332,9 +299,5 @@ class AOW_WorkFlowTest extends SuitePHPUnit_Framework_TestCase
         $processed->mark_deleted($processed->id);
         $result = $processed->retrieve($processed->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('aow_processed');
     }
 }

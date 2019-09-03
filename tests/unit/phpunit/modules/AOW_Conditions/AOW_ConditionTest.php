@@ -15,7 +15,6 @@ class AOW_ConditionTest extends SuitePHPUnit_Framework_TestCase
 
     public function testAOW_Condition()
     {
-
         //execute the contructor and check for the Object type and  attributes
         $aowCondition = new AOW_Condition();
         $this->assertInstanceOf('AOW_Condition', $aowCondition);
@@ -33,25 +32,14 @@ class AOW_ConditionTest extends SuitePHPUnit_Framework_TestCase
 
     public function testbean_implements()
     {
-
-        
-        
-        
-
         $aowCondition = new AOW_Condition();
         $this->assertEquals(false, $aowCondition->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aowCondition->bean_implements('test')); //test with invalid value
         $this->assertEquals(false, $aowCondition->bean_implements('ACL')); //test with valid value
-        
-        // clean up
     }
 
     public function testsave_lines()
     {
-
-        $state->pushTable('aow_conditions');
-        $state->pushTable('aod_indexevent');
-        
         $aowCondition = new AOW_Condition();
 
         //populate required values
@@ -76,10 +64,5 @@ class AOW_ConditionTest extends SuitePHPUnit_Framework_TestCase
         foreach ($aow_conditions as $lineItem) {
             $lineItem->mark_deleted($lineItem->id);
         }
-        
-        // clean up
-        
-        $state->popTable('aod_indexevent');
-        $state->popTable('aow_conditions');
     }
 }

@@ -34,10 +34,6 @@ class AOW_ActionTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave_lines()
     {
-
-        $state->pushTable('aow_actions');
-
-        // test
         $aowAction = new AOW_Action();
 
         //populate required values
@@ -60,9 +56,6 @@ class AOW_ActionTest extends SuitePHPUnit_Framework_TestCase
         foreach ($aow_actions as $lineItem) {
             $lineItem->mark_deleted($lineItem->id);
         }
-        
-        // clean up
-        $state->popTable('aow_actions');
     }
 
     public function testbean_implements()

@@ -32,9 +32,6 @@ class AOS_QuotesTest extends SuitePHPUnit_Framework_TestCase
 
     public function testSaveAndMark_deleted()
     {
-
-        $state->pushTable('aos_quotes');
-
         $aosQuotes = new AOS_Quotes();
 
         $aosQuotes->name = 'test';
@@ -51,8 +48,5 @@ class AOS_QuotesTest extends SuitePHPUnit_Framework_TestCase
         $aosQuotes->mark_deleted($aosQuotes->id);
         $result = $aosQuotes->retrieve($aosQuotes->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popTable('aos_quotes');
     }
 }

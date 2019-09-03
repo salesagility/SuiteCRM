@@ -25,12 +25,7 @@ class CurrentLanguageTest extends SuitePHPUnit_Framework_TestCase
 
     public function testGetCurrentLanguage()
     {
-
-        $state->pushFile('config_override.php');
-        
         $language = self::$language->getCurrentLanguage();
         $this->assertNotEmpty($language);
-        
-        $state->popFile('config_override.php');
     }
 }

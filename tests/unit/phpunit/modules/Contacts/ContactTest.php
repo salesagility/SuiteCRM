@@ -62,12 +62,7 @@ class ContactTest extends SuitePHPUnit_Framework_TestCase
     {
         self::markTestIncomplete('environment dependency');
 
-        // save state
 
-
-        $state->pushGlobals();
-
-        // test
         $contact = new Contact();
 
         $expected = array( "MAIN"=>"span", "ACCOUNT"=>"span");
@@ -76,7 +71,7 @@ class ContactTest extends SuitePHPUnit_Framework_TestCase
 
         // clean up
         
-        $state->popGlobals();
+
     }
 
     /**
@@ -172,12 +167,7 @@ class ContactTest extends SuitePHPUnit_Framework_TestCase
 
     public function testget_list_view_data()
     {
-        // save state
 
-        $state->pushTable('email_addresses');
-        $state->pushTable('tracker');
-
-        // test
         $contact = new Contact();
 
         //test with attributes preset and verify attributes are set accordingly
@@ -209,8 +199,8 @@ class ContactTest extends SuitePHPUnit_Framework_TestCase
 
         
         // clean up
-        $state->popTable('tracker');
-        $state->popTable('email_addresses');
+
+
     }
 
     public function testbuild_generic_where_clause()

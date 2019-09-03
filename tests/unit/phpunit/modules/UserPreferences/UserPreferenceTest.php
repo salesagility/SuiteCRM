@@ -16,12 +16,7 @@ class UserPreferenceTest extends SuitePHPUnit_Framework_TestCase
 
     public function testgetUserDateTimePreferences()
     {
-        // save state
 
-        $state->pushTable('aod_index');
-        $state->pushGlobals();
-
-        // test
         $user = new User();
         $user->retrieve('1');
 
@@ -31,20 +26,15 @@ class UserPreferenceTest extends SuitePHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result));
 
         // clean up
-        $state->popTable('aod_index');
-        $state->popGlobals();
+
+
     }
 
     public function testSetAndGetPreference()
     {
         $this->markTestIncomplete('state is incorrect');
         
-        // save state
 
-        $state->pushTable('aod_index');
-        $state->pushGlobals();
-
-        // test
         global $sugar_config;
 
         $user = new User();
@@ -73,17 +63,13 @@ class UserPreferenceTest extends SuitePHPUnit_Framework_TestCase
         $this->assertEquals($sugar_config['chartEngine'], $result);
         
         // clean up
-        $state->popTable('aod_index');
-        $state->popGlobals();
+
+
     }
     
     public function testgetDefaultPreference()
     {
-        // save state
 
-        $state->pushTable('aod_index');
-
-        // test
         global $sugar_config;
         $userPreference = new UserPreference();
 
@@ -110,16 +96,12 @@ class UserPreferenceTest extends SuitePHPUnit_Framework_TestCase
         
         // clean up
         
-        $state->popTable('aod_index');
+
     }
 
     public function test__construct()
     {
-        // save state
 
-        $state->pushTable('aod_index');
-
-        // test
         // execute the constructor and check for the Object type and  attributes
         $userPreference = new UserPreference();
 
@@ -134,22 +116,13 @@ class UserPreferenceTest extends SuitePHPUnit_Framework_TestCase
         $this->assertAttributeEquals(true, 'disable_row_level_security', $userPreference);
         
         // clean up
-        $state->popTable('aod_index');
+
     }
     
     public function testSavePreferencesToDBAndResetPreferences()
     {
         self::markTestIncomplete('environment dependency');
-        
-        // save state
 
-        $state->pushTable('email_addresses');
-        $state->pushTable('user_preferences');
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-
-        // test
         $user = new User();
         $user->retrieve('1');
 
@@ -174,13 +147,6 @@ class UserPreferenceTest extends SuitePHPUnit_Framework_TestCase
                 'category' => 'test_category',
         ));
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
-        $state->popTable('user_preferences');
-        $state->popTable('email_addresses');
     }
 
     public function testupdateAllUserPrefs()

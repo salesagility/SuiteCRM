@@ -82,25 +82,21 @@ class EmployeeTest extends SuitePHPUnit_Framework_TestCase
 
     public function testverify_data()
     {
-        // save state
 
-        $state->pushTable('email_addresses');
-
-        // test
         $employee = new Employee();
         $this->assertEquals(true, $employee->verify_data());
 
         // clean up
-        $state->popTable('email_addresses');
+
     }
 
     public function testget_list_view_data()
     {
         // save state
 
-        $state->pushTable('aod_index');
-        $state->pushTable('email_addresses');
-        $state->pushTable('tracker');
+
+
+
         
         
         $employee = new Employee();
@@ -130,9 +126,9 @@ class EmployeeTest extends SuitePHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
 
         // clean up
-        $state->popTable('tracker');
-        $state->popTable('email_addresses');
-        $state->popTable('aod_index');
+
+
+
     }
 
     public function testlist_view_parse_additional_sections()
@@ -204,11 +200,7 @@ class EmployeeTest extends SuitePHPUnit_Framework_TestCase
 
     public function testhasCustomFields()
     {
-        // save state
 
-        $state->pushTable('email_addresses');
-
-        // test
         
         
         $employee = new Employee();
@@ -217,7 +209,7 @@ class EmployeeTest extends SuitePHPUnit_Framework_TestCase
         
         
         // clean up
-        $state->popTable('email_addresses');
+
     }
     
     public function testError()

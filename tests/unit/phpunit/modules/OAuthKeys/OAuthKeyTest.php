@@ -33,8 +33,8 @@ class OAuthKeyTest extends SuitePHPUnit_Framework_TestCase
     public function testMain()
     {
 
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
+
+
 
         // test
         $oauthKey = new OAuthKey();
@@ -56,8 +56,8 @@ class OAuthKeyTest extends SuitePHPUnit_Framework_TestCase
         $this->mark_deleted($oauthKey->id);
         
         // clean up
-        $state->popTable('aod_index');
-        $state->popTable('tracker');
+
+
     }
 
     public function getByKey($key)

@@ -148,11 +148,6 @@ class CurrencyTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave()
     {
-
-        $state->pushTable('aod_index');
-        $state->pushTable('currencies');
-        $state->pushTable('tracker');
-        
         $currency = new Currency();
         $currency->name = 'Rand';
         $currency->iso4217 = 'R';
@@ -169,99 +164,50 @@ class CurrencyTest extends SuitePHPUnit_Framework_TestCase
         $currency->mark_deleted($currency->id);
         $result = $currency->retrieve($currency->id);
         $this->assertEquals(-99, $result->id);
-        
-        // clean up
-        
-        
-        $state->popTable('tracker');
-        $state->popTable('currencies');
-        $state->popTable('aod_index');
     }
 
     public function testcurrency_format_number()
     {
-
-        $state->pushTable('currencies');
-        
         $this->assertEquals('$100.00', currency_format_number(100));
         $this->assertEquals('$100.0', currency_format_number(100, array('round' => 1, 'decimals' => 1)));
-        
-        // clean up
-        $state->popTable('currencies');
     }
 
     public function testformat_number()
     {
-
-        $state->pushTable('currencies');
-        
         $this->assertEquals('100.00', format_number(100));
         $this->assertEquals('100.1', format_number(100.09, 1, 1));
         $this->assertEquals('$100.1', format_number(100.09, 1, 1, array('convert' => 1, 'currency_symbol' => 'R')));
-        
-        // clean up
-        $state->popTable('currencies');
     }
 
     public function testformat_place_symbol()
     {
-
-        $state->pushTable('currencies');
-        
         $this->assertEquals('R&nbsp;100', format_place_symbol(100, 'R', true));
         $this->assertEquals('R100', format_place_symbol(100, 'R', false));
         $this->assertEquals('100', format_place_symbol(100, '', false));
-        
-        // clean up
-        $state->popTable('currencies');
     }
 
     public function testunformat_number()
     {
-
-        $state->pushTable('currencies');
-        
         $this->assertEquals('100', unformat_number('$100'));
         $this->assertEquals('100', unformat_number(100));
-        
-        // clean up
-        $state->popTable('currencies');
     }
 
     public function testformat_money()
     {
-
-        $state->pushTable('currencies');
-        
         $this->assertEquals('100.00', format_money('100'));
         $this->assertEquals('100.00', format_money('100', false));
-        
-        // clean up
-        $state->popTable('currencies');
     }
 
     public function testget_number_seperators()
     {
-
-        $state->pushTable('currencies');
-        
         $this->assertEquals(array(',', '.'), get_number_seperators());
         $this->assertEquals(array(',', '.'), get_number_seperators(false));
-        
-        // clean up
-        $state->popTable('currencies');
     }
 
     public function testtoString()
     {
-
-        $state->pushTable('currencies');
-        
         $expected = "\$m_currency_round= \n\$m_currency_decimal= \n\$m_currency_symbol= \n\$m_currency_iso= \n\$m_currency_name= \n";
         $this->assertSame($expected, toString(false));
-        
-        // clean up
-        $state->popTable('currencies');
     }
 
     public function testgetCurrencyDropDown()
@@ -278,9 +224,6 @@ class CurrencyTest extends SuitePHPUnit_Framework_TestCase
 
     public function testgetCurrencyNameDropDown()
     {
-
-        $state->pushTable('currencies');
-        
         //test with view = Default / DetailView
         $this->assertEquals('US Dollars', getCurrencyNameDropDown(null));
 
@@ -288,16 +231,10 @@ class CurrencyTest extends SuitePHPUnit_Framework_TestCase
         $expected = $expected = "<select name=\"currency_name\" id=\"currency_name\" />\n<OPTION value='US Dollars'>US Dollars</OPTION></select>";
         $actual = getCurrencyNameDropDown(null, 'currency_name', '', 'EditView');
         $this->assertSame($expected, $actual);
-        
-        // clean up
-        $state->popTable('currencies');
     }
 
     public function testgetCurrencySymbolDropDown()
     {
-
-        $state->pushTable('currencies');
-        
         //test with view = Default / DetailView
         $this->assertEquals('US Dollars', getCurrencySymbolDropDown(null));
 
@@ -305,8 +242,5 @@ class CurrencyTest extends SuitePHPUnit_Framework_TestCase
         $expected = $expected = "<select name=\"currency_name\" id=\"currency_name\" />\n<OPTION value='\$'>\$</OPTION></select>";
         $actual = getCurrencySymbolDropDown(null, 'currency_name', '', 'EditView');
         $this->assertSame($expected, $actual);
-
-        // clean up
-        $state->popTable('currencies');
     }
 }

@@ -141,10 +141,6 @@ class SecurityGroupTest extends SuitePHPUnit_Framework_TestCase
 
     public function testinherit()
     {
-
-        $state->pushGlobals();
-        
-        // test
         $account = new Account();
         $account->id = 1;
 
@@ -157,9 +153,6 @@ class SecurityGroupTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popGlobals();
     }
 
     public function testassign_default_groups()
@@ -243,29 +236,14 @@ class SecurityGroupTest extends SuitePHPUnit_Framework_TestCase
 
     public function testgetMembershipCount()
     {
-        // save state
-
-        $state->pushGlobals();
-
-        // test
         $securityGroup = new SecurityGroup();
 
         $result = $securityGroup->getMembershipCount('1');
         $this->assertEquals(0, $result);
-
-        // clean up
-        $state->popGlobals();
     }
 
     public function testSaveAndRetrieveAndRemoveDefaultGroups()
     {
-        // save state
-
-        $state->pushTable('aod_index');
-        $state->pushTable('securitygroups');
-        $state->pushTable('tracker');
-
-        // test
         // unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
@@ -299,11 +277,6 @@ class SecurityGroupTest extends SuitePHPUnit_Framework_TestCase
 
         //delete the security group as well for cleanup
         $securityGroup->mark_deleted($securityGroup->id);
-        
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('securitygroups');
-        $state->popTable('aod_index');
     }
 
     public function testgetSecurityModules()
@@ -380,10 +353,6 @@ class SecurityGroupTest extends SuitePHPUnit_Framework_TestCase
 
     public function testaddGroupToRecord()
     {
-
-        $state->pushTable('securitygroups_records');
-        
-        // test
         // unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         //$db->disconnect();
@@ -399,9 +368,6 @@ class SecurityGroupTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popTable('securitygroups_records');
     }
 
     public function testremoveGroupFromRecord()

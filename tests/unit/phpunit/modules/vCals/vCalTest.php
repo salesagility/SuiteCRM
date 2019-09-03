@@ -125,11 +125,7 @@ class vCalTest extends SuitePHPUnit_Framework_TestCase
 
     public function testcreate_sugar_freebusy()
     {
-        // save state
 
-        $state->pushGlobals();
-
-        // test
         global $locale, $timedate;
 
         $vcal = new vCal();
@@ -143,16 +139,12 @@ class vCalTest extends SuitePHPUnit_Framework_TestCase
         $this->assertGreaterThanOrEqual(0, strlen($result));
         
         // clean up
-        $state->popGlobals();
+
     }
 
     public function testget_vcal_freebusy()
     {
-        // save state
 
-        $state->pushGlobals();
-
-        // test
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -165,18 +157,11 @@ class vCalTest extends SuitePHPUnit_Framework_TestCase
         $this->assertStringEndsWith($expectedEnd, $result);
 
         // clean up
-        $state->popGlobals();
+
     }
 
     public function testcache_sugar_vcal()
     {
-
-        
-        $state->pushTable('tracker');
-        $state->pushTable('vcals');
-        $state->pushTable('aod_index');
-        $state->pushGlobals();
-
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -187,25 +172,10 @@ class vCalTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('aod_index');
-        $state->popTable('vcals');
-        $state->popTable('tracker');
     }
 
     public function testcache_sugar_vcal_freebusy()
     {
-
-        
-        $state->pushTable('tracker');
-        $state->pushTable('vcals');
-        $state->pushGlobals();
-        
-        
-        
-        
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -216,11 +186,6 @@ class vCalTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('vcals');
-        $state->popTable('tracker');
     }
 
     public function testfold_ical_lines()

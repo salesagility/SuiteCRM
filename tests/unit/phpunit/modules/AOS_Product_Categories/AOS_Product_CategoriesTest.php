@@ -32,15 +32,6 @@ class AOS_Product_CategoriesTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave()
     {
-
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('aos_product_categories');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-        
-        
-
         $aosProductCategories = new AOS_Product_Categories();
         $aosProductCategories->name = 'test';
         $aosProductCategories->parent_category_id = 1;
@@ -55,13 +46,5 @@ class AOS_Product_CategoriesTest extends SuitePHPUnit_Framework_TestCase
         $aosProductCategories->mark_deleted($aosProductCategories->id);
         $result = $aosProductCategories->retrieve($aosProductCategories->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('aos_product_categories');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
 }

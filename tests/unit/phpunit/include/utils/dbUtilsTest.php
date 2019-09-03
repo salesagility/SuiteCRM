@@ -35,14 +35,14 @@ class db_utilsTest extends SuitePHPUnit_Framework_TestCase
     public function testdb_convert($string, $type, $params, $expected)
     {
 
-        $state->pushTable('aod_indexevent');
+
         
         //execute the method and test if it returns expected values for all types
         $actual = db_convert($string, $type, $params);
         $this->assertSame($expected, $actual);
         
         // clean up
-        $state->popTable('aod_indexevent');
+
     }
 
     public function testdb_concat()

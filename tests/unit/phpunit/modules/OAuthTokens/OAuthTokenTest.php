@@ -70,12 +70,7 @@ class OAuthTokenTest extends SuitePHPUnit_Framework_TestCase
 
     public function testSaveAndOthers()
     {
-        // save state
 
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-
-        // test
         $oauthToken = OAuthToken::generate();
 
         $oauthToken->save();
@@ -98,8 +93,8 @@ class OAuthTokenTest extends SuitePHPUnit_Framework_TestCase
         $this->mark_deleted($oauthToken->id);
         
         // clean up
-        $state->popTable('aod_index');
-        $state->popTable('tracker');
+
+
     }
 
     public function load($id)
@@ -145,12 +140,7 @@ class OAuthTokenTest extends SuitePHPUnit_Framework_TestCase
 
     public function testcreateAuthorized()
     {
-        // save state
 
-
-        $state->pushTable('tracker');
-
-        // test
         
         $oauthKey = new OAuthKey();
         $oauthKey->id = '1';
@@ -174,7 +164,7 @@ class OAuthTokenTest extends SuitePHPUnit_Framework_TestCase
         
         // clean up
         
-        $state->popTable('tracker');
+
     }
 
     public function copyAuthData($token)

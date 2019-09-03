@@ -31,11 +31,6 @@ class AOS_InvoicesTest extends SuitePHPUnit_Framework_TestCase
 
     public function testSaveAndMark_deleted()
     {
-
-        
-        $state->pushTable('aos_invoices');
-        $state->pushTable('tracker');
-        
         $aosInvoices = new AOS_Invoices();
         $aosInvoices->name = 'test';
 
@@ -50,9 +45,5 @@ class AOS_InvoicesTest extends SuitePHPUnit_Framework_TestCase
         $aosInvoices->mark_deleted($aosInvoices->id);
         $result = $aosInvoices->retrieve($aosInvoices->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('aos_invoices');
     }
 }

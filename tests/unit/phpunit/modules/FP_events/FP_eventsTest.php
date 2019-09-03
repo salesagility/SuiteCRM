@@ -23,7 +23,7 @@ class FP_eventsTest extends SuitePHPUnit_Framework_TestCase
     public function testemail_templates()
     {
 
-        $state->pushGlobals();
+
 
         global $app_list_strings;
 
@@ -33,6 +33,6 @@ class FP_eventsTest extends SuitePHPUnit_Framework_TestCase
         $this->assertTrue(is_array($app_list_strings['email_templet_list']));
         
         // clean up
-        $state->popGlobals();
+
     }
 }

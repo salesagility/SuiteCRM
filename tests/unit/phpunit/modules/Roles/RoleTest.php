@@ -94,7 +94,7 @@ class RoleTest extends SuitePHPUnit_Framework_TestCase
     // save state
 
 
-        $state->pushTable('email_addresses');
+
 
         // test
         
@@ -123,7 +123,7 @@ class RoleTest extends SuitePHPUnit_Framework_TestCase
         
         // clean up
         
-        $state->popTable('email_addresses');
+
     }
 
     public function get_users($id)

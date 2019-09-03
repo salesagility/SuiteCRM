@@ -45,7 +45,7 @@ class EmailMarketingTest extends SuitePHPUnit_Framework_TestCase
     {
         // save state
 
-        $state->pushGlobals();
+
         
         
         $emailMarketing = new EmailMarketing();
@@ -61,7 +61,7 @@ class EmailMarketingTest extends SuitePHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
 
         // clean up
-        $state->popGlobals();
+
     }
 
     public function testget_list_view_data()

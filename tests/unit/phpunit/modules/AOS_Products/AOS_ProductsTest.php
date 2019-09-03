@@ -31,14 +31,6 @@ class AOS_ProductsTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave()
     {
-
-        $state->pushTable('aos_products');
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-        
-        
-
         $aosProducts = new AOS_Products();
 
         $aosProducts->name = 'test';
@@ -57,13 +49,6 @@ class AOS_ProductsTest extends SuitePHPUnit_Framework_TestCase
         $aosProducts->mark_deleted($aosProducts->id);
         $result = $aosProducts->retrieve($aosProducts->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
-        $state->popTable('aos_products');
     }
 
     public function testgetCustomersPurchasedProductsQuery()

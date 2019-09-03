@@ -4,39 +4,12 @@ use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
 
 class TaskTest extends SuitePHPUnit_Framework_TestCase
 {
-    /**
-     *
-     * @var SuiteCRM\StateSaver
-     */
-    protected $state;
-
     public function setUp()
     {
         parent::setUp();
-
-        $this->state = new SuiteCRM\StateSaver();
-        $this->state->pushTable('aod_index');
-        $this->state->pushTable('aod_indexevent');
-        $this->state->pushTable('tasks');
-        $this->state->pushTable('tracker');
-        $this->state->pushFile('config.php');
-        $this->state->pushGlobals();
-
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
-    }
-
-    public function tearDown()
-    {
-        $this->state->popTable('tracker');
-        $this->state->popTable('tasks');
-        $this->state->popTable('aod_indexevent');
-        $this->state->popTable('aod_index');
-        $this->state->popGlobals();
-        $this->state->popFile('config.php');
-
-        parent::tearDown();
     }
 
     public function testTask()

@@ -47,10 +47,6 @@ class NoteTest extends SuitePHPUnit_Framework_TestCase
 
     public function testmark_deleted()
     {
-
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-
         $note = new Note();
 
         //execute the method and test if it works and does not throws an exception.
@@ -60,29 +56,15 @@ class NoteTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
     }
 
     public function testdeleteAttachment()
     {
-        // save state
-
-        $state->pushGlobals();
-        $state->pushTable('tracker');
-
-        // test
         $note = new Note();
 
         $note->id = 1;
         $result = $note->deleteAttachment();
         $this->assertEquals(true, $result);
-
-        // clean up
-        $state->popTable('tracker');
-        $state->popGlobals();
     }
 
     public function testget_summary_text()
@@ -165,19 +147,11 @@ class NoteTest extends SuitePHPUnit_Framework_TestCase
 
     public function testlistviewACLHelper()
     {
-        // save state
-
-        $state->pushGlobals();
-
-        // test
         $note = new Note();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $note->listviewACLHelper();
         $this->assertSame($expected, $actual);
-
-        // clean up
-        $state->popGlobals();
     }
 
     public function testbean_implements()

@@ -28,17 +28,6 @@ class DocumentRevisionTest extends SuitePHPUnit_Framework_TestCase
 
     public function testSaveAndRetrieve()
     {
-
-        
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        $state->pushTable('document_revisions');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-        
-        
-
         $documentRevision = new DocumentRevision();
 
         $documentRevision->document_id = '1';
@@ -65,25 +54,10 @@ class DocumentRevisionTest extends SuitePHPUnit_Framework_TestCase
         $docRev->mark_deleted($docRev->id);
         $result = $docRev->retrieve($docRev->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('document_revisions');
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
 
     public function testget_summary_text()
     {
-
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        $state->pushTable('document_revisions');
-        
-        
         $documentRevision = new DocumentRevision();
 
         //test without setting name
@@ -92,23 +66,10 @@ class DocumentRevisionTest extends SuitePHPUnit_Framework_TestCase
         //test with name set
         $documentRevision->filename = 'test';
         $this->assertEquals('test', $documentRevision->get_summary_text());
-        
-        // clean up
-        $state->popTable('document_revisions');
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
 
     public function testis_authenticated()
     {
-
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        $state->pushTable('document_revisions');
-        
-        
         $documentRevision = new DocumentRevision();
 
         //test wihout setting attributes
@@ -117,23 +78,10 @@ class DocumentRevisionTest extends SuitePHPUnit_Framework_TestCase
         //test with attributes preset
         $documentRevision->authenticated = true;
         $this->assertEquals(true, $documentRevision->is_authenticated());
-        
-        // clean up
-        $state->popTable('document_revisions');
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
 
     public function testfill_in_additional_list_fields()
     {
-
-        
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        $state->pushTable('document_revisions');
-        
         $documentRevision = new DocumentRevision();
 
         //execute the method and test if it works and does not throws an exception.
@@ -143,22 +91,10 @@ class DocumentRevisionTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popTable('document_revisions');
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
 
     public function testfill_in_additional_detail_fields()
     {
-
-        
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        $state->pushTable('document_revisions');
-        
         $documentRevision = new DocumentRevision();
 
         //execute the method and test if it works and does not throws an exception.
@@ -168,20 +104,10 @@ class DocumentRevisionTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popTable('document_revisions');
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
     }
 
     public function testgetDocumentRevisionNameForDisplay()
     {
-
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        $state->pushTable('document_revisions');
-        
         $documentRevision = new DocumentRevision();
 
         //test wihout setting attributes
@@ -193,21 +119,10 @@ class DocumentRevisionTest extends SuitePHPUnit_Framework_TestCase
         $documentRevision->revision = 1;
         $result = $documentRevision->getDocumentRevisionNameForDisplay();
         $this->assertEquals('-Revision_1.ext', $result);
-        
-        // clean up
-        $state->popTable('document_revisions');
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
     }
 
     public function testfill_document_name_revision()
     {
-
-        
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        $state->pushTable('document_revisions');
-        
         $documentRevision = new DocumentRevision();
 
         //execute the method and test if it works and does not throws an exception.
@@ -217,21 +132,10 @@ class DocumentRevisionTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popTable('document_revisions');
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
     }
 
     public function testlist_view_parse_additional_sections()
     {
-
-        
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        $state->pushTable('document_revisions');
-        
         $documentRevision = new DocumentRevision();
         
         $xTemplateSection = null;
@@ -244,80 +148,34 @@ class DocumentRevisionTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popTable('document_revisions');
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
     }
 
     public function testget_list_view_data()
     {
-
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        $state->pushTable('document_revisions');
-        
-        
         $documentRevision = new DocumentRevision();
         $result = $documentRevision->get_list_view_data();
         $this->assertEquals(array('DELETED' => 0), $result);
-        
-        // clean up
-        $state->popTable('document_revisions');
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
     }
 
     public function testget_document_revision_name()
     {
-
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        $state->pushTable('document_revisions');
-        
         $documentRevision = new DocumentRevision();
         $result = $documentRevision->get_document_revision_name(1);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popTable('document_revisions');
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
     }
 
     public function testget_document_revisions()
     {
-
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        $state->pushTable('document_revisions');
-        
         $documentRevision = new DocumentRevision();
         $results = $documentRevision->get_document_revisions(1);
         $this->assertTrue(is_array($results));
-        
-        // clean up
-        $state->popTable('document_revisions');
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
     }
 
     public function testbean_implements()
     {
-
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        $state->pushTable('document_revisions');
-        
         $documentRevision = new DocumentRevision();
         $this->assertEquals(false, $documentRevision->bean_implements('')); //test with blank value
         $this->assertEquals(false, $documentRevision->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $documentRevision->bean_implements('FILE')); //test with valid value
-        
-        // clean up
-        $state->popTable('document_revisions');
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
     }
 }

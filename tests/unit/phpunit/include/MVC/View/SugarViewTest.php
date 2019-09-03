@@ -31,12 +31,6 @@ class SugarViewTest extends SuitePHPUnit_Framework_TestCase
 
     public function testprocess()
     {
-        // save state
-
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-        $state->pushPHPConfigOptions();
-
         // test
         $SugarView = new SugarView();
         $SugarView->module = 'Users';
@@ -56,11 +50,6 @@ class SugarViewTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popPHPConfigOptions();
-        $state->popGlobals();
-        $state->popTable('tracker');
     }
 
     public function testdisplayErrors()

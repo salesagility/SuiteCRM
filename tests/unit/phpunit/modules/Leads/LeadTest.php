@@ -15,15 +15,6 @@ class LeadTest extends SuitePHPUnit_Framework_TestCase
 
     public function testLead()
     {
-        //self::markTestIncomplete('Test changes error level');
-
-        // save state
-
-        $state->pushTable('inbound_email');
-        
-
-        // test
-        
         //execute the contructor and check for the Object type and  attributes
         $lead = BeanFactory::getBean('Leads');
 
@@ -38,18 +29,10 @@ class LeadTest extends SuitePHPUnit_Framework_TestCase
 
         $this->assertAttributeEquals(true, 'new_schema', $lead);
         $this->assertAttributeEquals(true, 'importable', $lead);
-        
-        // clean up
-        $state->popTable('inbound_email');
     }
 
     public function testget_account()
     {
-
-        
-        
-        
-
         $lead = BeanFactory::getBean('Leads');
 
         //test without pre settting attributes
@@ -61,8 +44,6 @@ class LeadTest extends SuitePHPUnit_Framework_TestCase
         $lead->account_id = 1;
         $result = $lead->get_account();
         $this->assertEquals(null, $result);
-        
-        // clean up
     }
 
     public function testget_opportunity()
@@ -175,16 +156,6 @@ class LeadTest extends SuitePHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
-        // save state
-
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('leads');
-        $state->pushTable('leads_cstm');
-        $state->pushTable('sugarfeed');
-        $state->pushTable('tracker');
-
-        // test
         $lead = new Lead();
 
         $lead->first_name = "firstn";
@@ -193,14 +164,6 @@ class LeadTest extends SuitePHPUnit_Framework_TestCase
         $lead->fill_in_additional_list_fields();
 
         $this->assertEquals("firstn lastn", $lead->name);
-
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('sugarfeed');
-        $state->popTable('leads_cstm');
-        $state->popTable('leads');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
 
 
@@ -218,12 +181,7 @@ class LeadTest extends SuitePHPUnit_Framework_TestCase
 
     public function testget_list_view_data()
     {
-        // save state
 
-        $state->pushTable('email_addresses');
-        $state->pushTable('tracker');
-
-        // test
         
         $lead = BeanFactory::getBean('Leads');
 
@@ -253,8 +211,8 @@ class LeadTest extends SuitePHPUnit_Framework_TestCase
         $this->assertEquals($expected['EMAIL1_LINK'], $actual['EMAIL1_LINK']);
         
         // clean up
-        $state->popTable('tracker');
-        $state->popTable('email_addresses');
+
+
     }
 
 
@@ -343,11 +301,7 @@ class LeadTest extends SuitePHPUnit_Framework_TestCase
 
     public function testlistviewACLHelper()
     {
-        // save state
 
-        $state->pushGlobals();
-
-        // test
         $lead = BeanFactory::getBean('Leads');
 
         $expected = array("MAIN" => "a", "ACCOUNT" => "a", "OPPORTUNITY" => "a", "CONTACT" => "a");
@@ -355,7 +309,7 @@ class LeadTest extends SuitePHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
 
         // clean up
-        $state->popGlobals();
+
     }
 
 

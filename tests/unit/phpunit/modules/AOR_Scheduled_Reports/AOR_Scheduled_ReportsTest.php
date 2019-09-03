@@ -15,12 +15,6 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnit_Framework_TestCase
 
     public function testSaveAndGet_email_recipients()
     {
-
-        $state->pushTable('aor_scheduled_reports');
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-        $state->pushGlobals();
-
         $aorScheduledReports = new AOR_Scheduled_Reports();
         $aorScheduledReports->name = "test";
         $aorScheduledReports->description = "test description";
@@ -45,12 +39,6 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnit_Framework_TestCase
 
         $aorScheduledReports->mark_deleted($aorScheduledReports->id);
         unset($aorScheduledReports);
-
-        // clean up
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
-        $state->popTable('aor_scheduled_reports');
     }
     
     public function testAOR_Scheduled_Reports()

@@ -32,14 +32,6 @@ class DocumentTest extends SuitePHPUnit_Framework_TestCase
 
     public function testSaveAndGet_document_name()
     {
-
-        
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        $state->pushTable('documents');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-
         $document = new Document();
 
         $document->filename = 'test';
@@ -64,23 +56,10 @@ class DocumentTest extends SuitePHPUnit_Framework_TestCase
         $document->mark_deleted($document->id);
         $result = $document->retrieve($document->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('documents');
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
     }
 
     public function testget_summary_text()
     {
-
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        
-        
         $document = new Document();
 
         //test without setting name
@@ -89,18 +68,10 @@ class DocumentTest extends SuitePHPUnit_Framework_TestCase
         //test with name set
         $document->document_name = 'test';
         $this->assertEquals('test', $document->get_summary_text());
-        
-        // clean up
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
     }
 
     public function testis_authenticated()
     {
-
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        
         $document = new Document();
 
         //test without presetting attributes
@@ -109,20 +80,10 @@ class DocumentTest extends SuitePHPUnit_Framework_TestCase
         //test with attributes preset
         $document->authenticated = true;
         $this->assertEquals(true, $document->is_authenticated());
-        
-        // clean up
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
     }
 
     public function testfill_in_additional_list_fields()
     {
-
-        
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        $state->pushGlobals();
-
         $document = new Document();
 
         //execute the method and test if it works and does not throws an exception.
@@ -132,21 +93,11 @@ class DocumentTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
     }
 
     public function testfill_in_additional_detail_fields()
     {
         self::markTestIncomplete('environment dependency (random generated token in url)');
-        
-
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('cron_remove_documents');
-        $state->pushGlobals();
 
         $document = new Document();
         $document->id = 'abcde-12345';
@@ -158,18 +109,10 @@ class DocumentTest extends SuitePHPUnit_Framework_TestCase
         $this->assertEquals('', $document->file_url, 'file url: [[' . $document->file_url . ']]');
         //
         $this->assertEquals('', $document->file_url_noimage, 'file url noimage: [[' . $document->file_url_noimage . ']]');
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('cron_remove_documents');
-        $state->popTable('aod_indexevent');
     }
 
     public function testlist_view_parse_additional_sections()
     {
-
-        $state->pushTable('cron_remove_documents');
-        
         $document = new Document();
 
         $xTemplateSection = null;
@@ -182,9 +125,6 @@ class DocumentTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popTable('cron_remove_documents');
     }
 
     public function testcreate_export_query()

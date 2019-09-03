@@ -18,7 +18,7 @@ class activity_utilsTest extends SuitePHPUnit_Framework_TestCase
     public function testbuild_related_list_by_user_id()
     {
 
-        $state->pushGlobals();
+
         
         
         
@@ -37,6 +37,6 @@ class activity_utilsTest extends SuitePHPUnit_Framework_TestCase
         $this->assertTrue(is_array($list));
         
         // clean up
-        $state->popGlobals();
+
     }
 }

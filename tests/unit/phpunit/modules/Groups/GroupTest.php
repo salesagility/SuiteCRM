@@ -30,11 +30,6 @@ class GroupTest extends SuitePHPUnit_Framework_TestCase
     public function testmark_deleted()
     {
         self::markTestIncomplete('environment dependency (php7: Incorrect state hash: Hash doesn\'t match at key "database::users".)');
-        
-
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        $state->pushTable('users');
 
         $group = new Group();
 
@@ -45,11 +40,6 @@ class GroupTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popTable('users');
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
     }
 
     public function testcreate_export_query()

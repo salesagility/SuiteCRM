@@ -40,14 +40,6 @@ class jjwg_MapsTest extends SuitePHPUnit_Framework_TestCase
     {
         self::markTestIncomplete('environment dependency');
         
-        // save state
-
-
-        $state->pushTable('config');
-        $state->pushTable('tracker');
-
-        // test
-        
         $jjwgMaps = new jjwg_Maps();
 
         //test with empty array/default
@@ -57,11 +49,6 @@ class jjwg_MapsTest extends SuitePHPUnit_Framework_TestCase
         //test with data array
         $result = $jjwgMaps->saveConfiguration(array('test' => 1));
         $this->assertEquals(true, $result);
-        
-        // clean up
-        
-        $state->popTable('tracker');
-        $state->popTable('config');
     }
 
     public function testupdateGeocodeInfo()
@@ -138,13 +125,6 @@ class jjwg_MapsTest extends SuitePHPUnit_Framework_TestCase
 
     public function testupdateGeocodeInfoByAssocQuery()
     {
-        // save state
-
-
-        $state->pushTable('accounts_cstm');
-
-        // test
-        
         $jjwgMaps = new jjwg_Maps();
 
         //test with empty parameters
@@ -158,21 +138,10 @@ class jjwg_MapsTest extends SuitePHPUnit_Framework_TestCase
         //test with non empty valid parameters
         $result = $jjwgMaps->updateGeocodeInfoByAssocQuery('accounts', array('id' => 1), array());
         $this->assertSame(null, $result);
-        
-        // clean up
-        
-        $state->popTable('accounts_cstm');
     }
 
     public function testupdateGeocodeInfoByBeanQuery()
     {
-        // save state
-
-
-        $state->pushTable('accounts_cstm');
-
-        // test
-        
         $jjwgMaps = new jjwg_Maps();
         $bean = new Account();
 
@@ -184,10 +153,6 @@ class jjwg_MapsTest extends SuitePHPUnit_Framework_TestCase
         $bean->id = 1;
         $result = $jjwgMaps->updateGeocodeInfoByBeanQuery($bean);
         $this->assertSame(null, $result);
-        
-        // clean up
-        
-        $state->popTable('accounts_cstm');
     }
 
     public function testdeleteAllGeocodeInfoByBeanQuery()

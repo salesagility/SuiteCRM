@@ -34,11 +34,6 @@ class SugarFeedTest extends SuitePHPUnit_Framework_TestCase
     {
         self::markTestIncomplete('environment dependency');
 
-        // save state
-
-        $state->pushTable('config');
-
-        // test
         $admin = new Administration();
 
         //test activateModuleFeed method
@@ -50,9 +45,6 @@ class SugarFeedTest extends SuitePHPUnit_Framework_TestCase
         SugarFeed::disableModuleFeed('Accounts');
         $admin->retrieveSettings('sugarfeed');
         $this->assertEquals(0, $admin->settings['sugarfeed_module_Accounts']);
-        
-        // clean up
-        $state->popTable('config');
     }
 
     public function testflushBackendCache()
@@ -110,12 +102,6 @@ class SugarFeedTest extends SuitePHPUnit_Framework_TestCase
 
     public function testpushFeed2()
     {
-        // save state
-
-        $state->pushTable('aod_index');
-        $state->pushTable('sugarfeed');
-
-        // test
         $lead = new Lead();
         $lead->id = 1;
         $lead->assigned_user_id = 1;
@@ -132,19 +118,10 @@ class SugarFeedTest extends SuitePHPUnit_Framework_TestCase
 
         //mark the record as deleted
         $sugarFeed->mark_deleted($sugarFeed->id);
-        
-        // clean up
-        $state->popTable('sugarfeed');
-        $state->popTable('aod_index');
     }
 
     public function testpushFeed()
     {
-        // save state
-
-        $state->pushTable('sugarfeed');
-
-        // test
         SugarFeed::pushFeed('some text', 'SugarFeed', 1, 1, 'Link', 'some url');
 
         //retrieve newly created bean
@@ -160,9 +137,6 @@ class SugarFeedTest extends SuitePHPUnit_Framework_TestCase
 
         //mark the record as deleted
         $sugarFeed->mark_deleted($sugarFeed->id);
-        
-        // clean up
-        $state->popTable('sugarfeed');
     }
 
     public function fetchReplies()

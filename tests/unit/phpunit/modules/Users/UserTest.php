@@ -71,8 +71,8 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
     {
         // store state
 
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
+
+
         
         // test
         $db = DBManagerFactory::getInstance();
@@ -88,8 +88,8 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result));
         
         // clean up
-        $state->popTable('email_addresses');
-        $state->popGlobals();
+
+
     }
 
 
@@ -687,8 +687,8 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
     {
         // store state
 
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
+
+
         
         // test
         global $mod_strings;
@@ -702,8 +702,8 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result));
         
         // clean up
-        $state->popTable('email_addresses');
-        $state->popGlobals();
+
+
     }
 
     public function testlist_view_parse_additional_sections()
@@ -809,8 +809,8 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
     {
         // store state
 
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
+
+
         
         // test
         $user = new User();
@@ -856,8 +856,8 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
         
         // clean up
         
-        $state->popTable('email_addresses');
-        $state->popGlobals();
+
+
     }
 
 
@@ -937,8 +937,8 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
     {
         // store state
 
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
+
+
         
         // test
         $user = new User();
@@ -949,16 +949,16 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result));
         
         // clean up
-        $state->popTable('email_addresses');
-        $state->popGlobals();
+
+
     }
 
     public function testisDeveloperForModule()
     {
         // store state
 
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
+
+
         
         // test
         $user = new User();
@@ -978,16 +978,16 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
         $this->assertEquals(true, $user->isDeveloperForModule("Accounts"));
         
         // clean up
-        $state->popTable('email_addresses');
-        $state->popGlobals();
+
+
     }
 
     public function testgetAdminModules()
     {
         // store state
 
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
+
+
         
         // test
         $user = new User();
@@ -998,16 +998,16 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result));
         
         // clean up
-        $state->popTable('email_addresses');
-        $state->popGlobals();
+
+
     }
 
     public function testisAdminForModule()
     {
         // store state
 
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
+
+
         
         // test
         $user = new User();
@@ -1025,8 +1025,8 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
         
         
         // clean up
-        $state->popTable('email_addresses');
-        $state->popGlobals();
+
+
     }
 
     public function testshowLastNameFirst()
@@ -1130,9 +1130,6 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
     public function testError()
     {
         global $app_strings;
-        
-
-        $state->pushTable('email_addresses_audit');
 
         // setup
         $this->assertTrue(!isset($app_strings['TEST_ERROR_MESSAGE']));
@@ -1160,7 +1157,5 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
         
         // clean up
         unset($app_strings['TEST_ERROR_MESSAGE']);
-
-        $state->popTable('email_addresses_audit');
     }
 }

@@ -9,8 +9,8 @@ class jjwg_Address_CacheTest extends SuitePHPUnit_Framework_TestCase
     {
         // store state
 
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
+
+
         
         // test
         
@@ -30,8 +30,8 @@ class jjwg_Address_CacheTest extends SuitePHPUnit_Framework_TestCase
         $this->assertAttributeEquals(true, 'disable_row_level_security', $jjwgAddressCache);
 
         // clean up
-        $state->popTable('email_addresses');
-        $state->popGlobals();
+
+
     }
 
     public function testconfiguration()
@@ -46,13 +46,6 @@ class jjwg_Address_CacheTest extends SuitePHPUnit_Framework_TestCase
 
     public function testSaveAndGetAddressCacheInfoAndDeleteAllAddressCache()
     {
-        // save state
-
-        $state->pushTable('jjwg_address_cache');
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-
-        // test
         $jjwgAddressCache = new jjwg_Address_Cache();
 
         //test saveAddressCacheInfo() with empty info array
@@ -82,11 +75,6 @@ class jjwg_Address_CacheTest extends SuitePHPUnit_Framework_TestCase
         //verify that record cannot be retrieved anynore
         $result = $jjwgAddressCache->getAddressCacheInfo($ainfo);
         $this->assertEquals(false, $result);
-        
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
-        $state->popTable('jjwg_address_cache');
     }
 
     public function testis_valid_lng()
@@ -109,8 +97,8 @@ class jjwg_Address_CacheTest extends SuitePHPUnit_Framework_TestCase
         // store state
         
 
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
+
+
         
         // test
         $jjwgAddressCache = new jjwg_Address_Cache();
@@ -125,7 +113,7 @@ class jjwg_Address_CacheTest extends SuitePHPUnit_Framework_TestCase
         $this->assertEquals(true, $jjwgAddressCache->is_valid_lat(-90));
 
         // clean up
-        $state->popTable('email_addresses');
-        $state->popGlobals();
+
+
     }
 }

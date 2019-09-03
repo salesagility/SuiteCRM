@@ -23,13 +23,7 @@ class EmailAddressTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave()
     {
-        // save state
 
-        $state->pushTable('email_addresses');
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-        
-        // test
         $email = new EmailAddress();
 
         $email->email_address = 'test@test.com';
@@ -47,8 +41,8 @@ class EmailAddressTest extends SuitePHPUnit_Framework_TestCase
         $this->assertEquals(null, $result);
 
         // clean up
-        $state->popTable('aod_index');
-        $state->popTable('tracker');
-        $state->popTable('email_addresses');
+
+
+
     }
 }

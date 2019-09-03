@@ -32,12 +32,6 @@ class AOS_Line_Item_GroupsTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave_groups()
     {
-
-        
-        $state->pushTable('aos_line_item_groups');
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-        
         $aosLineItemGroup = new AOS_Line_Item_Groups();
 
         //populate required values
@@ -60,19 +54,10 @@ class AOS_Line_Item_GroupsTest extends SuitePHPUnit_Framework_TestCase
         foreach ($line_item_groups as $lineItem) {
             $lineItem->mark_deleted($lineItem->id);
         }
-        
-        // clean up
-        $state->popTable('aod_index');
-        $state->popTable('tracker');
-        $state->popTable('aos_line_item_groups');
     }
 
     public function testsave()
     {
-
-        $state->pushTable('aos_line_item_groups');
-        $state->pushTable('tracker');
-        
         $aosLineItemGroup = new AOS_Line_Item_Groups();
         $aosLineItemGroup->name = 'test';
         $aosLineItemGroup->total_amount = 100;
@@ -88,9 +73,5 @@ class AOS_Line_Item_GroupsTest extends SuitePHPUnit_Framework_TestCase
         $aosLineItemGroup->mark_deleted($aosLineItemGroup->id);
         $result = $aosLineItemGroup->retrieve($aosLineItemGroup->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('aos_line_item_groups');
     }
 }

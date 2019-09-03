@@ -64,7 +64,7 @@ class ProjectTest extends SuitePHPUnit_Framework_TestCase
     {
 
         
-        $state->pushGlobals();
+
         
         
         
@@ -84,7 +84,7 @@ class ProjectTest extends SuitePHPUnit_Framework_TestCase
         
         // clean up
         
-        $state->popGlobals();
+
     }
 
 

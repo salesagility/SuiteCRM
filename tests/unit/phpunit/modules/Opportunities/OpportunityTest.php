@@ -174,17 +174,6 @@ class OpportunityTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave()
     {
-        // save state
-
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('opportunities');
-        $state->pushTable('opportunities_cstm');
-        $state->pushTable('sugarfeed');
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-        $state->pushGlobals();
-
-        // test
         $opportunity = new Opportunity();
 
         $opportunity->name = 'test';
@@ -203,15 +192,6 @@ class OpportunityTest extends SuitePHPUnit_Framework_TestCase
         $opportunity->mark_deleted($opportunity->id);
         $result = $opportunity->retrieve($opportunity->id);
         $this->assertEquals(null, $result);
-
-        // clean up
-        $state->popGlobals();
-        $state->popTable('aod_index');
-        $state->popTable('tracker');
-        $state->popTable('sugarfeed');
-        $state->popTable('opportunities_cstm');
-        $state->popTable('opportunities');
-        $state->popTable('aod_indexevent');
     }
 
     public function testsave_relationship_changes()
@@ -271,11 +251,7 @@ class OpportunityTest extends SuitePHPUnit_Framework_TestCase
 
     public function testlistviewACLHelper()
     {
-        // save state
 
-        $state->pushGlobals();
-
-        // test
         $opportunity = new Opportunity();
 
         $expected = array('MAIN' => 'a', 'ACCOUNT' => 'a');
@@ -283,7 +259,7 @@ class OpportunityTest extends SuitePHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
 
         // clean up
-        $state->popGlobals();
+
     }
 
     public function testget_account_detail()

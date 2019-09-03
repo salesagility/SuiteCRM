@@ -24,15 +24,6 @@ class AOR_ConditionTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave_lines()
     {
-
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('aod_index');
-        $state->pushTable('aor_conditions');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-        
-        
-
         $aor_Condition = new AOR_Condition();
 
         //preset the required data
@@ -51,12 +42,5 @@ class AOR_ConditionTest extends SuitePHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('aor_conditions');
-        $state->popTable('aod_index');
-        $state->popTable('aod_indexevent');
     }
 }

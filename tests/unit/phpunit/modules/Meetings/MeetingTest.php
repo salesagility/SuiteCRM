@@ -40,11 +40,7 @@ class MeetingTest extends SuitePHPUnit_Framework_TestCase
 
     public function testACLAccess()
     {
-        // save state
 
-        $state->pushGlobals();
-
-        // test
         $meeting = new Meeting();
 
         //test without recurring_source
@@ -61,7 +57,7 @@ class MeetingTest extends SuitePHPUnit_Framework_TestCase
         $this->assertEquals(false, $meeting->ACLAccess('delete'));
         
         // clean up
-        $state->popGlobals();
+
     }
 
     public function testhasIntegratedMeeting()
@@ -73,20 +69,6 @@ class MeetingTest extends SuitePHPUnit_Framework_TestCase
 
     public function testSaveAndMarkdeletedAndSetAcceptStatus()
     {
-        // save state
-
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('meetings');
-        $state->pushTable('meetings_contacts');
-        $state->pushTable('meetings_cstm');
-        $state->pushTable('meetings_leads');
-        $state->pushTable('meetings_users');
-        $state->pushTable('vcals');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-
-        // test
         $meeting = new Meeting();
 
         $meeting->name = 'test';
@@ -125,18 +107,6 @@ class MeetingTest extends SuitePHPUnit_Framework_TestCase
         $meeting->mark_deleted($meeting->id);
         $result = $meeting->retrieve($meeting->id);
         $this->assertEquals(null, $result);
-
-        // clean up
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('vcals');
-        $state->popTable('meetings_users');
-        $state->popTable('meetings_leads');
-        $state->popTable('meetings_cstm');
-        $state->popTable('meetings_contacts');
-        $state->popTable('meetings');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
 
     public function testget_summary_text()
@@ -158,11 +128,7 @@ class MeetingTest extends SuitePHPUnit_Framework_TestCase
 
     public function testfill_in_additional_detail_fields()
     {
-        // save state
 
-        $state->pushGlobals();
-
-        // test
         $meeting = new Meeting();
 
         //preset required attributes
@@ -190,16 +156,12 @@ class MeetingTest extends SuitePHPUnit_Framework_TestCase
         $this->assertEquals('Accounts', $meeting->parent_type);
 
         // clean up
-        $state->popGlobals();
+
     }
 
     public function testget_list_view_data()
     {
-        // save state
 
-        $state->pushGlobals();
-
-        // test
         $meeting = new Meeting();
         $current_theme = SugarThemeRegistry::current();
 
@@ -245,7 +207,7 @@ class MeetingTest extends SuitePHPUnit_Framework_TestCase
         $this->assertEquals($expected['PARENT_MODULE'], $actual['PARENT_MODULE']);
 
         // clean up
-        $state->popGlobals();
+
     }
 
     public function testset_notification_body()
@@ -355,11 +317,7 @@ class MeetingTest extends SuitePHPUnit_Framework_TestCase
 
     public function testlistviewACLHelper()
     {
-        // save state
 
-        $state->pushGlobals();
-
-        // test
         $meeting = new Meeting();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
@@ -367,7 +325,7 @@ class MeetingTest extends SuitePHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
         
         // clean up
-        $state->popGlobals();
+
     }
 
     public function testsave_relationship_changes()

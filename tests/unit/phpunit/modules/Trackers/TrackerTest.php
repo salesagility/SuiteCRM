@@ -34,11 +34,7 @@ class TrackerTest extends SuitePHPUnit_Framework_TestCase
 
     public function testget_recently_viewed()
     {
-        // save state
 
-        $state->pushGlobals();
-
-        // test
         $tracker = new Tracker();
 
         $result = $tracker->get_recently_viewed(1);
@@ -47,7 +43,7 @@ class TrackerTest extends SuitePHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result));
         
         // clean up
-        $state->popGlobals();
+
     }
 
     public function testmakeInvisibleForAll()
@@ -78,7 +74,7 @@ class TrackerTest extends SuitePHPUnit_Framework_TestCase
                 
 
         
-        $state->pushGlobals();
+
 
         //test without setting headerDisplayed
         Tracker::logPage();
@@ -92,6 +88,6 @@ class TrackerTest extends SuitePHPUnit_Framework_TestCase
         //$this->assertEquals(time(), null);
         
         // clean up
-        $state->popGlobals();
+
     }
 }
