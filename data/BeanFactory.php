@@ -108,9 +108,9 @@ class BeanFactory
         }
 
         // Pull values from $params array
-        $encode = self::getEncodeFlag($params);
+        $encode = self::hasEncodeFlag($params);
 
-        $deleted = self::getDeletedFlag($params, $deleted);
+        $deleted = self::hasDeletedFlag($params, $deleted);
 
         self::initBeanRegistry($module);
 
@@ -171,7 +171,7 @@ class BeanFactory
      *
      * @return bool|mixed
      */
-    protected static function getEncodeFlag($params)
+    protected static function hasEncodeFlag($params)
     {
         return isset($params['encode'])
             ? $params['encode']
@@ -186,7 +186,7 @@ class BeanFactory
      *
      * @return bool
      */
-    protected static function getDeletedFlag($params, $deleted)
+    protected static function hasDeletedFlag($params, $deleted)
     {
         return isset($params['deleted'])
             ? $params['deleted']
