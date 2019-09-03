@@ -59,8 +59,10 @@ trait RefreshDatabase
     public function refreshDatabase()
     {
         $db = DBManagerFactory::getInstance();
-        if (!$db->query('TRUNCATE TABLE ?')) {
-            throw new StateSaverException('Failed to truncate database');
+        foreach ($db->getTablesArray() as $table) {
+            if (!$db->query('TRUNCATE TABLE ' . $table)) {
+                throw new StateSaverException('Failed to truncate database');
+            }
         }
     }
 }
