@@ -147,22 +147,23 @@ class Sugar_Smarty extends Smarty
                 $resource_name = "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
             }
         }
-        ///
 
         $this->assign('APP_LIST_STRINGS', $app_list_strings);
         $this->assign('APP', $app_strings);
         $this->assign('MOD', $mod_strings);
         $this->assign('APP_CONFIG', $sugar_config);
-
-        $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel('sugar_smarty_errors', 'error_reporting', false);
+        $errorLevelStored = 0;
 
         if (!(isset($sugar_config['developerMode']) && $sugar_config['developerMode'])) {
             $level = isset($sugar_config['smarty_error_level']) ? $sugar_config['smarty_error_level'] : 0;
+            $errorLevelStored = error_reporting();
             error_reporting($level);
         }
         $fetch = parent::fetch(get_custom_file_if_exists($resource_name), $cache_id, $compile_id, $display);
-        $state->popErrorLevel('sugar_smarty_errors', 'error_reporting', false);
+
+        if (!(isset($sugar_config['developerMode']) && $sugar_config['developerMode'])) {
+            error_reporting($errorLevelStored);
+        }
 
         return $fetch;
     }

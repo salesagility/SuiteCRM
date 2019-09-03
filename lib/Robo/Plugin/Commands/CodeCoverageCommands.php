@@ -37,6 +37,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 namespace SuiteCRM\Robo\Plugin\Commands;
 
 use SuiteCRM\Utility\OperatingSystem;
@@ -63,8 +64,6 @@ class CodeCoverageCommands extends \Robo\Tasks
         } else {
             throw new \RuntimeException('unable to detect continuous integration environment');
         }
-
-        $this->disableStateChecker();
         $this->generateCodeCoverageFile();
 
         $this->say('Code Coverage Completed');
@@ -95,29 +94,13 @@ class CodeCoverageCommands extends \Robo\Tasks
         $this->_exec($this->getCodeCoverageCommand());
     }
 
-    /**
-     * Disables the state checker
-     */
-    private function disableStateChecker()
-    {
-        global $sugar_config;
-        require_once 'include/utils/file_utils.php';
-
-        $sugar_config['state_checker']['test_state_check_mode'] = 0;
-
-        return write_array_to_file(
-            'sugar_config',
-            $sugar_config,
-            'config_override.php'
-        );
-    }
-
     private function getCodeCoverageCommand()
     {
         $os = new OperatingSystem();
         $command =
             $os->toOsPath('./vendor/bin/phpunit')
             . ' --configuration ./tests/phpunit.xml.dist --coverage-clover ./tests/_output/coverage.xml ./tests/unit/phpunit';
+
         return $command;
     }
 }
