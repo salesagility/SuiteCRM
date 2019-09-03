@@ -2,11 +2,10 @@
 include_once __DIR__ . '/SugarBeanMock.php';
 include_once __DIR__ . '/../../../../include/SubPanel/SubPanelDefinitions.php';
 
-use SuiteCRM\StateCheckerConfig;
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\TestCaseAbstract;
 
 /** @noinspection PhpUndefinedClassInspection */
-class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
+class SugarBeanTest extends TestCaseAbstract
 {
 
 
@@ -902,12 +901,6 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     {
         self::markTestIncomplete('environment dependency');
 
-        // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-
         // test
         global $sugar_config;
         
@@ -1249,11 +1242,6 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
-        
-        // clean up
-        
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
     }
 
     /**
@@ -2259,14 +2247,6 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
      */
     public function testSave()
     {
-        // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-        $state->pushTable('users');
-        $state->pushGlobals();
-
         $userFieldDefs = BeanFactory::getBean('Users')->field_defs;
         $contactFieldDefs = BeanFactory::getBean('Contacts')->field_defs;
 
@@ -2551,11 +2531,6 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         // clean up
         BeanFactory::getBean('Users')->field_defs = $userFieldDefs;
         BeanFactory::getBean('Contacts')->field_defs = $contactFieldDefs;
-
-        $state->popGlobals();
-        $state->popTable('users');
-        $state->popTable('aod_index');
-        $state->popTable('tracker');
     }
 
     /**
