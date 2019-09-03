@@ -57,4 +57,9 @@ trait DatabaseTransactions
         $db = DBManagerFactory::getInstance();
         $db->query('START TRANSACTION');
     }
+
+    public function rollbackDBTransaction() {
+        $db = DBManagerFactory::getInstance();
+        $db->query('ROLLBACK');
+    }
 }
