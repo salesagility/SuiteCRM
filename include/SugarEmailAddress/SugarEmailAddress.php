@@ -647,7 +647,8 @@ class SugarEmailAddress extends SugarBean
                     $emailId = isset($address['email_address_id'])
                     && isset($current_links[$address['email_address_id']])
                         ? $address['email_address_id'] : null;
-                    $emailId = $this->AddUpdateEmailAddress(
+		    $emailId = $this->AddUpdateEmailAddress(
+			$id,
                         $address['email_address'],
                         $address['invalid_email'],
                         $address['opt_out'],
@@ -1206,8 +1207,10 @@ class SugarEmailAddress extends SugarBean
      * @param int|null $optInFlag
      * @return string GUID of Email Address or '' if cleaned address was empty.
      */
-    public function AddUpdateEmailAddress($addr, $invalid = 0, $opt_out = 0, $id = null, $optInFlag = null)
+    public function AddUpdateEmailAddress($parent_id, $addr, $invalid = 0, $opt_out = 0, $id = null, $optInFlag = null)
     {
+	global $sugar_config;
+
         // sanity checks to avoid SQL injection.
         $invalid = intval($invalid);
         $opt_out = intval($opt_out);
@@ -1215,8 +1218,14 @@ class SugarEmailAddress extends SugarBean
         $address = $this->db->quote($this->_cleanAddress($addr));
         $addressCaps = strtoupper($address);
 
-        // determine if we have a matching email address
-        $q = "SELECT * FROM email_addresses WHERE email_address_caps = '{$addressCaps}' and deleted=0";
+	// determine if we have a matching email address
+	$q = "SELECT * FROM email_addresses WHERE email_address_caps = '{$addressCaps}' and deleted=0";
+
+	if(isset($sugar_config['enforce_unique_email_address']) && $sugar_config['enforce_unique_email_address'] == true) {
+	    $q  = "SELECT ea.id FROM email_addresses ea join email_addr_bean_rel eabr on eabr.email_address_id=ea.id ";
+	    $q .= "WHERE ea.email_address_caps = '{$addressCaps}' and ea.deleted=0 and eabr.bean_id = '" . $this->db->quote($parent_id) . "'";
+	}
+
         $r = $this->db->query($q);
         $duplicate_email = $this->db->fetchByAssoc($r);
 
