@@ -5,7 +5,6 @@ class AM_ProjectTemplatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
 {
     public function testAM_ProjectTemplates()
     {
-
         //execute the contructor and check for the Object type and type attribute
         $am_projectTemplate = new AM_ProjectTemplates();
         $this->assertInstanceOf('AM_ProjectTemplates', $am_projectTemplate);
