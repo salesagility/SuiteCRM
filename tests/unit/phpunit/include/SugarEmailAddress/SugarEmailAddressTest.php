@@ -1344,11 +1344,11 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $db = DBManagerFactory::getInstance();
 
         // test
-        $result = $this->ea->AddUpdateEmailAddress(null);
+        $result = $this->ea->AddUpdateEmailAddress(null, null);
         self::assertEquals('', $result);
 
         // test
-        $result = $this->ea->AddUpdateEmailAddress(null, 0, 0, 1);
+        $result = $this->ea->AddUpdateEmailAddress(null, null, 0, 0, 1);
         self::assertEquals('', $result);
 
 
@@ -1367,7 +1367,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             "INSERT INTO contacts (id) VALUES ('test_contact_{$i}')";
         $db->query($q);
 
-        $result = $this->ea->AddUpdateEmailAddress(null, 0, 0, "test_email_{$i}");
+        $result = $this->ea->AddUpdateEmailAddress(null, null, 0, 0, "test_email_{$i}");
         self::assertEquals('', $result);
 
         // test
