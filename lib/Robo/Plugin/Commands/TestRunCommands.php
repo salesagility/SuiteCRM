@@ -67,7 +67,7 @@ class TestRunCommands extends \Robo\Tasks
         $command .= ' -f';
       }
       
-      $this->_exec($command);
+      return $this->_exec($command);
     }
 
     /**
@@ -95,7 +95,7 @@ class TestRunCommands extends \Robo\Tasks
         $command .= ' -f';
       }
       
-      $this->_exec($command);
+      return $this->_exec($command);
     }
 
     /**
@@ -123,7 +123,7 @@ class TestRunCommands extends \Robo\Tasks
         $command .= ' -f';
       }
       
-      $this->_exec($command);
+      return $this->_exec($command);
     }
 
     /**
@@ -151,6 +151,6 @@ class TestRunCommands extends \Robo\Tasks
         $command .= ' --stop-on-error --stop-on-failure';
       }
 
-      $this->_exec($command);
+      return $this->_exec($command);
     }
 }
