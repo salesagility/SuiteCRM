@@ -65,6 +65,7 @@
     emailView: "",
     emailIsRequired: false,
     tabIndex: -1,
+    customOptions: {},
 
     isIE: function () {
       var ua = window.navigator.userAgent;
@@ -89,7 +90,8 @@
           o[i].opt_out,
           o[i].invalid_email,
           o[i].email_address_id,
-          o[i].confirm_opt_in
+          o[i].confirm_opt_in,
+          o[i]
         );
       }
     },//prefillEmailAddresses
@@ -113,6 +115,13 @@
             if (invalidEl) {
               invalidEl.checked = email['invalid_email'] == 1 ? true : false;
             }
+
+	    _eaw.customOptions.forEach(function(option) {
+                var el = $('#' + this.module + this.id + 'emailAddress' + option.vname + 'Flag' + targetNumber);
+                if (el) {
+                    el.checked = email[option.name] == 1 ? true : false;
+                }
+            });
           }
         }
         //Set the verified flag to true
@@ -219,7 +228,7 @@
       return false;
     },//freezeEvent
 
-    addEmailAddress: function (tableId, address, primaryFlag, replyToFlag, optOutFlag, invalidFlag, emailId, optInFlag) {
+    addEmailAddress: function (tableId, address, primaryFlag, replyToFlag, optOutFlag, invalidFlag, emailId, optInFlag, data) {
       _eaw = this;
 
       if (_eaw.addInProgress) {
@@ -355,6 +364,22 @@
         optInCheckbox.prop("checked", (optInFlag == 'opt-in' || optInFlag == 'confirmed-opt-in'));
       }
 
+      _eaw.customOptions.forEach(function(option) {
+          var checkbox = lineContainer.find('input#' + option.id);
+          if (checkbox.length == 1) {
+              checkbox.attr('name', this.module + _eaw.id + 'emailAddress' + option.vname + 'Flag[]');
+              checkbox.attr('id', this.module + _eaw.id + 'emailAddress' + option.vname + 'Flag' + _eaw.totalEmailAddresses);
+              checkbox.attr('value', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
+              checkbox.attr('tabindex', tabIndexCount);
+              checkbox.attr('enabled', "true");
+              checkbox.eaw = _eaw;
+ 
+              if(data.hasOwnProperty(option.name)) {
+                  checkbox.prop("checked", (data[option.name] == '1')); 
+              }
+          }
+      });
+
       // Verified flag
       var verifiedField = lineContainer.find('input#verified-flag');
       verifiedField.attr('name', this.module + _eaw.id + 'emailAddressVerifiedFlag');
@@ -459,6 +484,12 @@
           $(value).find('input.email-address-opted-in-flag').first().prop('name', module + id + "emailAddressOptInFlag[]");
           $(value).find('input.email-address-opted-in-flag').first().prop('id', module + id + "emailAddressOptInFlag" + counter);
           $(value).find('input.email-address-opted-in-flag').first().prop('value', module + id + 'emailAddress' + counter);
+
+          _eaw.customOptions.forEach(function(option) {
+              $(value).find('input.' + option.id).first().prop('name', module + id + "emailAddress" + option.vname + "Flag[]");
+              $(value).find('input.' + option.id).first().prop('id', module + id + "emailAddress" + option.vname + "Flag" + counter);
+              $(value).find('input.' + option.id).first().prop('value', module + id + 'emailAddress' + counter);
+          });
 
           // remove button
           $(value).find('.email-address-remove-button').first().prop('name', counter);

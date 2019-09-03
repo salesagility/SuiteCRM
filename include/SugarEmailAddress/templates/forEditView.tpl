@@ -129,6 +129,13 @@ var emailAddressWidgetLoaded = false;
                                                 </div>
 					</div>
                 {/if}
+
+                                {foreach from=$customOptionsArr item=option}
+                                    <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
+                                        <label class="text-sm col-xs-12">{$app_strings[$option.label]}</label>
+                                        <div><input type="checkbox" name="" title="{$app_strings[$option.label]}" id={$option.id} class={$option.id} value="" enabled="true"></div>
+                                </div>
+                                {/foreach}
 			</div>
 		</div>
 
@@ -141,6 +148,7 @@ var eaw = SUGAR.EmailAddressWidget.instances.{$module}{$index} = new SUGAR.Email
 eaw.emailView = '{$emailView}';
 eaw.emailIsRequired = "{$required}";
 eaw.tabIndex = '{$tabindex}';
+eaw.customOptions = {$customOptions};
 var addDefaultAddress = '{$addDefaultAddress}';
 var prefillEmailAddress = '{$prefillEmailAddresses}';
 var prefillData = {$prefillData};
