@@ -66,7 +66,7 @@ class SchedulerTest extends SuitePHPUnit_Framework_TestCase
 
     public function testcheckPendingJobs()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('job_queue');
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
@@ -190,7 +190,7 @@ class SchedulerTest extends SuitePHPUnit_Framework_TestCase
     public function testdisplayCronInstructions()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         // test
@@ -214,7 +214,7 @@ class SchedulerTest extends SuitePHPUnit_Framework_TestCase
     {
         self::markTestIncomplete('enviroment dependency');
         
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('schedulers');
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
@@ -240,7 +240,7 @@ class SchedulerTest extends SuitePHPUnit_Framework_TestCase
         self::markTestIncomplete('environment dependency');
 
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('schedulers');
 
         // test
@@ -264,7 +264,7 @@ class SchedulerTest extends SuitePHPUnit_Framework_TestCase
     {
         self::markTestIncomplete('environment dependency');
         
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('schedulers');
 
         
@@ -284,7 +284,7 @@ class SchedulerTest extends SuitePHPUnit_Framework_TestCase
 
     public function testfill_in_additional_detail_fields()
     {
-        $state = new SuiteCRM\StateSaver();
+
 
         $scheduler = new Scheduler();
 
@@ -306,7 +306,7 @@ class SchedulerTest extends SuitePHPUnit_Framework_TestCase
         self::markTestIncomplete('environment dependency');
 
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('schedulers');
 
         // test
@@ -343,7 +343,7 @@ class SchedulerTest extends SuitePHPUnit_Framework_TestCase
         self::markTestIncomplete('environment dependency');
         
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('schedulers');
 
         // test
@@ -365,7 +365,7 @@ class SchedulerTest extends SuitePHPUnit_Framework_TestCase
         self::markTestIncomplete('environment dependency');
         
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('schedulers');
 
         // test

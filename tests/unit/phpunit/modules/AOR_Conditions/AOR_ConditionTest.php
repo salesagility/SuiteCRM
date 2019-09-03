@@ -24,7 +24,7 @@ class AOR_ConditionTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave_lines()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_indexevent');
         $state->pushTable('aod_index');
         $state->pushTable('aor_conditions');

@@ -15,7 +15,7 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnit_Framework_TestCase
 
     public function testSaveAndGet_email_recipients()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aor_scheduled_reports');
         $state->pushTable('tracker');
         $state->pushTable('aod_index');

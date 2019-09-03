@@ -18,7 +18,7 @@ class mvc_utilsTest extends SuitePHPUnit_Framework_TestCase
 
     public function testgetPrintLink()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         //test without setting REQUEST param

@@ -38,7 +38,7 @@ class AuditTest extends SuitePHPUnit_Framework_TestCase
 
     public function testcreate_export_query()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         $audit = new Audit();
 
@@ -57,7 +57,7 @@ class AuditTest extends SuitePHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
@@ -75,7 +75,7 @@ class AuditTest extends SuitePHPUnit_Framework_TestCase
 
     public function testfill_in_additional_detail_fields()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
@@ -93,7 +93,7 @@ class AuditTest extends SuitePHPUnit_Framework_TestCase
 
     public function testfill_in_additional_parent_fields()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
@@ -111,7 +111,7 @@ class AuditTest extends SuitePHPUnit_Framework_TestCase
 
     public function testget_list_view_data()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
@@ -129,7 +129,7 @@ class AuditTest extends SuitePHPUnit_Framework_TestCase
 
     public function testget_audit_link()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.

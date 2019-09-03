@@ -5,18 +5,13 @@ use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
 
 class LogicHookTest extends SuitePHPUnit_Framework_TestCase
 {
-    protected $stateSaver;
-
     public function setUp()
     {
         parent::setUp();
-        $this->stateSaver = new SuiteCRM\StateSaver();
-        $this->stateSaver->pushTable('email_addresses');
     }
     
     public function tearDown()
     {
-        $this->stateSaver->popTable('email_addresses');
         parent::tearDown();
     }
     

@@ -47,10 +47,6 @@ class AOD_IndexTest extends SuitePHPUnit_Framework_TestCase
     public function testoptimise()
     {
         self::markTestIncomplete('[Zend_Search_Lucene_Exception] File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
-        
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('tracker');
 
         // test
         $aod_index = new AOD_Index();
@@ -61,9 +57,6 @@ class AOD_IndexTest extends SuitePHPUnit_Framework_TestCase
         //execute the method and test if the last optimized date is changed to a later date/time.
         $aod_index->optimise();
         $this->assertGreaterThan($last_optimized, $aod_index->last_optimised);
-        
-        // clean up
-        $state->popTable('tracker');
     }
 
     public function testgetIndex()

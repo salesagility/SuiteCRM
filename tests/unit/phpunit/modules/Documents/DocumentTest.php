@@ -32,7 +32,7 @@ class DocumentTest extends SuitePHPUnit_Framework_TestCase
 
     public function testSaveAndGet_document_name()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         $state->pushTable('aod_indexevent');
         $state->pushTable('cron_remove_documents');
@@ -76,7 +76,7 @@ class DocumentTest extends SuitePHPUnit_Framework_TestCase
 
     public function testget_summary_text()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_indexevent');
         $state->pushTable('cron_remove_documents');
         
@@ -97,7 +97,7 @@ class DocumentTest extends SuitePHPUnit_Framework_TestCase
 
     public function testis_authenticated()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_indexevent');
         $state->pushTable('cron_remove_documents');
         
@@ -117,7 +117,7 @@ class DocumentTest extends SuitePHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         $state->pushTable('aod_indexevent');
         $state->pushTable('cron_remove_documents');
@@ -143,7 +143,7 @@ class DocumentTest extends SuitePHPUnit_Framework_TestCase
     {
         self::markTestIncomplete('environment dependency (random generated token in url)');
         
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_indexevent');
         $state->pushTable('cron_remove_documents');
         $state->pushGlobals();
@@ -167,7 +167,7 @@ class DocumentTest extends SuitePHPUnit_Framework_TestCase
 
     public function testlist_view_parse_additional_sections()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('cron_remove_documents');
         
         $document = new Document();

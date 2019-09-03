@@ -42,7 +42,7 @@ class jjwg_MapsTest extends SuitePHPUnit_Framework_TestCase
         
         // save state
 
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('config');
         $state->pushTable('tracker');
 
@@ -140,7 +140,7 @@ class jjwg_MapsTest extends SuitePHPUnit_Framework_TestCase
     {
         // save state
 
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('accounts_cstm');
 
         // test
@@ -168,7 +168,7 @@ class jjwg_MapsTest extends SuitePHPUnit_Framework_TestCase
     {
         // save state
 
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('accounts_cstm');
 
         // test

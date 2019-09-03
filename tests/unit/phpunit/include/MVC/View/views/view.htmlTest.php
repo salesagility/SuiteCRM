@@ -24,7 +24,7 @@ class ViewHtmlTest extends SuitePHPUnit_Framework_TestCase
 
     public function testdisplay()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         
         

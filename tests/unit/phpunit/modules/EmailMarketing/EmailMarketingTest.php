@@ -44,7 +44,7 @@ class EmailMarketingTest extends SuitePHPUnit_Framework_TestCase
     public function testcreate_export_query()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         
         

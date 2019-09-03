@@ -22,7 +22,7 @@ class FP_eventsTest extends SuitePHPUnit_Framework_TestCase
 
     public function testemail_templates()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         global $app_list_strings;

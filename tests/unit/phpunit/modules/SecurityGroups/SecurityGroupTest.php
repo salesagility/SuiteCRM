@@ -30,7 +30,7 @@ class SecurityGroupTest extends SuitePHPUnit_Framework_TestCase
 
     public function testgetGroupWhere()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         
         
@@ -141,7 +141,7 @@ class SecurityGroupTest extends SuitePHPUnit_Framework_TestCase
 
     public function testinherit()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         
         // test
@@ -244,7 +244,7 @@ class SecurityGroupTest extends SuitePHPUnit_Framework_TestCase
     public function testgetMembershipCount()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         // test
@@ -260,7 +260,7 @@ class SecurityGroupTest extends SuitePHPUnit_Framework_TestCase
     public function testSaveAndRetrieveAndRemoveDefaultGroups()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('securitygroups');
         $state->pushTable('tracker');
@@ -380,7 +380,7 @@ class SecurityGroupTest extends SuitePHPUnit_Framework_TestCase
 
     public function testaddGroupToRecord()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('securitygroups_records');
         
         // test

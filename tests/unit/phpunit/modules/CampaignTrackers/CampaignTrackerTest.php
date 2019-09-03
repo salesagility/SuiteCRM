@@ -16,7 +16,7 @@ class CampaignTrackerTest extends SuitePHPUnit_Framework_TestCase
 
     public function testCampaignTracker()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
 
         //execute the contructor and check for the Object type and  attributes
@@ -37,7 +37,7 @@ class CampaignTrackerTest extends SuitePHPUnit_Framework_TestCase
     {
         // save state
 
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('campaign_trkrs');
         $state->pushTable('aod_index');
         $state->pushTable('tracker');

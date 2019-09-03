@@ -15,7 +15,7 @@ class SchedulersJobTest extends SuitePHPUnit_Framework_TestCase
 
     public function testSchedulersJob()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('email_addresses');
         
         //execute the contructor and check for the Object type and  attributes
@@ -112,7 +112,7 @@ class SchedulersJobTest extends SuitePHPUnit_Framework_TestCase
     public function testfailJob()
     {
         // save state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
         
@@ -140,7 +140,7 @@ class SchedulersJobTest extends SuitePHPUnit_Framework_TestCase
     public function testsucceedJob()
     {
         // save state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
         
@@ -166,7 +166,7 @@ class SchedulersJobTest extends SuitePHPUnit_Framework_TestCase
 
     public function testonFailureRetry()
     {
-        $state = new SuiteCRM\StateSaver();
+
 
         $schedulersJob = new SchedulersJob();
 
@@ -185,7 +185,7 @@ class SchedulersJobTest extends SuitePHPUnit_Framework_TestCase
 
     public function testOnFinalFailure()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         
         //
@@ -209,7 +209,7 @@ class SchedulersJobTest extends SuitePHPUnit_Framework_TestCase
     public function testresolveJob()
     {
         // save state
-        $state = new SuiteCRM\StateSaver();
+
         
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
@@ -245,7 +245,7 @@ class SchedulersJobTest extends SuitePHPUnit_Framework_TestCase
     public function testpostponeJobAndMark_deleted()
     {
         // save state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
         
@@ -276,7 +276,7 @@ class SchedulersJobTest extends SuitePHPUnit_Framework_TestCase
     public function testunexpectedExit()
     {
         // save state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
         
@@ -305,7 +305,7 @@ class SchedulersJobTest extends SuitePHPUnit_Framework_TestCase
     public function testrunJobId()
     {
         // save state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
         
@@ -342,7 +342,7 @@ class SchedulersJobTest extends SuitePHPUnit_Framework_TestCase
     public function testerrorHandler()
     {
         // save state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         
         // test

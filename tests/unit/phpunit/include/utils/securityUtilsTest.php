@@ -18,7 +18,7 @@ class security_utilsTest extends SuitePHPUnit_Framework_TestCase
     {
         self::markTestIncomplete('Test fails only in travis and php 7, Test has environment specific issue.');
         
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('aod_indexevent');
         
@@ -117,7 +117,7 @@ class security_utilsTest extends SuitePHPUnit_Framework_TestCase
 
     public function testquery_client_ip()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         
         //test without setting any server parameters

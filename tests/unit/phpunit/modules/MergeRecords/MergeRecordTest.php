@@ -103,7 +103,7 @@ class MergeRecordTest extends SuitePHPUnit_Framework_TestCase
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
-        $state = new SuiteCRM\StateSaver();
+
         
         
         
@@ -130,7 +130,7 @@ class MergeRecordTest extends SuitePHPUnit_Framework_TestCase
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
 
-        $state = new SuiteCRM\StateSaver();
+
         
         
         
@@ -257,7 +257,7 @@ class MergeRecordTest extends SuitePHPUnit_Framework_TestCase
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
 
-        $state = new SuiteCRM\StateSaver();
+
         
         
         

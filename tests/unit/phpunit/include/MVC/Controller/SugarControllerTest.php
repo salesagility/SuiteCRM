@@ -64,7 +64,7 @@ class SugarControllerTest extends SuitePHPUnit_Framework_TestCase
     public function testexecute()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('tracker');
         $state->pushGlobals();
         $state->pushPHPConfigOptions();
@@ -154,7 +154,7 @@ class SugarControllerTest extends SuitePHPUnit_Framework_TestCase
 
     public function testaction_save()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
         $state->pushTable('users');
@@ -229,7 +229,7 @@ class SugarControllerTest extends SuitePHPUnit_Framework_TestCase
     public function testcheckEntryPointRequiresAuth()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         
         // test

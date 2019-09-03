@@ -68,7 +68,7 @@ class ProjectTaskTest extends SuitePHPUnit_Framework_TestCase
     public function testsave()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('aod_indexevent');
         $state->pushTable('project_task');
         $state->pushTable('tracker');
@@ -149,7 +149,7 @@ class ProjectTaskTest extends SuitePHPUnit_Framework_TestCase
 
     public function testupdateStatistic()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         // test
@@ -286,7 +286,7 @@ class ProjectTaskTest extends SuitePHPUnit_Framework_TestCase
     public function testlistviewACLHelper()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         // test

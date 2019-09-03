@@ -71,7 +71,7 @@ class OAuthTokenTest extends SuitePHPUnit_Framework_TestCase
     public function testSaveAndOthers()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
 
@@ -147,7 +147,7 @@ class OAuthTokenTest extends SuitePHPUnit_Framework_TestCase
     {
         // save state
 
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('tracker');
 
         // test

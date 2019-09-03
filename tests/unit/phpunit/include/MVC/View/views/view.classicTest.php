@@ -37,7 +37,7 @@ class ViewClassicTest extends SuitePHPUnit_Framework_TestCase
             $session = $_SESSION;
         }
         
-        $state = new SuiteCRM\StateSaver();
+
 
         //test with a valid module but invalid action. it should return false.
         $view = new ViewClassic();

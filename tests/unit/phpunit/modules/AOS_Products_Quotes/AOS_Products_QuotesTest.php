@@ -16,7 +16,7 @@ class AOS_Products_QuotesTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aos_products_quotes');
         $state->pushTable('tracker');
 
@@ -44,7 +44,7 @@ class AOS_Products_QuotesTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave_lines()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aos_products_quotes');
         $state->pushTable('tracker');
         $state->pushGlobals();

@@ -24,7 +24,7 @@ class EmailAddressTest extends SuitePHPUnit_Framework_TestCase
     public function testsave()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('email_addresses');
         $state->pushTable('tracker');
         $state->pushTable('aod_index');

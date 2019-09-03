@@ -34,7 +34,7 @@ class AOW_ActionTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave_lines()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aow_actions');
 
         // test

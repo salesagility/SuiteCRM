@@ -25,7 +25,7 @@ class CurrentLanguageTest extends SuitePHPUnit_Framework_TestCase
 
     public function testGetCurrentLanguage()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushFile('config_override.php');
         
         $language = self::$language->getCurrentLanguage();

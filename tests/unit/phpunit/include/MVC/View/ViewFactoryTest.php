@@ -7,7 +7,7 @@ class ViewFactoryTest extends SuitePHPUnit_Framework_TestCase
 {
     public function testloadView()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         
         

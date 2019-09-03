@@ -17,7 +17,7 @@ class UserPreferenceTest extends SuitePHPUnit_Framework_TestCase
     public function testgetUserDateTimePreferences()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
@@ -40,7 +40,7 @@ class UserPreferenceTest extends SuitePHPUnit_Framework_TestCase
         $this->markTestIncomplete('state is incorrect');
         
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
@@ -80,7 +80,7 @@ class UserPreferenceTest extends SuitePHPUnit_Framework_TestCase
     public function testgetDefaultPreference()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
 
         // test
@@ -116,7 +116,7 @@ class UserPreferenceTest extends SuitePHPUnit_Framework_TestCase
     public function test__construct()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
 
         // test
@@ -142,7 +142,7 @@ class UserPreferenceTest extends SuitePHPUnit_Framework_TestCase
         self::markTestIncomplete('environment dependency');
         
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('email_addresses');
         $state->pushTable('user_preferences');
         $state->pushTable('aod_index');

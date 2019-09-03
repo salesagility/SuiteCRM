@@ -18,7 +18,7 @@ class CampaignTest extends SuitePHPUnit_Framework_TestCase
 
     public function testSubscribeUnsubscribeFromNewsLetterCampaign()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('sugarfeed');
         $state->pushTable('aod_indexevent');
         $state->pushTable('leads_cstm');
@@ -247,7 +247,7 @@ class CampaignTest extends SuitePHPUnit_Framework_TestCase
     public function testSaveAndMarkDeleted()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
         $state->pushTable('campaigns');

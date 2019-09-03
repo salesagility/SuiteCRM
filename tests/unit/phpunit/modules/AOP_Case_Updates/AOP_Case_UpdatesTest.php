@@ -35,7 +35,7 @@ class AOP_Case_UpdatesTest extends SuitePHPUnit_Framework_TestCase
     {
         self::markTestIncomplete('environment dependency');
         
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('acl_actions');
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');

@@ -83,7 +83,7 @@ class EmployeeTest extends SuitePHPUnit_Framework_TestCase
     public function testverify_data()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('email_addresses');
 
         // test
@@ -97,7 +97,7 @@ class EmployeeTest extends SuitePHPUnit_Framework_TestCase
     public function testget_list_view_data()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('email_addresses');
         $state->pushTable('tracker');
@@ -205,7 +205,7 @@ class EmployeeTest extends SuitePHPUnit_Framework_TestCase
     public function testhasCustomFields()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('email_addresses');
 
         // test

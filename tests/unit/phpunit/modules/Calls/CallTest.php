@@ -36,7 +36,7 @@ class CallTest extends SuitePHPUnit_Framework_TestCase
 
     public function testACLAccess()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         $call = new Call();
@@ -56,7 +56,7 @@ class CallTest extends SuitePHPUnit_Framework_TestCase
     public function testSaveAndMarkDeleted()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
         $state->pushTable('calls');
@@ -146,7 +146,7 @@ class CallTest extends SuitePHPUnit_Framework_TestCase
     public function testfill_in_additional_detail_fields()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         // test
@@ -173,7 +173,7 @@ class CallTest extends SuitePHPUnit_Framework_TestCase
         
         // save state
 
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         // test
@@ -266,7 +266,7 @@ class CallTest extends SuitePHPUnit_Framework_TestCase
     public function testset_accept_status()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('calls_users');
         $state->pushTable('tracker');
         $state->pushTable('vcals');
@@ -322,7 +322,7 @@ class CallTest extends SuitePHPUnit_Framework_TestCase
         self::markTestIncomplete('environment dependency');
         
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         // test

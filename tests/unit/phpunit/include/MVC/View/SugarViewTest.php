@@ -32,7 +32,7 @@ class SugarViewTest extends SuitePHPUnit_Framework_TestCase
     public function testprocess()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('tracker');
         $state->pushGlobals();
         $state->pushPHPConfigOptions();

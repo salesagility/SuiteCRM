@@ -47,7 +47,7 @@ class NoteTest extends SuitePHPUnit_Framework_TestCase
 
     public function testmark_deleted()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
 
@@ -69,7 +69,7 @@ class NoteTest extends SuitePHPUnit_Framework_TestCase
     public function testdeleteAttachment()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('tracker');
 
@@ -166,7 +166,7 @@ class NoteTest extends SuitePHPUnit_Framework_TestCase
     public function testlistviewACLHelper()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         // test

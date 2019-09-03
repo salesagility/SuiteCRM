@@ -64,7 +64,7 @@ class ContactTest extends SuitePHPUnit_Framework_TestCase
 
         // save state
 
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         // test
@@ -173,7 +173,7 @@ class ContactTest extends SuitePHPUnit_Framework_TestCase
     public function testget_list_view_data()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('email_addresses');
         $state->pushTable('tracker');
 

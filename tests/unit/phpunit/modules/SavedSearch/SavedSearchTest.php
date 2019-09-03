@@ -147,7 +147,7 @@ class SavedSearchTest extends SuitePHPUnit_Framework_TestCase
     public function testfill_in_additional_list_fields()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('saved_search');
 
         // test
@@ -168,7 +168,7 @@ class SavedSearchTest extends SuitePHPUnit_Framework_TestCase
     public function testpopulateRequest()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('saved_search');
         $state->pushGlobals();
 

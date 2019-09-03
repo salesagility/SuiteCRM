@@ -123,7 +123,7 @@ class EmailManTest extends SuitePHPUnit_Framework_TestCase
 
     public function testset_as_sent()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('tracker');
         $state->pushTable('campaign_log');
         $state->pushTable('aod_index');
@@ -158,7 +158,7 @@ class EmailManTest extends SuitePHPUnit_Framework_TestCase
     public function testcreate_indiv_email()
     {
         // save state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('campaign_log');
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
@@ -187,7 +187,7 @@ class EmailManTest extends SuitePHPUnit_Framework_TestCase
     public function testverify_campaign()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('campaign_log');
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
@@ -206,7 +206,7 @@ class EmailManTest extends SuitePHPUnit_Framework_TestCase
     public function testsendEmail()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('campaign_log');
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
@@ -235,7 +235,7 @@ class EmailManTest extends SuitePHPUnit_Framework_TestCase
     public function testvalid_email_address()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('campaign_log');
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
@@ -256,7 +256,7 @@ class EmailManTest extends SuitePHPUnit_Framework_TestCase
     public function testis_primary_email_address()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('campaign_log');
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
@@ -278,7 +278,7 @@ class EmailManTest extends SuitePHPUnit_Framework_TestCase
     public function testcreate_export_query()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('campaign_log');
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
@@ -306,7 +306,7 @@ class EmailManTest extends SuitePHPUnit_Framework_TestCase
     public function testmark_deleted()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('campaign_log');
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
@@ -331,7 +331,7 @@ class EmailManTest extends SuitePHPUnit_Framework_TestCase
     public function testcreate_ref_email()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('campaign_log');
         $state->pushTable('emails');
         $state->pushTable('aod_indexevent');

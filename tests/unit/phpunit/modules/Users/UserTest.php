@@ -70,7 +70,7 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
     public function testgetDefaultSignature()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
@@ -330,7 +330,7 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
     public function testsaveAndOthers()
     {
         self::markTestIncomplete('environment dependency');
-        $state = new SuiteCRM\StateSaver();
+
         
         
         
@@ -686,7 +686,7 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
     public function testget_list_view_data()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
@@ -808,7 +808,7 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
     public function testgetEmailLink2()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
@@ -936,7 +936,7 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
     public function testgetDeveloperModules()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
@@ -956,7 +956,7 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
     public function testisDeveloperForModule()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
@@ -985,7 +985,7 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
     public function testgetAdminModules()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
@@ -1005,7 +1005,7 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
     public function testisAdminForModule()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
@@ -1131,7 +1131,7 @@ class UserTest extends SuitePHPUnit_Framework_TestCase
     {
         global $app_strings;
         
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('email_addresses_audit');
 
         // setup

@@ -17,7 +17,7 @@ class activity_utilsTest extends SuitePHPUnit_Framework_TestCase
 
     public function testbuild_related_list_by_user_id()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         
         

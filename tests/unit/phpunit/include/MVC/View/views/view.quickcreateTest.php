@@ -57,7 +57,7 @@ class ViewQuickcreateTest extends SuitePHPUnit_Framework_TestCase
             $_request = $_REQUEST;
         }
         
-        $state = new SuiteCRM\StateSaver();
+
         
         
         

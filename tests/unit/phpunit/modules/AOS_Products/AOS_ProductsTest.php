@@ -31,7 +31,7 @@ class AOS_ProductsTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aos_products');
         $state->pushTable('aod_index');
         $state->pushTable('tracker');

@@ -93,7 +93,7 @@ class RoleTest extends SuitePHPUnit_Framework_TestCase
 
     // save state
 
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('email_addresses');
 
         // test

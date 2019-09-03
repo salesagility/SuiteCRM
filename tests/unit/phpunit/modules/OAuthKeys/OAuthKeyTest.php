@@ -32,7 +32,7 @@ class OAuthKeyTest extends SuitePHPUnit_Framework_TestCase
 
     public function testMain()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
 

@@ -32,7 +32,7 @@ class AOS_QuotesTest extends SuitePHPUnit_Framework_TestCase
 
     public function testSaveAndMark_deleted()
     {
-        $state = new SuiteCRM\StateSaver();        
+
         $state->pushTable('aos_quotes');
 
         $aosQuotes = new AOS_Quotes();

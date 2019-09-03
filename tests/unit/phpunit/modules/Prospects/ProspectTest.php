@@ -80,7 +80,7 @@ class ProspectTest extends SuitePHPUnit_Framework_TestCase
 
     public function testconverted_prospect()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         $prospect = new Prospect();
 

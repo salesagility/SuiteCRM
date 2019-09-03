@@ -34,7 +34,7 @@ class db_utilsTest extends SuitePHPUnit_Framework_TestCase
      */
     public function testdb_convert($string, $type, $params, $expected)
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_indexevent');
         
         //execute the method and test if it returns expected values for all types

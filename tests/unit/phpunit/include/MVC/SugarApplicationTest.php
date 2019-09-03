@@ -138,7 +138,7 @@ class SugarApplicationTest extends SuitePHPUnit_Framework_TestCase
 
     public function testhandleOfflineClient()
     {
-        $state = new SuiteCRM\StateSaver();
+
 
         $SugarApplication = new SugarApplication();
 
@@ -210,7 +210,7 @@ class SugarApplicationTest extends SuitePHPUnit_Framework_TestCase
     public function testcheckDatabaseVersion()
     {
         self::markTestIncomplete('environment dependency');
-        $state = new SuiteCRM\StateSaver();
+
 
         $SugarApplication = new SugarApplication();
 

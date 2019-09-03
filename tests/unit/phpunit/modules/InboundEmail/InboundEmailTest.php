@@ -26,7 +26,7 @@ class InboundEmailTest extends SuitePHPUnit_Framework_TestCase
     protected function storeStateAll()
     {
         // save state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('inbound_email_cache_ts');
         $state->pushTable('inbound_email_autoreply');
         $state->pushTable('inbound_email');
@@ -71,7 +71,7 @@ class InboundEmailTest extends SuitePHPUnit_Framework_TestCase
 
     public function testConnectMailServerFolderInboundForceFirstMailbox()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $fake = new ImapHandlerFakeData();
         $fake->add('isAvailable', null, [true]);
@@ -97,7 +97,7 @@ class InboundEmailTest extends SuitePHPUnit_Framework_TestCase
 
     public function testConnectMailServerFolderInboundForceTestFolder()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $fake = new ImapHandlerFakeData();
         $fake->add('isAvailable', null, [true]);
@@ -122,7 +122,7 @@ class InboundEmailTest extends SuitePHPUnit_Framework_TestCase
 
     public function testConnectMailServerFolderInboundForce()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $fake = new ImapHandlerFakeData();
         $fake->add('isAvailable', null, [true]);
@@ -146,7 +146,7 @@ class InboundEmailTest extends SuitePHPUnit_Framework_TestCase
 
     public function testConnectMailServerFolderSentForce()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $fake = new ImapHandlerFakeData();
         $fake->add('isAvailable', null, [true]);
@@ -170,7 +170,7 @@ class InboundEmailTest extends SuitePHPUnit_Framework_TestCase
 
     public function testConnectMailserverNoGood()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         $fake = new ImapHandlerFakeData();
@@ -205,7 +205,7 @@ class InboundEmailTest extends SuitePHPUnit_Framework_TestCase
 
     public function testConnectMailserverUseSsl()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         $fake = new ImapHandlerFakeData();
@@ -244,7 +244,7 @@ class InboundEmailTest extends SuitePHPUnit_Framework_TestCase
 
     public function testFindOptimumSettingsFalsePositive()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         $fake = new ImapHandlerFakeData();
@@ -330,7 +330,7 @@ class InboundEmailTest extends SuitePHPUnit_Framework_TestCase
 
     public function testFindOptimumSettingsOk()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         $fake = new ImapHandlerFakeData();
@@ -378,7 +378,7 @@ class InboundEmailTest extends SuitePHPUnit_Framework_TestCase
 
     public function testFindOptimumSettingsUseSsl()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         $fake = new ImapHandlerFakeData();

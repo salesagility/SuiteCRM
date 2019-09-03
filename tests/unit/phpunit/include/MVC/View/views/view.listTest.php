@@ -16,7 +16,7 @@ class ViewListTest extends SuitePHPUnit_Framework_TestCase
     public function testlistViewProcess()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('tracker');
         $state->pushTable('email_addresses');
@@ -87,7 +87,7 @@ class ViewListTest extends SuitePHPUnit_Framework_TestCase
     public function testViewList()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('tracker');
         $state->pushTable('email_addresses');
@@ -110,7 +110,7 @@ class ViewListTest extends SuitePHPUnit_Framework_TestCase
     public function testlistViewPrepare()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('tracker');
         $state->pushTable('email_addresses');
@@ -152,7 +152,7 @@ class ViewListTest extends SuitePHPUnit_Framework_TestCase
     public function testprepareSearchForm()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('tracker');
         $state->pushTable('email_addresses');
@@ -184,7 +184,7 @@ class ViewListTest extends SuitePHPUnit_Framework_TestCase
     public function testprocessSearchForm()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('tracker');
         $state->pushTable('email_addresses');
@@ -223,7 +223,7 @@ class ViewListTest extends SuitePHPUnit_Framework_TestCase
     public function testpreDisplay()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('tracker');
         $state->pushTable('email_addresses');
@@ -245,7 +245,7 @@ class ViewListTest extends SuitePHPUnit_Framework_TestCase
     public function testdisplay()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('tracker');
         $state->pushTable('email_addresses');

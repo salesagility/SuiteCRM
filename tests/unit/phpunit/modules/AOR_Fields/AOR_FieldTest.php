@@ -25,7 +25,7 @@ class AOR_FieldTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave_lines()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
         $state->pushTable('aor_fields');

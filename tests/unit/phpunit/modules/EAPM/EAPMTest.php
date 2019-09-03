@@ -7,7 +7,7 @@ class EAPMTest extends SuitePHPUnit_Framework_TestCase
     public function testEAPM()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('aod_index');
         $eapmTable = $state->pushTable('eapm');
@@ -41,7 +41,7 @@ class EAPMTest extends SuitePHPUnit_Framework_TestCase
     {
         // store state
         
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('aod_index');
         $eapmTable = $state->pushTable('eapm');
@@ -64,7 +64,7 @@ class EAPMTest extends SuitePHPUnit_Framework_TestCase
     {
         // store state
         
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('aod_index');
         $eapmTable = $state->pushTable('eapm');
@@ -93,7 +93,7 @@ class EAPMTest extends SuitePHPUnit_Framework_TestCase
     {
         // store state
         
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('aod_index');
         $eapmTable = $state->pushTable('eapm');
@@ -125,7 +125,7 @@ class EAPMTest extends SuitePHPUnit_Framework_TestCase
         self::markTestIncomplete('eapm table fails');
         
         // store state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $eapmTable = $state->pushTable('eapm');
         
@@ -167,7 +167,7 @@ class EAPMTest extends SuitePHPUnit_Framework_TestCase
 
     public function testfill_in_additional_detail_fields()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $eapmTable = $state->pushTable('eapm');
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
@@ -194,7 +194,7 @@ class EAPMTest extends SuitePHPUnit_Framework_TestCase
     {
         // store state
         
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $eapmTable = $state->pushTable('eapm');
         
@@ -219,7 +219,7 @@ class EAPMTest extends SuitePHPUnit_Framework_TestCase
     public function testsave_cleanup()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $eapmTable = $state->pushTable('eapm');
         
@@ -243,7 +243,7 @@ class EAPMTest extends SuitePHPUnit_Framework_TestCase
     public function testdelete_user_accounts()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $eapmTable = $state->pushTable('eapm');
         
@@ -268,7 +268,7 @@ class EAPMTest extends SuitePHPUnit_Framework_TestCase
     public function testgetEAPMExternalApiDropDown()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $eapmTable = $state->pushTable('eapm');
         

@@ -104,7 +104,7 @@ class ProspectListTest extends SuitePHPUnit_Framework_TestCase
     public function testsave()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
         $state->pushTable('prospect_lists');
@@ -205,7 +205,7 @@ class ProspectListTest extends SuitePHPUnit_Framework_TestCase
 
     public function testmark_relationships_deleted()
     {
-        $state = new SuiteCRM\StateSaver();
+
 
         $prospectList = new ProspectList();
 
@@ -224,7 +224,7 @@ class ProspectListTest extends SuitePHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
+
 
         $prospectList = new ProspectList();
 
@@ -252,7 +252,7 @@ class ProspectListTest extends SuitePHPUnit_Framework_TestCase
 
     public function testupdate_currency_id()
     {
-        $state = new SuiteCRM\StateSaver();
+
 
         $prospectList = new ProspectList();
 

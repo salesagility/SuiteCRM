@@ -175,7 +175,7 @@ class OpportunityTest extends SuitePHPUnit_Framework_TestCase
     public function testsave()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('aod_indexevent');
         $state->pushTable('opportunities');
         $state->pushTable('opportunities_cstm');
@@ -272,7 +272,7 @@ class OpportunityTest extends SuitePHPUnit_Framework_TestCase
     public function testlistviewACLHelper()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         // test
@@ -296,7 +296,7 @@ class OpportunityTest extends SuitePHPUnit_Framework_TestCase
 
     public function testgetCurrencyType()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         //execute the method and test if it works and does not throws an exception.
         try {

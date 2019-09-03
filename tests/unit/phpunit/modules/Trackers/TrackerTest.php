@@ -35,7 +35,7 @@ class TrackerTest extends SuitePHPUnit_Framework_TestCase
     public function testget_recently_viewed()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         // test
@@ -76,7 +76,7 @@ class TrackerTest extends SuitePHPUnit_Framework_TestCase
     {
         self::markTestIncomplete('Test parameters and local variables are not set');
                 
-        $state = new SuiteCRM\StateSaver();
+
         
         $state->pushGlobals();
 

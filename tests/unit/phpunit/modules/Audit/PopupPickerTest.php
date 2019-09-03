@@ -8,7 +8,7 @@ class PopupPickerTest extends SuitePHPUnit_Framework_TestCase
 {
     public function testProcessPage()
     {
-        $state = new \SuiteCRM\StateSaver();
+
         
         $state->pushGlobals();
         $state->pushTable('sugarfeed');

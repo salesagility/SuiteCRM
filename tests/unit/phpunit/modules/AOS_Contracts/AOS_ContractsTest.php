@@ -34,7 +34,7 @@ class AOS_ContractsTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsaveAndDelete()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         $state->pushTable('aod_indexevent');
         $state->pushTable('aos_contracts');
@@ -66,7 +66,7 @@ class AOS_ContractsTest extends SuitePHPUnit_Framework_TestCase
 
     public function testCreateReminderAndCreateLinkAndDeleteCall()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_indexevent');
         $state->pushTable('calls');
         $state->pushTable('vcals');

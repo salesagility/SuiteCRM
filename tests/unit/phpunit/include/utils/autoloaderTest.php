@@ -24,7 +24,7 @@ class SugarAutoLoaderTest extends SuitePHPUnit_Framework_TestCase
 
     public function testloadAll()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         
         

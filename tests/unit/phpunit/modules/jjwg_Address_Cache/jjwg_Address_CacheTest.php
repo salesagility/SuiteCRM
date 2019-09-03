@@ -8,7 +8,7 @@ class jjwg_Address_CacheTest extends SuitePHPUnit_Framework_TestCase
     public function testjjwg_Address_Cache()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
@@ -47,7 +47,7 @@ class jjwg_Address_CacheTest extends SuitePHPUnit_Framework_TestCase
     public function testSaveAndGetAddressCacheInfoAndDeleteAllAddressCache()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('jjwg_address_cache');
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
@@ -108,7 +108,7 @@ class jjwg_Address_CacheTest extends SuitePHPUnit_Framework_TestCase
         self::markTestIncomplete('Incorrect state hash (in PHPUnitTest): Hash doesn\'t match at key "database::email_addresses".');
         // store state
         
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         

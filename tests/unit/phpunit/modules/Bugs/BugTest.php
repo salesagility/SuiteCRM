@@ -191,7 +191,7 @@ class BugTest extends SuitePHPUnit_Framework_TestCase
     {
         // save state
 
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
         $state->pushTable('bugs');

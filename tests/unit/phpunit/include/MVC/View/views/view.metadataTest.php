@@ -85,7 +85,7 @@ class ViewMetadataTest extends SuitePHPUnit_Framework_TestCase
             $request = $_REQUEST;
         }
         
-        $state = new SuiteCRM\StateSaver();
+
         
         
         

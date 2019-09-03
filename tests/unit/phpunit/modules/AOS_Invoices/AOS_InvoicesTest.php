@@ -31,7 +31,7 @@ class AOS_InvoicesTest extends SuitePHPUnit_Framework_TestCase
 
     public function testSaveAndMark_deleted()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         $state->pushTable('aos_invoices');
         $state->pushTable('tracker');

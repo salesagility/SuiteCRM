@@ -35,7 +35,7 @@ class SugarFeedTest extends SuitePHPUnit_Framework_TestCase
         self::markTestIncomplete('environment dependency');
 
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('config');
 
         // test
@@ -111,7 +111,7 @@ class SugarFeedTest extends SuitePHPUnit_Framework_TestCase
     public function testpushFeed2()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('sugarfeed');
 
@@ -141,7 +141,7 @@ class SugarFeedTest extends SuitePHPUnit_Framework_TestCase
     public function testpushFeed()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('sugarfeed');
 
         // test

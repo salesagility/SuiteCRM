@@ -41,7 +41,7 @@ class MeetingTest extends SuitePHPUnit_Framework_TestCase
     public function testACLAccess()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         // test
@@ -74,7 +74,7 @@ class MeetingTest extends SuitePHPUnit_Framework_TestCase
     public function testSaveAndMarkdeletedAndSetAcceptStatus()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
         $state->pushTable('meetings');
@@ -159,7 +159,7 @@ class MeetingTest extends SuitePHPUnit_Framework_TestCase
     public function testfill_in_additional_detail_fields()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         // test
@@ -196,7 +196,7 @@ class MeetingTest extends SuitePHPUnit_Framework_TestCase
     public function testget_list_view_data()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         // test
@@ -356,7 +356,7 @@ class MeetingTest extends SuitePHPUnit_Framework_TestCase
     public function testlistviewACLHelper()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         // test

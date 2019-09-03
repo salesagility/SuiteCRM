@@ -62,7 +62,7 @@ class ProjectTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave_relationship_changes()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         $state->pushGlobals();
         

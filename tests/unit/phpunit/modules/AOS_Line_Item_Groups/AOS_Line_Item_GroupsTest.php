@@ -32,7 +32,7 @@ class AOS_Line_Item_GroupsTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave_groups()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         $state->pushTable('aos_line_item_groups');
         $state->pushTable('tracker');
@@ -69,7 +69,7 @@ class AOS_Line_Item_GroupsTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aos_line_item_groups');
         $state->pushTable('tracker');
         

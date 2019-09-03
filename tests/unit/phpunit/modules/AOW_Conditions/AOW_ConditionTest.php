@@ -33,7 +33,7 @@ class AOW_ConditionTest extends SuitePHPUnit_Framework_TestCase
 
     public function testbean_implements()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         
         
@@ -48,7 +48,7 @@ class AOW_ConditionTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave_lines()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aow_conditions');
         $state->pushTable('aod_indexevent');
         

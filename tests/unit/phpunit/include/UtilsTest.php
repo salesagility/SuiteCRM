@@ -104,8 +104,6 @@ class UtilsTest extends SuitePHPUnit_Framework_TestCase
     public function testget_current_language()
     {
         global $sugar_config;
-        $state = new StateSaver();
-        $state->pushGlobals();
 
         $_SESSION['authenticated_user_language'] = 'foo';
         $this->assertEquals(get_current_language(), 'foo');
@@ -115,7 +113,5 @@ class UtilsTest extends SuitePHPUnit_Framework_TestCase
         $this->assertEquals(get_current_language(), 'foo');
         unset($_SESSION['authenticated_user_language']);
         $this->assertEquals(get_current_language(), 'bar');
-
-        $state->popGlobals();
     }
 }

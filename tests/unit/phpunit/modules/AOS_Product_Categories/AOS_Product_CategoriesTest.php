@@ -32,7 +32,7 @@ class AOS_Product_CategoriesTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave()
     {
-        $state = new SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
         $state->pushTable('aos_product_categories');

@@ -24,7 +24,7 @@ class AOR_ChartTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsave_lines()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         $this->markTestSkipped('Skipping AOR Charts Tests');
         

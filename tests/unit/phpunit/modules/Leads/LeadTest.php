@@ -18,7 +18,7 @@ class LeadTest extends SuitePHPUnit_Framework_TestCase
         //self::markTestIncomplete('Test changes error level');
 
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('inbound_email');
         
 
@@ -45,7 +45,7 @@ class LeadTest extends SuitePHPUnit_Framework_TestCase
 
     public function testget_account()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         
         
@@ -176,7 +176,7 @@ class LeadTest extends SuitePHPUnit_Framework_TestCase
     public function testfill_in_additional_list_fields()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
         $state->pushTable('leads');
@@ -219,7 +219,7 @@ class LeadTest extends SuitePHPUnit_Framework_TestCase
     public function testget_list_view_data()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushTable('email_addresses');
         $state->pushTable('tracker');
 
@@ -344,7 +344,7 @@ class LeadTest extends SuitePHPUnit_Framework_TestCase
     public function testlistviewACLHelper()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
+
         $state->pushGlobals();
 
         // test

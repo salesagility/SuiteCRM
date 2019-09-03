@@ -43,9 +43,6 @@ class ACLRoleTest extends SuitePHPUnit_Framework_TestCase
 
     public function testsetAction()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('acl_roles_actions');
-        
         $aclRole = new ACLRole();
 
         //take count of relationship initially and then after method execution and test if relationship count increases
@@ -54,9 +51,6 @@ class ACLRoleTest extends SuitePHPUnit_Framework_TestCase
         $final_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
 
         $this->assertGreaterThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
-        
-        // clean up
-        $state->popTable('acl_roles_actions');
     }
 
     public function testmark_relationships_deleted()
