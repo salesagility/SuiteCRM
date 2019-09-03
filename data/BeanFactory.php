@@ -182,7 +182,7 @@ class BeanFactory
      * Pulls deleted flag from params array if set or the one given if not.
      *
      * @param array $params
-     * @param bool $deleted
+     * @param bool|mixed $deleted
      *
      * @return bool
      */
