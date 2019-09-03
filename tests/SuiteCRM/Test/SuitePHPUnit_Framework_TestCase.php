@@ -1,7 +1,6 @@
 <?php
 namespace SuiteCRM\Test;
 
-use User;
 use DBManagerFactory;
 use SuiteCRM\TestCaseAbstract;
 
@@ -12,7 +11,7 @@ abstract class SuitePHPUnit_Framework_TestCase extends TestCaseAbstract
     /**
      * @var array
      */
-    protected $env = array();
+    protected $env = [];
 
     /**
      * @var \LoggerManager

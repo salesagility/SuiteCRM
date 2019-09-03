@@ -60,7 +60,6 @@ abstract class TestCaseAbstract extends PHPUnit_Framework_TestCase
     protected static $cleanupStrategy = 'transaction';
 
     /**
-     * Collect state information and storing a hash
      * @throws Exception
      */
     protected function setUp()
