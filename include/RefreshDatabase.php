@@ -41,6 +41,7 @@
 namespace SuiteCRM;
 
 use DBManagerFactory;
+use SuiteCRM\Exception\Exception;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -54,14 +55,14 @@ trait RefreshDatabase
 {
     /**
      * Truncates the database before each unit test
-     * @throws StateSaverException
+     * @throws Exception
      */
     public function refreshDatabase()
     {
         $db = DBManagerFactory::getInstance();
         foreach ($db->getTablesArray() as $table) {
             if (!$db->query('TRUNCATE TABLE ' . $table)) {
-                throw new StateSaverException('Failed to truncate database');
+                throw new Exception('Failed to truncate database');
             }
         }
     }
