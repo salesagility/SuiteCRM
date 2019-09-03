@@ -3,9 +3,10 @@ namespace SuiteCRM\Test;
 
 use User;
 use DBManagerFactory;
+use SuiteCRM\TestCaseAbstract;
 
 /** @noinspection PhpUndefinedClassInspection */
-abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+abstract class SuitePHPUnit_Framework_TestCase extends TestCaseAbstract
 {
 
     /**

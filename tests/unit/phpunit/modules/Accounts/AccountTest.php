@@ -1,8 +1,6 @@
 <?php
 
-use SuiteCRM\TestCaseAbstract;
-
-class AccountTest extends TestCaseAbstract
+class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {
