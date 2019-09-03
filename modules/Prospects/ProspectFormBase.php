@@ -82,19 +82,24 @@ class ProspectFormBase
             }
         }
 
+        $rows = array();
         if (!empty($query)) {
-            $rows = array();
-        
             $db = DBManagerFactory::getInstance();
             $result = $db->query($query.');');
             while ($row = $db->fetchByAssoc($result)) {
                 $rows[] = $row;
             }
-            if (count($rows) > 0) {
-                return $rows;
+        }
+
+        $can_view = [];
+        foreach ($rows as $row) {
+            $bean = BeanFactory::getBean('Prospects', $row['id']);
+            if ($bean->ACLAccess('view')) {
+                $can_view[] = $row;
             }
         }
-        return null;
+
+        return !empty($can_view) ? $can_view : null;
     }
 
 

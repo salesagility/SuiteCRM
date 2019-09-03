@@ -950,7 +950,9 @@ class ViewConvertLead extends SugarView
             while ($row = $lead->db->fetchByAssoc($result)) {
                 $contact = new Contact();
                 $contact->retrieve($row['id']);
-                $dupes[$row['id']] = $contact->name;
+                if ($contact->ACLAccess('view')) {
+                    $dupes[$row['id']] = $contact->name;
+                }
             }
             if (!empty($dupes)) {
                 foreach ($dupes as $id => $name) {
