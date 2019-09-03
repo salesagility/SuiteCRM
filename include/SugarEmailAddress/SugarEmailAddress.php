@@ -215,10 +215,10 @@ class SugarEmailAddress extends SugarBean
                 $this->custom_options = $custom_options;
 	    }
 	    $loaded_definitions[$this->object_name]['custom_options'] =& $this->custom_options;
+	    return;
 	}
-	else {
-	    $this->custom_options =& $loaded_definitions[$this->object_name]['custom_options'];
-	}
+
+	$this->custom_options =& $loaded_definitions[$this->object_name]['custom_options'];
     }
 
     /**
