@@ -1,8 +1,9 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
 use SuiteCRM\Test\TestLogger;
 
-class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class SugarControllerTest extends SuitePHPUnit_Framework_TestCase
 {
     public function setUp()
     {

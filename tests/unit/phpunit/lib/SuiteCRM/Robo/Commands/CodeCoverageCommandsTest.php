@@ -1,8 +1,9 @@
 <?php
 
 use \SuiteCRM\Robo\Plugin\Commands\CodeCoverageCommands;
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
 
-class CodeCoverageCommandsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class CodeCoverageCommandsTest extends SuitePHPUnit_Framework_TestCase
 {
     /**
      * @var \UnitTester

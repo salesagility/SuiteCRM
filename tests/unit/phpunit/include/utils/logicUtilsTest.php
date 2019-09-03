@@ -1,10 +1,11 @@
 <?php
 
 use org\bovigo\vfs\vfsStream;
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
 
 require_once 'include/utils/logic_utils.php';
 
-class logic_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class logic_utilsTest extends SuitePHPUnit_Framework_TestCase
 {
     public function testget_hook_array()
     {

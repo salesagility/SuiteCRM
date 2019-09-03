@@ -39,8 +39,9 @@
  */
 
 use SuiteCRM\StateSaver;
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
 
-class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class SugarFolderTest extends SuitePHPUnit_Framework_TestCase
 {
     protected $folderId = null;
     protected $state    = null;

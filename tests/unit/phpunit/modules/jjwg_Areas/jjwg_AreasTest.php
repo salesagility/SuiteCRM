@@ -1,7 +1,9 @@
 <?php
 
 
-class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class jjwg_AreasTest extends SuitePHPUnit_Framework_TestCase
 {
     public function testjjwg_Areas()
     {

@@ -1,7 +1,9 @@
 <?php
 
 
-class CampaignTrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class CampaignTrackerTest extends SuitePHPUnit_Framework_TestCase
 {
     public function setUp()
     {

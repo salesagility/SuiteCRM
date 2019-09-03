@@ -1,7 +1,9 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
 require_once 'include/utils/security_utils.php';
-class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class security_utilsTest extends SuitePHPUnit_Framework_TestCase
 {
     public function setUp()
     {

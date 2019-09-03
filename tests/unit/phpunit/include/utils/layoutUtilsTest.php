@@ -1,8 +1,10 @@
 <?php
 
 
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
 require_once 'include/utils/layout_utils.php';
-class layout_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class layout_utilsTest extends SuitePHPUnit_Framework_TestCase
 {
     public function testget_form_header()
     {

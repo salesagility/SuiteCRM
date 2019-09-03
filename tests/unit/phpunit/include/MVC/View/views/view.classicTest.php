@@ -1,6 +1,8 @@
 <?php
 
-class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class ViewClassicTest extends SuitePHPUnit_Framework_TestCase
 {
     public function setUp()
     {

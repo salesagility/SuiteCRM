@@ -1,7 +1,9 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
 require_once 'include/utils/db_utils.php';
-class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class db_utilsTest extends SuitePHPUnit_Framework_TestCase
 {
     public function db_convertProvider()
     {

@@ -1,6 +1,8 @@
 <?php
 
-class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class TaskTest extends SuitePHPUnit_Framework_TestCase
 {
     /**
      *

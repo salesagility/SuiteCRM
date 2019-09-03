@@ -1,6 +1,8 @@
-<?php
+<?php /** @noinspection ALL */
 
-class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class ACLActionTest extends SuitePHPUnit_Framework_TestCase
 {
     public function setUp()
     {

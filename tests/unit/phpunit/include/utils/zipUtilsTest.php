@@ -1,7 +1,9 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
 require_once 'include/utils/zip_utils.php';
-class zip_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class zip_utilsTest extends SuitePHPUnit_Framework_TestCase
 {
     public function testunzip()
     {

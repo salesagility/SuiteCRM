@@ -1,6 +1,8 @@
 <?php
 
-class SuiteLoggerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class SuiteLoggerTest extends SuitePHPUnit_Framework_TestCase
 {
     /**
      * @var \UnitTester

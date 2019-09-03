@@ -1,4 +1,7 @@
 <?php
+
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,7 +41,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-class PersonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class PersonTest extends SuitePHPUnit_Framework_TestCase
 {
     /**
      * @var \UnitTester

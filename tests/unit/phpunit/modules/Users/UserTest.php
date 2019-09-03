@@ -1,7 +1,9 @@
 <?php
 
 
-class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class UserTest extends SuitePHPUnit_Framework_TestCase
 {
     public function testgetSignatureButtons()
     {

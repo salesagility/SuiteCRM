@@ -1,7 +1,9 @@
 <?php
 
 
-class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class EmailMarketingTest extends SuitePHPUnit_Framework_TestCase
 {
     public function testEmailMarketing()
     {

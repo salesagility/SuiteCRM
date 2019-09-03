@@ -1,6 +1,8 @@
 <?php
 
-class EmailTextTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class EmailTextTest extends SuitePHPUnit_Framework_TestCase
 {
     public function testEmailText()
     {

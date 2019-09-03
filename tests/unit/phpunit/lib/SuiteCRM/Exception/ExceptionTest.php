@@ -3,8 +3,9 @@
 namespace SuiteCRM\Exception;
 
 use Psr\Log\LogLevel;
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
 
-class ExceptionTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class ExceptionTest extends SuitePHPUnit_Framework_TestCase
 {
     /**
      * @var \UnitTester

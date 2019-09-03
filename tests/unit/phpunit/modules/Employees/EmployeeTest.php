@@ -1,6 +1,8 @@
 <?php
 
-class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class EmployeeTest extends SuitePHPUnit_Framework_TestCase
 {
     public function setUp()
     {

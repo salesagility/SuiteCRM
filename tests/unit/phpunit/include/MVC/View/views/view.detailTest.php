@@ -1,6 +1,8 @@
 <?php
 
-class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class ViewDetailTest extends SuitePHPUnit_Framework_TestCase
 {
     protected $stateSaver;
     

@@ -1,6 +1,8 @@
 <?php
 
-class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class SugarViewTest extends SuitePHPUnit_Framework_TestCase
 {
     public function setUp()
     {

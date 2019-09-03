@@ -1,7 +1,9 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
 require_once 'modules/iCals/iCal.php';
-class iCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class iCalTest extends SuitePHPUnit_Framework_TestCase
 {
     public function test__construct()
     {

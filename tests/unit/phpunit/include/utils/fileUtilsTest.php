@@ -1,9 +1,10 @@
 <?php
 
 use org\bovigo\vfs\vfsStream;
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
 
 require_once 'include/utils/file_utils.php';
-class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class file_utilsTest extends SuitePHPUnit_Framework_TestCase
 {
     public function setUp()
     {

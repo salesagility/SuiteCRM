@@ -38,7 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -51,7 +51,7 @@ require_once __DIR__ . '/../../../../../modules/Emails/EmailFromValidator.php';
  *
  * @author gyula
  */
-class EmailFromValidatorTest extends StateCheckerPHPUnitTestCaseAbstract
+class EmailFromValidatorTest extends SuitePHPUnit_Framework_TestCase
 {
     // TODO: !@# Needs more test...
     public function testValidateWrongFromAddr()

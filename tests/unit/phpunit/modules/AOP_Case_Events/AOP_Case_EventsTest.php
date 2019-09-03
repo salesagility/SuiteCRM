@@ -1,6 +1,8 @@
 <?php
 
-class AOP_Case_EventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class AOP_Case_EventsTest extends SuitePHPUnit_Framework_TestCase
 {
     public function testAOP_Case_Events()
     {

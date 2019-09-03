@@ -1,6 +1,8 @@
 <?php
 
-class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class RoleTest extends SuitePHPUnit_Framework_TestCase
 {
     public function setUp()
     {

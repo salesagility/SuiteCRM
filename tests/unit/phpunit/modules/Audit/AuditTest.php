@@ -1,7 +1,9 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
 require_once 'modules/Audit/Audit.php';
-class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class AuditTest extends SuitePHPUnit_Framework_TestCase
 {
     public function setUp()
     {

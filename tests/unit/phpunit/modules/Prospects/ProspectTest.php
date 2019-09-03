@@ -1,7 +1,9 @@
 <?php
 
 
-class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class ProspectTest extends SuitePHPUnit_Framework_TestCase
 {
     public function setUp()
     {

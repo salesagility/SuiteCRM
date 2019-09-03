@@ -1,9 +1,11 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
 require_once 'modules/Campaigns/utils.php';
 
 
-class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class CampaignTest extends SuitePHPUnit_Framework_TestCase
 {
     public function setUp()
     {

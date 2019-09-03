@@ -1,6 +1,8 @@
 <?php
 
-class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class AOR_Scheduled_ReportsTest extends SuitePHPUnit_Framework_TestCase
 {
     public function setUp()
     {

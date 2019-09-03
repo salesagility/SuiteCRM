@@ -40,6 +40,7 @@
 
 use SuiteCRM\ErrorMessage;
 use SuiteCRM\ErrorMessageException;
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -52,7 +53,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author gyula
  */
-class ErrorMessageTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class ErrorMessageTest extends SuitePHPUnit_Framework_TestCase
 {
     public function setUp()
     {

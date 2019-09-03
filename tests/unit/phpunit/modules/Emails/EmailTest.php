@@ -38,8 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
 use SuiteCRM\StateSaver;
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -50,7 +50,7 @@ require_once __DIR__ . '/SugarPHPMailerMock.php';
 require_once __DIR__ . '/NonGmailSentFolderHandlerMock.php';
 require_once __DIR__ . '/EmailMock.php';
 
-class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
+class EmailTest extends SuitePHPUnit_Framework_TestCase
 {
     public function setUp()
     {

@@ -1,6 +1,8 @@
 <?php
 
-class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+
+class ProjectTaskTest extends SuitePHPUnit_Framework_TestCase
 {
     public function setUp()
     {
