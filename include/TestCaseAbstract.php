@@ -87,6 +87,10 @@ abstract class TestCaseAbstract extends PHPUnit_Framework_TestCase
     {
         parent::tearDown();
 
+        if (self::$cleanupStrategy === 'transaction') {
+            $this->rollbackDBTransaction();
+        }
+
         if (self::$verbose) {
             fwrite(STDOUT, " [done]\n");
         }
