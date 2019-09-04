@@ -112,6 +112,14 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         $this->assertNotEmpty($matches);
     }
 
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testInvalidLevel()
+    {
+        self::$logger->log('invalid', 'test');
+    }
+
     private function getLastLogMessage()
     {
         $paths = new Paths();
