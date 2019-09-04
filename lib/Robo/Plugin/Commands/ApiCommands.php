@@ -355,7 +355,7 @@ SELECT
 FROM
     `$table`
 WHERE
-    `$row` LIKE '$name %'
+    `$row` LIKE '$nameQuoted %'
 SQL;
 
         $result = $this->db->fetchOne($query);
