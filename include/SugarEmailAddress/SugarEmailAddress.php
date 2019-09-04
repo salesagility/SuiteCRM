@@ -206,6 +206,8 @@ class SugarEmailAddress extends SugarBean
 
             // build $this->custom_options from the field_defs if they exist
 	    if (!empty($dictionary[$this->object_name]['fields'])) {
+	    
+                $custom_options = array();
 
 		foreach ($dictionary[$this->object_name]['fields'] as $key => $value_array) {
                     if (!empty($value_array['custom_option']) && !empty($value_array['name'])) {
@@ -2247,7 +2249,7 @@ class SugarEmailAddress extends SugarBean
                         $address['email_address'],
                         $address['invalid_email'],
                         $address['opt_out'],
-                        $emailId,
+                        $address['email_address_id'],
 			!is_null($optIn) ? $address['confirm_opt_in_flag'] : null,
 			$options
 		);// this will save the email address if not found
