@@ -176,10 +176,11 @@ class LoggerManager
      */
     public static function getLogger()
     {
-        if (!LoggerManager::$_instance) {
-            LoggerManager::$_instance = new LoggerManager();
+        if (!self::$_instance) {
+            self::$_instance = new LoggerManager();
         }
-        return LoggerManager::$_instance;
+
+        return self::$_instance;
     }
 
     /**
