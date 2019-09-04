@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class AOW_ConditionTest extends SuitePHPUnit_Framework_TestCase
+class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

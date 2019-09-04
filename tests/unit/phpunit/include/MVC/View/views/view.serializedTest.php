@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class ViewSerializedTest extends SuitePHPUnit_Framework_TestCase
+class ViewSerializedTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testViewSerialized()
     {

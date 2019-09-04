@@ -1,9 +1,9 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/array_utils.php';
-class array_utilsTest extends SuitePHPUnit_Framework_TestCase
+class array_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testvar_export_helper()
     {

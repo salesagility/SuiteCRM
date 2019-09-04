@@ -1,9 +1,9 @@
 <?php
 
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class AOR_FieldTest extends SuitePHPUnit_Framework_TestCase
+class AOR_FieldTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOR_Field()
     {

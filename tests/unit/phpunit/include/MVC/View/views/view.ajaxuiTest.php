@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class ViewAjaxUITest extends SuitePHPUnit_Framework_TestCase
+class ViewAjaxUITest extends SuitePHPUnitFrameworkTestCase
 {
     public function test__construct()
     {

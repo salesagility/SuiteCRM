@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class PathsTest extends SuitePHPUnit_Framework_TestCase
+class PathsTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
      * @var \UnitTester

@@ -2,10 +2,10 @@
 include_once __DIR__ . '/SugarBeanMock.php';
 include_once __DIR__ . '/../../../../include/SubPanel/SubPanelDefinitions.php';
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 /** @noinspection PhpUndefinedClassInspection */
-class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
+class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 {
 
 

@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class jjwg_MapsTest extends SuitePHPUnit_Framework_TestCase
+class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testjjwg_Maps()
     {

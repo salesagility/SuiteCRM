@@ -1,10 +1,10 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'modules/Audit/Popup_picker.php';
 
-class PopupPickerTest extends SuitePHPUnit_Framework_TestCase
+class PopupPickerTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testProcessPage()
     {

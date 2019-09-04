@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class FP_eventsTest extends SuitePHPUnit_Framework_TestCase
+class FP_eventsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testFP_events()
     {

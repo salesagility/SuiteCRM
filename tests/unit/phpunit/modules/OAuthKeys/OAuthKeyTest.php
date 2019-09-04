@@ -1,9 +1,9 @@
 <?php
 
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class OAuthKeyTest extends SuitePHPUnit_Framework_TestCase
+class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

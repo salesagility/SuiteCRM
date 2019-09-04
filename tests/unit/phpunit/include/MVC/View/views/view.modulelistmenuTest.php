@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class ViewModulelistmenuTest extends SuitePHPUnit_Framework_TestCase
+class ViewModulelistmenuTest extends SuitePHPUnitFrameworkTestCase
 {
     public function test__construct()
     {

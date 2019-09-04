@@ -1,9 +1,9 @@
 <?php
 
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class AlertTest extends SuitePHPUnit_Framework_TestCase
+class AlertTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

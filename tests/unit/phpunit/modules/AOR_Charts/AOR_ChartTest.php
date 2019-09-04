@@ -1,9 +1,9 @@
 <?php
 
 //require_once 'modules/AOR_Charts/lib/pChart/pChart.php';
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class AOR_ChartTest extends SuitePHPUnit_Framework_TestCase
+class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOR_Chart()
     {

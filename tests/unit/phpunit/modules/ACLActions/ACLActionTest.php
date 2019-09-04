@@ -1,8 +1,8 @@
 <?php /** @noinspection ALL */
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class ACLActionTest extends SuitePHPUnit_Framework_TestCase
+class ACLActionTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -12,7 +12,7 @@ class ACLActionTest extends SuitePHPUnit_Framework_TestCase
         get_sugar_config_defaults();
         $current_user = new User();
     }
-    
+
     public function tearDown()
     {
         parent::tearDown();
@@ -21,7 +21,7 @@ class ACLActionTest extends SuitePHPUnit_Framework_TestCase
     public function testACLAction()
     {
         self::markTestIncomplete('environment dependency');
-        
+
         $_POST['foo'] = 'bar123ase';
         //execute the contructor and check for the Object type and type attribute
         $aclAction = new ACLAction();
@@ -104,17 +104,20 @@ class ACLActionTest extends SuitePHPUnit_Framework_TestCase
     public function testuserNeedsSecurityGroup()
     {
         $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', '', ''));//test with empty module and action
-        $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', 'Accounts', 'list')); //test with valid module and action
+        $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', 'Accounts',
+            'list')); //test with valid module and action
     }
 
     public function testuserHasAccess()
     {
         self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
-        
+
         $this->assertFalse(ACLAction::userHasAccess('', '', '')); //test with empty module and action
-        $this->assertTrue(ACLAction::userHasAccess('', 'Accounts', 'list')); //test with e,pty user and valid module and action
+        $this->assertTrue(ACLAction::userHasAccess('', 'Accounts',
+            'list')); //test with e,pty user and valid module and action
         $this->assertTrue(ACLAction::userHasAccess('1', 'Accounts', 'list')); //test with valid User, module and action
-        $this->assertTrue(ACLAction::userHasAccess('1', 'SecurityGroups', 'list')); //test with valid User, module and action
+        $this->assertTrue(ACLAction::userHasAccess('1', 'SecurityGroups',
+            'list')); //test with valid User, module and action
         $this->assertTrue(ACLAction::userHasAccess('1', 'Users', 'list')); //test with valid User, module and action
     }
 
@@ -134,7 +137,7 @@ class ACLActionTest extends SuitePHPUnit_Framework_TestCase
     public function testuserNeedsOwnership()
     {
         self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
-        
+
         //test with invalid values
         $this->assertFalse(ACLAction::userNeedsOwnership('', '', ''));
 
@@ -156,12 +159,36 @@ class ACLActionTest extends SuitePHPUnit_Framework_TestCase
         $names_expected = array('list' => 'List', 'edit' => 'Edit');
 
         $categories_expected = array(
-                'Accounts' => array(
-                        'module' => array(
-                                'list' => array('list', 'accessColor' => false, 'accessName' => false, 'accessLabel' => false, 'accessOptions' => array(90 => 'All', 80 => 'Group', 75 => 'Owner', 0 => 'Not Set', -99 => 'None')),
-                                'edit' => array('edit', 'accessColor' => false, 'accessName' => false, 'accessLabel' => false, 'accessOptions' => array(90 => 'All', 80 => 'Group', 75 => 'Owner', 0 => 'Not Set', -99 => 'None')),
-                        ),
+            'Accounts' => array(
+                'module' => array(
+                    'list' => array(
+                        'list',
+                        'accessColor' => false,
+                        'accessName' => false,
+                        'accessLabel' => false,
+                        'accessOptions' => array(
+                            90 => 'All',
+                            80 => 'Group',
+                            75 => 'Owner',
+                            0 => 'Not Set',
+                            -99 => 'None'
+                        )
+                    ),
+                    'edit' => array(
+                        'edit',
+                        'accessColor' => false,
+                        'accessName' => false,
+                        'accessLabel' => false,
+                        'accessOptions' => array(
+                            90 => 'All',
+                            80 => 'Group',
+                            75 => 'Owner',
+                            0 => 'Not Set',
+                            -99 => 'None'
+                        )
+                    ),
                 ),
+            ),
         );
 
         //execute the method and verify that it retunrs expected results

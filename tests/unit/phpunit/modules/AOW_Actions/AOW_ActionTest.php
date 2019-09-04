@@ -1,9 +1,9 @@
 <?php
 
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class AOW_ActionTest extends SuitePHPUnit_Framework_TestCase
+class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

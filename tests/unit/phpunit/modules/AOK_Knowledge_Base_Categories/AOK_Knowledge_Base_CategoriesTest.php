@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class AOK_Knowledge_Base_CategoriesTest extends SuitePHPUnit_Framework_TestCase
+class AOK_Knowledge_Base_CategoriesTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOK_Knowledge_Base_Categories()
     {

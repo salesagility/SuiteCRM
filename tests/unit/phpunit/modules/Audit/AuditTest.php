@@ -1,9 +1,9 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'modules/Audit/Audit.php';
-class AuditTest extends SuitePHPUnit_Framework_TestCase
+class AuditTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

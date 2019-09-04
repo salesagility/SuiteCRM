@@ -45,11 +45,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 include_once __DIR__ . '/../../../../include/utils.php';
 
-class UtilsTest extends SuitePHPUnit_Framework_TestCase
+class UtilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testGetAppString()
     {

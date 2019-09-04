@@ -1,9 +1,9 @@
 <?php
 
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class ViewFactoryTest extends SuitePHPUnit_Framework_TestCase
+class ViewFactoryTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testloadView()
     {

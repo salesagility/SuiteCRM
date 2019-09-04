@@ -54,16 +54,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
 trait RefreshDatabase
 {
     /**
-     * Truncates the database before each unit test
+     * Truncates the database/table before each unit test
+     * @param string $table database table to truncate or 'ALL' to truncate all tables.
      * @throws Exception
      */
-    public function refreshDatabase()
+    public function refreshDatabase($table = 'ALL')
     {
         $db = DBManagerFactory::getInstance();
-        foreach ($db->getTablesArray() as $table) {
-            if (!$db->query('TRUNCATE TABLE ' . $table)) {
-                throw new Exception('Failed to truncate database');
+
+        if ($table === 'ALL') {
+            foreach ($db->getTablesArray() as $table) {
+                if (!$db->query('TRUNCATE TABLE ' . $table)) {
+                    throw new Exception('Failed to truncate database');
+                }
             }
+        } elseif (!$db->query('TRUNCATE TABLE ' . $table)) {
+            throw new Exception('Failed to truncate table: ' . $table);
         }
     }
 }

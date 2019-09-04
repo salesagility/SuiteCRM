@@ -1,9 +1,9 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/security_utils.php';
-class security_utilsTest extends SuitePHPUnit_Framework_TestCase
+class security_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

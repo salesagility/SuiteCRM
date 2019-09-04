@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class AOD_IndexTest extends SuitePHPUnit_Framework_TestCase
+class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOD_Index()
     {

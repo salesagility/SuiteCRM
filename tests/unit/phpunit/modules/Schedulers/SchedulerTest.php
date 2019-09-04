@@ -1,11 +1,11 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/SugarQueue/SugarJobQueue.php';
 require_once 'install/install_utils.php';
 
-class SchedulerTest extends SuitePHPUnit_Framework_TestCase
+class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

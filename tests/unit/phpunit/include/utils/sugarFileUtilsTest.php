@@ -1,9 +1,9 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/sugar_file_utils.php';
-class sugar_file_utilsTest extends SuitePHPUnit_Framework_TestCase
+class sugar_file_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
 
     //@todo: check this - vfs does not seem to be working...

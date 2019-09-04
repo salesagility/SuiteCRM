@@ -1,11 +1,19 @@
 <?php
+
 namespace SuiteCRM\Test;
 
+use BeanFactory;
+use DBManager;
 use DBManagerFactory;
+use LoggerManager;
+use SuiteCRM\Exception\Exception;
 use SuiteCRM\TestCaseAbstract;
 
-/** @noinspection PhpUndefinedClassInspection */
-abstract class SuitePHPUnit_Framework_TestCase extends TestCaseAbstract
+/**
+ * Class SuitePHPUnitFrameworkTestCase
+ * @package SuiteCRM\Test
+ */
+abstract class SuitePHPUnitFrameworkTestCase extends TestCaseAbstract
 {
 
     /**
@@ -14,12 +22,12 @@ abstract class SuitePHPUnit_Framework_TestCase extends TestCaseAbstract
     protected $env = [];
 
     /**
-     * @var \LoggerManager
+     * @var LoggerManager
      */
     protected $log;
 
     /**
-     * @var \DBManager
+     * @var DBManager
      */
     protected $db;
 
@@ -45,16 +53,14 @@ abstract class SuitePHPUnit_Framework_TestCase extends TestCaseAbstract
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
+     * @throws Exception
      */
     public function setUp()
     {
         parent::setUp();
 
         global $current_user, $sugar_config;
-        try {
-            $current_user = @\BeanFactory::getBean('Users'); //new User();
-        } catch (Exception $e) {
-        }
+        $current_user = @BeanFactory::getBean('Users');
         get_sugar_config_defaults();
 
         $this->log = $GLOBALS['log'];
@@ -94,7 +100,7 @@ abstract class SuitePHPUnit_Framework_TestCase extends TestCaseAbstract
         $GLOBALS['log'] = $this->log;
 
         DBManagerFactory::$instances = $this->dbManagerFactoryInstances;
-        
+
         parent::tearDown();
     }
 }

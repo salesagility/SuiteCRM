@@ -1,9 +1,9 @@
 <?php
 
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class ViewVcardTest extends SuitePHPUnit_Framework_TestCase
+class ViewVcardTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

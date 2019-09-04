@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class ViewDetailTest extends SuitePHPUnit_Framework_TestCase
+class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class SchedulersJobTest extends SuitePHPUnit_Framework_TestCase
+class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

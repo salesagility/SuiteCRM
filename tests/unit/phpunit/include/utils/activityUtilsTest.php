@@ -1,10 +1,10 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/activity_utils.php';
 
-class activity_utilsTest extends SuitePHPUnit_Framework_TestCase
+class activity_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

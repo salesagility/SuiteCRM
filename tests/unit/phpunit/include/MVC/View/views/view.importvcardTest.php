@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class ViewImportvcardTest extends SuitePHPUnit_Framework_TestCase
+class ViewImportvcardTest extends SuitePHPUnitFrameworkTestCase
 {
     public function test__construct()
     {

@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class EAPMTest extends SuitePHPUnit_Framework_TestCase
+class EAPMTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testEAPM()
     {

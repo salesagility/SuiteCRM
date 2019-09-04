@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class EmailTextTest extends SuitePHPUnit_Framework_TestCase
+class EmailTextTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testEmailText()
     {

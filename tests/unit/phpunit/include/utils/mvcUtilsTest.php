@@ -1,9 +1,9 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/mvc_utils.php';
-class mvc_utilsTest extends SuitePHPUnit_Framework_TestCase
+class mvc_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testloadParentView()
     {

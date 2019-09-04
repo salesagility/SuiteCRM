@@ -38,7 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -51,7 +51,7 @@ require_once __DIR__ . '/../../../../../include/Imap/ImapTestSettingsEntryHandle
  *
  * @author gyula
  */
-class ImapTestSettingsEntryHandlerTest extends SuitePHPUnit_Framework_TestCase
+class ImapTestSettingsEntryHandlerTest extends SuitePHPUnitFrameworkTestCase
 {
     
     /**

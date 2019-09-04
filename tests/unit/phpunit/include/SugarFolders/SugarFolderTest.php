@@ -38,9 +38,9 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class SugarFolderTest extends SuitePHPUnit_Framework_TestCase
+class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 {
     protected $folderId = null;
 

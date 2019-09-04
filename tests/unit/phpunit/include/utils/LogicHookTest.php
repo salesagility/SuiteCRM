@@ -1,9 +1,9 @@
 <?php
 
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class LogicHookTest extends SuitePHPUnit_Framework_TestCase
+class LogicHookTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

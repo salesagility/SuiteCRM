@@ -1,10 +1,10 @@
 <?php
 
 use SuiteCRM\Test\TestLogger;
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 /** @noinspection PhpUndefinedClassInspection */
-class SugarEmailAddressTest extends SuitePHPUnit_Framework_TestCase
+class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 {
 
     /**

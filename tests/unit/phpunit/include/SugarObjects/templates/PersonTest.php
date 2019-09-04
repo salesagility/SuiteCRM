@@ -1,6 +1,6 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 /**
  *
@@ -41,7 +41,7 @@ use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-class PersonTest extends SuitePHPUnit_Framework_TestCase
+class PersonTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
      * @var \UnitTester

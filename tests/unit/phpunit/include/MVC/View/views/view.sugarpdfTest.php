@@ -1,9 +1,9 @@
 <?php
 
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class ViewSugarpdfTest extends SuitePHPUnit_Framework_TestCase
+class ViewSugarpdfTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

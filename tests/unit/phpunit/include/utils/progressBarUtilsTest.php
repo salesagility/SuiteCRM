@@ -1,9 +1,9 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/progress_bar_utils.php';
-class progress_bar_utilsTest extends SuitePHPUnit_Framework_TestCase
+class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testprogress_bar_flush()
     {

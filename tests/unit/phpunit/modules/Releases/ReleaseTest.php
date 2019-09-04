@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class ReleaseTest extends SuitePHPUnit_Framework_TestCase
+class ReleaseTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testRelease()
     {

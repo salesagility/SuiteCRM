@@ -39,13 +39,13 @@
  */
 
 use SuiteCRM\SubPanel\SubPanelRowCounter;
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class SubPanelTest extends SuitePHPUnit_Framework_TestCase
+class SubPanelTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

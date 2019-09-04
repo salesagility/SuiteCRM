@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class CurrencyTest extends SuitePHPUnit_Framework_TestCase
+class CurrencyTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

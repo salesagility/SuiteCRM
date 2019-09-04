@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class AOS_PDF_TemplatesTest extends SuitePHPUnit_Framework_TestCase
+class AOS_PDF_TemplatesTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

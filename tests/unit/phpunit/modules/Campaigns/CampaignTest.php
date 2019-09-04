@@ -1,11 +1,11 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'modules/Campaigns/utils.php';
 
 
-class CampaignTest extends SuitePHPUnit_Framework_TestCase
+class CampaignTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

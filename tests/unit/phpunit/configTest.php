@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class configTest extends SuitePHPUnit_Framework_TestCase
+class configTest extends SuitePHPUnitFrameworkTestCase
 {
     public function test_config()
     {

@@ -1,8 +1,8 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class ViewNoaccessTest extends SuitePHPUnit_Framework_TestCase
+class ViewNoaccessTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testdisplay()
     {

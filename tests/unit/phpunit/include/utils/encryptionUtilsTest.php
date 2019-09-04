@@ -1,9 +1,9 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/encryption_utils.php';
-class encryption_utilsTest extends SuitePHPUnit_Framework_TestCase
+class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testsugarEncode()
     {

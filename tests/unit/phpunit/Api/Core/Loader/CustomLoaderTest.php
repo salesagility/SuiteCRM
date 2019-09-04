@@ -40,14 +40,14 @@
 
 use Api\Core\Loader\CustomLoader;
 use Slim\App;
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 /**
  * CustomLoaderTest
  *
  * @author gyula
  */
-class CustomLoaderTest extends SuitePHPUnit_Framework_TestCase
+class CustomLoaderTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testArrayMerge()
     {
