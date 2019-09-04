@@ -51,18 +51,21 @@ class CodeCoverageCommands extends \Robo\Tasks
     use RoboTrait;
 
     /**
-     * Runs code coverage for travis ci
-     * @throws RuntimeException
+     * Runs code coverage
+     * @param array $opts
+     * @option bool $ci Should be set to true if using a Continuous Integration environment.
      */
-    public function codeCoverage()
+    public function codeCoverage($opts = ['ci' => false])
     {
         $this->say('Code Coverage');
 
         // Get environment
-        if ($this->isEnvironmentTravisCI()) {
-            $range = $this->getCommitRangeForTravisCi();
-        } else {
-            throw new \RuntimeException('unable to detect continuous integration environment');
+        if ($opts['ci'] === true) {
+            if ($this->isEnvironmentTravisCI()) {
+                $range = $this->getCommitRangeForTravisCi();
+            } else {
+                throw new \RuntimeException('Unable to detect continuous integration environment');
+            }
         }
         $this->generateCodeCoverageFile();
 
@@ -92,6 +95,7 @@ class CodeCoverageCommands extends \Robo\Tasks
     private function generateCodeCoverageFile()
     {
         $this->_exec($this->getCodeCoverageCommand());
+        $this->say('Code coverage xml outputted to ./tests/_output/coverage.xml');
     }
 
     private function getCodeCoverageCommand()
