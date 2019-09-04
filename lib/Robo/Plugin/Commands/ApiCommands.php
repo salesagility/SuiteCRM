@@ -347,6 +347,8 @@ class ApiCommands extends Tasks
      */
     private function getNameCount($name, $table, $row)
     {
+        $nameQuoted = $this->db->quoted($name);
+
         $query = <<<SQL
 SELECT
     count(`id`) AS `count`
