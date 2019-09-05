@@ -52,7 +52,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
         $this->markTestIncomplete('method has no implementation');
         
-        // clean up
+
     }
 
     public function testfill_in_additional_list_fields()
@@ -70,7 +70,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
         $this->markTestIncomplete('method has no implementation');
         
-        // clean up
+
     }
 
     public function testfill_in_additional_detail_fields()
@@ -88,7 +88,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
         $this->markTestIncomplete('method has no implementation');
         
-        // clean up
+
     }
 
     public function testfill_in_additional_parent_fields()
@@ -106,7 +106,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
         $this->markTestIncomplete('method has no implementation');
         
-        // clean up
+
     }
 
     public function testget_list_view_data()
@@ -124,7 +124,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
         $this->markTestIncomplete('method has no implementation');
         
-        // clean up
+
     }
 
     public function testget_audit_link()
@@ -142,7 +142,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
         $this->markTestIncomplete('method has no implementation');
         
-        // clean up
+
     }
 
     public function testget_audit_list()

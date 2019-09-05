@@ -253,7 +253,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
         $this->markTestIncomplete('method has no implementation');
         
-        // clean up
+
     }
 
     public function testget_list_view_data()

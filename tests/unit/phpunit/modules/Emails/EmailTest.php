@@ -992,7 +992,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $actual = $email->listviewACLHelper();
         $this->assertSame($expected, $actual);
 
-        // clean up
+
         
     }
 
@@ -1172,7 +1172,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
 
 
-        // clean up
+
         
     }
 
@@ -1221,7 +1221,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $result = $email->distributionForm('test');
         $this->assertGreaterThan(0, strlen($result));
 
-        // clean up
+
         
     }
 

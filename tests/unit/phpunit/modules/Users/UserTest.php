@@ -87,7 +87,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $result = $user->getDefaultSignature();
         $this->assertTrue(is_array($result));
         
-        // clean up
+
 
 
     }
@@ -398,7 +398,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user->save();
         $user->mark_deleted($user->id);
         
-        // clean up
+
     }
 
     public function retrieve($id)
@@ -701,7 +701,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $result = $user->get_list_view_data();
         $this->assertTrue(is_array($result));
         
-        // clean up
+
 
 
     }
@@ -854,7 +854,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $actual = $user->getEmailLink2("abc@email.com", $contact);
         $this->assertSame($expected, $actual);
         
-        // clean up
+
         
 
 
@@ -948,7 +948,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $result = $user->getDeveloperModules();
         $this->assertTrue(is_array($result));
         
-        // clean up
+
 
 
     }
@@ -977,7 +977,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user->is_admin = 1;
         $this->assertEquals(true, $user->isDeveloperForModule("Accounts"));
         
-        // clean up
+
 
 
     }
@@ -997,7 +997,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $result = $user->getAdminModules();
         $this->assertTrue(is_array($result));
         
-        // clean up
+
 
 
     }
@@ -1024,7 +1024,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(true, $user->isAdminForModule("Accounts"));
         
         
-        // clean up
+
 
 
     }
@@ -1155,7 +1155,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $expected = '<span class=\'error\'>Hello error<br><br>' . "\n"  . $app_strings['NTC_CLICK_BACK'] . '</span>';
         $this->assertContains($expected, $contents);
         
-        // clean up
+
         unset($app_strings['TEST_ERROR_MESSAGE']);
     }
 }

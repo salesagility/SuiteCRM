@@ -42,7 +42,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
         $this->assertInstanceOf('BreadCrumbStack', $_SESSION['breadCrumbs']);
         $this->assertTrue(is_array($result));
         
-        // clean up
+
 
     }
 
@@ -87,7 +87,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
         
         //$this->assertEquals(time(), null);
         
-        // clean up
+
 
     }
 }

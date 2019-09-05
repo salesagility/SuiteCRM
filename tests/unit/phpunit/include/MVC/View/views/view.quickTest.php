@@ -44,7 +44,7 @@ class ViewQuickTest extends SuitePHPUnitFrameworkTestCase
         $view->dv->setup('Users', $view->bean);
 
 
-        // clean up
+
 
         if (isset($session)) {
             $_SESSION = $session;

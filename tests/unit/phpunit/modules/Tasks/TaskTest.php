@@ -104,7 +104,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+
     }
 
     public function testfill_in_additional_parent_fields()

@@ -74,7 +74,7 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertTrue($ret);
         
-        // clean up
+
         if (isset($session)) {
             $_SESSION = $session;
         } else {

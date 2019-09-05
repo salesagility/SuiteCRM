@@ -92,7 +92,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
         //test mark_deleted method
         $this->mark_deleted($oauthToken->id);
         
-        // clean up
+
 
 
     }
@@ -162,7 +162,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
         //finally mark deleted for cleanup
         $oauthToken->mark_deleted($oauthToken->id);
         
-        // clean up
+
         
 
     }

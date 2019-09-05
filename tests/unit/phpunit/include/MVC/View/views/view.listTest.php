@@ -46,7 +46,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         
         
         
-        // clean up
+
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
         foreach ($tableEmailAddresses as $row) {
             $query = "INSERT email_addresses INTO (";
@@ -190,7 +190,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent2));
         
-        // clean up
+
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
         foreach ($tableEmailAddresses as $row) {
             $query = "INSERT email_addresses INTO (";

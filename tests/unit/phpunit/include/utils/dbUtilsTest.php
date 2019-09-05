@@ -41,7 +41,7 @@ class db_utilsTest extends SuitePHPUnitFrameworkTestCase
         $actual = db_convert($string, $type, $params);
         $this->assertSame($expected, $actual);
         
-        // clean up
+
 
     }
 

@@ -258,7 +258,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         $actual = $opportunity->listviewACLHelper();
         $this->assertSame($expected, $actual);
 
-        // clean up
+
 
     }
 
@@ -284,6 +284,6 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
 
         $this->markTestIncomplete('This method has no implementation');
         
-        // clean up
+
     }
 }

@@ -38,7 +38,7 @@ class ViewQuickcreateTest extends SuitePHPUnitFrameworkTestCase
         $view->preDisplay();
         $this->assertNotSame($request, $_REQUEST);
         
-        // clean up
+
         
         if (isset($_request)) {
             $_REQUEST = $_request;
@@ -80,7 +80,7 @@ class ViewQuickcreateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertEquals(false, json_decode($renderedContent)); //check that it doesn't return json.
         
-        // clean up
+
         
         
         

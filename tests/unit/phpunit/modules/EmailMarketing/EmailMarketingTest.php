@@ -60,7 +60,7 @@ class EmailMarketingTest extends SuitePHPUnitFrameworkTestCase
         $actual = $emailMarketing->create_export_query('email_marketing.id', 'email_marketing.name=""');
         $this->assertSame($expected, $actual);
 
-        // clean up
+
 
     }
 

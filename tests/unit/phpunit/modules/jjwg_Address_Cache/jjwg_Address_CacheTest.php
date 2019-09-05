@@ -29,7 +29,7 @@ class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'importable', $jjwgAddressCache);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $jjwgAddressCache);
 
-        // clean up
+
 
 
     }
@@ -112,7 +112,7 @@ class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(true, $jjwgAddressCache->is_valid_lat(90));
         $this->assertEquals(true, $jjwgAddressCache->is_valid_lat(-90));
 
-        // clean up
+
 
 
     }

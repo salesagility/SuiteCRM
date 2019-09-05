@@ -2610,7 +2610,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $this->db->query("DELETE FROM email_addr_bean_rel WHERE bean_id LIKE 'testBean_1'");
         $this->db->query("DELETE FROM email_addresses WHERE email_address LIKE 'testbean1@email.com'");
         
-        // clean up
+
         BeanFactory::getBean('Users')->field_defs = $userFieldDefs;
         BeanFactory::getBean('Contacts')->field_defs = $contactFieldDefs;
     }

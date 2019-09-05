@@ -68,7 +68,7 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
         $actual = query_module_access_list($user);
         $this->assertSame($expected, $actual);
         
-        // clean up
+
 
 
     }
@@ -133,7 +133,7 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
         $_SERVER['HTTP_CLIENT_IP'] = '1.1.1.1';
         $this->assertSame('1.1.1.1', query_client_ip());
         
-        // clean up
+
 
     }
 

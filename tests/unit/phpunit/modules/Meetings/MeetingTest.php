@@ -56,7 +56,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(false, $meeting->ACLAccess('editview'));
         $this->assertEquals(false, $meeting->ACLAccess('delete'));
         
-        // clean up
+
 
     }
 
@@ -155,7 +155,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(false, $meeting->email_reminder_checked);
         $this->assertEquals('Accounts', $meeting->parent_type);
 
-        // clean up
+
 
     }
 
@@ -206,7 +206,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected['REPEAT_INTERVAL'], $actual['REPEAT_INTERVAL']);
         $this->assertEquals($expected['PARENT_MODULE'], $actual['PARENT_MODULE']);
 
-        // clean up
+
 
     }
 
@@ -324,7 +324,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $actual = $meeting->listviewACLHelper();
         $this->assertSame($expected, $actual);
         
-        // clean up
+
 
     }
 

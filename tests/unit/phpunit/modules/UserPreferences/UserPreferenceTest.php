@@ -25,7 +25,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         $result = $userPreference->getUserDateTimePreferences();
         $this->assertTrue(is_array($result));
 
-        // clean up
+
 
 
     }
@@ -62,7 +62,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         $result = $userPreference->getPreference('chartEngine');
         $this->assertEquals($sugar_config['chartEngine'], $result);
         
-        // clean up
+
 
 
     }
@@ -94,7 +94,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         $result = $userPreference->getDefaultPreference('email_link_type');
         $this->assertEquals($email_link_type, $result);
         
-        // clean up
+
         
 
     }
@@ -115,7 +115,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'new_schema', $userPreference);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $userPreference);
         
-        // clean up
+
 
     }
     

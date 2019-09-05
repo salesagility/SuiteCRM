@@ -40,7 +40,7 @@ class EmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $result = $email->retrieve($email->id);
         $this->assertEquals(null, $result);
 
-        // clean up
+
 
 
 

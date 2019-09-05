@@ -269,7 +269,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         $actual = $projectTask->listviewACLHelper();
         $this->assertSame($expected, $actual);
         
-        // clean up
+
 
     }
 

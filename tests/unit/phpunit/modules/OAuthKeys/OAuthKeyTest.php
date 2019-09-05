@@ -55,7 +55,7 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
         //test mark_deleted method
         $this->mark_deleted($oauthKey->id);
         
-        // clean up
+
 
 
     }

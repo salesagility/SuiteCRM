@@ -106,7 +106,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
             $this->assertContains($chart->id, $result);
         }
         
-        // clean up
+
         unset($GLOBALS['_SESSION']);
         unset($GLOBALS['objectList']);
         unset($GLOBALS['mod_strings']);

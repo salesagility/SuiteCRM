@@ -74,7 +74,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 
         $GLOBALS['log'] = $logger;
 
-        // clean up
+
 
         DBManagerFactory::getInstance()->query("DELETE FROM email_addr_bean_rel");
         foreach ($tableEmailAddrBeanRel as $row) {
@@ -169,7 +169,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame('0', $this->ea->addresses[1]['opt_out']);
         self::assertNull($this->ea->addresses[1]['email_address_id']);
 
-        // clean up
+
 
         if (isset($_request)) {
             $_REQUEST = $_request;
@@ -407,7 +407,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 
         $GLOBALS['log'] = $logger;
 
-        // clean up
+
 
         if (isset($_request)) {
             $_REQUEST = $_request;
@@ -513,7 +513,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
 
-        // clean up
+
 
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
         foreach ($tableEmailAddresses as $row) {
@@ -950,7 +950,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             ),
         ), $this->ea->addresses);
 
-        // clean up
+
 
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
         foreach ($tableEmailAddresses as $row) {
@@ -1207,7 +1207,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue($isValidator->isValidId($result));
 
 
-        // clean up
+
 
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
         foreach ($tableEmailAddresses as $row) {
@@ -1659,7 +1659,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 
         $GLOBALS['log'] = $logger;
 
-        // clean up
+
 
         DBManagerFactory::getInstance()->query("DELETE FROM accounts_cstm");
         foreach ($tableAccountsCstm as $row) {
@@ -2127,7 +2127,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['log'] = $logger;
 
 
-        // clean up
+
 
         DBManagerFactory::getInstance()->query("DELETE FROM accounts_cstm");
         foreach ($tableAccountsCstm as $row) {

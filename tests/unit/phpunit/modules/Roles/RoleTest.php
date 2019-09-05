@@ -121,7 +121,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         $this->clear_user_relationship($role->id, '1');
         $this->clear_user_relationship($role->id, '2');
         
-        // clean up
+
         
 
     }

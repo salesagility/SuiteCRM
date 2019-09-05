@@ -220,7 +220,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         $result = $SugarController->checkEntryPointRequiresAuth('GeneratePassword');
         $this->assertFalse($result);
         
-        // clean up
+
 
     }
 }

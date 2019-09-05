@@ -77,7 +77,7 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         $result = getAppString('TEST_NONEXISTS_LABEL');
         $this->assertEquals('Hello test', $result);
         
-        // clean up
+
         unset($app_strings['TEST_NONEXISTS_LABEL']);
     }
 

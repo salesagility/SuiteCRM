@@ -69,7 +69,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         $actual = $contact->listviewACLHelper();
         $this->assertSame($expected, $actual);
 
-        // clean up
+
         
 
     }
@@ -198,7 +198,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected['EMAIL_AND_NAME1'], $actual['EMAIL_AND_NAME1']);
 
         
-        // clean up
+
 
 
     }

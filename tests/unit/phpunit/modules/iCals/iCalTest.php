@@ -35,7 +35,7 @@ class iCalTest extends SuitePHPUnitFrameworkTestCase
 //        $this->assertStringStartsWith($expectedStart, $actual);
 //        $this->assertStringEndsWith($expectedEnd, $actual);
 //
-//        // clean up
+//
 //
 //
 //

@@ -34,7 +34,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(30, 'min_interval', $schedulersJob);
         $this->assertAttributeEquals(true, 'job_done', $schedulersJob);
         
-        // clean up
+
 
     }
 
@@ -127,7 +127,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 
         $schedulersJob->mark_deleted($schedulersJob->id);
         
-        // clean up
+
 
 
     }
@@ -149,7 +149,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 
         $schedulersJob->mark_deleted($schedulersJob->id);
         
-        // clean up
+
 
 
     }
@@ -170,7 +170,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
         
-        // clean up
+
     }
 
     public function testOnFinalFailure()
@@ -193,7 +193,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
         
-        // clean up
+
     }
 
     public function testresolveJob()
@@ -221,7 +221,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 
         $schedulersJob->mark_deleted($schedulersJob->id);
         
-        // clean up
+
 
 
     }
@@ -247,7 +247,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $result = $schedulersJob->retrieve($schedulersJob->id);
         $this->assertEquals(null, $result);
         
-        // clean up
+
 
 
     }
@@ -271,7 +271,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 
         $schedulersJob->mark_deleted($schedulersJob->id);
         
-        // clean up
+
 
 
     }
@@ -303,7 +303,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 
         $schedulersJob->mark_deleted($schedulersJob->id);
         
-        // clean up
+
 
 
     }
@@ -331,7 +331,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $schedulersJob->errorHandler(E_RECOVERABLE_ERROR, 'test err', 'testfile', '1');
         $this->assertEquals("Recoverable Error [4096]: test err in testfile on line 1\n", $schedulersJob->errors);
         
-        // clean up
+
 
     }
 

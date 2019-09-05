@@ -46,7 +46,7 @@ class ViewEditTest extends SuitePHPUnitFrameworkTestCase
         $view->preDisplay();
         $this->assertInstanceOf('EditView', $view->ev);
         
-        // clean up
+
         if (isset($session)) {
             $_SESSION = $session;
         } else {

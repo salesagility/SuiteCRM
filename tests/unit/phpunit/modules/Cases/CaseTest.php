@@ -52,7 +52,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         $actual = $aCase->listviewACLHelper();
         $this->assertSame($expected, $actual);
         
-        // clean up
+
 
     }
 
@@ -73,7 +73,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+
 
     }
 

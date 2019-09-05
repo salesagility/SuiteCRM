@@ -32,7 +32,7 @@ class mvc_utilsTest extends SuitePHPUnitFrameworkTestCase
         $actual = getPrintLink();
         $this->assertSame($expected, $actual);
         
-        // clean up
+
 
     }
 

@@ -122,7 +122,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+
     }
 
     public function testfill_in_additional_detail_fields()
@@ -148,7 +148,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+
     }
 
     public function testget_summary_text()
@@ -272,7 +272,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
 
         $this->assertSame($expected, $result);
         
-        // clean up
+
     }
 
     public function testemail_addresses_query()

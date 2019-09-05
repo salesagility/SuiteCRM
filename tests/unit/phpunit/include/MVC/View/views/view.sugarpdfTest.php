@@ -42,7 +42,7 @@ class ViewSugarpdfTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals('someValue', 'sugarpdf', $view);
         $this->assertAttributeEquals(null, 'sugarpdfBean', $view);
 
-        // clean up
+
         
         if (isset($_request)) {
             $_REQUEST = $_request;

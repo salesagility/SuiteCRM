@@ -94,7 +94,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
 
         $this->markTestIncomplete('Multiple errors in query');
         
-        // clean up
+
     }
 
     public function testbean_implements()

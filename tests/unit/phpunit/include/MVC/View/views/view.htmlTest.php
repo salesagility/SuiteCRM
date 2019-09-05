@@ -39,6 +39,6 @@ class ViewHtmlTest extends SuitePHPUnitFrameworkTestCase
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+
     }
 }

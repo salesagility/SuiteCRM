@@ -36,7 +36,7 @@ class activity_utilsTest extends SuitePHPUnitFrameworkTestCase
         $list = build_related_list_by_user_id($bean, '1', '');
         $this->assertTrue(is_array($list));
         
-        // clean up
+
 
     }
 }

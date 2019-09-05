@@ -66,7 +66,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         $actual = $securityGroup->getGroupWhere($table_name, $module, $user_id);
         $this->assertSame($expected, $actual);
         
-        // clean up
+
     }
 
     public function testgetGroupUsersWhere()

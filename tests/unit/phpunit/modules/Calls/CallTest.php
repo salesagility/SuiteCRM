@@ -49,7 +49,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $call->recurring_source = 'test';
         $this->assertFalse($call->ACLAccess('edit'));
         
-        // clean up
+
 
     }
 
@@ -140,7 +140,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(false, $call->email_reminder_checked);
         $this->assertEquals('Accounts', $call->parent_type);
 
-        // clean up
+
 
     }
 

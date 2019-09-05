@@ -209,10 +209,6 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected['FULL_NAME'], $actual['FULL_NAME']);
         $this->assertEquals($expected['DO_NOT_CALL'], $actual['DO_NOT_CALL']);
         $this->assertEquals($expected['EMAIL1_LINK'], $actual['EMAIL1_LINK']);
-        
-        // clean up
-
-
     }
 
 
@@ -308,7 +304,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $actual = $lead->listviewACLHelper();
         $this->assertSame($expected, $actual);
 
-        // clean up
+
 
     }
 

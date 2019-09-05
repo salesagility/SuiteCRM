@@ -86,7 +86,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $employee = new Employee();
         $this->assertEquals(true, $employee->verify_data());
 
-        // clean up
+
 
     }
 
@@ -125,7 +125,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $actual = $employee->get_list_view_data();
         $this->assertSame($expected, $actual);
 
-        // clean up
+
 
 
 
@@ -208,7 +208,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(false, $result);
         
         
-        // clean up
+
 
     }
     
@@ -240,7 +240,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $expected = '<span class=\'error\'>Hello error<br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
         $this->assertContains($expected, $contents);
         
-        // clean up
+
         unset($app_strings['TEST_ERROR_MESSAGE']);
     }
 }

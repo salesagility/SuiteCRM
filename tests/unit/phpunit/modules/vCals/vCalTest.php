@@ -58,7 +58,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
         $this->markTestIncomplete('method has no implementation');
         
-        // clean up
+
     }
 
     public function testfill_in_additional_detail_fields()
@@ -81,7 +81,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
         $this->markTestIncomplete('method has no implementation');
         
-        // clean up
+
     }
 
     public function testget_list_view_data()
@@ -104,7 +104,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
         $this->markTestIncomplete('method has no implementation');
         
-        // clean up
+
     }
 
     public function testget_freebusy_lines_cache()
@@ -138,7 +138,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $result = $vcal->create_sugar_freebusy($user_bean, $start_date_time, $end_date_time);
         $this->assertGreaterThanOrEqual(0, strlen($result));
         
-        // clean up
+
 
     }
 
@@ -156,7 +156,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $this->assertStringStartsWith($expectedStart, $result);
         $this->assertStringEndsWith($expectedEnd, $result);
 
-        // clean up
+
 
     }
 
