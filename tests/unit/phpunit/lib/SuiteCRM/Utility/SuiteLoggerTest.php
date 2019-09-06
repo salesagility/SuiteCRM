@@ -24,10 +24,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $loggerManager = LoggerManager::getLogger();
-
-        if (self::$logger === null) {
-            self::$oldLogLevel = $loggerManager::getLogLevel();
-        }
+        self::$oldLogLevel = $loggerManager::getLogLevel();
 
         $loggerManager::setLogLevel('debug');
     }
