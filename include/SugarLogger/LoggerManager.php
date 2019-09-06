@@ -247,7 +247,8 @@ class LoggerManager
 
     public static function getLogLevel()
     {
-        return self::$_instance->_level;
+        $instance = self::$_instance;
+        return $instance::$_level;
     }
 
     /**
