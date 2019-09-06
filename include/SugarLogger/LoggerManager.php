@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +38,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /**
  * Log management
  * @api
@@ -51,7 +52,7 @@ class LoggerManager
     private static $_level = 'fatal';
 
     //this is a list of different loggers that have been loaded
-    protected static $_loggers = array();
+    protected static $_loggers = [];
 
     //this is the instance of the LoggerManager
     /**
@@ -60,12 +61,12 @@ class LoggerManager
     private static $_instance = null;
 
     //these are the mappings for levels to different log types
-    private static $_logMapping = array(
+    private static $_logMapping = [
         'default' => 'SugarLogger',
-    );
+    ];
 
     //these are the log level mappings anything with a lower value than your current log level will be logged
-    private static $_levelMapping = array(
+    private static $_levelMapping = [
         'debug'      => 100,
         'info'       => 70,
         'warn'       => 50,
@@ -74,7 +75,7 @@ class LoggerManager
         'fatal'      => 10,
         'security'   => 5,
         'off'        => 0,
-    );
+    ];
 
     //only let the getLogger instantiate this object
     private function __construct()
