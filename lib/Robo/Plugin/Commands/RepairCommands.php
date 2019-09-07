@@ -125,6 +125,34 @@ class RepairCommands extends \Robo\Tasks
         $tool = new \RepairAndClear();
         $tool->show_output = $show_output;
         $tool->rebuildExtensions();
+        if ($opts['show-output'] === 'yes') {
+            echo "\n";
+        }
         $this->say("Extensions rebuilded!");
+    }
+
+
+    /**
+     * Rebuild Extensions - This Robo task executes rebuildExtensions()
+     * @param array $opts optional command line arguments
+     * show-output - Set if you want to see the RebuildRelationship output.
+     * @throws \RuntimeException
+     */
+    public function repairRebuildRelationships(array $opts = ['show-output' => 'no'])
+    {
+        $this->say("Rebuilding Relationships...");
+
+        $_REQUEST['silent'] = 'no';
+
+        if ($opts['show-output'] === 'yes') {
+            $_REQUEST['silent'] = 'yes';
+        }
+
+        require_once 'modules/Administration/RebuildRelationship.php';
+
+        if ($opts['show-output'] === 'yes') {
+            echo "\n";
+        }
+        $this->say("Relationships rebuilded!");
     }
 }
