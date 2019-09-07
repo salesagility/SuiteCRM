@@ -40,10 +40,6 @@
 
 namespace SuiteCRM\Robo\Plugin\Commands;
 
-use SuiteCRM\Utility\OperatingSystem;
-use SuiteCRM\Robo\Traits\RoboTrait;
-use Robo\Task\Base\loadTasks;
-
 /**
  * Class RepairCommands
  *
@@ -57,9 +53,6 @@ use Robo\Task\Base\loadTasks;
 
 class RepairCommands extends \Robo\Tasks
 {
-    use loadTasks;
-    use RoboTrait;
-
     /**
      * Repair database - Synchronize database with vardefs
      * @param array $opts optional command line arguments
