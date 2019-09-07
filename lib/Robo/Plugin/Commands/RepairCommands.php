@@ -146,10 +146,10 @@ class RepairCommands extends \Robo\Tasks
     {
         $this->say("Rebuilding Relationships...");
 
-        $_REQUEST['silent'] = 'no';
-
         if ($opts['show-output'] === 'yes') {
-            $_REQUEST['silent'] = 'yes';
+            unset($_REQUEST['silent']);
+        } else {
+            $_REQUEST['silent'] = 'no';
         }
 
         require_once 'modules/Administration/RebuildRelationship.php';
