@@ -44,6 +44,17 @@ use SuiteCRM\Utility\OperatingSystem;
 use SuiteCRM\Robo\Traits\RoboTrait;
 use Robo\Task\Base\loadTasks;
 
+/**
+ * Class RepairCommands
+ *
+ * @category RoboTasks
+ * @package  SuiteCRM\Robo\Plugin\Commands
+ * @author   Jose C. Massón <jose AT gcoop DOT coop>
+ * @license  GNU GPLv3
+ * @link     RepairCommands
+ */
+
+
 class RepairCommands extends \Robo\Tasks
 {
     use loadTasks;
