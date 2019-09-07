@@ -75,21 +75,19 @@ class RepairCommands extends \Robo\Tasks
         foreach ($beanFiles as $bean_name => $file) {
             require_once $file;
 
-            if (! file_exists($file)) {
+            if (!file_exists($file)) {
                 continue;
             }
 
             $GLOBALS['reload_vardefs'] = true;
             $focus = new $bean_name();
 
-            if (isset($focus->disable_vardefs) && $focus->disable_vardefs == false) {
-                if (isset($focus->module_dir)) {
-                    include 'modules/'.$focus->module_dir.'/vardefs.php';
-                    $sql = $db->repairTable($focus, $execute);
+            if (isset($focus->disable_vardefs) && $focus->disable_vardefs == false && isset($focus->module_dir)) {
+                include 'modules/'.$focus->module_dir.'/vardefs.php';
+                $sql = $db->repairTable($focus, $execute);
 
-                    if (!empty($sql)) {
-                        $queries[] = $sql;
-                    }
+                if (!empty($sql)) {
+                    $queries[] = $sql;
                 }
             }
         }
@@ -146,10 +144,10 @@ class RepairCommands extends \Robo\Tasks
     {
         $this->say("Rebuilding Relationships...");
 
+        $_REQUEST['silent'] = 'no';
+
         if ($opts['show-output'] === 'yes') {
             unset($_REQUEST['silent']);
-        } else {
-            $_REQUEST['silent'] = 'no';
         }
 
         require_once 'modules/Administration/RebuildRelationship.php';
