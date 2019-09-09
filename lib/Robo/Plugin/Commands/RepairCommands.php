@@ -92,15 +92,16 @@ class RepairCommands extends \Robo\Tasks
             }
         }
 
-        if (!$execute) {
-            $this->say("You need to execute the following queries in order to get database synchronized with vardefs");
-            foreach ($queries as $query) {
-                print_r($query);
-            }
-        } else {
+        if ($execute) {
             $total = count($queries);
             $this->say("Database synchronized with vardefs!");
             $this->say("Executed queries: {$total}");
+            return;
+        }
+
+        $this->say("You need to execute the following queries in order to get database synchronized with vardefs");
+        foreach ($queries as $query) {
+            print_r($query);
         }
     }
 
