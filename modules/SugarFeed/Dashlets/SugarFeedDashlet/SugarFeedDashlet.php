@@ -660,8 +660,8 @@ enableQS(false);
     public function getPostForm()
     {
         global $current_user;
-        
-        if (!empty($this->selectedCategories) && !in_array('User Feed', $this->categories, true)) {
+
+        if (!empty($this->selectedCategories) && !key_exists('UserFeed', $this->categories)) {
             // The user feed system isn't enabled, don't let them post notes
             return '';
         }
