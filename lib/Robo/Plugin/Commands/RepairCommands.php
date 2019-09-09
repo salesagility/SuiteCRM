@@ -66,8 +66,8 @@ class RepairCommands extends \Robo\Tasks
         $db = \DBManagerFactory::getInstance();
         $queries = [];
         \VardefManager::clearVardef();
-
         $execute = false;
+
         if ($opts['execute'] === 'yes') {
             $execute = true;
         }
@@ -92,17 +92,16 @@ class RepairCommands extends \Robo\Tasks
             }
         }
 
+        $total = count($queries);
+
         if ($execute) {
-            $total = count($queries);
             $this->say("Database synchronized with vardefs!");
             $this->say("Executed queries: {$total}");
             return;
         }
 
-        $this->say("You need to execute the following queries in order to get database synchronized with vardefs");
-        foreach ($queries as $query) {
-            print_r($query);
-        }
+        $this->say("Execute the following queries {$total} in order to get database synchronized with vardefs");
+        array_map('print_r', $queries);
     }
 
 
