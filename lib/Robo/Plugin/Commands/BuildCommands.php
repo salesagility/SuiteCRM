@@ -91,6 +91,17 @@ class BuildCommands extends \Robo\Tasks
         $this->buildColorScheme($opts['color-scheme'], $location);
         $this->say("Compile {$opts['theme']} Theme (SASS) Complete");
     }
+
+
+    /**
+     * Build SuiteP theme
+     * @param array $opts optional command line arguments
+     * color-scheme - set which color scheme you wish to build
+     * @throws \RuntimeException
+     */
+    public function buildSuiteP(array $opts = ['color-scheme' => ''])
+    {
+        $this->buildTheme(['theme' => 'SuiteP', 'color-scheme' => $opts['color-scheme']]);
     }
 
     /**
@@ -123,9 +134,11 @@ class BuildCommands extends \Robo\Tasks
                         unlink($directory . $file . '/style.css');
                     }
                     $this->say("Found style.scss for {$file}, Compiling");
-                    $this->buildSuitePColorScheme($file, $directory);
+                    $this->buildColorScheme($file, $directory);
                 }
             }
+        } else {
+            $this->say("Could not open the folder: {$directory}");
         }
     }
 }
