@@ -138,7 +138,7 @@ class BuildCommands extends \Robo\Tasks
                 }
             }
         } else {
-            $this->say("Could not open the folder: {$directory}");
+            $this->say("The folder {$directory} does not exists or it's not possible to open it.");
         }
     }
 }
