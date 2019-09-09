@@ -51,38 +51,46 @@ class BuildCommands extends \Robo\Tasks
 
     // define public methods as commands
 
+
     /**
-     * Build SuiteP theme
+     * Compile a theme (SASS) based in SuiteP
      * @param array $opts optional command line arguments
+     * theme - The name of the theme you want to compile css
      * color-scheme - set which color scheme you wish to build
      * @throws \RuntimeException
      */
-    public function buildSuiteP(array $opts = ['color-scheme' => ''])
+    public function buildTheme(array $opts = ['theme' => '', 'color-scheme' => ''])
     {
-        $this->say('Compile SuiteP Theme (SASS)');
+        if (empty($opts['theme'])) {
+            $this->say("Please specify the name of the theme you want to compile with '--theme=SuiteP'");
+            return;
+        }
+        $this->say("Compile {$opts['theme']} Theme (SASS)");
         if (empty($opts['color-scheme'])) {
-            /** Look for Subthemes in the SuiteP theme Dir **/
-            $std = 'themes/SuiteP/css/';
+            /** Look for Subthemes in the {$opts['theme']} theme Dir **/
+            $std = "themes/{$opts['theme']}/css/";
             $this->locateSubTheme($std);
             /** Look for Subthemes in the custom/theme Dir **/
             // Good opportunity to refactor here.
             // Does the same as above just looks in the custom directory.
-            $ctd = 'custom/themes/SuiteP/css/';
+            $ctd = "custom/themes/{$opts['theme']}/css/";
             $this->locateSubTheme($ctd);
-
             return;
         }
 
+        $location = "themes/{$opts['theme']}/css/";
+
         if (is_array($opts['color-scheme'])) {
             foreach ($opts['color-scheme'] as $colorScheme) {
-                $this->buildSuitePColorScheme($colorScheme);
+                $this->buildColorScheme($colorScheme, $location);
             }
 
             return;
         }
 
-        $this->buildSuitePColorScheme($opts['color-scheme']);
-        $this->say('Compile SuiteP Theme (SASS) Complete');
+        $this->buildColorScheme($opts['color-scheme'], $location);
+        $this->say("Compile {$opts['theme']} Theme (SASS) Complete");
+    }
     }
 
     /**
