@@ -24,15 +24,15 @@ $app->group('', function () use ($app) {
          * Logout
          */
         $app->post('/logout', LogoutController::class);
-        
+
         $app
             ->get('/search-defs/module/{moduleName}', 'Api\V8\Controller\ListViewSearchController:getModuleSearchDefs')
             ->add($paramsMiddlewareFactory->bind(Param\ListViewSearchParams::class));
-        
+
         $app
             ->get('/listview/columns/{moduleName}', 'Api\V8\Controller\ListViewController:getListViewColumns')
             ->add($paramsMiddlewareFactory->bind(Param\ListViewColumnsParams::class));
-        
+
         $app->get('/current-user', 'Api\V8\Controller\UserController:getCurrentUser');
 
         $app->get('/meta/modules', 'Api\V8\Controller\MetaController:getModuleList');
@@ -123,7 +123,7 @@ $app->group('', function () use ($app) {
                 'Api\V8\Controller\RelationshipController:deleteRelationship'
             )
             ->add($paramsMiddlewareFactory->bind(Param\DeleteRelationshipParams::class));
-        
+
         // add custom routes
         $app->group('/custom', function () use ($app) {
             $app = CustomLoader::loadCustomRoutes($app);

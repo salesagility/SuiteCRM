@@ -68,15 +68,15 @@ class MetaService
     private $moduleListProvider;
 
     private static $allowedVardefFields = [
-          'type',
-          'dbType',
-          'source',
-          'relationship',
-          'default',
-          'len',
-          'precision',
-          'comments',
-          'required',
+        'type',
+        'dbType',
+        'source',
+        'relationship',
+        'default',
+        'len',
+        'precision',
+        'comments',
+        'required',
     ];
 
     /**
@@ -100,13 +100,14 @@ class MetaService
     public function getModuleList(Request $request)
     {
         $modules = $this->moduleListProvider->getModuleList();
-        
+
         $dataResponse = new DataResponse('modules', '');
         $attributeResponse = new AttributeResponse($modules);
         $dataResponse->setAttributes($attributeResponse);
 
         $response = new DocumentResponse();
         $response->setData($dataResponse);
+
         return $response;
     }
 
@@ -128,6 +129,7 @@ class MetaService
 
         $response = new DocumentResponse();
         $response->setData($dataResponse);
+
         return $response;
     }
 
@@ -162,6 +164,7 @@ class MetaService
         foreach ($bean->field_defs as $fieldName => $fieldDef) {
             $fieldList[$fieldName] = $this->pruneVardef($fieldDef);
         }
+
         return $fieldList;
     }
 
@@ -185,6 +188,7 @@ class MetaService
         if (!isset($def['dbType'])) {
             $pruned['dbType'] = $def['type'];
         }
+
         return $pruned;
     }
 
