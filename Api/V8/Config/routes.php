@@ -45,6 +45,11 @@ $app->group('', function () use ($app) {
             ->add($paramsMiddlewareFactory->bind(Param\GetUserPreferencesParams::class));
 
         /**
+         * Get swagger schema
+         */
+        $app->get('/meta/swagger.json', 'Api\V8\Controller\MetaController:getSwaggerSchema');
+
+        /**
          * Get module records
          */
         $app
