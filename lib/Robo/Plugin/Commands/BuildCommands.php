@@ -90,7 +90,7 @@ class BuildCommands extends \Robo\Tasks
      * @param string $location eg Directory to work from
      * @throws \RuntimeException
      */
-    private function buildSuitePColorScheme($colorScheme, $location = 'themes/SuiteP/css/')
+    private function buildColorScheme($colorScheme, $location)
     {
         $os = new OperatingSystem();
         $command =
