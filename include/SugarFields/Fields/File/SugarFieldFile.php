@@ -155,7 +155,7 @@ class SugarFieldFile extends SugarFieldBase
 
         if ($move) {
             $upload_file->final_move($bean->id);
-            $docType = $prefix . $vardef['docType'];
+            $docType = $prefix . isset($vardef['docType']);
             $upload_file->upload_doc($bean, $bean->id, isset($params[$docType]), $bean->$field, $upload_file->mime_type);
         } elseif (! empty($old_id)) {
             // It's a duplicate, I think
