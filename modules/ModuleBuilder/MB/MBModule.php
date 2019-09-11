@@ -80,7 +80,7 @@ class MBModule
         $this->path = $this->getModuleDir() ;
         //		$this->mbrelationship = new MBRelationship($this->name, $this->path, $this->key_name);
         $this->relationships = new UndeployedRelationships($this->path) ;
-        $this->mbvardefs = new MBVardefs($this->name, $this->path, $this->key_name) ;
+        $this->mbvardefs = new MBVardefs($this->name, $this->path . "/Ext/Vardefs", $this->key_name) ;
 
         $this->load() ;
     }
@@ -316,7 +316,7 @@ class MBModule
             $old_config_md5 = $this->config_md5 ;
             $this->saveConfig() ;
             $this->getVardefs() ;
-            $this->mbvardefs->save($this->key_name) ;
+            // $this->mbvardefs->save($this->key_name) ;
             //           $this->mbrelationship->save ( $this->key_name ) ;
             $this->relationships->save() ;
             $this->copyMetaData() ;
@@ -489,11 +489,16 @@ class MBModule
             fwrite($fp, $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Class.tpl'));
             fclose($fp);
         }
+
         //write vardefs
-        $fp = sugar_fopen($path . '/vardefs.php', 'w') ;
+        if (! file_exists($path . '/Ext/Vardefs')) {
+            mkdir_recursive($path . '/Ext/Vardefs') ;
+        }
+
+        $fp = sugar_fopen($path . '/Ext/Vardefs/vardefs.ext.php', 'w') ;
         fwrite($fp, $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/vardef.tpl')) ;
         fclose($fp) ;
-        
+
         if (! file_exists($path . '/metadata')) {
             mkdir_recursive($path . '/metadata') ;
         }
@@ -523,8 +528,8 @@ class MBModule
     public function addInstallDefs(&$installDefs)
     {
         $name = $this->key_name ;
-        $installDefs [ 'copy' ] [] = array( 'from' => '<basepath>/SugarModules/modules/' . $name , 'to' => 'modules/' . $name ) ;
-        $installDefs [ 'beans' ] [] = array( 'module' => $name , 'class' => $name , 'path' => 'modules/' . $name . '/' . $name . '.php' , 'tab' => $this->config [ 'has_tab' ] ) ;
+        $installDefs [ 'copy' ] [] = array( 'from' => '<basepath>/SugarModules/modules/' . $name , 'to' => 'custom/modules/' . $name ) ;
+        $installDefs [ 'beans' ] [] = array( 'module' => $name , 'class' => $name , 'path' => 'custom/modules/' . $name . '/' . $name . '.php' , 'tab' => $this->config [ 'has_tab' ] ) ;
         $this->relationships->addInstallDefs($installDefs) ;
     }
 

@@ -163,19 +163,21 @@ class MBVardefs
     public function save()
     {
         $header = file_get_contents('modules/ModuleBuilder/MB/header.php');
-        write_array_to_file('vardefs', $this->vardef, $this->path . '/vardefs.php', 'w', $header);
+        if (mkdir_recursive($this->path)) {
+            write_array_to_file('vardefs', $this->vardef, $this->path . '/vardefs.ext.php', 'w', $header);
+        }
     }
 
     public function build($path)
     {
         $header = file_get_contents('modules/ModuleBuilder/MB/header.php');
-        write_array_to_file('dictionary["' . $this->name . '"]', $this->getVardefs(), $path . '/vardefs.php', 'w', $header);
+	write_array_to_file('dictionary["' . $this->name . '"]', $this->getVardefs(), $this->path . '/vardefs.ext.php', 'w', $header);
     }
     public function load()
     {
         $this->vardef = array('fields'=>array(), 'relationships'=>array());
-        if (file_exists($this->path . '/vardefs.php')) {
-            include($this->path. '/vardefs.php');
+        if (file_exists($this->path . '/vardefs.ext.php')) {
+            include($this->path. '/vardefs.ext.php');
             $this->vardef = $vardefs;
         }
     }
