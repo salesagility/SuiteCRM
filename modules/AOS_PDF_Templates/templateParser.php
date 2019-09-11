@@ -66,32 +66,32 @@ class templateParser
             if (isset($field_def['name']) && $field_def['name'] != '') {
                 $fieldName = $field_def['name'];
                 if (isset($field_def['source']) && $field_def['source'] == 'function' && empty($focus->$fieldName))
-        				{
-        					$can_execute = true;
-        					$execute_params = array();
-        					$execute_function = array();
-        					if (!empty($field_def['function_class'])) {
-        						$execute_function[] = $field_def['function_class'];
-        						$execute_function[] = $field_def['function_name'];
-        					} else {
-        						$execute_function = $field_def['function_name'];
-        					}
-        					foreach ($field_def['function_params'] as $param) {
-        						if (empty($focus->$param)) {
-        							$can_execute = false;
-        						} elseif ($param == '$this') {
-        							$execute_params[] = $focus;
-        						} else {
-        							$execute_params[] = $focus->$param;
-        						}
-        					}
-        					if ($can_execute) {
-        						if (!empty($field_def['function_require'])) {
-        							require_once($field_def['function_require']);
-        						}
-        						$focus->$fieldName = strval(call_user_func_array($execute_function, $execute_params));
-        					}
-        				}
+                {
+                    $can_execute = true;
+                    $execute_params = array();
+                    $execute_function = array();
+                    if (!empty($field_def['function_class'])) {
+                        $execute_function[] = $field_def['function_class'];
+                        $execute_function[] = $field_def['function_name'];
+                    } else {
+                        $execute_function = $field_def['function_name'];
+                    }
+                    foreach ($field_def['function_params'] as $param) {
+                        if (empty($focus->$param)) {
+                            $can_execute = false;
+                        } elseif ($param == '$this') {
+                            $execute_params[] = $focus;
+                        } else {
+                            $execute_params[] = $focus->$param;
+                        }
+                    }
+                    if ($can_execute) {
+                        if (!empty($field_def['function_require'])) {
+                            require_once($field_def['function_require']);
+                        }
+                        $focus->$fieldName = strval(call_user_func_array($execute_function, $execute_params));
+                    }
+                }
                 if ($field_def['type'] == 'currency') {
                     $params = array(
                         'currency_symbol' => false
@@ -125,30 +125,31 @@ class templateParser
                     } else {
                         $repl_arr[$key . "_" . $fieldName] = "false";
                     }
-                  } elseif ($field_def['type'] == 'image') {
-                      $secureLink = $sugar_config['site_url'] . '/' . "public/" . $focus->id . '_' . $fieldName;
-                      $file_location = $sugar_config['upload_dir'] . '/' . $focus->id . '_' . $fieldName;
-                      // create a copy with correct extension by mime type
-                      if (!file_exists('public')) {
-                          sugar_mkdir('public', 0777);
-                      }
-                      if (!copy($file_location, "public/{$focus->id}" . '_' . "$fieldName")) {
-                          $secureLink = $sugar_config['site_url'] . '/' . $file_location;
-                      }
-                      if (empty($focus->{$fieldName})) {
-                          $repl_arr[$key . "_" . $fieldName] = "";
-                      } else {
-                          $link = $secureLink;
-                          $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="' . $field_def['width'] . '" height="' . $field_def['height'] . '"/>';
-                      }
-                  } elseif ($field_def['type'] == 'wysiwyg') {
-                      $repl_arr[$key . "_" . $field_def['name']] = html_entity_decode($focus->$field_def['name'],
-                          ENT_COMPAT, 'UTF-8');
-                      $repl_arr[$key . "_" . $fieldName] = html_entity_decode($focus->{$fieldName},
-                          ENT_COMPAT, 'UTF-8');
-                  } else {
-                      $repl_arr[$key . "_" . $fieldName] = $focus->{$fieldName};
-                  }
+                } elseif ($field_def['type'] == 'image') {
+                    $secureLink = $sugar_config['site_url'] . '/' . "public/" . $focus->id . '_' . $fieldName;
+                    $file_location = $sugar_config['upload_dir'] . '/' . $focus->id . '_' . $fieldName;
+                    // create a copy with correct extension by mime type
+                    if (!file_exists('public')) {
+                        sugar_mkdir('public', 0777);
+                    }
+                    if (!copy($file_location, "public/{$focus->id}" . '_' . "$fieldName")) {
+                        $secureLink = $sugar_config['site_url'] . '/' . $file_location;
+                    }
+
+                    if (empty($focus->{$fieldName})) {
+                        $repl_arr[$key . "_" . $fieldName] = "";
+                    } else {
+                        $link = $secureLink;
+                        $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="' . $field_def['width'] . '" height="' . $field_def['height'] . '"/>';
+                    }
+                } elseif ($field_def['type'] == 'wysiwyg') {
+                    $repl_arr[$key . "_" . $field_def['name']] = html_entity_decode($focus->$field_def['name'],
+                        ENT_COMPAT, 'UTF-8');
+                    $repl_arr[$key . "_" . $fieldName] = html_entity_decode($focus->{$fieldName},
+                        ENT_COMPAT, 'UTF-8');
+                } else {
+                    $repl_arr[$key . "_" . $fieldName] = $focus->{$fieldName};
+                }
             }
         } // end foreach()
 
