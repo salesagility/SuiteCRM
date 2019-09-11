@@ -647,7 +647,7 @@ class SugarEmailAddress extends SugarBean
                     $emailId = isset($address['email_address_id'])
                     && isset($current_links[$address['email_address_id']])
                         ? $address['email_address_id'] : null;
-		    $emailId = $this->AddUpdateEmailAddress(
+		    $emailId = $this->AddUpdateEmailAddressWithParent(
 			$id,
                         $address['email_address'],
                         $address['invalid_email'],
@@ -1198,6 +1198,23 @@ class SugarEmailAddress extends SugarBean
     /**
      * Creates or Updates an entry in the email_addresses table, depending
      * on if the email address submitted matches a previous entry (case-insensitive)
+     * @param string $addr - email address
+     * @param int $invalid - is the email address marked as Invalid?
+     * @param int $opt_out - is the email address marked as Opt-Out?
+     * @param string $id - the GUID of the original SugarEmailAddress bean,
+     *        in case a "email has changed" WorkFlow has triggered - hack to allow workflow-induced changes
+     *        to propagate to the new SugarEmailAddress - see bug 39188
+     * @param int|null $optInFlag
+     * @return string GUID of Email Address or '' if cleaned address was empty.
+     */
+    public function AddUpdateEmailAddress($addr, $invalid = 0, $opt_out = 0, $id = null, $optInFlag = null)
+    {
+        $this->AddUpdateEmailAddressWithParent(null, $addr, $invalid, $opt_out, $id, $optInFlag);
+    }
+
+    /**
+     * Creates or Updates an entry in the email_addresses table, depending
+     * on if the email address submitted matches a previous entry (case-insensitive)
      * @param strint $parent_id - parent ID
      * @param string $addr - email address
      * @param int $invalid - is the email address marked as Invalid?
@@ -1208,7 +1225,7 @@ class SugarEmailAddress extends SugarBean
      * @param int|null $optInFlag
      * @return string GUID of Email Address or '' if cleaned address was empty.
      */
-    public function AddUpdateEmailAddress($parent_id, $addr, $invalid = 0, $opt_out = 0, $id = null, $optInFlag = null)
+    public function AddUpdateEmailAddressWithParent($parent_id, $addr, $invalid = 0, $opt_out = 0, $id = null, $optInFlag = null)
     {
 	global $sugar_config;
 
