@@ -51,6 +51,48 @@ class BuildCommands extends \Robo\Tasks
 
     // define public methods as commands
 
+
+    /**
+     * Compile a theme (SASS) based in SuiteP
+     * @param array $opts optional command line arguments
+     * theme - The name of the theme you want to compile css
+     * color-scheme - set which color scheme you wish to build
+     * @throws \RuntimeException
+     */
+    public function buildTheme(array $opts = ['theme' => '', 'color-scheme' => ''])
+    {
+        if (empty($opts['theme'])) {
+            $this->say("Please specify the name of the theme you want to compile with '--theme=SuiteP'");
+            return;
+        }
+        $this->say("Compile {$opts['theme']} Theme (SASS)");
+        if (empty($opts['color-scheme'])) {
+            /** Look for Subthemes in the {$opts['theme']} theme Dir **/
+            $std = "themes/{$opts['theme']}/css/";
+            $this->locateSubTheme($std);
+            /** Look for Subthemes in the custom/theme Dir **/
+            // Good opportunity to refactor here.
+            // Does the same as above just looks in the custom directory.
+            $ctd = "custom/themes/{$opts['theme']}/css/";
+            $this->locateSubTheme($ctd);
+            return;
+        }
+
+        $location = "themes/{$opts['theme']}/css/";
+
+        if (is_array($opts['color-scheme'])) {
+            foreach ($opts['color-scheme'] as $colorScheme) {
+                $this->buildColorScheme($colorScheme, $location);
+            }
+
+            return;
+        }
+
+        $this->buildColorScheme($opts['color-scheme'], $location);
+        $this->say("Compile {$opts['theme']} Theme (SASS) Complete");
+    }
+
+
     /**
      * Build SuiteP theme
      * @param array $opts optional command line arguments
@@ -59,30 +101,7 @@ class BuildCommands extends \Robo\Tasks
      */
     public function buildSuiteP(array $opts = ['color-scheme' => ''])
     {
-        $this->say('Compile SuiteP Theme (SASS)');
-        if (empty($opts['color-scheme'])) {
-            /** Look for Subthemes in the SuiteP theme Dir **/
-            $std = 'themes/SuiteP/css/';
-            $this->locateSubTheme($std);
-            /** Look for Subthemes in the custom/theme Dir **/
-            // Good opportunity to refactor here.
-            // Does the same as above just looks in the custom directory.
-            $ctd = 'custom/themes/SuiteP/css/';
-            $this->locateSubTheme($ctd);
-
-            return;
-        }
-
-        if (is_array($opts['color-scheme'])) {
-            foreach ($opts['color-scheme'] as $colorScheme) {
-                $this->buildSuitePColorScheme($colorScheme);
-            }
-
-            return;
-        }
-
-        $this->buildSuitePColorScheme($opts['color-scheme']);
-        $this->say('Compile SuiteP Theme (SASS) Complete');
+        $this->buildTheme(['theme' => 'SuiteP', 'color-scheme' => $opts['color-scheme']]);
     }
 
     /**
@@ -90,7 +109,7 @@ class BuildCommands extends \Robo\Tasks
      * @param string $location eg Directory to work from
      * @throws \RuntimeException
      */
-    private function buildSuitePColorScheme($colorScheme, $location = 'themes/SuiteP/css/')
+    private function buildColorScheme($colorScheme, $location)
     {
         $os = new OperatingSystem();
         $command =
@@ -115,9 +134,11 @@ class BuildCommands extends \Robo\Tasks
                         unlink($directory . $file . '/style.css');
                     }
                     $this->say("Found style.scss for {$file}, Compiling");
-                    $this->buildSuitePColorScheme($file, $directory);
+                    $this->buildColorScheme($file, $directory);
                 }
             }
+        } else {
+            $this->say("The folder {$directory} does not exists or it's not possible to open it.");
         }
     }
 }
