@@ -23,9 +23,9 @@
    var $CRC;
    var $MOD43;
 
-   /* Class creator */
-   function pBarcode39($BasePath="",$EnableMOD43=FALSE)
-    {
+     /* Class creator */
+     public function __construct($BasePath = "", $EnableMOD43 = false)
+     {
      $this->MOD43  = $EnableMOD43;
      $this->Codes   = "";
      $this->Reverse = "";

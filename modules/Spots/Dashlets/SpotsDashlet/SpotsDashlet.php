@@ -56,7 +56,7 @@ class SpotsDashlet extends Dashlet
      * @param guid  $id  id for the current dashlet (assigned from Home module)
      * @param array $def options saved for this dashlet
      */
-    public function SpotsDashlet($id, $def)
+    public function __construct($id, $def)
     {
         $this->loadLanguage('SpotsDashlet', 'modules/Spots/Dashlets/'); // load the language strings here
 
@@ -74,7 +74,7 @@ class SpotsDashlet extends Dashlet
             $this->showGui = 0;
         }
 
-        parent::Dashlet($id); // call parent constructor
+        parent::__construct($id); // call parent constructor
 
         $this->isConfigurable = true; // dashlet is configurable
         $this->hasScript = true;  // dashlet has javascript attached to it

@@ -22,12 +22,12 @@
    var $pChartObject;
    var $pDataObject;
 
-   /* Class creator */
-   function pBubble($pChartObject,$pDataObject)
-    {
-     $this->pChartObject = $pChartObject;
-     $this->pDataObject  = $pDataObject;
-    }
+     /* Class creator */
+     public function __construct($pChartObject, $pDataObject)
+     {
+         $this->pChartObject = $pChartObject;
+         $this->pDataObject = $pDataObject;
+     }
 
    /* Prepare the scale */
    function bubbleScale($DataSeries,$WeightSeries)
