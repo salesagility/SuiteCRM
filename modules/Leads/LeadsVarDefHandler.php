@@ -48,6 +48,11 @@ class LeadsVarDefHandler extends VarDefHandler
 {
     /**
      * Overriden to filter legacy pre-5.1 calls and meetings
+     * @param bool $use_singular
+     * @param bool $remove_dups
+     * @param bool $use_field_name
+     * @param bool $use_field_label
+     * @return array|mixed
      * @see VarDefHandler::get_vardef_array()
      */
     public function get_vardef_array($use_singular=false, $remove_dups = false, $use_field_name = false, $use_field_label = false)

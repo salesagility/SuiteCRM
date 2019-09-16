@@ -171,7 +171,10 @@ class parseCSV
 
     /**
      * Constructor
-     * @param   input   CSV file or string
+     * @param null $input
+     * @param null $offset
+     * @param null $limit
+     * @param null $conditions
      */
     public function __construct($input = null, $offset = null, $limit = null, $conditions = null)
     {
@@ -190,6 +193,10 @@ class parseCSV
     }
 
     /**
+     * @param null $input
+     * @param null $offset
+     * @param null $limit
+     * @param null $conditions
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function parseCSV($input = null, $offset = null, $limit = null, $conditions = null)
@@ -211,8 +218,11 @@ class parseCSV
 
     /**
      * Parse CSV file or string
-     * @param   input   CSV file or string
-     * @return  nothing
+     * @param null $input
+     * @param null $offset
+     * @param null $limit
+     * @param null $conditions
+     * @return bool
      */
     public function parse($input = null, $offset = null, $limit = null, $conditions = null)
     {
@@ -244,10 +254,10 @@ class parseCSV
 
     /**
      * Save changes, or new file and/or data
-     * @param   file     file to save to
-     * @param   data     2D array with data
-     * @param   append   append current data to end of target CSV if exists
-     * @param   fields   field names
+     * @param file     file to save to
+     * @param array $data
+     * @param bool $append
+     * @param array $fields
      * @return  true or false
      */
     public function save($file = null, $data = array(), $append = false, $fields = array())
@@ -262,10 +272,10 @@ class parseCSV
 
     /**
      * Generate CSV based string for output
-     * @param   filename    if specified, headers and data will be output directly to browser as a downloable file
-     * @param   data        2D array with data
-     * @param   fields      field names
-     * @param   delimiter   delimiter used to separate data
+     * @param null $filename
+     * @param array $data
+     * @param array $fields
+     * @param null $delimiter
      * @return  CSV data using delimiter of choice, or default
      */
     public function output($filename = null, $data = array(), $fields = array(), $delimiter = null)
@@ -287,9 +297,9 @@ class parseCSV
 
     /**
      * Convert character encoding
-     * @param   input    input character encoding, uses default if left blank
-     * @param   output   output character encoding, uses default if left blank
-     * @return  nothing
+     * @param null $input
+     * @param null $output
+     * @return void
      */
     public function encoding($input = null, $output = null)
     {
@@ -305,11 +315,11 @@ class parseCSV
     /**
      * Auto-Detect Delimiter: Find delimiter by analyzing a specific number of
      * rows to determine most probable delimiter character
-     * @param   file           local CSV file
-     * @param   parse          true/false parse file directly
-     * @param   search_depth   number of rows to analyze
-     * @param   preferred      preferred delimiter characters
-     * @param   enclosure      enclosure character, default is double quote (").
+     * @param null $file
+     * @param bool $parse
+     * @param null $search_depth
+     * @param null $preferred
+     * @param null $enclosure
      * @return  delimiter character
      */
     public function auto($file = null, $parse = true, $search_depth = null, $preferred = null, $enclosure = null)
@@ -409,8 +419,8 @@ class parseCSV
 
     /**
      * Read file to string and call parse_string()
-     * @param   file   local CSV file
-     * @return  2D array with CSV data, or false on failure
+     * @param file   local CSV file
+     * @return array|bool 2D array with CSV data, or false on failure
      */
     public function parse_file($file = null)
     {
@@ -425,8 +435,8 @@ class parseCSV
 
     /**
      * Parse CSV strings to arrays
-     * @param   data   CSV string
-     * @return  2D array with CSV data, or false on failure
+     * @param data   CSV string
+     * @return array|bool 2D array with CSV data, or false on failure
      */
     public function parse_string($data = null)
     {
@@ -577,12 +587,11 @@ class parseCSV
 
     /**
      * Create CSV data from array
-     * @param   data        2D array with data
-     * @param   fields      field names
-     * @param   append      if true, field names will not be output
-     * @param   is_php      if a php die() call should be put on the first
-     *                      line of the file, this is later ignored when read.
-     * @param   delimiter   field delimiter to use
+     * @param array $data
+     * @param array $fields
+     * @param bool $append
+     * @param bool $is_php
+     * @param data        2D array with data
      * @return  CSV data (text string)
      */
     public function unparse($data = array(), $fields = array(), $append = false, $is_php = false, $delimiter = null)
@@ -663,8 +672,8 @@ class parseCSV
 
     /**
      * Validate a row against specified conditions
-     * @param   row          array with values from a row
-     * @param   conditions   specified conditions that the row must match
+     * @param array $row
+     * @param row          array with values from a row
      * @return  true of false
      */
     public function _validate_row_conditions($row = array(), $conditions = null)
@@ -804,6 +813,10 @@ class parseCSV
     /**
      * Check if passed info might be delimiter
      *  - only used by find_delimiter()
+     * @param $char
+     * @param $array
+     * @param $depth
+     * @param $preferred
      * @return  special string used for delimiter selection, or false
      */
     public function _check_count($char, $array, $depth, $preferred)
@@ -854,10 +867,10 @@ class parseCSV
 
     /**
      * Write to local file
-     * @param   file     local filename
-     * @param   string   data to write to file
-     * @param   mode     fopen() mode
-     * @param   lock     flock() mode
+     * @param file     local filename
+     * @param string $string
+     * @param string $mode
+     * @param int $lock
      * @return  true or false
      */
     public function _wfile($file, $string = '', $mode = 'wb', $lock = 2)

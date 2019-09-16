@@ -429,11 +429,12 @@ class nusoap_base
     }
 
     /**
-    * sets error string
-    *
-    * @return   boolean $string error string
-    * @access   private
-    */
+     * sets error string
+     *
+     * @param $str
+     * @return void $string error string
+     * @access   private
+     */
     public function setError($str)
     {
         $this->error_str = $str;
@@ -458,20 +459,20 @@ class nusoap_base
     }
 
     /**
-    * serializes PHP values in accordance w/ section 5. Type information is
-    * not serialized if $use == 'literal'.
-    *
-    * @param	mixed	$val	The value to serialize
-    * @param	string	$name	The name (local part) of the XML element
-    * @param	string	$type	The XML schema type (local part) for the element
-    * @param	string	$name_ns	The namespace for the name of the XML element
-    * @param	string	$type_ns	The namespace for the type of the element
-    * @param	array	$attributes	The attributes to serialize as name=>value pairs
-    * @param	string	$use	The WSDL "use" (encoded|literal)
-    * @param	boolean	$soapval	Whether this is called from soapval.
-    * @return	string	The serialized element, possibly with child elements
-    * @access	public
-    */
+     * serializes PHP values in accordance w/ section 5. Type information is
+     * not serialized if $use == 'literal'.
+     *
+     * @param mixed $val The value to serialize
+     * @param bool $name The name (local part) of the XML element
+     * @param bool $type The XML schema type (local part) for the element
+     * @param bool $name_ns The namespace for the name of the XML element
+     * @param bool $type_ns The namespace for the type of the element
+     * @param bool $attributes The attributes to serialize as name=>value pairs
+     * @param string $use The WSDL "use" (encoded|literal)
+     * @param boolean $soapval Whether this is called from soapval.
+     * @return    string    The serialized element, possibly with child elements
+     * @access    public
+     */
     public function serialize_val($val, $name=false, $type=false, $name_ns=false, $type_ns=false, $attributes=false, $use='encoded', $soapval=false)
     {
         $this->debug("in serialize_val: name=$name, type=$type, name_ns=$name_ns, type_ns=$type_ns, use=$use, soapval=$soapval");

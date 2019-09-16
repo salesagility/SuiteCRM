@@ -233,19 +233,19 @@ class nusoap_client extends nusoap_base
     public $faultdetail;
 
     /**
-    * constructor
-    *
-    * @param    mixed $endpoint SOAP server or WSDL URL (string), or wsdl instance (object)
-    * @param    mixed $wsdl optional, set to 'wsdl' or true if using WSDL
-    * @param    string $proxyhost optional
-    * @param    string $proxyport optional
-    * @param	string $proxyusername optional
-    * @param	string $proxypassword optional
-    * @param	integer $timeout set the connection timeout
-    * @param	integer $response_timeout set the response timeout
-    * @param	string $portName optional portName in WSDL document
-    * @access   public
-    */
+     * constructor
+     *
+     * @param mixed $endpoint SOAP server or WSDL URL (string), or wsdl instance (object)
+     * @param mixed $wsdl optional, set to 'wsdl' or true if using WSDL
+     * @param bool $proxyhost optional
+     * @param bool $proxyport optional
+     * @param bool $proxyusername optional
+     * @param bool $proxypassword optional
+     * @param integer $timeout set the connection timeout
+     * @param integer $response_timeout set the response timeout
+     * @param string $portName optional portName in WSDL document
+     * @access   public
+     */
     public function nusoap_client($endpoint, $wsdl = false, $proxyhost = false, $proxyport = false, $proxyusername = false, $proxypassword = false, $timeout = 0, $response_timeout = 30, $portName = '')
     {
         parent::nusoap_base();
@@ -910,11 +910,12 @@ class nusoap_client extends nusoap_base
     }
 
     /**
-    * dynamically creates proxy class code
-    *
-    * @return   string PHP/NuSOAP code for the proxy class
-    * @access   private
-    */
+     * dynamically creates proxy class code
+     *
+     * @param $r
+     * @return   string PHP/NuSOAP code for the proxy class
+     * @access   private
+     */
     public function _getProxyClassCode($r)
     {
         $this->debug("in getProxy endpointType=$this->endpointType");

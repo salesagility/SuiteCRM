@@ -89,6 +89,8 @@ class PopupSmarty extends ListViewSmarty
     }
 
     /**
+     * @param $seed
+     * @param $module
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function PopupSmarty($seed, $module)
@@ -306,6 +308,16 @@ class PopupSmarty extends ListViewSmarty
     /**
      * Setup up the smarty template. we added an extra step here to add the order by from the popupdefs.
      *
+     * @param $seed
+     * @param null $file
+     * @param null $where
+     * @param array $params
+     * @param int $offset
+     * @param int $limit
+     * @param array $filter_fields
+     * @param string $id_field
+     * @param null $id
+     * @return mixed
      * @see ListViewDisplay::setup
      */
     public function setup(

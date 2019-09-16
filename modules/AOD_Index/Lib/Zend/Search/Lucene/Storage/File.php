@@ -88,6 +88,7 @@ abstract class Zend_Search_Lucene_Storage_File
      * Lock type may be a LOCK_SH (shared lock) or a LOCK_EX (exclusive lock)
      *
      * @param integer $lockType
+     * @param bool $nonBlockinLock
      * @return boolean
      */
     abstract public function lock($lockType, $nonBlockinLock = false);

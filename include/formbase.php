@@ -370,6 +370,8 @@ function isCloseAndCreateNewPressed()
 
 /**
  * Functions from Save2.php
+ * @param $parent_id
+ * @param $child_id
  * @see include/generic/Save2.php
  */
 

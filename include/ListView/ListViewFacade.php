@@ -78,7 +78,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
       * Constructor
       * @param $focus - the bean
       * @param $module - the module name
-      * @param - 0 = decide for me, 1 = ListView.html, 2 = ListViewSmarty
+      * @param int $type
       */
      public function __construct($focus, $module, $type = 0)
      {
@@ -89,6 +89,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
      }
 
      /**
+      * @param $focus
+      * @param $module
+      * @param int $type
       * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
       */
      public function ListViewFacade($focus, $module, $type = 0)

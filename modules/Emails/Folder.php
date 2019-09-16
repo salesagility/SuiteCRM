@@ -84,8 +84,6 @@ class Folder
 
     /**
      * @param int|string $folderId - (should be string, int type is legacy)
-     * @param bool $encode (legacy, unused)
-     * @param bool $deleted (legacy, unused)
      * @return null|string (folder ID)
      * @throws SuiteException
      */

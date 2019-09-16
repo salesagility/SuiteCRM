@@ -86,9 +86,7 @@
      /**
       * Retrieve a list of packages which belong to the corresponding category
       *
-      * @param category_id   this is passed via POST and is the category id of packages
-      *                      we wish to retrieve
-      * @return packages     xml string consisting of the packages and releases which belong to
+      * @return void xml string consisting of the packages and releases which belong to
       *                      the category
       */
      public function getPackages()
@@ -165,10 +163,7 @@
      /**
       * Download the given release
       *
-      * @param category_id   this is passed via POST and is the category id of the release we wish to download
-      * @param package_id   this is passed via POST and is the package id of the release we wish to download
-      * @param release_id   this is passed via POST and is the release id of the release we wish to download
-      * @return bool         true is successful in downloading, false otherwise
+      * @return void true is successful in downloading, false otherwise
       */
      public function download()
      {
@@ -202,11 +197,10 @@
      }
 
      /**
-     * Retrieve a list of categories that are subcategories to the selected category
-     *
-     * @param id - the id of the parent_category, -1 if this is the root
-     * @return array - a list of categories/nodes which are underneath this node
-     */
+      * Retrieve a list of categories that are subcategories to the selected category
+      *
+      * @return void - a list of categories/nodes which are underneath this node
+      */
      public function getCategories()
      {
          $json = getJSONobj();
@@ -234,8 +228,7 @@
 
      /**
       * Check the SugarDepot for updates for the given type as passed in via POST
-      * @param type      the type to check for
-      * @return array    return an array of releases for each given installed object if an update is found
+      * @return void return an array of releases for each given installed object if an update is found
       */
      public function checkForUpdates()
      {

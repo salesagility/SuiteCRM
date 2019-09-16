@@ -170,14 +170,14 @@ class ApiController implements LoggerAwareInterface
             throw new RuntimeException($errorMessage, $e->getCode(), $e);
         }
     }
-    
+
     /**
      *
      * @param Request $request
-     * @param \Exception $e
+     * @param \Exception $exception
      * @param array $payload
      * @return array
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     protected function handleExceptionIntoPayloadError(Request $request, \Exception $exception, $payload)
     {

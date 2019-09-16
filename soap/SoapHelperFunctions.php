@@ -47,6 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Retrieve field data for a provided SugarBean.
  *
  * @param SugarBean $value -- The bean to retrieve the field information for.
+ * @param bool $translate
  * @return Array -- 'field'=>   'name' -- the name of the field
  *                              'type' -- the data type of the field
  *                              'label' -- the translation key for the label of the field
@@ -913,7 +914,7 @@ function filter_field_list(&$field_list, $select_fields, $module_name)
  * @param Array $output_list -- The array of list data
  * @param Array $select_fields -- The list of fields that should be returned.  If this array is specfied, only the fields in the array will be returned.
  * @param String $module_name -- The name of the module this being worked on
- * @return The filtered array of list data.
+ * @return array filtered array of list data.
  */
 function filter_return_list(&$output_list, $select_fields, $module_name)
 {

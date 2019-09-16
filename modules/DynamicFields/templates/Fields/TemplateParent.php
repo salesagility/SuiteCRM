@@ -104,8 +104,11 @@ class TemplateParent extends TemplateEnum
     {
         return '';
     }
+
     /**
      * mysql requires the datatype caluse in the alter statment.it will be no-op anyway.
+     * @param $table
+     * @return string
      */
     public function get_db_modify_alter_table($table)
     {

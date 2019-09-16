@@ -955,10 +955,10 @@ class HTTP_WebDAV_Server
      * require content mimetype, start and end byte position and
      * optionaly the total byte length of the requested resource
      *
-     * @param  string  mimetype
-     * @param  int     start byte position
-     * @param  int     end   byte position
-     * @param  int     total resource byte size
+     * @param bool $mimetype
+     * @param bool $from
+     * @param bool $to
+     * @param bool $total
      */
     public function _multipart_byterange_header($mimetype = false, $from = false, $to=false, $total=false)
     {
@@ -1685,8 +1685,7 @@ class HTTP_WebDAV_Server
      * the "If:" header is an extension to HTTP/1.1
      * defined in RFC 2518 section 9.4
      *
-     * @param  void
-     * @return void
+     * @return bool
      */
     public function _check_if_header_conditions()
     {

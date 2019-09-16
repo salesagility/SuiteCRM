@@ -166,7 +166,7 @@ class SugarFieldBase
     }
 
     /**
-     * @param array $rawField
+     * @param $formattedField
      * @param array $vardef
      * @return mixed
      */
@@ -228,12 +228,8 @@ class SugarFieldBase
      *
      * @param array $parentFieldArray string name of the variable in the parent template for the bean's data
      * @param array $vardef field defintion
-     * @param array $displayParam parameters for display
-     *      available paramters are:
-     *      * labelSpan - column span for the label
-     *      * fieldSpan - column span for the field
+     * @param $displayParams
      * @param integer $tabindex
-     * @returns string
      * @return string
      */
     public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
@@ -430,7 +426,7 @@ class SugarFieldBase
      *
      * @param String $key value of key to search for
      * @param Mixed $args value containing haystack to search for value in
-     * @return $value Mixed value that the SugarField should return
+     * @return mixed|string $value Mixed value that the SugarField should return
      */
     public function getSearchInput($key = '', $args = array())
     {
@@ -596,8 +592,11 @@ class SugarFieldBase
 
     /**
      * This should be called when the bean is saved. The bean itself will be passed by reference
-     * @param SugarBean bean - the bean performing the save
-     * @param array params - an array of paramester relevant to the save, most likely will be $_REQUEST
+     * @param $bean
+     * @param $params
+     * @param $field
+     * @param $properties
+     * @param string $prefix
      */
     public function save(&$bean, $params, $field, $properties, $prefix = '')
     {
@@ -625,7 +624,7 @@ class SugarFieldBase
      * Handles import field sanitizing for an field type
      *
      * @param string $value value to be sanitized
-     * @param array $vardefs
+     * @param $vardef
      * @param SugarBean $focus object
      * @param ImportFieldSanitize $settings object
      * @return string sanitized value or boolean false if there's a problem with the value

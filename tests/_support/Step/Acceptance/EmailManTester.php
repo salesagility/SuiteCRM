@@ -20,7 +20,6 @@ class EmailManTester extends \AcceptanceTester
     /**
      * Populate email settings
      *
-     * @param $name
      */
     public function createEmailSettings()
     {

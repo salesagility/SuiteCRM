@@ -177,6 +177,7 @@ class aSubPanel
     }
 
     /**
+     * @param $module
      * @return string
      */
     public function buildSearchQuery($module)
@@ -210,6 +211,13 @@ class aSubPanel
     }
 
     /**
+     * @param $name
+     * @param $instance_properties
+     * @param $parent_bean
+     * @param bool $reload
+     * @param bool $original_only
+     * @param string $search_query
+     * @param array $collections
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function aSubPanel($name, $instance_properties, $parent_bean, $reload = false, $original_only = false, $search_query = '', $collections = array())
@@ -600,8 +608,7 @@ class SubPanelDefinitions
      * @param SugarBean $focus - this is the bean you want to get the data from
      * @param string $layout_def_key - if you wish to use a layout_def defined in the default metadata/subpaneldefs.php
      * that is not keyed off of $bean->module_dir pass in the key here
-     * @param array $layout_def_override - if you wish to override the default loaded layout defs you pass them in here.
-     * @return SubPanelDefinitions
+     * @param string $layout_def_override - if you wish to override the default loaded layout defs you pass them in here.
      */
     public function __construct($focus, $layout_def_key = '', $layout_def_override = '')
     {
@@ -692,9 +699,11 @@ class SubPanelDefinitions
      * Also the sub-panel is added to an array of sub-panels.
      * use of reload has been deprecated, since the subpanel is initialized every time.
      *
-     * @param string $name              The name of the sub-panel to reload
-     * @param boolean $reload           Reload the sub-panel (unused)
-     * @param boolean $original_only    Only load the original sub-panel and no custom ones
+     * @param string $name The name of the sub-panel to reload
+     * @param boolean $reload Reload the sub-panel (unused)
+     * @param boolean $original_only Only load the original sub-panel and no custom ones
+     * @param string $search_query
+     * @param array $collections
      * @return boolean|aSubPanel        Returns aSubPanel object or boolean false if one is not found or it can't be
      *      displayed due to ACL reasons.
      */
@@ -717,6 +726,9 @@ class SubPanelDefinitions
 
     /**
      * Load the layout def file and associate the definition with a variable in the file.
+     * @param bool $reload
+     * @param string $layout_def_key
+     * @param bool $original_only
      */
     public function open_layout_defs($reload = false, $layout_def_key = '', $original_only = false)
     {
@@ -744,6 +756,8 @@ class SubPanelDefinitions
      * Removes a tab from the list of loaded tabs.
      * Returns true if successful, false otherwise.
      * Hint: Used by Campaign's DetailView.
+     * @param $tab_name
+     * @return bool
      */
     public function exclude_tab($tab_name)
     {
@@ -766,6 +780,9 @@ class SubPanelDefinitions
     /**
      * return all available subpanels that belong to the list of tab modules.  You can optionally return all
      * available subpanels, and also optionally group by module (prepends the key with the bean class name).
+     * @param bool $return_tab_modules_only
+     * @param bool $group_by_module
+     * @return array
      */
     public function get_all_subpanels($return_tab_modules_only = true, $group_by_module = false)
     {

@@ -238,6 +238,7 @@ class MysqlManager extends DBManager
     }
 
     /**
+     * @param $dbResult
      * @see DBManager::freeDbResult()
      */
     protected function freeDbResult($dbResult)
@@ -261,6 +262,13 @@ class MysqlManager extends DBManager
     }
 
     /**
+     * @param $sql
+     * @param $start
+     * @param $count
+     * @param bool $dieOnError
+     * @param string $msg
+     * @param bool $execute
+     * @return resource|string
      * @see DBManager::limitQuery()
      */
     public function limitQuery($sql, $start, $count, $dieOnError = false, $msg = '', $execute = true)
@@ -287,6 +295,9 @@ class MysqlManager extends DBManager
 
 
     /**
+     * @param $sql
+     * @param bool $object_name
+     * @return bool
      * @see DBManager::checkQuery()
      */
     protected function checkQuery($sql, $object_name = false)
@@ -332,6 +343,8 @@ class MysqlManager extends DBManager
     }
 
     /**
+     * @param $tablename
+     * @return array
      * @see DBManager::get_columns()
      */
     public function get_columns($tablename)
@@ -368,6 +381,9 @@ class MysqlManager extends DBManager
     }
 
     /**
+     * @param $result
+     * @param bool $make_lower_case
+     * @return array|int
      * @see DBManager::getFieldsArray()
      */
     public function getFieldsArray($result, $make_lower_case = false)
@@ -396,6 +412,8 @@ class MysqlManager extends DBManager
     }
 
     /**
+     * @param $result
+     * @return array|bool
      * @see DBManager::fetchRow()
      */
     public function fetchRow($result)
@@ -439,6 +457,8 @@ class MysqlManager extends DBManager
     }
 
     /**
+     * @param $tableName
+     * @return bool
      * @see DBManager::tableExists()
      */
     public function tableExists($tableName)
@@ -483,6 +503,8 @@ class MysqlManager extends DBManager
 
     /**
      * @see DBManager::quote()
+     * @param $string
+     * @return array|string
      */
     public function quote($string)
     {
@@ -495,6 +517,8 @@ class MysqlManager extends DBManager
 
     /**
      * @see DBManager::quoteIdentifier()
+     * @param $string
+     * @return string
      */
     public function quoteIdentifier($string)
     {
@@ -503,6 +527,10 @@ class MysqlManager extends DBManager
 
     /**
      * @see DBManager::connect()
+     * @param array|null $configOptions
+     * @param bool $dieOnError
+     * @return bool
+     * @throws Exception
      */
     public function connect(array $configOptions = null, $dieOnError = false)
     {
@@ -578,6 +606,12 @@ class MysqlManager extends DBManager
      *
      * For MySQL, we can write the ALTER TABLE statement all in one line, which speeds things
      * up quite a bit. So here, we'll parse the returned SQL into a single ALTER TABLE command.
+     * @param $tablename
+     * @param $fielddefs
+     * @param $indices
+     * @param bool $execute
+     * @param null $engine
+     * @return mixed|string|string[]|null
      */
     public function repairTableParams($tablename, $fielddefs, $indices, $execute = true, $engine = null)
     {
@@ -624,6 +658,10 @@ class MysqlManager extends DBManager
 
     /**
      * @see DBManager::convert()
+     * @param $string
+     * @param $type
+     * @param array $additional_parameters
+     * @return string
      */
     public function convert($string, $type, array $additional_parameters = array())
     {
@@ -686,6 +724,9 @@ class MysqlManager extends DBManager
     /**
      * (non-PHPdoc)
      * @see DBManager::fromConvert()
+     * @param $string
+     * @param $type
+     * @return string
      */
     public function fromConvert($string, $type)
     {
@@ -736,6 +777,8 @@ class MysqlManager extends DBManager
 
     /**
      * @see DBManager::createTableSQL()
+     * @param SugarBean $bean
+     * @return string
      */
     public function createTableSQL(SugarBean $bean)
     {
@@ -803,6 +846,11 @@ class MysqlManager extends DBManager
 
     /**
      * @see DBManager::oneColumnSQLRep()
+     * @param $fieldDef
+     * @param bool $ignoreRequired
+     * @param string $table
+     * @param bool $return_as_array
+     * @return string
      */
     protected function oneColumnSQLRep($fieldDef, $ignoreRequired = false, $table = '', $return_as_array = false)
     {
@@ -828,6 +876,11 @@ class MysqlManager extends DBManager
 
     /**
      * @see DBManager::changeColumnSQL()
+     * @param $tablename
+     * @param $fieldDefs
+     * @param $action
+     * @param bool $ignoreRequired
+     * @return string
      */
     protected function changeColumnSQL($tablename, $fieldDefs, $action, $ignoreRequired = false)
     {
@@ -934,6 +987,9 @@ class MysqlManager extends DBManager
 
     /**
      * @see DBManager::setAutoIncrement()
+     * @param $table
+     * @param $field_name
+     * @return string
      */
     protected function setAutoIncrement($table, $field_name)
     {
@@ -945,6 +1001,7 @@ class MysqlManager extends DBManager
      *
      * @param string $table tablename
      * @param string $field_name
+     * @param $start_value
      * @return resource
      */
     public function setAutoIncrementStart($table, $field_name, $start_value)
@@ -974,6 +1031,8 @@ class MysqlManager extends DBManager
 
     /**
      * @see DBManager::get_indices()
+     * @param $tablename
+     * @return array
      */
     public function get_indices($tablename)
     {
@@ -1004,6 +1063,10 @@ class MysqlManager extends DBManager
 
     /**
      * @see DBManager::add_drop_constraint()
+     * @param $table
+     * @param $definition
+     * @param bool $drop
+     * @return string
      */
     public function add_drop_constraint($table, $definition, $drop = false)
     {
@@ -1071,6 +1134,8 @@ class MysqlManager extends DBManager
 
     /**
      * @see DBManager::full_text_indexing_installed()
+     * @param null $dbname
+     * @return bool
      */
     public function full_text_indexing_installed($dbname = null)
     {
@@ -1079,6 +1144,8 @@ class MysqlManager extends DBManager
 
     /**
      * @see DBManager::massageFieldDef()
+     * @param $fieldDef
+     * @param $tablename
      */
     public function massageFieldDef(&$fieldDef, $tablename)
     {
@@ -1190,6 +1257,10 @@ class MysqlManager extends DBManager
     /**
      * (non-PHPdoc)
      * @see DBManager::renameColumnSQL()
+     * @param $tablename
+     * @param $column
+     * @param $newname
+     * @return string
      */
     public function renameColumnSQL($tablename, $column, $newname)
     {
@@ -1251,7 +1322,7 @@ class MysqlManager extends DBManager
 
     /**
      * Generate fulltext query from set of terms
-     * @param string $fields Field to search against
+     * @param $field
      * @param array $terms Search terms that may be or not be in the result
      * @param array $must_terms Search terms that have to be in the result
      * @param array $exclude_terms Search terms that have to be not in the result

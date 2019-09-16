@@ -46,9 +46,11 @@
  class SugarVCR
  {
 
-    /**
-     * records the query in the session for later retrieval
-     */
+     /**
+      * records the query in the session for later retrieval
+      * @param $module
+      * @param $query
+      */
      public static function store($module, $query)
      {
          $_SESSION[$module .'2_QUERY'] = $query;
@@ -56,6 +58,8 @@
 
      /**
       * This function retrieves a query from the session
+      * @param $module
+      * @return mixed|string
       */
      public static function retrieve($module)
      {
@@ -64,6 +68,9 @@
 
      /**
       * return the start, prev, next, end
+      * @param $module
+      * @param $offset
+      * @return array
       */
      public static function play($module, $offset)
      {

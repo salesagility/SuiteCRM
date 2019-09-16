@@ -269,7 +269,7 @@ class Zend_Search_Lucene_Search_Query_Range extends Zend_Search_Lucene_Search_Qu
      * Constructs an appropriate Weight implementation for this query.
      *
      * @param Zend_Search_Lucene_Interface $reader
-     * @return Zend_Search_Lucene_Search_Weight
+     * @return void
      * @throws Zend_Search_Lucene_Exception
      */
     public function createWeight(Zend_Search_Lucene_Interface $reader)
@@ -298,7 +298,7 @@ class Zend_Search_Lucene_Search_Query_Range extends Zend_Search_Lucene_Search_Qu
      *
      * It's an array with document ids as keys (performance considerations)
      *
-     * @return array
+     * @return void
      * @throws Zend_Search_Lucene_Exception
      */
     public function matchedDocs()
@@ -312,7 +312,7 @@ class Zend_Search_Lucene_Search_Query_Range extends Zend_Search_Lucene_Search_Qu
      *
      * @param integer $docId
      * @param Zend_Search_Lucene_Interface $reader
-     * @return float
+     * @return void
      * @throws Zend_Search_Lucene_Exception
      */
     public function score($docId, Zend_Search_Lucene_Interface $reader)

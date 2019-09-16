@@ -257,6 +257,7 @@ class ACLController
      * Check to see if the module is available for this user.
      *
      * @param String $module_name
+     * @param $actions
      * @return true if they are allowed.  false otherwise.
      */
     public static function checkModuleAllowed($module_name, $actions)

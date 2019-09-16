@@ -448,7 +448,6 @@ class SyncInboundEmailAccountsSubActionHandler
     }
 
     /**
-     * @param $header
      * @param InboundEmail $ie
      * @param $uid
      * @param null $msgNo

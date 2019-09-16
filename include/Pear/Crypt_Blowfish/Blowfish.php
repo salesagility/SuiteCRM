@@ -102,6 +102,7 @@ class Crypt_Blowfish
     }
 
     /**
+     * @param $key
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function Crypt_Blowfish($key)
@@ -132,7 +133,7 @@ class Crypt_Blowfish
      * Deprecated init method - init is now a private
      * method and has been replaced with _init
      *
-     * @return bool
+     * @return void
      * @access public
      * @deprecated
      * @see Crypt_Blowfish::_init()

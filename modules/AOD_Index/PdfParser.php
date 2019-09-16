@@ -41,7 +41,7 @@ class PdfParser
     /**
      * Convert a PDF into text.
      *
-     * @param string $filename The filename to extract the data from.
+     * @param $data
      * @return string The extracted text from the PDF
      */
     protected static function extractText($data)

@@ -211,20 +211,20 @@ class nusoapclientmime extends nusoapclient
     public $mimeContentType;
 
     /**
-    * adds a MIME attachment to the current request.
-    *
-    * If the $data parameter contains an empty string, this method will read
-    * the contents of the file named by the $filename parameter.
-    *
-    * If the $cid parameter is false, this method will generate the cid.
-    *
-    * @param string $data The data of the attachment
-    * @param string $filename The filename of the attachment (default is empty string)
-    * @param string $contenttype The MIME Content-Type of the attachment (default is application/octet-stream)
-    * @param string $cid The content-id (cid) of the attachment (default is false)
-    * @return string The content-id (cid) of the attachment
-    * @access public
-    */
+     * adds a MIME attachment to the current request.
+     *
+     * If the $data parameter contains an empty string, this method will read
+     * the contents of the file named by the $filename parameter.
+     *
+     * If the $cid parameter is false, this method will generate the cid.
+     *
+     * @param string $data The data of the attachment
+     * @param string $filename The filename of the attachment (default is empty string)
+     * @param string $contenttype The MIME Content-Type of the attachment (default is application/octet-stream)
+     * @param bool $cid The content-id (cid) of the attachment (default is false)
+     * @return string The content-id (cid) of the attachment
+     * @access public
+     */
     public function addAttachment($data, $filename = '', $contenttype = 'application/octet-stream', $cid = false)
     {
         if (! $cid) {
@@ -434,20 +434,20 @@ class nusoapservermime extends soap_server
     public $mimeContentType;
 
     /**
-    * adds a MIME attachment to the current response.
-    *
-    * If the $data parameter contains an empty string, this method will read
-    * the contents of the file named by the $filename parameter.
-    *
-    * If the $cid parameter is false, this method will generate the cid.
-    *
-    * @param string $data The data of the attachment
-    * @param string $filename The filename of the attachment (default is empty string)
-    * @param string $contenttype The MIME Content-Type of the attachment (default is application/octet-stream)
-    * @param string $cid The content-id (cid) of the attachment (default is false)
-    * @return string The content-id (cid) of the attachment
-    * @access public
-    */
+     * adds a MIME attachment to the current response.
+     *
+     * If the $data parameter contains an empty string, this method will read
+     * the contents of the file named by the $filename parameter.
+     *
+     * If the $cid parameter is false, this method will generate the cid.
+     *
+     * @param string $data The data of the attachment
+     * @param string $filename The filename of the attachment (default is empty string)
+     * @param string $contenttype The MIME Content-Type of the attachment (default is application/octet-stream)
+     * @param bool $cid The content-id (cid) of the attachment (default is false)
+     * @return string The content-id (cid) of the attachment
+     * @access public
+     */
     public function addAttachment($data, $filename = '', $contenttype = 'application/octet-stream', $cid = false)
     {
         if (! $cid) {

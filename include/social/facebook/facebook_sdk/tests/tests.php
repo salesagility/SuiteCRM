@@ -2202,6 +2202,9 @@ class PHPSDKTestCase extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provideEndsWith
+     * @param $big
+     * @param $small
+     * @param $result
      */
     public function testEndsWith($big, $small, $result)
     {
@@ -2227,6 +2230,9 @@ class PHPSDKTestCase extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provideIsAllowedDomain
+     * @param $big
+     * @param $small
+     * @param $result
      */
     public function testIsAllowedDomain($big, $small, $result)
     {
@@ -2280,9 +2286,9 @@ class PHPSDKTestCase extends PHPUnit_Framework_TestCase
 
     /**
      * Checks that the correct args are a subset of the returned obj
-     * @param  array $correct The correct array values
-     * @param  array $actual  The values in practice
-     * @param  string $message to be shown on failure
+     * @param array $correct The correct array values
+     * @param array $actual The values in practice
+     * @param string $msg
      */
     protected function assertIsSubset($correct, $actual, $msg='')
     {

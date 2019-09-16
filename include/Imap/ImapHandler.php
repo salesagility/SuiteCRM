@@ -83,10 +83,12 @@ class ImapHandler implements ImapHandlerInterface
      * @var string
      */
     protected $charset;
-    
+
     /**
      *
-     * @param bool $log
+     * @param bool $logErrors
+     * @param bool $logCalls
+     * @param null $charset
      */
     public function __construct($logErrors = true, $logCalls = true, $charset = null)
     {
@@ -391,11 +393,11 @@ class ImapHandler implements ImapHandlerInterface
         $this->logReturn(__FUNCTION__, $ret);
         return $ret;
     }
-    
+
     /**
      *
      * @param type $msg_number
-     * @param type $options
+     * @param int $options
      * @return string
      */
     public function fetchHeader($msg_number, $options = 0)

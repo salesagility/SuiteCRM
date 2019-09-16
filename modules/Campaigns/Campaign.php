@@ -224,10 +224,13 @@ class Campaign extends SugarBean
 
         return $temp_array;
     }
+
     /**
-    	builds a generic search based on the query string using or
-    	do not include any $this-> because this is called on without having the class instantiated
-    */
+     * builds a generic search based on the query string using or
+     * do not include any $this-> because this is called on without having the class instantiated
+     * @param $the_query_string
+     * @return string
+     */
     public function build_generic_where_clause($the_query_string)
     {
         $where_clauses = array();
@@ -427,10 +430,9 @@ class Campaign extends SugarBean
      * with a campaign.
      *
      * @param string $query Select query string
-     * @param array $param array of arguments
+     * @param array $params
      * @return string count query
-     *
-     */
+*/
     public function create_list_count_query($query, $params=array())
     {
         //include the distinct filter if a marketing id is defined, which means we need to filter out duplicates by the passed in group by.

@@ -83,7 +83,7 @@ class InvoicesCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
-     * @param \\Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\EditView $editView
      * @param \Step\Acceptance\Invoices $invoice
      *
      * As administrative user I want to create an invoice and check the number rounding

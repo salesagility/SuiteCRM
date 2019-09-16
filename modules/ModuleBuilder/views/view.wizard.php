@@ -62,8 +62,10 @@ class ModuleBuilderViewWizard extends SugarView
         $this->editModule = (! empty($_REQUEST [ 'view_module' ])) ? $_REQUEST [ 'view_module' ] : null ;
         $this->buttons = array(); // initialize so that modules without subpanels for example don't result in this being unset and causing problems in the smarty->assign
     }
-    
+
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)

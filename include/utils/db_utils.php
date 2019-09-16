@@ -39,9 +39,12 @@
  */
 
 
-
-
 /**
+ * @param $string
+ * @param $type
+ * @param array $additional_parameters
+ * @param array $additional_parameters_oracle_only
+ * @return string
  * @deprecated use DBManager::convert() instead.
  */
 function db_convert($string, $type, $additional_parameters=array(), $additional_parameters_oracle_only=array())
@@ -50,6 +53,9 @@ function db_convert($string, $type, $additional_parameters=array(), $additional_
 }
 
 /**
+ * @param $table
+ * @param $fields
+ * @return string
  * @deprecated use DBManager::concat() instead.
  */
 function db_concat($table, $fields)
@@ -59,6 +65,9 @@ function db_concat($table, $fields)
 }
 
 /**
+ * @param $string
+ * @param $type
+ * @return string
  * @deprecated use DBManager::fromConvert() instead.
  */
 function from_db_convert($string, $type)

@@ -138,7 +138,6 @@ class EmailsViewCompose extends ViewEdit
 
     /**
      * Prepends body with $user's default signature
-     * @param Email $email
      * @param User $user
      * @return bool|Email
      * @throws SugarControllerException

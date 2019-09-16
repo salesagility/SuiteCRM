@@ -110,8 +110,7 @@ abstract class ImportDataSource implements Iterator
      * external field name and the rvalue equal to the actual value.
      *
      * @abstract
-     * @param  int $startIndex
-     * @param  int $maxResults
+     * @param int $maxResults
      * @return void
      */
     abstract public function loadDataSet($maxResults = 0);
@@ -251,6 +250,7 @@ abstract class ImportDataSource implements Iterator
 
     /**
      * Writes the row out to the ImportCacheFiles::getDuplicateFileName() file
+     * @param array $field_names
      */
     public function markRowAsDuplicate($field_names=array())
     {
@@ -317,6 +317,7 @@ abstract class ImportDataSource implements Iterator
 
     /**
      * Writes the row out to the ImportCacheFiles::getErrorRecordsFileName() file
+     * @param string $errorMessage
      */
     public function writeErrorRecord($errorMessage = '')
     {

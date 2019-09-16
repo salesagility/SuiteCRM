@@ -124,6 +124,7 @@ class ProjectTask extends SugarBean
     }
 
     /**
+     * @param bool $init
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function ProjectTask($init=true)
@@ -562,7 +563,7 @@ class ProjectTask extends SugarBean
      *
      * This is a private helper function to get the number of project tasks for a given project_id.
      *
-     * @param integer $project_id value of the project_id associated with this ProjectTask instance
+     * @param string $project_id value of the project_id associated with this ProjectTask instance
      * @return total integer value of the count of project tasks, 0 if none found
      */
     private function getNumberOfTasksInProject($project_id='')

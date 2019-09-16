@@ -1318,16 +1318,16 @@ abstract class DBManager
     /**
      * Generate a set of Insert statements based on the bean given
      *
+     * @param SugarBean $bean the bean from which table we will generate insert stmts
+     * @param string $select_query the query which will give us the set of objects that
+     * we want to place into our insert statement
+     * @param int $start the first row to query
+     * @param int $count the number of rows to query
+     * @param string $table the table to query from
+     * @param bool $is_related_query
+     * @return array SQL insert statement
      * @deprecated
      *
-     * @param  SugarBean $bean the bean from which table we will generate insert stmts
-     * @param  string $select_query the query which will give us the set of objects that
-     * we want to place into our insert statement
-     * @param  int $start the first row to query
-     * @param  int $count the number of rows to query
-     * @param  string $table the table to query from
-     * @param bool $is_related_query
-     * @return string SQL insert statement
      */
     public function generateInsertSQL(
         SugarBean $bean,
@@ -2218,9 +2218,9 @@ abstract class DBManager
     /**
      * Massages the field defintions to fill in anything else the DB backend may add
      *
-     * @param  array $fieldDef
-     * @param  string $tablename
-     * @return array
+     * @param array $fieldDef
+     * @param string $tablename
+     * @return void
      */
     public function massageFieldDef(&$fieldDef, $tablename)
     {
@@ -3111,10 +3111,10 @@ abstract class DBManager
     /**
      * Renames an index using fields definition
      *
-     * @param  array $old_definition
-     * @param  array $new_definition
-     * @param  string $table_name
-     * @return string SQL statement
+     * @param array $old_definition
+     * @param array $new_definition
+     * @param string $table_name
+     * @return array SQL statement
      */
     public function renameIndexDefs($old_definition, $new_definition, $table_name)
     {

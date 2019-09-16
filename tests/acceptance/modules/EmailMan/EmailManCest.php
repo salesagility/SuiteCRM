@@ -25,7 +25,6 @@ class EmailManCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\EmailManTester $emailMan
      *
      * As an administrator I want to test outgoing mail configuration.

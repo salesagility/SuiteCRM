@@ -190,10 +190,12 @@ class ACLAction extends SugarBean
     }
 
     /**
-    * static getAccessOptions()
-    * this is used for building select boxes
-    * @return array containg access levels (ints) as keys and access names as values
-    */
+     * static getAccessOptions()
+     * this is used for building select boxes
+     * @param $action
+     * @param string $type
+     * @return array containg access levels (ints) as keys and access names as values
+     */
     protected static function getAccessOptions($action, $type='module')
     {
         global $ACLActions;
@@ -209,11 +211,13 @@ class ACLAction extends SugarBean
     }
 
     /**
-    * function static getDefaultActions()
-    * This function will return a list of acl actions with their default access levels
-    *
-    *
-    */
+     * function static getDefaultActions()
+     * This function will return a list of acl actions with their default access levels
+     *
+     * @param string $type
+     * @param string $action
+     * @return array
+     */
     public static function getDefaultActions($type='module', $action='')
     {
         $query = "SELECT * FROM acl_actions WHERE deleted=0 ";
@@ -238,14 +242,15 @@ class ACLAction extends SugarBean
 
 
     /**
-    * static getUserActions($user_id,$refresh=false, $category='', $action='')
-    * returns a list of user actions
-    * @param GUID $user_id
-    * @param BOOLEAN $refresh
-    * @param STRING $category
-    * @param STRING $action
-    * @return ARRAY of ACLActionsArray
-    */
+     * static getUserActions($user_id,$refresh=false, $category='', $action='')
+     * returns a list of user actions
+     * @param GUID $user_id
+     * @param BOOLEAN $refresh
+     * @param STRING $category
+     * @param string $type
+     * @param STRING $action
+     * @return ARRAY of ACLActionsArray
+     */
 
     public static function getUserActions($user_id, $refresh=false, $category='', $type='', $action='')
     {
@@ -425,8 +430,13 @@ class ACLAction extends SugarBean
     */
     /* BEGIN - SECURITY GROUPS */
     /**
-    static function hasAccess($is_owner=false, $access = 0){
-    */
+     * static function hasAccess($is_owner=false, $access = 0){
+     * @param bool $is_owner
+     * @param bool $in_group
+     * @param int $access
+     * @param ACLAction|null $action
+     * @return bool
+     */
     public static function hasAccess($is_owner=false, $in_group=false, $access = 0, ACLAction $action = null)
     {
         /**
@@ -500,7 +510,14 @@ class ACLAction extends SugarBean
     /* BEGIN - SECURITY GROUPS - added $in_group */
     /**
     public static function userHasAccess($user_id, $category, $action,$type='module', $is_owner = false){
-    */
+     * @param $user_id
+     * @param $category
+     * @param $action
+     * @param string $type
+     * @param bool $is_owner
+     * @param bool $in_group
+     * @return bool
+     */
     public static function userHasAccess($user_id, $category, $action, $type='module', $is_owner = false, $in_group = false)
     {
         global $current_user;
@@ -644,13 +661,15 @@ class ACLAction extends SugarBean
     }
 
 
-
     /**
-    * function toArray()
-    * returns this acl as an array
-    *
-    * @return array of fields with id, name, access and category
-    */
+     * function toArray()
+     * returns this acl as an array
+     *
+     * @param bool $dbOnly
+     * @param bool $stringOnly
+     * @param bool $upperKeys
+     * @return array of fields with id, name, access and category
+     */
     public function toArray($dbOnly = false, $stringOnly = false, $upperKeys = false)
     {
         $array_fields = array('id', 'aclaccess');

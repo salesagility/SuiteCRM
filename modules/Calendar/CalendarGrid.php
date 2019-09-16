@@ -350,7 +350,7 @@ class CalendarGrid
      * Get html of basic cell
      * @param integer $start timestamp
      * @param integer $height slot height
-     * @param string $prefix prefix for id of slot used in shared view
+     * @param string $suffix
      * @return string
      */
     protected function get_basic_cell($start, $height = 80, $suffix = "")
@@ -366,7 +366,8 @@ class CalendarGrid
     /**
      * Get html of basic week grid
      * @param integer $start timestamp
-     * @param string $prefix prefix for id of slot used in shared view
+     * @param int $cols
+     * @param string $suffix
      * @return string
      */
     protected function get_basic_row($start, $cols = 7, $suffix = "")
@@ -432,7 +433,7 @@ class CalendarGrid
      * Get html of day head
      * @param integer $start timestamp
      * @param integer $day number of day in week
-     * @param bulean $force force display header
+     * @param bool $force force display header
      * @return string
      */
     protected function get_day_head($start, $day = 0, $force = false)

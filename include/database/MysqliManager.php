@@ -119,6 +119,12 @@ class MysqliManager extends MysqlManager
     );
 
     /**
+     * @param $sql
+     * @param bool $dieOnError
+     * @param string $msg
+     * @param bool $suppress
+     * @param bool $keepResult
+     * @return bool|mysqli_result|resource|null
      * @see MysqlManager::query()
      */
     public function query($sql, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false)
@@ -184,6 +190,7 @@ class MysqliManager extends MysqlManager
     /**
      * Returns the number of rows affected by the last query
      *
+     * @param $result
      * @return int
      */
     public function getAffectedRowCount($result)
@@ -226,6 +233,7 @@ class MysqliManager extends MysqlManager
     }
 
     /**
+     * @param $dbResult
      * @see DBManager::freeDbResult()
      */
     protected function freeDbResult($dbResult)
@@ -236,6 +244,9 @@ class MysqliManager extends MysqlManager
     }
 
     /**
+     * @param $result
+     * @param bool $make_lower_case
+     * @return array|int
      * @see DBManager::getFieldsArray()
      */
     public function getFieldsArray($result, $make_lower_case = false)
@@ -266,6 +277,8 @@ class MysqliManager extends MysqlManager
     }
 
     /**
+     * @param $result
+     * @return array|bool|null
      * @see DBManager::fetchRow()
      */
     public function fetchRow($result)
@@ -283,6 +296,8 @@ class MysqliManager extends MysqlManager
     }
 
     /**
+     * @param $string
+     * @return string
      * @see DBManager::quote()
      */
     public function quote($string)
@@ -291,6 +306,10 @@ class MysqliManager extends MysqlManager
     }
 
     /**
+     * @param array|null $configOptions
+     * @param bool $dieOnError
+     * @return bool
+     * @throws Exception
      * @see DBManager::connect()
      */
     public function connect(array $configOptions = null, $dieOnError = false)

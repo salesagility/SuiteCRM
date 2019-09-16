@@ -261,9 +261,9 @@ class jjwg_Maps extends jjwg_Maps_sugar
     public $custom_areas = null;
 
 
-
     /**
      * Constructor
+     * @param bool $init
      */
     public function __construct($init=true)
     {
@@ -275,6 +275,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
     }
 
     /**
+     * @param bool $init
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function jjwg_Maps($init=true)
@@ -555,7 +556,9 @@ class jjwg_Maps extends jjwg_Maps_sugar
      * That is, the parent relationship should define the new maps address.
      *
      * $bean passed by reference
-     *
+     * @param $bean
+     * @param bool $after_save
+     * @return bool
      */
     public function updateGeocodeInfo(&$bean, $after_save = false)
     {
@@ -689,6 +692,8 @@ class jjwg_Maps extends jjwg_Maps_sugar
      * That is, the parent relationship should define the new maps address.
      *
      * $bean passed by reference
+     * @param $bean
+     * @return bool
      */
     public function updateMeetingGeocodeInfo(&$bean)
     {
@@ -734,7 +739,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
      *
      * @param type $table_name string
      * @param type $display array (fetched_row)
-     * @param type $aInfo array
+     * @param array $aInfo array
      * @return bool
      */
     public function updateGeocodeInfoByAssocQuery($table_name, $display, $aInfo = array())
@@ -784,7 +789,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
      * Simple Query Approach
      *
      * @param type $bean object
-     * @param type $aInfo array
+     * @param array $aInfo array
      * @return bool
      */
     public function updateGeocodeInfoByBeanQuery(&$bean, $aInfo = array())
@@ -1193,7 +1198,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
     /**
      * Define the formatted address line based on address type and field names
      * @param bean $display fields array
-     * @param type $type of address: 'billing', 'shipping', 'primary', 'alt', 'custom', 'address'
+     * @param string $type $type of address: 'billing', 'shipping', 'primary', 'alt', 'custom', 'address'
      * @return bool|string
      */
     public function defineMapsFormattedAddress($display, $type = 'billing')
@@ -1264,6 +1269,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
     /**
      * Bean Log Special
      * This log method filters the $bean into a more readable array
+     * @param $bean
      */
     public function logGeocodeInfo($bean)
     {

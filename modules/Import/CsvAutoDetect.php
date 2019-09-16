@@ -255,6 +255,8 @@ class CsvAutoDetect
      * To check CSV heading
      *
      * @param bool $heading true of it has header, false if not
+     * @param $module
+     * @param null $encoding
      * @return bool true if header is found, false if error
      */
     public function hasHeader(&$heading, $module, $encoding = null)

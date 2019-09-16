@@ -92,8 +92,17 @@ class Sugarpdf extends TCPDF
      * Use for the ACL access.
      */
     public $aclAction = PDF_ACL_ACCESS;
+
     /**
      * Constructor which will peform the setup.
+     * @param null $bean
+     * @param array $sugarpdf_object_map
+     * @param string $orientation
+     * @param string $unit
+     * @param string $format
+     * @param bool $unicode
+     * @param string $encoding
+     * @param bool $diskcache
      */
 
 
@@ -263,16 +272,16 @@ class Sugarpdf extends TCPDF
     }
 
     /**
-    * [OVERRIDE] SetFont method in TCPDF Library
-    * This method override the regular SetFont() method to enable the custom font directory in addition to the OOB font directory.
-    *
-    * @param string $family Family font. It can be either a name defined by AddFont() or one of the standard Type1 families (case insensitive):<ul><li>times (Times-Roman)</li><li>timesb (Times-Bold)</li><li>timesi (Times-Italic)</li><li>timesbi (Times-BoldItalic)</li><li>helvetica (Helvetica)</li><li>helveticab (Helvetica-Bold)</li><li>helveticai (Helvetica-Oblique)</li><li>helveticabi (Helvetica-BoldOblique)</li><li>courier (Courier)</li><li>courierb (Courier-Bold)</li><li>courieri (Courier-Oblique)</li><li>courierbi (Courier-BoldOblique)</li><li>symbol (Symbol)</li><li>zapfdingbats (ZapfDingbats)</li></ul> It is also possible to pass an empty string. In that case, the current family is retained.
-    * @param string $style Font style. Possible values are (case insensitive):<ul><li>empty string: regular</li><li>B: bold</li><li>I: italic</li><li>U: underline</li><li>D: line trough</li></ul> or any combination. The default value is regular. Bold and italic styles do not apply to Symbol and ZapfDingbats basic fonts or other fonts when not defined.
-    * @param float $size Font size in points. The default value is the current size. If no size has been specified since the beginning of the document, the value taken is 12
-    * @param string $fontfile The font definition file. By default, the name is built from the family and style, in lower case with no spaces.
-    * @access public
-    * @see include/tcpdf/TCPDF#SetFont()
-    */
+     * [OVERRIDE] SetFont method in TCPDF Library
+     * This method override the regular SetFont() method to enable the custom font directory in addition to the OOB font directory.
+     *
+     * @param string $family Family font. It can be either a name defined by AddFont() or one of the standard Type1 families (case insensitive):<ul><li>times (Times-Roman)</li><li>timesb (Times-Bold)</li><li>timesi (Times-Italic)</li><li>timesbi (Times-BoldItalic)</li><li>helvetica (Helvetica)</li><li>helveticab (Helvetica-Bold)</li><li>helveticai (Helvetica-Oblique)</li><li>helveticabi (Helvetica-BoldOblique)</li><li>courier (Courier)</li><li>courierb (Courier-Bold)</li><li>courieri (Courier-Oblique)</li><li>courierbi (Courier-BoldOblique)</li><li>symbol (Symbol)</li><li>zapfdingbats (ZapfDingbats)</li></ul> It is also possible to pass an empty string. In that case, the current family is retained.
+     * @param string $style Font style. Possible values are (case insensitive):<ul><li>empty string: regular</li><li>B: bold</li><li>I: italic</li><li>U: underline</li><li>D: line trough</li></ul> or any combination. The default value is regular. Bold and italic styles do not apply to Symbol and ZapfDingbats basic fonts or other fonts when not defined.
+     * @param int $size Font size in points. The default value is the current size. If no size has been specified since the beginning of the document, the value taken is 12
+     * @param string $fontfile The font definition file. By default, the name is built from the family and style, in lower case with no spaces.
+     * @access public
+     * @see include/tcpdf/TCPDF#SetFont()
+     */
     public function SetFont($family, $style='', $size=0, $fontfile='')
     {
         if (empty($fontfile) && defined('K_PATH_CUSTOM_FONTS')) {
@@ -303,6 +312,16 @@ class Sugarpdf extends TCPDF
      * the string to print in the PDF.
      * The cell method is used by all the methods which print text (Write, MultiCell).
      * @see include/tcpdf/TCPDF#Cell()
+     * @param $w
+     * @param int $h
+     * @param string $txt
+     * @param int $border
+     * @param int $ln
+     * @param string $align
+     * @param int $fill
+     * @param string $link
+     * @param int $stretch
+     * @param bool $ignore_min_height
      */
     public function Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false)
     {
@@ -525,7 +544,7 @@ class Sugarpdf extends TCPDF
      * Return the heigth of a line depending of the width, the font and the content
      * @param Array $line containing the data of all the cells of the line
      * @param Array $width containing the width of all the cells of the line
-     * @return The heigth of the line
+     * @return float|int heigth of the line
      */
     private function getLineHeightFromArray($line, $width)
     {
@@ -547,7 +566,7 @@ class Sugarpdf extends TCPDF
      * Private method for writeCellTable which format and initialize the options array.
      * @param array $options
      * @param array $item
-     * @return $options array
+     * @return array $options array
      */
     private function initOptionsForWriteCellTable($options, $item)
     {
@@ -627,16 +646,16 @@ class Sugarpdf extends TCPDF
     }
 
     /**
-    * This is method is fix for a better handling of the count. This method now handle the line break
-    * between words.
-    * This method returns the estimated number of lines required to print the text.
-    * @param string $txt text to print
-    * @param float $w width of cell. If 0, they extend up to the right margin of the page.
-    * @return int Return the estimated number of lines.
-    * @access public
-    * @since 4.5.011
-    * @OVERRIDE
-    */
+     * This is method is fix for a better handling of the count. This method now handle the line break
+     * between words.
+     * This method returns the estimated number of lines required to print the text.
+     * @param string $txt text to print
+     * @param int $w width of cell. If 0, they extend up to the right margin of the page.
+     * @return int Return the estimated number of lines.
+     * @access public
+     * @since 4.5.011
+     * @OVERRIDE
+     */
     public function getNumLines($txt, $w=0)
     {
         $lines = 0;
@@ -711,6 +730,9 @@ class Sugarpdf extends TCPDF
     /**
      * Disable zlib output compression if we are downloading the PDF.
      *
+     * @param string $name
+     * @param string $dest
+     * @return string
      * @see TCPDF::Output()
      */
     public function Output($name='doc.pdf', $dest='I')

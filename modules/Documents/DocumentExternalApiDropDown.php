@@ -39,6 +39,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * @param null $focus
+ * @param null $name
+ * @param null $value
+ * @param null $view
+ * @return array
  */
 
 function getDocumentsExternalApiDropDown($focus = null, $name = null, $value = null, $view = null)

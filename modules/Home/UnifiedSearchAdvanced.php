@@ -530,7 +530,7 @@ class UnifiedSearchAdvanced
             unlink($cache_search);
         }
     }
-    
+
 
     /**
      * getUnifiedSearchModules
@@ -538,7 +538,7 @@ class UnifiedSearchAdvanced
      * Returns the value of the $unified_search_modules variable based on the module's vardefs.php file
      * and which fields are marked with the unified_search attribute.
      *
-     * @return $unified_search_modules Array of metadata module definitions along with their fields
+     * @return mixed $unified_search_modules Array of metadata module definitions along with their fields
      */
     public function getUnifiedSearchModules()
     {

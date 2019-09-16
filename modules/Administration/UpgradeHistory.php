@@ -101,11 +101,11 @@ class UpgradeHistory extends SugarBean
         $query = "SELECT id FROM " . $this->table_name . " ORDER BY ".$orderBy;
         return $this->getList($query);
     }
+
     /**
      * Given a name check if it exists in the table
      * @param name    the unique key from the manifest
-     * @param id      the id of the item you are comparing to
-     * @return upgrade_history object if found, null otherwise
+     * @return SugarBean|null object if found, null otherwise
      */
     public function checkForExisting($patch_to_check)
     {
@@ -142,6 +142,9 @@ class UpgradeHistory extends SugarBean
 
     /**
      * Check if this is an upgrade, if it is then return the latest version before this installation
+     * @param $id_name
+     * @param $version
+     * @return array|null
      */
     public function determineIfUpgrade($id_name, $version)
     {
@@ -250,11 +253,9 @@ class UpgradeHistory extends SugarBean
     /**
      * Given a left version and a right version, determine if the right hand side is greater
      *
-     * @param left           the client sugar version
-     * @param right          the server version
-     *
-     * return               true if the right version is greater or they are equal
-     *                      false if the left version is greater
+     * @param $left
+     * @param $right
+     * @param bool $equals_is_greater
      * @return bool
      */
     public function is_right_version_greater($left, $right, $equals_is_greater = true)
@@ -276,10 +277,8 @@ class UpgradeHistory extends SugarBean
     /**
      * Given an array of id_names and versions, check if the dependencies are installed
      *
-     * @param dependencies	an array of id_name, version to check if these dependencies are installed
-     * 						on the system
-     *
-     * @return not_found	an array of id_names that were not found to be installed on the system
+     * @param array $dependencies
+     * @return array an array of id_names that were not found to be installed on the system
      */
     public function checkDependencies($dependencies = array())
     {

@@ -93,11 +93,11 @@ class CampaignsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Campaigns $campaign
-     * @param \Step\Acceptance\InboundEmailTester $inboundEmailTester
-     * @param \Step\Acceptance\EmailMan $EmailManTester
+     * @param \Step\Acceptance\EmailManTester $EmailManTester
      *
      * As administrative user I want to create a Newsletter campaign so that I can test
      * the standard fields.
+     * @param \Step\Acceptance\InboundEmailTester $inboundEmailTester
      */
     public function testScenarioCreateNewsletterCampaign(
         \AcceptanceTester $I,

@@ -75,6 +75,7 @@ class ImportFileSplitter
      * Constructor
      *
      * @param string $source filename we are splitting
+     * @param int $recordThreshold
      */
     public function __construct(
         $source = null,

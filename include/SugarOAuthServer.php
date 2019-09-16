@@ -259,6 +259,8 @@ class SugarOAuthServer
 
     /**
      * Report OAuth problem as string
+     * @param Exception $e
+     * @return string
      */
     public function reportProblem(Exception $e)
     {

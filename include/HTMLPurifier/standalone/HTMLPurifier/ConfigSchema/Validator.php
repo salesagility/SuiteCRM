@@ -231,6 +231,8 @@ class HTMLPurifier_ConfigSchema_Validator
 
     /**
      * Emits an error, providing helpful context.
+     * @param $target
+     * @param $msg
      * @throws HTMLPurifier_ConfigSchema_Exception
      */
     protected function error($target, $msg)

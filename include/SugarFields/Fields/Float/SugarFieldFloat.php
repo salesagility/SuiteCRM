@@ -68,6 +68,11 @@ class SugarFieldFloat extends SugarFieldInt
     }
 
     /**
+     * @param $value
+     * @param $vardef
+     * @param $focus
+     * @param ImportFieldSanitize $settings
+     * @return bool|mixed
      * @see SugarFieldBase::importSanitize()
      */
     public function importSanitize(

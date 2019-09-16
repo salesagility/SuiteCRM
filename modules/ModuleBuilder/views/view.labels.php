@@ -49,6 +49,8 @@ require_once('modules/ModuleBuilder/views/view.modulefields.php');
 class ViewLabels extends ViewModulefields
 {
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)

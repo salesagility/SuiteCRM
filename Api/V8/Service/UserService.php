@@ -80,6 +80,8 @@ class UserService
 
     /**
      * @param BeanManager $beanManager
+     * @param AttributeObjectHelper $attributeHelper
+     * @param RelationshipObjectHelper $relationshipHelper
      */
     public function __construct(
         BeanManager $beanManager,

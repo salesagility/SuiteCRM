@@ -101,14 +101,14 @@ class nusoap_parser extends nusoap_base
     public $decode_utf8 = true;
 
     /**
-    * constructor that actually does the parsing
-    *
-    * @param    string $xml SOAP message
-    * @param    string $encoding character encoding scheme of message
-    * @param    string $method method for which XML is parsed (unused?)
-    * @param    string $decode_utf8 whether to decode UTF-8 to ISO-8859-1
-    * @access   public
-    */
+     * constructor that actually does the parsing
+     *
+     * @param string $xml SOAP message
+     * @param string $encoding character encoding scheme of message
+     * @param string $method method for which XML is parsed (unused?)
+     * @param bool $decode_utf8 whether to decode UTF-8 to ISO-8859-1
+     * @access   public
+     */
     public function nusoap_parser($xml, $encoding='UTF-8', $method='', $decode_utf8=true)
     {
         parent::nusoap_base();

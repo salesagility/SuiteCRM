@@ -200,18 +200,22 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
     }
 
 
-
-
     /**
-    * Creates lead_source_by_outcome pipeline image as a HORIZONAL accumlated bar graph for multiple users.
-    * param $datay- the lead source data to display in the x-axis
-    * param $ids - list of assigned users of opps to find
-    * param $cache_file_name - file name to write image to
-    * param $refresh - boolean whether to rebuild image if exists
-    * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
-    * All Rights Reserved..
-    * Contributor(s): ______________________________________..
-    */
+     * Creates lead_source_by_outcome pipeline image as a HORIZONAL accumlated bar graph for multiple users.
+     * param $datay- the lead source data to display in the x-axis
+     * param $ids - list of assigned users of opps to find
+     * param $cache_file_name - file name to write image to
+     * param $refresh - boolean whether to rebuild image if exists
+     * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
+     * All Rights Reserved..
+     * Contributor(s): ______________________________________..
+     * @param array $datay
+     * @param array $user_id
+     * @param string $cache_file_name
+     * @param bool $refresh
+     * @param null $current_module_strings
+     * @return
+     */
     public function gen_xml(
         $datay = array('foo', 'bar'),
         $user_id = array('1'),

@@ -75,6 +75,7 @@ class Group extends User
 
     /**
      * overrides SugarBean method
+     * @param $id
      */
     public function mark_deleted($id)
     {

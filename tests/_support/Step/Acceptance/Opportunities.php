@@ -8,6 +8,7 @@ class Opportunities extends \AcceptanceTester
      * Create an opportunity
      *
      * @param $name
+     * @param $account
      */
     public function createOpportunity($name, $account)
     {

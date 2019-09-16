@@ -261,8 +261,8 @@ class ViewConvertLead extends SugarView
      * Returns the javascript to enable/disable validation of each module's sub-form
      * //TODO: This should probably be on the smarty template
      * @param String $module the target module name.
-     * @param SugarBean $focus instance of the target module.
      * @param EditView $focus def for the module.
+     * @param $viewdef
      * @return String, javascript to echo to page.
      */
     protected function getValidationJS(
@@ -789,6 +789,7 @@ class ViewConvertLead extends SugarView
      * @param String $module Module of new bean
      * @param SugarBean $bean SugarBean to be populated.
      * @param Contact $contact Contact to relate the bean to.
+     * @param $lead
      */
     protected function populateNewBean(
         $module,
@@ -926,7 +927,10 @@ class ViewConvertLead extends SugarView
         }
         return false;
     }
+
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)

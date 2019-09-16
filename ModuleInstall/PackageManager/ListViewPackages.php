@@ -69,8 +69,15 @@ class ListViewPackages extends ListViewSmarty
     /**
      * Override the setup method in ListViewSmarty since we are not passing in a bean
      *
-     * @param data  the data to display on the page
-     * @param file  the template file to parse
+     * @param $data
+     * @param $file
+     * @param $where
+     * @param array $params
+     * @param int $offset
+     * @param int $limit
+     * @param array $filter_fields
+     * @param string $id_field
+     * @param null $id
      */
     public function setup($data, $file, $where, $params = array(), $offset = 0, $limit = -1, $filter_fields = array(), $id_field = 'id', $id=null)
     {
@@ -80,6 +87,9 @@ class ListViewPackages extends ListViewSmarty
 
     /**
      * Override the display method
+     * @param bool $end
+     * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function display($end = true)
     {

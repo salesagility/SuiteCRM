@@ -80,6 +80,7 @@ class MetaService
     /**
      * UserService constructor.
      * @param BeanManager $beanManager
+     * @param ModuleListProvider $moduleListProvider
      */
     public function __construct(
         BeanManager $beanManager,
@@ -112,6 +113,7 @@ class MetaService
      * Build the response with a list of fields to return.
      *
      * @param Request $request
+     * @param GetFieldListParams $fieldListParams
      * @return DocumentResponse
      * @throws NotAllowedException
      */

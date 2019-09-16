@@ -1763,10 +1763,8 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
      *
      * Returns start document id for the next segment
      *
-     * @param integer $startId
-     * @param integer $mode
-     * @throws Zend_Search_Lucene_Exception
      * @return integer
+     * @throws Zend_Search_Lucene_Exception
      */
     public function resetTermsStream(/** $startId = 0, $mode = self::SM_TERMS_ONLY */)
     {

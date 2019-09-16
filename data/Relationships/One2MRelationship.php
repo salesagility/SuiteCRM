@@ -116,7 +116,7 @@ class One2MRelationship extends M2MRelationship
     /**
      * @param SugarBean $lhs left side bean to add to the relationship.
      * @param SugarBean $rhs right side bean to add to the relationship.
-     * @param key $additionalFields =>value pairs of fields to save on the relationship
+     * @param array $additionalFields =>value pairs of fields to save on the relationship
      * @return boolean true if successful
      */
     public function add($lhs, $rhs, $additionalFields = array())
@@ -165,6 +165,9 @@ class One2MRelationship extends M2MRelationship
      * Just overriding the function from M2M to prevent it from occuring
      *
      * The logic for dealing with adding self-referencing one-to-many relations is in the add() method
+     * @param $lhs
+     * @param $rhs
+     * @param array $additionalFields
      */
     protected function addSelfReferencing($lhs, $rhs, $additionalFields = array())
     {
@@ -173,6 +176,9 @@ class One2MRelationship extends M2MRelationship
 
     /**
      * Just overriding the function from M2M to prevent it from occuring
+     * @param $lhs
+     * @param $rhs
+     * @param array $additionalFields
      */
     protected function removeSelfReferencing($lhs, $rhs, $additionalFields = array())
     {

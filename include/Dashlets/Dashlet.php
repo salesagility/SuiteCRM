@@ -105,6 +105,7 @@ class Dashlet
     }
 
     /**
+     * @param $id
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function Dashlet($id)
@@ -402,7 +403,7 @@ class Dashlet
      * Filters the array for only the parameters it needs to save
      *
      * @param array $req the array to pull options from
-     * @return array options array
+     * @return void options array
      */
     public function saveOptions($req)
     {

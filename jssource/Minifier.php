@@ -118,6 +118,10 @@ class Minifier
     /**
      * Minifier::minify takes a string containing javascript and removes unneeded characters in order to shrink the code
      * without altering it's functionality.
+     * @param $js
+     * @param array $options
+     * @return false|string
+     * @throws Exception
      */
     public static function minify($js, $options = array())
     {
@@ -357,6 +361,7 @@ class Minifier
      * Pushes the index ahead to the next instance of the supplied string. If it is found the first character of the
      * string is returned.
      *
+     * @param $string
      * @return string|false Returns the first character of the string if found, false otherwise.
      */
     protected function getNext($string)
@@ -443,6 +448,7 @@ class Minifier
     /**
      * Checks to see if a character is alphanumeric.
      *
+     * @param $char
      * @return bool
      */
     protected static function isAlphaNumeric($char)

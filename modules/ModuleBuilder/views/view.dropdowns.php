@@ -43,6 +43,8 @@ require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
 class ViewDropdowns extends SugarView
 {
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)

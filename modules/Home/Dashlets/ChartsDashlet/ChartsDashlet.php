@@ -73,6 +73,9 @@ class ChartsDashlet extends Dashlet
     }
 
     /**
+     * @param $id
+     * @param $report_id
+     * @param $def
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function ChartsDashlet($id, $report_id, $def)
@@ -177,7 +180,7 @@ class ChartsDashlet extends Dashlet
      * called to filter out $_REQUEST object when the user submits the configure dropdown
      *
      * @param array $req $_REQUEST
-     * @return array filtered options to save
+     * @return void filtered options to save
      */
     public function saveOptions($req)
     {

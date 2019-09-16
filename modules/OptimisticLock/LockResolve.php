@@ -39,6 +39,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * @param $object_1
+ * @param $object_2
+ * @param $field_defs
+ * @param $module_dir
+ * @param $display_name
  */
 
 function display_conflict_between_objects($object_1, $object_2, $field_defs, $module_dir, $display_name)

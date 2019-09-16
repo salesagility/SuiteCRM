@@ -588,6 +588,8 @@ abstract class HTMLPurifier_AttrDef
      *          4.7.  However, note that we are NOT necessarily
      *          parsing XML, thus, this behavior may still be correct. We
      *          assume that newlines have been normalized.
+     * @param $string
+     * @return mixed|string
      */
     public function parseCDATA($string)
     {
@@ -624,6 +626,8 @@ abstract class HTMLPurifier_AttrDef
     /**
      * Parses a possibly escaped CSS string and returns the "pure"
      * version of it.
+     * @param $string
+     * @return string
      */
     protected function expandCSSEscape($string)
     {
@@ -3661,6 +3665,10 @@ class HTMLPurifier_ElementDef
 
     /**
      * Low-level factory constructor for creating new standalone element defs
+     * @param $content_model
+     * @param $content_model_type
+     * @param $attr
+     * @return HTMLPurifier_ElementDef
      */
     public static function create($content_model, $content_model_type, $attr)
     {
@@ -4032,6 +4040,8 @@ class HTMLPurifier_Encoder
      * @note This is very similar to the unichr function in
      *       maintenance/generate-entity-file.php (although this is superior,
      *       due to its sanity checks).
+     * @param $code
+     * @return string
      */
 
     // +----------+----------+----------+----------+
@@ -5344,6 +5354,12 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
 
     /**
      * Adds a custom element to your HTML definition
+     * @param $element_name
+     * @param $type
+     * @param $contents
+     * @param $attr_collections
+     * @param array $attributes
+     * @return HTMLPurifier_ElementDef
      * @see HTMLPurifier_HTMLModule::addElement() for detailed
      *       parameter and return value descriptions.
      */
@@ -5834,7 +5850,7 @@ class HTMLPurifier_HTMLModule
      * the HTMLPurifier_ElementDef class. There is a similar function
      * in HTMLPurifier_HTMLDefinition.
      * @param HTMLPurifier_ElementDef $def
-     * @return HTMLPurifier_ChildDef subclass
+     * @return bool subclass
      */
     public function getChildDef($def)
     {
@@ -6205,6 +6221,7 @@ class HTMLPurifier_HTMLModuleManager
     /**
      * Adds a module to the current doctype by first registering it,
      * and then tacking it on to the active doctype
+     * @param $module
      */
     public function addModule($module)
     {
@@ -6218,6 +6235,7 @@ class HTMLPurifier_HTMLModuleManager
     /**
      * Adds a class prefix that registerModule() will use to resolve a
      * string name to a concrete class
+     * @param $prefix
      */
     public function addPrefix($prefix)
     {
@@ -6326,6 +6344,7 @@ class HTMLPurifier_HTMLModuleManager
     /**
      * Takes a module and adds it to the active module collection,
      * registering it if necessary.
+     * @param $module
      */
     public function processModule($module)
     {
@@ -6764,6 +6783,7 @@ abstract class HTMLPurifier_Injector
 
     /**
      * Handler that is called when a text token is processed
+     * @param $token
      */
     public function handleText(&$token)
     {
@@ -6771,6 +6791,7 @@ abstract class HTMLPurifier_Injector
 
     /**
      * Handler that is called when a start or empty token is processed
+     * @param $token
      */
     public function handleElement(&$token)
     {
@@ -6778,6 +6799,7 @@ abstract class HTMLPurifier_Injector
 
     /**
      * Handler that is called when an end token is processed
+     * @param $token
      */
     public function handleEnd(&$token)
     {
@@ -7592,7 +7614,7 @@ class HTMLPurifier_Lexer
      * @param String $string HTML.
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
-     * @return HTMLPurifier_Token[] array representation of HTML.
+     * @return void array representation of HTML.
      */
     public function tokenizeHTML($string, $config, $context)
     {
@@ -7714,6 +7736,8 @@ class HTMLPurifier_Lexer
 
     /**
      * Takes a string of HTML (fragment or document) and returns the content
+     * @param $html
+     * @return mixed
      * @todo Consider making protected
      */
     public function extractBody($html)
@@ -8104,6 +8128,7 @@ class HTMLPurifier_Queue
 
     /**
      * Pushes an element onto the front of the queue.
+     * @param $x
      */
     public function push($x)
     {
@@ -9814,6 +9839,7 @@ class HTMLPurifier_VarParser
 
     /**
      * Throws an exception.
+     * @param $msg
      * @throws HTMLPurifier_VarParserException
      */
     protected function error($msg)
@@ -9916,7 +9942,7 @@ class HTMLPurifier_Zipper
      * Creates a zipper from an array, with a hole in the
      * 0-index position.
      * @param Array to zipper-ify.
-     * @return Tuple of zipper and element of first position.
+     * @return array of zipper and element of first position.
      */
     public static function fromArray($array)
     {
@@ -9929,6 +9955,8 @@ class HTMLPurifier_Zipper
      * Convert zipper back into a normal array, optionally filling in
      * the hole with a value. (Usually you should supply a $t, unless you
      * are at the end of the array.)
+     * @param null $t
+     * @return array
      */
     public function toArray($t = null)
     {
@@ -9958,7 +9986,7 @@ class HTMLPurifier_Zipper
     /**
      * Iterated hole advancement.
      * @param Element $t to fill hole with
-     * @param How $i many forward to advance hole
+     * @param $n
      * @return Original contents of new hole, i away
      */
     public function advance($t, $n)
@@ -10041,7 +10069,9 @@ class HTMLPurifier_Zipper
      * NB: the absolute index location after this operation is
      * *unchanged!*
      *
-     * @param Current contents of hole.
+     * @param $t
+     * @param $delete
+     * @param $replacement
      * @return array
      */
     public function splice($t, $delete, $replacement)
@@ -14136,7 +14166,7 @@ class HTMLPurifier_ChildDef_Chameleon extends HTMLPurifier_ChildDef
      * @param HTMLPurifier_Node[] $children
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
-     * @return bool
+     * @return array
      */
     public function validateChildren($children, $config, $context)
     {
@@ -17184,7 +17214,7 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
     /**
      * Defines all fixes the module will perform in a compact
      * associative array of fix name to fix implementation.
-     * @return array
+     * @return void
      */
     public function makeFixes()
     {
@@ -18468,8 +18498,8 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
      * Iterative function that tokenizes a node, putting it into an accumulator.
      * To iterate is human, to recurse divine - L. Peter Deutsch
      * @param DOMNode $node DOMNode to be tokenized.
-     * @param HTMLPurifier_Token[] $tokens   Array-list of already tokenized tokens.
-     * @return HTMLPurifier_Token of node appended to previously passed tokens.
+     * @param HTMLPurifier_Token[] $tokens Array-list of already tokenized tokens.
+     * @return void of node appended to previously passed tokens.
      */
     protected function tokenizeDOM($node, &$tokens)
     {
@@ -19339,6 +19369,7 @@ class HTMLPurifier_Node_Text extends HTMLPurifier_Node
     /**
      * Constructor, accepts data and determines if it is whitespace.
      * @param string $data String parsed character data.
+     * @param $is_whitespace
      * @param int $line
      * @param int $col
      */

@@ -113,12 +113,12 @@ function get_form_header(
 /**
  * Wrapper function for the get_module_title function, which is mostly used for pre-MVC modules.
  *
- * @param  string$module         to next to the title.  Typically used for form buttons.
- * @param  string$module_title   to display as the module title
- * @param  boolean$show_help     which determines if the print and help links are shown.
+ * @param string $module to next to the title.  Typically used for form buttons.
+ * @param string $module_title to display as the module title
+ * @param $show_create
+ * @param int $count
  * @return string HTML
- *@deprecated use SugarView::getModuleTitle() for MVC modules, or getClassicModuleTitle() for non-MVC modules
- *
+ * @deprecated use SugarView::getModuleTitle() for MVC modules, or getClassicModuleTitle() for non-MVC modules
  */
 function get_module_title(
     $module,
@@ -254,10 +254,10 @@ EOHTML;
 /**
  * Create a header for a popup.
  *
- * @param  string$theme  the name of the current theme, ignorred to use SugarThemeRegistry::current() instead.
+ * @param string $theme the name of the current theme, ignorred to use SugarThemeRegistry::current() instead.
+ * @param bool $includeJS
  * @return string HTML
- *@todo refactor this into the base Popup_Picker class
- *
+ * @todo refactor this into the base Popup_Picker class
  */
 function insert_popup_header($theme = null, $includeJS = true)
 {

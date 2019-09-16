@@ -331,9 +331,11 @@ class Opportunity extends SugarBean
 
 
     /**
-        builds a generic search based on the query string using or
-        do not include any $this-> because this is called on without having the class instantiated
-    */
+     * builds a generic search based on the query string using or
+     * do not include any $this-> because this is called on without having the class instantiated
+     * @param $the_query_string
+     * @return string
+     */
     public function build_generic_where_clause($the_query_string)
     {
         $where_clauses = array();
@@ -463,7 +465,9 @@ class Opportunity extends SugarBean
 
     /**
      * Static helper function for getting releated account info.
-     */
+     * @param $opp_id
+     * @return array
+*/
     public function get_account_detail($opp_id)
     {
         $ret_array = array();

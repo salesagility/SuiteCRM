@@ -56,8 +56,7 @@ class WebResourceObserver extends ResourceObserver
     /**
      * notify
      * Web implementation to notify the browser
-     * @param msg String message to possibly display
-     *
+     * @param string $msg
      */
     public function notify($msg = '')
     {

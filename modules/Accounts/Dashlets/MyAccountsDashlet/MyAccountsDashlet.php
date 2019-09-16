@@ -68,6 +68,8 @@ class MyAccountsDashlet extends DashletGeneric
     }
 
     /**
+     * @param $id
+     * @param null $def
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function MyAccountsDashlet($id, $def = null)
@@ -88,6 +90,7 @@ class MyAccountsDashlet extends DashletGeneric
      * (A record may have an undetermined number of email addresses).
      *
      * @param array $lvsParams
+     * @param null $id
      */
 
     public function process($lvsParams = array(), $id = null)

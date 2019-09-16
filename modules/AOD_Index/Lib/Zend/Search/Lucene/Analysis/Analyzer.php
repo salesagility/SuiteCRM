@@ -97,6 +97,7 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer
      * Tokens are returned in UTF-8 (internal Zend_Search_Lucene encoding)
      *
      * @param string $data
+     * @param string $encoding
      * @return array
      */
     public function tokenize($data, $encoding = '')
@@ -117,6 +118,7 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer
      * Set input
      *
      * @param string $data
+     * @param string $encoding
      */
     public function setInput($data, $encoding = '')
     {
@@ -142,12 +144,10 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer
     abstract public function nextToken();
 
 
-
-
     /**
      * Set the default Analyzer implementation used by indexing code.
      *
-     * @param Zend_Search_Lucene_Analysis_Analyzer $similarity
+     * @param Zend_Search_Lucene_Analysis_Analyzer $analyzer
      */
     public static function setDefault(Zend_Search_Lucene_Analysis_Analyzer $analyzer)
     {

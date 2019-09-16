@@ -64,6 +64,9 @@ class MailMerge
     }
 
     /**
+     * @param null $list
+     * @param null $fieldList
+     * @param string $data_dir
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function MailMerge($list = null, $fieldList = null, $data_dir = 'data')

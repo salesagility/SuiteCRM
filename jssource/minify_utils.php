@@ -42,15 +42,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-
-
-    /**get_exclude_files
-     *
-     * This method returns a predefined array.
-     * The array holds the location of files/folders to be excluded
-     * if a prefix is passed in, then it is prepended to the key value in the array
-     * @prefix string to be prepended to key value in array
-     */
+/**get_exclude_files
+ *
+ * This method returns a predefined array.
+ * The array holds the location of files/folders to be excluded
+ * if a prefix is passed in, then it is prepended to the key value in the array
+ * @prefix string to be prepended to key value in array
+ * @param string $prefix
+ * @return array
+ */
     function get_exclude_files($prefix = '')
     {
         //add slash to prefix if it is not empty
@@ -77,14 +77,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
     }
 
 
-
-    /**ConcatenateFiles($from_path)
-     *
-     * This method takes in a string value of the root directory to begin processing
-     * it uses the predefined array of groupings to create a concatenated file for each grouping
-     * and places the concatenated file in root directory
-     * @from_path root directory where processing should take place
-     */
+/**ConcatenateFiles($from_path)
+ *
+ * This method takes in a string value of the root directory to begin processing
+ * it uses the predefined array of groupings to create a concatenated file for each grouping
+ * and places the concatenated file in root directory
+ * @from_path root directory where processing should take place
+ * @param $from_path
+ * @throws Exception
+ */
     function ConcatenateFiles($from_path)
     {
 
@@ -234,16 +235,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
     }
 
 
-
-
-    /**CompressFiles
-     * This method will call jsmin libraries to minify passed in files
-     * This method takes in 2 string values of the files to process
-     * Processing will back up javascript files and then minify the original javascript.
-     * Back up javascript files will have an added .src extension
-     * @from_path file name and path to be processed
-     * @to_path file name and path to be  used to place newly compressed contents
-     */
+/**CompressFiles
+ * This method will call jsmin libraries to minify passed in files
+ * This method takes in 2 string values of the files to process
+ * Processing will back up javascript files and then minify the original javascript.
+ * Back up javascript files will have an added .src extension
+ * @from_path file name and path to be processed
+ * @to_path file name and path to be  used to place newly compressed contents
+ * @param $from_path
+ * @param $to_path
+ * @throws Exception
+ */
     function CompressFiles($from_path, $to_path)
     {
         if (!defined('JSMIN_AS_LIB')) {
@@ -407,15 +409,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
         }
     }
 
-    /**BackUpAndCompressScriptFiles
-     *
-     * This method takes in a string value of the root directory to begin processing
-     * it will process and iterate through all files and subdirectories
-     * under the passed in directory, ignoring directories and files from the predefined exclude array.
-     * Processing includes calling a method that will minify the javascript children files
-     * @from_path root directory where processing should take place
-     * @to_path root directory where processing should take place, this gets filled in dynamically
-     */
+/**BackUpAndCompressScriptFiles
+ *
+ * This method takes in a string value of the root directory to begin processing
+ * it will process and iterate through all files and subdirectories
+ * under the passed in directory, ignoring directories and files from the predefined exclude array.
+ * Processing includes calling a method that will minify the javascript children files
+ * @from_path root directory where processing should take place
+ * @to_path root directory where processing should take place, this gets filled in dynamically
+ * @param $from_path
+ * @param string $to_path
+ * @param bool $backup
+ */
     function BackUpAndCompressScriptFiles($from_path, $to_path = '', $backup = true)
     {
         //check to see if provided paths are legit

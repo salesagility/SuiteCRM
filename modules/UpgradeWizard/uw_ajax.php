@@ -42,11 +42,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /*********************************************************************************
-
  * Description:
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
  * Reserved. Contributor(s): ______________________________________..
- * *******************************************************************************/
+ * ******************************************************************************
+ * @param $persistence
+ * @param $sql
+ * @param $type
+ * @return mixed
+ */
 
 
 ////	COMMON
@@ -265,6 +269,7 @@ function commitAjaxPrepSql($persistence)
 
 /**
  * handles post-install tasks
+ * @param $persistence
  */
 function commitAjaxPostInstall($persistence)
 {

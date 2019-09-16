@@ -64,9 +64,13 @@ class SearchFormMetaParser extends MetaParser
 
     /**
      * parse
-     * @param $mixed
-     * @return $obj A MetaDataBean instance
-     **/
+     * @param $filePath
+     * @param array $vardefs
+     * @param string $moduleDir
+     * @param bool $merge
+     * @param null $masterCopy
+     * @return string|string[]|null $obj A MetaDataBean instance
+     */
     public function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $masterCopy=null)
     {
         $contents = file_get_contents($filePath);

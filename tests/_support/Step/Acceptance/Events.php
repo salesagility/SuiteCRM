@@ -8,6 +8,7 @@ class Events extends \AcceptanceTester
      * Create an event
      *
      * @param $name
+     * @param $location
      */
     public function createEvent($name, $location)
     {

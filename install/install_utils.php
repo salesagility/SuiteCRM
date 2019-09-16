@@ -51,6 +51,7 @@ require_once('include/upload_file.php');
  * Calls a custom function (if it exists) based on the first parameter,
  *   and returns result of function call, or 'undefined' if the function doesn't exist
  * @param string function name to call in custom install hooks
+ * @param array $options
  * @return mixed function call result, or 'undefined'
  */
 function installerHook($function_name, $options = array())
@@ -1160,6 +1161,8 @@ function handleWebConfig()
 
 /**
  * Drop old tables if table exists and told to drop it
+ * @param $focus
+ * @return int
  */
 function drop_table_install(&$focus)
 {
@@ -1639,10 +1642,12 @@ function getLicenseDisplay($type, $manifest, $zipFile, $next_step, $license_file
 
 /**
  * creates the remove/delete form for langpack page
- * @param string type commit/remove
- * @param string manifest path to manifest file
- * @param string zipFile path to uploaded zip file
- * @param int nextstep current step
+ * @param $type
+ * @param $manifest
+ * @param $zipFile
+ * @param $next_step
+ * @param string $uninstallable
+ * @param bool $showButtons
  * @return string ret <form> for this package
  */
 function getPackButton($type, $manifest, $zipFile, $next_step, $uninstallable='Yes', $showButtons=true)
@@ -1674,7 +1679,7 @@ function getPackButton($type, $manifest, $zipFile, $next_step, $uninstallable='Y
 
 /**
  * finds all installed languages and returns an array with the names
- * @return array langs array of installed languages
+ * @return void langs array of installed languages
  */
 function getInstalledLanguages()
 {
@@ -1689,10 +1694,12 @@ function getInstalledLanguages()
 }
 
 
-
 /**
  * searches upgrade dir for lang pack files.
  *
+ * @param bool $display_commit
+ * @param array $types
+ * @param string $notice_text
  * @return string HTML of available lang packs
  */
 function getLangPacks($display_commit = true, $types = array('langpack'), $notice_text = '')

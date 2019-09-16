@@ -51,12 +51,13 @@ require_once __DIR__ . '/../../../../../modules/Emails/NonGmailSentFolderHandler
  */
 class NonGmailSentFolderHandlerMock extends NonGmailSentFolderHandler
 {
-    
+
     /**
      *
      * @param InboundEmail $ie
      * @param SugarPHPMailer $mail
      * @param string $sentFolder
+     * @param string $options
      * @return bool
      */
     protected function connectToNonGmailServer(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder, $options = "\\Seen")
@@ -75,13 +76,15 @@ class NonGmailSentFolderHandlerMock extends NonGmailSentFolderHandler
     {
         return parent::getProblemOfStoringInNonGmailSentFolder($ie, $mail);
     }
-    
+
     /**
      *
      * @param InboundEmail $ie
      * @param SugarPHPMailer $mail
      * @param string $sentFolder
+     * @param string $options
      * @return bool
+     * @throws phpmailerException
      */
     public function connectToNonGmailServerPublic(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder, $options = "\\Seen")
     {

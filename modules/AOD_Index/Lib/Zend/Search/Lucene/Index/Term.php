@@ -54,6 +54,8 @@ class Zend_Search_Lucene_Index_Term
 
     /**
      * Object constructor
+     * @param $text
+     * @param null $field
      */
     public function __construct($text, $field = null)
     {

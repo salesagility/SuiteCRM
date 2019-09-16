@@ -95,6 +95,7 @@ class Reminder_Invitee extends Basic
      * Load reminders invitees data.
      *
      * @param string $reminderId Related Reminder GUID
+     * @param bool $isDuplicate
      * @return array Invitees data
      */
     public static function loadRemindersInviteesData($reminderId, $isDuplicate = false)

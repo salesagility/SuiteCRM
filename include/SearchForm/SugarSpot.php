@@ -223,6 +223,8 @@ class SugarSpot
      *
      * @param string $query what we are searching for
      * @param int $offset search result offset
+     * @param int $limit
+     * @param array $options
      * @return array
      */
     public function search($query, $offset = -1, $limit = 20, $options = array())
@@ -486,6 +488,9 @@ class SugarSpot
     /**
      * Function used to walk the array and find keys that map the queried string.
      * if both the pattern and module name is found the promote the string to thet top.
+     * @param $item1
+     * @param $key
+     * @param $patterns
      */
     protected function _searchKeys($item1, $key, $patterns)
     {

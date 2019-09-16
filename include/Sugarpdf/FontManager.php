@@ -443,8 +443,10 @@ class FontManager
         }
         return true;
     }
+
     /**
      * Check if the given font filename exist in the font directories
+     * @param $filename
      * @return boolean
      */
     public function fontFileExist($filename)

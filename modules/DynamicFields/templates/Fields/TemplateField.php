@@ -324,6 +324,8 @@ class TemplateField
     /**
      * Oracle Support: do not set required constraint if no default value is supplied.
      * In this case the default value will be handled by the application/sugarbean.
+     * @param $table
+     * @return string
      */
     public function get_db_add_alter_table($table)
     {
@@ -340,6 +342,8 @@ class TemplateField
 
     /**
      * mysql requires the datatype caluse in the alter statment.it will be no-op anyway.
+     * @param $table
+     * @return array|string
      */
     public function get_db_modify_alter_table($table)
     {
@@ -482,7 +486,7 @@ class TemplateField
     /**
      * populateFromRow
      * This function supports setting the values of all TemplateField instances.
-     * @param The $row Array key/value pairs from fields_meta_data table
+     * @param array $row Array key/value pairs from fields_meta_data table
      */
     public function populateFromRow($row=array())
     {

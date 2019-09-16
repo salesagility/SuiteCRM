@@ -122,8 +122,13 @@ class SugarFieldInt extends SugarFieldBase
     
         return $this->fetch($this->findTemplate('SearchForm'));
     }
-    
+
     /**
+     * @param $value
+     * @param $vardef
+     * @param $focus
+     * @param ImportFieldSanitize $settings
+     * @return bool|mixed
      * @see SugarFieldBase::importSanitize()
      */
     public function importSanitize(

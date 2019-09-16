@@ -8,6 +8,7 @@ class Contracts extends \AcceptanceTester
      * Create a contract
      *
      * @param $name
+     * @param $account
      */
     public function createContract($name, $account)
     {

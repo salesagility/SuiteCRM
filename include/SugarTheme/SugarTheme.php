@@ -454,6 +454,7 @@ class SugarTheme
     /**
      * Generic public accessor method for all the properties of the theme ( which are kept protected )
      *
+     * @param $key
      * @return string
      */
     public function __get(
@@ -729,14 +730,14 @@ EOHTML;
     /**
      * Returns an image tag for the given image.
      *
-     * @param  string $image image name
-     * @param  string $other_attributes optional, other attributes to add to the image tag, not cached
-     * @param  string $width optional, defaults to the actual image's width
-     * @param  string $height optional, defaults to the actual image's height
-     * @param  string $ext optional, image extension (TODO can we deprecate this one ?)
-     * @param  string $alt optional, only used when image contains something useful, i.e. "Sally's profile pic"
-     * @param  string $imageJSONEncode optional, some of template javascript need the exact image-html-string to build HTML contents so this parameter make a json_encode call on the return SVG or image source
-     * @param  string $forceExt optional, force image extension
+     * @param $imageName
+     * @param string $other_attributes optional, other attributes to add to the image tag, not cached
+     * @param string $width optional, defaults to the actual image's width
+     * @param string $height optional, defaults to the actual image's height
+     * @param string $ext optional, image extension (TODO can we deprecate this one ?)
+     * @param string $alt optional, only used when image contains something useful, i.e. "Sally's profile pic"
+     * @param bool $imageJSONEncode optional, some of template javascript need the exact image-html-string to build HTML contents so this parameter make a json_encode call on the return SVG or image source
+     * @param string $forceExt optional, force image extension
      * @return string HTML image tag or sprite
      */
     public function getImage($imageName, $other_attributes = '', $width = null, $height = null, $ext = null, $alt = '', $imageJSONEncode = false, $forceExt = null)
@@ -888,6 +889,16 @@ EOHTML;
 
     /**
      * Returns a link HTML tag with or without an embedded image
+     * @param $url
+     * @param $title
+     * @param string $other_attributes
+     * @param string $img_name
+     * @param string $img_other_attributes
+     * @param null $img_width
+     * @param null $img_height
+     * @param string $img_alt
+     * @param string $img_placement
+     * @return string
      */
     public function getLink(
         $url,

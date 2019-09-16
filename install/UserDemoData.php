@@ -66,6 +66,8 @@ class UserDemoData
 
     /**
      * Constructor for creating user demo data
+     * @param $seed_user
+     * @param bool $large_scale_test
      */
     public function __construct($seed_user, $large_scale_test = false)
     {
@@ -76,6 +78,8 @@ class UserDemoData
     }
 
     /**
+     * @param $seed_user
+     * @param bool $large_scale_test
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function UserDemoData($seed_user, $large_scale_test = false)
@@ -111,6 +115,16 @@ class UserDemoData
 
     /**
      *  Create a user in the seed data.
+     * @param $id
+     * @param $last_name
+     * @param $first_name
+     * @param $user_name
+     * @param $title
+     * @param $is_admin
+     * @param $reports_to
+     * @param $reports_to_name
+     * @param $email
+     * @throws SuiteException
      */
     public function _create_seed_user(
         $id,
@@ -179,7 +193,7 @@ class UserDemoData
     }
 
     /**
-     *
+     * @param $name
      */
     public function _quick_create_user($name)
     {

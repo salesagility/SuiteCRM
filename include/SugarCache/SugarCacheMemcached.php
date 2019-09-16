@@ -101,8 +101,10 @@ class SugarCacheMemcached extends SugarCacheAbstract
         
         return $this->_memcached;
     }
-    
+
     /**
+     * @param $key
+     * @param $value
      * @see SugarCacheAbstract::_setExternal()
      */
     protected function _setExternal(
@@ -111,8 +113,10 @@ class SugarCacheMemcached extends SugarCacheAbstract
         ) {
         $this->_getMemcachedObject()->set($key, $value, $this->_expireTimeout);
     }
-    
+
     /**
+     * @param $key
+     * @return mixed|null
      * @see SugarCacheAbstract::_getExternal()
      */
     protected function _getExternal(
@@ -125,8 +129,9 @@ class SugarCacheMemcached extends SugarCacheAbstract
 
         return $returnValue;
     }
-    
+
     /**
+     * @param $key
      * @see SugarCacheAbstract::_clearExternal()
      */
     protected function _clearExternal(

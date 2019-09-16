@@ -74,11 +74,12 @@ class ListViewMerge extends EditViewMerge
         $this->customData = array($module=>array( $this->viewDefs=>array($this->panelName=>array('DEFAULT'=>$this->customData[$module]))));
         $this->newData = array($module=>array( $this->viewDefs=>array($this->panelName=>array('DEFAULT'=>$this->newData[$module]))));
     }
-    
+
     /**
      * This takes in a  list of panels and returns an associative array of field names to the meta-data of the field as well as the locations of that field
      * Since ListViews don't have the concept of rows and columns it takes the panel and the row to be the field name
      * @param ARRAY $panels - this is the 'panel' section of the meta-data for list views all the meta data is one panel since it is just a list of fields
+     * @param bool $multiple
      * @return ARRAY $fields - an associate array of fields and their meta-data as well as their location
      */
     protected function getFields(&$panels, $multiple = true)

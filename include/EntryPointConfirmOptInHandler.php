@@ -196,6 +196,7 @@ class EntryPointConfirmOptInHandler
 
     /**
      * @param array $people
+     * @param $module
      */
     private function setLawfulBasisForEachPerson(array $people, $module)
     {

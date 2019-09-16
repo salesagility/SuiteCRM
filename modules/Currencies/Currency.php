@@ -92,8 +92,8 @@ class Currency extends SugarBean
      * This method accepts a currency amount and converts it to the US Dollar amount
      *
      * @param The $amount currency amount to convert to US Dollars
-     * @param The $precision rounding precision scale
-     * @return currency value in US Dollars from conversion
+     * @param int $precision rounding precision scale
+     * @return float|int value in US Dollars from conversion
      */
     public function convertToDollar($amount, $precision = 6)
     {
@@ -106,8 +106,8 @@ class Currency extends SugarBean
      * with the conversion rate applied to it.
      *
      * @param The $amount currency amount in US Dollars
-     * @param The $precision rounding precision scale
-     * @return currency value from US Dollar conversion
+     * @param int $precision rounding precision scale
+     * @return float value from US Dollar conversion
      */
     public function convertFromDollar($amount, $precision = 6)
     {
@@ -264,7 +264,7 @@ class Currency extends SugarBean
  *(if user preferences are not defined).
  *
  * @param The $amount amount to be formatted
- * @param Optional $params parameters(see @format_number)
+ * @param array $params parameters(see @format_number)
  * @return String representation of amount with formatting applied
  */
 function currency_format_number($amount, $params = array())
@@ -495,6 +495,7 @@ function format_money($amount, $for_display = true)
 /**
  * Returns user/system preference for number grouping separator character(default ",") and the decimal separator
  *(default ".").  Special case: when num_grp_sep is ".", it will return NULL as the num_grp_sep.
+ * @param bool $reset_sep
  * @return array Two element array, first item is num_grp_sep, 2nd item is dec_sep
  */
 function get_number_seperators($reset_sep = false)
@@ -533,6 +534,8 @@ function get_number_seperators($reset_sep = false)
  * toString
  *
  * Utility function to print out some information about Currency instance.
+ * @param bool $echo
+ * @return string
  * @deprecated since version 7.10.2
  */
 function toString($echo = true)

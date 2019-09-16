@@ -129,6 +129,9 @@ class SearchForm
     }
 
     /**
+     * @param $module
+     * @param $seedBean
+     * @param null $tpl
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function SearchForm($module, &$seedBean, $tpl = null)
@@ -236,7 +239,10 @@ class SearchForm
 
     /**
      * The fuction will returns an array of filter conditions.
-     *
+     * @param bool $add_custom_fields
+     * @param string $module
+     * @return array
+     * @throws Exception
      */
     public function generateSearchWhere($add_custom_fields = false, $module='')
     {
@@ -628,6 +634,8 @@ class SearchForm
      * @param bool $header display this with headers
      * @param bool $return echo or return the html
      *
+     * @param string $listViewDefs
+     * @param string $lv
      * @return string html of contents
      */
     public function displayAdvanced($header = true, $return = false, $listViewDefs='', $lv='')
@@ -666,6 +674,8 @@ class SearchForm
     /**
      * displays the saved views form body
      *
+     * @param $listViewDefs
+     * @param $lv
      * @param bool $header display this with headers
      * @param bool $return echo or return the html
      *

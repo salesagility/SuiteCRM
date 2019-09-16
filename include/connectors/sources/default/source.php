@@ -352,7 +352,7 @@ abstract class source
      * This method is used to indicate whether or not a data source has testing enabled so that
      * the administration interface may call the test method on the data source instance
      *
-     * @return enabled boolean value indicating whether or not testing is enabled
+     * @return bool boolean value indicating whether or not testing is enabled
      */
     public function hasTestingEnabled()
     {
@@ -365,7 +365,7 @@ abstract class source
      * It is up to subclasses to implement a test and set _has_testing_enabled to true so that
      * a test button is rendered in the administration interface
      *
-     * @return result boolean result of the test function
+     * @return bool boolean result of the test function
      */
     public function test()
     {
@@ -379,7 +379,7 @@ abstract class source
      * Connectors that do not support the getList/getItem methods via API calls should
      * set the protected class variable _enable_in_wizard to false.
      *
-     * @return $enabled boolean variable indicating whether or not the connector is enabled for the wizard
+     * @return bool $enabled boolean variable indicating whether or not the connector is enabled for the wizard
      */
     public function isEnabledInWizard()
     {
@@ -393,8 +393,7 @@ abstract class source
      * Connectors that do not provide a formatter implementation should not
      * set the protected class variable _enable_in_hover to true.
      *
-     * @return $enabled boolean variable indicating whether or not the connector is enabled for the hover links
-     *
+     * @return bool $enabled boolean variable indicating whether or not the connector is enabled for the hover links
      */
     public function isEnabledInHover()
     {
@@ -463,7 +462,7 @@ abstract class source
      * Subclasses should set the class variable _required_config_fields to
      * return an Array of keys as specified in the Connector's config.php that are required.
      *
-     * @return $fields Array of Connector config fields that are required
+     * @return array $fields Array of Connector config fields that are required
      */
     public function getRequiredConfigFields()
     {
@@ -476,7 +475,7 @@ abstract class source
      * This method checks the configuration parameters against the required config fields
      * to see if they are set
      *
-     * @return $set boolean value indicating whether or not the required config fields are set
+     * @return bool $set boolean value indicating whether or not the required config fields are set
      */
     public function isRequiredConfigFieldsSet()
     {
@@ -496,7 +495,7 @@ abstract class source
      * "Get Data" button will include the Connector.  We use it as a subset of the
      * $this->_required_config_fields Array.
      *
-     * @return $fields Array of Connector config fields that are required to be set for the "Get Data" button to appear
+     * @return array $fields Array of Connector config fields that are required to be set for the "Get Data" button to appear
      */
     public function getRequiredConfigFieldsForButton()
     {
@@ -509,7 +508,7 @@ abstract class source
      * This method checks the configuration parameters against the required config fields
      * for the "Get Button" to see if they are set
      *
-     * @return $set boolean value indicating whether or not the required config fields are set
+     * @return bool $set boolean value indicating whether or not the required config fields are set
      */
     public function isRequiredConfigFieldsForButtonSet()
     {

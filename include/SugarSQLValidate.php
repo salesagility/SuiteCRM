@@ -120,6 +120,7 @@ class SugarSQLValidate
     /**
      * Validate parsed SQL expression
      * @param array $expr Parsed expression
+     * @param bool $allow_some_subqueries
      * @return bool
      */
     protected function validateExpression($expr, $allow_some_subqueries = false)

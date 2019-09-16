@@ -52,7 +52,8 @@ class SourceFactory
 
     /**
      * Given a source param, load the correct source and return the object
-     * @param string $source string representing the source to load
+     * @param $class
+     * @param bool $call_init
      * @return source
      */
     public static function getSource($class, $call_init = true)

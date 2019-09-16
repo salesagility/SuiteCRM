@@ -147,7 +147,8 @@ class Meeting extends SugarBean
     /**
      * Disable edit if meeting is recurring and source is not Sugar. It should be edited only from Outlook.
      * @param string $view
-     * @param bool $is_owner
+     * @param string $is_owner
+     * @param string $in_group
      * @return bool
      */
     public function ACLAccess($view, $is_owner='not_set', $in_group='not_set')
@@ -701,6 +702,9 @@ class Meeting extends SugarBean
 
     /**
      * Redefine method to attach ics file to notification email
+     * @param $notify_user
+     * @return SugarPHPMailer
+     * @throws phpmailerException
      */
     public function create_notification_email($notify_user)
     {
@@ -728,7 +732,9 @@ class Meeting extends SugarBean
 
     /**
      * Redefine method to remove ics after email is sent
-         * @return boolean success/failed
+     * @param $notify_user
+     * @param $admin
+     * @return boolean success/failed
      */
     public function send_assignment_notifications($notify_user, $admin)
     {

@@ -61,7 +61,7 @@ class One2MBeanRelationship extends One2MRelationship
     /**
      * @param SugarBean $lhs left side bean to add to the relationship.
      * @param SugarBean $rhs right side bean to add to the relationship.
-     * @param key $additionalFields =>value pairs of fields to save on the relationship
+     * @param array $additionalFields =>value pairs of fields to save on the relationship
      * @return boolean true if successful
      */
     public function add($lhs, $rhs, $additionalFields = array())
@@ -177,7 +177,8 @@ class One2MBeanRelationship extends One2MRelationship
 
     /**
      * @param Link2 $link loads the relationship for this link.
-     * @return void
+     * @param array $params
+     * @return array
      */
     public function load($link, $params = array())
     {

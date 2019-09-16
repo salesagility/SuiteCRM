@@ -42,12 +42,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /*********************************************************************************
-
  * Description:  Defines the English language pack for the base application.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ *******************************************************************************
+ * @param $campaign_id
+ * @param $campaign_name
+ * @param null $db
+ * @param array $mod_strings
+ * @return array
+ */
 
 /*
  *returns a list of objects a message can be scoped by, the list contacts the current campaign
@@ -90,8 +95,8 @@ function get_message_scope_dom($campaign_id, $campaign_name, $db=null, $mod_stri
  * Return bounce handling mailboxes for campaign.
  *
  * @param unknown_type $emails
- * @param unknown_type $get_box_name, Set it to false if want to get "From Name" other than the InboundEmail Name.
- * @return $get_name=true, bounce handling mailboxes' name; $get_name=false, bounce handling mailboxes' from name.
+ * @param bool $get_name
+ * @return array $get_name=true, bounce handling mailboxes' name; $get_name=false, bounce handling mailboxes' from name.
  */
 function get_campaign_mailboxes(&$emails, $get_name=true)
 {
@@ -345,11 +350,15 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
 }
 
 /**
-     *
-     * This method is deprecated
-     * @deprecated 62_Joneses - June 24, 2011
-     * @see campaign_log_lead_or_contact_entry()
-     */
+ *
+ * This method is deprecated
+ * @param $campaign_id
+ * @param $parent_bean
+ * @param $child_bean
+ * @param $activity_type
+ * @deprecated 62_Joneses - June 24, 2011
+ * @see campaign_log_lead_or_contact_entry()
+ */
 function campaign_log_lead_entry($campaign_id, $parent_bean, $child_bean, $activity_type)
 {
     campaign_log_lead_or_contact_entry($campaign_id, $parent_bean, $child_bean, $activity_type);
@@ -397,6 +406,9 @@ function get_campaign_urls($campaign_id)
 
 /**
  * Queries for the list
+ * @param $focus
+ * @param null $additional_fields
+ * @return array
  */
 function get_subscription_lists_query($focus, $additional_fields = null)
 {
@@ -511,6 +523,8 @@ function get_subscription_lists($focus, $descriptions = false)
 
 /**
  * same function as get_subscription_lists, but with the data separated in an associated array
+ * @param $focus
+ * @return mixed
  */
 function get_subscription_lists_keyed($focus)
 {

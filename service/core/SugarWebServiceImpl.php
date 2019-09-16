@@ -508,7 +508,7 @@ class SugarWebServiceImpl
      * @param String $session -- Session ID returned by a previous call to login.
      * @param String $module_name -- The name of the module to return records from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
      * @param Array $name_value_lists -- Array of Bean specific Arrays where the keys of the array are the SugarBean attributes, the values of the array are the values the attributes should have.
-     * @return Array    'ids' -- Array of the IDs of the beans that was written to (-1 on error)
+     * @return void 'ids' -- Array of the IDs of the beans that was written to (-1 on error)
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function set_entries($session, $module_name, $name_value_lists)
@@ -627,7 +627,7 @@ class SugarWebServiceImpl
      * Log out of the session.  This will destroy the session and prevent other's from using it.
      *
      * @param String $session -- Session ID returned by a previous call to login.
-     * @return Empty
+     * @return void
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function logout($session)
@@ -701,7 +701,7 @@ class SugarWebServiceImpl
      * @param String $session -- Session ID returned by a previous call to login.
      * @param String $module_name -- The name of the module to return records from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
      * @param Array $fields -- Optional, if passed then retrieve vardef information on these fields only.
-     * @return Array    'module_fields' -- Array - The vardef information on the selected fields.
+     * @return void 'module_fields' -- Array - The vardef information on the selected fields.
      *                  'link_fields' -- Array - The vardef information on the link fields
      * @exception 'SoapFault' -- The SOAP error, if any
      */
@@ -734,8 +734,7 @@ class SugarWebServiceImpl
      * Perform a seamless login. This is used internally during the sync process.
      *
      * @param String $session -- Session ID returned by a previous call to login.
-     * @return 1 -- integer - if the session was authenticated
-     * @return 0 -- integer - if the session could not be authenticated
+     * @return int 1 -- integer - if the session was authenticated
      */
     public function seamless_login($session)
     {
@@ -859,12 +858,12 @@ class SugarWebServiceImpl
      * properly authenticated user to download a document that they have proper rights to download.
      *
      * @param String $session -- Session ID returned by a previous call to login.
-     * @param String $id      -- ID of the document revision to obtain
-     * @return new_return_document_revision - Array String 'id' -- The ID of the document revision containing the attachment
-     * 												String document_name - The name of the document
-     * 												String revision - The revision value for this revision
-     *                                         		String 'filename' -- The file name of the attachment
-     *                                          	Binary 'file' -- The binary contents of the file.
+     * @param String $id -- ID of the document revision to obtain
+     * @return array|void - Array String 'id' -- The ID of the document revision containing the attachment
+     *                                                String document_name - The name of the document
+     *                                                String revision - The revision value for this revision
+     *                                                String 'filename' -- The file name of the attachment
+     *                                            Binary 'file' -- The binary contents of the file.
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function get_document_revision($session, $id)
@@ -1104,16 +1103,16 @@ LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id) ";
 
 
     /**
-    *   Once we have successfuly done a mail merge on a campaign, we need to notify Sugar of the targets
-    *   and the campaign_id for tracking purposes
-    *
-    * @param String session  -- Session ID returned by a previous call to login.
-    * @param Array targets   -- a string array of ids identifying the targets used in the merge
-    * @param String campaign_id  --  the campaign_id used for the merge
-    * @return - No output
-    *
-    * @exception 'SoapFault' -- The SOAP error, if any
-    */
+     *   Once we have successfuly done a mail merge on a campaign, we need to notify Sugar of the targets
+     *   and the campaign_id for tracking purposes
+     *
+     * @param $session
+     * @param $targets
+     * @param $campaign_id
+     * @return void - No output
+     *
+     * @exception 'SoapFault' -- The SOAP error, if any
+     */
     public function set_campaign_merge($session, $targets, $campaign_id)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->set_campaign_merge');

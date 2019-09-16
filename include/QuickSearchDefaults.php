@@ -152,7 +152,9 @@ class QuickSearchDefaults
      * the locale settings (s = salutation, f = first name, l = last name) that are permissible.
      * It should be noted though that any other characters present in the formatting will render
      * this widget non-functional.
-     * @return The JSON format of a QuickSearch definition for the Contacts module
+     * @param $name
+     * @param $idName
+     * @return array JSON format of a QuickSearch definition for the Contacts module
      */
     public function getQSContact($name, $idName)
     {

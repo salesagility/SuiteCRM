@@ -58,6 +58,11 @@ class HTMLPurifier_Lexer_PEARSax3 extends HTMLPurifier_Lexer
 
     /**
      * Open tag event handler, interface is defined by PEAR package.
+     * @param $parser
+     * @param $name
+     * @param $attrs
+     * @param $closed
+     * @return bool
      */
     public function openHandler(&$parser, $name, $attrs, $closed)
     {
@@ -77,6 +82,9 @@ class HTMLPurifier_Lexer_PEARSax3 extends HTMLPurifier_Lexer
 
     /**
      * Close tag event handler, interface is defined by PEAR package.
+     * @param $parser
+     * @param $name
+     * @return bool
      */
     public function closeHandler(&$parser, $name)
     {
@@ -96,6 +104,9 @@ class HTMLPurifier_Lexer_PEARSax3 extends HTMLPurifier_Lexer
 
     /**
      * Data event handler, interface is defined by PEAR package.
+     * @param $parser
+     * @param $data
+     * @return bool
      */
     public function dataHandler(&$parser, $data)
     {
@@ -106,6 +117,9 @@ class HTMLPurifier_Lexer_PEARSax3 extends HTMLPurifier_Lexer
 
     /**
      * Escaped text handler, interface is defined by PEAR package.
+     * @param $parser
+     * @param $data
+     * @return bool
      */
     public function escapeHandler(&$parser, $data)
     {
@@ -133,6 +147,12 @@ class HTMLPurifier_Lexer_PEARSax3 extends HTMLPurifier_Lexer
 
     /**
      * An error handler that mutes strict errors
+     * @param $errno
+     * @param $errstr
+     * @param null $errfile
+     * @param null $errline
+     * @param null $errcontext
+     * @return mixed|void
      */
     public function muteStrictErrorHandler($errno, $errstr, $errfile=null, $errline=null, $errcontext=null)
     {

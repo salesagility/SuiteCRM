@@ -53,6 +53,8 @@ require_once('include/MVC/View/SugarView.php');
 class ImportViewError extends SugarView
 {
     /**
+     * @param null $module
+     * @return array
      * @see SugarView::getMenu()
      */
     public function getMenu(

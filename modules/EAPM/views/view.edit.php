@@ -68,6 +68,8 @@ class EAPMViewEdit extends ViewEdit
     }
 
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)
@@ -107,6 +109,8 @@ class EAPMViewEdit extends ViewEdit
     }
 
     /**
+     * @param $module
+     * @return string
      * @see SugarView::getModuleTitleIconPath()
      */
     protected function getModuleTitleIconPath($module)

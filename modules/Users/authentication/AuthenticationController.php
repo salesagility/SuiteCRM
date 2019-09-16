@@ -60,7 +60,6 @@ class AuthenticationController
      * Creates an instance of the authentication controller and loads it
      *
      * @param STRING $type - the authentication Controller
-     * @return AuthenticationController -
      */
     public function __construct($type = null)
     {
@@ -108,7 +107,7 @@ class AuthenticationController
      * Returns an instance of the authentication controller
      *
      * @param string $type this is the type of authetnication you want to use default is SugarAuthenticate
-     * @return an instance of the authetnciation controller
+     * @return AuthenticationController|null instance of the authetnciation controller
      */
     public static function getInstance($type = null)
     {
@@ -200,7 +199,7 @@ class AuthenticationController
      * This is called on every page hit.
      * It returns true if the current session is authenticated or false otherwise
      *
-     * @return booelan
+     * @return bool
      */
     public function sessionAuthenticate()
     {

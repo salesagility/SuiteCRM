@@ -98,11 +98,15 @@ class SugarFieldCollection extends SugarFieldBase
     {
         $this->getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex, true);
     }
+
     /**
-    * This should be called when the bean is saved. The bean itself will be passed by reference
-    * @param SugarBean bean - the bean performing the save
-    * @param array params - an array of paramester relevant to the save, most likely will be $_REQUEST
-    */
+     * This should be called when the bean is saved. The bean itself will be passed by reference
+     * @param $bean
+     * @param $params
+     * @param $field
+     * @param $properties
+     * @param string $prefix
+     */
     public function save(&$bean, $params, $field, $properties, $prefix = '')
     {
         if (isset($_POST["primary_" . $field . "_collection"])) {

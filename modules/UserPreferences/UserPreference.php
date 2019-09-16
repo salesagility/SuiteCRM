@@ -310,10 +310,8 @@ class UserPreference extends SugarBean
      * Saves all preferences into the database that are in the session. Expensive, this is called by default in
      * sugar_cleanup if a setPreference has been called during one round trip.
      *
-     * @global user will use current_user if no user specificed in $user param
-     * @param user $user User object to retrieve, otherwise user current_user
      * @param bool $all save all of the preferences? (Dangerous)
-     *
+     * @global user will use current_user if no user specificed in $user param
      */
     public function savePreferencesToDB(
         $all = false
@@ -407,6 +405,12 @@ class UserPreference extends SugarBean
     /**
      * Updates every user pref with a new key value supports 2 levels deep, use append to
      * array if you want to append the value to an array
+     * @param $key
+     * @param $new_value
+     * @param string $sub_key
+     * @param bool $is_value_array
+     * @param bool $unset_value
+     * @throws Exception
      */
     public static function updateAllUserPrefs(
         $key,

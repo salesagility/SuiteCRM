@@ -229,13 +229,13 @@ class soap_transport_http extends nusoap_base
     }
 
     /**
-    * establish an HTTP connection
-    *
-    * @param    integer $timeout set connection timeout in seconds
-    * @param	integer $response_timeout set response timeout in seconds
-    * @return	boolean true if connected, false if not
-    * @access   private
-    */
+     * establish an HTTP connection
+     *
+     * @param int $connection_timeout
+     * @param integer $response_timeout set response timeout in seconds
+     * @return    boolean true if connected, false if not
+     * @access   private
+     */
     public function connect($connection_timeout=0, $response_timeout=30)
     {
         // For PHP 4.3 with OpenSSL, change https scheme to ssl, then treat like

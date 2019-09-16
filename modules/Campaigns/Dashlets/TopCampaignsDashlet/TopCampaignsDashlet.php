@@ -49,10 +49,12 @@ require_once('include/Dashlets/Dashlet.php');
 class TopCampaignsDashlet extends Dashlet
 {
     protected $top_campaigns = array();
-    
+
     /**
      * Constructor
      *
+     * @param $id
+     * @param null $def
      * @see Dashlet::Dashlet()
      */
     public function __construct($id, $def = null)
@@ -124,6 +126,8 @@ class TopCampaignsDashlet extends Dashlet
     }
 
     /**
+     * @param $req
+     * @return array
      * @see Dashlet::saveOptions()
      */
     public function saveOptions($req)

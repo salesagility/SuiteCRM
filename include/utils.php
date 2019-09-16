@@ -501,6 +501,8 @@ function addCronAllowedUser($addUser)
 }
 
 /**
+ * @param $path
+ * @return array
  * @deprecated use SugarView::getMenu() instead
  */
 function load_menu($path)
@@ -524,6 +526,7 @@ function load_menu($path)
  * get_notify_template_file
  * This function will return the location of the email notifications template to use.
  *
+ * @param $language
  * @return string relative file path to email notifications template file
  */
 function get_notify_template_file($language)
@@ -600,6 +603,10 @@ function make_not_writable($file)
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
+ * @param $row
+ * @param $first_column
+ * @param $last_column
+ * @return string
  */
 function return_name($row, $first_column, $last_column)
 {
@@ -824,6 +831,7 @@ function get_user_array($add_blank = true, $status = 'Active', $user_id = '', $u
  *
  * @param args string where clause entry
  *
+ * @param bool $hide_portal_users
  * @return array Array of Users' details that match passed criteria
  */
 function getUserArrayFromFullName($args, $hide_portal_users = false)
@@ -919,6 +927,9 @@ function clean($string, $maxLength)
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
+ * @param $request_var
+ * @param $focus
+ * @param bool $always_copy
  */
 function safe_map($request_var, &$focus, $always_copy = false)
 {
@@ -931,6 +942,10 @@ function safe_map($request_var, &$focus, $always_copy = false)
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
+ * @param $request_var
+ * @param $focus
+ * @param $member_var
+ * @param $always_copy
  */
 function safe_map_named($request_var, &$focus, $member_var, $always_copy)
 {
@@ -1242,7 +1257,11 @@ function return_module_language($language, $module, $refresh = false)
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- * If you are using the current language, do not call this function unless you are loading it for the first time */
+ * If you are using the current language, do not call this function unless you are loading it for the first time
+ * @param $language
+ * @param $module
+ * @return array|The|void
+ */
 function return_mod_list_strings_language($language, $module)
 {
     global $mod_list_strings;
@@ -1308,6 +1327,8 @@ function return_mod_list_strings_language($language, $module)
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
+ * @param $language
+ * @param $theme
  */
 function return_theme_language($language, $theme)
 {
@@ -1350,6 +1371,9 @@ function return_theme_language($language, $theme)
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
+ * @param $varname
+ * @param $default
+ * @return mixed
  */
 function return_session_value_or_default($varname, $default)
 {
@@ -1599,6 +1623,8 @@ function is_admin_for_module($user, $module)
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
+ * @param $user
+ * @return bool
  */
 function is_admin($user)
 {
@@ -1615,6 +1641,8 @@ function is_admin($user)
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  *
+ * @param $theme
+ * @return
  * @deprecated use SugarThemeRegistry::get($theme)->name instead
  */
 function get_theme_display($theme)
@@ -1644,6 +1672,9 @@ function get_themes()
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
+ * @param $option_list
+ * @param $selected
+ * @return string|string[]|null
  */
 function get_select_options($option_list, $selected)
 {
@@ -1658,6 +1689,9 @@ function get_select_options($option_list, $selected)
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
+ * @param $option_list
+ * @param $selected_key
+ * @return string|string[]|null
  */
 function get_select_options_with_id($option_list, $selected_key)
 {
@@ -1673,6 +1707,11 @@ function get_select_options_with_id($option_list, $selected_key)
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
+ * @param $label_list
+ * @param $key_list
+ * @param $selected_key
+ * @param bool $massupdate
+ * @return string|string[]|null
  */
 function get_select_options_with_id_separate_key($label_list, $key_list, $selected_key, $massupdate = false)
 {
@@ -1783,6 +1822,9 @@ function get_select_full_options_with_id($option_list = array(), $selected_key =
  * Call this method instead of die().
  * We print the error message and then die with an appropriate
  * exit code.
+ * @param $error_message
+ * @param int $exit_code
+ * @throws Exception
  */
 function sugar_die($error_message, $exit_code = 1)
 {
@@ -1898,6 +1940,8 @@ function array_csort()
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
+ * @param $local_format
+ * @return mixed
  */
 function parse_calendardate($local_format)
 {
@@ -2019,7 +2063,7 @@ function add_http($url)
 /**
  * returns a default array of XSS tags to clean.
  *
- * @return array
+ * @return string
  */
 function getDefaultXssTags()
 {
@@ -2269,6 +2313,8 @@ function clean_special_arguments()
 
 /**
  * cleans the given key in superglobals $_GET, $_POST, $_REQUEST.
+ * @param $key
+ * @param string $filter
  */
 function clean_superglobals($key, $filter = 'STANDARD')
 {
@@ -2494,6 +2540,13 @@ function convert_id($string)
 }
 
 /**
+ * @param $image
+ * @param $other_attributes
+ * @param string $width
+ * @param string $height
+ * @param string $ext
+ * @param string $alt
+ * @return string
  * @deprecated use SugarTheme::getImage()
  */
 function get_image($image, $other_attributes, $width = '', $height = '', $ext = '.gif', $alt = '')
@@ -2503,6 +2556,8 @@ function get_image($image, $other_attributes, $width = '', $height = '', $ext = 
 
 /**
  * @deprecated use SugarTheme::getImageURL()
+ * @param $image_name
+ * @return bool|string
  */
 function getImagePath($image_name)
 {
@@ -3093,6 +3148,7 @@ function br2nl($str)
  * Private helper function for displaying the contents of a given variable.
  * This function is only intended to be used for SugarCRM internal development.
  * The ppd stands for Pre Print Die.
+ * @param $mixed
  */
 function _ppd($mixed)
 {
@@ -3105,7 +3161,8 @@ function _ppd($mixed)
  *
  * @param var $mixed to print_r()
  * @param boolean $die end script flow
- * @param also $displayStackTrace show stack trace
+ * @param bool $displayStackTrace show stack trace
+ * @param string $loglevel
  */
 function _ppl($mixed, $die = false, $displayStackTrace = false, $loglevel = 'fatal')
 {
@@ -3137,6 +3194,7 @@ function _ppl($mixed, $die = false, $displayStackTrace = false, $loglevel = 'fat
  * The ppf stands for Pre[formatted] Print Focus [object].
  *
  * @param object bean The focus bean
+ * @param bool $die
  */
 function _ppf($bean, $die = false)
 {
@@ -3146,6 +3204,7 @@ function _ppf($bean, $die = false)
  * Private helper function for displaying the contents of a given variable.
  * This function is only intended to be used for SugarCRM internal development.
  * The pp stands for Pre Print.
+ * @param $mixed
  */
 function _pp($mixed)
 {
@@ -3155,6 +3214,7 @@ function _pp($mixed)
  * Private helper function for displaying the contents of a given variable.
  * This function is only intended to be used for SugarCRM internal development.
  * The pp stands for Pre Print.
+ * @param null $mixed
  */
 function _pstack_trace($mixed = null)
 {
@@ -3164,6 +3224,8 @@ function _pstack_trace($mixed = null)
  * Private helper function for displaying the contents of a given variable.
  * This function is only intended to be used for SugarCRM internal development.
  * The pp stands for Pre Print Trace.
+ * @param $mixed
+ * @param bool $textOnly
  */
 function _ppt($mixed, $textOnly = false)
 {
@@ -3173,6 +3235,7 @@ function _ppt($mixed, $textOnly = false)
  * Private helper function for displaying the contents of a given variable.
  * This function is only intended to be used for SugarCRM internal development.
  * The pp stands for Pre Print Trace Die.
+ * @param $mixed
  */
 function _pptd($mixed)
 {
@@ -3181,6 +3244,7 @@ function _pptd($mixed)
 /**
  * Private helper function for decoding javascript UTF8
  * This function is only intended to be used for SugarCRM internal development.
+ * @param $str
  */
 function decodeJavascriptUTF8($str)
 {
@@ -3193,7 +3257,7 @@ function decodeJavascriptUTF8($str)
  *
  * @param string Version to check against, defaults to the current environment's.
  *
- * @return integer1 if version is greater than the recommended PHP version,
+ * @return int if version is greater than the recommended PHP version,
  * 0 if version is between minimun and recomended PHP versions,
  * -1 otherwise (less than minimum or buggy version)
  */
@@ -3231,7 +3295,8 @@ function check_php_version($sys_php_version = '')
  * unsupported (results unknown), or invalid (something will break on this
  * ver).
  *
- * @return 1 implies supported, 0 implies unsupported, -1 implies invalid
+ * @param string $sys_iis_version
+ * @return int 1 implies supported, 0 implies unsupported, -1 implies invalid
  */
 function check_iis_version($sys_iis_version = '')
 {
@@ -3621,6 +3686,8 @@ function mark_delete_components($sub_object_array, $run_second_level = false, $s
 
 /**
  * For translating the php.ini memory values into bytes.  e.g. input value of '8M' will return 8388608.
+ * @param $val
+ * @return int|string|string[]|null
  */
 function return_bytes($val)
 {
@@ -3644,6 +3711,8 @@ function return_bytes($val)
 
 /**
  * Adds the href HTML tags around any URL in the $string.
+ * @param $string
+ * @return string|string[]|null
  */
 function url2html($string)
 {
@@ -3710,6 +3779,9 @@ function is_writable_windows($file)
 
 /**
  * best guesses Timezone based on webserver's TZ settings.
+ * @param int $userOffset
+ * @return string
+ * @throws Exception
  */
 function lookupTimezone($userOffset = 0)
 {
@@ -3868,7 +3940,7 @@ function get_module_info($module_name)
 /**
  * In order to have one place to obtain the proper object name. aCase for example causes issues throughout the application.
  *
- * @param string $moduleName
+ * @param $module_name
  * @return string
  */
 function get_valid_bean_name($module_name)
@@ -3897,7 +3969,7 @@ function checkAuthUserStatus()
  *
  * @param int $level info level constant (1,2,4,8...64);
  *
- * @return $returnInfo array    array of info about the PHP environment
+ * @return array $returnInfo array    array of info about the PHP environment
  *
  * @author    original by "code at adspeed dot com" Fron php.net
  * @author    customized for Sugar by Chris N.
@@ -3961,7 +4033,8 @@ function getPhpInfo($level = -1)
  * @param string $format to format
  * @param args $args to replace
  *
- * @return $result a formatted string
+ * @param bool $escape
+ * @return mixed|string $result a formatted string
  */
 function string_format($format, $args, $escape = true)
 {
@@ -4009,7 +4082,7 @@ function string_format($format, $args, $escape = true)
  * @param of $num bean
  * @param from $system_id system
  *
- * @return $result a formatted string
+ * @return string $result a formatted string
  */
 function format_number_display($num, $system_id)
 {
@@ -4033,7 +4106,7 @@ function checkLoginUserStatus()
  * @param URL $url containing host to append port
  * @param the $port port number - if '' is passed, no change to url
  *
- * @return $resulturl the new URL with the port appended to the host
+ * @return string|URL $resulturl the new URL with the port appended to the host
  */
 function appendPortToHost($url, $port)
 {
@@ -4423,7 +4496,7 @@ function loadCleanConfig()
  * will continue to with subsequent javascript requests.  If the variable
  * $_SERVER['HTTP_REFERER'] is not found then we default to old algorithm.
  *
- * @return $site_url The url used to refer to the website
+ * @return string|string[]|null $site_url The url used to refer to the website
  */
 function getJavascriptSiteURL()
 {
@@ -4534,11 +4607,11 @@ function _getIcon($iconFileName)
  * Function to grab the correct icon image for Studio.
  *
  * @param string $iconFileName Name of the icon file
- * @param string $altfilename  Name of a fallback icon file (displayed if the imagefilename doesn't exist)
- * @param string $width        Width of image
- * @param string $height       Height of image
- * @param string $align        Alignment of image
- * @param string $alt          Alt tag of image
+ * @param string $altFileName
+ * @param string $width Width of image
+ * @param string $height Height of image
+ * @param string $align Alignment of image
+ * @param string $alt Alt tag of image
  *
  * @return string $string <img> tag with corresponding image
  */
@@ -4560,12 +4633,11 @@ function getStudioIcon($iconFileName = '', $altFileName = '', $width = '48', $he
 /**
  * Function to grab the correct icon image for Dashlets Dialog.
  *
- * @param string $filename Location of the icon file
- * @param string $module   Name of the module to fall back onto if file does not exist
- * @param string $width    Width of image
- * @param string $height   Height of image
- * @param string $align    Alignment of image
- * @param string $alt      Alt tag of image
+ * @param string $module Name of the module to fall back onto if file does not exist
+ * @param string $width Width of image
+ * @param string $height Height of image
+ * @param string $align Alignment of image
+ * @param string $alt Alt tag of image
  *
  * @return string $string <img> tag with corresponding image
  */
@@ -4680,6 +4752,7 @@ function ajaxInit()
  *
  * @param string $path
  *
+ * @param bool $currentServer
  * @return string
  */
 function getAbsolutePath(
@@ -4810,7 +4883,10 @@ function filterInboundEmailPopSelection($protocol)
  * For some user using mssql without FreeTDS, they may store multibyte charaters in varchar using latin_general collation. It cannot store so many mutilbyte characters, so we need to use strlen.
  * The varchar in MySQL, Orcale, and nvarchar in FreeTDS, we can store $length mutilbyte charaters in it. we need mb_substr to keep more info.
  *
- * @returns the substred strings.
+ * @param $string
+ * @param $length
+ * @param string $charset
+ * @return string
  */
 function sugar_substr($string, $length, $charset = 'UTF-8')
 {
@@ -4824,6 +4900,9 @@ function sugar_substr($string, $length, $charset = 'UTF-8')
 /**
  * The function is used because on FastCGI enviroment, the ucfirst(Chinese Characters) will produce bad charcters.
  * This will work even without setting the mbstring.*encoding.
+ * @param $string
+ * @param string $charset
+ * @return string
  */
 function sugar_ucfirst($string, $charset = 'UTF-8')
 {
@@ -4831,7 +4910,8 @@ function sugar_ucfirst($string, $charset = 'UTF-8')
 }
 
 /**
- *
+ * @param $string
+ * @return array|bool|string
  */
 function unencodeMultienum($string)
 {
@@ -4936,6 +5016,9 @@ function clearAllJsAndJsLangFilesWithoutOutput()
 
 /**
  * This function will allow you to get a variable value from query string.
+ * @param $variable
+ * @param $string
+ * @return bool|mixed
  */
 function getVariableFromQueryString($variable, $string)
 {
@@ -5167,9 +5250,11 @@ function order_beans($beans, $field_name)
  * Return search like string
  * This function takes a user input string and returns a string that contains wild card(s) that can be used in db query.
  *
- * @param string $str       string to be searched
+ * @param string $str string to be searched
  * @param string $like_char Database like character, usually '%'
  *
+ * @param string $wildcard
+ * @param bool $appendWildcard
  * @return string Returns a string to be searched in db query
  */
 function sql_like_string($str, $like_char, $wildcard = '%', $appendWildcard = true)
@@ -5259,7 +5344,7 @@ function getFTSBoostOptions($optionName)
  *
  * @param Array $data of data to encode
  *
- * @return utf8 encoded Array data
+ * @return array encoded Array data
  */
 function utf8_recursive_encode($data)
 {
@@ -5298,7 +5383,7 @@ function get_language_header()
  *
  * @param String $file of filename to check
  *
- * @return $file String of filename including custom directory if found
+ * @return string $file String of filename including custom directory if found
  */
 function get_custom_file_if_exists($file)
 {
@@ -5424,6 +5509,10 @@ function clean_sensitive_data($defs, $data)
 
 /**
  * Return relations with labels for duplicates.
+ * @param $def
+ * @param $var_def
+ * @param $module
+ * @return array
  */
 function getDuplicateRelationListWithTitle($def, $var_def, $module)
 {
@@ -5564,6 +5653,8 @@ function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL
 
 /**
  * @deprecated deprecated since version 7.10 please use the SuiteValidator class
+ * @param $id
+ * @return bool
  */
 function isValidId($id)
 {

@@ -376,6 +376,8 @@ class SchedulersJob extends Basic
 
     /**
      * Delete a job
+     * @param $id
+     * @return bool|resource
      * @see SugarBean::mark_deleted($id)
      */
     public function mark_deleted($id)
@@ -609,7 +611,7 @@ interface RunnableSchedulerJob
 
     /**
      * @abstract
-     *
+     * @param $data
      */
     public function run($data);
 }

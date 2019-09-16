@@ -321,7 +321,7 @@ abstract class DashletGenericChart extends Dashlet
     /**
      * Returns the array of group by parameters for SugarChart::$group_by
      *
-     * @return string SQL query
+     * @return array SQL query
      */
     protected function constructGroupBy()
     {
@@ -393,17 +393,22 @@ abstract class DashletGenericChart extends Dashlet
     }
 
     /**
-      PG copied verbatim from SugarChart as there is no longer the dependency on this from RGraph charts
-
-    This function is used for localize all the characters in the Chart. And it can also sort all the dom_values by the sequence defined in the dom, but this may produce a lot of extra empty data in the xml file, when the chart is sorted by two key cols.
-    If the data quantity is large, it maybe a little slow.
-     * @param         array $data_set           The data get from database
-    string $keycolname1      We will sort by this key first
-    bool $translate1            Whether to trabslate the first column
-    string $keycolname1      We will sort by this key secondly, and  it can be null, then it will only sort by the first column.
-    bool $translate1            Whether to trabslate the second column
-    bool $ifsort2                 Whether to sort by the second column or just translate the second column.
-     * @return        The sorted and translated data.
+     * PG copied verbatim from SugarChart as there is no longer the dependency on this from RGraph charts
+     *
+     * This function is used for localize all the characters in the Chart. And it can also sort all the dom_values by the sequence defined in the dom, but this may produce a lot of extra empty data in the xml file, when the chart is sorted by two key cols.
+     * If the data quantity is large, it maybe a little slow.
+     * @param array $data_set The data get from database
+     * string $keycolname1      We will sort by this key first
+     * bool $translate1            Whether to trabslate the first column
+     * string $keycolname1      We will sort by this key secondly, and  it can be null, then it will only sort by the first column.
+     * bool $translate1            Whether to trabslate the second column
+     * bool $ifsort2                 Whether to sort by the second column or just translate the second column.
+     * @param null $keycolname1
+     * @param bool $translate1
+     * @param null $keycolname2
+     * @param bool $translate2
+     * @param bool $ifsort2
+     * @return array sorted and translated data.
      */
     public function sortData($data_set, $keycolname1=null, $translate1=false, $keycolname2=null, $translate2=false, $ifsort2=false)
     {

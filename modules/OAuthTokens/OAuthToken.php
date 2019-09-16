@@ -283,7 +283,7 @@ class OAuthToken extends SugarBean
 
     /**
      * Delete tokens by consumer ID
-     * @param string $user
+     * @param $consumer_id
      */
     public static function deleteByConsumer($consumer_id)
     {
@@ -293,7 +293,7 @@ class OAuthToken extends SugarBean
 
     /**
      * Delete tokens by user ID
-     * @param string $user
+     * @param $user_id
      */
     public static function deleteByUser($user_id)
     {

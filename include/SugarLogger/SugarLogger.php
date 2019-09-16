@@ -193,6 +193,8 @@ class SugarLogger implements LoggerTemplate
      * and show a backtrace information in log when
      * the 'show_log_trace' config variable is set and true
      * see LoggerTemplate::log()
+     * @param $level
+     * @param $message
      */
     public function log(
         $level,
@@ -236,6 +238,7 @@ class SugarLogger implements LoggerTemplate
 
     /**
      * rolls the logger file to start using a new file
+     * @param bool $force
      */
     protected function rollLog(
         $force = false

@@ -82,6 +82,8 @@ class Spots extends Basic
 
     /**
      *This replaces the label values in the config with the corresponding keys (to make language agnostic).
+     * @param bool $check_notify
+     * @return string
      */
     public function save($check_notify = false)
     {

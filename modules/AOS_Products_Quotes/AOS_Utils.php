@@ -5,7 +5,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
+ * @param $focus
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
@@ -25,6 +25,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
  * @author SalesAgility Ltd <info@salesagility.com>
+ * @package Advanced OpenSales for SugarCRM
  */
 
 function perform_aos_save($focus)

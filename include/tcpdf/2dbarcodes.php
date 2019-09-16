@@ -114,12 +114,12 @@ class TCPDF2DBarcode
     {
         return $this->barcode_array;
     }
-    
+
     /**
      * Set the barcode.
      * @param string $code code to print
      * @param string $type type of barcode: <ul><li>TEST</li><li>...TO BE IMPLEMENTED</li></ul>
-     * @return array
+     * @return void
      */
     public function setBarcode($code, $type)
     {

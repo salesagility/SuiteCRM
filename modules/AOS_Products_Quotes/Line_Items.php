@@ -1,6 +1,12 @@
 <?php
 /**
  * Advanced OpenSales, Advanced, robust set of sales modules.
+ * @param $focus
+ * @param $field
+ * @param $value
+ * @param $view
+ * @return string
+ * @author SalesAgility <info@salesagility.com>
  * @package Advanced OpenSales for SugarCRM
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
@@ -19,7 +25,6 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author SalesAgility <info@salesagility.com>
  */
 
 function display_lines($focus, $field, $value, $view)

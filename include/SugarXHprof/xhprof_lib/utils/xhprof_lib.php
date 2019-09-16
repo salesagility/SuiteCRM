@@ -50,6 +50,10 @@ function xhprof_get_possible_metrics()
  * Initialize the metrics we'll display based on the information
  * in the raw data.
  *
+ * @param $xhprof_data
+ * @param $rep_symbol
+ * @param $sort
+ * @param bool $diff_report
  * @author Kannan
  */
 function init_metrics($xhprof_data, $rep_symbol, $sort, $diff_report = false)
@@ -149,6 +153,8 @@ function xhprof_get_metrics($xhprof_data)
  * Takes a parent/child function name encoded as
  * "a==>b" and returns array("a", "b").
  *
+ * @param $parent_child
+ * @return array
  * @author Kannan
  */
 function xhprof_parse_parent_child($parent_child)
@@ -167,6 +173,9 @@ function xhprof_parse_parent_child($parent_child)
  * Given parent & child function name, composes the key
  * in the format present in the raw data.
  *
+ * @param $parent
+ * @param $child
+ * @return string
  * @author Kannan
  */
 function xhprof_build_parent_child_key($parent, $child)
@@ -272,6 +281,9 @@ function xhprof_trim_run($raw_data, $functions_to_keep)
  * collected are divided by $num_runs.
  *
  * @author Kannan
+ * @param $raw_data
+ * @param $num_runs
+ * @return array
  */
 function xhprof_normalize_metrics($raw_data, $num_runs)
 {
@@ -528,6 +540,9 @@ function xhprof_compute_flat_info($raw_data, &$overall_totals)
  * Compute and return difference of two call graphs: Run2 - Run1.
  *
  * @author Kannan
+ * @param $xhprof_data1
+ * @param $xhprof_data2
+ * @return mixed
  */
 function xhprof_compute_diff($xhprof_data1, $xhprof_data2)
 {
@@ -575,6 +590,7 @@ function xhprof_compute_diff($xhprof_data1, $xhprof_data2)
  * for a function is therefore the sum of inclusive metrics for the
  * function across all parents.
  *
+ * @param $raw_data
  * @return array  Returns a map of function name to total (across all parents)
  *                inclusive metrics for the function.
  *
@@ -718,6 +734,10 @@ function xhprof_prune_run($raw_data, $prune_percent)
 /**
  * Set one key in an array and return the array
  *
+ * @param $arr
+ * @param $k
+ * @param $v
+ * @return mixed
  * @author Kannan
  */
 function xhprof_array_set($arr, $k, $v)
@@ -730,6 +750,9 @@ function xhprof_array_set($arr, $k, $v)
  * Removes/unsets one key in an array and return the array
  *
  * @author Kannan
+ * @param $arr
+ * @param $k
+ * @return mixed
  */
 function xhprof_array_unset($arr, $k)
 {
@@ -773,6 +796,9 @@ function xhprof_get_param_helper($param)
  * $default value.
  *
  * @author Kannan
+ * @param $param
+ * @param string $default
+ * @return mixed|string|null
  */
 function xhprof_get_string_param($param, $default = '')
 {
@@ -794,6 +820,9 @@ function xhprof_get_string_param($param, $default = '')
  * and returns null.
  *
  * @author Kannan
+ * @param $param
+ * @param int $default
+ * @return int|mixed|string|null
  */
 function xhprof_get_uint_param($param, $default = 0)
 {
@@ -825,6 +854,9 @@ function xhprof_get_uint_param($param, $default = 0)
  * and returns null.
  *
  * @author Kannan
+ * @param $param
+ * @param int $default
+ * @return float|null
  */
 function xhprof_get_float_param($param, $default = 0)
 {
@@ -855,6 +887,9 @@ function xhprof_get_float_param($param, $default = 0)
  * and returns null.
  *
  * @author Kannan
+ * @param $param
+ * @param bool $default
+ * @return bool|mixed|string|null
  */
 function xhprof_get_bool_param($param, $default = false)
 {
@@ -908,6 +943,7 @@ function xhprof_get_bool_param($param, $default = false)
  *                       query string the default value is
  *                       used.
  * @author Kannan
+ * @param $params
  */
 function xhprof_param_init($params)
 {
@@ -944,6 +980,9 @@ function xhprof_param_init($params)
  * selector.
  *
  * @author Kannan
+ * @param $q
+ * @param $xhprof_data
+ * @return array
  */
 function xhprof_get_matching_functions($q, $xhprof_data)
 {

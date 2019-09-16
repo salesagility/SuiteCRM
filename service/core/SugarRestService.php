@@ -108,6 +108,14 @@ class SugarRestService extends SugarWebService
      * Its a no op method
      *
      * @access public
+     * @param $name
+     * @param $typeClass
+     * @param $phpType
+     * @param $compositor
+     * @param $restrictionBase
+     * @param $elements
+     * @param $attrs
+     * @param $arrayType
      */
     public function registerType($name, $typeClass, $phpType, $compositor, $restrictionBase, $elements, $attrs, $arrayType)
     {
@@ -192,7 +200,7 @@ class SugarRestService extends SugarWebService
      * This function registers implementation class name and creates an instance of rest implementation class
      * it will be made on this class object
      *
-     * @param String $implementationClass
+     * @param $className
      * @access public
      */
     public function registerImplClass($className)

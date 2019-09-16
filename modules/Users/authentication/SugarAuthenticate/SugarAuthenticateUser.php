@@ -59,7 +59,7 @@ class SugarAuthenticateUser
      *
      * @param STRING $name
      * @param STRING $password
-     * @param STRING $fallback - is this authentication a fallback from a failed authentication
+     * @param bool $fallback - is this authentication a fallback from a failed authentication
      * @return STRING id - used for loading the user
      */
     public function authenticateUser($name, $password, $fallback = false)
@@ -93,7 +93,8 @@ class SugarAuthenticateUser
      *
      * @param STRING $name
      * @param STRING $password
-     * @param STRING $fallback - is this authentication a fallback from a failed authentication
+     * @param bool $fallback - is this authentication a fallback from a failed authentication
+     * @param array $PARAMS
      * @return boolean
      */
     public function loadUserOnLogin($name, $password, $fallback = false, $PARAMS = array())

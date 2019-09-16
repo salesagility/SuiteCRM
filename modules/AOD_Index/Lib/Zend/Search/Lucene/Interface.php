@@ -244,7 +244,7 @@ interface Zend_Search_Lucene_Interface extends Zend_Search_Lucene_Index_TermsStr
      *
      * Default value is 10
      *
-     * @param integer $maxMergeDocs
+     * @param $mergeFactor
      */
     public function setMergeFactor($mergeFactor);
 

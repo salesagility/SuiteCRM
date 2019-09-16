@@ -879,7 +879,7 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
 
     /**
      * Getter function to get the implementation method which is a private variable
-     * @return DeployedMetaDataImplementation
+     * @return UndeployedMetaDataImplementation
      */
     public function getImplementation()
     {

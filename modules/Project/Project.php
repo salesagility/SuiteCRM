@@ -145,10 +145,11 @@ class Project extends SugarBean
     }
 
     /**
-    * Save changes that have been made to a relationship.
-    *
-    * @param true $is_update if this save is an update.
-    */
+     * Save changes that have been made to a relationship.
+     *
+     * @param true $is_update if this save is an update.
+     * @param array $exclude
+     */
     public function save_relationship_changes($is_update, $exclude=array())
     {
         parent::save_relationship_changes($is_update, $exclude);
@@ -180,8 +181,10 @@ class Project extends SugarBean
             }
         }
     }
+
     /**
-     *
+     * @param $project_id
+     * @return string
      */
     public function _get_total_estimated_effort($project_id)
     {
@@ -201,7 +204,8 @@ class Project extends SugarBean
     }
 
     /**
-     *
+     * @param $project_id
+     * @return string
      */
     public function _get_total_actual_effort($project_id)
     {
@@ -229,7 +233,8 @@ class Project extends SugarBean
     }
 
     /**
-     *
+     * @param $the_query_string
+     * @return string
      */
     public function build_generic_where_clause($the_query_string)
     {

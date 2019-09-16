@@ -431,6 +431,11 @@ eoq;
 
     /**
      * Returns JS used in this view
+     * @param $maxRecordsExceeded
+     * @param $maxRecordsWarningMessg
+     * @param $importMappingJS
+     * @param $importFileMap
+     * @return string
      */
     private function _getJS($maxRecordsExceeded, $maxRecordsWarningMessg, $importMappingJS, $importFileMap)
     {
@@ -590,6 +595,10 @@ EOJAVASCRIPT;
      * @param string $message error message to show
      * @param string $module what module we were importing into
      * @param string $action what page we should go back to
+     * @param bool $showCancel
+     * @param null $cancelLabel
+     * @param bool $display
+     * @throws \SuiteCRM\StateSaverException
      */
     protected function _showImportError($message, $module, $action = 'Step1', $showCancel = false, $cancelLabel = null, $display = false)
     {

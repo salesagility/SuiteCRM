@@ -84,6 +84,9 @@ class SavedSearch extends SugarBean
     }
 
     /**
+     * @param array $columns
+     * @param null $orderBy
+     * @param string $sortOrder
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function SavedSearch($columns = array(), $orderBy = null, $sortOrder = 'DESC')

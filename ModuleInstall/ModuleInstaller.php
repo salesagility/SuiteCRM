@@ -338,7 +338,8 @@ class ModuleInstaller
     /**
      * Removes any files that were added by the loaded module. If the files already existed prior to install
      * it will be handled by copy_path with the uninstall parameter.
-     *
+     * @param $cp
+     * @param $backup_path
      */
     public function uninstall_new_files($cp, $backup_path)
     {
@@ -1976,6 +1977,7 @@ class ModuleInstaller
 
     /**
      * Remove any customizations made within Studio while the module was installed.
+     * @param $beans
      */
     public function uninstall_customizations($beans)
     {
@@ -2116,8 +2118,7 @@ class ModuleInstaller
      * Static function which allows a module developer to abort their progress, pass in an array of errors and
      * redirect back to the main module loader page
      *
-     * @param errors	an array of error messages which will be displayed on the
-     * 					main module loader page once it is loaded.
+     * @param array $errors
      */
     public function abort($errors = array())
     {
@@ -2512,6 +2513,9 @@ class ModuleInstaller
 
     /**
      * BC implementation to provide specific calls to extensions
+     * @param $name
+     * @param $args
+     * @throws Exception
      */
     public function __call($name, $args)
     {

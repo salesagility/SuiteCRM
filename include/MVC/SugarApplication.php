@@ -208,7 +208,7 @@ class SugarApplication
      * setupResourceManagement
      * This function initialize the ResourceManager and calls the setup method
      * on the ResourceManager instance.
-     *
+     * @param $module
      */
     public function setupResourceManagement($module)
     {
@@ -375,6 +375,9 @@ class SugarApplication
      * checkDatabaseVersion
      * Check the db version sugar_version.php and compare to what the version is stored in the config table.
      * Ensure that both are the same.
+     * @param bool $dieOnFailure
+     * @return bool
+     * @throws Exception
      */
     public function checkDatabaseVersion($dieOnFailure = true)
     {
@@ -539,6 +542,8 @@ class SugarApplication
     /**
      *
      * Checks a request to ensure the request is coming from a valid source or it is for one of the white listed actions
+     * @param bool $dieIfInvalid
+     * @return bool
      */
     protected function checkHTTPReferer($dieIfInvalid = true)
     {

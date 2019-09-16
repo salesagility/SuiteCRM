@@ -114,6 +114,8 @@ class SugarCacheMemcache extends SugarCacheAbstract
     }
 
     /**
+     * @param $key
+     * @param $value
      * @see SugarCacheAbstract::_setExternal()
      */
     protected function _setExternal(
@@ -124,6 +126,8 @@ class SugarCacheMemcache extends SugarCacheAbstract
     }
 
     /**
+     * @param $key
+     * @return array|string|null
      * @see SugarCacheAbstract::_getExternal()
      */
     protected function _getExternal(
@@ -138,6 +142,7 @@ class SugarCacheMemcache extends SugarCacheAbstract
     }
 
     /**
+     * @param $key
      * @see SugarCacheAbstract::_clearExternal()
      */
     protected function _clearExternal(

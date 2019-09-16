@@ -184,6 +184,8 @@ class InboundEmail extends SugarBean
 
     /**
      * Email constructor
+     * @param ImapHandlerInterface|null $imapHandler
+     * @throws ImapHandlerException
      */
     public function __construct(ImapHandlerInterface $imapHandler = null)
     {
@@ -237,7 +239,9 @@ class InboundEmail extends SugarBean
 
     /**
      * retrieves I-E bean
-     * @param string id
+     * @param int $id
+     * @param bool $encode
+     * @param bool $deleted
      * @return object Bean
      */
     public function retrieve($id = -1, $encode = true, $deleted = true)
@@ -254,7 +258,7 @@ class InboundEmail extends SugarBean
 
     /**
      * wraps SugarBean->save()
-     * @param string ID of saved bean
+     * @param bool $check_notify
      * @return string
      */
     public function save($check_notify = false)
@@ -301,6 +305,7 @@ class InboundEmail extends SugarBean
     /**
      * Mark cached email answered (replied)
      * @param string $mailid (uid for imap, message_id for pop3)
+     * @param string $type
      */
     public function mark_answered($mailid, $type = 'smtp')
     {
@@ -380,7 +385,9 @@ class InboundEmail extends SugarBean
      * @param int $pageSize
      * @param array $order
      * @param array $filter
+     * @param array $columns
      * @return array
+     * @throws ImapHandlerException
      */
     public function checkWithPagination($offset = 0, $pageSize = 20, $order = array(), $filter = array(), $columns = array())
     {
@@ -748,6 +755,8 @@ class InboundEmail extends SugarBean
 
     /**
      * Fetches a timestamp
+     * @param $mbox
+     * @return int
      */
     public function getCacheTimestamp($mbox)
     {
@@ -860,6 +869,8 @@ class InboundEmail extends SugarBean
 
     /**
      * Retrieves cached headers
+     * @param $mbox
+     * @param $UIDs
      * @return array
      */
     public function getCacheValueForUIDs($mbox, $UIDs)
@@ -950,6 +961,11 @@ class InboundEmail extends SugarBean
 
     /**
      * Retrieves cached headers
+     * @param $mbox
+     * @param int $limit
+     * @param int $page
+     * @param string $sort
+     * @param string $direction
      * @return array
      */
     public function getCacheValue($mbox, $limit = 20, $page = 1, $sort = '', $direction = '')
@@ -1038,6 +1054,10 @@ class InboundEmail extends SugarBean
 
     /**
      * Sets cache values
+     * @param $mbox
+     * @param $insert
+     * @param array $update
+     * @param array $remove
      */
     public function setCacheValue($mbox, $insert, $update = array(), $remove = array())
     {
@@ -1401,6 +1421,9 @@ class InboundEmail extends SugarBean
     /**
      * Special handler for POP3 boxes.  Standard IMAP commands are useless.
      * This will fetch only partial emails for POP3 and hence needs to be call again and again based on status it returns
+     * @param bool $synch
+     * @return array|string
+     * @throws ImapHandlerException
      */
     public function pop3_checkPartialEmail($synch = false)
     {
@@ -1590,7 +1613,8 @@ class InboundEmail extends SugarBean
 
     /**
      * Iterates through msgno and message_id to remove dirty cache entries
-     * @param array diff
+     * @param $diff
+     * @param $cacheUIDLs
      * @return array
      */
     public function pop3_shiftCache($diff, $cacheUIDLs)
@@ -1660,7 +1684,9 @@ class InboundEmail extends SugarBean
      * Checks email (local caching too) for one mailbox
      * @param string $mailbox IMAP Mailbox path
      * @param bool $prefetch Flag to prefetch email body on check
+     * @param bool $synchronize
      * @return int
+     * @throws ImapHandlerException
      */
     public function checkEmailOneMailbox($mailbox, $prefetch = true, $synchronize = false)
     {
@@ -1760,7 +1786,11 @@ class InboundEmail extends SugarBean
      * Checks email (local caching too) for one mailbox
      * @param string $mailbox IMAP Mailbox path
      * @param bool $prefetch Flag to prefetch email body on check
+     * @param bool $synchronize
+     * @param int $start
+     * @param int $max
      * @return array
+     * @throws ImapHandlerException
      */
     public function checkEmailOneMailboxPartial($mailbox, $prefetch = true, $synchronize = false, $start = 0, $max = -1)
     {
@@ -2037,6 +2067,8 @@ class InboundEmail extends SugarBean
 
     /**
      * update INBOX
+     * @param bool $prefetch
+     * @param bool $synch
      */
     public function checkEmail($prefetch = true, $synch = false)
     {
@@ -2133,7 +2165,6 @@ class InboundEmail extends SugarBean
      * Deletes cached messages when moving from folder to folder
      * @param string $uids
      * @param string $fromFolder
-     * @param string $toFolder
      */
     public function deleteCachedMessages($uids, $fromFolder)
     {
@@ -2517,6 +2548,14 @@ class InboundEmail extends SugarBean
 
     /**
      * Searches IMAP (and POP3?) accounts/folders for emails with qualifying criteria
+     * @param $ieId
+     * @param string $subject
+     * @param string $from
+     * @param string $to
+     * @param string $body
+     * @param string $dateFrom
+     * @param string $dateTo
+     * @return array
      */
     public function search($ieId, $subject = '', $from = '', $to = '', $body = '', $dateFrom = '', $dateTo = '')
     {
@@ -2735,10 +2774,11 @@ class InboundEmail extends SugarBean
 
     /**
      * Saves Personal Inbox settings for Users
-     * @param string userId ID of user to assign all emails for this account
-     * @param strings userName Name of account, for Sugar purposes
+     * @param string $userId
+     * @param string $userName
      * @param bool forceSave Default true.  Flag to save errored settings.
      * @return boolean true on success, false on fail
+     * @throws ImapHandlerException
      */
     public function savePersonalEmailAccount($userId = '', $userName = '', $forceSave = true)
     {
@@ -3073,6 +3113,15 @@ class InboundEmail extends SugarBean
 
     /**
      * Programatically determines best-case settings for imap_open()
+     * @param bool $useSsl
+     * @param string $user
+     * @param string $pass
+     * @param string $server
+     * @param string $port
+     * @param string $prot
+     * @param string $mailbox
+     * @return array|bool
+     * @throws ImapHandlerException
      */
     public function findOptimumSettings(
         $useSsl = false,
@@ -3415,7 +3464,11 @@ class InboundEmail extends SugarBean
     /**
      * handles auto-responses to inbound emails
      *
-     * @param object email Email passed as reference
+     * @param $email
+     * @param $contactAddr
+     * @throws EmailException
+     * @throws EmailValidatorException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function handleAutoresponse(&$email, &$contactAddr)
     {
@@ -3966,9 +4019,14 @@ class InboundEmail extends SugarBean
     /**
      * returns the HTML text part of a multi-part message
      *
-     * @param int msgNo the relative message number for the monitored mailbox
+     * @param $uid
      * @param string $type the type of text processed, either 'PLAIN' or 'HTML'
+     * @param $structure
+     * @param $fullHeader
+     * @param bool $clean_email
+     * @param string $bcOffset
      * @return string UTF-8 encoded version of the requested message text
+     * @throws ImapHandlerException
      */
     public function getMessageTextWithUid($uid, $type, $structure, $fullHeader, $clean_email = true, $bcOffset = "")
     {
@@ -4169,7 +4227,7 @@ class InboundEmail extends SugarBean
      * decodes raw header information and passes back an associative array with
      * the important elements key'd by name
      * @param header string the raw header
-     * @return decodedHeader array the associative array
+     * @return array array the associative array
      */
     public function decodeHeader($fullHeader)
     {
@@ -4247,7 +4305,7 @@ class InboundEmail extends SugarBean
      * parts of an email message, including attachments and inline images
      * @param array $parts of objects
      * @param what $subtype type of trail to return? HTML? Plain? binaries?
-     * @param text $breadcrumb trail to build up
+     * @param string $breadcrumb trail to build up
      * @return int|string
      */
     public function buildBreadCrumbs($parts, $subtype, $breadcrumb = '0')
@@ -4279,9 +4337,9 @@ class InboundEmail extends SugarBean
     /**
      * Similar to buildBreadCrumbs() but returns an ordered array containing all parts of the message that would be
      * considered "HTML" or Richtext (embedded images, formatting, etc.).
-     * @param array parts Array of parts of a message
      * @param int breadcrumb Passed integer value to start breadcrumb trail
-     * @param array stackedBreadcrumbs Persistent trail of breadcrumbs
+     * @param string $breadcrumb
+     * @param array $stackedBreadcrumbs
      * @return array Ordered array of parts to retrieve via imap_fetchbody()
      */
     public function buildBreadCrumbsHTML($parts, $breadcrumb = '0', $stackedBreadcrumbs = array())
@@ -4642,7 +4700,7 @@ class InboundEmail extends SugarBean
      * decodes a string based on its associated encoding
      * if nothing is passed, we default to no-encoding type
      * @param encoded $str string
-     * @param detected $enc encoding
+     * @param int $enc encoding
      * @return bool|encoded|string
      */
     public function handleTranserEncoding($str, $enc = 0)
@@ -4896,6 +4954,10 @@ class InboundEmail extends SugarBean
 
     /**
      * If the importOneEmail returns false, then findout if the duplicate email
+     * @param $msgNo
+     * @param $uid
+     * @return bool|string
+     * @throws ImapHandlerException
      */
     public function getDuplicateEmailId($msgNo, $uid)
     {
@@ -4944,11 +5006,15 @@ class InboundEmail extends SugarBean
 
     /**
      * shiny new importOneEmail() method
-     * @deprecated since - 7.9 use returnImportedEmail instead
-     * @param int msgNo
-     * @param bool forDisplay
-     * @param clean_email boolean, default true,
+     * @param $msgNo
+     * @param $uid
+     * @param bool $forDisplay
+     * @param bool $clean_email
      * @return boolean|string
+     * @throws EmailValidatorException
+     * @throws ImapHandlerException
+     * @throws \SuiteCRM\ErrorMessageException
+     * @deprecated since - 7.9 use returnImportedEmail instead
      */
     public function importOneEmail($msgNo, $uid, $forDisplay = false, $clean_email = true)
     {
@@ -5800,8 +5866,9 @@ class InboundEmail extends SugarBean
 
     /**
      * wrapper for UUDecode
-     * @param string id Id of the email
-     * @param string UUEncode Encode US-ASCII
+     * @param $id
+     * @param $fileName
+     * @param $UUEncode
      */
     public function handleUUDecode($id, $fileName, $UUEncode)
     {
@@ -6115,7 +6182,7 @@ class InboundEmail extends SugarBean
     /**
      * This function returns a contact or user ID if a matching email is found
      * @param the $email email address to match
-     * @param which $table table to query
+     * @param $module
      * @return array|bool
      */
     public function getRelatedId($email, $module)
@@ -6195,6 +6262,8 @@ class InboundEmail extends SugarBean
     /**
      * Constructs the resource connection string that IMAP needs
      * @param string $service Service string, will generate if not passed
+     * @param string $mbox
+     * @param bool $includeMbox
      * @return string
      */
     public function getConnectString($service = '', $mbox = '', $includeMbox = true)
@@ -6582,6 +6651,10 @@ class InboundEmail extends SugarBean
 
     /**
      * Override's SugarBean's
+     * @param $order_by
+     * @param $where
+     * @param int $show_deleted
+     * @return String
      */
     public function create_export_query($order_by, $where, $show_deleted = 0)
     {
@@ -7052,6 +7125,7 @@ class InboundEmail extends SugarBean
      * Get the users default IE account id
      *
      * @param User $user
+     * @param $oe_id
      */
     public function setUsersDefaultOutboundServerId($user, $oe_id)
     {
@@ -7167,6 +7241,9 @@ class InboundEmail extends SugarBean
 
     /**
      * Sets status for a particular attribute on the mailserver and the local cache file
+     * @param $uid
+     * @param $field
+     * @param $value
      */
     public function setStatuses($uid, $field, $value)
     {
@@ -7448,8 +7525,9 @@ eoq;
     /**
      * Sorts IMAP's imap_fetch_overview() results
      * @param array $arr Array of standard objects
-     * @param string $sort Column to sort by
-     * @param string direction Direction to sort by (asc/desc)
+     * @param int $sort Column to sort by
+     * @param string $direction
+     * @param bool $forceSeen
      * @return array Sorted array of obj.
      */
     public function sortFetchedOverview($arr, $sort = 4, $direction = 'DESC', $forceSeen = false)
@@ -7870,8 +7948,9 @@ eoq;
 
     /**
      * sorts the folders in a mailbox in a multi-dimensional array
-     * @param string $MBOX
+     * @param $mbox
      * @param array $ret
+     * @param string $delimeter
      * @return array
      */
     public function sortMailboxes($mbox, $ret, $delimeter = ".")

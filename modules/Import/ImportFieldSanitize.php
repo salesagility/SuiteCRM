@@ -74,13 +74,12 @@ class ImportFieldSanitize
      * true if we will create related beans during the sanitize process
      */
     public $addRelatedBean = false;
-    
+
     /**
      * Checks the SugarField defintion for an available santization method.
      *
-     * @param string $value
-     * @param array $vardef
-     * @param object $focus bean of the module we're importing into
+     * @param $name
+     * @param $params
      * @return string sanitized and validated value on success, bool false on failure
      */
     public function __call(
@@ -153,7 +152,6 @@ class ImportFieldSanitize
      *
      * @param string $value
      * @param array $vardef
-     * @param object $focus bean of the module we're importing into
      * @return string sanitized and validated value on success, bool false on failure
      */
     public function email(

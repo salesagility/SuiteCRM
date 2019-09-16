@@ -207,6 +207,8 @@ class SugarSpriteBuilder
      * This is a private helper function to return attributes about an image.  If the width, height or type of the
      * image file cannot be determined, then we do not process the file.
      *
+     * @param $dir
+     * @param $file
      * @return array of file info entries containing file information (x, y, type) if image type is supported
      */
     private function getFileInfo($dir, $file)

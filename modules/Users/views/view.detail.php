@@ -222,7 +222,7 @@ class UsersViewDetail extends ViewDetail
      * meets the valid criteria.
      *
      * @param String $module the formatted module name
-     * @return $theTitle String the HTML for the help text
+     * @return string $theTitle String the HTML for the help text
      */
     protected function getHelpText($module)
     {

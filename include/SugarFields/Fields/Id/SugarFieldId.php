@@ -43,6 +43,11 @@ require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 class SugarFieldId extends SugarFieldBase
 {
     /**
+     * @param $value
+     * @param $vardef
+     * @param $focus
+     * @param ImportFieldSanitize $settings
+     * @return bool
      * @see SugarFieldBase::importSanitize()
      */
     public function importSanitize(

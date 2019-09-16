@@ -70,6 +70,8 @@ class ViewDashlet extends ViewListView
     }
 
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)

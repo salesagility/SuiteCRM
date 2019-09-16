@@ -104,6 +104,8 @@ class BreadCrumbStack
     }
 
     /**
+     * @param $user_id
+     * @param string $modules
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function BreadCrumbStack($user_id, $modules='')
@@ -122,7 +124,7 @@ class BreadCrumbStack
      * Returns true if the stack contains the specified item_id, false otherwise.
      *
      * @param item_id the item id to search for
-     * @return id of the first item on the stack
+     * @return bool of the first item on the stack
      */
     public function contains($item_id)
     {
@@ -246,6 +248,7 @@ class BreadCrumbStack
     /**
      * Return the list of breadcrubmbs currently in memory
      *
+     * @param string $filter_module
      * @return array of breadcrumbs
      */
     public function getBreadCrumbList($filter_module='')

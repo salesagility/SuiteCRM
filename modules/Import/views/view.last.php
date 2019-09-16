@@ -188,6 +188,8 @@ class ImportViewLast extends ImportView
 
     /**
      * Returns JS used in this view
+     * @param $activeTab
+     * @return string
      */
     private function _getJS($activeTab)
     {

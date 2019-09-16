@@ -279,7 +279,7 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
      *
      * @param string $from
      * @param string $to
-     * @return void
+     * @return bool
      * @throws Zend_Search_Lucene_Exception
      */
     public function renameFile($from, $to)
@@ -323,7 +323,7 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
      * Sets the modified time of $filename to now.
      *
      * @param string $filename
-     * @return void
+     * @return bool
      */
     public function touchFile($filename)
     {

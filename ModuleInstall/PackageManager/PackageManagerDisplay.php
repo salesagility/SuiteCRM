@@ -47,15 +47,17 @@ require_once('ModuleInstall/PackageManager/ListViewPackages.php');
 class PackageManagerDisplay
 {
 
-   /**
+    /**
      * A Static method to Build the display for the package manager
      *
-     * @param String form1 - the form to display for manual downloading
-     * @param String hidden_fields - the hidden fields related to downloading a package
-     * @param String form_action - the form_action to be used when downloading from the server
-     * @param String types - the types of objects we will request from the server
-     * @param String active_form - the form to display first
+     * @param $form1
+     * @param $hidden_fields
+     * @param $form_action
+     * @param array $types
+     * @param string $active_form
+     * @param bool $install
      * @return String - a string of html which will be used to display the forms
+     * @throws \SuiteCRM\StateSaverException
      */
     public static function buildPackageDisplay($form1, $hidden_fields, $form_action, $types = array('module'), $active_form = 'form1', $install = false)
     {
@@ -141,12 +143,13 @@ class PackageManagerDisplay
     /**
      * A Static method to Build the display for the package manager
      *
-     * @param String form1 - the form to display for manual downloading
-     * @param String hidden_fields - the hidden fields related to downloading a package
-     * @param String form_action - the form_action to be used when downloading from the server
-     * @param String types - the types of objects we will request from the server
-     * @param String active_form - the form to display first
+     * @param $form1
+     * @param $hidden_fields
+     * @param $form_action
+     * @param array $types
+     * @param string $active_form
      * @return String - a string of html which will be used to display the forms
+     * @throws \SuiteCRM\StateSaverException
      */
     public function buildPatchDisplay($form1, $hidden_fields, $form_action, $types = array('module'), $active_form = 'form1')
     {
@@ -268,9 +271,11 @@ class PackageManagerDisplay
     /**
      *  Build html in order to display the grids relevant for module loader
      *
-     *  @param Tree tree - the tree which we are using to display the categories
-     *  @param Array mod_strings - the local mod strings to display
-     *  @return String - a string of html
+     * @param $tree
+     * @param $mod_strings
+     * @param bool $display
+     * @param bool $show_login
+     * @return String - a string of html
      */
     public static function buildGridOutput($tree, $mod_strings, $display = true, $show_login = true)
     {
@@ -306,11 +311,12 @@ class PackageManagerDisplay
     }
 
     /**
-    * A Static method used to build the initial treeview when the page is first displayed
-    *
-    * @param String div_id - this div in which to display the tree
-    * @return Tree - the tree that is built
-    */
+     * A Static method used to build the initial treeview when the page is first displayed
+     *
+     * @param String div_id - this div in which to display the tree
+     * @param bool $isAlive
+     * @return Tree - the tree that is built
+     */
     public static function buildTreeView($div_id, $isAlive = true)
     {
         $tree = new Tree($div_id);
@@ -383,10 +389,16 @@ class PackageManagerDisplay
     }
 
     /**
-    * A Static method used to generate the javascript for the page
-    *
-    * @return String - the javascript required for the page
-    */
+     * A Static method used to generate the javascript for the page
+     *
+     * @param bool $install
+     * @param string $type
+     * @param null $releases
+     * @param array $types
+     * @param bool $isAlive
+     * @return String - the javascript required for the page
+     * @throws \SuiteCRM\StateSaverException
+     */
     public static function getDisplayScript($install = false, $type = 'module', $releases = null, $types = array(), $isAlive = true)
     {
         global $sugar_version, $sugar_config;
@@ -518,6 +530,9 @@ class PackageManagerDisplay
     /**
      *  This method is meant to be used to display the license agreement inline on the page
      *  if the system would like to perform the installation on the same page via an Ajax call
+     * @param $file
+     * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function buildLicenseOutput($file)
     {

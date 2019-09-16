@@ -166,6 +166,10 @@ class MssqlManager extends DBManager
     protected $connectOptions;
 
     /**
+     * @param array|null $configOptions
+     * @param bool $dieOnError
+     * @return bool
+     * @throws Exception
      * @see DBManager::connect()
      */
     public function connect(array $configOptions = null, $dieOnError = false)
@@ -283,6 +287,13 @@ class MssqlManager extends DBManager
     }
 
     /**
+     * @param $sql
+     * @param bool $dieOnError
+     * @param string $msg
+     * @param bool $suppress
+     * @param bool $keepResult
+     * @return bool|mixed|resource
+     * @throws Exception
      * @see DBManager::query()
      */
     public function query($sql, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false)
@@ -428,6 +439,13 @@ class MssqlManager extends DBManager
     }
 
     /**
+     * @param $sql
+     * @param $start
+     * @param $count
+     * @param bool $dieOnError
+     * @param string $msg
+     * @param bool $execute
+     * @return bool|mixed|resource|string
      * @see DBManager::limitQuery()
      */
     public function limitQuery($sql, $start, $count, $dieOnError = false, $msg = '', $execute = true)
@@ -898,6 +916,9 @@ class MssqlManager extends DBManager
     }
 
     /**
+     * @param $result
+     * @param bool $make_lower_case
+     * @return array|int
      * @see DBManager::getFieldsArray()
      */
     public function getFieldsArray($result, $make_lower_case = false)
@@ -927,6 +948,8 @@ class MssqlManager extends DBManager
     }
 
     /**
+     * @param $result
+     * @return array
      * @see DBManager::getAffectedRowCount()
      */
     public function getAffectedRowCount($result)
@@ -935,6 +958,8 @@ class MssqlManager extends DBManager
     }
 
     /**
+     * @param $result
+     * @return array|bool
      * @see DBManager::fetchRow()
      */
     public function fetchRow($result)
@@ -960,6 +985,8 @@ class MssqlManager extends DBManager
     }
 
     /**
+     * @param $string
+     * @return array|mixed
      * @see DBManager::quote()
      */
     public function quote($string)
@@ -973,6 +1000,8 @@ class MssqlManager extends DBManager
 
     /**
      * @see DBManager::quoteIdentifier()
+     * @param $string
+     * @return string
      */
     public function quoteIdentifier($string)
     {
@@ -981,6 +1010,8 @@ class MssqlManager extends DBManager
 
     /**
      * @see DBManager::tableExists()
+     * @param $tableName
+     * @return bool
      */
     public function tableExists($tableName)
     {
@@ -1107,6 +1138,10 @@ class MssqlManager extends DBManager
 
     /**
      * @see DBManager::convert()
+     * @param $string
+     * @param $type
+     * @param array $additional_parameters
+     * @return string
      */
     public function convert($string, $type, array $additional_parameters = array())
     {
@@ -1176,6 +1211,9 @@ class MssqlManager extends DBManager
 
     /**
      * @see DBManager::fromConvert()
+     * @param $string
+     * @param $type
+     * @return bool|string
      */
     public function fromConvert($string, $type)
     {
@@ -1194,6 +1232,10 @@ class MssqlManager extends DBManager
 
     /**
      * @see DBManager::createTableSQLParams()
+     * @param $tablename
+     * @param $fieldDefs
+     * @param $indices
+     * @return string
      */
     public function createTableSQLParams($tablename, $fieldDefs, $indices)
     {
@@ -1263,7 +1305,7 @@ class MssqlManager extends DBManager
      * modify operation
      * @param string $action
      * @param array $def
-     * @param bool $ignorRequired
+     * @param $ignoreRequired
      * @param string $tablename
      * @return string
      */
@@ -1299,6 +1341,11 @@ class MssqlManager extends DBManager
      *
      * MSSQL uses a different syntax than MySQL for table altering that is
      * not quite as simplistic to implement...
+     * @param $tablename
+     * @param $fieldDefs
+     * @param $action
+     * @param bool $ignoreRequired
+     * @return string
      */
     protected function changeColumnSQL($tablename, $fieldDefs, $action, $ignoreRequired = false)
     {
@@ -1360,6 +1407,10 @@ class MssqlManager extends DBManager
 
     /**
      * @see DBManager::setAutoIncrementStart()
+     * @param $table
+     * @param $field_name
+     * @param $start_value
+     * @return bool
      */
     public function setAutoIncrementStart($table, $field_name, $start_value)
     {
@@ -1373,6 +1424,9 @@ class MssqlManager extends DBManager
 
     /**
      * @see DBManager::getAutoIncrement()
+     * @param $table
+     * @param $field_name
+     * @return array
      */
     public function getAutoIncrement($table, $field_name)
     {
@@ -1383,6 +1437,8 @@ class MssqlManager extends DBManager
 
     /**
      * @see DBManager::get_indices()
+     * @param $tableName
+     * @return array
      */
     public function get_indices($tableName)
     {
@@ -1419,6 +1475,8 @@ EOSQL;
 
     /**
      * @see DBManager::get_columns()
+     * @param $tablename
+     * @return array
      */
     public function get_columns($tablename)
     {
@@ -1486,6 +1544,10 @@ EOSQL;
 
     /**
      * @see DBManager::add_drop_constraint()
+     * @param $table
+     * @param $definition
+     * @param bool $drop
+     * @return string
      */
     public function add_drop_constraint($table, $definition, $drop = false)
     {
@@ -1576,6 +1638,8 @@ EOSQL;
 
     /**
      * @see DBManager::full_text_indexing_enabled()
+     * @param null $dbname
+     * @return bool
      */
     protected function full_text_indexing_enabled($dbname = null)
     {
@@ -1676,6 +1740,8 @@ EOQ;
 
     /**
      * @see DBManager::massageFieldDef()
+     * @param $fieldDef
+     * @param $tablename
      */
     public function massageFieldDef(&$fieldDef, $tablename)
     {
@@ -1728,6 +1794,11 @@ EOQ;
 
     /**
      * @see DBManager::oneColumnSQLRep()
+     * @param $fieldDef
+     * @param bool $ignoreRequired
+     * @param string $table
+     * @param bool $return_as_array
+     * @return string
      */
     protected function oneColumnSQLRep($fieldDef, $ignoreRequired = false, $table = '', $return_as_array = false)
     {
@@ -1794,6 +1865,7 @@ EOQ;
 
     /**
      * @see DBManager::freeDbResult()
+     * @param $dbResult
      */
     protected function freeDbResult($dbResult)
     {
@@ -1863,6 +1935,8 @@ EOQ;
     /**
      * (non-PHPdoc)
      * @see DBManager::validateQuery()
+     * @param $query
+     * @return bool
      */
     public function validateQuery($query)
     {

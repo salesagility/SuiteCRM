@@ -61,7 +61,6 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
      * Zend_Search_Lucene_Search_Query_Term constructor
      *
      * @param Zend_Search_Lucene_Index_Term $term
-     * @param boolean $sign
      */
     public function __construct(Zend_Search_Lucene_Index_Term $term)
     {

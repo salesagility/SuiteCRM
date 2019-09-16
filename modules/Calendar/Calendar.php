@@ -89,12 +89,12 @@ class Calendar
      * @var bool $print Whether is print mode.
      */
     private $print = false;
-        
+
     /**
      * constructor
      * @param string $view
      * @param array $time_arr
-     * @param array $views
+     * @throws Exception
      */
     public function __construct($view = "agendaWeek", $time_arr = array())
     {

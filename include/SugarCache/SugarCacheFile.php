@@ -116,6 +116,8 @@ class SugarCacheFile extends SugarCacheAbstract
     }
 
     /**
+     * @param $key
+     * @param $value
      * @see SugarCacheAbstract::_setExternal()
      *
      * Does nothing; we write to cache on destroy
@@ -128,6 +130,8 @@ class SugarCacheFile extends SugarCacheAbstract
     }
 
     /**
+     * @param $key
+     * @return |null
      * @see SugarCacheAbstract::_getExternal()
      */
     protected function _getExternal(
@@ -146,6 +150,7 @@ class SugarCacheFile extends SugarCacheAbstract
     }
 
     /**
+     * @param $key
      * @see SugarCacheAbstract::_clearExternal()
      *
      * Does nothing; we write to cache on destroy

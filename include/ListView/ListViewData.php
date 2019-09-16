@@ -65,7 +65,6 @@ class ListViewData
     /**
      * Constructor sets the limitName to look up the limit in $sugar_config
      *
-     * @return ListViewData
      */
     public function __construct()
     {
@@ -91,6 +90,8 @@ class ListViewData
     /**
      * checks the request for the order by and if that is not set then it checks the session for it
      *
+     * @param string $orderBy
+     * @param string $direction
      * @return array containing the keys orderBy => field being ordered off of and sortOrder => the sort order of that field
      */
     public function getOrderBy($orderBy = '', $direction = '')
@@ -184,6 +185,9 @@ class ListViewData
      * based off of a base name it sets base, offset, and order by variable names to retrieve them from requests and sessions
      *
      * @param unknown_type $baseName
+     * @param $where
+     * @param null $listviewName
+     * @param null $id
      */
     public function setVariableName($baseName, $where, $listviewName = null, $id = null)
     {
@@ -226,35 +230,33 @@ class ListViewData
      * if the $limit value is set to -1 then it will use the default limit and offset values
      *
      * it will return an array with two key values
-     * 	1. 'data'=> this is an array of row data
+     *    1. 'data'=> this is an array of row data
      *  2. 'pageData'=> this is an array containg three values
-     * 			a.'ordering'=> array('orderBy'=> the field being ordered by , 'sortOrder'=> 'ASC' or 'DESC')
-     * 			b.'urls'=>array('baseURL'=>url used to generate other urls ,
-     * 							'orderBy'=> the base url for order by
-     * 							//the following may not be set (so check empty to see if they are set)
-     * 							'nextPage'=> the url for the next group of results,
-     * 							'prevPage'=> the url for the prev group of results,
-     * 							'startPage'=> the url for the start of the group,
-     * 							'endPage'=> the url for the last set of results in the group
-     * 			c.'offsets'=>array(
-     * 								'current'=>current offset
-     * 								'next'=> next group offset
-     * 								'prev'=> prev group offset
-     * 								'end'=> the offset of the last group
-     * 								'total'=> the total count (only accurate if totalCounted = true otherwise it is either the total count if less than the limit or the total count + 1 )
-     * 								'totalCounted'=> if a count query was used to get the total count
+     *            a.'ordering'=> array('orderBy'=> the field being ordered by , 'sortOrder'=> 'ASC' or 'DESC')
+     *            b.'urls'=>array('baseURL'=>url used to generate other urls ,
+     *                            'orderBy'=> the base url for order by
+     *                            //the following may not be set (so check empty to see if they are set)
+     *                            'nextPage'=> the url for the next group of results,
+     *                            'prevPage'=> the url for the prev group of results,
+     *                            'startPage'=> the url for the start of the group,
+     *                            'endPage'=> the url for the last set of results in the group
+     *            c.'offsets'=>array(
+     *                                'current'=>current offset
+     *                                'next'=> next group offset
+     *                                'prev'=> prev group offset
+     *                                'end'=> the offset of the last group
+     *                                'total'=> the total count (only accurate if totalCounted = true otherwise it is either the total count if less than the limit or the total count + 1 )
+     *                                'totalCounted'=> if a count query was used to get the total count
      *
      * @param SugarBean $seed
      * @param string $where
-     * @param int:0 $offset
-     * @param int:-1 $limit
-     * @param string[]:array() $filter_fields
-     * @param array:array() $params
-     * 	Potential $params are
-    	$params['distinct'] = use distinct key word
-    	$params['include_custom_fields'] = (on by default)
-        $params['custom_XXXX'] = append custom statements to query
-     * @param string:'id' $id_field
+     * @param int $offset
+     * @param int $limit
+     * @param array $filter_fields
+     * @param array $params
+     * @param string $id_field
+     * @param bool $singleSelect
+     * @param null $id
      * @return array('data'=> row data, 'pageData' => page data information, 'query' => original query string)
      */
     public function getListViewData($seed, $where, $offset=-1, $limit = -1, $filter_fields=array(), $params=array(), $id_field = 'id', $singleSelect=true, $id = null)

@@ -120,6 +120,7 @@ class ModuleListProvider
     }
 
     /**
+     * @param $moduleName
      * @param $actions
      * @return array
      */

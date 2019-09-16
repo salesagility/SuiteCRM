@@ -43,8 +43,10 @@ require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
 class ViewModule extends SugarView
 {
     public $mbModule;
-    
+
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)

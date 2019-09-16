@@ -73,7 +73,7 @@ class Zend_Search_Lucene_Proxy implements Zend_Search_Lucene_Interface
      * -1 means there are no segments files.
      *
      * @param Zend_Search_Lucene_Storage_Directory $directory
-     * @return integer
+     * @return void
      * @throws Zend_Search_Lucene_Exception
      */
     public static function getActualGeneration(Zend_Search_Lucene_Storage_Directory $directory)
@@ -321,7 +321,7 @@ class Zend_Search_Lucene_Proxy implements Zend_Search_Lucene_Interface
      *
      * Default value is 10
      *
-     * @param integer $maxMergeDocs
+     * @param $mergeFactor
      */
     public function setMergeFactor($mergeFactor)
     {

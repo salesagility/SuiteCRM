@@ -66,7 +66,7 @@ class ConnectorHtmlHelper
     /**
      * Get button for source
      *
-     * @param string $shown_source
+     * @param array $shown_sources
      * @param mixed $module
      * @param mixed $smarty
      * @return string

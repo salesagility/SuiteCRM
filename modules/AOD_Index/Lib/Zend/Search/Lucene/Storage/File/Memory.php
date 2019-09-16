@@ -86,7 +86,7 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
      *
      * @param integer $offset
      * @param integer $whence
-     * @return integer
+     * @return void
      */
     public function seek($offset, $whence=SEEK_SET)
     {
@@ -160,6 +160,7 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
      * Lock type may be a LOCK_SH (shared lock) or a LOCK_EX (exclusive lock)
      *
      * @param integer $lockType
+     * @param bool $nonBlockinLock
      * @return boolean
      */
     public function lock($lockType, $nonBlockinLock = false)

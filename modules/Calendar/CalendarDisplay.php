@@ -253,8 +253,11 @@ class CalendarDisplay
 
         return $activity;
     }
+
     /**
      * load settings popup template
+     * @param $ss
+     * @throws Exception
      */
     protected function load_settings_template(&$ss)
     {
@@ -361,6 +364,8 @@ class CalendarDisplay
 
     /**
      * Get date info string (legacy from old calendar)
+     * @param $view
+     * @param $date_time
      * @return string
      */
     public function get_date_info($view, $date_time)
@@ -659,6 +664,8 @@ class CalendarDisplay
 
     /**
      * display html used in shared view
+     * @param $view
+     * @throws \SuiteCRM\StateSaverException
      */
     public function display_shared_html($view)
     {

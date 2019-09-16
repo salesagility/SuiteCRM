@@ -91,7 +91,7 @@ class Zend_Search_Lucene_Index_SegmentMerger
     /**
      * Add segmnet to a collection of segments to be merged
      *
-     * @param Zend_Search_Lucene_Index_SegmentInfo $segment
+     * @param Zend_Search_Lucene_Index_SegmentInfo $segmentInfo
      */
     public function addSource(Zend_Search_Lucene_Index_SegmentInfo $segmentInfo)
     {

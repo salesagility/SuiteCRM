@@ -885,6 +885,7 @@ class EmailsController extends SugarController
     }
 
     /**
+     * @param $importedEmailId
      * @param array $request
      * @return bool|Email
      * @see Email::id

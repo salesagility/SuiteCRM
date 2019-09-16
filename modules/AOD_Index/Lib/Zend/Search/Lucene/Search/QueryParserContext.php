@@ -179,6 +179,7 @@ class Zend_Search_Lucene_Search_QueryParserContext
     /**
      * Process fuzzy search or proximity search modifier
      *
+     * @param null $parameter
      * @throws Zend_Search_Lucene_Search_QueryParserException
      */
     public function processFuzzyProximityModifier($parameter = null)

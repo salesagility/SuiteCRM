@@ -164,6 +164,8 @@ if (!class_exists('Tracker')) {
         /**
          * bean_implements
          * Override method to support ACL roles
+         * @param $interface
+         * @return bool
          */
         public function bean_implements($interface)
         {

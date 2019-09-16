@@ -404,6 +404,9 @@ class ViewList extends SugarView
 
     /**
      *
+     * @param $seed
+     * @param $module
+     * @param string $action
      * @return SearchForm
      */
     protected function getSearchForm2($seed, $module, $action = "index")

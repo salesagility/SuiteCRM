@@ -132,6 +132,9 @@ EOF;
 
     /**
      * override
+     * @param string $id
+     * @param string $location
+     * @return string
      */
     protected function buildActionsLink($id = 'actions_link', $location = 'top')
     {

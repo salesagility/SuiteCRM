@@ -46,6 +46,9 @@ require_once('include/connectors/ConnectorFactory.php');
 
 /**
  * Source sorting by order value
+ * @param $a
+ * @param $b
+ * @return int
  * @internal
  */
 function sources_sort_function($a, $b)
@@ -90,6 +93,7 @@ class ConnectorUtils
     /**
      * Check if external accounts are enabled for this connector
      * @param string $id
+     * @param bool $refresh
      * @return bool
      */
     public static function eapmEnabled($id, $refresh = false)
@@ -380,7 +384,8 @@ class ConnectorUtils
 
     /**
      * getDisplayConfig
-     *
+     * @param bool $refresh
+     * @return array
      */
     public static function getDisplayConfig(
         $refresh = false
@@ -409,7 +414,6 @@ class ConnectorUtils
      * getModuleConnectors
      *
      * @param String $module the module to get the connectors for
-     * @param mixed $connectors Array of connectors mapped to the module or empty if none
      * @return array
      */
     public static function getModuleConnectors(
@@ -500,7 +504,7 @@ class ConnectorUtils
     /**
      * updateMetaDataFiles
      * This method updates the metadata files (detailviewdefs.php) according to the settings in display_config.php
-     * @return $result boolean value indicating whether or not the method successfully completed.
+     * @return bool $result boolean value indicating whether or not the method successfully completed.
      */
     public static function updateMetaDataFiles()
     {
@@ -679,6 +683,7 @@ class ConnectorUtils
      *
      * @param Array $viewdefs the metadata of the detailview
      * @param String $module the Module to which the hover field should be added to
+     * @param $source_id
      * @return boolean True if field was added; false otherwise
      */
     private function setDefaultHoverField(

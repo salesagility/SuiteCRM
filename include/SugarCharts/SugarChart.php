@@ -294,33 +294,34 @@ class SugarChart
     /**
      * returns text with tabs appended before it
      *
-     * @param 	string $str input string
-     *			int $depth number of times to tab
-     * @return	string with tabs appended before it
+     * @param string $str input string
+     *            int $depth number of times to tab
+     * @param $depth
+     * @return    string with tabs appended before it
      */
     public function tab($str, $depth)
     {
         return str_repeat("\t", $depth) . $str . "\n";
     }
+
     /**
      * returns text with tabs appended before it
      *
-     * @param 	string $str xml tag
-     			int $tagFormat 2 = open and close tag, 1 = close, 0 = open
-     			sting $value input string
-     *			int $depth number of times to tab
-     * @return	string with tabs appended before it
+     * @param $tag
+     * @param $value
+     * @param $depth
+     * @return    string with tabs appended before it
      */
 
     public function tabValue($tag, $value, $depth)
     {
         return $this->tab("<{$tag}>".htmlspecialchars($value, ENT_QUOTES)."</{$tag}>", $depth);
     }
+
     /**
      * returns xml data format
      *
-     * @param 	none
-     * @return	string with xml data format
+     * @return array with xml data format
      */
     public function processData()
     {
@@ -390,8 +391,8 @@ class SugarChart
     /**
      * returns correct yAxis min/max
      *
-     * @param 	value to check
-     * @return	yAxis min and max
+     * @param value to check
+     * @return void min and max
      */
     public function checkYAxis($value)
     {
@@ -643,7 +644,7 @@ class SugarChart
      * nullGroup
      * This function sets a null group by clause
      *
-     * @param Mixed $sugarSetValue value
+     * @param $superSetValue
      * @param String $url value of URL for the link
      * @return string
      */
@@ -693,8 +694,8 @@ class SugarChart
     /**
      * function to generate XML and return it
      *
-     * @param 	none
-     * @return	string $xmlContents with xml information
+     * @param bool $xmlDataName
+     * @return    string $xmlContents with xml information
      */
     public function generateXML($xmlDataName = false)
     {
@@ -750,8 +751,9 @@ class SugarChart
     /**
      * generates xml file for Flash charts to use for internationalized instances
      *
-     * @param 	string $xmlFile	location of the XML file to write to
-     * @return	none
+     * @param string $xmlFile location of the XML file to write to
+     * @return void
+     * @throws Exception
      */
     public function generateChartStrings($xmlFile)
     {
@@ -780,10 +782,14 @@ class SugarChart
     /**
      * wrapper function to return the html code containing the chart in a div
      *
-     * @param 	string $name 	name of the div
-     *			string $xmlFile	location of the XML file
-     *			string $style	optional additional styles for the div
-     * @return	string returns the html code through smarty
+     * @param string $name name of the div
+     *            string $xmlFile    location of the XML file
+     *            string $style    optional additional styles for the div
+     * @param $xmlFile
+     * @param string $width
+     * @param string $height
+     * @param bool $resize
+     * @return    string returns the html code through smarty
      */
     public function display($name, $xmlFile, $width='320', $height='480', $resize=false)
     {
@@ -820,15 +826,20 @@ class SugarChart
 
 
     /**
-           This function is used for localize all the characters in the Chart. And it can also sort all the dom_values by the sequence defined in the dom, but this may produce a lot of extra empty data in the xml file, when the chart is sorted by two key cols.
-           If the data quantity is large, it maybe a little slow.
-      * @param         array $data_set           The data get from database
-                             string $keycolname1      We will sort by this key first
-                             bool $translate1            Whether to trabslate the first column
-                             string $keycolname1      We will sort by this key secondly, and  it can be null, then it will only sort by the first column.
-                             bool $translate1            Whether to trabslate the second column
-                             bool $ifsort2                 Whether to sort by the second column or just translate the second column.
-      * @return        The sorted and translated data.
+     * This function is used for localize all the characters in the Chart. And it can also sort all the dom_values by the sequence defined in the dom, but this may produce a lot of extra empty data in the xml file, when the chart is sorted by two key cols.
+     * If the data quantity is large, it maybe a little slow.
+     * @param array $data_set The data get from database
+     * string $keycolname1      We will sort by this key first
+     * bool $translate1            Whether to trabslate the first column
+     * string $keycolname1      We will sort by this key secondly, and  it can be null, then it will only sort by the first column.
+     * bool $translate1            Whether to trabslate the second column
+     * bool $ifsort2                 Whether to sort by the second column or just translate the second column.
+     * @param null $keycolname1
+     * @param bool $translate1
+     * @param null $keycolname2
+     * @param bool $translate2
+     * @param bool $ifsort2
+     * @return array sorted and translated data.
      */
     public function sortData($data_set, $keycolname1=null, $translate1=false, $keycolname2=null, $translate2=false, $ifsort2=false)
     {

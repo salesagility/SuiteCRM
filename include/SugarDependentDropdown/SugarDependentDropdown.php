@@ -114,6 +114,7 @@ class SugarDependentDropdown
     }
 
     /**
+     * @param string $metadata
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function SugarDependentDropdown($metadata='')
@@ -186,6 +187,8 @@ class SugarDependentDropdown
     ////	PRIVATE UTILS
     /**
      * Verifies that an element is valid and has all the required info.
+     * @param $element
+     * @return bool
      */
     public function isValidElement($element)
     {
@@ -212,6 +215,7 @@ class SugarDependentDropdown
     /**
      * Initializes an element for processing
      * @param array $element Element metadata
+     * @param $alwaysMerge
      * @return array
      */
     public function initElement($element, $alwaysMerge)

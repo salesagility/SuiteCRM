@@ -79,8 +79,8 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
      * @param Array $related_module_link_name_to_fields_array - For every related bean returrned, specify link fields name to fields info for that bean to be returned. For ex.'link_name_to_fields_array' => array(array('name' =>  'email_addresses', 'value' => array('id', 'email_address', 'opt_out', 'primary_address'))).
      * @param Number $deleted -- false if deleted records should not be include, true if deleted records should be included.
      * @param String $order_by -- field to order the result sets by
-     * @param Number $offset -- where to start in the return
-     * @param Number $limit -- number of results to return (defaults to all)
+     * @param int $offset -- where to start in the return
+     * @param bool $limit -- number of results to return (defaults to all)
      * @return Array 'entry_list' -- Array - The records that were retrieved
      *               'relationship_list' -- Array - The records link field data. The example is if asked about accounts contacts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
      * @exception 'SoapFault' -- The SOAP error, if any
@@ -198,21 +198,18 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
      * help facilitate sync operations.  The module_name should be "Users" and the related_module one of "Meetings", "Calls" and
      * "Contacts".
      *
-     * @param xsd :string $session String of the session id
-     * @param xsd :string $module_name String value of the primary module to retrieve relationship against
-     * @param xsd :string $related_module String value of the related module to retrieve records off of
-     * @param xsd :string $from_date String value in YYYY-MM-DD HH:MM:SS format of date_start range (required)
-     * @param xsd :string $to_date String value in YYYY-MM-DD HH:MM:SS format of ending date_start range (required)
-     * @param xsd :int $offset Integer value of the offset to begin returning records from
-     * @param xsd :int $max_results Integer value of the max_results to return; -99 for unlimited
-     * @param xsd :int $deleted Integer value indicating deleted column value search (defaults to 0).  Set to 1 to find deleted records
-     * @param xsd :string $module_user_id String value of the user id (optional, but defaults to SOAP session user id anyway)  The module_user_id value
-     * here ought to be the user id of the user initiating the SOAP session
-     * @param tns :select_fields $select_fields Array value of fields to select and return as name/value pairs
-     * @param xsd :string $relationship_name String value of the relationship name to search on
-     * @param xsd :string $deletion_date String value in YYYY-MM-DD HH:MM:SS format for filtering on deleted records whose date_modified falls within range
-     * this allows deleted records to be returned as well
-     *
+     * @param $session
+     * @param $module_name
+     * @param $related_module
+     * @param $from_date
+     * @param $to_date
+     * @param $offset
+     * @param $max_results
+     * @param int $deleted
+     * @param string $module_user_id
+     * @param array $select_fields
+     * @param string $relationship_name
+     * @param string $deletion_date
      * @return Array records that match search criteria
      */
     public function get_modified_relationships(

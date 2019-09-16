@@ -335,9 +335,10 @@ class PersonModuleCest
     }
 
     /**
-    /**
+     * /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\SideBar $sideBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      *

@@ -55,6 +55,8 @@ require_once('modules/EmailMan/Forms.php');
 class ViewConfig extends SugarView
 {
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)

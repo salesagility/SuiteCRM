@@ -42,11 +42,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /*********************************************************************************
-
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ *******************************************************************************
+ * @param $ss
+ * @param $vardef
+ * @return mixed
+ */
  
 function get_body(&$ss, $vardef)
 {

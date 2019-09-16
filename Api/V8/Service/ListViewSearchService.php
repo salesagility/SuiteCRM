@@ -75,9 +75,6 @@ class ListViewSearchService
 
     /**
      * @param BeanManager $beanManager
-     * @param AttributeObjectHelper $attributeHelper
-     * @param RelationshipObjectHelper $relationshipHelper
-     * @param PaginationObjectHelper $paginationHelper
      */
     public function __construct(
         BeanManager $beanManager

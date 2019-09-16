@@ -45,7 +45,6 @@ class ApplicationLanguage
 
     /**
      * @param CurrentLanguage $currentLanguage
-     * @param string $moduleName
      * @return array
      */
     public function getApplicationLanguageStrings(CurrentLanguage $currentLanguage)

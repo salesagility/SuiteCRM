@@ -48,6 +48,7 @@ class actionSendEmail extends actionBase
     }
 
     /**
+     * @param string $id
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function actionSendEmail($id = '')
@@ -388,7 +389,7 @@ class actionSendEmail extends actionBase
 
     /**
      * successfully sent emails count at last run_action
-     * @return type
+     * @return int
      */
     public function getLastEmailsSuccess()
     {

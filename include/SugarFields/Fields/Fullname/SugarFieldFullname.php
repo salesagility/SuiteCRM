@@ -47,8 +47,12 @@ class SugarFieldFullname extends SugarFieldBase
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
         return $this->fetch($this->findTemplate('DetailView'));
     }
-    
+
     /**
+     * @param $value
+     * @param $vardef
+     * @param $focus
+     * @param ImportFieldSanitize $settings
      * @see SugarFieldBase::importSanitize()
      */
     public function importSanitize(

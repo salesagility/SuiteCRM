@@ -105,7 +105,8 @@ class ACLRole extends SugarBean
      * returns a list of ACLRoles for a given user id
      *
      * @param GUID $user_id
-     * @return a list of ACLRole objects
+     * @param bool $getAsNameArray
+     * @return array list of ACLRole objects
      */
     public function getUserRoles($user_id, $getAsNameArray = true)
     {
@@ -172,7 +173,7 @@ class ACLRole extends SugarBean
      * static getAllRoles($returnAsArray = false)
      *
      * @param boolean $returnAsArray - should it return the results as an array of arrays or as an array of ACLRoles
-     * @return either an array of array representations of acl roles or an array of ACLRoles
+     * @return array an array of array representations of acl roles or an array of ACLRoles
      */
     public function getAllRoles($returnAsArray = false)
     {
@@ -201,6 +202,7 @@ class ACLRole extends SugarBean
      * gets the actions of a given role
      *
      * @param GUID $role_id
+     * @param string $type
      * @return array of actions
      */
     public function getRoleActions($role_id, $type='module')
@@ -278,10 +280,13 @@ class ACLRole extends SugarBean
 
     /**
      *  toArray()
-        * returns this role as an array
-        *
-        * @return array of fields with id, name, description
-        */
+     * returns this role as an array
+     *
+     * @param bool $dbOnly
+     * @param bool $stringOnly
+     * @param bool $upperKeys
+     * @return array of fields with id, name, description
+     */
     public function toArray($dbOnly = false, $stringOnly = false, $upperKeys=false)
     {
         $array_fields = array('id', 'name', 'description');

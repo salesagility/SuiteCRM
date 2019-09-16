@@ -82,7 +82,16 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
     /**
      * Equivalent of get_list function within SugarBean but allows the possibility to pass in an indicator
      * if the list should filter for favorites.  Should eventually update the SugarBean function as well.
-     *
+     * @param $seed
+     * @param string $order_by
+     * @param string $where
+     * @param int $row_offset
+     * @param int $limit
+     * @param int $max
+     * @param int $show_deleted
+     * @param bool $favorites
+     * @param bool $single_select
+     * @return
      */
     public function get_data_list(
         $seed,
@@ -161,7 +170,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
     /**
      * Processes the filter_fields attribute to use with SugarBean::create_new_list_query()
      *
-     * @param object $value SugarBean
+     * @param SugarBean $value SugarBean
      * @param array $fields
      * @return array
      */

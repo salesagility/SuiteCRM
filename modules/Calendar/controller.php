@@ -271,12 +271,12 @@ class CalendarController extends SugarController
             'access' => 'yes',
         );
     }
-    
-    
+
+
     /**
      * Retrieves current activity bean and checks access to action
      *
-     * @param string $actionToCheck
+     * @param bool $actionToCheck
      * @return bool Result of check
      */
     protected function retrieveCurrentBean($actionToCheck = false)

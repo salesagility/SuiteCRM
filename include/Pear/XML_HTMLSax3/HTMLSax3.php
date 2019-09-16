@@ -172,6 +172,7 @@ class XML_HTMLSax3_StateParser
     }
 
     /**
+     * @param $htmlsax
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function XML_HTMLSax3_StateParser(& $htmlsax)
@@ -332,12 +333,12 @@ class XML_HTMLSax3_StateParser
     }
 
     /**
-    * Performs the parsing itself, delegating calls to a specific parser
-    * state
-    * @param constant state object to parse with
-    * @access protected
-    * @return void
-    */
+     * Performs the parsing itself, delegating calls to a specific parser
+     * state
+     * @param int $state
+     * @return void
+     * @access protected
+     */
     public function _parse($state = XML_HTMLSAX3_STATE_START)
     {
         do {

@@ -8,6 +8,7 @@ class Cases extends \AcceptanceTester
      * Create a case
      *
      * @param $name
+     * @param $account
      */
     public function createCase($name, $account)
     {

@@ -665,11 +665,12 @@ class EditViewMerge
         
         return $fields;
     }
-        
-        
+
+
     /**
      * getPanelIds
-     *
+     * @param $panels
+     * @return array
      */
     protected function getPanelIds($panels)
     {
@@ -746,14 +747,14 @@ class EditViewMerge
     {
         return $this->newData;
     }
-    
+
     /**
      * public function that will merge meta data from an original sugar file that shipped with the product, a customized file, and a new file shipped with an upgrade
      *
      * @param STRING $module - name of the module's files that are to be merged
      * @param STRING $original_file - path to the file that originally shipped with sugar
      * @param STRING $new_file - path to the new file that is shipping with the patch
-     * @param STRING $custom_file - path to the custom file
+     * @param bool $custom_file - path to the custom file
      * @param BOOLEAN $save - boolean on if it should save the results to the custom file or not
      * @return BOOLEAN - if the merged file was saved if false is passed in for the save parameter it always returns true
      */

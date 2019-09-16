@@ -215,7 +215,7 @@ class Zend_Oauth_Provider
      * Collect request parameters from the environment
      * FIXME: uses GET/POST/SERVER, needs to be made injectable instead
      * @param string $method HTTP method being used
-     * @param string $params Extra parameters
+     * @param array $params Extra parameters
      * @return array List of all oauth params in the request
      */
     protected function assembleParams($method, $params = array())

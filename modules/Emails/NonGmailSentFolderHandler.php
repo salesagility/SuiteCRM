@@ -121,13 +121,14 @@ class NonGmailSentFolderHandler
         }
         $this->lastError = $err;
     }
-    
-    
+
+
     /**
      *
      * @param InboundEmail $ie
-     * @return bool
      * @param SugarPHPMailer $mail
+     * @param string $options
+     * @return bool
      */
     public function storeInSentFolder(InboundEmail $ie, SugarPHPMailer $mail, $options = "\\Seen")
     {
@@ -204,13 +205,15 @@ class NonGmailSentFolderHandler
         }
         return $msg;
     }
-    
+
     /**
      *
      * @param InboundEmail $ie
      * @param SugarPHPMailer $mail
      * @param string $sentFolder
+     * @param string $options
      * @return bool
+     * @throws phpmailerException
      */
     protected function connectToNonGmailServer(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder, $options = "\\Seen")
     {

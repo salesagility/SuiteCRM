@@ -126,17 +126,12 @@ class ListViewDisplay
      * @param SugarBean $seed Seed SugarBean to use
      * @param File $file Template file to use
      * @param string $where
+     * @param array $params
      * @param int $offset :0 offset to start at
-     * @param int :-1 $limit
-     * @param string []:array() $filter_fields
-     * @param array :array() $params Array
-     *     $params = [
-     *         'distinct' => bool Whether to use distinct key word,
-     *         'include_custom_fields' => bool :true,
-     *         'massupdate'  => bool :true Whether a mass update, true by default,
-     *         'handleMassupdate' => string :true Have massupdate.php handle massupdates?,
-     *    ]
-     * @param string :'id' $id_field
+     * @param int $limit
+     * @param array $filter_fields
+     * @param string $id_field
+     * @param null $id
      * @return bool
      */
     public function setup(
@@ -273,10 +268,15 @@ class ListViewDisplay
 
         return $str;
     }
+
     /**
      * Display the select link
-     * @return string select link html
-     * @param echo Bool set true if you want it echo'd, set false to have contents returned
+     * @param string $id
+     * @param int $total
+     * @param int $pageTotal
+     * @param string $location
+     * @return array select link html
+     * @throws \SuiteCRM\StateSaverException
      */
     public function buildSelectLink($id = 'select_link', $total=0, $pageTotal=0, $location="top")
     {
@@ -316,10 +316,12 @@ class ListViewDisplay
     /**
      * Display the actions link
      *
-     * @param  string $id link id attribute, defaults to 'actions_link'
+     * @param string $id link id attribute, defaults to 'actions_link'
+     * @param string $location
+     * @return array HTML source
+     * @throws \SuiteCRM\StateSaverException
      * @global $app_strings
      * @global $mod_strings
-     * @return string HTML source
      */
     protected function buildActionsLink($id = 'actions_link', $location = 'top')
     {
@@ -428,9 +430,11 @@ class ListViewDisplay
         );
         return $link;
     }
+
     /**
      * Builds the export link
      *
+     * @param string $loc
      * @return string HTML
      */
     protected function buildExportLink($loc = 'top')
@@ -442,6 +446,7 @@ class ListViewDisplay
     /**
      * Builds the massupdate link
      *
+     * @param string $loc
      * @return string HTML
      */
     protected function buildMassUpdateLink($loc = 'top')
@@ -504,9 +509,11 @@ class ListViewDisplay
 
         return $script;
     } // fn
+
     /**
      * Builds the delete link
      *
+     * @param string $loc
      * @return string HTML
      */
     protected function buildDeleteLink($loc = 'top')
@@ -530,7 +537,10 @@ class ListViewDisplay
     /**
      * Display the selected object span object
      *
+     * @param bool $echo
+     * @param int $total
      * @return string select object span
+     * @throws \SuiteCRM\StateSaverException
      */
     public function buildSelectedObjectsSpan($echo = true, $total=0)
     {
@@ -546,11 +556,13 @@ class ListViewDisplay
 
         return $selectedObjectSpan;
     }
+
     /**
      * Builds the mail merge link
      * The link can be disabled by setting module level duplicate_merge property to false
      * in the moudle's vardef file.
      *
+     * @param string $loc
      * @return string HTML
      */
     protected function buildMergeDuplicatesLink($loc = 'top')
@@ -575,9 +587,12 @@ class ListViewDisplay
 
         return "";
     }
+
     /**
      * Builds the mail merge link
      *
+     * @param array|null $modules_array
+     * @param string $loc
      * @return string HTML
      */
     protected function buildMergeLink(array $modules_array = null, $loc = 'top')
@@ -605,6 +620,7 @@ class ListViewDisplay
     /**
      * Builds the add to target list link
      *
+     * @param string $loc
      * @return string HTML
      */
     protected function buildTargetList($loc = 'top')

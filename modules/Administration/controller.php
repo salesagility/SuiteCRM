@@ -124,7 +124,8 @@ class AdministrationController extends SugarController
      * to be able to add additional parameters which are currently not supported
      * in the UI (i.e. additional curl settings for elastic search for auth)
      *
-     * @param array $config
+     * @param $type
+     * @param $newConfig
      * @return array
      */
     protected function mergeFtsConfig($type, $newConfig)

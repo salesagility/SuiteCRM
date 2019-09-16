@@ -14,9 +14,8 @@ class SugarMin
      * line and mult-line comments. Pass 2 performs some sanitation on each of the lines
      * and pass 3 works on stripping out unnecessary spaces.
      *
-     * @param string $js
-     * @param string $currentOptions
-     * @return void
+     * @param $text
+     * @param $compression
      */
     private function __construct($text, $compression)
     {

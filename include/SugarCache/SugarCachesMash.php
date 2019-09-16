@@ -64,8 +64,10 @@ class SugarCachesMash extends SugarCacheAbstract
             
         return false;
     }
-    
+
     /**
+     * @param $key
+     * @param $value
      * @see SugarCacheAbstract::_setExternal()
      */
     protected function _setExternal(
@@ -74,8 +76,10 @@ class SugarCachesMash extends SugarCacheAbstract
         ) {
         zput('/tmp/'.$this->_keyPrefix.'/'.$key, $value, $this->_expireTimeout);
     }
-    
+
     /**
+     * @param $key
+     * @return
      * @see SugarCacheAbstract::_getExternal()
      */
     protected function _getExternal(
@@ -83,8 +87,9 @@ class SugarCachesMash extends SugarCacheAbstract
         ) {
         return zget('/tmp/'.$this->_keyPrefix.'/'.$key, null);
     }
-    
+
     /**
+     * @param $key
      * @see SugarCacheAbstract::_clearExternal()
      */
     protected function _clearExternal(

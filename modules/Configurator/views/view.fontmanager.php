@@ -110,9 +110,10 @@ class ConfiguratorViewFontManager extends SugarView
 
 EOJAVASCRIPT;
     }
-    
+
     /**
      * Return the columnDefs for the YUI datatable
+     * @param $fontList
      * @return String
      */
     private function getYuiColumnDefs($fontList)

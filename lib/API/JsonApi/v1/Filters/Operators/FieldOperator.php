@@ -62,7 +62,7 @@ class FieldOperator extends Operator
 
     /**
      * Convert string to operator tag
-     * @param $tag
+     * @param $operator
      * @return mixed
      */
     public function toFilterTag($operator)

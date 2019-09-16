@@ -125,7 +125,7 @@ class Zend_Search_Lucene_LockManager
      *
      * It doesn't block other read or update processes, but prevent index from the premature cleaning-up
      *
-     * @param Zend_Search_Lucene_Storage_Directory $defaultLockDirectory
+     * @param Zend_Search_Lucene_Storage_Directory $lockDirectory
      * @return Zend_Search_Lucene_Storage_File
      * @throws Zend_Search_Lucene_Exception
      */

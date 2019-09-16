@@ -204,16 +204,21 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
     }
 
 
-
     /**
-    * Creates PIE CHART image of opportunities by lead_source.
-    * param $datax- the sales stage data to display in the x-axis
-    * param $datay- the sum of opportunity amounts for each opportunity in each sales stage
-    * to display in the y-axis
-    * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
-    * All Rights Reserved..
-    * Contributor(s): ______________________________________..
-    */
+     * Creates PIE CHART image of opportunities by lead_source.
+     * param $datax- the sales stage data to display in the x-axis
+     * param $datay- the sum of opportunity amounts for each opportunity in each sales stage
+     * to display in the y-axis
+     * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
+     * All Rights Reserved..
+     * Contributor(s): ______________________________________..
+     * @param array $legends
+     * @param array $user_id
+     * @param string $cache_file_name
+     * @param bool $refresh
+     * @param null $current_module_strings
+     * @return
+     */
     public function gen_xml(
         $legends = array('foo', 'bar'),
         $user_id = array('1'),

@@ -42,6 +42,8 @@
 /**
  * Searches through the installed relationships to find broken self referencing one-to-many relationships
  * (wrong field used in the subpanel, and the left link not marked as left)
+ * @param array $modules
+ * @throws Exception
  */
 function upgrade_custom_relationships($modules = array())
 {

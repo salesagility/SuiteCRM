@@ -60,6 +60,8 @@ function xhprof_http_header($name, $value)
 /**
  * Genearte and send MIME header for the output image to client browser.
  *
+ * @param $type
+ * @param $length
  * @author cjiang
  */
 function xhprof_generate_mime_header($type, $length)
@@ -159,18 +161,14 @@ function xhprof_get_children_table($raw_data)
 /**
  * Generate DOT script from the given raw phprof data.
  *
- * @param raw_data, phprof profile data.
- * @param threshold, float, the threshold value [0,1). The functions in the
- *                   raw_data whose exclusive wall times ratio are below the
- *                   threshold will be filtered out and won't apprear in the
- *                   generated image.
- * @param page, string(optional), the root node name. This can be used to
- *              replace the 'main()' as the root node.
- * @param func, string, the focus function.
- * @param critical_path, bool, whether or not to display critical path with
- *                             bold lines.
- * @returns, string, the DOT script to generate image.
- *
+ * @param $raw_data
+ * @param $threshold
+ * @param $source
+ * @param $page
+ * @param $func
+ * @param $critical_path
+ * @param null $right
+ * @param null $left
  * @return string
  * @author cjiang
  */
@@ -453,17 +451,12 @@ function xhprof_render_diff_image(
  *
  * @param object $xhprof_runs_impl An object that implements
  *                                   the iXHProfRuns interface
- * @param run_id, integer, the unique id for the phprof run, this is the
- *                primary key for phprof database table.
- * @param type, string, one of the supported image types. See also
- *              $xhprof_legal_image_types.
- * @param threshold, float, the threshold value [0,1). The functions in the
- *                   raw_data whose exclusive wall times ratio are below the
- *                   threshold will be filtered out and won't apprear in the
- *                   generated image.
- * @param func, string, the focus function.
- * @returns, string, the DOT script to generate image.
- *
+ * @param $run_id
+ * @param $type
+ * @param $threshold
+ * @param $func
+ * @param $source
+ * @param $critical_path
  * @return bool|string
  * @author cjiang
  */
@@ -502,18 +495,14 @@ function xhprof_get_content_by_run(
 /**
  * Generate image from phprof run id and send it to client.
  *
- * @param object  $xhprof_runs_impl  An object that implements
+ * @param object $xhprof_runs_impl An object that implements
  *                                   the iXHProfRuns interface
- * @param run_id, integer, the unique id for the phprof run, this is the
- *                primary key for phprof database table.
- * @param type, string, one of the supported image types. See also
- *              $xhprof_legal_image_types.
- * @param threshold, float, the threshold value [0,1). The functions in the
- *                   raw_data whose exclusive wall times ratio are below the
- *                   threshold will be filtered out and won't apprear in the
- *                   generated image.
- * @param func, string, the focus function.
- * @param bool, does this run correspond to a PHProfLive run or a dev run?
+ * @param $run_id
+ * @param $type
+ * @param $threshold
+ * @param $func
+ * @param $source
+ * @param $critical_path
  * @author cjiang
  */
 function xhprof_render_image(

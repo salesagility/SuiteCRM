@@ -145,6 +145,7 @@ class SugarCache
 
     /**
      * Try to reset file from caches
+     * @param $file
      */
     public static function cleanFile($file)
     {
@@ -181,6 +182,7 @@ function sugar_cache_retrieve($key)
  *
  * @param String $key -- Global namespace cache.  Key for the data.
  * @param Serializable $value -- The value to store in the cache.
+ * @param null $ttl
  */
 function sugar_cache_put($key, $value, $ttl = null)
 {

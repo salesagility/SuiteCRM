@@ -43,8 +43,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * Smarty plugin
- * @package Smarty
+ * @param $tag_attrs
+ * @param $compiler
+ * @return string|void
  * @subpackage plugins
+ * @package Smarty
  */
 function smarty_compiler_append($tag_attrs, &$compiler)
 {

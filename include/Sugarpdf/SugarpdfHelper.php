@@ -39,6 +39,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * @param $html
+ * @param $options
+ * @return string
  */
 
 
@@ -100,11 +103,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
         // return $locale->translateCharset($string, 'UTF-8', $locale->getExportCharset());
         return $string;
     }
-     /**
-     * Copy of format_number() from currency with fix for sugarpdf.
-     * @return String formatted currency value
-     * @see modules/Currencies/Currency.php
-     */
+
+/**
+ * Copy of format_number() from currency with fix for sugarpdf.
+ * @param $amount
+ * @param null $round
+ * @param null $decimals
+ * @param array $params
+ * @return String formatted currency value
+ * @see modules/Currencies/Currency.php
+ */
     function format_number_sugarpdf($amount, $round = null, $decimals = null, $params = array())
     {
         global $app_strings, $current_user, $sugar_config, $locale;

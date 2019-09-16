@@ -64,8 +64,10 @@ class SugarCacheWincache extends SugarCacheAbstract
             
         return false;
     }
-    
+
     /**
+     * @param $key
+     * @param $value
      * @see SugarCacheAbstract::_setExternal()
      */
     protected function _setExternal(
@@ -74,8 +76,10 @@ class SugarCacheWincache extends SugarCacheAbstract
         ) {
         wincache_ucache_set($key, $value, $this->_expireTimeout);
     }
-    
+
     /**
+     * @param $key
+     * @return mixed|null
      * @see SugarCacheAbstract::_getExternal()
      */
     protected function _getExternal(
@@ -87,8 +91,9 @@ class SugarCacheWincache extends SugarCacheAbstract
         
         return wincache_ucache_get($key);
     }
-    
+
     /**
+     * @param $key
      * @see SugarCacheAbstract::_clearExternal()
      */
     protected function _clearExternal(

@@ -55,6 +55,7 @@ class FactorAuthFactory
     protected static $instances = array();
 
     /**
+     * @param null $user
      * @return FactorAuthInterface
      * @throws SuiteException
      */

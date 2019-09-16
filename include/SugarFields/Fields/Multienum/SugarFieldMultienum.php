@@ -98,6 +98,11 @@ class SugarFieldMultienum extends SugarFieldEnum
     }
 
     /**
+     * @param $value
+     * @param $vardef
+     * @param $focus
+     * @param ImportFieldSanitize $settings
+     * @return bool|mixed|string
      * @see SugarFieldBase::importSanitize()
      */
     public function importSanitize(

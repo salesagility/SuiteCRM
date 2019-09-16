@@ -75,6 +75,8 @@ class contextMenu
      *
      * @param string $text text of the item
      * @param string $action function or pointer to the javascript function to call
+     * @param null $module
+     * @param null $aclAction
      * @param array $params other parameters includes:
      *      url - The URL for the MenuItem's anchor's "href" attribute.
      *      target - The value to be used for the MenuItem's anchor's "target" attribute.

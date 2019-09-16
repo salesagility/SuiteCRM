@@ -51,6 +51,10 @@ class MBLanguage
     }
 
     /**
+     * @param $name
+     * @param $path
+     * @param $label
+     * @param $key_name
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function MBLanguage($name, $path, $label, $key_name)
@@ -256,10 +260,11 @@ class MBLanguage
     }
 
     /**
-    *  If there is no this dropdown list  in  custom\modulebuilder\packages\$package\language\application\$lang.lang.php ,
-    *  we will include it from global app_list_string array into custom\modulebuilder\packages\$package\language\application\$lang.lang.php
-    *  when we create a dropdown filed  and the value is created in MB.(#20728 )
-    **/
+     *  If there is no this dropdown list  in  custom\modulebuilder\packages\$package\language\application\$lang.lang.php ,
+     *  we will include it from global app_list_string array into custom\modulebuilder\packages\$package\language\application\$lang.lang.php
+     *  when we create a dropdown filed  and the value is created in MB.(#20728 )
+     * @param $values
+     */
     public function getGlobalAppListStringsForMB(&$values)
     {
         //Ensure it comes from MB

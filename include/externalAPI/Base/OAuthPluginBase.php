@@ -80,6 +80,8 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
 
     /**
      * Load data from EAPM bean
+     * @param $eapmBean
+     * @return bool
      * @see ExternalAPIBase::loadEAPM()
      */
     public function loadEAPM($eapmBean)

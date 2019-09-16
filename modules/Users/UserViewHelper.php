@@ -80,6 +80,9 @@ class UserViewHelper
 
     /**
      * Constructor, pass in the smarty template, the bean and the viewtype
+     * @param Sugar_Smarty $smarty
+     * @param SugarBean $bean
+     * @param string $viewType
      */
     public function __construct(Sugar_Smarty &$smarty, SugarBean &$bean, $viewType = 'EditView')
     {

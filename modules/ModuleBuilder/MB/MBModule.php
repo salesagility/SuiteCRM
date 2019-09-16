@@ -251,6 +251,7 @@ class MBModule
 
     /**
      * Required for an MB module to work with Dynamic fields
+     * @param $displayLabel
      */
     public function addLabel($displayLabel)
     {

@@ -51,13 +51,13 @@ class UpgradeMetaHelper
     public $evparser;
     public $dvparser;
     public $path_to_master_copy;
+
     /**
      * UpgradeMetaHelper
      * This is the constructor for the UpgradeMetaHelper class
-     * @param The $dir root upgrade directory (where to copy working files)
-     * @param The $masterCopyDirectory root master directory (where SugarCRM 5.x files reside)
-     * @param Debug $debugMode mode, default is false
-     *
+     * @param string $dir root upgrade directory (where to copy working files)
+     * @param string $masterCopyDirecotry
+     * @param bool $debugMode mode, default is false
      */
     public function __construct($dir='upgrade', $masterCopyDirecotry='modules_50', $debugMode = false)
     {
@@ -79,6 +79,9 @@ class UpgradeMetaHelper
     }
 
     /**
+     * @param string $dir
+     * @param string $masterCopyDirecotry
+     * @param bool $debugMode
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function UpgradeMetaHelper($dir='upgrade', $masterCopyDirecotry='modules_50', $debugMode = false)
@@ -97,7 +100,7 @@ class UpgradeMetaHelper
      * This method returns a two-dimensional Array of Studio enabled
      * modules that have been modified.  The second Array index is an
      * Array of files that do not match the md5 checksum for the module
-     * @return $return_array Two-dimensional Array of [module][modified file(s) Array]
+     * @return array $return_array Two-dimensional Array of [module][modified file(s) Array]
      */
     public function getModifiedModules()
     {
@@ -273,7 +276,7 @@ class UpgradeMetaHelper
      * loadStudioModules
      * This method returns an Array of all modules where a studio.php file is
      * present in the metadata directory of the module
-     * @return $modules Array of modules that are studio enabled
+     * @return array $modules Array of modules that are studio enabled
      */
     public function loadStudioModules()
     {

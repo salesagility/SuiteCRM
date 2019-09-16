@@ -171,6 +171,10 @@ class ImportMap extends SugarBean
     }
 
     /**
+     * @param int $id
+     * @param bool $encode
+     * @param bool $deleted
+     * @return ImportMap|SugarBean|null
      * @see SugarBean::retrieve()
      */
     public function retrieve($id = -1, $encode=true, $deleted=true)
@@ -191,13 +195,7 @@ class ImportMap extends SugarBean
     /**
      * Save
      *
-     * @param  string $owner_id
-     * @param  string $name
-     * @param  string $module
-     * @param  string $source
-     * @param  string $has_header
-     * @param  string $delimiter
-     * @param  string $enclosure
+     * @param bool $check_notify
      * @return bool
      */
     public function save($check_notify = false)
@@ -363,7 +361,7 @@ class ImportMap extends SugarBean
     /**
      * set and get field elements in request field to and from user preferences
      *
-     * @param  array $fields_array
+     * @param string $ForceValsArr
      * @return array $obj_arr
      */
     public function set_get_import_wizard_fields($ForceValsArr = '')

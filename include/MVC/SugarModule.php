@@ -85,7 +85,10 @@ class SugarModule
     /**
      * Returns the bean object of the given module
      *
-     * @return object
+     * @param null $beanList
+     * @param null $beanFiles
+     * @param bool $returnObject
+     * @return bool
      */
     public function loadBean($beanList = null, $beanFiles = null, $returnObject = true)
     {

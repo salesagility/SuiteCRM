@@ -48,6 +48,7 @@ class EmployeesSearchForm extends SearchForm
 {
     /**
      * This builds an EmployeesSearchForm from a classic search form.
+     * @param SearchForm $oldSearchForm
      */
     public function __construct(SearchForm $oldSearchForm)
     {

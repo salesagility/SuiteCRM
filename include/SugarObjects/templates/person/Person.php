@@ -175,6 +175,8 @@ class Person extends Basic
     }
 
     /**
+     * @param bool $check_notify
+     * @return string
      * @see parent::save()
      */
     public function save($check_notify = false)
@@ -252,6 +254,7 @@ class Person extends Basic
     }
 
     /**
+     * @param SugarBean $newBean
      * @see SugarBean::populateRelatedBean()
      */
     public function populateRelatedBean(
@@ -283,6 +286,10 @@ class Person extends Basic
      * Default export query for Person based modules
      * used to pick all mails (primary and non-primary)
      *
+     * @param $order_by
+     * @param $where
+     * @param string $relate_link_join
+     * @return string
      * @see SugarBean::create_export_query()
      */
     public function create_export_query($order_by, $where, $relate_link_join = '')

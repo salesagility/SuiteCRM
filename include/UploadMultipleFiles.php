@@ -158,8 +158,9 @@ class UploadMultipleFiles
 
     /**
      * builds a URL path for an anchor tag
-     * @param string stored_file_name File name in filesystem
-     * @param string bean_id note bean ID
+     * @param $stored_file_name
+     * @param $bean_id
+     * @param bool $skip_rename
      * @return string path with file name
      */
     public static function get_file_path($stored_file_name, $bean_id, $skip_rename = false)

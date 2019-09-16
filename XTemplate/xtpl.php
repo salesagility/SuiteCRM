@@ -146,7 +146,11 @@ var $mainblock="";
 var $ERROR="";
 var $AUTORESET=1;										/* auto-reset sub blocks */
 
-/***[ constructor ]*********************************************************/
+    /***[ constructor ]********************************************************
+     * @param $file
+     * @param string $alt_include
+     * @param string $mainblock
+     */
 
 function __construct ($file, $alt_include = "", $mainblock="main") {
 	$this->alternate_include_directory = $alt_include;
@@ -158,6 +162,9 @@ function __construct ($file, $alt_include = "", $mainblock="main") {
 }
 
     /**
+     * @param $file
+     * @param string $alt_include
+     * @param string $mainblock
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     function XTemplate($file, $alt_include = "", $mainblock="main"){
@@ -178,10 +185,13 @@ function __construct ($file, $alt_include = "", $mainblock="main") {
 /***************************************************************************/
 
 
-/***[ assign ]**************************************************************/
-/*
-	assign a variable
-*/
+    /***[ assign ]*************************************************************
+     * @param $name
+     * @param string $val
+     */
+    /*
+        assign a variable
+    */
 
 function assign ($name,$val="") {
 	if (is_array($name)) {
@@ -202,10 +212,12 @@ function append ($varname, $name,$val="") {
     }
 }
 
-/***[ parse ]***************************************************************/
-/*
-	parse a block
-*/
+    /***[ parse ]**************************************************************
+     * @param $bname
+     */
+    /*
+        parse a block
+    */
 
 function parse ($bname) {
 	global $sugar_version, $sugar_config;
@@ -289,19 +301,26 @@ function parse ($bname) {
 	}
 }
 
-/***[ exists ]**************************************************************/
-/*
-	returns true if a block exists otherwise returns false.
-*/
+    /***[ exists ]*************************************************************
+     * @param $bname
+     * @return bool
+     */
+    /*
+        returns true if a block exists otherwise returns false.
+    */
 function exists($bname){
 	return (!empty($this->parsed_blocks[$bname])) || (!empty($this->blocks[$bname]));
 }
 
 
-/***[ var_exists ]**************************************************************/
-/*
-	returns true if a block exists otherwise returns false.
-*/
+    /***[ var_exists ]*************************************************************
+     * @param $bname
+     * @param $vname
+     * @return bool
+     */
+    /*
+        returns true if a block exists otherwise returns false.
+    */
 function var_exists($bname,$vname){
 	if(!empty($this->blocks[$bname])){
 		return substr_count($this->blocks[$bname], '{'. $vname . '}') >0;
@@ -310,10 +329,12 @@ function var_exists($bname,$vname){
 }
 
 
-/***[ rparse ]**************************************************************/
-/*
-	returns the parsed text for a block, including all sub-blocks.
-*/
+    /***[ rparse ]*************************************************************
+     * @param $bname
+     */
+    /*
+        returns the parsed text for a block, including all sub-blocks.
+    */
 
 function rparse($bname) {
 	if (!empty($this->sub_blocks[$bname])) {
@@ -328,20 +349,27 @@ function rparse($bname) {
 	$this->parse($bname);
 }
 
-/***[ insert_loop ]*********************************************************/
-/*
-	inserts a loop ( call assign & parse )
-*/
+    /***[ insert_loop ]********************************************************
+     * @param $bname
+     * @param $var
+     * @param string $value
+     */
+    /*
+        inserts a loop ( call assign & parse )
+    */
 
 function insert_loop($bname,$var,$value="") {
 	$this->assign($var,$value);
 	$this->parse($bname);
 }
 
-/***[ text ]****************************************************************/
-/*
-	returns the parsed text for a block
-*/
+    /***[ text ]***************************************************************
+     * @param $bname
+     * @return mixed|string
+     */
+    /*
+        returns the parsed text for a block
+    */
 
 function text($bname) {
 
@@ -352,10 +380,13 @@ function text($bname) {
     }
 }
 
-/***[ out ]*****************************************************************/
-/*
-	prints the parsed text
-*/
+    /***[ out ]****************************************************************
+     * @param $bname
+     * @throws Exception
+     */
+    /*
+        prints the parsed text
+    */
 
 function out ($bname) {
 	global $focus;
@@ -374,37 +405,48 @@ function out ($bname) {
 	echo $this->text($bname);
 }
 
-/***[ reset ]***************************************************************/
-/*
-	resets the parsed text
-*/
+    /***[ reset ]**************************************************************
+     * @param $bname
+     */
+    /*
+        resets the parsed text
+    */
 
 function reset ($bname) {
 	$this->parsed_blocks[$bname]="";
 }
 
-/***[ parsed ]**************************************************************/
-/*
-	returns true if block was parsed, false if not
-*/
+    /***[ parsed ]*************************************************************
+     * @param $bname
+     * @return bool
+     */
+    /*
+        returns true if block was parsed, false if not
+    */
 
 function parsed ($bname) {
 	return (!empty($this->parsed_blocks[$bname]));
 }
 
-/***[ SetNullString ]*******************************************************/
-/*
-	sets the string to replace in case the var was not assigned
-*/
+    /***[ SetNullString ]******************************************************
+     * @param $str
+     * @param string $varname
+     */
+    /*
+        sets the string to replace in case the var was not assigned
+    */
 
 function SetNullString($str,$varname="") {
 	$this->NULL_STRING[$varname]=$str;
 }
 
-/***[ SetNullBlock ]********************************************************/
-/*
-	sets the string to replace in case the block was not parsed
-*/
+    /***[ SetNullBlock ]*******************************************************
+     * @param $str
+     * @param string $bname
+     */
+    /*
+        sets the string to replace in case the block was not parsed
+    */
 
 function SetNullBlock($str,$bname="") {
 	$this->NULL_BLOCK[$bname]=$str;
@@ -458,12 +500,16 @@ function scan_globals() {
 /***[ private stuff ]*******************************************************/
 /***************************************************************************/
 
-/***[ maketree ]************************************************************/
-/*
-	generates the array containing to-be-parsed stuff:
-  $blocks["main"],$blocks["main.table"],$blocks["main.table.row"], etc.
-	also builds the reverse parse order.
-*/
+    /***[ maketree ]***********************************************************
+     * @param $con
+     * @param $block
+     * @return array
+     */
+    /*
+        generates the array containing to-be-parsed stuff:
+      $blocks["main"],$blocks["main.table"],$blocks["main.table.row"], etc.
+        also builds the reverse parse order.
+    */
 
 
 function maketree($con,$block) {
@@ -541,10 +587,13 @@ function set_error($str)	{
 	$this->ERROR=$str;
 }
 
-/***[ getfile ]*************************************************************/
-/*
-	returns the contents of a file
-*/
+    /***[ getfile ]************************************************************
+     * @param $file
+     * @return false|string
+     */
+    /*
+        returns the contents of a file
+    */
 
 function getfile($file) {
 	if (!isset($file)) {
@@ -569,10 +618,13 @@ function getfile($file) {
 	return $file_text;
 }
 
-/***[ r_getfile ]***********************************************************/
-/*
-	recursively gets the content of a file with {FILE "filename.tpl"} directives
-*/
+    /***[ r_getfile ]**********************************************************
+     * @param $file
+     * @return false|mixed|string
+     */
+    /*
+        recursively gets the content of a file with {FILE "filename.tpl"} directives
+    */
 
 
 function r_getfile($file) {

@@ -49,7 +49,7 @@ class PackageManagerComm
     /**
      * Initialize the soap client and store in the $GLOBALS object for use
      *
-     * @param login    designates whether we want to try to login after we initialize or not
+     * @param bool $login
      */
     public function initialize($login = true)
     {
@@ -103,6 +103,7 @@ class PackageManagerComm
     /**
      * Login to the depot
      *
+     * @param bool $terms_checked
      * @return true if successful, false otherwise
      */
     public function login($terms_checked = true)
@@ -163,10 +164,10 @@ class PackageManagerComm
      * return an object which contains categories and packages
      *
      * @param category_id  the category_id to fetch
-     * @param filter       a filter which will limit theh number of results returned
+     * @param array $filter
      * @return categories_and_packages
      * @see categories_and_packages
-    */
+     */
     public function getCategoryPackages($category_id, $filter = array())
     {
         PackageManagerComm::initialize();
@@ -178,7 +179,7 @@ class PackageManagerComm
      * Return a list of child categories to the parent specified in category_id
      *
      * @param category_id  the parent category_id
-     * @param filter       a filter which will limit theh number of results returned
+     * @param array $filter
      * @return categories_and_packages
      * @see categories_and_packages
      */
@@ -193,10 +194,10 @@ class PackageManagerComm
      * Return a list of packages which belong to the parent category_id
      *
      * @param category_id  the category_id to fetch
-     * @param filter       a filter which will limit theh number of results returned
+     * @param array $filter
      * @return packages
      * @see packages
-    */
+     */
     public function getPackages($category_id, $filter = array())
     {
         PackageManagerComm::initialize();
@@ -207,11 +208,12 @@ class PackageManagerComm
     /**
      * Return a list of releases belong to a package
      *
-     * @param category_id  the category_id to fetch
-     * @param package_id  the package id which the release belongs to
+     * @param $category_id
+     * @param $package_id
+     * @param array $filter
      * @return packages
      * @see packages
-    */
+     */
     public function getReleases($category_id, $package_id, $filter = array())
     {
         PackageManagerComm::initialize();
@@ -253,8 +255,8 @@ class PackageManagerComm
     /**
      * Call the PackageManagerDownloader function which uses curl in order to download the specified file
      *
-     * @param filename	the file to download
-     * @return path to downloaded file
+     * @param filename    the file to download
+     * @return the to downloaded file
      */
     public static function performDownload($filename)
     {

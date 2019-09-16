@@ -63,6 +63,7 @@ class SugarWidget
     }
 
     /**
+     * @param $layout_manager
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function SugarWidget(&$layout_manager)
@@ -94,7 +95,7 @@ class SugarWidget
     /**
      * setSubpanelWidgetId
      * This is a utility function to set the id for a widget
-     * @param id String value to set the widget's unique id
+     * @param string $id
      */
     public function setWidgetId($id='')
     {
@@ -114,12 +115,14 @@ class SugarWidget
     {
         $this->parent_bean = $parent_bean;
     }
+
     /**
      * getTruncatedColumnAlias
      * This function ensures that a column alias is no more than 28 characters.  Should the column_name
      * argument exceed 28 charcters, it creates an alias using the first 22 characters of the column_name
      * plus an md5 of the first 6 characters of the lowercased column_name value.
-     *
+     * @param $column_name
+     * @return string
      */
     protected function getTruncatedColumnAlias($column_name)
     {

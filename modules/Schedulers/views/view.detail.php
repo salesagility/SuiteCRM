@@ -50,6 +50,8 @@ class SchedulersViewDetail extends ViewDetail
 {
 
     /**
+     * @param bool $browserTitle
+     * @return string
      * @see SugarView::_getModuleTitleListParam()
      */
     protected function _getModuleTitleListParam($browserTitle = false)

@@ -103,6 +103,10 @@ class logic_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     /**
      * @dataProvider check_existing_elementProvider
+     * @param $hook_array
+     * @param $event
+     * @param $action_array
+     * @param $expected
      */
     public function testcheck_existing_element($hook_array, $event, $action_array, $expected)
     {

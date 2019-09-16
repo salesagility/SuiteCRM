@@ -219,12 +219,19 @@ echo get_validate_chart_js();
     }
 
     /**
-    * Creates opportunity pipeline image as a VERTICAL accumlated bar graph for multiple users.
-    * param $datax- the month data to display in the x-axis
-    * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
-    * All Rights Reserved..
-    * Contributor(s): ______________________________________..
-    */
+     * Creates opportunity pipeline image as a VERTICAL accumlated bar graph for multiple users.
+     * param $datax- the month data to display in the x-axis
+     * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
+     * All Rights Reserved..
+     * Contributor(s): ______________________________________..
+     * @param string $date_start
+     * @param string $date_end
+     * @param array $user_id
+     * @param string $cache_file_name
+     * @param bool $refresh
+     * @param null $current_module_strings
+     * @return
+     */
     public function gen_xml(
         $date_start = '1971-10-15',
         $date_end = '2010-10-15',

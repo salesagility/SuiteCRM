@@ -1,6 +1,12 @@
 <?php
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
+ * @param SugarBean $focus
+ * @param $field
+ * @param $value
+ * @param $view
+ * @return string
+ * @author SalesAgility <info@salesagility.com>
  * @package Advanced OpenWorkflow for SugarCRM
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
@@ -19,7 +25,6 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author SalesAgility <info@salesagility.com>
  */
 
 

@@ -66,6 +66,8 @@ class SugarCacheAPC extends SugarCacheAbstract
     }
 
     /**
+     * @param $key
+     * @param $value
      * @see SugarCacheAbstract::_setExternal()
      */
     protected function _setExternal($key, $value)
@@ -74,6 +76,8 @@ class SugarCacheAPC extends SugarCacheAbstract
     }
 
     /**
+     * @param $key
+     * @return mixed|null
      * @see SugarCacheAbstract::_getExternal()
      */
     protected function _getExternal($key)
@@ -87,6 +91,7 @@ class SugarCacheAPC extends SugarCacheAbstract
     }
 
     /**
+     * @param $key
      * @see SugarCacheAbstract::_clearExternal()
      */
     protected function _clearExternal($key)

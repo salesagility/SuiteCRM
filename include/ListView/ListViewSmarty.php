@@ -104,8 +104,8 @@ class ListViewSmarty extends ListViewDisplay
      *
      * @param file $file Template file to use
      * @param array $data from ListViewData
-     * @param string $htmlVar the corresponding html public in xtpl per row
-     *
+     * @param $htmlpublic
+     * @throws \SuiteCRM\StateSaverException
      */
     public function process($file, $data, $htmlpublic)
     {
@@ -271,9 +271,9 @@ class ListViewSmarty extends ListViewDisplay
     /**
      * Displays the xtpl, either echo or returning the contents
      *
-     * @param end bool display the ending of the listview data (ie MassUpdate)
-     *
+     * @param bool $end
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function display($end = true)
     {

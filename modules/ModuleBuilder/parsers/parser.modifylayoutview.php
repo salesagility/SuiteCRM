@@ -62,6 +62,9 @@ class ParserModifyLayoutView extends ModuleBuilderParser
 
     /**
      * Constructor
+     * @param $module
+     * @param $view
+     * @param bool $submittedLayout
      */
     public function init($module, $view, $submittedLayout = false)
     {

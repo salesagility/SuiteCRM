@@ -76,6 +76,8 @@ class ImportView extends SugarView
     }
 
     /**
+     * @param null $module
+     * @return array
      * @see SugarView::getMenu()
      */
     public function getMenu($module = null)
@@ -143,6 +145,8 @@ class ImportView extends SugarView
     }
 
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)

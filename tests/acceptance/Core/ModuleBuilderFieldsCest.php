@@ -249,9 +249,6 @@ class ModuleBuilderFieldsCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\EditView $editView
      * @param \Step\Acceptance\DetailView $detailView
-     * @param \Step\Acceptance\Accounts $accounts
-     *
-     * As an administrator I want to test relating to the accounts module
      */
     public function testScenarioRelateToAccounts(
         \AcceptanceTester $I,

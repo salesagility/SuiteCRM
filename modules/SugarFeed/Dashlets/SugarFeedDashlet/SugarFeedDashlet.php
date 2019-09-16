@@ -141,6 +141,8 @@ class SugarFeedDashlet extends DashletGeneric
     }
 
     /**
+     * @param $id
+     * @param null $def
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function SugarFeedDashlet($id, $def = null)
@@ -519,8 +521,8 @@ class SugarFeedDashlet extends DashletGeneric
 
     /**
      * creats the values
-     * @param Object$req
-     *@return
+     * @param Object $req
+     * @return array
      */
     public function saveOptions($req)
     {
@@ -630,8 +632,8 @@ enableQS(false);
 
     /**
      *
-     * @param Object$text
-     *@return the title and the user post form
+     * @param string $text
+     * @return the title and the user post form
      */
     public function getHeader($text='')
     {

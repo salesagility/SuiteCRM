@@ -224,7 +224,7 @@ class SugarEmailAddress extends SugarBean
 
     /**
      * @param SugarBean $bean
-     * @return bool
+     * @return void
      */
     private function needsToParseLegacyAddresses($bean)
     {
@@ -515,8 +515,7 @@ class SugarEmailAddress extends SugarBean
     /**
      * Fills standard email1 legacy fields
      * @param string id
-     * @param string module
-     * @return object
+     * @return void
      */
     public function handleLegacyRetrieve(&$bean)
     {
@@ -600,7 +599,7 @@ class SugarEmailAddress extends SugarBean
      * @param string $invalid GUID of invalid address
      * @param string $optOut
      * @param bool $in_workflow
-     * @param bool|null $opt_in
+     * @param null $optIn
      * @return null
      */
     public function saveEmail(
@@ -751,7 +750,7 @@ class SugarEmailAddress extends SugarBean
     /**
      * This function returns a contact or user ID if a matching email is found
      * @param string $email the email address to match
-     * @param string $table which table to query
+     * @param $module
      * @return array|bool
      */
     public function getRelatedId($email, $module)
@@ -825,10 +824,12 @@ class SugarEmailAddress extends SugarBean
     /**
      * Saves email addresses for a parent bean
      * @param string $id Parent bean ID
-     * @param string $module  Parent bean's module
+     * @param string $module Parent bean's module
      * @param array $new_addrs Override of $_REQUEST vars, used to handle non-standard bean saves
      * @param string $primary GUID of primary address
      * @param string $replyTo GUID of reply-to address
+     * @param string $invalid
+     * @param string $optOut
      */
     public function populateAddresses(
         $id,
@@ -1359,6 +1360,8 @@ class SugarEmailAddress extends SugarBean
     /**
      * Returns Primary or newest email address
      * @param object $focus Object in focus
+     * @param null $parent_id
+     * @param null $parent_type
      * @return string email
      */
     public function getPrimaryAddress($focus, $parent_id = null, $parent_type = null)
@@ -1468,14 +1471,17 @@ class SugarEmailAddress extends SugarBean
 
     /**
      * Returns the HTML/JS for the EmailAddress widget
+     * @param $id
+     * @param string $module $focus' module
+     * @param bool $asMetadata
+     * @param string $tpl
+     * @param string $tabindex
+     * @return string HTML/JS for widget
+     * @throws \SuiteCRM\StateSaverException
      * @global LoggerManager $log
      * @global array $app_strings
      * @global array $dictionary
      * @global array $beanList
-     * @param string $parent_id ID of parent bean, generally $focus
-     * @param string $module $focus' module
-     * @param bool asMetadata Default false
-     * @return string HTML/JS for widget
      */
     public function getEmailAddressWidgetEditView($id, $module, $asMetadata = false, $tpl = '', $tabindex = '0')
     {
@@ -1637,7 +1643,9 @@ class SugarEmailAddress extends SugarBean
     /**
      * Returns the HTML/JS for the EmailAddress widget
      * @param object $focus Bean in focus
+     * @param string $tpl
      * @return string HTML/JS for widget
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getEmailAddressWidgetDetailView($focus, $tpl = '')
     {
@@ -1828,7 +1836,8 @@ class SugarEmailAddress extends SugarBean
 
     /**
      * getFormBaseURL
-     *
+     * @param $focus
+     * @return bool|string
      */
     public function getFormBaseURL($focus)
     {
@@ -1902,7 +1911,7 @@ class SugarEmailAddress extends SugarBean
 
     /**
      * This function is here so the Employees/Users division can be handled cleanly in one place
-     * @param object $focus SugarBean
+     * @param $module
      * @return string The value for the bean_module column in the email_addr_bean_rel table
      */
     public function getCorrectedModule(&$module)

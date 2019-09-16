@@ -72,14 +72,14 @@ class ListViewController extends BaseController
     {
         $this->listViewService = $listViewService;
     }
-    
+
     /**
      *
      * @param Request $request
      * @param Response $response
      * @param array $args
      * @param ListViewColumnsParams $params
-     * @return HttpResponse
+     * @return Response
      */
     public function getListViewColumns(Request $request, Response $response, array $args, ListViewColumnsParams $params)
     {

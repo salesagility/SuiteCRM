@@ -8,6 +8,7 @@ class Maps extends \AcceptanceTester
      * Create map
      *
      * @param $name
+     * @param $account
      */
     public function createMap($name, $account)
     {

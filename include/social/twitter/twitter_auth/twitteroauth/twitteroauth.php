@@ -74,6 +74,10 @@ class TwitterOAuth
 
     /**
      * construct TwitterOAuth object
+     * @param $consumer_key
+     * @param $consumer_secret
+     * @param null $oauth_token
+     * @param null $oauth_token_secret
      */
     public function __construct($consumer_key, $consumer_secret, $oauth_token = null, $oauth_token_secret = null)
     {
@@ -90,7 +94,8 @@ class TwitterOAuth
     /**
      * Get a request_token from Twitter
      *
-     * @returns a key/value array containing oauth_token and oauth_token_secret
+     * @param $oauth_callback
+     * @return array
      */
     public function getRequestToken($oauth_callback)
     {
@@ -105,7 +110,9 @@ class TwitterOAuth
     /**
      * Get the authorize URL
      *
-     * @returns a string
+     * @param $token
+     * @param bool $sign_in_with_twitter
+     * @return string
      */
     public function getAuthorizeURL($token, $sign_in_with_twitter = true)
     {
@@ -122,10 +129,8 @@ class TwitterOAuth
      * Exchange request token and secret for an access token and
      * secret, to sign API calls.
      *
-     * @returns array("oauth_token" => "the-access-token",
-     *                "oauth_token_secret" => "the-access-secret",
-     *                "user_id" => "9436992",
-     *                "screen_name" => "abraham")
+     * @param $oauth_verifier
+     * @return array
      */
     public function getAccessToken($oauth_verifier)
     {
@@ -140,11 +145,9 @@ class TwitterOAuth
     /**
      * One time exchange of username and password for access token and secret.
      *
-     * @returns array("oauth_token" => "the-access-token",
-     *                "oauth_token_secret" => "the-access-secret",
-     *                "user_id" => "9436992",
-     *                "screen_name" => "abraham",
-     *                "x_auth_expires" => "0")
+     * @param $username
+     * @param $password
+     * @return array
      */
     public function getXAuthToken($username, $password)
     {
@@ -160,6 +163,9 @@ class TwitterOAuth
 
     /**
      * GET wrapper for oAuthRequest.
+     * @param $url
+     * @param array $parameters
+     * @return API|mixed
      */
     public function get($url, $parameters = array())
     {
@@ -169,9 +175,12 @@ class TwitterOAuth
         }
         return $response;
     }
-  
+
     /**
      * POST wrapper for oAuthRequest.
+     * @param $url
+     * @param array $parameters
+     * @return API|mixed
      */
     public function post($url, $parameters = array())
     {
@@ -184,6 +193,9 @@ class TwitterOAuth
 
     /**
      * DELETE wrapper for oAuthReqeust.
+     * @param $url
+     * @param array $parameters
+     * @return API|mixed
      */
     public function delete($url, $parameters = array())
     {
@@ -196,6 +208,10 @@ class TwitterOAuth
 
     /**
      * Format and sign an OAuth / API request
+     * @param $url
+     * @param $method
+     * @param $parameters
+     * @return API
      */
     public function oAuthRequest($url, $method, $parameters)
     {
@@ -215,6 +231,9 @@ class TwitterOAuth
     /**
      * Make an HTTP request
      *
+     * @param $url
+     * @param $method
+     * @param null $postfields
      * @return API results
      */
     public function http($url, $method, $postfields = null)
@@ -256,6 +275,9 @@ class TwitterOAuth
 
     /**
      * Get the header info to store.
+     * @param $ch
+     * @param $header
+     * @return int
      */
     public function getHeader($ch, $header)
     {

@@ -91,15 +91,15 @@ class nusoap_xmlschema extends nusoap_base
     public $depth_array = array();
     public $message = array();
     public $defaultNamespace = array();
-    
+
     /**
-    * constructor
-    *
-    * @param    string $schema schema document URI
-    * @param    string $xml xml document URI
-    * @param	string $namespaces namespaces defined in enclosing XML
-    * @access   public
-    */
+     * constructor
+     *
+     * @param string $schema schema document URI
+     * @param string $xml xml document URI
+     * @param array $namespaces namespaces defined in enclosing XML
+     * @access   public
+     */
     public function nusoap_xmlschema($schema='', $xml='', $namespaces=array())
     {
         parent::nusoap_base();
@@ -921,48 +921,43 @@ class nusoap_xmlschema extends nusoap_base
         }
         return $buffer;
     }
-    
+
     /**
-    * adds a complex type to the schema
-    *
-    * example: array
-    *
-    * addType(
-    * 	'ArrayOfstring',
-    * 	'complexType',
-    * 	'array',
-    * 	'',
-    * 	'SOAP-ENC:Array',
-    * 	array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'string[]'),
-    * 	'xsd:string'
-    * );
-    *
-    * example: PHP associative array ( SOAP Struct )
-    *
-    * addType(
-    * 	'SOAPStruct',
-    * 	'complexType',
-    * 	'struct',
-    * 	'all',
-    * 	array('myVar'=> array('name'=>'myVar','type'=>'string')
-    * );
-    *
-    * @param name
-    * @param typeClass (complexType|simpleType|attribute)
-    * @param phpType: currently supported are array and struct (php assoc array)
-    * @param compositor (all|sequence|choice)
-    * @param restrictionBase namespace:name (http://schemas.xmlsoap.org/soap/encoding/:Array)
-    * @param elements = array ( name = array(name=>'',type=>'') )
-    * @param attrs = array(
-    * 	array(
-    *		'ref' => "http://schemas.xmlsoap.org/soap/encoding/:arrayType",
-    *		"http://schemas.xmlsoap.org/wsdl/:arrayType" => "string[]"
-    * 	)
-    * )
-    * @param arrayType: namespace:name (http://www.w3.org/2001/XMLSchema:string)
-    * @access public
-    * @see getTypeDef
-    */
+     * adds a complex type to the schema
+     *
+     * example: array
+     *
+     * addType(
+     *    'ArrayOfstring',
+     *    'complexType',
+     *    'array',
+     *    '',
+     *    'SOAP-ENC:Array',
+     *    array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'string[]'),
+     *    'xsd:string'
+     * );
+     *
+     * example: PHP associative array ( SOAP Struct )
+     *
+     * addType(
+     *    'SOAPStruct',
+     *    'complexType',
+     *    'struct',
+     *    'all',
+     *    array('myVar'=> array('name'=>'myVar','type'=>'string')
+     * );
+     *
+     * @param name
+     * @param string $typeClass
+     * @param string $phpType
+     * @param string $compositor
+     * @param string $restrictionBase
+     * @param array $elements
+     * @param array $attrs
+     * @param string $arrayType
+     * @access public
+     * @see getTypeDef
+     */
     public function addComplexType($name, $typeClass='complexType', $phpType='array', $compositor='', $restrictionBase='', $elements=array(), $attrs=array(), $arrayType='')
     {
         $this->complexTypes[$name] = array(

@@ -129,6 +129,8 @@ abstract class ExternalAPIBase implements ExternalAPIPlugin
 
     /**
      * Does API support this method?
+     * @param string $method
+     * @return bool
      * @see ExternalAPIPlugin::supports()
      */
     public function supports($method = '')

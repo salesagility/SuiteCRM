@@ -51,12 +51,12 @@ class TestRunCommands extends \Robo\Tasks
      * @param string $fileOrDirectory Provide a path to a file or directory to
      *   run a specific test/specific directory of tests.
      * @param array $opts
+     * @return
      * @option debug Whether to have the test suite output extra information.
      * @option fail-fast Stop after first failure.
      * @usage tests:install
      * @usage tests:install ./tests/install/UserWizardCest.php
      * @usage tests:install --debug ./tests/install/UserWizardCest.php
-     * @return
      */
     public function TestsInstall($fileOrDirectory = null, $opts = ['debug' => false, 'fail-fast' => false]) {
       $this->say('Running Codeception Install Test Suite.');
@@ -79,13 +79,13 @@ class TestRunCommands extends \Robo\Tasks
      * @param string $fileOrDirectory Provide a path to a file or directory to
      *   run a specific test/specific directory of tests.
      * @param array $opts
+     * @return
      * @option debug Whether to have the test suite output extra information.
      * @option fail-fast Stop after first failure.
      * @usage tests:api
      * @usage tests:api ./tests/api/V8/GetFieldsMetaCest.php
      * @usage tests:api ./tests/api/V8/
      * @usage tests:api --debug ./tests/api/V8/GetFieldsMetaCest.php
-     * @return
      */
     public function TestsAPI($fileOrDirectory = null, $opts = ['debug' => false, 'fail-fast' => false]) {
       $this->say('Running Codeception API Test Suite.');
@@ -108,13 +108,13 @@ class TestRunCommands extends \Robo\Tasks
      * @param string $fileOrDirectory Provide a path to a file or directory to
      *   run a specific test/specific directory of tests.
      * @param array $opts
+     * @return
      * @option debug Whether to have the test suite output extra information.
      * @option fail-fast Stop after first failure.
      * @usage tests:acceptance
      * @usage tests:acceptance ./tests/acceptance/modules/Calendar/CalendarCest.php
      * @usage tests:acceptance ./tests/acceptance/modules/
      * @usage tests:acceptance --debug ./tests/acceptance/modules/Calendar/CalendarCest.php
-     * @return
      */
     public function TestsAcceptance($fileOrDirectory = null, $opts = ['debug' => false, 'fail-fast' => false]) {
       $this->say('Running Codeception Acceptance Test Suite.');
@@ -137,6 +137,7 @@ class TestRunCommands extends \Robo\Tasks
      * @param string $fileOrDirectory Provide a path to a file or directory to
      *   run a specific test/specific directory of tests.
      * @param array $opts
+     * @return
      * @option debug Whether to have the test suite output extra information.
      * @option fail-fast Stop after first failure.
      * @usage tests:unit
@@ -144,7 +145,6 @@ class TestRunCommands extends \Robo\Tasks
      * @usage tests:unit ./tests/unit/phpunit/modules/
      * @usage tests:unit --filter testdeleteFavorite ./tests/unit/phpunit/modules/Favorites/FavoritesTest.php
      * @usage tests:unit --debug ./tests/unit/phpunit/modules/Favorites/FavoritesTest.php
-     * @return
      */
     public function TestsUnit($fileOrDirectory = './tests/unit/phpunit', $opts = ['debug' => false, 'fail-fast' => false, 'filter' => InputOption::VALUE_REQUIRED]) {
       $this->say('Running PHPUnit Unit Test Suite.');

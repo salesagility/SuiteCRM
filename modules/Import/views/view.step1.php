@@ -65,8 +65,10 @@ class ImportViewStep1 extends ImportView
             $this->importModule = 'Administration';
         }
     }
-    
+
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)
@@ -160,8 +162,11 @@ class ImportViewStep1 extends ImportView
     {
         return ExternalAPIFactory::getModuleDropDown('Import', false, false);
     }
+
     /**
      * Returns JS used in this view
+     * @param bool $sourceType
+     * @return string
      */
     private function _getJS($sourceType = false)
     {

@@ -56,7 +56,7 @@ class ProjectListViewData extends ListViewData
      * generates the additional details span to be retrieved via ajax
      *
      * @param GUID id id of the record
-     * @return array string to attach to field
+     * @return void string to attach to field
      */
     public function getAdditionalDetailsAjax($id)
     {

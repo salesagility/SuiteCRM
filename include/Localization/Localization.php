@@ -143,8 +143,9 @@ class Localization
 
     /**
      * abstraction of precedence
-     * @param string prefName Name of preference to retrieve based on overrides
-     * @param object user User in focus, default null (current_user)
+     * @param $prefName
+     * @param null $user
+     * @param string $sugarConfigPrefName
      * @return string pref Most significant preference
      */
     public function getPrecedentPreference($prefName, $user=null, $sugarConfigPrefName = '')
@@ -404,6 +405,11 @@ class Localization
 
     /**
      * translates a character set from one to another, and the into MIME-header friendly format
+     * @param $string
+     * @param $fromCharset
+     * @param string $toCharset
+     * @param string $encoding
+     * @return string
      */
     public function translateCharsetMIME($string, $fromCharset, $toCharset='UTF-8', $encoding="Q")
     {
@@ -439,7 +445,8 @@ class Localization
 
     /**
      * returns the charset preferred in descending order: User, Sugar Config, DEFAULT
-     * @param string charset to override ALL, pass a valid charset here
+     * @param string $charset
+     * @param null $user
      * @return string charset the chosen character set
      */
     public function getExportCharset($charset='', $user=null)
@@ -450,6 +457,7 @@ class Localization
 
     /**
      * returns the charset preferred in descending order: User, Sugar Config, DEFAULT
+     * @param null $user
      * @return string charset the chosen character set
      */
     public function getOutboundEmailCharset($user=null)
@@ -489,9 +497,10 @@ class Localization
 
     /**
      * returns a number formatted by user preference or system default
-     * @param string number Number to be formatted and returned
-     * @param string currencySymbol Currency symbol if override is necessary
-     * @param bool is_currency Flag to also return the currency symbol
+     * @param $number
+     * @param string $currencySymbol
+     * @param bool $is_currency
+     * @param null $user
      * @return string Formatted number
      */
     public function getLocaleFormattedNumber($number, $currencySymbol='', $is_currency=true, $user=null)
@@ -627,6 +636,7 @@ eoq;
     ////	NAME DISPLAY FORMATTING CODE
     /**
      * get's the Name format macro string, preferring $current_user
+     * @param null $user
      * @return string format Name Format macro for locale
      */
     public function getLocaleFormatMacro($user=null)
@@ -709,9 +719,10 @@ eoq;
 
     /**
      * outputs some simple Javascript to show a preview of Name format in "My Account" and "Admin->Localization"
-     * @param string first First Name, use app_strings default if not specified
-     * @param string last Last Name, use app_strings default if not specified
-     * @param string salutation Saluation, use app_strings default if not specified
+     * @param string $first
+     * @param string $last
+     * @param string $salutation
+     * @param string $title
      * @return string some Javascript
      */
     public function getNameJs($first='', $last='', $salutation='', $title='')

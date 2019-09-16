@@ -394,7 +394,16 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
     /**
      * Equivalent of get_list function within SugarBean but allows the possibility to pass in an indicator
      * if the list should filter for favorites.  Should eventually update the SugarBean function as well.
-     *
+     * @param $seed
+     * @param string $order_by
+     * @param string $where
+     * @param int $row_offset
+     * @param int $limit
+     * @param int $max
+     * @param int $show_deleted
+     * @param bool $favorites
+     * @param bool $singleSelect
+     * @return
      */
     public function get_data_list($seed, $order_by = "", $where = "", $row_offset = 0, $limit=-1, $max=-1, $show_deleted = 0, $favorites = false, $singleSelect=false)
     {
@@ -450,6 +459,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      *
      * @param String $module Name of the module
      * @param String $field Name of the field
+     * @param null $current_user
      * @return int
      */
     public function getFieldLevelACLValue($module, $field, $current_user = null)

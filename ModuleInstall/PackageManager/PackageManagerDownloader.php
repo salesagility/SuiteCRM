@@ -46,11 +46,10 @@ class PackageManagerDownloader
     /**
      * Using curl we will download the file from the depot server
      *
-     * @param session_id		the session_id this file is queued for
-     * @param file_name			the file_name to download
-     * @param save_dir			(optional) if specified it will direct where to save the file once downloaded
-     * @param download_sever	(optional) if specified it will direct the url for the download
-     *
+     * @param $session_id
+     * @param $file_name
+     * @param string $save_dir
+     * @param string $download_server
      * @return the full path of the saved file
      */
     public function download($session_id, $file_name, $save_dir = '', $download_server = '')

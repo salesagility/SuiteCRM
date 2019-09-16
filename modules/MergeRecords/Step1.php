@@ -179,6 +179,10 @@ function validate_input($requestData)
  * This function is equivalent of AddFieldRow in merge.js. is being used to
  * preload the filter criteria based on the vardef.
  * <span><table><tr><td></td><td></td><td></td></tr></table></span>
+ * @param $colName
+ * @param $colLabel
+ * @param $colValue
+ * @return string
  */
 function addFieldRow($colName, $colLabel, $colValue)
 {

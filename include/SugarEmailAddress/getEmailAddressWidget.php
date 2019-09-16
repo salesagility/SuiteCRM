@@ -44,7 +44,9 @@
  * @param string $field unused
  * @param string $value unused
  * @param string $view DetailView or EditView
+ * @param string $tabindex
  * @return string
+ * @throws \SuiteCRM\StateSaverException
  */
 function getEmailAddressWidget($focus, $field, $value, $view, $tabindex = '0')
 {

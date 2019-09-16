@@ -61,7 +61,7 @@ abstract class PHP5Soap extends SugarSoapService
 
     /**
      * Serves the Soap Request
-     * @return
+     * @return void
      */
     public function serve()
     {
@@ -137,8 +137,8 @@ abstract class PHP5Soap extends SugarSoapService
     /**
      * This function allows specifying what version of PHP soap to use
      * PHP soap supports version 1.1 and 1.2.
-     * @return
      * @param String $version [optional]
+     * @return void
      */
     public function setSoapVersion($version='1.1')
     {

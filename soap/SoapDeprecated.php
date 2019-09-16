@@ -218,8 +218,7 @@ $server->register(
  *
  * @param string $user_name -- the user name for the session
  * @param string $password -- MD5 of user password
- * @return "Success" if the session is created
- * @return "Failed" if the session creation failed.
+ * @return string "Success" if the session is created
  */
 function create_session($user_name, $password)
 {
@@ -234,8 +233,7 @@ function create_session($user_name, $password)
  * End a session.  This method will end the SOAP session.
  *
  * @param string $user_name -- the user name for the session
- * @return "Success" if the session is destroyed
- * @return "Failed" if the session destruction failed.
+ * @return string "Success" if the session is destroyed
  */
 function end_session($user_name)
 {
@@ -399,7 +397,7 @@ function add_leads_matching_email_address(&$output_list, $email_address, &$seed_
  * @param string $user_name -- User name to authenticate with
  * @param string $password -- MD5 of the user password
  * @param string $id -- the id of the record
- * @return contact detail array along with associated objects.
+ * @return array|void detail array along with associated objects.
  */
 function get_contact_relationships($user_name, $password, $id)
 {
@@ -466,7 +464,7 @@ $current_user = null;
  * @param string $user_name -- User name to authenticate with
  * @param string $password -- MD5 of the user password
  * @param string $email_address -- Single email address or '; ' separated list of email addresses (e.x "test@example.com; test2@example.com"
- * @return contact detail array along with associated objects.
+ * @return array detail array along with associated objects.
  */
 function contact_by_email($user_name, $password, $email_address)
 {
@@ -519,9 +517,9 @@ function contact_by_email($user_name, $password, $email_address)
 /**
  * Internal: convert a bean into an array
  *
- * @param Bean $bean -- The bean to convert
- * @param int $msi_id -- Russult array index
- * @return An associated array containing the detail fields.
+ * @param $contact
+ * @param string $msi_id -- Russult array index
+ * @return array associated array containing the detail fields.
  */
 function get_contact_array($contact, $msi_id = '0')
 {
@@ -542,7 +540,7 @@ function get_contact_array($contact, $msi_id = '0')
  * Internal: Convert a user into an array
  *
  * @param User $user -- The user to convert
- * @return An associated array containing the detail fields.
+ * @return array associated array containing the detail fields.
  */
 function get_user_list_array($user)
 {
@@ -564,7 +562,7 @@ function get_user_list_array($user)
  *
  * @param string $user -- user name for validation
  * @param password $password -- MD5 hash of the user password for validation
- * @return User Array -- An array of user detail records
+ * @return array Array -- An array of user detail records
  */
 function user_list($user, $password)
 {
@@ -593,7 +591,7 @@ function user_list($user, $password)
  *
  * @param string $name -- Name to search for.
  * @param string $where -- Where clause defaults to ''
- * @param int $msi_id -- Response array index
+ * @param string $msi_id -- Response array index
  * @return array -- Resturns a list of contacts that have the provided name.
  */
 function contact_by_search($name, $where = '', $msi_id = '0')
@@ -621,9 +619,9 @@ function contact_by_search($name, $where = '', $msi_id = '0')
 /**
  * Internal: convert a bean into an array
  *
- * @param Bean $bean -- The bean to convert
- * @param int $msi_id -- Russult array index
- * @return An associated array containing the detail fields.
+ * @param $lead
+ * @param string $msi_id -- Russult array index
+ * @return array associated array containing the detail fields.
  */
 function get_lead_array($lead, $msi_id = '0')
 {
@@ -665,9 +663,9 @@ function lead_by_search($name, $where = '', $msi_id = '0')
 /**
  * Internal: convert a bean into an array
  *
- * @param Bean $bean -- The bean to convert
+ * @param $account
  * @param int $msi_id -- Russult array index
- * @return An associated array containing the detail fields.
+ * @return array associated array containing the detail fields.
  */
 function get_account_array($account, $msi_id)
 {
@@ -707,9 +705,9 @@ function account_by_search($name, $where = '', $msi_id = '0')
 /**
  * Internal: convert a bean into an array
  *
- * @param Bean $bean -- The bean to convert
- * @param int $msi_id -- Russult array index
- * @return An associated array containing the detail fields.
+ * @param $value
+ * @param string $msi_id -- Russult array index
+ * @return array associated array containing the detail fields.
  */
 function get_opportunity_array($value, $msi_id = '0')
 {
@@ -749,9 +747,10 @@ function opportunity_by_search($name, $where = '', $msi_id = '0')
 /**
  * Internal: convert a bean into an array
  *
- * @param Bean $bean -- The bean to convert
+ * @param $value
  * @param int $msi_id -- Russult array index
- * @return An associated array containing the detail fields.
+ * @param $type
+ * @return array associated array containing the detail fields.
  */
 function get_bean_array($value, $msi_id, $type)
 {
@@ -769,9 +768,9 @@ function get_bean_array($value, $msi_id, $type)
 /**
  * Internal: convert a bean into an array
  *
- * @param Bean $bean -- The bean to convert
+ * @param $value
  * @param int $msi_id -- Russult array index
- * @return An associated array containing the detail fields.
+ * @return array associated array containing the detail fields.
  */
 function get_case_array($value, $msi_id)
 {
@@ -842,8 +841,9 @@ function case_by_search($name, $where = '', $msi_id = '0')
  * @param string $date_sent_received -- Date/time the email was sent in Visual Basic Date format. (e.g. '7/22/2004 9:36:31 AM')
  * @param string $email_subject -- The subject of the email
  * @param string $email_body -- The body of the email
- * @return "Invalid username and/or password"
- * @return -1 If the authenticated user does not have ACL access to save Email.
+ * @return int|string "Invalid username and/or password"
+ * @throws EmailValidatorException
+ * @throws \SuiteCRM\ErrorMessageException
  */
 function track_email($user_name, $password, $parent_id, $contact_ids, $date_sent_received, $email_subject, $email_body)
 {

@@ -34,6 +34,7 @@ class BasicModuleCest
     }
 
     // Tests
+
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
@@ -41,6 +42,7 @@ class BasicModuleCest
      * As an administrator I want to create and deploy a basic module so that I can test
      * that the basic functionality is working. Given that I have already created a module I expect to deploy
      * the module before testing.
+     * @param \Step\Acceptance\Repair $repair
      */
     public function testScenarioCreateBasicModule(
         \AcceptanceTester $I,
@@ -91,6 +93,7 @@ class BasicModuleCest
      *
      * As administrative user I want to create a record with my basic test module so that I can test
      * the standard fields.
+     * @param \Step\Acceptance\DetailView $detailView
      */
     public function testScenarioCreateRecord(
         \AcceptanceTester $I,

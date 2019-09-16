@@ -66,6 +66,8 @@ class SugarCacheZend extends SugarCacheAbstract
     }
 
     /**
+     * @param $key
+     * @param $value
      * @see SugarCacheAbstract::_setExternal()
      */
     protected function _setExternal(
@@ -76,6 +78,8 @@ class SugarCacheZend extends SugarCacheAbstract
     }
 
     /**
+     * @param $key
+     * @return mixed|null
      * @see SugarCacheAbstract::_getExternal()
      */
     protected function _getExternal(
@@ -91,6 +95,7 @@ class SugarCacheZend extends SugarCacheAbstract
     }
 
     /**
+     * @param $key
      * @see SugarCacheAbstract::_clearExternal()
      */
     protected function _clearExternal(

@@ -85,6 +85,11 @@ class SugarFieldCurrency extends SugarFieldFloat
     }
 
     /**
+     * @param $value
+     * @param $vardef
+     * @param $focus
+     * @param ImportFieldSanitize $settings
+     * @return
      * @see SugarFieldBase::importSanitize()
      */
     public function importSanitize(
@@ -101,8 +106,8 @@ class SugarFieldCurrency extends SugarFieldFloat
     /**
      * format the currency field based on system locale values for currency
      * Note that this may be different from the precision specified in the vardefs.
-     * @param string $rawfield value of the field
-     * @param string $somewhere vardef for the field being processed
+     * @param $rawField
+     * @param $vardef
      * @return number formatted according to currency settings
      */
     public function formatField($rawField, $vardef)

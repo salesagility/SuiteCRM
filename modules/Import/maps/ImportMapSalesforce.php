@@ -152,9 +152,11 @@ class ImportMapSalesforce extends ImportMapOther
             return $return_array;
         }
     }
-    
+
     /**
-    * @see ImportMapOther::getIgnoredFields()
+     * @param $module
+     * @return array
+     * @see ImportMapOther::getIgnoredFields()
      */
     public function getIgnoredFields(
         $module

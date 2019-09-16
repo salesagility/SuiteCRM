@@ -70,8 +70,10 @@ class ConfiguratorViewEdit extends ViewEdit
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
     }
-    
+
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)

@@ -16,6 +16,7 @@
  *      capitalize (Smarty online manual)
  * @author   Monte Ohrt <monte at ohrt dot com>
  * @param string
+ * @param bool $uc_digits
  * @return string
  */
 function smarty_modifier_capitalize($string, $uc_digits = false)

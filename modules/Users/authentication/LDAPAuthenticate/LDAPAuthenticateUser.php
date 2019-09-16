@@ -341,12 +341,13 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
     }
 
     /**
-    * @return string appropriate value for username when binding to directory server.
-    * @param string $user_name the value provided in login form
-    * @desc Take the login username and return either said username for AD or lookup
+     * @param string $user_name the value provided in login form
+     * @param $password
+     * @return string appropriate value for username when binding to directory server.
+     * @desc Take the login username and return either said username for AD or lookup
      * distinguished name using anonymous credentials for OpenLDAP.
      * Contributions by Erik Mitchell erikm@logicpd.com
-    */
+     */
     public function ldap_rdn_lookup($user_name, $password)
     {
 

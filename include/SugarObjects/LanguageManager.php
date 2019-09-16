@@ -53,7 +53,8 @@ class LanguageManager
     /**
      * Called from VardefManager to allow for caching a lang file for a module
      * @param module - the name of the module we are working with
-     * @param templates - an array of templates this module uses
+     * @param array $templates
+     * @param bool $refresh
      */
     public static function createLanguageFile($module, $templates=array('default'), $refresh = false)
     {
@@ -191,6 +192,7 @@ class LanguageManager
      *
      * @param string $module the given module we want to load the vardefs for
      * @param string $lang the given language we wish to load
+     * @param array $loaded_mod_strings
      * @param array $additional_search_paths an array which allows a consumer to pass in additional vardef locations to search
      */
     public static function refreshLanguage($module, $lang, $loaded_mod_strings = array(), $additional_search_paths = null)

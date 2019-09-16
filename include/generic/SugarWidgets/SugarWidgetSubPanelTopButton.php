@@ -58,7 +58,11 @@ class SugarWidgetSubPanelTopButton extends SugarWidget
     //TODO rename defines to layout defs and make it a member variable instead of passing it multiple layers with extra copying.
 
     /** Take the keys for the strings and look them up.  Module is literal, the rest are label keys
-    */
+     * @param string $module
+     * @param string $title
+     * @param string $access_key
+     * @param string $form_value
+     */
     public function __construct($module='', $title='', $access_key='', $form_value='')
     {
         global $app_strings;
@@ -103,6 +107,10 @@ class SugarWidgetSubPanelTopButton extends SugarWidget
     }
 
     /**
+     * @param string $module
+     * @param string $title
+     * @param string $access_key
+     * @param string $form_value
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function SugarWidgetSubPanelTopButton($module='', $title='', $access_key='', $form_value='')
@@ -271,7 +279,12 @@ class SugarWidgetSubPanelTopButton extends SugarWidget
         return $button;
     }
 
-    /** This default function is used to create the HTML for a simple button */
+    /** This default function is used to create the HTML for a simple button
+     * @param $defines
+     * @param null $additionalFormFields
+     * @param bool $nonbutton
+     * @return string
+     */
     public function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
         $temp='';
@@ -301,6 +314,8 @@ class SugarWidgetSubPanelTopButton extends SugarWidget
     /**
      * Returns a string that is the JSON encoded version of the popup request.
      * Perhaps this function should be moved to a more globally accessible location?
+     * @param $popup_request_data
+     * @return false|string
      */
     public function _create_json_encoded_popup_request($popup_request_data)
     {

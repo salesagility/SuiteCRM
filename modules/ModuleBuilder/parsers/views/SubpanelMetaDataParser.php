@@ -204,7 +204,7 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
      * widget_class, target_module and target_record_key deltas to the related subpanel definition entry.
      *
      * @param Array of subpanel definitions to possibly alter
-     * @return $defs Array of formatted subpanel definition entries to include any relate field attributes for Subpanels
+     * @return mixed $defs Array of formatted subpanel definition entries to include any relate field attributes for Subpanels
      */
     protected function makeRelateFieldsAsLink($defs)
     {

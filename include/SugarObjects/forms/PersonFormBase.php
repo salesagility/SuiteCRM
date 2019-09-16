@@ -60,14 +60,14 @@ abstract class PersonFormBase extends FormBase
 {
     public $moduleName;
     public $objectName;
-    
+
     /**
      * buildTableForm
      *
      * This function creates a table with form data.  It is used by the form base code when checking for duplicates
      *
      * @param Array $rows of duplicate row data
-     * @return $form The HTML form data
+     * @return string $form The HTML form data
      */
     public function buildTableForm($rows)
     {
@@ -186,7 +186,7 @@ abstract class PersonFormBase extends FormBase
      * of this class.
      *
      * @param String $prefix value of any prefix to the form input names
-     * @return $rows Array of matching Leads entries found; null if none found
+     * @return array|null $rows Array of matching Leads entries found; null if none found
      */
     public function checkForDuplicates($prefix='')
     {

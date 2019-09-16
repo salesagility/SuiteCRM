@@ -56,9 +56,8 @@ class FormatterFactory
      * for the source is used.
      *
      * @param The $source_name data source name to retreive formatter for
-     * @param Optional $formatter_name formatter name to use
-     * @param Optional $wrapper_name wrapper name to use
-     * @return $instance The formatter instance
+     * @param string $formatter_name formatter name to use
+     * @return mixed|null $instance The formatter instance
      */
     public static function getInstance($source_name, $formatter_name='')
     {

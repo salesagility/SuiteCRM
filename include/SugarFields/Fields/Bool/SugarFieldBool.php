@@ -46,11 +46,14 @@ class SugarFieldBool extends SugarFieldBase
 {
     /**
      *
-     * @return The html for a drop down if the search field is not 'my_items_only' or a dropdown for all other fields.
-     *			This strange behavior arises from the special needs of PM. They want the my items to be checkboxes and all other boolean fields to be dropdowns.
-     * @author Navjeet Singh
      * @param $parentFieldArray -
-     **/
+     * @param $vardef
+     * @param $displayParams
+     * @param $tabindex
+     * @return The html for a drop down if the search field is not 'my_items_only' or a dropdown for all other fields.
+     *            This strange behavior arises from the special needs of PM. They want the my items to be checkboxes and all other boolean fields to be dropdowns.
+     * @author Navjeet Singh
+     */
     public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
@@ -62,6 +65,11 @@ class SugarFieldBool extends SugarFieldBase
     }
 
     /**
+     * @param $value
+     * @param $vardef
+     * @param $focus
+     * @param ImportFieldSanitize $settings
+     * @return bool|int|string
      * @see SugarFieldBase::importSanitize()
      */
     public function importSanitize(

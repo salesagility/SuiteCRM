@@ -157,11 +157,11 @@ interface ImapHandlerInterface
      * @return bool|object Returns FALSE on error or, if successful, the information in an object
      */
     public function getHeaderInfo($msg_number, $fromlength = 0, $subjectlength = 0, $defaulthost = null);
-    
+
     /**
      *
      * @param type $msg_number
-     * @param type $options
+     * @param int $options
      * @return string
      */
     public function fetchHeader($msg_number, $options = 0);

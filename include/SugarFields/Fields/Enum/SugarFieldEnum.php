@@ -90,8 +90,13 @@ class SugarFieldEnum extends SugarFieldBase
         $displayTypeFunc = 'get'.$displayType.'Smarty';
         return $this->$displayTypeFunc($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
-    
+
     /**
+     * @param $value
+     * @param $vardef
+     * @param $focus
+     * @param ImportFieldSanitize $settings
+     * @return bool|false|int|string
      * @see SugarFieldBase::importSanitize()
      */
     public function importSanitize(

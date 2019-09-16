@@ -49,6 +49,7 @@ class jjwg_Areas extends jjwg_Areas_sugar
     }
 
     /**
+     * @param bool $init
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function jjwg_Areas($init=true)
@@ -77,6 +78,10 @@ class jjwg_Areas extends jjwg_Areas_sugar
 
     /**
      * Retrieve object by id
+     * @param int $id
+     * @param bool $encode
+     * @param bool $deleted
+     * @return jjwg_Areas
      */
     public function retrieve($id = -1, $encode = true, $deleted = true)
     {
@@ -146,7 +151,7 @@ class jjwg_Areas extends jjwg_Areas_sugar
 
     /**
      * Define Centroid - Point
-     * @return type
+     * @return array
      */
     public function define_centroid()
     {
@@ -189,7 +194,7 @@ class jjwg_Areas extends jjwg_Areas_sugar
 
     /**
      * Define Polygon Area
-     * @return type
+     * @return float|int
      */
     public function define_area()
     {

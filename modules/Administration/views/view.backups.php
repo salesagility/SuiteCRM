@@ -45,6 +45,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class ViewBackups extends SugarView
 {
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)

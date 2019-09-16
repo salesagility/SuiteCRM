@@ -56,7 +56,7 @@ class SAML2AuthenticateUser extends SugarAuthenticateUser
      *
      * @param STRING $name
      * @param STRING $password
-     * @param STRING $fallback - is this authentication a fallback from a failed authentication
+     * @param bool $fallback - is this authentication a fallback from a failed authentication
      * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (SAML2 default is false)
      * @return STRING id - used for loading the user
      */
@@ -77,7 +77,8 @@ class SAML2AuthenticateUser extends SugarAuthenticateUser
      *
      * @param STRING $name
      * @param STRING $password
-     * @param STRING $fallback - is this authentication a fallback from a failed authentication
+     * @param bool $fallback - is this authentication a fallback from a failed authentication
+     * @param array $PARAMS
      * @return boolean
      */
     public function loadUserOnLogin($name, $password, $fallback = false, $PARAMS = array())

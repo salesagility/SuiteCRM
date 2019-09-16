@@ -235,10 +235,12 @@ class ListView
     }
 
     /**
-     * @return void
      * @param unknown $data
-     * @param unknown $xTemplateSection
+     * @param $parent_data
+     * @param $xtemplateSection
      * @param unknown $html_varName
+     * @param $subpanel_def
+     * @return void
      * @desc INTERNAL FUNCTION handles the rows
      */
     public function process_dynamic_listview_rows($data, $parent_data, $xtemplateSection, $html_varName, $subpanel_def)
@@ -564,7 +566,8 @@ class ListView
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
-    */
+     * @param $bool
+     */
     public function setDisplayHeaderAndFooter($bool)
     {
         $this->display_header_and_footer = $bool;
@@ -593,30 +596,38 @@ class ListView
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
-    */
+     * @param $count
+     */
     public function setRecordsPerPage($count)
     {
         $this->records_per_page = $count;
     }
-    /**sets the header title */
+
+    /**sets the header title
+     * @param $value
+     */
     public function setHeaderTitle($value)
     {
         $this->header_title = $value;
     }
+
     /**sets the header text this is text that's appended to the header table and is usually used for the creation of buttons
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
-    */
+     * @param $value
+     */
     public function setHeaderText($value)
     {
         $this->header_text = $value;
     }
+
     /**sets the path for the XTemplate HTML file to be used this is only needed to be set if you are allowing ListView to create the XTemplate
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
-    */
+     * @param $value
+     */
     public function setXTemplatePath($value)
     {
         $this->xTemplatePath= $value;
@@ -626,7 +637,10 @@ class ListView
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
-    */
+     * @param $XTemplatePath
+     * @param $modString
+     * @param null $imagePath
+     */
     public function initNewXTemplate($XTemplatePath, $modString, $imagePath = null)
     {
         $this->setXTemplatePath($XTemplatePath);
@@ -716,7 +730,12 @@ class ListView
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
-    */
+     * @param $where
+     * @param $limit
+     * @param $orderBy
+     * @param $varName
+     * @param bool $allowOrderByOveride
+     */
     public function setQuery($where, $limit, $orderBy, $varName, $allowOrderByOveride=true)
     {
         $this->query_where = $where;
@@ -746,7 +765,8 @@ class ListView
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
-    */
+     * @param $theme
+     */
     public function setTheme($theme)
     {
         $this->local_theme = $theme;
@@ -759,7 +779,8 @@ class ListView
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
-    */
+     * @param $app_strings
+     */
     public function setAppStrings($app_strings)
     {
         unset($this->local_app_strings);
@@ -773,7 +794,8 @@ class ListView
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
-    */
+     * @param $mod_strings
+     */
     public function setModStrings($mod_strings)
     {
         unset($this->local_module_strings);
@@ -787,7 +809,8 @@ class ListView
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
-    */
+     * @param $image_path
+     */
     public function setImagePath($image_path)
     {
         $this->local_image_path = $image_path;
@@ -803,7 +826,8 @@ class ListView
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
-    */
+     * @param $currentModule
+     */
     public function setCurrentModule($currentModule)
     {
         unset($this->local_current_module);
@@ -840,7 +864,8 @@ class ListView
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
-    */
+     * @param $newXTemplate
+     */
     public function setXTemplate($newXTemplate)
     {
         $this->xTemplate = $newXTemplate;
@@ -860,7 +885,9 @@ class ListView
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
-    */
+     * @param $name
+     * @param $value
+     */
     public function xTemplateAssign($name, $value)
     {
         if (!isset($this->xTemplate)) {
@@ -891,7 +918,9 @@ class ListView
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
-    */
+     * @param $localVarName
+     * @param $value
+     */
     public function setOffset($localVarName, $value)
     {
         $this->setSessionVariable($localVarName, "offset", $value);
@@ -901,7 +930,10 @@ class ListView
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
-    */
+     * @param $localVarName
+     * @param $varName
+     * @param $value
+     */
     public function setSessionVariable($localVarName, $varName, $value)
     {
         $_SESSION[$this->local_current_module."_".$localVarName."_".$varName] = $value;
@@ -920,7 +952,10 @@ class ListView
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
-    */
+     * @param $localVarName
+     * @param $varName
+     * @return mixed|string
+     */
     public function getSessionVariable($localVarName, $varName)
     {
         //Set any variables pass in through request first
@@ -993,19 +1028,18 @@ class ListView
     }
 
     /**
-
-    * @return void
-    * @param unknown $seed
-    * @param unknown $xTemplateSection
-    * @param unknown $html_varName
-    * @desc INTERNAL FUNCTION Handles List Views using seeds that extend SugarBean
-        $XTemplateSection is the section in the XTemplate file that should be parsed usually main
-        $html_VarName is the variable name used in the XTemplateFile e.g. TASK
-        $seed is a seed that extends SugarBean
-        * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
-        * All Rights Reserved..
-        * Contributor(s): ______________________________________..
-    */
+     * @param $xtemplateSection
+     * @param unknown $html_varName
+     * @param unknown $seed
+     * @return void
+     * @desc INTERNAL FUNCTION Handles List Views using seeds that extend SugarBean
+     * $XTemplateSection is the section in the XTemplate file that should be parsed usually main
+     * $html_VarName is the variable name used in the XTemplateFile e.g. TASK
+     * $seed is a seed that extends SugarBean
+     * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
+     * All Rights Reserved..
+     * Contributor(s): ______________________________________..
+     */
     public function processSugarBean($xtemplateSection, $html_varName, $seed)
     {
         global $list_view_row_count;
@@ -1223,16 +1257,23 @@ class ListView
         $cache[$html_varName] = $baseurl;
         return $baseurl;
     }
+
     /**
-    * @return void
-    * @param unknown $data
-    * @param unknown $xTemplateSection
-    * @param unknown $html_varName
-    * @desc INTERNAL FUNCTION process the List Navigation
-    * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
-    * All Rights Reserved.
-    * Contributor(s): ______________________________________..
-    */
+     * @param $xtemplateSection
+     * @param unknown $html_varName
+     * @param $current_offset
+     * @param $next_offset
+     * @param $previous_offset
+     * @param $row_count
+     * @param null $sugarbean
+     * @param null $subpanel_def
+     * @param int $col_count
+     * @return void
+     * @desc INTERNAL FUNCTION process the List Navigation
+     * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+     * All Rights Reserved.
+     * Contributor(s): ______________________________________..
+     */
     public function processListNavigation($xtemplateSection, $html_varName, $current_offset, $next_offset, $previous_offset, $row_count, $sugarbean=null, $subpanel_def=null, $col_count = 20)
     {
         global $export_module;
@@ -1599,15 +1640,15 @@ class ListView
 
 
     /**
-    * @return void
-    * @param unknown $data
-    * @param unknown $xTemplateSection
-    * @param unknown $html_varName
-    * @desc INTERNAL FUNCTION handles the rows
-    * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
-    * All Rights Reserved.
-    * Contributor(s): ______________________________________..
-    */
+     * @param unknown $data
+     * @param $xtemplateSection
+     * @param unknown $html_varName
+     * @return void
+     * @desc INTERNAL FUNCTION handles the rows
+     * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+     * All Rights Reserved.
+     * Contributor(s): ______________________________________..
+     */
     public function processListRows($data, $xtemplateSection, $html_varName)
     {
         global $odd_bg;
@@ -2075,10 +2116,13 @@ class ListView
 
     /**INTERNAL FUNCTION sets a session variable keeping it local to the listview
     not the current_module
-    * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
-    * All Rights Reserved.
-    * Contributor(s): ______________________________________.
-    */
+     * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+     * All Rights Reserved.
+     * Contributor(s): ______________________________________.
+     * @param $localVarName
+     * @param $varName
+     * @param $value
+     */
     public function setLocalSessionVariable($localVarName, $varName, $value)
     {
         $_SESSION[$localVarName."_".$varName] = $value;
@@ -2086,10 +2130,13 @@ class ListView
 
     /**INTERNAL FUNCTION returns a session variable that is local to the listview,
     not the current_module
-    * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
-    * All Rights Reserved.
-    * Contributor(s): ______________________________________.
-    */
+     * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+     * All Rights Reserved.
+     * Contributor(s): ______________________________________.
+     * @param $localVarName
+     * @param $varName
+     * @return mixed|string
+     */
     public function getLocalSessionVariable($localVarName, $varName)
     {
         if (isset($_SESSION[$localVarName."_".$varName])) {

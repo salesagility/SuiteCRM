@@ -188,8 +188,7 @@ $server->register(
  * Check to see if the soap server and client are on the same machine.
  * We don't allow a server to sync to itself.
  *
- * @return true -- if the SOAP server and client are on the same machine
- * @return false -- if the SOAP server and client are not on the same machine.
+ * @return int -- if the SOAP server and client are on the same machine
  */
 function is_loopback()
 {
@@ -289,8 +288,7 @@ $server->register(
  * Perform a seamless login.  This is used internally during the sync process.
  *
  * @param String $session -- Session ID returned by a previous call to login.
- * @return true -- if the session was authenticated
- * @return false -- if the session could not be authenticated
+ * @return int -- if the session was authenticated
  */
 function seamless_login($session)
 {
@@ -502,7 +500,7 @@ $server->register(
  * @param String $module_name -- The name of the module to return records from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
  * @param String $id -- The SugarBean's ID value.
  * @param Array $select_fields -- A list of the fields to be included in the results. This optional parameter allows for only needed fields to be retrieved.
- * @return unknown
+ * @return array
  */
 function get_entry($session, $module_name, $id, $select_fields)
 {
@@ -756,16 +754,10 @@ $server->register(
 /**
  * Retrieve an attachment from a note
  * @param String $session -- Session ID returned by a previous call to login.
- * @param Binary $note -- The flie contents of the attachment.
+ * @param String $id -- The ID of the appropriate Note.
  * @return Array 'id' -- The ID of the new note or -1 on error
  *               'error' -- The SOAP error if any.
  *
- * @param String $session -- Session ID returned by a previous call to login.
- * @param String $id -- The ID of the appropriate Note.
- * @return Array 'note_attachment' -- Array String 'id' -- The ID of the Note containing the attachment
- *                                          String 'filename' -- The file name of the attachment
- *                                          Binary 'file' -- The binary contents of the file.
- *               'error' -- The SOAP error if any.
  */
 function get_note_attachment($session, $id)
 {
@@ -821,7 +813,7 @@ $server->register(
  * @param String $note_id -- The ID of the note that you want to associate with a bean
  * @param String $module_name -- The name of the module to return records from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
  * @param String $module_id -- The ID of the bean that you want to associate the note with
- * @return no error for success, error for failure
+ * @return array error for success, error for failure
  */
 function relate_note_to_module($session, $note_id, $module_name, $module_id)
 {
@@ -953,7 +945,7 @@ $server->register(
  * Log out of the session.  This will destroy the session and prevent other's from using it.
  *
  * @param String $session -- Session ID returned by a previous call to login.
- * @return Empty error on success, Error on failure
+ * @return array error on success, Error on failure
  */
 function logout($session)
 {
@@ -1074,7 +1066,7 @@ $server->register(
  * @param String $session -- Session ID returned by a previous call to login.
  * @param String $portal_name -- The portal user_name of the contact
  * @param Array $name_value_list -- collection of 'name'=>'value' pairs for finding the contact
- * @return Empty error on success, Error on failure
+ * @return array error on success, Error on failure
  */
 function update_portal_user($session, $portal_name, $name_value_list)
 {
@@ -1285,7 +1277,7 @@ $server->register(
  * @param String $related_module -- The name of the related module to return records from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
  * @param String $related_module_query -- A portion of the where clause of the SQL statement to find the related items.  The SQL query will already be filtered to only include the beans that are related to the specified bean.
  * @param Number $deleted -- false if deleted records should not be include, true if deleted records should be included.
- * @return unknown
+ * @return array
  */
 function get_relationships($session, $module_name, $module_id, $related_module, $related_module_query, $deleted)
 {
@@ -1443,7 +1435,7 @@ $server->register(
  *      'module1_id' -- The ID of the bean in the specified module
  *      'module2' -- The name of the module that the related record is from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
  *      'module2_id' -- The ID of the bean in the specified module
- * @return Empty error on success, Error on failure
+ * @return array|int error on success, Error on failure
  */
 function set_relationships($session, $set_relationship_list)
 {
@@ -1477,7 +1469,8 @@ function set_relationships($session, $set_relationship_list)
  *      'module1_id' -- The ID of the bean in the specified module
  *      'module2' -- The name of the module that the related record is from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
  *      'module2_id' -- The ID of the bean in the specified module
- * @return Empty error on success, Error on failure
+ * @param string $session
+ * @return array error on success, Error on failure
  */
 function handle_set_relationship($set_relationship_value, $session = '')
 {
@@ -1640,7 +1633,7 @@ $server->register(
  *
  * @param String $session -- Session ID returned by a previous call to login.
  * @param unknown_type $document_revision
- * @return unknown
+ * @return array
  */
 function set_document_revision($session, $document_revision)
 {
@@ -1681,7 +1674,7 @@ $server->register(
  * @param string[] $modules - array of modules to query
  * @param int $offset - a specified offset in the query
  * @param int $max_results - max number of records to return
- * @return get_entry_list_result    - id, module_name, and list of fields from each record
+ * @return array - id, module_name, and list of fields from each record
  */
 function search_by_module($user_name, $password, $search_string, $modules, $offset, $max_results)
 {
@@ -1915,7 +1908,7 @@ $server->register(
  * @param String $session -- Session ID returned by a previous call to login.
  * @param unknown_type $file_name
  * @param unknown_type $fields
- * @return unknown
+ * @return array
  */
 function get_mailmerge_document($session, $file_name, $fields)
 {
@@ -2041,7 +2034,7 @@ $server->register(
  * @param String $session -- Session ID returned by a previous call to login.
  * @param unknown_type $file_name
  * @param unknown_type $fields
- * @return unknown
+ * @return array
  */
 function get_mailmerge_document2($session, $file_name, $fields)
 {
@@ -2201,7 +2194,7 @@ $server->register(
  *
  * @param String $session -- Session ID returned by a previous call to login.
  * @param String $id -- ID of the document revision to obtain
- * @return return_document_revision - this is a complex type as defined in SoapTypes.php
+ * @return array - this is a complex type as defined in SoapTypes.php
  */
 function get_document_revision($session, $id)
 {
@@ -2247,11 +2240,10 @@ $server->register(
  *   Once we have successfuly done a mail merge on a campaign, we need to notify Sugar of the targets
  *   and the campaign_id for tracking purposes
  *
- * @param session        the session id of the authenticated user
- * @param targets        a string array of ids identifying the targets used in the merge
- * @param campaign_id    the campaign_id used for the merge
- *
- * @return error_value
+ * @param $session
+ * @param $targets
+ * @param $campaign_id
+ * @return array
  */
 function set_campaign_merge($session, $targets, $campaign_id)
 {
@@ -2281,12 +2273,11 @@ $server->register(
 /**
  *   Retrieve number of records in a given module
  *
- * @param session        the session id of the authenticated user
- * @param module_name    module to retrieve number of records from
- * @param query          allows webservice user to provide a WHERE clause
- * @param deleted        specify whether or not to include deleted records
- *
- * @return get_entries_count_result - this is a complex type as defined in SoapTypes.php
+ * @param $session
+ * @param $module_name
+ * @param $query
+ * @param $deleted
+ * @return array - this is a complex type as defined in SoapTypes.php
  */
 function get_entries_count($session, $module_name, $query, $deleted)
 {

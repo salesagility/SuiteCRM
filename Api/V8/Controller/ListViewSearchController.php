@@ -72,14 +72,14 @@ class ListViewSearchController extends BaseController
     {
         $this->listViewSearchService = $listViewSearchService;
     }
-    
+
     /**
      *
      * @param Request $request
      * @param Response $response
      * @param array $args
      * @param ListViewSearchParams $params
-     * @return HttpResponse
+     * @return Response
      */
     public function getModuleSearchDefs(Request $request, Response $response, array $args, ListViewSearchParams $params)
     {

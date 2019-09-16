@@ -235,8 +235,7 @@ class ListViewXTPL extends ListViewDisplay
     /**
      * Displays the xtpl, either echo or returning the contents
      *
-     * @param echo bool echo or return contents
-     *
+     * @param bool $echo
      * @return string
      */
     public function display($echo = true)

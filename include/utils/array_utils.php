@@ -39,6 +39,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * @param $tempArray
+ * @return mixed
  */
 
 
@@ -149,19 +151,20 @@ function object_to_array_recursive($obj)
     }
     return $ret;
 }
+
 /**
-     * This function returns an array of all the key=>value pairs in $array1
-     * that are wither not present, or different in $array2.
-     * If a key exists in $array2 but not $array1, it will not be reported.
-     * Values which are arrays are traced further and reported only if thier is a difference
-     * in one or more of thier children.
-     *
-     * @param array $array1, the array which contains all the key=>values you wish to check againts
-     * @param array $array2, the array which
-     * @param array $allowEmpty, will return the value if it is empty in $array1 and not in $array2,
-     * otherwise empty values in $array1 are ignored.
-     * @return array containing the differences between the two arrays
-     */
+ * This function returns an array of all the key=>value pairs in $array1
+ * that are wither not present, or different in $array2.
+ * If a key exists in $array2 but not $array1, it will not be reported.
+ * Values which are arrays are traced further and reported only if thier is a difference
+ * in one or more of thier children.
+ *
+ * @param array $array1 , the array which contains all the key=>values you wish to check againts
+ * @param array $array2 , the array which
+ * @param bool $allowEmpty , will return the value if it is empty in $array1 and not in $array2,
+ * otherwise empty values in $array1 are ignored.
+ * @return array containing the differences between the two arrays
+ */
     function deepArrayDiff($array1, $array2, $allowEmpty = false)
     {
         $diff = array();
@@ -181,14 +184,15 @@ function object_to_array_recursive($obj)
         }
         return $diff;
     }
-    
-    /**
-     * Recursivly set a value in an array, creating sub arrays as necessary
-     *
-     * @param unknown_type $array
-     * @param unknown_type $key
-     */
-    function setDeepArrayValue(&$array, $key, $value)
+
+/**
+ * Recursivly set a value in an array, creating sub arrays as necessary
+ *
+ * @param unknown_type $array
+ * @param unknown_type $key
+ * @param $value
+ */
+function setDeepArrayValue(&$array, $key, $value)
     {
         //if _ is at position zero, that is invalid.
         if (strrpos($key, "_")) {

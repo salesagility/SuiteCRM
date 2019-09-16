@@ -404,9 +404,13 @@ class PDFBarcode
         }
         $this->barcode_array = $arrcode;
     }
-    
+
     /**
      * CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.
+     * @param $code
+     * @param bool $extended
+     * @param bool $checksum
+     * @return array|bool
      */
     protected function barcode_code39($code, $extended=false, $checksum=false)
     {
@@ -504,9 +508,11 @@ class PDFBarcode
         $bararray['checkdigit'] = $checkdigit;
         return $bararray;
     }
-    
+
     /**
      * Encode a string to be used for CODE 39 Extended mode.
+     * @param $code
+     * @return bool|string
      */
     protected function encode_code39_ext($code)
     {
@@ -553,9 +559,11 @@ class PDFBarcode
         }
         return $code_ext;
     }
-    
+
     /**
      * Calculate CODE 39 checksum (modulo 43).
+     * @param $code
+     * @return mixed
      */
     protected function checksum_code39($code)
     {
@@ -573,10 +581,12 @@ class PDFBarcode
         $j = ($sum % 43);
         return $chars[$j];
     }
-    
+
     /**
      * CODE 93 - USS-93
      * Compact code similar to Code 39
+     * @param $code
+     * @return array|bool
      */
     protected function barcode_code93($code)
     {
@@ -702,9 +712,11 @@ class PDFBarcode
         $bararray['checkdigit'] = $checkdigit;
         return $bararray;
     }
-    
+
     /**
      * Calculate CODE 93 checksum (modulo 47).
+     * @param $code
+     * @return string
      */
     protected function checksum_code93($code)
     {
@@ -745,9 +757,11 @@ class PDFBarcode
         $k = $chars[$check];
         return $c.$k;
     }
-    
+
     /**
      * Checksum for standard 2 of 5 barcodes.
+     * @param $code
+     * @return int
      */
     protected function checksum_s25($code)
     {
@@ -766,11 +780,14 @@ class PDFBarcode
         }
         return $r;
     }
-    
+
     /**
      * MSI.
      * Variation of Plessey code, with similar applications
      * Contains digits (0 to 9) and encodes the data only in the width of bars.
+     * @param $code
+     * @param bool $checksum
+     * @return bool|mixed
      */
     protected function barcode_msi($code, $checksum=false)
     {
@@ -824,11 +841,14 @@ class PDFBarcode
         $bararray['checkdigit'] = $checkdigit;
         return $this->binseq_to_array($seq, $bararray);
     }
-    
+
     /**
      * Standard 2 of 5 barcodes.
      * Used in airline ticket marking, photofinishing
      * Contains digits (0 to 9) and encodes the data only in the width of bars.
+     * @param $code
+     * @param bool $checksum
+     * @return bool|mixed
      */
     protected function barcode_s25($code, $checksum=false)
     {
@@ -866,9 +886,12 @@ class PDFBarcode
         $bararray['checkdigit'] = $checkdigit;
         return $this->binseq_to_array($seq, $bararray);
     }
-    
+
     /**
      * Convert binary barcode sequence to barcode array
+     * @param $seq
+     * @param $bararray
+     * @return mixed
      */
     protected function binseq_to_array($seq, $bararray)
     {
@@ -891,11 +914,14 @@ class PDFBarcode
         }
         return $bararray;
     }
-    
+
     /**
      * Interleaved 2 of 5 barcodes.
      * Compact numeric code, widely used in industry, air cargo
      * Contains digits (0 to 9) and encodes the data in the width of both bars and spaces.
+     * @param $code
+     * @param bool $checksum
+     * @return array|bool
      */
     protected function barcode_i25($code, $checksum=false)
     {
@@ -961,10 +987,14 @@ class PDFBarcode
         $bararray['checkdigit'] = $checkdigit;
         return $bararray;
     }
-    
+
     /**
      * C128 barcodes.
      * Very capable code, excellent density, high reliability; in very wide use world-wide
+     * @param $code
+     * @param string $type
+     * @param bool $ean
+     * @return array|bool
      */
     protected function barcode_c128($code, $type='B', $ean=false)
     {
@@ -1163,12 +1193,15 @@ class PDFBarcode
         $bararray['checkdigit'] = $checkdigit;
         return $bararray;
     }
-    
+
     /**
      * EAN13 and UPC-A barcodes.
      * EAN13: European Article Numbering international retail product code
      * UPC-A: Universal product code seen on almost all retail products in the USA and Canada
      * UPC-E: Short version of UPC symbol
+     * @param $code
+     * @param int $len
+     * @return array|bool
      */
     protected function barcode_eanupc($code, $len=13)
     {
@@ -1374,11 +1407,14 @@ class PDFBarcode
         $bararray['checkdigit'] = $checkdigit;
         return $bararray;
     }
-    
+
     /**
      * UPC-Based Extentions
      * 2-Digit Ext.: Used to indicate magazines and newspaper issue numbers
      * 5-Digit Ext.: Used to mark suggested retail price of books
+     * @param $code
+     * @param int $len
+     * @return bool|mixed
      */
     protected function barcode_eanext($code, $len=5)
     {
@@ -1447,10 +1483,13 @@ class PDFBarcode
         $bararray = array('code' => $code, 'maxw' => 0, 'maxh' => 1, 'bcode' => array());
         return $this->binseq_to_array($seq, $bararray);
     }
-    
+
     /**
      * POSTNET and PLANET barcodes.
      * Used by U.S. Postal Service for automated mail sorting
+     * @param $code
+     * @param bool $planet
+     * @return array
      */
     protected function barcode_postnet($code, $planet=false)
     {
@@ -1524,11 +1563,14 @@ class PDFBarcode
         $bararray['checkdigit'] = $checkdigit;
         return $bararray;
     }
-    
+
     /**
      * RM4SCC - CBC - KIX
      * RM4SCC (Royal Mail 4-state Customer Code) - CBC (Customer Bar Code) - KIX (Klant index - Customer index)
      * RM4SCC is the name of the barcode symbology used by the Royal Mail for its Cleanmail service.
+     * @param $code
+     * @param bool $kix
+     * @return array
      */
     protected function barcode_rm4scc($code, $kix=false)
     {
@@ -1680,10 +1722,12 @@ class PDFBarcode
         }
         return $bararray;
     }
-    
+
     /**
      * CODABAR barcodes.
      * Older code often used in library systems, sometimes in blood banks
+     * @param $code
+     * @return array|bool
      */
     protected function barcode_codabar($code)
     {
@@ -1739,10 +1783,12 @@ class PDFBarcode
         }
         return $bararray;
     }
-    
+
     /**
      * CODE11 barcodes.
      * Used primarily for labeling telecommunications equipment
+     * @param $code
+     * @return array|bool
      */
     protected function barcode_code11($code)
     {
@@ -1837,13 +1883,15 @@ class PDFBarcode
         $bararray['checkdigit'] = $checkdigit;
         return $bararray;
     }
-    
-    
+
+
     /**
      * IMB - Intelligent Mail Barcode - Onecode - USPS-B-3200
      * (requires PHP bcmath extension)
      * Intelligent Mail barcode is a 65-bar code for use on mail in the United States.
      * The fields are described as follows:<ul><li>The Barcode Identifier shall be assigned by USPS to encode the presort identification that is currently printed in human readable form on the optional endorsement line (OEL) as well as for future USPS use. This shall be two digits, with the second digit in the range of 0-4. The allowable encoding ranges shall be 00-04, 10-14, 20-24, 30-34, 40-44, 50-54, 60-64, 70-74, 80-84, and 90-94.</li><li>The Service Type Identifier shall be assigned by USPS for any combination of services requested on the mailpiece. The allowable encoding range shall be 000-999. Each 3-digit value shall correspond to a particular mail class with a particular combination of service(s). Each service program, such as OneCode Confirm and OneCode ACS, shall provide the list of Service Type Identifier values.</li><li>The Mailer or Customer Identifier shall be assigned by USPS as a unique, 6 or 9 digit number that identifies a business entity. The allowable encoding range for the 6 digit Mailer ID shall be 000000- 899999, while the allowable encoding range for the 9 digit Mailer ID shall be 900000000-999999999.</li><li>The Serial or Sequence Number shall be assigned by the mailer for uniquely identifying and tracking mailpieces. The allowable encoding range shall be 000000000-999999999 when used with a 6 digit Mailer ID and 000000-999999 when used with a 9 digit Mailer ID. e. The Delivery Point ZIP Code shall be assigned by the mailer for routing the mailpiece. This shall replace POSTNET for routing the mailpiece to its final delivery point. The length may be 0, 5, 9, or 11 digits. The allowable encoding ranges shall be no ZIP Code, 00000-99999,  000000000-999999999, and 00000000000-99999999999.</li></ul>
+     * @param $code
+     * @return array|bool
      */
     protected function barcode_imb($code)
     {
@@ -1964,10 +2012,12 @@ class PDFBarcode
         $bararray['maxw'] -= $this->gapwidth ;
         return $bararray;
     }
-    
+
     /**
      * Convert large integer number to hexadecimal representation.
      * (requires PHP bcmath extension)
+     * @param $number
+     * @return string
      */
     public function dec_to_hex($number)
     {
@@ -1987,10 +2037,12 @@ class PDFBarcode
         $hex = array_reverse($hex);
         return implode($hex);
     }
-    
+
     /**
      * Convert large hexadecimal number to decimal representation (string).
      * (requires PHP bcmath extension)
+     * @param $hex
+     * @return int|string
      */
     public function hex_to_dec($hex)
     {
@@ -2003,9 +2055,11 @@ class PDFBarcode
         }
         return $dec;
     }
-    
+
     /**
      * Intelligent Mail Barcode calculation of Frame Check Sequence
+     * @param $code_arr
+     * @return int
      */
     protected function imb_crc11fcs($code_arr)
     {
@@ -2037,9 +2091,11 @@ class PDFBarcode
         }
         return $fcs;
     }
-    
+
     /**
      * Reverse unsigned short value
+     * @param $num
+     * @return int
      */
     protected function imb_reverse_us($num)
     {
@@ -2051,9 +2107,12 @@ class PDFBarcode
         }
         return $rev;
     }
-    
+
     /**
      * generate Nof13 tables used for Intelligent Mail Barcode
+     * @param $n
+     * @param $size
+     * @return array
      */
     protected function imb_tables($n, $size)
     {

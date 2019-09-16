@@ -124,7 +124,7 @@ EOQ;
     }
 
     /**
-     * @param page $title title
+     * @param $mod_strings
      * @param linked $styles css files (string)
      * @param linked $scripts javascript files (string)
      * @return string Install page layout header
@@ -146,12 +146,14 @@ EOQ;
 
 
     /**
+     * @param $mod_strings
      * @param form $name tag name
      * @param form $id tag id
      * @param form $errs errors
-     * @param form $title header line
      * @param form $items items (string)
      * @param form $controlls controll buttons (string)
+     * @param $scripts
+     * @param $next_step
      * @return string
      */
     private function getForm($mod_strings, $name, $id, $errs, $items, $controlls, $scripts, $next_step)
@@ -188,6 +190,8 @@ EOQ;
     /**
      * @param install $header page head
      * @param install $form page form step
+     * @param $sugar_md
+     * @param $mod_strings
      * @return string install page
      */
     private function getOutput($header, $form, $sugar_md, $mod_strings)

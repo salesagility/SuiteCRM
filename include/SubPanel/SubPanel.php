@@ -345,6 +345,9 @@ class SubPanel
 
     /**
      * Retrieve the subpanel definition from the registered layout_defs arrays.
+     * @param $module
+     * @param $subpanel_id
+     * @return array
      */
     public function getSubPanelDefine($module, $subpanel_id)
     {

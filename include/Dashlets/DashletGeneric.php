@@ -154,6 +154,8 @@ class DashletGeneric extends Dashlet
     }
 
     /**
+     * @param $id
+     * @param null $options
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function DashletGeneric($id, $options = null)
@@ -413,6 +415,8 @@ class DashletGeneric extends Dashlet
 
     /**
      * Does all dashlet processing, here's your chance to modify the rows being displayed!
+     * @param array $lvsParams
+     * @param null $id
      */
     public function process($lvsParams = array(), $id = null)
     {

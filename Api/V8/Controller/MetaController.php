@@ -92,6 +92,7 @@ class MetaController extends BaseController
      * @param Request $request
      * @param Response $response
      * @param array $args
+     * @param GetFieldListParams $fieldListParams
      * @return Response
      */
     public function getFieldList(Request $request, Response $response, array $args, GetFieldListParams $fieldListParams)

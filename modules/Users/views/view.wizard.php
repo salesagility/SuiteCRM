@@ -55,6 +55,8 @@ class ViewWizard extends SugarView
 {
     /**
      * Constructor.
+     * @param null $bean
+     * @param array $view_object_map
      */
     public function __construct($bean = null, $view_object_map = array())
     {

@@ -69,6 +69,8 @@ class TeamDemoData
 
     /**
      * Constructor for creating demo data for teams
+     * @param $seed_team
+     * @param bool $large_scale_test
      */
     public function __construct($seed_team, $large_scale_test = false)
     {
@@ -77,6 +79,8 @@ class TeamDemoData
     }
 
     /**
+     * @param $seed_team
+     * @param bool $large_scale_test
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function TeamDemoData($seed_team, $large_scale_test = false)
@@ -198,7 +202,7 @@ class TeamDemoData
     }
 
     /**
-     *
+     * @param $name
      */
     public function _quick_create($name)
     {

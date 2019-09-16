@@ -139,11 +139,12 @@ class CustomLoader
         
         return $array;
     }
-    
+
 
     /**
      *
      * @param App $app
+     * @param string $customRoutesFile
      * @return App
      */
     public static function loadCustomRoutes(App $app, $customRoutesFile = 'Config/routes.php')

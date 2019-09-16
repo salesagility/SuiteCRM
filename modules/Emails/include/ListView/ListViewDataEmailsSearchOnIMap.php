@@ -46,7 +46,6 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
 {
 
 
-
     /**
      * @param Email $seed
      * @param array $request
@@ -60,6 +59,8 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
      * @param int $limit
      * @param string $limitPerPage
      * @param array $params
+     * @param $pageData
+     * @param $filter_fields
      * @return array
      */
     public function search(

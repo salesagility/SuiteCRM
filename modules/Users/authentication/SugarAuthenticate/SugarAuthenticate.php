@@ -63,7 +63,6 @@ class SugarAuthenticate
      * Constructs SugarAuthenticate
      * This will load the user authentication class
      *
-     * @return SugarAuthenticate
      */
     public function __construct()
     {
@@ -99,6 +98,8 @@ class SugarAuthenticate
      *
      * @param string $username
      * @param string $password
+     * @param bool $fallback
+     * @param array $PARAMS
      * @return boolean
      */
     public function loginAuthenticate($username, $password, $fallback=false, $PARAMS = array())
@@ -346,8 +347,8 @@ class SugarAuthenticate
 
     /**
      * Read back the session messages and clear it;
+     * @param string $sep
      * @return bool|string
-     * @throws \RuntimeException
      */
     public static function getFactorMessages($sep = '<br>')
     {

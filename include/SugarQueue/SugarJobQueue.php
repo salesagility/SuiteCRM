@@ -89,7 +89,6 @@ class SugarJobQueue
     /**
      * Submit a new job to the queue
      * @param SugarJob $job
-     * @param User $user User to run the job under
      * @return string
      */
     public function submitJob($job)
@@ -109,7 +108,7 @@ class SugarJobQueue
     /**
      * Get Job object by ID
      * @param string $jobId
-     * @return SugarJob
+     * @return SchedulersJob|null
      */
     protected function getJob($jobId)
     {
@@ -198,7 +197,7 @@ class SugarJobQueue
     /**
      * Fetch the next job in the queue and mark it running
      * @param string $clientID ID of the client requesting the job
-     * @return SugarJob
+     * @return SchedulersJob|null
      */
     public function nextJob($clientID)
     {

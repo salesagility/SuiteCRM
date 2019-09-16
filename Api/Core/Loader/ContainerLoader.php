@@ -11,7 +11,7 @@ class ContainerLoader
     /**
      * Load all service containers and add slim settings
      *
-     * @return ContainerInterface
+     * @return Container
      */
     public static function configure()
     {

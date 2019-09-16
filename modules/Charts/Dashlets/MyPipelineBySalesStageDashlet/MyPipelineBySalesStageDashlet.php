@@ -56,6 +56,9 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
     protected $_seedName = 'Opportunities';
 
     /**
+     * @param $id
+     * @param array|null $options
+     * @throws Exception
      * @see DashletGenericChart::__construct()
      */
     public function __construct(

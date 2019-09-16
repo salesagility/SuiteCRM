@@ -65,10 +65,11 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
      * @param String $id -- The SugarBean's ID value.
      * @param Array $select_fields -- A list of the fields to be included in the results. This optional parameter allows for only needed fields to be retrieved.
      * @param Array $link_name_to_fields_array -- A list of link_names and for each link_name, what fields value to be returned. For ex.'link_name_to_fields_array' => array(array('name' =>  'email_addresses', 'value' => array('id', 'email_address', 'opt_out', 'primary_address')))
-     * @param bool $trackView -- Should we track the record accessed.
+     * @param bool $track_view
      * @return Array
      *        'entry_list' -- Array - The records name value pair for the simple data types excluding link field data.
      *         'relationship_list' -- Array - The records link field data. The example is if asked about accounts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function get_entry($session, $module_name, $id, $select_fields, $link_name_to_fields_array, $track_view = false)
@@ -91,7 +92,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
      *
      * @param String $session -- Session ID returned by a previous call to login.
      * @param String $module_name -- The name of the module to return records from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
-     * @return String The md5 hash of the vardef definition.
+     * @return array The md5 hash of the vardef definition.
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function get_module_fields_md5($session, $module_name)
@@ -123,8 +124,10 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
      *
      * @param String $session -- Session ID returned by a previous call to login.
      * @param array $module_name (s) -- The name of the module to return records from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
+     * @param $type
+     * @param $view
+     * @param bool $acl_check
      * @return array $type(s) The type of view requested.  Current supported types are 'default' (for application) and 'wireless'
-     * @return array $view(s) The view requested.  Current supported types are edit, detail, and list.
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function get_module_layout_md5($session, $module_name, $type, $view, $acl_check = true)
@@ -145,10 +148,11 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
      * @param Array $ids -- An array of SugarBean IDs.
      * @param Array $select_fields -- A list of the fields to be included in the results. This optional parameter allows for only needed fields to be retrieved.
      * @param Array $link_name_to_fields_array -- A list of link_names and for each link_name, what fields value to be returned. For ex.'link_name_to_fields_array' => array(array('name' =>  'email_addresses', 'value' => array('id', 'email_address', 'opt_out', 'primary_address')))
-     * @param bool $trackView -- Should we track the record accessed.
+     * @param bool $track_view
      * @return Array
      *        'entry_list' -- Array - The records name value pair for the simple data types excluding link field data.
      *         'relationship_list' -- Array - The records link field data. The example is if asked about accounts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function get_entries($session, $module_name, $ids, $select_fields, $link_name_to_fields_array, $track_view = false)
@@ -577,9 +581,12 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
      * Retrieve the layout metadata for a given module given a specific type and view.
      *
      * @param String $session -- Session ID returned by a previous call to login.
-     * @param array $module_name (s) -- The name of the module(s) to return records from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
+     * @param $a_module_names
+     * @param $a_type
+     * @param $a_view
+     * @param bool $acl_check
+     * @param bool $md5
      * @return array $type The type(s) of views requested.  Current supported types are 'default' (for application) and 'wireless'
-     * @return array $view The view(s) requested.  Current supported types are edit, detail, list, and subpanel.
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function get_module_layout($session, $a_module_names, $a_type, $a_view, $acl_check = true, $md5 = false)
@@ -639,6 +646,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
      * @param array $link_name_to_fields_array -- A list of link_names and for each link_name, what fields value to be returned. For ex.'link_name_to_fields_array' => array(array('name' =>  'email_addresses', 'value' => array('id', 'email_address', 'opt_out', 'primary_address')))
      * @param integer $max_results -- The maximum number of records to return.  The default is the sugar configuration value for 'list_max_entries_per_page'
      * @param bool $deleted -- false if deleted records should not be include, true if deleted records should be included.
+     * @param bool $favorites
      * @return array 'result_count' -- integer - The number of records returned
      *               'next_offset' -- integer - The start of the next page (This will always be the previous offset plus the number of rows returned.  It does not indicate if there is additional data unless you calculate that the next_offset happens to be closer than it should be.
      *               'entry_list' -- Array - The records that were retrieved

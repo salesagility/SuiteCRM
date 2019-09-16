@@ -31,11 +31,14 @@ class Calls extends \AcceptanceTester
         $I->clickSaveButton();
         $DetailView->waitForDetailViewVisible();
     }
+
     /**
      * Create a call and relate to a module
      *
-     * @param $name, $module_name, $module, $params
-     *
+     * @param $name , $module_name, $module, $params
+     * @param $module_name
+     * @param $module
+     * @param array $params
      */
     public function createCallRelateModule($name, $module_name, $module, $params = array())
     {

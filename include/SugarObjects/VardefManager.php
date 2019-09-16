@@ -51,6 +51,10 @@ class VardefManager
     /**
      * this method is called within a vardefs.php file which extends from a SugarObject.
      * It is meant to load the vardefs from the SugarObject.
+     * @param $module
+     * @param $object
+     * @param array $templates
+     * @param bool $object_name
      */
     public static function createVardef($module, $object, $templates = array('default'), $object_name = false)
     {
@@ -172,6 +176,7 @@ class VardefManager
      * Save the dictionary object to the cache
      * @param string $module the name of the module
      * @param string $object the name of the object
+     * @param array $additonal_objects
      */
     public static function saveCache($module, $object, $additonal_objects= array())
     {
@@ -248,6 +253,8 @@ class VardefManager
      * @param string $module the given module we want to load the vardefs for
      * @param string $object the given object we wish to load the vardefs for
      * @param array $additional_search_paths an array which allows a consumer to pass in additional vardef locations to search
+     * @param bool $cacheCustom
+     * @param array $params
      */
     public static function refreshVardefs($module, $object, $additional_search_paths = null, $cacheCustom = true, $params = array())
     {
@@ -410,7 +417,8 @@ class VardefManager
      * load the vardefs for a given module and object
      * @param string $module the given module we want to load the vardefs for
      * @param string $object the given object we wish to load the vardefs for
-     * @param bool   $refresh whether or not we wish to refresh the cache file.
+     * @param bool $refresh whether or not we wish to refresh the cache file.
+     * @param array $params
      */
     public static function loadVardef($module, $object, $refresh=false, $params = array())
     {

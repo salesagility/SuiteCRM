@@ -60,7 +60,7 @@ class ViewFactory
      * Load the correct view
      *
      * @param string $type
-     * @param null $module
+     * @param string $module
      * @param null $bean
      * @param array $view_object_map
      * @param string $target_module
@@ -116,6 +116,8 @@ class ViewFactory
 
     /**
      * Load the view_<view>_config.php file which holds options used by the view.
+     * @param $view
+     * @param $type
      */
     public static function _loadConfig(&$view, $type)
     {
@@ -222,7 +224,12 @@ class ViewFactory
      * This is a private function which just helps the getView function generate the
      * proper view object
      *
-     * @return a valid SugarView
+     * @param $file
+     * @param $bean
+     * @param $view_object_map
+     * @param $type
+     * @param $module
+     * @return CustomSugarView|SugarView valid SugarView
      */
     public static function _buildFromFile($file, &$bean, $view_object_map, $type, $module)
     {

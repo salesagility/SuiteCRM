@@ -112,10 +112,10 @@ class wsdl extends nusoap_base
      * constructor
      *
      * @param string $wsdl WSDL document URL
-     * @param string $proxyhost
-     * @param string $proxyport
-     * @param string $proxyusername
-     * @param string $proxypassword
+     * @param bool $proxyhost
+     * @param bool $proxyport
+     * @param bool $proxyusername
+     * @param bool $proxypassword
      * @param integer $timeout set the connection timeout
      * @param integer $response_timeout set the response timeout
      * @param array $curl_options user-specified cURL options
@@ -143,6 +143,7 @@ class wsdl extends nusoap_base
      * fetches the WSDL document and parses it
      *
      * @access public
+     * @param $wsdl
      */
     public function fetchWSDL($wsdl)
     {
@@ -1344,7 +1345,7 @@ class wsdl extends nusoap_base
      * @param string $type XML schema type of value (type or element)
      * @param mixed $value a native PHP value (parameter value)
      * @param string $use use for part (encoded|literal)
-     * @param string $encodingStyle SOAP encoding style for the value (if different than the enclosing style)
+     * @param bool $encodingStyle SOAP encoding style for the value (if different than the enclosing style)
      * @param boolean $unqualified a kludge for what should be XML namespace form handling
      * @return string value serialized as an XML string
      * @access private
@@ -1728,7 +1729,7 @@ class wsdl extends nusoap_base
      * @param string $ns the namespace of the type
      * @param string $uqType the local part of the type
      * @param string $use use for part (encoded|literal)
-     * @param string $encodingStyle SOAP encoding style for the value (if different than the enclosing style)
+     * @param bool $encodingStyle SOAP encoding style for the value (if different than the enclosing style)
      * @return string value serialized as an XML string
      * @access private
      */
@@ -1914,16 +1915,16 @@ class wsdl extends nusoap_base
      * register an operation with the server
      *
      * @param string $name operation (method) name
-     * @param array $in assoc array of input values: key = param name, value = param type
-     * @param array $out assoc array of output values: key = param name, value = param type
-     * @param string $namespace optional The namespace for the operation
-     * @param string $soapaction optional The soapaction for the operation
+     * @param bool $in assoc array of input values: key = param name, value = param type
+     * @param bool $out assoc array of output values: key = param name, value = param type
+     * @param bool $namespace optional The namespace for the operation
+     * @param bool $soapaction optional The soapaction for the operation
      * @param string $style (rpc|document) optional The style for the operation Note: when 'document' is specified, parameter and return wrappers are created for you automatically
      * @param string $use (encoded|literal) optional The use for the parameters (cannot mix right now)
      * @param string $documentation optional The description to include in the WSDL
      * @param string $encodingStyle optional (usually 'http://schemas.xmlsoap.org/soap/encoding/' for encoded)
-     * @access public
      * @return bool
+     * @access public
      */
     public function addOperation($name, $in = false, $out = false, $namespace = false, $soapaction = false, $style = 'rpc', $use = 'encoded', $documentation = '', $encodingStyle = '')
     {

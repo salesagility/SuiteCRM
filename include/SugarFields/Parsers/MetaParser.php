@@ -83,6 +83,9 @@ class MetaParser
     /**
      * getFormContents
      * Parses for contents enclosed within <form>...</form> tags
+     * @param $contents
+     * @param bool $all
+     * @return array
      */
     public function getFormContents($contents, $all = true)
     {
@@ -101,7 +104,7 @@ class MetaParser
      * getFormElements
      * Parses for input, select, textarea types from string content
      * @param The $contents String contents to parse
-     * @return $matches Array of matches of PREG_SET_ORDER
+     * @return array $matches Array of matches of PREG_SET_ORDER
      */
     public function getFormElements($contents)
     {
@@ -118,7 +121,7 @@ class MetaParser
      * getFormElementsNames
      * Parses for the name values of input, select, textarea types from string content
      * @param The $contents String contents to parse
-     * @return $matches Array of name/value pairs
+     * @return mixed|null $matches Array of name/value pairs
      */
     public function getFormElementsNames($contents)
     {
@@ -132,7 +135,7 @@ class MetaParser
      * Returns the name/value of a tag attribute where name is set to $name
      * @param The $name name of the attribute
      * @param The $contents contents to parse
-     * @param Option $filter regular expression to filter value
+     * @param string $filter regular expression to filter value
      * @return Array of name/value for matching attribute
      */
     public function getTagAttribute($name, $contents, $filter = '')
@@ -161,7 +164,7 @@ class MetaParser
      * equal to $tableClass
      *
      * @param null $tableClass Optional table class parameter value
-     * @param null $contents
+     * @param string $contents
      * @return array|false of table elements found
      */
     public function getTables($tableClass = null, $contents = '')
@@ -190,7 +193,8 @@ class MetaParser
      * "<td>Text <table><tr><td>a</td></tr></table></td>"
      *
      * @param The $type type of element to parse out and return
-     * @return a tag element format Array
+     * @param $contents
+     * @return array tag element format Array
      */
     public function getElementsByType($type, $contents)
     {
@@ -230,10 +234,12 @@ class MetaParser
     }
 
 
-
     /**
      * getElementValue
-     *
+     * @param $type
+     * @param $contents
+     * @param string $filter
+     * @return mixed|string
      */
     public function getElementValue($type, $contents, $filter = "(.*?)")
     {
@@ -254,7 +260,6 @@ class MetaParser
      * to remove the flavor tags in the file contents if present.  If $GLOBALS['sugar_flavor']
      * is not set, it defaults to PRO flavor
      * @param The $contents file contents as a String value
-     * @param The $result file contents with non-matching flavor tags and their nested comments removed
      * @return string|string[]|The|null
      */
     public function stripFlavorTags($contents)
@@ -274,7 +279,7 @@ class MetaParser
      * Returns the highest number of <td>...</td> blocks within a <tr>...</tr> block.
      * @param The $contents table contents to parse
      * @param Optional $filter filter to parse for an attribute within the td block.
-     * @return The maximum column count
+     * @return int maximum column count
      */
     public function getMaxColumns($contents, $filter)
     {
@@ -330,7 +335,8 @@ class MetaParser
      *
      * @param The $contents HTML String contents to parse
      *
-     * @return $javascript The formatted script blocks or null if none found
+     * @param bool $addLiterals
+     * @return bool|mixed|string|string[]|null $javascript The formatted script blocks or null if none found
      */
     public function getJavascript($contents, $addLiterals = true)
     {
@@ -471,7 +477,7 @@ class MetaParser
      * Utility method to list all the files in a given directory.
      *
      * @param The $directory directory to scan
-     * @return $results The files in the directory that were found
+     * @return array $results The files in the directory that were found
      */
     public function dirList($directory)
     {
@@ -626,9 +632,10 @@ class MetaParser
      * mergePanels
      * This function merges the $panels Array against the $masterCopy's meta data definition
      * @param meta $panels data Array to merge
+     * @param $vardefs
      * @param Directory $moduleDir name of the module
      * @param file $masterCopy path to the meta data master copy
-     * @return Array of merged $panel definition
+     * @return meta of merged $panel definition
      */
     public function mergePanels($panels, $vardefs, $moduleDir, $masterCopy)
     {
@@ -798,7 +805,8 @@ class MetaParser
      * This is a very crude function to fix instances where files declared a table as
      * <table...><td> instead of <table...><tr><td>.  Without this helper function, the
      * parsing could messed up.
-     *
+     * @param $tableContents
+     * @return string|string[]|null
      */
     public function fixTablesWithMissingTr($tableContents)
     {
@@ -811,6 +819,8 @@ class MetaParser
     /**
      * fixRowsWithMissingTr
      * This is a very crude function to fix instances where files have an </tr> tag immediately followed by a <td> tag
+     * @param $tableContents
+     * @return string|string[]|null
      */
     public function fixRowsWithMissingTr($tableContents)
     {
@@ -823,6 +833,8 @@ class MetaParser
     /**
      * fixDuplicateTrTags
      * This is a very crude function to fix instances where files have two consecutive <tr> tags
+     * @param $tableContents
+     * @return string|string[]|null
      */
     public function fixDuplicateTrTags($tableContents)
     {
@@ -836,6 +848,9 @@ class MetaParser
      * findSingleVardefElement
      * Scans array of form elements to see if just one is a vardef element and, if so,
      * return that vardef name
+     * @param array $formElements
+     * @param array $vardefs
+     * @return mixed|string
      */
     public function findSingleVardefElement($formElements=array(), $vardefs=array())
     {

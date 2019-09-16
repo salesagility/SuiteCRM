@@ -218,7 +218,7 @@ class SugarController
     /**
      * Called from SugarApplication and is meant to perform the setup operations
      * on the controller.
-     *
+     * @param string $module
      */
     public function setup($module = '')
     {
@@ -326,6 +326,8 @@ class SugarController
 
     /**
      * Generic load method to load mapping arrays.
+     * @param $var
+     * @param bool $merge
      */
     private function loadMapping($var, $merge = false)
     {
@@ -483,7 +485,7 @@ class SugarController
      * It allows a developer to override any one of these methods contained within,
      * or if the developer so chooses they can override the entire action_* method.
      *
-     * @return true if any one of the pre_, do_, or post_ methods have been defined,
+     * @return void if any one of the pre_, do_, or post_ methods have been defined,
      * false otherwise.  This is important b/c if none of these methods exists, then we will run the
      * action_default() method.
      */
@@ -578,7 +580,6 @@ class SugarController
     }
 
     /**
-     * @param $action
      * @return string
      */
     protected function getPreActionMethodName()
@@ -587,7 +588,6 @@ class SugarController
     }
 
     /**
-     * @param $action
      * @return string
      */
     protected function getActionMethodName()
@@ -596,7 +596,6 @@ class SugarController
     }
 
     /**
-     * @param $action
      * @return string
      */
     protected function getPostActionMethodName()
@@ -938,6 +937,8 @@ class SugarController
 
     /**
      * getActionFilename
+     * @param $action
+     * @return mixed
      */
     public static function getActionFilename($action)
     {
@@ -957,7 +958,7 @@ class SugarController
      * to this url. In addition if any links specified for this module, load the links into
      * GLOBALS
      *
-     * @return true if we want to stop processing, false if processing should continue
+     * @return void if we want to stop processing, false if processing should continue
      */
     private function blockFileAccess()
     {
@@ -1027,7 +1028,7 @@ class SugarController
     /**
      * Checks to see if the requested entry point requires auth
      *
-     * @param string $entrypoint name of the entrypoint
+     * @param $entryPoint
      * @return bool true if auth is required, false if not
      */
     public function checkEntryPointRequiresAuth($entryPoint)

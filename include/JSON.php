@@ -96,6 +96,8 @@ class JSON
     }
 
     /**
+     * @param $string
+     * @return string
      * @deprecated use JSON::encode() instead
      */
     public static function encodeReal($string)
@@ -104,6 +106,8 @@ class JSON
     }
 
     /**
+     * @param $string
+     * @return string
      * @deprecated use JSON::decode() instead
      */
     public static function decodeReal($string)

@@ -50,8 +50,10 @@ class MyClosedOpportunitiesDashlet extends Dashlet
 {
     protected $total_opportunities;
     protected $total_opportunities_won;
-    
+
     /**
+     * @param $id
+     * @param null $def
      * @see Dashlet::Dashlet()
      */
     public function __construct($id, $def = null)
@@ -121,6 +123,8 @@ class MyClosedOpportunitiesDashlet extends Dashlet
     }
 
     /**
+     * @param $req
+     * @return array
      * @see Dashlet::saveOptions()
      */
     public function saveOptions($req)

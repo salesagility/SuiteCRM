@@ -116,7 +116,8 @@ class ImportListView
      * Display the list view like table.
      *
      * @param bool $return True if we should return the content rather than echoing.
-     * @return
+     * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function display($return = false)
     {

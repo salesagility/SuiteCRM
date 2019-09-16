@@ -71,8 +71,8 @@ class MassUpdate
 
     /**
      * get the massupdate form
-     * @param bool boolean need to execute the massupdate form or not
      * @param multi_select_popup booleanif it is a multi-select value
+     * @param bool $multi_select_popup
      * @return string
      */
     public function getDisplayMassUpdateForm($bool, $multi_select_popup = false)
@@ -101,7 +101,7 @@ class MassUpdate
 
     /**
      * returns the mass update's html form header
-     * @param multi_select_popup boolean if it is a mult-select or not
+     * @param bool $multi_select_popup
      * @return string
      */
     public function getMassUpdateFormHeader($multi_select_popup = false)
@@ -444,6 +444,8 @@ eoq;
 
     /**
      * Displays the massupdate form
+     * @param bool $hideDeleteIfNoFieldsAvailable
+     * @return string
      */
     public function getMassUpdateForm(
         $hideDeleteIfNoFieldsAvailable = false
@@ -1061,9 +1063,9 @@ EOHTML;
 
     /**
      * Add Account selection popup window HTML code
-     * @param displayname Name to display in the popup window
-     * @param varname name of the variable
-     * @param id_name name of the id in vardef
+     * @param $displayname
+     * @param $varname
+     * @param string $id_name
      * @return string
      */
     public function addAccountID($displayname, $varname, $id_name = '')

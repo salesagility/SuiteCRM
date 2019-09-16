@@ -59,6 +59,8 @@ class XML_HTMLSax3_Trim
     }
 
     /**
+     * @param $orig_obj
+     * @param $orig_method
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function XML_HTMLSax3_Trim(&$orig_obj, $orig_method)
@@ -124,23 +126,27 @@ class XML_HTMLSax3_CaseFolding
         $this->orig_open_method = $orig_open_method;
         $this->orig_close_method = $orig_close_method;
     }
+
     /**
-    * Folds up open tag callbacks
-    * @param XML_HTMLSax3
-    * @param string tag name
-    * @param array tag attributes
-    * @access protected
-    */
+     * Folds up open tag callbacks
+     * @param $parser
+     * @param $tag
+     * @param array $attrs
+     * @param bool $empty
+     * @access protected
+     */
     public function foldOpen(&$parser, $tag, $attrs=array(), $empty = false)
     {
         $this->orig_obj->{$this->orig_open_method}($parser, strtoupper($tag), $attrs, $empty);
     }
+
     /**
-    * Folds up close tag callbacks
-    * @param XML_HTMLSax3
-    * @param string tag name
-    * @access protected
-    */
+     * Folds up close tag callbacks
+     * @param $parser
+     * @param $tag
+     * @param bool $empty
+     * @access protected
+     */
     public function foldClose(&$parser, $tag, $empty = false)
     {
         $this->orig_obj->{$this->orig_close_method}($parser, strtoupper($tag), $empty);

@@ -85,6 +85,9 @@ class SugarMerge
     }
 
     /**
+     * @param string $new_path
+     * @param string $original_path
+     * @param string $custom_path
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function SugarMerge($new_path='', $original_path='', $custom_path='custom')
@@ -197,7 +200,8 @@ class SugarMerge
      *
      * @param STRING $module - name of the module
      * @param STRING $file - name of the file
-     * @param STRING $save - should the merged file be saved to the custom directory
+     * @param bool $save - should the merged file be saved to the custom directory
+     * @param bool $logHistory
      * @return BOOLEAN - success or failure of the merge
      */
     public function mergeFile($module, $file, $save=true, $logHistory=true)

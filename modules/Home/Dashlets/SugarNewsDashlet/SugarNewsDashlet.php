@@ -59,6 +59,8 @@ class SugarNewsDashlet extends iFrameDashlet
     }
 
     /**
+     * @param $id
+     * @param null $options
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function SugarNewsDashlet($id, $options = null)

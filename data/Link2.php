@@ -561,7 +561,6 @@ class Link2
 
     /**
      * @param $rel_keys
-     * @param array $additional_values
      * @return array|bool
      */
     public function remove($rel_keys)

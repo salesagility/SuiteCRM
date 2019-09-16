@@ -141,13 +141,11 @@ class SugarFieldHandler
      * Returns the smarty code to be used in a template built by TemplateHandler
      * The SugarField class is choosen dependant on the vardef's type field.
      *
-     * @param parentFieldArray string name of the variable in the parent template for the bean's data
-     * @param vardef vardef field defintion
-     * @param displayType string the display type for the field (eg DetailView, EditView, etc)
-     * @param displayParam parameters for displayin
-     *      available paramters are:
-     *      * labelSpan - column span for the label
-     *      * fieldSpan - column span for the field
+     * @param $parentFieldArray
+     * @param $vardef
+     * @param $displayType
+     * @param array $displayParams
+     * @param int $tabindex
      * @return string
      */
     public static function displaySmarty($parentFieldArray, $vardef, $displayType, $displayParams = array(), $tabindex = 1)

@@ -292,6 +292,8 @@
 
         /**
          * this function takes an iCal string and converts it to iCal array while following RFC rules
+         * @param $ical_string
+         * @return array
          */
         public static function create_ical_array_from_string($ical_string)
         {
@@ -313,6 +315,9 @@
 
         /**
          * this function takes an iCal array and converts it to iCal string while following RFC rules
+         * @param $ical_array
+         * @param bool $no_folding
+         * @return string
          */
         public static function create_ical_string_from_array($ical_array, $no_folding = false)
         {
@@ -358,6 +363,9 @@
 
         /**
          * get ics file content for meeting invite email
+         * @param SugarBean $bean
+         * @param User $user
+         * @return string
          */
         public static function get_ical_event(SugarBean $bean, User $user)
         {

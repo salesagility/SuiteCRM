@@ -46,6 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Returns the display labels for a module path and field.
  * @param $modulePath
  * @param $field
+ * @param $reportModule
  * @return array
  */
 function getDisplayForField($modulePath, $field, $reportModule)

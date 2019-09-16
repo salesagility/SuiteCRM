@@ -160,7 +160,7 @@ class OutboundEmail
      * override account.
      *
      * @param unknown_type $user_id
-     * @return unknown
+     * @return bool
      */
     public function doesUserOverrideAccountRequireCredentials($user_id)
     {
@@ -183,6 +183,8 @@ class OutboundEmail
 
     /**
      * Retrieves name value pairs for opts lists
+     * @param $user
+     * @return array
      */
     public function getUserMailers($user)
     {
@@ -268,7 +270,8 @@ class OutboundEmail
     /**
      * Retrieves a cascading mailer set
      * @param object user
-     * @param string mailer_id
+     * @param string $mailer_id
+     * @param string $ieId
      * @return object
      */
     public function getUserMailerSettings(&$user, $mailer_id = '', $ieId = '')
@@ -309,7 +312,6 @@ class OutboundEmail
      * their outbound account set to this object.
      *
      * @param SugarBean $user
-     * @param string $outbound_id
      * @return array
      */
     public function getAssociatedInboundAccounts($user)
@@ -331,7 +333,8 @@ class OutboundEmail
     /**
      * Retrieves a cascading mailer set
      * @param object user
-     * @param string mailer_id
+     * @param string $mailer_id
+     * @param string $ieId
      * @return object
      */
     public function getInboundMailerSettings($user, $mailer_id = '', $ieId = '')

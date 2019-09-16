@@ -118,10 +118,11 @@ class M2MRelationship extends SugarRelationship
         $GLOBALS['log']->error("Unable to determine best appropriate link for relationship {$this->name}");
         return $links[0];
     }
+
     /**
      * @param SugarBean $lhs left side bean to add to the relationship.
      * @param SugarBean $rhs right side bean to add to the relationship.
-     * @param key $additionalFields =>value pairs of fields to save on the relationship
+     * @param array $additionalFields =>value pairs of fields to save on the relationship
      * @return boolean true if successful
      */
     public function add($lhs, $rhs, $additionalFields = array())
@@ -365,7 +366,8 @@ class M2MRelationship extends SugarRelationship
 
     /**
      * @param Link2 $link loads the relationship for this link.
-     * @return void
+     * @param array $params
+     * @return array
      */
     public function load($link, $params = array())
     {
@@ -615,7 +617,7 @@ class M2MRelationship extends SugarRelationship
     /**
      * @param  $lhs
      * @param  $rhs
-     * @return bool
+     * @return array
      */
     public function relationship_exists($lhs, $rhs)
     {

@@ -44,6 +44,8 @@ require_once('include/MVC/Controller/SugarController.php');
 class ViewClassic extends SugarView
 {
     /**
+     * @param null $bean
+     * @param array $view_object_map
      * @see SugarView::SugarView()
      */
     public function __construct(

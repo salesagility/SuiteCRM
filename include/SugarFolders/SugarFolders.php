@@ -130,6 +130,13 @@ class SugarFolder
 
     /**
      * Sole constructor
+     * @param User|null $current_user
+     * @param null $app_strings
+     * @param null $mod_strings
+     * @param null $timedate
+     * @param null $bean_list
+     * @param null $sugar_config
+     * @param null $current_language
      */
     public function __construct(
         User $current_user = null,
@@ -338,9 +345,9 @@ class SugarFolder
     /**
      * Sets a user's preferences for subscribe folders (Sugar only)
      *
-     * @param array   Sub Array of IDs for subscribed folders
-     * @param User    Specify which user to set the subscriptions
-     * @return void
+     * @param $subs
+     * @param null $user
+     * @return bool
      */
     public function setSubscriptions($subs, $user = null)
     {
@@ -431,7 +438,7 @@ class SugarFolder
      * Deletes subscriptions to folders in preparation for reset
      *
      * @param User|null $user User
-     * @return boolean
+     * @return void
      */
     public function clearSubscriptions($user = null)
     {
@@ -507,6 +514,12 @@ class SugarFolder
 
     /**
      * returns array of items for listView display in yui-ext Grid
+     * @param $folderId
+     * @param int $page
+     * @param int $pageSize
+     * @param string $sort
+     * @param string $direction
+     * @return array
      */
     public function getListItemsForEmailXML($folderId, $page = 1, $pageSize = 10, $sort = '', $direction = '')
     {
@@ -932,10 +945,11 @@ class SugarFolder
     /**
      * Collects, sorts, and builds tree of user's folders
      *
-     * @param object  $rootNode     Reference to tree root node
-     * @param array   $folderStates User pref folder open/closed states
-     * @param User    $user         Optional User in focus, default current_user
+     * @param object $rootNode Reference to tree root node
+     * @param array $folderStates User pref folder open/closed states
+     * @param User $user Optional User in focus, default current_user
      *
+     * @param bool $forRefresh
      * @return array
      */
     public function getUserFolders(&$rootNode, $folderStates, $user = null, $forRefresh = false)
@@ -1060,7 +1074,11 @@ class SugarFolder
 
     /**
      * Builds children nodes for folders for TreeView
-     * @return $folderNode TreeView node
+     * @param $a
+     * @param $nodePath
+     * @param $folderStates
+     * @param $subscriptions
+     * @return ExtNode $folderNode TreeView node
      */
     public function buildTreeNodeFolders($a, $nodePath, $folderStates, $subscriptions)
     {
@@ -1270,6 +1288,7 @@ class SugarFolder
     /**
      * Add subscriptions to this group folder.
      *
+     * @param $user_id
      * @return boolean
      */
     public function createSubscriptionForUser($user_id)

@@ -96,6 +96,7 @@ class OAuthKey extends Basic
     /**
      * Delete the key
      * also removed all tokens
+     * @param $id
      */
     public function mark_deleted($id)
     {

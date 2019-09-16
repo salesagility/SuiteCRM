@@ -146,9 +146,11 @@ class Prospect extends Person implements EmailInterface
     }
 
     /**
-        builds a generic search based on the query string using or
-        do not include any $this-> because this is called on without having the class instantiated
-    */
+     * builds a generic search based on the query string using or
+     * do not include any $this-> because this is called on without having the class instantiated
+     * @param $the_query_string
+     * @return string
+     */
     public function build_generic_where_clause($the_query_string)
     {
         $where_clauses = array();
@@ -195,9 +197,15 @@ class Prospect extends Person implements EmailInterface
 
     /**
      *  This method will be used by Mail Merge in order to retieve the targets as specified in the query
-     * @param query String - this is the query which contains the where clause for the query
+     * @param $query
+     * @param $fields
+     * @param int $offset
+     * @param int $limit
+     * @param int $max
+     * @param int $deleted
+     * @param string $module
      * @return array
-     */
+*/
     public function retrieveTargetList($query, $fields, $offset = 0, $limit= -99, $max = -99, $deleted = 0, $module = '')
     {
         global  $beanList, $beanFiles;
@@ -254,7 +262,9 @@ class Prospect extends Person implements EmailInterface
     /**
      *  Given an id, looks up in the prospect_lists_prospects table
      *  and retrieve the correct type for this id
-     */
+     * @param $id
+     * @return null
+*/
     public function retrieveTarget($id)
     {
         $query = "SELECT related_id, related_type FROM prospect_lists_prospects WHERE id = '".$this->db->quote($id)."'";

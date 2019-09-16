@@ -299,9 +299,8 @@ class Configurator
 
     /**
      * @params : none
-     * @return : An array of logger configuration properties including log size, file extensions etc. See SugarLogger for more details.
+     * @return void : An array of logger configuration properties including log size, file extensions etc. See SugarLogger for more details.
      * Parses the old logger settings from the log4php.properties files.
-     *
      */
     public function parseLoggerSettings()
     {

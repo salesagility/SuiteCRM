@@ -68,6 +68,11 @@ class Monitor implements Trackable
 
     /**
      * Monitor constructor
+     * @param string $name
+     * @param string $monitorId
+     * @param string $metadata
+     * @param string $store
+     * @throws Exception
      */
     public function __construct($name='', $monitorId='', $metadata='', $store='')
     {
@@ -108,6 +113,11 @@ class Monitor implements Trackable
     }
 
     /**
+     * @param string $name
+     * @param string $monitorId
+     * @param string $metadata
+     * @param string $store
+     * @throws Exception
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function Monitor($name='', $monitorId='', $metadata='', $store='')
@@ -147,7 +157,7 @@ class Monitor implements Trackable
     /**
      * getStores
      * Returns Array of store names defined for monitor instance
-     * @return Array of store names defined for monitor instance
+     * @return string of store names defined for monitor instance
      */
     public function getStores()
     {
@@ -167,7 +177,7 @@ class Monitor implements Trackable
     /**
      * isDirty
      * Returns if the monitor has data that needs to be saved
-     * @return $dirty boolean
+     * @return bool $dirty boolean
      */
     public function isDirty()
     {
@@ -255,7 +265,7 @@ class Monitor implements Trackable
 
     /**
      * Returns the monitor's metrics/values as an Array
-     * @return An Array of data for the monitor's corresponding metrics
+     * @return array Array of data for the monitor's corresponding metrics
      */
     public function toArray()
     {

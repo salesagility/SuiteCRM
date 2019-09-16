@@ -477,7 +477,7 @@ class SearchForm
     /**
      * Set options
      * @param array $options
-     * @return SearchForm2
+     * @return SearchForm
      */
     public function setOptions($options = null)
     {
@@ -875,7 +875,7 @@ class SearchForm
      * @param bool $add_custom_fields boolean indicating whether or not custom fields should be added
      * @param string $module Module to search against
      *
-     * @return string the SQL WHERE clause based on the arguments supplied in SearchForm2 instance
+     * @return array the SQL WHERE clause based on the arguments supplied in SearchForm2 instance
      */
     public function generateSearchWhere($add_custom_fields = false, $module = '')
     {
@@ -1421,6 +1421,7 @@ class SearchForm
      * This function checks to see if a blank dropdown field was supplied.  This scenario will occur where
      * a dropdown select is in single selection mode
      *
+     * @param string $name
      * @param Mixed $value dropdown value
      * @return bool
      */

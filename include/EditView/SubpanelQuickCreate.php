@@ -159,6 +159,9 @@ class SubpanelQuickCreate
     }
 
     /**
+     * @param $module
+     * @param string $view
+     * @param bool $proccessOverride
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function SubpanelQuickCreate($module, $view='QuickCreate', $proccessOverride = false)

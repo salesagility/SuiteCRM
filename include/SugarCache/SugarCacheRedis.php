@@ -112,8 +112,10 @@ class SugarCacheRedis extends SugarCacheAbstract
         
         return $this->_redis;
     }
-    
+
     /**
+     * @param $key
+     * @param $value
      * @see SugarCacheAbstract::_setExternal()
      */
     protected function _setExternal(
@@ -126,8 +128,10 @@ class SugarCacheRedis extends SugarCacheAbstract
         $this->_getRedisObject()->set($key, $value);
         $this->_getRedisObject()->expire($key, $this->_expireTimeout);
     }
-    
+
     /**
+     * @param $key
+     * @return bool|mixed|string|null
      * @see SugarCacheAbstract::_getExternal()
      */
     protected function _getExternal(
@@ -144,8 +148,9 @@ class SugarCacheRedis extends SugarCacheAbstract
             unserialize($returnValue) :
             $returnValue;
     }
-    
+
     /**
+     * @param $key
      * @see SugarCacheAbstract::_clearExternal()
      */
     protected function _clearExternal(

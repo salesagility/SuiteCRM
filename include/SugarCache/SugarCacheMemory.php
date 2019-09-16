@@ -56,8 +56,10 @@ class SugarCacheMemory extends SugarCacheAbstract
         // we'll always have this backend available
         return true;
     }
-    
+
     /**
+     * @param $key
+     * @param $value
      * @see SugarCacheAbstract::_setExternal()
      *
      * Does nothing; cache is gone after request is done.
@@ -65,8 +67,9 @@ class SugarCacheMemory extends SugarCacheAbstract
     protected function _setExternal($key, $value)
     {
     }
-    
+
     /**
+     * @param $key
      * @see SugarCacheAbstract::_getExternal()
      *
      * Does nothing; cache is gone after request is done.
@@ -74,8 +77,9 @@ class SugarCacheMemory extends SugarCacheAbstract
     protected function _getExternal($key)
     {
     }
-    
+
     /**
+     * @param $key
      * @see SugarCacheAbstract::_clearExternal()
      *
      * Does nothing; cache is gone after request is done.

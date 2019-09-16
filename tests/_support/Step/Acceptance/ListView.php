@@ -9,6 +9,7 @@ class ListView extends Tester
 
     /**
      * Click on the name of a record
+     * @param $name
      */
     public function clickNameLink($name)
     {

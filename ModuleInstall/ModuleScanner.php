@@ -503,6 +503,8 @@ class ModuleScanner
 
     /**
      *Ensures that a file has a valid extension
+     * @param $file
+     * @return bool
      */
     public function isValidExtension($file)
     {
@@ -530,7 +532,9 @@ class ModuleScanner
 
     /**
      *Scans a directory and calls on scan file for each file
-     **/
+     * @param $path
+     * @return bool
+     */
     public function scanDir($path)
     {
         static $startPath = '';
@@ -582,7 +586,8 @@ class ModuleScanner
      * Given a file it will open it's contents and check if it is a PHP file (not safe to just rely on extensions) if it finds <?php tags it will use the tokenizer to scan the file
      * $var()  and ` are always prevented then whatever is in the blacklist.
      * It will also ensure that all files are of valid extension types
-     *
+     * @param $file
+     * @return array
      */
     public function scanFile($file)
     {
@@ -757,6 +762,8 @@ class ModuleScanner
     /**
      *This function will scan the Manifest for disabled actions specified in $GLOBALS['sugar_config']['moduleInstaller']['disableActions']
      *if $GLOBALS['sugar_config']['moduleInstaller']['disableRestrictedCopy'] is set to false or not set it will call on scanCopy to ensure that it is not overriding files
+     * @param $manifestPath
+     * @return array
      */
     public function scanManifest($manifestPath)
     {
@@ -851,7 +858,7 @@ class ModuleScanner
      *Main external function that takes in a path to a package and then scans
      *that package's manifest for disabled actions and then it scans the PHP files
      *for restricted function calls
-     *
+     * @param $path
      */
     public function scanPackage($path)
     {
@@ -864,7 +871,8 @@ class ModuleScanner
 
     /**
      *This function will take all issues of the current instance and print them to the screen
-     **/
+     * @param string $package
+     */
     public function displayIssues($package='Package')
     {
         echo '<h2>'.str_replace('{PACKAGE}', $package, translate('ML_PACKAGE_SCANNING')). '</h2><BR><h2 class="error">' . translate('ML_INSTALLATION_FAILED') . '</h2><br><p>' .str_replace('{PACKAGE}', $package, translate('ML_PACKAGE_NOT_CONFIRM')). '</p><ul><li>'. translate('ML_OBTAIN_NEW_PACKAGE') . '<li>' . translate('ML_RELAX_LOCAL').

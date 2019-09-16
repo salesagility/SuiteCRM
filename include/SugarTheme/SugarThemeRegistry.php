@@ -283,7 +283,7 @@ class SugarThemeRegistry
      * from upgrades.  It attempts to look for the Sugar theme and if not found, defaults to return the name of the last theme
      * in the array of available themes loaded.
      *
-     * @return $defaultThemeKey String value of the default theme key to use
+     * @return int|mixed|string $defaultThemeKey String value of the default theme key to use
      */
     private static function getDefaultThemeKey()
     {

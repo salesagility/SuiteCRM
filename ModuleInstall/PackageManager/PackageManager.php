@@ -98,6 +98,8 @@ class PackageManager
 
     /**
      * Obtain a list of category/packages/releases for use within the module loader
+     * @param string $category_id
+     * @return array
      */
     public function getModuleLoaderCategoryPackages($category_id = '')
     {
@@ -109,7 +111,9 @@ class PackageManager
 
     /**
      * Obtain the list of category_packages from SugarDepot
-     * @return category_packages
+     * @param string $category_id
+     * @param array $filter
+     * @return array
      */
     public function getCategoryPackages($category_id = '', $filter = array())
     {
@@ -155,7 +159,7 @@ class PackageManager
     /**
      * Get a list of categories from the SugarDepot
      * @param category_id   the category id of parent to obtain
-     * @param filter        an array of filters to pass to limit the query
+     * @param array $filter
      * @return array        an array of categories for display on the client
      */
     public function getCategories($category_id, $filter = array())
@@ -206,10 +210,10 @@ class PackageManager
     /**
      * Retrieve the package as specified by the $id from the heartbeat server
      *
-     * @param category_id   the category_id to which the release belongs
-     * @param package_id    the package_id to which the release belongs
-     * @param release_id    the release_id to download
-     * @return filename - the path to which the zip file was saved
+     * @param $category_id
+     * @param $package_id
+     * @param $release_id
+     * @return path|null - the path to which the zip file was saved
      */
     public function download($category_id, $package_id, $release_id)
     {
@@ -231,9 +235,10 @@ class PackageManager
      * Given the Mambo username, password, and download key attempt to authenticate, if
      * successful then store these credentials
      *
-     * @param username      Mambo username
-     * @param password      Mambo password
-     * @param systemname   the user's download key
+     * @param $username
+     * @param $password
+     * @param string $systemname
+     * @param bool $terms_checked
      * @return              true if successful, false otherwise
      */
     public function authenticate($username, $password, $systemname='', $terms_checked = true)
@@ -797,9 +802,7 @@ class PackageManager
     /**
      * Run the query to obtain the list of installed types as specified by the type param
      *
-     * @param type	an array of types you would like to search for
-     * 				type options include (theme, langpack, module, patch)
-     *
+     * @param array $types
      * @return an array of installed upgrade_history objects
      */
     public function getInstalled($types = array('module'))

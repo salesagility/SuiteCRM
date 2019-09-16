@@ -58,6 +58,7 @@ class _parse_propfind
      * constructor
      *
      * @access public
+     * @param $path
      */
     public function __construct($path)
     {

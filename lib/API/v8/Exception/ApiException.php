@@ -95,7 +95,7 @@ class ApiException extends LangException
     }
 
     /**
-     * @param string $detail
+     * @param LangText $detail
      */
     public function setDetail(LangText $detail)
     {

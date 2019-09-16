@@ -185,7 +185,7 @@ class component
      * getConfig
      * Returns the configuration Array as definied in the config.php file
      *
-     * @return $config Array of the configuration mappings as defined in config.php
+     * @return  $config Array of the configuration mappings as defined in config.php
      */
     public function getConfig()
     {
@@ -215,6 +215,9 @@ class component
 
     /**
      * mapInput
+     * @param $inputData
+     * @param $module
+     * @return array
      */
     public function mapInput($inputData, $module)
     {

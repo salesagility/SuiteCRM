@@ -510,7 +510,12 @@ class ProjectController extends SugarController
         die();
     }
 
-    /*********************************** Utility functions **************************************/
+    /*********************************** Utility functions *************************************
+     * @param $start_date
+     * @param $end_date
+     * @return int|mixed
+     * @throws Exception
+     */
 
 
     //Returns the total number of days between two dates

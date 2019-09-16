@@ -48,7 +48,8 @@ class ControllerFactory
     /**
      * Obtain an instance of the correct controller.
      *
-     * @return an instance of SugarController
+     * @param $module
+     * @return CustomSugarController|SugarController instance of SugarController
      */
     public static function getController($module)
     {

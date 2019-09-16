@@ -36,6 +36,11 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * @param $focus
+ * @param $field
+ * @param $value
+ * @param $view
+ * @return string
  */
 
 function display_email_lines($focus, $field, $value, $view)

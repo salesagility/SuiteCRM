@@ -55,11 +55,11 @@ class EmailAuthenticate extends SugarAuthenticate
 {
     public $userAuthenticateClass = 'EmailAuthenticateUser';
     public $authenticationDir = 'EmailAuthenticate';
+
     /**
      * Constructs EmailAuthenticate
      * This will load the user authentication class
      *
-     * @return EmailAuthenticate
      */
     public function __construct()
     {

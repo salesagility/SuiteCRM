@@ -52,7 +52,7 @@ class CasesCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Cases $cases
-     * @param \Step\Acceptance\Cases $account
+     * @param \Step\Acceptance\Accounts $account
      *
      * As administrative user I want to create a case so that I can test
      * the standard fields.

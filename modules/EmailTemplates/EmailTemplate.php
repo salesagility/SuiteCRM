@@ -138,7 +138,7 @@ class EmailTemplate extends SugarBean
 
     /**
      * Generates the extended field_defs for creating macros
-     * @return array
+     * @return string
      */
     public function generateFieldDefsJS()
     {

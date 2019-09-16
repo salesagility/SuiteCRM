@@ -150,6 +150,7 @@ EORSS;
     }
 
     /**
+     * @param $errorObject
      * @see SugarRest::fault()
      */
     public function fault($errorObject)

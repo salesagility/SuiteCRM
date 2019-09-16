@@ -49,6 +49,8 @@ require_once('include/connectors/sources/SourceFactory.php');
 class ViewModifyDisplay extends SugarView
 {
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)

@@ -45,8 +45,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * EmployeeStatus.php
  * This is a helper file used by the meta-data framework
- * @see modules/Users/vardefs.php (employee_status)
+ * @param $focus
+ * @param string $name
+ * @param null $value
+ * @param string $view
+ * @return string
  * @author Collin Lee
+ * @see modules/Users/vardefs.php (employee_status)
  */
 function getEmployeeStatusOptions($focus, $name = 'employee_status', $value = null, $view = 'DetailView')
 {

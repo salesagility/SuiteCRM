@@ -84,7 +84,7 @@ class Zend_Search_Lucene_MultiSearcher implements Zend_Search_Lucene_Interface
      * -1 means there are no segments files.
      *
      * @param Zend_Search_Lucene_Storage_Directory $directory
-     * @return integer
+     * @return void
      * @throws Zend_Search_Lucene_Exception
      */
     public static function getActualGeneration(Zend_Search_Lucene_Storage_Directory $directory)
@@ -107,7 +107,7 @@ class Zend_Search_Lucene_MultiSearcher implements Zend_Search_Lucene_Interface
     /**
      * Get index format version
      *
-     * @return integer
+     * @return void
      * @throws Zend_Search_Lucene_Exception
      */
     public function getFormatVersion()
@@ -443,7 +443,7 @@ class Zend_Search_Lucene_MultiSearcher implements Zend_Search_Lucene_Interface
      *
      * Default value is 10
      *
-     * @param integer $maxMergeDocs
+     * @param $mergeFactor
      */
     public function setMergeFactor($mergeFactor)
     {
@@ -594,7 +594,7 @@ class Zend_Search_Lucene_MultiSearcher implements Zend_Search_Lucene_Interface
      *
      * @param Zend_Search_Lucene_Index_Term $term
      * @param Zend_Search_Lucene_Index_DocsFilter|null $docsFilter
-     * @return Zend_Search_Lucene_Index_DocsFilter
+     * @return void
      * @throws Zend_Search_Lucene_Exception
      */
     public function termDocsFilter(Zend_Search_Lucene_Index_Term $term, $docsFilter = null)

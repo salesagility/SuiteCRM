@@ -147,7 +147,8 @@ abstract class SugarCacheAbstract
     /**
      * PHP's magic __set() method, used here for setting a value for a key in the cache.
      *
-     * @param  string $key
+     * @param string $key
+     * @param $value
      * @return mixed
      */
     public function __set($key, $value)
@@ -319,9 +320,9 @@ abstract class SugarCacheAbstract
     /**
      * Returns the priority level for this backend
      *
+     * @return indicates
      * @see self::$_priority
      *
-     * @return int
      */
     public function getPriority()
     {

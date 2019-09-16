@@ -67,6 +67,7 @@ class ConnectorFactory
      * Split the class name by _ and go through the class name
      * which represents the inheritance structure to load up all required parents.
      * @param string $class the root class we want to load.
+     * @param $type
      */
     public static function load($class, $type)
     {
@@ -76,6 +77,7 @@ class ConnectorFactory
     /**
      * include a source class file.
      * @param string $class a class file to include.
+     * @param $type
      */
     public static function loadClass($class, $type)
     {

@@ -105,7 +105,10 @@ class CalendarUtils
     /**
      * Get array of needed time data
      * @param SugarBean $bean
+     * @param string $start_field
+     * @param string $end_field
      * @return array
+     * @throws Exception
      */
     public static function get_time_data(SugarBean $bean, $start_field = "date_start", $end_field = "date_end")
     {

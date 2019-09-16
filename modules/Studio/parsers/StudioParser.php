@@ -389,7 +389,8 @@ EOQ;
      */
     /**
      * STATIC FUNCTION DISABLE INPUTS IN AN HTML STRING
-     *
+     * @param $str
+     * @return string|string[]|null
      */
     public function disableInputs($str)
     {
@@ -583,7 +584,8 @@ EOQ;
      * delete:-1
      * add:2000
      * swap: 0 - 1999
-     *
+     * @param $slot_count
+     * @param $display_count
      */
     public function addSlotToForm($slot_count, $display_count)
     {

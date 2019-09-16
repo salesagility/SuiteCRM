@@ -93,12 +93,11 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
         }
 
 
-
         /**
          * Serve a webdav request
          *
          * @access public
-         * @param  string
+         * @param bool $base
          */
         public function ServeRequest($base = false)
         {
@@ -400,8 +399,8 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
         /**
          * PUT method handler
          *
-         * @param  array  parameter passing array
-         * @return bool   true on success
+         * @param array  parameter passing array
+         * @return void true on success
          */
         public function PUT(&$options)
         {

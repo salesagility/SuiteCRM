@@ -162,6 +162,12 @@ class SugarFieldDatetimecombo extends SugarFieldBase
     }
 
     /**
+     * @param $value
+     * @param $vardef
+     * @param $focus
+     * @param ImportFieldSanitize $settings
+     * @return bool|string
+     * @throws Exception
      * @see SugarFieldBase::importSanitize()
      */
     public function importSanitize(

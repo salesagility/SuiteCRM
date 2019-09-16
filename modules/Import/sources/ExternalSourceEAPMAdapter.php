@@ -86,12 +86,13 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
 
         $this->setSourceName();
     }
+
     /**
      * Return a feed of google contacts using the EAPM and Connectors farmework.
      *
+     * @param int $maxResults
+     * @return void
      * @throws Exception
-     * @param  $maxResults
-     * @return array
      */
     public function loadDataSet($maxResults = 0)
     {

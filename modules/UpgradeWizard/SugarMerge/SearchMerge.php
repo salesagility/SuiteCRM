@@ -75,10 +75,12 @@ class SearchMerge extends ListViewMerge
         $this->customData = array($module=>array( $this->viewDefs=>$this->customData[$module]));
         $this->newData = array($module=>array( $this->viewDefs=>$this->newData[$module]));
     }
+
     /**
      * This takes in a  list of panels and returns an associative array of field names to the meta-data of the field as well as the locations of that field
      * Since searchdefs have the concept of basic and advanced those act as panels for merging
      * @param ARRAY $panels - this is the 'panel' section of the meta-data for list views all the meta data is one panel since it is just a list of fields
+     * @param bool $multiple
      * @return ARRAY $fields - an associate array of fields and their meta-data as well as their location
      */
     
@@ -139,14 +141,14 @@ class SearchMerge extends ListViewMerge
     {
         return write_array_to_file("$this->varName['$this->module']", $this->newData[$this->module], $to);
     }
-    
+
     /**
      * public function that will merge meta data from an original sugar file that shipped with the product, a customized file, and a new file shipped with an upgrade
      *
      * @param STRING $module - name of the module's files that are to be merged
      * @param STRING $original_file - path to the file that originally shipped with sugar
      * @param STRING $new_file - path to the new file that is shipping with the patch
-     * @param STRING $custom_file - path to the custom file
+     * @param bool $custom_file - path to the custom file
      * @param BOOLEAN $save - boolean on if it should save the results to the custom file or not
      * @return BOOLEAN - if the merged file was saved if false is passed in for the save parameter it always returns true
      */

@@ -224,6 +224,9 @@ class TrackerManager
      * saveMonitor
      * Saves the monitor instance and then clears it
      * If ignoreDisabled is set the ignore the fact of this monitor being disabled
+     * @param $monitor
+     * @param bool $flush
+     * @param bool $ignoreDisabled
      */
     public function saveMonitor($monitor, $flush=true, $ignoreDisabled = false)
     {
@@ -242,6 +245,7 @@ class TrackerManager
     /**
      * unsetMonitor
      * Method to unset the monitor so that it will not be saved
+     * @param $monitor
      */
     public function unsetMonitor($monitor)
     {

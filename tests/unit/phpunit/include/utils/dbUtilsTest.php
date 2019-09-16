@@ -29,6 +29,11 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     /**
      * @dataProvider db_convertProvider
+     * @param $string
+     * @param $type
+     * @param $params
+     * @param $expected
+     * @throws \SuiteCRM\StateSaverException
      */
     public function testdb_convert($string, $type, $params, $expected)
     {

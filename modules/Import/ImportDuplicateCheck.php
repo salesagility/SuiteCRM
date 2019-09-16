@@ -141,7 +141,7 @@ class ImportDuplicateCheck
     /**
      * Checks to see if the given bean is a duplicate based off the given fields
      *
-     * @param  array $indexlist
+     * @param $fieldList
      * @return bool true if this bean is a duplicate or false if it isn't
      */
     public function isADuplicateRecordByFields($fieldList)

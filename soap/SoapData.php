@@ -52,27 +52,26 @@ $server->register(
 );
 
 
-
 /**
  * Get a list of the relationship records that have been modified within a
  * specified date range.  This is used to perform a sync with a mobile client.
  * The results are paged.
  *
- * @param xsd:string $session
- * @param xsd:string $module_name
- * @param xsd:string $related_module
- * @param xsd:string $from_date
- * @param xsd:string $to_date
- * @param xsd:int $offset
- * @param xsd:int $max_results
- * @param xsd:int $deleted
- * @param xsd:int $module_id
- * @param tns:select_fields $select_fields
- * @param tns:select_fields $ids
- * @param xsd:string $relationship_name
- * @param xsd:string $deletion_date
- * @param xsd:int $php_serialize
- * @return
+ * @param $session
+ * @param $module_name
+ * @param $related_module
+ * @param $from_date
+ * @param $to_date
+ * @param $offset
+ * @param $max_results
+ * @param $deleted
+ * @param string $module_id
+ * @param array $select_fields
+ * @param array $ids
+ * @param string $relationship_name
+ * @param string $deletion_date
+ * @param int $php_serialize
+ * @return array
  */
 function sync_get_modified_relationships($session, $module_name, $related_module, $from_date, $to_date, $offset, $max_results, $deleted, $module_id = '', $select_fields = array(), $ids = array(), $relationship_name = '', $deletion_date = '', $php_serialize = 1)
 {

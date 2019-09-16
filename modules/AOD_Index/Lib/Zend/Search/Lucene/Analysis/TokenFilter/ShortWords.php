@@ -46,7 +46,7 @@ class Zend_Search_Lucene_Analysis_TokenFilter_ShortWords extends Zend_Search_Luc
     /**
      * Constructs new instance of this filter.
      *
-     * @param integer $short  minimum allowed length of term which passes this filter (default 2)
+     * @param int $length
      */
     public function __construct($length = 2)
     {

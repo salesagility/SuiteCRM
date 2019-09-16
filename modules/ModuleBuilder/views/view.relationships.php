@@ -47,6 +47,8 @@ require_once('modules/ModuleBuilder/Module/StudioBrowser.php') ;
 class ViewRelationships extends SugarView
 {
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)
@@ -153,8 +155,7 @@ class ViewRelationships extends SugarView
      * fetchTemplate
      * This function overrides fetchTemplate from SugarView.
      *
-     * @param FieldViewer $mixed the Sugar_Smarty instance
-     * @param string $template the file to fetch
+     * @param $smarty
      * @return string contents from calling the fetch method on the Sugar_Smarty instance
      */
     protected function fetchTemplate($smarty/*, $template*/)

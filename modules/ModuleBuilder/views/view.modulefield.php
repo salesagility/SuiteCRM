@@ -44,6 +44,8 @@ require_once('modules/DynamicFields/FieldViewer.php');
 class ViewModulefield extends SugarView
 {
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)
@@ -379,8 +381,7 @@ class ViewModulefield extends SugarView
      * This function overrides fetchTemplate from SugarView.  For view.modulefield.php we go through the FieldViewer
      * class to fetch the display contents.
      *
-     * @param FieldViewer $mixed the FieldViewer instance
-     * @param string $template the file to fetch
+     * @param $fv
      * @return string contents from calling the fetch method on the FieldViewer Sugar_Smarty instance
      */
     protected function fetchTemplate($fv/*, $template*/)

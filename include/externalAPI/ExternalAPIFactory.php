@@ -197,9 +197,9 @@ class ExternalAPIFactory
 
     /**
      * This will hand back an initialized class for the requested external API, it will also load in the external API password information into the bean.
-     * @param string $apiName The name of the requested API ( known API's can be listed by the listAPI() call )
      * @param bool $apiName Ignore authentication requirements (optional)
-     * @return ExternalAPIBase API plugin
+     * @param bool $ignoreAuth
+     * @return bool API plugin
      */
     public static function loadAPI($apiName, $ignoreAuth=false)
     {
@@ -241,7 +241,7 @@ class ExternalAPIFactory
      * Lists the available API's for a module or all modules, and possibly ignoring if the user has auth information for that API even if it is required
      * @param string $module Which module name you are searching for, leave blank to find all API's
      * @param bool $ignoreAuth Ignore API's demands for authentication (used to get a complete list of modules
-     * @return API class
+     * @return array class
      */
     public static function listAPI($module = '', $ignoreAuth = false)
     {

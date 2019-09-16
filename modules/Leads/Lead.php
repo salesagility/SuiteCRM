@@ -355,9 +355,11 @@ class Lead extends Person implements EmailInterface
     }
 
     /**
-    	builds a generic search based on the query string using or
-    	do not include any $this-> because this is called on without having the class instantiated
-    */
+     * builds a generic search based on the query string using or
+     * do not include any $this-> because this is called on without having the class instantiated
+     * @param $the_query_string
+     * @return string
+     */
     public function build_generic_where_clause($the_query_string)
     {
         $where_clauses = array();

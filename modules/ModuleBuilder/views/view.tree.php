@@ -47,6 +47,8 @@ require_once('include/ytree/ExtNode.php') ;
 class ViewHistory extends SugarView
 {
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)
@@ -72,11 +74,11 @@ class ViewHistory extends SugarView
         $json = getJSONobj();
         echo($json->encode($root));
     }
-    
+
     /**
      *
-     * @param StudioModule$module
-     *@return ExtNode built from the passed StudioModule
+     * @param StudioModule $module
+     * @return void built from the passed StudioModule
      */
     public function buildStudioNode($module)
     {

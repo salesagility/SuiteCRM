@@ -1710,7 +1710,7 @@ class TimeDate
     /**
      * Create regexp from datetime format
      * @param string $format
-     * @return string Regular expression string
+     * @return array Regular expression string
      */
     public static function get_regular_expression($format)
     {

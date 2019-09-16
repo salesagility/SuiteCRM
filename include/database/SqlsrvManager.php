@@ -151,6 +151,10 @@ class SqlsrvManager extends MssqlManager
     );
 
     /**
+     * @param array|null $configOptions
+     * @param bool $dieOnError
+     * @return bool
+     * @throws Exception
      * @see DBManager::connect()
      */
     public function connect(array $configOptions = null, $dieOnError = false)
@@ -212,6 +216,12 @@ class SqlsrvManager extends MssqlManager
     }
 
     /**
+     * @param $sql
+     * @param bool $dieOnError
+     * @param string $msg
+     * @param bool $suppress
+     * @param bool $keepResult
+     * @return bool|resource
      * @see DBManager::query()
      */
     public function query($sql, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false)
@@ -241,6 +251,9 @@ class SqlsrvManager extends MssqlManager
     }
 
     /**
+     * @param $result
+     * @param bool $make_lower_case
+     * @return array|bool
      * @see DBManager::getFieldsArray()
      */
     public function getFieldsArray($result, $make_lower_case = false)
@@ -264,6 +277,8 @@ class SqlsrvManager extends MssqlManager
     }
 
     /**
+     * @param $result
+     * @return array|bool|false|null
      * @see DBManager::fetchRow()
      */
     public function fetchRow($result)
@@ -291,6 +306,10 @@ class SqlsrvManager extends MssqlManager
     }
 
     /**
+     * @param $string
+     * @param $type
+     * @param array $additional_parameters
+     * @return string
      * @see DBManager::convert()
      */
     public function convert($string, $type, array $additional_parameters = array())
@@ -306,8 +325,9 @@ class SqlsrvManager extends MssqlManager
      * for example emails_beans.  In 554 the field email_id was nvarchar but in 6.0 since it id dbType = 'id' we would want to alter
      * it to varchar. This code will prevent it.
      *
-     * @param  array $fielddef1
-     * @param  array $fielddef2
+     * @param array $fielddef1
+     * @param array $fielddef2
+     * @param bool $ignoreName
      * @return bool   true if they match, false if they don't
      */
     public function compareVarDefs($fielddef1, $fielddef2, $ignoreName = false)
@@ -341,6 +361,7 @@ class SqlsrvManager extends MssqlManager
     }
 
     /**
+     * @param $dbResult
      * @see DBManager::freeDbResult()
      */
     protected function freeDbResult($dbResult)
@@ -354,6 +375,9 @@ class SqlsrvManager extends MssqlManager
     /**
      * Detect if no clustered index has been created for a table; if none created then just pick the first index and make it that
      *
+     * @param $indices
+     * @param $table
+     * @return array
      * @see MssqlHelper::indexSQL()
      */
     public function getConstraintSql($indices, $table)
@@ -379,6 +403,8 @@ class SqlsrvManager extends MssqlManager
 
     /**
      * @see DBManager::get_columns()
+     * @param $tablename
+     * @return array
      */
     public function get_columns($tablename)
     {
@@ -486,6 +512,11 @@ EOSQL;
      *
      * @see DBManager::changeColumnSQL()
      * @see MssqlHelper::changeColumnSQL()
+     * @param $tablename
+     * @param $fieldDefs
+     * @param $action
+     * @param bool $ignoreRequired
+     * @return string
      */
     protected function changeColumnSQL($tablename, $fieldDefs, $action, $ignoreRequired = false)
     {

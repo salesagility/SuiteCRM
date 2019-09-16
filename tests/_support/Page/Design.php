@@ -26,7 +26,6 @@ class Design extends Module
     }
 
     /**
-     * @param integer $browserWidth in pixels
      * @return string
      * @see \SuiteCRM\Enumerator\DesignBreakPoint
      */

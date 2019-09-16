@@ -31,6 +31,7 @@ class HistoryCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\Accounts $accounts
      * @param \Step\Acceptance\Calls $calls
      * @param \Step\Acceptance\NavigationBar $NavigationBar

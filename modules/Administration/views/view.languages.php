@@ -52,6 +52,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class ViewLanguages extends SugarView
 {
     /**
+     * @param bool $browserTitle
+     * @return array
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)

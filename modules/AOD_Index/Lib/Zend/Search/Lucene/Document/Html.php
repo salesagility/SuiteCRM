@@ -382,7 +382,8 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
     /**
      * Standard callback method used to highlight words.
      *
-     * @param  string  $stringToHighlight
+     * @param string $stringToHighlight
+     * @param $colour
      * @return string
      * @internal
      */

@@ -71,7 +71,7 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
      * Serve a webdav request
      *
      * @access public
-     * @param  string
+     * @param bool $base
      */
     public function ServeICalRequest($base = false)
     {

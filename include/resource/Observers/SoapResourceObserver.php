@@ -51,6 +51,7 @@ class SoapResourceObserver extends ResourceObserver
     }
 
     /**
+     * @param $module
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function SoapResourceObserver($module)
@@ -81,7 +82,7 @@ class SoapResourceObserver extends ResourceObserver
     /**
      * notify
      * Soap implementation to notify the soap clients of a resource management error
-     * @param msg String message to possibly display
+     * @param string $msg
      */
     public function notify($msg = '')
     {

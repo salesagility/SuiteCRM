@@ -540,6 +540,8 @@ class Contact extends Person implements EmailInterface
     /**
      * builds a generic search based on the query string using or
      * do not include any $this-> because this is called on without having the class instantiated
+     * @param $the_query_string
+     * @return string
      */
     public function build_generic_where_clause($the_query_string)
     {
@@ -637,7 +639,7 @@ class Contact extends Person implements EmailInterface
      * - string 'all': add this contact for all users
      * - comma deliminated lists of teams and/or users
      *
-     * @param string $list_of_user
+     * @param $list_of_users
      */
     public function process_sync_to_outlook($list_of_users)
     {

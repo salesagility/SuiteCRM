@@ -35,13 +35,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
 interface iXHProfRuns
 {
 
-  /**
-   * Returns XHProf data given a run id ($run) of a given
-   * type ($type).
-   *
-   * Also, a brief description of the run is returned via the
-   * $run_desc out parameter.
-   */
+    /**
+     * Returns XHProf data given a run id ($run) of a given
+     * type ($type).
+     *
+     * Also, a brief description of the run is returned via the
+     * $run_desc out parameter.
+     * @param $run_id
+     * @param $type
+     * @param $run_desc
+     */
     public function get_run($run_id, $type, &$run_desc);
 
     /**
@@ -54,7 +57,9 @@ interface iXHProfRuns
      * unique run id for this saved XHProf run.
      *
      * Returns the run id for the saved XHProf run.
-     *
+     * @param $xhprof_data
+     * @param $type
+     * @param null $run_id
      */
     public function save_run($xhprof_data, $type, $run_id = null);
 }

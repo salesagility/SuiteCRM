@@ -115,7 +115,8 @@ class SugarTinyMCE
 
     /**
      * Returns the Javascript necessary to initialize a TinyMCE instance for a given <textarea> or <div>
-     * @param string target Comma delimited list of DOM ID's, <textarea id='someTarget'>
+     * @param string $targets
+     * @param string $type
      * @return string
      */
     public function getInstance($targets = "", $type = 'default')
@@ -215,7 +216,7 @@ eoq;
      * and returns a cleaned copy of it.
      *
      * @param $html
-     * @return $html with all the tinyMCE specific html removed
+     * @return mixed $html with all the tinyMCE specific html removed
      */
     public function cleanEncodedMCEHtml($html)
     {

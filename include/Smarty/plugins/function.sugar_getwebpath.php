@@ -39,8 +39,8 @@ r32836 - 2008-03-14 16:48:48 -0700 (Fri, 14 Mar 2008) - majed - adds smarty func
  * Purpose:  Handles rendering the global file includes from the metadata files defined
  *           in templateMeta=>includes.
  *
- * @param array
- * @param Smarty
+ * @param $params
+ * @param $smarty
  * @return
  * @author Collin Lee {clee@sugarcrm.com}
  */

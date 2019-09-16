@@ -108,6 +108,7 @@ class cssmin
         }
         return $r;
     }
+
     /**
      * Return a array structure created by {@link cssmin::toArray()} to a string.
      *
@@ -115,8 +116,8 @@ class cssmin
      * $css_string = cssmin::toString($css_structure);
      * </code>
      *
-     * @param	array		$css
-     * @return	array
+     * @param array $array
+     * @return string
      */
     public static function toString(array $array)
     {

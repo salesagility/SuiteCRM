@@ -83,6 +83,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @param boolean $embedded Set to false to not embed the font, true otherwise (default).
  * @param string $enc Name of the encoding table to use. Omit this parameter for TrueType Unicode, OpenType Unicode and symbolic fonts like Symbol or ZapfDingBats.
  * @param array $patch Optional modification of the encoding
+ * @param string $cidInfo
  * @return string
  */
 function MakeFont($fontfile, $fmfile, $embedded=true, $enc='cp1252', $patch=array()/* BEGIN SUGARCRM SPECIFIC */, $cidInfo=""/* END SUGARCRM SPECIFIC */)
@@ -353,6 +354,9 @@ function ReadMap($enc)
 
 /**
  * Read UFM file
+ * @param $file
+ * @param $cidtogidmap
+ * @return array
  */
 function ReadUFM($file, &$cidtogidmap)
 {
@@ -429,6 +433,9 @@ function ReadUFM($file, &$cidtogidmap)
 
 /**
  * Read AFM file
+ * @param $file
+ * @param $map
+ * @return array
  */
 function ReadAFM($file, &$map)
 {

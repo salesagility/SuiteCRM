@@ -522,16 +522,20 @@ class EmailMan extends SugarBean
      * this function will create an email if one does not exist. also the function will load these relationships leads, accounts, contacts
      * users and targets
      *
-     * @param varchar marketing_id message id
+     * @param $marketing_id
      * @param string $subject email subject
      * @param string $body_text Email Body Text
      * @param string $body_html Email Body HTML
-     * @param string $campaign_name Campaign Name
-     * @param string from_address Email address of the sender, usually email address of the configured inbox.
-     * @param string sender_id If of the user sending the campaign.
-     * @param array  macro_nv array of name value pair, one row for each replacable macro in email template text.
-     * @param string from_address_name The from address eg markeing <marketing@sugar.net>
-     * @return
+     * @param $campagin_name
+     * @param $from_address
+     * @param $sender_id
+     * @param $notes
+     * @param $macro_nv
+     * @param $newmessage
+     * @param $from_address_name
+     * @return string
+     * @throws EmailValidatorException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function create_ref_email(
         $marketing_id,

@@ -110,8 +110,8 @@ class SugarWebServiceUtilv4_1 extends SugarWebServiceUtilv4
      * @param Array $link_module_fields Array of fields of relationship entries to return
      * @param string $optional_where String containing an optional WHERE select clause
      * @param string $order_by String containing field to order results by
-     * @param Number $offset -- where to start in the return (defaults to 0)
-     * @param Number $limit -- number of results to return (defaults to all)
+     * @param int $offset -- where to start in the return (defaults to 0)
+     * @param string $limit -- number of results to return (defaults to all)
      * @return array|bool Returns an Array of relationship results; false if relationship could not be retrieved
      */
     public function getRelationshipResults($bean, $link_field_name, $link_module_fields, $optional_where = '', $order_by = '', $offset = 0, $limit = '')
