@@ -258,4 +258,58 @@ class array_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = SugarArray::staticGet($haystack, 'key1.key3');
         $this->assertSame($expected, $actual);
     }
+
+    /**
+     * This function tests fixIndexArrayFormat() function.
+     * The idea is that both arrays represents the same index definition, one defined in vardefs.php
+     * and the other obtained with get_indices() function.
+     * After applying fixIndexArrayFormat() to both arrays we compare it as compareVarDefs() function does:
+     *
+     */
+    public function testfixIndexArrayFormat()
+    {
+        $index1 = [
+            'user_name',
+            'is_group',
+            'status',
+            'last_name (30)',
+            'first_name (30)',
+            'id'
+        ];
+
+        $index2 = [
+            'user_name',
+            'is_group',
+            'status',
+            'last_name    (  30 ) ',
+            'first_name  ( 30  ) ',
+            'id'
+        ];
+
+        $index1 = fixIndexArrayFormat($index1);
+        $index2 = fixIndexArrayFormat($index2);
+        $this->assertTrue(array_map('strtolower', $index1) == array_map('strtolower', $index2));
+
+        $index3 = [
+            'user_name',
+            'is_group',
+            'status',
+            'last_name (30)',
+            'first_name (30)',
+            'id'
+        ];
+
+        $index4 = [
+            'user_name',
+            'is_group',
+            'status',
+            'last_name    (  30 )',
+            'first_name  ( 50  )',
+            'id'
+        ];
+
+        $index3 = fixIndexArrayFormat($index3);
+        $index4 = fixIndexArrayFormat($index4);
+        $this->assertFalse(array_map('strtolower', $index3) == array_map('strtolower', $index4));
+    }
 }

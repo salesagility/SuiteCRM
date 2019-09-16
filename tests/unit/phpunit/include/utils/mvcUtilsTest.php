@@ -5,12 +5,6 @@ class mvc_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testloadParentView()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         //execute the method and test if it doesn't throws an exception
         try {
             loadParentView('classic');
@@ -18,17 +12,12 @@ class mvc_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testgetPrintLink()
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
-        
-        
-        
 
         //test without setting REQUEST param
         $expected = "javascript:void window.open('index.php?','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')";
@@ -41,8 +30,7 @@ class mvc_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = getPrintLink();
         $this->assertSame($expected, $actual);
         
-        
-        
+        // clean up
         $state->popGlobals();
     }
 
