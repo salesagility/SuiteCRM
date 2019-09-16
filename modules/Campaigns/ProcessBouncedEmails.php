@@ -192,6 +192,7 @@ function markEmailAddressInvalid($email_address)
  *
  * @param string Target Key
  * @return array Campaign Log Row
+ * @throws Exception
  */
 function getExistingCampaignLogEntry($identifier)
 {

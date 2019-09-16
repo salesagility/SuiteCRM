@@ -92,6 +92,7 @@ class UsersLastImport extends SugarBean
      * Extends SugarBean::listviewACLHelper
      *
      * @return array
+     * @throws Exception
      */
     public function listviewACLHelper()
     {

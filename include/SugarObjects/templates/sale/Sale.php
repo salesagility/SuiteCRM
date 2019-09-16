@@ -87,6 +87,7 @@ class Sale extends Basic
      * @param bool $ifListForExport
      *
      * @return String
+     * @throws Exception
      */
     public function create_new_list_query(
         $order_by,

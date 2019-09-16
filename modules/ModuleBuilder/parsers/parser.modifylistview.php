@@ -83,6 +83,7 @@ class ParserModifyListView extends ModuleBuilderParser
     /**
      * @param string $module_name
      * @param string $submodule
+     * @throws Exception
      */
     public function init($module_name, $submodule = '')
     {

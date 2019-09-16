@@ -1974,6 +1974,7 @@ HTML;
      * @throws HTMLPurifier_Exception
      * @throws ImapHandlerException
      * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      */
     public function setReadFlag($ieId, $mbox, $uid)
     {
@@ -1992,6 +1993,7 @@ HTML;
      * @throws HTMLPurifier_Exception
      * @throws ImapHandlerException
      * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      */
     public function markEmails($type, $ieId, $folder, $uids)
     {
@@ -2295,7 +2297,9 @@ HTML;
      * returns the metadata defining a single email message for display.  Uses cache file if it exists
      * @param $ie
      * @return array
+     * @throws EmailException
      * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
      * @throws ImapHandlerException
      * @throws \SuiteCRM\ErrorMessageException
      */
@@ -3016,6 +3020,7 @@ eoq;
     /**
      * returns an array of EmailTemplates that the user has access to for the compose email screen
      * @return array
+     * @throws Exception
      */
     public function getEmailTemplatesArray()
     {

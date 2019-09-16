@@ -240,11 +240,12 @@ class TemplateRelatedTextField extends TemplateText
         $fieldId->delete($df);
         parent::delete($df);
     }
-        
+
     /**
      * Delete label of id field
      * @param TemplateField $fieldId
      * @param $df
+     * @throws Exception
      */
     protected function deleteIdLabel(TemplateField $fieldId, $df)
     {

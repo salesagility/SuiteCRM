@@ -419,6 +419,7 @@ class TemplateHandler
      * @param string $view
      * @param string $module
      * @return string
+     * @throws Exception
      * @internal param array $def The vardefs.php definitions
      */
     public function createQuickSearchCode($defs, $defs2, $view = '', $module = '')

@@ -77,6 +77,7 @@ class SugarOAuthServer
      * Find consumer by key
      * @param $provider
      * @return int
+     * @throws Exception
      */
     public function lookupConsumer($provider)
     {
@@ -115,6 +116,7 @@ class SugarOAuthServer
      * Vefiry incoming token
      * @param OAuthProvider $provider
      * @return int
+     * @throws Exception
      */
     public function tokenHandler($provider)
     {

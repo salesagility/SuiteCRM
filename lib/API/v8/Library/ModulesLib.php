@@ -367,6 +367,7 @@ class ModulesLib
     /**
      * @param Request $request
      * @return \User
+     * @throws \Exception
      */
     public function getCurrentUser(Request $request)
     {

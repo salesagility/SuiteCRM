@@ -507,6 +507,7 @@ class EmailTemplate extends SugarBean
      * @param string $type
      * @param string $value
      * @return string
+     * @throws Exception
      */
     public function _convertToType($type, $value)
     {
@@ -523,6 +524,7 @@ class EmailTemplate extends SugarBean
      * @param array $repl_arr
      * @param object $user
      * @return array
+     * @throws Exception
      */
     public function _parseUserValues($repl_arr, &$user)
     {

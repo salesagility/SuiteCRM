@@ -169,6 +169,7 @@ class AOW_WorkFlow extends Basic
     /**
      * Select and run all active flows
      * @return bool
+     * @throws Exception
      */
     public function run_flows()
     {

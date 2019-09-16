@@ -266,6 +266,7 @@ class Currency extends SugarBean
  * @param The $amount amount to be formatted
  * @param array $params parameters(see @format_number)
  * @return String representation of amount with formatting applied
+ * @throws Exception
  */
 function currency_format_number($amount, $params = array())
 {

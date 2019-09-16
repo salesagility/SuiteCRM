@@ -91,6 +91,7 @@ class SugarWidgetFieldcurrency_id extends SugarWidgetFieldEnum
      *
      * @param array $layout_def
      * @return string for order by
+     * @throws Exception
      */
     public function queryOrderBy($layout_def)
     {

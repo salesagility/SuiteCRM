@@ -496,6 +496,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
      *                                             mobile  - Return all visible modules for the mobile view
      * @return Array    'modules' -- Array - An array of module names
      * @exception 'SoapFault' -- The SOAP error, if any
+     * @throws Exception
      */
     public function get_available_modules($session, $filter = 'all')
     {
@@ -533,6 +534,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
      * @param array $modules Array of modules to return
      * @param bool $MD5 Should the results be md5d
      * @return array|void
+     * @throws Exception
      */
     public function get_language_definition($session, $modules, $MD5 = false)
     {
@@ -652,6 +654,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
      *               'entry_list' -- Array - The records that were retrieved
      *                 'relationship_list' -- Array - The records link field data. The example is if asked about accounts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
      * @exception 'SoapFault' -- The SOAP error, if any
+     * @throws Exception
      */
     public function get_entry_list(
         $session = null,

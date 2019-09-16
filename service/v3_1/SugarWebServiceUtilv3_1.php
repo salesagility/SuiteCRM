@@ -86,6 +86,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      * @param array $list List of module candidates (only keys are used)
      * @param array $availModules List of module availability from Session
      * @return array
+     * @throws Exception
      */
     public function getModulesFromList($list, $availModules)
     {
@@ -108,6 +109,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      *
      * @param array $availModules An array of all the modules the user already has access to.
      * @return array Modules enabled within the application.
+     * @throws Exception
      */
     public function get_visible_modules($availModules)
     {
@@ -122,6 +124,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      *
      * @param string $moduleName
      * @return array An array of fields to be searched against.
+     * @throws Exception
      */
     public function generateUnifiedSearchFields($moduleName)
     {
@@ -193,6 +196,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      *
      * @param string $module
      * @return array results containing access and boolean indicating access
+     * @throws Exception
      */
     public function checkModuleRoleAccess($module)
     {
@@ -403,7 +407,8 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      * @param int $show_deleted
      * @param bool $favorites
      * @param bool $singleSelect
-     * @return
+     * @return mixed
+     * @throws Exception
      */
     public function get_data_list($seed, $order_by = "", $where = "", $row_offset = 0, $limit=-1, $max=-1, $show_deleted = 0, $favorites = false, $singleSelect=false)
     {

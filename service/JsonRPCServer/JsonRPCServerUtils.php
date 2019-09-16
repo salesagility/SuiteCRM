@@ -107,6 +107,7 @@ class JsonRPCServerUtils
     /**
      * Authenticates User
      * @return null|User
+     * @throws Exception
      */
     public function authenticate()
     {

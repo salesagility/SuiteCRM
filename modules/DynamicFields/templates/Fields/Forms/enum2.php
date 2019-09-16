@@ -39,6 +39,7 @@
  * @param $ss
  * @param $vardef
  * @return mixed
+ * @throws Exception
  */
 
 /*

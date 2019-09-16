@@ -48,6 +48,7 @@ class SugarWebServiceUtilv4_1 extends SugarWebServiceUtilv4
      * @param String $session_id -- The session ID that was returned by a call to login.
      * @return true -- If the session is valid and loaded.
      * @return false -- if the session is not valid.
+     * @throws Exception
      */
     public function validate_authenticated($session_id)
     {

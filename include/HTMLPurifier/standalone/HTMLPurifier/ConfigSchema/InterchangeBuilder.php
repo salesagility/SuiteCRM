@@ -21,6 +21,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
      * @param string $dir
      * @return HTMLPurifier_ConfigSchema_Interchange
      * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws HTMLPurifier_Exception
      */
     public static function buildFromDirectory($dir = null)
     {

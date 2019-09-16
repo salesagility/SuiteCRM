@@ -172,6 +172,7 @@ class Reminder extends Basic
      * @param string $eventModuleId Related event GUID
      * @param bool $isDuplicate
      * @return array contains the remainders
+     * @throws Exception
      */
     public static function loadRemindersData($eventModule, $eventModuleId, $isDuplicate = false)
     {

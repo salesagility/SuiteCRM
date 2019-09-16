@@ -65,6 +65,7 @@ r12955 - 2006-04-26 18:32:25 -0700 (Wed, 26 Apr 2006) - wayne - custom code in l
  * @param array
  * @param Smarty
  * @return mixed|string|void
+ * @throws Exception
  * @author Wayne Pan {wayne at sugarcrm.com
  */
 function smarty_function_sugar_evalcolumn($params, &$smarty)

@@ -78,6 +78,7 @@ class ImportView extends SugarView
     /**
      * @param null $module
      * @return array
+     * @throws Exception
      * @see SugarView::getMenu()
      */
     public function getMenu($module = null)

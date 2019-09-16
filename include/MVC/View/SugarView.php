@@ -1350,6 +1350,7 @@ EOHTML;
      * @param string $module optional, can specify module to retrieve menu for if not the current one
      *
      * @return array module menu
+     * @throws Exception
      */
     public function getMenu(
         $module = null

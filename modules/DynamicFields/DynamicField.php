@@ -114,6 +114,7 @@ class DynamicField
      * LOADS THE BEAN IF THE BEAN IS NOT BEING PASSED ALONG IN SETUP IT SHOULD BE SET PRIOR TO SETUP.
      *
      * @param SugarBean $bean
+     * @throws Exception
      */
     public function setup($bean = null)
     {
@@ -154,6 +155,7 @@ class DynamicField
      * @param bool $saveCache Boolean value indicating whether or not to pass saveCache value to saveToVardef, defaults to true
      *
      * @return bool
+     * @throws Exception
      */
     public function buildCache($module = false, $saveCache = true)
     {
@@ -846,6 +848,7 @@ class DynamicField
      *
      * @param bool $execute
      * @return string
+     * @throws Exception
      */
     public function createCustomTable($execute = true)
     {

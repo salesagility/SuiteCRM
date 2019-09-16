@@ -792,8 +792,9 @@ class SugarWebServiceImpl
      * @return Array 'note_attachment' -- Array String 'id' -- The ID of the Note containing the attachment
      *                                          String 'filename' -- The file name of the attachment
      *                                          Binary 'file' -- The binary contents of the file.
-     * 											String 'related_module_id' -- module id to which this note is related
-     * 											String 'related_module_name' - module name to which this note is related
+     *                                            String 'related_module_id' -- module id to which this note is related
+     *                                            String 'related_module_name' - module name to which this note is related
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function get_note_attachment($session, $id)

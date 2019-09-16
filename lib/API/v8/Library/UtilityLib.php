@@ -48,6 +48,7 @@ class UtilityLib
      * @param $postData
      *
      * @return array
+     * @throws \Exception
      */
     public function login($postData)
     {

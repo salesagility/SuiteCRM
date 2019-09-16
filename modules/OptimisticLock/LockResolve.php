@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @param $field_defs
  * @param $module_dir
  * @param $display_name
+ * @throws Exception
  */
 
 function display_conflict_between_objects($object_1, $object_2, $field_defs, $module_dir, $display_name)

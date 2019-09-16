@@ -118,6 +118,7 @@ class JsonRPCServer
 
     /**
      * @return array json response
+     * @throws Exception
      */
     private function processRequest()
     {

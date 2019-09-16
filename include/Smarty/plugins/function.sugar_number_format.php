@@ -30,9 +30,10 @@ r53409 - 2010-01-03 19:31:15 -0800 (Sun, 03 Jan 2010) - roger - merge -r50376:HE
  * Name:     sugar_currency_format<br>
  * Purpose:  formats a number
  *
- * @param array
- * @param Smarty
+ * @param $params
+ * @param $smarty
  * @return string
+ * @throws Exception
  * @author Wayne Pan {wayne at sugarcrm.com}
  */
 function smarty_function_sugar_number_format($params, &$smarty)

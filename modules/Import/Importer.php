@@ -745,6 +745,7 @@ class Importer
      * If a bean save is not done for some reason, this method will undo any of the beans that were created
      *
      * @param array $ids ids of user_last_import records created
+     * @throws Exception
      */
     protected function _undoCreatedBeans(array $ids)
     {

@@ -494,6 +494,7 @@ class CalendarDisplay
     /**
      * Get link to next date range
      * @return string
+     * @throws Exception
      */
     protected function get_next_calendar()
     {
@@ -512,6 +513,7 @@ class CalendarDisplay
     /**
      * Get link to previous date range
      * @return string
+     * @throws Exception
      */
     protected function get_previous_calendar()
     {

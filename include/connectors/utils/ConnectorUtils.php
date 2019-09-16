@@ -96,6 +96,7 @@ class ConnectorUtils
      * @param string $id
      * @param bool $refresh
      * @return bool
+     * @throws Exception
      */
     public static function eapmEnabled($id, $refresh = false)
     {
@@ -419,6 +420,7 @@ class ConnectorUtils
      *
      * @param String $module the module to get the connectors for
      * @return array
+     * @throws Exception
      */
     public static function getModuleConnectors(
         $module
@@ -439,6 +441,7 @@ class ConnectorUtils
      * Given a module name, checks to see if the module is enabled to be serviced by the connector module
      * @param String $module String name of the module
      * @return boolean $enabled boolean value indicating whether or not the module is enabled to be serviced by the connector module
+     * @throws Exception
      */
     public static function isModuleEnabled(
         $module
@@ -453,6 +456,7 @@ class ConnectorUtils
      * Given a source id, checks to see if the source is enabled for at least one module
      * @param String $source String name of the source
      * @return boolean $enabled boolean value indicating whether or not the source is displayed in at least one module
+     * @throws Exception
      */
     public static function isSourceEnabled(
         $source
@@ -727,6 +731,7 @@ class ConnectorUtils
      * @param mixed $displayParams Array value of display parameters passed from the SugarField code
      * @param mixed $smarty The Smarty object from the calling smarty code
      * @return String $code The HTML code for the hover link
+     * @throws Exception
      */
     public static function getConnectorButtonScript(
         $displayParams,

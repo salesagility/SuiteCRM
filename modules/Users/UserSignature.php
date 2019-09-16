@@ -106,6 +106,7 @@ class UserSignature extends SugarBean
      * @param $where
      * @param int $show_deleted
      * @return String
+     * @throws Exception
      */
     public function create_export_query($order_by, $where, $show_deleted = 0)
     {

@@ -101,6 +101,7 @@ class SugarAuthenticate
      * @param bool $fallback
      * @param array $PARAMS
      * @return boolean
+     * @throws Exception
      */
     public function loginAuthenticate($username, $password, $fallback=false, $PARAMS = array())
     {

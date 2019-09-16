@@ -89,6 +89,7 @@ class contextMenu
      *      selected - If set to true the MenuItem will be highlighted.
      *      submenu - Appends / removes a menu (and it's associated DOM elements) to / from the MenuItem.
      *      checked - If set to true the MenuItem will be rendered with a checkmark.
+     * @throws Exception
      */
     public function addMenuItem($text, $action, $module = null, $aclAction = null, $params = null)
     {
@@ -108,6 +109,7 @@ class contextMenu
     /**
      * Loads up menu items from files located in include/contextMenus/menuDefs
      * @param string $name name of the object
+     * @throws Exception
      */
     public function loadFromFile($name)
     {
@@ -121,6 +123,7 @@ class contextMenu
      * Loads up menu items from def
      * @param string $name name of the object type
      * @param array $defs menu item definitions
+     * @throws Exception
      */
     public function loadFromDef($name, $defs)
     {

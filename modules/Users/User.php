@@ -1068,6 +1068,7 @@ class User extends Person implements EmailInterface
      * @param bool $encode encode the result
      * @param bool $deleted
      * @return User|SugarBean|null null if no User found
+     * @throws Exception
      */
     public function retrieve($id = -1, $encode = true, $deleted = true)
     {
@@ -1769,6 +1770,7 @@ EOQ;
      *
      * @param string id GUID of target user if needed
      * @return array Assoc array for an email and name
+     * @throws Exception
      */
     public function getEmailInfo($id = '')
     {
@@ -2066,6 +2068,7 @@ EOQ;
      *
      * @param $module
      * @return bool
+     * @throws Exception
      */
     public function isDeveloperForModule($module)
     {
@@ -2108,6 +2111,7 @@ EOQ;
      *
      * @param $module
      * @return bool
+     * @throws Exception
      */
     public function isAdminForModule($module)
     {

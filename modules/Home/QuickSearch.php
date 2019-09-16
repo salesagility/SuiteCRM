@@ -113,6 +113,7 @@ class quicksearchQuery
      *
      * @param array $args arguments used to construct query, see query() for example
      * @return string list of users returned
+     * @throws Exception
      */
     public function get_user_array($args)
     {

@@ -640,6 +640,7 @@ class Contact extends Person implements EmailInterface
      * - comma deliminated lists of teams and/or users
      *
      * @param $list_of_users
+     * @throws Exception
      */
     public function process_sync_to_outlook($list_of_users)
     {

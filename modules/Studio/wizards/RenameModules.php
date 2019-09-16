@@ -383,6 +383,7 @@ class RenameModules
      *
      *
      * @return RenameModules
+     * @throws Exception
      */
     private function renameAllSubpanels()
     {
@@ -402,9 +403,10 @@ class RenameModules
     /**
      * Rename subpanels for a particular module.
      *
-     * @param  string $moduleName The name of the module to be renamed
-     * @param  string $beanName  The name of the SugarBean to be renamed.
+     * @param string $moduleName The name of the module to be renamed
+     * @param string $beanName The name of the SugarBean to be renamed.
      * @return void
+     * @throws Exception
      */
     private function renameModuleSubpanel($moduleName, $beanName)
     {
@@ -485,6 +487,7 @@ class RenameModules
      * Rename all related linked within the application
      *
      * @return RenameModules
+     * @throws Exception
      */
     private function renameAllRelatedLinks()
     {
@@ -504,9 +507,10 @@ class RenameModules
     /**
      * Rename the related links within a module.
      *
-     * @param  string $moduleName The module to be renamed
-     * @param  string $moduleClass The class name of the module to be renamed
+     * @param string $moduleName The module to be renamed
+     * @param string $moduleClass The class name of the module to be renamed
      * @return void
+     * @throws Exception
      */
     private function renameModuleRelatedLinks($moduleName, $moduleClass)
     {
@@ -644,6 +648,7 @@ class RenameModules
      * Rename all module strings within the application.
      *
      * @return RenameModules
+     * @throws Exception
      */
     private function changeAllModuleModStrings()
     {
@@ -655,12 +660,13 @@ class RenameModules
     }
 
     /**
-      * Rename all module strings within the leads module.
-      *
-      * @param  string $targetModule The name of the module that owns the labels to be changed.
-      * @param  array $labelKeysToReplace The labels to be changed.
-      * @return RenameModules
-      */
+     * Rename all module strings within the leads module.
+     *
+     * @param string $targetModule The name of the module that owns the labels to be changed.
+     * @param array $labelKeysToReplace The labels to be changed.
+     * @return RenameModules
+     * @throws Exception
+     */
     private function renameCertainModuleModStrings($targetModule, $labelKeysToReplace)
     {
         $GLOBALS['log']->debug("Beginning to rename labels for $targetModule module");
@@ -674,11 +680,12 @@ class RenameModules
     /**
      * For a particular module, rename any relevant module strings that need to be replaced.
      *
-     * @param  string $moduleName The name of the module to be renamed.
+     * @param string $moduleName The name of the module to be renamed.
      * @param  $replacementLabels
-     * @param  string $targetModule The name of the module that owns the labels to be changed.
-     * @param  array $labelKeysToReplace The labels to be changed.
+     * @param string $targetModule The name of the module that owns the labels to be changed.
+     * @param array $labelKeysToReplace The labels to be changed.
      * @return void
+     * @throws Exception
      */
     private function changeCertainModuleModStrings($moduleName, $replacementLabels, $targetModule, $labelKeysToReplace)
     {
@@ -713,9 +720,10 @@ class RenameModules
     /**
      * For a particular module, rename any relevant module strings that need to be replaced.
      *
-     * @param  string $moduleName The name of the module to be renamed.
+     * @param string $moduleName The name of the module to be renamed.
      * @param  $replacementLabels
      * @return void
+     * @throws Exception
      */
     private function changeModuleModStrings($moduleName, $replacementLabels)
     {

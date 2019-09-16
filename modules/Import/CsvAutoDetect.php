@@ -258,6 +258,7 @@ class CsvAutoDetect
      * @param $module
      * @param null $encoding
      * @return bool true if header is found, false if error
+     * @throws Exception
      */
     public function hasHeader(&$heading, $module, $encoding = null)
     {

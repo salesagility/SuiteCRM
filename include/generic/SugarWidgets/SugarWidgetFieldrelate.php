@@ -138,6 +138,7 @@ class SugarWidgetFieldRelate extends SugarWidgetReportField
      * @param array $layout_def definition of a field
      * @param bool $rename_columns unused
      * @return string SQL where part
+     * @throws Exception
      */
     public function queryFilterone_of($layout_def, $rename_columns = true)
     {

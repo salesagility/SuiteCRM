@@ -166,6 +166,7 @@ class SpotsDashlet extends Dashlet
      *
      *
      * @return json_encoded string of the list of available spots names
+     * @throws Exception
      */
     public function getSpotsList()
     {

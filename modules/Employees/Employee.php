@@ -276,6 +276,7 @@ class Employee extends Person
      * @param boolean $singleSelect Optional, default false.
      * @param bool $ifListForExport
      * @return String select query string, optionally an array value will be returned if $return_array= true.
+     * @throws Exception
      */
     public function create_new_list_query($order_by, $where, $filter=array(), $params=array(), $show_deleted = 0, $join_type='', $return_array = false, $parentbean=null, $singleSelect = false, $ifListForExport = false)
     {

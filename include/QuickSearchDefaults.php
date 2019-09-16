@@ -218,6 +218,7 @@ class QuickSearchDefaults
      * @param type $nameField the name of the field to populate
      * @param type $idField the id of the field to populate
      * @return array
+     * @throws Exception
      */
     public function loadQSObject($module, $object, $relationName, $nameField, $idField)
     {

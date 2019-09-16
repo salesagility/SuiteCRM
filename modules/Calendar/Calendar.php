@@ -429,6 +429,7 @@ class Calendar
      * Get date string of next or previous calendar grid
      * @param string $direction next or previous
      * @return string
+     * @throws Exception
      */
     public function get_neighbor_date_str($direction)
     {

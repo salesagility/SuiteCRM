@@ -548,6 +548,7 @@ class CalendarGrid
     /**
      * Get html of week shared grid
      * @return string
+     * @throws Exception
      */
     protected function display_shared()
     {

@@ -106,6 +106,7 @@ class SugarBeanMock extends SugarBean
      * @param SugarBean $parentbean
      * @param string $order_by
      * @return array
+     * @throws Exception
      */
     public static function publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentbean, $order_by)
     {

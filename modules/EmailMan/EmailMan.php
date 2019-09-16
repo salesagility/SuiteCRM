@@ -286,6 +286,7 @@ class EmailMan extends SugarBean
      * @param null $parentbean
      * @param bool $singleSelect
      * @return string
+     * @throws Exception
      */
     public function create_queue_items_query(
         $order_by,

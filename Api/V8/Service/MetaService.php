@@ -95,6 +95,7 @@ class MetaService
      *
      * @param Request $request
      * @return DocumentResponse
+     * @throws \Exception
      */
     public function getModuleList(Request $request)
     {

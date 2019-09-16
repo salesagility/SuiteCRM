@@ -280,6 +280,7 @@ class HTMLPurifier
      *                   generated version with.
      *
      * @return HTMLPurifier
+     * @throws HTMLPurifier_Exception
      */
     public static function instance($prototype = null)
     {
@@ -305,6 +306,7 @@ class HTMLPurifier
      *
      * @return HTMLPurifier
      * @note Backwards compatibility, see instance()
+     * @throws HTMLPurifier_Exception
      */
     public static function getInstance($prototype = null)
     {

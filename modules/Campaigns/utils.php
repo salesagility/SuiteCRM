@@ -412,6 +412,7 @@ function get_campaign_urls($campaign_id)
  * @param $focus
  * @param null $additional_fields
  * @return array
+ * @throws Exception
  */
 function get_subscription_lists_query($focus, $additional_fields = null)
 {
@@ -528,6 +529,7 @@ function get_subscription_lists($focus, $descriptions = false)
  * same function as get_subscription_lists, but with the data separated in an associated array
  * @param $focus
  * @return mixed
+ * @throws Exception
  */
 function get_subscription_lists_keyed($focus)
 {

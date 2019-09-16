@@ -86,9 +86,10 @@ class SpotsController extends SugarController
      * This is a duplicate of the build_report_access_query in AOR_Report (here for autonomy).
      *
      * @param SugarBean $module the $module to return the access query for
-     * @param string    $alias  the alias for the table
+     * @param string $alias the alias for the table
      *
      * @return string $where the where clause to represent access
+     * @throws Exception
      */
     public function buildSpotsAccessQuery(SugarBean $module, $alias)
     {

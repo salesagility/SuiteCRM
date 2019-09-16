@@ -3218,6 +3218,7 @@ class Email extends Basic
      * @throws EmailException
      * @throws EmailValidatorException
      * @throws HTMLPurifier_Exception
+     * @throws ImapHandlerException
      * @throws \SuiteCRM\ErrorMessageException
      * @throws phpmailerException
      */
@@ -3363,6 +3364,7 @@ class Email extends Basic
      * @param bool $singleSelect
      * @param bool $ifListForExport
      * @return string
+     * @throws Exception
      */
     public function create_new_list_query(
         $order_by,
@@ -3430,6 +3432,7 @@ class Email extends Basic
     } // fn
 
     /**
+     * @throws Exception
      * @global $timedate
      * @global $mod_strings
      * fill_in_additional_list_fields
@@ -3592,12 +3595,13 @@ class Email extends Basic
     }
 
     /**
+     * @return array
+     * @throws Exception
      * @global $app_list_strings
      * @global $theme
      * @global $current_user
      * @global $timedate
      * @global $mod_strings
-     * @return array
      */
     public function get_list_view_data()
     {
@@ -3716,11 +3720,12 @@ class Email extends Basic
     }
 
     /**
+     * @return string
+     * @throws Exception
      * @global $mod_strings
      * @global $app_strings
      * @global $currentModule
      * @global $current_language
-     * @return string
      */
     public function quickCreateForm()
     {
@@ -3742,15 +3747,16 @@ class Email extends Basic
     }
 
     /**
+     * @param string $sort
+     * @param string $direction
+     * @return array
+     * @throws Exception
      * @global timedate
      * @global $current_user
      * @global $beanList
      * @global $sugar_config
      * @gloabl $app_strings
      *  Searches all imported emails and returns the result set as an array.
-     * @param string $sort
-     * @param string $direction
-     * @return array
      */
     public function searchImportedEmails($sort = '', $direction = '')
     {

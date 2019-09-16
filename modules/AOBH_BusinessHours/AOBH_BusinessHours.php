@@ -84,6 +84,7 @@ class AOBH_BusinessHours extends Basic
 
     /**
      * @return int
+     * @throws Exception
      */
     public function areBusinessHoursSet()
     {
@@ -98,6 +99,7 @@ class AOBH_BusinessHours extends Basic
      * @param $day
      *
      * @return AOBH_BusinessHours[]
+     * @throws Exception
      */
     public function getBusinessHoursForDay($day)
     {

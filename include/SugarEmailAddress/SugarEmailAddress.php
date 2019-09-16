@@ -2371,6 +2371,7 @@ class SugarEmailAddress extends SugarBean
     /**
      *
      * @return string
+     * @throws Exception
      */
     public function getConfirmOptInTokenGenerateIfNotExists()
     {

@@ -130,6 +130,7 @@ class SugarAuthenticateUser
      *
      * @param STRING $user_id
      * @return boolean
+     * @throws Exception
      */
     public function loadUserOnSession($user_id = '')
     {

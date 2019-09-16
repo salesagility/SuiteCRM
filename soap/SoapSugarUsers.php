@@ -63,6 +63,7 @@ $server->register(
  *
  * @param String $session -- Session ID returned by a previous call to login.
  * @return int 1 or 0 depending on if the user is an admin
+ * @throws Exception
  */
 function is_user_admin($session)
 {
@@ -91,6 +92,7 @@ $server->register(
  * @param String $application -- The name of the application you are logging in from.  (Currently unused).
  * @return Array(session_id, error) -- session_id is the id of the session that was
  *      created.  Error is set if there was any error during creation.
+ * @throws Exception
  */
 function login($user_auth, $application)
 {
@@ -205,6 +207,7 @@ function is_loopback()
  * @param String $session_id -- The session ID that was returned by a call to login.
  * @return true -- If the session is valid and loaded.
  * @return false -- if the session is not valid.
+ * @throws Exception
  */
 function validate_authenticated($session_id)
 {
@@ -289,6 +292,7 @@ $server->register(
  *
  * @param String $session -- Session ID returned by a previous call to login.
  * @return int -- if the session was authenticated
+ * @throws Exception
  */
 function seamless_login($session)
 {
@@ -530,6 +534,7 @@ $server->register(
  * @return Array 'field_list' -- Var def information about the returned fields
  *               'entry_list' -- The records that were retrieved
  *               'error' -- The SOAP error, if any
+ * @throws Exception
  */
 function get_entries($session, $module_name, $ids, $select_fields)
 {
@@ -624,6 +629,7 @@ $server->register(
  * @param Array $name_value_list -- The keys of the array are the SugarBean attributes, the values of the array are the values the attributes should have.
  * @return Array    'id' -- the ID of the bean that was written to (-1 on error)
  *                  'error' -- The SOAP error if any.
+ * @throws Exception
  */
 function set_entry($session, $module_name, $name_value_list)
 {
@@ -695,6 +701,7 @@ $server->register(
  * @param Array $name_value_lists -- Array of Bean specific Arrays where the keys of the array are the SugarBean attributes, the values of the array are the values the attributes should have.
  * @return Array    'ids' -- Array of the IDs of the beans that was written to (-1 on error)
  *                  'error' -- The SOAP error if any.
+ * @throws Exception
  */
 function set_entries($session, $module_name, $name_value_lists)
 {
@@ -816,6 +823,7 @@ $server->register(
  * @param String $module_name -- The name of the module to return records from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
  * @param String $module_id -- The ID of the bean that you want to associate the note with
  * @return array error for success, error for failure
+ * @throws Exception
  */
 function relate_note_to_module($session, $note_id, $module_name, $module_id)
 {
@@ -883,6 +891,7 @@ $server->register(
  *                  'field_list' -- The vardef information on the selected fields.
  *                  'entry_list' -- The records that were retrieved
  *                  'error' -- The SOAP error, if any
+ * @throws Exception
  */
 function get_related_notes($session, $module_name, $module_id, $select_fields)
 {
@@ -948,6 +957,7 @@ $server->register(
  *
  * @param String $session -- Session ID returned by a previous call to login.
  * @return array error on success, Error on failure
+ * @throws Exception
  */
 function logout($session)
 {
@@ -982,6 +992,7 @@ $server->register(
  * @param String $module_name -- The name of the module to return records from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
  * @return Array    'module_fields' -- The vardef information on the selected fields.
  *                  'error' -- The SOAP error, if any
+ * @throws Exception
  */
 function get_module_fields($session, $module_name)
 {
@@ -1039,6 +1050,7 @@ $server->register(
  * @param String $session -- Session ID returned by a previous call to login.
  * @return Array    'modules' -- An array of module names
  *                  'error' -- The SOAP error, if any
+ * @throws Exception
  */
 function get_available_modules($session)
 {
@@ -1120,6 +1132,7 @@ $server->register(
  * @param String $session -- Session ID returned by a previous call to login.
  * @return String -- the User ID of the current session
  *                  -1 on error.
+ * @throws Exception
  */
 function get_user_id($session)
 {
@@ -1145,6 +1158,7 @@ $server->register(
  * @return String -- the Team ID of the current user's default team
  *                  1 for Community Edition
  *                  -1 on error.
+ * @throws Exception
  */
 function get_user_team_id($session)
 {
@@ -1168,6 +1182,7 @@ $server->register(
  * @return String -- the Team Set ID of the current user
  *                  1 for Community Edition
  *                  -1 on error.
+ * @throws Exception
  */
 function get_user_team_set_id($session)
 {
@@ -1282,6 +1297,7 @@ $server->register(
  * @param String $related_module_query -- A portion of the where clause of the SQL statement to find the related items.  The SQL query will already be filtered to only include the beans that are related to the specified bean.
  * @param Number $deleted -- false if deleted records should not be include, true if deleted records should be included.
  * @return array
+ * @throws Exception
  */
 function get_relationships($session, $module_name, $module_id, $related_module, $related_module_query, $deleted)
 {
@@ -1641,6 +1657,7 @@ $server->register(
  * @param String $session -- Session ID returned by a previous call to login.
  * @param unknown_type $document_revision
  * @return array
+ * @throws Exception
  */
 function set_document_revision($session, $document_revision)
 {
@@ -1917,6 +1934,7 @@ $server->register(
  * @param unknown_type $file_name
  * @param unknown_type $fields
  * @return array
+ * @throws Exception
  */
 function get_mailmerge_document($session, $file_name, $fields)
 {
@@ -2043,6 +2061,7 @@ $server->register(
  * @param unknown_type $file_name
  * @param unknown_type $fields
  * @return array
+ * @throws Exception
  */
 function get_mailmerge_document2($session, $file_name, $fields)
 {
@@ -2397,6 +2416,7 @@ $server->register(
  * @param Array $select_fields -- A list of the fields to be included in the results. This optional parameter allows for only needed fields to be retrieved.
  * @return Array    'name_value_lists' --  Array of Bean specific Arrays where the keys of the array are the SugarBean attributes, the values of the array are the values the attributes should have.
  *                  'error' -- The SOAP error if any.
+ * @throws Exception
  */
 function set_entries_details($session, $module_name, $name_value_lists, $select_fields)
 {

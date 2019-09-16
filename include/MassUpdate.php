@@ -445,6 +445,7 @@ eoq;
      * Displays the massupdate form
      * @param bool $hideDeleteIfNoFieldsAvailable
      * @return string
+     * @throws Exception
      */
     public function getMassUpdateForm(
         $hideDeleteIfNoFieldsAvailable = false

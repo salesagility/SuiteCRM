@@ -74,6 +74,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  * @param $params
  * @param $smarty
+ * @throws Exception
  */
 
 

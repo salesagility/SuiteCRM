@@ -647,6 +647,7 @@ class ViewConvertLead extends SugarView
      * Change the parent id and parent type of an activity
      * @param Activity $activity to be modified
      * @param New $bean parent bean of the activity
+     * @throws Exception
      */
     protected function moveActivity($activity, $bean)
     {
@@ -792,6 +793,7 @@ class ViewConvertLead extends SugarView
      * @param SugarBean $bean SugarBean to be populated.
      * @param Contact $contact Contact to relate the bean to.
      * @param $lead
+     * @throws Exception
      */
     protected function populateNewBean(
         $module,

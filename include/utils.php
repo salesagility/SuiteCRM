@@ -5473,6 +5473,7 @@ function generateETagHeader($etag)
  * @param string $reportName
  *
  * @return string translated report name
+ * @throws Exception
  */
 function getReportNameTranslation($reportName)
 {
@@ -5524,6 +5525,7 @@ function clean_sensitive_data($defs, $data)
  * @param $var_def
  * @param $module
  * @return array
+ * @throws Exception
  */
 function getDuplicateRelationListWithTitle($def, $var_def, $module)
 {

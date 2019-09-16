@@ -194,6 +194,7 @@ function rollBackMergedModules($data)
  *
  * @param array $layoutMergeData
  * @return array
+ * @throws Exception
  */
 function formatLayoutMergeDataForDisplay($layoutMergeData)
 {

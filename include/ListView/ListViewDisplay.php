@@ -565,6 +565,7 @@ class ListViewDisplay
      *
      * @param string $loc
      * @return string HTML
+     * @throws Exception
      */
     protected function buildMergeDuplicatesLink($loc = 'top')
     {

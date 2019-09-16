@@ -315,6 +315,7 @@ class VardefManager
      * @param  $module
      * @param  $object
      * @return array|bool  returns a list of all fields in the module of type 'link'.
+     * @throws Exception
      */
     protected static function getLinkFieldsForModule($module, $object)
     {

@@ -125,6 +125,7 @@ class AuthenticationController
      * @param string $password
      * @param array $PARAMS
      * @return boolean true if the user successfully logs in or false otherwise.
+     * @throws Exception
      */
     public function login($username, $password, $PARAMS = array())
     {

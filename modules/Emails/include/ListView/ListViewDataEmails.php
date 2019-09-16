@@ -397,6 +397,7 @@ class ListViewDataEmails extends ListViewData
      * @param Email $seed
      * @param bool $singleSelect
      * @return array|string
+     * @throws Exception
      */
     public function getCrmQueryArray($crmWhere, $filterFields, $params, $seed, $singleSelect)
     {

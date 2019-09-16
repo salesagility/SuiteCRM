@@ -91,6 +91,7 @@ class MyAccountsDashlet extends DashletGeneric
      *
      * @param array $lvsParams
      * @param null $id
+     * @throws Exception
      */
 
     public function process($lvsParams = array(), $id = null)

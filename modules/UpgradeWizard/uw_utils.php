@@ -3306,6 +3306,7 @@ function upgradeUserPreferences()
  * Checks if a locale name format is part of the default list, if not adds it to the config
  * @param string $name_format a local name format string such as 's f l'
  * @return bool true on successful write to config file, false on failure;
+ * @throws Exception
  */
 function upgradeLocaleNameFormat($name_format)
 {
@@ -4262,6 +4263,7 @@ function remove_linkedin_connector()
 /**
  * Enable the InsideView connector for the four default modules.
  * @param string $path
+ * @throws Exception
  */
 function upgradeEnableInsideViewConnector($path='')
 {
@@ -4677,7 +4679,7 @@ function rebuildSprites($fromUpgrade=true)
  *
  * @param String $globString value used for glob search defaults to searching for all SearchFields.php files in modules directory
  * @param String $path value used to point to log file should logging be required.  Defaults to empty.
- *
+ * @throws Exception
  */
 function repairSearchFields($globString='modules/*/metadata/SearchFields.php', $path='')
 {

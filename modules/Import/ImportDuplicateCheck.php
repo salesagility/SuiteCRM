@@ -108,6 +108,7 @@ class ImportDuplicateCheck
      * Returns an array with an element for each index
      *
      * @return array
+     * @throws Exception
      */
     public function getDuplicateCheckIndexes()
     {

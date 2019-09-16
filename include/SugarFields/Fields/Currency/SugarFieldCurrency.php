@@ -109,6 +109,7 @@ class SugarFieldCurrency extends SugarFieldFloat
      * @param $rawField
      * @param $vardef
      * @return number formatted according to currency settings
+     * @throws Exception
      */
     public function formatField($rawField, $vardef)
     {

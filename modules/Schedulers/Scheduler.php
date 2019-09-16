@@ -191,6 +191,7 @@ class Scheduler extends SugarBean
     /**
      * Checks if any jobs qualify to run at this moment
      * @param SugarJobQueue $queue
+     * @throws Exception
      */
     public function checkPendingJobs($queue)
     {
@@ -1014,6 +1015,7 @@ class Scheduler extends SugarBean
      * @param $where
      * @param int $show_deleted
      * @return String
+     * @throws Exception
      */
     public function create_export_query($order_by, $where, $show_deleted = 0)
     {

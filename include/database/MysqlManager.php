@@ -784,9 +784,10 @@ class MysqlManager extends DBManager
     }
 
     /**
-     * @see DBManager::createTableSQL()
      * @param SugarBean $bean
      * @return string
+     * @throws Exception
+     * @see DBManager::createTableSQL()
      */
     public function createTableSQL(SugarBean $bean)
     {
@@ -920,10 +921,11 @@ class MysqlManager extends DBManager
      * itself. The keys generated will be either primary, foreign, unique, index
      * or none at all depending on the setting of the "key" parameter of a field definition
      *
-     * @param  array $indices
-     * @param  bool $alter_table
-     * @param  string $alter_action
+     * @param array $indices
+     * @param bool $alter_table
+     * @param string $alter_action
      * @return string SQL Statement
+     * @throws Exception
      */
     protected function keysSQL($indices, $alter_table = false, $alter_action = '')
     {

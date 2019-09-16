@@ -340,14 +340,15 @@ class PackageManagerDisplay
     /**
      * A Static method used to obtain the div for the license
      *
-     * @param String license_file - the path to the license file
-     * @param String form_action - the form action when accepting the license file
-     * @param String next_step - the value for the next step in the installation process
-     * @param String zipFile - a string representing the path to the zip file
-     * @param String type - module/patch....
-     * @param String manifest - the path to the manifest file
-     * @param String modify_field - the field to update when the radio button is changed
+     * @param $license_file
+     * @param $form_action
+     * @param $next_step
+     * @param $zipFile
+     * @param $type
+     * @param $manifest
+     * @param $modify_field
      * @return String - a form used to display the license
+     * @throws Exception
      */
     public function getLicenseDisplay($license_file, $form_action, $next_step, $zipFile, $type, $manifest, $modify_field)
     {

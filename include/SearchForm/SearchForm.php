@@ -637,6 +637,7 @@ class SearchForm
      * @param string $listViewDefs
      * @param string $lv
      * @return string html of contents
+     * @throws Exception
      */
     public function displayAdvanced($header = true, $return = false, $listViewDefs='', $lv='')
     {
@@ -680,6 +681,7 @@ class SearchForm
      * @param bool $return echo or return the html
      *
      * @return string html of contents
+     * @throws Exception
      */
     public function displaySavedViews($listViewDefs, $lv, $header = true, $return = false)
     {

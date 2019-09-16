@@ -98,6 +98,7 @@ class Reminder_Invitee extends Basic
      * @param string $reminderId Related Reminder GUID
      * @param bool $isDuplicate
      * @return array Invitees data
+     * @throws Exception
      */
     public static function loadRemindersInviteesData($reminderId, $isDuplicate = false)
     {

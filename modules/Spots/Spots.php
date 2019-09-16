@@ -154,6 +154,7 @@ class Spots extends Basic
      * @param string $config the configuration file for the spot
      *
      * @return string is the config file with the label values in place of the key names
+     * @throws Exception
      */
     public function replaceKeyValueWithLabel($config)
     {

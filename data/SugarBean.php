@@ -1030,6 +1030,7 @@ class SugarBean
      * @param $order_by
      *
      * @return array
+     * @throws Exception
      */
     protected static function build_sub_queries_for_union($subpanel_list, $subpanel_def, $parentbean, $order_by)
     {
@@ -3181,6 +3182,7 @@ class SugarBean
      * Determines which users receive a notification
      *
      * @return User[]
+     * @throws Exception
      */
     public function get_notification_recipients()
     {
@@ -3514,6 +3516,7 @@ class SugarBean
      * @param bool $singleSelect Optional, default false.
      * @param bool $ifListForExport
      * @return String select query string, optionally an array value will be returned if $return_array= true.
+     * @throws Exception
      */
     public function create_new_list_query(
         $order_by,
@@ -4382,9 +4385,6 @@ class SugarBean
      *
      * It is intended for use in navigation buttons on the DetailView.  It will pass an offset
      * and limit argument to the sql query.
-     * @internal This method must be called on a new instance.  It overrides the values of all the fields
-     * in the current one.
-     *
      * @param string $order_by
      * @param string $where Additional where clause
      * @param int $offset
@@ -4395,6 +4395,10 @@ class SugarBean
      * @return array Fetched data.
      *
      * Internal function, do not override.
+     * @throws Exception
+     * @internal This method must be called on a new instance.  It overrides the values of all the fields
+     * in the current one.
+     *
      */
     public function get_detail(
         $order_by = "",
@@ -5137,6 +5141,7 @@ class SugarBean
      * @param bool $check_dates . defaults to false
      * @param int $show_deleted show deleted records. defaults to 0
      * @return null|SugarBean[]
+     * @throws Exception
      */
     public function get_full_list($order_by = "", $where = "", $check_dates = false, $show_deleted = 0)
     {
@@ -5869,6 +5874,7 @@ class SugarBean
 
     /**
      * @param $currentModule
+     * @throws Exception
      */
     public function assign_display_fields($currentModule)
     {
@@ -6238,6 +6244,7 @@ class SugarBean
      * @param string $order_by
      * @param string $where
      * @return string SQL query
+     * @throws Exception
      */
     public function create_export_query($order_by, $where)
     {
@@ -6248,6 +6255,7 @@ class SugarBean
      * Checks auditing is enables and then carrys out an audit on the current bean.
      *
      * @param $isUpdate
+     * @throws Exception
      */
     public function auditBean($isUpdate)
     {

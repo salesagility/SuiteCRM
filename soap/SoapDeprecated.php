@@ -219,6 +219,7 @@ $server->register(
  * @param string $user_name -- the user name for the session
  * @param string $password -- MD5 of user password
  * @return string "Success" if the session is created
+ * @throws Exception
  */
 function create_session($user_name, $password)
 {

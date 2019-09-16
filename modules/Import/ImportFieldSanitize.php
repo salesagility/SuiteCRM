@@ -179,6 +179,7 @@ class ImportFieldSanitize
      * @param array $vardef
      * @param array $bad_names used to return list of bad users/teams in $value
      * @return string sanitized and validated value on success, bool false on failure
+     * @throws Exception
      */
     public function synctooutlook(
         $value,

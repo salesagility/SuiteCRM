@@ -65,6 +65,7 @@ class SAML2Authenticate extends SugarAuthenticate
     /**
      * pre login initialization - use SAML2 to authenticate a user login process
      * @throws OneLogin_Saml2_Error
+     * @throws Exception
      */
     public function pre_login()
     {
@@ -116,6 +117,7 @@ class SAML2Authenticate extends SugarAuthenticate
      * override SugarAuthenticate and use SAML2 authentication
      * @param SugarApplication $app
      * @return bool
+     * @throws Exception
      */
     public function redirectToLogin(SugarApplication $app)
     {

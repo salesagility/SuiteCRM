@@ -47,6 +47,7 @@ class ModuleLanguage
      * @param CurrentLanguage $currentLanguage
      * @param string $moduleName
      * @return array
+     * @throws \Exception
      */
     public function getModuleLanguageStrings(CurrentLanguage $currentLanguage, $moduleName)
     {

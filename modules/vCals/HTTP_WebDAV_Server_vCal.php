@@ -98,6 +98,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
          *
          * @access public
          * @param bool $base
+         * @throws Exception
          */
         public function ServeRequest($base = false)
         {
@@ -216,10 +217,11 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
          * No authentication is needed here
          *
          * @access private
-         * @param  string $type HTTP Authentication type (Basic, Digest, ...)
-         * @param  string $user Username
-         * @param  string $password Password
+         * @param string $type HTTP Authentication type (Basic, Digest, ...)
+         * @param string $user Username
+         * @param string $password Password
          * @return bool    true on successful authentication
+         * @throws Exception
          */
         public function check_auth($type, $user, $password)
         {

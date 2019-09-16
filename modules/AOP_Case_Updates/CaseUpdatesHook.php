@@ -48,6 +48,7 @@ class CaseUpdatesHook
 
     /**
      * @return string
+     * @throws Exception
      */
     private function getAssignToUser()
     {
@@ -351,6 +352,7 @@ class CaseUpdatesHook
     /**
      * @param aCase $case
      * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
      * @throws \SuiteCRM\ErrorMessageException
      * @throws phpmailerException
      */
@@ -443,6 +445,7 @@ class CaseUpdatesHook
      * @param $event
      * @param $arguments
      * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
      * @throws \SuiteCRM\ErrorMessageException
      * @throws phpmailerException
      */

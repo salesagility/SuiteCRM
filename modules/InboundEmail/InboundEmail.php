@@ -1701,6 +1701,7 @@ class InboundEmail extends SugarBean
      * @throws HTMLPurifier_Exception
      * @throws ImapHandlerException
      * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      */
     public function checkEmailOneMailbox($mailbox, $prefetch = true, $synchronize = false)
     {
@@ -1809,6 +1810,7 @@ class InboundEmail extends SugarBean
      * @throws HTMLPurifier_Exception
      * @throws ImapHandlerException
      * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      */
     public function checkEmailOneMailboxPartial($mailbox, $prefetch = true, $synchronize = false, $start = 0, $max = -1)
     {
@@ -2092,6 +2094,7 @@ class InboundEmail extends SugarBean
      * @throws HTMLPurifier_Exception
      * @throws ImapHandlerException
      * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      */
     public function checkEmail($prefetch = true, $synch = false)
     {
@@ -2310,8 +2313,10 @@ class InboundEmail extends SugarBean
      * @return bool
      * @throws EmailException
      * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
      * @throws ImapHandlerException
      * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      */
     public function fetchCheckedEmails($fetchedOverviews)
     {
@@ -3841,6 +3846,7 @@ class InboundEmail extends SugarBean
      *
      * @param object Email bean to be linked against
      * @return string contactAddr is the email address of the sender
+     * @throws Exception
      */
     public function handleLinking(&$email)
     {
@@ -6724,6 +6730,7 @@ class InboundEmail extends SugarBean
      * @param $where
      * @param int $show_deleted
      * @return String
+     * @throws Exception
      */
     public function create_export_query($order_by, $where, $show_deleted = 0)
     {
@@ -6828,6 +6835,7 @@ class InboundEmail extends SugarBean
      * @throws HTMLPurifier_Exception
      * @throws ImapHandlerException
      * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      */
     public function copyEmails($fromIe, $fromFolder, $toIe, $toFolder, $uids)
     {
@@ -7095,6 +7103,7 @@ class InboundEmail extends SugarBean
      * @throws HTMLPurifier_Exception
      * @throws ImapHandlerException
      * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      */
     public function deleteMessageOnMailServer($uid)
     {

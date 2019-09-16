@@ -56,6 +56,7 @@ class ExternalAPIFactory
      * Filter the list of APIs, removing disabled ones
      * @param array $apiFullList
      * @return array Filtered list
+     * @throws Exception
      */
     public static function filterAPIList($apiFullList)
     {

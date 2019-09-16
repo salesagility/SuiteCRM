@@ -725,6 +725,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
      * @param string $session
      * @param string $clientid
      * @return array|void
+     * @throws Exception
      */
     public function job_queue_cycle($session, $clientid)
     {
@@ -748,6 +749,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
      * @param string $jobid
      * @param string $clientid
      * @return array|void
+     * @throws Exception
      */
     public function job_queue_run($session, $jobid, $clientid)
     {

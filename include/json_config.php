@@ -258,6 +258,7 @@ class json_config
      * @param array $fields
      *
      * @return array
+     * @throws Exception
      */
     public function listFilter($module, $fields)
     {

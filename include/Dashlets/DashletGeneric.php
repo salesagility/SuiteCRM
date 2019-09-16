@@ -417,6 +417,7 @@ class DashletGeneric extends Dashlet
      * Does all dashlet processing, here's your chance to modify the rows being displayed!
      * @param array $lvsParams
      * @param null $id
+     * @throws Exception
      */
     public function process($lvsParams = array(), $id = null)
     {

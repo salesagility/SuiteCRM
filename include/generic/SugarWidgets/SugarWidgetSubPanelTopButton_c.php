@@ -267,6 +267,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
      * @param null $additionalFormFields
      * @param bool $nonbutton
      * @return string
+     * @throws Exception
      */
     public function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
