@@ -577,7 +577,6 @@ table.view {
   text-align: left;
   vertical-align: baseline;
   white-space: pre-wrap;
-  line-height: 10px;
 }
 
 #lineItems {
@@ -2626,6 +2625,10 @@ input#btn_ActionLine.button[type="button"] {
   width: 84px;
 }
 
+.col-sm-6 .edit-view-field input[type="text"].date_input {
+    width: auto;
+}
+
 .col-sm-6 .edit-view-field .datetimecombo_time_section {
   display: inline-block;
 }
@@ -3528,6 +3531,10 @@ select#sales_stage_advanced {
     width: 100%;
   }
 
+  .col-sm-6 .edit-view-field input[type="text"].date_input {
+      width: auto;
+  }
+
   [type="date"] img {
     margin-left: 8px;
   }
@@ -3629,6 +3636,10 @@ select#sales_stage_advanced {
 
   .col-sm-6 .edit-view-field input[type="text"] {
     width: 100%;
+  }
+
+  .col-sm-6 .edit-view-field input[type="text"].date_input {
+      width: auto;
   }
 
   .email-address-options-container {
@@ -3734,6 +3745,10 @@ select#sales_stage_advanced {
     width: 90%;
   }
 
+  .col-sm-6 .edit-view-field input[type="text"].date_input {
+      width: auto;
+  }
+
   .email-address-options-container {
     margin-top: 0;
   }
@@ -3785,6 +3800,9 @@ select#sales_stage_advanced {
     width: 90%;
   }
 
+  .col-sm-6 .edit-view-field input[type="text"].date_input {
+      width: auto;
+  }
 
   #BILLING_address_fieldset input[type=text] {
     width: 90%;
@@ -3845,6 +3863,9 @@ select#sales_stage_advanced {
     width: 90%;
   }
 
+  .col-sm-6 .edit-view-field input[type="text"].date_input {
+      width: auto;
+  }
 
   #BILLING_address_fieldset input[type=text] {
     width: 90%;
