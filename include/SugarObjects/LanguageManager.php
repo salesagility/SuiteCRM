@@ -81,6 +81,7 @@ class LanguageManager
      * @param templates - an array of templates this module uses
      * @param lang - current language this module use
      * @param loaded_mod_strings - the string that we will add the module template language  into
+     * @return array
      */
     public static function loadTemplateLanguage($module, $templates, $lang, $loaded_mod_strings)
     {

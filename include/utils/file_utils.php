@@ -224,7 +224,8 @@ function generateMD5array($path, $ignore_dirs = ['cache', 'upload', '.git', 'ven
  * @param The $path_a path of the first root directory to scan - must end with '/'
  * @param The $path_b path of the second root directory to scan - must end with '/'
  * @param array $ignore_dirs of filenames/directory names to ignore running md5 on - default 'cache' and 'upload'
- * @result	array containing all the md5s of everything in $path_a that didn't have a match in $path_b
+ * @result    array containing all the md5s of everything in $path_a that didn't have a match in $path_b
+ * @return array
  */
 function md5DirCompare($path_a, $path_b, $ignore_dirs = array('cache', 'upload'))
 {
@@ -271,6 +272,7 @@ function getFiles(&$arr, $dir, $pattern = null)
  * used in download.php
  * @param string $filename
  * @param int $retbytes
+ * @return bool|int
  */
 function readfile_chunked($filename, $retbytes=true)
 {
@@ -295,11 +297,13 @@ function readfile_chunked($filename, $retbytes=true)
     }
     return $status;
 }
+
 /**
  * Renames a file. If $new_file already exists, it will first unlink it and then rename it.
  * used in SugarLogger.php
  * @param string $old_filename
  * @param string $new_filename
+ * @return bool
  */
 function sugar_rename($old_filename, $new_filename)
 {

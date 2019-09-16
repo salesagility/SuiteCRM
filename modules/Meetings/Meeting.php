@@ -148,6 +148,7 @@ class Meeting extends SugarBean
      * Disable edit if meeting is recurring and source is not Sugar. It should be edited only from Outlook.
      * @param string $view
      * @param bool $is_owner
+     * @return bool
      */
     public function ACLAccess($view, $is_owner='not_set', $in_group='not_set')
     {

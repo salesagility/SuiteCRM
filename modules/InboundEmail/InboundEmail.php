@@ -253,6 +253,7 @@ class InboundEmail extends SugarBean
     /**
      * wraps SugarBean->save()
      * @param string ID of saved bean
+     * @return string
      */
     public function save($check_notify = false)
     {
@@ -316,6 +317,7 @@ class InboundEmail extends SugarBean
     /**
      * Renames an IMAP mailbox
      * @param string $newName
+     * @return bool
      */
     public function renameFolder($oldName, $newName)
     {
@@ -1585,6 +1587,7 @@ class InboundEmail extends SugarBean
     /**
      * Iterates through msgno and message_id to remove dirty cache entries
      * @param array diff
+     * @return array
      */
     public function pop3_shiftCache($diff, $cacheUIDLs)
     {
@@ -1653,6 +1656,7 @@ class InboundEmail extends SugarBean
      * Checks email (local caching too) for one mailbox
      * @param string $mailbox IMAP Mailbox path
      * @param bool $prefetch Flag to prefetch email body on check
+     * @return int
      */
     public function checkEmailOneMailbox($mailbox, $prefetch = true, $synchronize = false)
     {
@@ -1752,6 +1756,7 @@ class InboundEmail extends SugarBean
      * Checks email (local caching too) for one mailbox
      * @param string $mailbox IMAP Mailbox path
      * @param bool $prefetch Flag to prefetch email body on check
+     * @return array
      */
     public function checkEmailOneMailboxPartial($mailbox, $prefetch = true, $synchronize = false, $start = 0, $max = -1)
     {
@@ -2242,6 +2247,7 @@ class InboundEmail extends SugarBean
     /**
      * Check email prefetches email bodies for quicker display
      * @param array array of fetched overviews
+     * @return bool
      */
     public function fetchCheckedEmails($fetchedOverviews)
     {
@@ -3803,6 +3809,7 @@ class InboundEmail extends SugarBean
      * Gets part by following breadcrumb path
      * @param string $bc the breadcrumb string in format (1.1.1)
      * @param array parts the root level parts array
+     * @return bool|null
      */
     protected function getPartByPath($bc, $parts)
     {
@@ -4237,6 +4244,7 @@ class InboundEmail extends SugarBean
      * @param array $parts of objects
      * @param what $subtype type of trail to return? HTML? Plain? binaries?
      * @param text $breadcrumb trail to build up
+     * @return int|string
      */
     public function buildBreadCrumbs($parts, $subtype, $breadcrumb = '0')
     {
@@ -4308,6 +4316,7 @@ class InboundEmail extends SugarBean
      * Takes a PHP imap_* object's to/from/cc/bcc address field and converts it
      * to a standard string that SugarCRM expects
      * @param an $arr array of email address objects
+     * @return string
      */
     public function convertImapToSugarEmailAddress($arr)
     {
@@ -4568,6 +4577,7 @@ class InboundEmail extends SugarBean
      * @param string thisBc Breadcrumb to navigate email structure to find the content
      * @param object part IMAP standard object that contains the "parts" of this section of email
      * @param bool $forDisplay
+     * @return bool|void
      */
     public function saveAttachmentBinaries($attach, $msgNo, $thisBc, $part, $forDisplay)
     {
@@ -4629,6 +4639,7 @@ class InboundEmail extends SugarBean
      * if nothing is passed, we default to no-encoding type
      * @param encoded $str string
      * @param detected $enc encoding
+     * @return bool|encoded|string
      */
     public function handleTranserEncoding($str, $enc = 0)
     {
@@ -5939,6 +5950,7 @@ class InboundEmail extends SugarBean
      * returns exactly 1 id match. if more than one, than returns false
      * @param the $emailName subject of the email to match
      * @param the $tableName table of the matching bean type
+     * @return bool
      */
     public function getSingularRelatedId($emailName, $tableName)
     {
@@ -6100,6 +6112,7 @@ class InboundEmail extends SugarBean
      * This function returns a contact or user ID if a matching email is found
      * @param the $email email address to match
      * @param which $table table to query
+     * @return array|bool
      */
     public function getRelatedId($email, $module)
     {
@@ -6440,6 +6453,7 @@ class InboundEmail extends SugarBean
      * Retrieves the current count of personal accounts for the user specified.
      *
      * @param unknown_type $user
+     * @return
      */
     public function getUserPersonalAccountCount($user = null)
     {
@@ -6970,6 +6984,7 @@ class InboundEmail extends SugarBean
     /**
      * deletes and expunges emails on server
      * @param string $uid UID(s), comma delimited, of email(s) on server
+     * @return bool
      */
     public function deleteMessageOnMailServerForPop3($uid)
     {
@@ -7226,6 +7241,7 @@ class InboundEmail extends SugarBean
      * @param int uid UID of email to display
      * @param string mbox Mailbox to look in for the message
      * @param bool isMsgNo Flag to assume $uid is a MessageNo, not UniqueID, default false
+     * @return array
      */
     public function displayOneEmail($uid, $mbox, $isMsgNo = false)
     {
@@ -7539,6 +7555,7 @@ eoq;
      * @param string mbox Name of mailbox using dot notation paths to display
      * @param string $forceRefresh Flag to use cache or not
      * @param integer page number
+     * @return array
      */
     public function displayFolderContents($mbox, $forceRefresh = 'false', $page = 1)
     {

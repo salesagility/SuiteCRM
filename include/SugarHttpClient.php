@@ -52,10 +52,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class SugarHttpClient
 {
     protected $last_error = '';
+
     /**
      * sends POST request to REST service via CURL
      * @param string $url URL to call
      * @param string $postArgs POST args
+     * @return bool|string
      */
     public function callRest($url, $postArgs)
     {

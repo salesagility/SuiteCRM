@@ -247,6 +247,7 @@ class wsdl extends nusoap_base
      *
      * @param string $wsdl path or URL
      * @access private
+     * @return bool
      */
     public function parseWSDL($wsdl = '')
     {
@@ -1910,19 +1911,20 @@ class wsdl extends nusoap_base
     }
 
     /**
-    * register an operation with the server
-    *
-    * @param string $name operation (method) name
-    * @param array $in assoc array of input values: key = param name, value = param type
-    * @param array $out assoc array of output values: key = param name, value = param type
-    * @param string $namespace optional The namespace for the operation
-    * @param string $soapaction optional The soapaction for the operation
-    * @param string $style (rpc|document) optional The style for the operation Note: when 'document' is specified, parameter and return wrappers are created for you automatically
-    * @param string $use (encoded|literal) optional The use for the parameters (cannot mix right now)
-    * @param string $documentation optional The description to include in the WSDL
-    * @param string $encodingStyle optional (usually 'http://schemas.xmlsoap.org/soap/encoding/' for encoded)
-    * @access public
-    */
+     * register an operation with the server
+     *
+     * @param string $name operation (method) name
+     * @param array $in assoc array of input values: key = param name, value = param type
+     * @param array $out assoc array of output values: key = param name, value = param type
+     * @param string $namespace optional The namespace for the operation
+     * @param string $soapaction optional The soapaction for the operation
+     * @param string $style (rpc|document) optional The style for the operation Note: when 'document' is specified, parameter and return wrappers are created for you automatically
+     * @param string $use (encoded|literal) optional The use for the parameters (cannot mix right now)
+     * @param string $documentation optional The description to include in the WSDL
+     * @param string $encodingStyle optional (usually 'http://schemas.xmlsoap.org/soap/encoding/' for encoded)
+     * @access public
+     * @return bool
+     */
     public function addOperation($name, $in = false, $out = false, $namespace = false, $soapaction = false, $style = 'rpc', $use = 'encoded', $documentation = '', $encodingStyle = '')
     {
         if ($use == 'encoded' && $encodingStyle == '') {

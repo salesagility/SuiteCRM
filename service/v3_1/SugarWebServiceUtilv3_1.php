@@ -84,6 +84,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      *
      * @param array $list List of module candidates (only keys are used)
      * @param array $availModules List of module availability from Session
+     * @return array
      */
     public function getModulesFromList($list, $availModules)
     {

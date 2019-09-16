@@ -124,11 +124,12 @@ class fpdi_pdf_parser extends pdf_parser
     {
         return $this->_getPageResources($this->pages[$this->pageno]);
     }
-    
+
     /**
      * Get page-resources from /Page
      *
      * @param array $obj Array of pdf-data
+     * @return array|bool|mixed
      */
     public function _getPageResources($obj)
     { // $obj = /Page
@@ -350,13 +351,14 @@ class fpdi_pdf_parser extends pdf_parser
             }
         }
     }
-    
+
     /**
      * Read all /Page(es)
      *
      * @param object pdf_context
      * @param array /Pages
      * @param array the result-array
+     * @return bool
      */
     public function read_pages(&$c, &$pages, &$result)
     {

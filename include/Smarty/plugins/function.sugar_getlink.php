@@ -48,6 +48,7 @@
  *
  * @param array
  * @param Smarty
+ * @return string
  */
 
 function smarty_function_sugar_getlink($params, &$smarty)

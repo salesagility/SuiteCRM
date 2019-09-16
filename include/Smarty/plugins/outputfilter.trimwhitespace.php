@@ -19,11 +19,12 @@
  * Install:  Drop into the plugin directory, call
  *           <code>$smarty->load_filter('output','trimwhitespace');</code>
  *           from application.
+ * @param string
+ * @param Smarty
+ * @return string|string[]|null
  * @author   Monte Ohrt <monte at ohrt dot com>
  * @author Contributions from Lars Noschinski <lars@usenet.noschinski.de>
  * @version  1.3
- * @param string
- * @param Smarty
  */
 function smarty_outputfilter_trimwhitespace($source, &$smarty)
 {

@@ -195,7 +195,8 @@ class Prospect extends Person implements EmailInterface
 
     /**
      *  This method will be used by Mail Merge in order to retieve the targets as specified in the query
-     *  @param query String - this is the query which contains the where clause for the query
+     * @param query String - this is the query which contains the where clause for the query
+     * @return array
      */
     public function retrieveTargetList($query, $fields, $offset = 0, $limit= -99, $max = -99, $deleted = 0, $module = '')
     {

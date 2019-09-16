@@ -664,15 +664,16 @@ class soap_transport_http extends nusoap_base
             unsetHeader('Proxy-Authorization');
         }
     }
-    
+
 
     /**
      * Test if the given string starts with a header that is to be skipped.
      * Skippable headers result from chunked transfer and proxy requests.
      *
-     * @param	string $data The string to check.
-     * @returns	boolean	Whether a skippable header was found.
-     * @access	private
+     * @param string $data The string to check.
+     * @returns    boolean    Whether a skippable header was found.
+     * @access    private
+     * @return bool
      */
     public function isSkippableCurlHeader(&$data)
     {
@@ -695,15 +696,16 @@ class soap_transport_http extends nusoap_base
     }
 
     /**
-    * decode a string that is encoded w/ "chunked' transfer encoding
-    * as defined in RFC2068 19.4.6
-    *
-    * @param    string $buffer
-    * @param    string $lb
-    * @returns	string
-    * @access   public
-    * @deprecated
-    */
+     * decode a string that is encoded w/ "chunked' transfer encoding
+     * as defined in RFC2068 19.4.6
+     *
+     * @param string $buffer
+     * @param string $lb
+     * @returns    string
+     * @access   public
+     * @return string
+     * @deprecated
+     */
     public function decodeChunked($buffer, $lb)
     {
         // length := 0

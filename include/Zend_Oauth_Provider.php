@@ -169,6 +169,7 @@ class Zend_Oauth_Provider
     /**
      * Check if all required parameters are there
      * @param array $params
+     * @return bool
      * @throws Zend_Oauth_Exception
      */
     protected function checkRequiredParams($params)
@@ -363,6 +364,7 @@ class Zend_Oauth_Provider
     /**
      * Generate new token
      * @param int $size How many characters?
+     * @return bool|string
      */
     public function generateToken($size)
     {

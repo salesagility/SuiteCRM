@@ -194,6 +194,7 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
      * Writes a byte to the end of the file.
      *
      * @param integer $byte
+     * @return int
      */
     public function writeByte($byte)
     {

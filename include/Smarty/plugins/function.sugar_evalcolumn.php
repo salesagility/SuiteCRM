@@ -62,9 +62,10 @@ r12955 - 2006-04-26 18:32:25 -0700 (Wed, 26 Apr 2006) - wayne - custom code in l
  * Name:     sugar_evalcolumn<br>
  * Purpose:  evaluate a string by substituting values in the rowData parameter. Used for ListViews<br>
  *
- * @author Wayne Pan {wayne at sugarcrm.com
  * @param array
  * @param Smarty
+ * @return mixed|string|void
+ * @author Wayne Pan {wayne at sugarcrm.com
  */
 function smarty_function_sugar_evalcolumn($params, &$smarty)
 {

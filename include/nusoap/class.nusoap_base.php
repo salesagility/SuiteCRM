@@ -396,11 +396,12 @@ class nusoap_base
     }
 
     /**
-    * expands entities, e.g. changes '<' to '&lt;'.
-    *
-    * @param	string	$val	The string in which to expand entities.
-    * @access	private
-    */
+     * expands entities, e.g. changes '<' to '&lt;'.
+     *
+     * @param string $val The string in which to expand entities.
+     * @access    private
+     * @return mixed|string
+     */
     public function expandEntities($val)
     {
         if ($this->charencoding) {

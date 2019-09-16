@@ -570,13 +570,15 @@ class ACLAction extends SugarBean
         }
         return false;
     }
+
     /**
-    *
-    * static pass by ref setupCategoriesMatrix(&$categories)
-    * takes in an array of categories and modifes them adding display information
-    *
-    * @param unknown_type $categories
-    */
+     *
+     * static pass by ref setupCategoriesMatrix(&$categories)
+     * takes in an array of categories and modifes them adding display information
+     *
+     * @param unknown_type $categories
+     * @return array
+     */
     public static function setupCategoriesMatrix(&$categories)
     {
         global $ACLActions, $current_user;

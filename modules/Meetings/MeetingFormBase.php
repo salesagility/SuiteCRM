@@ -170,9 +170,10 @@ EOQ;
 
     /**
      * handles save functionality for meetings
-     * @param	string prefix
-     * @param	bool redirect default True
-     * @param	bool useRequired default True
+     * @param string prefix
+     * @param bool redirect default True
+     * @param bool useRequired default True
+     * @return Meeting|SugarBean|null
      */
     public function handleSave($prefix, $redirect=true, $useRequired=false)
     {

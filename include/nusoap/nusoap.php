@@ -592,11 +592,12 @@ class nusoap_base
     }
 
     /**
-    * expands entities, e.g. changes '<' to '&lt;'.
-    *
-    * @param	string	$val	The string in which to expand entities.
-    * @access	private
-    */
+     * expands entities, e.g. changes '<' to '&lt;'.
+     *
+     * @param string $val The string in which to expand entities.
+     * @access    private
+     * @return string|string[]|null
+     */
     public function expandEntities($val)
     {
         if ($this->charencoding) {
@@ -3873,9 +3874,10 @@ class soap_transport_http extends nusoap_base
      * Test if the given string starts with a header that is to be skipped.
      * Skippable headers result from chunked transfer and proxy requests.
      *
-     * @param	string $data The string to check.
-     * @returns	boolean	Whether a skippable header was found.
-     * @access	private
+     * @param string $data The string to check.
+     * @returns    boolean    Whether a skippable header was found.
+     * @access    private
+     * @return bool
      */
     public function isSkippableCurlHeader(&$data)
     {
@@ -3898,15 +3900,16 @@ class soap_transport_http extends nusoap_base
     }
 
     /**
-    * decode a string that is encoded w/ "chunked' transfer encoding
-    * as defined in RFC2068 19.4.6
-    *
-    * @param    string $buffer
-    * @param    string $lb
-    * @returns	string
-    * @access   public
-    * @deprecated
-    */
+     * decode a string that is encoded w/ "chunked' transfer encoding
+     * as defined in RFC2068 19.4.6
+     *
+     * @param string $buffer
+     * @param string $lb
+     * @returns    string
+     * @access   public
+     * @return string
+     * @deprecated
+     */
     public function decodeChunked($buffer, $lb)
     {
         // length := 0
@@ -5764,19 +5767,20 @@ class nusoap_server extends nusoap_base
     }
 
     /**
-    * register a service function with the server
-    *
-    * @param    string $name the name of the PHP function, class.method or class..method
-    * @param    array $in assoc array of input values: key = param name, value = param type
-    * @param    array $out assoc array of output values: key = param name, value = param type
-    * @param	mixed $namespace the element namespace for the method or false
-    * @param	mixed $soapaction the soapaction for the method or false
-    * @param	mixed $style optional (rpc|document) or false Note: when 'document' is specified, parameter and return wrappers are created for you automatically
-    * @param	mixed $use optional (encoded|literal) or false
-    * @param	string $documentation optional Description to include in WSDL
-    * @param	string $encodingStyle optional (usually 'http://schemas.xmlsoap.org/soap/encoding/' for encoded)
-    * @access   public
-    */
+     * register a service function with the server
+     *
+     * @param string $name the name of the PHP function, class.method or class..method
+     * @param array $in assoc array of input values: key = param name, value = param type
+     * @param array $out assoc array of output values: key = param name, value = param type
+     * @param mixed $namespace the element namespace for the method or false
+     * @param mixed $soapaction the soapaction for the method or false
+     * @param mixed $style optional (rpc|document) or false Note: when 'document' is specified, parameter and return wrappers are created for you automatically
+     * @param mixed $use optional (encoded|literal) or false
+     * @param string $documentation optional Description to include in WSDL
+     * @param string $encodingStyle optional (usually 'http://schemas.xmlsoap.org/soap/encoding/' for encoded)
+     * @access   public
+     * @return bool
+     */
     public function register($name, $in=array(), $out=array(), $namespace=false, $soapaction=false, $style=false, $use=false, $documentation='', $encodingStyle='')
     {
         global $HTTP_SERVER_VARS;
@@ -6343,6 +6347,7 @@ class wsdl extends nusoap_base
      *
      * @param string $wsdl path or URL
      * @access private
+     * @return bool
      */
     public function parseWSDL($wsdl = '')
     {
@@ -8011,19 +8016,20 @@ class wsdl extends nusoap_base
     }
 
     /**
-    * register an operation with the server
-    *
-    * @param string $name operation (method) name
-    * @param array $in assoc array of input values: key = param name, value = param type
-    * @param array $out assoc array of output values: key = param name, value = param type
-    * @param string $namespace optional The namespace for the operation
-    * @param string $soapaction optional The soapaction for the operation
-    * @param string $style (rpc|document) optional The style for the operation Note: when 'document' is specified, parameter and return wrappers are created for you automatically
-    * @param string $use (encoded|literal) optional The use for the parameters (cannot mix right now)
-    * @param string $documentation optional The description to include in the WSDL
-    * @param string $encodingStyle optional (usually 'http://schemas.xmlsoap.org/soap/encoding/' for encoded)
-    * @access public
-    */
+     * register an operation with the server
+     *
+     * @param string $name operation (method) name
+     * @param array $in assoc array of input values: key = param name, value = param type
+     * @param array $out assoc array of output values: key = param name, value = param type
+     * @param string $namespace optional The namespace for the operation
+     * @param string $soapaction optional The soapaction for the operation
+     * @param string $style (rpc|document) optional The style for the operation Note: when 'document' is specified, parameter and return wrappers are created for you automatically
+     * @param string $use (encoded|literal) optional The use for the parameters (cannot mix right now)
+     * @param string $documentation optional The description to include in the WSDL
+     * @param string $encodingStyle optional (usually 'http://schemas.xmlsoap.org/soap/encoding/' for encoded)
+     * @access public
+     * @return bool
+     */
     public function addOperation($name, $in = false, $out = false, $namespace = false, $soapaction = false, $style = 'rpc', $use = 'encoded', $documentation = '', $encodingStyle = '')
     {
         if ($use == 'encoded' && $encodingStyle == '') {

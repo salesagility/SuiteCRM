@@ -30,9 +30,10 @@ r53409 - 2010-01-03 19:31:15 -0800 (Sun, 03 Jan 2010) - roger - merge -r50376:HE
  * Name:     sugar_fetch<br>
  * Purpose:  grabs the requested index from either an object or an array
  *
- * @author Rob Aagaard {rob at sugarcrm.com}
  * @param array
  * @param Smarty
+ * @return mixed|void
+ * @author Rob Aagaard {rob at sugarcrm.com}
  */
 
 function smarty_function_sugar_fetch($params, &$smarty)

@@ -457,6 +457,7 @@ class jjwg_MapsController extends SugarController
      * @param address $aInfo info array(address, status, lat, lng)
      * @param signular $object_name object name
      * @param fetched $display row array
+     * @return address
      */
     public function defineMapsAddressCustom($aInfo, $object_name, $display)
     {
@@ -492,6 +493,7 @@ class jjwg_MapsController extends SugarController
      * @param name $fields value pairs
      * @param $delimiter
      * @param $enclosure
+     * @return string
      */
     private function list_row_to_csv($fields, $delimiter = ',', $enclosure = '"')
     {
@@ -1001,6 +1003,7 @@ class jjwg_MapsController extends SugarController
      * @param bean $display fields array
      * $param $mod_strings_display mod_strings from display module
      * TODO: Use a custom defined field for the $marker['group']
+     * @return array|bool
      */
     public function getMarkerData($module_type, $display, $center_marker = false, $mod_strings_display = array())
     {
@@ -1121,6 +1124,7 @@ class jjwg_MapsController extends SugarController
     /**
      * Get Marker Data Custom for Mapping
      * @param $marker_object
+     * @return array|bool
      */
     public function getMarkerDataCustom($marker_object)
     {
@@ -1168,6 +1172,7 @@ class jjwg_MapsController extends SugarController
     /**
      * Get Area Data Custom for Mapping
      * @param $area_object
+     * @return array|bool
      */
     public function getAreaDataCustom($area_object)
     {
@@ -1205,6 +1210,7 @@ class jjwg_MapsController extends SugarController
     /**
      * Check for valid longitude
      * @param float $lng
+     * @return bool
      */
     public function is_valid_lng($lng)
     {
@@ -1214,6 +1220,7 @@ class jjwg_MapsController extends SugarController
     /**
      * Check for valid latitude
      * @param float $lat
+     * @return bool
      */
     public function is_valid_lat($lat)
     {

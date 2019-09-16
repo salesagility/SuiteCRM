@@ -278,6 +278,7 @@ r22618 - 2007-05-09 15:36:06 -0700 (Wed, 09 May 2007) - clee - Added file.
  *
  * @param The $params runtime Smarty key/value arguments
  * @param The $smarty reference to the Smarty object used in this invocation
+ * @return string|void
  */
 function smarty_function_sugar_button($params, &$smarty)
 {

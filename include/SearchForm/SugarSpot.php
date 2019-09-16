@@ -170,6 +170,7 @@ class SugarSpot
      * Get count from query
      * @param SugarBean $seed
      * @param string $main_query
+     * @return int
      */
     protected function _getCount($seed, $main_query)
     {

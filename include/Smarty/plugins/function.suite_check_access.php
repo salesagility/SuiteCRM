@@ -13,9 +13,10 @@
  * Name:     suite_check_access<br>
  * Purpose:  Check if the current user has access to a record
  *
- * @author Jose C. Massón <jose AT gcoop DOT coop>
  * @param array
  * @param Smarty
+ * @return bool|void
+ * @author Jose C. Massón <jose AT gcoop DOT coop>
  */
 function smarty_function_suite_check_access($params, &$smarty)
 {

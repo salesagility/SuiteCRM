@@ -370,6 +370,7 @@ class ModuleInstaller
     /**
      * Get directory where module's extensions go
      * @param string $module Module name
+     * @return string
      */
     public function getExtDir($module)
     {

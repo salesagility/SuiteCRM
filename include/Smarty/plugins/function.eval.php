@@ -17,6 +17,7 @@
  * @author Monte Ohrt <monte at ohrt dot com>
  * @param array
  * @param Smarty
+ * @return false|string|void
  */
 function smarty_function_eval($params, &$smarty)
 {

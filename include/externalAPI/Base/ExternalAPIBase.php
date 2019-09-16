@@ -67,6 +67,7 @@ abstract class ExternalAPIBase implements ExternalAPIPlugin
     /**
      * Load authorization data
      * @param EAPM $eapmBean
+     * @return bool
      * @see ExternalAPIPlugin::loadEAPM()
      */
     public function loadEAPM($eapmBean)
@@ -83,6 +84,7 @@ abstract class ExternalAPIBase implements ExternalAPIPlugin
     /**
      * Check login
      * @param EAPM $eapmBean
+     * @return array
      * @see ExternalAPIPlugin::checkLogin()
      */
     public function checkLogin($eapmBean = null)
@@ -243,6 +245,7 @@ abstract class ExternalAPIBase implements ExternalAPIPlugin
      * Allow API clients to provide translated language strings for a given error code
      *
      * @param unknown_type $error_numb
+     * @return
      */
     protected function getErrorStringFromCode($error_numb)
     {

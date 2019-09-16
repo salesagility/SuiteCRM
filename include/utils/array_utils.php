@@ -224,6 +224,7 @@ function array_merge_values($arr1, $arr2)
  *
  * @param unknown_type $key
  * @param unknown_type $haystack
+ * @return bool
  */
 function array_search_insensitive($key, $haystack)
 {

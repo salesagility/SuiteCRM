@@ -860,6 +860,7 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @param array $args
+     * @return Response
      * @throws RuntimeException
      */
     public function getModuleRecordsViewed(Request $req, Response $res, array $args)
@@ -920,6 +921,7 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @param array $args
+     * @return Response
      * @throws RuntimeException
      */
     public function getModuleFavorites(Request $req, Response $res, array $args)

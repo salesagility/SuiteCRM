@@ -2061,6 +2061,7 @@ class Email extends Basic
 
     /**
      * Ensures that the user is able to send outbound emails
+     * @return bool
      * @global $current_user
      */
     public function check_email_settings()

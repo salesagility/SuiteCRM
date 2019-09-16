@@ -57,9 +57,10 @@ r14718 - 2006-07-17 17:39:10 -0700 (Mon, 17 Jul 2006) - wayne - format the curre
  * Name:     sugar_currency_format<br>
  * Purpose:  formats a number
  *
- * @author Wayne Pan {wayne at sugarcrm.com}
  * @param array
  * @param Smarty
+ * @return string
+ * @author Wayne Pan {wayne at sugarcrm.com}
  */
 function smarty_function_sugar_currency_format($params, &$smarty)
 {

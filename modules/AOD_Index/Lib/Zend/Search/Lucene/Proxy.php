@@ -482,6 +482,7 @@ class Zend_Search_Lucene_Proxy implements Zend_Search_Lucene_Interface
      * $id is an internal document id
      *
      * @param integer|Zend_Search_Lucene_Search_QueryHit $id
+     * @return
      * @throws Zend_Search_Lucene_Exception
      */
     public function delete($id)

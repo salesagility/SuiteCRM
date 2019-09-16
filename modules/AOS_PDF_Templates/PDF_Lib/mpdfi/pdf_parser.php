@@ -536,13 +536,14 @@ class pdf_parser
 
          }
     }
-    
+
     /**
      * Resolve an object
      *
      * @param object $c pdf_context
      * @param array $obj_spec The object-data
      * @param boolean $encapsulate Must set to true, cause the parsing and fpdi use this method only without this para
+     * @return array|bool
      */
     public function pdf_resolve_object(&$c, $obj_spec, $encapsulate = true)
     {

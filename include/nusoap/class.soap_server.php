@@ -1012,19 +1012,20 @@ class nusoap_server extends nusoap_base
     }
 
     /**
-    * register a service function with the server
-    *
-    * @param    string $name the name of the PHP function, class.method or class..method
-    * @param    array $in assoc array of input values: key = param name, value = param type
-    * @param    array $out assoc array of output values: key = param name, value = param type
-    * @param	mixed $namespace the element namespace for the method or false
-    * @param	mixed $soapaction the soapaction for the method or false
-    * @param	mixed $style optional (rpc|document) or false Note: when 'document' is specified, parameter and return wrappers are created for you automatically
-    * @param	mixed $use optional (encoded|literal) or false
-    * @param	string $documentation optional Description to include in WSDL
-    * @param	string $encodingStyle optional (usually 'http://schemas.xmlsoap.org/soap/encoding/' for encoded)
-    * @access   public
-    */
+     * register a service function with the server
+     *
+     * @param string $name the name of the PHP function, class.method or class..method
+     * @param array $in assoc array of input values: key = param name, value = param type
+     * @param array $out assoc array of output values: key = param name, value = param type
+     * @param mixed $namespace the element namespace for the method or false
+     * @param mixed $soapaction the soapaction for the method or false
+     * @param mixed $style optional (rpc|document) or false Note: when 'document' is specified, parameter and return wrappers are created for you automatically
+     * @param mixed $use optional (encoded|literal) or false
+     * @param string $documentation optional Description to include in WSDL
+     * @param string $encodingStyle optional (usually 'http://schemas.xmlsoap.org/soap/encoding/' for encoded)
+     * @access   public
+     * @return bool
+     */
     public function register($name, $in=array(), $out=array(), $namespace=false, $soapaction=false, $style=false, $use=false, $documentation='', $encodingStyle='')
     {
         global $HTTP_SERVER_VARS;

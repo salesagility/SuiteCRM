@@ -117,6 +117,7 @@ class OutboundEmail
      * and password for the default system account.
      *
      * @param String $user_id
+     * @return OutboundEmail|null
      */
     public function getUsersMailerForSystemOverride($user_id)
     {
@@ -138,6 +139,7 @@ class OutboundEmail
      * @param string $user_id
      * @param string $user_name
      * @param string $user_pass
+     * @return object|OutboundEmail
      */
     public function createUserSystemOverrideAccount($user_id, $user_name = "", $user_pass = "")
     {

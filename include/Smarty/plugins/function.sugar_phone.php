@@ -99,9 +99,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Name:     sugar_translate<br>
  * Purpose:  translates a label into the users current language
  *
- * @author Majed Itani {majed at sugarcrm.com
  * @param array
  * @param Smarty
+ * @return mixed|string
+ * @author Majed Itani {majed at sugarcrm.com
  */
 function smarty_function_sugar_phone($params, &$smarty)
 {

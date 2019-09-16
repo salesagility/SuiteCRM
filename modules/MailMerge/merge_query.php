@@ -44,6 +44,7 @@
  * @param SugarBean $seed Object being queried
  * @param string $merge_module Module being merged
  * @param string $key ID of the record in module being merged
+ * @return mixed|string
  */
 function get_merge_query($seed, $merge_module, $key)
 {

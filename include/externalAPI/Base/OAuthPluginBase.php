@@ -97,6 +97,7 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
     /**
      * Check login
      * @param EAPM $eapmBean
+     * @return array|bool
      * @see ExternalAPIBase::checkLogin()
      */
     public function checkLogin($eapmBean = null)

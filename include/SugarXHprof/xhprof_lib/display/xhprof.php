@@ -148,6 +148,7 @@ function xhprof_render_actions($actions)
  * @param raw-str  $onmousedown
  * @param raw-str  $dir
  * @param raw-str  $rel
+ * @return string
  */
 function xhprof_render_link(
     $content,

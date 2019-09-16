@@ -78,9 +78,10 @@ class SugarCronRemoteJobs extends SugarCronJobs
     }
 
     /**
-    * Set client to talk to SNIP
-    * @param SugarHttpClient $client
-    */
+     * Set client to talk to SNIP
+     * @param SugarHttpClient $client
+     * @return SugarCronRemoteJobs
+     */
     public function setClient(SugarHttpClient $client)
     {
         $this->client = $client;

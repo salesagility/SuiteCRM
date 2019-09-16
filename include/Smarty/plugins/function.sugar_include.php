@@ -48,9 +48,10 @@ r22571 - 2007-05-08 16:35:35 -0700 (Tue, 08 May 2007) - clee -
  * Purpose:  Handles rendering the global file includes from the metadata files defined
  *           in templateMeta=>includes.
  *
- * @author Collin Lee {clee@sugarcrm.com}
  * @param array
  * @param Smarty
+ * @return string
+ * @author Collin Lee {clee@sugarcrm.com}
  */
 function smarty_function_sugar_include($params, &$smarty)
 {

@@ -126,6 +126,7 @@ class SugarSpriteBuilder
      *
      * This method processes files in a directory and adds them to the sprites array
      * @param String $dir value of the directory to scan for image files in
+     * @return array
      */
     private function getFileList($dir)
     {
@@ -454,6 +455,7 @@ background-position: -{$offset_x}px -{$offset_y}px;
      * @param String $file value of file
      * @param String $type value of the file type (IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG)
      *
+     * @return bool|false|resource
      */
     private function loadImage($dir, $file, $type)
     {

@@ -691,6 +691,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
      * Get next job from the queue
      * @param string $session
      * @param string $clientid
+     * @return array|void
      */
     public function job_queue_next($session, $clientid)
     {
@@ -716,6 +717,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
      * Run cleanup and schedule
      * @param string $session
      * @param string $clientid
+     * @return array|void
      */
     public function job_queue_cycle($session, $clientid)
     {
@@ -738,6 +740,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
      * @param string $session
      * @param string $jobid
      * @param string $clientid
+     * @return array|void
      */
     public function job_queue_run($session, $jobid, $clientid)
     {

@@ -41,6 +41,7 @@ $xhprof_legal_image_types = array(
  * @param string  HTTP header name, like 'Location'
  * @param string  HTTP header value, like 'http://www.example.com/'
  *
+ * @return null
  */
 function xhprof_http_header($name, $value)
 {
@@ -100,6 +101,7 @@ function xhprof_generate_mime_header($type, $length)
  * @returns, binary content of the generated image on success. empty string on
  *           failure.
  *
+ * @return bool|string
  * @author cjiang
  */
 function xhprof_generate_image_by_dot($dot_script, $type)
@@ -169,6 +171,7 @@ function xhprof_get_children_table($raw_data)
  *                             bold lines.
  * @returns, string, the DOT script to generate image.
  *
+ * @return string
  * @author cjiang
  */
 function xhprof_generate_dot_script(
@@ -448,7 +451,7 @@ function xhprof_render_diff_image(
 /**
  * Generate image content from phprof run id.
  *
- * @param object  $xhprof_runs_impl  An object that implements
+ * @param object $xhprof_runs_impl An object that implements
  *                                   the iXHProfRuns interface
  * @param run_id, integer, the unique id for the phprof run, this is the
  *                primary key for phprof database table.
@@ -461,6 +464,7 @@ function xhprof_render_diff_image(
  * @param func, string, the focus function.
  * @returns, string, the DOT script to generate image.
  *
+ * @return bool|string
  * @author cjiang
  */
 function xhprof_get_content_by_run(

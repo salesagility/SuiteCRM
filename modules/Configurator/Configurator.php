@@ -282,6 +282,7 @@ class Configurator
      * Saves the company logo to the custom directory for the default theme, so all themes can use it
      *
      * @param string $path path to the image to set as the company logo image
+     * @return bool
      */
     public function saveCompanyLogo($path)
     {

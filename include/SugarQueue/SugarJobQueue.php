@@ -90,6 +90,7 @@ class SugarJobQueue
      * Submit a new job to the queue
      * @param SugarJob $job
      * @param User $user User to run the job under
+     * @return string
      */
     public function submitJob($job)
     {
@@ -156,6 +157,7 @@ class SugarJobQueue
     /**
      * Delete a job
      * @param string $jobId
+     * @return bool|resource|void
      */
     public function deleteJob($jobId)
     {

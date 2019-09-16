@@ -194,6 +194,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
     /**
      * Get assigned or logged in user's current date and time value.
      * @param boolean $timestamp Format of return value, if set to true, return unix like timestamp , else a formatted date.
+     * @return false|int|string
      */
     public function get_users_current_date_time($timestamp=false)
     {
@@ -214,10 +215,12 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $curr_timestamp=mktime($time_parts[0], $time_parts[1], 0, $date_parts[1], $date_parts[2], $date_parts[0]);
         return $curr_timestamp;
     }
+
     /**
      * Get specified date and time for a particalur day, in current user's timezone.
      * @param int $days Adjust date by this number of days, negative values are valid.
      * @param time string falg for desired time value, start: minimum time, end: maximum time, default: current time
+     * @return false|string
      */
     public function get_db_date($days, $time)
     {
@@ -249,6 +252,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * @param array layout_def field def for field being filtered
      * @param string $begin start date value (in DB format)
      * @param string $end End date value (in DB format)
+     * @return string
      */
     public function get_start_end_date_filter(& $layout_def, $begin, $end)
     {
@@ -268,11 +272,12 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * Create query for binary operation of field of certain type
      * Produces query like:
      * arg1 op to_date(arg2), e.g.:
-     * 		date_closed < '2009-12-01'
+     *        date_closed < '2009-12-01'
      * @param string $arg1 1st arg - column name
      * @param string|DateTime $arg2 2nd arg - value to be converted
      * @param string $op
      * @param string $type
+     * @return string
      */
     protected function queryDateOp($arg1, $arg2, $op, $type)
     {
@@ -297,6 +302,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * Create query from the beginning to the end of certain day
      * @param array $layout_def
      * @param SugarDateTime $day
+     * @return string
      */
     protected function queryDay($layout_def, SugarDateTime $day)
     {
@@ -347,6 +353,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * Create query from the beginning to the end of certain month
      * @param array $layout_def
      * @param SugarDateTime $month
+     * @return string
      */
     protected function queryMonth($layout_def, $month)
     {

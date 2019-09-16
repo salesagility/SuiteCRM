@@ -750,8 +750,9 @@ class SugarEmailAddress extends SugarBean
 
     /**
      * This function returns a contact or user ID if a matching email is found
-     * @param   string $email      the email address to match
-     * @param   string $table      which table to query
+     * @param string $email the email address to match
+     * @param string $table which table to query
+     * @return array|bool
      */
     public function getRelatedId($email, $module)
     {

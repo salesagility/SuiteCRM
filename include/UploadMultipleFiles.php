@@ -125,6 +125,7 @@ class UploadMultipleFiles
      * Get URL of the uploaded file related to the document
      * @param SugarBean $document
      * @param string $type Type of the document, if different from $document
+     * @return string
      */
     public static function get_upload_url($document, $type = null)
     {
@@ -139,6 +140,7 @@ class UploadMultipleFiles
      * Try renaming a file to bean_id name
      * @param string $filename
      * @param string $bean_id
+     * @return bool
      */
     protected static function tryRename($filename, $bean_id)
     {
@@ -537,6 +539,7 @@ class UploadMultipleFiles
      * deletes a file
      * @param string bean_id ID of the parent bean
      * @param string file_name File's name
+     * @return bool
      */
     public static function unlink_file($bean_id, $file_name = '')
     {
@@ -557,6 +560,7 @@ class UploadMultipleFiles
     /**
      * Return real FS path of the file
      * @param string $path
+     * @return bool|string
      */
     public static function realpath($path)
     {
@@ -571,6 +575,7 @@ class UploadMultipleFiles
     /**
      * Return path of uploaded file relative to uploads dir
      * @param string $path
+     * @return bool|string
      */
     public static function relativeName($path)
     {

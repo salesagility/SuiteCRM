@@ -1736,6 +1736,7 @@ class HTTP_WebDAV_Server
      * @param string $uri URI to check
      * @param string $condition Condition to check for this URI
      * @returns bool Condition check result
+     * @return bool
      */
     public function _check_uri_condition($uri, $condition)
     {
@@ -1748,8 +1749,9 @@ class HTTP_WebDAV_Server
     /**
      *
      *
-     * @param  string  path of resource to check
-     * @param  bool    exclusive lock?
+     * @param string  path of resource to check
+     * @param bool    exclusive lock?
+     * @return bool
      */
     public function _check_lock_status($path, $exclusive_only = false)
     {

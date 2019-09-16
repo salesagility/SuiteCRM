@@ -76,6 +76,7 @@ class SugarOAuthServer
     /**
      * Find consumer by key
      * @param $provider
+     * @return int
      */
     public function lookupConsumer($provider)
     {
@@ -95,6 +96,7 @@ class SugarOAuthServer
     /**
      * Check timestamps & nonces
      * @param OAuthProvider $provider
+     * @return int
      */
     public function timestampNonceChecker($provider)
     {
@@ -111,6 +113,7 @@ class SugarOAuthServer
     /**
      * Vefiry incoming token
      * @param OAuthProvider $provider
+     * @return int
      */
     public function tokenHandler($provider)
     {

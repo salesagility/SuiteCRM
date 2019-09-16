@@ -181,13 +181,14 @@ class Link2
      *                      rhs_value: The value to search for.
      *                      limit: The maximum number of rows
      *                      deleted: If deleted is set to 1, only deleted records related
- *                          to the current record will be returned.
+     *                          to the current record will be returned.
      *                      Example:
      *                      'where' => array(
      *                      'lhs_field' => 'source',
      *                      'operator' => '=',
      *                      'rhs_value' => 'external'
      *                      )
+     * @return null
      */
     public function query($params)
     {

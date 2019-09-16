@@ -223,6 +223,7 @@ class jjwg_Areas extends jjwg_Areas_sugar
      *
      * Define Marker Location
      * @param mixed $marker (array or object)
+     * @return array
      */
     public function define_loc($marker = array())
     {
@@ -257,6 +258,7 @@ class jjwg_Areas extends jjwg_Areas_sugar
      *
      * Check for valid longitude
      * @param float $lng
+     * @return bool
      */
     public function is_valid_lng($lng)
     {
@@ -267,6 +269,7 @@ class jjwg_Areas extends jjwg_Areas_sugar
      *
      * Check for valid latitude
      * @param float $lat
+     * @return bool
      */
     public function is_valid_lat($lat)
     {
@@ -276,6 +279,7 @@ class jjwg_Areas extends jjwg_Areas_sugar
     /**
      * Determine if Marker Object is in Area (Polygon)
      * @param object $marker
+     * @return bool
      */
     public function is_marker_in_area($marker)
     {
@@ -296,6 +300,7 @@ class jjwg_Areas extends jjwg_Areas_sugar
      *
      * @param float $lng
      * @param float $lat
+     * @return bool
      */
     public function is_point_in_area($lng, $lat)
     {

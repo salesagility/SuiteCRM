@@ -255,6 +255,7 @@ class UpgradeHistory extends SugarBean
      *
      * return               true if the right version is greater or they are equal
      *                      false if the left version is greater
+     * @return bool
      */
     public function is_right_version_greater($left, $right, $equals_is_greater = true)
     {

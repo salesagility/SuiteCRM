@@ -88,6 +88,7 @@ function implodeVersion($version, $size = 0, $lastSymbol = '', $delimiter = '')
  * Helper function for upgrade - get path from upload:// name
  * @param string $path
  * return string
+ * @return bool|string
  */
 function getUploadRelativeName($path)
 {
@@ -2292,6 +2293,7 @@ function unlinkUWTempFiles()
  * @param array the_array Collections of found files/dirs
  * @param bool include_dir True if we want to include directories in the
  * returned collection
+ * @return array
  */
 function uwFindAllFiles($dir, $theArray, $includeDirs=false, $skipDirs=array(), $echo=false)
 {

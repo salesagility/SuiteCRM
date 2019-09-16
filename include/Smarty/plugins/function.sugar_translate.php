@@ -56,9 +56,10 @@ r15131 - 2006-07-29 15:46:10 -0700 (Sat, 29 Jul 2006) - majed - translate functi
  * Name:     sugar_translate<br>
  * Purpose:  translates a label into the users current language
  *
- * @author Majed Itani {majed at sugarcrm.com
  * @param array
  * @param Smarty
+ * @return mixed|string|string[]|null
+ * @author Majed Itani {majed at sugarcrm.com
  */
 function smarty_function_sugar_translate($params, &$smarty)
 {

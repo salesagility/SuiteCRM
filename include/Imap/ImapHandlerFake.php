@@ -230,6 +230,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param string $message
      * @param string $options
      * @param string $internal_date
+     * @return mixed
      */
     public function append($mailbox, $message, $options = null, $internal_date = null)
     {

@@ -68,6 +68,7 @@ Pushed code for help popups into smarty function sugar_help.
  *
  * @param The $params runtime Smarty key/value arguments
  * @param The $smarty reference to the Smarty object used in this invocation
+ * @return string
  */
 function smarty_function_sugar_help($params, &$smarty)
 {

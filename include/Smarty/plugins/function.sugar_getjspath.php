@@ -37,9 +37,10 @@ r42807 - 2008-12-29 11:16:59 -0800 (Mon, 29 Dec 2008) - dwong - Branch from trun
  * Name:     sugar_getjspath<br>
  * Purpose:  Adds JS caching string to path
  *
- * @author Collin Lee {clee@sugarcrm.com}
  * @param array
  * @param Smarty
+ * @return string|void
+ * @author Collin Lee {clee@sugarcrm.com}
  */
 function smarty_function_sugar_getjspath($params, &$smarty)
 {

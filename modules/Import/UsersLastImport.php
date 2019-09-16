@@ -121,6 +121,7 @@ class UsersLastImport extends SugarBean
      * Undo a single record
      *
      * @param string $id specific users_last_import id to undo
+     * @return bool
      */
     public function undoById($id)
     {
@@ -144,7 +145,8 @@ class UsersLastImport extends SugarBean
     /**
      * Undo an import
      *
-     * @param string $module  module being imported into
+     * @param string $module module being imported into
+     * @return bool
      */
     public function undo($module)
     {
@@ -170,6 +172,7 @@ class UsersLastImport extends SugarBean
      *
      * @param $bean_id
      * @param $module
+     * @return bool
      */
     protected function _deleteRecord($bean_id, $module)
     {
@@ -227,7 +230,8 @@ class UsersLastImport extends SugarBean
     /**
      * Get a list of bean types created in the import
      *
-     * @param string $module  module being imported into
+     * @param string $module module being imported into
+     * @return array
      */
     public static function getBeansByImport($module)
     {

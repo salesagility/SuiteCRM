@@ -40,9 +40,10 @@ r22725 - 2007-05-11 16:37:35 -0700 (Fri, 11 May 2007) - clee - Added file.
  * Name:     sugar_evalcolumn_old<br>
  * Purpose:  evaluate a string by substituting values in the rowData parameter. Used for ListViews<br>
  *
- * @author Wayne Pan {wayne at sugarcrm.com
  * @param array
  * @param Smarty
+ * @return array|mixed|string|void
+ * @author Wayne Pan {wayne at sugarcrm.com
  */
 function smarty_function_sugar_evalcolumn_old($params, &$smarty)
 {

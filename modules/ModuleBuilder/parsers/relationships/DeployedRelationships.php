@@ -379,13 +379,14 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
             }
         }
     }
-    
+
     /**
      * Added for bug #40941
      * Deletes the field from DetailView and editView of the appropriate module
      * after the relatioship is deleted in delete() function above.
      * @param The $relationship relationship that is getting deleted
      * return null
+     * @return bool
      */
     private function removeFieldsFromDeployedLayout($relationship)
     {

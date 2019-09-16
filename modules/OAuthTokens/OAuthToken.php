@@ -249,6 +249,7 @@ class OAuthToken extends SugarBean
      * @param string $key
      * @param string $nonce
      * @param string $ts
+     * @return int
      */
     public static function checkNonce($key, $nonce, $ts)
     {

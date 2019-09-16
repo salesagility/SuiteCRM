@@ -17,6 +17,7 @@
  * @author messju mohr <messju at lammfellpuschen dot de> (conversion to compiler function)
  * @param string containing var-attribute and value-attribute
  * @param Smarty_Compiler
+ * @return string|void
  */
 function smarty_compiler_assign($tag_attrs, &$compiler)
 {

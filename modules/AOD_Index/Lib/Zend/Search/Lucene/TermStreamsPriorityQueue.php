@@ -95,6 +95,7 @@ class Zend_Search_Lucene_TermStreamsPriorityQueue implements Zend_Search_Lucene_
      * Prefix contains fully specified field info and portion of searched term
      *
      * @param Zend_Search_Lucene_Index_Term $prefix
+     * @return Zend_Search_Lucene_Index_Term|null
      */
     public function skipTo(Zend_Search_Lucene_Index_Term $prefix)
     {

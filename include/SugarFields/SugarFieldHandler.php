@@ -148,6 +148,7 @@ class SugarFieldHandler
      *      available paramters are:
      *      * labelSpan - column span for the label
      *      * fieldSpan - column span for the field
+     * @return string
      */
     public static function displaySmarty($parentFieldArray, $vardef, $displayType, $displayParams = array(), $tabindex = 1)
     {

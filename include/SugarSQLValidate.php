@@ -184,6 +184,7 @@ class SugarSQLValidate
      * Allow some subqueries to pass
      * Needed since OPI uses subqueries for email searches... sigh
      * @param array $term term structure of the subquery
+     * @return bool
      */
     protected function allowedSubquery($term)
     {

@@ -114,6 +114,7 @@ abstract class Zend_Search_Lucene_Search_Query
      * Constructs an initializes a Weight for a _top-level_query_.
      *
      * @param Zend_Search_Lucene_Interface $reader
+     * @return Zend_Search_Lucene_Search_Weight
      */
     protected function _initWeight(Zend_Search_Lucene_Interface $reader)
     {

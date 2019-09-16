@@ -753,6 +753,7 @@ define('XHPROF_BOOL_PARAM', 4);
  *
  * @param string   name of the URL query string param
  *
+ * @return mixed|null
  * @author Kannan
  */
 function xhprof_get_param_helper($param)

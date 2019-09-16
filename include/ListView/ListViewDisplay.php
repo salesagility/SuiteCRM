@@ -123,7 +123,7 @@ class ListViewDisplay
 
     /**
      * Setup the class
-     * @param SugarBean $seed  Seed SugarBean to use
+     * @param SugarBean $seed Seed SugarBean to use
      * @param File $file Template file to use
      * @param string $where
      * @param int $offset :0 offset to start at
@@ -137,6 +137,7 @@ class ListViewDisplay
      *         'handleMassupdate' => string :true Have massupdate.php handle massupdates?,
      *    ]
      * @param string :'id' $id_field
+     * @return bool
      */
     public function setup(
         $seed,

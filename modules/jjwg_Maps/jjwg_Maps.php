@@ -407,6 +407,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
      * Save Configuration Settings using Administration Module
      *
      * @param array $data of post data
+     * @return bool
      */
     public function saveConfiguration($data = array())
     {
@@ -614,6 +615,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
      * improve performance and not trigger additional logic hooks.
      *
      * @param $bean
+     * @return bool
      */
     public function updateRelatedMeetingsGeocodeInfo(&$bean)
     {
@@ -732,7 +734,8 @@ class jjwg_Maps extends jjwg_Maps_sugar
      *
      * @param type $table_name string
      * @param type $display array (fetched_row)
-     * @param type $aInfo   array
+     * @param type $aInfo array
+     * @return bool
      */
     public function updateGeocodeInfoByAssocQuery($table_name, $display, $aInfo = array())
     {
@@ -780,8 +783,9 @@ class jjwg_Maps extends jjwg_Maps_sugar
      * Used to Update or Remove Geocoding Information from Custom Table
      * Simple Query Approach
      *
-     * @param type $bean    object
-     * @param type $aInfo   array
+     * @param type $bean object
+     * @param type $aInfo array
+     * @return bool
      */
     public function updateGeocodeInfoByBeanQuery(&$bean, $aInfo = array())
     {
@@ -830,7 +834,8 @@ class jjwg_Maps extends jjwg_Maps_sugar
      * Remove All Geocoding Information from Custom Table for Module
      * Simple Query Approach
      *
-     * @param type $bean    object
+     * @param type $bean object
+     * @return bool
      */
     public function deleteAllGeocodeInfoByBeanQuery(&$bean)
     {
@@ -860,6 +865,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
      * @param string $table_name
      * @param integer $limit
      * @param string $id
+     * @return bool|resource
      */
     public function getGeocodeAddressesResult($table_name, $limit = 0, $id = '')
     {
@@ -899,9 +905,10 @@ class jjwg_Maps extends jjwg_Maps_sugar
 
     /**
      * getGoogleMapsGeocode - Get Lng/Lat using Google Maps V3
-     * @var $address
+     * @return array|mixed
      * @var boolean $return_full_array
      * @var boolean $allow_approximate
+     * @var $address
      */
     public function getGoogleMapsGeocode($address, $return_full_array = false, $allow_approximate = true)
     {
@@ -1025,6 +1032,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
      *
      * @param signular $object_name object name
      * @param fetched $display row
+     * @return array|bool
      */
     public function defineMapsAddress($object_name, $display)
     {
@@ -1186,6 +1194,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
      * Define the formatted address line based on address type and field names
      * @param bean $display fields array
      * @param type $type of address: 'billing', 'shipping', 'primary', 'alt', 'custom', 'address'
+     * @return bool|string
      */
     public function defineMapsFormattedAddress($display, $type = 'billing')
     {
@@ -1235,6 +1244,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
     /**
      * Check for valid longitude
      * @param float $lng
+     * @return bool
      */
     public function is_valid_lng($lng)
     {
@@ -1244,6 +1254,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
     /**
      * Check for valid latitude
      * @param float $lat
+     * @return bool
      */
     public function is_valid_lat($lat)
     {

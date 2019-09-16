@@ -528,6 +528,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
      * @param string $session - Session ID returned by a previous call to login.
      * @param array $modules Array of modules to return
      * @param bool $MD5 Should the results be md5d
+     * @return array|void
      */
     public function get_language_definition($session, $modules, $MD5 = false)
     {

@@ -24,6 +24,7 @@ r53792 - 2010-01-18 13:37:35 -0800 (Mon, 18 Jan 2010) - roger - adding code to s
  *
  * @param The $params runtime Smarty key/value arguments
  * @param The $smarty reference to the Smarty object used in this invocation
+ * @return string
  */
 function smarty_function_sugar_button_slider($params, &$smarty)
 {

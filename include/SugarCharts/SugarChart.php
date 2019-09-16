@@ -645,6 +645,7 @@ class SugarChart
      *
      * @param Mixed $sugarSetValue value
      * @param String $url value of URL for the link
+     * @return string
      */
     private function nullGroup($superSetValue, $url)
     {
@@ -656,6 +657,7 @@ class SugarChart
      * returns a name for the XML File
      *
      * @param string $file_id - unique id to make part of the file name
+     * @return string
      */
     public static function getXMLFileName($file_id)
     {

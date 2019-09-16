@@ -54,6 +54,7 @@
  *
  * @param array
  * @param Smarty
+ * @return string
  */
 function smarty_function_sugar_getscript($params, &$smarty)
 {

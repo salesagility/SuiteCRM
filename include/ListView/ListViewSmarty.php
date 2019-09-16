@@ -268,12 +268,12 @@ class ListViewSmarty extends ListViewDisplay
     }
 
 
-
     /**
      * Displays the xtpl, either echo or returning the contents
      *
      * @param end bool display the ending of the listview data (ie MassUpdate)
      *
+     * @return string
      */
     public function display($end = true)
     {

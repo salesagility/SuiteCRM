@@ -1390,6 +1390,7 @@ function append_where_clause(&$where_clauses, $variable_name, $SQL_name = null)
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
+ * @return string
  */
 function generate_where_statement($where_clauses)
 {
@@ -2159,7 +2160,7 @@ function xss_check_pattern($pattern, $str)
  * Designed to take a string passed in the URL as a parameter and clean all "bad" data from it.
  *
  * @param string $str
- * @param string $filter       which corresponds to a regular expression to use; choices are:
+ * @param string $filter which corresponds to a regular expression to use; choices are:
  *                             "STANDARD" ( default )
  *                             "STANDARDSPACE"
  *                             "FILE"
@@ -2170,7 +2171,8 @@ function xss_check_pattern($pattern, $str)
  *                             "UNIFIED_SEARCH"
  *                             "AUTO_INCREMENT"
  *                             "ALPHANUM"
- * @param bool   $dieOnBadData true (default) if you want to die if bad data if found, false if not
+ * @param bool $dieOnBadData true (default) if you want to die if bad data if found, false if not
+ * @return bool|string
  */
 function clean_string($str, $filter = 'STANDARD', $dieOnBadData = true)
 {
@@ -2959,6 +2961,7 @@ function get_bean_select_array(
 
 /**
  * @param unknown_type $listArray
+ * @return array
  */
 // function parse_list_modules
 // searches a list for items in a user's allowed tabs and returns an array that removes unallowed tabs from list
@@ -3866,6 +3869,7 @@ function get_module_info($module_name)
  * In order to have one place to obtain the proper object name. aCase for example causes issues throughout the application.
  *
  * @param string $moduleName
+ * @return string
  */
 function get_valid_bean_name($module_name)
 {
@@ -4785,6 +4789,7 @@ function inDeveloperMode()
  * Filter the protocol list for inbound email accounts.
  *
  * @param array $protocol
+ * @return array
  */
 function filterInboundEmailPopSelection($protocol)
 {
@@ -5039,7 +5044,8 @@ function getUrls($string)
  * Sanitize image file from hostile content.
  *
  * @param string $path Image file
- * @param bool   $jpeg Accept only JPEGs?
+ * @param bool $jpeg Accept only JPEGs?
+ * @return bool
  */
 function verify_image_file($path, $jpeg = false)
 {
@@ -5101,8 +5107,9 @@ function verify_image_file($path, $jpeg = false)
  * Verify uploaded image
  * Verifies that image has proper extension, MIME type and doesn't contain hostile content.
  *
- * @param string $path      Image path
- * @param bool   $jpeg_only Accept only JPEGs?
+ * @param string $path Image path
+ * @param bool $jpeg_only Accept only JPEGs?
+ * @return bool
  */
 function verify_uploaded_image($path, $jpeg_only = false)
 {

@@ -620,6 +620,7 @@ EOSQL;
     /**
      * Select database
      * @param string $dbname
+     * @return bool|mixed|resource
      */
     protected function selectDb($dbname)
     {

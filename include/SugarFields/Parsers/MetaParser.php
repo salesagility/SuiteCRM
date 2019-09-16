@@ -255,6 +255,7 @@ class MetaParser
      * is not set, it defaults to PRO flavor
      * @param The $contents file contents as a String value
      * @param The $result file contents with non-matching flavor tags and their nested comments removed
+     * @return string|string[]|The|null
      */
     public function stripFlavorTags($contents)
     {

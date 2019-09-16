@@ -7921,6 +7921,7 @@ class HTMLPurifier_PropertyList
     /**
      * Recursively retrieves the value for a key
      * @param string $name
+     * @return mixed
      * @throws HTMLPurifier_Exception
      */
     public function get($name)
@@ -10029,6 +10030,7 @@ class HTMLPurifier_Zipper
      * *unchanged!*
      *
      * @param Current contents of hole.
+     * @return array
      */
     public function splice($t, $delete, $replacement)
     {
@@ -20111,6 +20113,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
      * @param HTMLPurifier_Token|array|int|bool $token Token substitution value
      * @param HTMLPurifier_Injector|int $injector Injector that performed the substitution; default is if
      *        this is not an injector related operation.
+     * @return mixed
      * @throws HTMLPurifier_Exception
      */
     protected function processToken($token, $injector = -1)
@@ -20157,6 +20160,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
      * Inserts a token before the current token. Cursor now points to
      * this token.  You must reprocess after this.
      * @param HTMLPurifier_Token $token
+     * @return mixed
      */
     private function insertBefore($token)
     {

@@ -38,9 +38,10 @@ r21722 - 2007-04-11 14:18:45 -0700 (Wed, 11 Apr 2007) - wayne - sugar variable c
  * Name:     sugar_variable_constructor<br>
  * Purpose:  creates a smarty variable from the parameters
  *
- * @author Wayne Pan {wayne at sugarcrm.com}
  * @param array
  * @param Smarty
+ * @return string|void
+ * @author Wayne Pan {wayne at sugarcrm.com}
  */
 
 function smarty_function_sugar_variable_constructor($params, &$smarty)

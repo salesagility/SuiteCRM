@@ -73,6 +73,7 @@ class MassUpdate
      * get the massupdate form
      * @param bool boolean need to execute the massupdate form or not
      * @param multi_select_popup booleanif it is a multi-select value
+     * @return string
      */
     public function getDisplayMassUpdateForm($bool, $multi_select_popup = false)
     {
@@ -101,6 +102,7 @@ class MassUpdate
     /**
      * returns the mass update's html form header
      * @param multi_select_popup boolean if it is a mult-select or not
+     * @return string
      */
     public function getMassUpdateFormHeader($multi_select_popup = false)
     {
@@ -739,6 +741,7 @@ EOJS;
      * Decides which popup HTML code is needed for mass updating
      * @param displayname Name to display in the popup window
      * @param field name of the field to update
+     * @return string
      */
     public function handleRelationship($displayname, $field)
     {
@@ -784,6 +787,7 @@ EOJS;
      * Add a parent selection popup window
      * @param displayname Name to display in the popup window
      * @param field_name name of the field
+     * @return string
      */
     public function addParent($displayname, $field)
     {
@@ -897,6 +901,7 @@ EOHTML;
      * Add a generic input type='text' field
      * @param displayname Name to display in the popup window
      * @param field_name name of the field
+     * @return string
      */
     public function addInputType($displayname, $varname)
     {
@@ -1059,6 +1064,7 @@ EOHTML;
      * @param displayname Name to display in the popup window
      * @param varname name of the variable
      * @param id_name name of the id in vardef
+     * @return string
      */
     public function addAccountID($displayname, $varname, $id_name = '')
     {
@@ -1118,6 +1124,7 @@ EOHTML;
      * Add AssignedUser popup window HTML code
      * @param displayname Name to display in the popup window
      * @param varname name of the variable
+     * @return string
      */
     public function addAssignedUserID($displayname, $varname)
     {
@@ -1165,6 +1172,7 @@ EOQ;
      * @param displayname Name to display in the popup window
      * @param varname name of the variable
      * @param options array of options for status
+     * @return string
      */
     public function addStatus($displayname, $varname, $options)
     {
@@ -1201,6 +1209,7 @@ EOQ;
      * @param displayname Name to display in the popup window
      * @param varname name of the variable
      * @param options array of options for status
+     * @return string
      */
     public function addBool($displayname, $varname)
     {
@@ -1235,6 +1244,7 @@ EOQ;
      * Add Date selection popup window HTML code
      * @param displayname Name to display in the popup window
      * @param varname name of the variable
+     * @return string
      */
     public function addDate($displayname, $varname)
     {
@@ -1293,6 +1303,7 @@ EOQ;
      * Add Datetime selection popup window HTML code
      * @param displayname Name to display in the popup window
      * @param varname name of the variable
+     * @return string
      */
     public function addDatetime($displayname, $varname)
     {

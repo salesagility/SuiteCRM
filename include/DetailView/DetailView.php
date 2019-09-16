@@ -450,6 +450,7 @@ class DetailView extends ListView
      *
      * @param unknown_type $name - the name of the variable to set in the session
      * @param unknown_type $value - the value of the variable to set
+     * @return mixed|string
      */
     public function getVariableFromSession($name, $value)
     {

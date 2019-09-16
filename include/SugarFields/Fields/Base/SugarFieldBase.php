@@ -234,6 +234,7 @@ class SugarFieldBase
      *      * fieldSpan - column span for the field
      * @param integer $tabindex
      * @returns string
+     * @return string
      */
     public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {

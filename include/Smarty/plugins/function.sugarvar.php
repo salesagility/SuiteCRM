@@ -61,9 +61,10 @@ r22124 - 2007-04-20 16:54:53 -0700 (Fri, 20 Apr 2007) - clee -
  * Name:     sugarvar<br>
  * Purpose:  creates a smarty variable from the parameters
  *
- * @author Wayne Pan {wayne at sugarcrm.com}
  * @param array
  * @param Smarty
+ * @return string|void
+ * @author Wayne Pan {wayne at sugarcrm.com}
  */
 
 function smarty_function_sugarvar($params, &$smarty)

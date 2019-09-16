@@ -176,6 +176,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
     /**
      * Evaluates an array PHP code string without array() wrapper
      * @param string $contents
+     * @return mixed
      */
     protected function evalArray($contents)
     {

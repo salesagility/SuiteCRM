@@ -90,6 +90,7 @@ class ConnectorUtils
     /**
      * Check if external accounts are enabled for this connector
      * @param string $id
+     * @return bool
      */
     public static function eapmEnabled($id, $refresh = false)
     {
@@ -247,6 +248,7 @@ class ConnectorUtils
      *
      * @param boolean $refresh boolean flag indicating whether or not to force rewriting the file; defaults to false
      * @returns mixed $connectors Array of the connector entries found
+     * @return array
      */
     public static function getConnectors(
         $refresh = false
@@ -462,7 +464,8 @@ class ConnectorUtils
      * When a module has all of the sources removed from it we do not properly remove it from the viewdefs. This function
      * will handle that.
      *
-     * @param String $module	 - the module in question
+     * @param String $module - the module in question
+     * @return bool
      */
     public static function cleanMetaDataFile(
         $module
@@ -749,6 +752,7 @@ class ConnectorUtils
      *
      * @param String $source_id String value of the connector id to retrive language strings for
      * @param String $language optional String value for the language to use (defaults to $GLOBALS['current_language'])
+     * @return array
      */
     public static function getConnectorStrings(
         $source_id,
@@ -769,13 +773,14 @@ class ConnectorUtils
     }
 
     /**
-    * setConnectorStrings
-    * This method outputs the language Strings for a given connector instance
-    *
-    * @param String $source_id String value of the connector id to write language strings for (e.g., ext_soap_marketo)
-    * @param String $connector_strings array value of the connector_strings
-    * @param String $language optional String value for the language to use (defaults to $GLOBALS['current_language'])
-    */
+     * setConnectorStrings
+     * This method outputs the language Strings for a given connector instance
+     *
+     * @param String $source_id String value of the connector id to write language strings for (e.g., ext_soap_marketo)
+     * @param String $connector_strings array value of the connector_strings
+     * @param String $language optional String value for the language to use (defaults to $GLOBALS['current_language'])
+     * @return bool
+     */
     public static function setConnectorStrings(
         $source_id,
         $connector_strings,

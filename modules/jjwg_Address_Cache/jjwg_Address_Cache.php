@@ -58,6 +58,7 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar
     /**
      * Get the Address Info from the Address Cache Module
      * @param array $aInfo of geocode info (lng, lat, status, address)
+     * @return array|bool
      */
     public function getAddressCacheInfo($aInfo = array())
     {
@@ -102,6 +103,7 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar
     /**
      * Save New Address Info to the Address Cache Module / Table
      * @param array $aInfo of geocode info (lng, lat, status, address)
+     * @return bool
      */
     public function saveAddressCacheInfo($aInfo = array())
     {
@@ -156,6 +158,7 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar
      *
      * Check for valid longitude
      * @param float $lng
+     * @return bool
      */
     public function is_valid_lng($lng)
     {
@@ -166,6 +169,7 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar
      *
      * Check for valid latitude
      * @param float $lat
+     * @return bool
      */
     public function is_valid_lat($lat)
     {

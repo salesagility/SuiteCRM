@@ -845,6 +845,7 @@ class SearchForm
      * @param string $operator Date expression operator
      * @param string DB field name
      * @param string DB field type
+     * @return string
      */
     protected function parseDateExpression($operator, $db_field, $field_type = '')
     {
@@ -1421,6 +1422,7 @@ class SearchForm
      * a dropdown select is in single selection mode
      *
      * @param Mixed $value dropdown value
+     * @return bool
      */
     private function isEmptyDropdownField($name = '', $value = array())
     {
@@ -1435,6 +1437,7 @@ class SearchForm
      *
      * @static
      * @param $module
+     * @return array
      */
     public static function retrieveSearchDefs($module)
     {

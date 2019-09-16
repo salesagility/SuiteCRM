@@ -299,6 +299,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
      * get_subpanel_relationship_name
      * Get the relationship name based on the subapnel definition
      * @param mixed $defines The subpanel definition
+     * @return mixed|string
      */
     public function get_subpanel_relationship_name($defines)
     {

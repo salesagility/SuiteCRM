@@ -177,8 +177,9 @@ abstract class ImportDataSource implements Iterator
      * Add this row to the UsersLastImport table
      *
      * @param string $import_module name of the module we are doing the import into
-     * @param string $module        name of the bean we are creating for this import
-     * @param string $id            id of the recorded created in the $module
+     * @param string $module name of the bean we are creating for this import
+     * @param string $id id of the recorded created in the $module
+     * @return string
      */
     public static function writeRowToLastImport($import_module, $module, $id)
     {

@@ -3533,22 +3533,23 @@ if (!class_exists('TCPDF', false)) {
         }
 
         /**
-        * Returns the PDF string code to print a cell (rectangular area) with optional borders, background color and character string. The upper-left corner of the cell corresponds to the current position. The text can be aligned or centered. After the call, the current position moves to the right or to the next line. It is possible to put a link on the text.<br />
-        * If automatic page breaking is enabled and the cell goes beyond the limit, a page break is done before outputting.
-        * @param float $w Cell width. If 0, the cell extends up to the right margin.
-        * @param float $h Cell height. Default value: 0.
-        * @param string $txt String to print. Default value: empty string.
-        * @param mixed $border Indicates if borders must be drawn around the cell. The value can be either a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul>or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul>
-        * @param int $ln Indicates where the current position should go after the call. Possible values are:<ul><li>0: to the right (or left for RTL languages)</li><li>1: to the beginning of the next line</li><li>2: below</li></ul>Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value: 0.
-        * @param string $align Allows to center or align the text. Possible values are:<ul><li>L or empty string: left align (default value)</li><li>C: center</li><li>R: right align</li><li>J: justify</li></ul>
-        * @param int $fill Indicates if the cell background must be painted (1) or transparent (0). Default value: 0.
-        * @param mixed $link URL or identifier returned by AddLink().
-        * @param int $stretch stretch carachter mode: <ul><li>0 = disabled</li><li>1 = horizontal scaling only if necessary</li><li>2 = forced horizontal scaling</li><li>3 = character spacing only if necessary</li><li>4 = forced character spacing</li></ul>
-        * @param boolean $ignore_min_height if true ignore automatic minimum height value.
-        * @access protected
-        * @since 1.0
-        * @see Cell()
-        */
+         * Returns the PDF string code to print a cell (rectangular area) with optional borders, background color and character string. The upper-left corner of the cell corresponds to the current position. The text can be aligned or centered. After the call, the current position moves to the right or to the next line. It is possible to put a link on the text.<br />
+         * If automatic page breaking is enabled and the cell goes beyond the limit, a page break is done before outputting.
+         * @param float $w Cell width. If 0, the cell extends up to the right margin.
+         * @param float $h Cell height. Default value: 0.
+         * @param string $txt String to print. Default value: empty string.
+         * @param mixed $border Indicates if borders must be drawn around the cell. The value can be either a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul>or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul>
+         * @param int $ln Indicates where the current position should go after the call. Possible values are:<ul><li>0: to the right (or left for RTL languages)</li><li>1: to the beginning of the next line</li><li>2: below</li></ul>Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value: 0.
+         * @param string $align Allows to center or align the text. Possible values are:<ul><li>L or empty string: left align (default value)</li><li>C: center</li><li>R: right align</li><li>J: justify</li></ul>
+         * @param int $fill Indicates if the cell background must be painted (1) or transparent (0). Default value: 0.
+         * @param mixed $link URL or identifier returned by AddLink().
+         * @param int $stretch stretch carachter mode: <ul><li>0 = disabled</li><li>1 = horizontal scaling only if necessary</li><li>2 = forced horizontal scaling</li><li>3 = character spacing only if necessary</li><li>4 = forced character spacing</li></ul>
+         * @param boolean $ignore_min_height if true ignore automatic minimum height value.
+         * @access protected
+         * @return string
+         * @since 1.0
+         * @see Cell()
+         */
         protected function getCellCode($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false)
         {
             $txt = $this->removeSHY($txt);
@@ -4746,13 +4747,14 @@ if (!class_exists('TCPDF', false)) {
         }
 
         /**
-        * Convert the loaded php image to a JPEG and then return a structure for the PDF creator.
-        * This function requires GD library and write access to the directory defined on K_PATH_CACHE constant.
-        * @param string $file Image file name.
-        * @param image $image Image object.
-        * return image JPEG image object.
-        * @access protected
-        */
+         * Convert the loaded php image to a JPEG and then return a structure for the PDF creator.
+         * This function requires GD library and write access to the directory defined on K_PATH_CACHE constant.
+         * @param string $file Image file name.
+         * @param image $image Image object.
+         * return image JPEG image object.
+         * @access protected
+         * @return array
+         */
         protected function _toJPEG($image)
         {
             $tempname = tempnam(K_PATH_CACHE, 'jpg_');
@@ -4974,11 +4976,12 @@ if (!class_exists('TCPDF', false)) {
         }
 
         /**
-        * Correct the gamma value to be used with GD library
-        * @param float $v the gamma value to be corrected
-        * @access protected
-        * @since 4.3.007 (2008-12-04)
-        */
+         * Correct the gamma value to be used with GD library
+         * @param float $v the gamma value to be corrected
+         * @access protected
+         * @return float|int
+         * @since 4.3.007 (2008-12-04)
+         */
         protected function getGDgamma($v)
         {
             return (pow(($v / 255), 2.2) * 255);
@@ -5137,15 +5140,16 @@ if (!class_exists('TCPDF', false)) {
         }
 
         /**
-        * Send the document to a given destination: string, local file or browser.
-        * In the last case, the plug-in may be used (if present) or a download ("Save as" dialog box) may be forced.<br />
-        * The method first calls Close() if necessary to terminate the document.
-        * @param string $name The name of the file when saved. Note that special characters are removed and blanks characters are replaced with the underscore character.
-        * @param string $dest Destination where to send the document. It can take one of the following values:<ul><li>I: send the file inline to the browser (default). The plug-in is used if available. The name given by name is used when one selects the "Save as" option on the link generating the PDF.</li><li>D: send to the browser and force a file download with the name given by name.</li><li>F: save to a local file with the name given by name.</li><li>S: return the document as a string. name is ignored.</li></ul>
-        * @access public
-        * @since 1.0
-        * @see Close()
-        */
+         * Send the document to a given destination: string, local file or browser.
+         * In the last case, the plug-in may be used (if present) or a download ("Save as" dialog box) may be forced.<br />
+         * The method first calls Close() if necessary to terminate the document.
+         * @param string $name The name of the file when saved. Note that special characters are removed and blanks characters are replaced with the underscore character.
+         * @param string $dest Destination where to send the document. It can take one of the following values:<ul><li>I: send the file inline to the browser (default). The plug-in is used if available. The name given by name is used when one selects the "Save as" option on the link generating the PDF.</li><li>D: send to the browser and force a file download with the name given by name.</li><li>F: save to a local file with the name given by name.</li><li>S: return the document as a string. name is ignored.</li></ul>
+         * @access public
+         * @return string
+         * @see Close()
+         * @since 1.0
+         */
         public function Output($name='doc.pdf', $dest='I')
         {
             //Output PDF to some destination
@@ -6685,12 +6689,13 @@ if (!class_exists('TCPDF', false)) {
         }
 
         /**
-        * Underline text.
-        * @param int $x X coordinate
-        * @param int $y Y coordinate
-        * @param string $txt text to underline
-        * @access protected
-        */
+         * Underline text.
+         * @param int $x X coordinate
+         * @param int $y Y coordinate
+         * @param string $txt text to underline
+         * @access protected
+         * @return string
+         */
         protected function _dounderline($x, $y, $txt)
         {
             $up = $this->CurrentFont['up'];
@@ -6700,12 +6705,13 @@ if (!class_exists('TCPDF', false)) {
         }
 
         /**
-        * Line through text.
-        * @param int $x X coordinate
-        * @param int $y Y coordinate
-        * @param string $txt text to linethrough
-        * @access protected
-        */
+         * Line through text.
+         * @param int $x X coordinate
+         * @param int $y Y coordinate
+         * @param string $txt text to linethrough
+         * @access protected
+         * @return string
+         */
         protected function _dolinethrough($x, $y, $txt)
         {
             $up = $this->CurrentFont['up'];
@@ -7243,11 +7249,12 @@ if (!class_exists('TCPDF', false)) {
         // SINCE 2.0.000 (2008-01-02)
 
         /**
-        * Compute encryption key depending on object number where the encrypted data is stored
-        * @param int $n object number
-        * @access protected
-        * @since 2.0.000 (2008-01-02)
-        */
+         * Compute encryption key depending on object number where the encrypted data is stored
+         * @param int $n object number
+         * @access protected
+         * @return bool|string
+         * @since 2.0.000 (2008-01-02)
+         */
         protected function _objectkey($n)
         {
             return substr($this->_md5_16($this->encryption_key.pack('VXxx', $n)), 0, 10);
@@ -9797,25 +9804,27 @@ if (!class_exists('TCPDF', false)) {
         }
 
         /**
-        * Format the page numbers.
-        * This method can be overriden for custom formats.
-        * @param int $num page number
-        * @access protected
-        * @since 4.2.005 (2008-11-06)
-        */
+         * Format the page numbers.
+         * This method can be overriden for custom formats.
+         * @param int $num page number
+         * @access protected
+         * @return string
+         * @since 4.2.005 (2008-11-06)
+         */
         protected function formatPageNumber($num)
         {
             return number_format((float)$num, 0, '', '.');
         }
 
         /**
-        * Format the page numbers on the Table Of Content.
-        * This method can be overriden for custom formats.
-        * @param int $num page number
-        * @access protected
-        * @since 4.5.001 (2009-01-04)
-        * @see addTOC()
-        */
+         * Format the page numbers on the Table Of Content.
+         * This method can be overriden for custom formats.
+         * @param int $num page number
+         * @access protected
+         * @return string
+         * @see addTOC()
+         * @since 4.5.001 (2009-01-04)
+         */
         protected function formatTOCPageNumber($num)
         {
             return number_format((float)$num, 0, '', '.');
@@ -11156,14 +11165,15 @@ if (!class_exists('TCPDF', false)) {
          * @param string $html html text to print. Default value: empty string.
          * @param mixed $border Indicates if borders must be drawn around the cell. The value can be either a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul>or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul>
          * @param int $ln Indicates where the current position should go after the call. Possible values are:<ul><li>0: to the right (or left for RTL language)</li><li>1: to the beginning of the next line</li><li>2: below</li></ul>
-    Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value: 0.
+         * Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value: 0.
          * @param int $fill Indicates if the cell background must be painted (1) or transparent (0). Default value: 0.
          * @param boolean $reseth if true reset the last cell height (default true).
          * @param string $align Allows to center or align the text. Possible values are:<ul><li>L : left align</li><li>C : center</li><li>R : right align</li><li>'' : empty string : left for LTR or right for RTL</li></ul>
          * @param boolean $autopadding if true, uses internal padding and automatically adjust it to account for line width.
          * @access public
+         * @return int
          * @uses MultiCell()
-         * @see Multicell(), writeHTML()
+         * @see  Multicell(), writeHTML()
          */
         public function writeHTMLCell($w, $h, $x, $y, $html='', $border=0, $ln=0, $fill=0, $reseth=true, $align='', $autopadding=true)
         {
@@ -13195,11 +13205,12 @@ if (!class_exists('TCPDF', false)) {
         }
 
         /**
-        * Set custom width for list indentation.
-        * @param float $width width of the indentation. Use negative value to disable it.
-        * @access public
-        * @since 4.2.007 (2008-11-12)
-        */
+         * Set custom width for list indentation.
+         * @param float $width width of the indentation. Use negative value to disable it.
+         * @access public
+         * @return float
+         * @since 4.2.007 (2008-11-12)
+         */
         public function setListIndentWidth($width)
         {
             return $this->customlistindent = floatval($width);
@@ -13583,12 +13594,13 @@ if (!class_exists('TCPDF', false)) {
         }
 
         /**
-        * Returns a temporary filename for caching object on filesystem.
-        * @param string $prefix prefix to add to filename
-        * return string filename.
-        * @access protected
-        * @since 4.5.000 (2008-12-31)
-        */
+         * Returns a temporary filename for caching object on filesystem.
+         * @param string $prefix prefix to add to filename
+         * return string filename.
+         * @access protected
+         * @return bool|string
+         * @since 4.5.000 (2008-12-31)
+         */
         protected function getObjFilename($name)
         {
             return tempnam(K_PATH_CACHE, $name.'_');

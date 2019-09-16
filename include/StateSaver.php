@@ -326,12 +326,13 @@ class StateSaver
         $level = $this->pop($key, $namespace);
         error_reporting($level);
     }
-    
+
     /**
      * Save all data from a database table into store at an optional namespace.
      *
      * @param string $table
      * @param string $namespace
+     * @return array
      * @throws StateSaverException
      */
     public function pushTable($table, $namespace = 'db_table')
@@ -348,12 +349,13 @@ class StateSaver
         $this->push($rows, $table, $namespace);
         return $rows;
     }
-    
+
     /**
      * Restore all data into a database table from store at an optional namespace.
      *
      * @param string $table
      * @param string $namespace
+     * @return mixed
      */
     public function popTable($table, $namespace = 'db_table')
     {

@@ -256,6 +256,7 @@ class ImportMap extends SugarBean
      * If true, then call parent function
      *
      * @param $id
+     * @return bool|void
      */
     public function mark_deleted(
         $id
