@@ -83,11 +83,36 @@ class Sentry
         }
     }
 
-    public function handleException(Exception $exception)
+    /**
+     * Log an exception to sentry
+     *
+     * @param Exception $exception The Throwable/Exception object.
+     * @param array $data Additional attributes to pass with this event (see Sentry docs).
+     * @param mixed $logger
+     * @param mixed $vars
+     * @return string|null
+     */
+    public function handleException($exception, $data = null, $logger = null, $vars = null)
     {
         if ($this->enabled) {
-            $this->client->captureException($exception);
+            $this->client->captureException($exception, $data, $logger, $vars);
         }
     }
 
+    /**
+     * Log a message to sentry
+     *
+     * @param string $message The message (primary description) for the event.
+     * @param array $params params to use when formatting the message.
+     * @param array $data Additional attributes to pass with this event (see Sentry docs).
+     * @param bool|array $stack
+     * @param mixed $vars
+     * @return string|null
+     */
+    public function captureMessage($message, $params = [], $data = [], $stack = false, $vars = null)
+    {
+        if ($this->enabled) {
+            $this->client->captureMessage($message, $params, $data, $stack, $vars);
+        }
+    }
 }

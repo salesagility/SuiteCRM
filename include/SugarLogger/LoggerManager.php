@@ -99,6 +99,8 @@ class LoggerManager
         $method,
         $message
         ) {
+        global $sugar_config;
+
         if (!isset(self::$_levelMapping[$method])) {
             $method = self::$_level;
         }
@@ -119,6 +121,12 @@ class LoggerManager
             }
             //tell the logger to log the message
             self::$_loggers[$logger]->log($method, $message);
+
+            // Log to sentry if enabled
+            if ($sugar_config['sentry']['enabled']) {
+                $sentry = new Sentry();
+                $sentry->captureMessage($message, ['level' => $method]);
+            }
         }
     }
 
