@@ -84,6 +84,7 @@ if (empty($GLOBALS['installing']) && empty($sugar_config['dbconfig']['db_name'])
 // make sure SugarConfig object is available
 $GLOBALS['sugar_config'] = $sugar_config;
 require_once 'include/SugarObjects/SugarConfig.php';
+require_once 'include/SugarLogger/LoggerManager.php';
 
 if (!empty($sugar_config['xhprof_config'])) {
     require_once 'include/SugarXHprof/SugarXHprof.php';
@@ -127,7 +128,6 @@ require 'modules/DynamicFields/templates/Fields/TemplateText.php';
 
 require_once 'include/utils/file_utils.php';
 require_once 'include/SugarEmailAddress/SugarEmailAddress.php';
-require_once 'include/SugarLogger/LoggerManager.php';
 require_once 'modules/Trackers/BreadCrumbStack.php';
 require_once 'modules/Trackers/Tracker.php';
 require_once 'modules/Trackers/TrackerManager.php';
