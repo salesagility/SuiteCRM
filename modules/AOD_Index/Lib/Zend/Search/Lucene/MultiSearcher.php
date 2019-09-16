@@ -458,7 +458,6 @@ class Zend_Search_Lucene_MultiSearcher implements Zend_Search_Lucene_Interface
      *
      * @param mixed $query
      * @return array Zend_Search_Lucene_Search_QueryHit
-     * @throws Zend_Search_Lucene_Exception
      */
     public function find($query)
     {
@@ -826,7 +825,6 @@ class Zend_Search_Lucene_MultiSearcher implements Zend_Search_Lucene_Interface
      * Adds a document to this index.
      *
      * @param Zend_Search_Lucene_Document $document
-     * @throws Zend_Search_Lucene_Exception
      */
     public function addDocument(Zend_Search_Lucene_Document $document)
     {

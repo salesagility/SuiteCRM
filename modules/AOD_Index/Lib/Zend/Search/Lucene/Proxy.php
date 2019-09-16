@@ -335,7 +335,6 @@ class Zend_Search_Lucene_Proxy implements Zend_Search_Lucene_Interface
      *
      * @param mixed $query
      * @return array Zend_Search_Lucene_Search_QueryHit
-     * @throws Zend_Search_Lucene_Exception
      */
     public function find($query)
     {

@@ -155,13 +155,13 @@ class NonGmailSentFolderHandler
         }
         return $ret;
     }
-    
+
     /**
      *
      * @param InboundEmail $ie
      * @param SugarPHPMailer $mail
+     * @param string $options
      * @return bool
-     * @throws EmailException
      */
     protected function storeInNonGmailSentMailBox(InboundEmail $ie, SugarPHPMailer $mail, $options = "\\Seen")
     {

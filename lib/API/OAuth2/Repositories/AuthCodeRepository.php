@@ -76,7 +76,7 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
 
     /**
      * {@inheritdoc}
-     * @throws NotImplementedException
+     * @return AuthCodeEntity
      */
     public function getNewAuthCode()
     {

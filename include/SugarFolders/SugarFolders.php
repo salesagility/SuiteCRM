@@ -678,9 +678,9 @@ class SugarFolder
     /**
      * Builds up a metacollection of user/group folders to be passed to processor methods
      *
-     * @param User $user  Defaults to $current_user
+     * @param User $user Defaults to $current_user
+     * @param bool $subscribed
      * @return array      Array of abstract folder objects
-     * @throws \SugarFolderEmptyException
      */
     public function retrieveFoldersForProcessing($user, $subscribed = true)
     {

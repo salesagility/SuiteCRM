@@ -2683,9 +2683,8 @@ class PHPMailer
      * Returns an empty string on failure.
      * @param string $path The full path to the file
      * @param string $encoding The encoding to use; one of 'base64', '7bit', '8bit', 'binary', 'quoted-printable'
-     * @throws phpmailerException
-     * @access protected
      * @return string
+     * @access protected
      */
     protected function encodeFile($path, $encoding = 'base64')
     {

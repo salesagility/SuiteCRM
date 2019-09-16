@@ -93,7 +93,6 @@ class Zend_Search_Lucene_Search_QueryEntry_Phrase extends Zend_Search_Lucene_Sea
      *
      * @param string $encoding
      * @return Zend_Search_Lucene_Search_Query
-     * @throws Zend_Search_Lucene_Search_QueryParserException
      */
     public function getQuery($encoding)
     {

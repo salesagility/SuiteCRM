@@ -103,9 +103,8 @@ class Relationship extends ResourceIdentifier
 
     /**
      * @param ResourceIdentifier $related
-     * @return Resource
-     * @throws ForbiddenException
-     * @throws \SuiteCRM\API\v8\Exception\ApiException
+     * @return Relationship
+     * @throws ApiException
      */
     public function withResourceIdentifier(ResourceIdentifier $related)
     {

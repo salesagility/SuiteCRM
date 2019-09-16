@@ -57,10 +57,6 @@ class SchemaController extends ApiController
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      * @return ResponseInterface
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
      */
     public function getJsonApiSchema(ServerRequestInterface $request, ResponseInterface $response)
     {
@@ -92,10 +88,6 @@ class SchemaController extends ApiController
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      * @return ResponseInterface|static
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
      */
     public function getSwaggerSchema(ServerRequestInterface $request, ResponseInterface $response)
     {

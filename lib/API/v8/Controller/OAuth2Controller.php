@@ -56,10 +56,6 @@ class OAuth2Controller extends ApiController
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      * @return ResponseInterface|static
-     * @throws InvalidJsonApiResponseException
-     * @throws InvalidArgumentException
-     * @throws NotAcceptableException
-     * @throws UnsupportedMediaTypeException
      */
     public function authenticate(ServerRequestInterface $request, ResponseInterface $response)
     {

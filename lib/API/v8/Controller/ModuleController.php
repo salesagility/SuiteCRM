@@ -804,12 +804,6 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws InvalidJsonApiResponseException
-     * @throws \InvalidArgumentException
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
-     * @throws UnsupportedMediaTypeException
-     * @throws NotAcceptableException
      */
     public function getModuleMetaFields(Request $req, Response $res, array $args)
     {

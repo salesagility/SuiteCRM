@@ -86,7 +86,6 @@ class FactorAuthEmailCode implements FactorAuthInterface
      *
      * @param string $token
      * @return bool
-     * @throws \phpmailerException
      */
     public function sendToken($token)
     {
