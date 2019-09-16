@@ -45,6 +45,7 @@
  * @param array $additional_parameters
  * @param array $additional_parameters_oracle_only
  * @return string
+ * @throws Exception
  * @deprecated use DBManager::convert() instead.
  */
 function db_convert($string, $type, $additional_parameters=array(), $additional_parameters_oracle_only=array())
@@ -56,6 +57,7 @@ function db_convert($string, $type, $additional_parameters=array(), $additional_
  * @param $table
  * @param $fields
  * @return string
+ * @throws Exception
  * @deprecated use DBManager::concat() instead.
  */
 function db_concat($table, $fields)
@@ -68,6 +70,7 @@ function db_concat($table, $fields)
  * @param $string
  * @param $type
  * @return string
+ * @throws Exception
  * @deprecated use DBManager::fromConvert() instead.
  */
 function from_db_convert($string, $type)
@@ -168,6 +171,7 @@ function getValidDBName($name, $ensureUnique = false, $maxLen = 30)
  * @param string $name Proposed name for the DB
  * @param string $dbType Type of database server
  * @return bool true or false based on the validity of the DB name
+ * @throws Exception
  */
 function isValidDBName($name, $dbType)
 {

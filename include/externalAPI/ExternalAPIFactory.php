@@ -90,6 +90,7 @@ class ExternalAPIFactory
      * @param bool $forceRebuild
      * @param bool $ignoreDisabled Should we ignore disabled status?
      * @return array
+     * @throws Exception
      */
     public static function loadFullAPIList($forceRebuild=false, $ignoreDisabled = false)
     {
@@ -200,6 +201,7 @@ class ExternalAPIFactory
      * @param bool $apiName Ignore authentication requirements (optional)
      * @param bool $ignoreAuth
      * @return bool API plugin
+     * @throws Exception
      */
     public static function loadAPI($apiName, $ignoreAuth=false)
     {
@@ -242,6 +244,7 @@ class ExternalAPIFactory
      * @param string $module Which module name you are searching for, leave blank to find all API's
      * @param bool $ignoreAuth Ignore API's demands for authentication (used to get a complete list of modules
      * @return array class
+     * @throws Exception
      */
     public static function listAPI($module = '', $ignoreAuth = false)
     {
@@ -281,6 +284,7 @@ class ExternalAPIFactory
      * @param bool $ignoreAuth Ignore if we have authentication details or not
      * @param bool $addEmptyEntry Add empty entry?
      * @return array
+     * @throws Exception
      */
     public static function getModuleDropDown($moduleName, $ignoreAuth = false, $addEmptyEntry = false)
     {

@@ -83,6 +83,7 @@ class ResourceManager
      * 'Soap'; otherwise, it will try to create a WebResourceObserver instance.
      * @param string $module The module value used to create the corresponding observer
      * @return boolean value indicating whether or not an observer was successfully setup
+     * @throws Exception
      */
     public function setup($module)
     {

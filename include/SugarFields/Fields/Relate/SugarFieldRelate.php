@@ -53,6 +53,7 @@ class SugarFieldRelate extends SugarFieldBase
      * @param array $displayParams
      * @param integer $tabindex
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
@@ -68,12 +69,13 @@ class SugarFieldRelate extends SugarFieldBase
     }
 
     /**
-     * @see SugarFieldBase::getEditViewSmarty()
      * @param array $parentFieldArray
      * @param array $vardef
      * @param array $displayParams
      * @param integer $tabindex
      * @return string
+     * @throws \SuiteCRM\StateSaverException
+     * @see SugarFieldBase::getEditViewSmarty()
      */
     public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
@@ -192,6 +194,7 @@ class SugarFieldRelate extends SugarFieldBase
      * @param array $displayParams
      * @param integer $tabindex
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getPopupViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
@@ -206,6 +209,7 @@ class SugarFieldRelate extends SugarFieldBase
      * @param array $displayParams
      * @param integer $tabindex
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
@@ -336,12 +340,13 @@ class SugarFieldRelate extends SugarFieldBase
     }
 
     /**
-     * @see SugarFieldBase::importSanitize()
      * @param string $value
      * @param array $vardef
      * @param SugarBean $focus
      * @param ImportFieldSanitize $settings
      * @return array|bool|string
+     * @throws Exception
+     * @see SugarFieldBase::importSanitize()
      */
     public function importSanitize(
         $value,

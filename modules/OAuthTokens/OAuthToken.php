@@ -148,6 +148,7 @@ class OAuthToken extends SugarBean
      * Load token by ID
      * @param string $token
      * @return OAuthToken
+     * @throws Exception
      */
     public static function load($token)
     {
@@ -182,6 +183,7 @@ class OAuthToken extends SugarBean
      * @param OAuthKey $consumer
      * @param User $user
      * @return OAuthToken
+     * @throws Exception
      */
     public static function createAuthorized($consumer, $user)
     {
@@ -197,6 +199,7 @@ class OAuthToken extends SugarBean
      * Authorize request token
      * @param mixed $authdata
      * @return string Validation token
+     * @throws Exception
      */
     public function authorize($authdata)
     {
@@ -250,6 +253,7 @@ class OAuthToken extends SugarBean
      * @param string $nonce
      * @param string $ts
      * @return int
+     * @throws Exception
      */
     public static function checkNonce($key, $nonce, $ts)
     {
@@ -284,6 +288,7 @@ class OAuthToken extends SugarBean
     /**
      * Delete tokens by consumer ID
      * @param $consumer_id
+     * @throws Exception
      */
     public static function deleteByConsumer($consumer_id)
     {
@@ -294,6 +299,7 @@ class OAuthToken extends SugarBean
     /**
      * Delete tokens by user ID
      * @param $user_id
+     * @throws Exception
      */
     public static function deleteByUser($user_id)
     {

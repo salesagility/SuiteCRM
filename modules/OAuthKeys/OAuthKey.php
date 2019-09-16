@@ -62,6 +62,7 @@ class OAuthKey extends Basic
      * Get record by consumer key
      * @param string $key
      * @return OAuthKey|false
+     * @throws Exception
      */
     public function getByKey($key)
     {
@@ -78,6 +79,7 @@ class OAuthKey extends Basic
      * Fetch customer key by id
      * @param string $key
      * @return OAuthKey|false
+     * @throws Exception
      */
     public static function fetchKey($key)
     {

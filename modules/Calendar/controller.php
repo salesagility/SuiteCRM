@@ -278,6 +278,7 @@ class CalendarController extends SugarController
      *
      * @param bool $actionToCheck
      * @return bool Result of check
+     * @throws Exception
      */
     protected function retrieveCurrentBean($actionToCheck = false)
     {

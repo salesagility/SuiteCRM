@@ -165,6 +165,7 @@ class Call extends SugarBean
      * @param string $is_owner
      * @param string $in_group
      * @return bool
+     * @throws Exception
      */
     public function ACLAccess($view, $is_owner='not_set', $in_group='not_set')
     {

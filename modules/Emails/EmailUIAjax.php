@@ -52,6 +52,7 @@ use SuiteCRM\Utility\SuiteValidator;
  * @param JSON $json
  * @param User|null $user
  * @return string JSON
+ * @throws ImapHandlerException
  */
 function handleSubs($subs, $email, $json, $user = null)
 {

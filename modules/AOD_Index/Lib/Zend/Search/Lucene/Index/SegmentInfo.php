@@ -417,6 +417,7 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
      * Returns bitset or an array depending on bitset extension availability
      *
      * @return mixed
+     * @throws Zend_Search_Lucene_Exception
      */
     private function _load21DelFile()
     {

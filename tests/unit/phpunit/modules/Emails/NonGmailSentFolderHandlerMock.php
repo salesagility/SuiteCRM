@@ -84,6 +84,7 @@ class NonGmailSentFolderHandlerMock extends NonGmailSentFolderHandler
      * @param string $sentFolder
      * @param string $options
      * @return bool
+     * @throws ImapHandlerException
      * @throws phpmailerException
      */
     public function connectToNonGmailServerPublic(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder, $options = "\\Seen")

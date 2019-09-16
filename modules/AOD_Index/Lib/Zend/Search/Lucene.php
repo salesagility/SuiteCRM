@@ -1419,11 +1419,11 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
     }
 
 
-
     /**
      * Adds a document to this index.
      *
      * @param Zend_Search_Lucene_Document $document
+     * @throws Zend_Search_Lucene_Exception
      */
     public function addDocument(Zend_Search_Lucene_Document $document)
     {

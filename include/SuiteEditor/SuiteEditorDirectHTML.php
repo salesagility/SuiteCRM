@@ -68,6 +68,7 @@ class SuiteEditorDirectHTML implements SuiteEditorInterface
      * see more at SuiteEditorInterface
      *
      * @return mixed
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getHtml()
     {

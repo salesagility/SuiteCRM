@@ -386,6 +386,7 @@ class ModuleInstaller
      * @param string $section Name of the install file section
      * @param string $extname Name in Ext directory
      * @param string $module This extension belongs to a specific module
+     * @throws Exception
      */
     public function installExt($section, $extname, $module = '')
     {

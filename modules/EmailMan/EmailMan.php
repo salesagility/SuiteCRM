@@ -407,6 +407,7 @@ class EmailMan extends SugarBean
 
     /**
      * @return array
+     * @throws \SuiteCRM\StateSaverException
      */
     public function get_list_view_data()
     {
@@ -471,6 +472,7 @@ class EmailMan extends SugarBean
      * @param null $email_type
      * @param null $activity_type
      * @param null $resend_type
+     * @throws Exception
      */
     public function set_as_sent(
         $email_address,
@@ -535,6 +537,7 @@ class EmailMan extends SugarBean
      * @param $from_address_name
      * @return string
      * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
      * @throws \SuiteCRM\ErrorMessageException
      */
     public function create_ref_email(
@@ -711,6 +714,9 @@ class EmailMan extends SugarBean
      * @param $module
      * @param $mail
      * @return string
+     * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function create_indiv_email($module, $mail)
     {
@@ -803,6 +809,7 @@ class EmailMan extends SugarBean
      * for the campaign. If issues are found a fatal error will be logged but processing will not stop.
      * @param $marketing_id
      * @return bool Returns true if all campaign parameters are set correctly
+     * @throws Exception
      */
     public function verify_campaign($marketing_id)
     {
@@ -847,6 +854,10 @@ class EmailMan extends SugarBean
      * @param int $save_emails
      * @param bool $testmode
      * @return bool
+     * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws ImapHandlerException
+     * @throws \SuiteCRM\ErrorMessageException
      * @throws phpmailerException
      * @global array $beanList ;
      * @global array $beanFiles ;
@@ -1311,6 +1322,7 @@ class EmailMan extends SugarBean
      * @param string $module
      * @param string $uid
      * @return boolean|string
+     * @throws Exception
      */
     public function addOptInEmailToEmailQueue($module, $uid)
     {
@@ -1403,11 +1415,12 @@ class EmailMan extends SugarBean
 
     /**
      *
-     * @global LoggerManager $log
-     * @global array $app_strings
      * @param SugarBean|Person|Company $focus
      * @param EmailAddress $emailAddress
      * @return boolean return true on success otherwise false
+     * @throws phpmailerException
+     * @global LoggerManager $log
+     * @global array $app_strings
      */
     private function sendOptInEmailViaMailer(SugarBean $focus, EmailAddress $emailAddress)
     {

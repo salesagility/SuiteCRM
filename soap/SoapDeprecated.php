@@ -249,7 +249,7 @@ function end_session($user_name)
  * @param string $user_name -- The user name to create a session for
  * @param string $password -- The MD5 sum of the user's password
  * @return true -- If the session is created
- * @return false -- If the session is not created
+ * @throws Exception
  */
 function validate_user($user_name, $password)
 {
@@ -289,11 +289,11 @@ function validate_user($user_name, $password)
  * Internal: When building a response to the plug-in for Microsoft Outlook, find
  * all contacts that match the email address that was provided.
  *
- * @param array by ref $output_list -- The list of matching beans.  New contacts that match
- *   the email address are appended to the $output_list
+ * @param $output_list
  * @param string $email_address -- an email address to search for
  * @param Contact $seed_contact -- A template SugarBean.  This is a blank Contact
  * @param ID $msi_id -- Index Count
+ * @throws Exception
  */
 function add_contacts_matching_email_address(&$output_list, $email_address, &$seed_contact, &$msi_id)
 {
@@ -359,6 +359,7 @@ function add_contacts_matching_email_address(&$output_list, $email_address, &$se
  * @param String $email_address -- Email address
  * @param Bean $seed_lead -- Seed Lead Bean
  * @param int $msi_id -- output array offset.
+ * @throws Exception
  */
 function add_leads_matching_email_address(&$output_list, $email_address, &$seed_lead, &$msi_id)
 {
@@ -398,6 +399,7 @@ function add_leads_matching_email_address(&$output_list, $email_address, &$seed_
  * @param string $password -- MD5 of the user password
  * @param string $id -- the id of the record
  * @return array|void detail array along with associated objects.
+ * @throws Exception
  */
 function get_contact_relationships($user_name, $password, $id)
 {
@@ -465,6 +467,7 @@ $current_user = null;
  * @param string $password -- MD5 of the user password
  * @param string $email_address -- Single email address or '; ' separated list of email addresses (e.x "test@example.com; test2@example.com"
  * @return array detail array along with associated objects.
+ * @throws Exception
  */
 function contact_by_email($user_name, $password, $email_address)
 {
@@ -563,6 +566,7 @@ function get_user_list_array($user)
  * @param string $user -- user name for validation
  * @param password $password -- MD5 hash of the user password for validation
  * @return array Array -- An array of user detail records
+ * @throws Exception
  */
 function user_list($user, $password)
 {
@@ -593,6 +597,7 @@ function user_list($user, $password)
  * @param string $where -- Where clause defaults to ''
  * @param string $msi_id -- Response array index
  * @return array -- Resturns a list of contacts that have the provided name.
+ * @throws Exception
  */
 function contact_by_search($name, $where = '', $msi_id = '0')
 {
@@ -843,6 +848,7 @@ function case_by_search($name, $where = '', $msi_id = '0')
  * @param string $email_body -- The body of the email
  * @return int|string "Invalid username and/or password"
  * @throws EmailValidatorException
+ * @throws HTMLPurifier_Exception
  * @throws \SuiteCRM\ErrorMessageException
  */
 function track_email($user_name, $password, $parent_id, $contact_ids, $date_sent_received, $email_subject, $email_body)

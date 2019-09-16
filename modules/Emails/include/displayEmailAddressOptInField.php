@@ -44,12 +44,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 /**
- * @global array $app_strings
  * @param \Email $focus
  * @param string $field
  * @param mixed $value
  * @param string $view
  * @return string
+ * @throws \SuiteCRM\StateSaverException
+ * @global array $app_strings
  */
 function displayEmailAddressOptInField(Email $focus, $field, $value, $view)
 {

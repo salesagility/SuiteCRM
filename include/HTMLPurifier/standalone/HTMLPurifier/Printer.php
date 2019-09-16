@@ -28,6 +28,7 @@ class HTMLPurifier_Printer
     /**
      * Give generator necessary configuration if possible
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     public function prepareGenerator($config)
     {

@@ -73,6 +73,7 @@ function checkRequired($prefix, $required)
  * @param bool $skipRetrieve do not retrieve data of bean
  * @param bool $checkACL do not update fields if they are forbidden for current user
  * @return SugarBean
+ * @throws Exception
  */
 function populateFromPost($prefix, &$focus, $skipRetrieve = false, $checkACL = false)
 {
@@ -372,6 +373,7 @@ function isCloseAndCreateNewPressed()
  * Functions from Save2.php
  * @param $parent_id
  * @param $child_id
+ * @throws Exception
  * @see include/generic/Save2.php
  */
 

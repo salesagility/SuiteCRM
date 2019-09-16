@@ -78,6 +78,7 @@ class UserPreferencesService
      *
      * @param GetUserPreferencesParams $params
      * @return DocumentResponse
+     * @throws \Exception
      */
     public function getUserPreferences(GetUserPreferencesParams $params)
     {

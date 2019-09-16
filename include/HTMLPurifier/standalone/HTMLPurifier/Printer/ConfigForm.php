@@ -89,6 +89,7 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
      * @param array|bool $allowed Optional namespace(s) and directives to restrict form to.
      * @param bool $render_controls
      * @return string
+     * @throws HTMLPurifier_Exception
      */
     public function render($config, $allowed = true, $render_controls = true)
     {
@@ -140,6 +141,7 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
      * @param String $ns namespace name
      * @param array $directives array of directives to values
      * @return string
+     * @throws HTMLPurifier_Exception
      */
     protected function renderNamespace($ns, $directives)
     {
@@ -230,6 +232,7 @@ class HTMLPurifier_Printer_ConfigForm_NullDecorator extends HTMLPurifier_Printer
      * @param string $name
      * @param HTMLPurifier_Config|array $config
      * @return string
+     * @throws HTMLPurifier_Exception
      */
     public function render($ns, $directive, $value, $name, $config)
     {
@@ -293,6 +296,7 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
      * @param string $name
      * @param HTMLPurifier_Config|array $config
      * @return string
+     * @throws HTMLPurifier_Exception
      */
     public function render($ns, $directive, $value, $name, $config)
     {
@@ -387,6 +391,7 @@ class HTMLPurifier_Printer_ConfigForm_bool extends HTMLPurifier_Printer
      * @param string $name
      * @param HTMLPurifier_Config|array $config
      * @return string
+     * @throws HTMLPurifier_Exception
      */
     public function render($ns, $directive, $value, $name, $config)
     {

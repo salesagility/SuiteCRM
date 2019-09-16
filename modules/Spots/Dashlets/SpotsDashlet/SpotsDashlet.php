@@ -98,6 +98,7 @@ class SpotsDashlet extends Dashlet
      * Displays the dashlet.
      *
      * @return string html to display dashlet
+     * @throws \SuiteCRM\StateSaverException
      */
     public function display()
     {
@@ -139,6 +140,7 @@ class SpotsDashlet extends Dashlet
      * Displays the configuration form for the dashlet.
      *
      * @return string html to display form
+     * @throws \SuiteCRM\StateSaverException
      */
     public function displayOptions()
     {

@@ -68,6 +68,7 @@ abstract class PersonFormBase extends FormBase
      *
      * @param Array $rows of duplicate row data
      * @return string $form The HTML form data
+     * @throws Exception
      */
     public function buildTableForm($rows)
     {
@@ -187,6 +188,7 @@ abstract class PersonFormBase extends FormBase
      *
      * @param String $prefix value of any prefix to the form input names
      * @return array|null $rows Array of matching Leads entries found; null if none found
+     * @throws Exception
      */
     public function checkForDuplicates($prefix='')
     {

@@ -101,6 +101,7 @@ abstract class DashletGenericChart extends Dashlet
      *
      * @param int $id
      * @param array $options
+     * @throws Exception
      */
     public function __construct(
         $id,
@@ -237,6 +238,7 @@ abstract class DashletGenericChart extends Dashlet
      * Handles displaying the chart dashlet configuration popup window
      *
      * @return string HTML to return to the browser
+     * @throws \SuiteCRM\StateSaverException
      */
     public function displayOptions()
     {
@@ -332,6 +334,7 @@ abstract class DashletGenericChart extends Dashlet
      * Displays the Dashlet, must call process() prior to calling this
      *
      * @return string HTML that displays Dashlet
+     * @throws \SuiteCRM\StateSaverException
      */
     public function display()
     {
@@ -343,6 +346,7 @@ abstract class DashletGenericChart extends Dashlet
      *
      * @param int $dashletOffset
      * @return string HTML code
+     * @throws \SuiteCRM\StateSaverException
      */
     protected function processAutoRefresh($dashletOffset = 0)
     {

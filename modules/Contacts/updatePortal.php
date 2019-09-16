@@ -48,6 +48,10 @@ class updatePortal
 {
     /**
      * @param Contact $bean
+     * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      */
     public function updateUser($bean)
     {
@@ -80,6 +84,10 @@ class updatePortal
      * @param $emailBody
      * @param $altEmailBody
      * @param SugarBean|null $relatedBean
+     * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      */
     public function sendEmail($emailTo, $emailSubject, $emailBody, $altEmailBody, SugarBean $relatedBean = null)
     {

@@ -255,6 +255,7 @@ class VardefManager
      * @param array $additional_search_paths an array which allows a consumer to pass in additional vardef locations to search
      * @param bool $cacheCustom
      * @param array $params
+     * @throws Exception
      */
     public static function refreshVardefs($module, $object, $additional_search_paths = null, $cacheCustom = true, $params = array())
     {
@@ -419,6 +420,7 @@ class VardefManager
      * @param string $object the given object we wish to load the vardefs for
      * @param bool $refresh whether or not we wish to refresh the cache file.
      * @param array $params
+     * @throws Exception
      */
     public static function loadVardef($module, $object, $refresh=false, $params = array())
     {

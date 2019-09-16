@@ -61,6 +61,7 @@ class One2OneRelationship extends M2MRelationship
      * @param SugarBean $rhs right side bean to add to the relationship.
      * @param array $additionalFields =>value pairs of fields to save on the relationship
      * @return boolean true if successful
+     * @throws Exception
      */
     public function add($lhs, $rhs, $additionalFields = array())
     {

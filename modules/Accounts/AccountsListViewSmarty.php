@@ -111,6 +111,7 @@ EOF;
      * @param array $data
      * @param string $htmlVar
      * @return void|bool
+     * @throws \SuiteCRM\StateSaverException
      */
     public function process($file, $data, $htmlVar)
     {
@@ -134,7 +135,8 @@ EOF;
      * override
      * @param string $id
      * @param string $location
-     * @return string
+     * @return array
+     * @throws \SuiteCRM\StateSaverException
      */
     protected function buildActionsLink($id = 'actions_link', $location = 'top')
     {

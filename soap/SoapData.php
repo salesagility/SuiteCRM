@@ -72,6 +72,7 @@ $server->register(
  * @param string $deletion_date
  * @param int $php_serialize
  * @return array
+ * @throws Exception
  */
 function sync_get_modified_relationships($session, $module_name, $related_module, $from_date, $to_date, $offset, $max_results, $deleted, $module_id = '', $select_fields = array(), $ids = array(), $relationship_name = '', $deletion_date = '', $php_serialize = 1)
 {

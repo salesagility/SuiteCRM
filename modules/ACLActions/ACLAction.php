@@ -217,6 +217,7 @@ class ACLAction extends SugarBean
      * @param string $type
      * @param string $action
      * @return array
+     * @throws Exception
      */
     public static function getDefaultActions($type='module', $action='')
     {
@@ -250,6 +251,7 @@ class ACLAction extends SugarBean
      * @param string $type
      * @param STRING $action
      * @return ARRAY of ACLActionsArray
+     * @throws Exception
      */
 
     public static function getUserActions($user_id, $refresh=false, $category='', $type='', $action='')
@@ -476,6 +478,7 @@ class ACLAction extends SugarBean
      * @param STRING $action
      * @param STRING $type
      * @return boolean
+     * @throws Exception
      */
     public static function userNeedsSecurityGroup($user_id, $category, $action, $type='module')
     {
@@ -509,7 +512,7 @@ class ACLAction extends SugarBean
     */
     /* BEGIN - SECURITY GROUPS - added $in_group */
     /**
-    public static function userHasAccess($user_id, $category, $action,$type='module', $is_owner = false){
+     * public static function userHasAccess($user_id, $category, $action,$type='module', $is_owner = false){
      * @param $user_id
      * @param $category
      * @param $action
@@ -517,6 +520,7 @@ class ACLAction extends SugarBean
      * @param bool $is_owner
      * @param bool $in_group
      * @return bool
+     * @throws Exception
      */
     public static function userHasAccess($user_id, $category, $action, $type='module', $is_owner = false, $in_group = false)
     {
@@ -542,15 +546,16 @@ class ACLAction extends SugarBean
     }
     /* END - SECURITY GROUPS */
     /**
-    * function getUserAccessLevel($user_id, $category, $action,$type='module')
-    * returns the access level for a given category and action
-    *
-    * @param GUID  $user_id
-    * @param STRING $category
-    * @param STRING $action
-    * @param STRING $type
-    * @return INT (ACCESS LEVEL)
-    */
+     * function getUserAccessLevel($user_id, $category, $action,$type='module')
+     * returns the access level for a given category and action
+     *
+     * @param GUID $user_id
+     * @param STRING $category
+     * @param STRING $action
+     * @param STRING $type
+     * @return INT (ACCESS LEVEL)
+     * @throws Exception
+     */
     public static function getUserAccessLevel($user_id, $category, $action, $type='module')
     {
         if (empty($_SESSION['ACL'][$user_id][$category][$type][$action])) {
@@ -566,15 +571,16 @@ class ACLAction extends SugarBean
     }
 
     /**
-    * STATIC function userNeedsOwnership($user_id, $category, $action,$type='module')
-    * checks if a user should have ownership to do an action
-    *
-    * @param GUID $user_id
-    * @param STRING $category
-    * @param STRING $action
-    * @param STRING $type
-    * @return boolean
-    */
+     * STATIC function userNeedsOwnership($user_id, $category, $action,$type='module')
+     * checks if a user should have ownership to do an action
+     *
+     * @param GUID $user_id
+     * @param STRING $category
+     * @param STRING $action
+     * @param STRING $type
+     * @return boolean
+     * @throws Exception
+     */
     public static function userNeedsOwnership($user_id, $category, $action, $type='module')
     {
         //check if we don't have it set in the cache if not lets reload the cache

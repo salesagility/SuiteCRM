@@ -117,7 +117,8 @@ class UndeployedSubpanelImplementation extends AbstractMetaDataImplementation im
 
     /**
      * Save a subpanel
-     * @param array $layoutDefinitions    Layout definition in the same format as received by the constructor
+     * @param array $layoutDefinitions Layout definition in the same format as received by the constructor
+     * @throws Exception
      */
     public function deploy($layoutDefinitions)
     {

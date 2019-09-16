@@ -161,6 +161,7 @@ class CalendarUtils
      * Get array that will be sent back to ajax frontend
      * @param SugarBean $bean
      * @return array
+     * @throws Exception
      */
     public static function get_sendback_array(SugarBean $bean)
     {
@@ -219,6 +220,7 @@ class CalendarUtils
      * Get array of repeat data
      * @param SugarBean $bean
      * @return array
+     * @throws Exception
      */
     public static function get_sendback_repeat_data(SugarBean $bean)
     {
@@ -266,6 +268,7 @@ class CalendarUtils
      * @param string $date_start
      * @param array $params
      * @return array
+     * @throws Exception
      */
     public static function build_repeat_sequence($date_start, $params)
     {
@@ -379,6 +382,7 @@ class CalendarUtils
      * @param SugarBean $bean
      * @param array $time_arr array of datetimes
      * @return array
+     * @throws Exception
      */
     public static function save_repeat_activities(SugarBean $bean, $time_arr)
     {
@@ -495,6 +499,7 @@ class CalendarUtils
     /**
      * Delete recurring activities and their invitee relationships
      * @param SugarBean $bean
+     * @throws Exception
      */
     public static function markRepeatDeleted(SugarBean $bean)
     {
@@ -525,6 +530,7 @@ class CalendarUtils
      * check if meeting has repeat children and pass repeat_parent over to the 2nd meeting in sequence
      * @param SugarBean $bean
      * @param string $beanId
+     * @throws Exception
      */
     public static function correctRecurrences(SugarBean $bean, $beanId)
     {

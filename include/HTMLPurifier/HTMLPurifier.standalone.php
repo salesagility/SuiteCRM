@@ -130,6 +130,7 @@ class HTMLPurifier
      *                per-use basis).
      *                The parameter can also be any type that
      *                HTMLPurifier_Config::create() supports.
+     * @throws HTMLPurifier_Exception
      */
     public function __construct($config = null)
     {
@@ -257,6 +258,7 @@ class HTMLPurifier
      *                See HTMLPurifier::purify() for more details.
      *
      * @return string[] Array of purified HTML
+     * @throws HTMLPurifier_Exception
      */
     public function purifyArray($array_of_html, $config = null)
     {
@@ -847,6 +849,7 @@ class HTMLPurifier_AttrValidator
      * @param HTMLPurifier_Token $token Token to validate.
      * @param HTMLPurifier_Config $config Instance of HTMLPurifier_Config
      * @param HTMLPurifier_Context $context Instance of HTMLPurifier_Context
+     * @throws HTMLPurifier_Exception
      */
     public function validateToken($token, $config, $context)
     {
@@ -1208,6 +1211,7 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
     /**
      * Constructs the info array.  The meat of this class.
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     protected function doSetup($config)
     {
@@ -1625,6 +1629,7 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
      * Performs extra config-based processing. Based off of
      * HTMLPurifier_HTMLDefinition.
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      * @todo Refactor duplicate elements into common class (probably using
      *       composition, not inheritance).
      */
@@ -1836,6 +1841,7 @@ class HTMLPurifier_Config
      *                      or a string filename of an ini file.
      * @param HTMLPurifier_ConfigSchema $schema Schema object
      * @return HTMLPurifier_Config Configured object
+     * @throws HTMLPurifier_Exception
      */
     public static function create($config, $schema = null)
     {
@@ -2012,6 +2018,7 @@ class HTMLPurifier_Config
      * @param string $key key
      * @param mixed $value value
      * @param mixed $a
+     * @throws HTMLPurifier_Exception
      */
     public function set($key, $value, $a = null)
     {
@@ -2387,6 +2394,7 @@ class HTMLPurifier_Config
      * Namespace.Directive => Value
      *
      * @param array $config_array Configuration associative array
+     * @throws HTMLPurifier_Exception
      */
     public function loadArray($config_array)
     {
@@ -2476,6 +2484,7 @@ class HTMLPurifier_Config
      * @param HTMLPurifier_ConfigSchema $schema Schema to use, if not global copy
      *
      * @return mixed
+     * @throws HTMLPurifier_Exception
      */
     public static function loadArrayFromForm($array, $index = false, $allowed = true, $mq_fix = true, $schema = null)
     {
@@ -2491,6 +2500,7 @@ class HTMLPurifier_Config
      * @param string|bool $index Index/name that the config variables are in
      * @param array|bool $allowed List of allowed namespaces/directives
      * @param bool $mq_fix Boolean whether or not to enable magic quotes fix
+     * @throws HTMLPurifier_Exception
      */
     public function mergeArrayFromForm($array, $index = false, $allowed = true, $mq_fix = true)
     {
@@ -2539,6 +2549,7 @@ class HTMLPurifier_Config
      * Loads configuration values from an ini file
      *
      * @param string $filename Name of ini file
+     * @throws HTMLPurifier_Exception
      */
     public function loadIni($filename)
     {
@@ -3105,6 +3116,7 @@ abstract class HTMLPurifier_DefinitionCache
      * Generates a unique identifier for a particular configuration
      * @param HTMLPurifier_Config $config Instance of HTMLPurifier_Config
      * @return string
+     * @throws HTMLPurifier_Exception
      */
     public function generateKey($config)
     {
@@ -3119,6 +3131,7 @@ abstract class HTMLPurifier_DefinitionCache
      * @param string $key Key to test
      * @param HTMLPurifier_Config $config Instance of HTMLPurifier_Config to test against
      * @return bool
+     * @throws HTMLPurifier_Exception
      */
     public function isOld($key, $config)
     {
@@ -3267,6 +3280,7 @@ class HTMLPurifier_DefinitionCacheFactory
      * @param string $type Name of definitions handled by cache
      * @param HTMLPurifier_Config $config Config instance
      * @return mixed
+     * @throws HTMLPurifier_Exception
      */
     public function create($type, $config)
     {
@@ -3490,6 +3504,7 @@ class HTMLPurifier_DoctypeRegistry
      *       based or not).
      * @param HTMLPurifier_Config $config
      * @return HTMLPurifier_Doctype
+     * @throws HTMLPurifier_Exception
      */
     public function make($config)
     {
@@ -3500,6 +3515,7 @@ class HTMLPurifier_DoctypeRegistry
      * Retrieves the doctype from the configuration object
      * @param HTMLPurifier_Config $config
      * @return string
+     * @throws HTMLPurifier_Exception
      */
     public function getDoctypeFromConfig($config)
     {
@@ -4119,6 +4135,7 @@ class HTMLPurifier_Encoder
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return string
+     * @throws HTMLPurifier_Exception
      */
     public static function convertToUTF8($str, $config, $context)
     {
@@ -4165,6 +4182,7 @@ class HTMLPurifier_Encoder
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return string
+     * @throws HTMLPurifier_Exception
      * @note Currently, this is a lossy conversion, with unexpressable
      *       characters being omitted.
      */
@@ -4733,6 +4751,7 @@ class HTMLPurifier_ErrorCollector
      * @param HTMLPurifier_Config $config Configuration, vital for HTML output nature
      * @param array $errors Errors array to display; used for recursion.
      * @return string
+     * @throws HTMLPurifier_Exception
      */
     public function getHTMLFormatted($config, $errors = null)
     {
@@ -5013,6 +5032,7 @@ class HTMLPurifier_Generator
     /**
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
+     * @throws HTMLPurifier_Exception
      */
     public function __construct($config, $context)
     {
@@ -5029,6 +5049,7 @@ class HTMLPurifier_Generator
      * Generates HTML from an array of tokens.
      * @param HTMLPurifier_Token[] $tokens Array of HTMLPurifier_Token
      * @return string Generated HTML
+     * @throws HTMLPurifier_Exception
      */
     public function generateFromTokens($tokens)
     {
@@ -5426,6 +5447,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
 
     /**
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     protected function doSetup($config)
     {
@@ -5443,6 +5465,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
     /**
      * Extract out the information from the manager
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     protected function processModules($config)
     {
@@ -5494,6 +5517,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
     /**
      * Sets up stuff based on config. We need a better way of doing this.
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     protected function setupConfigStuff($config)
     {
@@ -6246,6 +6270,7 @@ class HTMLPurifier_HTMLModuleManager
      * Performs processing on modules, after being called you may
      * use getElement() and getElements()
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     public function setup($config)
     {
@@ -6498,6 +6523,7 @@ class HTMLPurifier_IDAccumulator
      * @param HTMLPurifier_Config $config Instance of HTMLPurifier_Config
      * @param HTMLPurifier_Context $context Instance of HTMLPurifier_Context
      * @return HTMLPurifier_IDAccumulator Fully initialized HTMLPurifier_IDAccumulator
+     * @throws HTMLPurifier_Exception
      */
     public static function build($config, $context)
     {
@@ -6629,6 +6655,7 @@ abstract class HTMLPurifier_Injector
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool|string Boolean false if success, string of missing needed element/attribute if failure
+     * @throws HTMLPurifier_Exception
      */
     public function prepare($config, $context)
     {
@@ -6652,6 +6679,7 @@ abstract class HTMLPurifier_Injector
      * Auto-Paragraphing injector should not be enabled.
      * @param HTMLPurifier_Config $config
      * @return bool|string Boolean false if success, string of missing needed element/attribute if failure
+     * @throws HTMLPurifier_Exception
      */
     public function checkNeeded($config)
     {
@@ -7110,6 +7138,7 @@ class HTMLPurifier_LanguageFactory
      * @param HTMLPurifier_Context $context
      * @param bool|string $code Code to override configuration with. Private parameter.
      * @return HTMLPurifier_Language
+     * @throws HTMLPurifier_Exception
      */
     public function create($config, $context, $code = false)
     {
@@ -7685,6 +7714,7 @@ class HTMLPurifier_Lexer
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return string
+     * @throws HTMLPurifier_Exception
      * @todo Consider making protected
      */
     public function normalize($html, $config, $context)
@@ -9270,6 +9300,7 @@ abstract class HTMLPurifier_URIScheme
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool success or failure
+     * @throws HTMLPurifier_Exception
      */
     public function validate(&$uri, $config, $context)
     {
@@ -9351,6 +9382,7 @@ class HTMLPurifier_URISchemeRegistry
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return HTMLPurifier_URIScheme
+     * @throws HTMLPurifier_Exception
      */
     public function getScheme($scheme, $config, $context)
     {
@@ -10113,6 +10145,7 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     public function validate($css, $config, $context)
     {
@@ -10820,6 +10853,7 @@ class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
 
     /**
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     public function __construct($config)
     {
@@ -11088,6 +11122,7 @@ class HTMLPurifier_AttrDef_CSS_Border extends HTMLPurifier_AttrDef
 
     /**
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     public function __construct($config)
     {
@@ -11142,6 +11177,7 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     public function validate($color, $config, $context)
     {
@@ -11427,6 +11463,7 @@ class HTMLPurifier_AttrDef_CSS_Font extends HTMLPurifier_AttrDef
 
     /**
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     public function __construct($config)
     {
@@ -11636,6 +11673,7 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     public function validate($string, $config, $context)
     {
@@ -11988,6 +12026,7 @@ class HTMLPurifier_AttrDef_CSS_ListStyle extends HTMLPurifier_AttrDef
 
     /**
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     public function __construct($config)
     {
@@ -12280,6 +12319,7 @@ class HTMLPurifier_AttrDef_CSS_URI extends HTMLPurifier_AttrDef_URI
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     public function validate($uri_string, $config, $context)
     {
@@ -12483,6 +12523,7 @@ class HTMLPurifier_AttrDef_HTML_Class extends HTMLPurifier_AttrDef_HTML_Nmtokens
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return array
+     * @throws HTMLPurifier_Exception
      */
     protected function filter($tokens, $config, $context)
     {
@@ -12516,6 +12557,7 @@ class HTMLPurifier_AttrDef_HTML_Color extends HTMLPurifier_AttrDef
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     public function validate($string, $config, $context)
     {
@@ -12582,6 +12624,7 @@ class HTMLPurifier_AttrDef_HTML_FrameTarget extends HTMLPurifier_AttrDef_Enum
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     public function validate($string, $config, $context)
     {
@@ -12631,6 +12674,7 @@ class HTMLPurifier_AttrDef_HTML_ID extends HTMLPurifier_AttrDef
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     public function validate($id, $config, $context)
     {
@@ -12876,6 +12920,7 @@ class HTMLPurifier_AttrDef_HTML_LinkTypes extends HTMLPurifier_AttrDef
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     public function validate($string, $config, $context)
     {
@@ -13019,6 +13064,7 @@ class HTMLPurifier_AttrDef_URI_Host extends HTMLPurifier_AttrDef
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     public function validate($string, $config, $context)
     {
@@ -13327,6 +13373,7 @@ class HTMLPurifier_AttrTransform_BdoDir extends HTMLPurifier_AttrTransform
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return array
+     * @throws HTMLPurifier_Exception
      */
     public function transform($attr, $config, $context)
     {
@@ -13531,6 +13578,7 @@ class HTMLPurifier_AttrTransform_ImgRequired extends HTMLPurifier_AttrTransform
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return array
+     * @throws HTMLPurifier_Exception
      */
     public function transform($attr, $config, $context)
     {
@@ -13772,6 +13820,7 @@ class HTMLPurifier_AttrTransform_Name extends HTMLPurifier_AttrTransform
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return array
+     * @throws HTMLPurifier_Exception
      */
     public function transform($attr, $config, $context)
     {
@@ -13812,6 +13861,7 @@ class HTMLPurifier_AttrTransform_NameSync extends HTMLPurifier_AttrTransform
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return array
+     * @throws HTMLPurifier_Exception
      */
     public function transform($attr, $config, $context)
     {
@@ -13859,6 +13909,7 @@ class HTMLPurifier_AttrTransform_Nofollow extends HTMLPurifier_AttrTransform
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return array
+     * @throws HTMLPurifier_Exception
      */
     public function transform($attr, $config, $context)
     {
@@ -13979,6 +14030,7 @@ class HTMLPurifier_AttrTransform_SafeParam extends HTMLPurifier_AttrTransform
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return array
+     * @throws HTMLPurifier_Exception
      */
     public function transform($attr, $config, $context)
     {
@@ -14072,6 +14124,7 @@ class HTMLPurifier_AttrTransform_TargetBlank extends HTMLPurifier_AttrTransform
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return array
+     * @throws HTMLPurifier_Exception
      */
     public function transform($attr, $config, $context)
     {
@@ -14615,6 +14668,7 @@ class HTMLPurifier_ChildDef_StrictBlockquote extends HTMLPurifier_ChildDef_Requi
     /**
      * @param HTMLPurifier_Config $config
      * @return array
+     * @throws HTMLPurifier_Exception
      * @note We don't want MakeWellFormed to auto-close inline elements since
      *       they might be allowed.
      */
@@ -14629,6 +14683,7 @@ class HTMLPurifier_ChildDef_StrictBlockquote extends HTMLPurifier_ChildDef_Requi
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return array
+     * @throws HTMLPurifier_Exception
      */
     public function validateChildren($children, $config, $context)
     {
@@ -14674,6 +14729,7 @@ class HTMLPurifier_ChildDef_StrictBlockquote extends HTMLPurifier_ChildDef_Requi
 
     /**
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     private function init($config)
     {
@@ -15116,6 +15172,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
      * @param HTMLPurifier_Definition $def
      * @param HTMLPurifier_Config $config
      * @return int|bool
+     * @throws HTMLPurifier_Exception
      */
     public function add($def, $config)
     {
@@ -15136,6 +15193,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
      * @param HTMLPurifier_Definition $def
      * @param HTMLPurifier_Config $config
      * @return int|bool
+     * @throws HTMLPurifier_Exception
      */
     public function set($def, $config)
     {
@@ -15153,6 +15211,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
      * @param HTMLPurifier_Definition $def
      * @param HTMLPurifier_Config $config
      * @return int|bool
+     * @throws HTMLPurifier_Exception
      */
     public function replace($def, $config)
     {
@@ -15172,6 +15231,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
     /**
      * @param HTMLPurifier_Config $config
      * @return bool|HTMLPurifier_Config
+     * @throws HTMLPurifier_Exception
      */
     public function get($config)
     {
@@ -15185,6 +15245,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
     /**
      * @param HTMLPurifier_Config $config
      * @return bool
+     * @throws HTMLPurifier_Exception
      */
     public function remove($config)
     {
@@ -15198,6 +15259,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
     /**
      * @param HTMLPurifier_Config $config
      * @return bool
+     * @throws HTMLPurifier_Exception
      */
     public function flush($config)
     {
@@ -15220,6 +15282,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
     /**
      * @param HTMLPurifier_Config $config
      * @return bool
+     * @throws HTMLPurifier_Exception
      */
     public function cleanup($config)
     {
@@ -15247,6 +15310,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
      * the configuration and definition name
      * @param HTMLPurifier_Config $config
      * @return string
+     * @throws HTMLPurifier_Exception
      * @todo Make protected
      */
     public function generateFilePath($config)
@@ -15259,6 +15323,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
      * Generates the path to the directory contain this cache's serial files
      * @param HTMLPurifier_Config $config
      * @return string
+     * @throws HTMLPurifier_Exception
      * @note No trailing slash
      * @todo Make protected
      */
@@ -15273,6 +15338,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
      * serials
      * @param HTMLPurifier_Config $config
      * @return mixed|string
+     * @throws HTMLPurifier_Exception
      * @todo Make protected
      */
     public function generateBaseDirectoryPath($config)
@@ -15288,6 +15354,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
      * @param string $data Data to write into file
      * @param HTMLPurifier_Config $config
      * @return int|bool Number of bytes written if success, or false if failure.
+     * @throws HTMLPurifier_Exception
      */
     private function _write($file, $data, $config)
     {
@@ -15308,6 +15375,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
      * Prepares the directory that this type stores the serials in
      * @param HTMLPurifier_Config $config
      * @return bool True if successful
+     * @throws HTMLPurifier_Exception
      */
     private function _prepareDir($config)
     {
@@ -15503,6 +15571,7 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
      * @param HTMLPurifier_Definition $def
      * @param HTMLPurifier_Config $config
      * @return mixed
+     * @throws HTMLPurifier_Exception
      */
     public function add($def, $config)
     {
@@ -15517,6 +15586,7 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
      * @param HTMLPurifier_Definition $def
      * @param HTMLPurifier_Config $config
      * @return mixed
+     * @throws HTMLPurifier_Exception
      */
     public function set($def, $config)
     {
@@ -15531,6 +15601,7 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
      * @param HTMLPurifier_Definition $def
      * @param HTMLPurifier_Config $config
      * @return mixed
+     * @throws HTMLPurifier_Exception
      */
     public function replace($def, $config)
     {
@@ -15544,6 +15615,7 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
     /**
      * @param HTMLPurifier_Config $config
      * @return mixed
+     * @throws HTMLPurifier_Exception
      */
     public function get($config)
     {
@@ -15947,6 +16019,7 @@ class HTMLPurifier_HTMLModule_Iframe extends HTMLPurifier_HTMLModule
 
     /**
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     public function setup($config)
     {
@@ -15992,6 +16065,7 @@ class HTMLPurifier_HTMLModule_Image extends HTMLPurifier_HTMLModule
 
     /**
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     public function setup($config)
     {
@@ -16275,6 +16349,7 @@ class HTMLPurifier_HTMLModule_Name extends HTMLPurifier_HTMLModule
 
     /**
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     public function setup($config)
     {
@@ -16536,6 +16611,7 @@ class HTMLPurifier_HTMLModule_SafeEmbed extends HTMLPurifier_HTMLModule
 
     /**
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     public function setup($config)
     {
@@ -16580,6 +16656,7 @@ class HTMLPurifier_HTMLModule_SafeObject extends HTMLPurifier_HTMLModule
 
     /**
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     public function setup($config)
     {
@@ -16641,6 +16718,7 @@ class HTMLPurifier_HTMLModule_SafeScripting extends HTMLPurifier_HTMLModule
 
     /**
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      */
     public function setup($config)
     {
@@ -17032,6 +17110,7 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
      * Lazy load constructs the module by determining the necessary
      * fixes to create and then delegating to the populate() function.
      * @param HTMLPurifier_Config $config
+     * @throws HTMLPurifier_Exception
      * @todo Wildcard matching and error reporting when an added or
      *       subtracted fix has no effect.
      */
@@ -18056,6 +18135,7 @@ class HTMLPurifier_Injector_PurifierLinkify extends HTMLPurifier_Injector
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return string
+     * @throws HTMLPurifier_Exception
      */
     public function prepare($config, $context)
     {
@@ -18140,6 +18220,7 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return void
+     * @throws HTMLPurifier_Exception
      */
     public function prepare($config, $context)
     {
@@ -18153,6 +18234,7 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
 
     /**
      * @param HTMLPurifier_Token $token
+     * @throws HTMLPurifier_Exception
      */
     public function handleElement(&$token)
     {
@@ -18246,6 +18328,7 @@ class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_In
 
     /**
      * @param HTMLPurifier_Token $token
+     * @throws HTMLPurifier_Exception
      */
     public function handleElement(&$token)
     {
@@ -18340,6 +18423,7 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return void
+     * @throws HTMLPurifier_Exception
      */
     public function prepare($config, $context)
     {
@@ -18456,6 +18540,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return HTMLPurifier_Token[]
+     * @throws HTMLPurifier_Exception
      */
     public function tokenizeHTML($html, $config, $context)
     {
@@ -19477,6 +19562,7 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return array|HTMLPurifier_Token[]
+     * @throws HTMLPurifier_Exception
      */
     public function execute($tokens, $config, $context)
     {
@@ -20249,6 +20335,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return array|HTMLPurifier_Token[]
+     * @throws HTMLPurifier_Exception
      */
     public function execute($tokens, $config, $context)
     {
@@ -20452,6 +20539,7 @@ class HTMLPurifier_Strategy_ValidateAttributes extends HTMLPurifier_Strategy
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return HTMLPurifier_Token[]
+     * @throws HTMLPurifier_Exception
      */
     public function execute($tokens, $config, $context)
     {
@@ -20989,6 +21077,7 @@ class HTMLPurifier_URIFilter_HostBlacklist extends HTMLPurifier_URIFilter
     /**
      * @param HTMLPurifier_Config $config
      * @return bool
+     * @throws HTMLPurifier_Exception
      */
     public function prepare($config)
     {
@@ -21066,6 +21155,7 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool
+     * @throws HTMLPurifier_Exception
      */
     public function filter(&$uri, $config, $context)
     {
@@ -21236,6 +21326,7 @@ class HTMLPurifier_URIFilter_Munge extends HTMLPurifier_URIFilter
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool
+     * @throws HTMLPurifier_Exception
      */
     public function filter(&$uri, $config, $context)
     {
@@ -21323,6 +21414,7 @@ class HTMLPurifier_URIFilter_SafeIframe extends HTMLPurifier_URIFilter
     /**
      * @param HTMLPurifier_Config $config
      * @return bool
+     * @throws HTMLPurifier_Exception
      */
     public function prepare($config)
     {
@@ -21335,6 +21427,7 @@ class HTMLPurifier_URIFilter_SafeIframe extends HTMLPurifier_URIFilter
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool
+     * @throws HTMLPurifier_Exception
      */
     public function filter(&$uri, $config, $context)
     {

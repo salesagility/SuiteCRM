@@ -291,6 +291,7 @@ function merge_passwordsetting($sugar_config, $sugar_version)
 
 /**
  * @param array $defaultRoles
+ * @throws Exception
  */
 function addDefaultModuleRoles($defaultRoles = [])
 {

@@ -42,6 +42,7 @@
  * @param string $assignField
  * @param array $value
  * @return string
+ * @throws Exception
  */
 function getAOPAssignField($assignField, $value)
 {

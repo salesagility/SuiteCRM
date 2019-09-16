@@ -32,6 +32,7 @@ class ContactsListViewSmarty extends ListViewSmarty
      * @param array $data from ListViewData
      * @param string $htmlVar the corresponding html public in xtpl per row
      * @return bool|void
+     * @throws \SuiteCRM\StateSaverException
      */
     public function process($file, $data, $htmlVar)
     {

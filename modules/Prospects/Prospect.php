@@ -150,6 +150,7 @@ class Prospect extends Person implements EmailInterface
      * do not include any $this-> because this is called on without having the class instantiated
      * @param $the_query_string
      * @return string
+     * @throws Exception
      */
     public function build_generic_where_clause($the_query_string)
     {
@@ -205,7 +206,8 @@ class Prospect extends Person implements EmailInterface
      * @param int $deleted
      * @param string $module
      * @return array
-*/
+     * @throws Exception
+     */
     public function retrieveTargetList($query, $fields, $offset = 0, $limit= -99, $max = -99, $deleted = 0, $module = '')
     {
         global  $beanList, $beanFiles;

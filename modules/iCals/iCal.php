@@ -193,15 +193,16 @@ class iCal extends vCal
     }
 
     /**
-    * Creates the string for the user's events and todos between the given start
-    * and end times
-    *
-    * @param UserBean $user_bean the current UserBean
-    * @param DateTime $start_date_time the start date to search from
-    * @param DateTime $end_date_time the end date to search to
-    * @param string $dtstamp the current timestamp
-    * @return string the entries for events and todos
-    */
+     * Creates the string for the user's events and todos between the given start
+     * and end times
+     *
+     * @param UserBean $user_bean the current UserBean
+     * @param DateTime $start_date_time the start date to search from
+     * @param DateTime $end_date_time the end date to search to
+     * @param string $dtstamp the current timestamp
+     * @return string the entries for events and todos
+     * @throws Exception
+     */
     protected function createSugarIcal(&$user_bean, &$start_date_time, &$end_date_time, $dtstamp)
     {
         $ical_array = array();
@@ -386,11 +387,12 @@ class iCal extends vCal
     }
 
     /**
-    * Gets the time zone for the given user.
-    *
-    * @param User $current_user the user
-    * @return DateTimeZone the user's timezone
-    */
+     * Gets the time zone for the given user.
+     *
+     * @param User $current_user the user
+     * @return DateTimeZone the user's timezone
+     * @throws Exception
+     */
     protected function getUserTimezone($current_user)
     {
         $gmtTZ = new DateTimeZone("UTC");
@@ -404,12 +406,13 @@ class iCal extends vCal
     }
 
     /**
-    * Gets the daylight savings range for the given user.
-    *
-    * @param User $current_user the user
-    * @param integer $year the year
-    * @return array the start and end transitions of daylight savings
-    */
+     * Gets the daylight savings range for the given user.
+     *
+     * @param User $current_user the user
+     * @param integer $year the year
+     * @return array the start and end transitions of daylight savings
+     * @throws Exception
+     */
     protected function getDSTRange($current_user, $year)
     {
         $tz = $this->getUserTimezone($current_user);
@@ -509,12 +512,13 @@ class iCal extends vCal
     }
 
     /**
-    * Generates the complete string for the calendar
-    *
-    * @param User $user_focus the user
-    * @param integer $num_months the number of months to search before and after today
-    * @return string the iCal calenar string
-    */
+     * Generates the complete string for the calendar
+     *
+     * @param User $user_focus the user
+     * @param integer $num_months the number of months to search before and after today
+     * @return string the iCal calenar string
+     * @throws Exception
+     */
     public function getVcalIcal(&$user_focus, $num_months)
     {
         global $current_user, $timedate;

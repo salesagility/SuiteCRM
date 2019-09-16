@@ -86,7 +86,7 @@ class Basic extends SugarBean
      * Return Email address from an email address field eg email1
      * @param string $emailField
      * @return \EmailAddress|null
-     * @throws InvalidArgumentException
+     * @throws Exception
      */
     public function getEmailAddressFromEmailField($emailField)
     {
@@ -112,7 +112,7 @@ class Basic extends SugarBean
      *
      * @param string $emailField
      * @return string|null EmailAddress ID or null on error
-     * @throws \InvalidArgumentException
+     * @throws Exception
      */
     private function getEmailAddressId($emailField)
     {

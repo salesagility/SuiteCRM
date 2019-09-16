@@ -93,10 +93,11 @@ class ParserLabel
      * Takes in the request params from a save request and processes
      * them for the save.
      *
-     * @param array  $params   Labels as "label_".System label => Display label pairs
+     * @param array $params Labels as "label_".System label => Display label pairs
      * @param string $language Language key, for example 'en_us'
      *
      * @return bool
+     * @throws HTMLPurifier_Exception
      */
     public function handleSave($params, $language)
     {

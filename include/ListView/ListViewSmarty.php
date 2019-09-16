@@ -83,6 +83,7 @@ class ListViewSmarty extends ListViewDisplay
     /**
      *
      * @return string|boolean
+     * @throws \SuiteCRM\StateSaverException
      */
     public function buildSendConfirmOptInEmailToPersonAndCompany()
     {

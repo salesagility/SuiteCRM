@@ -82,6 +82,7 @@ class EmailsControllerActionGetFromFields
      * @param InboundEmail $ie
      * @return string JSON
      * @throws EmailValidatorException
+     * @throws ImapHandlerException
      */
     public function handleActionGetFromFields(Email $email, InboundEmail $ie)
     {

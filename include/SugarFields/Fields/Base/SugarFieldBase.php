@@ -89,6 +89,7 @@ class SugarFieldBase
      * parse and fetch template
      * @param string $path template
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function fetch($path)
     {
@@ -183,6 +184,7 @@ class SugarFieldBase
      * @param integer $tabindex
      * @param string $view
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getSmartyView($parentFieldArray, $vardef, $displayParams, $tabindex, $view)
     {
@@ -202,6 +204,7 @@ class SugarFieldBase
      * @param array $displayParams
      * @param string $col (unused)
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getListViewSmarty($parentFieldArray, $vardef, $displayParams, $col)
     {
@@ -231,6 +234,7 @@ class SugarFieldBase
      * @param $displayParams
      * @param integer $tabindex
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
@@ -256,6 +260,7 @@ class SugarFieldBase
      * @param array $displayParams
      * @param integer $tabindex
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
@@ -283,6 +288,7 @@ class SugarFieldBase
      * @param array $displayParams
      * @param integer $tabindex
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getImportViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
@@ -295,6 +301,7 @@ class SugarFieldBase
      * @param array $displayParams
      * @param integer $tabindex
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
@@ -304,12 +311,14 @@ class SugarFieldBase
 
         return $this->getSmartyView($parentFieldArray, $vardef, $displayParams, $tabindex, 'EditView');
     }
+
     /**
      * @param array $parentFieldArray
      * @param array $vardef
      * @param array $displayParams
      * @param integer $tabindex
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getPopupViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {

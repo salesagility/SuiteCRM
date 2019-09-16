@@ -128,8 +128,9 @@ class DBManagerFactory
      * Returns a reference to the DB object for instance $instanceName, or the default
      * instance if one is not specified
      *
-     * @param  string $instanceName optional, name of the instance
+     * @param string $instanceName optional, name of the instance
      * @return DBManager instance
+     * @throws Exception
      */
     public static function getInstance($instanceName = '')
     {

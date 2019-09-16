@@ -258,6 +258,7 @@ class ListViewData
      * @param bool $singleSelect
      * @param null $id
      * @return array('data'=> row data, 'pageData' => page data information, 'query' => original query string)
+     * @throws Exception
      */
     public function getListViewData($seed, $where, $offset=-1, $limit = -1, $filter_fields=array(), $params=array(), $id_field = 'id', $singleSelect=true, $id = null)
     {

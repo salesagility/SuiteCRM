@@ -81,6 +81,7 @@ class quicksearchQuery
      *        'limit' => '30', // limit, number of records to return
      *       )
      * @return string list of elements returned
+     * @throws Exception
      */
     public function query($args)
     {
@@ -95,6 +96,7 @@ class quicksearchQuery
      * get_contact_array
      * @param $args
      * @return string
+     * @throws Exception
      */
     public function get_contact_array($args)
     {
@@ -149,6 +151,7 @@ class quicksearchQuery
      * @param Object $focus
      * @param array $args
      * @return string
+     * @throws Exception
      */
     protected function constructWhere($focus, $args)
     {
@@ -363,6 +366,7 @@ class quicksearchQuery
      * @param array $args
      * @param boolean $singleSelect
      * @return array
+     * @throws Exception
      */
     protected function getRawResults($args, $singleSelect = false)
     {
@@ -415,6 +419,7 @@ class quicksearchQuery
      *
      * @param string $condition
      * @return array
+     * @throws Exception
      */
     protected function getUserResults($condition)
     {
@@ -448,6 +453,7 @@ class quicksearchQuery
      * @param string $limit
      * @param boolean $singleSelect
      * @return array
+     * @throws Exception
      */
     protected function updateData($data, $focus, $orderBy, $where, $limit, $singleSelect = false)
     {
@@ -544,6 +550,7 @@ class quicksearchQuery
      *
      * @param string $condition
      * @return array
+     * @throws Exception
      */
     protected function getUserArray($condition)
     {
@@ -559,6 +566,7 @@ class quicksearchQuery
      *
      * @param array $args
      * @return string
+     * @throws Exception
      */
     protected function getNonPrivateTeamsWhere(&$args)
     {
@@ -667,6 +675,7 @@ class quicksearchQuery
      *
      * @param array $args
      * @return array
+     * @throws Exception
      */
     protected function updateTeamArrayArguments($args)
     {

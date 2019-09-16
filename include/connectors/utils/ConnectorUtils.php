@@ -81,6 +81,7 @@ class ConnectorUtils
      * @param string $id
      * @param bool $refresh
      * @return null|array Connector data
+     * @throws Exception
      */
     public static function getConnector(
         $id,
@@ -144,6 +145,7 @@ class ConnectorUtils
      *
      * @param mixed $filter_sources Array optional Array value of sources to only use
      * @return mixed $mergedefs Array of the merge definitions
+     * @throws Exception
      */
     public static function getViewDefs(
         $filter_sources = array()
@@ -191,9 +193,10 @@ class ConnectorUtils
      * Returns an Array of the merge definitions used by the Connector module to
      * merge values into the bean instance
      *
-     * @deprecated This method has been replaced by getViewDefs
      * @param boolean $refresh boolean value to manually refresh the mergeview definitions
      * @return mixed $mergedefs Array of the merge definitions
+     * @throws Exception
+     * @deprecated This method has been replaced by getViewDefs
      */
     public static function getMergeViewDefs(
         $refresh = false
@@ -251,8 +254,8 @@ class ConnectorUtils
      * along with attributes pertaining to each connector.
      *
      * @param boolean $refresh boolean flag indicating whether or not to force rewriting the file; defaults to false
-     * @returns mixed $connectors Array of the connector entries found
      * @return array
+     * @throws Exception
      */
     public static function getConnectors(
         $refresh = false
@@ -386,6 +389,7 @@ class ConnectorUtils
      * getDisplayConfig
      * @param bool $refresh
      * @return array
+     * @throws Exception
      */
     public static function getDisplayConfig(
         $refresh = false
@@ -809,6 +813,7 @@ class ConnectorUtils
      *
      * @param String $source String value of the id of the connector to install
      * @return boolean $result boolean value indicating whether or not connector was installed
+     * @throws Exception
      */
     public static function installSource(
         $source
@@ -851,6 +856,7 @@ class ConnectorUtils
      *
      * @param String $source String value of the id of the connector to un-install
      * @return boolean $result boolean value indicating whether or not connector was un-installed
+     * @throws Exception
      */
     public static function uninstallSource(
         $source

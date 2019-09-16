@@ -522,6 +522,7 @@ class SugarBean
      * Local file system cache is created as needed.
      *
      * @param string $module_name setting up custom fields for this module.
+     * @throws Exception
      */
     public function setupCustomFields($module_name)
     {
@@ -806,6 +807,7 @@ class SugarBean
      * @return array
      *
      * Internal Function, do not override.
+     * @throws Exception
      */
     public static function get_union_related_list(
         $parentbean,
@@ -1207,6 +1209,7 @@ class SugarBean
      * @param string $query_row_count
      * @param array $secondary_queries
      * @return array $fetched data.
+     * @throws Exception
      */
     public function process_union_list_query(
         $parent_bean,
@@ -2302,6 +2305,7 @@ class SugarBean
      *
      * @param bool $check_notify Optional, default false, if set to true assignee of the record is notified via email.
      * @return string ID
+     * @throws Exception
      * @todo Add support for field type validation and encoding of parameters.
      */
     public function save($check_notify = false)
@@ -3139,6 +3143,7 @@ class SugarBean
      * Send assignment notifications and invites for meetings and calls
      *
      * @param bool $check_notify
+     * @throws phpmailerException
      */
     private function _sendNotifications($check_notify)
     {
@@ -3193,6 +3198,7 @@ class SugarBean
      *
      * @param User $notify_user user to notify
      * @param Administration $admin the admin user that sends out the notification
+     * @throws phpmailerException
      */
     public function send_assignment_notifications($notify_user, $admin)
     {
@@ -3273,6 +3279,7 @@ class SugarBean
      * This function handles create the email notifications email.
      * @param string $notify_user the user to send the notification email to
      * @return SugarPHPMailer
+     * @throws phpmailerException
      */
     public function create_notification_email($notify_user)
     {
@@ -3414,8 +3421,6 @@ class SugarBean
      * This function returns a paged list of the current object type.  It is intended to allow for
      * hopping back and forth through pages of data.  It only retrieves what is on the current page.
      *
-     * @internal This method must be called on a new instance.  It trashes the values of all the fields
-     * in the current one.
      * @param string $order_by
      * @param string $where Additional where clause
      * @param int $row_offset Optional,default 0, starting row number
@@ -3427,6 +3432,9 @@ class SugarBean
      * @return array Fetched data.
      *
      * Internal function, do not override.
+     * @throws Exception
+     * @internal This method must be called on a new instance.  It trashes the values of all the fields
+     * in the current one.
      */
     public function get_list(
         $order_by = "",
@@ -4167,6 +4175,7 @@ class SugarBean
      * @param int $max_per_page Optional, default -1
      * @param string $where Optional, additional filter criteria.
      * @return array Fetched data
+     * @throws Exception
      */
     public function process_list_query($query, $row_offset, $limit = -1, $max_per_page = -1, $where = '')
     {
@@ -4447,7 +4456,7 @@ class SugarBean
      * @param string $where Custom where clause.
      * @param int $offset Optional, default 0
      * @return array Fetched data.
-     *
+     * @throws Exception
      */
     public function process_detail_query($query, $row_offset, $limit = -1, $max_per_page = -1, $where = '', $offset = 0)
     {
@@ -4508,6 +4517,7 @@ class SugarBean
      * @return SugarBean|null
      *
      * Internal function, do not override.
+     * @throws Exception
      */
     public function retrieve($id = -1, $encode = true, $deleted = true)
     {
@@ -4722,7 +4732,7 @@ class SugarBean
      * It fills in all of the fields from the DB into the object it was called on.
      *
      * @return mixed this - The object that it was called upon or null if exactly 1 record was not found.
-     *
+     * @throws Exception
      */
 
     public function check_date_relationships_load()
@@ -4843,6 +4853,7 @@ class SugarBean
      * will fill in any parent_name fields.
      *
      * @return bool
+     * @throws Exception
      */
     public function fill_in_additional_parent_fields()
     {
@@ -4881,6 +4892,7 @@ class SugarBean
      * @param bool $return_array
      *
      * @return string
+     * @throws Exception
      */
     public function getRelatedFields($module, $id, $fields, $return_array = false)
     {
@@ -5203,6 +5215,7 @@ class SugarBean
      *
      * If it is not overridden, then marking this type of item is not allowed
      * @param string $id
+     * @throws Exception
      */
     public function mark_deleted($id)
     {
@@ -5249,6 +5262,7 @@ class SugarBean
      *
      * Internal function, do not override.
      * @param string $id
+     * @throws Exception
      */
     public function mark_undeleted($id)
     {
@@ -5271,6 +5285,7 @@ class SugarBean
      * Restores files from deleted folder
      *
      * @return bool success of operation
+     * @throws Exception
      */
     protected function restoreFiles()
     {
@@ -5489,6 +5504,7 @@ class SugarBean
      * @param int $row_offset Optional, default 0
      * @param int $limit Optional, default -1
      * @return array
+     * @throws Exception
      */
     public function build_related_list($query, &$template, $row_offset = 0, $limit = -1)
     {
@@ -5536,10 +5552,11 @@ class SugarBean
      * @param object $template - The object that should be used to copy the records.
      * @param string $where
      * @param string $in
-     * @param $order_by
+     * @param string $order_by
      * @param string $limit
      * @param int $row_offset
      * @return array
+     * @throws Exception
      */
     public function build_related_list_where(
         $query,
@@ -6028,6 +6045,7 @@ class SugarBean
      * links or not based on the ACL permissions of the user
      *
      * @return string[]
+     * @throws Exception
      */
     public function listviewACLHelper()
     {
@@ -6047,6 +6065,7 @@ class SugarBean
      * is an owner they will receive different access
      * @param bool|string $in_group
      * @return bool
+     * @throws Exception
      */
     public function ACLAccess($view, $is_owner = 'not_set', $in_group = 'not_set')
     {
@@ -6112,6 +6131,7 @@ class SugarBean
      * @param array $arr row of data fetched from the database.
      *
      * Internal function do not override.
+     * @throws Exception
      */
     public function loadFromRow($arr)
     {
@@ -6247,6 +6267,7 @@ class SugarBean
      * Reset's the bean fetched row so changes are not duplicated.
      *
      * @param array $auditDataChanges
+     * @throws Exception
      */
     protected function createAuditRecord(array $auditDataChanges)
     {

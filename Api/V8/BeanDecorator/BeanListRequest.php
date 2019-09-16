@@ -154,6 +154,7 @@ class BeanListRequest
 
     /**
      * @return BeanListResponse
+     * @throws \Exception
      */
     public function fetch()
     {

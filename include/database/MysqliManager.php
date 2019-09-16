@@ -125,6 +125,7 @@ class MysqliManager extends MysqlManager
      * @param bool $suppress
      * @param bool $keepResult
      * @return bool|mysqli_result|resource|null
+     * @throws Exception
      * @see MysqlManager::query()
      */
     public function query($sql, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false)

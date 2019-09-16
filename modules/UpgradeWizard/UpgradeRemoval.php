@@ -79,6 +79,7 @@ class UpgradeRemoval
      * This method handles removing the array of files/directories specified.
      *
      * @param mixed $files
+     * @throws Exception
      */
     public function processFilesToRemove($files=array())
     {
@@ -110,6 +111,7 @@ class UpgradeRemoval
      * Private method to handle backing up the file to custom/backup directory
      *
      * @param File $file or directory to backup to custom/backup directory
+     * @throws Exception
      */
     protected function backup($file)
     {

@@ -106,6 +106,7 @@ class DropDownHelper
      * them for the save.
      *
      * @param REQUEST params  $params
+     * @throws Exception
      */
     public function saveDropDown($params)
     {

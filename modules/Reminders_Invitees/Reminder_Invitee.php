@@ -63,6 +63,7 @@ class Reminder_Invitee extends Basic
      *
      * @param string $reminderId Related Reminder GUID
      * @param array $inviteesData Invitees Data
+     * @throws Exception
      */
     public static function saveRemindersInviteesData($reminderId, $inviteesData)
     {
@@ -146,6 +147,7 @@ class Reminder_Invitee extends Basic
      *
      * @param string $reminderId Related Reminder GUID
      * @param array $inviteeIds (optional) Exluded Invitees GUIDs, the invitee will not deleted if this argument contains that. Default is empty array.
+     * @throws Exception
      */
     public static function deleteRemindersInviteesMultiple($reminderId, $inviteeIds = array())
     {

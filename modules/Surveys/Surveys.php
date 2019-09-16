@@ -144,6 +144,7 @@ class Surveys extends Basic
     /**
      * @param bool $check_notify
      * @return string
+     * @throws Exception
      */
     public function save($check_notify = false)
     {
@@ -182,6 +183,7 @@ class Surveys extends Basic
      * @param array $ids
      * @param array $deleted
      * @param string $questionId
+     * @throws Exception
      */
     private function saveOptions(array $options, array $ids, array $deleted, $questionId)
     {

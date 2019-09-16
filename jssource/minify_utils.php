@@ -420,6 +420,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @param $from_path
  * @param string $to_path
  * @param bool $backup
+ * @throws Exception
  */
     function BackUpAndCompressScriptFiles($from_path, $to_path = '', $backup = true)
     {

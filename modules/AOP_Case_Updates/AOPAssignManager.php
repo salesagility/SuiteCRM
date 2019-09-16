@@ -51,7 +51,8 @@ class AOPAssignManager
     /**
      * AOPAssignManager constructor.
      *
-     * @param  InboundEmail|bool $ieX
+     * @param InboundEmail|bool $ieX
+     * @throws Exception
      */
     public function __construct($ieX = false)
     {
@@ -105,6 +106,7 @@ class AOPAssignManager
      * @param $roleId
      *
      * @return array
+     * @throws Exception
      */
     private function getRoleUsers($roleId)
     {
@@ -122,6 +124,7 @@ class AOPAssignManager
 
     /**
      * @return array
+     * @throws Exception
      */
     private function getAssignableUsers()
     {
@@ -187,6 +190,7 @@ class AOPAssignManager
 
     /**
      * @return array
+     * @throws Exception
      */
     private function getLeastBusyCounts()
     {
@@ -209,6 +213,7 @@ class AOPAssignManager
 
     /**
      * @return mixed
+     * @throws Exception
      */
     private function getLeastBusyUser()
     {
@@ -221,6 +226,7 @@ class AOPAssignManager
 
     /**
      * @param $id
+     * @throws Exception
      */
     private function updateLeastBusy($id)
     {
@@ -242,6 +248,7 @@ class AOPAssignManager
 
     /**
      * @return mixed|string
+     * @throws Exception
      */
     public function getNextAssignedUser()
     {

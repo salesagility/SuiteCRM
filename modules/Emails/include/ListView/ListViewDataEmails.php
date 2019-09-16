@@ -504,6 +504,7 @@ class ListViewDataEmails extends ListViewData
      * @param string $folder
      * @param Folder $folderObj
      * @return bool|string
+     * @throws Exception
      */
     protected function getEmailRecordFieldValue($field, $emailHeader, $inboundEmail, $currentUser, $folder, $folderObj)
     {
@@ -645,6 +646,7 @@ class ListViewDataEmails extends ListViewData
      * @param User $currentUser
      * @param string $folder
      * @return array|bool
+     * @throws Exception
      */
     public function getEmailRecord($folderObj, $emailHeader, $seed, $inboundEmail, $currentUser, $folder)
     {

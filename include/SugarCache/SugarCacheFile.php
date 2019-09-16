@@ -131,7 +131,7 @@ class SugarCacheFile extends SugarCacheAbstract
 
     /**
      * @param $key
-     * @return |null
+     * @return |null |null |null |null
      * @see SugarCacheAbstract::_getExternal()
      */
     protected function _getExternal(

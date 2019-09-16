@@ -204,6 +204,7 @@ class Reminder extends Basic
      * @param EmailReminder $emailReminder Caller EmailReminder
      * @param Administration $admin Administration module for EmailRemainder->sendReminders() function
      * @param boolean $checkDecline (optional) Send email if user accept status is not decline. Default is TRUE.
+     * @throws phpmailerException
      */
     public static function sendEmailReminders(EmailReminder $emailReminder, Administration $admin, $checkDecline = true)
     {
@@ -624,6 +625,7 @@ class Reminder extends Basic
 
     /**
      * @param string $eventModule 'Calls' or 'Meetings'
+     * @throws Exception
      */
     private static function upgradeEventReminders($eventModule)
     {
@@ -690,6 +692,7 @@ class Reminder extends Basic
      * @param int $oldReminderEmailTimer
      * @param $oldReminderEmailSent
      * @param array $oldInvitees
+     * @throws Exception
      */
     private static function migrateReminder($eventModule, $eventModuleId, $oldReminderPopupChecked, $oldReminderPopupTimer, $oldReminderEmailChecked, $oldReminderEmailTimer, $oldReminderEmailSent, $oldInvitees)
     {
@@ -756,6 +759,7 @@ class Reminder extends Basic
     /**
      * @param string $eventModule 'Calls' or 'Meetings'
      * @param string $eventModuleId
+     * @throws Exception
      */
     private static function removeOldReminder($eventModule, $eventModuleId)
     {

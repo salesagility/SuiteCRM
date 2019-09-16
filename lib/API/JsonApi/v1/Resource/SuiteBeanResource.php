@@ -506,6 +506,7 @@ class SuiteBeanResource extends Resource
      * @param \SugarBean $bean
      * @param string $fieldName
      * @return \SugarBean
+     * @throws \Exception
      */
     private function saveFileToBean(\SugarBean $bean, $fieldName)
     {

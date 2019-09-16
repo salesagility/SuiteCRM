@@ -60,6 +60,7 @@ class EmailAuthenticateUser extends SugarAuthenticateUser
      * @param STRING $name
      * @param STRING $password
      * @return boolean
+     * @throws phpmailerException
      */
     public function loadUserOnLogin($name, $password)
     {
@@ -110,6 +111,7 @@ class EmailAuthenticateUser extends SugarAuthenticateUser
      *
      * @param unknown_type $user_id
      * @param unknown_type $password
+     * @throws phpmailerException
      */
     public function sendEmailPassword($user_id, $password)
     {

@@ -70,7 +70,7 @@ class ListViewSmartyEmails extends ListViewSmarty
      * @param string $id_field
      * @param null $id
      * @return bool
-     *
+     * @throws \SuiteCRM\StateSaverException
      */
     public function setup(
         $seed,

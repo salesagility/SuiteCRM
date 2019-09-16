@@ -150,6 +150,7 @@ class Meeting extends SugarBean
      * @param string $is_owner
      * @param string $in_group
      * @return bool
+     * @throws Exception
      */
     public function ACLAccess($view, $is_owner='not_set', $in_group='not_set')
     {
@@ -735,6 +736,7 @@ class Meeting extends SugarBean
      * @param $notify_user
      * @param $admin
      * @return boolean success/failed
+     * @throws phpmailerException
      */
     public function send_assignment_notifications($notify_user, $admin)
     {

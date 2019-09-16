@@ -49,6 +49,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @param $value
  * @param $view
  * @return string
+ * @throws \SuiteCRM\StateSaverException
  */
 function displayAttachmentField($focus, $field, $value, $view)
 {

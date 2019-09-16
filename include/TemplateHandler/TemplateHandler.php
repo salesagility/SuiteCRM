@@ -165,7 +165,8 @@ class TemplateHandler
      * @param boolean $ajaxSave parameter indicating whether or not this is coming from an Ajax call
      * @param array $metaDataDefs metadata definition as Array
      * @return void
-     **/
+     * @throws \SuiteCRM\StateSaverException
+     */
     public function buildTemplate($module, $view, $tpl, $ajaxSave, $metaDataDefs)
     {
         global $theme;
@@ -364,6 +365,7 @@ class TemplateHandler
      * @param boolean $ajaxSave parameter indicating whether or not this is from an Ajax operation
      * @param array|null $metaDataDefs Optional metadata definition Array
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function displayTemplate($module, $view, $tpl, $ajaxSave = false, $metaDataDefs = null)
     {

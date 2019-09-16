@@ -106,8 +106,9 @@ class ImportCacheFiles
     /**
      * Returns the filename for a temporary file
      *
-     * @param  string $type string to prepend to the filename, typically to indicate the file's use
+     * @param string $type string to prepend to the filename, typically to indicate the file's use
      * @return string filename
+     * @throws Exception
      */
     private static function _createFileName($type = self::FILE_MISCELLANEOUS)
     {
@@ -123,6 +124,7 @@ class ImportCacheFiles
      * Ensure that all cache files are writable or can be created
      *
      * @return bool
+     * @throws Exception
      */
     public static function ensureWritable()
     {
@@ -141,6 +143,7 @@ class ImportCacheFiles
      * Returns the duplicates filename (the ones used to download to csv file
      *
      * @return string filename
+     * @throws Exception
      */
     public static function getDuplicateFileName()
     {
@@ -151,6 +154,7 @@ class ImportCacheFiles
      * Returns the duplicates display filename (the one used for display in html)
      *
      * @return string filename
+     * @throws Exception
      */
     public static function getDuplicateFileDisplayName()
     {
@@ -161,6 +165,7 @@ class ImportCacheFiles
      * Returns the error filename
      *
      * @return string filename
+     * @throws Exception
      */
     public static function getErrorFileName()
     {
@@ -171,6 +176,7 @@ class ImportCacheFiles
      * Returns the error records filename
      *
      * @return string filename
+     * @throws Exception
      */
     public static function getErrorRecordsFileName()
     {
@@ -181,6 +187,7 @@ class ImportCacheFiles
      * Returns the error records filename
      *
      * @return string filename
+     * @throws Exception
      */
     public static function getErrorRecordsWithoutErrorFileName()
     {
@@ -191,6 +198,7 @@ class ImportCacheFiles
      * Returns the status filename
      *
      * @return string filename
+     * @throws Exception
      */
     public static function getStatusFileName()
     {

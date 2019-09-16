@@ -539,6 +539,7 @@ class Email extends Basic
     /**
      *
      * @param Email $email
+     * @throws Exception
      */
     protected function createTempEmailAtSend(Email $email = null)
     {
@@ -625,6 +626,7 @@ class Email extends Basic
      * Presaves one attachment for new email 2.0 spec
      * DOES NOT CREATE A NOTE
      * @return array ID of note associated with the attachment
+     * @throws Exception
      */
     public function email2saveAttachment()
     {
@@ -808,9 +810,10 @@ class Email extends Basic
      * @param $toaddress
      * @param string $mail_sendtype
      * @param string $fromname
+     * @return array
+     * @throws phpmailerException
      * @global $current_user
      * @global $app_strings
-     * @return array
      */
     public function sendEmailTest(
         $mailserver_url,
@@ -908,6 +911,12 @@ class Email extends Basic
      * Sends Email for Email 2.0
      *
      * @param $request
+     * @return bool
+     * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws ImapHandlerException
+     * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      * @global $mod_strings
      * @global $app_strings
      * @global $current_user
@@ -916,7 +925,6 @@ class Email extends Basic
      * @global $timedate
      * @global $beanList
      * @global $beanFiles
-     * @return bool
      */
     public function email2Send($request)
     {
@@ -1555,6 +1563,7 @@ class Email extends Basic
      * @param bool $check_notify
      * @return bool|string
      * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
      * @throws \SuiteCRM\ErrorMessageException
      * @global $current_user
      */
@@ -1661,6 +1670,7 @@ class Email extends Basic
      * @param string $fileLocation
      * @param string $mimeType
      * @return boolean success/failed
+     * @throws Exception
      */
     public function saveTempNoteAttachments($filename, $fileLocation, $mimeType)
     {
@@ -1950,6 +1960,7 @@ class Email extends Basic
      * retrieves Notes that belong to this Email and stuffs them into the "attachments" attribute
      * @param $id
      * @param bool $duplicate
+     * @throws Exception
      */
     public function getNotes($id, $duplicate = false)
     {
@@ -2321,6 +2332,7 @@ class Email extends Basic
 
     /**
      * handles attachments of various kinds when sending email
+     * @throws Exception
      * @global $mod_strings
      */
     public function handleAttachments()
@@ -2520,6 +2532,7 @@ class Email extends Basic
 
     /**
      * Handles file attachments with multiple files
+     * @throws Exception
      * @global $mod_strings
      */
     public function handleMultipleFileAttachments()
@@ -2911,7 +2924,10 @@ class Email extends Basic
      * @return boolean True on success
      * @throws EmailException
      * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws ImapHandlerException
      * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      * @global array $mod_strings
      * @global array $app_strings
      * @global User $current_user
@@ -3158,6 +3174,11 @@ class Email extends Basic
      * @param string $options
      * @return int|null null if error
      * @throws EmailException
+     * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws ImapHandlerException
+     * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      */
     public function saveAndStoreInSentFolderIfNoGmail(
         InboundEmail $ie,
@@ -3195,6 +3216,10 @@ class Email extends Basic
      * @param string $options
      * @return string
      * @throws EmailException
+     * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      */
     protected function saveAndStoreInSent(
         SugarPHPMailer $mail,
@@ -3229,6 +3254,7 @@ class Email extends Basic
 
     /**
      * @return string[]
+     * @throws Exception
      */
     public function listviewACLHelper()
     {
@@ -3442,6 +3468,7 @@ class Email extends Basic
     }
 
     /**
+     * @throws Exception
      * @global $app_list_strings
      * @global $mod_strings
      * fill_in_additional_detail_fields
@@ -3845,10 +3872,11 @@ class Email extends Basic
     }
 
     /**
+     * @return String Query to be executed.
+     * @throws Exception
      * @global $timedate
      * Generate the query used for searching imported emails.
      *
-     * @return String Query to be executed.
      */
     public function _genereateSearchImportedEmailsQuery()
     {
@@ -3899,9 +3927,10 @@ class Email extends Basic
     }
 
     /**
+     * @return array|string
+     * @throws Exception
      * @global $timedate
      * Generate the where clause for searching imported emails.
-     * @return array|string
      */
     public function _generateSearchImportWhereClause()
     {
@@ -3993,13 +4022,14 @@ class Email extends Basic
 
 
     /**
+     * @param string $where
+     * @return string
+     * @throws \SuiteCRM\StateSaverException
      * @global $app_list_strings
      * @global $app_strings
      * @global $mod_strings
      * @global $theme
      * @global $current_user
-     * @param string $where
-     * @return string
      */
     public function distributionForm($where)
     {

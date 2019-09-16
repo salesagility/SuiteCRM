@@ -84,10 +84,11 @@ class EmailReminder
         $this->now = $GLOBALS['timedate']->nowDb();
         $this->max = $GLOBALS['timedate']->getNow()->modify("+{$max_time} seconds")->asDb();
     }
-    
+
     /**
      * main method that runs reminding process
      * @return boolean
+     * @throws phpmailerException
      */
     public function process()
     {
@@ -127,6 +128,7 @@ class EmailReminder
      * @param Administration $admin
      * @param array $recipients
      * @return boolean
+     * @throws phpmailerException
      */
     public function sendReminders(SugarBean $bean, Administration $admin, $recipients)
     {
@@ -194,14 +196,15 @@ class EmailReminder
 
         return true;
     }
-    
+
     /**
      * set reminder body
      * @param XTemplate $xtpl
      * @param SugarBean $bean
      * @param User $user
      * @return XTemplate
-    */
+     * @throws Exception
+     */
     protected function setReminderBody(XTemplate $xtpl, SugarBean $bean, User $user)
     {
         $object = strtoupper($bean->object_name);
@@ -217,10 +220,11 @@ class EmailReminder
 
         return $xtpl;
     }
-    
+
     /**
      * get meeting ids list for remind
      * @return array
+     * @throws Exception
      */
     public function getMeetingsForRemind()
     {
@@ -245,10 +249,11 @@ class EmailReminder
         }
         return $meetings;
     }
-    
+
     /**
      * get calls ids list for remind
      * @return array
+     * @throws Exception
      */
     public function getCallsForRemind()
     {
@@ -273,12 +278,13 @@ class EmailReminder
         }
         return $calls;
     }
-    
+
     /**
      * get recipients of reminding email for specific activity
      * @param string $id
      * @param string $module
      * @return array
+     * @throws Exception
      */
     protected function getRecipients($id, $module = "Meetings")
     {

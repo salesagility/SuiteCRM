@@ -169,6 +169,7 @@ $xtpl->out("main");
 /**
  * @param string $requestData
  * @return string
+ * @throws HTMLPurifier_Exception
  */
 function validate_input($requestData)
 {

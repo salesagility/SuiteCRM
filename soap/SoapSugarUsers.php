@@ -330,6 +330,7 @@ $server->register(
  *               'next_offset' -- integer - The start of the next page (This will always be the previous offset plus the number of rows returned.  It does not indicate if there is additional data unless you calculate that the next_offset happens to be closer than it should be.
  *               'entry_list' -- Array - The records that were retrieved
  *                 'relationship_list' -- Array - The records link field data. The example is if asked about accounts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
+ * @throws Exception
  * @exception 'SoapFault' -- The SOAP error, if any
  */
 function get_entry_list(
@@ -728,6 +729,7 @@ $server->register(
  * @param Binary $note -- The flie contents of the attachment.
  * @return Array 'id' -- The ID of the new note or -1 on error
  *               'error' -- The SOAP error if any.
+ * @throws Exception
  */
 function set_note_attachment($session, $note)
 {
@@ -757,7 +759,7 @@ $server->register(
  * @param String $id -- The ID of the appropriate Note.
  * @return Array 'id' -- The ID of the new note or -1 on error
  *               'error' -- The SOAP error if any.
- *
+ * @throws Exception
  */
 function get_note_attachment($session, $id)
 {
@@ -1067,6 +1069,7 @@ $server->register(
  * @param String $portal_name -- The portal user_name of the contact
  * @param Array $name_value_list -- collection of 'name'=>'value' pairs for finding the contact
  * @return array error on success, Error on failure
+ * @throws Exception
  */
 function update_portal_user($session, $portal_name, $name_value_list)
 {
@@ -1202,6 +1205,7 @@ $server->register(
  * Return the current time on the server in the format 'Y-m-d H:i:s'.  This time is in GMT.
  *
  * @return String -- The current date/time 'Y-m-d H:i:s'
+ * @throws Exception
  */
 function get_gmt_time()
 {
@@ -1405,7 +1409,8 @@ $server->register(
  *      'module1_id' -- The ID of the bean in the specified module
  *      'module2' -- The name of the module that the related record is from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
  *      'module2_id' -- The ID of the bean in the specified module
- * @return Empty error on success, Error on failure
+ * @return array error on success, Error on failure
+ * @throws Exception
  */
 function set_relationship($session, $set_relationship_value)
 {
@@ -1436,6 +1441,7 @@ $server->register(
  *      'module2' -- The name of the module that the related record is from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
  *      'module2_id' -- The ID of the bean in the specified module
  * @return array|int error on success, Error on failure
+ * @throws Exception
  */
 function set_relationships($session, $set_relationship_list)
 {
@@ -1471,6 +1477,7 @@ function set_relationships($session, $set_relationship_list)
  *      'module2_id' -- The ID of the bean in the specified module
  * @param string $session
  * @return array error on success, Error on failure
+ * @throws Exception
  */
 function handle_set_relationship($set_relationship_value, $session = '')
 {
@@ -1675,6 +1682,7 @@ $server->register(
  * @param int $offset - a specified offset in the query
  * @param int $max_results - max number of records to return
  * @return array - id, module_name, and list of fields from each record
+ * @throws Exception
  */
 function search_by_module($user_name, $password, $search_string, $modules, $offset, $max_results)
 {
@@ -2195,6 +2203,7 @@ $server->register(
  * @param String $session -- Session ID returned by a previous call to login.
  * @param String $id -- ID of the document revision to obtain
  * @return array - this is a complex type as defined in SoapTypes.php
+ * @throws Exception
  */
 function get_document_revision($session, $id)
 {
@@ -2244,6 +2253,7 @@ $server->register(
  * @param $targets
  * @param $campaign_id
  * @return array
+ * @throws Exception
  */
 function set_campaign_merge($session, $targets, $campaign_id)
 {
@@ -2278,6 +2288,7 @@ $server->register(
  * @param $query
  * @param $deleted
  * @return array - this is a complex type as defined in SoapTypes.php
+ * @throws Exception
  */
 function get_entries_count($session, $module_name, $query, $deleted)
 {

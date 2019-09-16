@@ -92,6 +92,7 @@ class UserPreference extends SugarBean
      * @param string $name name of the preference to retreive
      * @param string $category name of the category to retreive, defaults to global scope
      * @return mixed the value of the preference (string, array, int etc)
+     * @throws Exception
      */
     public function getPreference(
         $name,
@@ -198,6 +199,7 @@ class UserPreference extends SugarBean
      *
      * @param string $category name of the category to retreive, defaults to global scope
      * @return bool successful?
+     * @throws Exception
      */
     public function loadPreferences(
         $category = 'global'
@@ -220,6 +222,7 @@ class UserPreference extends SugarBean
      * Unconditionally reloads user preferences from the DB and updates the session
      * @param string $category name of the category to retreive, defaults to global scope
      * @return bool successful?
+     * @throws Exception
      */
     public function reloadPreferences($category = 'global')
     {
@@ -253,6 +256,7 @@ class UserPreference extends SugarBean
      * Loads users timedate preferences
      *
      * @return array 'date' - date format for user ; 'time' - time format for user
+     * @throws Exception
      */
     public function getUserDateTimePreferences()
     {
@@ -311,6 +315,7 @@ class UserPreference extends SugarBean
      * sugar_cleanup if a setPreference has been called during one round trip.
      *
      * @param bool $all save all of the preferences? (Dangerous)
+     * @throws Exception
      * @global user will use current_user if no user specificed in $user param
      */
     public function savePreferencesToDB(
@@ -360,6 +365,7 @@ class UserPreference extends SugarBean
      * Resets preferences for a particular user. If $category is null all user preferences will be reset
      *
      * @param string $category category to reset
+     * @throws Exception
      */
     public function resetPreferences(
         $category = null

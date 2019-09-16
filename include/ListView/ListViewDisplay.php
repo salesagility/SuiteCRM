@@ -133,6 +133,7 @@ class ListViewDisplay
      * @param string $id_field
      * @param null $id
      * @return bool
+     * @throws Exception
      */
     public function setup(
         $seed,

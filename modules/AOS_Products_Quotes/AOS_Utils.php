@@ -6,6 +6,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
  * @param $focus
+ * @throws Exception
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *

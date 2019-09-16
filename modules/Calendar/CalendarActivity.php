@@ -115,6 +115,7 @@ class CalendarActivity
      * @param string $field_name date field in table
      * @param string $field_end_date
      * @return string
+     * @throws Exception
      */
     public static function get_occurs_within_where_clause(
         $table_name,
@@ -144,6 +145,7 @@ class CalendarActivity
      * @param string $field_name date field in table
      * @param string $field_end_date
      * @return string
+     * @throws Exception
      */
     public static function get_occurs_until_where_clause(
         $table_name,
@@ -169,6 +171,7 @@ class CalendarActivity
      * @param $start_date_time
      * @param $end_date_time
      * @return array
+     * @throws Exception
      */
     public static function get_freebusy_activities($user_focus, $start_date_time, $end_date_time)
     {
@@ -202,6 +205,7 @@ class CalendarActivity
      * @param boolean $show_calls
      * @param boolean $show_completed use to allow filtering completed events
      * @return array
+     * @throws Exception
      */
     public static function get_activities(
         $activities,
@@ -299,6 +303,7 @@ class CalendarActivity
      * @param $field_end_date
      * @param array $callback callback function to generete specific SQL query-part
      * @return string
+     * @throws Exception
      */
     protected static function getOccursWhereClauseGeneral(
         $table_name,

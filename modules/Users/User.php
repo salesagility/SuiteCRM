@@ -328,6 +328,7 @@ class User extends Person implements EmailInterface
      * InboundEmail
      *
      * @return bool
+     * @throws ImapHandlerException
      */
     public function hasPersonalEmail()
     {
@@ -574,6 +575,7 @@ class User extends Person implements EmailInterface
     /**
      * Get WHERE clause that fetches all users counted for licensing purposes
      * @return string
+     * @throws Exception
      */
     public static function getLicensedUsersWhere()
     {
@@ -967,9 +969,10 @@ class User extends Person implements EmailInterface
 
 
     /**
-     * @return boolean true if the user is a member of the role_name, false otherwise
      * @param string $role_name - Must be the exact name of the acl_role
      * @param string $user_id - The user id to check for the role membership, empty string if current user
+     * @return boolean true if the user is a member of the role_name, false otherwise
+     * @throws Exception
      * @desc Determine whether or not a user is a member of an ACL Role. This function caches the
      *       results in the session or to prevent running queries after the first time executed.
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
@@ -1043,6 +1046,7 @@ class User extends Person implements EmailInterface
      *
      * @param string $password MD5-encoded password
      * @return bool
+     * @throws Exception
      */
     public function authenticate_user($password)
     {
@@ -1115,6 +1119,7 @@ EOQ;
      * @param string $username_password Password
      * @param bool $password_encoded Is password md5-encoded or plain text?
      * @return User|null -- this if load was successul and null if load failed.
+     * @throws Exception
      */
     public function load_user($username_password, $password_encoded = false)
     {
@@ -1220,6 +1225,7 @@ EOQ;
      * @param string $where Limiting query
      * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (default is true)
      * @return bool|array the matching User of false if not found
+     * @throws Exception
      */
     public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
     {
@@ -1253,6 +1259,7 @@ EOQ;
      * Sets new password and resets password expiration timers
      * @param string $new_password
      * @param string $system_generated
+     * @throws Exception
      */
     public function setNewPassword($new_password, $system_generated = '0')
     {
@@ -1275,6 +1282,7 @@ EOQ;
      * @param string $new_password - Must be non null and at least 1 character.
      * @param string $system_generated
      * @return boolean - If passwords pass verification and query succeeds, return true, else return false.
+     * @throws Exception
      */
     public function change_password($username_password, $new_password, $system_generated = '0')
     {
@@ -1428,6 +1436,7 @@ EOQ;
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
      * All Rights Reserved..
      * Contributor(s): ______________________________________..
+     * @throws Exception
      */
     public function verify_data($ieVerified = true)
     {
@@ -1545,6 +1554,7 @@ EOQ;
      *
      * Returns all active and inactive users
      * @return Array of all users in the system
+     * @throws Exception
      */
     public static function getAllUsers()
     {
@@ -1561,6 +1571,7 @@ EOQ;
      *
      * Returns all active users
      * @return Array of active users in the system
+     * @throws Exception
      */
     public static function getActiveUsers()
     {
@@ -1805,6 +1816,7 @@ EOQ;
      * @param string $ret_id
      * @param string $class
      * @return string    link
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getEmailLink2(
         $emailAddress,
@@ -1868,6 +1880,7 @@ EOQ;
      * @param string $ret_id
      * @param string $class
      * @return string    link
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getEmailLink(
         $attribute,
@@ -1951,6 +1964,7 @@ EOQ;
      *
      * @param string $type
      * @return array
+     * @throws Exception
      */
     protected function _getModulesForACL($type = 'dev')
     {
@@ -2035,6 +2049,7 @@ EOQ;
      * List the modules a user has developer access to
      *
      * @return array
+     * @throws Exception
      */
     public function getDeveloperModules()
     {
@@ -2077,6 +2092,7 @@ EOQ;
      * List the modules a user has admin access to
      *
      * @return array
+     * @throws Exception
      */
     public function getAdminModules()
     {
@@ -2239,6 +2255,10 @@ EOQ;
      * @param string $templateId Id of email template
      * @param array $additionalData additional params: link, url, password
      * @return array status: true|false, message: error message, if status = false and message = '' it means that send method has returned false
+     * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      */
     public function sendEmailForPassword($templateId, array $additionalData = array())
     {

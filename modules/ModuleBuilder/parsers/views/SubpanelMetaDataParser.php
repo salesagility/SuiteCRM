@@ -66,6 +66,7 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
      * @param string $subpanelName
      * @param string $moduleName
      * @param string $packageName
+     * @throws Exception
      */
     public function __construct($subpanelName, $moduleName, $packageName = '')
     {
@@ -97,6 +98,7 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
     /**
      * Save the layout
      * @param bool $populate
+     * @throws HTMLPurifier_Exception
      */
     public function handleSave($populate = true)
     {

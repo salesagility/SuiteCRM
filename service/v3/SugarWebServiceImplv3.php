@@ -60,15 +60,14 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
     /**
      * Log the user into the application
      *
-     * @param UserAuth array $user_auth -- Set user_name and password (password needs to be
-     *      in the right encoding for the type of authentication the user is setup for.  For Base
-     *      sugar validation, password is the MD5 sum of the plain text password.
+     * @param $user_auth
      * @param String $application -- The name of the application you are logging in from.  (Currently unused).
      * @param array $name_value_list -- Array of name value pair of extra parameters. As of today only 'language' and 'notifyonsave' is supported
      * @return Array - id - String id is the session_id of the session that was created.
-     * 				 - module_name - String - module name of user
-     * 				 - name_value_list - Array - The name value pair of user_id, user_name, user_language, user_currency_id, user_currency_name,
+     *                 - module_name - String - module name of user
+     *                 - name_value_list - Array - The name value pair of user_id, user_name, user_language, user_currency_id, user_currency_name,
      *                                         - user_default_team_id, user_is_admin, user_default_dateformat, user_default_timeformat
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function login($user_auth, $application, $name_value_list)
@@ -186,8 +185,9 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
     /**
      * Gets server info. This will return information like version, flavor and gmt_time.
      * @return Array - flavor - String - Retrieve the specific flavor of sugar.
-     * 				 - version - String - Retrieve the version number of Sugar that the server is running.
-     * 				 - gmt_time - String - Return the current time on the server in the format 'Y-m-d H:i:s'. This time is in GMT.
+     *                 - version - String - Retrieve the version number of Sugar that the server is running.
+     *                 - gmt_time - String - Return the current time on the server in the format 'Y-m-d H:i:s'. This time is in GMT.
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function get_server_info()
@@ -371,14 +371,15 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
      * Given a list of modules to search and a search string, return the id, module_name, along with the fields
      * We will support Accounts, Bugs, Cases, Contacts, Leads, Opportunities, Project, ProjectTask, Quotes
      *
-     * @param string $session			- Session ID returned by a previous call to login.
-     * @param string $search_string 	- string to search
-     * @param string[] $modules			- array of modules to query
-     * @param int $offset				- a specified offset in the query
-     * @param int $max_results			- max number of records to return
-     * @param string $assigned_user_id	- a user id to filter all records by, leave empty to exclude the filter
-     * @param string[] $select_fields   - An array of fields to return.  If empty the default return fields will be from the active list view defs.
-     * @return Array return_search_result 	- Array('Accounts' => array(array('name' => 'first_name', 'value' => 'John', 'name' => 'last_name', 'value' => 'Do')))
+     * @param string $session - Session ID returned by a previous call to login.
+     * @param string $search_string - string to search
+     * @param string[] $modules - array of modules to query
+     * @param int $offset - a specified offset in the query
+     * @param int $max_results - max number of records to return
+     * @param string $assigned_user_id - a user id to filter all records by, leave empty to exclude the filter
+     * @param string[] $select_fields - An array of fields to return.  If empty the default return fields will be from the active list view defs.
+     * @return Array return_search_result    - Array('Accounts' => array(array('name' => 'first_name', 'value' => 'John', 'name' => 'last_name', 'value' => 'Do')))
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function search_by_module($session, $search_string, $modules, $offset, $max_results, $assigned_user_id = '', $select_fields = array())

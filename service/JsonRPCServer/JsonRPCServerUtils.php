@@ -49,6 +49,7 @@ class JsonRPCServerUtils
      * @param string $table
      * @param null $module
      * @return string
+     * @throws Exception
      */
     public function constructWhere(&$query_obj, $table = '', $module = null)
     {

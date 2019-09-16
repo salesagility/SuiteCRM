@@ -89,6 +89,7 @@ function implodeVersion($version, $size = 0, $lastSymbol = '', $delimiter = '')
  * @param string $path
  * return string
  * @return bool|string
+ * @throws Exception
  */
 function getUploadRelativeName($path)
 {
@@ -579,7 +580,13 @@ function removeMd5MatchingFiles($deleteNot=array())
 /**
  * Handles requirements for creating reminder Tasks and Emails
  * @param array skippedFiles Array of files that were not overwriten and must be manually mereged.
- * @param string path Optional full path to alternate upgradeWizard log.
+ * @param string $path
+ * @throws EmailException
+ * @throws EmailValidatorException
+ * @throws HTMLPurifier_Exception
+ * @throws ImapHandlerException
+ * @throws \SuiteCRM\ErrorMessageException
+ * @throws phpmailerException
  */
 function commitHandleReminders($skippedFiles, $path='')
 {
@@ -711,12 +718,12 @@ function deleteChance()
 }
 
 
-
 /**
  * upgradeUWFiles
  * This function copies upgrade wizard files from new patch if that dir exists
  *
  * @param String $file path to uploaded zip file
+ * @throws Exception
  */
 function upgradeUWFiles($file)
 {
@@ -866,10 +873,11 @@ function checkCustomOverrides($fromDir)
  * upgradeUWFilesCopy
  *
  * This function recursively copies files from the upgradeUWFiles Array
- * @see upgradeUWFiles
- *
  * @param array $allFiles Array of files to copy over after zip file has been uploaded
  * @param string $from_dir Source directory
+ * @throws Exception
+ * @see upgradeUWFiles
+ *
  */
 function upgradeUWFilesCopy($allFiles, $from_dir)
 {
@@ -1046,6 +1054,7 @@ eoq;
  * finalizes upgrade by setting upgrade versions in DB (config table) and sugar_version.php
  * @param $version
  * @return bool true on success
+ * @throws Exception
  */
 function updateVersions($version)
 {
@@ -3409,6 +3418,7 @@ function add_custom_modules_favorites_search()
  * team_sets_teams tables.
  *
  * @param array $filter
+ * @throws Exception
  */
 function upgradeModulesForTeamsets($filter=array())
 {
@@ -3452,6 +3462,7 @@ function upgradeModulesForTeamsets($filter=array())
  *
  * @param SugarBean $bean which we are adding team_set_id column to
  * @param The $column_name name of the column containing the default team_set_id value
+ * @throws Exception
  */
 function upgradeTeamColumn($bean, $column_name)
 {
@@ -3900,6 +3911,7 @@ function update_iframe_dashlets()
  * convertImageToText
  * @param $table_name
  * @param $column_name
+ * @throws Exception
  * @deprecated
  * This method attempts to convert date type image to text on Microsoft SQL Server.
  * This method could NOT be used in any other type of datebases.
@@ -3995,7 +4007,6 @@ function clearHelpFiles()
 }
 
 
-
 /**
  * upgradeDateTimeFields
  *
@@ -4003,6 +4014,7 @@ function clearHelpFiles()
  * which prevents you from performing timezone offset calculations once the data has been saved.
  *
  * @param path String location to log file, empty by default
+ * @throws Exception
  */
 function upgradeDateTimeFields($path)
 {
@@ -4020,6 +4032,7 @@ function upgradeDateTimeFields($path)
 /**
  * upgradeDocumentTypeFields
  * @param $path
+ * @throws Exception
  */
 function upgradeDocumentTypeFields($path)
 {
@@ -4472,6 +4485,7 @@ function upgradeSugarCache($file)
  * This is a helper function to clean up
  *
  * @param String $version value of current system version (pre upgrade)
+ * @throws Exception
  */
 function unlinkUpgradeFiles($version)
 {

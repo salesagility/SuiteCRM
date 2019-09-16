@@ -223,6 +223,7 @@ class ImportFieldSanitize
      * @param array $vardef
      * @param object $focus bean of the module we're importing into
      * @return string sanitized and validated value on success, bool false on failure
+     * @throws Exception
      */
     public function time(
         $value,

@@ -150,6 +150,7 @@ class MBPackage
      * @param bool $for_export
      *
      * @return string
+     * @throws Exception
      */
     public function getManifest($version_specific = false, $for_export = false)
     {
@@ -196,6 +197,7 @@ class MBPackage
      * @param $path
      *
      * @return string
+     * @throws Exception
      */
     public function buildInstall($path)
     {
@@ -299,6 +301,7 @@ class MBPackage
      * @param bool $clean
      *
      * @return array
+     * @throws Exception
      */
     public function build($export = true, $clean = false)
     {
@@ -407,6 +410,7 @@ class MBPackage
      * @param string $new_name
      *
      * @return bool
+     * @throws Exception
      */
     public function copy($new_name)
     {
@@ -446,6 +450,7 @@ class MBPackage
      * @param $path
      *
      * @return string
+     * @throws Exception
      */
     public function customBuildInstall($modules, $path)
     {
@@ -519,6 +524,7 @@ class MBPackage
     /**
      * @param $module
      * @param $installdefs
+     * @throws Exception
      */
     private function getCustomFieldsManifestForModule($module, &$installdefs)
     {
@@ -1027,11 +1033,12 @@ class MBPackage
     }
 
     /**
-     * @param $package
+     * @param string $package
      * @param bool $export
      * @param bool $clean
      *
      * @return string
+     * @throws Exception
      */
     public function exportProject($package = '', $export = true, $clean = true)
     {

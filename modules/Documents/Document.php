@@ -422,6 +422,7 @@ class Document extends File
      * remove DocumentRevision relationships and then optionally delete Contracts depending on the version.
      *
      * @param String $id The record id of the Document instance
+     * @throws Exception
      */
     public function mark_relationships_deleted($id)
     {

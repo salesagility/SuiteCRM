@@ -185,6 +185,7 @@ class SugarCronJobs
     /**
      * Execute given job
      * @param SchedulersJob $job
+     * @throws Exception
      */
     public function executeJob($job)
     {

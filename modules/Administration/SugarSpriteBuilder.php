@@ -108,6 +108,7 @@ class SugarSpriteBuilder
      * This function is used to create the spriteSrc array
      * @param String $name value of the sprite name
      * @param String $dir value of the directory associated with the sprite entry
+     * @throws Exception
      */
     public function addDirectory($name, $dir)
     {
@@ -127,6 +128,7 @@ class SugarSpriteBuilder
      * This method processes files in a directory and adds them to the sprites array
      * @param String $dir value of the directory to scan for image files in
      * @return array
+     * @throws Exception
      */
     private function getFileList($dir)
     {

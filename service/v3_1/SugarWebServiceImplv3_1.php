@@ -237,6 +237,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
      * @param Array $name_value_list -- The keys of the array are the SugarBean attributes, the values of the array are the values the attributes should have.
      * @param Bool $track_view -- Should the tracker be notified that the action was performed on the bean.
      * @return Array    'id' -- the ID of the bean that was written to (-1 on error)
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function set_entry($session, $module_name, $name_value_list, $track_view = false)
@@ -331,15 +332,14 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
     /**
      * Log the user into the application
      *
-     * @param UserAuth array $user_auth -- Set user_name and password (password needs to be
-     *      in the right encoding for the type of authentication the user is setup for.  For Base
-     *      sugar validation, password is the MD5 sum of the plain text password.
+     * @param $user_auth
      * @param String $application -- The name of the application you are logging in from.  (Currently unused).
      * @param array $name_value_list -- Array of name value pair of extra parameters. As of today only 'language' and 'notifyonsave' is supported
      * @return Array - id - String id is the session_id of the session that was created.
      *                 - module_name - String - module name of user
      *                 - name_value_list - Array - The name value pair of user_id, user_name, user_language, user_currency_id, user_currency_name,
      *                                         - user_default_team_id, user_is_admin, user_default_dateformat, user_default_timeformat
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function login($user_auth, $application, $name_value_list = array())
@@ -802,6 +802,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
      * @param string[] $select_fields - An array of fields to return.  If empty the default return fields will be from the active list view defs.
      * @param bool $unified_search_only - A boolean indicating if we should only search against those modules participating in the unified search.
      * @return Array return_search_result    - Array('Accounts' => array(array('name' => 'first_name', 'value' => 'John', 'name' => 'last_name', 'value' => 'Do')))
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function search_by_module(

@@ -56,6 +56,7 @@ class OAuth2Controller extends ApiController
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      * @return ResponseInterface|static
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function authenticate(ServerRequestInterface $request, ResponseInterface $response)
     {

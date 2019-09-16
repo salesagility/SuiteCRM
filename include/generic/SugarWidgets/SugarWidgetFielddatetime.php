@@ -197,6 +197,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * Get assigned or logged in user's current date and time value.
      * @param boolean $timestamp Format of return value, if set to true, return unix like timestamp , else a formatted date.
      * @return false|int|string
+     * @throws Exception
      */
     public function get_users_current_date_time($timestamp=false)
     {
@@ -221,8 +222,9 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
     /**
      * Get specified date and time for a particalur day, in current user's timezone.
      * @param int $days Adjust date by this number of days, negative values are valid.
-     * @param time string falg for desired time value, start: minimum time, end: maximum time, default: current time
+     * @param $time
      * @return false|string
+     * @throws Exception
      */
     public function get_db_date($days, $time)
     {
@@ -293,6 +295,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
     /**
      * Return current date in required user's TZ
      * @return SugarDateTime
+     * @throws Exception
      */
     protected function now()
     {
@@ -417,6 +420,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * @param string $modifyFilter - Modification to start/end date, used to select previous/next quarter
      * @param string $date - Date for which to find the quarter filter, if not set uses current date
      * @return string - BETWEEN WHERE query for quarter filter
+     * @throws Exception
      */
     protected function getQuarterFilter($layout_def, $modifyFilter, $date = '')
     {
@@ -451,6 +455,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      *
      * @param array $layout_def for field
      * @return string part of select query with last quarter only
+     * @throws Exception
      */
     public function queryFilterTP_last_quarter($layout_def)
     {
@@ -462,6 +467,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      *
      * @param array $layout_def for field
      * @return string part of select query with this quarter only
+     * @throws Exception
      */
     public function queryFilterTP_this_quarter($layout_def)
     {
@@ -473,6 +479,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      *
      * @param array $layout_def for field
      * @return string part of select query with next quarter only
+     * @throws Exception
      */
     public function queryFilterTP_next_quarter($layout_def)
     {

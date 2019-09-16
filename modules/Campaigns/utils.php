@@ -52,6 +52,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @param null $db
  * @param array $mod_strings
  * @return array
+ * @throws Exception
  */
 
 /*
@@ -91,12 +92,14 @@ function get_message_scope_dom($campaign_id, $campaign_name, $db=null, $mod_stri
         return $return_array;
     }
 }
+
 /**
  * Return bounce handling mailboxes for campaign.
  *
  * @param unknown_type $emails
  * @param bool $get_name
  * @return array $get_name=true, bounce handling mailboxes' name; $get_name=false, bounce handling mailboxes' from name.
+ * @throws Exception
  */
 function get_campaign_mailboxes(&$emails, $get_name=true)
 {
@@ -940,8 +943,9 @@ function process_subscriptions($subscription_string_to_parse)
 /**
  * Handle campaign log entry creation for mail-merge activity. The function will be called by the soap component.
  *
- * @param String campaign_id Primary key of the campaign
- * @param array targets List of keys for entries from prospect_lists_prosects table
+ * @param $campaign_id
+ * @param $targets
+ * @throws Exception
  */
  function campaign_log_mail_merge($campaign_id, $targets)
  {
@@ -961,11 +965,13 @@ function process_subscriptions($subscription_string_to_parse)
          }
      }
  }
+
 /**
  * Function creates a campaign_log entry for campaigns processesed using the mail-merge feature. If any entry
  * exist the hit counter is updated. target_tracker_key is used to locate duplicate entries.
- * @param string campaign_id Primary key of the campaign
+ * @param $campaign_id
  * @param array $pl_row A row of data from prospect_lists_prospects table.
+ * @throws Exception
  */
 function write_mail_merge_log_entry($campaign_id, $pl_row)
 {

@@ -383,7 +383,7 @@ function commitModules($unlink = false, $type = 'module')
 
 /**
  * creates UpgradeHistory entries
- * @param mode string Install or Uninstall
+ * @throws Exception
  */
 function updateUpgradeHistory()
 {
@@ -1163,6 +1163,7 @@ function handleWebConfig()
  * Drop old tables if table exists and told to drop it
  * @param $focus
  * @return int
+ * @throws Exception
  */
 function drop_table_install(&$focus)
 {

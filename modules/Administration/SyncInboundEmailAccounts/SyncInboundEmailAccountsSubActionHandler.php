@@ -81,6 +81,8 @@ class SyncInboundEmailAccountsSubActionHandler
      *
      * @param SyncInboundEmailAccountsPage $sync
      * @param ImapHandlerInterface $imap
+     * @throws ImapHandlerException
+     * @throws SyncInboundEmailAccountsEmptyException
      * @throws SyncInboundEmailAccountsException
      * @throws SyncInboundEmailAccountsInvalidMethodTypeException
      * @throws SyncInboundEmailAccountsInvalidSubActionArgumentsException
@@ -213,9 +215,10 @@ class SyncInboundEmailAccountsSubActionHandler
     }
 
     /**
+     * @throws ImapHandlerException
+     * @throws SyncInboundEmailAccountsEmptyException
      * @throws SyncInboundEmailAccountsException
      * @throws SyncInboundEmailAccountsInvalidSubActionArgumentsException
-     * @throws SyncInboundEmailException
      */
     protected function action_Sync()
     {
@@ -395,6 +398,7 @@ class SyncInboundEmailAccountsSubActionHandler
      * @param bool $force
      * @param null $useSsl
      * @return mixed
+     * @throws ImapHandlerException
      * @throws SyncInboundEmailAccountsIMapConnectionException
      */
     protected function getEmailHeadersOfIMAPServer(InboundEmail $ie, $test = false, $force = false, $useSsl = null)

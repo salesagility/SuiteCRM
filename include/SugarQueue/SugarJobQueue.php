@@ -109,6 +109,7 @@ class SugarJobQueue
      * Get Job object by ID
      * @param string $jobId
      * @return SchedulersJob|null
+     * @throws Exception
      */
     protected function getJob($jobId)
     {
@@ -127,6 +128,7 @@ class SugarJobQueue
      * @param string $resolution One of JOB_ constants that define job status
      * @param string $message
      * @return bool
+     * @throws Exception
      */
     public function resolveJob($jobId, $resolution, $message = null)
     {
@@ -143,6 +145,7 @@ class SugarJobQueue
      * @param string $message
      * @param string $delay how long to delay (default is job's delay)
      * @return bool
+     * @throws Exception
      */
     public function postponeJob($jobId, $message = null, $delay = null)
     {
@@ -170,6 +173,7 @@ class SugarJobQueue
     /**
      * Remove old jobs that still are marked as running
      * @return bool true if no failed job discovered, false if some job were failed
+     * @throws Exception
      */
     public function cleanup()
     {
@@ -198,6 +202,7 @@ class SugarJobQueue
      * Fetch the next job in the queue and mark it running
      * @param string $clientID ID of the client requesting the job
      * @return SchedulersJob|null
+     * @throws Exception
      */
     public function nextJob($clientID)
     {

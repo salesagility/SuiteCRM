@@ -107,6 +107,7 @@ class ACLRole extends SugarBean
      * @param GUID $user_id
      * @param bool $getAsNameArray
      * @return array list of ACLRole objects
+     * @throws Exception
      */
     public function getUserRoles($user_id, $getAsNameArray = true)
     {
@@ -141,6 +142,7 @@ class ACLRole extends SugarBean
      *
      * @param GUID $user_id
      * @return array a list of ACLRole Names
+     * @throws Exception
      */
     public function getUserRoleNames($user_id)
     {
@@ -174,6 +176,7 @@ class ACLRole extends SugarBean
      *
      * @param boolean $returnAsArray - should it return the results as an array of arrays or as an array of ACLRoles
      * @return array an array of array representations of acl roles or an array of ACLRoles
+     * @throws Exception
      */
     public function getAllRoles($returnAsArray = false)
     {
@@ -204,6 +207,7 @@ class ACLRole extends SugarBean
      * @param GUID $role_id
      * @param string $type
      * @return array of actions
+     * @throws Exception
      */
     public function getRoleActions($role_id, $type='module')
     {
@@ -262,12 +266,14 @@ class ACLRole extends SugarBean
         }
         return ($a < $b) ? -1 : 1;
     }
+
     /**
      * function mark_relationships_deleted($id)
      *
      * special case to delete acl_roles_actions relationship
      *
      * @param ACLRole GUID $id
+     * @throws Exception
      */
     public function mark_relationships_deleted($id)
     {

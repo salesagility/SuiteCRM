@@ -236,6 +236,7 @@ class UploadMultipleFiles
     /**
      * standard PHP file-upload security measures. all variables accessed in a global context
      * @return bool True on success
+     * @throws Exception
      */
     public function confirm_upload()
     {
@@ -562,6 +563,7 @@ class UploadMultipleFiles
      * Return real FS path of the file
      * @param string $path
      * @return bool|string
+     * @throws Exception
      */
     public static function realpath($path)
     {

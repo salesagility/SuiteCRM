@@ -179,6 +179,7 @@ abstract class ImportDataSource implements Iterator
      * @param string $module name of the bean we are creating for this import
      * @param string $id id of the recorded created in the $module
      * @return string
+     * @throws Exception
      */
     public static function writeRowToLastImport($import_module, $module, $id)
     {
@@ -209,6 +210,7 @@ abstract class ImportDataSource implements Iterator
      * @param string $error
      * @param string $fieldName
      * @param mixed $fieldValue
+     * @throws Exception
      */
     public function writeError($error, $fieldName, $fieldValue)
     {
@@ -251,6 +253,7 @@ abstract class ImportDataSource implements Iterator
     /**
      * Writes the row out to the ImportCacheFiles::getDuplicateFileName() file
      * @param array $field_names
+     * @throws Exception
      */
     public function markRowAsDuplicate($field_names=array())
     {
@@ -318,6 +321,7 @@ abstract class ImportDataSource implements Iterator
     /**
      * Writes the row out to the ImportCacheFiles::getErrorRecordsFileName() file
      * @param string $errorMessage
+     * @throws Exception
      */
     public function writeErrorRecord($errorMessage = '')
     {

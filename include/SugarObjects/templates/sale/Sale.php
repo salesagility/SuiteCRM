@@ -147,6 +147,7 @@ class Sale extends Basic
      * @param bool $check_notify
      *
      * @return string
+     * @throws Exception
      */
     public function save($check_notify = false)
     {

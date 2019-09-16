@@ -82,6 +82,7 @@ class jjwg_Areas extends jjwg_Areas_sugar
      * @param bool $encode
      * @param bool $deleted
      * @return jjwg_Areas
+     * @throws Exception
      */
     public function retrieve($id = -1, $encode = true, $deleted = true)
     {

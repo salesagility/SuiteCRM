@@ -453,6 +453,7 @@ class Campaign extends SugarBean
      * which were created through generated lead form
      *
      * @return integer
+     * @throws Exception
      */
     public function getDeletedCampaignLogLeadsCount()
     {

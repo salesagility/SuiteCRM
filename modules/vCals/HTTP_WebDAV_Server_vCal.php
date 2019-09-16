@@ -273,11 +273,11 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
         // {{{ http_PUT()
 
         /**
-        * PUT method handler
-        *
-        * @param  void
-        * @return void
-        */
+         * PUT method handler
+         *
+         * @return void
+         * @throws Exception
+         */
         public function http_PUT()
         {
             $options = array();

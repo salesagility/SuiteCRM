@@ -57,6 +57,7 @@ class SchemaController extends ApiController
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      * @return ResponseInterface
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getJsonApiSchema(ServerRequestInterface $request, ResponseInterface $response)
     {
@@ -88,6 +89,7 @@ class SchemaController extends ApiController
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      * @return ResponseInterface|static
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getSwaggerSchema(ServerRequestInterface $request, ResponseInterface $response)
     {

@@ -249,6 +249,7 @@ class ApiTester extends \Codeception\Actor
      * This is also temporary till we fix this.
      *
      * @return string
+     * @throws Exception
      */
     public function createAccount()
     {
@@ -273,6 +274,7 @@ class ApiTester extends \Codeception\Actor
      * This is also temporary till we fix this.
      *
      * @return string
+     * @throws Exception
      */
     public function createContact()
     {
@@ -294,6 +296,7 @@ class ApiTester extends \Codeception\Actor
      *
      * @param string $tableName
      * @param string $id
+     * @throws Exception
      */
     public function deleteBean($tableName, $id)
     {
@@ -307,6 +310,7 @@ class ApiTester extends \Codeception\Actor
      *
      * @param array $relationshipMeta
      * @param array $ids
+     * @throws Exception
      */
     public function deleteRelationship($relationshipMeta, $ids)
     {

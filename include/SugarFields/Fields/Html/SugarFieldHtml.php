@@ -54,6 +54,8 @@ class SugarFieldHtml extends SugarFieldBase
      * @param array $displayParams
      * @param integer $tabindex
      * @return string
+     * @throws HTMLPurifier_Exception
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
@@ -71,6 +73,8 @@ class SugarFieldHtml extends SugarFieldBase
      * @param array $displayParams
      * @param integer $tabindex
      * @return string
+     * @throws HTMLPurifier_Exception
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
@@ -88,6 +92,8 @@ class SugarFieldHtml extends SugarFieldBase
      * @param array $displayParams
      * @param integer $tabindex
      * @return string
+     * @throws HTMLPurifier_Exception
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {

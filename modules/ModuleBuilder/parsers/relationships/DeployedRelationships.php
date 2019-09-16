@@ -387,6 +387,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * @param The $relationship relationship that is getting deleted
      * return null
      * @return bool
+     * @throws Exception
      */
     private function removeFieldsFromDeployedLayout($relationship)
     {

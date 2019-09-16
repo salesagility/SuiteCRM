@@ -79,6 +79,7 @@ class ConfiguratorViewAddFontResult extends SugarView
     /**
      * This method prepares the received data and call the addFont method of the fontManager
      * @return boolean true on success
+     * @throws Exception
      */
     private function addFont()
     {

@@ -168,6 +168,7 @@ class History implements HistoryInterface
      * Add an item to the history
      * @param string $path
      * @return string   A GMT Unix timestamp for this newly added item
+     * @throws Exception
      */
     public function append($path)
     {

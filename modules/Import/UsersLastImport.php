@@ -122,6 +122,7 @@ class UsersLastImport extends SugarBean
      *
      * @param string $id specific users_last_import id to undo
      * @return bool
+     * @throws Exception
      */
     public function undoById($id)
     {
@@ -147,6 +148,7 @@ class UsersLastImport extends SugarBean
      *
      * @param string $module module being imported into
      * @return bool
+     * @throws Exception
      */
     public function undo($module)
     {
@@ -173,6 +175,7 @@ class UsersLastImport extends SugarBean
      * @param $bean_id
      * @param $module
      * @return bool
+     * @throws Exception
      */
     protected function _deleteRecord($bean_id, $module)
     {
@@ -232,6 +235,7 @@ class UsersLastImport extends SugarBean
      *
      * @param string $module module being imported into
      * @return array
+     * @throws Exception
      */
     public static function getBeansByImport($module)
     {

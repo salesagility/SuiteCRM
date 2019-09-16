@@ -11,6 +11,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
     /**
      * @param HTMLPurifier_Config $config
      * @return string
+     * @throws HTMLPurifier_Exception
      */
     public function render($config)
     {

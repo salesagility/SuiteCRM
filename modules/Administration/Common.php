@@ -208,8 +208,9 @@ function create_field_label($module, $language, $key, $value, $overwrite=false)
 }
 
 /**
- * @return bool
  * @param dropdown_name string
+ * @return bool
+ * @throws Exception
  * @desc Wrapper function that creates a dropdown type for all languages.
  */
 function create_dropdown_type_all_lang($dropdown_name)
@@ -342,6 +343,7 @@ function return_custom_app_list_strings_file_contents($language, $custom_filenam
  * @param $dropdown_name
  * @param $language
  * @return bool
+ * @throws Exception
  * @desc Creates a new dropdown type.
  */
 function create_dropdown_type($dropdown_name, $language)

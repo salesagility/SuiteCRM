@@ -299,6 +299,7 @@ echo get_validate_chart_js();
      * @param string $chart_size
      * @param null $current_module_strings
      * @return
+     * @throws Exception
      */
     public function gen_xml(
         $datax = array('foo', 'bar'),

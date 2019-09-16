@@ -61,10 +61,11 @@ class ProspectLink extends Link2
      * 'link_class' => 'ProspectLink',
      * 'link_file' => 'modules/Campaigns/ProspectLink.php'.
      *
-     * @see Link::getJoin method
      * @param array $params
      * @param bool $return_array
      * @return array|string
+     * @throws Exception
+     * @see Link::getJoin method
      */
     public function getJoin($params, $return_array = false)
     {

@@ -151,6 +151,7 @@ class actionCreateRecord extends actionBase
      * @param array $params
      * @param bool $in_save
      * @return bool
+     * @throws Exception
      */
     public function run_action(SugarBean $bean, $params = array(), $in_save = false)
     {
@@ -186,6 +187,7 @@ class actionCreateRecord extends actionBase
      * @param SugarBean $bean
      * @param array $params
      * @param bool $in_save
+     * @throws Exception
      */
     public function set_record(SugarBean $record, SugarBean $bean, $params = array(), $in_save = false)
     {

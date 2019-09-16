@@ -122,6 +122,7 @@ class SpotsController extends SugarController
      * Returns the cached account file, will create it first if it is out of date / does not exist.
      *
      * @return string returns a string representation of the accounts file
+     * @throws Exception
      */
     public function action_getAccountsSpotsData()
     {
@@ -139,6 +140,7 @@ class SpotsController extends SugarController
      * This creates the cached file for accounts.
      *
      * @param string $filepath the filepath to save the cached file
+     * @throws Exception
      */
     public function action_createAccountsSpotsData($filepath)
     {
@@ -178,6 +180,7 @@ EOF;
      * Returns the cached leads file, will create it first if it is out of date / does not exist.
      *
      * @return string returns a string representation of the leads file
+     * @throws Exception
      */
     public function action_getLeadsSpotsData()
     {
@@ -195,6 +198,7 @@ EOF;
      * This creates the cached file for leads.
      *
      * @param string $filepath the filepath to save the cached file
+     * @throws Exception
      */
     public function action_createLeadsSpotsData($filepath)
     {
@@ -283,6 +287,7 @@ EOF;
      * Returns the cached sales file, will create it first if it is out of date / does not exist.
      *
      * @return string returns a string representation of the sales file
+     * @throws Exception
      */
     public function action_getSalesSpotsData()
     {
@@ -300,6 +305,7 @@ EOF;
      * This creates the cached file for sales.
      *
      * @param string $filepath the filepath to save the cached file
+     * @throws Exception
      */
     public function action_createSalesSpotsData($filepath)
     {
@@ -415,6 +421,7 @@ EOF;
      * Returns the cached service file, will create it first if it is out of date / does not exist.
      *
      * @return string returns a string representation of the service file
+     * @throws Exception
      */
     public function action_getServiceSpotsData()
     {
@@ -432,6 +439,7 @@ EOF;
      * This creates the cached file for service.
      *
      * @param string $filepath the filepath to save the cached file
+     * @throws Exception
      */
     public function action_createServiceSpotsData($filepath)
     {
@@ -528,6 +536,7 @@ EOF;
      * Returns the cached activities file, will create it first if it is out of date / does not exist.
      *
      * @return string returns a string representation of the activities file
+     * @throws Exception
      */
     public function action_getActivitiesSpotsData()
     {
@@ -545,6 +554,7 @@ EOF;
      * This creates the cached file for activities.
      *
      * @param string $filepath the filepath to save the cached file
+     * @throws Exception
      */
     public function action_createActivitiesSpotsData($filepath)
     {
@@ -668,6 +678,7 @@ EOF;
      * Returns the cached marketing file, will create it first if it is out of date / does not exist.
      *
      * @return string returns a string representation of the marketing file
+     * @throws Exception
      */
     public function action_getMarketingSpotsData()
     {
@@ -685,6 +696,7 @@ EOF;
      * This creates the cached file for marketing.
      *
      * @param string $filepath the filepath to save the cached file as
+     * @throws Exception
      */
     public function action_createMarketingSpotsData($filepath)
     {
@@ -783,6 +795,7 @@ EOF;
      * Returns the cached marketing activity file, will create it first if it is out of date / does not exist.
      *
      * @return string returns a string representation of the marketing activity file
+     * @throws Exception
      */
     public function action_getMarketingActivitySpotsData()
     {
@@ -800,6 +813,7 @@ EOF;
      * This creates the cached file for marketing activity.
      *
      * @param string $filepath the filepath to save the cached file
+     * @throws Exception
      */
     public function action_createMarketingActivitySpotsData($filepath)
     {
@@ -845,6 +859,7 @@ EOF;
      * Returns the cached quotes file, will create it first if it is out of date / does not exist.
      *
      * @return string returns a string representation of the quotes file
+     * @throws Exception
      */
     public function action_getQuotesSpotsData()
     {
@@ -862,6 +877,7 @@ EOF;
      * This creates the cached file for quotes.
      *
      * @param string $filepath the filepath to save the cached file
+     * @throws Exception
      */
     public function action_createQuotesSpotsData($filepath)
     {

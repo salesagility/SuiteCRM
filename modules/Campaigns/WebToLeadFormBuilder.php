@@ -262,6 +262,7 @@ HTML;
      * @param bool $fieldRequired
      * @param string $webRequiredSymbol
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     private static function getFieldCharsHTML($fieldName, $fieldLabel, $fieldRequired, $webRequiredSymbol)
     {
@@ -307,6 +308,7 @@ HTML;
      * @param string $fieldLabel
      * @param string $webRequiredSymbol
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     private static function getFieldEmailHTML($fieldName, $fieldRequired, $fieldLabel, $webRequiredSymbol)
     {
@@ -318,11 +320,12 @@ HTML;
         
         return $html;
     }
-    
+
     /**
      *
      * @param string $fieldName
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     private static function getOptInCheckboxHTML($fieldName)
     {

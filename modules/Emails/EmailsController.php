@@ -648,6 +648,7 @@ class EmailsController extends SugarController
 
 
     /**
+     * @throws ImapHandlerException
      * @throws SugarControllerException
      */
     public function action_MarkEmails()
@@ -695,6 +696,7 @@ class EmailsController extends SugarController
 
     /**
      * @param array $request
+     * @throws ImapHandlerException
      * @throws SugarControllerException
      */
     public function markEmails($request)
@@ -728,7 +730,7 @@ class EmailsController extends SugarController
     /**
      * @param array $request
      * @param int $mode
-     * @throws InvalidArgumentException
+     * @throws ImapHandlerException
      * @see EmailsController::COMPOSE_BEAN_MODE_UNDEFINED
      * @see EmailsController::COMPOSE_BEAN_MODE_REPLY_TO
      * @see EmailsController::COMPOSE_BEAN_MODE_REPLY_TO_ALL
@@ -888,6 +890,7 @@ class EmailsController extends SugarController
      * @param $importedEmailId
      * @param array $request
      * @return bool|Email
+     * @throws Exception
      * @see Email::id
      * @see EmailsController::action_ImportAndShowDetailView()
      * @see EmailsController::action_ImportView()
@@ -917,6 +920,7 @@ class EmailsController extends SugarController
      * @param InboundEmail $requestedInboundEmail
      * @param Email $requestedEmail
      * @return bool false if user doesn't have access
+     * @throws ImapHandlerException
      */
     protected function userIsAllowedToSendEmail($requestedUser, $requestedInboundEmail, $requestedEmail)
     {

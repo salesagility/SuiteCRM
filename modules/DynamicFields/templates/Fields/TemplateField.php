@@ -326,6 +326,7 @@ class TemplateField
      * In this case the default value will be handled by the application/sugarbean.
      * @param $table
      * @return string
+     * @throws Exception
      */
     public function get_db_add_alter_table($table)
     {
@@ -344,6 +345,7 @@ class TemplateField
      * mysql requires the datatype caluse in the alter statment.it will be no-op anyway.
      * @param $table
      * @return array|string
+     * @throws Exception
      */
     public function get_db_modify_alter_table($table)
     {
@@ -584,6 +586,7 @@ class TemplateField
      * member variable is set to true, a search field definition is updated/created to the SearchFields.php file.
      *
      * @param DynamicField $df
+     * @throws Exception
      */
     public function save($df)
     {

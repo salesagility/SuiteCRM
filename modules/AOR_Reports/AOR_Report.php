@@ -133,6 +133,7 @@ class AOR_Report extends Basic
      * @param string $is_owner
      * @param string $in_group
      * @return bool
+     * @throws Exception
      */
     public function ACLAccess($view, $is_owner = 'not_set', $in_group = 'not_set')
     {
@@ -1521,6 +1522,7 @@ class AOR_Report extends Basic
     /**
      * @param array $query
      * @return array
+     * @throws Exception
      */
     public function build_report_query_where($query = array())
     {

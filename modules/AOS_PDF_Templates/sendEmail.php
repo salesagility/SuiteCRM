@@ -55,6 +55,9 @@ class sendEmail
      * @param string $printable
      * @param string $file_name
      * @param bool $attach
+     * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws \SuiteCRM\ErrorMessageException
      * @see generatePDF (Entrypoint)
      * @deprecated use EmailController::composeViewFrom
      */

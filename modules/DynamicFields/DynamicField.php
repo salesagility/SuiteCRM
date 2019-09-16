@@ -58,6 +58,7 @@ class DynamicField
     /**
      * DynamicField constructor.
      * @param string $module
+     * @throws Exception
      */
     public function __construct($module = '')
     {
@@ -70,8 +71,9 @@ class DynamicField
     }
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      * @param string $module
+     * @throws Exception
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function DynamicField($module = '')
     {
@@ -130,6 +132,7 @@ class DynamicField
      * @param string $language
      * @param $key
      * @param $value
+     * @throws HTMLPurifier_Exception
      */
     public function setLabel($language, $key = null, $value = null)
     {
@@ -246,6 +249,7 @@ class DynamicField
      * @param string $module
      * @param array $result
      * @param bool $saveCache Boolean value indicating whether or not to call VardefManager::saveCache, defaults to true
+     * @throws Exception
      */
     public function saveToVardef($module, $result, $saveCache = true)
     {
@@ -442,6 +446,7 @@ class DynamicField
      * Process the save action for sugar bean custom fields.
      *
      * @param bool $isUpdate
+     * @throws Exception
      */
     public function save($isUpdate)
     {
@@ -525,6 +530,7 @@ class DynamicField
      * Use the widgets get_db_modify_alter_table() method to get the table sql - some widgets do not need any custom table modifications.
      *
      * @param TemplateField $widget
+     * @throws Exception
      */
     public function deleteField($widget)
     {
@@ -594,6 +600,7 @@ class DynamicField
      * @param TemplateField $field
      *
      * @return bool
+     * @throws Exception
      */
     public function addFieldObject(&$field)
     {
@@ -804,6 +811,7 @@ class DynamicField
      * @param string $comment
      *
      * @return bool
+     * @throws Exception
      */
     public function addField($name, $label = '', $type = 'Text', $max_size = '255', $required_option = 'optional', $default_value = '', $ext1 = '', $ext2 = '', $ext3 = '', $audited = 0, $inline_edit = 1, $mass_update = 0, $ext4 = '', $help = '', $duplicate_merge = 0, $comment = '')
     {
@@ -890,6 +898,7 @@ class DynamicField
      *
      * @param bool $execute
      * @return string
+     * @throws Exception
      */
     public function add_existing_custom_fields($execute = true)
     {
@@ -910,6 +919,7 @@ class DynamicField
      * @param array $data
      * @param bool $execute
      * @return string
+     * @throws Exception
      */
     public function add_existing_custom_field($data, $execute = true)
     {
@@ -928,6 +938,7 @@ class DynamicField
     /**
      * @param bool $execute
      * @return string
+     * @throws Exception
      */
     public function repairCustomFields($execute = true)
     {
@@ -973,6 +984,7 @@ class DynamicField
      *
      * @return string The core of the system label name - returns currency_id5 for example, when the full label would then be LBL_CURRENCY_ID5
      *                TODO: Only the core is returned for historical reasons - switch to return the real system label
+     * @throws HTMLPurifier_Exception
      */
     public function addLabel($displayLabel)
     {

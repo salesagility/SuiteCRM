@@ -241,6 +241,7 @@ class ListView
      * @param unknown $html_varName
      * @param $subpanel_def
      * @return void
+     * @throws Exception
      * @desc INTERNAL FUNCTION handles the rows
      */
     public function process_dynamic_listview_rows($data, $parent_data, $xtemplateSection, $html_varName, $subpanel_def)
@@ -1032,6 +1033,7 @@ class ListView
      * @param unknown $html_varName
      * @param unknown $seed
      * @return void
+     * @throws Exception
      * @desc INTERNAL FUNCTION Handles List Views using seeds that extend SugarBean
      * $XTemplateSection is the section in the XTemplate file that should be parsed usually main
      * $html_VarName is the variable name used in the XTemplateFile e.g. TASK
@@ -1269,6 +1271,7 @@ class ListView
      * @param null $subpanel_def
      * @param int $col_count
      * @return void
+     * @throws Exception
      * @desc INTERNAL FUNCTION process the List Navigation
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
      * All Rights Reserved.
@@ -1894,19 +1897,20 @@ class ListView
 
 
     /**
-    * @return void
-    * @param unknown $seed
-    * @param unknown $xTemplateSection
-    * @param unknown $html_varName
-    * @desc PUBLIC FUNCTION Handles List Views using seeds that extend SugarBean
-        $XTemplateSection is the section in the XTemplate file that should be parsed usually main
-        $html_VarName is the variable name used in the XTemplateFile e.g. TASK
-        $seed is a seed there are two types of seeds one is a subclass of SugarBean, the other is a list usually created from a sugar bean using get_list
-        if no XTemplate is set it will create  a new XTemplate
-        * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
-        * All Rights Reserved..
-        * Contributor(s): ______________________________________..
-    */
+     * @param unknown $seed
+     * @param unknown $xTemplateSection
+     * @param unknown $html_varName
+     * @return void
+     * @throws \SuiteCRM\StateSaverException
+     * @desc PUBLIC FUNCTION Handles List Views using seeds that extend SugarBean
+     * $XTemplateSection is the section in the XTemplate file that should be parsed usually main
+     * $html_VarName is the variable name used in the XTemplateFile e.g. TASK
+     * $seed is a seed there are two types of seeds one is a subclass of SugarBean, the other is a list usually created from a sugar bean using get_list
+     * if no XTemplate is set it will create  a new XTemplate
+     * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
+     * All Rights Reserved..
+     * Contributor(s): ______________________________________..
+     */
 
     public function processListViewTwo($seed, $xTemplateSection, $html_varName)
     {

@@ -9247,6 +9247,7 @@ class nusoap_client extends nusoap_base
      * @param integer $timeout set the connection timeout
      * @param integer $response_timeout set the response timeout
      * @param string $portName optional portName in WSDL document
+     * @throws Exception
      * @access   public
      */
     public function nusoap_client($endpoint, $wsdl = false, $proxyhost = false, $proxyport = false, $proxyusername = false, $proxypassword = false, $timeout = 0, $response_timeout = 30, $portName = '')

@@ -86,6 +86,7 @@ class CaseEventsHook
 
     /**
      * @param SugarBean $bean
+     * @throws Exception
      */
     public function saveUpdate($bean)
     {

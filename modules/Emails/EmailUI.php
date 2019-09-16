@@ -115,6 +115,7 @@ class EmailUI
      * Renders the frame for emails
      * @param string $baseTpl
      * @return string
+     * @throws ImapHandlerException
      * @throws \SuiteCRM\StateSaverException
      */
     public function displayEmailFrame($baseTpl = "modules/Emails/templates/_baseEmail.tpl")
@@ -362,6 +363,8 @@ eoq;
      * by an ajax call.
      *
      * @return JSON An object containing html markup and js script variables.
+     * @throws ImapHandlerException
+     * @throws \SuiteCRM\StateSaverException
      */
     public function displayQuickComposeEmailFrame()
     {
@@ -383,6 +386,7 @@ eoq;
      * Load the modules from the metadata file and include in a custom one if it exists
      *
      * @return array
+     * @throws Exception
      */
     protected function _loadQuickCreateModules()
     {
@@ -413,6 +417,7 @@ eoq;
      * @param String $emailLinkUrl
      * @param bool $lazyLoad
      * @return JSON Object containing the composePackage and full link url
+     * @throws ImapHandlerException
      */
     public function generateComposePackageForQuickCreateFromComposeUrl($emailLinkUrl, $lazyLoad = false)
     {
@@ -457,15 +462,14 @@ HTML;
 
     /**
      *
-     * @global SugarBean $focus
      * @param SugarBean|null $bean
      * @param string $emailField
      * @param bool $checkAllEmail
      * @param string|null $innerText
      * @param string|null $composeData
      * @return string
-     * @throws RuntimeException
-     * @throws InvalidArgumentException
+     * @throws \SuiteCRM\StateSaverException
+     * @global SugarBean $focus
      */
     public function populateComposeViewFields(
         $bean = null,
@@ -635,9 +639,8 @@ HTML;
      *
      * @param Basic|Object $myBean
      * @param string $emailField
-     * @throws RuntimeException
-     * @throws InvalidArgumentException
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     private function getEmailAddressConfirmOptInTick($myBean, $emailField)
     {
@@ -669,6 +672,7 @@ HTML;
      * @param bool $lazyLoad
      * @param SugarBean $bean Optional - the parent object bean with data
      * @return JSON Object containg composePackage and fullLinkUrl
+     * @throws ImapHandlerException
      */
     public function generateComposePackageForQuickCreate($composeData, $fullLinkUrl, $lazyLoad = false, $bean = null)
     {
@@ -703,7 +707,7 @@ HTML;
      * returned is the minimum set needed by the quick compose UI.
      *
      * @param String $type Drives which tinyMCE options will be included.
-     * @throws \RuntimeException
+     * @throws ImapHandlerException
      */
     public function _generateComposeConfigData($type = "email_compose_light")
     {
@@ -900,6 +904,7 @@ HTML;
     /**
      * saves editted Contact info
      * @param string $str JSON serialized object
+     * @throws Exception
      */
     public function saveContactEdit($str)
     {
@@ -931,9 +936,10 @@ HTML;
 
     /**
      * Prepares the Edit Contact mini-form via template assignment
-     * @param string id ID of contact in question
-     * @param string module Module in focus
+     * @param $id
+     * @param $module
      * @return array
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getEditContact($id, $module)
     {
@@ -1158,6 +1164,7 @@ HTML;
      * @param $parentId
      * @param int $isGroup
      * @return array
+     * @throws Exception
      */
     public function saveNewFolder($nodeLabel, $parentId, $isGroup = 0)
     {
@@ -1304,6 +1311,7 @@ HTML;
      * @param bool $forceRefresh
      * @param User|null $user User
      * @return object TreeView object
+     * @throws ImapHandlerException
      */
     public function getMailboxNodes($forceRefresh = false, $user = null)
     {
@@ -1540,6 +1548,7 @@ HTML;
      * Used exclusively by draft code.  Returns Notes and Documents as attachments.
      * @param array $ret
      * @return array
+     * @throws Exception
      */
     public function getDraftAttachments($ret)
     {
@@ -1960,6 +1969,11 @@ HTML;
      * @param $ieId
      * @param $mbox
      * @param $uid
+     * @throws EmailException
+     * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws ImapHandlerException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function setReadFlag($ieId, $mbox, $uid)
     {
@@ -1973,6 +1987,11 @@ HTML;
      * @param string $ieId
      * @param string $folder IMAP folder structure or SugarFolder GUID
      * @param string $uids Comma sep list of UIDs or GUIDs
+     * @throws EmailException
+     * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws ImapHandlerException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function markEmails($type, $ieId, $folder, $uids)
     {
@@ -2153,6 +2172,9 @@ HTML;
      * @param array $userIds of users to dist to
      * @param array $mailIds of email ids to push on those users
      * @return  boolean        true on success
+     * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function distRoundRobin($userIds, $mailIds)
     {
@@ -2184,6 +2206,9 @@ HTML;
      * @param array $userIds of users to dist to
      * @param array $mailIds of email ids to push on those users
      * @return  boolean        true on success
+     * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function distLeastBusy($userIds, $mailIds)
     {
@@ -2211,6 +2236,9 @@ HTML;
      * @param users $user to dist to
      * @param array $mailIds of email ids to push
      * @return  boolean        true on success
+     * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function distDirect($user, $mailIds)
     {
@@ -2267,6 +2295,9 @@ HTML;
      * returns the metadata defining a single email message for display.  Uses cache file if it exists
      * @param $ie
      * @return array
+     * @throws EmailValidatorException
+     * @throws ImapHandlerException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getSingleMessage($ie)
     {
@@ -2375,6 +2406,7 @@ eoq;
      * @param int $folderListCacheOffset Seconds for valid cache file
      * @param string $forceRefresh
      * @return array HTML render of list.
+     * @throws ImapHandlerException
      */
     public function getListEmails($ieId, $mbox, $folderListCacheOffset, $forceRefresh = 'false')
     {
@@ -2475,9 +2507,10 @@ eoq;
 
     /**
      * Formats email body on reply/forward
-     * @param object email Email object in focus
-     * @param string type
+     * @param $email
+     * @param $type
      * @return object email
+     * @throws Exception
      */
     public function handleReplyType($email, $type)
     {
@@ -2546,6 +2579,7 @@ eoq;
      * @param $whereArr
      * @param $person
      * @return array
+     * @throws Exception
      */
     public function _getPeopleUnionQuery($whereArr, $person)
     {
@@ -2807,6 +2841,7 @@ eoq;
      * @param object $user User in focus
      * @param array $folder_params Array of parameters for folder creation
      * @return SugarFolder
+     * @throws Exception
      */
     protected function createFolder($user, $folder_params)
     {
@@ -2823,6 +2858,7 @@ eoq;
     /**
      * Creates defaults for the User
      * @param object $user User in focus
+     * @throws Exception
      */
     public function preflightUser(&$user)
     {
@@ -3249,6 +3285,7 @@ eoq;
      * Re-used option getter for Show Accounts multiselect pane
      * @param $ie
      * @return array
+     * @throws Exception
      */
     public function getShowAccountsOptions(&$ie)
     {
@@ -3358,6 +3395,7 @@ eoq;
     /**
      * Formats a display message on successful async call
      * @param string $type Type of message to display
+     * @throws \SuiteCRM\StateSaverException
      */
     public function displaySuccessMessage($type)
     {

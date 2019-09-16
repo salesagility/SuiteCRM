@@ -61,6 +61,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
      * @param string $idField
      * @param int $offset
      * @return array
+     * @throws Exception
      */
     public function search($filterFields, $request, $where, InboundEmail $inboundEmail, $params, Email $seed, $singleSelect, $id, $limit, User $currentUser, $idField, $offset)
     {

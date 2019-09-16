@@ -337,6 +337,7 @@ class ViewConvertLead extends SugarView
      * Saves a new Contact as well as any related items passed in.
      *
      * @return null
+     * @throws Exception
      */
     protected function handleSave()
     {
@@ -689,6 +690,7 @@ class ViewConvertLead extends SugarView
      * Gets the list of activities related to the lead
      * @param Lead $lead Lead to get activities from
      * @return Array of Activity SugarBeans .
+     * @throws Exception
      */
     protected function getActivitiesFromLead(
         $lead

@@ -97,6 +97,7 @@ class SugarOAuthServer
      * Check timestamps & nonces
      * @param OAuthProvider $provider
      * @return int
+     * @throws Exception
      */
     public function timestampNonceChecker($provider)
     {
@@ -190,6 +191,7 @@ class SugarOAuthServer
     /**
      * Generate request token string
      * @return string
+     * @throws Exception
      */
     public function requestToken()
     {
@@ -207,6 +209,7 @@ class SugarOAuthServer
     /**
      * Generate access token string - must have validated request token
      * @return string
+     * @throws Exception
      */
     public function accessToken()
     {

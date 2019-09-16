@@ -60,6 +60,7 @@ class DocumentPopupPicker extends Popup_Picker
      * documents on compose email pop-up.
      *
      * @return string WHERE clause
+     * @throws Exception
      */
     public function _get_where_clause()
     {

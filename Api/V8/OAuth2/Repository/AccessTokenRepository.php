@@ -84,7 +84,8 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     /**
      * @inheritdoc
      *
-     * @throws \InvalidArgumentException When access token is not found.
+     * @param $tokenId
+     * @throws \Exception
      */
     public function revokeAccessToken($tokenId)
     {

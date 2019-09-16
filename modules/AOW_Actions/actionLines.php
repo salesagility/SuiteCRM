@@ -6,6 +6,7 @@
  * @param $value
  * @param $view
  * @return string
+ * @throws Exception
  * @author SalesAgility <info@salesagility.com>
  * @package Advanced OpenWorkflow for SugarCRM
  * @copyright SalesAgility Ltd http://www.salesagility.com
@@ -24,7 +25,6 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  */
 
 

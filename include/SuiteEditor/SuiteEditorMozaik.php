@@ -75,6 +75,7 @@ class SuiteEditorMozaik implements SuiteEditorInterface
      * see at SuiteEditorInterface
      *
      * @return mixed
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getHtml()
     {

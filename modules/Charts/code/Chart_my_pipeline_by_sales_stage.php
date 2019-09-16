@@ -234,6 +234,7 @@ echo get_validate_chart_js();
  * @param string $chart_size
  * @param null $current_module_strings
  * @return mixed
+ * @throws Exception
  */
 function gen_xml_pipeline_by_sales_stage(
     $datax = array('foo', 'bar'),

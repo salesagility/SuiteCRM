@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @param $table_name
  * @param $db_indexes
  * @param $var_indexes
+ * @throws Exception
  */
 
 

@@ -149,6 +149,7 @@ class Project extends SugarBean
      *
      * @param true $is_update if this save is an update.
      * @param array $exclude
+     * @throws Exception
      */
     public function save_relationship_changes($is_update, $exclude=array())
     {
@@ -235,6 +236,7 @@ class Project extends SugarBean
     /**
      * @param $the_query_string
      * @return string
+     * @throws Exception
      */
     public function build_generic_where_clause($the_query_string)
     {

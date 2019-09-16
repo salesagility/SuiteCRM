@@ -219,6 +219,7 @@ class TimeDate
     /**
      * Get TimeDate instance
      * @return TimeDate
+     * @throws Exception
      */
     public static function getInstance()
     {
@@ -1031,6 +1032,7 @@ class TimeDate
      * @param bool $meridiem
      * @param bool $convert_tz Perform TZ conversion?
      * @return string Time in user-defined format
+     * @throws Exception
      */
     public function to_display_time($date, $meridiem = true, $convert_tz = true)
     {
@@ -1057,6 +1059,7 @@ class TimeDate
      * @param string $date
      * @param string $format
      * @return array
+     * @throws Exception
      */
     public function splitTime($date, $format)
     {
@@ -1188,6 +1191,7 @@ class TimeDate
      * @param string $date Local date
      * @param bool $convert_tz Should time and TZ be taken into account?
      * @return string Time in DB format
+     * @throws Exception
      */
     public function to_db_time($date, $convert_tz = true)
     {
@@ -1239,6 +1243,7 @@ class TimeDate
     /**
      * Return current time in DB format
      * @return string
+     * @throws Exception
      */
     public function nowDb()
     {
@@ -1254,6 +1259,7 @@ class TimeDate
     /**
      * Return current date in DB format
      * @return string
+     * @throws Exception
      */
     public function nowDbDate()
     {
@@ -1302,6 +1308,7 @@ class TimeDate
     /**
      * Return current datetime in local format
      * @return string
+     * @throws Exception
      */
     public function now()
     {
@@ -1311,6 +1318,7 @@ class TimeDate
     /**
      * Return current date in User format
      * @return string
+     * @throws Exception
      */
     public function nowDate()
     {
@@ -1388,6 +1396,7 @@ class TimeDate
      * @param string $date
      * @param string $format Target format
      * @return string
+     * @throws Exception
      */
     public function expandDate($date, $format)
     {
@@ -1406,6 +1415,7 @@ class TimeDate
      * @param string $format Target format
      * @param DateTimeZone $tz
      * @return string
+     * @throws Exception
      */
     public function expandTime($date, $format, $tz)
     {
@@ -1424,6 +1434,7 @@ class TimeDate
      * Get midnight (start of the day) in local time format
      *
      * @return Time string
+     * @throws Exception
      */
     public function get_default_midnight()
     {
@@ -1434,6 +1445,7 @@ class TimeDate
      * Get the name of the timezone for the user
      * @param User $user User, default - current user
      * @return string
+     * @throws Exception
      */
     public static function userTimezone(User $user = null)
     {
@@ -1523,6 +1535,7 @@ class TimeDate
      * @param DateTime $date Current date
      * @param User $user User, default - current user
      * @return string
+     * @throws Exception
      */
     public static function userTimezoneSuffix(DateTime $date, User $user = null)
     {
@@ -1627,6 +1640,7 @@ class TimeDate
      * Create datetime object from calendar array
      * @param array $time
      * @return SugarDateTime
+     * @throws Exception
      */
     public function fromTimeArray($time)
     {
@@ -1748,12 +1762,13 @@ class TimeDate
 
     /**
      * Parse date template
-     * @internal
      * @param string $template Date expression
      * @param bool $daystart Do we want start or end of the day?
      * @param User $user
      * @param bool $adjustForTimezone
      * @return SugarDateTime
+     * @throws Exception
+     * @internal
      */
     protected function parseFromTemplate($template, $daystart, User $user = null, $adjustForTimezone = true)
     {
@@ -1770,11 +1785,12 @@ class TimeDate
 
     /**
      * Get month-long range mdiff months from now
-     * @internal
      * @param int $mdiff
      * @param User $user
      * @param bool $adjustForTimezone
      * @return array
+     * @throws Exception
+     * @internal
      */
     protected function diffMon($mdiff, User $user = null, $adjustForTimezone = true)
     {
@@ -1789,11 +1805,12 @@ class TimeDate
 
     /**
      * Get year-long range ydiff years from now
-     * @internal
      * @param int $ydiff
      * @param User $user
      * @param bool $adjustForTimezone
      * @return array
+     * @throws Exception
+     * @internal
      */
     protected function diffYear($ydiff, User $user = null, $adjustForTimezone = true)
     {
@@ -1813,6 +1830,7 @@ class TimeDate
      * @param User $user
      * @param bool $adjustForTimezone Do we need to adjust for timezone?
      * @return array of two Date objects, start & end
+     * @throws Exception
      */
     public function parseDateRange($range, User $user = null, $adjustForTimezone = true)
     {
@@ -1900,9 +1918,10 @@ class TimeDate
     }
 
     /**
+     * @return string
+     * @throws Exception
      * @deprecated for public use
      * Get current GMT datetime in DB format
-     * @return string
      */
     public function get_gmt_db_datetime()
     {
@@ -1910,9 +1929,10 @@ class TimeDate
     }
 
     /**
+     * @return string
+     * @throws Exception
      * @deprecated for public use
      * Get current GMT date in DB format
-     * @return string
      */
     public function get_gmt_db_date()
     {
@@ -1994,11 +2014,12 @@ class TimeDate
     }
 
     /**
-     * @deprecated for public use
-     * get timezone start & end
      * @param $year
      * @param string $zone
      * @return array
+     * @throws Exception
+     * @deprecated for public use
+     * get timezone start & end
      */
     public function getDSTRange($year, $zone = null)
     {

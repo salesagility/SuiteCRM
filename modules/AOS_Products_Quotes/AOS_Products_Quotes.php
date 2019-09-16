@@ -131,6 +131,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
 
     /**
      * @param SugarBean $parent
+     * @throws Exception
      */
     public function mark_lines_deleted($parent)
     {

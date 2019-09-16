@@ -43,6 +43,7 @@ if (! defined('sugarEntry') || ! sugarEntry) {
  * @param $ss
  * @param $vardef
  * @return mixed
+ * @throws Exception
  */
 
 

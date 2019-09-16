@@ -48,6 +48,7 @@ class ModuleListProvider
 {
     /**
      * @return array
+     * @throws \Exception
      */
     public function getModuleList()
     {
@@ -94,6 +95,7 @@ class ModuleListProvider
     /**
      * @param $modules
      * @return mixed
+     * @throws \Exception
      */
     private function markACLAccess($modules)
     {

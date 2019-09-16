@@ -398,6 +398,7 @@ if ($_REQUEST['module'] == 'Campaigns') {
  *
  * @param string $fieldName The field name that changed
  * @param SugarBean $focus The InboundEmail bean being saved.
+ * @throws Exception
  */
 function syncSugarFoldersWithBeanChanges($fieldName, $focus)
 {

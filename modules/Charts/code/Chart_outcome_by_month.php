@@ -231,6 +231,7 @@ echo get_validate_chart_js();
      * @param bool $refresh
      * @param null $current_module_strings
      * @return
+     * @throws Exception
      */
     public function gen_xml(
         $date_start = '1971-10-15',

@@ -170,6 +170,7 @@ class aCase extends Basic
 
     /**
      * @return string[]
+     * @throws Exception
      */
     public function listviewACLHelper()
     {

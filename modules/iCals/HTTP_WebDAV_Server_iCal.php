@@ -72,6 +72,7 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
      *
      * @access public
      * @param bool $base
+     * @throws Exception
      */
     public function ServeICalRequest($base = false)
     {
@@ -202,8 +203,8 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
     /**
      * GET method handler
      *
-     * @param void
-     * @returns void
+     * @return void
+     * @throws Exception
      */
     public function http_GET()
     {

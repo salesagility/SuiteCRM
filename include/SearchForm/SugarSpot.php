@@ -55,6 +55,7 @@ class SugarSpot
     {
         $this->module = $current_module;
     }
+
     /**
      * searchAndDisplay
      *
@@ -65,6 +66,7 @@ class SugarSpot
      * @param int $offset search result offset
      * @return string HTML code containing results
      *
+     * @throws \SuiteCRM\StateSaverException
      * @deprecated deprecated since 6.5
      */
     public function searchAndDisplay($query, $modules, $offset=-1)
@@ -183,6 +185,7 @@ class SugarSpot
      * Determine which modules should be searched against.
      *
      * @return array
+     * @throws Exception
      */
     protected function getSearchModules()
     {
@@ -226,6 +229,7 @@ class SugarSpot
      * @param int $limit
      * @param array $options
      * @return array
+     * @throws Exception
      */
     public function search($query, $offset = -1, $limit = 20, $options = array())
     {
@@ -237,6 +241,7 @@ class SugarSpot
 
         return $this->_performSearch($query, $modules, $offset, $limit);
     }
+
     /**
      * _performSearch
      *
@@ -247,6 +252,7 @@ class SugarSpot
      * @param int $offset search result offset
      * @param int $limit search limit
      * @return array
+     * @throws Exception
      */
     protected function _performSearch($query, $modules, $offset = -1, $limit = 20)
     {

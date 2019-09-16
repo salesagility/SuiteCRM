@@ -65,6 +65,7 @@ class EmailsDetailView extends DetailView2
      * @param string $tpl
      * @param bool $createFocus
      * @param string $metadataFileName
+     * @throws Exception
      */
     public function setup(
         $module,
@@ -102,6 +103,7 @@ class EmailsDetailView extends DetailView2
      * @param bool $showTitle boolean value indicating whether or not to show a title on the resulting page
      * @param bool $ajaxSave boolean value indicating whether or not the operation is an Ajax save request
      * @return string display for view as HTML
+     * @throws \SuiteCRM\StateSaverException
      */
     public function display($showTitle = true, $ajaxSave = false)
     {

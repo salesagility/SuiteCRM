@@ -40,6 +40,7 @@ function getDocumentRevisionPath($revisionId)
  * Given a path to a PPTX document returns a lucene document with filename and contents set.
  * @param $path
  * @return Zend_Search_Lucene_Document
+ * @throws Zend_Search_Lucene_Exception
  */
 function createPPTXDocument($path)
 {
@@ -52,6 +53,7 @@ function createPPTXDocument($path)
  * Given a path to a XLSX document returns a lucene document with filename and contents set.
  * @param $path
  * @return Zend_Search_Lucene_Document
+ * @throws Zend_Search_Lucene_Exception
  */
 function createXLSXDocument($path)
 {

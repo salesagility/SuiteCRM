@@ -65,6 +65,7 @@ class ACLController
      * @param string $type
      * @param bool $in_group
      * @return bool
+     * @throws Exception
      */
     public static function checkAccess($category, $action, $is_owner = false, $type = 'module', $in_group = false)
     {
@@ -162,6 +163,7 @@ class ACLController
      * @param Bool $value
      * @param string $type
      * @return bool
+     * @throws Exception
      */
     public static function requireOwner($category, $value, $type = 'module')
     {
@@ -182,6 +184,7 @@ class ACLController
      * @param Bool $value
      * @param string $type
      * @return bool
+     * @throws Exception
      */
     public static function requireSecurityGroup($category, $value, $type = 'module')
     {
@@ -200,6 +203,7 @@ class ACLController
      *
      * @param array $moduleList
      * @param Bool $by_value
+     * @throws Exception
      */
     public static function filterModuleList(&$moduleList, $by_value = true)
     {
@@ -278,6 +282,7 @@ class ACLController
      * @param Bool $by_value
      * @param String $view
      * @return array
+     * @throws Exception
      */
     public static function disabledModuleList($moduleList, $by_value = true, $view = 'list')
     {

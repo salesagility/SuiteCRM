@@ -180,6 +180,7 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
     /**
      * Save a definition that will be used to display a subpanel for $this->_moduleName
      * @param array $layoutDefinitions Layout definition in the same format as received by the constructor
+     * @throws Exception
      */
     public function deploy($layoutDefinitions)
     {

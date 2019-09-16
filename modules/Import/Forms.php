@@ -52,11 +52,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * Returns an input control for this fieldname given
  *
- * @param  string $module
- * @param  string $fieldname
- * @param  string $vardef
- * @param  string $value
+ * @param string $module
+ * @param string $fieldname
+ * @param string $vardef
+ * @param string $value
  * @return string html for input element for this control
+ * @throws \SuiteCRM\StateSaverException
  */
 function getControl(
     $module,

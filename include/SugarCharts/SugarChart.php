@@ -790,6 +790,7 @@ class SugarChart
      * @param string $height
      * @param bool $resize
      * @return    string returns the html code through smarty
+     * @throws Exception
      */
     public function display($name, $xmlFile, $width='320', $height='480', $resize=false)
     {

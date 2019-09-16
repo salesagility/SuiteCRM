@@ -194,6 +194,7 @@ class UserDemoData
 
     /**
      * @param $name
+     * @throws SuiteException
      */
     public function _quick_create_user($name)
     {

@@ -179,6 +179,7 @@ class One2MBeanRelationship extends One2MRelationship
      * @param Link2 $link loads the relationship for this link.
      * @param array $params
      * @return array
+     * @throws Exception
      */
     public function load($link, $params = array())
     {

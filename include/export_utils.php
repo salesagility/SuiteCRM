@@ -537,11 +537,13 @@ function generateSearchWhere($module, $query)
     $ret_array['searchFields'] = $searchForm->searchFields;
     return $ret_array;
 }
+
 /**
-  * calls export method to build up a delimited string and some sample instructional text on how to use this file
-  * @param string type the bean-type to export
-  * @return string delimited string for export with some tutorial text
-  */
+ * calls export method to build up a delimited string and some sample instructional text on how to use this file
+ * @param string type the bean-type to export
+ * @return string delimited string for export with some tutorial text
+ * @throws Exception
+ */
      function exportSample($type)
      {
          global $app_strings;

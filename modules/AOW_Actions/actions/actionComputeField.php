@@ -752,6 +752,7 @@ class actionComputeField extends actionBase
      * @param $module
      *
      * @return string
+     * @throws Exception
      */
     private function getOtherModuleForRelationship($relationship_name, $module)
     {

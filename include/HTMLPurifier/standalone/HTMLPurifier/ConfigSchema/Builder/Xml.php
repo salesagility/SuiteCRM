@@ -19,6 +19,7 @@ class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
 
     /**
      * @param string $html
+     * @throws HTMLPurifier_Exception
      */
     protected function writeHTMLDiv($html)
     {
@@ -46,6 +47,7 @@ class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
 
     /**
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
+     * @throws HTMLPurifier_Exception
      */
     public function build($interchange)
     {
@@ -71,6 +73,7 @@ class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
 
     /**
      * @param HTMLPurifier_ConfigSchema_Interchange_Directive $directive
+     * @throws HTMLPurifier_Exception
      */
     public function buildDirective($directive)
     {

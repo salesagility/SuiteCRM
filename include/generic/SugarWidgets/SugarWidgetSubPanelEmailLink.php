@@ -50,6 +50,7 @@ class SugarWidgetSubPanelEmailLink extends SugarWidgetField
     /**
      * @param array $layout_def
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function displayList(&$layout_def)
     {

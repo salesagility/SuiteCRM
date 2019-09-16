@@ -100,6 +100,7 @@ class SugarCronRemoteJobs extends SugarCronJobs
     /**
      * Execute given job
      * @param SchedulersJob $job
+     * @throws Exception
      */
     public function executeJob($job)
     {

@@ -211,6 +211,7 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
      * @param string $relationship_name
      * @param string $deletion_date
      * @return Array records that match search criteria
+     * @throws Exception
      */
     public function get_modified_relationships(
         $session,

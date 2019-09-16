@@ -163,6 +163,7 @@ class SugarWebServiceImpl
      *               'next_offset' -- integer - The start of the next page (This will always be the previous offset plus the number of rows returned.  It does not indicate if there is additional data unless you calculate that the next_offset happens to be closer than it should be.
      *               'entry_list' -- Array - The records that were retrieved
      *                 'relationship_list' -- Array - The records link field data. The example is if asked about accounts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function get_entry_list(
@@ -530,14 +531,13 @@ class SugarWebServiceImpl
     /**
      * Log the user into the application
      *
-     * @param UserAuth array $user_auth -- Set user_name and password (password needs to be
-     *      in the right encoding for the type of authentication the user is setup for.  For Base
-     *      sugar validation, password is the MD5 sum of the plain text password.
+     * @param $user_auth
      * @param String $application -- The name of the application you are logging in from.  (Currently unused).
      * @param array $name_value_list -- Array of name value pair of extra parameters. As of today only 'language' and 'notifyonsave' is supported
      * @return Array - id - String id is the session_id of the session that was created.
-     * 				 - module_name - String - module name of user
-     * 				 - name_value_list - Array - The name value pair of user_id, user_name, user_language, user_currency_id, user_currency_name
+     *                 - module_name - String - module name of user
+     *                 - name_value_list - Array - The name value pair of user_id, user_name, user_language, user_currency_id, user_currency_name
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function login($user_auth, $application, $name_value_list)
@@ -652,8 +652,9 @@ class SugarWebServiceImpl
     /**
      * Gets server info. This will return information like version, flavor and gmt_time.
      * @return Array - flavor - String - Retrieve the specific flavor of sugar.
-     * 				 - version - String - Retrieve the version number of Sugar that the server is running.
-     * 				 - gmt_time - String - Return the current time on the server in the format 'Y-m-d H:i:s'. This time is in GMT.
+     *                 - version - String - Retrieve the version number of Sugar that the server is running.
+     *                 - gmt_time - String - Return the current time on the server in the format 'Y-m-d H:i:s'. This time is in GMT.
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function get_server_info()
@@ -864,6 +865,7 @@ class SugarWebServiceImpl
      *                                                String revision - The revision value for this revision
      *                                                String 'filename' -- The file name of the attachment
      *                                            Binary 'file' -- The binary contents of the file.
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function get_document_revision($session, $id)
@@ -900,12 +902,13 @@ class SugarWebServiceImpl
      * Given a list of modules to search and a search string, return the id, module_name, along with the fields
      * We will support Accounts, Bugs, Cases, Contacts, Leads, Opportunities, Project, ProjectTask, Quotes
      *
-     * @param string $session			- Session ID returned by a previous call to login.
-     * @param string $search_string 	- string to search
-     * @param string[] $modules			- array of modules to query
-     * @param int $offset				- a specified offset in the query
-     * @param int $max_results			- max number of records to return
+     * @param string $session - Session ID returned by a previous call to login.
+     * @param string $search_string - string to search
+     * @param string[] $modules - array of modules to query
+     * @param int $offset - a specified offset in the query
+     * @param int $max_results - max number of records to return
      * @return Array 'entry_list' -- Array('Accounts' => array(array('name' => 'first_name', 'value' => 'John', 'name' => 'last_name', 'value' => 'Do')))
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function search_by_module($session, $search_string, $modules, $offset, $max_results)
@@ -1111,6 +1114,7 @@ LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id) ";
      * @param $campaign_id
      * @return void - No output
      *
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function set_campaign_merge($session, $targets, $campaign_id)
@@ -1134,17 +1138,18 @@ LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id) ";
         campaign_log_mail_merge($campaign_id, $targets);
         // else
     } // fn
-/**
-*   Retrieve number of records in a given module
-*
-* @param String session      -- Session ID returned by a previous call to login.
-* @param String module_name  -- module to retrieve number of records from
-* @param String query        -- allows webservice user to provide a WHERE clause
-* @param int deleted         -- specify whether or not to include deleted records
-*
-* @return Array  result_count - integer - Total number of records for a given module and query
-* @exception 'SoapFault' -- The SOAP error, if any
-*/
+
+    /**
+     *   Retrieve number of records in a given module
+     *
+     * @param $session
+     * @param $module_name
+     * @param $query
+     * @param $deleted
+     * @return Array  result_count - integer - Total number of records for a given module and query
+     * @throws Exception
+     * @exception 'SoapFault' -- The SOAP error, if any
+     */
     public function get_entries_count($session, $module_name, $query, $deleted)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_entries_count');

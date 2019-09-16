@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @param null $value
  * @param null $view
  * @return array
+ * @throws Exception
  */
 
 function getDocumentsExternalApiDropDown($focus = null, $name = null, $value = null, $view = null)

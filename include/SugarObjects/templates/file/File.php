@@ -83,11 +83,12 @@ class File extends Basic
     }
 
     /**
-     * @see SugarBean::save()
-     *
      * @param bool $check_notify
      *
      * @return string
+     * @throws Exception
+     * @see SugarBean::save()
+     *
      */
     public function save($check_notify = false)
     {
@@ -131,13 +132,14 @@ class File extends Basic
     }
 
     /**
-     * @see SugarBean::retrieve()
-     *
      * @param int $id
      * @param bool $encode
      * @param bool $deleted
      *
      * @return SugarBean
+     * @throws Exception
+     * @see SugarBean::retrieve()
+     *
      */
     public function retrieve($id = -1, $encode = true, $deleted = true)
     {
@@ -157,6 +159,7 @@ class File extends Basic
      * @param string $isDuplicate
      *
      * @return bool
+     * @throws Exception
      */
     public function deleteAttachment($isDuplicate = 'false')
     {

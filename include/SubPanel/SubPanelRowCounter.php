@@ -92,6 +92,7 @@ class SubPanelRowCounter
     /**
      * @param array $subPanelDef
      * @return int
+     * @throws \Exception
      */
     private function doGetSubPanelRowCount($subPanelDef)
     {

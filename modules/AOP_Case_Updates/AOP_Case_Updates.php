@@ -114,6 +114,10 @@ class AOP_Case_Updates extends Basic
     /**
      * @param bool $check_notify
      * @return string
+     * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      */
     public function save($check_notify = false)
     {
@@ -265,6 +269,10 @@ class AOP_Case_Updates extends Basic
      * @param null $contactId
      *
      * @return bool
+     * @throws EmailValidatorException
+     * @throws HTMLPurifier_Exception
+     * @throws \SuiteCRM\ErrorMessageException
+     * @throws phpmailerException
      */
     public function sendEmail(
         $emails,

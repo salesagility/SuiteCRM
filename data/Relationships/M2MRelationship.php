@@ -124,6 +124,7 @@ class M2MRelationship extends SugarRelationship
      * @param SugarBean $rhs right side bean to add to the relationship.
      * @param array $additionalFields =>value pairs of fields to save on the relationship
      * @return boolean true if successful
+     * @throws Exception
      */
     public function add($lhs, $rhs, $additionalFields = array())
     {
@@ -227,6 +228,7 @@ class M2MRelationship extends SugarRelationship
      * @param $rhs
      * @param array $additionalFields
      * @return void
+     * @throws Exception
      */
     protected function addSelfReferencing($lhs, $rhs, $additionalFields = array())
     {
@@ -352,6 +354,7 @@ class M2MRelationship extends SugarRelationship
      * @param $rhs
      * @param array $additionalFields
      * @return void
+     * @throws Exception
      */
     protected function removeSelfReferencing($lhs, $rhs, $additionalFields = array())
     {
@@ -368,6 +371,7 @@ class M2MRelationship extends SugarRelationship
      * @param Link2 $link loads the relationship for this link.
      * @param array $params
      * @return array
+     * @throws Exception
      */
     public function load($link, $params = array())
     {
@@ -618,6 +622,7 @@ class M2MRelationship extends SugarRelationship
      * @param  $lhs
      * @param  $rhs
      * @return array
+     * @throws Exception
      */
     public function relationship_exists($lhs, $rhs)
     {

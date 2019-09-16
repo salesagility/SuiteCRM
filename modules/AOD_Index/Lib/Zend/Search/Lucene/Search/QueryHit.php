@@ -75,6 +75,7 @@ class Zend_Search_Lucene_Search_QueryHit
      *
      * @param string $offset
      * @return string
+     * @throws Zend_Search_Lucene_Exception
      */
     public function __get($offset)
     {

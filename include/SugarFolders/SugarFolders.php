@@ -137,6 +137,7 @@ class SugarFolder
      * @param null $bean_list
      * @param null $sugar_config
      * @param null $current_language
+     * @throws Exception
      */
     public function __construct(
         User $current_user = null,
@@ -927,13 +928,11 @@ class SugarFolder
     /**
      * Returns the number of "new" items (based on passed criteria)
      *
-     * @param string id ID of folder
-     * @param array criteria
-     *        expected:
-     *        array('field' => 'status',
-     *                'value' => 'unread');
-     * @param array
+     * @param $id
+     * @param $criteria
+     * @param $folder
      * @return int
+     * @throws Exception
      */
     public function getCountNewItems($id, $criteria, $folder)
     {

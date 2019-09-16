@@ -227,6 +227,7 @@ class EAPM extends Basic
      * Given a user remove their associated accounts. This is called when a user is deleted from the system.
      *
      * @param  $user_id
+     * @throws Exception
      */
     public function delete_user_accounts($user_id)
     {

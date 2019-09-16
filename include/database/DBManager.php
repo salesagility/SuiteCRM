@@ -307,9 +307,10 @@ abstract class DBManager
     /**
      * Checks for error happening in the database
      *
-     * @param  string $msg message to prepend to the error message
-     * @param  bool $dieOnError true if we want to die immediately on error
+     * @param string $msg message to prepend to the error message
+     * @param bool $dieOnError true if we want to die immediately on error
      * @return bool True if there was an error
+     * @throws Exception
      */
     public function checkError($msg = '', $dieOnError = false)
     {
@@ -1326,8 +1327,8 @@ abstract class DBManager
      * @param string $table the table to query from
      * @param bool $is_related_query
      * @return array SQL insert statement
+     * @throws Exception
      * @deprecated
-     *
      */
     public function generateInsertSQL(
         SugarBean $bean,
@@ -1641,10 +1642,11 @@ abstract class DBManager
     /**
      * Runs a query and returns a single row containing single value
      *
-     * @param  string $sql SQL Statement to execute
-     * @param  bool $dieOnError True if we want to call die if the query returns errors
-     * @param  string $msg Message to log if error occurs
+     * @param string $sql SQL Statement to execute
+     * @param bool $dieOnError True if we want to call die if the query returns errors
+     * @param string $msg Message to log if error occurs
      * @return array    single value from the query
+     * @throws Exception
      */
     public function getOne($sql, $dieOnError = false, $msg = '')
     {
@@ -1671,11 +1673,12 @@ abstract class DBManager
     /**
      * Runs a query and returns a single row
      *
-     * @param  string $sql SQL Statement to execute
-     * @param  bool $dieOnError True if we want to call die if the query returns errors
-     * @param  string $msg Message to log if error occurs
-     * @param  bool $suppress Message to log if error occurs
+     * @param string $sql SQL Statement to execute
+     * @param bool $dieOnError True if we want to call die if the query returns errors
+     * @param string $msg Message to log if error occurs
+     * @param bool $suppress Message to log if error occurs
      * @return array    single row from the query
+     * @throws Exception
      */
     public function fetchOne($sql, $dieOnError = false, $msg = '', $suppress = false)
     {
@@ -2909,6 +2912,7 @@ abstract class DBManager
      * @param SugarBean $bean SugarBean that was changed
      * @param array $changes List of changes, contains 'before' and 'after'
      * @return string  Audit table INSERT query
+     * @throws Exception
      */
     protected function auditSQL(SugarBean $bean, $changes)
     {
@@ -2945,7 +2949,7 @@ abstract class DBManager
      * @param SugarBean $bean Sugarbean instance that was changed
      * @param array $changes List of changes, contains 'before' and 'after'
      * @return bool query result
-     *
+     * @throws Exception
      */
     public function save_audit_records(SugarBean $bean, $changes)
     {
@@ -3316,6 +3320,7 @@ abstract class DBManager
     /**
      * Return current time in format fit for insertion into DB (with quotes)
      * @return string
+     * @throws Exception
      */
     public function now()
     {
@@ -3326,6 +3331,7 @@ abstract class DBManager
      * Check if connecting user has certain privilege
      * @param string $privilege
      * @return bool Privilege allowed?
+     * @throws Exception
      */
     public function checkPrivilege($privilege)
     {

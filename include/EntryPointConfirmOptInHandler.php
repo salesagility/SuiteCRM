@@ -57,6 +57,7 @@ class EntryPointConfirmOptInHandler
      *
      * @param array $request
      * @param array $post
+     * @throws \SuiteCRM\StateSaverException
      */
     public function __construct($request = null, $post = null)
     {
@@ -82,6 +83,7 @@ class EntryPointConfirmOptInHandler
      * @param array $post
      * @param array $request
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     protected function callMethod($method, $post, $request)
     {
@@ -97,9 +99,10 @@ class EntryPointConfirmOptInHandler
     }
 
     /**
-     * @global array $app_strings
      * @param array $post
      * @return string|boolean
+     * @throws Exception
+     * @global array $app_strings
      */
     private function methodConfirmOptInSelected($post)
     {
@@ -149,6 +152,7 @@ class EntryPointConfirmOptInHandler
      *
      * @param array $request
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     private function methodConfirmOptInUser($request)
     {

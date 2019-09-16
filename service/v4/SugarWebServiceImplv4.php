@@ -59,15 +59,14 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
     /**
      * Log the user into the application
      *
-     * @param UserAuth array $user_auth -- Set user_name and password (password needs to be
-     *      in the right encoding for the type of authentication the user is setup for.  For Base
-     *      sugar validation, password is the MD5 sum of the plain text password.
+     * @param $user_auth
      * @param String $application -- The name of the application you are logging in from.  (Currently unused).
      * @param array $name_value_list -- Array of name value pair of extra parameters. As of today only 'language' and 'notifyonsave' is supported
      * @return Array - id - String id is the session_id of the session that was created.
-     * 				 - module_name - String - module name of user
-     * 				 - name_value_list - Array - The name value pair of user_id, user_name, user_language, user_currency_id, user_currency_name,
+     *                 - module_name - String - module name of user
+     *                 - name_value_list - Array - The name value pair of user_id, user_name, user_language, user_currency_id, user_currency_name,
      *                                         - user_default_team_id, user_is_admin, user_default_dateformat, user_default_timeformat
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function login($user_auth, $application = null, $name_value_list = array())
@@ -197,6 +196,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
      * @return Array
      *        'entry_list' -- Array - The records name value pair for the simple data types excluding link field data.
      *         'relationship_list' -- Array - The records link field data. The example is if asked about accounts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function get_entries(
@@ -412,16 +412,17 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
      * Given a list of modules to search and a search string, return the id, module_name, along with the fields
      * We will support Accounts, Bugs, Cases, Contacts, Leads, Opportunities, Project, ProjectTask, Quotes
      *
-     * @param string $session			- Session ID returned by a previous call to login.
-     * @param string $search_string 	- string to search
-     * @param string[] $modules			- array of modules to query
-     * @param int $offset				- a specified offset in the query
-     * @param int $max_results			- max number of records to return
-     * @param string $assigned_user_id	- a user id to filter all records by, leave empty to exclude the filter
-     * @param string[] $select_fields   - An array of fields to return.  If empty the default return fields will be from the active list view defs.
+     * @param string $session - Session ID returned by a previous call to login.
+     * @param string $search_string - string to search
+     * @param string[] $modules - array of modules to query
+     * @param int $offset - a specified offset in the query
+     * @param int $max_results - max number of records to return
+     * @param string $assigned_user_id - a user id to filter all records by, leave empty to exclude the filter
+     * @param string[] $select_fields - An array of fields to return.  If empty the default return fields will be from the active list view defs.
      * @param bool $unified_search_only - A boolean indicating if we should only search against those modules participating in the unified search.
-     * @param bool $favorites           - A boolean indicating if we should only search against records marked as favorites.
-     * @return Array return_search_result 	- Array('Accounts' => array(array('name' => 'first_name', 'value' => 'John', 'name' => 'last_name', 'value' => 'Do')))
+     * @param bool $favorites - A boolean indicating if we should only search against records marked as favorites.
+     * @return Array return_search_result    - Array('Accounts' => array(array('name' => 'first_name', 'value' => 'John', 'name' => 'last_name', 'value' => 'Do')))
+     * @throws Exception
      * @exception 'SoapFault' -- The SOAP error, if any
      */
     public function search_by_module($session, $search_string, $modules, $offset, $max_results, $assigned_user_id = '', $select_fields = array(), $unified_search_only = true, $favorites = false)
@@ -697,6 +698,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
      * @param string $session
      * @param string $clientid
      * @return array|void
+     * @throws Exception
      */
     public function job_queue_next($session, $clientid)
     {

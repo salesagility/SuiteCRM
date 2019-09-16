@@ -174,6 +174,7 @@ abstract class SugarRelationship
 
     /**
      * @param string $rowID id of SugarBean to remove from the relationship
+     * @throws Exception
      */
     public function removeById($rowID)
     {
@@ -224,6 +225,7 @@ abstract class SugarRelationship
      * @param array $row values to be inserted into the relationship
      *
      * @return bool|resource null if new row was inserted and true if an existing row was updated
+     * @throws Exception
      */
     protected function addRow($row)
     {
@@ -254,6 +256,7 @@ abstract class SugarRelationship
      * @param array $values values to insert into row
      *
      * @return resource result of update statement
+     * @throws Exception
      */
     protected function updateRow($id, $values)
     {
@@ -279,6 +282,7 @@ abstract class SugarRelationship
      * @param array $where of field=>value pairs to match
      *
      * @return bool|resource
+     * @throws Exception
      */
     protected function removeRow($where)
     {
@@ -304,6 +308,7 @@ abstract class SugarRelationship
      * @param  $row
      *
      * @return array|bool returns false if now row is found, otherwise the row is returned
+     * @throws Exception
      */
     protected function checkExisting($row)
     {

@@ -213,6 +213,7 @@ class FormulaCalculator
      * @param $node
      *
      * @return int|mixed|string
+     * @throws Exception
      */
     private function evaluateTreeLevel(&$node)
     {

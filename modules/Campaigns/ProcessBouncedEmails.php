@@ -52,6 +52,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @param Email $email
  * @return string
+ * @throws Exception
  */
 function retrieveErrorReportAttachment(Email $email)
 {
@@ -84,6 +85,7 @@ function retrieveErrorReportAttachment(Email $email)
  * @param Email $email
  * @param string $email_description
  * @return string
+ * @throws Exception
  */
 function createBouncedCampaignLogEntry($row, $email, $email_description)
 {
@@ -115,6 +117,7 @@ function createBouncedCampaignLogEntry($row, $email, $email_description)
  * Given an bounce entry, mark the related email address as invalid.
  *
  * @param CampaignLog $bounce
+ * @throws Exception
  */
 function markBounceEmailAddressInvalid(CampaignLog $bounce)
 {
@@ -170,6 +173,7 @@ function checkBouncedEmailInvalid($email_description)
  * Given an email address, mark it as invalid.
  *
  * @param $email_address
+ * @throws Exception
  */
 function markEmailAddressInvalid($email_address)
 {

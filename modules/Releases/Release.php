@@ -165,6 +165,7 @@ class Release extends SugarBean
      * do not include any $this-> because this is called on without having the class instantiated
      * @param $the_query_string
      * @return string
+     * @throws Exception
      */
     public function build_generic_where_clause($the_query_string)
     {

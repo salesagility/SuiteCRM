@@ -106,6 +106,7 @@ class UpgradeHistory extends SugarBean
      * Given a name check if it exists in the table
      * @param name    the unique key from the manifest
      * @return SugarBean|null object if found, null otherwise
+     * @throws Exception
      */
     public function checkForExisting($patch_to_check)
     {

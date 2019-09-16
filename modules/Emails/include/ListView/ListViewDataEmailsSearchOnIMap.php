@@ -62,6 +62,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
      * @param $pageData
      * @param $filter_fields
      * @return array
+     * @throws ImapHandlerException
      */
     public function search(
         Email $seed,

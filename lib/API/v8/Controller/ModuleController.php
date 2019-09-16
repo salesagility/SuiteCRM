@@ -93,7 +93,7 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getModulesMetaList(Request $req, Response $res)
     {
@@ -124,7 +124,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getModulesMetaMenuModules(Request $req, Response $res, array $args)
     {
@@ -186,7 +186,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getModulesMetaMenuFilters(Request $req, Response $res, array $args)
     {
@@ -250,7 +250,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getModulesMetaViewed(Request $req, Response $res, array $args)
     {
@@ -314,7 +314,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getModulesMetaFavorites(Request $req, Response $res, array $args)
     {
@@ -351,7 +351,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getModuleRecords(Request $req, Response $res, array $args)
     {
@@ -398,7 +398,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function createModuleRecord(Request $req, Response $res, array $args)
     {
@@ -501,7 +501,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getModuleRecord(Request $req, Response $res, array $args)
     {
@@ -577,7 +577,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function updateModuleRecord(Request $req, Response $res, array $args)
     {
@@ -664,7 +664,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function deleteModuleRecord(Request $req, Response $res, array $args)
     {
@@ -721,7 +721,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getModuleMetaLanguage(Request $req, Response $res, array $args)
     {
@@ -751,7 +751,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getApplicationMetaLanguages(Request $req, Response $res, array $args)
     {
@@ -778,7 +778,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getModuleMetaAttributes(Request $req, Response $res, array $args)
     {
@@ -804,12 +804,13 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getModuleMetaFields(Request $req, Response $res, array $args)
     {
         return $this->getModuleMetaAttributes($req, $res, $args);
     }
-   
+
     /**
      * GET /api/v8/modules/{id}/meta/menu
      *
@@ -817,7 +818,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getModuleMetaMenu(Request $req, Response $res, array $args)
     {
@@ -861,7 +862,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getModuleRecordsViewed(Request $req, Response $res, array $args)
     {
@@ -922,7 +923,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getModuleFavorites(Request $req, Response $res, array $args)
     {
@@ -945,12 +946,12 @@ class ModuleController extends ApiController
 
     /**
      * GET /api/v8/modules/{module}/meta/view/{view}
-     * @see MBConstants for {view}
      * @param Request $req
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
+     * @see MBConstants for {view}
      */
     public function getModuleMetaLayout(Request $req, Response $res, array $args)
     {
@@ -997,8 +998,8 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @param array $args
+     * @throws \SuiteCRM\ErrorMessageException
      * @see http://jsonapi.org/format/1.0/#fetching-relationships
-     * @throws RuntimeException
      */
     public function getModuleRelationship(Request $req, Response $res, array $args)
     {
@@ -1157,7 +1158,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function createModuleRelationship(Request $req, Response $res, array $args)
     {
@@ -1345,7 +1346,7 @@ class ModuleController extends ApiController
      * @param Response $res
      * @param array $args
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function updateModuleRelationship(Request $req, Response $res, array $args)
     {
@@ -1497,9 +1498,9 @@ class ModuleController extends ApiController
      * @param Request $req
      * @param Response $res
      * @param array $args
-     * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
+     * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
      */
     public function deleteModuleRelationship(Request $req, Response $res, array $args)
     {

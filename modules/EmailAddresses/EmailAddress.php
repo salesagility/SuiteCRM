@@ -74,6 +74,7 @@ class EmailAddress extends SugarEmailAddress
      * @param string $optOut
      * @param bool $in_workflow
      * @return null|string
+     * @throws Exception
      */
     public function save(
         $id = '',

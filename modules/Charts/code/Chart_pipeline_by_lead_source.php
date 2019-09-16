@@ -218,6 +218,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
      * @param bool $refresh
      * @param null $current_module_strings
      * @return
+     * @throws Exception
      */
     public function gen_xml(
         $legends = array('foo', 'bar'),

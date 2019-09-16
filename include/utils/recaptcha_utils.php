@@ -199,6 +199,7 @@ function displayRecaptchaValidation()
 
 /**
  * @return string recaptcha enabled template or the recaptcha disabled template
+ * @throws \SuiteCRM\StateSaverException
  */
 function displayRecaptcha()
 {

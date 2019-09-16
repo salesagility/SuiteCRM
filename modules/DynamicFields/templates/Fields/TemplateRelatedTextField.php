@@ -303,6 +303,7 @@ class TemplateRelatedTextField extends TemplateText
      *
      * @param string $idLabelName
      * @param DynamicField $df
+     * @throws HTMLPurifier_Exception
      */
     protected function saveIdLabel($idLabelName, $df)
     {

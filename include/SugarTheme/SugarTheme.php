@@ -681,6 +681,7 @@ class SugarTheme
      * Returns javascript for the current theme
      *
      * @return string HTML code
+     * @throws Exception
      */
     public function getJS()
     {

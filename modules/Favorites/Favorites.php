@@ -67,6 +67,7 @@ class Favorites extends Basic
     /**
      * @param $id
      * @return bool
+     * @throws Exception
      */
     public function deleteFavorite($id)
     {
@@ -84,6 +85,7 @@ class Favorites extends Basic
      * @param $module
      * @param $record_id
      * @return array
+     * @throws Exception
      */
     public function getFavoriteID($module, $record_id)
     {
@@ -104,6 +106,7 @@ class Favorites extends Basic
     /**
      * @param string $id
      * @return array
+     * @throws Exception
      */
     public function getCurrentUserSidebarFavorites($id = null)
     {

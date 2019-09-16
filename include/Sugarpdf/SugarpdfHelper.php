@@ -111,6 +111,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @param null $decimals
  * @param array $params
  * @return String formatted currency value
+ * @throws Exception
  * @see modules/Currencies/Currency.php
  */
     function format_number_sugarpdf($amount, $round = null, $decimals = null, $params = array())

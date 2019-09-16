@@ -71,6 +71,7 @@ class BreadCrumbStack
      *
      * @param String $user_id value of user id to get bread crumb items for
      * @param mixed $modules value of module name(s) to provide extra filtering
+     * @throws Exception
      */
     public function __construct($user_id, $modules='')
     {
@@ -106,6 +107,7 @@ class BreadCrumbStack
     /**
      * @param $user_id
      * @param string $modules
+     * @throws Exception
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function BreadCrumbStack($user_id, $modules='')
@@ -141,6 +143,7 @@ class BreadCrumbStack
      * visibility.
      *
      * @param array $row - a trackable item to store in memory
+     * @throws Exception
      */
     public function push($row)
     {
@@ -182,6 +185,7 @@ class BreadCrumbStack
      * Change the visibility of an item
      *
      * @param int $id
+     * @throws Exception
      */
     private function makeItemInvisible($id)
     {

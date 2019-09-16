@@ -315,6 +315,7 @@ class actionSendEmail extends actionBase
      * @param array $params
      * @param bool $in_save
      * @return boolean
+     * @throws Exception
      */
     public function run_action(SugarBean $bean, $params = array(), $in_save = false)
     {

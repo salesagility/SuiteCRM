@@ -843,9 +843,10 @@ class SearchForm
     /**
      * Parse date expression and return WHERE clause
      * @param string $operator Date expression operator
-     * @param string DB field name
-     * @param string DB field type
+     * @param $db_field
+     * @param string $field_type
      * @return string
+     * @throws Exception
      */
     protected function parseDateExpression($operator, $db_field, $field_type = '')
     {
@@ -876,6 +877,7 @@ class SearchForm
      * @param string $module Module to search against
      *
      * @return array the SQL WHERE clause based on the arguments supplied in SearchForm2 instance
+     * @throws Exception
      */
     public function generateSearchWhere($add_custom_fields = false, $module = '')
     {

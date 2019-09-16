@@ -191,7 +191,7 @@ class campaign_charts
 
     /**
      * Campaign roi computations.
-    *
+     *
      * @param array $datay
      * @param array $targets
      * @param string|null $campaign_id
@@ -201,7 +201,9 @@ class campaign_charts
      * @param bool $is_dashlet
      * @param string $dashlet_id
      * @return string
-     */public function campaign_response_roi(
+     * @throws Exception
+     */
+    public function campaign_response_roi(
         $datay= array(),
         $targets=array(),
         $campaign_id= null,

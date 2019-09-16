@@ -701,6 +701,7 @@ function get_assigned_user_name($assigned_user_id, $is_group = '')
  * @param string id GUID of user
  *
  * @return string
+ * @throws Exception
  */
 function get_user_name($id)
 {
@@ -725,15 +726,16 @@ function get_user_name($id)
  * This function uses the get_register_value function by default to use a caching layer where supported.
  * This function has been updated return the array sorted by user preference of name display (bug 62712)
  *
- * @param bool   $add_blank        Boolean value to add a blank entry to the array results, true by default
- * @param string $status           String value indicating the status to filter users by, "Active" by default
- * @param string $user_id          String value to specify a particular user id value (searches the id column of users table), blank by default
- * @param bool   $use_real_name    Boolean value indicating whether or not results should include the full name or just user_name, false by default
+ * @param bool $add_blank Boolean value to add a blank entry to the array results, true by default
+ * @param string $status String value indicating the status to filter users by, "Active" by default
+ * @param string $user_id String value to specify a particular user id value (searches the id column of users table), blank by default
+ * @param bool $use_real_name Boolean value indicating whether or not results should include the full name or just user_name, false by default
  * @param string $user_name_filter String value indicating the user_name filter (searches the user_name column of users table) to optionally search with, blank by default
- * @param string $portal_filter    String query filter for portal users (defaults to searching non-portal users), change to blank if you wish to search for all users including portal users
- * @param bool   $from_cache       Boolean value indicating whether or not to use the get_register_value function for caching, true by default
+ * @param string $portal_filter String query filter for portal users (defaults to searching non-portal users), change to blank if you wish to search for all users including portal users
+ * @param bool $from_cache Boolean value indicating whether or not to use the get_register_value function for caching, true by default
  *
  * @return array Array of users matching the filter criteria that may be from cache (if similar search was previously run)
+ * @throws Exception
  */
 function get_user_array($add_blank = true, $status = 'Active', $user_id = '', $use_real_name = false, $user_name_filter = '', $portal_filter = ' AND portal_only=0 ', $from_cache = true)
 {
@@ -833,6 +835,7 @@ function get_user_array($add_blank = true, $status = 'Active', $user_id = '', $u
  *
  * @param bool $hide_portal_users
  * @return array Array of Users' details that match passed criteria
+ * @throws Exception
  */
 function getUserArrayFromFullName($args, $hide_portal_users = false)
 {
@@ -1171,10 +1174,11 @@ function return_application_language($language)
  * This function retrieves a module's language file and returns the array of strings included.
  *
  * @param string $language specific language to load
- * @param string $module   module name to load strings for
- * @param bool   $refresh  optional, true if you want to rebuild the language strings
+ * @param string $module module name to load strings for
+ * @param bool $refresh optional, true if you want to rebuild the language strings
  *
  * @return array lang strings
+ * @throws Exception
  */
 function return_module_language($language, $module, $refresh = false)
 {
@@ -1394,6 +1398,7 @@ function return_session_value_or_default($varname, $default)
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
+ * @throws Exception
  */
 function append_where_clause(&$where_clauses, $variable_name, $SQL_name = null)
 {
@@ -2093,9 +2098,10 @@ function getDefaultXssTags()
  *
  * @param string str String to search for XSS attack vectors
  *
+ * @return string
+ * @throws HTMLPurifier_Exception
  * @deprecated
  *
- * @return string
  */
 function remove_xss($str)
 {
@@ -2932,6 +2938,7 @@ function number_empty($value)
  * @param string $order_by
  * @param bool $blank_is_none
  * @return array
+ * @throws Exception
  */
 function get_bean_select_array(
     $add_blank,
@@ -3017,6 +3024,7 @@ function get_bean_select_array(
 /**
  * @param unknown_type $listArray
  * @return array
+ * @throws Exception
  */
 // function parse_list_modules
 // searches a list for items in a user's allowed tabs and returns an array that removes unallowed tabs from list
@@ -4035,6 +4043,7 @@ function getPhpInfo($level = -1)
  *
  * @param bool $escape
  * @return mixed|string $result a formatted string
+ * @throws Exception
  */
 function string_format($format, $args, $escape = true)
 {
@@ -4357,6 +4366,7 @@ function getTrackerSubstring($name)
  * @param bool $add_custom_fields
  * @param string $module
  * @return array
+ * @throws Exception
  */
 function generate_search_where(
     $field_list,
@@ -4950,6 +4960,7 @@ function encodeMultienumValue($arr)
  * @param $where : where clauses
  *
  * @return array
+ * @throws Exception
  */
 function create_export_query_relate_link_patch($module, $searchFields, $where)
 {

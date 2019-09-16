@@ -17,6 +17,7 @@ class HTMLPurifier_Lexer_PH5P extends HTMLPurifier_Lexer_DOMLex
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return HTMLPurifier_Token[]
+     * @throws HTMLPurifier_Exception
      */
     public function tokenizeHTML($html, $config, $context)
     {

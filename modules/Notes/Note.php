@@ -143,6 +143,7 @@ class Note extends File
      * If a system setting is set, it will mark all related notes as deleted, and attempt to delete files that are
      * related to those notes
      * @param string id ID
+     * @throws Exception
      */
     public function mark_deleted($id)
     {

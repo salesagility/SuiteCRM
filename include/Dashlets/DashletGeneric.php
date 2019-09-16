@@ -508,10 +508,11 @@ class DashletGeneric extends Dashlet
     }
 
     /**
-      * Displays the Dashlet, must call process() prior to calling this
-      *
-      * @return string HTML that displays Dashlet
-      */
+     * Displays the Dashlet, must call process() prior to calling this
+     *
+     * @return string HTML that displays Dashlet
+     * @throws \SuiteCRM\StateSaverException
+     */
     public function display()
     {
         return parent::display() . $this->lvs->display(false) . $this->processAutoRefresh();

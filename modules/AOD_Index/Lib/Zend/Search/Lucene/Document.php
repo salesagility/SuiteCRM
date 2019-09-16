@@ -57,8 +57,9 @@ class Zend_Search_Lucene_Document
      * Proxy method for getFieldValue(), provides more convenient access to
      * the string value of a field.
      *
-     * @param  string $offset
+     * @param string $offset
      * @return string
+     * @throws Zend_Search_Lucene_Exception
      */
     public function __get($offset)
     {

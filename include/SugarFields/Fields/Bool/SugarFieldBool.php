@@ -52,6 +52,7 @@ class SugarFieldBool extends SugarFieldBase
      * @param $tabindex
      * @return The html for a drop down if the search field is not 'my_items_only' or a dropdown for all other fields.
      *            This strange behavior arises from the special needs of PM. They want the my items to be checkboxes and all other boolean fields to be dropdowns.
+     * @throws \SuiteCRM\StateSaverException
      * @author Navjeet Singh
      */
     public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)

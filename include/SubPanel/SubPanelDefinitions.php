@@ -179,6 +179,7 @@ class aSubPanel
     /**
      * @param $module
      * @return string
+     * @throws Exception
      */
     public function buildSearchQuery($module)
     {

@@ -107,6 +107,7 @@ class HtmlSanitizer
      * @param string $dirtyHtml
      * @param bool $removeHtml - remove encoded html
      * @return string clean html
+     * @throws \HTMLPurifier_Exception
      */
     public static function cleanHtml($dirtyHtml, $removeHtml = false)
     {

@@ -209,6 +209,7 @@ class SugarApplication
      * This function initialize the ResourceManager and calls the setup method
      * on the ResourceManager instance.
      * @param $module
+     * @throws Exception
      */
     public function setupResourceManagement($module)
     {
@@ -696,8 +697,9 @@ class SugarApplication
     /**
      * Storing messages into session
      *
-     * @access	public
+     * @access    public
      * @param string $message
+     * @throws Exception
      */
     public static function appendErrorMessage($message)
     {
@@ -707,6 +709,7 @@ class SugarApplication
     /**
      * picking up the messages from the session and clearing session storage array
      * @return array messages
+     * @throws Exception
      */
     public static function getErrorMessages()
     {
@@ -717,8 +720,9 @@ class SugarApplication
     /**
      * Storing messages into session
      *
-     * @access	public
+     * @access    public
      * @param string $message
+     * @throws Exception
      */
     public static function appendSuccessMessage($message)
     {
@@ -728,6 +732,7 @@ class SugarApplication
     /**
      * picking up the messages from the session and clearing session storage array
      * @return array messages
+     * @throws Exception
      */
     public static function getSuccessMessages()
     {

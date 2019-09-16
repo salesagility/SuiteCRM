@@ -222,6 +222,7 @@ class SqlsrvManager extends MssqlManager
      * @param bool $suppress
      * @param bool $keepResult
      * @return bool|resource
+     * @throws Exception
      * @see DBManager::query()
      */
     public function query($sql, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false)
@@ -378,6 +379,7 @@ class SqlsrvManager extends MssqlManager
      * @param $indices
      * @param $table
      * @return array
+     * @throws Exception
      * @see MssqlHelper::indexSQL()
      */
     public function getConstraintSql($indices, $table)
@@ -402,9 +404,10 @@ class SqlsrvManager extends MssqlManager
     }
 
     /**
-     * @see DBManager::get_columns()
      * @param $tablename
      * @return array
+     * @throws Exception
+     * @see DBManager::get_columns()
      */
     public function get_columns($tablename)
     {
@@ -463,8 +466,9 @@ class SqlsrvManager extends MssqlManager
     /**
      * protected function to return true if the given tablename has any clustered indexes defined.
      *
-     * @param  string $tableName
+     * @param string $tableName
      * @return bool
+     * @throws Exception
      */
     protected function doesTableHaveAClusteredIndexDefined($tableName)
     {
@@ -487,8 +491,9 @@ EOSQL;
     /**
      * protected function to return true if the given tablename has any fulltext indexes defined.
      *
-     * @param  string $tableName
+     * @param string $tableName
      * @return bool
+     * @throws Exception
      */
     protected function doesTableHaveAFulltextIndexDefined($tableName)
     {
@@ -510,13 +515,14 @@ EOSQL;
     /**
      * Override method to add support for detecting and dropping fulltext indices.
      *
-     * @see DBManager::changeColumnSQL()
-     * @see MssqlHelper::changeColumnSQL()
      * @param $tablename
      * @param $fieldDefs
      * @param $action
      * @param bool $ignoreRequired
      * @return string
+     * @throws Exception
+     * @see DBManager::changeColumnSQL()
+     * @see MssqlHelper::changeColumnSQL()
      */
     protected function changeColumnSQL($tablename, $fieldDefs, $action, $ignoreRequired = false)
     {
@@ -601,6 +607,7 @@ EOSQL;
      * @param  $table
      * @param  $query
      * @return string
+     * @throws Exception
      */
     protected function verifyGenericQueryRollback($type, $table, $query)
     {
@@ -617,9 +624,10 @@ EOSQL;
 
     /**
      * Tests an INSERT INTO query
-     * @param string table The table name to get DDL
-     * @param string query The query to test.
+     * @param $table
+     * @param $query
      * @return string Non-empty if error found
+     * @throws Exception
      */
     public function verifyInsertInto($table, $query)
     {
@@ -628,9 +636,10 @@ EOSQL;
 
     /**
      * Tests an UPDATE query
-     * @param string table The table name to get DDL
-     * @param string query The query to test.
+     * @param $table
+     * @param $query
      * @return string Non-empty if error found
+     * @throws Exception
      */
     public function verifyUpdate($table, $query)
     {
@@ -639,9 +648,10 @@ EOSQL;
 
     /**
      * Tests an DELETE FROM query
-     * @param string table The table name to get DDL
-     * @param string query The query to test.
+     * @param $table
+     * @param $query
      * @return string Non-empty if error found
+     * @throws Exception
      */
     public function verifyDeleteFrom($table, $query)
     {
@@ -652,6 +662,7 @@ EOSQL;
      * Select database
      * @param string $dbname
      * @return bool|mixed|resource
+     * @throws Exception
      */
     protected function selectDb($dbname)
     {

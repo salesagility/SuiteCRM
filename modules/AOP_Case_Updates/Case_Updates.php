@@ -42,6 +42,7 @@
  * @param $focus
  *
  * @return string
+ * @throws Exception
  */
 function display_updates($focus)
 {
@@ -200,6 +201,7 @@ EOD;
 
 /**
  * @return mixed|string|void
+ * @throws \SuiteCRM\StateSaverException
  */
 function display_update_form()
 {
@@ -317,6 +319,7 @@ function display_case_attachments($case)
  * @param $case
  *
  * @return string - the html to be displayed and javascript
+ * @throws Exception
  */
 function quick_edit_case_updates($case)
 {

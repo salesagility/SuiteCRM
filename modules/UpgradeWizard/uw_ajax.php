@@ -84,6 +84,12 @@ function ajaxSqlProgress($persistence, $sql, $type)
  * does post-post-install stuff
  * @param array persistence
  * @return array persistence
+ * @throws EmailException
+ * @throws EmailValidatorException
+ * @throws HTMLPurifier_Exception
+ * @throws ImapHandlerException
+ * @throws \SuiteCRM\ErrorMessageException
+ * @throws phpmailerException
  */
 function commitAjaxFinalTouches($persistence)
 {
@@ -184,6 +190,7 @@ function commitAjaxFinalTouches($persistence)
  * runs one line of sql
  * @param array $persistence
  * @return array $persistence
+ * @throws Exception
  */
 function commitAjaxRunSql($persistence)
 {
@@ -260,6 +267,7 @@ function commitAjaxGetSqlErrors($persistence)
  * parses the sql upgrade file for sequential querying
  * @param array persistence
  * @return array persistence
+ * @throws Exception
  */
 function commitAjaxPrepSql($persistence)
 {
@@ -270,6 +278,7 @@ function commitAjaxPrepSql($persistence)
 /**
  * handles post-install tasks
  * @param $persistence
+ * @throws Exception
  */
 function commitAjaxPostInstall($persistence)
 {
@@ -576,8 +585,9 @@ eoq;
 /**
  * loads the sql file into an array
  * @param array persistence
- * @param bool preflight Flag to load for Preflight or Commit
+ * @param bool $preflight
  * @return array persistence
+ * @throws Exception
  */
 function preflightCheckJsonPrepSchemaCheck($persistence, $preflight=true)
 {

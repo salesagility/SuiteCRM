@@ -215,6 +215,7 @@ class DocumentRevision extends SugarBean
      * this to needs created by email RFCs, filesystem name conventions, charset conventions etc.
      * @param string revId Revision ID if not latest
      * @return string formatted name
+     * @throws Exception
      */
     public function getDocumentRevisionNameForDisplay($revId='')
     {

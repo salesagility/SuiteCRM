@@ -173,8 +173,7 @@ eoq;
 
     /**
      * Executes the massupdate form
-     * @param displayname Name to display in the popup window
-     * @param varname name of the variable
+     * @throws Exception
      */
     public function handleMassUpdate()
     {
@@ -787,9 +786,10 @@ EOJS;
 
     /**
      * Add a parent selection popup window
-     * @param displayname Name to display in the popup window
-     * @param field_name name of the field
+     * @param $displayname
+     * @param $field
      * @return string
+     * @throws Exception
      */
     public function addParent($displayname, $field)
     {

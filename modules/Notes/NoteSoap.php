@@ -73,6 +73,7 @@ class NoteSoap
      * @param array $note
      * @param bool $portal
      * @return string
+     * @throws Exception
      */
     public function saveFile($note, $portal = false)
     {

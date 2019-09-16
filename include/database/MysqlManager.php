@@ -165,12 +165,13 @@ class MysqlManager extends DBManager
     /**
      * Parses and runs queries
      *
-     * @param  string $sql SQL Statement to execute
-     * @param  bool $dieOnError True if we want to call die if the query returns errors
-     * @param  string $msg Message to log if error occurs
-     * @param  bool $suppress Flag to suppress all error output unless in debug logging mode.
-     * @param  bool $keepResult True if we want to push this result into the $lastResult array.
+     * @param string $sql SQL Statement to execute
+     * @param bool $dieOnError True if we want to call die if the query returns errors
+     * @param string $msg Message to log if error occurs
+     * @param bool $suppress Flag to suppress all error output unless in debug logging mode.
+     * @param bool $keepResult True if we want to push this result into the $lastResult array.
      * @return resource result set
+     * @throws Exception
      */
     public function query($sql, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false)
     {
@@ -269,6 +270,7 @@ class MysqlManager extends DBManager
      * @param string $msg
      * @param bool $execute
      * @return resource|string
+     * @throws Exception
      * @see DBManager::limitQuery()
      */
     public function limitQuery($sql, $start, $count, $dieOnError = false, $msg = '', $execute = true)
@@ -298,6 +300,7 @@ class MysqlManager extends DBManager
      * @param $sql
      * @param bool $object_name
      * @return bool
+     * @throws Exception
      * @see DBManager::checkQuery()
      */
     protected function checkQuery($sql, $object_name = false)
@@ -345,6 +348,7 @@ class MysqlManager extends DBManager
     /**
      * @param $tablename
      * @return array
+     * @throws Exception
      * @see DBManager::get_columns()
      */
     public function get_columns($tablename)
@@ -459,6 +463,7 @@ class MysqlManager extends DBManager
     /**
      * @param $tableName
      * @return bool
+     * @throws Exception
      * @see DBManager::tableExists()
      */
     public function tableExists($tableName)
@@ -482,6 +487,7 @@ class MysqlManager extends DBManager
      * Get tables like expression
      * @param string $like
      * @return array
+     * @throws Exception
      */
     public function tablesLike($like)
     {
@@ -602,16 +608,17 @@ class MysqlManager extends DBManager
     }
 
     /**
-     * @see DBManager::repairTableParams()
-     *
-     * For MySQL, we can write the ALTER TABLE statement all in one line, which speeds things
-     * up quite a bit. So here, we'll parse the returned SQL into a single ALTER TABLE command.
      * @param $tablename
      * @param $fielddefs
      * @param $indices
      * @param bool $execute
      * @param null $engine
      * @return mixed|string|string[]|null
+     * @throws Exception
+     * @see DBManager::repairTableParams()
+     *
+     * For MySQL, we can write the ALTER TABLE statement all in one line, which speeds things
+     * up quite a bit. So here, we'll parse the returned SQL into a single ALTER TABLE command.
      */
     public function repairTableParams($tablename, $fielddefs, $indices, $execute = true, $engine = null)
     {
@@ -753,8 +760,9 @@ class MysqlManager extends DBManager
     /**
      * Returns true if the engine given is enabled in the backend
      *
-     * @param  string $engine
+     * @param string $engine
      * @return bool
+     * @throws Exception
      */
     protected function isEngineEnabled($engine)
     {
@@ -793,11 +801,12 @@ class MysqlManager extends DBManager
     /**
      * Generates sql for create table statement for a bean.
      *
-     * @param  string $tablename
-     * @param  array $fieldDefs
-     * @param  array $indices
-     * @param  string $engine optional, MySQL engine to use
+     * @param string $tablename
+     * @param array $fieldDefs
+     * @param array $indices
+     * @param string $engine optional, MySQL engine to use
      * @return string SQL Create Table statement
+     * @throws Exception
      */
     public function createTableSQLParams($tablename, $fieldDefs, $indices, $engine = null)
     {
@@ -1003,6 +1012,7 @@ class MysqlManager extends DBManager
      * @param string $field_name
      * @param $start_value
      * @return resource
+     * @throws Exception
      */
     public function setAutoIncrementStart($table, $field_name, $start_value)
     {
@@ -1014,9 +1024,10 @@ class MysqlManager extends DBManager
     /**
      * Returns the next value for an auto increment
      *
-     * @param  string $table tablename
-     * @param  string $field_name
+     * @param string $table tablename
+     * @param string $field_name
      * @return string
+     * @throws Exception
      */
     public function getAutoIncrement($table, $field_name)
     {
@@ -1030,9 +1041,10 @@ class MysqlManager extends DBManager
     }
 
     /**
-     * @see DBManager::get_indices()
      * @param $tablename
      * @return array
+     * @throws Exception
+     * @see DBManager::get_indices()
      */
     public function get_indices($tablename)
     {
@@ -1116,11 +1128,12 @@ class MysqlManager extends DBManager
     /**
      * Runs a query and returns a single row
      *
-     * @param  string $sql SQL Statement to execute
-     * @param  bool $dieOnError True if we want to call die if the query returns errors
-     * @param  string $msg Message to log if error occurs
-     * @param  bool $suppress Message to log if error occurs
+     * @param string $sql SQL Statement to execute
+     * @param bool $dieOnError True if we want to call die if the query returns errors
+     * @param string $msg Message to log if error occurs
+     * @param bool $suppress Message to log if error occurs
      * @return array    single row from the query
+     * @throws Exception
      */
     public function fetchOne($sql, $dieOnError = false, $msg = '', $suppress = false)
     {
@@ -1133,9 +1146,10 @@ class MysqlManager extends DBManager
     }
 
     /**
-     * @see DBManager::full_text_indexing_installed()
      * @param null $dbname
      * @return bool
+     * @throws Exception
+     * @see DBManager::full_text_indexing_installed()
      */
     public function full_text_indexing_installed($dbname = null)
     {
@@ -1241,6 +1255,7 @@ class MysqlManager extends DBManager
     /**
      * List of available collation settings
      * @return array
+     * @throws Exception
      */
     public function getCollationList()
     {
@@ -1348,6 +1363,7 @@ class MysqlManager extends DBManager
     /**
      * Get list of all defined charsets
      * @return array
+     * @throws Exception
      */
     protected function getCharsetInfo()
     {
@@ -1413,9 +1429,10 @@ class MysqlManager extends DBManager
 
     /**
      * Tests an ALTER TABLE query
-     * @param string table The table name to get DDL
-     * @param string query The query to test.
+     * @param $table
+     * @param $query
      * @return string Non-empty if error found
+     * @throws Exception
      */
     protected function verifyAlterTable($table, $query)
     {
@@ -1525,6 +1542,7 @@ class MysqlManager extends DBManager
      * Check if certain database exists
      * @param string $dbname
      * @return bool
+     * @throws Exception
      */
     public function dbExists($dbname)
     {
@@ -1547,6 +1565,7 @@ class MysqlManager extends DBManager
      * Check if certain DB user exists
      * @param string $username
      * @return bool
+     * @throws Exception
      */
     public function userExists($username)
     {
@@ -1568,6 +1587,7 @@ class MysqlManager extends DBManager
      * @param string $host_name
      * @param string $user
      * @param string $password
+     * @throws Exception
      */
     public function createDbUser($database_name, $host_name, $user, $password)
     {
@@ -1586,6 +1606,7 @@ class MysqlManager extends DBManager
     /**
      * Create a database
      * @param string $dbname
+     * @throws Exception
      */
     public function createDatabase($dbname)
     {
@@ -1602,6 +1623,7 @@ class MysqlManager extends DBManager
      * Drop a database
      * @param string $dbname
      * @return resource
+     * @throws Exception
      */
     public function dropDatabase($dbname)
     {
@@ -1656,6 +1678,7 @@ class MysqlManager extends DBManager
      * @abstract
      * @param string $tableName
      * @return resource
+     * @throws Exception
      */
     public function disableKeys($tableName)
     {
@@ -1667,6 +1690,7 @@ class MysqlManager extends DBManager
      * @abstract
      * @param string $tableName
      * @return resource
+     * @throws Exception
      */
     public function enableKeys($tableName)
     {

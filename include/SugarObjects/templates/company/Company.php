@@ -71,11 +71,12 @@ class Company extends Basic
     }
 
     /**
-     * @see parent::save()
-     *
      * @param bool $check_notify
      *
      * @return string
+     * @throws Exception
+     * @see parent::save()
+     *
      */
     public function save($check_notify = false)
     {

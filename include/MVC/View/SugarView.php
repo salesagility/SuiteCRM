@@ -367,6 +367,7 @@ class SugarView
      * @param bool $retModTabs
      *
      * @return string
+     * @throws \SuiteCRM\StateSaverException
      */
     public function displayHeader($retModTabs = false)
     {
@@ -1245,6 +1246,7 @@ EOHTML;
 
     /**
      * @return string
+     * @throws Exception
      */
     private function _getStatistics()
     {
@@ -1303,6 +1305,7 @@ EOHTML;
      * @param String $newline of newline character to use (defaults to </ br>)
      *
      * @return string formatted message about memory statistics
+     * @throws Exception
      */
     protected function logMemoryStatistics($newline = '<br>')
     {
@@ -1832,6 +1835,7 @@ EOHTML;
      * @param String $file path of the file to fetch
      *
      * @return string content from resulting Smarty fetch operation on template
+     * @throws \SuiteCRM\StateSaverException
      */
     protected function fetchTemplate($file)
     {

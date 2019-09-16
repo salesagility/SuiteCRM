@@ -392,6 +392,7 @@ class Zend_Search_Lucene_Search_QueryParserContext
      * Generate query from current context
      *
      * @return Zend_Search_Lucene_Search_Query
+     * @throws Zend_Search_Lucene_Search_QueryParserException
      */
     public function getQuery()
     {

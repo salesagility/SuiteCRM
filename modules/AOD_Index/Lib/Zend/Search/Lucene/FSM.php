@@ -133,6 +133,7 @@ abstract class Zend_Search_Lucene_FSM
      * @param array $states
      * @param array $inputAphabet
      * @param array $rules
+     * @throws Zend_Search_Exception
      */
     public function __construct($states = array(), $inputAphabet = array(), $rules = array())
     {

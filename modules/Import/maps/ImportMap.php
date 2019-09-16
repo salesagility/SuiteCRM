@@ -175,6 +175,7 @@ class ImportMap extends SugarBean
      * @param bool $encode
      * @param bool $deleted
      * @return ImportMap|SugarBean|null
+     * @throws Exception
      * @see SugarBean::retrieve()
      */
     public function retrieve($id = -1, $encode=true, $deleted=true)
@@ -255,6 +256,7 @@ class ImportMap extends SugarBean
      *
      * @param $id
      * @return bool|void
+     * @throws Exception
      */
     public function mark_deleted(
         $id

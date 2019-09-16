@@ -438,6 +438,7 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
      *
      * @param Zend_Search_Lucene_Index_Term $termEntry
      * @param array $termDocs
+     * @throws Zend_Search_Lucene_Exception
      */
     public function addTerm($termEntry, $termDocs)
     {

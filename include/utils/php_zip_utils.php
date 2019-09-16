@@ -120,6 +120,7 @@ function zip_dir($zip_dir, $zip_archive)
  * @param array $file_list
  * @param string $prefix Regular expression for the prefix to strip
  * @return bool
+ * @throws Exception
  */
 function zip_files_list($zip_file, $file_list, $prefix = '')
 {

@@ -137,6 +137,7 @@ class UploadStream
     /**
      * Check if upload dir is writable
      * @return bool
+     * @throws Exception
      */
     public static function writable()
     {
@@ -155,6 +156,7 @@ class UploadStream
      * Get real FS path of the upload stream file
      * @param string $path Upload stream path (with upload://)
      * @return string FS path
+     * @throws Exception
      */
     public static function path($path)
     {

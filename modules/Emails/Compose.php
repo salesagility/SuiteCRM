@@ -83,6 +83,7 @@ function initFullCompose($ret)
  * @param Bool $forFullCompose If full compose is set to TRUE, then continue execution and include the full Emails UI.  Otherwise
  *             the data generated is returned.
  * @return array
+ * @throws ImapHandlerException
  */
 function generateComposeDataPackage($data, $forFullCompose = true)
 {

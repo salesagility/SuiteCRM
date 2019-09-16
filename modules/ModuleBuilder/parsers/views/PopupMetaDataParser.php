@@ -95,8 +95,9 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
      * $this->columns   Array of 'Column LBL'=>function_to_retrieve_fields_for_this_column() - expected by the view
      *
      * @param string $view
-     * @param string $moduleName     The name of the module to which this listview belongs
-     * @param string $packageName    If not empty, the name of the package to which this listview belongs
+     * @param string $moduleName The name of the module to which this listview belongs
+     * @param string $packageName If not empty, the name of the package to which this listview belongs
+     * @throws Exception
      */
     public function __construct($view, $moduleName, $packageName = '')
     {

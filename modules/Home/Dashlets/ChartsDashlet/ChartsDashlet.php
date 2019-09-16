@@ -94,6 +94,7 @@ class ChartsDashlet extends Dashlet
      * Displays the dashlet
      *
      * @return string html to display dashlet
+     * @throws \SuiteCRM\StateSaverException
      */
     public function display()
     {

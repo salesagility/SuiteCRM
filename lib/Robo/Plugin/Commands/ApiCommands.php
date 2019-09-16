@@ -226,6 +226,7 @@ class ApiCommands extends Tasks
      * @param string $name
      * @param string $password
      * @return void
+     * @throws \Exception
      */
     public function apiCreateUser($name, $password)
     {
@@ -344,6 +345,7 @@ class ApiCommands extends Tasks
      * @param string $table
      * @param string $row
      * @return int
+     * @throws \Exception
      */
     private function getNameCount($name, $table, $row)
     {

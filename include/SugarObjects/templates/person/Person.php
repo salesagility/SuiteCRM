@@ -100,13 +100,14 @@ class Person extends Basic
     /**
      * need to override to have a name field created for this class
      *
-     * @see parent::retrieve()
-     *
      * @param int $id
      * @param bool $encode
      * @param bool $deleted
      *
      * @return SugarBean
+     * @throws Exception
+     * @see parent::retrieve()
+     *
      */
     public function retrieve($id = -1, $encode = true, $deleted = true)
     {
@@ -177,6 +178,7 @@ class Person extends Basic
     /**
      * @param bool $check_notify
      * @return string
+     * @throws Exception
      * @see parent::save()
      */
     public function save($check_notify = false)
@@ -348,7 +350,7 @@ class Person extends Basic
      * @param string $basis
      * @param string $source
      * @return int
-     * @throws InvalidArgumentException
+     * @throws Exception
      */
     public function setLawfulBasis($basis, $source)
     {

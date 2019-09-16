@@ -173,7 +173,7 @@ class SoapHelperWebServices
      * @param string $user_name -- The user name to create a session for
      * @param string $password -- The MD5 sum of the user's password
      * @return true -- If the session is created
-     * @return false -- If the session is not created
+     * @throws Exception
      */
     public function validate_user($user_name, $password)
     {

@@ -116,6 +116,7 @@ class EditView
      * Displays the template
      *
      * @return string HTML of parsed template
+     * @throws \SuiteCRM\StateSaverException
      */
     public function display()
     {

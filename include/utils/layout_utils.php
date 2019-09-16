@@ -57,6 +57,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @param boolean $show_help which determines if the print and help links are shown.
  * @param boolean $print_out which determines if the print/echo out code
  * @return string HTML
+ * @throws \SuiteCRM\StateSaverException
  */
 function get_form_header(
     $form_title,

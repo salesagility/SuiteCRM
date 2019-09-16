@@ -272,10 +272,12 @@ SUGAR.IV.togglePages('$activeTab');
 
 EOJAVASCRIPT;
     }
+
     /**
      * Returns a button to add this list of prospects to a Target List
      *
      * @return string html code to display button
+     * @throws Exception
      */
     private function _addToProspectListButton()
     {

@@ -57,6 +57,7 @@ class JsonRPCServerCalls
      * @param string $request_id
      * @param array $params
      * @return array
+     * @throws Exception
      */
     public function retrieve($request_id, $params)
     {
@@ -86,6 +87,7 @@ class JsonRPCServerCalls
      * @param $request_id
      * @param array $params
      * @return array
+     * @throws Exception
      */
     public function query($request_id, $params)
     {

@@ -106,6 +106,7 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar
      * Save New Address Info to the Address Cache Module / Table
      * @param array $aInfo of geocode info (lng, lat, status, address)
      * @return bool
+     * @throws Exception
      */
     public function saveAddressCacheInfo($aInfo = array())
     {

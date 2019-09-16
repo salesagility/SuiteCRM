@@ -65,6 +65,7 @@ class tracker_monitor extends Monitor
      * @param string $monitorId
      * @param string $metadata
      * @param string $store
+     * @throws Exception
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
     public function tracker_monitor($name='', $monitorId='', $metadata='', $store='')

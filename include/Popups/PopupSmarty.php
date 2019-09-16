@@ -126,10 +126,10 @@ class PopupSmarty extends ListViewSmarty
      * Processes the request. Calls ListViewData process. Also assigns all lang strings, export links,
      * This is called from ListViewDisplay
      *
-     * @param file file Template file to use
-     * @param data array from ListViewData
-     * @param html_var string the corresponding html var in xtpl per row
-     *
+     * @param $file
+     * @param $data
+     * @param $htmlVar
+     * @throws \SuiteCRM\StateSaverException
      */
     public function process($file, $data, $htmlVar)
     {

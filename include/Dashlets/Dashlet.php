@@ -192,6 +192,7 @@ class Dashlet
      *
      * @param string $text text after the title
      * @return string Header html
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getHeader($text = '')
     {
@@ -272,6 +273,7 @@ class Dashlet
      * Called when Dashlet is displayed
      *
      * @return string footer HTML
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getFooter()
     {
@@ -334,6 +336,7 @@ class Dashlet
      *
      * @param int $dashletOffset
      * @return string HTML code
+     * @throws \SuiteCRM\StateSaverException
      */
     protected function processAutoRefresh($dashletOffset = 0)
     {

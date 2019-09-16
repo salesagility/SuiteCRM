@@ -24,7 +24,7 @@ class LogoutService
      * @param string $accessToken
      *
      * @return DocumentResponse
-     * @throws \InvalidArgumentException When access token is not found.
+     * @throws \Exception
      */
     public function logout($accessToken)
     {

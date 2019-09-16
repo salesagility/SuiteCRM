@@ -20,6 +20,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
     /**
      * @param string $dir
      * @return HTMLPurifier_ConfigSchema_Interchange
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
     public static function buildFromDirectory($dir = null)
     {
@@ -32,6 +33,8 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
      * @param string $dir
      * @return HTMLPurifier_ConfigSchema_Interchange
+     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws HTMLPurifier_Exception
      */
     public function buildDir($interchange, $dir = null)
     {
@@ -64,6 +67,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
      * @param string $file
      * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws HTMLPurifier_Exception
      */
     public function buildFile($interchange, $file)
     {
@@ -79,6 +83,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange HTMLPurifier_ConfigSchema_Interchange object to build
      * @param HTMLPurifier_StringHash $hash source data
      * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws HTMLPurifier_Exception
      */
     public function build($interchange, $hash)
     {
@@ -104,6 +109,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
      * @param HTMLPurifier_StringHash $hash
      * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws HTMLPurifier_Exception
      */
     public function buildDirective($interchange, $hash)
     {

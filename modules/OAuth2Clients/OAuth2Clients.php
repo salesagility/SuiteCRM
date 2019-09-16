@@ -86,10 +86,11 @@ class OAuth2Clients extends SugarBean
     }
 
     /**
-     * @see SugarBean::save()
-     *
      * @param bool $check_notify
      * @return string ID
+     * @throws Exception
+     * @see SugarBean::save()
+     *
      */
     public function save($check_notify = false)
     {

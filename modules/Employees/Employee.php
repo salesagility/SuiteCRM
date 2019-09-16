@@ -321,6 +321,7 @@ class Employee extends Person
      *
      * @param bool $check_notify
      * @return bool|string
+     * @throws Exception
      */
     public function save($check_notify = false)
     {

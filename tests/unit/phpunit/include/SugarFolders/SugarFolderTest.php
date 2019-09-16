@@ -78,6 +78,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      * Test the object can be found
      *
      * @return void
+     * @throws Exception
      */
     public function testCanGetSugarFolderObject()
     {

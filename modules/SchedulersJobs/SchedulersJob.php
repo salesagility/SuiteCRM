@@ -126,6 +126,7 @@ class SchedulersJob extends Basic
         $this->execute_time_db = $this->db->fromConvert($this->execute_time, 'datetime');
         parent::check_date_relationships_load();
     }
+
     /**
      * handleDateFormat
      *
@@ -137,6 +138,7 @@ class SchedulersJob extends Basic
      * @param boolean $user_format Boolean indicating whether or not to convert to user's time format, defaults to false
      *
      * @return string Formatted datetime value
+     * @throws Exception
      */
     public function handleDateFormat($date='now', $user=null, $user_format=false)
     {
@@ -254,6 +256,7 @@ class SchedulersJob extends Basic
      * Mark this job as failed
      * @param string $message
      * @return bool
+     * @throws Exception
      */
     public function failJob($message = null)
     {
@@ -264,6 +267,7 @@ class SchedulersJob extends Basic
      * Mark this job as success
      * @param string $message
      * @return bool
+     * @throws Exception
      */
     public function succeedJob($message = null)
     {
@@ -293,6 +297,7 @@ class SchedulersJob extends Basic
      * @param string $resolution One of JOB_ constants that define job status
      * @param string $message
      * @return bool
+     * @throws Exception
      */
     public function resolveJob($resolution, $message = null)
     {
@@ -358,6 +363,7 @@ class SchedulersJob extends Basic
      * @param string $message
      * @param string $delay how long to delay (default is job's delay)
      * @return bool
+     * @throws Exception
      */
     public function postponeJob($message = null, $delay = null)
     {
@@ -401,6 +407,7 @@ class SchedulersJob extends Basic
      * @param string $id
      * @param string $client Client that is trying to run the job
      * @return bool|string true on success, false on job failure, error message on failure to run
+     * @throws Exception
      */
     public static function runJobId($id, $client)
     {
@@ -485,6 +492,7 @@ class SchedulersJob extends Basic
     /**
      * Set environment to the user of this job
      * @return boolean
+     * @throws Exception
      */
     protected function setJobUser()
     {
@@ -519,6 +527,7 @@ class SchedulersJob extends Basic
     /**
      * Run this job
      * @return bool Was the job successful?
+     * @throws Exception
      */
     public function runJob()
     {

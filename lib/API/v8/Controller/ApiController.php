@@ -108,7 +108,7 @@ class ApiController implements LoggerAwareInterface
      * @param Response $response
      * @param array $payload
      * @return Response
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     protected function generateJsonApiResponse(Request $request, Response $response, $payload)
     {
@@ -201,7 +201,7 @@ class ApiController implements LoggerAwareInterface
      * @param Response $response
      * @param \Exception|ApiException $exception
      * @return integer
-     * @throws RuntimeException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function generateJsonApiErrorResponse(Request $request, Response $response, \Exception $exception)
     {

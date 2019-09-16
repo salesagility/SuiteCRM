@@ -77,7 +77,9 @@ class FilterRepository
      * @param Request $request
      * @param array route arguments
      * @return array
-     * @throws \SuiteCRM\API\v8\Exception\BadRequestException
+     * @throws BadRequestException
+     * @throws \SuiteCRM\Exception\Exception
+     * @throws \SuiteCRM\Exception\InvalidArgumentException
      */
     public function fromRequest(Request $request, array $args = array())
     {

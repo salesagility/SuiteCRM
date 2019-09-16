@@ -137,6 +137,7 @@ class SecurityGroup extends SecurityGroup_sugar
      * @param string $id
      * @param string $action
      * @return bool true if group is assigned to the record
+     * @throws Exception
      */
     public static function groupHasAccess($module, $id, $action = '')
     {
@@ -186,6 +187,7 @@ class SecurityGroup extends SecurityGroup_sugar
     /**
      * @param SugarBean $focus
      * @param boolean $isUpdate
+     * @throws Exception
      */
     public static function inherit($focus, $isUpdate)
     {
@@ -221,6 +223,7 @@ class SecurityGroup extends SecurityGroup_sugar
     /**
      * @param SugarBean $focus
      * @param boolean $isUpdate
+     * @throws Exception
      */
     public static function assign_default_groups($focus, $isUpdate)
     {
@@ -475,6 +478,7 @@ class SecurityGroup extends SecurityGroup_sugar
      * @param string $record_id
      * @param string $module
      * @return boolean
+     * @throws Exception
      */
     public static function inheritOne($user_id, $record_id, $module)
     {
@@ -511,6 +515,7 @@ class SecurityGroup extends SecurityGroup_sugar
      * returns # of groups a user is a member of that are inheritable.
      * @param string $user_id
      * @return
+     * @throws Exception
      */
     public static function getMembershipCount($user_id)
     {
@@ -536,6 +541,7 @@ class SecurityGroup extends SecurityGroup_sugar
 
     /**
      * @return array
+     * @throws Exception
      */
     public static function retrieveDefaultGroups()
     {
@@ -562,6 +568,7 @@ class SecurityGroup extends SecurityGroup_sugar
     /**
      * @param string $group_id
      * @param string $module
+     * @throws Exception
      */
     public static function saveDefaultGroup($group_id, $module)
     {
@@ -585,6 +592,7 @@ class SecurityGroup extends SecurityGroup_sugar
 
     /**
      * @param string $default_id
+     * @throws Exception
      */
     public static function removeDefaultGroup($default_id)
     {
@@ -643,6 +651,7 @@ class SecurityGroup extends SecurityGroup_sugar
      * @param string $this_module
      * @param string $rel_module
      * @return
+     * @throws Exception
      */
     public static function getLinkName($this_module, $rel_module)
     {
@@ -662,6 +671,7 @@ class SecurityGroup extends SecurityGroup_sugar
      * @param string $module
      * @param string $record_id
      * @param string $securitygroup_id
+     * @throws Exception
      */
     public function addGroupToRecord($module, $record_id, $securitygroup_id)
     {
@@ -683,6 +693,7 @@ class SecurityGroup extends SecurityGroup_sugar
      * @param string $module
      * @param string $record_id
      * @param string $securitygroup_id
+     * @throws Exception
      */
     public static function removeGroupFromRecord($module, $record_id, $securitygroup_id)
     {
@@ -700,6 +711,7 @@ class SecurityGroup extends SecurityGroup_sugar
      * Return a list of groups that this user belongs to.
      * @param string $user_id
      * @return array
+     * @throws Exception
      */
     public static function getUserSecurityGroups($user_id)
     {

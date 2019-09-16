@@ -118,6 +118,7 @@ class ImportFileSplitter
      * @param string $enclosure
      * @param bool $has_header true if file has a header row
      * @return bool
+     * @throws Exception
      */
     public function splitSourceFile(
         $delimiter = ',',

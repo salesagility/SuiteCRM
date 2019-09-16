@@ -58,6 +58,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
      /**
       * @param string $merge_module
       * @param string $merge_id
+      * @throws Exception
       * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
       */
      public function ConnectorRecord($merge_module = '', $merge_id = '')

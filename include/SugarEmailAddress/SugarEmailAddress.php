@@ -262,6 +262,7 @@ class SugarEmailAddress extends SugarBean
      *
      * @param array $request $_REQUEST
      * @return bool
+     * @throws Exception
      */
     public function saveAtUserProfile($request)
     {
@@ -393,6 +394,7 @@ class SugarEmailAddress extends SugarBean
      * @param bool $primary
      * @param bool $replyTo
      * @return bool
+     * @throws Exception
      */
     protected function handleEmailSaveAtUserProfile($id, $address, $primary, $replyTo)
     {
@@ -569,9 +571,10 @@ class SugarEmailAddress extends SugarBean
     }
 
     /**
-     * @deprecated
      * @param bool $check_notify
      * @return null
+     * @throws Exception
+     * @deprecated
      */
     public function save($check_notify = false)
     {
@@ -601,6 +604,7 @@ class SugarEmailAddress extends SugarBean
      * @param bool $in_workflow
      * @param null $optIn
      * @return null
+     * @throws Exception
      */
     public function saveEmail(
         $id,
@@ -1171,6 +1175,7 @@ class SugarEmailAddress extends SugarBean
      * preps a passed email address for email address storage
      * @param string $addr Address in focus, must be RFC compliant
      * @return string $id email_addresses ID
+     * @throws Exception
      */
     public function getEmailGUID($addr)
     {
@@ -1207,6 +1212,7 @@ class SugarEmailAddress extends SugarBean
      *        to propagate to the new SugarEmailAddress - see bug 39188
      * @param int|null $optInFlag
      * @return string GUID of Email Address or '' if cleaned address was empty.
+     * @throws Exception
      */
     public function AddUpdateEmailAddress($addr, $invalid = 0, $opt_out = 0, $id = null, $optInFlag = null)
     {
@@ -1695,6 +1701,7 @@ class SugarEmailAddress extends SugarBean
      * getEmailAddressWidgetDuplicatesView($focus)
      * @param object $focus Bean in focus
      * @return string HTML that contains hidden input values based off of HTML request
+     * @throws \SuiteCRM\StateSaverException
      */
     public function getEmailAddressWidgetDuplicatesView($focus)
     {
@@ -1959,9 +1966,9 @@ class SugarEmailAddress extends SugarBean
     /**
      * Update Opt In state to SugarEmailAddress::COI_STAT_OPT_IN
      *
-     * @see SugarEmailAddress::COI_STAT_OPT_IN
      * @return string|bool ID or false on failed
-     * @throws RuntimeException this function updates an exists SugarEmailAddress bean should have ID
+     * @throws Exception
+     * @see SugarEmailAddress::COI_STAT_OPT_IN
      */
     public function optIn()
     {
@@ -1994,6 +2001,7 @@ class SugarEmailAddress extends SugarBean
      *
      * @param string $state
      * @return boolean
+     * @throws Exception
      */
     public function setConfirmedOptInState($state)
     {
@@ -2070,6 +2078,7 @@ class SugarEmailAddress extends SugarBean
     /**
      * Uses the configuration to determine opt in status
      * @return string
+     * @throws Exception
      */
     public function getOptInStatus()
     {
@@ -2286,10 +2295,10 @@ class SugarEmailAddress extends SugarBean
     }
 
 
-
     /**
-     * @global array $app_strings
      * @return string
+     * @throws \SuiteCRM\StateSaverException
+     * @global array $app_strings
      */
     public function getOptInStatusTickHTML()
     {

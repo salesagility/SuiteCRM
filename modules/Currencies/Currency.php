@@ -327,6 +327,7 @@ function currency_format_number($amount, $params = array())
  *        String  $params['currency_id'] - currency_id to retreive, defaults to current user
  *        String  $params['human'] - formatting that truncates the first thousands and appends "k"
  * @return String formatted currency value
+ * @throws Exception
  * @see include/Localization/Localization.php
  */
 function format_number($amount, $round = null, $decimals = null, $params = array())

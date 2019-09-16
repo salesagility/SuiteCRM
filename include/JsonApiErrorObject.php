@@ -131,6 +131,7 @@ class JsonApiErrorObject
      * @param array $links
      * @param array $source
      * @param array $meta
+     * @throws ErrorMessageException
      */
     public function __construct(LangText $title = null, LangText $detail = null, $id = null, $code = null, $status = null, $links = null, $source = null, $meta = null)
     {
@@ -177,6 +178,7 @@ class JsonApiErrorObject
     /**
      *
      * @param string $id
+     * @throws ErrorMessageException
      */
     public function setId($id)
     {
@@ -191,6 +193,7 @@ class JsonApiErrorObject
     /**
      *
      * @param string $code
+     * @throws ErrorMessageException
      */
     public function setCode($code)
     {
@@ -205,6 +208,7 @@ class JsonApiErrorObject
     /**
      *
      * @param string $status
+     * @throws ErrorMessageException
      */
     public function setStatus($status)
     {
@@ -219,6 +223,7 @@ class JsonApiErrorObject
     /**
      *
      * @param array $links
+     * @throws ErrorMessageException
      */
     public function setLinks($links)
     {
@@ -233,6 +238,7 @@ class JsonApiErrorObject
     /**
      *
      * @param array $source
+     * @throws ErrorMessageException
      */
     public function setSource($source)
     {
@@ -247,6 +253,7 @@ class JsonApiErrorObject
     /**
      *
      * @param array $meta
+     * @throws ErrorMessageException
      */
     public function setMeta($meta)
     {
@@ -505,6 +512,7 @@ class JsonApiErrorObject
     /**
      *
      * @return string
+     * @throws ErrorMessageException
      */
     public function exportJson()
     {
@@ -547,11 +555,12 @@ class JsonApiErrorObject
         
         return $meta;
     }
-    
+
     /**
      *
      * @param Exception $e
      * @return $this
+     * @throws ErrorMessageException
      */
     public function retrieveFromException(Exception $e)
     {
@@ -571,11 +580,12 @@ class JsonApiErrorObject
         
         return $this;
     }
-    
+
     /**
      *
      * @param ServerRequestInterface $request
      * @return $this
+     * @throws ErrorMessageException
      */
     public function retrieveFromRequest(ServerRequestInterface $request)
     {
