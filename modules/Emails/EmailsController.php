@@ -60,7 +60,7 @@ class EmailsController extends SugarController
     const ERR_REPLY_TO_FROMAT_INVALID_NO_NAME = 112;
     const ERR_REPLY_TO_FROMAT_INVALID_NO_ADDR = 113;
     const ERR_REPLY_TO_FROMAT_INVALID_AS_FROM = 114;
-    
+
     /**
      * @var Email $bean ;
      */
