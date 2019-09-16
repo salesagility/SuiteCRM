@@ -90,6 +90,11 @@ if (!empty($sugar_config['xhprof_config'])) {
     SugarXHprof::getInstance()->start();
 }
 
+if ($sugar_config['sentry']['enabled']) {
+    require_once 'Sentry.php';
+    $sentry = new Sentry();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 ////	DATA SECURITY MEASURES
 require_once 'include/utils.php';
