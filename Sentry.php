@@ -49,8 +49,12 @@ class Sentry
     {
         global $sugar_config;
 
-        if (!isset($sugar_config['sentry']['dsn'])) {
-            throw new Exception('You must configure Sentry DSN.');
+        try {
+            if (!isset($sugar_config['sentry']['dsn'])) {
+                throw new \SuiteCRM\Exception\Exception('You must configure Sentry DSN.');
+            }
+        } catch (\SuiteCRM\Exception\Exception$exception) {
+            LoggerManager::getLogger()->fatal($exception->getMessage() . "\nTrace:\n" . $exception->getTraceAsString());
         }
 
         $this->enabled = $sugar_config['sentry']['enabled'];
@@ -73,8 +77,8 @@ class Sentry
             $this->client->user_context($user_context);
             try {
                 $this->client->install();
-            } catch (Raven_Exception $e) {
-                LoggerManager::getLogger()->fatal('Sentry Exception: ' . $e->getMessage());
+            } catch (Raven_Exception $exception) {
+                LoggerManager::getLogger()->fatal($exception->getMessage() . "\nTrace:\n" . $exception->getTraceAsString());
             }
         }
     }
