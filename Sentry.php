@@ -56,6 +56,7 @@ class Sentry
         $this->enabled = $sugar_config['sentry']['enabled'];
         $this->dsn = $sugar_config['sentry']['dsn'];
         $this->client = $this->buildClient();
+        $this->init();
     }
 
     protected function buildClient()
