@@ -7230,7 +7230,7 @@ if (!class_exists('TCPDF', false)) {
         /**
          * Reverse function for htmlentities.
          * Convert entities in UTF-8.
-         * @param $text_to_convert Text to convert.
+         * @param Text $text_to_convert to convert.
          * @return string converted
          * @access public
         */
@@ -13551,7 +13551,7 @@ if (!class_exists('TCPDF', false)) {
 
         /**
         * Set graphic variables.
-        * @param $gvars array graphic variables
+        * @param array $gvars graphic variables
         * @access protected
         * @since 4.2.010 (2008-11-14)
         */

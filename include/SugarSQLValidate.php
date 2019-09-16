@@ -231,7 +231,7 @@ class SugarSQLValidate
      * This method validates the column name portion of the SQL statement and returns true if it is deemed safe.
      * We check against querying for the user_hash column.
      *
-     * @param $name String portion of the column name from SQL
+     * @param String $name portion of the column name from SQL
      * @return boolean True if column name is deemed safe, false otherwise
      */
     protected function validateColumnName($name)

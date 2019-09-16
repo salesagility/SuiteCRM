@@ -300,7 +300,7 @@ EOD;
      * awu: Bug 16794 - this function is a hack to get the correct sales stage order
      * until i can clean it up later
      *
-     * @param  $query string
+     * @param string $query
      * @return array
      */
     public function getChartData(
@@ -350,7 +350,7 @@ EOD;
     }
 
     /**
-     * @param  $dataset array
+     * @param array $dataset
      * @return int
      */
     private function getHorizBarTotal(

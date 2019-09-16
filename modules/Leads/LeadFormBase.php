@@ -53,10 +53,10 @@ class LeadFormBase extends PersonFormBase
      *
      * This function returns the SQL String used for initial duplicate Leads check
      *
-     * @see checkForDuplicates (method), ContactFormBase.php, LeadFormBase.php, ProspectFormBase.php
-     * @param $focus sugarbean
-     * @param $prefix String value of prefix that may be present in $_POST variables
+     * @param sugarbean$focus
+     * @param String$prefix  value of prefix that may be present in $_POST variables
      * @return SQL String of the query that should be used for the initial duplicate lookup check
+     *@see checkForDuplicates (method), ContactFormBase.php, LeadFormBase.php, ProspectFormBase.php
      */
     public function getDuplicateQuery($focus, $prefix='')
     {

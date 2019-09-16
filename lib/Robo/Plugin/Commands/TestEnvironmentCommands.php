@@ -379,8 +379,8 @@ class TestEnvironmentCommands extends \Robo\Tasks
     }
 
     /**
-     * @param $url to download
-     * @param $toPath path to download file to (save as)
+     * @param to $url download
+     * @param path $toPath to download file to (save as)
      */
     private function download($url, $toPath)
     {
@@ -412,7 +412,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
     }
 
     /**
-     * @param $basePath directory where driver is kept
+     * @param directory $basePath where driver is kept
      * @param string $urlBase the url chrome should respond to
      */
     private function runChromeWebDriver($basePath, $urlBase = '/wd/hub')

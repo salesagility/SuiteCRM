@@ -833,8 +833,8 @@ eoq;
     /**
      * Attempts to detect the charset used in the string
      *
-     * @param  $str string
-     * @param $strict bool default false (use strict encoding?)
+     * @param string $str
+     * @param bool $strict default false (use strict encoding?)
      * @return string
      */
     public function detectCharset($str, $strict=false)

@@ -31,7 +31,7 @@ class AOPInboundEmail extends InboundEmail
     /**
      * Replaces embedded image links with links to the appropriate note in the CRM.
      * @param $string
-     * @param $noteIds A whitelist of note ids to replace
+     * @param A $noteIds whitelist of note ids to replace
      * @return mixed
      */
     public function processImageLinks($string, $noteIds)

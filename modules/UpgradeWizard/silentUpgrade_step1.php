@@ -460,7 +460,7 @@ if ($upgradeType !== constant('DCE_INSTANCE')) {
         /**
          * sugar_cached
          *
-         * @param $file string The path to retrieve cache lookup information for
+         * @param string $file The path to retrieve cache lookup information for
          * @return string The cached path according to $GLOBALS['sugar_config']['cache_dir'] or just appended with cache if not defined
          */
         function sugar_cached($file)

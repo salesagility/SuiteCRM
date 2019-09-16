@@ -75,8 +75,8 @@ class ViewHistory extends SugarView
     
     /**
      *
-     * @return ExtNode built from the passed StudioModule
-     * @param $module StudioModule
+     * @param StudioModule$module
+     *@return ExtNode built from the passed StudioModule
      */
     public function buildStudioNode($module)
     {

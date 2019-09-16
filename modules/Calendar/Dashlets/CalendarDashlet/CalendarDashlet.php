@@ -51,8 +51,8 @@ class CalendarDashlet extends Dashlet
 
     /**
      * CalendarDashlet constructor.
-     * @param $id string
-     * @param $def array
+     * @param string $id
+     * @param array $def
      */
     public function __construct($id, $def)
     {
@@ -158,7 +158,7 @@ class CalendarDashlet extends Dashlet
     }
 
     /**
-     * @param $req array
+     * @param array $req
      * @return array
      */
     public function saveOptions($req)

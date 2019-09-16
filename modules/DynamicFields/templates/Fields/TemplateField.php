@@ -482,7 +482,7 @@ class TemplateField
     /**
      * populateFromRow
      * This function supports setting the values of all TemplateField instances.
-     * @param $row The Array key/value pairs from fields_meta_data table
+     * @param The $row Array key/value pairs from fields_meta_data table
      */
     public function populateFromRow($row=array())
     {

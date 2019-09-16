@@ -146,8 +146,8 @@ function sodUpdateProgressBar($itemweight)
 
 /**
  * Dump table as array
- * @param  $header string table header
- * @param  $values array list of values
+ * @param string $header table header
+ * @param array $values list of values
  * @return string
  */
 function array_as_table($header, $values)

@@ -2125,8 +2125,8 @@ HTML;
 
     /**
      * distributes emails to users on Round Robin basis
-     * @param    $userIds    array of users to dist to
-     * @param    $mailIds    array of email ids to push on those users
+     * @param array $userIds of users to dist to
+     * @param array $mailIds of email ids to push on those users
      * @return  boolean        true on success
      */
     public function distRoundRobin($userIds, $mailIds)
@@ -2156,8 +2156,8 @@ HTML;
 
     /**
      * distributes emails to users on Least Busy basis
-     * @param    $userIds    array of users to dist to
-     * @param    $mailIds    array of email ids to push on those users
+     * @param array $userIds of users to dist to
+     * @param array $mailIds of email ids to push on those users
      * @return  boolean        true on success
      */
     public function distLeastBusy($userIds, $mailIds)
@@ -2183,8 +2183,8 @@ HTML;
 
     /**
      * distributes emails to 1 user
-     * @param    $user        users to dist to
-     * @param    $mailIds    array of email ids to push
+     * @param users $user to dist to
+     * @param array $mailIds of email ids to push
      * @return  boolean        true on success
      */
     public function distDirect($user, $mailIds)
@@ -2598,7 +2598,7 @@ eoq;
     /**
      * get emails of related bean for a given bean id
      * @param $beanType
-     * @param $condition array of conditions inclued bean id
+     * @param array $condition of conditions inclued bean id
      * @return array('query' => $q, 'countQuery' => $countq);
      */
     public function getRelatedEmail($beanType, $whereArr, $relatedBeanInfoArr = '')

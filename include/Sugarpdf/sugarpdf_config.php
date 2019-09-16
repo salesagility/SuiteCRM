@@ -295,8 +295,8 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 /**
  * Function to define a sugarpdf seeting from the admin application settings (config table).
  * This function use the default value if there is nothing in the table.
- * @param $value    settings to search
- * @param $default  default value
+ * @param settings $value to search
+ * @param default $default value
  */
 function defineFromConfig($value, $default)
 {
@@ -319,8 +319,8 @@ function defineFromConfig($value, $default)
  * SUGARPDF_USE_FOCUS is use to load the preference of the none current user. To use
  * this constant you have to define a global variable $focus_user.
  *
- * @param $value    settings to search
- * @param $default  default value
+ * @param settings $value to search
+ * @param default $default value
  */
 function defineFromUserPreference($value, $default)
 {

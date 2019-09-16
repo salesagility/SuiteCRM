@@ -290,7 +290,7 @@ class SugarTheme
      * Returns the mime type for the image extension in case it is supported.
      * In case the extension isn't supported returns null.
      *
-     * @param $extension The extension name, e.g. 'png'
+     * @param The $extension extension name, e.g. 'png'
      * @return string|null
      */
     public function getMimeType($extension)
@@ -307,7 +307,7 @@ class SugarTheme
      *
      * Sets the theme properties from the defaults passed to it, and loads the file path cache from an external cache
      *
-     * @param  $defaults string defaults for the current theme
+     * @param string $defaults defaults for the current theme
      */
     public function __construct(
         $defaults
@@ -611,8 +611,8 @@ class SugarTheme
     /**
      * Returns CSS for the current theme.
      *
-     * @param  $color string optional, specifies the css color file to use if the theme supports it; defaults to cookie value or theme default
-     * @param  $font  string optional, specifies the css font file to use if the theme supports it; defaults to cookie value or theme default
+     * @param string $color optional, specifies the css color file to use if the theme supports it; defaults to cookie value or theme default
+     * @param string $font optional, specifies the css font file to use if the theme supports it; defaults to cookie value or theme default
      * @return string HTML code
      */
     public function getCSS(

@@ -48,8 +48,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * smarty_function_sugar_actions_link
  * This is the constructor for the Smarty plugin.
  *
- * @param $params The runtime Smarty key/value arguments
- * @param $smarty The reference to the Smarty object used in this invocation
+ * @param The $params runtime Smarty key/value arguments
+ * @param The $smarty reference to the Smarty object used in this invocation
  */
 function smarty_function_sugar_actions_link($params, &$smarty)
 {

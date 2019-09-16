@@ -4234,9 +4234,9 @@ class InboundEmail extends SugarBean
     /**
      * Builds up the "breadcrumb" trail that imap_fetchbody() uses to return
      * parts of an email message, including attachments and inline images
-     * @param    $parts    array of objects
-     * @param    $subtype    what type of trail to return? HTML? Plain? binaries?
-     * @param    $breadcrumb    text trail to build up
+     * @param array $parts of objects
+     * @param what $subtype type of trail to return? HTML? Plain? binaries?
+     * @param text $breadcrumb trail to build up
      */
     public function buildBreadCrumbs($parts, $subtype, $breadcrumb = '0')
     {
@@ -4307,7 +4307,7 @@ class InboundEmail extends SugarBean
     /**
      * Takes a PHP imap_* object's to/from/cc/bcc address field and converts it
      * to a standard string that SugarCRM expects
-     * @param    $arr    an array of email address objects
+     * @param an $arr array of email address objects
      */
     public function convertImapToSugarEmailAddress($arr)
     {
@@ -4627,8 +4627,8 @@ class InboundEmail extends SugarBean
     /**
      * decodes a string based on its associated encoding
      * if nothing is passed, we default to no-encoding type
-     * @param    $str    encoded string
-     * @param    $enc    detected encoding
+     * @param encoded $str string
+     * @param detected $enc encoding
      */
     public function handleTranserEncoding($str, $enc = 0)
     {
@@ -5937,8 +5937,8 @@ class InboundEmail extends SugarBean
 
     /**
      * returns exactly 1 id match. if more than one, than returns false
-     * @param    $emailName        the subject of the email to match
-     * @param    $tableName        the table of the matching bean type
+     * @param the $emailName subject of the email to match
+     * @param the $tableName table of the matching bean type
      */
     public function getSingularRelatedId($emailName, $tableName)
     {
@@ -6098,8 +6098,8 @@ class InboundEmail extends SugarBean
 
     /**
      * This function returns a contact or user ID if a matching email is found
-     * @param    $email        the email address to match
-     * @param    $table        which table to query
+     * @param the $email email address to match
+     * @param which $table table to query
      */
     public function getRelatedId($email, $module)
     {
@@ -7094,7 +7094,7 @@ class InboundEmail extends SugarBean
             $GLOBALS['log']->info("INBOUNDEMAIL: Using cache file for setEmailForDisplay()");
 
             include($cache); // profides $cacheFile
-            /** @var $cacheFile array */
+            /** @var array $cacheFile */
 
             $metaOut = unserialize($cacheFile['out']);
             $meta = $metaOut['meta']['email'];

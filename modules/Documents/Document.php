@@ -421,7 +421,7 @@ class Document extends File
      * Override method from SugarBean to handle deleting relationships associated with a Document.  This method will
      * remove DocumentRevision relationships and then optionally delete Contracts depending on the version.
      *
-     * @param $id String The record id of the Document instance
+     * @param String $id The record id of the Document instance
      */
     public function mark_relationships_deleted($id)
     {

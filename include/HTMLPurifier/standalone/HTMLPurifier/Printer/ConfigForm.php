@@ -53,8 +53,8 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
 
     /**
      * Sets default column and row size for textareas in sub-printers
-     * @param $cols Integer columns of textarea, null to use default
-     * @param $rows Integer rows of textarea, null to use default
+     * @param Integer $cols columns of textarea, null to use default
+     * @param Integer $rows rows of textarea, null to use default
      */
     public function setTextareaDimensions($cols = null, $rows = null)
     {
@@ -137,7 +137,7 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
 
     /**
      * Renders a single namespace
-     * @param $ns String namespace name
+     * @param String $ns namespace name
      * @param array $directives array of directives to values
      * @return string
      */

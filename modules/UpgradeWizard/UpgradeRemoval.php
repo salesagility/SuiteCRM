@@ -109,7 +109,7 @@ class UpgradeRemoval
      * backup
      * Private method to handle backing up the file to custom/backup directory
      *
-     * @param $file File or directory to backup to custom/backup directory
+     * @param File $file or directory to backup to custom/backup directory
      */
     protected function backup($file)
     {

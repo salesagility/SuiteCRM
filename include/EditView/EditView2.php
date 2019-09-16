@@ -344,7 +344,7 @@ class EditView
     /**
      * enableFormatting
      * This method is used to manually turn on/off the field formatting
-     * @param $format boolean value to turn on/off field formatting
+     * @param boolean $format value to turn on/off field formatting
      */
     public function enableFormatting($format = true)
     {

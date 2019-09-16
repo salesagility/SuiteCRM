@@ -357,7 +357,7 @@ class SugarWidgetReportField extends SugarWidgetField
 
     public function queryFilterNot_Empty($layout_def)
     {
-        /** @var $db DBManager */
+        /** @var DBManager $db */
         $db = $this->reporter->db;
         $column = $this->_get_column_select($layout_def);
         return "(coalesce(" . $db->convert($column, "length") . ",0) > 0)\n";

@@ -51,8 +51,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * Check for null or zero for list of values
- * @param $prefix the prefix of value to be checked
- * @param $required array of value to be checked
+ * @param the $prefix prefix of value to be checked
+ * @param array $required of value to be checked
  * @return boolean true if all values are set in the array
  */
 function checkRequired($prefix, $required)

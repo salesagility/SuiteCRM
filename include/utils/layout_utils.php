@@ -52,10 +52,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * Create HTML to display formatted form title.
  *
- * @param  $form_title string to display as the title in the header
- * @param  $other_text string to next to the title.  Typically used for form buttons.
- * @param  $show_help  boolean which determines if the print and help links are shown.
- * @param  $print_out  boolean which determines if the print/echo out code
+ * @param string $form_title to display as the title in the header
+ * @param string $other_text to next to the title.  Typically used for form buttons.
+ * @param boolean $show_help which determines if the print and help links are shown.
+ * @param boolean $print_out which determines if the print/echo out code
  * @return string HTML
  */
 function get_form_header(
@@ -113,12 +113,12 @@ function get_form_header(
 /**
  * Wrapper function for the get_module_title function, which is mostly used for pre-MVC modules.
  *
- * @deprecated use SugarView::getModuleTitle() for MVC modules, or getClassicModuleTitle() for non-MVC modules
- *
- * @param  $module       string  to next to the title.  Typically used for form buttons.
- * @param  $module_title string  to display as the module title
- * @param  $show_help    boolean which determines if the print and help links are shown.
+ * @param  string$module         to next to the title.  Typically used for form buttons.
+ * @param  string$module_title   to display as the module title
+ * @param  boolean$show_help     which determines if the print and help links are shown.
  * @return string HTML
+ *@deprecated use SugarView::getModuleTitle() for MVC modules, or getClassicModuleTitle() for non-MVC modules
+ *
  */
 function get_module_title(
     $module,
@@ -177,8 +177,8 @@ EOHTML;
 /**
  * Handles displaying the header for classic view modules
  *
- * @param $module String value of the module to create the title section for
- * @param $params Array of arguments used to create the title label.  Typically this is just the current language string label for the section
+ * @param String$module value of the module to create the title section for
+ * @param Array$params of arguments used to create the title label.  Typically this is just the current language string label for the section
  * These should be in the form of array('label' => '<THE LABEL>', 'link' => '<HREF TO LINK TO>');
  * the first breadcrumb should be index at 0, and built from there e.g.
  * <code>
@@ -190,9 +190,9 @@ EOHTML;
  * </code>
  * would display as:
  * <a href='index.php?module=Contacts&amp;action=index'>Contacts</a> >> <a href='index.php?module=Contacts&amp;action=DetailView&amp;record=123'>John Smith</a> >> Edit
- * @param $show_create boolean flag indicating whether or not to display the create link (defaults to false)
- * @param $index_url_override String value of url to override for module index link (defaults to module's index action if none supplied)
- * @param $create_url_override String value of url to override for module create link (defaults to EditView action if none supplied)
+ * @param boolean$show_create flag indicating whether or not to display the create link (defaults to false)
+ * @param String$index_url_override value of url to override for module index link (defaults to module's index action if none supplied)
+ * @param String$create_url_override value of url to override for module create link (defaults to EditView action if none supplied)
  *
  * @return String HTML content for a classic module title section
  */
@@ -254,10 +254,10 @@ EOHTML;
 /**
  * Create a header for a popup.
  *
- * @todo refactor this into the base Popup_Picker class
- *
- * @param  $theme string the name of the current theme, ignorred to use SugarThemeRegistry::current() instead.
+ * @param  string$theme  the name of the current theme, ignorred to use SugarThemeRegistry::current() instead.
  * @return string HTML
+ *@todo refactor this into the base Popup_Picker class
+ *
  */
 function insert_popup_header($theme = null, $includeJS = true)
 {

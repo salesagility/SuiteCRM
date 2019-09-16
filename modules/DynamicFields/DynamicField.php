@@ -309,7 +309,7 @@ class DynamicField
     /**
      * returns either false or an array containing the select and join parameter for a query using custom fields.
      *
-     * @param $expandedList boolean    If true, return a list of all fields with source=custom_fields in the select instead of the standard _cstm.*
+     * @param boolean $expandedList If true, return a list of all fields with source=custom_fields in the select instead of the standard _cstm.*
      *     This is required for any downstream construction of a SQL statement where we need to manipulate the select list,
      *     for example, listViews with custom relate fields where the value comes from join rather than from the custom table
      * @param bool $includeRelates

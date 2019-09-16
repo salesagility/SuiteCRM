@@ -54,9 +54,9 @@ class UpgradeMetaHelper
     /**
      * UpgradeMetaHelper
      * This is the constructor for the UpgradeMetaHelper class
-     * @param $dir The root upgrade directory (where to copy working files)
-     * @param $masterCopyDirectory The root master directory (where SugarCRM 5.x files reside)
-     * @param $debugMode Debug mode, default is false
+     * @param The $dir root upgrade directory (where to copy working files)
+     * @param The $masterCopyDirectory root master directory (where SugarCRM 5.x files reside)
+     * @param Debug $debugMode mode, default is false
      *
      */
     public function __construct($dir='upgrade', $masterCopyDirecotry='modules_50', $debugMode = false)
@@ -317,8 +317,8 @@ class UpgradeMetaHelper
      * parseFile
      * Hanldes parsing the files for given module where Studio or manual
      * changes have been detected.
-     * @param $module_name The module to parse
-     * @param $files Array of files found to parse
+     * @param The $module_name module to parse
+     * @param Array $files of files found to parse
      *
      */
     public function parseFile($module_name, $files)
@@ -393,9 +393,9 @@ class UpgradeMetaHelper
      * This function does some quick checks to make sure the metadataFile at
      * least has an Array panel
      *
-     * @param $metadataFile The path to the metadata file to verify
-     * @param $module The module to verify
-     * @param $view The view (EditView or DetailView)
+     * @param The $metadataFile path to the metadata file to verify
+     * @param The $module module to verify
+     * @param The $view view (EditView or DetailView)
      * @return boolean true if verification check is okay; false otherwise
      */
     public function verifyMetaData($metadataFile, $module, $view)

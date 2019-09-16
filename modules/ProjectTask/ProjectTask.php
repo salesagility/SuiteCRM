@@ -438,7 +438,7 @@ class ProjectTask extends SugarBean
 
     /**
      * Calculate percent complete for parent task based on it's children tasks
-     * @param $subProjectTasks mixed Array of children tasks
+     * @param mixed $subProjectTasks Array of children tasks
      * @return int percent complete
      */
     private function _calculateCompletePercent(&$subProjectTasks)
@@ -562,7 +562,7 @@ class ProjectTask extends SugarBean
      *
      * This is a private helper function to get the number of project tasks for a given project_id.
      *
-     * @param $project_id integer value of the project_id associated with this ProjectTask instance
+     * @param integer $project_id value of the project_id associated with this ProjectTask instance
      * @return total integer value of the count of project tasks, 0 if none found
      */
     private function getNumberOfTasksInProject($project_id='')

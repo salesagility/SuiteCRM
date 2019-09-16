@@ -57,7 +57,7 @@ class StoreQuery
      * SavedSearch.php does something very similar when saving saved searches as well
      *
      * @see SavedSearch
-     * @param $name String name  to identify this query
+     * @param String $name name  to identify this query
      */
     public function SaveQuery($name)
     {

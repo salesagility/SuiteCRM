@@ -709,7 +709,7 @@ function deleteChance()
  * upgradeUWFiles
  * This function copies upgrade wizard files from new patch if that dir exists
  *
- * @param $file String path to uploaded zip file
+ * @param String $file path to uploaded zip file
  */
 function upgradeUWFiles($file)
 {
@@ -3242,7 +3242,7 @@ function upgradeUserPreferences()
 
 /**
  * Checks if a locale name format is part of the default list, if not adds it to the config
- * @param $name_format string a local name format string such as 's f l'
+ * @param string $name_format a local name format string such as 's f l'
  * @return bool true on successful write to config file, false on failure;
  */
 function upgradeLocaleNameFormat($name_format)
@@ -3397,8 +3397,8 @@ function upgradeModulesForTeamsets($filter=array())
  * Helper function to create a team_set_id column and also set team_set_id column
  * to have the value of the $column_name parameter
  *
- * @param $bean SugarBean which we are adding team_set_id column to
- * @param $column_name The name of the column containing the default team_set_id value
+ * @param SugarBean $bean which we are adding team_set_id column to
+ * @param The $column_name name of the column containing the default team_set_id value
  */
 function upgradeTeamColumn($bean, $column_name)
 {
@@ -4413,7 +4413,7 @@ function upgradeSugarCache($file)
  * unlinkUpgradeFiles
  * This is a helper function to clean up
  *
- * @param $version String value of current system version (pre upgrade)
+ * @param String $version value of current system version (pre upgrade)
  */
 function unlinkUpgradeFiles($version)
 {
@@ -4603,8 +4603,8 @@ function rebuildSprites($fromUpgrade=true)
  * This method goes through the list of SearchFields files based and calls TemplateRange::repairCustomSearchFields
  * method on the files in an attempt to ensure the range search attributes are properly set in SearchFields.php.
  *
- * @param $globString String value used for glob search defaults to searching for all SearchFields.php files in modules directory
- * @param $path String value used to point to log file should logging be required.  Defaults to empty.
+ * @param String $globString value used for glob search defaults to searching for all SearchFields.php files in modules directory
+ * @param String $path value used to point to log file should logging be required.  Defaults to empty.
  *
  */
 function repairSearchFields($globString='modules/*/metadata/SearchFields.php', $path='')

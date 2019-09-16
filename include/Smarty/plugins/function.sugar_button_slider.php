@@ -22,8 +22,8 @@ r53792 - 2010-01-18 13:37:35 -0800 (Mon, 18 Jan 2010) - roger - adding code to s
  * smarty_function_sugar_button
  * This is the constructor for the Smarty plugin.
  *
- * @param $params The runtime Smarty key/value arguments
- * @param $smarty The reference to the Smarty object used in this invocation
+ * @param The $params runtime Smarty key/value arguments
+ * @param The $smarty reference to the Smarty object used in this invocation
  */
 function smarty_function_sugar_button_slider($params, &$smarty)
 {

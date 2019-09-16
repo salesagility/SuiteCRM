@@ -260,9 +260,9 @@ class ViewConvertLead extends SugarView
     /**
      * Returns the javascript to enable/disable validation of each module's sub-form
      * //TODO: This should probably be on the smarty template
-     * @param $module String the target module name.
-     * @param $focus SugarBean instance of the target module.
-     * @param $focus EditView def for the module.
+     * @param String $module the target module name.
+     * @param SugarBean $focus instance of the target module.
+     * @param EditView $focus def for the module.
      * @return String, javascript to echo to page.
      */
     protected function getValidationJS(
@@ -644,8 +644,8 @@ class ViewConvertLead extends SugarView
 
     /**
      * Change the parent id and parent type of an activity
-     * @param $activity Activity to be modified
-     * @param $bean New parent bean of the activity
+     * @param Activity $activity to be modified
+     * @param New $bean parent bean of the activity
      */
     protected function moveActivity($activity, $bean)
     {

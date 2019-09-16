@@ -3717,8 +3717,8 @@ class HTMLPurifier_ElementDef
 
     /**
      * Merges one array into another, removes values which equal false
-     * @param $a1 Array by reference that is merged into
-     * @param $a2 Array that merges into $a1
+     * @param Array $a1 by reference that is merged into
+     * @param Array $a2 that merges into $a1
      */
     private function _mergeAssocArray(&$a1, $a2)
     {
@@ -6143,10 +6143,10 @@ class HTMLPurifier_HTMLModuleManager
     /**
      * Registers a module to the recognized module list, useful for
      * overloading pre-existing modules.
-     * @param $module Mixed: string module name, with or without
+     * @param Mixed $module : string module name, with or without
      *                HTMLPurifier_HTMLModule prefix, or instance of
      *                subclass of HTMLPurifier_HTMLModule.
-     * @param $overload Boolean whether or not to overload previous modules.
+     * @param Boolean $overload whether or not to overload previous modules.
      *                  If this is not set, and you do overload a module,
      *                  HTML Purifier will complain with a warning.
      * @note This function will not call autoload, you must instantiate
@@ -6496,7 +6496,7 @@ class HTMLPurifier_IDAccumulator
 
     /**
      * Load a list of IDs into the lookup table
-     * @param $array_of_ids Array of IDs to load
+     * @param Array $array_of_ids of IDs to load
      * @note This function doesn't care about duplicates
      */
     public function load($array_of_ids)
@@ -7583,7 +7583,7 @@ class HTMLPurifier_Lexer
 
     /**
      * Lexes an HTML string into tokens.
-     * @param $string String HTML.
+     * @param String $string HTML.
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return HTMLPurifier_Token[] array representation of HTML.
@@ -9114,7 +9114,7 @@ class HTMLPurifier_URIParser
 
     /**
      * Parses a URI.
-     * @param $uri string URI to parse
+     * @param string $uri URI to parse
      * @return HTMLPurifier_URI representation of URI. This representation has
      *         not been validated yet and may not conform to RFC.
      */
@@ -9931,7 +9931,7 @@ class HTMLPurifier_Zipper
 
     /**
      * Move hole to the next element.
-     * @param $t Element to fill hole with
+     * @param Element $t to fill hole with
      * @return Original contents of new hole.
      */
     public function next($t)
@@ -9944,8 +9944,8 @@ class HTMLPurifier_Zipper
 
     /**
      * Iterated hole advancement.
-     * @param $t Element to fill hole with
-     * @param $i How many forward to advance hole
+     * @param Element $t to fill hole with
+     * @param How $i many forward to advance hole
      * @return Original contents of new hole, i away
      */
     public function advance($t, $n)
@@ -9958,7 +9958,7 @@ class HTMLPurifier_Zipper
 
     /**
      * Move hole to the previous element
-     * @param $t Element to fill hole with
+     * @param Element $t to fill hole with
      * @return Original contents of new hole.
      */
     public function prev($t)
@@ -10303,9 +10303,9 @@ class HTMLPurifier_AttrDef_Integer extends HTMLPurifier_AttrDef
     protected $positive = true;
 
     /**
-     * @param $negative Bool indicating whether or not negative values are allowed
-     * @param $zero Bool indicating whether or not zero is allowed
-     * @param $positive Bool indicating whether or not positive values are allowed
+     * @param Bool $negative indicating whether or not negative values are allowed
+     * @param Bool $zero indicating whether or not zero is allowed
+     * @param Bool $positive indicating whether or not positive values are allowed
      */
     public function __construct($negative = true, $zero = true, $positive = true)
     {
@@ -14174,7 +14174,7 @@ class HTMLPurifier_ChildDef_Custom extends HTMLPurifier_ChildDef
     private $_pcre_regex;
 
     /**
-     * @param $dtd_regex Allowed child pattern from the DTD
+     * @param Allowed $dtd_regex child pattern from the DTD
      */
     public function __construct($dtd_regex)
     {
@@ -17123,7 +17123,7 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
     /**
      * Parses a fix name and determines what kind of fix it is, as well
      * as other information defined by the fix
-     * @param $name String name of fix
+     * @param String $name name of fix
      * @return array(string $fix_type, array $fix_parameters)
      * @note $fix_parameters is type dependant, see populate() for usage
      *       of these parameters

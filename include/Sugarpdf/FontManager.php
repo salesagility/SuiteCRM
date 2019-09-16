@@ -339,13 +339,13 @@ class FontManager
     }
     /**
      * This method add a font to SugarCRM from a font file and a metric file using MakeFont()
-     * @param $font_file string
-     * @param $metric_file string
-     * @param $embedded boolean
-     * @param $encoding_table string
-     * @param $patch array
-     * @param $cid_info string
-     * @param $style string
+     * @param string $font_file
+     * @param string $metric_file
+     * @param boolean $embedded
+     * @param string $encoding_table
+     * @param array $patch
+     * @param string $cid_info
+     * @param string $style
      * @return boolean true on success
      * @see MakeFont() in K_PATH_FONTS/utils
      */

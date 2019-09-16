@@ -206,9 +206,9 @@ abstract class ImportDataSource implements Iterator
     /**
      * Writes the row out to the ImportCacheFiles::getErrorFileName() file
      *
-     * @param $error string
-     * @param $fieldName string
-     * @param $fieldValue mixed
+     * @param string $error
+     * @param string $fieldName
+     * @param mixed $fieldValue
      */
     public function writeError($error, $fieldName, $fieldValue)
     {
@@ -303,7 +303,7 @@ abstract class ImportDataSource implements Iterator
     /**
      * Marks whether this row created a new record or not
      *
-     * @param $createdRecord bool true if record is created, false if it is just updated
+     * @param bool $createdRecord true if record is created, false if it is just updated
      */
     public function markRowAsImported($createdRecord = true)
     {

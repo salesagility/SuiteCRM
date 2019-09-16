@@ -78,9 +78,9 @@ class ImportFieldSanitize
     /**
      * Checks the SugarField defintion for an available santization method.
      *
-     * @param  $value  string
-     * @param  $vardef array
-     * @param  $focus  object bean of the module we're importing into
+     * @param string $value
+     * @param array $vardef
+     * @param object $focus bean of the module we're importing into
      * @return string sanitized and validated value on success, bool false on failure
      */
     public function __call(
@@ -117,9 +117,9 @@ class ImportFieldSanitize
     /**
      * Validate date fields
      *
-     * @param  $value  string
-     * @param  $vardef array
-     * @param  $focus  object bean of the module we're importing into
+     * @param string $value
+     * @param array $vardef
+     * @param object $focus bean of the module we're importing into
      * @return string sanitized and validated value on success, bool false on failure
      */
     public function date(
@@ -151,9 +151,9 @@ class ImportFieldSanitize
     /**
      * Validate email fields
      *
-     * @param  $value  string
-     * @param  $vardef array
-     * @param  $focus  object bean of the module we're importing into
+     * @param string $value
+     * @param array $vardef
+     * @param object $focus bean of the module we're importing into
      * @return string sanitized and validated value on success, bool false on failure
      */
     public function email(
@@ -177,9 +177,9 @@ class ImportFieldSanitize
     /**
      * Validate sync_to_outlook field
      *
-     * @param  $value     string
-     * @param  $vardef    array
-     * @param  $bad_names array used to return list of bad users/teams in $value
+     * @param string $value
+     * @param array $vardef
+     * @param array $bad_names used to return list of bad users/teams in $value
      * @return string sanitized and validated value on success, bool false on failure
      */
     public function synctooutlook(
@@ -221,9 +221,9 @@ class ImportFieldSanitize
     /**
      * Validate time fields
      *
-     * @param  $value    string
-     * @param  $vardef   array
-     * @param  $focus  object bean of the module we're importing into
+     * @param string $value
+     * @param array $vardef
+     * @param object $focus bean of the module we're importing into
      * @return string sanitized and validated value on success, bool false on failure
      */
     public function time(
@@ -267,8 +267,8 @@ class ImportFieldSanitize
     /**
      * Added to handle Bug 24104, to make sure the date/time value is correct ( i.e. 20/20/2008 doesn't work )
      *
-     * @param  $value  string
-     * @param  $format string
+     * @param string $value
+     * @param string $format
      * @return string sanitized and validated value on success, bool false on failure
      */
     public function isValidTimeDate(

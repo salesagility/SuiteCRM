@@ -70,7 +70,7 @@ class AOW_WorkFlow extends Basic
 
     /**
      * return an SQL operator
-     * @param $key name of SQL operator
+     * @param name $key of SQL operator
      * @return mixed SQL operator or false if $key not found
      */
     private function getSQLOperator($key)
@@ -93,7 +93,7 @@ class AOW_WorkFlow extends Basic
 
     /**
      * check an SQL operator is exists
-     * @param $key name of SQL operator
+     * @param name $key of SQL operator
      * @return bool true if operator exists otherwise false
      */
     private function isSQLOperator($key)

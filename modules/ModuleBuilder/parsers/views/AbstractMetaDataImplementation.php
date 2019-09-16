@@ -375,7 +375,7 @@ abstract class AbstractMetaDataImplementation
     }
 
     /**
-     * @param $defs array The definitions to save
+     * @param array $defs The definitions to save
      * @return bool
      */
     private function hasToAppendOriginalViewTemplateDefs($defs)

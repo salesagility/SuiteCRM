@@ -324,10 +324,10 @@ class Sugarpdf extends TCPDF
      * Options :
      * header options override the regular options for the header's cells - $options['header']
      * cell options override the regular options for the specific cell - Array[line number (0 to x)][cell header]['options']
-     * @param $item Array[line number (0 to x)][cell header] = Cell content OR
+     * @param Array $item [line number (0 to x)][cell header] = Cell content OR
      *              Array[line number (0 to x)][cell header]['value'] = Cell content AND
      *              Array[line number (0 to x)][cell header]['options'] = Array[cell properties] = values
-     * @param $options Array which can contain : width (array 'column name'=>'width value + % OR nothing'), isheader (bool), header (array), fill (string: HTML color), ishtml (bool) default: false, border (0: no border (defaul), 1: frame or all of the following characters: L ,T ,R ,B), align (L: left align, C: center, R: right align, J: justification), stretch (array 'column name'=>stretch type)
+     * @param Array $options which can contain : width (array 'column name'=>'width value + % OR nothing'), isheader (bool), header (array), fill (string: HTML color), ishtml (bool) default: false, border (0: no border (defaul), 1: frame or all of the following characters: L ,T ,R ,B), align (L: left align, C: center, R: right align, J: justification), stretch (array 'column name'=>stretch type)
      * @see MultiCell()
      */
     public function writeCellTable($item, $options=null)
@@ -427,11 +427,11 @@ class Sugarpdf extends TCPDF
     /**
      * This method allow printing a table using the writeHTML method with a formatted array in parameter
      * This method can also return the table as HTML code
-     * @param $item Array[line number (0 to x)][cell header] = Cell content OR
+     * @param Array $item [line number (0 to x)][cell header] = Cell content OR
      *              Array[line number (0 to x)][cell header]['value'] = Cell content AND
      *              Array[line number (0 to x)][cell header]['options'] = Array[cell properties] = values
      * @param $returnHtml (bool) Return the table as HTML code instead of printing the HTML table
-     * @param $options Array which can contain : table (array of "HTML proprty"=>"value"),td (array of "HTML proprty"=>"value"), tr (array of "HTML proprty"=>"value"), isheader(bool), header (array of "HTML proprty"=>"value"), width (array 'column name'=>'width value + unit OR nothing')
+     * @param Array $options which can contain : table (array of "HTML proprty"=>"value"),td (array of "HTML proprty"=>"value"), tr (array of "HTML proprty"=>"value"), isheader(bool), header (array of "HTML proprty"=>"value"), width (array 'column name'=>'width value + unit OR nothing')
      * @return the HTML code if $returnHtml set to true
      */
     public function writeHTMLTable($item, $returnHtml=false, $options=null)
@@ -523,8 +523,8 @@ class Sugarpdf extends TCPDF
 
     /**
      * Return the heigth of a line depending of the width, the font and the content
-     * @param $line Array containing the data of all the cells of the line
-     * @param $width Array containing the width of all the cells of the line
+     * @param Array $line containing the data of all the cells of the line
+     * @param Array $width containing the width of all the cells of the line
      * @return The heigth of the line
      */
     private function getLineHeightFromArray($line, $width)
@@ -545,8 +545,8 @@ class Sugarpdf extends TCPDF
 
     /**
      * Private method for writeCellTable which format and initialize the options array.
-     * @param $options array
-     * @param $item array
+     * @param array $options
+     * @param array $item
      * @return $options array
      */
     private function initOptionsForWriteCellTable($options, $item)

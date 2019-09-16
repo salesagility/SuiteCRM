@@ -76,9 +76,9 @@ class Link2
     protected $tempBeans = array();
 
     /**
-     * @param  $linkName String name of a link field in the module's vardefs
-     * @param  $bean SugarBean focus bean for this link (one half of a relationship)
-     * @param  $linkDef array Optional vardef for the link in case it can't be found in the passed in bean
+     * @param String $linkName name of a link field in the module's vardefs
+     * @param SugarBean $bean focus bean for this link (one half of a relationship)
+     * @param array $linkDef Optional vardef for the link in case it can't be found in the passed in bean
      * for the global dictionary
      */
     public function __construct($linkName, $bean, $linkDef = array())
@@ -370,7 +370,7 @@ class Link2
     }
 
     /**
-     * @param $params array of parameters. Possible parameters include:
+     * @param array $params of parameters. Possible parameters include:
      * 'join_table_link_alias': alias the relationship join table in the query (for M2M relationships),
      * 'join_table_alias': alias for the final table to be joined against (usually a module main table)
      * @param bool $return_array if true the query is returned as a array broken up into
@@ -398,7 +398,7 @@ class Link2
      * This function is similar getJoin except for M2m relationships it won't join against the final table.
      * Its used to retrieve the ID of the related beans only.
      *
-     * @param $params array of parameters. Possible parameters include:
+     * @param array $params of parameters. Possible parameters include:
      * 'return_as_array': returns the query broken into
      * @param bool $return_array same as passing 'return_as_array' into parameters
      *
@@ -607,7 +607,7 @@ class Link2
     /**
      * Marks the relationship deleted for this given record pair.
      *
-     * @param $id string id of the Parent/Focus SugarBean
+     * @param string $id id of the Parent/Focus SugarBean
      * @param string $related_id id or SugarBean to unrelate. Pass a SugarBean if you have it.
      *
      * @return bool true if delete was successful or false if it was not

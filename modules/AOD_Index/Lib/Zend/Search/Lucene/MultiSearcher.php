@@ -514,7 +514,7 @@ class Zend_Search_Lucene_MultiSearcher implements Zend_Search_Lucene_Interface
     public function getDocument($id)
     {
         if ($id instanceof Zend_Search_Lucene_Search_QueryHit) {
-            /* @var $id Zend_Search_Lucene_Search_QueryHit */
+            /* @var Zend_Search_Lucene_Search_QueryHit $id */
             $id = $id->id;
         }
 

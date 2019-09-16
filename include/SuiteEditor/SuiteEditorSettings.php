@@ -86,7 +86,7 @@ abstract class SuiteEditorSettings
     /**
      * SuiteEditorSettings constructor.
      *
-     * @param $settings array or object
+     * @param array $settings or object
      */
     public function __construct($settings = null)
     {
@@ -98,7 +98,7 @@ abstract class SuiteEditorSettings
     /**
      * extends the settings
      *
-     * @param $settings array or object
+     * @param array $settings or object
      */
     public function extend($settings)
     {

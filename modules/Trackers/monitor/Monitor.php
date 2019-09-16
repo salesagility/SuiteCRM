@@ -124,8 +124,8 @@ class Monitor implements Trackable
     /**
      * setValue
      * Sets the value defined in the monitor's metrics for the given name
-     * @param $name String value of metric name
-     * @param $value Mixed value
+     * @param String $name value of metric name
+     * @param Mixed $value value
      * @throws Exception Thrown if metric name is not configured for monitor instance
      */
     public function setValue($name, $value)
@@ -178,7 +178,7 @@ class Monitor implements Trackable
      * save
      * This method retrieves the Store instances associated with monitor and calls
      * the flush method passing with the montior ($this) instance.
-     * @param $flush boolean parameter indicating whether or not to flush the instance data to store or possibly cache
+     * @param boolean $flush parameter indicating whether or not to flush the instance data to store or possibly cache
      */
     public function save($flush=true)
     {
@@ -221,7 +221,7 @@ class Monitor implements Trackable
      * This method checks if the Store implementation has already been instantiated and
      * will return the one stored; otherwise it will create the Store implementation and
      * save it to the Array of Stores.
-     * @param $store The name of the store as defined in the 'modules/Trackers/config.php' settings
+     * @param The $store name of the store as defined in the 'modules/Trackers/config.php' settings
      * @return An instance of a Store implementation
      * @throws Exception Thrown if $store class cannot be loaded
      */

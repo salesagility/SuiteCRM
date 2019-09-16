@@ -331,10 +331,10 @@ class CalendarActivity
 
     /**
      * Helper-method to generate within two dates sql clause
-     * @param $field_date string table_name.field_name to compare
+     * @param string $field_date table_name.field_name to compare
      * @param $field_date_end
-     * @param $start_day string period start date
-     * @param $end_day string period end date
+     * @param string $start_day period start date
+     * @param string $end_day period end date
      * @return string
      */
     protected static function within($field_date, $field_date_end, $start_day, $end_day)
@@ -344,10 +344,10 @@ class CalendarActivity
 
     /**
      * Helper-method to generate until some date sql clause
-     * @param $field_date string table_name.field_name to compare
+     * @param string $field_date table_name.field_name to compare
      * @param $field_date_end
-     * @param $start_day string period start date
-     * @param $end_day string period end date
+     * @param string $start_day period start date
+     * @param string $end_day period end date
      * @return string
      */
     protected static function until($field_date, $field_date_end, $start_day, $end_day)

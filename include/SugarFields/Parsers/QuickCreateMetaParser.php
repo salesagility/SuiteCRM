@@ -77,11 +77,11 @@ class QuickCreateMetaParser extends MetaParser
     /**
      * parse
      *
-     * @param $filePath The file path of the HTML file to parse
-     * @param $vardefs The module's vardefs
-     * @param $moduleDir The module's directory
-     * @param $merge boolean value indicating whether or not to merge the parsed contents
-     * @param $masterCopy The file path of the mater copy of the metadata file to merge against
+     * @param The $filePath file path of the HTML file to parse
+     * @param The $vardefs module's vardefs
+     * @param The $moduleDir module's directory
+     * @param boolean $merge value indicating whether or not to merge the parsed contents
+     * @param The $masterCopy file path of the mater copy of the metadata file to merge against
      * @return String format of metadata contents
      **/
     public function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $masterCopy=null)

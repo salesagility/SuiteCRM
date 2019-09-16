@@ -434,8 +434,8 @@ class SearchForm
 
     /**
      * Find search value in fields options by ID
-     * @param $fields field definitions
-     * @param $key key or ID of value
+     * @param field $fields definitions
+     * @param key $key or ID of value
      * @return mixed value for key
      * @throws Exception value not found
      */
@@ -1420,7 +1420,7 @@ class SearchForm
      * This function checks to see if a blank dropdown field was supplied.  This scenario will occur where
      * a dropdown select is in single selection mode
      *
-     * @param $value Mixed dropdown value
+     * @param Mixed $value dropdown value
      */
     private function isEmptyDropdownField($name = '', $value = array())
     {

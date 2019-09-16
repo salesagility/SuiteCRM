@@ -1300,7 +1300,7 @@ EOHTML;
      * This function returns a string message containing the memory statistics as well as writes to the memory_usage.log
      * file the memory statistics for the SugarView invocation.
      *
-     * @param $newline String of newline character to use (defaults to </ br>)
+     * @param String $newline of newline character to use (defaults to </ br>)
      *
      * @return string formatted message about memory statistics
      */
@@ -1344,7 +1344,7 @@ EOHTML;
     /**
      * Loads the module shortcuts menu
      *
-     * @param  $module string optional, can specify module to retrieve menu for if not the current one
+     * @param string $module optional, can specify module to retrieve menu for if not the current one
      *
      * @return array module menu
      */
@@ -1749,7 +1749,7 @@ EOHTML;
      *
      * This is a protected function that returns the help text portion.  It is called from getModuleTitle.
      *
-     * @param $module String the formatted module name
+     * @param String $module the formatted module name
      *
      * @return string the HTML for the help text
      */
@@ -1815,7 +1815,7 @@ EOHTML;
      *
      * This function wraps a call to get_custom_file_if_exists from include/utils.php
      *
-     * @param $file String of filename to check
+     * @param String $file of filename to check
      *
      * @return string filename including custom directory if found
      */
@@ -1829,7 +1829,7 @@ EOHTML;
      *
      * This function wraps the call to the fetch function of the Smarty variable for the view
      *
-     * @param $file String path of the file to fetch
+     * @param String $file path of the file to fetch
      *
      * @return string content from resulting Smarty fetch operation on template
      */

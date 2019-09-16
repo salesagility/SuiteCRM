@@ -1471,10 +1471,10 @@ class Email extends Basic
      * contacts or leads from listview
      * By default, use comma, but allow for non-standard delimiters as specified in email_address_separator
      *
-     * @param $module string module name
-     * @param $idsArray array of record ids to get the email address for
-     * @global $local
+     * @param string $module module name
+     * @param array $idsArray of record ids to get the email address for
      * @return string (config-specified) delimited list of email addresses
+     *@global $local
      */
     public function getNamePlusEmailAddressesForCompose($module, $idsArray)
     {

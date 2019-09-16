@@ -87,7 +87,7 @@ class MBPackage
      * Will override currently loaded string to reflect undeployed label changes.
      * $app_list_strings
      *
-     * @param $language String language identifier
+     * @param String $language language identifier
      */
     public function loadModuleTitles($language = '')
     {
@@ -606,7 +606,7 @@ class MBPackage
             RecursiveIteratorIterator::SELF_FIRST
         );
 
-        /* @var $fInfo SplFileInfo */
+        /* @var SplFileInfo $fInfo */
         foreach (new RegexIterator($recursiveIterator, "/\.php$/i") as $fInfo) {
             $newPath = substr($fInfo->getPathname(), strrpos($fInfo->getPathname(), $generalPath));
 
@@ -913,7 +913,7 @@ class MBPackage
             RecursiveIteratorIterator::SELF_FIRST
         );
 
-        /* @var $fileInfo SplFileInfo */
+        /* @var SplFileInfo $fileInfo */
         foreach ($recursiveIterator as $fileInfo) {
             if ($fileInfo->isFile() && !in_array($fileInfo->getPathname(), $result)) {
                 //get the filename in lowercase for easier comparison
@@ -1094,7 +1094,7 @@ class MBPackage
         $relation = null;
         $module = new StudioModule($moduleName);
 
-        /* @var $rel DeployedRelationships */
+        /* @var DeployedRelationships $rel */
         $rel = $module->getRelationships();
 
         $relList = $rel->getRelationshipList();
@@ -1150,7 +1150,7 @@ class MBPackage
         );
 
         /**
-         * @var $fileInfo SplFileInfo
+         * @var SplFileInfo $fileInfo
          */
         foreach ($recursiveIterator as $fileInfo) {
             if ($fileInfo->isFile() && !in_array($fileInfo->getPathname(), $result)) {

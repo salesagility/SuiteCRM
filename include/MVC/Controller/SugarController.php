@@ -1027,7 +1027,7 @@ class SugarController
     /**
      * Checks to see if the requested entry point requires auth
      *
-     * @param  $entrypoint string name of the entrypoint
+     * @param string $entrypoint name of the entrypoint
      * @return bool true if auth is required, false if not
      */
     public function checkEntryPointRequiresAuth($entryPoint)

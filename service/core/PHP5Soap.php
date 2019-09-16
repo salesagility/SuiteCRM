@@ -138,7 +138,7 @@ abstract class PHP5Soap extends SugarSoapService
      * This function allows specifying what version of PHP soap to use
      * PHP soap supports version 1.1 and 1.2.
      * @return
-     * @param $version String[optional]
+     * @param String $version [optional]
      */
     public function setSoapVersion($version='1.1')
     {

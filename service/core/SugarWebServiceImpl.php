@@ -223,7 +223,7 @@ class SugarWebServiceImpl
         if ($using_cp) {
             $response = $seed->retrieveTargetList($query, $select_fields, $offset, -1, -1, $deleted);
         } else {
-            /* @var $seed SugarBean */
+            /* @var SugarBean $seed */
             $response = $seed->get_list($order_by, $query, $offset, -1, -1, $deleted, false, $select_fields);
         } // else
         $list = $response['list'];

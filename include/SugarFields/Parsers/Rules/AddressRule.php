@@ -113,8 +113,8 @@ class AddressRule extends BaseRule
      * intact.  This means that all five fields (street, city, state, country and postalcode)
      * have not been moved from the address panel
      *
-     * @param $addressPanel Array of address panel contents
-     * @param $suffix The address suffix (billing, shipping, primary, alternate) to check for
+     * @param Array $addressPanel of address panel contents
+     * @param The $suffix address suffix (billing, shipping, primary, alternate) to check for
      * @return boolean
      */
     public function hasAddressFieldsIntact($addressPanel, $suffix)
@@ -136,8 +136,8 @@ class AddressRule extends BaseRule
      * removeStreetFieldOverride
      * This function scans the panels and locates the street address field for the given key
      * and replaces the Array definition (from the merging process) with a String value.
-     * @param $panels Array of the view's panels
-     * @param $street String key value of the street to search for
+     * @param Array $panels of the view's panels
+     * @param String $street key value of the street to search for
      * @returns $panels Array of view's panels with street value substituted
      */
     public function removeStreetFieldOverride($panels, $street)

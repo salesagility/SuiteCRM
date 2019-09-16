@@ -59,7 +59,7 @@ abstract class ext_soap extends source
      * obj2array
      * Given an object, returns the object as an Array
      *
-     * @param $obj Object to convert to an array
+     * @param Object $obj to convert to an array
      * @return $out Array reflecting the object's properties
      */
     public function obj2array($obj)

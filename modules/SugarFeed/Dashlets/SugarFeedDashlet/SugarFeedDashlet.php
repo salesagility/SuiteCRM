@@ -519,8 +519,8 @@ class SugarFeedDashlet extends DashletGeneric
 
     /**
      * creats the values
-     * @return
-     * @param $req Object
+     * @param Object$req
+     *@return
      */
     public function saveOptions($req)
     {
@@ -630,8 +630,8 @@ enableQS(false);
 
     /**
      *
-     * @return the title and the user post form
-     * @param $text Object
+     * @param Object$text
+     *@return the title and the user post form
      */
     public function getHeader($text='')
     {

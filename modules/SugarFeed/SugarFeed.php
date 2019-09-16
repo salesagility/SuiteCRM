@@ -251,10 +251,10 @@ class SugarFeed extends Basic
      * pushFeed2
      * This method is a wrapper to pushFeed
      *
-     * @param $text String value of the feed's description
-     * @param $bean The SugarBean that is triggering the feed
-     * @param $link_type boolean value indicating whether or not feed is a link type
-     * @param $link_url String value of the URL (for link types only)
+     * @param String $text value of the feed's description
+     * @param The $bean SugarBean that is triggering the feed
+     * @param boolean $link_type value indicating whether or not feed is a link type
+     * @param String $link_url value of the URL (for link types only)
      */
     public static function pushFeed2($text, $bean, $link_type=false, $link_url=false)
     {

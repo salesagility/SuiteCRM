@@ -1870,15 +1870,15 @@ class TimeDate
     }
 
     /**
-     * @deprecated for public use
-     * handles offset values for Timezones and DST
-     * @param    $date         string        date/time formatted in user's selected format
-     * @param    $format         string        destination format value as passed to PHP's date() funtion
-     * @param    $to             boolean
-     * @param    $user         object        user object from which Timezone and DST
-     * @param    $usetimezone string        timezone name
+     * @param    string$date                 date/time formatted in user's selected format
+     * @param string $format destination format value as passed to PHP's date() funtion
+     * @param boolean $to
+     * @param    object$user                 user object from which Timezone and DST
+     * @param string $usetimezone timezone name
      * values will be derived
      * @return     string        date formatted and adjusted for TZ and DST
+     *@deprecated for public use
+     * handles offset values for Timezones and DST
      */
     public function handle_offset($date, $format, $to = true, $user = null, $usetimezone = null)
     {

@@ -52,7 +52,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * This is a Smarty plugin to handle the creation of HTML List elements for Sugar Action Menus.
  * Based on the theme, the plugin generates a proper group of button lists.
  *
- * @param $params array - its structure is
+ * @param array $params - its structure is
  *     'buttons' => list of button htmls, such as ( html_element1, html_element2, ..., html_element_n),
  *     'id' => id property for ul element
  *     'class' => class property for ul element

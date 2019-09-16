@@ -996,7 +996,7 @@ class MssqlManager extends DBManager
 
     /**
      * Get tables like expression
-     * @param $like string
+     * @param string $like
      * @return array
      */
     public function tablesLike($like)
@@ -1880,7 +1880,7 @@ EOQ;
      * This is a utility function to prepend the "N" character in front of SQL values that are
      * surrounded by single quotes.
      *
-     * @param  $sql string SQL statement
+     * @param string $sql SQL statement
      * @return string SQL statement with single quote values prepended with "N" character for nvarchar columns
      */
     protected function _appendN($sql)

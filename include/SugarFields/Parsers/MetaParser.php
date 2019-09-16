@@ -100,7 +100,7 @@ class MetaParser
     /**
      * getFormElements
      * Parses for input, select, textarea types from string content
-     * @param $contents The String contents to parse
+     * @param The $contents String contents to parse
      * @return $matches Array of matches of PREG_SET_ORDER
      */
     public function getFormElements($contents)
@@ -117,7 +117,7 @@ class MetaParser
     /**
      * getFormElementsNames
      * Parses for the name values of input, select, textarea types from string content
-     * @param $contents The String contents to parse
+     * @param The $contents String contents to parse
      * @return $matches Array of name/value pairs
      */
     public function getFormElementsNames($contents)
@@ -130,9 +130,9 @@ class MetaParser
     /**
      * getTagAttribute
      * Returns the name/value of a tag attribute where name is set to $name
-     * @param $name The name of the attribute
-     * @param $contents The contents to parse
-     * @param $filter Option regular expression to filter value
+     * @param The $name name of the attribute
+     * @param The $contents contents to parse
+     * @param Option $filter regular expression to filter value
      * @return Array of name/value for matching attribute
      */
     public function getTagAttribute($name, $contents, $filter = '')
@@ -189,7 +189,7 @@ class MetaParser
      * and method call getElementsByType("<td>", $contents) returns
      * "<td>Text <table><tr><td>a</td></tr></table></td>"
      *
-     * @param $type The type of element to parse out and return
+     * @param The $type type of element to parse out and return
      * @return a tag element format Array
      */
     public function getElementsByType($type, $contents)
@@ -253,8 +253,8 @@ class MetaParser
      * This method accepts the file contents and uses the $GLOBALS['sugar_flavor'] value
      * to remove the flavor tags in the file contents if present.  If $GLOBALS['sugar_flavor']
      * is not set, it defaults to PRO flavor
-     * @param $contents The file contents as a String value
-     * @param $result The file contents with non-matching flavor tags and their nested comments removed
+     * @param The $contents file contents as a String value
+     * @param The $result file contents with non-matching flavor tags and their nested comments removed
      */
     public function stripFlavorTags($contents)
     {
@@ -271,8 +271,8 @@ class MetaParser
     /**
      * getMaxColumns
      * Returns the highest number of <td>...</td> blocks within a <tr>...</tr> block.
-     * @param $contents The table contents to parse
-     * @param $filter Optional filter to parse for an attribute within the td block.
+     * @param The $contents table contents to parse
+     * @param Optional $filter filter to parse for an attribute within the td block.
      * @return The maximum column count
      */
     public function getMaxColumns($contents, $filter)
@@ -327,7 +327,7 @@ class MetaParser
      * The method also converts values enclosed within "{...}" blocks that may need to be converted
      * to Smarty syntax.
      *
-     * @param $contents The HTML String contents to parse
+     * @param The $contents HTML String contents to parse
      *
      * @return $javascript The formatted script blocks or null if none found
      */
@@ -419,8 +419,8 @@ class MetaParser
      * PHP file to see if the assignment was made using the bean's variable.  If so, we return
      * this variable name.
      *
-     * @param $name The tag name found in the HTML file for which we want to search
-     * @param $filePath The full file path for the HTML file
+     * @param The $name tag name found in the HTML file for which we want to search
+     * @param The $filePath full file path for the HTML file
      * @return The variable name found in PHP file, original $name variable if not found
      */
     public function findAssignedVariableName($name, $filePath)
@@ -469,7 +469,7 @@ class MetaParser
      * dirList
      * Utility method to list all the files in a given directory.
      *
-     * @param $directory The directory to scan
+     * @param The $directory directory to scan
      * @return $results The files in the directory that were found
      */
     public function dirList($directory)
@@ -501,7 +501,7 @@ class MetaParser
      * This method checks the mixed variable $elementNames to see if it is a custom field.  A custom
      * field is simply defined as a field that ends with "_c".  If $elementNames is an Array
      * any matching custom field value will result in a true evaluation
-     * @param $elementNames Array or String value of form element name(s).
+     * @param Array $elementNames or String value of form element name(s).
      * @return String name of custom field; null if none found
      */
     public function getCustomField($elementNames)
@@ -624,9 +624,9 @@ class MetaParser
     /**
      * mergePanels
      * This function merges the $panels Array against the $masterCopy's meta data definition
-     * @param $panels meta data Array to merge
-     * @param $moduleDir Directory name of the module
-     * @param $masterCopy file path to the meta data master copy
+     * @param meta $panels data Array to merge
+     * @param Directory $moduleDir name of the module
+     * @param file $masterCopy path to the meta data master copy
      * @return Array of merged $panel definition
      */
     public function mergePanels($panels, $vardefs, $moduleDir, $masterCopy)
@@ -716,9 +716,9 @@ class MetaParser
     /**
      * mergeTemplateMeta
      * This function merges the $templateMeta Array against the $masterCopy's meta data definition
-     * @param $templateMeta meta data Array to merge
-     * @param $moduleDir Directory name of the module
-     * @param $masterCopy file path to the meta data master copy
+     * @param meta $templateMeta data Array to merge
+     * @param Directory $moduleDir name of the module
+     * @param file $masterCopy path to the meta data master copy
      * @return Array of merged $templateMeta definition
      */
     public function mergeTemplateMeta($templateMeta, $moduleDir, $masterCopy)

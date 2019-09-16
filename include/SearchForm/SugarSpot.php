@@ -60,9 +60,9 @@ class SugarSpot
      *
      * Performs the search and returns the HTML widget containing the results
      *
-     * @param  $query string what we are searching for
-     * @param  $modules array modules we are searching in
-     * @param  $offset int search result offset
+     * @param string $query what we are searching for
+     * @param array $modules modules we are searching in
+     * @param int $offset search result offset
      * @return string HTML code containing results
      *
      * @deprecated deprecated since 6.5
@@ -147,7 +147,7 @@ class SugarSpot
      * first checks the default installation directories for the SearchFields.php file and then
      * loads any custom definition (if found)
      *
-     * @param  $moduleName String name of module to retrieve SearchFields entries for
+     * @param String $moduleName name of module to retrieve SearchFields entries for
      * @return array of SearchFields
      */
     protected static function getSearchFields($moduleName)
@@ -220,8 +220,8 @@ class SugarSpot
     /**
      * Perform a search
      *
-     * @param $query string what we are searching for
-     * @param $offset int search result offset
+     * @param string $query what we are searching for
+     * @param int $offset search result offset
      * @return array
      */
     public function search($query, $offset = -1, $limit = 20, $options = array())
@@ -239,10 +239,10 @@ class SugarSpot
      *
      * Performs the search from the global search field.
      *
-     * @param  $query   string what we are searching for
-     * @param  $modules array  modules we are searching in
-     * @param  $offset  int   search result offset
-     * @param  $limit  int    search limit
+     * @param string $query what we are searching for
+     * @param array $modules modules we are searching in
+     * @param int $offset search result offset
+     * @param int $limit search limit
      * @return array
      */
     protected function _performSearch($query, $modules, $offset = -1, $limit = 20)

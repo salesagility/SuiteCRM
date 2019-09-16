@@ -283,7 +283,7 @@ EOD
      * We override the function from SugarView.php to make sure the create link only appears if the current user
      * meets the valid criteria.
      *
-     * @param $module String the formatted module name
+     * @param String $module the formatted module name
      * @return $theTitle String the HTML for the help text
      */
     protected function getHelpText($module)

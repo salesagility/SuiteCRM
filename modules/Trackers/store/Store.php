@@ -54,7 +54,7 @@ interface Store
     /**
      * flush
      * This is the method implementations need to provide to store a monitor instance
-     * @param $monitor An instance of Monitor
+     * @param An $monitor instance of Monitor
      */
     public function flush($monitor);
 }

@@ -165,8 +165,8 @@ class SchedulersJob extends Basic
 
     /**
      * This function takes a passed URL and cURLs it to fake multi-threading with another httpd instance
-     * @param	$job		String in URI-clean format
-     * @param	$timeout	Int value in secs for cURL to timeout. 30 default.
+     * @param String $job in URI-clean format
+     * @param Int $timeout value in secs for cURL to timeout. 30 default.
      */
     public function fireUrl($job, $timeout=30)
     {

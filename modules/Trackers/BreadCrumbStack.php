@@ -69,8 +69,8 @@ class BreadCrumbStack
      * BreadCrumbStack
      * Constructor for BreadCrumbStack that builds list of breadcrumbs using tracker table
      *
-     * @param $user_id String value of user id to get bread crumb items for
-     * @param $modules mixed value of module name(s) to provide extra filtering
+     * @param String $user_id value of user id to get bread crumb items for
+     * @param mixed $modules value of module name(s) to provide extra filtering
      */
     public function __construct($user_id, $modules='')
     {

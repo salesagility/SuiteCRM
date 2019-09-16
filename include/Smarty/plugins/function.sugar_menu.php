@@ -70,7 +70,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *  </ul>
  *
  *
- * @param $params array - look up the bellow example
+ * @param array $params - look up the bellow example
  * @param $smarty
  * @return string - generated HTML code
  *

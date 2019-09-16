@@ -71,7 +71,7 @@ class SugarFieldInt extends SugarFieldBase
      * Checks and returns a sane value based on the field type that can be used when building the where clause in a
      * search form.
      *
-     * @param $value Mixed value being searched on
+     * @param Mixed $value value being searched on
      * @return Int the value for the where clause used in search
      */
     public function getSearchWhereValue($value)

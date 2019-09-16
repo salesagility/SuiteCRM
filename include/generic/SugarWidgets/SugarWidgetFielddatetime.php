@@ -125,7 +125,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * Finally the time portion is applied depending on whether or not this date should be for the end
      * in which case the 23:59:59 time value is applied otherwise 00:00:00 is used.
      *
-     * @param $date String value of the date value to expand
+     * @param String $date value of the date value to expand
      * @param bool $end Boolean value indicating whether or not this is for an end time period or not
      * @return $date TimeDate object with time value applied
      */

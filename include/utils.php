@@ -3100,9 +3100,9 @@ function _ppd($mixed)
  * the Logger. This function is only intended to be used for SugarCRM internal
  * development. The pp stands for Pre Print.
  *
- * @param $mixed var to print_r()
- * @param $die boolean end script flow
- * @param $displayStackTrace also show stack trace
+ * @param var $mixed to print_r()
+ * @param boolean $die end script flow
+ * @param also $displayStackTrace show stack trace
  */
 function _ppl($mixed, $die = false, $displayStackTrace = false, $loglevel = 'fatal')
 {
@@ -3891,7 +3891,7 @@ function checkAuthUserStatus()
  * This function returns an array of phpinfo() results that can be parsed and
  * used to figure out what version we run, what modules are compiled in, etc.
  *
- * @param   $level int        info level constant (1,2,4,8...64);
+ * @param int $level info level constant (1,2,4,8...64);
  *
  * @return $returnInfo array    array of info about the PHP environment
  *
@@ -3954,8 +3954,8 @@ function getPhpInfo($level = -1)
  * This function will take a string that has tokens like {0}, {1} and will replace
  * those tokens with the args provided.
  *
- * @param   $format string to format
- * @param   $args   args to replace
+ * @param string $format to format
+ * @param args $args to replace
  *
  * @return $result a formatted string
  */
@@ -4002,8 +4002,8 @@ function string_format($format, $args, $escape = true)
  * numbers using a DB auto-increment key from offline clients and still
  * have the number be unique (since it is modified by the system_id.
  *
- * @param   $num       of bean
- * @param   $system_id from system
+ * @param of $num bean
+ * @param from $system_id system
  *
  * @return $result a formatted string
  */
@@ -4026,8 +4026,8 @@ function checkLoginUserStatus()
 /**
  * This function will take a number and system_id and format.
  *
- * @param   $url  URL containing host to append port
- * @param   $port the port number - if '' is passed, no change to url
+ * @param URL $url containing host to append port
+ * @param the $port port number - if '' is passed, no change to url
  *
  * @return $resulturl the new URL with the port appended to the host
  */
@@ -5249,7 +5249,7 @@ function getFTSBoostOptions($optionName)
  * This function walks through an Array and recursively calls utf8_encode on the
  * values of each of the elements.
  *
- * @param $data Array of data to encode
+ * @param Array $data of data to encode
  *
  * @return utf8 encoded Array data
  */
@@ -5288,7 +5288,7 @@ function get_language_header()
  * path of the custom file if it exists.  It basically checks if custom/{$file} exists and returns this path if so;
  * otherwise it return $file
  *
- * @param $file String of filename to check
+ * @param String $file of filename to check
  *
  * @return $file String of filename including custom directory if found
  */

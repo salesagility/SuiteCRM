@@ -413,7 +413,7 @@ class SugarFieldBase
      * Checks and returns a sane value based on the field type that can be used when building the where clause in a
      * search form.
      *
-     * @param $value Mixed value being searched on
+     * @param Mixed $value value being searched on
      * @return Mixed the value for the where clause used in search
      */
     public function getSearchWhereValue($value)
@@ -427,8 +427,8 @@ class SugarFieldBase
      * This function allows the SugarFields to handle returning the search input value given arguments (typically from $_REQUEST/$_POST)
      * and a search string.
      *
-     * @param $key String value of key to search for
-     * @param $args Mixed value containing haystack to search for value in
+     * @param String $key value of key to search for
+     * @param Mixed $args value containing haystack to search for value in
      * @return $value Mixed value that the SugarField should return
      */
     public function getSearchInput($key = '', $args = array())
@@ -623,10 +623,10 @@ class SugarFieldBase
     /**
      * Handles import field sanitizing for an field type
      *
-     * @param  $value    string value to be sanitized
-     * @param  $vardefs  array
-     * @param  $focus    SugarBean object
-     * @param  $settings ImportFieldSanitize object
+     * @param string $value value to be sanitized
+     * @param array $vardefs
+     * @param SugarBean $focus object
+     * @param ImportFieldSanitize $settings object
      * @return string sanitized value or boolean false if there's a problem with the value
      */
     public function importSanitize(

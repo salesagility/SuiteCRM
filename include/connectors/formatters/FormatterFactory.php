@@ -55,9 +55,9 @@ class FormatterFactory
      * formatter name.  If no formatter name is specified, the default formatter
      * for the source is used.
      *
-     * @param $source_name The data source name to retreive formatter for
-     * @param $formatter_name Optional formatter name to use
-     * @param $wrapper_name Optional wrapper name to use
+     * @param The $source_name data source name to retreive formatter for
+     * @param Optional $formatter_name formatter name to use
+     * @param Optional $wrapper_name wrapper name to use
      * @return $instance The formatter instance
      */
     public static function getInstance($source_name, $formatter_name='')

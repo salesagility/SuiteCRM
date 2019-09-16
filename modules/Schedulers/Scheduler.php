@@ -216,7 +216,7 @@ class Scheduler extends SugarBean
      * qualified by its ranges.  The times are from the time of calling the
      * script.
      *
-     * @param	$focus		Scheduler object
+     * @param Scheduler $focus object
      * @return	$dateTimes	array loaded with DB datetime strings derived from
      * 						the	 job_interval attribute
      * @return	false		If we the Scheduler is not in scope, return false.

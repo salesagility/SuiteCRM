@@ -643,8 +643,8 @@ class SugarChart
      * nullGroup
      * This function sets a null group by clause
      *
-     * @param $sugarSetValue Mixed value
-     * @param $url String value of URL for the link
+     * @param Mixed $sugarSetValue value
+     * @param String $url value of URL for the link
      */
     private function nullGroup($superSetValue, $url)
     {

@@ -91,8 +91,8 @@ class Currency extends SugarBean
      * convertToDollar
      * This method accepts a currency amount and converts it to the US Dollar amount
      *
-     * @param $amount The currency amount to convert to US Dollars
-     * @param $precision The rounding precision scale
+     * @param The $amount currency amount to convert to US Dollars
+     * @param The $precision rounding precision scale
      * @return currency value in US Dollars from conversion
      */
     public function convertToDollar($amount, $precision = 6)
@@ -105,8 +105,8 @@ class Currency extends SugarBean
      * This method accepts a US Dollar amount and returns a currency amount
      * with the conversion rate applied to it.
      *
-     * @param $amount The currency amount in US Dollars
-     * @param $precision The rounding precision scale
+     * @param The $amount currency amount in US Dollars
+     * @param The $precision rounding precision scale
      * @return currency value from US Dollar conversion
      */
     public function convertFromDollar($amount, $precision = 6)
@@ -156,7 +156,7 @@ class Currency extends SugarBean
      * Returns the id value for given currency symbol in Currencies table
      * and currency entry for symbol is not set to deleted.
      *
-     * @param $symbol Symbol value
+     * @param Symbol $symbol value
      * @return String id value for symbol defined in Currencies table, blank String value
      *         if none found
      */
@@ -263,8 +263,8 @@ class Currency extends SugarBean
  * matching his/her user preferences(if set) or the system configuration defaults
  *(if user preferences are not defined).
  *
- * @param $amount The amount to be formatted
- * @param $params Optional parameters(see @format_number)
+ * @param The $amount amount to be formatted
+ * @param Optional $params parameters(see @format_number)
  * @return String representation of amount with formatting applied
  */
 function currency_format_number($amount, $params = array())
@@ -311,10 +311,10 @@ function currency_format_number($amount, $params = array())
  * are responsible for passing in the appropriate decimal and number rounding digits
  * as well as parameters to control displaying the currency symbol or not.
  *
- * @param $amount The currency amount to apply formatting to
- * @param $round Integer value for number of places to round to
- * @param $decimals Integer value for number of decimals to round to
- * @param $params Array of additional parameter values
+ * @param The $amount currency amount to apply formatting to
+ * @param Integer $round value for number of places to round to
+ * @param Integer $decimals value for number of decimals to round to
+ * @param Array $params of additional parameter values
  *
  *
  * The following are passed in as an array of params:

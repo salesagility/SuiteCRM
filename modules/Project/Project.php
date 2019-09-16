@@ -147,7 +147,7 @@ class Project extends SugarBean
     /**
     * Save changes that have been made to a relationship.
     *
-    * @param $is_update true if this save is an update.
+    * @param true $is_update if this save is an update.
     */
     public function save_relationship_changes($is_update, $exclude=array())
     {

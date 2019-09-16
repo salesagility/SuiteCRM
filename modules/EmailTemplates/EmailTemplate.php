@@ -391,7 +391,7 @@ class EmailTemplate extends SugarBean
     /**
      *
      * Method for replace "preg_match_all" in method "parse_tracker_urls"
-     * @param $text string String in which we need to search all string that match the pattern {.}
+     * @param string $text String in which we need to search all string that match the pattern {.}
      * @return array result of search
      */
     private function _preg_match_tracker_url($text)

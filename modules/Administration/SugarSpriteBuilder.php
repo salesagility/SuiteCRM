@@ -106,8 +106,8 @@ class SugarSpriteBuilder
      * addDirectory
      *
      * This function is used to create the spriteSrc array
-     * @param $name String value of the sprite name
-     * @param $dir String value of the directory associated with the sprite entry
+     * @param String $name value of the sprite name
+     * @param String $dir value of the directory associated with the sprite entry
      */
     public function addDirectory($name, $dir)
     {
@@ -125,7 +125,7 @@ class SugarSpriteBuilder
      * getFileList
      *
      * This method processes files in a directory and adds them to the sprites array
-     * @param $dir String value of the directory to scan for image files in
+     * @param String $dir value of the directory to scan for image files in
      */
     private function getFileList($dir)
     {
@@ -186,7 +186,7 @@ class SugarSpriteBuilder
      * to the sprites_config member variable which may contain a list of array entries of files/directories to exclude from
      * being included into the sprites image.
      *
-     * @param $dir String value of the directory containing the custom sprites_config.php file
+     * @param String $dir value of the directory containing the custom sprites_config.php file
      */
     private function loadSpritesConfig($dir)
     {
@@ -450,9 +450,9 @@ background-position: -{$offset_x}px -{$offset_y}px;
      *
      * private function to load image resources
      *
-     * @param $dir String value of directory where image is located
-     * @param $file String value of file
-     * @param $type String value of the file type (IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG)
+     * @param String $dir value of directory where image is located
+     * @param String $file value of file
+     * @param String $type value of the file type (IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG)
      *
      */
     private function loadImage($dir, $file, $type)
@@ -476,7 +476,7 @@ background-position: -{$offset_x}px -{$offset_y}px;
      * This is a private function used to log messages generated from this class.  Depending on whether or not
      * silentRun or fromSilentUpgrade is set to true/false then it will either output to screen or write to log file
      *
-     * @param $msg String value of message to log into file or echo into output buffer depending on the context
+     * @param String $msg value of message to log into file or echo into output buffer depending on the context
      */
     private function logMessage($msg)
     {

@@ -139,10 +139,10 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
      * function synchDropDown
      * 	Ensures that the set of dropdown keys is consistant accross all languages.
      *
-     * @param $dropdown_name The name of the dropdown to be synched
-     * @param $dropdown array The dropdown currently being saved
-     * @param $selected_lang String the language currently selected in Studio/MB
-     * @param $saveLov String the path to the directory to save the new lang file in.
+     * @param The $dropdown_name name of the dropdown to be synched
+     * @param array $dropdown The dropdown currently being saved
+     * @param String $selected_lang the language currently selected in Studio/MB
+     * @param String $saveLov the path to the directory to save the new lang file in.
      */
      public function synchDropDown($dropdown_name, $dropdown, $selected_lang, $saveLoc)
      {
@@ -167,10 +167,10 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
      * function synchMBDropDown
      * 	Ensures that the set of dropdown keys is consistant accross all languages in a ModuleBuilder Module
      *
-     * @param $dropdown_name The name of the dropdown to be synched
-     * @param $dropdown array The dropdown currently being saved
-     * @param $selected_lang String the language currently selected in Studio/MB
-     * @param $module MBModule the module to update the languages in
+     * @param The $dropdown_name name of the dropdown to be synched
+     * @param array $dropdown The dropdown currently being saved
+     * @param String $selected_lang the language currently selected in Studio/MB
+     * @param MBModule $module the module to update the languages in
      */
      public function synchMBDropDown($dropdown_name, $dropdown, $selected_lang, $module)
      {

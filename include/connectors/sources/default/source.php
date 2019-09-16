@@ -543,8 +543,8 @@ abstract class source
      * Returns an array containing a key/value pair(s) of a connector record. To be overridden by the implementation
      * source.
      *
-     * @param $args Array of arguments to search/filter by
-     * @param $module String optional value of the module that the connector framework is attempting to map to
+     * @param Array $args of arguments to search/filter by
+     * @param String $module optional value of the module that the connector framework is attempting to map to
      * @return Array of key/value pair(s) of connector record; empty Array if no results are found
      */
     abstract public function getItem($args=array(), $module=null);
@@ -555,8 +555,8 @@ abstract class source
      * Returns a nested array containing a key/value pair(s) of a connector record. To be overridden by the
      * implementation source.
      *
-     * @param $args Array of arguments to search/filter by
-     * @param $module String optional value of the module that the connector framework is attempting to map to
+     * @param Array $args of arguments to search/filter by
+     * @param String $module optional value of the module that the connector framework is attempting to map to
      * @return Array of key/value pair(s) of connector record; empty Array if no results are found
      */
     abstract public function getList($args=array(), $module=null);

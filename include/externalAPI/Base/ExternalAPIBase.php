@@ -211,7 +211,7 @@ abstract class ExternalAPIBase implements ExternalAPIPlugin
      * that are being checked deal with handling the behavior of closing/hiding windows/tabs that
      * are displayed when prompting for OAUTH validation
      *
-     * @param $callback_url String value of callback URL
+     * @param String $callback_url value of callback URL
      * @return String value of URL with applicable formatting
      */
     protected function formatCallbackURL($callback_url)

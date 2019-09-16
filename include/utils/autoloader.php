@@ -143,7 +143,7 @@ class SugarAutoLoader
      *
      * @static
      *
-     * @param $class String name of the class to load
+     * @param String $class name of the class to load
      *
      * @return string file of the SugarWidget class; false if none found
      */

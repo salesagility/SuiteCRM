@@ -406,7 +406,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
     /**
      * Save Configuration Settings using Administration Module
      *
-     * @param $data array of post data
+     * @param array $data of post data
      */
     public function saveConfiguration($data = array())
     {
@@ -857,9 +857,9 @@ class jjwg_Maps extends jjwg_Maps_sugar
 
     /**
      * Get $db result of records (addresses) in need of geocoding
-     * @param $table_name string
-     * @param $limit integer
-     * @param $id string
+     * @param string $table_name
+     * @param integer $limit
+     * @param string $id
      */
     public function getGeocodeAddressesResult($table_name, $limit = 0, $id = '')
     {
@@ -900,8 +900,8 @@ class jjwg_Maps extends jjwg_Maps_sugar
     /**
      * getGoogleMapsGeocode - Get Lng/Lat using Google Maps V3
      * @var $address
-     * @var $return_full_array boolean
-     * @var $allow_approximate boolean
+     * @var boolean $return_full_array
+     * @var boolean $allow_approximate
      */
     public function getGoogleMapsGeocode($address, $return_full_array = false, $allow_approximate = true)
     {
@@ -1023,8 +1023,8 @@ class jjwg_Maps extends jjwg_Maps_sugar
      *   or Project to Opportunity to Account(address)
      * Meeting - based on Flex Relate
      *
-     * @param $object_name  signular object name
-     * @param $display      fetched row
+     * @param signular $object_name object name
+     * @param fetched $display row
      */
     public function defineMapsAddress($object_name, $display)
     {
@@ -1184,8 +1184,8 @@ class jjwg_Maps extends jjwg_Maps_sugar
 
     /**
      * Define the formatted address line based on address type and field names
-     * @param $display bean fields array
-     * @param $type type of address: 'billing', 'shipping', 'primary', 'alt', 'custom', 'address'
+     * @param bean $display fields array
+     * @param type $type of address: 'billing', 'shipping', 'primary', 'alt', 'custom', 'address'
      */
     public function defineMapsFormattedAddress($display, $type = 'billing')
     {
@@ -1234,7 +1234,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
 
     /**
      * Check for valid longitude
-     * @param $lng float
+     * @param float $lng
      */
     public function is_valid_lng($lng)
     {
@@ -1243,7 +1243,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
 
     /**
      * Check for valid latitude
-     * @param $lat float
+     * @param float $lat
      */
     public function is_valid_lat($lat)
     {
