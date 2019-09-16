@@ -107,11 +107,19 @@ class Sentry
      * @param array $data Additional attributes to pass with this event (see Sentry docs).
      * @param bool|array $stack
      * @param mixed $vars
-     * @return string|null
      */
     public function captureMessage($message, $params = [], $data = [], $stack = false, $vars = null)
     {
         if ($this->enabled) {
+            // change to a string if there is just one entry
+            if (is_array($message) && count($message) === 1) {
+                $message = array_shift($message);
+            }
+            // change to a human-readable array output if it's any other array
+            if (is_array($message)) {
+                $message = print_r($message, true);
+            }
+
             $this->client->captureMessage($message, $params, $data, $stack, $vars);
         }
     }

@@ -125,7 +125,7 @@ class LoggerManager
             // Log to sentry if enabled
             if ($sugar_config['sentry']['enabled']) {
                 $sentry = new Sentry();
-                $sentry->captureMessage($message, ['level' => $method]);
+                $sentry->captureMessage($message);
             }
         }
     }
