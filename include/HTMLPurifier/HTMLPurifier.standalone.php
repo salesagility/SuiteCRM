@@ -162,6 +162,7 @@ class HTMLPurifier
      *                that HTMLPurifier_Config::create() supports.
      *
      * @return string Purified HTML
+     * @throws HTMLPurifier_Exception
      */
     public function purify($html, $config = null)
     {
@@ -1879,6 +1880,7 @@ class HTMLPurifier_Config
      * @param mixed $a
      *
      * @return mixed
+     * @throws HTMLPurifier_Exception
      */
     public function get($key, $a = null)
     {
@@ -2123,6 +2125,7 @@ class HTMLPurifier_Config
      *             named, instead.
      *
      * @return HTMLPurifier_HTMLDefinition
+     * @throws HTMLPurifier_Exception
      */
     public function getHTMLDefinition($raw = false, $optimized = false)
     {
@@ -2142,6 +2145,7 @@ class HTMLPurifier_Config
      *             named, instead.
      *
      * @return HTMLPurifier_CSSDefinition
+     * @throws HTMLPurifier_Exception
      */
     public function getCSSDefinition($raw = false, $optimized = false)
     {
@@ -2161,6 +2165,7 @@ class HTMLPurifier_Config
      *             named, instead.
      *
      * @return HTMLPurifier_URIDefinition
+     * @throws HTMLPurifier_Exception
      */
     public function getURIDefinition($raw = false, $optimized = false)
     {
@@ -2609,6 +2614,7 @@ class HTMLPurifier_Config
      * be reconstituted.
      *
      * @return string
+     * @throws HTMLPurifier_Exception
      */
     public function serialize()
     {
@@ -8656,6 +8662,7 @@ class HTMLPurifier_URI
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return HTMLPurifier_URIScheme Scheme object appropriate for validating this URI
+     * @throws HTMLPurifier_Exception
      */
     public function getSchemeObj($config, $context)
     {
@@ -8687,6 +8694,7 @@ class HTMLPurifier_URI
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool True if validation/filtering succeeds, false if failure
+     * @throws HTMLPurifier_Exception
      */
     public function validate($config, $context)
     {
@@ -8852,6 +8860,7 @@ class HTMLPurifier_URI
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool
+     * @throws HTMLPurifier_Exception
      */
     public function isLocal($config, $context)
     {
@@ -8874,6 +8883,7 @@ class HTMLPurifier_URI
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool
+     * @throws HTMLPurifier_Exception
      */
     public function isBenign($config, $context)
     {
@@ -9718,6 +9728,7 @@ class HTMLPurifier_VarParser
      * @param int $type Type of variable, see HTMLPurifier_VarParser->types
      * @param bool $allow_null Whether or not to permit null as a value
      * @return string Validated and type-coerced variable
+     * @throws HTMLPurifier_Exception
      * @throws HTMLPurifier_VarParserException
      */
     final public function parse($var, $type, $allow_null = false)
@@ -9831,6 +9842,7 @@ class HTMLPurifier_VarParser
      * Generic error for if a type didn't work.
      * @param mixed $var
      * @param int $type
+     * @throws HTMLPurifier_VarParserException
      */
     protected function errorGeneric($var, $type)
     {
@@ -10571,6 +10583,7 @@ class HTMLPurifier_AttrDef_URI extends HTMLPurifier_AttrDef
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     public function validate($uri, $config, $context)
     {
@@ -12423,6 +12436,7 @@ class HTMLPurifier_AttrDef_HTML_Class extends HTMLPurifier_AttrDef_HTML_Nmtokens
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     protected function split($string, $config, $context)
     {
@@ -18618,6 +18632,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return string
+     * @throws HTMLPurifier_Exception
      */
     protected function wrapHTML($html, $config, $context)
     {
@@ -18685,6 +18700,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return array|HTMLPurifier_Token[]
+     * @throws Exception
      */
     public function tokenizeHTML($html, $config, $context)
     {
@@ -19018,6 +19034,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
      * @return array Assoc array of attributes.
+     * @throws Exception
      */
     public function parseAttributeString($string, $config, $context)
     {
@@ -20832,6 +20849,7 @@ class HTMLPurifier_URIFilter_DisableExternal extends HTMLPurifier_URIFilter
     /**
      * @param HTMLPurifier_Config $config
      * @return void
+     * @throws HTMLPurifier_Exception
      */
     public function prepare($config)
     {
@@ -20990,6 +21008,7 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
     /**
      * @param HTMLPurifier_Config $config
      * @return bool
+     * @throws HTMLPurifier_Exception
      */
     public function prepare($config)
     {
@@ -21167,6 +21186,7 @@ class HTMLPurifier_URIFilter_Munge extends HTMLPurifier_URIFilter
     /**
      * @param HTMLPurifier_Config $config
      * @return bool
+     * @throws Exception
      */
     public function prepare($config)
     {
@@ -21722,6 +21742,7 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
      * @param int $type
      * @param bool $allow_null
      * @return array|bool|float|int|mixed|null|string
+     * @throws HTMLPurifier_Exception
      * @throws HTMLPurifier_VarParserException
      */
     protected function parseImplementation($var, $type, $allow_null)
@@ -21853,6 +21874,7 @@ class HTMLPurifier_VarParser_Native extends HTMLPurifier_VarParser
      * @param int $type
      * @param bool $allow_null
      * @return null|string
+     * @throws HTMLPurifier_VarParserException
      */
     protected function parseImplementation($var, $type, $allow_null)
     {

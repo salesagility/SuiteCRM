@@ -251,7 +251,8 @@ class SugarSpriteBuilder
      *
      * This is the public function to allow the sprites to be built.
      *
-     * @return $result boolean value indicating whether or not sprites were created
+     * @return bool $result boolean value indicating whether or not sprites were created
+     * @throws Exception
      */
     public function createSprites()
     {

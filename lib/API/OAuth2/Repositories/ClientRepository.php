@@ -49,7 +49,12 @@ class ClientRepository implements ClientRepositoryInterface
 {
     /**
      * {@inheritdoc}
+     * @param $clientIdentifier
+     * @param $grantType
+     * @param null $clientSecret
+     * @param bool $mustValidateSecret
      * @return null|ClientEntity
+     * @throws GrantTypeNotAllowedForClient
      */
     public function getClientEntity($clientIdentifier, $grantType, $clientSecret = null, $mustValidateSecret = true)
     {

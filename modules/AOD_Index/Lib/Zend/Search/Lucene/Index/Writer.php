@@ -163,6 +163,7 @@ class Zend_Search_Lucene_Index_Writer
      * @param Zend_Search_Lucene_Storage_Directory $directory
      * @param integer $generation
      * @param integer $nameCount
+     * @throws Zend_Search_Lucene_Exception
      */
     public static function createIndex(Zend_Search_Lucene_Storage_Directory $directory, $generation, $nameCount)
     {
@@ -231,6 +232,7 @@ class Zend_Search_Lucene_Index_Writer
      * Adds a document to this index.
      *
      * @param Zend_Search_Lucene_Document $document
+     * @throws Zend_Search_Lucene_Exception
      */
     public function addDocument(Zend_Search_Lucene_Document $document)
     {
@@ -368,6 +370,7 @@ class Zend_Search_Lucene_Index_Writer
      * $segments is an array of SegmentInfo objects
      *
      * @param array $segments
+     * @throws Zend_Search_Lucene_Exception
      */
     private function _mergeSegments($segments)
     {
@@ -799,6 +802,7 @@ class Zend_Search_Lucene_Index_Writer
      * is running now
      *
      * @return boolean
+     * @throws Zend_Search_Lucene_Exception
      */
     public function optimize()
     {
@@ -829,6 +833,7 @@ class Zend_Search_Lucene_Index_Writer
      * Get name for new segment
      *
      * @return string
+     * @throws Zend_Search_Lucene_Exception
      */
     private function _newSegmentName()
     {

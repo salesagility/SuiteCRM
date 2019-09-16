@@ -353,6 +353,7 @@ class AOD_Index extends AOD_Index_sugar
     /**
      * Returns a handle on the actual lucene index.
      * @return Zend_Search_Lucene_Interface
+     * @throws Zend_Search_Lucene_Exception
      */
     private function getLuceneIndex()
     {

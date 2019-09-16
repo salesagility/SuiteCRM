@@ -59,7 +59,7 @@ class Imap implements ImapInterface
      * @var resource
      */
     protected $resource;
-    
+
     /**
      * see more at imap_open()
      *
@@ -71,6 +71,7 @@ class Imap implements ImapInterface
      * @param array $params
      *
      * @return resource or <b>FALSE</b> on error.
+     * @throws StateSaverException
      */
     public function open($mailbox, $username, $password, $options = 0, $n_retries = 0, array $params = null)
     {

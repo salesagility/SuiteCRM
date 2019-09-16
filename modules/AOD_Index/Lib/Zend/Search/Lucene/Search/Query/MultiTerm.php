@@ -203,6 +203,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      *
      * @param Zend_Search_Lucene_Interface $index
      * @return Zend_Search_Lucene_Search_Query
+     * @throws Zend_Search_Lucene_Exception
      */
     public function optimize(Zend_Search_Lucene_Interface $index)
     {

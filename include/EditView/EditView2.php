@@ -213,7 +213,7 @@ class EditView
      * @param string $tpl value of file location to use in overriding default Smarty template
      * @param bool $createFocus value to tell whether to create a new bean if we do not have one with an id, this is used from ConvertLead
      * @param string $metadataFileName specifies the name of the metadata file eg 'editviewdefs'
-     *
+     * @throws Exception
      */
     public function setup(
         $module,

@@ -565,7 +565,8 @@ class UnifiedSearchAdvanced
      * Returns the value of the $unified_search_modules_display variable which is based on the $unified_search_modules
      * entries that have been selected to be allowed for searching.
      *
-     * @return $unified_search_modules_display Array value of modules that have enabled for searching
+     * @return array $unified_search_modules_display Array value of modules that have enabled for searching
+     * @throws Exception
      */
     public function getUnifiedSearchModulesDisplay()
     {

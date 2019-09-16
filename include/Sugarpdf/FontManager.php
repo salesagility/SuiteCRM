@@ -304,9 +304,11 @@ class FontManager
     {
         return preg_replace("/.php$/i", "", $this->filename);
     }
+
     /**
      * This method delete all the files related to the font define in the filename attribute.
      * @return boolean true on success
+     * @throws Exception
      */
     public function deleteFont()
     {
@@ -337,6 +339,7 @@ class FontManager
         }
         return false;
     }
+
     /**
      * This method add a font to SugarCRM from a font file and a metric file using MakeFont()
      * @param string $font_file
@@ -347,6 +350,7 @@ class FontManager
      * @param string $cid_info
      * @param string $style
      * @return boolean true on success
+     * @throws Exception
      * @see MakeFont() in K_PATH_FONTS/utils
      */
     public function addFont($font_file, $metric_file, $embedded=true, $encoding_table='cp1252', $patch=array(), $cid_info="", $style="regular")
@@ -422,9 +426,11 @@ class FontManager
         $this->clearCachedFile();
         return $error;
     }
+
     /**
      * This method  delete the cached file cachedFontList.php
      * @return boolean
+     * @throws Exception
      */
     public function clearCachedFile()
     {

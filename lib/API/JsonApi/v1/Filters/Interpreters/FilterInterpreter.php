@@ -211,6 +211,8 @@ class FilterInterpreter
      * @param array $args Route arguments
      * @return string
      * @throws BadRequestException
+     * @throws Exception
+     * @throws \SuiteCRM\Exception\InvalidArgumentException
      */
     public function getFilterByAttributes(array $filterStructure, array $args)
     {

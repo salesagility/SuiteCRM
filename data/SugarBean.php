@@ -541,6 +541,7 @@ class SugarBean
 
     /**
      * @param bool $force
+     * @throws Exception
      */
     public function populateDefaultValues($force = false)
     {
@@ -3367,6 +3368,7 @@ class SugarBean
      * @param string $user_id - String value of the user that is viewing the record.
      * @param string $current_module - String value of the module being processed.
      * @param string $current_view - String value of the current view
+     * @throws Exception
      */
     public function track_view($user_id, $current_module, $current_view = '')
     {
@@ -5419,6 +5421,7 @@ class SugarBean
      * Moves file to deleted folder
      *
      * @return bool success of movement
+     * @throws Exception
      */
     public function deleteFiles()
     {

@@ -63,10 +63,11 @@ class ImapHandlerFake implements ImapHandlerInterface
     {
         $this->fakes = $fakeData;
     }
-    
+
     /**
      *
      * @return boolean
+     * @throws Exception
      */
     public function close()
     {
@@ -76,6 +77,7 @@ class ImapHandlerFake implements ImapHandlerInterface
     /**
      *
      * @return array
+     * @throws Exception
      */
     public function getAlerts()
     {
@@ -85,35 +87,39 @@ class ImapHandlerFake implements ImapHandlerInterface
     /**
      *
      * @return resource|boolean
+     * @throws Exception
      */
     public function getConnection()
     {
         return $this->fakes->call('getConnection');
     }
-    
+
     /**
      *
      * @return array
+     * @throws Exception
      */
     public function getErrors()
     {
         return $this->fakes->call('getErrors');
     }
-    
+
     /**
      *
      * @return string|boolean
+     * @throws Exception
      */
     public function getLastError()
     {
         return $this->fakes->call('getLastError');
     }
-    
+
     /**
      *
      * @param string $ref
      * @param string $pattern
      * @return array
+     * @throws Exception
      */
     public function getMailboxes($ref, $pattern)
     {
@@ -123,12 +129,13 @@ class ImapHandlerFake implements ImapHandlerInterface
     /**
      *
      * @return boolean
+     * @throws Exception
      */
     public function isAvailable()
     {
         return $this->fakes->call('isAvailable');
     }
-    
+
     /**
      *
      * @param string $mailbox
@@ -138,44 +145,48 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param int $n_retries
      * @param array|null $params
      * @return resource|boolean
+     * @throws Exception
      */
     public function open($mailbox, $username, $password, $options = 0, $n_retries = 0, $params = null)
     {
         return $this->fakes->call('open', [$mailbox, $username, $password, $options, $n_retries, $params]);
     }
-    
+
     /**
      *
      * @return boolean
+     * @throws Exception
      */
     public function ping()
     {
         return $this->fakes->call('ping');
     }
-    
+
     /**
      *
      * @param string $mailbox
      * @param int $options
      * @param int $n_retries
      * @return boolean
+     * @throws Exception
      */
     public function reopen($mailbox, $options = 0, $n_retries = 0)
     {
         return $this->fakes->call('reopen', [$mailbox, $options, $n_retries]);
     }
-    
+
     /**
      *
      * @param int $timeout_type
      * @param int $timeout
      * @return mixed
+     * @throws Exception
      */
     public function setTimeout($timeout_type, $timeout = -1)
     {
         return $this->fakes->call('setTimeout', [$timeout_type, $timeout]);
     }
-    
+
     /**
      *
      * @param int $criteria
@@ -184,6 +195,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param string $search_criteria
      * @param string $charset
      * @return array
+     * @throws Exception
      */
     public function sort($criteria, $reverse, $options = 0, $search_criteria = null, $charset = null)
     {
@@ -194,12 +206,13 @@ class ImapHandlerFake implements ImapHandlerInterface
      *
      * @param int $uid
      * @return int
+     * @throws Exception
      */
     public function getMessageNo($uid)
     {
         return $this->fakes->call('getMessageNo', [$uid]);
     }
-    
+
     /**
      *
      * @param int $msg_number
@@ -207,17 +220,19 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param int $subjectlength
      * @param string $defaulthost
      * @return bool|object Returns FALSE on error or, if successful, the information in an object
+     * @throws Exception
      */
     public function getHeaderInfo($msg_number, $fromlength = 0, $subjectlength = 0, $defaulthost = null)
     {
         return $this->fakes->call('getHeaderInfo', [$msg_number, $fromlength, $subjectlength, $defaulthost]);
     }
-    
+
     /**
      *
      * @param type $msg_number
-     * @param type $options
+     * @param int $options
      * @return string
+     * @throws Exception
      */
     public function fetchHeader($msg_number, $options = 0)
     {
@@ -231,33 +246,37 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param string $options
      * @param string $internal_date
      * @return mixed
+     * @throws Exception
      */
     public function append($mailbox, $message, $options = null, $internal_date = null)
     {
         return $this->fakes->call('append', [$mailbox, $message, $options, $internal_date]);
     }
-    
+
     /**
      *
      * @param int $msg_number
      * @return int
+     * @throws Exception
      */
     public function getUid($msg_number)
     {
         return $this->fakes->call('getUid', [$msg_number]);
     }
-    
+
     /**
      * @return bool
+     * @throws Exception
      */
     public function expunge()
     {
         return $this->fakes->call('expunge', []);
     }
 
-    
+
     /**
      * @return object|bool Returns FALSE on failure.
+     * @throws Exception
      */
     public function check()
     {
@@ -270,16 +289,18 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param string $flag
      * @param int $options
      * @return bool Returns TRUE on success or FALSE on failure.
+     * @throws Exception
      */
     public function clearFlagFull($sequence, $flag, $options = 0)
     {
         return $this->fakes->call('clearFlagFull', [$sequence, $flag, $options]);
     }
-    
+
     /**
      *
      * @param string $mailbox
      * @return bool Returns TRUE on success or FALSE on failure.
+     * @throws Exception
      */
     public function createMailbox($mailbox)
     {
@@ -291,6 +312,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param int $msg_number
      * @param int $options
      * @return bool Returns TRUE.
+     * @throws Exception
      */
     public function delete($msg_number, $options = 0)
     {
@@ -301,6 +323,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      *
      * @param string $mailbox
      * @return bool Returns TRUE on success or FALSE on failure.
+     * @throws Exception
      */
     public function deleteMailbox($mailbox)
     {
@@ -313,6 +336,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param string $section
      * @param int $options
      * @return string
+     * @throws Exception
      */
     public function fetchBody($msg_number, $section, $options = 0)
     {
@@ -324,6 +348,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param string $sequence
      * @param int $options
      * @return array
+     * @throws Exception
      */
     public function fetchOverview($sequence, $options = 0)
     {
@@ -335,6 +360,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param int $msg_number
      * @param int $options
      * @return object
+     * @throws Exception
      */
     public function fetchStructure($msg_number, $options = 0)
     {
@@ -346,6 +372,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param int $msg_number
      * @param int $options
      * @return string
+     * @throws Exception
      */
     public function getBody($msg_number, $options)
     {
@@ -354,6 +381,7 @@ class ImapHandlerFake implements ImapHandlerInterface
 
     /**
      * @return int|bool Return the number of messages in the current mailbox, as an integer, or FALSE on error.
+     * @throws Exception
      */
     public function getNumberOfMessages()
     {
@@ -365,6 +393,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param string $mailbox
      * @param int $options
      * @return object
+     * @throws Exception
      */
     public function getStatus($mailbox, $options)
     {
@@ -377,6 +406,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param string $mailbox
      * @param int $options
      * @return bool Returns TRUE on success or FALSE on failure.
+     * @throws Exception
      */
     public function mailCopy($msglist, $mailbox, $options = 0)
     {
@@ -389,6 +419,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param string $mailbox
      * @param int $options
      * @return bool Returns TRUE on success or FALSE on failure.
+     * @throws Exception
      */
     public function mailMove($msglist, $mailbox, $options = 0)
     {
@@ -399,6 +430,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      *
      * @param string $text
      * @return array
+     * @throws Exception
      */
     public function mimeHeaderDecode($text)
     {
@@ -410,6 +442,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param string $old_mbox
      * @param string $new_mbox
      * @return bool Returns TRUE on success or FALSE on failure.
+     * @throws Exception
      */
     public function renameMailbox($old_mbox, $new_mbox)
     {
@@ -421,6 +454,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param string $headers
      * @param string $defaulthost
      * @return object
+     * @throws Exception
      */
     public function rfc822ParseHeaders($headers, $defaulthost = "UNKNOWN")
     {
@@ -433,6 +467,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param int $options
      * @param string $charset
      * @return array|bool Return FALSE if it does not understand the search criteria or no messages have been found.
+     * @throws Exception
      */
     public function search($criteria, $options = SE_FREE, $charset = null)
     {
@@ -445,6 +480,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      * @param string $flag
      * @param int $options
      * @return bool Returns TRUE on success or FALSE on failure.
+     * @throws Exception
      */
     public function setFlagFull($sequence, $flag, $options = NIL)
     {
@@ -455,6 +491,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      *
      * @param string $mailbox
      * @return bool Returns TRUE on success or FALSE on failure.
+     * @throws Exception
      */
     public function subscribe($mailbox)
     {
@@ -465,6 +502,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      *
      * @param string $mailbox
      * @return bool Returns TRUE on success or FALSE on failure.
+     * @throws Exception
      */
     public function unsubscribe($mailbox)
     {
@@ -475,6 +513,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      *
      * @param string $data
      * @return string|bool FALSE if text contains invalid modified UTF-7 sequence or text contains a character that is not part of ISO-8859-1 character set.
+     * @throws Exception
      */
     public function utf7Encode($data)
     {
@@ -485,6 +524,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      *
      * @param string $mime_encoded_text
      * @return string
+     * @throws Exception
      */
     public function utf8($mime_encoded_text)
     {

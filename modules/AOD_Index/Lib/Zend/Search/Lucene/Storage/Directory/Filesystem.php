@@ -342,6 +342,7 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
      * @param string $filename
      * @param boolean $shareHandler
      * @return Zend_Search_Lucene_Storage_File
+     * @throws Zend_Search_Lucene_Exception
      */
     public function getFileObject($filename, $shareHandler = true)
     {

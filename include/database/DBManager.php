@@ -337,6 +337,7 @@ abstract class DBManager
      * @param string $userMessage Message from function user
      * @param string $message Message from SQL driver
      * @param bool $dieOnError
+     * @throws Exception
      */
     protected function registerError($userMessage, $message, $dieOnError = false)
     {

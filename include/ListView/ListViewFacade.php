@@ -108,6 +108,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
       * @param string $module
       * @param array $request
       * @return array
+      * @throws Exception
       */
      public static function getDisplayColumns($module, $request = [])
      {

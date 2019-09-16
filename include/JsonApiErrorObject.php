@@ -147,6 +147,7 @@ class JsonApiErrorObject
     /**
      *
      * @param LangText $title
+     * @throws ErrorMessageException
      */
     public function setTitle(LangText $title)
     {
@@ -161,6 +162,7 @@ class JsonApiErrorObject
     /**
      *
      * @param LangText $detail
+     * @throws ErrorMessageException
      */
     public function setDetail(LangText $detail)
     {

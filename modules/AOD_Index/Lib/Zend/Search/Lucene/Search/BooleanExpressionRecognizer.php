@@ -149,6 +149,7 @@ class Zend_Search_Lucene_Search_BooleanExpressionRecognizer extends Zend_Search_
      * Operators are defined by class constants: IN_AND_OPERATOR, IN_OR_OPERATOR and IN_NOT_OPERATOR
      *
      * @param integer $operator
+     * @throws Zend_Search_Exception
      */
     public function processOperator($operator)
     {
@@ -158,7 +159,8 @@ class Zend_Search_Lucene_Search_BooleanExpressionRecognizer extends Zend_Search_
     /**
      * Process expression literal.
      *
-     * @param integer $operator
+     * @param $literal
+     * @throws Zend_Search_Exception
      */
     public function processLiteral($literal)
     {

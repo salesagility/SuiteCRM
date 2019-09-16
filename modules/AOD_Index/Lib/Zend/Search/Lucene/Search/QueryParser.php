@@ -550,6 +550,7 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
     /**
      * Process last range query term (opened interval)
      *
+     * @throws Zend_Search_Lucene_Exception
      * @throws Zend_Search_Lucene_Search_QueryParserException
      */
     public function openedRQLastTerm()
@@ -599,6 +600,7 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
     /**
      * Process last range query term (closed interval)
      *
+     * @throws Zend_Search_Lucene_Exception
      * @throws Zend_Search_Lucene_Search_QueryParserException
      */
     public function closedRQLastTerm()

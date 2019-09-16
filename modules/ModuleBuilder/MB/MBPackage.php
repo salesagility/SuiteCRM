@@ -641,6 +641,7 @@ class MBPackage
      * @param bool $clean
      *
      * @return string
+     * @throws Exception
      */
     public function exportCustom($modules, $export = true, $clean = true)
     {

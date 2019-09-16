@@ -360,6 +360,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
      * @param string $packageName
      * @param string $type
      * @return string
+     * @throws Exception
      */
     public function getFileName($view, $moduleName, $packageName, $type = MB_CUSTOMMETADATALOCATION)
     {

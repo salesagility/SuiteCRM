@@ -74,12 +74,13 @@ class ImapHandlerFakeData
     {
         return $encoded = md5(serialize($args));
     }
-    
+
     /**
      *
      * @param string $name
      * @param string $argsEncoded
      * @return mixed
+     * @throws Exception
      */
     protected function getNextCallReturn($name, $argsEncoded)
     {
@@ -192,11 +193,12 @@ class ImapHandlerFakeData
         }
         $this->add($name, $args);
     }
-    
+
     /**
      * Following example when ImapHandlerFake::open() called and imitate a success IMAP connection
      *
      * @param array $calls
+     * @throws Exception
      */
     public function retrieve($calls)
     {

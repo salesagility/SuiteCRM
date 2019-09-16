@@ -1106,11 +1106,12 @@ class SugarController
             $this->do_action = $this->action;
         }
     }
-    
-        
+
+
     /**
      * action: Send Confirm Opt In Email to Contact/Lead/Account/Prospect
      *
+     * @throws Exception
      * @global array $app_strings using for user messages about error/success status of action
      */
     public function action_sendConfirmOptInEmail()

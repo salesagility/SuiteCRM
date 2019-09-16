@@ -63,6 +63,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      *
      * @param SugarBean $seed
      * @param string $current_view
+     * @throws Exception
      */
     public function trackView($seed, $current_view)
     {

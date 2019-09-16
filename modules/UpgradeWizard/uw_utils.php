@@ -103,13 +103,14 @@ function getUploadRelativeName($path)
 
 /**
  * Backs-up files that are targeted for patch/upgrade to a restore directory
- * @param string rest_dir Full path to the directory containing the original, replaced files.
- * @param string install_file Full path to the uploaded patch/upgrade zip file
- * @param string unzip_dir Full path to the unzipped files in a temporary directory
- * @param string zip_from_dir Name of directory that the unzipped files containing the actuall replacement files
- * @param array errors Collection of errors to be displayed at end of process
- * @param string path Optional full path to the log file.
+ * @param $rest_dir
+ * @param $install_file
+ * @param $unzip_dir
+ * @param $zip_from_dir
+ * @param $errors
+ * @param string $path
  * @return array errors
+ * @throws Exception
  */
 function commitMakeBackupFiles($rest_dir, $install_file, $unzip_dir, $zip_from_dir, $errors, $path='')
 {
@@ -1097,9 +1098,11 @@ function getModuleLanguagePack($lang, $module)
 
     return $mod_strings;
 }
+
 /**
  * checks system compliance for 4.5+ codebase
  * @return array Mixed values
+ * @throws ImapHandlerException
  */
 function checkSystemCompliance()
 {

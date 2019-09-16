@@ -205,9 +205,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Type:     modifier<br>
  * Name:     default_date_value<br>
  * Purpose:  Utility to return a default date value given the field's default value settings
- * @author   Collin Lee <clee at sugarcrm dot com>
  * @param defaultValue The date field's default value setting
  * @return String representing date value
+ * @throws Exception
+ * @author   Collin Lee <clee at sugarcrm dot com>
  */
 function smarty_modifier_default_date_value($defaultValue)
 {

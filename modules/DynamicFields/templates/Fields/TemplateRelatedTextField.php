@@ -219,11 +219,12 @@ class TemplateRelatedTextField extends TemplateText
         $def['source'] = 'non-db';
         return $def;
     }
-    
+
     /**
      * Delete field
      *
      * @param DynamicField $df
+     * @throws Exception
      */
     public function delete($df)
     {

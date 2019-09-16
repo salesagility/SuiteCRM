@@ -73,6 +73,7 @@ if (!defined('sugarEntry')) {
       * This method calls functions on the implementation class and returns the output or Fault object in case of error to client
       *
       * @return unknown
+      * @throws ReflectionException
       */
      public function serve()
      {

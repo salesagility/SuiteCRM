@@ -134,11 +134,12 @@ class ViewResetmodule extends SugarView
         
         echo $ajax->getJavascript() ;
     }
-    
+
     /**
      * Removes all custom fields created in studio
      *
      * @return html output record of the field deleted
+     * @throws Exception
      */
     public function removeCustomFields()
     {
@@ -167,11 +168,12 @@ class ViewResetmodule extends SugarView
         }
         return ($out);
     }
-    
+
     /**
      * Removes the metadata files for all known studio layouts.
      *
      * @return html output record of the files deleted
+     * @throws Exception
      */
     public function removeCustomLayouts()
     {

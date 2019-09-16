@@ -839,15 +839,16 @@ class EmailMan extends SugarBean
     }
 
     /**
+     * @param SugarPHPMailer $mail
+     * @param int $save_emails
+     * @param bool $testmode
+     * @return bool
+     * @throws phpmailerException
      * @global array $beanList ;
      * @global array $beanFiles ;
      * @global Configurator|array $sugar_config ;
      * @global array $mod_strings ;
      * @global Localization $locale ;
-     * @param SugarPHPMailer $mail
-     * @param int $save_emails
-     * @param bool $testmode
-     * @return bool
      */
     public function sendEmail(SugarPHPMailer $mail, $save_emails = 1, $testmode = false)
     {

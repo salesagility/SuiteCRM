@@ -213,12 +213,13 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
      * Zend_Search_Lucene_Index_SegmentInfo constructor
      *
      * @param Zend_Search_Lucene_Storage_Directory $directory
-     * @param string     $name
-     * @param integer    $docCount
-     * @param integer    $delGen
+     * @param string $name
+     * @param integer $docCount
+     * @param integer $delGen
      * @param array|null $docStoreOptions
-     * @param boolean    $hasSingleNormFile
-     * @param boolean    $isCompound
+     * @param boolean $hasSingleNormFile
+     * @param boolean $isCompound
+     * @throws Zend_Search_Lucene_Exception
      */
     public function __construct(Zend_Search_Lucene_Storage_Directory $directory, $name, $docCount, $delGen = 0, $docStoreOptions = null, $hasSingleNormFile = false, $isCompound = null)
     {
@@ -572,6 +573,7 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
      *
      * @param string $extension
      * @return integer
+     * @throws Zend_Search_Lucene_Exception
      */
     public function compoundFileLength($extension)
     {
@@ -804,6 +806,7 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
      *
      * @param Zend_Search_Lucene_Index_Term $term
      * @return Zend_Search_Lucene_Index_TermInfo
+     * @throws Zend_Search_Lucene_Exception
      */
     public function getTermInfo(Zend_Search_Lucene_Index_Term $term)
     {
@@ -934,6 +937,7 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
      * @param integer $shift
      * @param Zend_Search_Lucene_Index_DocsFilter|null $docsFilter
      * @return array
+     * @throws Zend_Search_Lucene_Exception
      */
     public function termDocs(Zend_Search_Lucene_Index_Term $term, $shift = 0, $docsFilter = null)
     {
@@ -1054,7 +1058,8 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
      * @param Zend_Search_Lucene_Index_Term $term
      * @param integer $shift
      * @param Zend_Search_Lucene_Index_DocsFilter|null $docsFilter
-     * @return Zend_Search_Lucene_Index_TermInfo
+     * @return array
+     * @throws Zend_Search_Lucene_Exception
      */
     public function termFreqs(Zend_Search_Lucene_Index_Term $term, $shift = 0, $docsFilter = null)
     {
@@ -1181,7 +1186,8 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
      * @param Zend_Search_Lucene_Index_Term $term
      * @param integer $shift
      * @param Zend_Search_Lucene_Index_DocsFilter|null $docsFilter
-     * @return Zend_Search_Lucene_Index_TermInfo
+     * @return array
+     * @throws Zend_Search_Lucene_Exception
      */
     public function termPositions(Zend_Search_Lucene_Index_Term $term, $shift = 0, $docsFilter = null)
     {
@@ -1393,6 +1399,7 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
      * @param integer $id
      * @param string $fieldName
      * @return float
+     * @throws Zend_Search_Lucene_Exception
      */
     public function norm($id, $fieldName)
     {
@@ -1414,6 +1421,7 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
      *
      * @param string $fieldName
      * @return string
+     * @throws Zend_Search_Lucene_Exception
      */
     public function normVector($fieldName)
     {
@@ -1547,8 +1555,8 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
      * This method must be invoked only from the Writer _updateSegments() method,
      * so index Write lock has to be already obtained.
      *
+     * @throws Zend_Search_Lucene_Exception
      * @internal
-     * @throws Zend_Search_Lucene_Exceptions
      */
     public function writeChanges()
     {

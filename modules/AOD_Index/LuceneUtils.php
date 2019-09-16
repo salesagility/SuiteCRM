@@ -70,10 +70,13 @@ function createHTMLDocument($path)
     $doc->addField(Zend_Search_Lucene_Field::Text('filename', basename($path)));
     return $doc;
 }
+
 /**
  * Given a path to a DocX document returns a lucene document with filename and contents set.
  * @param $path
  * @return Zend_Search_Lucene_Document
+ * @throws Zend_Search_Lucene_Document_Exception
+ * @throws Zend_Search_Lucene_Exception
  */
 function createDocXDocument($path)
 {

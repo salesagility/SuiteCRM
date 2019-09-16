@@ -119,8 +119,9 @@ class Zend_Search_Lucene_Search_QueryToken
      * IndexReader constructor needs token type and token text as a parameters.
      *
      * @param integer $tokenCategory
-     * @param string  $tokText
+     * @param $tokenText
      * @param integer $position
+     * @throws Zend_Search_Lucene_Exception
      */
     public function __construct($tokenCategory, $tokenText, $position)
     {

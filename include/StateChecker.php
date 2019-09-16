@@ -273,10 +273,11 @@ class StateChecker
         }
         return $tables;
     }
-    
+
     /**
      *
      * @return string
+     * @throws StateCheckerException
      */
     protected function getDatabaseHash()
     {
@@ -336,10 +337,11 @@ class StateChecker
         }
         return $files;
     }
-    
+
     /**
      *
      * @return string
+     * @throws StateCheckerException
      */
     protected function getFilesystemHash()
     {
@@ -349,10 +351,11 @@ class StateChecker
     }
     
     // -------------- SUPERGLOBALS -----------------
-    
+
     /**
      *
      * @return string
+     * @throws StateCheckerException
      */
     protected function getSuperGlobalsHash()
     {
@@ -366,10 +369,11 @@ class StateChecker
     }
     
     // -------------- ERROR LEVEL -------------
-    
+
     /**
      *
      * @return string hash
+     * @throws StateCheckerException
      */
     protected function getErrorLevelHash()
     {
@@ -396,11 +400,12 @@ class StateChecker
     {
         return $this->lashHashAll;
     }
-    
+
     /**
      * Retrieve a hash of all
      *
      * @return string hash
+     * @throws StateCheckerException
      */
     public function getStateHash()
     {

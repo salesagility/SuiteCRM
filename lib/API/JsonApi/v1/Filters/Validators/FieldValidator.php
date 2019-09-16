@@ -68,7 +68,8 @@ class FieldValidator implements ValidatorInterface
     /**
      * @param string $fieldKey
      * @return bool
-     *  @throws \SuiteCRM\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
+     * @throws \SuiteCRM\Exception\Exception
      */
     public function isValid($fieldKey)
     {

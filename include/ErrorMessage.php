@@ -144,7 +144,8 @@ class ErrorMessage
     /**
      *
      * @param string $message
-     * @param integer $level
+     * @param string $level
+     * @throws ErrorMessageException
      */
     public static function log($message, $level = self::DEFAULT_LOG_LEVEL)
     {
@@ -155,6 +156,7 @@ class ErrorMessage
      *
      * @param string $message
      * @param integer $code
+     * @throws ErrorMessageException
      */
     public static function drop($message, $code = self::DEFAULT_CODE)
     {

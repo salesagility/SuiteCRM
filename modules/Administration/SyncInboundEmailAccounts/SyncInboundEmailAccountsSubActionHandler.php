@@ -82,6 +82,8 @@ class SyncInboundEmailAccountsSubActionHandler
      * @param SyncInboundEmailAccountsPage $sync
      * @param ImapHandlerInterface $imap
      * @throws SyncInboundEmailAccountsException
+     * @throws SyncInboundEmailAccountsInvalidMethodTypeException
+     * @throws SyncInboundEmailAccountsInvalidSubActionArgumentsException
      * @throws SyncInboundEmailAccountsNoMethodException
      */
     public function __construct(SyncInboundEmailAccountsPage $sync, ImapHandlerInterface $imap)
@@ -515,6 +517,7 @@ class SyncInboundEmailAccountsSubActionHandler
      * calling by sync action to get selected inbound email accounts
      *
      * @return mixed
+     * @throws SyncInboundEmailAccountsEmptyException
      * @throws SyncInboundEmailAccountsInvalidSubActionArgumentsException
      */
     protected function getRequestedInboundEmailAccounts()

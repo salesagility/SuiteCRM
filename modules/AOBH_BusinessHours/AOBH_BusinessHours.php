@@ -142,6 +142,7 @@ class AOBH_BusinessHours extends Basic
      * @param DateTime $endTime
      *
      * @return int
+     * @throws Exception
      */
     public function diffBusinessHours(DateTime $startTime, DateTime $endTime)
     {
@@ -179,6 +180,7 @@ class AOBH_BusinessHours extends Basic
      * @param DateTime|null $date
      *
      * @return DateTime
+     * @throws Exception
      */
     public function addBusinessHours($hours, DateTime $date = null)
     {

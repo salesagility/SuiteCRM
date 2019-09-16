@@ -818,10 +818,11 @@ class Importer
     /**
      * Replaces PHP error handler in Step4
      *
-     * @param int    $errno
+     * @param int $errno
      * @param string $errstr
      * @param string $errfile
      * @param string $errline
+     * @throws Exception
      */
     public static function handleImportErrors($errno, $errstr, $errfile, $errline)
     {

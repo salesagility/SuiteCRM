@@ -155,6 +155,7 @@ class Zend_Search_Lucene_LockManager
      *
      * @param Zend_Search_Lucene_Storage_Directory $lockDirectory
      * @return boolean
+     * @throws Zend_Search_Lucene_Exception
      */
     public static function escalateReadLock(Zend_Search_Lucene_Storage_Directory $lockDirectory)
     {

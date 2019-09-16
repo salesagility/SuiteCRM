@@ -68,6 +68,7 @@ class DetailView2 extends EditView
      * @param string $tpl tpl String value of file location to use in overriding default Smarty template
      * @param bool $createFocus
      * @param string $metadataFileName specifies the name of the metadata file eg 'detailviewdefs'
+     * @throws Exception
      */
     public function setup(
         $module,

@@ -110,6 +110,7 @@ class SubPanelRowCounter
 
     /**
      * @return int
+     * @throws \Exception
      */
     public function getSingleSubPanelRowCount()
     {
@@ -134,6 +135,7 @@ class SubPanelRowCounter
 
     /**
      * @return string
+     * @throws \Exception
      */
     public function makeSubPanelRowCountQuery()
     {

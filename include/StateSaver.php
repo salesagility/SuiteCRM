@@ -158,6 +158,7 @@ class StateSaver
      * @param mixed $value
      * @param string $key
      * @param string $namespace
+     * @throws StateSaverException
      */
     public function push($value, $key, $namespace)
     {
@@ -205,12 +206,13 @@ class StateSaver
           
         return $value;
     }
-    
+
     /**
      * Save a global variable into storage at an optional namespace.
      *
      * @param string $key
      * @param string $namespace
+     * @throws StateSaverException
      */
     public function pushGlobal($key, $namespace = 'GLOBALS')
     {
@@ -356,6 +358,7 @@ class StateSaver
      * @param string $table
      * @param string $namespace
      * @return mixed
+     * @throws StateSaverException
      */
     public function popTable($table, $namespace = 'db_table')
     {
@@ -488,26 +491,28 @@ class StateSaver
             }
         }
     }
-    
+
     /**
      * Store PHP Configuration Options
-     * @see more at StateCheckerConfig::$phpConfigOptionKeys
-     *
      * @param string $key
      * @param string $namespace
+     * @throws StateSaverException
+     * @see more at StateCheckerConfig::$phpConfigOptionKeys
+     *
      */
     public function pushPHPConfigOptions($key = 'all', $namespace = 'php_config_options')
     {
         $configOptions = self::getPHPConfigOptions();
         $this->push($configOptions, $key, $namespace);
     }
-    
+
     /**
      * Restore PHP Configuration Options
-     * @see more at StateCheckerConfig::$phpConfigOptionKeys
-     *
      * @param string $key
      * @param string $namespace
+     * @throws StateSaverException
+     * @see more at StateCheckerConfig::$phpConfigOptionKeys
+     *
      */
     public function popPHPConfigOptions($key = 'all', $namespace = 'php_config_options')
     {

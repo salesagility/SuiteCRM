@@ -64,9 +64,10 @@ class DBManagerFactory
     /**
      * Returns a reference to the DB object of specific type
      *
-     * @param  string $type DB type
+     * @param string $type DB type
      * @param array $config DB configuration
      * @return object DBManager instance
+     * @throws Exception
      */
     public static function getTypeInstance($type, $config = array())
     {

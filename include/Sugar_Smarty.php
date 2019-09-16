@@ -119,15 +119,16 @@ class Sugar_Smarty extends Smarty
     /**
      * executes & returns or displays the template results
      *
-     * @global array $app_list_strings
-     * @global array $app_strings
-     * @global array $mod_strings
-     * @global array $sugar_config
      * @param string $resource_name
      * @param string|null $cache_id
      * @param string|null $compile_id
      * @param boolean $display
      * @return string
+     * @throws \SuiteCRM\StateSaverException
+     * @global array $app_list_strings
+     * @global array $app_strings
+     * @global array $mod_strings
+     * @global array $sugar_config
      */
     public function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false)
     {

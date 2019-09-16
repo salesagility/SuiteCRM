@@ -76,6 +76,7 @@ class tracker_monitor extends Monitor
      * the flush method passing with the montior ($this) instance.
      * @param boolean $flush parameter indicating whether or not to flush the instance data to store or possibly cache
      * @return bool
+     * @throws Exception
      */
     public function save($flush=true)
     {

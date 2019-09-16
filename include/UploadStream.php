@@ -117,6 +117,7 @@ class UploadStream
     /**
      * Get upload directory
      * @return string
+     * @throws Exception
      */
     public static function getDir()
     {
@@ -171,6 +172,7 @@ class UploadStream
      * @param string $path Upload stream path (with upload://)
      * @param bool $writable
      * @return boolean
+     * @throws Exception
      */
     public static function ensureDir($path, $writable = true)
     {

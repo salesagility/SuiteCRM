@@ -76,13 +76,14 @@ class iCal extends vCal
     }
 
     /**
-    * Gets the UTC formatted dateTime from the given timestamp.
-    *
-    * Checks the version of Sugar to see if user timezone adjustments are needed.
-    *
-    * @param integer $ts the timestamp to format
-    * @return string the UTC formatted dateTime
-    */
+     * Gets the UTC formatted dateTime from the given timestamp.
+     *
+     * Checks the version of Sugar to see if user timezone adjustments are needed.
+     *
+     * @param integer $ts the timestamp to format
+     * @return string the UTC formatted dateTime
+     * @throws Exception
+     */
     protected function getUtcTime($ts)
     {
         global $timedate, $sugar_version;
@@ -105,14 +106,15 @@ class iCal extends vCal
     }
 
     /**
-    * Create a todo entry for the given task.
-    *
-    * @param UserBean $user_bean the current UserBean
-    * @param Task $task the task for the todo entry
-    * @param string $moduleName the name of the task module
-    * @param string $dtstamp the current timestamp
-    * @return string the todo entry for the task
-    */
+     * Create a todo entry for the given task.
+     *
+     * @param UserBean $user_bean the current UserBean
+     * @param Task $task the task for the todo entry
+     * @param string $moduleName the name of the task module
+     * @param string $dtstamp the current timestamp
+     * @return string the todo entry for the task
+     * @throws Exception
+     */
     protected function createSugarIcalTodo($user_bean, $task, $moduleName, $dtstamp)
     {
         global $sugar_config;
@@ -457,10 +459,11 @@ class iCal extends vCal
     }
 
     /**
-    * Gets the timezone string for the current user.
-    *
-    * @return string the full timezone definition including daylight savings for the iCal
-    */
+     * Gets the timezone string for the current user.
+     *
+     * @return string the full timezone definition including daylight savings for the iCal
+     * @throws Exception
+     */
     protected function getTimezoneString()
     {
         global $current_user, $timedate;

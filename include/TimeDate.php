@@ -182,6 +182,7 @@ class TimeDate
     /**
      * Create TimeDate handler
      * @param User $user User to work with, default if current user
+     * @throws Exception
      */
     public function __construct(User $user = null)
     {
@@ -913,6 +914,7 @@ class TimeDate
      *
      * @param interger|string $ts
      * @return SugarDateTime
+     * @throws Exception
      */
     public function fromTimestamp($ts)
     {
@@ -946,6 +948,7 @@ class TimeDate
      * Get string defining midnight in current user's format
      * @param string $format Time format to use
      * @return string
+     * @throws Exception
      */
     protected function _get_midnight($format = null)
     {
@@ -1267,6 +1270,7 @@ class TimeDate
      * Get 'now' DateTime object
      * @param bool $userTz return in user timezone?
      * @return SugarDateTime
+     * @throws Exception
      */
     public function getNow($userTz = false)
     {
@@ -1349,6 +1353,7 @@ class TimeDate
      * @param string|DateTime $date Date in any suitable format
      * @param User $user
      * @return array Start & end date in start, startdate, starttime, end, enddate, endtime
+     * @throws Exception
      */
     public function getDayStartEndGMT($date, User $user = null)
     {
@@ -1448,6 +1453,7 @@ class TimeDate
      * Guess the timezone for the current user
      * @param int $userOffset Offset from GMT in minutes
      * @return string
+     * @throws Exception
      */
     public static function guessTimezone($userOffset = 0)
     {
@@ -1534,6 +1540,7 @@ class TimeDate
      * Note: it uses current date for GMT offset, so it may be not suitable for displaying generic dates
      * @param string|DateTimeZone $name TZ name
      * @return string
+     * @throws Exception
      */
     public static function tzName($name)
     {
@@ -1584,6 +1591,7 @@ class TimeDate
     /**
      * Get list of all timezones in the system
      * @return array
+     * @throws Exception
      */
     public static function getTimezoneList()
     {
@@ -1870,14 +1878,15 @@ class TimeDate
     }
 
     /**
-     * @param    string$date                 date/time formatted in user's selected format
+     * @param string $date date/time formatted in user's selected format
      * @param string $format destination format value as passed to PHP's date() funtion
      * @param boolean $to
-     * @param    object$user                 user object from which Timezone and DST
+     * @param object $user user object from which Timezone and DST
      * @param string $usetimezone timezone name
      * values will be derived
      * @return     string        date formatted and adjusted for TZ and DST
-     *@deprecated for public use
+     * @throws Exception
+     * @deprecated for public use
      * handles offset values for Timezones and DST
      */
     public function handle_offset($date, $format, $to = true, $user = null, $usetimezone = null)
@@ -1911,14 +1920,15 @@ class TimeDate
     }
 
     /**
+     * @param $date
+     * @return array
+     * @throws Exception
      * @deprecated for public use
      * this method will take an input $date variable (expecting Y-m-d format)
      * and get the GMT equivalent - with an hour-level granularity :
      * return the max value of a given locale's
      * date+time in GMT metrics (i.e., if in PDT, "2005-01-01 23:59:59" would be
      * "2005-01-02 06:59:59" in GMT metrics)
-     * @param $date
-     * @return array
      */
     public function handleOffsetMax($date)
     {

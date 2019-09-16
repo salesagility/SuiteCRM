@@ -190,6 +190,7 @@ class SugarAuthenticateUser
     }
 
     /**
+     * @throws SuiteException
      * @global User $current_user
      */
     public function showFactorTokenInput()
@@ -228,6 +229,7 @@ class SugarAuthenticateUser
 
     /**
      * @return bool
+     * @throws Exception
      */
     public function sendFactorTokenToUser()
     {

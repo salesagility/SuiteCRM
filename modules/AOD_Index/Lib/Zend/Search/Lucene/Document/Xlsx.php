@@ -255,9 +255,10 @@ class Zend_Search_Lucene_Document_Xlsx extends Zend_Search_Lucene_Document_OpenX
     /**
      * Load Xlsx document from a file
      *
-     * @param string  $fileName
+     * @param string $fileName
      * @param boolean $storeContent
      * @return Zend_Search_Lucene_Document_Xlsx
+     * @throws Zend_Search_Lucene_Exception
      */
     public static function loadXlsxFile($fileName, $storeContent = false)
     {

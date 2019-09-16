@@ -155,6 +155,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
      *
      * @param Zend_Search_Lucene_Interface $index
      * @return Zend_Search_Lucene_Search_Query
+     * @throws Zend_Search_Lucene_Exception
      */
     public function optimize(Zend_Search_Lucene_Interface $index)
     {

@@ -63,6 +63,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
     /**
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
      * @param string $file
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
     public function buildFile($interchange, $file)
     {

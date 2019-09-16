@@ -710,9 +710,11 @@ class SugarChart
     /**
      * function to save XML contents into a file
      *
-     * @param 	string $xmlFilename location of the xml file
-     *			string $xmlContents contents of the xml file
-     * @return	string boolean denoting whether save has failed
+     * @param string $xmlFilename location of the xml file
+     *            string $xmlContents contents of the xml file
+     * @param $xmlContents
+     * @return    string boolean denoting whether save has failed
+     * @throws Exception
      */
     public function saveXMLFile($xmlFilename, $xmlContents)
     {

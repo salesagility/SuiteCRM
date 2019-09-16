@@ -227,6 +227,7 @@ class CronExpression
      * @param string|\DateTime $currentTime Relative calculation date
      *
      * @return bool Returns TRUE if the cron is due to run or FALSE if not
+     * @throws \Exception
      */
     public function isDue($currentTime = 'now')
     {
@@ -256,14 +257,14 @@ class CronExpression
     /**
      * Get the next or previous run date of the expression relative to a date
      *
-     * @param string|\DateTime $currentTime      Relative calculation date
-     * @param int              $nth              Number of matches to skip before returning
-     * @param bool             $invert           Set to TRUE to go backwards in time
-     * @param bool             $allowCurrentDate Set to TRUE to return the
+     * @param string|\DateTime $currentTime Relative calculation date
+     * @param int $nth Number of matches to skip before returning
+     * @param bool $invert Set to TRUE to go backwards in time
+     * @param bool $allowCurrentDate Set to TRUE to return the
      *                                           current date if it matches the cron expression
      *
      * @return \DateTime
-     * @throws \RuntimeException on too many iterations
+     * @throws \Exception
      */
     protected function getRunDate($currentTime = null, $nth = 0, $invert = false, $allowCurrentDate = false)
     {

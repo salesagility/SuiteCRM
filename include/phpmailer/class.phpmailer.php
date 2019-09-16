@@ -813,6 +813,7 @@ class PHPMailer
      * @param string $address The email address to send to
      * @param string $name
      * @return boolean true on success, false if address already used or invalid in some way
+     * @throws phpmailerException
      */
     public function addAddress($address, $name = '')
     {
@@ -825,6 +826,7 @@ class PHPMailer
      * @param string $address The email address to send to
      * @param string $name
      * @return boolean true on success, false if address already used or invalid in some way
+     * @throws phpmailerException
      */
     public function addCC($address, $name = '')
     {
@@ -837,6 +839,7 @@ class PHPMailer
      * @param string $address The email address to send to
      * @param string $name
      * @return boolean true on success, false if address already used or invalid in some way
+     * @throws phpmailerException
      */
     public function addBCC($address, $name = '')
     {
@@ -848,6 +851,7 @@ class PHPMailer
      * @param string $address The email address to reply to
      * @param string $name
      * @return boolean true on success, false if address already used or invalid in some way
+     * @throws phpmailerException
      */
     public function addReplyTo($address, $name = '')
     {
@@ -3864,6 +3868,7 @@ class PHPMailer
      * @param string $subject Subject
      * @param string $body Body
      * @return string
+     * @throws phpmailerException
      */
     public function DKIM_Add($headers_line, $subject, $body)
     {

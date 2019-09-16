@@ -161,10 +161,11 @@ class Zend_Search_Lucene_Document_Docx extends Zend_Search_Lucene_Document_OpenX
     /**
      * Load Docx document from a file
      *
-     * @param string  $fileName
+     * @param string $fileName
      * @param boolean $storeContent
      * @return Zend_Search_Lucene_Document_Docx
      * @throws Zend_Search_Lucene_Document_Exception
+     * @throws Zend_Search_Lucene_Exception
      */
     public static function loadDocxFile($fileName, $storeContent = false)
     {

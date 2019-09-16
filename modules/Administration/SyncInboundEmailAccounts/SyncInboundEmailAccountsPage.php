@@ -72,6 +72,8 @@ class SyncInboundEmailAccountsPage
      *
      * @param array $includeData
      * @param ImapHandlerInterface $imap
+     * @throws SyncInboundEmailAccountsException
+     * @throws SyncInboundEmailAccountsNoMethodException
      */
     public function __construct($includeData, ImapHandlerInterface $imap)
     {

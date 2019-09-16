@@ -45,6 +45,7 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
      *
      * @param string $filename
      * @param string $mode
+     * @throws Zend_Search_Lucene_Exception
      */
     public function __construct($filename, $mode='r+b')
     {
@@ -145,6 +146,7 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
      *
      * @param integer $length
      * @return string
+     * @throws Zend_Search_Lucene_Exception
      */
     protected function _fread($length=1)
     {

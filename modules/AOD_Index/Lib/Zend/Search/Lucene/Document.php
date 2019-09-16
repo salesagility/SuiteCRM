@@ -96,6 +96,7 @@ class Zend_Search_Lucene_Document
      *
      * @param string $fieldName
      * @return Zend_Search_Lucene_Field
+     * @throws Zend_Search_Lucene_Exception
      */
     public function getField($fieldName)
     {
@@ -110,8 +111,10 @@ class Zend_Search_Lucene_Document
     /**
      * Returns the string value of a named field in this document.
      *
-     * @see __get()
+     * @param $fieldName
      * @return string
+     * @throws Zend_Search_Lucene_Exception
+     * @see __get()
      */
     public function getFieldValue($fieldName)
     {
@@ -121,8 +124,10 @@ class Zend_Search_Lucene_Document
     /**
      * Returns the string value of a named field in UTF-8 encoding.
      *
-     * @see __get()
+     * @param $fieldName
      * @return string
+     * @throws Zend_Search_Lucene_Exception
+     * @see __get()
      */
     public function getFieldUtf8Value($fieldName)
     {

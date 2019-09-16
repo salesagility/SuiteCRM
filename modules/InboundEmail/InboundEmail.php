@@ -218,7 +218,9 @@ class InboundEmail extends SugarBean
 
     /**
      *
+     * @param ImapHandlerInterface|null $imap
      * @return ImapHandlerInterface
+     * @throws ImapHandlerException
      */
     public function getImap(ImapHandlerInterface $imap = null)
     {
@@ -316,8 +318,10 @@ class InboundEmail extends SugarBean
 
     /**
      * Renames an IMAP mailbox
+     * @param $oldName
      * @param string $newName
      * @return bool
+     * @throws \SuiteCRM\StateSaverException
      */
     public function renameFolder($oldName, $newName)
     {

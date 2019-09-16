@@ -81,6 +81,7 @@ class LangException extends Exception implements LangExceptionInterface
     /**
      *
      * @return string|null
+     * @throws ErrorMessageException
      */
     public function getLangMessage()
     {

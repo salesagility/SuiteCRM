@@ -704,6 +704,7 @@ abstract class BaseFacebook
      * Make an API call.
      *
      * @return mixed The decoded response
+     * @throws FacebookApiException
      */
     public function api(/* polymorphic */)
     {
@@ -1006,6 +1007,7 @@ abstract class BaseFacebook
      * @param CurlHandler $ch Initialized curl handle
      *
      * @return string The response text
+     * @throws FacebookApiException
      */
     protected function makeRequest($url, $params, $ch=null)
     {
@@ -1391,6 +1393,7 @@ abstract class BaseFacebook
      *
      * @param array $result A record storing the error message returned
      *                      by a failed API call.
+     * @throws FacebookApiException
      */
     protected function throwAPIException($result)
     {

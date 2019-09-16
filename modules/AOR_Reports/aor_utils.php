@@ -225,6 +225,7 @@ function getConditionsAsParameters($report, $override = array())
  * getPeriodDate
  * @param $date_time_period_list_selected
  * @return DateTime
+ * @throws Exception
  */
 function getPeriodDate($date_time_period_list_selected)
 {
@@ -329,8 +330,9 @@ function getPeriodDate($date_time_period_list_selected)
 
 /**
  * getPeriodDate
- * @param $date_time_period_list_selected
+ * @param $dateTimePeriodListSelected
  * @return DateTime
+ * @throws Exception
  */
 function getPeriodEndDate($dateTimePeriodListSelected)
 {
@@ -413,6 +415,7 @@ function getPeriodEndDate($dateTimePeriodListSelected)
 /**
  * @param int $offsetMonths - defines start of the year.
  * @return array - The each quarters boundary
+ * @throws Exception
  */
 function calculateQuarters($offsetMonths = 0)
 {

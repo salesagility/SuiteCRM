@@ -60,6 +60,7 @@ class Today implements ByPreMadeFilterInterpreter
 
     /**
      * @return string
+     * @throws \Exception
      */
     public function getByPreMadeFilter()
     {

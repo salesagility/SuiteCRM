@@ -4476,6 +4476,7 @@ function array_depth($array, $depth_count = -1, $depth_array = array())
  * @param string $name Name of Group User
  *
  * @return string GUID of new Group User
+ * @throws SuiteException
  */
 function createGroupUser($name)
 {

@@ -161,6 +161,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
      *
      * @param Zend_Search_Lucene_Index_Term $term
      * @param integer $position
+     * @throws Zend_Search_Lucene_Exception
      */
     public function addTerm(Zend_Search_Lucene_Index_Term $term, $position = null)
     {
@@ -186,6 +187,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
      *
      * @param Zend_Search_Lucene_Interface $index
      * @return Zend_Search_Lucene_Search_Query
+     * @throws Zend_Search_Lucene_Exception
      */
     public function rewrite(Zend_Search_Lucene_Interface $index)
     {

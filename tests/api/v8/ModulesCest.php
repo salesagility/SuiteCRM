@@ -388,6 +388,7 @@ class ModulesCest
     /**
      * Create a document resource and attaches a file
      * @param ApiTester $I
+     * @throws Exception
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: POST

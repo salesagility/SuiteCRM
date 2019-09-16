@@ -164,6 +164,7 @@ class DashletMetaDataParser extends ListLayoutMetaDataParser
 
     /**
      * @param bool $populate
+     * @throws Exception
      */
     public function handleSave($populate = true)
     {

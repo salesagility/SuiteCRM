@@ -89,7 +89,8 @@ class FieldOperator extends Operator
     /**
      * @param string $operator
      * @return bool
-     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws \SuiteCRM\Exception\Exception
      */
     public function isOperator($operator)
     {

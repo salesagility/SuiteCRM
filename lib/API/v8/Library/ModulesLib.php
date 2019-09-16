@@ -79,9 +79,10 @@ class ModulesLib
      * @param Response $res
      * @param array $args
      * @return array list => SugarBean[], current_offset => 0, row_count => 0
+     * @throws BadRequestException
      * @throws ModuleNotFoundException
-     * @throws \InvalidArgumentException
-     * @throws NotAllowed
+     * @throws \SuiteCRM\API\v8\Exception\ApiException
+     * @throws \SuiteCRM\Exception\Exception
      */
     public function generatePaginatedModuleRecords(Request $req, Response $res, array $args = array())
     {

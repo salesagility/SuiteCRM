@@ -88,6 +88,8 @@ class NotInOperator extends Operator implements OperatorInterface
     /**
      * @param array $operands
      * @return string
+     * @throws InvalidArgumentException
+     * @throws \SuiteCRM\API\v8\Exception\BadRequestException
      */
     public function toSqlOperands(array $operands)
     {

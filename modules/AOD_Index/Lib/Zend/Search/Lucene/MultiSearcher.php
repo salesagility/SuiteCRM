@@ -132,7 +132,8 @@ class Zend_Search_Lucene_MultiSearcher implements Zend_Search_Lucene_Interface
     /**
      * Returns the Zend_Search_Lucene_Storage_Directory instance for this index.
      *
-     * @return Zend_Search_Lucene_Storage_Directory
+     * @return void
+     * @throws Zend_Search_Lucene_Exception
      */
     public function getDirectory()
     {

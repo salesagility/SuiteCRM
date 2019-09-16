@@ -60,10 +60,11 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         get_sugar_config_defaults();
         $current_user = new User();
     }
-    
+
     /**
      *
      * @return StateSaver
+     * @throws \SuiteCRM\StateSaverException
      */
     protected function storeState()
     {
@@ -74,10 +75,11 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
         return $state;
     }
-    
+
     /**
      *
      * @param StateSaver $state
+     * @throws \SuiteCRM\StateSaverException
      */
     protected function restoreState(StateSaver $state)
     {

@@ -84,7 +84,7 @@ class ListViewSearchService
     ) {
         $this->beanManager = $beanManager;
     }
-    
+
     /**
      *
      * @param LangText $trans
@@ -93,6 +93,7 @@ class ListViewSearchService
      * @param string $valueKey
      * @param array $displayColumns
      * @return array
+     * @throws \SuiteCRM\ErrorMessageException
      */
     protected function getDataTranslated($trans, $data, $part, $valueKey, $displayColumns)
     {
@@ -112,11 +113,12 @@ class ListViewSearchService
         
         return $data;
     }
-    
+
     /**
      * @param ListViewSearchParams $params
      *
      * @return JsonSerializable
+     * @throws \Exception
      */
     public function getListViewSearchDefs(ListViewSearchParams $params)
     {

@@ -106,6 +106,7 @@ class SugarDateTime extends DateTime
      * @param string $time Time to parse
      * @param DateTimeZone $timezone
      * @return SugarDateTime
+     * @throws Exception
      * @see DateTime::createFromFormat
      */
     public static function createFromFormat($format, $time, $timezone = null)
@@ -134,11 +135,12 @@ class SugarDateTime extends DateTime
 
     /**
      * Internal _createFromFormat implementation for 5.2
-     * @internal
      * @param string $format Format like in date()
      * @param string $time Time string to parse
      * @param DateTimeZone $timezone TZ
      * @return SugarDateTime
+     * @throws Exception
+     * @internal
      * @see DateTime::createFromFormat
      */
     protected static function _createFromFormat($format, $time, DateTimeZone $timezone = null)
@@ -244,6 +246,7 @@ class SugarDateTime extends DateTime
      * @param string $name
      * @param array $args
      * @return mixed
+     * @throws Exception
      */
     public function __call($name, $args)
     {
@@ -279,6 +282,7 @@ class SugarDateTime extends DateTime
      * Get specific hour of today
      * @param int $hour_index
      * @return SugarDateTime
+     * @throws Exception
      */
     public function get_datetime_by_index_today($hour_index)
     {
@@ -371,6 +375,7 @@ class SugarDateTime extends DateTime
      * Create from ISO 8601 datetime
      * @param string $str
      * @return SugarDateTime
+     * @throws Exception
      */
     public static function parse_utc_date_time($str)
     {

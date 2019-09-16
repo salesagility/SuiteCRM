@@ -121,6 +121,7 @@ class MergeRecord extends SugarBean
      * @param $merge_module
      * @param bool $load_module_strings
      * @param string $merge_id
+     * @throws Exception
      */
     public function load_merge_bean($merge_module, $load_module_strings = false, $merge_id = '')
     {

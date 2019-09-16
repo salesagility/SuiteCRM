@@ -76,12 +76,13 @@ class ACLAction extends SugarBean
 
 
     /**
-    * static addActions($category, $type='module')
-    * Adds all default actions for a category/type
-    *
-    * @param STRING $category - the category (e.g module name - Accounts, Contacts)
-    * @param STRING $type - the type (e.g. 'module', 'field')
-    */
+     * static addActions($category, $type='module')
+     * Adds all default actions for a category/type
+     *
+     * @param STRING $category - the category (e.g module name - Accounts, Contacts)
+     * @param STRING $type - the type (e.g. 'module', 'field')
+     * @throws Exception
+     */
     public static function addActions($category, $type='module')
     {
         global $ACLActions;
@@ -109,12 +110,13 @@ class ACLAction extends SugarBean
     }
 
     /**
-    * static removeActions($category, $type='module')
-    * Removes all default actions for a category/type
-    *
-    * @param STRING $category - the category (e.g module name - Accounts, Contacts)
-    * @param STRING $type - the type (e.g. 'module', 'field')
-    */
+     * static removeActions($category, $type='module')
+     * Removes all default actions for a category/type
+     *
+     * @param STRING $category - the category (e.g module name - Accounts, Contacts)
+     * @param STRING $type - the type (e.g. 'module', 'field')
+     * @throws Exception
+     */
     public static function removeActions($category, $type='module')
     {
         global $ACLActions;

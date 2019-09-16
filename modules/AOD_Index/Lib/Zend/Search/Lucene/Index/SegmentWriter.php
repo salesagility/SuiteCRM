@@ -224,6 +224,7 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
      * Add stored fields information
      *
      * @param array $storedFields array of Zend_Search_Lucene_Field objects
+     * @throws Zend_Search_Lucene_Exception
      */
     public function addStoredFields($storedFields)
     {
@@ -517,6 +518,7 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
      * @param Zend_Search_Lucene_Index_Term $term
      * @param Zend_Search_Lucene_Index_TermInfo $prevTermInfo
      * @param Zend_Search_Lucene_Index_TermInfo $termInfo
+     * @throws Zend_Search_Lucene_Exception
      */
     protected function _dumpTermDictEntry(
         Zend_Search_Lucene_Storage_File $dicFile,

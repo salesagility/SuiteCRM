@@ -97,7 +97,9 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
 
     /**
      * {@inheritdoc}
+     * @param $tokenId
      * @return bool
+     * @throws \Exception
      */
     public function isAccessTokenRevoked($tokenId)
     {

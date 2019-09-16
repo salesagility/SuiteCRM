@@ -187,9 +187,10 @@ class Zend_Search_Lucene_Document_Pptx extends Zend_Search_Lucene_Document_OpenX
     /**
      * Load Pptx document from a file
      *
-     * @param string  $fileName
+     * @param string $fileName
      * @param boolean $storeContent
      * @return Zend_Search_Lucene_Document_Pptx
+     * @throws Zend_Search_Lucene_Exception
      */
     public static function loadPptxFile($fileName, $storeContent = false)
     {

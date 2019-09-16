@@ -215,7 +215,8 @@ class Zend_Search_Lucene_Search_Query_Wildcard extends Zend_Search_Lucene_Search
      * Optimize query in the context of specified index
      *
      * @param Zend_Search_Lucene_Interface $index
-     * @return Zend_Search_Lucene_Search_Query
+     * @return void
+     * @throws Zend_Search_Lucene_Exception
      */
     public function optimize(Zend_Search_Lucene_Interface $index)
     {

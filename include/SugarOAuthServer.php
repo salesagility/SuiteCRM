@@ -161,7 +161,8 @@ class SugarOAuthServer
      * Create OAuth provider
      *
      * Checks current request for OAuth valitidy
-     * @param bool $add_rest add REST endpoint as request path
+     * @param string $req_path
+     * @throws OAuthException
      */
     public function __construct($req_path = '')
     {

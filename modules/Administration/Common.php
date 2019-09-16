@@ -49,6 +49,7 @@ require_once('include/utils/array_utils.php');
 
 /**
  * @return bool
+ * @throws Exception
  * @desc Creates the include language directory under the custom directory.
  */
 function create_include_lang_dir()
@@ -61,8 +62,9 @@ function create_include_lang_dir()
 }
 
 /**
- * @return bool
  * @param module string
+ * @return bool
+ * @throws Exception
  * @desc Creates the module's language directory under the custom directory.
  */
 function create_module_lang_dir($module)

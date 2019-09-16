@@ -94,6 +94,7 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
      * Constructor
      * @param string $subpanelName The name of this subpanel
      * @param string $moduleName The name of the module to which this subpanel belongs
+     * @throws Exception
      */
     public function __construct($subpanelName, $moduleName)
     {
@@ -204,7 +205,8 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
      * @param string $moduleName The name of the module that will use this layout
      * @param string $packageName
      * @param string $type
-     * @return array
+     * @return string
+     * @throws Exception
      */
     public function getFileName($view, $moduleName, $packageName, $type = MB_CUSTOMMETADATALOCATION)
     {

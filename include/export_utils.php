@@ -66,9 +66,12 @@ function getDelimiter()
 
 /**
  * builds up a delimited string for export
- * @param string type the bean-type to export
- * @param array records an array of records if coming directly from a query
+ * @param $type
+ * @param null $records
+ * @param bool $members
+ * @param bool $sample
  * @return string delimited string for export
+ * @throws Exception
  */
 function export($type, $records = null, $members = false, $sample=false)
 {

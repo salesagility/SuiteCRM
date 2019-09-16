@@ -1084,9 +1084,10 @@ EOHTML;
      * Returns the URL for an image in the current theme. If not found in the current theme, will revert
      * to looking in the base theme.
      *
-     * @param  string $jsFileName js file name
-     * @param  bool   $returnURL if true, returns URL with unique image mark, otherwise returns path to the file
+     * @param string $jsFileName js file name
+     * @param bool $returnURL if true, returns URL with unique image mark, otherwise returns path to the file
      * @return string path to js file
+     * @throws Exception
      */
     public function getJSURL($jsFileName, $returnURL = true)
     {

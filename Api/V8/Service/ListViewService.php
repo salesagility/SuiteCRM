@@ -121,7 +121,8 @@ class ListViewService
     /**
      * @param ListViewColumnsParams $params
      *
-     * @return JsonSerializable
+     * @return AttributeResponse
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getListViewDefs(ListViewColumnsParams $params)
     {

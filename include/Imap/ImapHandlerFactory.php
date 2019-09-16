@@ -125,10 +125,11 @@ class ImapHandlerFactory
         $interfaceFakeData->retrieve($interfaceCalls);
         $this->setInterfaceObject(new $interfaceClass($interfaceFakeData));
     }
-    
+
     /**
      *
      * @return string
+     * @throws ImapHandlerException
      */
     protected function getTestSettings()
     {

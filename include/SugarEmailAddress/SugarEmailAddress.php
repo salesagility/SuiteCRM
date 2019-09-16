@@ -2100,7 +2100,7 @@ class SugarEmailAddress extends SugarBean
     /**
      * Determines the opt in status without considering the configuration
      * @return string
-     * @throws  RuntimeException
+     * @throws Exception
      */
     private function getOptInIndicationFromFlags()
     {

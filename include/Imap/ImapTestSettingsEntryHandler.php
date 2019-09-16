@@ -60,7 +60,7 @@ class ImapTestSettingsEntryHandler
      * @param array $sugarConfig
      * @param array $request
      * @return string entry point output as string
-     * @throws InvalidArgumentException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function handleEntryPointRequest($sugarConfig, $request)
     {
@@ -84,12 +84,13 @@ class ImapTestSettingsEntryHandler
         
         return $output;
     }
-    
+
     /**
      *
      * @param string $key
      * @param string $var
      * @return string|null return a translated error message if error occurred
+     * @throws \SuiteCRM\ErrorMessageException
      */
     protected function doSaveTestSettingsKey($key, $var)
     {
@@ -105,12 +106,14 @@ class ImapTestSettingsEntryHandler
         }
         return $error;
     }
-    
+
     /**
      *
      * @param ImapHandlerFactory $imapHandlerFactory
      * @param string $key
      * @return string|null return a translated error message if error occurred
+     * @throws ImapHandlerException
+     * @throws \SuiteCRM\ErrorMessageException
      */
     protected function getSaveTestSettingsKey(ImapHandlerFactory $imapHandlerFactory, $key)
     {
@@ -120,11 +123,12 @@ class ImapTestSettingsEntryHandler
         }
         return $error;
     }
-    
+
     /**
      *
      * @param ImapHandlerException $e
      * @return string return a translated error message
+     * @throws \SuiteCRM\ErrorMessageException
      */
     protected function handleImapHandlerException(ImapHandlerException $e)
     {

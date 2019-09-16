@@ -48,6 +48,7 @@ $_SESSION['setup_license_accept'] = true;
  * @param bool $install_script
  * @param array $mod_strings
  * @return string
+ * @throws Exception
  */
 function runCheck($install_script, $mod_strings = array())
 {

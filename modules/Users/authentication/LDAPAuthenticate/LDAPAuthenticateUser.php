@@ -258,6 +258,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
      *
      * @param STRING $name
      * @return STRING $id
+     * @throws SuiteException
      */
     public function createUser($name)
     {

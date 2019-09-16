@@ -38,6 +38,7 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
     public function assertIsString()
     {
@@ -49,6 +50,7 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
     public function assertIsBool()
     {
@@ -60,6 +62,7 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
     public function assertIsArray()
     {
@@ -71,6 +74,7 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
     public function assertNotNull()
     {
@@ -82,6 +86,7 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
     public function assertAlnum()
     {
@@ -94,6 +99,7 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
     public function assertNotEmpty()
     {
@@ -105,6 +111,7 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
     public function assertIsLookup()
     {

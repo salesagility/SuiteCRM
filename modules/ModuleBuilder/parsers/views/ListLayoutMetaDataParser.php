@@ -73,6 +73,7 @@ class ListLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
      * @param string $view The view type, that is, editview, searchview etc
      * @param string $moduleName The name of the module to which this listview belongs
      * @param string $packageName If not empty, the name of the package to which this listview belongs
+     * @throws Exception
      */
     public function __construct($view, $moduleName, $packageName = '')
     {

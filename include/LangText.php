@@ -207,6 +207,7 @@ class LangText
     /**
      *
      * @return string
+     * @throws ErrorMessageException
      */
     public function __toString()
     {

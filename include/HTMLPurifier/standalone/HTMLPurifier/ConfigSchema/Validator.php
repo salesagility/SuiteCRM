@@ -42,6 +42,8 @@ class HTMLPurifier_ConfigSchema_Validator
      * Validates a fully-formed interchange object.
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
      * @return bool
+     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws HTMLPurifier_Exception
      */
     public function validate($interchange)
     {
@@ -62,6 +64,7 @@ class HTMLPurifier_ConfigSchema_Validator
     /**
      * Validates a HTMLPurifier_ConfigSchema_Interchange_Id object.
      * @param HTMLPurifier_ConfigSchema_Interchange_Id $id
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
     public function validateId($id)
     {
@@ -82,6 +85,8 @@ class HTMLPurifier_ConfigSchema_Validator
     /**
      * Validates a HTMLPurifier_ConfigSchema_Interchange_Directive object.
      * @param HTMLPurifier_ConfigSchema_Interchange_Directive $d
+     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws HTMLPurifier_Exception
      */
     public function validateDirective($d)
     {
@@ -125,6 +130,7 @@ class HTMLPurifier_ConfigSchema_Validator
      * Extra validation if $allowed member variable of
      * HTMLPurifier_ConfigSchema_Interchange_Directive is defined.
      * @param HTMLPurifier_ConfigSchema_Interchange_Directive $d
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
     public function validateDirectiveAllowed($d)
     {
@@ -150,6 +156,7 @@ class HTMLPurifier_ConfigSchema_Validator
      * Extra validation if $valueAliases member variable of
      * HTMLPurifier_ConfigSchema_Interchange_Directive is defined.
      * @param HTMLPurifier_ConfigSchema_Interchange_Directive $d
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
     public function validateDirectiveValueAliases($d)
     {
@@ -186,6 +193,7 @@ class HTMLPurifier_ConfigSchema_Validator
      * Extra validation if $aliases member variable of
      * HTMLPurifier_ConfigSchema_Interchange_Directive is defined.
      * @param HTMLPurifier_ConfigSchema_Interchange_Directive $d
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
     public function validateDirectiveAliases($d)
     {
