@@ -383,8 +383,9 @@ class SugarController
 
     protected function showException(Exception $e)
     {
-        $GLOBALS['log']->fatal('Exception in Controller: ' . $e->getMessage());
-        $GLOBALS['log']->fatal("backtrace:\n" . $e->getTraceAsString());
+        LoggerManager::getLogger()->fatal('Exception in Controller: ' . $e->getMessage());
+        LoggerManager::getLogger()->fatal("backtrace:\n" . $e->getTraceAsString());
+
         if ($prev = $e->getPrevious()) {
             $GLOBALS['log']->fatal("Previous:\n");
             $this->showException($prev);
@@ -397,15 +398,22 @@ class SugarController
      */
     protected function handleException(Exception $e)
     {
-        $GLOBALS['log']->fatal("Exception handling in " . __FILE__ . ':' . __LINE__);
+        global $sugar_config;
+
+        LoggerManager::getLogger()->fatal('Exception handling in ' . __FILE__ . ':' . __LINE__);
         $this->showException($e);
         $logicHook = new LogicHook();
 
         if (isset($this->bean)) {
             $logicHook->setBean($this->bean);
-            $logicHook->call_custom_logic($this->bean->module_dir, "handle_exception", $e);
+            $logicHook->call_custom_logic($this->bean->module_dir, 'handle_exception', $e);
         } else {
-            $logicHook->call_custom_logic('', "handle_exception", $e);
+            $logicHook->call_custom_logic('', 'handle_exception', $e);
+        }
+
+        if ($sugar_config['sentry']['enabled']) {
+            $sentry = new Sentry();
+            $sentry->handleException($e);
         }
     }
 

@@ -83,4 +83,11 @@ class Sentry
         }
     }
 
+    public function handleException(Exception $exception)
+    {
+        if ($this->enabled) {
+            $this->client->captureException($exception);
+        }
+    }
+
 }
