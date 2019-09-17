@@ -2,7 +2,6 @@
 include_once __DIR__ . '/SugarBeanMock.php';
 include_once __DIR__ . '/../../../../include/SubPanel/SubPanelDefinitions.php';
 
-use SuiteCRM\StateCheckerConfig;
 use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
 
 /** @noinspection PhpUndefinedClassInspection */
