@@ -3546,6 +3546,10 @@ select#sales_stage_advanced {
   .col-sm-6 .edit-view-field[type="date"] input[type="text"] {
     width: 92%;
   }
+
+  .col-sm-6 .edit-view-field[type="date"] input[type="text"].date_input {
+      width: auto;
+  }
 }
 
 @media (min-width: 768px) {
