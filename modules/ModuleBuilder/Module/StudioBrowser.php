@@ -61,6 +61,21 @@ class StudioBrowser
             if (file_exists('modules/' . $e . '/metadata/studio.php') && isset($GLOBALS [ 'beanList' ][$e]) && (in_array($e, $access) || $current_user->isAdmin())) { // installed modules must also exist in the beanList
                 $this->modules[$e] =  StudioModuleFactory::getStudioModule($e) ;
             }
+	}
+
+        $d = dir('custom/modules');
+        while ($e = $d->read()) {
+            if (substr($e, 0, 1) == '.' || !is_dir('custom/modules/' . $e)) {
+                continue;
+            }
+
+            if(array_key_exists($e, $this->modules)) {
+                continue;
+            }
+
+            if (file_exists('custom/modules/' . $e . '/metadata/studio.php') && isset($GLOBALS [ 'beanList' ][$e]) && (in_array($e, $access) || $current_user->isAdmin())) { // installed modules must also exist in the beanList
+                $this->modules[$e] = StudioModuleFactory::getStudioModule($e) ;
+            }
         }
     }
     
@@ -72,6 +87,21 @@ class StudioBrowser
                 continue;
             }
             if (file_exists('modules/' . $e . '/metadata/studio.php') && isset($GLOBALS [ 'beanList' ][$e])) { // installed modules must also exist in the beanList
+                $this->modules[$e] = StudioModuleFactory::getStudioModule($e) ;
+            }
+	}
+
+        $d = dir('custom/modules');
+        while ($e = $d->read()) {
+            if (substr($e, 0, 1) == '.' || !is_dir('custom/modules/' . $e)) {
+                continue;
+            }
+
+            if(array_key_exists($e, $this->modules)) {
+                continue;
+            }
+
+            if (file_exists('custom/modules/' . $e . '/metadata/studio.php') && isset($GLOBALS [ 'beanList' ][$e])) { // installed modules must also exist in the beanList
                 $this->modules[$e] = StudioModuleFactory::getStudioModule($e) ;
             }
         }

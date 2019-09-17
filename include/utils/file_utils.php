@@ -92,7 +92,35 @@ function get_module_dir_list()
             }
         }
     }
+
     return $modules;
+}
+
+function get_custom_dir_list()
+{
+    $modules = get_module_dir_list();
+    $custom_modules = array();
+
+    $path = 'custom/modules';
+    $d = dir($path);
+    while ($entry = $d->read()) {
+        if(array_key_exists($entry, $modules)) {
+            continue;
+        }
+
+        $unwanted_modules = array('Projects');
+        if(in_array($entry, $unwanted_modules)) {
+            continue;
+        }
+
+        if ($entry != '..' && $entry != '.') {
+            if (is_dir($path. '/'. $entry)) {
+                $custom_modules[$entry] = $entry;
+            }
+        }
+    }
+
+    return $custom_modules;
 }
 
 function mk_temp_dir($base_dir, $prefix="")

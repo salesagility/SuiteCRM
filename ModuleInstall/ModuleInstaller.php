@@ -1849,6 +1849,46 @@ class ModuleInstaller
                         unlink("custom/$extpath/$name");
                     }
                 }
+	    }
+
+            foreach(get_custom_dir_list() as $module) {
+                $extension = "<?php \n //WARNING: The contents of this file are auto-generated\n";
+                $extpath = "modules/$module/$path";
+                $module_install  = 'custom/Extension/'.$extpath;
+
+                if (is_dir($module_install)) {
+                    $dir = dir($module_install);
+                    $override = array();
+                    while ($entry = $dir->read()) {
+                        if ((empty($filter) || substr_count($entry, $filter) > 0) && is_file($module_install.'/'.$entry)
+                          && $entry != '.' && $entry != '..' && strtolower(substr($entry, -4)) == ".php") {
+                            if (substr($entry, 0, 9) == '_override') {
+                                $override[] = $entry;
+                            } else {
+                                $file = file_get_contents($module_install . '/' . $entry);
+                                $GLOBALS['log']->debug(get_class($this)."->merge_files(): found {$module_install}{$entry}") ;
+                                $extension .= "\n". str_replace(array('<?php', '?>', '<?PHP', '<?'), array('','', '' ,''), $file);
+                            }
+                        }
+                    }
+                    foreach ($override as $entry) {
+                        $file = file_get_contents($module_install . '/' . $entry);
+                        $extension .= "\n". str_replace(array('<?php', '?>', '<?PHP', '<?'), array('','', '' ,''), $file);
+                    }
+                }
+                $extension .= "\n?>";
+
+                if (!file_exists("custom/$extpath")) {
+                    mkdir_recursive("custom/$extpath", true);
+                }
+
+                if($name === 'vardefs.ext.php') {
+                    $name = 'vardefs.custom.ext.php';
+                }
+
+                $out = sugar_fopen("custom/$extpath/$name", 'w');
+                fwrite($out, $extension);
+                fclose($out);
             }
         }
 
