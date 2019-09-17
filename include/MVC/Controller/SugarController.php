@@ -412,7 +412,7 @@ class SugarController
         }
 
         if ($sugar_config['sentry']['enabled']) {
-            $sentry = new Sentry();
+            $sentry = Sentry::getInstance();
             $sentry->handleException($e);
         }
     }

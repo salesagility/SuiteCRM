@@ -93,7 +93,7 @@ if (!empty($sugar_config['xhprof_config'])) {
 
 if ($sugar_config['sentry']['enabled']) {
     require_once 'Sentry.php';
-    $sentry = new Sentry();
+    Sentry::getInstance();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

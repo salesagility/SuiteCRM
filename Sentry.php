@@ -40,10 +40,19 @@
 
 class Sentry
 {
-    public $enabled;
-    public $dsn;
+    protected static $enabled;
+    protected static $dsn;
+    protected static $instance;
+    protected static $client;
 
-    private $client;
+    public static function getInstance()
+    {
+        if (self::$instance !== null) {
+            return self::$instance;
+        }
+
+        return self::$instance = new self();
+    }
 
     public function __construct()
     {
@@ -57,26 +66,26 @@ class Sentry
             LoggerManager::getLogger()->fatal($exception->getMessage() . "\nTrace:\n" . $exception->getTraceAsString());
         }
 
-        $this->enabled = $sugar_config['sentry']['enabled'];
-        $this->dsn = $sugar_config['sentry']['dsn'];
-        $this->client = $this->buildClient();
+        self::$enabled = $sugar_config['sentry']['enabled'];
+        self::$dsn = $sugar_config['sentry']['dsn'];
+        self::$client = $this->buildClient();
         $this->init();
     }
 
     protected function buildClient()
     {
-        return new Raven_Client($this->dsn);
+        return new Raven_Client(self::$dsn);
     }
 
-    public function init()
+    protected function init()
     {
         global $current_user;
 
-        if ($this->enabled) {
+        if (self::$enabled) {
             $user_context = $current_user->id;
-            $this->client->user_context($user_context);
+            self::$client->user_context($user_context);
             try {
-                $this->client->install();
+                self::$client->install();
             } catch (Raven_Exception $exception) {
                 LoggerManager::getLogger()->fatal($exception->getMessage() . "\nTrace:\n" . $exception->getTraceAsString());
             }
@@ -90,19 +99,18 @@ class Sentry
      * @param array $data Additional attributes to pass with this event (see Sentry docs).
      * @param mixed $logger
      * @param mixed $vars
-     * @return string|null
      */
     public function handleException($exception, $data = null, $logger = null, $vars = null)
     {
-        if ($this->enabled) {
-            $this->client->captureException($exception, $data, $logger, $vars);
+        if (self::$enabled) {
+            self::$client->captureException($exception, $data, $logger, $vars);
         }
     }
 
     /**
      * Log a message to sentry
      *
-     * @param string $message The message (primary description) for the event.
+     * @param string|array $message The message (primary description) for the event.
      * @param array $params params to use when formatting the message.
      * @param array $data Additional attributes to pass with this event (see Sentry docs).
      * @param bool|array $stack
@@ -110,7 +118,7 @@ class Sentry
      */
     public function captureMessage($message, $params = [], $data = [], $stack = false, $vars = null)
     {
-        if ($this->enabled) {
+        if (self::$enabled) {
             // change to a string if there is just one entry
             if (is_array($message) && count($message) === 1) {
                 $message = array_shift($message);
@@ -120,7 +128,7 @@ class Sentry
                 $message = print_r($message, true);
             }
 
-            $this->client->captureMessage($message, $params, $data, $stack, $vars);
+            self::$client->captureMessage($message, $params, $data, $stack, $vars);
         }
     }
 }
