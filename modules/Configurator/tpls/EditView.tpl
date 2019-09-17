@@ -372,15 +372,29 @@
 	</tr>
 
 
-
 </table>
+	<th scope="row" colspan="6"><h4>{$MOD.LBL_SENTRY}</h4></th>
+	<table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+		<td scope="row">{$MOD.LBL_SENTRY_ENABLED}:
+			{if !empty($config.sentry.enabled)}
+				{assign var='sentry_checked' value='CHECKED'}
+			{else}
+				{assign var='sentry_checked' value=''}
+			{/if}
 
-<table  width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-{if $logger_visible}
-<tr>
-<th align="left" scope="row" colspan="6"><h4>{$MOD.LBL_LOGGER}</h4></th>
-</tr>
-	<tr>
+		<td><input type='hidden' name='sentry_enabled' value='false'><input name='sentry_enabled' type="checkbox"
+																			value='true' {$sentry_checked}></td>
+
+		<td>{$MOD.LBL_SENTRY_DSN}:
+			<input name='sentry_dsn' type="text" value="{$config.sentry.dsn}"></td>
+	</table>
+
+	<table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+		{if $logger_visible}
+			<tr>
+				<th align="left" scope="row" colspan="6"><h4>{$MOD.LBL_LOGGER}</h4></th>
+			</tr>
+			<tr>
 		<td  scope="row" valign='middle'>{$MOD.LBL_LOGGER_FILENAME}</td>
 		<td   valign='middle' ><input type='text' name = 'logger_file_name'  value="{$config.logger.file.name}"></td>
 		<td  scope="row">{$MOD.LBL_LOGGER_FILE_EXTENSION}</td>
