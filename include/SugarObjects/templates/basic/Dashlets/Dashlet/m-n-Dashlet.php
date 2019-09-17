@@ -43,13 +43,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/Dashlets/DashletGeneric.php');
-require_once('modules/<module_name>/<object_name>.php');
+require_once('custom/modules/<module_name>/<object_name>.php');
 
 class <module_name>Dashlet extends DashletGeneric {
     function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
-        require('modules/<module_name>/metadata/dashletviewdefs.php');
+        require('custom/modules/<module_name>/metadata/dashletviewdefs.php');
 
         parent::__construct($id, $def);
 
