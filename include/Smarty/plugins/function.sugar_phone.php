@@ -116,5 +116,9 @@ function smarty_function_sugar_phone($params, &$smarty)
         $GLOBALS['log']->debug($params['value']);
         return '<a href="tel:'.format_skype($params['value']).'">'.$params['value'].'</a>';
     }
+    // Render the field as a simple `tel:` link if it has a value.
+    if (isset($params['value'])) {
+        return '<a href="tel:'.$params['value'].'">'.$params['value'].'</a>';
+    }
     return $params['value'];
 }
