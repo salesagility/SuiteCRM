@@ -1,7 +1,6 @@
 <?php
 
 use Faker\Generator;
-use JeroenDesloovere\VCard\VCard;
 
 class SaleModuleCest
 {

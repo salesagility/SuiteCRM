@@ -40,8 +40,6 @@
 
 namespace SuiteCRM\API\v8\Exception;
 
-use SuiteCRM\Enumerator\ExceptionCode;
-
 /**
  * Class ConflictException
  * @package SuiteCRM\API\v8\Exception

@@ -2,7 +2,6 @@
 namespace Test\Api\V8;
 
 use ApiTester;
-use Codeception\Example;
 
 class DeleteModuleCest
 {
