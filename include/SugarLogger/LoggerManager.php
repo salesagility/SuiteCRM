@@ -123,7 +123,7 @@ class LoggerManager
             self::$_loggers[$logger]->log($method, $message);
 
             // Log to sentry if enabled
-            if ($sugar_config['sentry']['enabled']) {
+            if (!empty($sugar_config['sentry']['enabled'])) {
                 $sentry = Sentry::getInstance();
                 $sentry->captureMessage($message);
             }

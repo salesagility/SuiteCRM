@@ -411,7 +411,7 @@ class SugarController
             $logicHook->call_custom_logic('', 'handle_exception', $e);
         }
 
-        if ($sugar_config['sentry']['enabled']) {
+        if (!empty($sugar_config['sentry']['enabled'])) {
             $sentry = Sentry::getInstance();
             $sentry->handleException($e);
         }
