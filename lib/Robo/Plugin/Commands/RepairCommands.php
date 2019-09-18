@@ -73,12 +73,11 @@ class RepairCommands extends \Robo\Tasks
         }
 
         foreach ($beanFiles as $bean_name => $file) {
-            require_once $file;
-
             if (!file_exists($file)) {
                 continue;
             }
 
+            require_once $file;
             $GLOBALS['reload_vardefs'] = true;
             $focus = new $bean_name();
 
