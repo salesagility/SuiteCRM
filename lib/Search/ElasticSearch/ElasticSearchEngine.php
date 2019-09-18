@@ -66,7 +66,12 @@ class ElasticSearchEngine extends SearchEngine
      */
     public function __construct(Client $client = null)
     {
-        $this->client = empty($client) ? ElasticSearchClientBuilder::getClient() : $client;
+        global $sugar_config;
+        $this->client = $client === null ? ElasticSearchClientBuilder::getClient() : $client;
+
+        if (!empty($sugar_config['search']['ElasticSearch']['index'])) {
+            $this->index = $sugar_config['search']['ElasticSearch']['index'];
+        }
     }
 
     /**
