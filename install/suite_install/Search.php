@@ -73,6 +73,7 @@ function install_es()
         'host' => 'localhost',
         'user' => '',
         'pass' => '',
+        'index' => $sugar_config['unique_key']
     ];
 
     ksort($sugar_config);
@@ -123,3 +124,4 @@ function installESHooks()
         );
     }
 }
+
