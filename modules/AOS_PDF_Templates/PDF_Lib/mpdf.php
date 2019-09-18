@@ -3510,7 +3510,7 @@ public $aliasNbPgHex;
             }
             $s.="?>";
             if (is_writable(dirname(_MPDF_TTFONTDATAPATH.'x'))) {
-                $fh = fopen(_MPDF_TTFONTDATAPATH.$fontkey.'.mtx.php', "w");
+                $fh = fopen(_MPDF_TTFONTDATAPATH.$fontkey.'.mtx.php', 'wb');
                 fwrite($fh, $s, strlen($s));
                 fclose($fh);
                 $fh = fopen(_MPDF_TTFONTDATAPATH.$fontkey.'.cw.dat', "wb");
@@ -32213,7 +32213,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
             $this->useRC128encryption = true;
         }
         if ($owner_pass === null) {
-            $owner_pass = uniqid(rand());
+            $owner_pass = uniqid(mt_rand());
         }
         $this->encrypted = true;
         $this->_generateencryptionkey($user_pass, $owner_pass, $protection);
@@ -32331,7 +32331,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
         $chars = 'ABCDEF1234567890';
         $id = '';
         for ($i=0; $i<32; $i++) {
-            $id .= $chars{rand(0, 15)};
+            $id .= $chars{mt_rand(0, 15)};
         }
         $this->uniqid = md5($id);
         // Compute O value

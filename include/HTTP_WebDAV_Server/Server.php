@@ -1117,7 +1117,7 @@ class HTTP_WebDAV_Server
                 }
             }
 
-            $options["stream"] = fopen("php://input", "r");
+            $options["stream"] = fopen("php://input", 'rb');
 
             $stat = $this->PUT($options);
 

@@ -269,7 +269,7 @@ class EditViewMerge
      */
     public function setLogFile($file)
     {
-        $this->fp = fopen($file, 'a');
+        $this->fp = fopen($file, 'ab');
     }
     
     /**

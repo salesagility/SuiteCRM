@@ -7405,7 +7405,7 @@ if (!class_exists('TCPDF', false)) {
                 $protection += $options[$permission];
             }
             if ($owner_pass === null) {
-                $owner_pass = uniqid(rand());
+                $owner_pass = uniqid(mt_rand());
             }
             $this->encrypted = true;
             $this->_generateencryptionkey($user_pass, $owner_pass, $protection);
@@ -14319,7 +14319,7 @@ if (!class_exists('TCPDF', false)) {
                     // truncate files to previous values
                     foreach ($this->objcopy->cache_file_lenght as $file => $lenght) {
                         $file = substr($file, 1);
-                        $handle = fopen($file, 'r+');
+                        $handle = fopen($file, 'rb+');
                         ftruncate($handle, $lenght);
                     }
                 }

@@ -225,7 +225,7 @@ class ParserLabel
                 // obtain $mod_strings
                 include $filename;
             } elseif ($forRelationshipLabel) {
-                $fh = fopen($filename, 'a');
+                $fh = fopen($filename, 'ab');
                 fclose($fh);
             }
         } else {
@@ -303,7 +303,7 @@ class ParserLabel
                 }
 
                 try {
-                    $file_contents = fopen($extension_filename, 'w');
+                    $file_contents = fopen($extension_filename, 'wb');
                     fputs($file_contents, $out, strlen($out));
                     fclose($file_contents);
                 } catch (Exception $e) {
@@ -349,7 +349,7 @@ class ParserLabel
 
                 $failed_to_write = false;
                 try {
-                    $file_contents = fopen($relationships_filename, 'w');
+                    $file_contents = fopen($relationships_filename, 'wb');
                     fputs($file_contents, $out, strlen($out));
                     fclose($file_contents);
                 } catch (Exception $e) {

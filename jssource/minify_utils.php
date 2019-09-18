@@ -127,14 +127,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
                             if (function_exists('sugar_fopen')) {
                                 $trgt_handle = sugar_fopen($trgt, 'a');
                             } else {
-                                $trgt_handle = fopen($trgt, 'a');
+                                $trgt_handle = fopen($trgt, 'ab');
                             }
                         } else {
                             //open target file
                             if (function_exists('sugar_fopen')) {
                                 $trgt_handle = sugar_fopen($trgt, 'w');
                             } else {
-                                $trgt_handle = fopen($trgt, 'w');
+                                $trgt_handle = fopen($trgt, 'wb');
                             }
                         }
                     } else {
@@ -147,7 +147,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                         if (function_exists('sugar_fopen')) {
                             $trgt_handle = @sugar_fopen($trgt, 'w');
                         } else {
-                            $trgt_handle = @fopen($trgt, 'w');
+                            $trgt_handle = @fopen($trgt, 'wb');
                         }
 
                         // todo: make this failure more friendly.  Ideally, it will display a
@@ -268,7 +268,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 if (function_exists('sugar_fopen')) {
                     $file_handle = sugar_fopen($from_path, 'r');
                 } else {
-                    $file_handle = fopen($from_path, 'r');
+                    $file_handle = fopen($from_path, 'rb');
                 }
                 if ($file_handle) {
                     $beg = false;

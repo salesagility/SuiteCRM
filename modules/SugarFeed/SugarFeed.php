@@ -210,7 +210,7 @@ class SugarFeed extends Basic
         if (! file_exists($cachedir = sugar_cached('modules/SugarFeed'))) {
             mkdir_recursive($cachedir);
         }
-        $fd = fopen("$cachedir/moduleCache.php", 'w');
+        $fd = fopen("$cachedir/moduleCache.php", 'wb');
         fwrite($fd, '<'."?php\n\n".'$feedModules = '.var_export($feedModules, true).';');
         fclose($fd);
 
@@ -353,7 +353,7 @@ class SugarFeed extends Basic
         if (! file_exists($cachedir = sugar_cached('modules/SugarFeed'))) {
             mkdir_recursive($cachedir);
         }
-        $fd = fopen("$cachedir/linkTypeCache.php", 'w');
+        $fd = fopen("$cachedir/linkTypeCache.php", 'wb');
         fwrite($fd, '<'."?php\n\n".'$linkTypeList = '.var_export($linkTypeList, true).';');
         fclose($fd);
 

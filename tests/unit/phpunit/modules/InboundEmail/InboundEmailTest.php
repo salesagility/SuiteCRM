@@ -78,7 +78,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return fopen('fakeImapResource', 'wb+');
         }]);
         $fake->add('close', null, [null]);
         $fake->add('ping', null, [true]);
@@ -104,7 +104,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return fopen('fakeImapResource', 'wb+');
         }]);
         $fake->add('close', null, [null]);
         $fake->add('ping', null, [true]);
@@ -129,7 +129,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return fopen('fakeImapResource', 'wb+');
         }]);
         $fake->add('close', null, [null]);
         $fake->add('ping', null, [true]);
@@ -153,7 +153,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return fopen('fakeImapResource', 'wb+');
         }]);
         $fake->add('close', null, [null]);
         $fake->add('ping', null, [true]);
@@ -181,12 +181,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [2, 15], [true]);
         $fake->add('setTimeout', [3, 15], [true]);
         $fake->add('open', ["{:/service=/ssl/tls/validate-cert/secure}", null, null, 0, 0, []], [function () {
-            return fopen('fakeImapResource', 'w+');
+            return fopen('fakeImapResource', 'wb+');
         }]);
         $fake->add('getLastError', null, ['Too many login failures']);
         $fake->add('getAlerts', null, [null]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return fopen('fakeImapResource', 'wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/ssl/tls/validate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
@@ -213,7 +213,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return fopen('fakeImapResource', 'wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('ping', null, [true]);
@@ -252,12 +252,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
-            return fopen('fakeImapResource', 'w+');
+            return fopen('fakeImapResource', 'wb+');
         }]);
         $fake->add('getLastError', null, ["SECURITY PROBLEM: insecure server advertised AUTH=PLAIN"]);
         $fake->add('getAlerts', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return fopen('fakeImapResource', 'wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
@@ -290,12 +290,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
-            return fopen('fakeImapResource', 'w+');
+            return fopen('fakeImapResource', 'wb+');
         }]);
         $fake->add('getLastError', null, ['Too many login failures']);
         $fake->add('getAlerts', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return fopen('fakeImapResource', 'wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
@@ -338,12 +338,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
-            return fopen('fakeImapResource', 'w+');
+            return fopen('fakeImapResource', 'wb+');
         }]);
         $fake->add('getLastError', null, [false]);
         $fake->add('getAlerts', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return fopen('fakeImapResource', 'wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
@@ -386,12 +386,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('open', ["{:/service=/ssl/tls/validate-cert/secure}", null, null, 0, 0, []], [function () {
-            return fopen('fakeImapResource', 'w+');
+            return fopen('fakeImapResource', 'wb+');
         }]);
         $fake->add('getLastError', null, [false]);
         $fake->add('getAlerts', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return fopen('fakeImapResource', 'wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/ssl/tls/validate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
