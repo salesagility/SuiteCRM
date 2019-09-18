@@ -815,7 +815,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
                 $query .= '-';
             }
 
-            $query .= '(' . $subquery->__toString() . ')';
+            $query .= '(' . (string)$subquery . ')';
         }
 
         if ($this->getBoost() != 1) {

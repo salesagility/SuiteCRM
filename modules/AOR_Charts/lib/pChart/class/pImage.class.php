@@ -539,9 +539,9 @@
      /* Return the HTML converted color from the RGB composite values */
      public function toHTMLColor($R, $G, $B)
      {
-         $R=intval($R);
-         $G=intval($G);
-         $B=intval($B);
+         $R= (int)$R;
+         $G= (int)$G;
+         $B= (int)$B;
          $R=dechex($R<0?0:($R>255?255:$R));
          $G=dechex($G<0?0:($G>255?255:$G));
          $B=dechex($B<0?0:($B>255?255:$B));

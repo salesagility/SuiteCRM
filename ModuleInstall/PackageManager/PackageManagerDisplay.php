@@ -610,7 +610,7 @@ class PackageManagerDisplay
             }
 
             $target_manifest = remove_file_extension($filename) . "-manifest.php";
-            require_once("$target_manifest");
+            require_once((string)$target_manifest);
 
             if (isset($manifest['icon']) && $manifest['icon'] != "") {
                 $manifest_copy_files_to_dir = isset($manifest['copy_files']['to_dir']) ? clean_path($manifest['copy_files']['to_dir']) : "";

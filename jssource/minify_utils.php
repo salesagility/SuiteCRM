@@ -388,7 +388,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
         //if this is not a directory, then
         //check if this is a javascript file, then process
         $path_parts = pathinfo($from_path);
-        if (is_file("$from_path") && isset($path_parts['extension']) && $path_parts['extension'] =='js') {
+        if (is_file((string)$from_path) && isset($path_parts['extension']) && $path_parts['extension'] =='js') {
 
                     //create backup directory if needed
             $bu_dir = dirname($bu_path);
@@ -446,9 +446,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
             $bu_path .= substr($from_path, strlen($to_path));
 
             //if this is a directory, then read it and process files
-            if (is_dir("$from_path")) {
+            if (is_dir((string)$from_path)) {
                 //grab file / directory and read it.
-                $handle = opendir("$from_path");
+                $handle = opendir((string)$from_path);
                 //loop over the directory and go into each child directory
                 while (false !== ($dir = readdir($handle))) {
 
@@ -465,7 +465,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
             //check if this is a javascript file, then process
             // Also, check if there's a min counterpart, in which case, don't use this file.
             $path_parts = pathinfo($from_path);
-            if (is_file("$from_path") && isset($path_parts['extension']) && $path_parts['extension'] =='js') {
+            if (is_file((string)$from_path) && isset($path_parts['extension']) && $path_parts['extension'] =='js') {
                 /*$min_file_path = $path_parts['dirname'].'/'.$path_parts['filename'].'-min.'.$path_parts['extension'];
                 if(is_file($min_file_path)) {
                     $from_path = $min_file_path;

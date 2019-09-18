@@ -354,7 +354,7 @@ class ModulesLib
         }
 
         $query->withContent($pagination);
-        $queryString = $query->__toString();
+        $queryString = (string)$query;
         if ($queryString !== null) {
             return $config['site_url'] . '/api/' . $req->getUri()->getPath() . '?' . $queryString;
         }

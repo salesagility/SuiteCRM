@@ -135,7 +135,7 @@ class PdfParser
                 foreach ($found_octal_values[0] as $value) {
                     $octal = substr($value, 1);
 
-                    if (intval($octal) < 40) {
+                    if ((int)$octal < 40) {
                         // Skips non printable chars
                         $command = str_replace($value, '', $command);
                     } else {

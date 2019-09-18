@@ -104,7 +104,7 @@ function print_graph($g, $pgwidth)
     }
 
     if ($g['attr']['DPI']) {
-        $dpi = intval($g['attr']['DPI']);
+        $dpi = (int)$g['attr']['DPI'];
     }
     if (!$dpi || $dpi < 50 || $dpi > 2400) {
         $dpi = 150;
@@ -239,7 +239,7 @@ function print_graph($g, $pgwidth)
     for ($r=($rowbegin-1);$r<$rowend;$r++) {
         for ($c=($colbegin-1);$c<$colend;$c++) {
             if (isset($g['data'][$r][$c])) {
-                $g['data'][$r][$c] = floatval($g['data'][$r][$c]);
+                $g['data'][$r][$c] = (float)$g['data'][$r][$c];
             } else {
                 $g['data'][$r][$c] = 0;
             }

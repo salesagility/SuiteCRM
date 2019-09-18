@@ -916,7 +916,7 @@ class HTTP_WebDAV_Server
             $this->http_status("404 not found");
         }
 
-        $this->http_status("$status");
+        $this->http_status((string)$status);
     }
 
 

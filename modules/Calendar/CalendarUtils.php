@@ -269,7 +269,7 @@ class CalendarUtils
         $arr = array();
 
         $type = $params['type'];
-        $interval = intval($params['interval']);
+        $interval = (int)$params['interval'];
         if ($interval < 1) {
             $interval = 1;
         }

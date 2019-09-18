@@ -71,7 +71,7 @@ class templateParser
                     $repl_arr[$key . "_" . $fieldName] = implode(", ", $translatedVals);
                 } //Fix for Windows Server as it needed to be converted to a string.
                 elseif ($field_def['type'] == 'int') {
-                    $repl_arr[$key . "_" . $fieldName] = strval($focus->$fieldName);
+                    $repl_arr[$key . "_" . $fieldName] = (string)$focus->$fieldName;
                 } elseif ($field_def['type'] == 'bool') {
                     if ($focus->$fieldName == "1") {
                         $repl_arr[$key . "_" . $fieldName] = "true";
@@ -85,7 +85,7 @@ class templateParser
                     if (!file_exists('public')) {
                         sugar_mkdir('public', 0777);
                     }
-                    if (!copy($file_location, "public/{$focus->id}".  '_' . "$fieldName")) {
+                    if (!copy($file_location, "public/{$focus->id}".  '_' . (string)$fieldName)) {
                         $secureLink = $sugar_config['site_url'] . '/'. $file_location;
                     }
 
