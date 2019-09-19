@@ -131,7 +131,7 @@ class RepairCommands extends \Robo\Tasks
         if ($opts['show-output'] === 'yes') {
             echo "\n";
         }
-        $this->say("Extensions rebuilded!");
+        $this->say("Extensions rebuilt!");
     }
 
 
