@@ -136,7 +136,7 @@ class RepairCommands extends \Robo\Tasks
     /**
      * Rebuild Extensions - This Robo task executes rebuildExtensions()
      * @param array $opts optional command line arguments
-     * show-output - Set if you want to see the RebuildRelationship output.
+     * @option bool $show-output - Set if you want to see the RebuildRelationships output.
      * @throws \RuntimeException
      */
     public function repairRebuildRelationships(array $opts = ['show-output' => 'no'])
