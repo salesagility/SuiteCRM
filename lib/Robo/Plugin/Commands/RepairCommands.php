@@ -141,7 +141,7 @@ class RepairCommands extends \Robo\Tasks
      * @option bool $show-output - Set if you want to see the RebuildRelationships output.
      * @throws \RuntimeException
      */
-    public function repairRebuildRelationships(array $opts = ['show-output' => 'no'])
+    public function repairRebuildRelationships(array $opts = ['show-output' => false])
     {
         $this->say("Rebuilding Relationships...");
 
