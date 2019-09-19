@@ -156,6 +156,6 @@ class RepairCommands extends \Robo\Tasks
         if ($opts['show-output'] === 'yes') {
             echo "\n";
         }
-        $this->say("Relationships rebuilded!");
+        $this->say("Relationships rebuilt!");
     }
 }
