@@ -60,7 +60,7 @@ class RepairCommands extends \Robo\Tasks
      * @option bool $execute - Set if you want the command to execute SQL at the end of the repair, true by default.
      * @throws \RuntimeException
      */
-    public function repairDatabase(array $opts = ['execute' => 'yes'])
+    public function repairDatabase(array $opts = ['execute' => true])
     {
         global  $beanFiles;
         $this->say('Repairing database...');
