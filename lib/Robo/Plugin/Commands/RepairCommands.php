@@ -113,7 +113,7 @@ class RepairCommands extends \Robo\Tasks
      * show-output - Set if you want to see the rebuildExtensions() output.
      * @throws \RuntimeException
      */
-    public function repairRebuildExtensions(array $opts = ['show-output' => 'no'])
+    public function repairRebuildExtensions(array $opts = ['show-output' => false])
     {
         $this->say("Rebuilding Extensions...");
         require_once 'modules/Administration/QuickRepairAndRebuild.php';
