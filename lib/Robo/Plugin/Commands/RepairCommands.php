@@ -57,7 +57,7 @@ class RepairCommands extends \Robo\Tasks
      * Synchronize database tables with vardefs.
      *
      * @param array $opts optional command line arguments
-     * execute - Set if you want that the command executes the SQL or not.
+     * @option bool $execute - Set if you want the command to execute SQL at the end of the repair, true by default.
      * @throws \RuntimeException
      */
     public function repairDatabase(array $opts = ['execute' => 'yes'])
