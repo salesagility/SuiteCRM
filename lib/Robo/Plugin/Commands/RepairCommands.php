@@ -54,7 +54,8 @@ namespace SuiteCRM\Robo\Plugin\Commands;
 class RepairCommands extends \Robo\Tasks
 {
     /**
-     * Repair database - Synchronize database with vardefs
+     * Synchronize database tables with vardefs.
+     *
      * @param array $opts optional command line arguments
      * execute - Set if you want that the command executes the SQL or not.
      * @throws \RuntimeException
