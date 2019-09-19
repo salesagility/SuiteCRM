@@ -110,7 +110,7 @@ class RepairCommands extends \Robo\Tasks
      * This Robo task rebuilds the CRM extension files found in custom/Extension.
      * 
      * @param array $opts optional command line arguments
-     * show-output - Set if you want to see the rebuildExtensions() output.
+     * @option bool $show-output - Set if you want to see the rebuildExtensions() output.
      * @throws \RuntimeException
      */
     public function repairRebuildExtensions(array $opts = ['show-output' => false])
