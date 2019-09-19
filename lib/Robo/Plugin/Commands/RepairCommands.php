@@ -69,7 +69,7 @@ class RepairCommands extends \Robo\Tasks
         \VardefManager::clearVardef();
         $execute = false;
 
-        if ($opts['execute'] === 'yes') {
+        if ($opts['execute']) {
             $execute = true;
         }
 
