@@ -114,16 +114,11 @@ class RepairCommands extends \Robo\Tasks
         require_once 'modules/Administration/QuickRepairAndRebuild.php';
         global $current_user;
         $current_user->is_admin = '1';
-
-        $show_output = false;
-        if ($opts['show-output'] === 'yes') {
-            $show_output = true;
-        }
-
         $tool = new \RepairAndClear();
-        $tool->show_output = $show_output;
+        $tool->show_output = $opts['show-output'];
         $tool->rebuildExtensions();
-        if ($opts['show-output'] === 'yes') {
+
+        if ($opts['show-output']) {
             echo "\n";
         }
         $this->say("Extensions rebuilt!");
