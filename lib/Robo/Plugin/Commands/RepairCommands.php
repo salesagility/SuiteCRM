@@ -57,21 +57,16 @@ class RepairCommands extends \Robo\Tasks
      * Synchronize database tables with vardefs.
      *
      * @param array $opts optional command line arguments
-     * @option bool $execute - Set if you want the command to execute SQL at the end of the repair, true by default.
+     * @option bool $no-execute - Set if you do not want the command to execute SQL at the end of the repair.
      * @throws \RuntimeException
      */
-    public function repairDatabase(array $opts = ['execute' => true])
+    public function repairDatabase(array $opts = ['no-execute' => false])
     {
         global $beanFiles;
         $this->say('Repairing database...');
         $db = \DBManagerFactory::getInstance();
         $queries = [];
         \VardefManager::clearVardef();
-        $execute = false;
-
-        if ($opts['execute']) {
-            $execute = true;
-        }
 
         foreach ($beanFiles as $bean_name => $file) {
             if (!file_exists($file)) {
@@ -84,7 +79,7 @@ class RepairCommands extends \Robo\Tasks
 
             if (isset($focus->disable_vardefs) && $focus->disable_vardefs == false && isset($focus->module_dir)) {
                 include 'modules/'.$focus->module_dir.'/vardefs.php';
-                $sql = $db->repairTable($focus, $execute);
+                $sql = $db->repairTable($focus, !$opts['no-execute']);
 
                 if (!empty($sql)) {
                     $queries[] = $sql;
@@ -94,7 +89,7 @@ class RepairCommands extends \Robo\Tasks
 
         $total = count($queries);
 
-        if ($execute) {
+        if (!$opts['no-execute']) {
             $this->say("Database synchronized with vardefs!");
             $this->say("Executed queries: {$total}");
             return;
