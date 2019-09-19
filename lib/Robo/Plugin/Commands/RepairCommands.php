@@ -62,7 +62,7 @@ class RepairCommands extends \Robo\Tasks
      */
     public function repairDatabase(array $opts = ['execute' => true])
     {
-        global  $beanFiles;
+        global $beanFiles;
         $this->say('Repairing database...');
         $db = \DBManagerFactory::getInstance();
         $queries = [];
