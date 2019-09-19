@@ -136,7 +136,7 @@ class RepairCommands extends \Robo\Tasks
 
 
     /**
-     * Rebuilds relationships defined in modules/**/vardefs.php.
+     * Rebuilds relationships defined in modules/MODULE/vardefs.php.
      * @param array $opts optional command line arguments
      * @option bool $show-output - Set if you want to see the RebuildRelationships output.
      * @throws \RuntimeException
