@@ -3468,7 +3468,9 @@ class SugarBean
             '',
             false,
             null,
-            $singleSelect
+            $singleSelect,
+            false,
+            'LIMIT ' . $row_offset . ', ' . $limit
         );
         return $this->process_list_query($query, $row_offset, $limit, $max, $where);
     }
@@ -3506,6 +3508,7 @@ class SugarBean
      * @param object $parentbean creating a subquery for this bean.
      * @param bool $singleSelect Optional, default false.
      * @param bool $ifListForExport
+     * @param string $limit Optional, default ''
      * @return String select query string, optionally an array value will be returned if $return_array= true.
      */
     public function create_new_list_query(
@@ -3518,7 +3521,8 @@ class SugarBean
         $return_array = false,
         $parentbean = null,
         $singleSelect = false,
-        $ifListForExport = false
+        $ifListForExport = false,
+        $limit = ''
     ) {
         $selectedFields = array();
         $secondarySelectedFields = array();
