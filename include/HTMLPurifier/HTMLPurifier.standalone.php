@@ -8232,7 +8232,7 @@ class HTMLPurifier_StringHashParser
         if (!file_exists($file)) {
             return false;
         }
-        $fh = fopen($file, 'r');
+        $fh = fopen($file, 'rb');
         if (!$fh) {
             return false;
         }
@@ -8252,7 +8252,7 @@ class HTMLPurifier_StringHashParser
             return false;
         }
         $ret = array();
-        $fh = fopen($file, 'r');
+        $fh = fopen($file, 'rb');
         if (!$fh) {
             return false;
         }

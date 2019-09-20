@@ -360,7 +360,7 @@ class Meeting extends SugarBean
 
     public function get_summary_text()
     {
-        return "$this->name";
+        return (string)$this->name;
     }
 
     public function create_export_query($order_by, $where, $relate_link_join='')
@@ -428,7 +428,7 @@ class Meeting extends SugarBean
         $this->fill_in_additional_parent_fields();
 
         if (!isset($this->time_hour_start)) {
-            $this->time_start_hour = intval(substr($this->time_start, 0, 2));
+            $this->time_start_hour = (int)substr($this->time_start, 0, 2);
         } //if-else
 
         if (isset($this->time_minute_start)) {
@@ -451,7 +451,7 @@ class Meeting extends SugarBean
         if (isset($this->time_hour_start)) {
             $time_start_hour = $this->time_hour_start;
         } else {
-            $time_start_hour = intval(substr($this->time_start, 0, 2));
+            $time_start_hour = (int)substr($this->time_start, 0, 2);
         }
 
         global $timedate;

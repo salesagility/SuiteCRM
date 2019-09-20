@@ -93,6 +93,6 @@ class SubpanelMerge extends ListViewMerge
      */
     public function save($to)
     {
-        return write_array_to_file("$this->varName", $this->newData, $to);
+        return write_array_to_file((string)$this->varName, $this->newData, $to);
     }
 }

@@ -174,9 +174,6 @@ class SugarViewTest extends StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        
-        // clean up
     }
 
     public function testprocess()
@@ -189,8 +186,6 @@ class SugarViewTest extends StateCheckerPHPUnitTestCaseAbstract
         $state->pushPHPConfigOptions();
 
         // test
-        
-        
         $SugarView = new SugarView();
         $SugarView->module = 'Users';
         $GLOBALS['app'] = new SugarApplication();
@@ -211,7 +206,6 @@ class SugarViewTest extends StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-
         $state->popPHPConfigOptions();
         $state->popGlobals();
         $state->popTable('tracker');
@@ -236,8 +230,6 @@ class SugarViewTest extends StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        // clean up
     }
 
     public function testpreDisplay()
@@ -258,8 +250,6 @@ class SugarViewTest extends StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        // clean up
     }
 
     public function testdisplay()
@@ -280,8 +270,6 @@ class SugarViewTest extends StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        // clean up
     }
 
     public function testdisplayHeader()
@@ -310,8 +298,6 @@ class SugarViewTest extends StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testgetModuleMenuHTML()
@@ -332,8 +318,6 @@ class SugarViewTest extends StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        // clean up
     }
 
     public function testincludeClassicFile()
@@ -355,8 +339,6 @@ class SugarViewTest extends StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        // clean up
     }
 
     public function testgetJavascriptValidation()
@@ -389,8 +371,6 @@ class SugarViewTest extends StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testrenderJavascript()
@@ -417,8 +397,6 @@ class SugarViewTest extends StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testgetMenu()
