@@ -43,18 +43,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use SugarBean;
 use BeanFactory;
 use Carbon\Carbon;
+use Monolog\Logger;
 use Elasticsearch\Client;
 use JsonSchema\Exception\RuntimeException;
-use Monolog\Logger;
-use SugarBean;
 use SuiteCRM\Search\Index\AbstractIndexer;
-use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
 use SuiteCRM\Search\Index\IndexingLockFileTrait;
+use Symfony\Component\Yaml\Parser as YamlParser;
 use SuiteCRM\Search\Index\IndexingSchedulerTrait;
 use SuiteCRM\Search\Index\IndexingStatisticsTrait;
-use Symfony\Component\Yaml\Parser as YamlParser;
+use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
+use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
 
 /**
  * Class ElasticSearchIndexer takes care of creating a search index for the database.
