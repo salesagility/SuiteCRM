@@ -826,7 +826,12 @@ class AOR_Report extends Basic
                     if ($att['function'] == 'COUNT' || !empty($att['format'])) {
                         $html .= $row[$name];
                     } else {
-                        $params = array('record_id' => $row[$att['alias'] . '_id']);
+                        // Make sure the `{$module}_id` key exists on $row, to prevent PHP notices.
+                        if (isset($row[$att['alias'] . '_id'])) {
+                            $params = array('record_id' => $row[$att['alias'] . '_id']);
+                        } else {
+                            $params = [];
+                        }
                         $html .= getModuleField(
                             $att['module'],
                             $att['field'],
