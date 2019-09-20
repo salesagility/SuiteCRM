@@ -3571,7 +3571,7 @@ class SugarBean
         } else {
             $ret_array['select'] = " SELECT $distinct $this->table_name.id ";
         }
-        $ret_array['from'] = (!isset($sugar_config['large_table'][$this->table_name]) && $sugar_config['large_table'][$this->table_name] == true) ? " FROM (SELECT * FROM $this->table_name WHERE $this->table_name.deleted = 0 ORDER BY $this->table_name.date_entered ASC $limit) $this->table_name " : " FROM $this->table_name ";
+        $ret_array['from'] = (isset($sugar_config['large_table'][$this->table_name]) && $sugar_config['large_table'][$this->table_name] == true) ? " FROM (SELECT * FROM $this->table_name WHERE $this->table_name.deleted = 0 ORDER BY $this->table_name.date_entered ASC $limit) $this->table_name " : " FROM $this->table_name ";
         $ret_array['from_min'] = $ret_array['from'];
         $ret_array['secondary_from'] = $ret_array['from'];
         $ret_array['where'] = '';
