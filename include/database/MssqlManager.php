@@ -1172,7 +1172,7 @@ class MssqlManager extends DBManager
                 return 'getutcdate()';
         }
 
-        return "$string";
+        return (string)$string;
     }
 
     /**

@@ -68,15 +68,11 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetDefaultSignature()
     {
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
         // test
-        
-
-//        self::markTestIncomplete('environment dependency');
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
@@ -90,7 +86,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(is_array($result));
         
         // clean up
-        
         $state->popTable('email_addresses');
         $state->popGlobals();
     }
@@ -217,12 +212,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsavePreferencesToDB()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $user = new User();
 
         $user->retrieve(1);
@@ -234,8 +223,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
 
@@ -697,14 +684,11 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testget_list_view_data()
     {
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
         // test
-        
-
         global $mod_strings;
         $mod_strings['LBL_CHECKMARK'] = "";
 
@@ -716,7 +700,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(is_array($result));
         
         // clean up
-        
         $state->popTable('email_addresses');
         $state->popGlobals();
     }
@@ -823,14 +806,11 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetEmailLink2()
     {
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
         // test
-        
-
         $user = new User();
 
         $user->retrieve(1);
@@ -954,15 +934,11 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetDeveloperModules()
     {
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
         // test
-        
-
-
         $user = new User();
 
         $user->retrieve(1);
@@ -971,7 +947,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(is_array($result));
         
         // clean up
-        
         $state->popTable('email_addresses');
         $state->popGlobals();
     }
@@ -979,15 +954,11 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testisDeveloperForModule()
     {
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
         // test
-        
-
-
         $user = new User();
 
 
@@ -1005,7 +976,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $user->isDeveloperForModule("Accounts"));
         
         // clean up
-        
         $state->popTable('email_addresses');
         $state->popGlobals();
     }
@@ -1013,14 +983,11 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetAdminModules()
     {
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
         // test
-        
-
         $user = new User();
 
         $user->retrieve(1);
@@ -1029,7 +996,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(is_array($result));
         
         // clean up
-        
         $state->popTable('email_addresses');
         $state->popGlobals();
     }
@@ -1037,25 +1003,19 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testisAdminForModule()
     {
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
         // test
-        
-
         $user = new User();
-
 
         //test without setting is_admin
         $this->assertEquals(false, $user->isAdminForModule("Accounts"));
 
-
         //test with id set
         $user->id = 1;
         $this->assertEquals(false, $user->isAdminForModule("Accounts"));
-
 
         //test with id and is_admin set
         $user->is_admin = 1;
@@ -1063,7 +1023,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         // clean up
-        
         $state->popTable('email_addresses');
         $state->popGlobals();
     }
@@ -1136,11 +1095,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testafterImportSave()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        //error_reporting(E_ALL);
-
         $user = new User();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1150,8 +1104,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->assertStringStartsWith('Cannot modify header information', $e->getMessage());
         }
-        
-        // clean up
     }
 
 

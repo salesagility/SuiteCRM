@@ -653,7 +653,7 @@ class MBPackage
             $pathmod = "$path/SugarModules/modules/$module";
             if (mkdir_recursive($pathmod)) {
                 if (file_exists("custom/modules/$module")) {
-                    copy_recursive("custom/modules/$module", "$pathmod");
+                    copy_recursive("custom/modules/$module", (string)$pathmod);
                     //Don't include cached extension files
                     if (is_dir("$pathmod/Ext")) {
                         rmdir_recursive("$pathmod/Ext");

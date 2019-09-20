@@ -84,7 +84,7 @@ class _parse_lockinfo
         $had_input = false;
 
         // open stream
-        $f_in = fopen($path, "r");
+        $f_in = fopen($path, 'rb');
         if (!$f_in) {
             $this->success = false;
             return;

@@ -163,7 +163,7 @@ class Sugarpdf extends TCPDF
 
         $this->SetProtection($protection, blowfishDecode(blowfishGetKey('sugarpdf_pdf_user_password'), PDF_USER_PASSWORD), blowfishDecode(blowfishGetKey('sugarpdf_pdf_owner_password'), PDF_OWNER_PASSWORD));
         $this->setCellHeightRatio(K_CELL_HEIGHT_RATIO);
-        $this->setJPEGQuality(intval(PDF_JPEG_QUALITY));
+        $this->setJPEGQuality((int)PDF_JPEG_QUALITY);
         $this->setPDFVersion(PDF_PDF_VERSION);
 
         // set default header data

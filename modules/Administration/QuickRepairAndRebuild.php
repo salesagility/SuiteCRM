@@ -382,7 +382,7 @@ class RepairAndClear
         $search_dir=sugar_cached('');
         $src_file = $search_dir . 'modules/unified_search_modules.php';
         if (file_exists($src_file)) {
-            unlink("$src_file");
+            unlink((string)$src_file);
         }
     }
     public function clearExternalAPICache()

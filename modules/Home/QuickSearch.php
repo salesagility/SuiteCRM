@@ -368,7 +368,7 @@ class quicksearchQuery
     protected function getRawResults($args, $singleSelect = false)
     {
         $orderBy = !empty($args['order']) ? $args['order'] : '';
-        $limit   = !empty($args['limit']) ? intval($args['limit']) : '';
+        $limit   = !empty($args['limit']) ? (int)$args['limit'] : '';
         $data    = array();
 
         foreach ($args['modules'] as $module) {

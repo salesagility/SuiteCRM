@@ -13,7 +13,6 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testOpportunity()
     {
-
         //execute the contructor and check for the Object type and  attributes
         $opportunity = new Opportunity();
 
@@ -32,11 +31,6 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $opportunity = new Opportunity();
 
         //test without setting name
@@ -45,8 +39,6 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with name set
         $opportunity->name = 'test';
         $this->assertEquals('test', $opportunity->get_summary_text());
-        
-        // clean up
     }
 
     public function testcreate_list_query()
@@ -83,12 +75,6 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $opportunity = new Opportunity();
 
         //execute the method and test if it works and does not throws an exception.
@@ -105,18 +91,10 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfill_in_additional_detail_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $opportunity = new Opportunity();
 
         //execute the method and test if it works and does not throws an exception.
@@ -126,8 +104,6 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testget_contacts()
@@ -140,12 +116,6 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testupdate_currency_id()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $opportunity = new Opportunity();
 
         //execute the method and test if it works and does not throws an exception.
@@ -155,8 +125,6 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testget_list_view_data()
@@ -205,7 +173,6 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsave()
     {
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('opportunities');
@@ -216,7 +183,6 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
 
         // test
-        
         $opportunity = new Opportunity();
 
         $opportunity->name = 'test';
@@ -237,7 +203,6 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(null, $result);
 
         // clean up
-        
         $state->popGlobals();
         $state->popTable('aod_index');
         $state->popTable('tracker');
@@ -249,12 +214,6 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave_relationship_changes()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $opportunity = new Opportunity();
         $opportunity->account_id = 1;
 
@@ -264,18 +223,10 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testset_opportunity_contact_relationship()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $opportunity = new Opportunity();
 
         try {
@@ -284,8 +235,6 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testset_notification_body()
@@ -320,14 +269,11 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
-
-    // save state
-
+        // save state
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
         // test
-        
         $opportunity = new Opportunity();
 
         $expected = array('MAIN' => 'a', 'ACCOUNT' => 'a');
@@ -335,7 +281,6 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
 
         // clean up
-        
         $state->popGlobals();
     }
 
@@ -350,10 +295,6 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetCurrencyType()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
         
         //execute the method and test if it works and does not throws an exception.
         try {

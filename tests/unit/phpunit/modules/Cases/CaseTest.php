@@ -31,18 +31,11 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $aCase = new aCase();
         $this->assertEquals(null, $aCase->get_summary_text());
 
         $aCase->name = 'test';
         $this->assertEquals('test', $aCase->get_summary_text());
-        
-        // clean up
     }
 
     public function testlistviewACLHelper()
@@ -58,7 +51,6 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
         
         // clean up
-        
         $state->popGlobals();
     }
 
@@ -66,9 +58,6 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
-        
-        
-        
         
         $aCase = new aCase();
 
@@ -83,18 +72,11 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         $state->popTable('aod_indexevent');
     }
 
     public function testset_case_contact_relationship()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $aCase = new aCase();
 
         //execute the method and test if it works and does not throws an exception.
@@ -104,18 +86,10 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $aCase = new aCase();
 
         //execute the method and test if it works and does not throws an exception.
@@ -125,8 +99,6 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfill_in_additional_detail_fields()

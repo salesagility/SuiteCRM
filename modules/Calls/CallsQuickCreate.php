@@ -88,7 +88,7 @@ class CallsQuickCreate extends QuickCreate
 
         $this->ss->assign("DATE_START", $focus->date_start);
         $this->ss->assign("TIME_START", substr($focus->time_start, 0, 5));
-        $time_start_hour = intval(substr($focus->time_start, 0, 2));
+        $time_start_hour = (int)substr($focus->time_start, 0, 2);
         $time_start_minutes = substr($focus->time_start, 3, 5);
 
         if ($time_start_minutes > 0 && $time_start_minutes < 15) {

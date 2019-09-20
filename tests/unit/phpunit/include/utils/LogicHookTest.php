@@ -27,28 +27,18 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testLogicHook()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
-        //execute the method and test if it doesn't throws an exception
+        //execute the method and test if it doesn't throw an exception
         try {
             $LogicHook = new LogicHook();
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-
-        
-        // clean up
     }
 
     public function testsetBean()
     {
         //execute the method and test if it returns correct class instances
-
         $LogicHook = new LogicHook();
         $result = $LogicHook->setBean(new User());
         $this->assertInstanceOf('LogicHook', $result);
@@ -59,7 +49,6 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetHooksMap()
     {
         //execute the method and test if it returns true
-
         $LogicHook = new LogicHook();
         $hook_map = $LogicHook->getHooksMap();
         $this->assertTrue(is_array($hook_map));
@@ -68,7 +57,6 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetHooksList()
     {
         //execute the method and test if it returns true
-
         $LogicHook = new LogicHook();
         $hookscan = $LogicHook->getHooksList();
         $this->assertTrue(is_array($hookscan));
@@ -76,14 +64,7 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testscanHooksDir()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-
         //execute the method and test if it returns expected contents
-
         $expected_hook_map = array(
             'before_save' =>
                 array(
@@ -184,35 +165,22 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->assertTrue(empty($hook_map));
             $this->assertTrue(empty($hookscan));
         }
-
-        
-        // clean up
     }
 
     public function testrefreshHooks()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         //execute the method and test if it doesn't throws an exception
-
         try {
             LogicHook::refreshHooks();
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testloadHooks()
     {
         //execute the method and test if it returns expected contents
-
         $expected_accounts = array(
             'before_save' => array(
                 array(
@@ -502,14 +470,7 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcall_custom_logic()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         //execute the method and test if it doesn't throws an exception
-
         $LogicHook = new LogicHook();
         $LogicHook->setBean(new Account());
 
@@ -519,22 +480,12 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-
-        
-        // clean up
     }
 
 
     public function testprocess_hooks()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
-        //execute the method and test if it doesn't throws an exception
-
+        // execute the method and test if it doesn't throws an exception
         $LogicHook = new LogicHook();
         $LogicHook->setBean(new Account());
         $hooks = $LogicHook->loadHooks('');
@@ -545,8 +496,5 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-
-        
-        // clean up
     }
 }

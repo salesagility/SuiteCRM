@@ -783,7 +783,7 @@ eoq;
      */
     public function createInvalidLocaleNameFormatUpgradeNotice()
     {
-        $fh = fopen($this->invalidNameFormatUpgradeFilename, 'w');
+        $fh = fopen($this->invalidNameFormatUpgradeFilename, 'wb');
         fclose($fh);
     }
 
