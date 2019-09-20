@@ -2153,7 +2153,7 @@ abstract class DBManager
                         return 0;
                     }
 
-                    return intval($val);
+                    return (int)$val;
                 case 'bigint':
                     $val = (float)$val;
                     if (!empty($fieldDef['required']) && $val == false) {
@@ -2174,7 +2174,7 @@ abstract class DBManager
                         return 0;
                     }
 
-                    return floatval($val);
+                    return (float)$val;
                 case 'time':
                 case 'date':
                     // empty date can't be '', so convert it to either NULL or empty date value

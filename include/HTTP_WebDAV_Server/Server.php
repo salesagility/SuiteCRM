@@ -916,7 +916,7 @@ class HTTP_WebDAV_Server
             $this->http_status("404 not found");
         }
 
-        $this->http_status("$status");
+        $this->http_status((string)$status);
     }
 
 
@@ -1117,7 +1117,7 @@ class HTTP_WebDAV_Server
                 }
             }
 
-            $options["stream"] = fopen("php://input", "r");
+            $options["stream"] = fopen("php://input", 'rb');
 
             $stat = $this->PUT($options);
 

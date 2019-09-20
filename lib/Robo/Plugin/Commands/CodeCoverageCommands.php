@@ -43,7 +43,6 @@ namespace SuiteCRM\Robo\Plugin\Commands;
 use SuiteCRM\Utility\OperatingSystem;
 use SuiteCRM\Robo\Traits\RoboTrait;
 use Robo\Task\Base\loadTasks;
-use SuiteCRM\Utility\Paths;
 
 class CodeCoverageCommands extends \Robo\Tasks
 {

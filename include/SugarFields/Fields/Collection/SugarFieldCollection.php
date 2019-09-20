@@ -114,7 +114,7 @@ class SugarFieldCollection extends SugarFieldBase
                 if (strpos($name, $field . "_collection_") !== false) {
                     $num = substr($name, -1);
                     if (is_numeric($num)) {
-                        settype($num, 'int');
+                        $num = (int)$num;
                         if (strpos($name, $field . "_collection_extra_") !== false) {
                             $extra_field = substr($name, $field . "_collection_extra_" . $num);
                             $link_field[$num]['extra_field'][$extra_field]=$value;
@@ -129,7 +129,7 @@ class SugarFieldCollection extends SugarFieldBase
             // Set Primary
             if (isset($_POST["primary_" . $field . "_collection"])) {
                 $primary = $_POST["primary_" . $field . "_collection"];
-                settype($primary, 'int');
+                $primary = (int)$primary;
                 $link_field[$primary]['primary']=true;
             }
             // Create or update record and take care of the extra_field

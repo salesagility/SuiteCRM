@@ -221,7 +221,7 @@ foreach ($errors as $k => $type) {
     }
 }
 
-$GLOBALS['top_message'] = "{$mod_strings['LBL_UW_NEXT_TO_UPLOAD']}";
+$GLOBALS['top_message'] = (string)($mod_strings['LBL_UW_NEXT_TO_UPLOAD']);
 $showBack		= true;
 $showCancel		= true;
 $showRecheck	= true;

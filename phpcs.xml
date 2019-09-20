@@ -6,6 +6,7 @@
     <rule ref="PSR2">
         <exclude name="PEAR.Functions.FunctionCallSignature"/>
         <exclude name="PEAR.Functions.FunctionCallSignature.SpaceAfterCloseBracket"/>
+        <exclude name="WordPress.CSRF.NonceVerification.NoNonceVerification"/>
     </rule>
 
 </ruleset>

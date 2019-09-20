@@ -1460,7 +1460,7 @@ HTML;
                 if ($mailbox != "") {
                     $mailbox .= ".";
                 }
-                $mailbox .= "{$exMbox[$i]}";
+                $mailbox .= (string)($exMbox[$i]);
             }
 
             $mailbox = substr($key, strpos($key, '.'));
