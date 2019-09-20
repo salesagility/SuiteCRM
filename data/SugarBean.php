@@ -3465,7 +3465,9 @@ class SugarBean
             '',
             false,
             null,
-            $singleSelect
+            $singleSelect,
+            false,
+            'LIMIT ' . $row_offset . ', ' . $limit
         );
         return $this->process_list_query($query, $row_offset, $limit, $max, $where);
     }
@@ -3503,6 +3505,7 @@ class SugarBean
      * @param object $parentbean creating a subquery for this bean.
      * @param bool $singleSelect Optional, default false.
      * @param bool $ifListForExport
+     * @param string $limit Optional, default empty
      * @return String select query string, optionally an array value will be returned if $return_array= true.
      */
     public function create_new_list_query(
@@ -3515,7 +3518,8 @@ class SugarBean
         $return_array = false,
         $parentbean = null,
         $singleSelect = false,
-        $ifListForExport = false
+        $ifListForExport = false,
+        $limit = ''
     ) {
         $selectedFields = array();
         $secondarySelectedFields = array();
@@ -3568,7 +3572,7 @@ class SugarBean
         } else {
             $ret_array['select'] = " SELECT $distinct $this->table_name.id ";
         }
-        $ret_array['from'] = " FROM $this->table_name ";
+        $ret_array['from'] = (isset($sugar_config['large_table'][$this->table_name]) && $sugar_config['large_table'][$this->table_name] == true) ? " FROM (SELECT * FROM $this->table_name WHERE $this->table_name.deleted = 0 $limit) $this->table_name " : " FROM $this->table_name ";
         $ret_array['from_min'] = $ret_array['from'];
         $ret_array['secondary_from'] = $ret_array['from'];
         $ret_array['where'] = '';
