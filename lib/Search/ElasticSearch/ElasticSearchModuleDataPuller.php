@@ -187,9 +187,9 @@ class ElasticSearchModuleDataPuller
             $tableName = $this->seed->table_name;
             $lastIndexTime = $this->lastIndexTime;
             return "$tableName.date_modified > '$lastIndexTime' OR $tableName.date_entered > '$lastIndexTime'";    
-        }else{
-            return '';
         }
+
+        return '';
     }
 
     /**
