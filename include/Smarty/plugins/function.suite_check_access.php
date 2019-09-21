@@ -33,6 +33,10 @@ function smarty_function_suite_check_access($params, &$smarty)
     }
     $ret = false;
     $bean = BeanFactory::getBean($params['module'], $params['record']);
-    $ret = (bool) $bean->ACLAccess($params['action']);
+
+    if (is_subclass_of($bean, 'SugarBean')) {
+        $ret = (bool) $bean->ACLAccess($params['action']);
+    }
+
     return $ret;
 }
