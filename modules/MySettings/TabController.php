@@ -44,8 +44,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class TabController
 {
-    public $required_modules = array('Home');
-
     /**
      * @var bool flag of validation of the cache
      */
