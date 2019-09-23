@@ -1025,6 +1025,10 @@ EOQ;
     Header unset ETag
     FileETag None
 </IfModule>
+<IfModule mod_headers.c>
+    Header unset X-Powered-By
+    Header always unset X-Powered-By
+</IfModule>
 <IfModule mod_expires.c>
  ExpiresActive on
  ExpiresDefault "access plus 1 month"
