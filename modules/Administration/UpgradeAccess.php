@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once '../../install/install_utils.php';
+require_once __DIR__ . '/../../install/install_utils.php';
 handleHtaccess();
 
 $uploadHta = '';
