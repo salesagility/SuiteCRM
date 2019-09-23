@@ -527,7 +527,7 @@ class SugarFeedDashlet extends DashletGeneric
         global $sugar_config, $timedate, $current_user, $theme;
         $options = array();
         $options['title'] = $req['title'];
-        $rows = intval($_REQUEST['rows']);
+        $rows = (int)$_REQUEST['rows'];
         if ($rows <= 0) {
             $rows = 15;
         }

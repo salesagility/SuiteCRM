@@ -1,8 +1,6 @@
 <?php
 
 
-use Codeception\Configuration;
-
 /**
  * Inherited Methods
  * @method void wantToTest($text)

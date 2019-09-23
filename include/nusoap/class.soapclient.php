@@ -349,7 +349,7 @@ class nusoap_client extends nusoap_base
             $use = $opData['input']['use'];
             // add ns to ns array
             if ($namespace != '' && !isset($this->wsdl->namespaces[$namespace])) {
-                $nsPrefix = 'ns' . rand(1000, 9999);
+                $nsPrefix = 'ns' . mt_rand(1000, 9999);
                 $this->wsdl->namespaces[$nsPrefix] = $namespace;
             }
             $nsPrefix = $this->wsdl->getPrefixFromNamespace($namespace);
@@ -388,7 +388,7 @@ class nusoap_client extends nusoap_base
         } else {
             // no WSDL
             //$this->namespaces['ns1'] = $namespace;
-            $nsPrefix = 'ns' . rand(1000, 9999);
+            $nsPrefix = 'ns' . mt_rand(1000, 9999);
             // serialize
             $payload = '';
             if (is_string($params)) {
@@ -868,7 +868,7 @@ class nusoap_client extends nusoap_base
     */
     public function getProxy()
     {
-        $r = rand();
+        $r = mt_rand();
         $evalStr = $this->_getProxyClassCode($r);
         //$this->debug("proxy class: $evalStr");
         if ($this->getError()) {
@@ -977,7 +977,7 @@ class nusoap_client extends nusoap_base
     */
     public function getProxyClassCode()
     {
-        $r = rand();
+        $r = mt_rand();
         return $this->_getProxyClassCode($r);
     }
 

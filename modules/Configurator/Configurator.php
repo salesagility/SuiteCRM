@@ -83,10 +83,10 @@ class Configurator
                 }
             }
             if (isset($this->config[$key]) || in_array($key, $this->allow_undefined)) {
-                if (strcmp("$value", 'true') == 0) {
+                if (strcmp((string)$value, 'true') == 0) {
                     $value = true;
                 }
-                if (strcmp("$value", 'false') == 0) {
+                if (strcmp((string)$value, 'false') == 0) {
                     $value = false;
                 }
                 $this->config[$key] = $value;

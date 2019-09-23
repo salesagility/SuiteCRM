@@ -221,7 +221,7 @@ class OutboundEmail
                 if (!empty($system->mail_smtpserver)) {
                     $ret[] = array(
                         'id' => $system->id,
-                        'name' => "$system->name",
+                        'name' => (string)$system->name,
                         'mail_smtpserver' => $system->mail_smtpdisplay,
                         'is_editable' => $isEditable,
                         'type' => $system->type,
@@ -492,7 +492,7 @@ class OutboundEmail
                 if (empty($this->$def)) {
                     $this->$def = 0;
                 }
-                $values[] = intval($this->$def);
+                $values[] = (int)$this->$def;
                 $validKeys[] = $def;
             } else {
                 if (isset($this->$def)) {

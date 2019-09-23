@@ -51,7 +51,6 @@ use SuiteCRM\API\JsonApi\v1\Repositories\FilterRepository;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
 use SuiteCRM\API\v8\Exception\BadRequestException;
 use SuiteCRM\API\v8\Exception\ModuleNotFoundException;
-use SuiteCRM\API\v8\Exception\NotAllowedException;
 
 /**
  * Class ModulesLib
@@ -355,7 +354,7 @@ class ModulesLib
         }
 
         $query->withContent($pagination);
-        $queryString = $query->__toString();
+        $queryString = (string)$query;
         if ($queryString !== null) {
             return $config['site_url'] . '/api/' . $req->getUri()->getPath() . '?' . $queryString;
         }

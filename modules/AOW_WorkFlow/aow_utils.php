@@ -1003,7 +1003,7 @@ function fixUpFormatting($module, $field, $value)
                 $value = false;
             } elseif (true === $value || 1 == $value) {
                 $value = true;
-            } elseif (in_array(strval($value), $boolean_false_values)) {
+            } elseif (in_array((string)$value, $boolean_false_values)) {
                 $value = false;
             } else {
                 $value = true;

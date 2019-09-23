@@ -1051,7 +1051,7 @@ function _mergeCustomAppListStrings($file, $app_list_strings)
 
     foreach ($app_list_strings as $key => $value) {
         if (!in_array($key, $exemptDropdowns) && array_key_exists($key, $app_list_strings_original)) {
-            unset($app_list_strings_original["$key"]);
+            unset($app_list_strings_original[(string)$key]);
         }
     }
     $app_list_strings = sugarArrayMergeRecursive($app_list_strings_original, $app_list_strings);

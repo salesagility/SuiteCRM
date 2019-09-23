@@ -97,7 +97,7 @@ class Release extends SugarBean
 
     public function get_summary_text()
     {
-        return "$this->name";
+        return (string)$this->name;
     }
 
     public function get_releases($add_blank=false, $status='Active', $where='')
