@@ -1004,6 +1004,7 @@ EOQ;
 <IfModule mod_rewrite.c>
     Options +SymLinksIfOwnerMatch
     Options -Indexes
+    Options -MultiViews
     RewriteEngine On
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
