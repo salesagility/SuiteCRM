@@ -1020,20 +1020,66 @@ EOQ;
     RewriteRule ^Api/access_token$ Api/index.php/access_token [L]
     RewriteRule ^Api/V8/(.*?)$ Api/index.php/V8/$1 [L]
 </IfModule>
-<FilesMatch "\.(jpg|png|gif|js|css|ico)$">
-        <IfModule mod_headers.c>
-                Header set ETag ""
-                Header set Cache-Control "max-age=2592000"
-                Header set Expires "01 Jan 2112 00:00:00 GMT"
-        </IfModule>
-</FilesMatch>
 <IfModule mod_expires.c>
-        ExpiresByType text/css "access plus 1 month"
-        ExpiresByType text/javascript "access plus 1 month"
-        ExpiresByType application/x-javascript "access plus 1 month"
-        ExpiresByType image/gif "access plus 1 month"
-        ExpiresByType image/jpg "access plus 1 month"
-        ExpiresByType image/png "access plus 1 month"
+ ExpiresActive on
+ ExpiresDefault "access plus 1 month"
+
+ # CSS
+ ExpiresByType text/css "access plus 1 year"
+ 
+ # Data
+ ExpiresByType application/atom+xml "access plus 1 hour"
+ ExpiresByType application/rdf+xml "access plus 1 hour"
+ ExpiresByType application/rss+xml "access plus 1 hour"
+ ExpiresByType application/json "access plus 0 seconds"
+ ExpiresByType application/ld+json "access plus 0 seconds"
+ ExpiresByType application/schema+json "access plus 0 seconds"
+ ExpiresByType application/geo+json "access plus 0 seconds"
+ ExpiresByType application/xml "access plus 0 seconds"
+ ExpiresByType text/calendar "access plus 0 seconds"
+ ExpiresByType text/xml "access plus 0 seconds"
+
+ # Favicon
+ ExpiresByType image/x-icon "access plus 1 week"
+
+ # HTML
+ ExpiresByType text/html "access plus 0 seconds"
+
+ # JavaScript
+ ExpiresByType application/javascript "access plus 1 year"
+ ExpiresByType application/x-javascript "access plus 1 year"
+ ExpiresByType text/javascript "access plus 1 year"
+
+ # Markdown
+ ExpiresByType text/markdown "access plus 0 seconds"
+
+ # Media files
+ ExpiresByType audio/ogg "access plus 1 month"
+ ExpiresByType image/bmp "access plus 1 month"
+ ExpiresByType image/gif "access plus 1 month"
+ ExpiresByType image/jpeg "access plus 1 month"
+ ExpiresByType image/jpg "access plus 1 month"
+ ExpiresByType image/png "access plus 1 month"
+ ExpiresByType image/svg+xml "access plus 1 month"
+ ExpiresByType image/webp "access plus 1 month"
+ ExpiresByType video/mp4 "access plus 1 month"
+ ExpiresByType video/ogg "access plus 1 month"
+ ExpiresByType video/webm "access plus 1 month"
+
+ # Fonts
+ ExpiresByType font/eot "access plus 1 month"
+ ExpiresByType font/opentype "access plus 1 month"
+ ExpiresByType font/otf "access plus 1 month"
+ ExpiresByType application/x-font-ttf "access plus 1 month"
+ ExpiresByType font/ttf "access plus 1 month"
+ ExpiresByType application/font-woff "access plus 1 month"
+ ExpiresByType application/x-font-woff "access plus 1 month"
+ ExpiresByType font/woff "access plus 1 month"
+ ExpiresByType application/font-woff2 "access plus 1 month"
+ ExpiresByType font/woff2 "access plus 1 month"
+
+ # Other
+ ExpiresByType text/x-cross-domain-policy "access plus 1 week"
 </IfModule>
 <IfModule mod_rewrite.c>
         RewriteEngine On
