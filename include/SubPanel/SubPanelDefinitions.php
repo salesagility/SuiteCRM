@@ -641,7 +641,7 @@ class SubPanelDefinitions
 
         if (isset($this->layout_defs [ 'subpanel_setup' ])) { // bug 17434 - belts-and-braces - check that we have some subpanels first
             //retrieve list of hidden subpanels
-            $hidden_panels = $this->get_hidden_subpanels();
+            $hidden_panels = self::get_hidden_subpanels();
 
             //activities is a special use case in that if it is hidden,
             //then the history tab should be hidden too.
@@ -843,7 +843,7 @@ class SubPanelDefinitions
     /*
      * retrieve hidden subpanels
      */
-    public function get_hidden_subpanels()
+    public static function get_hidden_subpanels()
     {
         global $moduleList;
 
