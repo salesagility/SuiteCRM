@@ -1086,6 +1086,9 @@ EOQ;
  # Other
  ExpiresByType text/x-cross-domain-policy "access plus 1 week"
 </IfModule>
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+</IfModule>
 <IfModule mod_rewrite.c>
         RewriteEngine On
         RewriteCond %{REQUEST_FILENAME} !-d
