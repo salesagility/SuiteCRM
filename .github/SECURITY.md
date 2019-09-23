@@ -6,8 +6,8 @@ For a complete compatibility matrix, please see the documentation [here](https:/
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 7.11.x   | :white_check_mark: |
-| 7.10.x   | :white_check_mark: |
+| 7.11.x   | :heavy_check_mark: |
+| 7.10.x   | :heavy_check_mark: |
 | ≤7.8.x   | :x: |
 
 ## Reporting a Vulnerability
