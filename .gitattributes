@@ -181,8 +181,8 @@ Dockerfile text eol=lf
 /.gitmodules export-ignore
 /.gitignore export-ignore
 /.php_cs export-ignore
-/.codacy.yml export-ignore
-/.codeception.dist.yml export-ignore
-/.codecov.yml export-ignore
+/codacy.yml export-ignore
+/codeception.dist.yml export-ignore
+/codecov.yml export-ignore
 /.travis.yml export-ignore
 /.phpcs.xml export-ignore
