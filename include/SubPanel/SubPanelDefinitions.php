@@ -767,7 +767,7 @@ class SubPanelDefinitions
      * return all available subpanels that belong to the list of tab modules.  You can optionally return all
      * available subpanels, and also optionally group by module (prepends the key with the bean class name).
      */
-    public function get_all_subpanels($return_tab_modules_only = true, $group_by_module = false)
+    public static function get_all_subpanels($return_tab_modules_only = true, $group_by_module = false)
     {
         global $moduleList, $beanFiles, $beanList, $module;
 
