@@ -58,21 +58,9 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('email_cache');
     }
 
-
-    public function testThisCallback()
-    {
-        $str = ['nope', '%foo', 'bar%', '%bazz%'];
-        $ret = this_callback($str);
-        $result = [];
-        for ($i = 0; $i < strlen($ret); $i++) {
-            $result[] = ord($ret[$i]);
-        }
-        $this->assertEquals([14, 15, 186, 186], $result);
-    }
-
-    // ---------------------------------------------
-    // ----- FOLLOWIN TESTS ARE USING FAKE IMAP ----
-    // ------------------------------------------------->
+    // ---------------------------------------------------------->
+    // ----- FOLLOWING TESTS ARE USING A FAKE IMAP Connection---->
+    // ---------------------------------------------------------->
 
 
     public function testConnectMailServerFolderInboundForceFirstMailbox()

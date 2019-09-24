@@ -52,17 +52,6 @@ require_once('include/OutboundEmail/OutboundEmail.php');
 require_once('modules/InboundEmail/Overview.php');
 require_once('modules/InboundEmail/temp.php');
 
-function this_callback($str)
-{
-    $ret = '';
-    foreach ($str as $match) {
-        $ret .= chr(hexdec(str_replace("%", "", $match)));
-    }
-
-    return $ret;
-}
-
-
 /**
  * @todo use InboundEmail::$imap::getConnection() instead of InboundEmail::$conn
  */
