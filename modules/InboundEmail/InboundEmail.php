@@ -44,6 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use ZBateson\MailMimeParser\MailMimeParser;
+
 require_once __DIR__ . '/../../include/Imap/ImapHandlerFactory.php';
 
 require_once('include/OutboundEmail/OutboundEmail.php');
@@ -183,12 +185,26 @@ class InboundEmail extends SugarBean
     protected $imap;
 
     /**
-     * Email constructor
+     * @var MailMimeParser
      */
-    public function __construct(ImapHandlerInterface $imapHandler = null)
+    private $mailParser;
+
+    /**
+     * Email constructor
+     * @param ImapHandlerInterface|null $imapHandler
+     * @param MailMimeParser|null $mailParser
+     * @throws ImapHandlerException
+     */
+    public function __construct(ImapHandlerInterface $imapHandler = null, MailMimeParser $mailParser = null)
     {
+        if (null === $mailParser) {
+            $this->mailParser = new MailMimeParser();
+        } else {
+            $this->mailParser = $mailParser;
+        }
+
         // using ImapHandlerInterface as dependency
-        if (null == $imapHandler) {
+        if (null === $imapHandler) {
             LoggerManager::getLogger()->debug('Using system default ImapHandler. Hint: Use any ImapHandlerInterface as dependency of InboundEmail');
             $imapHandlerFactory = new ImapHandlerFactory();
             $imapHandler = $imapHandlerFactory->getImapHandler();
@@ -3961,88 +3977,7 @@ class InboundEmail extends SugarBean
      */
     public function getMessageTextWithUid($uid, $type, $structure, $fullHeader, $clean_email = true, $bcOffset = "")
     {
-        global $sugar_config;
-        $cacheDir = $GLOBALS['sugar_config']['cache_dir'] . 'images/';
-
         $msgPart = '';
-        $bc = $this->buildBreadCrumbs($structure->parts, $type);
-        //Add an offset if specified
-        if (!empty($bcOffset)) {
-            $bc = $this->addBreadCrumbOffset($bc, $bcOffset);
-        }
-
-        if (!empty($bc)) { // multi-part
-            // HUGE difference between PLAIN and HTML
-            if ($type == 'PLAIN') {
-                $msgPart = $this->getMessageTextFromSingleMimePart($uid, $bc, $structure);
-            } else {
-                // get part of structure that will
-                $msgPartRaw = '';
-                $bcArray = $this->buildBreadCrumbsHTML($structure->parts, $bcOffset);
-                // construct inline HTML/Rich msg
-                foreach ($bcArray as $bcArryKey => $bcArr) {
-                    foreach ($bcArr as $type => $bcTrail) {
-                        if ($type == 'html') {
-                            $msgPartRaw .= $this->getMessageTextFromSingleMimePartWithUid($uid, $bcTrail, $structure);
-                        } else {
-                            // deal with inline image
-                            $part = $this->getPartByPath($bcTrail, $structure->parts);
-                            if (empty($part) || empty($part->id)) {
-                                continue;
-                            }
-                            $partid = substr($part->id, 1, -1); // strip <> around
-                            if ($part->parameters[0]->value) {
-                                $newImagePath = "class=\"image\" src=\"{$cacheDir}{$this->inlineImages[$partid]}\"";
-                                $preImagePath = "src=\"cid:$partid\"";
-                                $msgPartRaw = str_replace($preImagePath, $newImagePath, $msgPartRaw);
-                            }
-                        }
-                    }
-                }
-                $msgPart = $msgPartRaw;
-            }
-        } else { // either PLAIN message type (flowed) or b0rk3d RFC
-            // make sure we're working on valid data here.
-            if ($structure->subtype != $type) {
-                return '';
-            }
-
-            $decodedHeader = $this->decodeHeader($fullHeader);
-
-            // now get actual body contents
-            $text = $this->getImap()->getBody($uid, FT_UID);
-
-            $upperCaseKeyDecodeHeader = array();
-            if (is_array($decodedHeader)) {
-                $upperCaseKeyDecodeHeader = array_change_key_case($decodedHeader, CASE_UPPER);
-            } // if
-            if (isset($upperCaseKeyDecodeHeader[strtoupper('Content-Transfer-Encoding')])) {
-                $flip = array_flip($this->transferEncoding);
-                $text = $this->handleTranserEncoding(
-                    $text,
-                    $flip[strtoupper($upperCaseKeyDecodeHeader[strtoupper('Content-Transfer-Encoding')])]
-                );
-            }
-
-            if (is_array($upperCaseKeyDecodeHeader['CONTENT-TYPE']) && isset($upperCaseKeyDecodeHeader['CONTENT-TYPE']['charset']) && !empty($upperCaseKeyDecodeHeader['CONTENT-TYPE']['charset'])) {
-                // we have an explicit content type, use it
-                $msgPart = $this->handleCharsetTranslation($text, $upperCaseKeyDecodeHeader['CONTENT-TYPE']['charset']);
-            } elseif (is_array($upperCaseKeyDecodeHeader['CONTENT-TYPE']) && isset($upperCaseKeyDecodeHeader['CONTENT-TYPE']['boundary'])) {
-                $email_segments = explode('--' . $upperCaseKeyDecodeHeader['CONTENT-TYPE']['boundary'], $text);
-                array_shift($email_segments);
-                foreach ($email_segments as $segment)
-                {
-                    if (false !== stripos($segment, 'Content-Type: text/plain'))
-                    {
-                        $msgPart = preg_replace('/Content-(Type|ID|Disposition|Transfer-Encoding):.*?\r\n/is', '', $segment);
-                    }
-                }
-            } else {
-                // make a best guess as to what our content type is
-                $msgPart = $this->convertToUtf8($text);
-            }
-        } // end else clause
-
         $msgPart = $this->customGetMessageText($msgPart);
         /* cn: bug 9176 - htmlEntitites hide XSS attacks. */
         if ($type == 'PLAIN') {
