@@ -89,7 +89,9 @@ class ElasticSearchHooks
     {
         $this->action = 'remove';
 
-        $this->reIndexSafe($bean);
+        if (ElasticSearchIndexer::isEnabled() !== false) {
+            $this->reIndexSafe($bean);
+        }
     }
 
     // ~ ~ ~ ~ ~ ~
