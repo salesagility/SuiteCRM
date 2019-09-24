@@ -3988,7 +3988,9 @@ class InboundEmail extends SugarBean
         $bcOffset = ''
     ) {
         $email = $this->imap->fetchBody($uid, '', FT_UID);
+
         $emailHTML = $this->mailParser->parse($email)->getHtmlContent();
+        $emailHTML = $this->handleInlineImages($email, $emailHTML);
         $emailHTML = $this->customGetMessageText($emailHTML);
 
         return SugarCleaner::cleanHtml($emailHTML, true);
@@ -3996,20 +3998,35 @@ class InboundEmail extends SugarBean
 
     /**
      * Returns email HTML with visible inline images.
+     * @param string $email
      * @param string $emailHTML
      * @return mixed|string
      */
-    protected function handleInlineImages($emailHTML) {
-        foreach ($this->mailParser->parse($emailHTML)->getAllAttachmentParts() as $attachment) {
+    protected function handleInlineImages($email, $emailHTML)
+    {
+        foreach ($this->mailParser->parse($email)->getAllAttachmentParts() as $attachment) {
             $disposition = $attachment->getContentDisposition();
             if ($disposition === 'inline') {
                 $fileName = $attachment->getFilename();
                 $fileID = $attachment->getContentId();
-                $newImagePath = "class=\"image\" src=\"{$this->imagePrefix}{$fileName}\"";
-                $preImagePath = "src=\"cid:$fileID\"";
-                $emailHTML = str_replace($preImagePath, $newImagePath, $emailHTML);
+
+                foreach ($this->tempAttachment as $temp) {
+                    if ($temp === $fileName) {
+                        $fileKey = array_search($fileName, $this->tempAttachment, false);
+
+                        $imagePrefix = "{$GLOBALS['sugar_config']['site_url']}/cache/images/";
+                        $pos = strrpos($fileName, '.');
+                        $fileType = $pos === false ? $fileName : substr($fileName, $pos + 1);
+                        $fileName = $imagePrefix . $fileKey . '.' . $fileType;
+
+                        $newImagePath = "class=\"image\" src=\"{$fileName}\"";
+                        $preImagePath = "src=\"cid:$fileID\"";
+                        $emailHTML = str_replace($preImagePath, $newImagePath, $emailHTML);
+                    }
+                }
             }
         }
+
         return $emailHTML;
     }
 
