@@ -198,10 +198,10 @@ class InboundEmail extends SugarBean
     public function __construct(ImapHandlerInterface $imapHandler = null, MailMimeParser $mailParser = null)
     {
         if (null === $mailParser) {
-            $this->mailParser = new MailMimeParser();
-        } else {
-            $this->mailParser = $mailParser;
+            $mailParser = new MailMimeParser();
         }
+
+        $this->mailParser = $mailParser;
 
         // using ImapHandlerInterface as dependency
         if (null === $imapHandler) {
@@ -3971,20 +3971,25 @@ class InboundEmail extends SugarBean
     /**
      * returns the HTML text part of a multi-part message
      *
-     * @param int msgNo the relative message number for the monitored mailbox
+     * @param $uid
      * @param string $type the type of text processed, either 'PLAIN' or 'HTML'
+     * @param null $structure
+     * @param null $fullHeader
+     * @param bool $clean_email
+     * @param string $bcOffset
      * @return string UTF-8 encoded version of the requested message text
      */
-    public function getMessageTextWithUid($uid, $type, $structure, $fullHeader, $clean_email = true, $bcOffset = "")
-    {
-        $msgPart = '';
+    public function getMessageTextWithUid(
+        $uid,
+        $type = null,
+        $structure = null,
+        $fullHeader = null,
+        $clean_email = true,
+        $bcOffset = ''
+    ) {
+        $email = $this->imap->fetchBody($uid, '', FT_UID);
+        $msgPart = $this->mailParser->parse($email)->getHtmlContent();
         $msgPart = $this->customGetMessageText($msgPart);
-        /* cn: bug 9176 - htmlEntitites hide XSS attacks. */
-        if ($type == 'PLAIN') {
-            return SugarCleaner::cleanHtml(to_html($msgPart), false);
-        }
-        // Bug 50241: can't process <?xml:namespace .../> properly. Strip <?xml ...> tag first.
-        $msgPart = preg_replace("/<\?xml[^>]*>/", "", $msgPart);
 
         return SugarCleaner::cleanHtml($msgPart, true);
     }
@@ -5311,34 +5316,15 @@ class InboundEmail extends SugarBean
                 // Store CIDs in imported messages, convert on display
                 $this->imagePrefix = 'cid:';
             }
-            // handle multi-part email bodies
-            $subtypeArray = [
-                'MIXED',
-                'ALTERNATIVE',
-                'RELATED',
-                'REPORT',
-                'HTML'
-            ];
 
-            if (in_array(strtoupper($structure->subtype), $subtypeArray, true)) {
-                $email->description_html = $this->getMessageTextWithUid(
-                    $uid,
-                    $structure->subtype,
-                    $structure,
-                    $fullHeader,
-                    $clean_email
-                );
-            } elseif ($structure->subtype === 'PLAIN') {
-                $email->description = $this->getMessageTextWithUid(
-                    $uid,
-                    'PLAIN',
-                    $structure,
-                    $fullHeader,
-                    $clean_email
-                );
-            } else {
-                LoggerManager::getLogger()->warn('Unknown MIME subtype in fetch request');
-            }
+            $email->description_html = $this->getMessageTextWithUid(
+                $uid,
+                $structure->subtype,
+                $structure,
+                $fullHeader,
+                $clean_email
+            );
+
             $this->imagePrefix = $oldPrefix;
 
 
@@ -5581,36 +5567,15 @@ class InboundEmail extends SugarBean
 
                 $oldPrefix = $this->imagePrefix;
 
-
                 $structure = $this->getImap()->fetchStructure($uid, FT_UID);
 
-                $subtypeArray = [
-                    'MIXED',
-                    'ALTERNATIVE',
-                    'RELATED',
-                    'REPORT',
-                    'HTML'
-                ];
-
-                if (in_array(strtoupper($structure->subtype), $subtypeArray, true)) {
-                    $email->description_html = $this->getMessageTextWithUid(
-                        $uid,
-                        $structure->subtype,
-                        $structure,
-                        $fullHeader,
-                        true
-                    );
-                } elseif ($structure->subtype === 'PLAIN') {
-                    $email->description = $this->getMessageTextWithUid(
-                        $uid,
-                        'PLAIN',
-                        $structure,
-                        $fullHeader,
-                        true
-                    );
-                } else {
-                    $log->warn('Unknown MIME subtype in fetch request');
-                }
+                $email->description_html = $this->getMessageTextWithUid(
+                    $uid,
+                    $structure->subtype,
+                    $structure,
+                    $fullHeader,
+                    true
+                );
             } else {
                 $log->warn('Missing viewdefs in request');
             }
