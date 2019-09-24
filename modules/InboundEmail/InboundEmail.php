@@ -3988,12 +3988,30 @@ class InboundEmail extends SugarBean
         $bcOffset = ''
     ) {
         $email = $this->imap->fetchBody($uid, '', FT_UID);
-        $msgPart = $this->mailParser->parse($email)->getHtmlContent();
-        $msgPart = $this->customGetMessageText($msgPart);
+        $emailHTML = $this->mailParser->parse($email)->getHtmlContent();
+        $emailHTML = $this->customGetMessageText($emailHTML);
 
-        return SugarCleaner::cleanHtml($msgPart, true);
+        return SugarCleaner::cleanHtml($emailHTML, true);
     }
 
+    /**
+     * Returns email HTML with visible inline images.
+     * @param string $emailHTML
+     * @return mixed|string
+     */
+    protected function handleInlineImages($emailHTML) {
+        foreach ($this->mailParser->parse($emailHTML)->getAllAttachmentParts() as $attachment) {
+            $disposition = $attachment->getContentDisposition();
+            if ($disposition === 'inline') {
+                $fileName = $attachment->getFilename();
+                $fileID = $attachment->getContentId();
+                $newImagePath = "class=\"image\" src=\"{$this->imagePrefix}{$fileName}\"";
+                $preImagePath = "src=\"cid:$fileID\"";
+                $emailHTML = str_replace($preImagePath, $newImagePath, $emailHTML);
+            }
+        }
+        return $emailHTML;
+    }
 
     /**
      * @param $uid
