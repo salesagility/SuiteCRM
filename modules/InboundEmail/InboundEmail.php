@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -52,17 +52,13 @@ require_once __DIR__ . '/../../include/OutboundEmail/OutboundEmail.php';
 require_once __DIR__ . '/../../modules/InboundEmail/Overview.php';
 require_once __DIR__ . '/../../modules/InboundEmail/temp.php';
 
-/**
- * @todo use InboundEmail::$imap::getConnection() instead of InboundEmail::$conn
- */
 class InboundEmail extends SugarBean
 {
-    // module specific
+    // Module specific
     public $conn;
-    public $purifier; // HTMLPurifier object placeholder
+    public $purifier;
     public $email;
 
-    // fields
     public $id;
     public $deleted;
     public $date_entered;
@@ -88,51 +84,52 @@ class InboundEmail extends SugarBean
     public $is_personal;
     public $groupfolder_id;
 
-    // email 2.0
+    // Email 2.0
     public $pop3socket;
-    public $outboundInstance; // id to outbound_email instance
+    public $outboundInstance;
     public $autoImport;
-    public $iconFlagged = "F";
-    public $iconDraft = "D";
-    public $iconAnswered = "A";
-    public $iconDeleted = "del";
+    public $iconFlagged = 'F';
+    public $iconDraft = 'D';
+    public $iconAnswered = 'A';
+    public $iconDeleted = 'del';
     public $isAutoImport = false;
     public $smarty;
     public $attachmentCount = 0;
-    public $tempAttachment = array();
-    public $unsafeChars = array("&", "!", "'", '"', '\\', '/', '<', '>', '|', '$',);
+    public $tempAttachment = [];
+    public $unsafeChars = ['&', '!', "'", '"', '\\', '/', '<', '>', '|', '$',];
     public $currentCache;
     public $defaultSort = 'date';
-    public $defaultDirection = "DESC";
-    public $hrSort = array(
+    public $defaultDirection = 'DESC';
+    public $hrSort = [
         0 => 'flagged',
         1 => 'status',
         2 => 'from',
         3 => 'subj',
         4 => 'date',
-    );
-    public $hrSortLocal = array(
+    ];
+    public $hrSortLocal = [
         'flagged' => 'flagged',
         'status' => 'answered',
         'from' => 'fromaddr',
         'subject' => 'subject',
         'date' => 'senddate',
-    );
+    ];
 
-    // default attributes
-    public $transferEncoding = array(
+    public $transferEncoding = [
         0 => '7BIT',
         1 => '8BIT',
         2 => 'BINARY',
         3 => 'BASE64',
         4 => 'QUOTED-PRINTABLE',
         5 => 'OTHER'
-    );
-    // object attributes
-    public $compoundMessageId; // concatenation of messageID and deliveredToEmail
+    ];
+
+    // concatenation of messageID and deliveredToEmail
+    public $compoundMessageId;
     public $serverConnectString;
     public $disable_row_level_security = true;
     public $InboundEmailCachePath;
+    public $EmailCachePath;
     public $InboundEmailCacheFile = 'InboundEmail.cache.php';
     public $object_name = 'InboundEmail';
     public $module_dir = 'InboundEmail';
@@ -143,27 +140,30 @@ class InboundEmail extends SugarBean
     public $dbManager;
     public $field_defs;
     public $column_fields;
-    public $required_fields = array(
+    public $required_fields = [
         'name' => 'name',
         'server_url' => 'server_url',
         'mailbox' => 'mailbox',
         'user' => 'user',
         'port' => 'port',
-    );
-    public $imageTypes = array("JPG", "JPEG", "GIF", "PNG");
-    public $inlineImages = array();  // temporary space to store ID of inlined images
+    ];
+    public $imageTypes = ['JPG', 'JPEG', 'GIF', 'PNG'];
+    public $inlineImages = [];
     public $defaultEmailNumAutoreplies24Hours = 10;
     public $maxEmailNumAutoreplies24Hours = 10;
-    // custom ListView attributes
+
+    // Custom ListView attributes
     public $mailbox_type_name;
     public $global_personal_string;
-    // service attributes
+
+    // Service attributes
     public $tls;
     public $ca;
     public $ssl;
     public $protocol;
     public $keyForUsersDefaultIEAccount = 'defaultIEAccount';
-    // prefix to use when importing inlinge images in emails
+
+    // Prefix to use when importing inline images in emails
     public $imagePrefix;
     public $job_name = 'function::pollMonitoredInboxes';
 
@@ -177,6 +177,11 @@ class InboundEmail extends SugarBean
      * @var MailMimeParser
      */
     private $mailParser;
+
+    /**
+     * @var Overview
+     */
+    private $overview;
 
     /**
      * Email constructor
@@ -223,7 +228,9 @@ class InboundEmail extends SugarBean
 
     /**
      *
+     * @param ImapHandlerInterface|null $imap
      * @return ImapHandlerInterface
+     * @throws ImapHandlerException
      */
     public function getImap(ImapHandlerInterface $imap = null)
     {
@@ -240,14 +247,16 @@ class InboundEmail extends SugarBean
 
     /**
      * retrieves I-E bean
-     * @param string id
+     * @param int $id
+     * @param bool $encode
+     * @param bool $deleted
      * @return object Bean
      */
     public function retrieve($id = -1, $encode = true, $deleted = true)
     {
         $ret = parent::retrieve($id, $encode, $deleted);
-        // if I-E bean exist
-        if (!is_null($ret)) {
+        // If I-E bean exist
+        if ($ret !== null) {
             $this->email_password = blowfishDecode(blowfishGetKey('InboundEmail'), $this->email_password);
             $this->retrieveMailBoxFolders();
         }
@@ -3200,7 +3209,7 @@ class InboundEmail extends SugarBean
             $alerts = '';
             $GLOBALS['log']->debug($l . ': I-E testing string: ' . $serviceTest);
 
-            // open the connection and try the test string
+            // Open the connection and try the test string
             $this->conn = $this->getImapConnection($serviceTest, $login, $passw);
 
             if (($errors = $this->getImap()->getLastError()) || ($alerts = $this->getImap()->getAlerts())) {
@@ -3992,10 +4001,10 @@ class InboundEmail extends SugarBean
         $clean_email = true,
         $bcOffset = ''
     ) {
-        $email = $this->imap->fetchBody($uid, '', FT_UID);
+        $emailBody = $this->imap->fetchBody($uid, '', FT_UID);
 
-        $emailHTML = $this->mailParser->parse($email)->getHtmlContent();
-        $emailHTML = $this->handleInlineImages($email, $emailHTML);
+        $emailHTML = $this->mailParser->parse($emailBody)->getHtmlContent();
+        $emailHTML = $this->handleInlineImages($emailBody, $emailHTML);
         $emailHTML = $this->customGetMessageText($emailHTML);
 
         return SugarCleaner::cleanHtml($emailHTML, true);
@@ -4019,10 +4028,10 @@ class InboundEmail extends SugarBean
                     if ($temp === $fileName) {
                         $fileKey = array_search($fileName, $this->tempAttachment, false);
 
-                        $imagePrefix = "{$GLOBALS['sugar_config']['site_url']}/cache/images/";
+                        $filePrefix = "{$GLOBALS['sugar_config']['site_url']}/cache/images/";
                         $pos = strrpos($fileName, '.');
                         $fileType = $pos === false ? $fileName : substr($fileName, $pos + 1);
-                        $fileName = $imagePrefix . $fileKey . '.' . $fileType;
+                        $fileName = $filePrefix . $fileKey . '.' . $fileType;
 
                         $newImagePath = "class=\"image\" src=\"{$fileName}\"";
                         $preImagePath = "src=\"cid:$fileID\"";
@@ -6264,7 +6273,7 @@ class InboundEmail extends SugarBean
         }
 
         if ($test) {
-            if ($opts == false && !is_resource($this->getImap()->getConnection())) {
+            if ($opts === false && !is_resource($this->getImap()->getConnection())) {
                 $this->conn = $this->getImapConnection(
                     $connectString,
                     $this->email_user,
@@ -6276,7 +6285,7 @@ class InboundEmail extends SugarBean
             $alerts = '';
             $successful = false;
             if (($errors = $this->getImap()->getLastError()) || ($alerts = $this->getImap()->getAlerts())) {
-                if ($errors == 'Mailbox is empty') { // false positive
+                if ($errors === 'Mailbox is empty') { // false positive
                     $successful = true;
                 } else {
                     if (!isset($msg)) {
@@ -6350,23 +6359,16 @@ class InboundEmail extends SugarBean
      */
     protected function getImapConnection($mailbox, $username, $password, $options = 0)
     {
-        // if php is prior to 5.3.2, then return call without disable parameters as they are not supported yet
-        if (version_compare(phpversion(), '5.3.2', '<')) {
-            LoggerManager::getLogger()->deprecated("current php version is not supported");
-
-            return $this->getImap()->open($mailbox, $username, $password, $options);
-        }
-
         $connection = null;
-        $authenticators = array('', 'GSSAPI', 'NTLM');
+        $authenticators = ['', 'GSSAPI', 'NTLM'];
 
         while (!$connection && ($authenticator = array_shift($authenticators)) !== null) {
             if ($authenticator) {
-                $params = array(
+                $params = [
                     'DISABLE_AUTHENTICATOR' => $authenticator,
-                );
+                ];
             } else {
-                $params = array();
+                $params = [];
             }
 
             $connection = $this->getImap()->open($mailbox, $username, $password, $options, 0, $params);
