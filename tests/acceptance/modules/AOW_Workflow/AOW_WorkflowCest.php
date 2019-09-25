@@ -1,6 +1,7 @@
 <?php
 
 use \Faker\Factory;
+
 /**
  * Class LoginCest
  *
@@ -23,7 +24,7 @@ class AOW_WorkflowCest
      */
     public function _before(AcceptanceTester $I)
     {
-        if(!$this->fakeData) {
+        if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
             $this->fakeData->addProvider(new Faker\Provider\en_US\Address($this->fakeData));
             $this->fakeData->addProvider(new Faker\Provider\en_US\PhoneNumber($this->fakeData));
@@ -43,8 +44,7 @@ class AOW_WorkflowCest
     // tests
     public function testScenarioCreateWorkflow(
         AcceptanceTester $I,
-        \Helper\WebDriverHelper $webDriverHelper,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\SideBar $sideBar,
         \Step\Acceptance\DetailView $detailView,
@@ -53,13 +53,9 @@ class AOW_WorkflowCest
         \Step\Acceptance\Workflow $workflow
     ) {
         $I->wantTo('Create a workflow for accounts');
-        $I->amOnUrl($webDriverHelper->getInstanceURL());
 
         // Login as Administrator
-        $I->login(
-            $webDriverHelper->getAdminUser(),
-            $webDriverHelper->getAdminPassword()
-        );
+        $I->loginAsAdmin();
 
         $dashboard->waitForDashboardVisible();
         $workflow->navigateToWorkflow($navigationBar, $listView);
@@ -109,24 +105,30 @@ class AOW_WorkflowCest
         $detailView->waitForDetailViewVisible();
     }
 
-    public function testScenarioDeleteWorkflow(
-        AcceptanceTester $I,
-        \Helper\WebDriverHelper $webDriverHelper,
-        \Step\Acceptance\NavigationBar $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\SideBar $sideBar,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Step\Acceptance\Dashboard $dashboard,
-        \Step\Acceptance\Workflow $workflow
-    ) {
-        $I->wantTo('Delete workflow');
-
-        // Delete Record
-        $detailView->clickActionMenuItem('Delete');
-        $detailView->acceptPopup();
-
-        $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
-    }
+    // TODO: This test relied on state from the previous test, so it breaks when
+    // the test order is randomized or cookies are cleared between tests. This should
+    // be fixed.
+    //
+    // public function testScenarioDeleteWorkflow(
+    //     AcceptanceTester $I,
+    //     \Step\Acceptance\NavigationBar $navigationBar,
+    //     \Step\Acceptance\ListView $listView,
+    //     \Step\Acceptance\SideBar $sideBar,
+    //     \Step\Acceptance\DetailView $detailView,
+    //     \Step\Acceptance\EditView $editView,
+    //     \Step\Acceptance\Dashboard $dashboard,
+    //     \Step\Acceptance\Workflow $workflow
+    // ) {
+    //     $I->wantTo('Delete workflow');
+    //     $I->loginAsAdmin();
+    //
+    //     $dashboard->waitForDashboardVisible();
+    //     // TODO: Create a workflow and navigate to its DetailView here.
+    //
+    //     // Delete Record
+    //     $detailView->clickActionMenuItem('Delete');
+    //     $detailView->acceptPopup();
+    //
+    //     $listView->waitForListViewVisible();
+    // }
 }

@@ -1,28 +1,49 @@
 language: php
-php:
-  - 5.5
-  - 5.6
-  - 7.0
-  - 7.1
-  - 7.2
+os: linux
+sudo: required
 
 matrix:
   fast_finish: true
-jobs:
   include:
-      - stage: codecoverage
-        if: type IN (pull_request) OR branch in (master, develop)
-        php: 7.0
-        script: ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d; ./vendor/bin/robo -vvv code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
-sudo: required
-dist: trusty
+    - name: "PHP 5.6 / MySQL 5.6"
+      php: "5.6"
+      dist: trusty
+    - name: "PHP 7.0 / MySQL 5.7"
+      php: "7.0"
+      dist: xenial
+    - name: "PHP 7.1 / MySQL 5.7"
+      php: "7.1"
+      dist: xenial
+    - name: "PHP 7.2 / MySQL 5.7"
+      php: "7.2"
+      dist: xenial
+    - name: "PHP 7.3 / MySQL 5.7"
+      php: "7.3"
+      dist: xenial
+    # Run composer validate to make sure the composer.json and composer.lock are in sync.
+    - name: "composer validate"
+      php: "7.2"
+      dist: xenial
+      before_script: composer install
+      script: composer validate
+    - stage: codecoverage
+      if: type IN (pull_request) OR branch in (master, develop, hotfix)
+      php: "7.0"
+      dist: xenial
+      script: ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 1;" >> config_override.php  ; ./vendor/bin/robo code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
+
 services:
   - mysql
+  - elasticsearch
 addons:
   chrome: stable
 
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
 env:
-  - INSTANCE_URL=http://localhost/ DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1
+  - INSTANCE_URL=http://localhost DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1 COMPOSER_MEMORY_LIMIT=-1
 
 before_install:
   # Install chrome driver#
@@ -30,13 +51,16 @@ before_install:
   - wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip
   - unzip -o chromedriver_linux64.zip
   - ./chromedriver --url-base=/wd/hub &
+  # Lint PHP
+  - for file in $(git diff --name-status HEAD~1 HEAD | egrep "^[ACMR].*\.php$" | cut -c 3-); do php -l $file; done
 
 install:
+  - phpenv config-add travis.php.ini
   - composer self-update && composer --version
 
 before_script:
   # Set up MySQL
-  - mysql -e "CREATE DATABASE automated_tests;"
+  - mysql -e "CREATE DATABASE automated_tests CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
   - mysql -u root -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
   - mysql -u root -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
   # Install apache - images with PHP 7 or above
@@ -53,36 +77,46 @@ before_script:
   # Configure apache virtual hosts - images with PHP 7 or above
   - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
+  # Additional PHP config
+  - phpenv config-add travis.php.ini
   - sudo service apache2 restart
   # Install composer
   - composer install
   - ./vendor/bin/codecept build
-  # Additional PHP config
-  - phpenv config-add travis.php.ini
 
 script:
-  # Run the silent installer or the wizard installer ?
+  # Run the wizard installer
   - echo "using install wizard"
-  - ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d
+  - ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter
   - ./build/push_output.sh
-
+  
   # Run the unit tests
-  - ./vendor/bin/codecept run unit --steps
+  - sudo chmod -R 777 .
+  - ./vendor/bin/phpunit --stop-on-failure --stop-on-error --colors --configuration ./tests/phpunit.xml.dist ./tests/unit/phpunit
   # Install OAuth2 demo data
   - mysql -u root -D automated_tests -v -e "source tests/_data/api_data.sql"
   # Install demo user data
   - mysql -u root -D automated_tests -v -e "source tests/_data/demo_users.sql"
   # set the log level to error
-  - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
-  # Run API functional tests
-  - ./vendor/bin/codecept run api --steps
-  # RUN Basic Acceptance test
+  - echo "\$sugar_config['logger']['level'] = 'error';" >> config_override.php
+  # add keys
   - sudo chmod -R 777 .
-  - ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -vvv -d;
+  - openssl genrsa -out Api/V8/OAuth2/private.key 2048
+  - openssl rsa -in Api/V8/OAuth2/private.key -pubout -out Api/V8/OAuth2/public.key
+  - sudo chmod 600 Api/V8/OAuth2/p*.key
+  # - sudo chown www-data:www-data Api/V8/OAuth2/p*.key
+  # Run API functional tests
+  - ./vendor/bin/codecept run tests/api/V8/ -f --ext DotReporter
+  # RUN Basic Acceptance test
+  - echo "\$sugar_config['imap_test'] = true;" >> config_override.php
+  - ./vendor/bin/codecept run acceptance --env travis-ci-hub -f --ext DotReporter
 
 after_script:
   - ./build/push_output.sh
-  - cat suitecrm.log
+  - curl -i -F file=@suitecrm.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
+  - curl -i -F file=@var/log/apache2/error.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
+  # ElasticSearch Indexing logs
+  - cat search_index.log
   - sudo cat /var/log/apache2/error.log
   - echo $TRAVIS_COMMIT_RANGE
 

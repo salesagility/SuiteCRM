@@ -81,7 +81,7 @@ class CodeCoverageCommands extends \Robo\Tasks
 
     /**
      * @return array|false|string git commit range from travis ci
-     * eg 3b762531a80e768c2b303f4cce0189386a9f71d4...921bd12b282b0a984a83cc3d7e2a43bc21f2694f
+     * e.g. 3b762531a80e768c2b303f4cce0189386a9f71d4...921bd12b282b0a984a83cc3d7e2a43bc21f2694f
      */
     private function getCommitRangeForTravisCi()
     {
@@ -115,13 +115,10 @@ class CodeCoverageCommands extends \Robo\Tasks
 
     private function getCodeCoverageCommand()
     {
-        $paths = new Paths();
         $os = new OperatingSystem();
-        $projectPath = $os->toOsPath($paths->getProjectPath());
-        $command = $projectPath
-            . DIRECTORY_SEPARATOR
-            . $os->toOsPath('vendor/bin/codecept')
-            . ' run unit --coverage-xml';
+        $command =
+            $os->toOsPath('./vendor/bin/phpunit')
+            . ' --configuration ./tests/phpunit.xml.dist --coverage-clover ./tests/_output/coverage.xml ./tests/unit/phpunit';
         return $command;
     }
 }

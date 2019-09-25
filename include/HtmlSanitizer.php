@@ -112,6 +112,10 @@ class HtmlSanitizer
     {
         // $encode_html previously effected the decoding process.
         // we should decode regardless, just in case, the calling method passing encoded html
+        //Prevent that the email address in Outlook format are removed
+        $pattern = '/(.*)(&lt;([a-zA-Z0-9.!#$%&\'*+\=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)&gt;)(.*)/';
+        $replacement = '${1}<<a href="mailto:${3}">${3}</a>> ${4}';
+        $dirtyHtml =  preg_replace($pattern, $replacement, $dirtyHtml);
         $dirty_html_decoded = html_entity_decode($dirtyHtml);
 
         // Re-encode html
@@ -142,5 +146,3 @@ class HtmlSanitizer
         return $isEncoded ? to_html($dirtyHtml) : $dirtyHtml;
     }
 }
-
-

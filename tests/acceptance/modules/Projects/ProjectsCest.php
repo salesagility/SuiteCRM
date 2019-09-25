@@ -30,26 +30,18 @@ class ProjectsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Projects $projects
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the projects module.
      */
     public function testScenarioViewProjectsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Projects $projects,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the projects module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to projects list-view
         $I->loginAsAdmin();
-        $projects->gotoProjects();
+        $I->visitPage('Project', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Projects', '.module-title-text');
@@ -60,7 +52,6 @@ class ProjectsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Projects $project
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a project so that I can test
      * the standard fields.
@@ -69,18 +60,13 @@ class ProjectsCest
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Projects $project,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Projects $project
     ) {
         $I->wantTo('Create a Project');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to projects list-view
         $I->loginAsAdmin();
-        $project->gotoProjects();
+        $I->visitPage('Project', 'index');
         $listView->waitForListViewVisible();
 
         // Create project
@@ -92,5 +78,4 @@ class ProjectsCest
         $detailView->acceptPopup();
         $listView->waitForListViewVisible();
     }
-
 }

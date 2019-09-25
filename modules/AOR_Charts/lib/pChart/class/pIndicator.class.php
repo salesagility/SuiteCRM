@@ -27,11 +27,11 @@
   {
    var $pChartObject;
 
-   /* Class creator */
-   function pIndicator($pChartObject)
-    {
-     $this->pChartObject = $pChartObject;
-    }
+     /* Class creator */
+     public function __construct($pChartObject)
+     {
+         $this->pChartObject = $pChartObject;
+     }
 
    /* Draw an indicator */
    function draw($X,$Y,$Width,$Height,$Format="")

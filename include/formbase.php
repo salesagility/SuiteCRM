@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -54,14 +57,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 function checkRequired($prefix, $required)
 {
-	foreach($required as $key)
-	{
-		if(!isset($_POST[$prefix.$key]) || number_empty($_POST[$prefix.$key]))
-		{
-			return false;
-		}
-	}
-	return true;
+    foreach ($required as $key) {
+        if (!isset($_POST[$prefix.$key]) || number_empty($_POST[$prefix.$key])) {
+            return false;
+        }
+    }
+    return true;
 }
 
 /**
@@ -75,17 +76,25 @@ function checkRequired($prefix, $required)
  */
 function populateFromPost($prefix, &$focus, $skipRetrieve = false, $checkACL = false)
 {
-	global $current_user;
+    global $current_user;
 
-	if(!empty($_REQUEST[$prefix.'record']) && !$skipRetrieve)
-		$focus->retrieve($_REQUEST[$prefix.'record']);
+    /* BEGIN - SECURITY GROUPS */ 
+    if(!empty($_REQUEST['dup_checked']) && !empty($_REQUEST[$prefix.'id']))
+    {
+        $focus->new_with_id = true;
+    }
+    /* END - SECURITY GROUPS */ 
 
-	if(!empty($_POST['assigned_user_id']) && 
-	    ($focus->assigned_user_id != $_POST['assigned_user_id']) && 
-	    ($_POST['assigned_user_id'] != $current_user->id)) {
-		$GLOBALS['check_notify'] = true;
-	}
-    if(isset($_POST['dup_checked']) && $_POST['dup_checked'] && isset($_POST['id']) && $_POST['id'] != '' ){
+    if (!empty($_REQUEST[$prefix.'record']) && !$skipRetrieve) {
+        $focus->retrieve($_REQUEST[$prefix.'record']);
+    }
+
+    if (!empty($_POST['assigned_user_id']) &&
+        ($focus->assigned_user_id != $_POST['assigned_user_id']) &&
+        ($_POST['assigned_user_id'] != $current_user->id)) {
+        $GLOBALS['check_notify'] = true;
+    }
+    if (isset($_POST['dup_checked']) && $_POST['dup_checked'] && isset($_POST['id']) && $_POST['id'] != '') {
         $focus->new_with_id = true;
     }
     require_once('include/SugarFields/SugarFieldHandler.php');
@@ -106,65 +115,65 @@ function populateFromPost($prefix, &$focus, $skipRetrieve = false, $checkACL = f
         $relatedFields[$def['id_name']] = $field;
     }
 
-	foreach($focus->field_defs as $field=>$def) {
-        if ( $field == 'id' && !empty($focus->id) ) {
+    foreach ($focus->field_defs as $field=>$def) {
+        if ($field == 'id' && !empty($focus->id)) {
             // Don't try and overwrite the ID
             continue;
         }
 
 
-	    $type = !empty($def['custom_type']) ? $def['custom_type'] : $def['type'];
-		$sf = $sfh::getSugarField($type);
-        if($sf != null){
+        $type = !empty($def['custom_type']) ? $def['custom_type'] : $def['type'];
+        $sf = $sfh::getSugarField($type);
+        if ($sf != null) {
             $sf->save($focus, $_POST, $field, $def, $prefix);
         } else {
             $GLOBALS['log']->fatal("Field '$field' does not have a SugarField handler");
         }
 
-/*
-        if(isset($_POST[$prefix.$field])) {
-			if(is_array($_POST[$prefix.$field]) && !empty($focus->field_defs[$field]['isMultiSelect'])) {
-				if($_POST[$prefix.$field][0] === '' && !empty($_POST[$prefix.$field][1]) ) {
-					unset($_POST[$prefix.$field][0]);
-				}
-				$_POST[$prefix.$field] = encodeMultienumValue($_POST[$prefix.$field]);	
-			}
+        /*
+                if(isset($_POST[$prefix.$field])) {
+        			if(is_array($_POST[$prefix.$field]) && !empty($focus->field_defs[$field]['isMultiSelect'])) {
+        				if($_POST[$prefix.$field][0] === '' && !empty($_POST[$prefix.$field][1]) ) {
+        					unset($_POST[$prefix.$field][0]);
+        				}
+        				$_POST[$prefix.$field] = encodeMultienumValue($_POST[$prefix.$field]);
+        			}
 
-			$focus->$field = $_POST[$prefix.$field];
-			/* 
-			 * overrides the passed value for booleans.
-			 * this will be fully deprecated when the change to binary booleans is complete.
-			 /
-			if(isset($focus->field_defs[$prefix.$field]) && $focus->field_defs[$prefix.$field]['type'] == 'bool' && isset($focus->field_defs[$prefix.$field]['options'])) {
-				$opts = explode("|", $focus->field_defs[$prefix.$field]['options']);
-				$bool = $_POST[$prefix.$field];
+        			$focus->$field = $_POST[$prefix.$field];
+        			/*
+        			 * overrides the passed value for booleans.
+        			 * this will be fully deprecated when the change to binary booleans is complete.
+        			 /
+        			if(isset($focus->field_defs[$prefix.$field]) && $focus->field_defs[$prefix.$field]['type'] == 'bool' && isset($focus->field_defs[$prefix.$field]['options'])) {
+        				$opts = explode("|", $focus->field_defs[$prefix.$field]['options']);
+        				$bool = $_POST[$prefix.$field];
 
-				if(is_int($bool) || ($bool === "0" || $bool === "1" || $bool === "2")) {
-					// 1=on, 2=off
-					$selection = ($_POST[$prefix.$field] == "0") ? 1 : 0;
-				} elseif(is_bool($_POST[$prefix.$field])) {
-					// true=on, false=off
-					$selection = ($_POST[$prefix.$field]) ? 0 : 1;
-				}
-				$focus->$field = $opts[$selection];
-			}
-		} else if(!empty($focus->field_defs[$field]['isMultiSelect']) && !isset($_POST[$prefix.$field]) && isset($_POST[$prefix.$field . '_multiselect'])) {
-			$focus->$field = '';
-		}
-*/
-	}
+        				if(is_int($bool) || ($bool === "0" || $bool === "1" || $bool === "2")) {
+        					// 1=on, 2=off
+        					$selection = ($_POST[$prefix.$field] == "0") ? 1 : 0;
+        				} elseif(is_bool($_POST[$prefix.$field])) {
+        					// true=on, false=off
+        					$selection = ($_POST[$prefix.$field]) ? 0 : 1;
+        				}
+        				$focus->$field = $opts[$selection];
+        			}
+        		} else if(!empty($focus->field_defs[$field]['isMultiSelect']) && !isset($_POST[$prefix.$field]) && isset($_POST[$prefix.$field . '_multiselect'])) {
+        			$focus->$field = '';
+        		}
+        */
+    }
 
-	foreach($focus->additional_column_fields as $field) {
-		if(isset($_POST[$prefix.$field])) {
-			$value = $_POST[$prefix.$field];
-			$focus->$field = $value;
-		}
-	}
-	return $focus;
+    foreach ($focus->additional_column_fields as $field) {
+        if (isset($_POST[$prefix.$field])) {
+            $value = $_POST[$prefix.$field];
+            $focus->$field = $value;
+        }
+    }
+    return $focus;
 }
 
-function add_hidden_elements($key, $value) {
-
+function add_hidden_elements($key, $value)
+{
     $elements = '';
 
     // if it's an array, we need to loop into the array and use square brackets []
@@ -182,145 +191,130 @@ function add_hidden_elements($key, $value) {
 
 function getPostToForm($ignore='', $isRegularExpression=false)
 {
-	$fields = '';
-	if(!empty($ignore) && $isRegularExpression) {
-		foreach ($_POST as $key=>$value){
-			if(!preg_match($ignore, $key)) {
-                                $fields .= add_hidden_elements($key, $value);
-			}
-		}	
-	} else {
-		foreach ($_POST as $key=>$value){
-			if($key != $ignore) {
-                                $fields .= add_hidden_elements($key, $value);
-			}
-		}
-	}
-	return $fields;
+    $fields = '';
+    if (!empty($ignore) && $isRegularExpression) {
+        foreach ($_POST as $key=>$value) {
+            if (!preg_match($ignore, $key)) {
+                $fields .= add_hidden_elements($key, $value);
+            }
+        }
+    } else {
+        foreach ($_POST as $key=>$value) {
+            if ($key != $ignore) {
+                $fields .= add_hidden_elements($key, $value);
+            }
+        }
+    }
+    return $fields;
 }
 
 function getGetToForm($ignore='', $usePostAsAuthority = false)
 {
     global $log;
-	$fields = '';
-	foreach ($_GET as $key => $value)
-	{
-	    if(!is_string($key) || !is_int($key)) {
-            if(!empty($key)) {
-                $log->warn('$key must be a string or an integer');
+    $fields = '';
+    foreach ($_GET as $key => $value) {
+        if (is_array($key)) {
+            if (!empty($key)) {
+                $log->warn('$key must be a string');
             }
-	        continue;
+            continue;
         }
 
-        if (!is_string($value)) {
-            if(!empty($value)) {
+        if (is_array($value)) {
+            if (!empty($value)) {
                 $log->warn('$value must be a string');
             }
-	        continue;
+            continue;
         }
-		if($key != $ignore){
-			if(!$usePostAsAuthority || !isset($_POST[$key])){
-				$fields.= "<input type='hidden' name='$key' value='$value'>";
-			}
-		}
-	}
-	return $fields;
-
+        if ($key != $ignore) {
+            if (!$usePostAsAuthority || !isset($_POST[$key])) {
+                $fields.= "<input type='hidden' name='$key' value='$value'>";
+            }
+        }
+    }
+    return $fields;
 }
 function getAnyToForm($ignore='', $usePostAsAuthority = false)
 {
-	$fields = getPostToForm($ignore);
-	$fields .= getGetToForm($ignore, $usePostAsAuthority);
-	return $fields;
-
+    $fields = getPostToForm($ignore);
+    $fields .= getGetToForm($ignore, $usePostAsAuthority);
+    return $fields;
 }
 
 function handleRedirect($return_id='', $return_module='', $additionalFlags = false)
 {
-	if(isset($_REQUEST['return_url']) && $_REQUEST['return_url'] != "")
-	{
-		header("Location: ". $_REQUEST['return_url']);
-		exit;
-	}
+    if (isset($_REQUEST['return_url']) && $_REQUEST['return_url'] != "") {
+        header("Location: ". $_REQUEST['return_url']);
+        exit;
+    }
 
-	$url = buildRedirectURL($return_id, $return_module);
-	header($url);
-	exit;	
+    $url = buildRedirectURL($return_id, $return_module);
+    header($url);
+    exit;
 }
 
 //eggsurplus: abstract to simplify unit testing
-function buildRedirectURL($return_id='', $return_module='') 
+function buildRedirectURL($return_id='', $return_module='')
 {
-    if(isset($_REQUEST['return_module']) && $_REQUEST['return_module'] != "")
-	{
-		$return_module = $_REQUEST['return_module'];
-	}
-	else
-	{
-		$return_module = $return_module;
-	}
-	if(isset($_REQUEST['return_action']) && $_REQUEST['return_action'] != "")
-	{
-	    
-	   //if we are doing a "Close and Create New"
-        if(isCloseAndCreateNewPressed())
-        {
-            $return_action = "EditView";    
-            $isDuplicate = "true";        
+    if (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] != "") {
+        $return_module = $_REQUEST['return_module'];
+    } else {
+        $return_module = $return_module;
+    }
+    if (isset($_REQUEST['return_action']) && $_REQUEST['return_action'] != "") {
+        
+       //if we are doing a "Close and Create New"
+        if (isCloseAndCreateNewPressed()) {
+            $return_action = "EditView";
+            $isDuplicate = "true";
             $status = "";
             
             // Meeting Integration
-            if(isset($_REQUEST['meetingIntegrationFlag']) && $_REQUEST['meetingIntegrationFlag'] == 1) {
-            	$additionalFlags = array('meetingIntegrationShowForm' => '1');
+            if (isset($_REQUEST['meetingIntegrationFlag']) && $_REQUEST['meetingIntegrationFlag'] == 1) {
+                $additionalFlags = array('meetingIntegrationShowForm' => '1');
             }
             // END Meeting Integration
-        } 
-		// if we create a new record "Save", we want to redirect to the DetailView
-		else if(isset($_REQUEST['action']) && $_REQUEST['action'] == "Save" 
-			&& $_REQUEST['return_module'] != 'Activities'
-			&& $_REQUEST['return_module'] != 'Home' 
-			&& $_REQUEST['return_module'] != 'Forecasts' 
-			&& $_REQUEST['return_module'] != 'Calendar'
-			&& $_REQUEST['return_module'] != 'MailMerge'
-			) 
-			{
-			    $return_action = 'DetailView';
-			} elseif($_REQUEST['return_module'] == 'Activities' || $_REQUEST['return_module'] == 'Calendar') {
-			$return_module = $_REQUEST['module'];
-			$return_action = $_REQUEST['return_action']; 
-			// wp: return action needs to be set for one-click close in task list
-		} 
-		else 
-		{
-			// if we "Cancel", we go back to the list view.
-			$return_action = $_REQUEST['return_action'];
-		}
-	}
-	else
-	{
-		$return_action = "DetailView";
-	}
-	
-	if(isset($_REQUEST['return_id']) && $_REQUEST['return_id'] != "")
-	{
-		$return_id = $_REQUEST['return_id'];
-	}
+        }
+        // if we create a new record "Save", we want to redirect to the DetailView
+        else {
+            if (isset($_REQUEST['action']) && $_REQUEST['action'] == "Save"
+            && $_REQUEST['return_module'] != 'Activities'
+            && $_REQUEST['return_module'] != 'Home'
+            && $_REQUEST['return_module'] != 'Forecasts'
+            && $_REQUEST['return_module'] != 'Calendar'
+            && $_REQUEST['return_module'] != 'MailMerge'
+            ) {
+                $return_action = 'DetailView';
+            } elseif ($_REQUEST['return_module'] == 'Activities' || $_REQUEST['return_module'] == 'Calendar') {
+                $return_module = $_REQUEST['module'];
+                $return_action = $_REQUEST['return_action'];
+            // wp: return action needs to be set for one-click close in task list
+            } else {
+                // if we "Cancel", we go back to the list view.
+                $return_action = $_REQUEST['return_action'];
+            }
+        }
+    } else {
+        $return_action = "DetailView";
+    }
+    
+    if (isset($_REQUEST['return_id']) && $_REQUEST['return_id'] != "") {
+        $return_id = $_REQUEST['return_id'];
+    }
 
     $add = "";
-    if(isset($additionalFlags) && !empty($additionalFlags)) {
-        foreach($additionalFlags as $k => $v) {
+    if (isset($additionalFlags) && !empty($additionalFlags)) {
+        foreach ($additionalFlags as $k => $v) {
             $add .= "&{$k}={$v}";
         }
     }
     
-    if (!isset($isDuplicate) || !$isDuplicate)
-    {
+    if (!isset($isDuplicate) || !$isDuplicate) {
         $url="index.php?action=$return_action&module=$return_module&record=$return_id&return_module=$return_module&return_action=$return_action{$add}";
-        if(isset($_REQUEST['offset']) && empty($_REQUEST['duplicateSave'])) {
+        if (isset($_REQUEST['offset']) && empty($_REQUEST['duplicateSave'])) {
             $url .= "&offset=".$_REQUEST['offset'];
         }
-        if(!empty($_REQUEST['ajax_load']))
-        {
+        if (!empty($_REQUEST['ajax_load'])) {
             $ajax_ret = array(
                 'content' => "<script>SUGAR.ajaxUI.loadContent('$url');</script>\n",
                 'menu' => array(
@@ -334,10 +328,9 @@ function buildRedirectURL($return_id='', $return_module='')
             return "Location: $url";
         }
     } else {
-    	$standard = "action=$return_action&module=$return_module&record=$return_id&isDuplicate=true&return_module=$return_module&return_action=$return_action&status=$status";
+        $standard = "action=$return_action&module=$return_module&record=$return_id&isDuplicate=true&return_module=$return_module&return_action=$return_action&status=$status";
         $url="index.php?{$standard}{$add}";
-        if(!empty($_REQUEST['ajax_load']))
-        {
+        if (!empty($_REQUEST['ajax_load'])) {
             $ajax_ret = array(
                  'content' => "<script>SUGAR.ajaxUI.loadContent('$url');</script>\n",
                  'menu' => array(
@@ -355,30 +348,25 @@ function buildRedirectURL($return_id='', $return_module='')
 
 function getLikeForEachWord($fieldname, $value, $minsize=4)
 {
-	$value = trim($value);
-	$values = explode(' ',$value);
-	$ret = '';
-	foreach($values as $val)
-	{
-		if(strlen($val) >= $minsize)
-		{
-			if(!empty($ret))
-			{
-				$ret .= ' or';
-			}
-			$ret .= ' '. $fieldname . ' LIKE %'.$val.'%';
-		}
-
-	}
-
-
+    $value = trim($value);
+    $values = explode(' ', $value);
+    $ret = '';
+    foreach ($values as $val) {
+        if (strlen($val) >= $minsize) {
+            if (!empty($ret)) {
+                $ret .= ' or';
+            }
+            $ret .= ' '. $fieldname . ' LIKE %'.$val.'%';
+        }
+    }
 }
 
-function isCloseAndCreateNewPressed() {
-    return isset($_REQUEST['action']) && 
+function isCloseAndCreateNewPressed()
+{
+    return isset($_REQUEST['action']) &&
            $_REQUEST['action'] == "Save" &&
-           isset($_REQUEST['isSaveAndNew']) && 
-           $_REQUEST['isSaveAndNew'] == 'true';	
+           isset($_REQUEST['isSaveAndNew']) &&
+           $_REQUEST['isSaveAndNew'] == 'true';
 }
 
 
@@ -387,36 +375,35 @@ function isCloseAndCreateNewPressed() {
  * @see include/generic/Save2.php
  */
 
-function add_prospects_to_prospect_list($parent_id,$child_id)
+function add_prospects_to_prospect_list($parent_id, $child_id)
 {
     $focus=BeanFactory::getBean('Prospects');
-    if(is_array($child_id)){
+    if (is_array($child_id)) {
         $uids = $child_id;
-    }
-    else{
+    } else {
         $uids = array($child_id);
     }
 
     $relationship = '';
-    foreach($focus->get_linked_fields() as $field => $def) {
+    foreach ($focus->get_linked_fields() as $field => $def) {
         if ($focus->load_relationship($field)) {
-            if ( $focus->$field->getRelatedModuleName() == 'ProspectLists' ) {
+            if ($focus->$field->getRelatedModuleName() == 'ProspectLists') {
                 $relationship = $field;
                 break;
             }
         }
     }
 
-    if ( $relationship != '' ) {
-        foreach ( $uids as $id) {
+    if ($relationship != '') {
+        foreach ($uids as $id) {
             $focus->retrieve($id);
             $focus->load_relationship($relationship);
-            $focus->prospect_lists->add( $parent_id );
+            $focus->prospect_lists->add($parent_id);
         }
     }
 }
 
-function add_to_prospect_list($query_panel,$parent_module,$parent_type,$parent_id,$child_id,$link_attribute,$link_type,$parent)
+function add_to_prospect_list($query_panel, $parent_module, $parent_type, $parent_id, $child_id, $link_attribute, $link_type, $parent)
 {
     $GLOBALS['log']->debug('add_prospects_to_prospect_list:parameters:'.$query_panel);
     $GLOBALS['log']->debug('add_prospects_to_prospect_list:parameters:'.$parent_module);
@@ -433,10 +420,10 @@ function add_to_prospect_list($query_panel,$parent_module,$parent_type,$parent_i
     }
     $focus = new $parent_type();
     $focus->retrieve($parent_id);
-    if(empty($focus->id)) {
+    if (empty($focus->id)) {
         return false;
     }
-    if(empty($parent)) {
+    if (empty($parent)) {
         return false;
     }
 
@@ -447,20 +434,19 @@ function add_to_prospect_list($query_panel,$parent_module,$parent_type,$parent_i
 
     $subpanel = new SubPanelTiles($parent, $parent->module_dir);
     $thisPanel=$subpanel->subpanel_definitions->load_subpanel($query_panel);
-    if(empty($thisPanel)) {
+    if (empty($thisPanel)) {
         return false;
     }
 
     // bugfix #57850  filter prospect list based on marketing_id (if it's present)
-    if (isset($_REQUEST['marketing_id']) && $_REQUEST['marketing_id'] != 'all')
-    {
+    if (isset($_REQUEST['marketing_id']) && $_REQUEST['marketing_id'] != 'all') {
         $thisPanel->_instance_properties['function_parameters']['EMAIL_MARKETING_ID_VALUE'] = $_REQUEST['marketing_id'];
     }
 
-    $result = SugarBean::get_union_related_list($parent, '', '', '', 0, -99,-99,'', $thisPanel);
+    $result = SugarBean::get_union_related_list($parent, '', '', '', 0, -99, -99, '', $thisPanel);
 
-    if(!empty($result['list'])) {
-        foreach($result['list'] as $object) {
+    if (!empty($result['list'])) {
+        foreach ($result['list'] as $object) {
             if ($link_type != 'default') {
                 $relationship_attribute=strtolower($object->$link_attribute);
             }
@@ -476,7 +462,8 @@ function add_to_prospect_list($query_panel,$parent_module,$parent_type,$parent_i
 }
 
 //Link rows returned by a report to parent record.
-function save_from_report($report_id,$parent_id, $module_name, $relationship_attr_name) {
+function save_from_report($report_id, $parent_id, $module_name, $relationship_attr_name)
+{
     global $beanFiles;
     global $beanList;
 
@@ -495,7 +482,7 @@ function save_from_report($report_id,$parent_id, $module_name, $relationship_att
     //fetch report definition.
     global $current_language, $report_modules, $modules_report;
 
-    $mod_strings = return_module_language($current_language,"Reports");
+    $mod_strings = return_module_language($current_language, "Reports");
 
 
     $saved = new SavedReport();
@@ -512,8 +499,7 @@ function save_from_report($report_id,$parent_id, $module_name, $relationship_att
     $result = $report->db->query($sql);
 
     $reportBean = BeanFactory::newBean($saved->module);
-    while($row = $report->db->fetchByAssoc($result))
-    {
+    while ($row = $report->db->fetchByAssoc($result)) {
         $reportBean->id = $row['primaryid'];
         $focus->$relationship_attr_name->add($reportBean);
     }

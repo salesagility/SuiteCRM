@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -182,7 +182,7 @@ $mod_strings = array(
     'LBL_DBCONF_DB_PASSWORD' => 'SuiteCRM Database User Password',
     'LBL_DBCONF_DB_PASSWORD2' => 'Re-enter SuiteCRM Database User Password',
     'LBL_DBCONF_DB_USER' => 'SuiteCRM Database User',
-    'LBL_DBCONF_SUGAR_DB_USER' => 'SuiteCRM Database User',
+    'LBL_DBCONF_SUITE_DB_USER' => 'SuiteCRM Database User',
     'LBL_DBCONF_DB_ADMIN_USER' => 'Database Administrator Username',
     'LBL_DBCONF_DB_ADMIN_PASSWORD' => 'Database Admin Password',
     'LBL_DBCONF_DEMO_DATA' => 'Populate Database with Demo Data?',
@@ -229,6 +229,7 @@ $mod_strings = array(
     'LBL_LICENSE_CHKDB_HEADER' => 'Verifying DB Credentials.',
     'LBL_LICENSE_CHECK_PASSED' => 'System passed check for compatibility.',
     'LBL_CREATE_CACHE' => 'Preparing to Install...',
+    'LBL_CREATE_DEFAULT_ENC_KEY' => 'Creating default encryption key...',
     'LBL_LICENSE_REDIRECT' => 'Redirecting in ',
     'LBL_LICENSE_I_ACCEPT' => 'I Accept',
     'LBL_LICENSE_PRINTABLE' => ' Printable View ',
@@ -295,9 +296,8 @@ $mod_strings = array(
     'LBL_SITECFG_LOG_DIR' => 'Log Directory',
     'LBL_SITECFG_SESSION_PATH' => 'Path to Session Directory<br>(must be writable)',
     'LBL_SITECFG_SITE_SECURITY' => 'Select Security Options',
-    'LBL_SITECFG_SUGAR_UP_DIRECTIONS' => 'If selected, the system will periodically check for updated versions of the application.',
-    'LBL_SITECFG_SUGAR_UP' => 'Automatically Check For Updates?',
-    'LBL_SITECFG_SUGAR_UPDATES' => 'SuiteCRM Updates Config',
+    'LBL_SITECFG_SUITE_UP_DIRECTIONS' => 'If selected, the system will periodically check for updated versions of the application.',
+    'LBL_SITECFG_SUITE_UP' => 'Automatically Check For Updates?',
     'LBL_SITECFG_TITLE' => 'Site Configuration',
     'LBL_SITECFG_TITLE2' => 'Identify Administration User',
     'LBL_SITECFG_SECURITY_TITLE' => 'Site Security',
@@ -451,8 +451,8 @@ Click on the link below to reset your password:
 $contact_user_link_guid',
         'name' => 'Forgot Password email',
     ),
-    
-    
+
+
     'two_factor_auth_email' => array(
         'subject' => 'Two Factor Authentication Code',
         'type' => 'system',
@@ -548,13 +548,13 @@ $contact_user_link_guid',
     'ERR_ADMIN_EMAIL' => 'Administrator Email Address is incorrect.',
     'ERR_SITE_URL' => 'Site URL is required.',
 
-	'STAT_CONFIGURATION' => 'Configuration relationships...',
-	'STAT_CREATE_DB' => 'Create database...',
+    'STAT_CONFIGURATION' => 'Configuration relationships...',
+    'STAT_CREATE_DB' => 'Create database...',
 
-	'STAT_CREATE_DEFAULT_SETTINGS' => 'Create default settings...',
-	'STAT_INSTALL_FINISH' => 'Install finish...',
-	'STAT_INSTALL_FINISH_LOGIN' => 'Installation process finished, <a href="%s">please log in...</a>',
-	'LBL_LICENCE_TOOLTIP' => 'Please accept license first',
+    'STAT_CREATE_DEFAULT_SETTINGS' => 'Create default settings...',
+    'STAT_INSTALL_FINISH' => 'Install finish...',
+    'STAT_INSTALL_FINISH_LOGIN' => 'Installation process finished, <a href="%s">please log in...</a>',
+    'LBL_LICENCE_TOOLTIP' => 'Please accept license first',
 
     'LBL_MORE_OPTIONS_TITLE' => 'More options',
     'LBL_START' => '',
@@ -568,7 +568,6 @@ $contact_user_link_guid',
     'LBL_DBCONFIG_MSG3' => 'Name of the database that will contain the data for the SuiteCRM instance you are about to install.',
     'LBL_DBCONFIG_MSG2_LABEL' => 'Host Name',
     'LBL_DBCONFIG_MSG2' => 'Name of web server or machine (host) on which the database is located (such as www.mydomain.com). If installing locally, it\'s better to use \'localhost\' than \'127.0.0.1\', for performance reasons.',
-    'LBL_DBCONFIG_B_MSG1_LABEL' => '',
+    'LBL_DBCONFIG_B_MSG1_LABEL' => '', // this label dynamically needed in install/installConfig.php:293
     'LBL_DBCONFIG_B_MSG1' => 'The username and password of a database administrator who can create database tables and users and who can write to the database is necessary in order to set up the SuiteCRM database.'
 );
-

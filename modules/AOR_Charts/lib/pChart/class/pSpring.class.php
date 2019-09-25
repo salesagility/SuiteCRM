@@ -42,9 +42,9 @@
    var $AutoComputeFreeZone;
    var $Labels;
 
-   /* Class creator */
-   function pSpring()
-    {
+     /* Class creator */
+     public function __construct()
+     {
      /* Initialise data arrays */
      $this->Data = "";
      $this->Links = "";

@@ -6,6 +6,7 @@ cache/*
 upload/*
 !upload/index.html
 # Ignore some files and directories from the custom directory.
+custom/
 custom/history/*
 custom/blowfish/*
 custom/modulebuilder/*
@@ -69,6 +70,8 @@ Desktop.ini
 *.sln
 *.suo
 *.phpproj
+# Microsoft Visual Studio Code
+.vscode
 # Disytel
 lang_cmp.php
 .kdev4/
@@ -78,8 +81,8 @@ SuiteCRM.kdev4
 vendor/
 public/
 
-#Ingore composer files
-composer.lock
+.php_cs.cache
+
 
 #Ignore bower_components
 bower_components/
@@ -100,7 +103,16 @@ browserstack.err
 cache/
 custom/**/
 .sass-cache/
-.php_cs.cache
 
 # Ignore testing environment
 build/tmp/
+
+# IMAP testing
+fakeImapResource
+include/Imap/ImapTestSettings.txt
+
+# Ignore php-cs-fixer cache
+.php_cs.cache
+
+# Ignore custom codeception environments so they won't be committed.
+tests/_envs/custom.yml

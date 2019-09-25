@@ -118,7 +118,7 @@ $dictionary['Email'] = array(
         ),
         'description_html' => array(
             'name' => 'description_html',
-            'type' => 'html',
+            'type' => 'emailbody',
             'vname' => 'description_html',
             'source' => 'non-db',
             'inline_edit' => false,
@@ -131,9 +131,9 @@ $dictionary['Email'] = array(
             'inline_edit' => false,
 
         ),
-        'date_sent' => array(
-            'name' => 'date_sent',
-            'vname' => 'LBL_DATE_SENT',
+        'date_sent_received' => array(
+            'name' => 'date_sent_received',
+            'vname' => 'LBL_DATE_SENT_RECEIVED',
             'type' => 'datetime',
             'inline_edit' => false,
         ),
@@ -318,6 +318,24 @@ $dictionary['Email'] = array(
                 'name' => 'displaySubjectField',
                 'returns' => 'html',
                 'include' => 'modules/Emails/include/displaySubjectField.php',
+                'onListView' =>  true
+            ),
+        ),
+
+        'attachment' => array(
+            'name' => 'attachment',
+            'vname' => 'LBL_ATTACHMENTS',
+            'type' => 'function',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'studio' => 'visible',
+            'inline_edit' => false,
+            'function' => array(
+                'name' => 'displayAttachmentField',
+                'returns' => 'html',
+                'include' => 'modules/Emails/include/displayAttachmentField.php',
                 'onListView' =>  true
             ),
         ),
@@ -552,7 +570,7 @@ $dictionary['Email'] = array(
             'reportable' => true,
         ),
 
-        "emails_email_templates" => array (
+        "emails_email_templates" => array(
             'name' => 'emails_email_templates',
             'type' => 'link',
             'relationship' => 'emails_email_templates',
@@ -562,7 +580,7 @@ $dictionary['Email'] = array(
             'vname' => 'LBL_EMAIL_TEMPLATE',
             'id_name' => 'emails_email_templates_idb',
         ),
-        "emails_email_templates_name" => array (
+        "emails_email_templates_name" => array(
             'name' => 'emails_email_templates_name',
             'type' => 'relate',
             'source' => 'non-db',
@@ -574,7 +592,7 @@ $dictionary['Email'] = array(
             'module' => 'EmailTemplates',
             'rname' => 'name',
         ),
-        "emails_email_templates_idb" => array (
+        "emails_email_templates_idb" => array(
             'name' => 'emails_email_templates_idb',
             'type' => 'link',
             'relationship' => 'emails_email_templates',
@@ -701,8 +719,13 @@ $dictionary['Email'] = array(
             'lhs_key' => 'id',
             'rhs_module' => 'Meetings',
             'rhs_table' => 'meetings',
-            'rhs_key' => 'parent_id',
-            'relationship_type' => 'one-to-many',
+            'rhs_key' => 'id',
+            'relationship_type' => 'many-to-many',
+            'join_table' => 'emails_beans',
+            'join_key_lhs' => 'email_id',
+            'join_key_rhs' => 'bean_id',
+            'relationship_role_column' => 'bean_module',
+            'relationship_role_column_value' => 'Meetings',
         ),
     ), // end relationships
     'indices' => array(

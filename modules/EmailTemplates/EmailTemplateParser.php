@@ -157,42 +157,44 @@ class EmailTemplateParser
      */
     private function getValueFromBean($variable)
     {
-        $reference = null;
-        $parts = explode('_', ltrim($variable, '$'));
-        list($moduleName, $attribute) = [array_shift($parts), join('_', $parts)];
+        global $app_list_strings;
 
-        switch ($moduleName) {
-            case 'surveys':
-                if ($this->campaign->survey_id === '') {
-                    $GLOBALS['log']->fatal(sprintf(
-                        'Variable %s could not be parsed, because Campaign has no Survey',
-                        $variable
-                    ));
-                    return $variable;
-                }
-                $reference = $this->getSurvey();
-                break;
-            case 'contact':
-                $reference = $this->module;
-                break;
+        $charVariable = chr(36);
+        $charUnderscore = chr(95);
+
+        if (strpos($variable, $charVariable) === false || strpos($variable, $charUnderscore) === false) {
+            $GLOBALS['log']->warn(sprintf(
+                'Variable %s parsed to an empty string, because attribute has no %s or %s character',
+                $variable,
+                $charVariable,
+                $charUnderscore
+            ));
+            return '';
         }
 
+        $parts = explode($charUnderscore, ltrim($variable, $charVariable));
+        list($moduleName, $attribute) = [array_shift($parts), join($charUnderscore, $parts)];
         if (in_array($attribute, static::$allowedVariables, true)) {
             return $this->getNonDBVariableValue($attribute);
         }
 
-        if (isset($reference->$attribute)) {
-            return $reference->$attribute;
+        if ($this->module instanceof $moduleName && property_exists($this->module, $attribute)) {
+            if (isset($this->module->field_name_map[$attribute]['type']) && ($this->module->field_name_map[$attribute]['type']) === 'enum') {
+                $enum = $this->module->field_name_map[$attribute]['options'];
+                if (isset($app_list_strings[$enum][$this->module->$attribute])) {
+                    $this->module->$attribute = $app_list_strings[$enum][$this->module->$attribute];
+                }
+            }
+            return $this->module->$attribute;
         }
 
-        $GLOBALS['log']->fatal(sprintf(
-            'Variable %s could not be parsed, because attribute %s does not set in %s bean',
+        $GLOBALS['log']->warn(sprintf(
+            'Variable %s parsed to an empty string, because attribute %s is not set in %s bean',
             $variable,
             $attribute,
-            $moduleName
+            get_class($this->module)
         ));
-
-        return $variable;
+        return '';
     }
 
     /**
@@ -200,7 +202,6 @@ class EmailTemplateParser
      */
     public function getSurvey()
     {
-
         if ($this->survey === null) {
             $this->survey = \BeanFactory::getBean('Surveys', $this->campaign->survey_id);
         }
@@ -222,7 +223,7 @@ class EmailTemplateParser
             /** @var Contact $contact */
             $contact = $this->module;
             $value = sprintf(
-                '%s/index.php?entryPoint=survey&id=%s&contact=%s%s',
+                '%s/index.php?entryPoint=survey&id=%s&contact=%s&tracker=%s',
                 $this->siteUrl,
                 $this->getSurvey()->id,
                 $contact->id,

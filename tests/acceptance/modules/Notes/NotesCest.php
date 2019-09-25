@@ -30,26 +30,18 @@ class NotesCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Notes $notes
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the notes module.
      */
     public function testScenarioViewNotesModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Notes $notes,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the notes module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to notes list-view
         $I->loginAsAdmin();
-        $notes->gotoNotes();
+        $I->visitPage('Notes', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Notes', '.module-title-text');

@@ -30,26 +30,18 @@ class TargetListsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Targets $targets
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the targets module.
      */
     public function testScenarioViewTargetsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Targets $targets,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the targets module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to targets list-view
         $I->loginAsAdmin();
-        $targets->gotoTargets();
+        $I->visitPage('ProspectLists', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Targets', '.module-title-text');

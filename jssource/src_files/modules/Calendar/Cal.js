@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -651,7 +651,18 @@ CAL.dialog_save = function () {
         CAL.update_vcal();
 
         var newEvent = new Object();
-        $("#calendar" + res.user_id).fullCalendar("removeEvents", res['record']);
+        // If there's more than one calendar ("shared calendar separate" is active) use the one related to the event user
+        var thisCal = $('div[id^="calendar"].fc');
+        if (thisCal.length > 1) {
+            // Let's look for the user ID
+            var user_id = res.user_id;
+            if (user_id === ""){
+                user_id = res.users[0];
+            }
+            thisCal = $("#calendar" + user_id);
+        }
+
+        thisCal.fullCalendar("removeEvents", res['record']);
         newEvent.module = res['module_name'];
         newEvent.title = res['name'];
         newEvent.record = res['record'];
@@ -661,12 +672,12 @@ CAL.dialog_save = function () {
           newEvent.borderColor = '#' + global_colorList[res.module_name].border;
           newEvent.textColor = '#' + global_colorList[res.module_name].text;
         }
-        newEvent.start = new Date(moment.unix(res['ts_start']).format("MM/DD/YYYY") + " " + moment(res['time_start'], 'hh:mma').format("HH:mm"));
-        newEvent.end = moment(new Date(moment.unix(res['ts_start']).format("MM/DD/YYYY") + " " + moment(res['time_start'], 'hh:mma').format("HH:mm"))).add(res['duration_hours'], 'hours').add(res['duration_minutes'], 'minutes');
+        newEvent.start = new Date(moment.utc(moment.unix(res['ts_start'])).format("MM/DD/YYYY") + " " + moment(res['time_start'], 'hh:mma').format("HH:mm"));
+        newEvent.end = moment(new Date(moment.utc(moment.unix(res['ts_start'])).format("MM/DD/YYYY") + " " + moment(res['time_start'], 'hh:mma').format("HH:mm"))).add(res['duration_hours'], 'hours').add(res['duration_minutes'], 'minutes');
         if ((res['duration_hours'] % 24 === 0) && (res['time_start'] == "12:00am")) {
           newEvent.allDay = "true";
         }
-        $('#calendar' + res.user_id).fullCalendar('renderEvent', newEvent);
+        thisCal.fullCalendar('renderEvent', newEvent);
 
         if (res['repeat']) {
           $.each(res['repeat'], function (key, value) {
@@ -675,12 +686,12 @@ CAL.dialog_save = function () {
             newEvent.title = res['name'];
             newEvent.record = value['id'];
             newEvent.id = value['id'];
-            newEvent.start = new Date(moment.unix(value['ts_start']).format("MM/DD/YYYY") + " " + moment(res['time_start'], 'hh:mma').format("HH:mm"));
-            newEvent.end = moment(new Date(moment.unix(value['ts_start']).format("MM/DD/YYYY") + " " + moment(res['time_start'], 'hh:mma').format("HH:mm"))).add(res['duration_hours'], 'hours').add(res['duration_minutes'], 'minutes');
+            newEvent.start = new Date(moment.utc(moment.unix(value['ts_start'])).format("MM/DD/YYYY") + " " + moment(res['time_start'], 'hh:mma').format("HH:mm"));
+            newEvent.end = moment(new Date(moment.utc(moment.unix(value['ts_start'])).format("MM/DD/YYYY") + " " + moment(res['time_start'], 'hh:mma').format("HH:mm"))).add(res['duration_hours'], 'hours').add(res['duration_minutes'], 'minutes');
             if ((res['duration_hours'] % 24 === 0) && (res['time_start'] == "12:00am")) {
               newEvent.allDay = "true";
             }
-            $('#calendar' + res.user_id).fullCalendar('renderEvent', newEvent);
+            thisCal.fullCalendar('renderEvent', newEvent);
           });
         }
 
@@ -1059,7 +1070,6 @@ $($.fullCalendar).ready(function () {
                 text: title,
                 button: true,
               },
-
               text: body,
             },
             events: {
@@ -1087,7 +1097,11 @@ $($.fullCalendar).ready(function () {
               at: 'top left'
             },
             show: {solo: true},
-            hide: {event: false},
+            hide: {
+              event: 'mouseleave',
+              fixed: true,
+              delay: 500
+            },
             style: {
               width: 224,
               padding: 5,

@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -56,9 +59,9 @@ $filesNWPerms = array();
 
 // add directories here that should be skipped when doing file permissions checks (cache/upload is the nasty one)
 $skipDirs = array(
-	$sugar_config['upload_dir'],
-	'.svn',
-	'.git',
+    $sugar_config['upload_dir'],
+    '.svn',
+    '.git',
 );
 $files = uwFindAllFiles(getcwd(), array(), true, $skipDirs);
 
@@ -75,44 +78,44 @@ $filesOut = "
 	</tr>";
 
 $isWindows = is_windows();
-foreach($files as $file) {
-	if($isWindows) {
-		if(!is_writable_windows($file) && file_exists($file)) {
-			logThis('WINDOWS: File ['.$file.'] not readable - saving for display');
-			// don't warn yet - we're going to use this to check against replacement files
-			$filesNotWritable[$i] = $file;
-			$filesNWPerms[$i] = substr(sprintf('%o',fileperms($file)), -4);
-			$filesOut .= "<tr>".
-							"<td><span class='error'>{$file}</span></td>".
-							"<td>{$filesNWPerms[$i]}</td>".
-							"<td>".$mod_strings['ERR_UW_CANNOT_DETERMINE_USER']."</td>".
-							"<td>".$mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP']."</td>".
-						  "</tr>";
-		}
-	} else {
-		if(!is_writable($file) && file_exists($file)) {
-			logThis('File ['.$file.'] not writable - saving for display');
-			// don't warn yet - we're going to use this to check against replacement files
-			$filesNotWritable[$i] = $file;
-			$filesNWPerms[$i] = substr(sprintf('%o',fileperms($file)), -4);
-			$owner = posix_getpwuid(fileowner($file));
-			$group = posix_getgrgid(filegroup($file));
-			$filesOut .= "<tr>".
-							"<td><span class='error'>{$file}</span></td>".
-							"<td>{$filesNWPerms[$i]}</td>".
-							"<td>".$owner['name']."</td>".
-							"<td>".$group['name']."</td>".
-					  	"</tr>";
-		}
-	}
-	$i++;
+foreach ($files as $file) {
+    if ($isWindows) {
+        if (!is_writable_windows($file) && file_exists($file)) {
+            logThis('WINDOWS: File ['.$file.'] not readable - saving for display');
+            // don't warn yet - we're going to use this to check against replacement files
+            $filesNotWritable[$i] = $file;
+            $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
+            $filesOut .= "<tr>".
+                            "<td><span class='error'>{$file}</span></td>".
+                            "<td>{$filesNWPerms[$i]}</td>".
+                            "<td>".$mod_strings['ERR_UW_CANNOT_DETERMINE_USER']."</td>".
+                            "<td>".$mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP']."</td>".
+                          "</tr>";
+        }
+    } else {
+        if (!is_writable($file) && file_exists($file)) {
+            logThis('File ['.$file.'] not writable - saving for display');
+            // don't warn yet - we're going to use this to check against replacement files
+            $filesNotWritable[$i] = $file;
+            $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
+            $owner = function_exists('posix_getpwuid') ? posix_getpwuid(fileowner($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_USER'];
+            $group = function_exists('posix_getgrgid') ? posix_getgrgid(filegroup($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP'];
+            $filesOut .= "<tr>".
+                            "<td><span class='error'>{$file}</span></td>".
+                            "<td>{$filesNWPerms[$i]}</td>".
+                            "<td>".$owner['name']."</td>".
+                            "<td>".$group['name']."</td>".
+                        "</tr>";
+        }
+    }
+    $i++;
 }
 
 $filesOut .= '</table></div>';
 // not a stop error
 $errors['files']['filesNotWritable'] = (count($filesNotWritable) > 0) ? true : false;
-if(count($filesNotWritable) < 1) {
-	$filesOut = "<b>{$mod_strings['LBL_UW_FILE_NO_ERRORS']}</b>";
+if (count($filesNotWritable) < 1) {
+    $filesOut = "<b>{$mod_strings['LBL_UW_FILE_NO_ERRORS']}</b>";
 }
 
 logThis('Finished file permission check.');
@@ -147,9 +150,9 @@ $outs = testPermsDropTable($db, $outs, $outs['skip']);
 $outs['dbOut'] .= '</table>';
 
 
-if(count($outs['db']) < 1) {
-	logThis('No permissions errors found!');
-	$outs['dbOut'] = "<b>".$mod_strings['LBL_UW_DB_NO_ERRORS']."</b>";
+if (count($outs['db']) < 1) {
+    logThis('No permissions errors found!');
+    $outs['dbOut'] = "<b>".$mod_strings['LBL_UW_DB_NO_ERRORS']."</b>";
 }
 logThis('Finished database permissions check.');
 $dbOut = $outs['dbOut'];
@@ -161,60 +164,61 @@ $dbOut = $outs['dbOut'];
 ////	INSTALLER TYPE CHECKS
 $result = checkSystemCompliance();
 $checks = array(
-	'phpVersion'				=> $mod_strings['LBL_UW_COMPLIANCE_PHP_VERSION'],
+    'phpVersion'				=> $mod_strings['LBL_UW_COMPLIANCE_PHP_VERSION'],
     'dbVersion'                 => $mod_strings['LBL_UW_COMPLIANCE_DB'],
-	'xmlStatus'					=> $mod_strings['LBL_UW_COMPLIANCE_XML'],
-	'curlStatus'				=> $mod_strings['LBL_UW_COMPLIANCE_CURL'],
-	'imapStatus'				=> $mod_strings['LBL_UW_COMPLIANCE_IMAP'],
-	'mbstringStatus'			=> $mod_strings['LBL_UW_COMPLIANCE_MBSTRING'],
-	'safeModeStatus'			=> $mod_strings['LBL_UW_COMPLIANCE_SAFEMODE'],
-	'callTimeStatus'			=> $mod_strings['LBL_UW_COMPLIANCE_CALLTIME'],
-	'memory_msg'				=> $mod_strings['LBL_UW_COMPLIANCE_MEMORY'],
+    'xmlStatus'					=> $mod_strings['LBL_UW_COMPLIANCE_XML'],
+    'curlStatus'				=> $mod_strings['LBL_UW_COMPLIANCE_CURL'],
+    'imapStatus'				=> $mod_strings['LBL_UW_COMPLIANCE_IMAP'],
+    'mbstringStatus'			=> $mod_strings['LBL_UW_COMPLIANCE_MBSTRING'],
+    'safeModeStatus'			=> $mod_strings['LBL_UW_COMPLIANCE_SAFEMODE'],
+    'callTimeStatus'			=> $mod_strings['LBL_UW_COMPLIANCE_CALLTIME'],
+    'memory_msg'				=> $mod_strings['LBL_UW_COMPLIANCE_MEMORY'],
     'stream_msg'                => $mod_strings['LBL_UW_COMPLIANCE_STREAM'],
     'ZipStatus'			        => $mod_strings['LBL_UW_COMPLIANCE_ZIPARCHIVE'],
     'pcreVersion'			    => $mod_strings['LBL_UW_COMPLIANCE_PCRE_VERSION'],
-	//commenting mbstring overload.
-	//'mbstring.func_overload'	=> $mod_strings['LBL_UW_COMPLIANCE_MBSTRING_FUNC_OVERLOAD'],
+    //commenting mbstring overload.
+    //'mbstring.func_overload'	=> $mod_strings['LBL_UW_COMPLIANCE_MBSTRING_FUNC_OVERLOAD'],
 );
-if($result['error_found'] == true || !empty($result['warn_found'])) {
-	if($result['error_found']) {
-		$stop = true;
-	}
-	$phpIniLocation = get_cfg_var("cfg_file_path");
+if ($result['error_found'] == true || !empty($result['warn_found'])) {
+    if ($result['error_found']) {
+        $stop = true;
+    }
+    $phpIniLocation = get_cfg_var("cfg_file_path");
 
-	$sysCompliance  = "<a href='javascript:void(0); toggleNwFiles(\"sysComp\");'>{$mod_strings['LBL_UW_SHOW_COMPLIANCE']}</a>";
-	$sysCompliance .= "<div id='sysComp' >";
-	$sysCompliance .= "<table cellpadding='0' cellspacing='0' border='0'>";
-	foreach($result as $k => $v) {
-		if($k == 'error_found')
-			continue;
-		$sysCompliance .= "<tr><td valign='top'>{$checks[$k]}</td>";
-		$sysCompliance .= "<td valign='top'>{$v}</td></tr>";
-	}
-	$sysCompliance .= "<tr><td valign='top'>{$mod_strings['LBL_UW_COMPLIANCE_PHP_INI']}</td>";
-	$sysCompliance .= "<td valign='top'><b>{$phpIniLocation}</b></td></tr>";
-	$sysCompliance .= "</table></div>";
+    $sysCompliance  = "<a href='javascript:void(0); toggleNwFiles(\"sysComp\");'>{$mod_strings['LBL_UW_SHOW_COMPLIANCE']}</a>";
+    $sysCompliance .= "<div id='sysComp' >";
+    $sysCompliance .= "<table cellpadding='0' cellspacing='0' border='0'>";
+    foreach ($result as $k => $v) {
+        if ($k == 'error_found') {
+            continue;
+        }
+        $sysCompliance .= "<tr><td valign='top'>{$checks[$k]}</td>";
+        $sysCompliance .= "<td valign='top'>{$v}</td></tr>";
+    }
+    $sysCompliance .= "<tr><td valign='top'>{$mod_strings['LBL_UW_COMPLIANCE_PHP_INI']}</td>";
+    $sysCompliance .= "<td valign='top'><b>{$phpIniLocation}</b></td></tr>";
+    $sysCompliance .= "</table></div>";
 } else {
-	$sysCompliance = "<b>{$mod_strings['LBL_UW_COMPLIANCE_ALL_OK']}</b>";
+    $sysCompliance = "<b>{$mod_strings['LBL_UW_COMPLIANCE_ALL_OK']}</b>";
 }
 
 ////	END INSTALLER CHECKS
 ///////////////////////////////////////////////////////////////////////////////
 
 ////	stop on all errors
-foreach($errors as $k => $type) {
-	if(is_array($type) && count($type) > 0) {
-		foreach($type as $k => $subtype) {
-			if($subtype == true) {
-				$stop = true;
-			}
-		}
-	}
+foreach ($errors as $k => $type) {
+    if (is_array($type) && count($type) > 0) {
+        foreach ($type as $k => $subtype) {
+            if ($subtype == true) {
+                $stop = true;
+            }
+        }
+    }
 
-	if($type === true) {
-		logThis('Found errors during system check - disabling forward movement.');
-		$stop = true;
-	}
+    if ($type === true) {
+        logThis('Found errors during system check - disabling forward movement.');
+        $stop = true;
+    }
 }
 
 $GLOBALS['top_message'] = "{$mod_strings['LBL_UW_NEXT_TO_UPLOAD']}";
@@ -288,4 +292,3 @@ $uwMain =<<<eoq
      </table>
  </div>
 eoq;
-

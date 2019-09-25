@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,8 +35,7 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
-var lbl_remove=SUGAR.language.get('app_strings','LBL_REMOVE');function remove_filter(spanfieldid){var selspan=document.getElementById(spanfieldid);selspan.setAttribute("style","visibility:hidden");selspan.innerHTML='';var ops=object_refs['field_avail_list'].options;var newoption=new Option(selspan.getAttribute("Value"),selspan.getAttribute("ValueId"),false,true);ops.add(newoption);}
+ */var lbl_remove=SUGAR.language.get('app_strings','LBL_REMOVE');function remove_filter(spanfieldid){var selspan=document.getElementById(spanfieldid);selspan.setAttribute("style","visibility:hidden");selspan.innerHTML='';var ops=object_refs['field_avail_list'].options;var newoption=new Option(selspan.getAttribute("Value"),selspan.getAttribute("ValueId"),false,true);ops.add(newoption);}
 function ajax_fetch_sync(url,post_data){global_xmlhttp=getXMLHTTPinstance();var method='GET';if(typeof(post_data)!='undefined'){method='POST';}
 try{global_xmlhttp.open(method,url,false);}
 catch(error){alert('message:'+error.message+":url:"+url);}
@@ -71,4 +70,4 @@ var fieldCount=0;function addFieldRow(colName,colLabel){var tableId='search_type
 var aElement=document.createElement("a");aElement.setAttribute("href","javascript:remove_filter('filter_"+colName+"')");aElement.setAttribute("class","listViewTdToolsS1");var imgElement=document.createElement("img");imgElement.setAttribute("src",delete_inline_image);imgElement.setAttribute("align","absmiddle");imgElement.setAttribute("alt",lbl_remove);imgElement.setAttribute("border","0");imgElement.setAttribute("height","12");imgElement.setAttribute("width","12");aElement.appendChild(imgElement);aElement.appendChild(document.createTextNode(" "));var div=document.getElementById('filter_def');var span1=document.getElementById('filter_'+colName);if(span1==null||span1==''||typeof(span1)=='undefined'){span1=document.createElement("span");}else{span1.setAttribute("style","visibility:visible");}
 span1.setAttribute("id",'filter_'+colName);span1.setAttribute("Value",colLabel);span1.setAttribute("ValueId",colName);var table=document.createElement("table");var row=table.insertRow(table.rows.length);table.setAttribute("width","100%");table.setAttribute("border","0");table.setAttribute("cellpadding","0");var td1=document.createElement("td");td1.setAttribute("width","2%");td1.appendChild(aElement);row.appendChild(td1)
 var td2=document.createElement("td");td2.setAttribute("width","20%");td2.appendChild(document.createTextNode(colLabel+':  '));row.appendChild(td2)
-var td3=document.createElement("td");td3.setAttribute("width","10%");td3.appendChild(selElement);row.appendChild(td3);var coldata;SUGAR.util.globalEval("coldata=bean_data."+colName+";");var edit=document.createElement("input");edit.setAttribute("type","text");edit.setAttribute("name",colName+'SearchField');edit.setAttribute("id",colName+'SearchField');edit.setAttribute("value",coldata);var td5=document.createElement("td");td5.setAttribute("width","68%");td5.appendChild(edit);row.appendChild(td5);span1.appendChild(table);div.appendChild(span1);}
+var td3=document.createElement("td");td3.setAttribute("width","10%");td3.appendChild(selElement);row.appendChild(td3);var coldata=bean_data[colName];var edit=document.createElement("input");edit.setAttribute("type","text");edit.setAttribute("name",colName+'SearchField');edit.setAttribute("id",colName+'SearchField');edit.setAttribute("value",coldata);var td5=document.createElement("td");td5.setAttribute("width","68%");td5.appendChild(edit);row.appendChild(td5);span1.appendChild(table);div.appendChild(span1);}

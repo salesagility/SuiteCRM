@@ -4,7 +4,6 @@ namespace Step\Acceptance;
 
 use \AcceptanceTester as Tester;
 
-
 class EditView extends Tester
 {
     /**
@@ -13,7 +12,7 @@ class EditView extends Tester
     public function waitForEditViewVisible()
     {
         $I = $this;
-        $I->waitForElementVisible('#EditView', 120);
+        $I->waitForElementVisible('#EditView');
     }
 
     public function clickSaveButton()
@@ -22,5 +21,4 @@ class EditView extends Tester
         $I->executeJS('window.scrollTo(0,0); return true;');
         $I->click('Save');
     }
-
 }

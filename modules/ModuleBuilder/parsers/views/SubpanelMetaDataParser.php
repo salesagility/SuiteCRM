@@ -67,18 +67,18 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
      * @param string $moduleName
      * @param string $packageName
      */
-    function __construct($subpanelName, $moduleName, $packageName = '')
+    public function __construct($subpanelName, $moduleName, $packageName = '')
     {
         $GLOBALS ['log']->debug(get_class($this) . ": __construct()");
 
         // TODO: check the implementations
-        if (empty ($packageName)) {
+        if (empty($packageName)) {
             require_once 'modules/ModuleBuilder/parsers/views/DeployedSubpanelImplementation.php';
-            $this->implementation = new DeployedSubpanelImplementation ($subpanelName, $moduleName);
-            //$this->originalViewDef = $this->implementation->getOriginalDefs ();
+            $this->implementation = new DeployedSubpanelImplementation($subpanelName, $moduleName);
+        //$this->originalViewDef = $this->implementation->getOriginalDefs ();
         } else {
             require_once 'modules/ModuleBuilder/parsers/views/UndeployedSubpanelImplementation.php';
-            $this->implementation = new UndeployedSubpanelImplementation ($subpanelName, $moduleName, $packageName);
+            $this->implementation = new UndeployedSubpanelImplementation($subpanelName, $moduleName, $packageName);
         }
 
         $this->_viewdefs = array_change_key_case($this->implementation->getViewdefs()); // force to lower case so don't have problems with case mismatches later
@@ -88,8 +88,10 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
         $GLOBALS['log']->debug(get_class($this) . "->__construct(): viewdefs = " . print_r($this->_viewdefs, true));
         $this->_invisibleFields = $this->findInvisibleFields($this->_viewdefs);
 
-        $GLOBALS['log']->debug(get_class($this) . "->__construct(): invisibleFields = " . print_r($this->_invisibleFields,
-                true));
+        $GLOBALS['log']->debug(get_class($this) . "->__construct(): invisibleFields = " . print_r(
+            $this->_invisibleFields,
+            true
+        ));
     }
 
     /**
@@ -100,27 +102,33 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
     {
         if ($populate) {
             $this->_populateFromRequest();
-            if (isset ($_REQUEST['subpanel_title']) && isset($_REQUEST['subpanel_title_key'])) {
+            if (isset($_REQUEST['subpanel_title']) && isset($_REQUEST['subpanel_title_key'])) {
                 $selected_lang = (!empty($_REQUEST['selected_lang']) ? $_REQUEST['selected_lang'] : $_SESSION['authenticated_user_language']);
                 if (empty($selected_lang)) {
                     $selected_lang = $GLOBALS['sugar_config']['default_language'];
                 }
                 require_once 'modules/ModuleBuilder/parsers/parser.label.php';
-                $labelParser = new ParserLabel ($_REQUEST['view_module'],
-                    isset ($_REQUEST ['view_package']) ? $_REQUEST ['view_package'] : null);
-                $labelParser::addLabels($selected_lang,
+                $labelParser = new ParserLabel(
+                    $_REQUEST['view_module'],
+                    isset($_REQUEST ['view_package']) ? $_REQUEST ['view_package'] : null
+                );
+                $labelParser::addLabels(
+                    $selected_lang,
                     array($_REQUEST['subpanel_title_key'] => remove_xss(from_html($_REQUEST['subpanel_title']))),
-                    $_REQUEST['view_module']);
+                    $_REQUEST['view_module']
+                );
             }
         }
         // Bug 46291 - Missing widget_class for edit_button and remove_button
         foreach ($this->_viewdefs as $key => $def) {
-            if (isset ($this->_fielddefs [$key] ['widget_class'])) {
+            if (isset($this->_fielddefs [$key] ['widget_class'])) {
                 $this->_viewdefs [$key] ['widget_class'] = $this->_fielddefs [$key] ['widget_class'];
             }
         }
-        $defs = $this->restoreInvisibleFields($this->_invisibleFields,
-            $this->_viewdefs); // unlike our parent, do not force the field names back to upper case
+        $defs = $this->restoreInvisibleFields(
+            $this->_invisibleFields,
+            $this->_viewdefs
+        ); // unlike our parent, do not force the field names back to upper case
         $defs = $this->makeRelateFieldsAsLink($defs);
         $this->implementation->deploy($defs);
     }
@@ -134,7 +142,7 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
     {
         $defaultFields = array();
         foreach ($this->_viewdefs as $key => $def) {
-            if (empty ($def ['usage']) || strcmp($def ['usage'], 'query_only') == 1) {
+            if (empty($def ['usage']) || strcmp($def ['usage'], 'query_only') == 1) {
                 $defaultFields [strtolower($key)] = $this->_viewdefs [$key];
             }
         }
@@ -212,5 +220,4 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
 
         return $defs;
     }
-
 }

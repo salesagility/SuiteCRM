@@ -1,12 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +34,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * Description: This file handles the Data base functionality for the application.
@@ -127,6 +130,7 @@ class SqlsrvManager extends MssqlManager
         'relate' => 'nvarchar',
         'multienum' => 'nvarchar(max)',
         'html' => 'nvarchar(max)',
+        'emailbody' => 'nvarchar(max)',
         'longhtml' => 'nvarchar(max)',
         'datetime' => 'datetime',
         'datetimecombo' => 'datetime',
@@ -291,8 +295,7 @@ class SqlsrvManager extends MssqlManager
      */
     public function convert($string, $type, array $additional_parameters = array())
     {
-        if ($type == 'datetime') // see http://msdn.microsoft.com/en-us/library/ms187928.aspx for details
-        {
+        if ($type == 'datetime') { // see http://msdn.microsoft.com/en-us/library/ms187928.aspx for details
             return "CONVERT(datetime,$string,120)";
         } else {
             return parent::convert($string, $type, $additional_parameters);
@@ -310,8 +313,10 @@ class SqlsrvManager extends MssqlManager
      */
     public function compareVarDefs($fielddef1, $fielddef2, $ignoreName = false)
     {
-        if ((isset($fielddef2['dbType']) && $fielddef2['dbType'] == 'id') || preg_match('/(_id$|^id$)/',
-                $fielddef2['name'])
+        if ((isset($fielddef2['dbType']) && $fielddef2['dbType'] == 'id') || preg_match(
+            '/(_id$|^id$)/',
+            $fielddef2['name']
+        )
         ) {
             if (isset($fielddef1['type']) && isset($fielddef2['type'])) {
                 $fielddef2['type'] = $fielddef1['type'];
@@ -402,8 +407,10 @@ class SqlsrvManager extends MssqlManager
                 $columns[$column_name]['type'] = str_replace(' identity', '', strtolower($row['TYPE_NAME']));
             }
 
-            if (!empty($row['IS_NULLABLE']) && $row['IS_NULLABLE'] == 'NO' && (empty($row['KEY']) || !stristr($row['KEY'],
-                        'PRI'))
+            if (!empty($row['IS_NULLABLE']) && $row['IS_NULLABLE'] == 'NO' && (empty($row['KEY']) || !stristr(
+                $row['KEY'],
+                'PRI'
+            ))
             ) {
                 $columns[strtolower($row['COLUMN_NAME'])]['required'] = 'true';
             }

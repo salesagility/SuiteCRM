@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -64,13 +67,13 @@ $detailView = new DetailView();
 $offset = 0;
 $offset=0;
 if (isset($_REQUEST['offset']) or isset($_REQUEST['record'])) {
-	$result = $detailView->processSugarBean("CAMPAIGN", $focus, $offset);
-	if($result == null) {
-	    sugar_die($app_strings['ERROR_NO_RECORD']);
-	}
-	$focus=$result;
+    $result = $detailView->processSugarBean("CAMPAIGN", $focus, $offset);
+    if ($result == null) {
+        sugar_die($app_strings['ERROR_NO_RECORD']);
+    }
+    $focus=$result;
 } else {
-	$header_URL = "Location: index.php?module=Accounts&action=index";
+    $header_URL = "Location: index.php?module=Accounts&action=index";
     SugarApplication::headerRedirect($header_URL);
 }
 
@@ -80,13 +83,13 @@ if (isset($_REQUEST['offset']) or isset($_REQUEST['record'])) {
 if(!$focus->campaign_type == "NewsLetter"){
     include ('modules/Campaigns/NewsLetterTrackDetailView.php');
 } else{
-	
+
 */
     echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$focus->name), true);
     
     $GLOBALS['log']->info("Campaign detail view");
     
-	$smarty = new Sugar_Smarty();
+    $smarty = new Sugar_Smarty();
     $smarty->assign("MOD", $mod_strings);
     $smarty->assign("APP", $app_strings);
     
@@ -128,63 +131,62 @@ if(!$focus->campaign_type == "NewsLetter"){
 //Query for opportunities won, clickthroughs
 $campaign_id = $focus->id;
             $opp_query1  = "select camp.name, count(*) opp_count,SUM(opp.amount) as Revenue, SUM(camp.actual_cost) as Investment, 
-                            ROUND((SUM(opp.amount) - SUM(camp.actual_cost))/(SUM(camp.actual_cost)), 2)*100 as ROI";	           
+                            ROUND((SUM(opp.amount) - SUM(camp.actual_cost))/(SUM(camp.actual_cost)), 2)*100 as ROI";
             $opp_query1 .= " from opportunities opp";
             $opp_query1 .= " right join campaigns camp on camp.id = opp.campaign_id";
             $opp_query1 .= " where opp.sales_stage = 'Closed Won' and camp.id='$campaign_id'";
-            $opp_query1 .= " and opp.deleted=0";                                  
+            $opp_query1 .= " and opp.deleted=0";
             $opp_query1 .= " group by camp.name";
-            $opp_result1=$focus->db->query($opp_query1);              
+            $opp_result1=$focus->db->query($opp_query1);
             $opp_data1=$focus->db->fetchByAssoc($opp_result1);
-      if(empty($opp_data1['opp_count'])) $opp_data1['opp_count']=0; 
-      //_ppd($opp_data1);     
-     $smarty->assign("OPPORTUNITIES_WON",$opp_data1['opp_count']);
+      if (empty($opp_data1['opp_count'])) {
+          $opp_data1['opp_count']=0;
+      }
+      //_ppd($opp_data1);
+     $smarty->assign("OPPORTUNITIES_WON", $opp_data1['opp_count']);
           
-            $camp_query1  = "select camp.name, count(*) click_thru_link";	           
+            $camp_query1  = "select camp.name, count(*) click_thru_link";
             $camp_query1 .= " from campaign_log camp_log";
             $camp_query1 .= " right join campaigns camp on camp.id = camp_log.campaign_id";
             $camp_query1 .= " where camp_log.activity_type = 'link' and camp.id='$campaign_id'";
             $camp_query1 .= " group by camp.name";
-            $opp_query1 .= " and deleted=0";                                  
-            $camp_result1=$focus->db->query($camp_query1);              
+            $opp_query1 .= " and deleted=0";
+            $camp_result1=$focus->db->query($camp_query1);
             $camp_data1=$focus->db->fetchByAssoc($camp_result1);
             
-   if(unformat_number($focus->impressions) > 0){         
-    $cost_per_impression= unformat_number($focus->actual_cost)/unformat_number($focus->impressions);
+   if (unformat_number($focus->impressions) > 0) {
+       $cost_per_impression= unformat_number($focus->actual_cost)/unformat_number($focus->impressions);
+   } else {
+       $cost_per_impression = format_number(0);
    }
-   else{
-   	$cost_per_impression = format_number(0);
-   }       
-   $smarty->assign("COST_PER_IMPRESSION",currency_format_number($cost_per_impression));
-   if(empty($camp_data1['click_thru_link'])) $camp_data1['click_thru_link']=0;      
+   $smarty->assign("COST_PER_IMPRESSION", currency_format_number($cost_per_impression));
+   if (empty($camp_data1['click_thru_link'])) {
+       $camp_data1['click_thru_link']=0;
+   }
    $click_thru_links = $camp_data1['click_thru_link'];
    
-   if($click_thru_links >0){
-    $cost_per_click_thru= unformat_number($focus->actual_cost)/unformat_number($click_thru_links);   	
+   if ($click_thru_links >0) {
+       $cost_per_click_thru= unformat_number($focus->actual_cost)/unformat_number($click_thru_links);
+   } else {
+       $cost_per_click_thru = format_number(0);
    }
-   else{
-   	$cost_per_click_thru = format_number(0);
-   } 
-   $smarty->assign("COST_PER_CLICK_THROUGH",currency_format_number($cost_per_click_thru));
+   $smarty->assign("COST_PER_CLICK_THROUGH", currency_format_number($cost_per_click_thru));
     
     
-    	$currency  = new Currency();
-    if(isset($focus->currency_id) && !empty($focus->currency_id))
-    {
-    	$currency->retrieve($focus->currency_id);
-    	if( $currency->deleted != 1){
-    		$smarty->assign("CURRENCY", $currency->iso4217 .' '.$currency->symbol );
-    	}else $smarty->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
-    }else{
-    
-    	$smarty->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
-    
+        $currency  = new Currency();
+    if (isset($focus->currency_id) && !empty($focus->currency_id)) {
+        $currency->retrieve($focus->currency_id);
+        if ($currency->deleted != 1) {
+            $smarty->assign("CURRENCY", $currency->iso4217 .' '.$currency->symbol);
+        } else {
+            $smarty->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
+        }
+    } else {
+        $smarty->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
     }
     global $current_user;
-    if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])){
-    
-    	$smarty->assign("ADMIN_EDIT","<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$_REQUEST['record']. "'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'", null,null,'.gif',$mod_strings['LBL_EDIT_LAYOUT'])."</a>");
-
+    if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
+        $smarty->assign("ADMIN_EDIT", "<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$_REQUEST['record']. "'>".SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDIT_LAYOUT'])."</a>");
     }
     
     $detailView->processListNavigation($xtpl, "CAMPAIGN", $offset, $focus->is_AuditEnabled());
@@ -205,12 +207,14 @@ $campaign_id = $focus->id;
     $cache_file_name_roi	= $current_user->getUserPrivGuid()."_campaign_response_by_roi_".$dateFileNameSafe[0]."_".$dateFileNameSafe[1].".xml";
     $chart= new campaign_charts();
     //_ppd($roi_vals);
-    $smarty->assign("MY_CHART_ROI", $chart->campaign_response_roi($app_list_strings['roi_type_dom'],$app_list_strings['roi_type_dom'],$focus->id,true,true));    
+    $smarty->assign("MY_CHART_ROI", $chart->campaign_response_roi($app_list_strings['roi_type_dom'], $app_list_strings['roi_type_dom'], $focus->id, true, true));
     //end chart
     //custom chart code
     require_once('include/SugarCharts/SugarChartFactory.php');
     $sugarChart = SugarChartFactory::getInstance();
-	$resources = $sugarChart->getChartResources();
-	$smarty->assign('chartResources', $resources);
+    if ($sugarChart) {
+        $resources = $sugarChart->getChartResources();
+        $smarty->assign('chartResources', $resources);
+    }
 
 echo $smarty->fetch('modules/Campaigns/RoiDetailView.tpl');

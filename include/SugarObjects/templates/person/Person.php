@@ -81,21 +81,7 @@ class Person extends Basic
         $this->emailAddress = new SugarEmailAddress();
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8,
-     *     please update your code, use __construct instead
-     */
-    public function Person()
-    {
-        $deprecatedMessage =
-            'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
     /**
      * need to override to have a name field created for this class
@@ -150,7 +136,6 @@ class Person extends Basic
             isset($app_list_strings[$this->field_defs['salutation']['options']]) &&
             isset($app_list_strings[$this->field_defs['salutation']['options']][$this->salutation])
         ) {
-
             $salutation = $app_list_strings[$this->field_defs['salutation']['options']][$this->salutation];
         } // if
 
@@ -180,10 +165,16 @@ class Person extends Basic
      */
     public function save($check_notify = false)
     {
+        
         //If we are saving due to relationship changes, don't bother trying to update the emails
         if (!empty($GLOBALS['resavingRelatedBeans'])) {
-            parent::save($check_notify);
-
+            $retId = parent::save($check_notify);
+            if (!$retId) {
+                LoggerManager::getLogger()->fatal('resavingRelatedBeans error: Person is not saved, SugarBean ID is not returned.');
+            }
+            if ($retId != $this->id) {
+                LoggerManager::getLogger()->fatal('resavingRelatedBeans error: Person is not saved properly, returned SugarBean ID does not match to Person ID.');
+            }
             return $this->id;
         }
         $this->add_address_streets('primary_address_street');
@@ -192,7 +183,13 @@ class Person extends Basic
         $this->emailAddress->handleLegacySave($this);
         // bug #39188 - store emails state before workflow make any changes
         $this->emailAddress->stash($this->id, $this->module_dir);
-        parent::save($check_notify);
+        $retId = parent::save($check_notify);
+        if (!$retId) {
+            LoggerManager::getLogger()->fatal('Person is not saved, SugarBean ID is not returned.');
+        }
+        if ($retId != $this->id) {
+            LoggerManager::getLogger()->fatal('Person is not saved properly, returned SugarBean ID does not match to Person ID.');
+        }
         $override_email = array();
         if (!empty($this->email1_set_in_workflow)) {
             $override_email['emailAddress0'] = $this->email1_set_in_workflow;
@@ -260,7 +257,7 @@ class Person extends Basic
     ) {
         parent::populateRelatedBean($newBean);
 
-        if ($newBean instanceOf Company) {
+        if ($newBean instanceof Company) {
             $newBean->phone_fax = $this->phone_fax;
             $newBean->phone_office = $this->phone_work;
             $newBean->phone_alternate = $this->phone_other;
@@ -323,7 +320,7 @@ class Person extends Basic
 
         $where_auto = " $table.deleted=0 ";
 
-        if ($where != '') {
+        if (!empty($where)) {
             $query .= "WHERE ($where) AND " . $where_auto;
         } else {
             $query .= 'WHERE ' . $where_auto;
@@ -372,7 +369,7 @@ class Person extends Basic
         $this->lawful_basis = '^'.$basis.'^';
         $this->lawful_basis_source = $source;
         $date = TimeDate::getInstance()->nowDb();
-        $date_test = $timedate->to_display_date($date,false);
+        $date_test = $timedate->to_display_date($date, false);
         $this->date_reviewed = $date_test;
 
         return (bool)$this->save();

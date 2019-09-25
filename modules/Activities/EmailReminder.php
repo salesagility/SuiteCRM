@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -47,10 +47,11 @@ require_once("modules/Calls/Call.php");
 require_once("modules/Users/User.php");
 require_once("modules/Contacts/Contact.php");
 require_once("modules/Leads/Lead.php");
+require_once("include/utils.php");
 
 /**
  * Class for sending email reminders of meetings and call to invitees
- * 
+ *
  */
 class EmailReminder
 {
@@ -71,13 +72,13 @@ class EmailReminder
     public function __construct()
     {
         $max_time = 0;
-        if(isset($GLOBALS['app_list_strings']['reminder_time_options'])){
-            foreach($GLOBALS['app_list_strings']['reminder_time_options'] as $seconds => $value ) {
-                if ( $seconds > $max_time ) {
+        if (isset($GLOBALS['app_list_strings']['reminder_time_options'])) {
+            foreach ($GLOBALS['app_list_strings']['reminder_time_options'] as $seconds => $value) {
+                if ($seconds > $max_time) {
                     $max_time = $seconds;
                 }
             }
-        }else{
+        } else {
             $max_time = 8400;
         }
         $this->now = $GLOBALS['timedate']->nowDb();
@@ -90,29 +91,28 @@ class EmailReminder
      */
     public function process()
     {
-
         $admin = new Administration();
         $admin->retrieveSettings();
 
         Reminder::sendEmailReminders($this, $admin);
         
         $meetings = $this->getMeetingsForRemind();
-        foreach($meetings as $id ) {
-            $recipients = $this->getRecipients($id,'Meetings');
+        foreach ($meetings as $id) {
+            $recipients = $this->getRecipients($id, 'Meetings');
             $bean = new Meeting();
-            $bean->retrieve($id);			
-			if ( $this->sendReminders($bean, $admin, $recipients) ) {
+            $bean->retrieve($id);
+            if ($this->sendReminders($bean, $admin, $recipients)) {
                 $bean->email_reminder_sent = 1;
                 $bean->save();
-            }            
+            }
         }
         
         $calls = $this->getCallsForRemind();
-        foreach($calls as $id ) {
-            $recipients = $this->getRecipients($id,'Calls');
+        foreach ($calls as $id) {
+            $recipients = $this->getRecipients($id, 'Calls');
             $bean = new Call();
             $bean->retrieve($id);
-            if ( $this->sendReminders($bean, $admin, $recipients) ) {
+            if ($this->sendReminders($bean, $admin, $recipients)) {
                 $bean->email_reminder_sent = 1;
                 $bean->save();
             }
@@ -130,21 +130,14 @@ class EmailReminder
      */
     public function sendReminders(SugarBean $bean, Administration $admin, $recipients)
     {
-        if (empty($_SESSION['authenticated_user_language'])) {
-            $current_language = $GLOBALS['sugar_config']['default_language'];
-        }
-        else {
-            $current_language = $_SESSION['authenticated_user_language'];
-        }
+        $current_language = get_current_language();
 
         if (!empty($bean->created_by)) {
             $user_id = $bean->created_by;
-        }
-        else {
+        } else {
             if (!empty($bean->assigned_user_id)) {
                 $user_id = $bean->assigned_user_id;
-            }
-            else {
+            } else {
                 $user_id = $GLOBALS['current_user']->id;
             }
         }
@@ -158,13 +151,13 @@ class EmailReminder
         if (empty($admin->settings['notify_send_from_assigning_user'])) {
             $from_address = $admin->settings['notify_fromaddress'];
             $from_name = $admin->settings['notify_fromname'] ? "" : $admin->settings['notify_fromname'];
-        }
-        else {
+        } else {
             $from_address = $user->emailAddress->getReplyToAddress($user);
             $from_name = $user->full_name;
         }
 
         $mail->From = $from_address;
+        isValidEmailAddress($mail->From);
         $mail->FromName = $from_name;
 
         $xtpl = new XTemplate(get_notify_template_file($current_language));
@@ -207,17 +200,16 @@ class EmailReminder
      * @param XTemplate $xtpl
      * @param SugarBean $bean
      * @param User $user
-     * @return XTemplate 
+     * @return XTemplate
     */
     protected function setReminderBody(XTemplate $xtpl, SugarBean $bean, User $user)
     {
-    
         $object = strtoupper($bean->object_name);
 
         $xtpl->assign("{$object}_SUBJECT", $bean->name);
-        $date = $GLOBALS['timedate']->fromUser($bean->date_start,$GLOBALS['current_user']);
+        $date = $GLOBALS['timedate']->fromUser($bean->date_start, $GLOBALS['current_user']);
         $xtpl->assign("{$object}_STARTDATE", $GLOBALS['timedate']->asUser($date, $user)." ".TimeDate::userTimezoneSuffix($date, $user));
-        if ( isset($bean->location) ) {
+        if (isset($bean->location)) {
             $xtpl->assign("{$object}_LOCATION", $bean->location);
         }
         $xtpl->assign("{$object}_CREATED_BY", $user->full_name);
@@ -244,10 +236,10 @@ class EmailReminder
         ";
         $re = $db->query($query);
         $meetings = array();
-        while($row = $db->fetchByAssoc($re) ) {
-            $remind_ts = $GLOBALS['timedate']->fromDb($db->fromConvert($row['date_start'],'datetime'))->modify("-{$row['email_reminder_time']} seconds")->ts;
+        while ($row = $db->fetchByAssoc($re)) {
+            $remind_ts = $GLOBALS['timedate']->fromDb($db->fromConvert($row['date_start'], 'datetime'))->modify("-{$row['email_reminder_time']} seconds")->ts;
             $now_ts = $GLOBALS['timedate']->getNow()->ts;
-            if ( $now_ts >= $remind_ts ) {
+            if ($now_ts >= $remind_ts) {
                 $meetings[] = $row['id'];
             }
         }
@@ -272,10 +264,10 @@ class EmailReminder
         ";
         $re = $db->query($query);
         $calls = array();
-        while($row = $db->fetchByAssoc($re) ) {
-            $remind_ts = $GLOBALS['timedate']->fromDb($db->fromConvert($row['date_start'],'datetime'))->modify("-{$row['email_reminder_time']} seconds")->ts;
+        while ($row = $db->fetchByAssoc($re)) {
+            $remind_ts = $GLOBALS['timedate']->fromDb($db->fromConvert($row['date_start'], 'datetime'))->modify("-{$row['email_reminder_time']} seconds")->ts;
             $now_ts = $GLOBALS['timedate']->getNow()->ts;
-            if ( $now_ts >= $remind_ts ) {
+            if ($now_ts >= $remind_ts) {
                 $calls[] = $row['id'];
             }
         }
@@ -292,7 +284,7 @@ class EmailReminder
     {
         $db = DBManagerFactory::getInstance();
     
-        switch($module ) {
+        switch ($module) {
             case "Meetings":
                 $field_part = "meeting";
                 break;
@@ -308,10 +300,10 @@ class EmailReminder
         $query = "SELECT user_id FROM {$field_part}s_users WHERE {$field_part}_id = '{$id}' AND accept_status != 'decline' AND deleted = 0
         ";
         $re = $db->query($query);
-        while($row = $db->fetchByAssoc($re) ) {
+        while ($row = $db->fetchByAssoc($re)) {
             $user = new User();
             $user->retrieve($row['user_id']);
-            if ( !empty($user->email1) ) {
+            if (!empty($user->email1)) {
                 $arr = array(
                     'type' => 'Users',
                     'name' => $user->full_name,
@@ -319,14 +311,14 @@ class EmailReminder
                 );
                 $emails[] = $arr;
             }
-        }        
+        }
         // fetch contacts
         $query = "SELECT contact_id FROM {$field_part}s_contacts WHERE {$field_part}_id = '{$id}' AND accept_status != 'decline' AND deleted = 0";
         $re = $db->query($query);
-        while($row = $db->fetchByAssoc($re) ) {
+        while ($row = $db->fetchByAssoc($re)) {
             $contact = new Contact();
             $contact->retrieve($row['contact_id']);
-            if ( !empty($contact->email1) ) {
+            if (!empty($contact->email1)) {
                 $arr = array(
                     'type' => 'Contacts',
                     'name' => $contact->full_name,
@@ -334,14 +326,14 @@ class EmailReminder
                 );
                 $emails[] = $arr;
             }
-        }        
+        }
         // fetch leads
         $query = "SELECT lead_id FROM {$field_part}s_leads WHERE {$field_part}_id = '{$id}' AND accept_status != 'decline' AND deleted = 0";
         $re = $db->query($query);
-        while($row = $db->fetchByAssoc($re) ) {
+        while ($row = $db->fetchByAssoc($re)) {
             $lead = new Lead();
             $lead->retrieve($row['lead_id']);
-            if ( !empty($lead->email1) ) {
+            if (!empty($lead->email1)) {
                 $arr = array(
                     'type' => 'Leads',
                     'name' => $lead->full_name,
@@ -353,4 +345,3 @@ class EmailReminder
         return $emails;
     }
 }
-

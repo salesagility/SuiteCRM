@@ -1,10 +1,11 @@
 <?php
 /**
- * This is project's console commands configuration for Robo task runner.
+ * This is the project's configuration for Robo task runner. This doesn't actually do anything
+ * other than exist, to prevent invalid Robo commands from returning unrelated errors.
  *
  * @see http://robo.li/
  */
 class RoboFile extends \Robo\Tasks
 {
-    // define public methods as commands
+    // This space intentionally left blank.
 }

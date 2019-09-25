@@ -470,6 +470,7 @@
       var mb = messageBox();
       mb.hideHeader();
       mb.hideFooter();
+      document.activeElement.blur();
       mb.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
       mb.show();
       mb.on('ok', function () {
@@ -728,6 +729,37 @@
         fileInputID = document_attachment_id;
       }
 
+      $.fn.EmailsComposeView.selectDocumentFromPopup = function(resultData) {
+        set_return(resultData);
+        if (fileInputID.val().length === 0) {
+          // id is empty
+          fileGroupContainer.remove();
+          self.updateDocumentIDs();
+        } else {
+          // id is full
+          if (fileGroupContainer.find('.attachment-remove').length === 0) {
+            var removeAttachment = $('<a class="attachment-remove"><span class="glyphicon glyphicon-remove"></span></a>');
+            fileGroupContainer.append(removeAttachment);
+            // handle when user removes attachment
+            removeAttachment.click(function () {
+              fileGroupContainer.remove();
+              self.updateDocumentIDs();
+            });
+          }
+
+          fileInput.val(fileInputID.val());
+          fileLabel.empty();
+
+          var fileContainer = $('<div class="attachment-file-container"></div>');
+          fileContainer.appendTo(fileLabel);
+          fileContainer.append('<span class="attachment-name"> ' + fileInputName.val() + ' </span>');
+
+          fileLabel.removeClass('attachment-blank');
+
+          self.updateDocumentIDs();
+        }
+      };
+
       //language=JQuery-CSS
       var document_attachment_name = $('[name=document_attachment_name]');
       var fileInputName = undefined;
@@ -758,7 +790,7 @@
           true,
           false,
           {
-            "call_back_function": 'set_return',
+            "call_back_function": '$.fn.EmailsComposeView.selectDocumentFromPopup',
             "form_name": "ComposeView",
             "field_to_name_array": {
               "id": "document_attachment_id",
@@ -769,37 +801,6 @@
           false
         );
 
-        popupWindow.onbeforeunload = function () {
-          setTimeout(function () {
-            if (fileInputID.val().length === 0) {
-              // id is empty
-              fileGroupContainer.remove();
-              self.updateDocumentIDs();
-            } else {
-              // id is full
-              if (fileGroupContainer.find('.attachment-remove').length === 0) {
-                var removeAttachment = $('<a class="attachment-remove"><span class="glyphicon glyphicon-remove"></span></a>');
-                fileGroupContainer.append(removeAttachment);
-                // handle when user removes attachment
-                removeAttachment.click(function () {
-                  fileGroupContainer.remove();
-                  self.updateDocumentIDs();
-                });
-              }
-
-              fileInput.val(fileInputID.val());
-              fileLabel.empty();
-
-              var fileContainer = $('<div class="attachment-file-container"></div>');
-              fileContainer.appendTo(fileLabel);
-              fileContainer.append('<span class="attachment-name"> ' + fileInputName.val() + ' </span>');
-
-              fileLabel.removeClass('attachment-blank');
-
-              self.updateDocumentIDs();
-            }
-          }, 300);
-        }
       };
 
       // Mimic the file attachment behaviour

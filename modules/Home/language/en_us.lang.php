@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -143,8 +143,8 @@ $mod_strings = array(
     'LBL_DASHLET_INCORRECT_URL' => 'Incorrect website location is specified',
     'LBL_DASHLET_OPT_URL' => 'Website Location',
     'LBL_DASHLET_OPT_HEIGHT' => 'Dashlet Height (in pixels)',
-    'LBL_DASHLET_SUGAR_NEWS' => 'SuiteCRM News',
-    'LBL_DASHLET_DISCOVER_SUGAR_PRO' => 'Discover SuiteCRM',
+    'LBL_DASHLET_SUITE_NEWS' => 'SuiteCRM News',
+    'LBL_DASHLET_DISCOVER_SUITE' => 'Discover SuiteCRM',
     'LBL_BASIC_SEARCH' => 'Quick Filter' /*for 508 compliance fix*/,
     'LBL_ADVANCED_SEARCH' => 'Advanced Filter' /*for 508 compliance fix*/,
     'LBL_TOUR_HOME' => 'Home Icon',
@@ -224,4 +224,25 @@ $mod_strings = array(
     'LBL_REPEAT_UNTIL' => 'Repeat Until',
     'LBL_REPEAT_COUNT' => 'Number of recurrences',
     'LBL_REPEAT_LIMIT_ERROR' => 'Your request was going to create more than $limit meetings.',
+
+    //Events
+    'LNK_EVENT' => 'Event',
+    'LNK_EVENT_VIEW' => 'View Event',
+    'LBL_DATE' => 'Date: ',
+    'LBL_DURATION' => 'Duration: ',
+    'LBL_NAME' => 'Title: ',
+    'LBL_HOUR_ABBREV' => 'hour',
+    'LBL_HOURS_ABBREV' => 'hours',
+    'LBL_MINSS_ABBREV' => 'minutes',
+    'LBL_LOCATION' => 'Location:',
+    'LBL_STATUS' => 'Status:',
+    'LBL_DESCRIPTION' => 'Description: ',
+    //End Events
+
+    'LBL_ELASTIC_SEARCH_EXCEPTION_SEARCH_INVALID_REQUEST' => 'An error has occurred while performing the search. Your query syntax might not be valid.',
+    'LBL_ELASTIC_SEARCH_EXCEPTION_SEARCH_ENGINE_NOT_FOUND' => 'Unable to find the requested SearchEngine. Try performing the search again.',
+    'LBL_ELASTIC_SEARCH_EXCEPTION_NO_NODES_AVAILABLE' => 'Failed to connect to the Elasticsearch server.',
+    'LBL_ELASTIC_SEARCH_EXCEPTION_SEARCH' => 'An error internal to the Search has occurred.',
+    'LBL_ELASTIC_SEARCH_EXCEPTION_DEFAULT' => 'An unknown error has occurred while performing the search.',
+    'LBL_ELASTIC_SEARCH_EXCEPTION_END_MESSAGE' => 'Contact an administrator if the problem persists. More information available in the logs.'
 );

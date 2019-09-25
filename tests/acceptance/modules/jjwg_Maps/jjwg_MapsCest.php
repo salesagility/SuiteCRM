@@ -30,26 +30,18 @@ class jjwg_MapsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Maps $maps
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the maps module.
      */
     public function testScenarioViewMapsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Maps $maps,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the maps module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to maps list-view
         $I->loginAsAdmin();
-        $maps->gotoMaps();
+        $I->visitPage('jjwg_Maps', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Maps', '.module-title-text');
@@ -60,8 +52,7 @@ class jjwg_MapsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Maps $map
-     * @param \Step\Acceptance\Accounts $accounts
-     * @param \Helper\WebDriverHelper $webDriverHelper
+     * @param \Step\Acceptance\AccountsTester $accounts
      *
      * As administrative user I want to create a map so that I can test
      * the standard fields.
@@ -71,18 +62,13 @@ class jjwg_MapsCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Maps $map,
-        \Step\Acceptance\Accounts $accounts,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\AccountsTester $accounts
     ) {
         $I->wantTo('Create a Map');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -91,7 +77,7 @@ class jjwg_MapsCest
         $accounts->createAccount($account_name);
 
         // Navigate to maps list-view
-        $map->gotoMaps();
+        $I->visitPage('jjwg_Maps', 'index');
         $listView->waitForListViewVisible();
 
         // Create map
@@ -106,9 +92,9 @@ class jjwg_MapsCest
         $listView->waitForListViewVisible();
 
         // Delete account
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
-        $I->wait(10);
+        $I->wait(5);
         $listView->clickFilterButton();
         $I->fillField('#name_basic', $account_name);
         $I->click('#search_form_submit');

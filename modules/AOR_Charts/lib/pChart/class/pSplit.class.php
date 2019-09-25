@@ -21,9 +21,10 @@
   {
    var $pChartObject;
 
-   /* Class creator */
-   function pSplit()
-    { }
+     /* Class creator */
+     public function __construct()
+     {
+     }
 
    /* Create the encoded string */
    function drawSplitPath($Object,$Values,$Format="")

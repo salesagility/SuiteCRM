@@ -1,17 +1,19 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 $module_name = 'AOD_IndexEvent';
 $listViewDefs [$module_name] =
-    array (
+    array(
         'RECORD_MODULE' =>
-        array (
+        array(
             'type' => 'varchar',
             'label' => 'LBL_RECORD_MODULE',
             'width' => '10%',
             'default' => true,
         ),
         'NAME' =>
-        array (
+        array(
             'width' => '30%',
             'label' => 'LBL_NAME',
             'default' => true,
@@ -19,14 +21,14 @@ $listViewDefs [$module_name] =
             'customCode' => '<a href="index.php?action=EditView&module={$RECORD_MODULE}&record={$RECORD_ID}">{$NAME}</a>',
         ),
         'DATE_MODIFIED' =>
-        array (
+        array(
             'type' => 'datetime',
             'label' => 'LBL_DATE_MODIFIED',
             'width' => '10%',
             'default' => true,
         ),
         'ERROR' =>
-        array (
+        array(
             'type' => 'varchar',
             'label' => 'LBL_ERROR',
             'width' => '50%',

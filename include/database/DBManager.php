@@ -515,7 +515,7 @@ abstract class DBManager
         $sql = $this->insertSQL($bean);
         $tablename = $bean->getTableName();
         $msg = "Error inserting into table: $tablename:";
-
+        
         return $this->query($sql, true, $msg);
     }
 
@@ -528,43 +528,47 @@ abstract class DBManager
      * @param bool $execute Execute or return query?
      * @return bool query result
      */
-	public function insertParams($table, $field_defs, $data, $field_map = null, $execute = true)
-	{
-		$values = array();
-		if(!is_array($field_defs) && !is_object($field_defs)) {
+    public function insertParams($table, $field_defs, $data, $field_map = null, $execute = true)
+    {
+        $values = array();
+        if (!is_array($field_defs) && !is_object($field_defs)) {
             $GLOBALS['log']->fatal('$filed_defs should be an array');
-        } else {foreach ((array)$field_defs as $field => $fieldDef){
+        } else {
+            foreach ((array)$field_defs as $field => $fieldDef) {
+                if (isset($fieldDef['source']) && $fieldDef['source'] != 'db') {
+                    continue;
+                }//custom fields handle there save seperatley
+                if (!empty($field_map) && !empty($field_map[$field]['custom_type'])) {
+                    continue;
+                }
 
-			if (isset($fieldDef['source']) && $fieldDef['source'] != 'db') { continue;
-			}//custom fields handle there save seperatley
-			if(!empty($field_map) && !empty($field_map[$field]['custom_type'])) {continue;}
+                if (isset($data[$field])) {
+                    // clean the incoming value..
+                    $val = from_html($data[$field]);
+                } else {
+                    if (isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
+                        $val = $fieldDef['default'];
+                    } else {
+                        $val = null;
+                    }
+                }
 
-			if(isset($data[$field])) {
-				// clean the incoming value..
-				$val = from_html($data[$field]);
-			} else {
-				if(isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
-					$val = $fieldDef['default'];
-				} else {
-					$val = null;
-				}
-			}
-
-			//handle auto increment values here - we may have to do something like nextval for oracle
-			if (!empty($fieldDef['auto_increment'])) {
-				$auto = $this->getAutoIncrementSQL($table, $fieldDef['name']);
-				if(!empty($auto)) {
-					$values[$field] = $auto;
-				}
-			} elseif (isset($fieldDef['name']) && $fieldDef['name'] == 'deleted') {
-				$values['deleted'] = (int)$val;
-			} else {
-				// need to do some thing about types of values
-				if(!is_null($val) || !empty($fieldDef['required'])) {
-					$values[$field] = $this->massageValue($val, $fieldDef);
-				}
-			}
-		}}
+                //handle auto increment values here - we may have to do something like nextval for oracle
+                if (!empty($fieldDef['auto_increment'])) {
+                    $auto = $this->getAutoIncrementSQL($table, $fieldDef['name']);
+                    if (!empty($auto)) {
+                        $values[$field] = $auto;
+                    }
+                } elseif (isset($fieldDef['name']) && $fieldDef['name'] == 'deleted') {
+                    $values['deleted'] = (int)$val;
+                } else {
+                    // need to do some thing about types of values
+                    if (!is_null($val) || !empty($fieldDef['required'])) {
+                        $values[$field] = $this->massageValue($val, $fieldDef);
+                    }
+                }
+            }
+        }
 
         if (empty($values)) {
             return $execute ? true : '';
@@ -768,7 +772,6 @@ abstract class DBManager
      */
     protected function isNullable($vardef)
     {
-
         if (isset($vardef['isnull']) && (strtolower($vardef['isnull']) == 'false' || $vardef['isnull'] === false)
             && !empty($vardef['required'])
         ) {
@@ -841,6 +844,11 @@ abstract class DBManager
                     continue;
                 }
             }
+            if (isset($value['type']) == false || $value['type'] == false) {
+                $sql .= "/* TYPE IS MISSING IN VARDEF $tablename::$name */\n";
+                continue;
+            }
+
 
             $name = strtolower($value['name']);
             // add or fix the field defs per what the DB is expected to give us back
@@ -973,7 +981,6 @@ abstract class DBManager
                         $this->query($rename, true, "Cannot rename index");
                     }
                     $sql .= is_array($rename) ? join("\n", $rename) . "\n" : $rename . "\n";
-
                 } else {
                     // ok we need this field lets create it
                     $sql .= "/*MISSING INDEX IN DATABASE - $name -{$value['type']}  ROW */\n";
@@ -1435,7 +1442,6 @@ abstract class DBManager
                             }
                         }
                     }
-
                 }
             } else {
                 foreach ($row as $key => $val) {
@@ -1846,14 +1852,14 @@ abstract class DBManager
         $sqlStr = '';
         foreach ($tokens as $key => $val) {
             switch ($val) {
-                case '?' :
-                case '!' :
-                case '&' :
+                case '?':
+                case '!':
+                case '&':
                     $count++;
                     $sqlStr .= '?';
                     break;
 
-                default :
+                default:
                     //escape any special characters
                     $tokens[$key] = preg_replace('/\\\([&?!])/', "\\1", $val);
                     $sqlStr .= $tokens[$key];
@@ -1956,8 +1962,13 @@ abstract class DBManager
     public function insertSQL(SugarBean $bean)
     {
         // get column names and values
-        $sql = $this->insertParams($bean->getTableName(), $bean->getFieldDefinitions(), get_object_vars($bean),
-            isset($bean->field_name_map) ? $bean->field_name_map : null, false);
+        $sql = $this->insertParams(
+            $bean->getTableName(),
+            $bean->getFieldDefinitions(),
+            get_object_vars($bean),
+            isset($bean->field_name_map) ? $bean->field_name_map : null,
+            false
+        );
 
         return $sql;
     }
@@ -1974,55 +1985,66 @@ abstract class DBManager
         $primaryField = $bean->getPrimaryFieldDefinition();
         $columns = array();
         $fields = $bean->getFieldDefinitions();
-		// get column names and values
-		if(!is_array($fields) && !is_object($fields)) {
+        // get column names and values
+        if (!is_array($fields) && !is_object($fields)) {
             $GLOBALS['log']->fatal('Field Definition should be an array.');
-        } else {foreach ((array)$fields as $field => $fieldDef) {
-			if (isset($fieldDef['source']) && $fieldDef['source'] != 'db') { continue;
-			}// Do not write out the id field on the update statement.
-    		// We are not allowed to change ids.
-    		if (empty($fieldDef['name']) || $fieldDef['name'] == $primaryField['name']) {continue;}
+        } else {
+            foreach ((array)$fields as $field => $fieldDef) {
+                if (isset($fieldDef['source']) && $fieldDef['source'] != 'db') {
+                    continue;
+                }// Do not write out the id field on the update statement.
+                // We are not allowed to change ids.
+                if (empty($fieldDef['name']) || $fieldDef['name'] == $primaryField['name']) {
+                    continue;
+                }
 
-    		// If the field is an auto_increment field, then we shouldn't be setting it.  This was added
-    		// specially for Bugs and Cases which have a number associated with them.
-    		if (!empty($bean->field_name_map[$field]['auto_increment'])) {continue;}
+                // If the field is an auto_increment field, then we shouldn't be setting it.  This was added
+                // specially for Bugs and Cases which have a number associated with them.
+                if (!empty($bean->field_name_map[$field]['auto_increment'])) {
+                    continue;
+                }
 
-    		//custom fields handle their save separately
-    		if(isset($bean->field_name_map) && !empty($bean->field_name_map[$field]['custom_type'])) { continue;}
+                //custom fields handle their save separately
+                if (isset($bean->field_name_map) && !empty($bean->field_name_map[$field]['custom_type'])) {
+                    continue;
+                }
 
-    		// no need to clear deleted since we only update not deleted records anyway
-    		if($fieldDef['name'] == 'deleted' && empty($bean->deleted)) {continue;}
+                // no need to clear deleted since we only update not deleted records anyway
+                if ($fieldDef['name'] == 'deleted' && empty($bean->deleted)) {
+                    continue;
+                }
 
-    		if(isset($bean->$field)) {
-    			$val = from_html($bean->$field);
-    		} else {
-    			continue;
-    		}
+                if (isset($bean->$field)) {
+                    $val = from_html($bean->$field);
+                } else {
+                    continue;
+                }
 
-    		if(!empty($fieldDef['type']) && $fieldDef['type'] == 'bool'){
-    			$val = $bean->getFieldValue($field);
-    		}
+                if (!empty($fieldDef['type']) && $fieldDef['type'] == 'bool') {
+                    $val = $bean->getFieldValue($field);
+                }
 
-    		if(strlen($val) == 0) {
-    			if(isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
-    				$val = $fieldDef['default'];
-    			} else {
-    				$val = null;
-    			}
-    		}
+                if (strlen($val) == 0) {
+                    if (isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
+                        $val = $fieldDef['default'];
+                    } else {
+                        $val = null;
+                    }
+                }
 
-    		if(!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
-			    $val = $this->truncate($val, $fieldDef['len']);
-			}
-		$columnName = $this->quoteIdentifier($fieldDef['name']);
-    		if(!is_null($val) || !empty($fieldDef['required'])) {
-    			$columns[] = "{$columnName}=".$this->massageValue($val, $fieldDef);
-    		} elseif($this->isNullable($fieldDef)) {
-    			$columns[] = "{$columnName}=NULL";
-    		} else {
-    		    $columns[] = "{$columnName}=".$this->emptyValue($fieldDef['type']);
-    		}
-		}}
+                if (!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
+                    $val = $this->truncate($val, $fieldDef['len']);
+                }
+                $columnName = $this->quoteIdentifier($fieldDef['name']);
+                if (!is_null($val) || !empty($fieldDef['required'])) {
+                    $columns[] = "{$columnName}=".$this->massageValue($val, $fieldDef);
+                } elseif ($this->isNullable($fieldDef)) {
+                    $columns[] = "{$columnName}=NULL";
+                } else {
+                    $columns[] = "{$columnName}=".$this->emptyValue($fieldDef['type']);
+                }
+            }
+        }
 
         if (sizeof($columns) == 0) {
             return "";
@@ -2137,7 +2159,7 @@ abstract class DBManager
                     }
 
                     return intval($val);
-                case 'bigint' :
+                case 'bigint':
                     $val = (float)$val;
                     if (!empty($fieldDef['required']) && $val == false) {
                         if (isset($fieldDef['default'])) {
@@ -2264,14 +2286,11 @@ abstract class DBManager
                     if ($char == ")") {
                         $level--;
                         $selectField .= $char;
-
-
                     } else {
                         $selectField .= $char;
                     }
                 }
             }
-
         }
         $fields[$this->getFieldNameFromSelect($selectField)] = $selectField;
 
@@ -2288,19 +2307,15 @@ abstract class DBManager
         if (strncasecmp($string, "DISTINCT ", 9) == 0) {
             $string = substr($string, 9);
         }
-        if (stripos($string, " as ") !== false) //"as" used for an alias
-        {
+        if (stripos($string, " as ") !== false) { //"as" used for an alias
             return trim(substr($string, strripos($string, " as ") + 4));
         } else {
-            if (strrpos($string, " ") != 0) //Space used as a delimiter for an alias
-            {
+            if (strrpos($string, " ") != 0) { //Space used as a delimiter for an alias
                 return trim(substr($string, strrpos($string, " ")));
             } else {
-                if (strpos($string, ".") !== false) //No alias, but a table.field format was used
-                {
+                if (strpos($string, ".") !== false) { //No alias, but a table.field format was used
                     return substr($string, strpos($string, ".") + 1);
-                } else //Give up and assume the whole thing is the field name
-                {
+                } else { //Give up and assume the whole thing is the field name
                     return $string;
                 }
             }
@@ -2522,22 +2537,24 @@ abstract class DBManager
         }
     }
 
-	/**
-	 * Returns the defintion for a single column
-	 *
-	 * @param  array  $fieldDef Vardef-format field def
-	 * @param  bool   $ignoreRequired  Optional, true if we should ignore this being a required field
-	 * @param  string $table           Optional, table name
-	 * @param  bool   $return_as_array Optional, true if we should return the result as an array instead of sql
-	 * @return string or array if $return_as_array is true
-	 */
-	protected function oneColumnSQLRep($fieldDef, $ignoreRequired = false, $table = '', $return_as_array = false)
-	{
-		if(!isset($fieldDef['name'])) {
-	        $GLOBALS['log']->fatal('"name" field does not exists in field definition.');
-	        $name = null;
-        } else {$name = $fieldDef['name'];}
-		$type = $this->getFieldType($fieldDef);
+    /**
+     * Returns the defintion for a single column
+     *
+     * @param  array  $fieldDef Vardef-format field def
+     * @param  bool   $ignoreRequired  Optional, true if we should ignore this being a required field
+     * @param  string $table           Optional, table name
+     * @param  bool   $return_as_array Optional, true if we should return the result as an array instead of sql
+     * @return string or array if $return_as_array is true
+     */
+    protected function oneColumnSQLRep($fieldDef, $ignoreRequired = false, $table = '', $return_as_array = false)
+    {
+        if (!isset($fieldDef['name'])) {
+            $GLOBALS['log']->fatal('"name" field does not exists in field definition.');
+            $name = null;
+        } else {
+            $name = $fieldDef['name'];
+        }
+        $type = $this->getFieldType($fieldDef);
         $colType = $this->getColumnType($type);
 
         if ($parts = $this->getTypeParts($colType)) {
@@ -2623,21 +2640,22 @@ abstract class DBManager
         }
     }
 
-	/**
-	 * Returns SQL defintions for all columns in a table
-	 *
-	 * @param  array  $fieldDefs  Vardef-format field def
-	 * @param  bool   $ignoreRequired Optional, true if we should ignor this being a required field
-	 * @param  string $tablename      Optional, table name
-	 * @return string SQL column definitions
-	 */
-	protected function columnSQLRep($fieldDefs, $ignoreRequired , $tablename= null){
+    /**
+     * Returns SQL defintions for all columns in a table
+     *
+     * @param  array  $fieldDefs  Vardef-format field def
+     * @param  bool   $ignoreRequired Optional, true if we should ignor this being a required field
+     * @param  string $tablename      Optional, table name
+     * @return string SQL column definitions
+     */
+    protected function columnSQLRep($fieldDefs, $ignoreRequired, $tablename= null)
+    {
         // set $ignoreRequired = false by default
         if (!is_bool($ignoreRequired)) {
             $ignoreRequired = false;
         }
 
-		$columns = array();
+        $columns = array();
 
         if ($this->isFieldArray($fieldDefs)) {
             foreach ($fieldDefs as $fieldDef) {
@@ -2916,7 +2934,7 @@ abstract class DBManager
         $values['parent_id'] = $this->massageValue($bean->id, $fieldDefs['parent_id']);
         $values['field_name'] = $this->massageValue($changes['field_name'], $fieldDefs['field_name']);
         $values['data_type'] = $this->massageValue($changes['data_type'], $fieldDefs['data_type']);
-        if ($changes['data_type'] == 'text') {
+        if ($changes['data_type'] == 'text' || $changes['data_type'] == 'multienum') {
             $values['before_value_text'] = $this->massageValue($changes['before'], $fieldDefs['before_value_text']);
             $values['after_value_text'] = $this->massageValue($changes['after'], $fieldDefs['after_value_text']);
         } else {
@@ -2964,7 +2982,6 @@ abstract class DBManager
         }
 
         if ($fetched_row) {
-
             $field_defs = $bean->field_defs;
 
             if (is_array($field_filter)) {
@@ -3000,16 +3017,18 @@ abstract class DBManager
                     $before_value = $this->fromConvert($before_value, $field_type);
                 }
                 //if the type and values match, do nothing.
-                if (!($this->_emptyValue($before_value, $field_type) && $this->_emptyValue($after_value,
-                        $field_type))
+                if (!($this->_emptyValue($before_value, $field_type) && $this->_emptyValue(
+                    $after_value,
+                    $field_type
+                ))
                 ) {
                     $change = false;
                     if (trim($before_value) !== trim($after_value)) {
-			 // decode value for field type of 'text' or 'varchar' to check before audit if the value contain trip tags or special character
-                        if($field_type == 'varchar' || $field_type == 'name' || $field_type == 'text') {
+                        // decode value for field type of 'text' or 'varchar' to check before audit if the value contain trip tags or special character
+                        if ($field_type == 'varchar' || $field_type == 'name' || $field_type == 'text') {
                             $decode_before_value = strip_tags(html_entity_decode($before_value));
                             $decode_after_value = strip_tags(html_entity_decode($after_value));
-                            if($decode_before_value == $decode_after_value) {
+                            if ($decode_before_value == $decode_after_value) {
                                 continue;
                             }
                             $change = true;
@@ -3017,21 +3036,23 @@ abstract class DBManager
                         // Bug #42475: Don't directly compare numeric values, instead do the subtract and see if the comparison comes out to be "close enough", it is necessary for floating point numbers.
                         // Manual merge of fix 95727f2eed44852f1b6bce9a9eccbe065fe6249f from DBHelper
                         // This fix also fixes Bug #44624 in a more generic way and therefore eliminates the need for fix 0a55125b281c4bee87eb347709af462715f33d2d in DBHelper
-                        else if ($this->isNumericType($field_type)) {
-                            $numerator = abs(2 * ((trim($before_value) + 0) - (trim($after_value) + 0)));
-                            $denominator = abs(((trim($before_value) + 0) + (trim($after_value) + 0)));
-                            // detect whether to use absolute or relative error. use absolute if denominator is zero to avoid division by zero
-                            $error = ($denominator == 0) ? $numerator : $numerator / $denominator;
-                            if ($error >= 0.0000000001) {    // Smaller than 10E-10
-                                $change = true;
-                            }
-                        } else {
-                            if ($this->isBooleanType($field_type)) {
-                                if ($this->_getBooleanValue($before_value) != $this->_getBooleanValue($after_value)) {
+                        else {
+                            if ($this->isNumericType($field_type)) {
+                                $numerator = abs(2 * ((trim($before_value) + 0) - (trim($after_value) + 0)));
+                                $denominator = abs(((trim($before_value) + 0) + (trim($after_value) + 0)));
+                                // detect whether to use absolute or relative error. use absolute if denominator is zero to avoid division by zero
+                                $error = ($denominator == 0) ? $numerator : $numerator / $denominator;
+                                if ($error >= 0.0000000001) {    // Smaller than 10E-10
                                     $change = true;
                                 }
                             } else {
-                                $change = true;
+                                if ($this->isBooleanType($field_type)) {
+                                    if ($this->_getBooleanValue($before_value) != $this->_getBooleanValue($after_value)) {
+                                        $change = true;
+                                    }
+                                } else {
+                                    $change = true;
+                                }
                             }
                         }
                         if ($change) {
@@ -3775,7 +3796,7 @@ abstract class DBManager
      * @param  bool $execute Execute or return SQL?
      * @return resource query result
      */
-    abstract function limitQuery($sql, $start, $count, $dieOnError = false, $msg = '', $execute = true);
+    abstract public function limitQuery($sql, $start, $count, $dieOnError = false, $msg = '', $execute = true);
 
 
     /**
@@ -3790,7 +3811,7 @@ abstract class DBManager
      * @param string $column
      * @param string $newname
      */
-    abstract function renameColumnSQL($tablename, $column, $newname);
+    abstract public function renameColumnSQL($tablename, $column, $newname);
 
     /**
      * Returns definitions of all indies for passed table.

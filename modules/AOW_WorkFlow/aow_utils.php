@@ -78,8 +78,9 @@ function getModuleFields(
             foreach ($mod->field_defs as $name => $arr) {
                 if (ACLController::checkAccess($mod->module_dir, 'list', true)) {
                     if (array_key_exists($mod->module_dir, $blockedModuleFields)) {
-                        if (in_array($arr['name'],
-                                $blockedModuleFields[$mod->module_dir]
+                        if (in_array(
+                            $arr['name'],
+                            $blockedModuleFields[$mod->module_dir]
                             ) && !$current_user->isAdmin()
                         ) {
                             $GLOBALS['log']->debug('hiding ' . $arr['name'] . ' field from ' . $current_user->name);
@@ -112,34 +113,33 @@ function getModuleFields(
                     unset($fields[$name]);
                 }
             }
-
         }
     }
     asort($fields);
-    if($view == 'JSON'){
+    if ($view == 'JSON') {
         return json_encode($fields);
     }
-    if($view == 'EditView'){
+    if ($view == 'EditView') {
         return get_select_options_with_id($fields, $value);
     } else {
         return $fields[$value];
     }
 }
 
-function getRelModuleFields($module, $rel_field, $view='EditView',$value = ''){
+function getRelModuleFields($module, $rel_field, $view='EditView', $value = '')
+{
     global $beanList;
 
-    if($module == $rel_field){
+    if ($module == $rel_field) {
         return getModuleFields($module, $view, $value);
     }
 
     $mod = new $beanList[$module]();
     $data = $mod->field_defs[$rel_field];
 
-    if(isset($data['module']) && $data['module'] != ''){
+    if (isset($data['module']) && $data['module'] != '') {
         return getModuleFields($data['module'], $view, $value);
     }
-
 }
 
 /**
@@ -170,7 +170,8 @@ function getRelatedModule($module, $linkFields)
     return $relatedModule;
 }
 
-function getModuleTreeData($module){
+function getModuleTreeData($module)
+{
     global $beanList, $app_list_strings;
 
     $sort_fields = array();
@@ -182,34 +183,40 @@ function getModuleTreeData($module){
                         'module_label'=> $module_label)
     );
 
-    if ($module != '') {
-        if(isset($beanList[$module]) && $beanList[$module]){
+    if ($module != '' && ACLController::checkAccess($module, 'list', true)) {
+        if (isset($beanList[$module]) && $beanList[$module]) {
             $mod = new $beanList[$module]();
 
-            foreach($mod->get_linked_fields() as $name => $arr){
-                if(isset($arr['module']) && $arr['module'] != '') {
+            foreach ($mod->get_linked_fields() as $name => $arr) {
+                if (isset($arr['module']) && $arr['module'] != '') {
                     $rel_module = $arr['module'];
-                } else if($mod->load_relationship($name)){
-                    $rel_module = $mod->$name->getRelatedModuleName();
+                } else {
+                    if ($mod->load_relationship($name)) {
+                        $rel_module = $mod->$name->getRelatedModuleName();
+                    }
+                }
+
+                if (!ACLController::checkAccess($rel_module, 'list', true)) {
+                    continue;
                 }
 
                 $rel_module_label = isset($app_list_strings['moduleList'][$rel_module]) ? $app_list_strings['moduleList'][$rel_module] : $rel_module;
-                if(isset($arr['vname']) && $arr['vname'] != '') {
+                if (isset($arr['vname']) && $arr['vname'] != '') {
                     $label = $rel_module_label . ' : ' . translate($arr['vname'], $mod->module_dir);
-                    $module_label = trim(translate($arr['vname'],$mod->module_dir),':');
-                }else {
+                    $module_label = trim(translate($arr['vname'], $mod->module_dir), ':');
+                } else {
                     $label = $rel_module_label . ' : '. $name;
                     $module_label = $name;
                 }
                 $sort_fields[$name] = array('label'=>$label,'type'=>'relationship','module' => $rel_module,'module_label'=>$module_label);
-                if($arr['type'] == 'relate' && isset($arr['id_name']) && $arr['id_name'] != ''){
-                    if(isset($fields[$arr['id_name']])){
-                        unset( $fields[$arr['id_name']]);
+                if ($arr['type'] == 'relate' && isset($arr['id_name']) && $arr['id_name'] != '') {
+                    if (isset($fields[$arr['id_name']])) {
+                        unset($fields[$arr['id_name']]);
                     }
                 }
             } //End loop.
-            uasort($sort_fields,function($a,$b){
-                return strcmp($a['label'],$b['label']);
+            uasort($sort_fields, function ($a, $b) {
+                return strcmp($a['label'], $b['label']);
             });
 
             $fields = array_merge((array)$fields, (array)$sort_fields);
@@ -219,7 +226,7 @@ function getModuleTreeData($module){
     return json_encode($fields);
 }
 
-function getModuleRelationships($module, $view='EditView',$value = '')
+function getModuleRelationships($module, $view='EditView', $value = '')
 {
     global $beanList, $app_list_strings;
 
@@ -228,27 +235,31 @@ function getModuleRelationships($module, $view='EditView',$value = '')
     $invalid_modules = array();
 
     if ($module != '') {
-        if(isset($beanList[$module]) && $beanList[$module]){
+        if (isset($beanList[$module]) && $beanList[$module]) {
             $mod = new $beanList[$module]();
 
             /*if($mod->is_AuditEnabled()){
                 $fields['Audit'] = translate('LBL_AUDIT_TABLE','AOR_Fields');
             }*/
-            foreach($mod->get_linked_fields() as $name => $arr){
-                if(isset($arr['module']) && $arr['module'] != '') {
+            foreach ($mod->get_linked_fields() as $name => $arr) {
+                if (isset($arr['module']) && $arr['module'] != '') {
                     $rel_module = $arr['module'];
-                } else if($mod->load_relationship($name)){
-                    $rel_module = $mod->$name->getRelatedModuleName();
+                } else {
+                    if ($mod->load_relationship($name)) {
+                        $rel_module = $mod->$name->getRelatedModuleName();
+                    }
                 }
-                if(!in_array($rel_module,$invalid_modules)){
+                if (!in_array($rel_module, $invalid_modules)) {
                     $relModuleName = isset($app_list_strings['moduleList'][$rel_module]) ? $app_list_strings['moduleList'][$rel_module] : $rel_module;
-                    if(isset($arr['vname']) && $arr['vname'] != ''){
-                        $sort_fields[$name] = $relModuleName.' : '.translate($arr['vname'],$mod->module_dir);
+                    if (isset($arr['vname']) && $arr['vname'] != '') {
+                        $sort_fields[$name] = $relModuleName.' : '.translate($arr['vname'], $mod->module_dir);
                     } else {
                         $sort_fields[$name] = $relModuleName.' : '. $name;
                     }
-                    if($arr['type'] == 'relate' && isset($arr['id_name']) && $arr['id_name'] != ''){
-                        if(isset($fields[$arr['id_name']])) unset( $fields[$arr['id_name']]);
+                    if ($arr['type'] == 'relate' && isset($arr['id_name']) && $arr['id_name'] != '') {
+                        if (isset($fields[$arr['id_name']])) {
+                            unset($fields[$arr['id_name']]);
+                        }
                     }
                 }
             } //End loop.
@@ -256,21 +267,22 @@ function getModuleRelationships($module, $view='EditView',$value = '')
             $fields = array_merge((array)$fields, (array)$sort_fields);
         }
     }
-    if($view == 'EditView'){
+    if ($view == 'EditView') {
         return get_select_options_with_id($fields, $value);
     } else {
         return $fields[$value];
     }
 }
 
-function getValidFieldsTypes($module, $field){
+function getValidFieldsTypes($module, $field)
+{
     global $beanFiles, $beanList;
 
     require_once($beanFiles[$beanList[$module]]);
     $focus = new $beanList[$module];
     $vardef = $focus->getFieldDefinition($field);
 
-    switch($vardef['type']) {
+    switch ($vardef['type']) {
         case 'double':
         case 'decimal':
         case 'float':
@@ -314,7 +326,7 @@ function getModuleField(
     $alt_type = '',
     $currency_id = '',
     $params= array()
-){
+) {
     global $current_language;
     global $app_strings;
     global $app_list_strings;
@@ -323,10 +335,10 @@ function getModuleField(
     global $beanList;
 
     // use the mod_strings for this module
-    $mod_strings = return_module_language($current_language,$module);
+    $mod_strings = return_module_language($current_language, $module);
 
     // if aor condition
-    if(strstr($aow_field, 'aor_conditions_value') !== false) {
+    if (strstr($aow_field, 'aor_conditions_value') !== false) {
         // get aor condition row
         $aor_row = str_replace('aor_conditions_value', '', $aow_field);
         $aor_row = str_replace('[', '', $aor_row);
@@ -352,18 +364,17 @@ function getModuleField(
 
     $displayParams = array();
 
-    if ( !is_file($file)
+    if (!is_file($file)
         || inDeveloperMode()
-        || !empty($_SESSION['developerMode']) ) {
-
-        if ( !isset($vardef) ) {
+        || !empty($_SESSION['developerMode'])) {
+        if (!isset($vardef)) {
             require_once($beanFiles[$beanList[$module]]);
             $focus = new $beanList[$module];
             $vardef = $focus->getFieldDefinition($fieldname);
         }
 
         // Bug: check for AOR value SecurityGroups value missing
-        if(stristr($fieldname, 'securitygroups') != false && empty($vardef)) {
+        if (stristr($fieldname, 'securitygroups') != false && empty($vardef)) {
             require_once($beanFiles[$beanList['SecurityGroups']]);
             $module = 'SecurityGroups';
             $focus = new $beanList[$module];
@@ -374,64 +385,66 @@ function getModuleField(
         //$displayParams['formName'] = 'EditView';
 
         // if this is the id relation field, then don't have a pop-up selector.
-        if( $vardef['type'] == 'relate' && $vardef['id_name'] == $vardef['name']) {
+        if ($vardef['type'] == 'relate' && $vardef['id_name'] == $vardef['name']) {
             $vardef['type'] = 'varchar';
         }
 
-        if(isset($vardef['precision'])) unset($vardef['precision']);
+        if (isset($vardef['precision'])) {
+            unset($vardef['precision']);
+        }
 
         //$vardef['precision'] = $locale->getPrecedentPreference('default_currency_significant_digits', $current_user);
 
-        if( $vardef['type'] == 'datetime') {
+        if ($vardef['type'] == 'datetime') {
             $vardef['type'] = 'datetimecombo';
         }
-        if( $vardef['type'] == 'datetimecombo') {
+        if ($vardef['type'] == 'datetimecombo') {
             $displayParams['originalFieldName'] = $aow_field;
             // Replace the square brackets by a deliberately complex alias to avoid JS conflicts
             $displayParams['idName'] = createBracketVariableAlias($aow_field);
         }
 
         // trim down textbox display
-        if( $vardef['type'] == 'text' ) {
+        if ($vardef['type'] == 'text') {
             $vardef['rows'] = 2;
             $vardef['cols'] = 32;
         }
 
         // create the dropdowns for the parent type fields
-        if ( $vardef['type'] == 'parent_type' ) {
+        if ($vardef['type'] == 'parent_type') {
             $vardef['type'] = 'enum';
         }
 
-        if($vardef['type'] == 'link'){
+        if ($vardef['type'] == 'link') {
             $vardef['type'] = 'relate';
             $vardef['rname'] = 'name';
             $vardef['id_name'] = $vardef['name'].'_id';
-            if((!isset($vardef['module']) || $vardef['module'] == '') && $focus->load_relationship($vardef['name'])) {
+            if ((!isset($vardef['module']) || $vardef['module'] == '') && $focus->load_relationship($vardef['name'])) {
                 $relName = $vardef['name'];
                 $vardef['module'] = $focus->$relName->getRelatedModuleName();
             }
-
         }
 
         //check for $alt_type
-        if ( $alt_type != '' ) {
+        if ($alt_type != '') {
             $vardef['type'] = $alt_type;
         }
 
         // remove the special text entry field function 'getEmailAddressWidget'
-        if ( isset($vardef['function'])
-            && ( $vardef['function'] == 'getEmailAddressWidget'
-                || $vardef['function']['name'] == 'getEmailAddressWidget' ) )
+        if (isset($vardef['function'])
+            && ($vardef['function'] == 'getEmailAddressWidget'
+                || $vardef['function']['name'] == 'getEmailAddressWidget')) {
             unset($vardef['function']);
+        }
 
-        if(isset($vardef['name']) && ($vardef['name'] == 'date_entered' || $vardef['name'] == 'date_modified')){
+        if (isset($vardef['name']) && ($vardef['name'] == 'date_entered' || $vardef['name'] == 'date_modified')) {
             $vardef['name'] = 'aow_temp_date';
         }
 
         // load SugarFieldHandler to render the field tpl file
         static $sfh;
 
-        if(!isset($sfh)) {
+        if (!isset($sfh)) {
             require_once('include/SugarFields/SugarFieldHandler.php');
             $sfh = new SugarFieldHandler();
         }
@@ -442,14 +455,20 @@ function getModuleField(
         $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', $contents);
 
         if ($view == 'EditView' && ($vardef['type'] == 'relate' || $vardef['type'] == 'parent')) {
-            $contents = str_replace('"' . $vardef['id_name'] . '"',
-                '{/literal}"{$fields.' . $vardef['name'] . '.id_name}"{literal}', $contents);
-            $contents = str_replace('"' . $vardef['name'] . '"',
-                '{/literal}"{$fields.' . $vardef['name'] . '.name}"{literal}', $contents);
+            $contents = str_replace(
+                '"' . $vardef['id_name'] . '"',
+                '{/literal}"{$fields.' . $vardef['name'] . '.id_name}"{literal}',
+                $contents
+            );
+            $contents = str_replace(
+                '"' . $vardef['name'] . '"',
+                '{/literal}"{$fields.' . $vardef['name'] . '.name}"{literal}',
+                $contents
+            );
         }
         if ($view == 'DetailView' && $vardef['type'] == 'image') {
-	     // Because TCPDF could not read image from download entryPoint, we need change entryPoint link to image path to resolved issue Image is not showing in PDF report
-	   if($_REQUEST['module'] == 'AOR_Reports' && $_REQUEST['action'] == 'DownloadPDF') {
+            // Because TCPDF could not read image from download entryPoint, we need change entryPoint link to image path to resolved issue Image is not showing in PDF report
+            if ($_REQUEST['module'] == 'AOR_Reports' && $_REQUEST['action'] == 'DownloadPDF') {
                 global $sugar_config;
                 $upload_dir = isset($sugar_config['upload_dir']) ? $sugar_config['upload_dir'] : 'upload/';
                 $contents = str_replace('index.php?entryPoint=download&id=', $upload_dir, $contents);
@@ -480,14 +499,13 @@ function getModuleField(
     $ss->assign('TIME_FORMAT', $time_format);
     $time_separator = ":";
     $match = array();
-    if(preg_match('/\d+([^\d])\d+([^\d]*)/s', $time_format, $match)) {
+    if (preg_match('/\d+([^\d])\d+([^\d]*)/s', $time_format, $match)) {
         $time_separator = $match[1];
     }
     $t23 = strpos($time_format, '23') !== false ? '%H' : '%I';
-    if(!isset($match[2]) || $match[2] == '') {
+    if (!isset($match[2]) || $match[2] == '') {
         $ss->assign('CALENDAR_FORMAT', $date_format . ' ' . $t23 . $time_separator . "%M");
-    }
-    else {
+    } else {
         $pm = $match[2] == "pm" ? "%P" : "%p";
         $ss->assign('CALENDAR_FORMAT', $date_format . ' ' . $t23 . $time_separator . "%M" . $pm);
     }
@@ -496,36 +514,39 @@ function getModuleField(
 
     // populate the fieldlist from the vardefs
     $fieldlist = array();
-    if ( !isset($focus) || !($focus instanceof SugarBean) )
+    if (!isset($focus) || !($focus instanceof SugarBean)) {
         require_once($beanFiles[$beanList[$module]]);
+    }
     $focus = new $beanList[$module];
     // create the dropdowns for the parent type fields
     $vardefFields = $focus->getFieldDefinitions();
-    if (isset($vardefFields[$fieldname]['type']) && $vardefFields[$fieldname]['type'] == 'parent_type' ) {
+    if (isset($vardefFields[$fieldname]['type']) && $vardefFields[$fieldname]['type'] == 'parent_type') {
         $focus->field_defs[$fieldname]['options'] = $focus->field_defs[$vardefFields[$fieldname]['group']]['options'];
     }
-    foreach ( $vardefFields as $name => $properties ) {
+    foreach ($vardefFields as $name => $properties) {
         $fieldlist[$name] = $properties;
         // fill in enums
-        if(isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($app_list_strings[$fieldlist[$name]['options']]))
+        if (isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($app_list_strings[$fieldlist[$name]['options']])) {
             $fieldlist[$name]['options'] = $app_list_strings[$fieldlist[$name]['options']];
+        }
         // Bug 32626: fall back on checking the mod_strings if not in the app_list_strings
-        elseif(isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($mod_strings[$fieldlist[$name]['options']]))
+        elseif (isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($mod_strings[$fieldlist[$name]['options']])) {
             $fieldlist[$name]['options'] = $mod_strings[$fieldlist[$name]['options']];
+        }
         // Bug 22730: make sure all enums have the ability to select blank as the default value.
-        if(!isset($fieldlist[$name]['options']['']))
+        if (!isset($fieldlist[$name]['options'][''])) {
             $fieldlist[$name]['options'][''] = '';
+        }
     }
 
     // fill in function return values
-    if ( !in_array($fieldname,array('email1','email2')) )
-    {
-        if (!empty($fieldlist[$fieldname]['function']['returns']) && $fieldlist[$fieldname]['function']['returns'] == 'html')
-        {
+    if (!in_array($fieldname, array('email1','email2'))) {
+        if (!empty($fieldlist[$fieldname]['function']['returns']) && $fieldlist[$fieldname]['function']['returns'] == 'html') {
             $function = $fieldlist[$fieldname]['function']['name'];
             // include various functions required in the various vardefs
-            if ( isset($fieldlist[$fieldname]['function']['include']) && is_file($fieldlist[$fieldname]['function']['include']))
+            if (isset($fieldlist[$fieldname]['function']['include']) && is_file($fieldlist[$fieldname]['function']['include'])) {
                 require_once($fieldlist[$fieldname]['function']['include']);
+            }
             $_REQUEST[$fieldname] = $value;
             $value = $function($focus, $fieldname, $value, $view);
 
@@ -533,45 +554,47 @@ function getModuleField(
         }
     }
 
-    if(isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'link'){
+    if (isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'link') {
         $fieldlist[$fieldname]['id_name'] = $fieldlist[$fieldname]['name'].'_id';
 
-        if((!isset($fieldlist[$fieldname]['module']) || $fieldlist[$fieldname]['module'] == '') && $focus->load_relationship($fieldlist[$fieldname]['name'])) {
+        if ((!isset($fieldlist[$fieldname]['module']) || $fieldlist[$fieldname]['module'] == '') && $focus->load_relationship($fieldlist[$fieldname]['name'])) {
             $relName = $fieldlist[$fieldname]['name'];
             $fieldlist[$fieldname]['module'] = $focus->$relName->getRelatedModuleName();
         }
     }
 
-    if(isset($fieldlist[$fieldname]['name']) && ($fieldlist[$fieldname]['name'] == 'date_entered' || $fieldlist[$fieldname]['name'] == 'date_modified')){
+    if (isset($fieldlist[$fieldname]['name']) && ($fieldlist[$fieldname]['name'] == 'date_entered' || $fieldlist[$fieldname]['name'] == 'date_modified')) {
         $fieldlist[$fieldname]['name'] = 'aow_temp_date';
         $fieldlist['aow_temp_date'] = $fieldlist[$fieldname];
         $fieldname = 'aow_temp_date';
     }
 
     $quicksearch_js = '';
-    if(isset( $fieldlist[$fieldname]['id_name'] ) && $fieldlist[$fieldname]['id_name'] != '' && $fieldlist[$fieldname]['id_name'] != $fieldlist[$fieldname]['name']){
+    if (isset($fieldlist[$fieldname]['id_name']) && $fieldlist[$fieldname]['id_name'] != '' && $fieldlist[$fieldname]['id_name'] != $fieldlist[$fieldname]['name']) {
         $rel_value = $value;
 
         require_once("include/TemplateHandler/TemplateHandler.php");
         $template_handler = new TemplateHandler();
-        $quicksearch_js = $template_handler->createQuickSearchCode($fieldlist,$fieldlist,$view);
+        $quicksearch_js = $template_handler->createQuickSearchCode($fieldlist, $fieldlist, $view);
         $quicksearch_js = str_replace($fieldname, $aow_field.'_display', $quicksearch_js);
         $quicksearch_js = str_replace($fieldlist[$fieldname]['id_name'], $aow_field, $quicksearch_js);
 
         echo $quicksearch_js;
 
-        if(isset($fieldlist[$fieldname]['module']) && $fieldlist[$fieldname]['module'] == 'Users'){
+        if (isset($fieldlist[$fieldname]['module']) && $fieldlist[$fieldname]['module'] == 'Users') {
             $rel_value = get_assigned_user_name($value);
-        } else if(isset($fieldlist[$fieldname]['module'])){
-            require_once($beanFiles[$beanList[$fieldlist[$fieldname]['module']]]);
-            $rel_focus = new $beanList[$fieldlist[$fieldname]['module']];
-            $rel_focus->retrieve($value);
-            if(isset($fieldlist[$fieldname]['rname']) && $fieldlist[$fieldname]['rname'] != ''){
-                $relDisplayField = $fieldlist[$fieldname]['rname'];
-            } else {
-                $relDisplayField = 'name';
+        } else {
+            if (isset($fieldlist[$fieldname]['module'])) {
+                require_once($beanFiles[$beanList[$fieldlist[$fieldname]['module']]]);
+                $rel_focus = new $beanList[$fieldlist[$fieldname]['module']];
+                $rel_focus->retrieve($value);
+                if (isset($fieldlist[$fieldname]['rname']) && $fieldlist[$fieldname]['rname'] != '') {
+                    $relDisplayField = $fieldlist[$fieldname]['rname'];
+                } else {
+                    $relDisplayField = 'name';
+                }
+                $rel_value = $rel_focus->$relDisplayField;
             }
-            $rel_value = $rel_focus->$relDisplayField;
         }
 
         $fieldlist[$fieldlist[$fieldname]['id_name']]['value'] = $value;
@@ -579,43 +602,56 @@ function getModuleField(
         $fieldlist[$fieldname]['id_name'] = $aow_field;
         $fieldlist[$fieldlist[$fieldname]['id_name']]['name'] = $aow_field;
         $fieldlist[$fieldname]['name'] = $aow_field.'_display';
-    } else if(isset( $fieldlist[$fieldname]['type'] ) && $view == 'DetailView' && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
-        $value = $focus->convertField($value, $fieldlist[$fieldname]);
-        if(!empty($params['date_format']) && isset($params['date_format'])){
-            $convert_format = "Y-m-d H:i:s";
-            if($fieldlist[$fieldname]['type'] == 'date') $convert_format = "Y-m-d";
-            $fieldlist[$fieldname]['value'] = $timedate->to_display($value, $convert_format, $params['date_format']);
-        }else{
-            $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
-        }
-        $fieldlist[$fieldname]['name'] = $aow_field;
-    } else if(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
-        $value = $focus->convertField($value, $fieldlist[$fieldname]);
-        $displayValue = $timedate->to_display_date_time($value);
-        $fieldlist[$fieldname]['value'] = $fieldlist[$aow_field]['value'] = $displayValue;
-        $fieldlist[$fieldname]['name'] = $aow_field;
     } else {
-        $fieldlist[$fieldname]['value'] = $value;
-        $fieldlist[$fieldname]['name'] = $aow_field;
-
+        if (isset($fieldlist[$fieldname]['type']) && $view == 'DetailView' && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')) {
+            $value = $focus->convertField($value, $fieldlist[$fieldname]);
+            if (!empty($params['date_format']) && isset($params['date_format'])) {
+                $convert_format = "Y-m-d H:i:s";
+                if ($fieldlist[$fieldname]['type'] == 'date') {
+                    $convert_format = "Y-m-d";
+                }
+                $fieldlist[$fieldname]['value'] = $timedate->to_display($value, $convert_format, $params['date_format']);
+            } else {
+                if ($fieldlist[$fieldname]['type'] == 'date') {
+                    $fieldlist[$fieldname]['value'] = $timedate->to_display_date($value, true, true);
+                } else {
+                    $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
+                }
+            }
+            $fieldlist[$fieldname]['name'] = $aow_field;
+        } else {
+            if (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')) {
+                $value = $focus->convertField($value, $fieldlist[$fieldname]);
+                if($fieldlist[$fieldname]['type'] == 'date') {
+                    $displayValue = $timedate->to_display_date($value, false);
+                }else{
+                    $displayValue = $timedate->to_display_date_time($value, true, true);
+                }
+                $fieldlist[$fieldname]['value'] = $fieldlist[$aow_field]['value'] = $displayValue;
+                $fieldlist[$fieldname]['name'] = $aow_field;
+            } else {
+                $fieldlist[$fieldname]['value'] = $value;
+                $fieldlist[$fieldname]['name'] = $aow_field;
+            }
+        }
     }
 
-    if (isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' ) {
+    if (isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime') {
         $fieldlist[$aow_field]['aliasId'] = createBracketVariableAlias($aow_field);
         $fieldlist[$aow_field]['originalId'] = $aow_field;
     }
 
-    if(isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'currency' && $view != 'EditView'){
+    if (isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'currency' && $view != 'EditView') {
         static $sfh;
 
-        if(!isset($sfh)) {
+        if (!isset($sfh)) {
             require_once('include/SugarFields/SugarFieldHandler.php');
             $sfh = new SugarFieldHandler();
         }
 
-        if($currency_id != '' && !stripos($fieldname, '_USD')){
+        if ($currency_id != '' && !stripos($fieldname, '_USD')) {
             $userCurrencyId = $current_user->getPreference('currency');
-            if($currency_id != $userCurrencyId){
+            if ($currency_id != $userCurrencyId) {
                 $currency = new Currency();
                 $currency->retrieve($currency_id);
                 $value = $currency->convertToDollar($value);
@@ -638,7 +674,7 @@ function getModuleField(
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
     $ss->assign("module", $module);
-    if (isset($params['record_id']) && $params['record_id']) {
+    if (!empty($params['record_id'])) {
         $ss->assign("record_id", $params['record_id']);
     }
 
@@ -677,113 +713,120 @@ function getDateField($module, $aow_field, $view, $value = null, $field_option =
 
     $value = json_decode(html_entity_decode_utf8($value), true);
 
-    if(!file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php')) unset($app_list_strings['aow_date_type_list']['business_hours']);
+    if (!file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php')) {
+        unset($app_list_strings['aow_date_type_list']['business_hours']);
+    }
 
     $field = '';
 
-    if($view == 'EditView'){
+    if ($view == 'EditView') {
         $field .= "<select type='text' name='$aow_field".'[0]'."' id='$aow_field".'[0]'."' title='' tabindex='116'>". getDateFields($module, $view, $value[0], $field_option) ."</select>&nbsp;&nbsp;";
         $field .= "<select type='text' name='$aow_field".'[1]'."' id='$aow_field".'[1]'."' onchange='date_field_change(\"$aow_field\")'  title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_date_operator'], $value[1]) ."</select>&nbsp;";
         $display = 'none';
-        if($value[1] == 'plus' || $value[1] == 'minus') $display = '';
+        if ($value[1] == 'plus' || $value[1] == 'minus') {
+            $display = '';
+        }
         $field .= "<input  type='text' style='display:$display' name='$aow_field".'[2]'."' id='$aow_field".'[2]'."' title='' value='$value[2]' tabindex='116'>&nbsp;";
         $field .= "<select type='text' style='display:$display' name='$aow_field".'[3]'."' id='$aow_field".'[3]'."' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_date_type_list'], $value[3]) ."</select>";
-    }
-    else {
+    } else {
         $field = getDateFields($module, $view, $value[0], $field_option).' '.$app_list_strings['aow_date_operator'][$value[1]];
-        if($value[1] == 'plus' || $value[1] == 'minus'){
+        if ($value[1] == 'plus' || $value[1] == 'minus') {
             $field .= ' '.$value[2].' '.$app_list_strings['aow_date_type_list'][$value[3]];
         }
     }
     return $field;
-
 }
 
-function getDateFields($module, $view='EditView',$value = '', $field_option = true)
+function getDateFields($module, $view='EditView', $value = '', $field_option = true)
 {
     global $beanList, $app_list_strings;
 
     $fields = $app_list_strings['aow_date_options'];
 
-    if(!$field_option) unset($fields['field']);
+    if (!$field_option) {
+        unset($fields['field']);
+    }
 
     if ($module != '') {
-        if(isset($beanList[$module]) && $beanList[$module]){
+        if (isset($beanList[$module]) && $beanList[$module]) {
             $mod = new $beanList[$module]();
-            foreach($mod->field_defs as $name => $arr){
-                if($arr['type'] == 'date' || $arr['type'] == 'datetime' || $arr['type'] == 'datetimecombo'){
-                    if(isset($arr['vname']) && $arr['vname'] != ''){
-                        $fields[$name] = translate($arr['vname'],$mod->module_dir);
+            foreach ($mod->field_defs as $name => $arr) {
+                if ($arr['type'] == 'date' || $arr['type'] == 'datetime' || $arr['type'] == 'datetimecombo') {
+                    if (isset($arr['vname']) && $arr['vname'] != '') {
+                        $fields[$name] = translate($arr['vname'], $mod->module_dir);
                     } else {
                         $fields[$name] = $name;
                     }
                 }
             } //End loop.
-
         }
     }
-    if($view == 'EditView'){
+    if ($view == 'EditView') {
         return get_select_options_with_id($fields, $value);
     } else {
         return $fields[$value];
     }
 }
 
-function getAssignField($aow_field, $view, $value){
+function getAssignField($aow_field, $view, $value)
+{
     global $app_list_strings;
 
     $value = json_decode(html_entity_decode_utf8($value), true);
 
-    $roles = get_bean_select_array(true, 'ACLRole','name', '','name',true);
+    $roles = get_bean_select_array(true, 'ACLRole', 'name', '', 'name', true);
 
-    if(!file_exists('modules/SecurityGroups/SecurityGroup.php')){
+    if (!file_exists('modules/SecurityGroups/SecurityGroup.php')) {
         unset($app_list_strings['aow_assign_options']['security_group']);
-    }
-    else{
-        $securityGroups = get_bean_select_array(true, 'SecurityGroup','name', '','name',true);
+    } else {
+        $securityGroups = get_bean_select_array(true, 'SecurityGroup', 'name', '', 'name', true);
     }
 
     $field = '';
 
-    if($view == 'EditView'){
+    if ($view == 'EditView') {
         $field .= "<select type='text' name='$aow_field".'[0]'."' id='$aow_field".'[0]'."' onchange='assign_field_change(\"$aow_field\")' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_assign_options'], $value[0]) ."</select>&nbsp;&nbsp;";
-        if(!file_exists('modules/SecurityGroups/SecurityGroup.php')){
+        if (!file_exists('modules/SecurityGroups/SecurityGroup.php')) {
             $field .= "<input type='hidden' name='$aow_field".'[1]'."' id='$aow_field".'[1]'."' value=''  />";
-        }
-        else {
+        } else {
             $display = 'none';
-            if($value[0] == 'security_group') $display = '';
+            if ($value[0] == 'security_group') {
+                $display = '';
+            }
             $field .= "<select type='text' style='display:$display' name='$aow_field".'[1]'."' id='$aow_field".'[1]'."' title='' tabindex='116'>". get_select_options_with_id($securityGroups, $value[1]) ."</select>&nbsp;&nbsp;";
         }
         $display = 'none';
-        if($value[0] == 'role' || $value[0] == 'security_group') $display = '';
+        if ($value[0] == 'role' || $value[0] == 'security_group') {
+            $display = '';
+        }
         $field .= "<select type='text' style='display:$display' name='$aow_field".'[2]'."' id='$aow_field".'[2]'."' title='' tabindex='116'>". get_select_options_with_id($roles, $value[2]) ."</select>&nbsp;&nbsp;";
-    }
-    else {
+    } else {
         $field = $app_list_strings['aow_assign_options'][$value[1]];
     }
     return $field;
-
 }
 
-function getDropdownList($list_id, $selected_value) {
+function getDropdownList($list_id, $selected_value)
+{
     global $app_list_strings;
     $option = '';
-    foreach($app_list_strings[$list_id] as $key => $value) {
-        if(base64_decode($selected_value) == $key) {
+    foreach ($app_list_strings[$list_id] as $key => $value) {
+        if (base64_decode($selected_value) == $key) {
             $option .= '<option value="'.$key.'" selected>'.$value.'</option>';
-        } else if($selected_value == $key) {
-            $option .= '<option value="'.$key.'" selected>'.$value.'</option>';
-        }
-        else {
-            $option .= '<option value="'.$key.'">'.$value.'</option>';
+        } else {
+            if ($selected_value == $key) {
+                $option .= '<option value="'.$key.'" selected>'.$value.'</option>';
+            } else {
+                $option .= '<option value="'.$key.'">'.$value.'</option>';
+            }
         }
     }
     return $option;
 }
-function getLeastBusyUser($users, $field, SugarBean $bean) {
+function getLeastBusyUser($users, $field, SugarBean $bean)
+{
     $counts = array();
-    foreach($users as $id) {
+    foreach ($users as $id) {
         $c = $bean->db->getOne("SELECT count(*) AS c FROM ".$bean->table_name." WHERE $field = '$id' AND deleted = 0");
         $counts[$id] = $c;
     }
@@ -792,33 +835,34 @@ function getLeastBusyUser($users, $field, SugarBean $bean) {
     return array_shift($countsKeys);
 }
 
-function getRoundRobinUser($users, $id) {
-
+function getRoundRobinUser($users, $id)
+{
     $file = create_cache_directory('modules/AOW_WorkFlow/Users/') . $id . 'lastUser.cache.php';
 
-    if(isset($_SESSION['lastuser'][$id]) && $_SESSION['lastuser'][$id] != '') {
+    if (isset($_SESSION['lastuser'][$id]) && $_SESSION['lastuser'][$id] != '') {
         $users_by_key = array_flip($users); // now keys are values
         $key = $users_by_key[$_SESSION['lastuser'][$id]] + 1;
-        if(!empty($users[$key])) {
+        if (!empty($users[$key])) {
             return $users[$key];
         }
-    }
-    else if (is_file($file)){
-        require_once($file);
-        if(isset($lastUser['User']) && $lastUser['User'] != '') {
-            $users_by_key = array_flip($users); // now keys are values
-            $key = $users_by_key[$lastUser['User']] + 1;
-            if(!empty($users[$key])) {
-                return $users[$key];
+    } else {
+        if (is_file($file)) {
+            require_once($file);
+            if (isset($lastUser['User']) && $lastUser['User'] != '') {
+                $users_by_key = array_flip($users); // now keys are values
+                $key = $users_by_key[$lastUser['User']] + 1;
+                if (!empty($users[$key])) {
+                    return $users[$key];
+                }
             }
         }
     }
 
-   return $users[0];
+    return $users[0];
 }
 
-function setLastUser($user_id, $id) {
-
+function setLastUser($user_id, $id)
+{
     $_SESSION['lastuser'][$id] = $user_id;
 
     $file = create_cache_directory('modules/AOW_WorkFlow/Users/') . $id . 'lastUser.cache.php';
@@ -831,21 +875,22 @@ function setLastUser($user_id, $id) {
 ?>
 eoq;
 
-    if($fh = @sugar_fopen($file, 'w')) {
+    if ($fh = @sugar_fopen($file, 'w')) {
         fputs($fh, $content);
         fclose($fh);
     }
     return true;
 }
 
-function getEmailableModules(){
+function getEmailableModules()
+{
     global $beanFiles, $beanList, $app_list_strings;
     $emailableModules = array();
-    foreach($app_list_strings['aow_moduleList'] as $bean_name => $bean_dis) {
-        if(isset($beanList[$bean_name]) && isset($beanFiles[$beanList[$bean_name]])){
+    foreach ($app_list_strings['aow_moduleList'] as $bean_name => $bean_dis) {
+        if (isset($beanList[$bean_name]) && isset($beanFiles[$beanList[$bean_name]])) {
             require_once($beanFiles[$beanList[$bean_name]]);
             $obj = new $beanList[$bean_name];
-            if($obj instanceof Person || $obj instanceof Company){
+            if ($obj instanceof Person || $obj instanceof Company) {
                 $emailableModules[] = $bean_name;
             }
         }
@@ -854,34 +899,39 @@ function getEmailableModules(){
     return $emailableModules;
 }
 
-function getRelatedEmailableFields($module){
+function getRelatedEmailableFields($module)
+{
     global $beanList, $app_list_strings;
     $relEmailFields = array();
     $checked_link = array();
     $emailableModules = getEmailableModules();
     if ($module != '') {
-        if(isset($beanList[$module]) && $beanList[$module]){
+        if (isset($beanList[$module]) && $beanList[$module]) {
             $mod = new $beanList[$module]();
 
-            foreach($mod->get_related_fields() as $field){
-                if(isset($field['link'])) $checked_link[] = $field['link'];
-                if(!isset($field['module']) || !in_array($field['module'],$emailableModules) || (isset($field['dbType']) && $field['dbType'] == "id")){
+            foreach ($mod->get_related_fields() as $field) {
+                if (isset($field['link'])) {
+                    $checked_link[] = $field['link'];
+                }
+                if (!isset($field['module']) || !in_array($field['module'], $emailableModules) || (isset($field['dbType']) && $field['dbType'] == "id")) {
                     continue;
                 }
                 $relEmailFields[$field['name']] = translate($field['module']) . ": "
                     . trim(translate($field['vname'], $mod->module_name), ":");
             }
 
-            foreach($mod->get_linked_fields() as $field){
-                if(!in_array($field['name'],$checked_link) && !in_array($field['relationship'],$checked_link)){
-                    if(isset($field['module']) && $field['module'] != '') {
+            foreach ($mod->get_linked_fields() as $field) {
+                if (!in_array($field['name'], $checked_link) && !in_array($field['relationship'], $checked_link)) {
+                    if (isset($field['module']) && $field['module'] != '') {
                         $rel_module = $field['module'];
-                    } else if($mod->load_relationship($field['name'])){
-                        $relField = $field['name'];
-                        $rel_module = $mod->$relField->getRelatedModuleName();
+                    } else {
+                        if ($mod->load_relationship($field['name'])) {
+                            $relField = $field['name'];
+                            $rel_module = $mod->$relField->getRelatedModuleName();
+                        }
                     }
 
-                    if(in_array($rel_module,$emailableModules)) {
+                    if (in_array($rel_module, $emailableModules)) {
                         if (isset($field['vname']) && $field['vname'] != '') {
                             $relEmailFields[$field['name']] = $app_list_strings['moduleList'][$rel_module] . ' : ' . translate($field['vname'], $mod->module_dir);
                         } else {
@@ -906,37 +956,43 @@ function fixUpFormatting($module, $field, $value)
 
     static $boolean_false_values = array('off', 'false', '0', 'no');
 
-    switch($bean->field_defs[$field]['type']) {
+    switch ($bean->field_defs[$field]['type']) {
         case 'datetime':
         case 'datetimecombo':
-            if(empty($value)) break;
+            if (empty($value)) {
+                break;
+            }
             if ($value == 'NULL') {
                 $value = '';
                 break;
             }
-            if ( ! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/',$value) ) {
+            if (! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/', $value)) {
                 // This appears to be formatted in user date/time
                 $value = $timedate->to_db($value);
             }
             break;
         case 'date':
-            if(empty($value)) break;
+            if (empty($value)) {
+                break;
+            }
             if ($value == 'NULL') {
                 $value = '';
                 break;
             }
-            if ( ! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/',$value) ) {
+            if (! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $value)) {
                 // This date appears to be formatted in the user's format
                 $value = $timedate->to_db_date($value, false);
             }
             break;
         case 'time':
-            if(empty($value)) break;
+            if (empty($value)) {
+                break;
+            }
             if ($value == 'NULL') {
                 $value = '';
                 break;
             }
-            if ( preg_match('/(am|pm)/i',$value) ) {
+            if (preg_match('/(am|pm)/i', $value)) {
                 // This time appears to be formatted in the user's format
                 $value = $timedate->fromUserTime($value)->format(TimeDate::DB_TIME_FORMAT);
             }
@@ -945,10 +1001,10 @@ function fixUpFormatting($module, $field, $value)
         case 'decimal':
         case 'currency':
         case 'float':
-            if ( $value === '' || $value == NULL || $value == 'NULL') {
-                continue;
+            if ($value === '' || $value == null || $value == 'NULL') {
+                break;
             }
-            if ( is_string($value) ) {
+            if (is_string($value)) {
                 $value = (float)unformat_number($value);
             }
             break;
@@ -958,22 +1014,26 @@ function fixUpFormatting($module, $field, $value)
         case 'short':
         case 'tinyint':
         case 'int':
-            if ( $value === '' || $value == NULL || $value == 'NULL') {
-                continue;
+            if ($value === '' || $value == null || $value == 'NULL') {
+                break;
             }
-            if ( is_string($value) ) {
+            if (is_string($value)) {
                 $value = (int)unformat_number($value);
             }
             break;
         case 'bool':
             if (empty($value)) {
                 $value = false;
-            } else if(true === $value || 1 == $value) {
-                $value = true;
-            } else if(in_array(strval($value), $boolean_false_values)) {
-                $value = false;
             } else {
-                $value = true;
+                if (true === $value || 1 == $value) {
+                    $value = true;
+                } else {
+                    if (in_array(strval($value), $boolean_false_values)) {
+                        $value = false;
+                    } else {
+                        $value = true;
+                    }
+                }
             }
             break;
         case 'encrypt':
@@ -981,5 +1041,4 @@ function fixUpFormatting($module, $field, $value)
             break;
     }
     return $value;
-
 }

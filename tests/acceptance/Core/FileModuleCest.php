@@ -5,12 +5,6 @@ use Faker\Generator;
 class FileModuleCest
 {
     /**
-     * @var string $lastView helps the test skip some repeated tests in order to make the test framework run faster at the
-     * potential cost of being accurate and reliable
-     */
-    protected $lastView;
-
-    /**
      * @var Generator $fakeData
      */
     protected $fakeData;
@@ -43,22 +37,16 @@ class FileModuleCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to create and deploy a file module so that I can test
      * that the file functionality is working. Given that I have already created a module I expect to deploy
      * the module before testing.
      */
     public function testScenarioCreateFileModule(
-       \AcceptanceTester $I,
-       \Step\Acceptance\ModuleBuilder $moduleBuilder,
-        \Helper\WebDriverHelper $webDriverHelper
+        \AcceptanceTester $I,
+        \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a file module for testing');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 
@@ -67,71 +55,54 @@ class FileModuleCest
             \Page\FileModule::$NAME,
             \SuiteCRM\Enumerator\SugarObjectType::file
         );
-
-        $this->lastView = 'ModuleBuilder';
     }
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view my file test module so that I can see if it has been
      * deployed correctly.
      */
     public function testScenarioViewFileTestModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\NavigationBarTester $navigationBar,
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View File Test Module');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         $I->loginAsAdmin();
 
         // Navigate to module
         $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailview
      * @param \Step\Acceptance\EditView $editView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a record with my file test module so that I can test
      * the standard fields.
      */
     public function testScenarioCreateRecord(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailview,
-        \Step\Acceptance\EditView $editView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Create File Test Module Record');
+        $I->loginAsAdmin();
 
-        if ($this->lastView !== 'ListView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        // Go to File Test Module
+        $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            $I->loginAsAdmin();
-
-            // Go to File Test Module
-            $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
-            $listView->waitForListViewVisible();
-        }
         // Select create File Test Module form the current menu
         $navigationBar->clickCurrentMenuItem('Create ' . \Page\FileModule::$NAME);
 
@@ -148,7 +119,6 @@ class FileModuleCest
         // TODO: other fields
         $editView->clickSaveButton();
         $detailview->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
         $detailview->see($fileName, '#uploadfile');
         
         $I->deleteFile($fileDir.$fileName);
@@ -156,88 +126,71 @@ class FileModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view the record by selecting it in the list view
      */
     public function testScenarioViewRecordFromListView(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Select Record from list view');
-        if ($this->lastView !== 'ListView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
+        // Go to File Test Module
+        $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Go to File Test Module
-            $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
-            $listView->waitForListViewVisible();
-
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->fillField('#document_name_basic', $this->fakeData->lastName . '.test.txt');
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-        }
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#document_name_basic', $this->fakeData->lastName . '.test.txt');
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
 
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
-
     }
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to edit the record by selecting it in the detail view
      */
     public function testScenarioEditRecordFromDetailView(
         \AcceptanceTester$I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Edit File Test Module Record from detail view');
-        if ($this->lastView !== 'DetailView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
+        // Go to File Test Module
+        $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Go to File Test Module
-            $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
-            $listView->waitForListViewVisible();
-
-            // Select record from list view
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->fillField('#document_name_basic', $this->fakeData->lastName . '.test.txt');
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
-        }
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#document_name_basic', $this->fakeData->lastName . '.test.txt');
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
         // Edit Record
         $detailView->clickActionMenuItem('Edit');
 
@@ -245,49 +198,41 @@ class FileModuleCest
         $editView->click('Save');
 
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to duplicate the record
      */
     public function testScenarioDuplicateRecordFromDetailView(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Duplicate File Test Module Record from detail view');
-        if ($this->lastView !== 'DetailView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
+        // Go to File Test Module
+        $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Go to File Test Module
-            $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
-            $listView->waitForListViewVisible();
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#document_name_basic', $this->fakeData->lastName . '.test.txt');
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
 
-            // Select record from list view
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->fillField('#document_name_basic', $this->fakeData->lastName . '.test.txt');
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
-        }
         // Edit Record
         $detailView->clickActionMenuItem('Duplicate');
 
@@ -302,52 +247,42 @@ class FileModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to delete the record by selecting it in the detail view
      */
     public function testScenarioDeleteRecordFromDetailView(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Delete File Test Module Record from detail view');
-        if ($this->lastView !== 'DetailView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
+        // Go to File Test Module
+        $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Go to File Test Module
-            $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
-            $listView->waitForListViewVisible();
-
-            // Select record from list view
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->fillField('#document_name_basic', $this->fakeData->lastName);
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
-        }
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#document_name_basic', $this->fakeData->lastName);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
         // Delete Record
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 }

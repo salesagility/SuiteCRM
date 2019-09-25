@@ -1,27 +1,51 @@
 <?php
+use SuiteCRM\Utility\SuiteValidator;
 
 //Grab the survey
 if (empty($_REQUEST['id'])) {
-    header("HTTP/1.0 404 Not Found");
+    header('HTTP/1.0 404 Not Found');
     exit();
 }
-$surveyId = $_REQUEST['id'];
+
+$isValidator = new SuiteValidator();
+$surveyId = '';
+
+if (!empty($_REQUEST['id']) && $isValidator->isValidId($_REQUEST['id'])) {
+    $surveyId = $_REQUEST['id'];
+} else {
+    LoggerManager::getLogger()->warn('Invalid survey ID.');
+}
+
 $survey = BeanFactory::getBean('Surveys', $surveyId);
+
 if (empty($survey->id)) {
-    header("HTTP/1.0 404 Not Found");
+    header('HTTP/1.0 404 Not Found');
     exit();
 }
-if ($survey->status == 'Closed') {
+if ($survey->status === 'Closed') {
     displayClosedPage($survey);
     exit();
 }
-if ($survey->status != 'Public') {
-    header("HTTP/1.0 404 Not Found");
+if ($survey->status !== 'Public') {
+    header('HTTP/1.0 404 Not Found');
     exit();
 }
-$contactId = $_REQUEST['contact'];
 
-$trackerId = !empty($_REQUEST['tracker']) ? $_REQUEST['tracker'] : '';
+$contactId = '';
+
+if (!empty($_REQUEST['contact']) && $isValidator->isValidId($_REQUEST['contact'])) {
+    $contactId = $_REQUEST['contact'];
+} else {
+    LoggerManager::getLogger()->warn('Invalid contact ID in survey.');
+}
+
+$trackerId = '';
+
+if (!empty($_REQUEST['tracker']) && $isValidator->isValidId($_REQUEST['tracker'])) {
+    $trackerId = $_REQUEST['tracker'];
+} else {
+    LoggerManager::getLogger()->warn('Invalid tracker ID in survey.');
+}
 
 $themeObject = SugarThemeRegistry::current();
 $companyLogoURL = $themeObject->getImageURL('company_logo.png');
@@ -128,16 +152,15 @@ function displaySurvey($survey, $contactId, $trackerId)
         <input type="hidden" name="tracker" value="<?= $trackerId ?>">
         <?php
         $questions = $survey->get_linked_beans('surveys_surveyquestions', 'SurveyQuestions');
-        usort(
+    usort(
             $questions,
             function ($a, $b) {
                 return $a->sort_order - $b->sort_order;
             }
         );
-        foreach ($questions as $question) {
-            displayQuestion($survey, $question);
-        }
-        ?>
+    foreach ($questions as $question) {
+        displayQuestion($survey, $question);
+    } ?>
         <button class="btn btn-primary" type="submit"><?php echo $survey->getSubmitText(); ?></button>
     </form>
     <?php
@@ -154,32 +177,32 @@ function displayQuestion($survey, $question)
             <div class="form-group">
                 <?php
                 $options = array();
-                foreach ($question->get_linked_beans(
+    foreach ($question->get_linked_beans(
                     'surveyquestions_surveyquestionoptions',
                     'SurveyQuestionOptions',
                     'sort_order'
                 ) as $option) {
-                    $optionArr = array();
-                    $optionArr['id'] = $option->id;
-                    $optionArr['name'] = $option->name;
-                    $options[] = $optionArr;
-                }
-                switch ($question->type) {
+        $optionArr = array();
+        $optionArr['id'] = $option->id;
+        $optionArr['name'] = $option->name;
+        $options[] = $optionArr;
+    }
+    switch ($question->type) {
 
                     case "Textbox":
                         echo "<textarea class=\"form-control\" id='question" .
-                             $question->id .
-                             "' name='question[" .
-                             $question->id .
-                             "]'></textarea>";
+                            $question->id .
+                            "' name='question[" .
+                            $question->id .
+                            "]'></textarea>";
                         break;
                     case "Checkbox":
                         echo "<div class='checkbox'><label>";
                         echo "<input id='question" .
-                             $question->id .
-                             "' name='question[" .
-                             $question->id .
-                             "]' type='checkbox'/>";
+                            $question->id .
+                            "' name='question[" .
+                            $question->id .
+                            "]' type='checkbox'/>";
                         echo "</label></div>";
                         break;
                     case "Radio":
@@ -187,12 +210,12 @@ function displayQuestion($survey, $question)
                             echo "<div class='radio'>";
                             echo "<label>";
                             echo "<input  id='question" .
-                                 $question->id .
-                                 "' name='question[" .
-                                 $question->id .
-                                 "]' value='" .
-                                 $option['id'] .
-                                 "' type='radio'/>";
+                                $question->id .
+                                "' name='question[" .
+                                $question->id .
+                                "]' value='" .
+                                $option['id'] .
+                                "' type='radio'/>";
                             echo $option['name'];
                             echo "</label>";
                             echo "</div>";
@@ -229,8 +252,7 @@ function displayQuestion($survey, $question)
                     default:
                         displayTextField($question);
                         break;
-                }
-                ?>
+                } ?>
             </div>
         </div>
     </div>
@@ -240,10 +262,10 @@ function displayQuestion($survey, $question)
 function displayTextField($question)
 {
     echo "<input class=\"form-control\" id='question" .
-         $question->id .
-         "' name='question[" .
-         $question->id .
-         "]' type='text'/>";
+        $question->id .
+        "' name='question[" .
+        $question->id .
+        "]' type='text'/>";
 }
 
 function displayScaleField($question)
@@ -256,12 +278,12 @@ function displayScaleField($question)
     echo "</tr><tr>";
     for ($x = 1; $x <= $scaleMax; $x++) {
         echo "<td><input id='question" .
-             $question->id .
-             "' name='question[" .
-             $question->id .
-             "]' value='" .
-             $x .
-             "' type='radio'/></td>";
+            $question->id .
+            "' name='question[" .
+            $question->id .
+            "]' value='" .
+            $x .
+            "' type='radio'/></td>";
     }
     echo "</tr></table>";
 }
@@ -272,12 +294,12 @@ function displayRatingField($question)
     echo "<div class='starRating'>";
     for ($x = 1; $x <= $ratingMax; $x++) {
         echo "<input class='rating' id='question" .
-             $question->id .
-             "' name='question[" .
-             $question->id .
-             "]' value='" .
-             $x .
-             "' type='radio'/>";
+            $question->id .
+            "' name='question[" .
+            $question->id .
+            "]' value='" .
+            $x .
+            "' type='radio'/>";
     }
     echo "</div>";
 }
@@ -301,15 +323,15 @@ function displayMatrixField($survey, $question, $options)
         echo "</td>";
         foreach ($matrixOptions as $x => $matrixOption) {
             echo "<td style='width:25%'><input  id='question" .
-                 $question->id .
-                 "' name='question[" .
-                 $question->id .
-                 "][" .
-                 $option['id'] .
-                 "]' 
+                $question->id .
+                "' name='question[" .
+                $question->id .
+                "][" .
+                $option['id'] .
+                "]' 
 value='" .
-                 $x .
-                 "' type='radio'/></td>";
+                $x .
+                "' type='radio'/></td>";
         }
         echo "</tr>";
     }
@@ -320,10 +342,10 @@ function displayDateTimeField($question)
 {
     echo "<div class=\"input-group\">";
     echo "<input class=\"form-control datetimefield\" id='question" .
-         $question->id .
-         "' name='question[" .
-         $question->id .
-         "]' type='text'/>";
+        $question->id .
+        "' name='question[" .
+        $question->id .
+        "]' type='text'/>";
     echo "<div class=\"input-group-addon ui-datetimepicker-trigger\"><span class=\"suitepicon suitepicon-module-calendar\"></span></div></div>";
 }
 
@@ -331,10 +353,10 @@ function displayDateField($question)
 {
     echo "<div class=\"input-group\">";
     echo "<input class=\"form-control datefield\" id='question" .
-         $question->id .
-         "' name='question[" .
-         $question->id .
-         "]' type='text'/>";
+        $question->id .
+        "' name='question[" .
+        $question->id .
+        "]' type='text'/>";
     echo "<div class=\"input-group-addon ui-datepicker-trigger\"><span class=\"suitepicon suitepicon-module-calendar\"></span></div></div>";
 }
 

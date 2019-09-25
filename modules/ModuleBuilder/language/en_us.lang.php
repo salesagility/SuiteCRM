@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -331,7 +331,7 @@ $mod_strings = array(
     'LBL_STUDIO' => 'Studio',
     'LBL_DROPDOWNEDITOR' => 'Dropdown Editor',
     'LBL_DEVELOPER_TOOLS' => 'Developer Tools',
-    'LBL_SUGARPORTAL' => 'SuiteCRM Portal Editor',
+    'LBL_SUITEPORTAL' => 'SuiteCRM Portal Editor',
     'LBL_PACKAGE_LIST' => 'Package List',
     'LBL_HOME' => 'Home',
     'LBL_NONE' => '-None-',
@@ -572,7 +572,7 @@ $mod_strings = array(
     'LBL_MODULE_DEPLOYED' => 'Module has been deployed.',
     'LBL_UNDEFINED' => 'undefined',
     'LBL_EC_VIEWS' => 'customized view(s)',
-    'LBL_EC_SUGARFEEDS' => 'customized Feed(s)',
+    'LBL_EC_SUITEFEEDS' => 'customized Feed(s)',
     'LBL_EC_DASHLETS' => 'customized Dashlet(s)',
     'LBL_EC_CSS' => 'customized css(s)',
     'LBL_EC_TPLS' => 'customized tpls(s)',
@@ -649,6 +649,7 @@ $mod_strings = array(
         'datetimecombo' => 'Datetime',
         'decimal' => 'Decimal',
         'image' => 'Image',
+        'wysiwyg' => 'WYSIWYG',
     ),
     'labelTypes' => array(
         "frequently_used" => "Frequently used labels",
@@ -662,4 +663,3 @@ $mod_strings = array(
     'LBL_ALL_MODULES' => 'All Modules',
     'LBL_RELATED_FIELD_ID_NAME_LABEL' => '{0} (related {1} ID)',
 );
-

@@ -64,8 +64,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
             'instance_client_id' => '',
             'instance_client_secret' => '',
         ]
-    )
-    {
+    ) {
         $this->say('Configure Test Environment');
 
         // Database
@@ -99,8 +98,8 @@ class TestEnvironmentCommands extends \Robo\Tasks
         } elseif ($os->isOsLinux()) {
             $this->say('Linux detected');
             $this->installUnixEnvironmentVariables($opts);
-        } elseif ($os->isOsMacOsX()) {
-            $this->say('Mac OS X detected');
+        } elseif ($os->isOsMacOSX()) {
+            $this->say('macOS detected');
             $this->installUnixEnvironmentVariables($opts);
         } elseif ($os->isOsBSD()) {
             $this->say('BSD detected');
@@ -118,34 +117,64 @@ class TestEnvironmentCommands extends \Robo\Tasks
     }
 
     /**
-     * Download and run the chrome web driver
+     * Download and install ChromeDriver.
+     * @command chromedriver:install
      * @param array $opts
+     * @option bool $reinstall Forces the Chrome WebDriver executable to be reinstalled, can be used to get a newer version.
+     * @usage chromedriver:install --reinstall
      */
-    public function driverRunChrome($opts = ['url_base' => '/wd/hub'])
+    public function chromeDriverInstall($opts = ['reinstall' => false])
     {
-        $this->say('Driver Run Chrome');
+        $this->say('Installing ChromeDriver...');
         $os = new OperatingSystem();
         $paths = new Paths();
         $url = $this->getChromeWebDriverUrl();
-        $basePath = $os->toOsPath($paths->getProjectPath().'/build/tmp/');
+        $basePath = $os->toOsPath($paths->getProjectPath() . '/build/tmp');
 
-        if(!file_exists($basePath)) {
+        if (!file_exists($basePath)) {
             if (mkdir($basePath, 0777, true) === false) {
-                throw  new \RuntimeException('Unable to create file structure ' . $basePath);
+                throw new \RuntimeException('Unable to create file structure ' . $basePath);
+            }
+        } elseif ($opts['reinstall']) {
+            $this->_deleteDir($basePath);
+            if (mkdir($basePath, 0777, true) === false) {
+                throw new \RuntimeException('Unable to create file structure ' . $basePath);
             }
         }
 
         $zipPath = $basePath . DIRECTORY_SEPARATOR . 'webdriver.zip';
         $unzippedPath = $basePath . DIRECTORY_SEPARATOR . 'webdriver';
 
-        if (!file_exists($unzippedPath)){
+        if (!file_exists($unzippedPath)) {
+            $this->say('Downloading ChromeDriver.');
             $this->download($url, $zipPath);
             $this->unzip($zipPath, $unzippedPath);
+            $this->say('ChromeDriver install completed.');
+        } else {
+            $this->say('ChromeDriver has already been downloaded.');
+        }
+    }
+
+    /**
+     * Run ChromeDriver.
+     * @command chromedriver:run
+     * @param array $opts
+     * @option string $url_base The base URL from which the WebDriver will be run.
+     */
+    public function chromeDriverRun($opts = ['url_base' => '/wd/hub'])
+    {
+        $this->say('Running ChromeDriver...');
+        $os = new OperatingSystem();
+        $paths = new Paths();
+        $basePath = $os->toOsPath($paths->getProjectPath() . '/build/tmp/');
+
+        $unzippedPath = $basePath . DIRECTORY_SEPARATOR . 'webdriver';
+
+        if (!file_exists($unzippedPath)) {
+            throw new \RuntimeException('ChromeDriver is not installed in ' . $unzippedPath);
         }
 
         $this->runChromeWebDriver($unzippedPath, $opts['url_base']);
-
-        $this->say('Driver Run Chrome Completed');
     }
 
     /**
@@ -173,8 +202,8 @@ class TestEnvironmentCommands extends \Robo\Tasks
         } elseif ($os->isOsLinux()) {
             $this->say('Linux detected');
             $this->installUnixEnvironmentVariables($opts);
-        } elseif ($os->isOsMacOsX()) {
-            $this->say('Mac OS X detected');
+        } elseif ($os->isOsMacOSX()) {
+            $this->say('macOS detected');
             $this->installUnixEnvironmentVariables($opts);
         } elseif ($os->isOsBSD()) {
             $this->say('BSD detected');
@@ -183,9 +212,9 @@ class TestEnvironmentCommands extends \Robo\Tasks
             $this->say('Solaris detected');
             $this->installUnixEnvironmentVariables($opts);
         } elseif ($os->isOsUnknown()) {
-            throw new \DomainException('Unknown Operating system');
+            throw new \DomainException('Unknown operating system');
         } else {
-            throw new \DomainException('Unable to detect Operating system');
+            throw new \DomainException('Unable to detect operating system');
         }
 
         $this->say('Fake Travis Environment Complete');
@@ -225,9 +254,8 @@ class TestEnvironmentCommands extends \Robo\Tasks
                 if (stristr($line, $optionKeyReplaced) !== false) {
                     $self->say('Removed: ' . $optionKeyReplaced);
                     return '';
-                } else {
-                    return $line;
                 }
+                return $line;
             }, $bashAliasesLines);
         }
 
@@ -320,31 +348,33 @@ class TestEnvironmentCommands extends \Robo\Tasks
 
 
     /**
-     * @param string $version
+     * Gets the URL for installing the latest version of ChromeDriver.
      * @return string url
      */
-    private function getChromeWebDriverUrl($version = '2.38')
+    private function getChromeWebDriverUrl()
     {
         $os = new OperatingSystem();
+        $latestRelease = file_get_contents('https://chromedriver.storage.googleapis.com/LATEST_RELEASE', false);
+
         if ($os->isOsWindows()) {
             $this->say('Windows detected');
-            return 'https://chromedriver.storage.googleapis.com/' . $version . '/chromedriver_win32.zip';
+            return 'https://chromedriver.storage.googleapis.com/' . $latestRelease . '/chromedriver_win32.zip';
         } elseif ($os->isOsLinux()) {
             $this->say('Linux detected');
-            return 'https://chromedriver.storage.googleapis.com/' . $version . '/chromedriver_linux64.zip';
-        } elseif ($os->isOsMacOsX()) {
-            $this->say('Mac OS X detected');
-            return 'https://chromedriver.storage.googleapis.com/' . $version . '/chromedriver_mac64.zip';
+            return 'https://chromedriver.storage.googleapis.com/' . $latestRelease . '/chromedriver_linux64.zip';
+        } elseif ($os->isOsMacOSX()) {
+            $this->say('macOS detected');
+            return 'https://chromedriver.storage.googleapis.com/' . $latestRelease . '/chromedriver_mac64.zip';
         } elseif ($os->isOsBSD()) {
             $this->say('BSD detected');
-            throw new \DomainException('Unsupported Operating system');
+            throw new \DomainException('Unsupported operating system');
         } elseif ($os->isOsSolaris()) {
             $this->say('Solaris detected');
-            throw new \DomainException('Unsupported Operating system');
+            throw new \DomainException('Unsupported operating system');
         } elseif ($os->isOsUnknown()) {
-            throw new \DomainException('Unknown Operating system');
+            throw new \DomainException('Unknown operating system');
         } else {
-            throw new \DomainException('Unable to detect Operating system');
+            throw new \DomainException('Unable to detect operating system');
         }
     }
 
@@ -355,10 +385,10 @@ class TestEnvironmentCommands extends \Robo\Tasks
     private function download($url, $toPath)
     {
         $contents = file_get_contents($url, false);
-        if($contents === false) {
+        if ($contents === false) {
             throw new \RuntimeException('Unable to download ' . $url);
         }
-        if(file_put_contents($toPath, $contents) === false) {
+        if (file_put_contents($toPath, $contents) === false) {
             throw new \RuntimeException('Unable to write to ' . $toPath);
         }
     }
@@ -370,15 +400,15 @@ class TestEnvironmentCommands extends \Robo\Tasks
      */
     private function unzip($zipPath, $unzippedPath)
     {
+        $this->say("Unzipping {$zipPath}.");
         $zip = new \ZipArchive();
         $res = $zip->open($zipPath);
         if ($res === true) {
             $zip->extractTo($unzippedPath);
             $zip->close();
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -399,29 +429,30 @@ class TestEnvironmentCommands extends \Robo\Tasks
                 . DIRECTORY_SEPARATOR
                 . 'chromedriver';
             chmod($binPath, 100);
-        } elseif ($os->isOsMacOsX()) {
+        } elseif ($os->isOsMacOSX()) {
+            $this->say('macOS detected');
             $binPath = $basePath
                 . DIRECTORY_SEPARATOR
                 . 'chromedriver';
             chmod($binPath, 100);
         } elseif ($os->isOsBSD()) {
             $this->say('BSD detected');
-            throw new \DomainException('Unsupported Operating system');
+            throw new \DomainException('Unsupported operating system');
         } elseif ($os->isOsSolaris()) {
             $this->say('Solaris detected');
-            throw new \DomainException('Unsupported Operating system');
+            throw new \DomainException('Unsupported operating system');
         } elseif ($os->isOsUnknown()) {
-            throw new \DomainException('Unknown Operating system');
+            throw new \DomainException('Unknown operating system');
         } else {
-            throw new \DomainException('Unable to detect Operating system');
+            throw new \DomainException('Unable to detect operating system');
         }
 
         if (!file_exists($binPath)) {
-            throw new \RuntimeException('Unable to find chrome driver ' . $binPath);
+            throw new \RuntimeException('Unable to find ChromeDriver ' . $binPath);
         }
 
-        $this->say('Hint: open terminal and run `'.$os->toOsPath('./vendor/bin/codecept').'run [test suite] --env chrome-driver`');
-        $this->say('Starting Chrome Driver');
+        $this->say('Hint: open terminal and run `'.$os->toOsPath('./vendor/bin/codecept').' run [test suite] --env custom`');
+        $this->say('Starting ChromeDriver');
         $this->_exec(
             $binPath
             . ' --url-base='

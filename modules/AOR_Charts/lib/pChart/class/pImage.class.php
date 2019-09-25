@@ -81,9 +81,9 @@
    /* Last generated chart info */
    var $LastChartLayout	= CHART_LAST_LAYOUT_REGULAR;	// Last layout : regular or stacked
 
-   /* Class constructor */
-   function pImage($XSize,$YSize,$DataSet=NULL,$TransparentBackground=FALSE)
-    {
+     /* Class constructor */
+     public function __construct($XSize, $YSize, $DataSet = null, $TransparentBackground = false)
+     {
      $this->TransparentBackground = $TransparentBackground;
 
      if ( $DataSet != NULL ) { $this->DataSet = $DataSet; }

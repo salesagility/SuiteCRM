@@ -1,12 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +34,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * Description: This file handles the Data base functionality for the application.
@@ -127,6 +130,7 @@ class MysqlManager extends DBManager
         'relate' => 'varchar',
         'multienum' => 'text',
         'html' => 'text',
+    'emailbody' => 'nvarchar(max)',
         'longhtml' => 'longtext',
         'datetime' => 'datetime',
         'datetimecombo' => 'datetime',
@@ -342,8 +346,10 @@ class MysqlManager extends DBManager
             $matches = array();
             preg_match_all('/(\w+)(?:\(([0-9]+,?[0-9]*)\)|)( unsigned)?/i', $row['Type'], $matches);
             $columns[$name]['type'] = strtolower($matches[1][0]);
-            if (isset($matches[2][0]) && in_array(strtolower($matches[1][0]),
-                    array('varchar', 'char', 'varchar2', 'int', 'decimal', 'float'))
+            if (isset($matches[2][0]) && in_array(
+                strtolower($matches[1][0]),
+                array('varchar', 'char', 'varchar2', 'int', 'decimal', 'float')
+            )
             ) {
                 $columns[$name]['len'] = strtolower($matches[2][0]);
             }
@@ -645,6 +651,7 @@ class MysqlManager extends DBManager
 
                     return "DATE_FORMAT($string,$format)";
                 }
+                // no break
             case 'ifnull':
                 if (empty($additional_parameters) && !strstr($all_strings, ",")) {
                     $all_strings .= ",''";
@@ -663,7 +670,7 @@ class MysqlManager extends DBManager
                 return "DATE_ADD($string, INTERVAL {$additional_parameters[0]} {$additional_parameters[1]})";
             case 'add_time':
                 return "DATE_ADD($string, INTERVAL + CONCAT({$additional_parameters[0]}, ':', {$additional_parameters[1]}) HOUR_MINUTE)";
-            case 'add_tz_offset' :
+            case 'add_tz_offset':
                 $getUserUTCOffset = $GLOBALS['timedate']->getUserUTCOffset();
                 $operation = $getUserUTCOffset < 0 ? '-' : '+';
 
@@ -910,8 +917,10 @@ class MysqlManager extends DBManager
                     if ($this->full_text_indexing_installed()) {
                         $columns[] = " FULLTEXT ($fields)";
                     } else {
-                        $GLOBALS['log']->debug('MYISAM engine is not available/enabled, full-text indexes will be skipped. Skipping:',
-                            $name);
+                        $GLOBALS['log']->debug(
+                            'MYISAM engine is not available/enabled, full-text indexes will be skipped. Skipping:',
+                            $name
+                        );
                     }
                     break;
             }
@@ -1506,7 +1515,6 @@ class MysqlManager extends DBManager
     {
         $db->query("ALTER DATABASE `{$setup_db_database_name}` DEFAULT CHARACTER SET utf8", true);
         $db->query("ALTER DATABASE `{$setup_db_database_name}` DEFAULT COLLATE utf8_general_ci", true);
-
     }
 
     /**
