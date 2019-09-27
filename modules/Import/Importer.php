@@ -167,7 +167,8 @@ class Importer
                 $locale = new Localization();
             }
             if (isset($row[$fieldNum])) {
-                $rowValue = $locale->translateCharset(strip_tags(trim($row[$fieldNum])), $this->importSource->importlocale_charset, $sugar_config['default_charset']);
+                // issue #6442 - translateCharset was already executed in an earlier step
+                $rowValue = strip_tags(trim($row[$fieldNum]));
             } elseif (isset($this->sugarToExternalSourceFieldMap[$field]) && isset($row[$this->sugarToExternalSourceFieldMap[$field]])) {
                 $rowValue = $locale->translateCharset(strip_tags(trim($row[$this->sugarToExternalSourceFieldMap[$field]])), $this->importSource->importlocale_charset, $sugar_config['default_charset']);
             } else {
