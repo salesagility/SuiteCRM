@@ -3642,7 +3642,7 @@ class InboundEmail extends SugarBean
                 } // if
             } // if
             $c->save(true);
-            $c->retrieve($c->id);;
+            $c->retrieve($c->id);
             if ($c->load_relationship('emails')) {
                 $c->emails->add($email->id);
             } // if
