@@ -62,7 +62,7 @@ class Sentry
             if (!isset($sugar_config['sentry']['dsn'])) {
                 throw new \SuiteCRM\Exception\Exception('You must configure a Sentry DSN in config.php.');
             }
-        } catch (\SuiteCRM\Exception\Exception$exception) {
+        } catch (\SuiteCRM\Exception\Exception $exception) {
             LoggerManager::getLogger()->fatal($exception->getMessage() . "\nTrace:\n" . $exception->getTraceAsString());
         }
 
