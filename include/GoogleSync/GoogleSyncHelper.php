@@ -224,7 +224,7 @@ class GoogleSyncHelper
     public function wipeLocalSyncData(string $assigned_user_id)
     {
         $db = DBManagerFactory::getInstance();
-        $query = "UPDATE meetings SET gsync_id = NULL, gsync_lastsync = NULL WHERE assigned_user_id = {$db->quote($assigned_user_id)}";
+        $query = "UPDATE meetings SET gsync_id = NULL, gsync_lastsync = NULL WHERE assigned_user_id = {$db->quoted($assigned_user_id)}";
         $db->query($query);
     }
 }
