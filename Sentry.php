@@ -42,7 +42,7 @@ class Sentry
 {
     protected static $enabled;
     protected static $dsn;
-    protected static $instance;
+    private static $instance;
     protected static $client;
 
     public static function getInstance()
@@ -54,13 +54,13 @@ class Sentry
         return self::$instance = new self();
     }
 
-    public function __construct()
+    private function __construct()
     {
         global $sugar_config;
 
         try {
             if (!isset($sugar_config['sentry']['dsn'])) {
-                throw new \SuiteCRM\Exception\Exception('You must configure Sentry DSN.');
+                throw new \SuiteCRM\Exception\Exception('You must configure a Sentry DSN in config.php.');
             }
         } catch (\SuiteCRM\Exception\Exception$exception) {
             LoggerManager::getLogger()->fatal($exception->getMessage() . "\nTrace:\n" . $exception->getTraceAsString());
