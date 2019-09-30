@@ -225,6 +225,6 @@ class GoogleSyncHelper
     {
         $db = DBManagerFactory::getInstance();
         $query = "UPDATE meetings SET gsync_id = NULL, gsync_lastsync = NULL WHERE assigned_user_id = {$db->quote($assigned_user_id)}";
-        $result = $db->query($query);
+        $db->query($query);
     }
 }
