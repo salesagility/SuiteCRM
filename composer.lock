@@ -2923,16 +2923,16 @@
         },
         {
             "name": "zbateson/mail-mime-parser",
-            "version": "1.1.5",
+            "version": "1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zbateson/mail-mime-parser.git",
-                "reference": "63bedd7d71fb3abff2381174a14637c5a4ddaa36"
+                "reference": "70ad506290d830ff2ebbb7d96132dcf9960444f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zbateson/mail-mime-parser/zipball/63bedd7d71fb3abff2381174a14637c5a4ddaa36",
-                "reference": "63bedd7d71fb3abff2381174a14637c5a4ddaa36",
+                "url": "https://api.github.com/repos/zbateson/mail-mime-parser/zipball/70ad506290d830ff2ebbb7d96132dcf9960444f8",
+                "reference": "70ad506290d830ff2ebbb7d96132dcf9960444f8",
                 "shasum": ""
             },
             "require": {
@@ -2983,7 +2983,7 @@
                 "parser",
                 "php-imap"
             ],
-            "time": "2019-03-26T16:52:07+00:00"
+            "time": "2019-09-24T18:38:14+00:00"
         },
         {
             "name": "zbateson/mb-wrapper",
