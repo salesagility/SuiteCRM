@@ -79,11 +79,7 @@ class Sentry
 
     protected function init()
     {
-        global $current_user;
-
         if (self::$enabled) {
-            $user_context = $current_user->id;
-            self::$client->user_context($user_context);
             try {
                 self::$client->install();
             } catch (Raven_Exception $exception) {
@@ -103,6 +99,14 @@ class Sentry
     public function handleException($exception, $data = null, $logger = null, $vars = null)
     {
         if (self::$enabled) {
+            global $current_user;
+            if (isset($current_user)) {
+                $user_context = array(
+                    'username' => $current_user->user_name,
+                    'id' => $current_user->id
+                );
+                self::$client->user_context($user_context);
+            }
             self::$client->captureException($exception, $data, $logger, $vars);
         }
     }
@@ -119,6 +123,14 @@ class Sentry
     public function captureMessage($message, $params = [], $data = [], $stack = false, $vars = null)
     {
         if (self::$enabled) {
+            global $current_user;
+            if (isset($current_user)) {
+                $user_context = array(
+                    'username' => $current_user->user_name,
+                    'id' => $current_user->id
+                );
+                self::$client->user_context($user_context);
+            }
             // change to a string if there is just one entry
             if (is_array($message) && count($message) === 1) {
                 $message = array_shift($message);
