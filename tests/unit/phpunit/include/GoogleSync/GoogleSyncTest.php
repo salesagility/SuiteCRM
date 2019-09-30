@@ -1258,7 +1258,8 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $db = DBManagerFactory::getInstance();
 
         // Make sure the values we set are saved in the DB
-        $result = $db->query("SELECT gsync_id, gsync_lastsync FROM Meetings WHERE id = {$meeting_id}");
+        $query = "SELECT gsync_id, gsync_lastsync FROM meetings WHERE id = {$db->quoted($meeting_id)}";
+        $result = $db->query($query);
         $row = $db->fetchByAssoc($result);
         $this->assertEquals('GSYNCID', $row['gsync_id']);
         $this->assertEquals('1234567890', $row['gsync_lastsync']);
@@ -1268,7 +1269,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $helper->wipeLocalSyncData($user->id);
 
         // Check the raw DB values
-        $result = $db->query("SELECT gsync_id, gsync_lastsync FROM Meetings WHERE id = {$meeting_id}");
+        $result = $db->query($query);
         $row = $db->fetchByAssoc($result);
         $this->assertEquals('', $row['gsync_id']);
         $this->assertEquals('', $row['gsync_lastsync']);
