@@ -700,7 +700,8 @@ class SubPanelDefinitions
      */
     public function load_subpanel($name, $reload = false, $original_only = false, $search_query = '', $collections = array())
     {
-        if (!is_dir('modules/' . $this->layout_defs [ 'subpanel_setup' ][ strtolower($name) ] [ 'module' ])) {
+        if (!is_dir('modules/' . $this->layout_defs [ 'subpanel_setup' ][ strtolower($name) ] [ 'module' ]) &&
+            !is_dir('custom/modules/' . $this->layout_defs [ 'subpanel_setup' ][ strtolower($name) ] [ 'module' ])) {
             return false;
         }
 
