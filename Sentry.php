@@ -68,13 +68,24 @@ class Sentry
 
         self::$enabled = $sugar_config['sentry']['enabled'];
         self::$dsn = $sugar_config['sentry']['dsn'];
-        self::$client = $this->buildClient();
+
+        // Pass configuration options to the Raven Client if the user has set any.
+        $raven_client_config = array();
+        if (isset($sugar_config['sentry']['raven_client_config'])) {
+            $raven_client_config = $sugar_config['sentry']['raven_client_config'];
+        }
+        self::$client = $this->buildClient($raven_client_config);
         $this->init();
     }
 
-    protected function buildClient()
+    /**
+     * Build the Sentry client.
+     * 
+     * @param array $raven_client_config An array of configuration values for the Sentry client.
+     */
+    protected function buildClient($raven_client_config = array())
     {
-        return new Raven_Client(self::$dsn);
+        return new Raven_Client(self::$dsn, $raven_client_config);
     }
 
     protected function init()
@@ -107,6 +118,7 @@ class Sentry
                 );
                 self::$client->user_context($user_context);
             }
+            self::$client->tags_context($this->getTagsContext());
             self::$client->captureException($exception, $data, $logger, $vars);
         }
     }
@@ -131,6 +143,7 @@ class Sentry
                 );
                 self::$client->user_context($user_context);
             }
+            self::$client->tags_context($this->getTagsContext());
             // change to a string if there is just one entry
             if (is_array($message) && count($message) === 1) {
                 $message = array_shift($message);
@@ -142,5 +155,19 @@ class Sentry
 
             self::$client->captureMessage($message, $params, $data, $stack, $vars);
         }
+    }
+
+    /**
+     * Returns an array of tags for the error context.
+     * @return array
+     */
+    protected function getTagsContext() {
+        global $sugar_config;
+
+        $tags = array(
+            'suitecrm_version' => $sugar_config['suitecrm_version']
+        );
+
+        return $tags;
     }
 }
