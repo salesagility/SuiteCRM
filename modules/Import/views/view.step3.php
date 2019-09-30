@@ -291,13 +291,6 @@ class ImportViewStep3 extends ImportView
             // Bug 27046 - Sort the column name picker alphabetically
             ksort($options);
 
-            // to be displayed in UTF-8 format
-            if (!empty($charset) && $charset != 'UTF-8') {
-                if (isset($rows[1][$field_count])) {
-                    $rows[1][$field_count] = $locale->translateCharset($rows[1][$field_count], $charset);
-                }
-            }
-
             $cellOneData = isset($rows[0][$field_count]) ? $rows[0][$field_count] : '';
             $cellTwoData = isset($rows[1][$field_count]) ? $rows[1][$field_count] : '';
             $cellThreeData = isset($rows[2][$field_count]) ? $rows[2][$field_count] : '';

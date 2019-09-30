@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "b5721ca48944bf2b57bda1783341b5c3",
@@ -896,16 +896,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.114",
+            "version": "v0.116",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "22746bfd8d8d5a4f8bbe5e22559d9976810c177c"
+                "reference": "91c932fa2bdb37f9fc73a5eee3e7b4734a25f51e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/22746bfd8d8d5a4f8bbe5e22559d9976810c177c",
-                "reference": "22746bfd8d8d5a4f8bbe5e22559d9976810c177c",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/91c932fa2bdb37f9fc73a5eee3e7b4734a25f51e",
+                "reference": "91c932fa2bdb37f9fc73a5eee3e7b4734a25f51e",
                 "shasum": ""
             },
             "require": {
@@ -929,7 +929,7 @@
             "keywords": [
                 "google"
             ],
-            "time": "2019-09-16T00:23:14+00:00"
+            "time": "2019-09-29T00:23:21+00:00"
         },
         {
             "name": "google/auth",
@@ -2188,16 +2188,16 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.0.7",
+            "version": "v6.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "0c41a36d4508d470e376498c1c0c527aa36a2d59"
+                "reference": "26bd96350b0b2fcbf0ef4e6f0f9cf3528302a9d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/0c41a36d4508d470e376498c1c0c527aa36a2d59",
-                "reference": "0c41a36d4508d470e376498c1c0c527aa36a2d59",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/26bd96350b0b2fcbf0ef4e6f0f9cf3528302a9d8",
+                "reference": "26bd96350b0b2fcbf0ef4e6f0f9cf3528302a9d8",
                 "shasum": ""
             },
             "require": {
@@ -2230,16 +2230,16 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-2.1"
+                "LGPL-2.1-only"
             ],
             "authors": [
                 {
-                    "name": "Jim Jagielski",
-                    "email": "jimjag@gmail.com"
-                },
-                {
                     "name": "Marcus Bointon",
                     "email": "phpmailer@synchromedia.co.uk"
+                },
+                {
+                    "name": "Jim Jagielski",
+                    "email": "jimjag@gmail.com"
                 },
                 {
                     "name": "Andy Prevost",
@@ -2250,7 +2250,7 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2019-02-01T15:04:28+00:00"
+            "time": "2019-09-27T21:33:43+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -5825,9 +5825,9 @@
             "authors": [
                 {
                     "name": "Jeroen Desloovere",
+                    "role": "Developer",
                     "email": "info@jeroendesloovere.be",
-                    "homepage": "http://jeroendesloovere.be",
-                    "role": "Developer"
+                    "homepage": "http://jeroendesloovere.be"
                 }
             ],
             "description": "This VCard PHP class can generate a vCard with some data. When using an iOS device it will export as a .ics file because iOS devices don't support the default .vcf files.",
@@ -5940,16 +5940,16 @@
         },
         {
             "name": "mockery/mockery",
-            "version": "1.2.3",
+            "version": "1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mockery/mockery.git",
-                "reference": "4eff936d83eb809bde2c57a3cea0ee9643769031"
+                "reference": "b3453f75fd23d9fd41685f2148f4abeacabc6405"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mockery/mockery/zipball/4eff936d83eb809bde2c57a3cea0ee9643769031",
-                "reference": "4eff936d83eb809bde2c57a3cea0ee9643769031",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/b3453f75fd23d9fd41685f2148f4abeacabc6405",
+                "reference": "b3453f75fd23d9fd41685f2148f4abeacabc6405",
                 "shasum": ""
             },
             "require": {
@@ -5963,7 +5963,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -6001,7 +6001,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2019-08-07T15:01:07+00:00"
+            "time": "2019-09-30T08:30:27+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -6406,8 +6406,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "FilterIterator implementation that filters files based on a list of suffixes.",
@@ -6448,8 +6448,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Simple template engine.",
@@ -6497,8 +6497,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "Utility class for timing",
