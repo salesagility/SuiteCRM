@@ -1254,25 +1254,24 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $meeting1->gsync_lastsync = '1234567890';
         $meeting_id = $meeting1->save();
 
-        // Unregister the bean so we pull from the DB next time.
-        BeanFactory::unregisterBean('Meetings', $meeting_id);
+        // Get a DB object
+        $db = DBManagerFactory::getInstance();
 
-        // Get the Meeting bean back and check the gsync fields
-        $meeting2 = BeanFactory::getBean('Meetings', $meeting_id);
-        $this->assertEquals('GSYNCID', $meeting2->gsync_id);
-        $this->assertEquals('1234567890', $meeting2->gsync_lastsync);
-
-        // Unregister the bean so we pull from the DB next time.
-        BeanFactory::unregisterBean('Meetings', $meeting_id);
+        // Make sure the values we set are saved in the DB
+        $result = $db->query("SELECT gsync_id, gsync_lastsync FROM Meetings WHERE id = {$meeting_id}");
+        $row = $db->fetchByAssoc($result);
+        $this->assertEquals('GSYNCID', $row['gsync_id']);
+        $this->assertEquals('1234567890', $row['gsync_lastsync']);
 
         // Call the tested function to wipe the gsync data
         $helper = new GoogleSyncHelper;
         $helper->wipeLocalSyncData($user->id);
 
-        // Get the Meeting bean back and check the gsync fields
-        $meeting3 = BeanFactory::getBean('Meetings', $meeting_id);
-        $this->assertNull($meeting3->gsync_id);
-        $this->assertNull($meeting3->gsync_lastsync);
+        // Check the raw DB values
+        $result = $db->query("SELECT gsync_id, gsync_lastsync FROM Meetings WHERE id = {$meeting_id}");
+        $row = $db->fetchByAssoc($result);
+        $this->assertEquals('', $row['gsync_id']);
+        $this->assertEquals('', $row['gsync_lastsync']);
 
         $state->popTable('meetings');
         $state->popTable('meetings_cstm');
