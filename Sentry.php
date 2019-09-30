@@ -162,10 +162,10 @@ class Sentry
      * @return array
      */
     protected function getTagsContext() {
-        global $sugar_config;
+        global $suitecrm_version;
 
         $tags = array(
-            'suitecrm_version' => $sugar_config['suitecrm_version']
+            'suitecrm_version' => $suitecrm_version
         );
 
         return $tags;
