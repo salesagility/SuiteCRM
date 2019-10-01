@@ -58,3 +58,14 @@ if (!class_exists(Provider::class)) {
     /** @deprecated this is an alias for Zend_Oauth_Provider */
     class Provider {}
 }
+
+
+/**
+ * Backwards compatibility for mPDF
+ */
+class_alias('MpdfException', 'mPDF_exception');
+
+if (!class_exists(mPDF_exception::class)) {
+    /** @deprecated this is an alias for mPDF_exception */
+    class mPDF_exception {}
+}
