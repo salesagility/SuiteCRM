@@ -95,7 +95,7 @@ class SearchQuery implements \JsonSerializable
     {
         $searchQuery = self::filterArray($request, 'search-query-string', '', FILTER_SANITIZE_STRING);
         $searchQueryAlt = self::filterArray($request, 'query_string', '', FILTER_SANITIZE_STRING);
-        $searchSize = self::filterArray($request, 'search-query-size', 10, FILTER_SANITIZE_NUMBER_INT);
+        $searchSize = self::filterArray($request, 'search-query-size', static::getDefaultSearchSize(), FILTER_SANITIZE_NUMBER_INT);
         $searchFrom = self::filterArray($request, 'search-query-from', 0, FILTER_SANITIZE_NUMBER_INT);
         $searchEngine = self::filterArray($request, 'search-engine', null, FILTER_SANITIZE_STRING);
 
@@ -112,6 +112,26 @@ class SearchQuery implements \JsonSerializable
         );
 
         return new self($searchQuery, $searchEngine, $searchSize, $searchFrom, $request);
+    }
+
+    /**
+     * Get the default Search size by checking the config or falling back to 10
+     *
+     * @return int
+     */
+    public static function getDefaultSearchSize()
+    {
+        global $sugar_config;
+
+        if(isset($sugar_config['search']['query_size'])){
+            return (int) $sugar_config['search']['query_size'];
+        }
+
+        if(isset($sugar_config['search']['pagination']['min'])){
+            return (int) $sugar_config['search']['pagination']['min'];
+        }
+
+        return 10;
     }
 
     /**
