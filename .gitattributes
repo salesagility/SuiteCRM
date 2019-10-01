@@ -183,12 +183,12 @@ Dockerfile text eol=lf
 # Files to exclude when creating an archive
 /.gitmodules export-ignore
 /.gitignore export-ignore
-/.php_cs export-ignore
+/php_cs.xml export-ignore
 /codacy.yml export-ignore
 /codeception.dist.yml export-ignore
 /.codecov.yml export-ignore
 /.travis.yml export-ignore
-/travis.php.ini
+travis.php.ini export-ignore
 /.phpcs.xml export-ignore
 /.gitattributes export-ignore
 /custom/modules/unified_search_modules_display.php
