@@ -191,4 +191,4 @@ Dockerfile text eol=lf
 travis.php.ini export-ignore
 /.phpcs.xml export-ignore
 /.gitattributes export-ignore
-/custom/modules/unified_search_modules_display.php
+/custom/modules/unified_search_modules_display.php export-ignore
