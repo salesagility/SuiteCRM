@@ -449,8 +449,6 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $hash);
         $this->assertSame('config.php', $_SESSION['file2Hash'][$hash]);
 
-
-
         if (isset($_session)) {
             $_SESSION = $_session;
         } else {
@@ -474,8 +472,6 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         $hash = fileToHash('config.php');
         $actual = hashToFile($hash);
         $this->assertSame('config.php', $actual);
-
-
 
         if (isset($_session)) {
             $_SESSION = $_session;

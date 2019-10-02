@@ -109,7 +109,7 @@ class SugarFieldInt extends SugarFieldBase
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
         if ($this->isRangeSearchView($vardef)) {
             $id = isset($displayParams['idName']) ? $displayParams['idName'] : $vardef['name'];
-            $this->ss->assign('original_id', "{$id}");
+            $this->ss->assign('original_id', (string)($id));
             $this->ss->assign('id_range', "range_{$id}");
             $this->ss->assign('id_range_start', "start_range_{$id}");
             $this->ss->assign('id_range_end', "end_range_{$id}");

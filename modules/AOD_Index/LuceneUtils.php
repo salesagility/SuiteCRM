@@ -89,7 +89,7 @@ function createDocXDocument($path)
  */
 function createDocDocument($path)
 {
-    $fileHandle = fopen($path, "r");
+    $fileHandle = fopen($path, 'rb');
     $line = @fread($fileHandle, filesize($path));
     $lines = explode(chr(0x0D), $line);
     $outtext = "";

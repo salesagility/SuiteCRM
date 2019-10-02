@@ -39,6 +39,8 @@
  */
 namespace SuiteCRM\Robo\Plugin\Commands;
 
+use Symfony\Component\Console\Input\InputOption;
+
 class TestRunCommands extends \Robo\Tasks
 {
     use \SuiteCRM\Robo\Traits\RoboTrait;
@@ -137,9 +139,10 @@ class TestRunCommands extends \Robo\Tasks
      * @usage tests:unit
      * @usage tests:unit ./tests/unit/phpunit/modules/Favorites/FavoritesTest.php
      * @usage tests:unit ./tests/unit/phpunit/modules/
+     * @usage tests:unit --filter testdeleteFavorite ./tests/unit/phpunit/modules/Favorites/FavoritesTest.php
      * @usage tests:unit --debug ./tests/unit/phpunit/modules/Favorites/FavoritesTest.php
      */
-    public function TestsUnit($fileOrDirectory = './tests/unit/phpunit', $opts = ['debug' => false, 'fail-fast' => false]) {
+    public function TestsUnit($fileOrDirectory = './tests/unit/phpunit', $opts = ['debug' => false, 'fail-fast' => false, 'filter' => InputOption::VALUE_REQUIRED]) {
       $this->say('Running PHPUnit Unit Test Suite.');
 
       $command = "./vendor/bin/phpunit --colors --configuration ./tests/phpunit.xml.dist {$fileOrDirectory}";
@@ -149,6 +152,9 @@ class TestRunCommands extends \Robo\Tasks
       }
       if ($opts['fail-fast']) {
         $command .= ' --stop-on-error --stop-on-failure';
+      }
+      if ($opts['filter']) {
+          $command .= ' --filter ' . $opts['filter'];
       }
 
       return $this->_exec($command);

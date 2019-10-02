@@ -113,7 +113,7 @@ class populateSeedData
     {
         global $timedate;
         // 1201852800 is 1 Feb 2008
-        return $timedate->fromTimestamp(rand(1201852800, $timedate->getNow()->ts))->asDb();
+        return $timedate->fromTimestamp(mt_rand(1201852800, $timedate->getNow()->ts))->asDb();
     }
 
     public function getSessionId()

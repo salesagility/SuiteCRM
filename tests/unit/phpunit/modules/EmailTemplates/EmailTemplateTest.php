@@ -2,6 +2,8 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+require_once 'modules/EmailTemplates/EmailTemplateParser.php';
+
 class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
@@ -11,6 +13,42 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
+    }
+
+    public function testEmailTemplateParser()
+    {
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->body_html = to_html('<h1>Hello $contact_name</h1>');
+        $emailTemplate->body = 'Hello $contact_name';
+        $emailTemplate->subject = 'Hello $contact_name';
+        $campaign = new Campaign();
+
+        $related = [new Lead(), new Contact(), new Prospect()];
+        foreach ($related as $bean) {
+            $bean->name = 'foobar';
+
+            $parser = new EmailTemplateParser($emailTemplate, $campaign, $bean, "", "");
+            $result = $parser->parseVariables();
+            $this->assertEquals('<h1>Hello foobar</h1>', from_html($result['body_html']));
+            $this->assertEquals('Hello foobar', $result['body']);
+            $this->assertEquals('Hello foobar', $result['subject']);
+        }
+    }
+
+    public function testEmailTemplateParserUser()
+    {
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->body = 'Hello $contact_user_full_name';
+        $campaign = new Campaign();
+
+        $bean = new User();
+        $bean->first_name = 'foo';
+        $bean->last_name = 'bar';
+        $bean->fill_in_additional_detail_fields();
+
+        $parser = new EmailTemplateParser($emailTemplate, $campaign, $bean, "", "");
+        $result = $parser->parseVariables();
+        $this->assertEquals('Hello foo bar', $result['body']);
     }
 
     public function testcreateCopyTemplate()

@@ -6,6 +6,24 @@ include_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFakeData.php';
 include_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFake.php';
 require_once __DIR__ . '/../../../../../modules/InboundEmail/InboundEmail.php';
 
+/**
+ * Like tempfile() but takes a mode
+ *
+ * @param $mode
+ * @return bool|resource
+ */
+function tempFileWithMode($mode)
+{
+    $path = tempnam(sys_get_temp_dir(), '');
+    $file = fopen($path, $mode);
+    register_shutdown_function(function() use($path) {
+        if (file_exists($path)) {
+            unlink($path);
+        }
+    });
+    return $file;
+}
+
 class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testThisCallback()
@@ -33,7 +51,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('close', null, [null]);
         $fake->add('ping', null, [true]);
@@ -45,7 +63,6 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $ie->mailboxarray = ['first'];
         $ret = $ie->connectMailserver(false, true);
         $this->assertEquals('true', $ret);
-
     }
 
     public function testConnectMailServerFolderInboundForceTestFolder()
@@ -59,7 +76,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('close', null, [null]);
         $fake->add('ping', null, [true]);
@@ -84,7 +101,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('close', null, [null]);
         $fake->add('ping', null, [true]);
@@ -105,7 +122,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('close', null, [null]);
         $fake->add('ping', null, [true]);
@@ -129,12 +146,12 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [2, 15], [true]);
         $fake->add('setTimeout', [3, 15], [true]);
         $fake->add('open', ["{:/service=/ssl/tls/validate-cert/secure}", null, null, 0, 0, []], [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getLastError', null, ['Too many login failures']);
         $fake->add('getAlerts', null, [null]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/ssl/tls/validate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
@@ -156,7 +173,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('ping', null, [true]);
@@ -190,12 +207,12 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getLastError', null, ["SECURITY PROBLEM: insecure server advertised AUTH=PLAIN"]);
         $fake->add('getAlerts', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
@@ -226,12 +243,12 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getLastError', null, ['Too many login failures']);
         $fake->add('getAlerts', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
@@ -271,12 +288,12 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getLastError', null, [false]);
         $fake->add('getAlerts', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
@@ -314,12 +331,12 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('open', ["{:/service=/ssl/tls/validate-cert/secure}", null, null, 0, 0, []], [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getLastError', null, [false]);
         $fake->add('getAlerts', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/ssl/tls/validate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
@@ -514,9 +531,9 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function renameFolder($id)
     {
 
+
         
-        
-        
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->retrieve($id);
@@ -536,9 +553,9 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function search($id)
     {
 
+
         
-        
-        
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->retrieve($id);
@@ -584,9 +601,9 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     {
         
 
+
         
-        
-        
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mark_deleted($id);
@@ -600,9 +617,9 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function hardDelete($id)
     {
 
+
         
-        
-        
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->hardDelete($id);
@@ -616,7 +633,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testcustomGetMessageText()
     {
 
-        
+
 
         $inboundEmail = new InboundEmail();
 
@@ -629,8 +646,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetFormattedRawSource()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test without ID
@@ -648,8 +665,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testfilterMailBoxFromRaw()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -672,8 +689,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testconvertToUtf8()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
         $result = $inboundEmail->convertToUtf8('some text with non UTF8 chars');
         $this->assertSame('some text with non UTF8 chars', $result);
@@ -684,8 +701,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetFormattedHeaders()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test for default/imap
@@ -703,8 +720,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testsetAndgetCacheTimestamp()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->id = 1;
@@ -719,11 +736,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     }
 
-    public function testsetCacheValue()
-    {
-
-        
-        
+    private function setDummyCacheValue() {
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->id = 1;
@@ -745,21 +758,25 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         //execute the method to populate email cache
         $inboundEmail->setCacheValue('INBOX', $inserts);
         $inboundEmail->setCacheValue('INBOX.Trash', $inserts);
+        return $inboundEmail;
+    }
+
+    public function testsetCacheValue()
+    {
+        $inboundEmail = $this->setDummyCacheValue();
 
         //retrieve back to verify the records created
         $result = $inboundEmail->getCacheValue('INBOX');
 
         $this->assertGreaterThan(0, count((array)$result['retArr'][0]));
         $this->assertEquals(1, $result['retArr'][0]->message_id);
-        
-
     }
 
     public function testgetCacheValueForUIDs()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test wih default protocol
@@ -783,8 +800,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetCacheValue()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test wih default protocol
@@ -801,8 +818,6 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(is_array($result));
         $this->assertTrue(is_array($result['uids']));
         $this->assertTrue(is_array($result['retArr']));
-        
-
     }
 
     public function testValidCacheExists()
@@ -814,7 +829,9 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(false, $result);
 
         //test with a valid id set
-        $inboundEmail->id = 1;
+        $inboundEmail = $this->setDummyCacheValue();
+        $result = $inboundEmail->validCacheExists('');
+        $this->assertEquals(true, $result);
 
         $inserts = [];
 
@@ -848,18 +865,15 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         //use the cache values array as parameter and verify that it returns an array
         $result = $inboundEmail->displayFetchedSortedListXML($ret, 'INBOX');
         $this->assertTrue(is_array($result));
-        
-
     }
 
     public function testgetCacheUnreadCount()
     {
 
-        
-        
-        $inboundEmail = new InboundEmail();
 
-        $inboundEmail->id = 1;
+        
+        
+        $inboundEmail = $this->setDummyCacheValue();
 
         $inserts = [];
 
@@ -891,9 +905,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetCacheCount()
     {
-        $inboundEmail = new InboundEmail();
-
-        $inboundEmail->id = 1;
+        $inboundEmail = $this->setDummyCacheValue();
 
         $inserts = [];
 
@@ -927,10 +939,11 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     {
 
         
-        
-        $inboundEmail = new InboundEmail();
+        // test
 
-        $inboundEmail->id = 1;
+
+        $inboundEmail = $this->setDummyCacheValue();
+
 
         $inserts = [];
 
@@ -962,12 +975,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testmark_answered()
     {
-
-        
-        
-        $inboundEmail = new InboundEmail();
-
-        $inboundEmail->id = 1;
+        $inboundEmail = $this->setDummyCacheValue();
 
         $inserts = [];
 
@@ -999,9 +1007,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testpop3_shiftCache()
     {
-        $inboundEmail = new InboundEmail();
-
-        $inboundEmail->id = 1;
+        $inboundEmail = $this->setDummyCacheValue();
 
         $inserts = [];
 
@@ -1033,9 +1039,9 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetUIDLForMessage()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = $this->setDummyCacheValue();
 
-        $inboundEmail->id = 1;
+        $inboundEmail->pop3_shiftCache(array('1' => '1'), array('1'));
 
         //test with invalid msgNo
         $result = $inboundEmail->getUIDLForMessage('2');
@@ -1072,23 +1078,17 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         //test with valid msgNo but most probably it will never work because of wrong column name in return statement
         $result = $inboundEmail->getMsgnoForMessageID('1');
         $this->assertEquals('', $result);
-        
-
     }
 
-    /**
-     * @todo: NEEDS REVISION
-     */
-//    public function testpop3_getCacheUidls()
-//    {
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        $result = $inboundEmail->pop3_getCacheUidls();
-//
-//        $this->assertEquals(array('1' => '1'), $result);
-//    }
+    public function testpop3_getCacheUidls()
+    {
+        $inboundEmail = $this->setDummyCacheValue();
+        $inboundEmail->pop3_shiftCache(array('1' => '1'), array('1'));
+
+        $result = $inboundEmail->pop3_getCacheUidls();
+
+        $this->assertEquals(array('1' => '1'), $result);
+    }
 
     /**
      * @todo: NEEDS REVISION
@@ -1201,8 +1201,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testdeletePop3Cache()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -1221,8 +1221,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testpop3_open()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -1237,8 +1237,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testpop3_cleanUp()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -1257,8 +1257,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testpop3_sendCommand()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -1273,8 +1273,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetPop3NewMessagesToDownload()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -1289,8 +1289,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetPop3NewMessagesToDownloadForCron()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -1305,8 +1305,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testpop3_getUIDL()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -1322,8 +1322,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testpop3_checkPartialEmail()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -1345,8 +1345,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testpop3_checkEmail()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -1368,8 +1368,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetMessagesInEmailCache()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -1411,8 +1411,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testcheckEmailOneMailboxPartial()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -1427,8 +1427,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetCachedIMAPSearch()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -1443,8 +1443,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testcheckEmailIMAPPartial()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -1459,8 +1459,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testcheckEmail2_meta()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -1476,8 +1476,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetMailboxProcessCount()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->getMailboxProcessCount('INBOX');
@@ -1490,8 +1490,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testcheckEmail()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test for IMAP
@@ -1520,8 +1520,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testsyncEmail()
     {
 
-        
-        
+
+
         global $current_user;
         $current_user = new User('1');
 
@@ -1541,8 +1541,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testdeleteCachedMessages()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->id = 1;
@@ -1561,8 +1561,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetOverviewsFromCacheFile()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->getOverviewsFromCacheFile('1,2', 'INBOX');
@@ -1618,8 +1618,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testfetchCheckedEmails()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -1658,8 +1658,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testmarkEmails()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1681,8 +1681,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testdeleteFolder()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
@@ -1698,8 +1698,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testsaveNewFolder()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->saveNewFolder('TEST', 'INBOX');
@@ -1712,8 +1712,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetImapMboxFromSugarProprietary()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test with invalid format string
@@ -1734,8 +1734,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testrepairAccount()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->email_password = 'test_pass';
@@ -1768,8 +1768,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testsavePersonalEmailAccountAndOthers()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $_REQUEST['ie_name'] = 'test';
@@ -1805,8 +1805,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function handleIsPersonal($id)
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test with a invalid group_id
@@ -1825,8 +1825,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function getUserPersonalAccountCount()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test with invalid user id
@@ -1845,8 +1845,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function retrieveByGroupFolderId()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test with invalid groupfolder id
@@ -1869,8 +1869,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function getUserNameFromGroupId($id)
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test with a invalid group_id
@@ -1889,8 +1889,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function deletePersonalEmailAccount($id)
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test with invalid username
@@ -1907,8 +1907,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetFoldersListForMailBox()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->getFoldersListForMailBox();
@@ -1920,8 +1920,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testfindOptimumSettings()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test with different parameters, it will always return false because we do not have a mail server to connect.
@@ -1939,8 +1939,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetSessionConnectionString()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test without setting session key
@@ -1958,8 +1958,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testsetSessionConnectionString()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->setSessionConnectionString('mail.google.com', 'test', 22, 'IMAP', 'test connection');
@@ -1971,8 +1971,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetSessionInboundDelimiterString()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test without setting session key
@@ -1990,8 +1990,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testsetSessionInboundDelimiterString()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->setSessionInboundDelimiterString('mail.google.com', 'test', 22, 'IMAP', 'test string');
@@ -2003,8 +2003,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetSessionInboundFoldersString()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test without setting session key
@@ -2022,8 +2022,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testsetSessionInboundFoldersString()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->setSessionInboundFoldersString('mail.google.com', 'test', 22, 'IMAP', 'foldersList string');
@@ -2035,8 +2035,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgroupUserDupeCheck()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2060,8 +2060,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetGroupsWithSelectOptions()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2086,8 +2086,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testhandleAutoresponse()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2116,8 +2116,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testhandleCaseAssignment()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2138,8 +2138,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testhandleMailboxType()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2167,8 +2167,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testisMailBoxTypeCreateCase()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2194,8 +2194,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testhandleCreateCase()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2221,8 +2221,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testhandleLinking()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2263,8 +2263,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetCharsetFromBreadCrumb()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $parts = array(
@@ -2301,8 +2301,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testaddBreadCrumbOffset()
     {
 
-        
-        
+
+
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         unset($db->database);
@@ -2349,8 +2349,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testdecodeHeader()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2379,8 +2379,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testhandleCharsetTranslation()
     {
 
-        
-        
+
+
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         unset($db->database);
@@ -2402,8 +2402,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testbuildBreadCrumbs()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2426,8 +2426,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testbuildBreadCrumbsHTML()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2450,8 +2450,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testconvertImapToSugarEmailAddress()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2472,8 +2472,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testhandleEncodedFilename()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2491,8 +2491,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetMimeType()
     {
 
-        
-        
+
+
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         unset($db->database);
@@ -2510,8 +2510,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testsaveAttachments()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2534,8 +2534,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetNoteBeanForAttachment()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->getNoteBeanForAttachment('1');
@@ -2550,8 +2550,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testretrieveAttachmentNameFromStructure()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test with filename attribute
@@ -2577,8 +2577,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testsaveAttachmentBinaries()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2603,8 +2603,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testhandleTranserEncoding()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $this->assertEquals('test', $inboundEmail->handleTranserEncoding('test'));
@@ -2617,8 +2617,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetMessageId()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $header = "From: Media Temple user (mt.kb.user@gmail.com)\r\nSubject: article: How to Trace a Email\r\nDate: January 25, 2011 3:30:58 PM PDT\r\nTo: user@example.com\r\nReturn-Path: <mt.kb.user@gmail.com>\r\nEnvelope-To: user@example.com\r\nDelivery-Date: Tue, 25 Jan 2011 15:31:01 -0700";
@@ -2633,8 +2633,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testimportDupeCheck()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $textHeader = "From: Media Temple user (mt.kb.user@gmail.com)\r\nSubject: article: How to Trace a Email\r\nDate: January 25, 2011 3:30:58 PM PDT\r\nTo: user@example.com\r\nReturn-Path: <mt.kb.user@gmail.com>\r\nEnvelope-To: user@example.com\r\nDelivery-Date: Tue, 25 Jan 2011 15:31:01 -0700";
@@ -2648,8 +2648,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testhandleMimeHeaderDecode()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->handleMimeHeaderDecode('Subject: article: How to Trace a Email');
@@ -2662,8 +2662,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetUnixHeaderDate()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->handleMimeHeaderDecode('Date: January 25, 2011 3:30:58 PM PDT');
@@ -2676,8 +2676,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetDuplicateEmailId()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2700,8 +2700,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testimportOneEmail()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX';
@@ -2721,8 +2721,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testisUuencode()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $this->assertEquals(false, $inboundEmail->isUuencode('test'));
@@ -2735,8 +2735,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testhandleUUEncodedEmailBody()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $raw = 'Message Body: This is a KnowledgeBase article that provides information on how to find email headers and use the data to trace a email.';
@@ -2770,8 +2770,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testcheckFilterDomain()
     {
 
-        
-        
+
+
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         unset($db->database);
@@ -2792,8 +2792,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testcheckOutOfOffice()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2811,8 +2811,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testsetAndgetAutoreplyStatus()
     {
 
-        
-        
+
+
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2836,8 +2836,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testsaveInboundEmailSystemSettings()
     {
 
-        
-        
+
+
         global $sugar_config, $db;
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2908,8 +2908,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetCaseIdFromCaseNumber()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->getCaseIdFromCaseNumber('test', new aCase());
@@ -2921,8 +2921,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testget_stored_options()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->get_stored_options('test', '');
@@ -2967,8 +2967,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetNewMessageIds()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->getNewMessageIds();
@@ -2981,8 +2981,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetConnectString()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $this->assertEquals('{:/service=}', $inboundEmail->getConnectString()); //test with default options
@@ -2996,8 +2996,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testdisconnectMailserver()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -3014,8 +3014,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testconnectMailserver()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test with default parameters
@@ -3032,8 +3032,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testcheckImap()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -3050,8 +3050,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testget_summary_text()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test without setting name
@@ -3067,8 +3067,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testcreate_export_query()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test with empty string params
@@ -3087,8 +3087,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testget_list_view_data()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox_type = 'INBOX';
@@ -3117,8 +3117,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testfill_in_additional_list_fields()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->service = 'tls::ca::ssl::protocol';
@@ -3136,8 +3136,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testfill_in_additional_detail_fields()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->service = 'tls::ca::ssl::protocol';
@@ -3155,8 +3155,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testisAutoImport()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $user = new User();
@@ -3176,8 +3176,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testcleanOutCache()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -3255,8 +3255,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testdeleteMessageOnMailServerForPop3()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -3273,8 +3273,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testisPop3Protocol()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //test without setting protocol
@@ -3290,8 +3290,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testSetAndGetUsersDefaultOutboundServerId()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $user = new User();
@@ -3331,8 +3331,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testdisplayOneEmail()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->id = 1;
@@ -3358,8 +3358,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testcollapseLongMailingList()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $emails = 'one@email.com,two@email.com,three@email.com,four@email.com,five@email.com,six@email.com';
@@ -3376,8 +3376,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testsortFetchedOverview()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->id = 1;
@@ -3415,8 +3415,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testdisplayFolderContents()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $expected = array('mbox' => 'INBOX', 'ieId' => 1, 'name' => 'test', 'fromCache' => 0, 'out' => array());
@@ -3451,8 +3451,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testcreateAutoImportSugarFolder()
     {
 
-        
-        
+
+
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         unset($db->database);
@@ -3474,8 +3474,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetMailboxes()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailboxarray = array('INBOX.TRASH', 'OUTBOX.TRASH');
@@ -3495,8 +3495,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetMailBoxesForGroupAccount()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 1;
@@ -3513,8 +3513,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testretrieveMailBoxFolders()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX,TRASH';
@@ -3529,8 +3529,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testinsertMailBoxFolders()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->id = '101';
@@ -3549,8 +3549,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testretrieveDelimiter()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->retrieveDelimiter();
@@ -3563,8 +3563,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgenerateFlatArrayFromMultiDimArray()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $arraymbox = array('INBOX' => array('TRASH' => 'TRASH'), 'OUTBOX' => array('TRASH' => 'TRASH'));
@@ -3581,8 +3581,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgenerateMultiDimArrayFromFlatArray()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $expected = array('INBOX' => array('TRASH' => 'TRASH'), 'OUTBOX' => array('TRASH' => 'TRASH'));
@@ -3597,8 +3597,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgenerateArrayData()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $result = array();
@@ -3615,8 +3615,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testsortMailboxes()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->sortMailboxes('INBOX.TRASH', array());
@@ -3631,8 +3631,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetServiceString()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->service = 'tls::ca::ssl::protocol';
@@ -3647,8 +3647,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetNewEmailsForSyncedMailbox()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -3666,8 +3666,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testimportMessages()
     {
 
-        
-        
+
+
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.

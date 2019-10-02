@@ -142,7 +142,7 @@ class CampaignTracker extends SugarBean
     /* Generally from this method you would return value of a field that is required and is of type string*/
     public function get_summary_text()
     {
-        return "$this->tracker_name";
+        return (string)$this->tracker_name;
     }
 
 

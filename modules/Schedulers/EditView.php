@@ -137,13 +137,13 @@ $time_meridiem_start = $timedate->AMPMMenu('time_start_', $time_start, '');
 $time_meridiem_end = $timedate->AMPMMenu('time_end_', $time_end, '');
 $time_meridiem_from = $timedate->AMPMMenu('time_from_', $focus->time_from, '');
 $time_meridiem_to = $timedate->AMPMMenu('time_to_', $focus->time_to, '');
-$time_start_hour = intval(substr($time_start, 0, 2));
+$time_start_hour = (int)substr($time_start, 0, 2);
 $time_start_minutes = substr($time_start, 3, 5);
-$time_end_hour = intval(substr($time_end, 0, 2));
+$time_end_hour = (int)substr($time_end, 0, 2);
 $time_end_minutes = substr($time_end, 3, 5);
-$time_from_hour = intval(substr($focus->time_from, 0, 2));
+$time_from_hour = (int)substr($focus->time_from, 0, 2);
 $time_from_min = substr($focus->time_from, 3, 5);
-$time_to_hour = intval(substr($focus->time_to, 0, 2));
+$time_to_hour = (int)substr($focus->time_to, 0, 2);
 $time_to_min = substr($focus->time_to, 3, 5);
 $hours_arr = array();
 $mins_arr = array();
@@ -307,7 +307,7 @@ $xtpl->assign('CALENDAR_DATEFORMAT', $timedate->get_cal_date_format());
 // standard assigns
 $xtpl->assign('MOD', $mod_strings);
 $xtpl->assign('APP', $app_strings);
-$xtpl->assign('THEME', SugarThemeRegistry::current()->__toString());
+$xtpl->assign('THEME', (string)SugarThemeRegistry::current());
 $xtpl->assign('GRIDLINE', $gridline);
 if ($use_adv) {
     $javascript->script .= 'toggleAdv();';
