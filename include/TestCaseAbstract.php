@@ -77,7 +77,7 @@ abstract class TestCaseAbstract extends PHPUnit_Framework_TestCase
         } elseif (self::$cleanupStrategy === 'refresh') {
             $this->refreshDatabase();
         } else {
-            throw new Exception('Failed to truncate database');
+            throw new Exception('Failed to cleanup database, invalid cleanup strategy specified.');
         }
         parent::setUp();
     }
