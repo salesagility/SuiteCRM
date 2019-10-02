@@ -475,6 +475,10 @@ if (version_compare($sugar_version, '6.5.0', '<') && function_exists('repairUpgr
     repairUpgradeHistoryTable();
 }
 
+// Run quick repair and rebuild
+$repair = new RepairAndClear();
+$repair->repairAndClearAll(['clearAll'], ['All Modules']);
+
 //TAKE OUT TRASH
 if (empty($errors)) {
     set_upgrade_progress('end', 'in_progress', 'unlinkingfiles', 'in_progress');
