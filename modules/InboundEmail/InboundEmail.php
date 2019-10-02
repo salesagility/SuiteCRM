@@ -2839,7 +2839,7 @@ class InboundEmail extends SugarBean
             } // if
             $stored_options['only_since'] = $onlySince;
             $stored_options['filter_domain'] = '';
-            $storedOptions['folderDelimiter'] = $delimiter;
+            $stored_options['folderDelimiter'] = $delimiter;
             $stored_options['outbound_email'] = (isset($_REQUEST['outbound_email'])) ? $_REQUEST['outbound_email'] : $oe->id;
             $this->stored_options = base64_encode(serialize($stored_options));
 
