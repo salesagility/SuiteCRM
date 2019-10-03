@@ -39,9 +39,10 @@
 
 namespace SuiteCRM\Search;
 
-use BeanFactory;
-use RuntimeException;
 use SugarBean;
+use BeanFactory;
+use LoggerManager;
+use RuntimeException;
 use SuiteCRM\Exception\Exception;
 
 if (!defined('sugarEntry') || !sugarEntry) {
