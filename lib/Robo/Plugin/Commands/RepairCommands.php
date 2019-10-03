@@ -141,7 +141,7 @@ class RepairCommands extends \Robo\Tasks
             unset($_REQUEST['silent']);
         }
 
-        require_once 'modules/Administration/RebuildRelationship.php';
+        require_once __DIR__ . '/../../../../modules/Administration/RebuildRelationship.php';
 
         if ($opts['show-output']) {
             echo "\n";
