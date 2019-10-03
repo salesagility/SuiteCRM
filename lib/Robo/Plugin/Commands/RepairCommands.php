@@ -77,7 +77,7 @@ class RepairCommands extends \Robo\Tasks
             $GLOBALS['reload_vardefs'] = true;
             $focus = new $bean_name();
 
-            if (isset($focus->disable_vardefs) && $focus->disable_vardefs == false && isset($focus->module_dir)) {
+            if (isset($focus->disable_vardefs) && $focus->disable_vardefs === false && isset($focus->module_dir)) {
                 include 'modules/'.$focus->module_dir.'/vardefs.php';
                 $sql = $db->repairTable($focus, !$opts['no-execute']);
 
