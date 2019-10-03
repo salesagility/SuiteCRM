@@ -241,7 +241,7 @@ class SugarAuthenticateUser
         if (function_exists('random_int')) {
             $token = random_int($min, $max);
         } else {
-            $token = rand($min, $max);
+            $token = mt_rand($min, $max);
         }
 
         $emailTemplate = new EmailTemplate();
@@ -272,13 +272,13 @@ class SugarAuthenticateUser
         if (!$mailer->send()) {
             $ret = false;
             $GLOBALS['log']->fatal(
-                    'Email sending for two factor email authentication via Email Code failed. Mailer Error Info: ' .
+                'Email sending for two factor email authentication via Email Code failed. Mailer Error Info: ' .
                     $mailer->ErrorInfo
             );
         } else {
             $ret = true;
             $GLOBALS['log']->debug(
-                    'Token sent to user: ' .
+                'Token sent to user: ' .
                     $current_user->id . ', token: ' . $token . ' so we store it in the session'
             );
 

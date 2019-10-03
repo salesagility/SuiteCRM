@@ -190,8 +190,8 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
             $subquery = new Zend_Search_Lucene_Search_Query_Term($term);
 
             $query->addSubquery(
-                    $subquery->rewrite($index),
-                                    ($this->_signs === null)?  true : $this->_signs[$termId]
+                $subquery->rewrite($index),
+                ($this->_signs === null)?  true : $this->_signs[$termId]
                 );
         }
 
@@ -340,10 +340,10 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
             $docFreqs,
             SORT_ASC,
             SORT_NUMERIC,
-                        $ids,
+            $ids,
             SORT_ASC,
             SORT_NUMERIC,
-                        $this->_terms
+            $this->_terms
         );
 
         require_once 'Zend/Search/Lucene/Index/DocsFilter.php';
@@ -405,10 +405,10 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
             $requiredVectorsSizes,
             SORT_ASC,
             SORT_NUMERIC,
-                        $requiredVectorsIds,
+            $requiredVectorsIds,
             SORT_ASC,
             SORT_NUMERIC,
-                        $requiredVectors
+            $requiredVectors
         );
 
         $required = null;
@@ -481,7 +481,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
         if ($this->_coord === null) {
             $this->_coord = $reader->getSimilarity()->coord(
                 count($this->_terms),
-                                                            count($this->_terms)
+                count($this->_terms)
             );
         }
 

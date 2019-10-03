@@ -40,7 +40,6 @@
 
 use Api\Core\Loader\CustomLoader;
 use Slim\App;
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
 
 /**
  * CustomLoaderTest

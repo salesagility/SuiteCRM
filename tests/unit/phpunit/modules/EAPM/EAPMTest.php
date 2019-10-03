@@ -5,7 +5,6 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testEAPM()
     {
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('aod_index');
@@ -46,9 +45,6 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $eapmTable = $state->pushTable('eapm');
         
         // test
-        
-        
-
         $eapm = new EAPM();
         $this->assertEquals(false, $eapm->bean_implements('')); //test with blank value
         $this->assertEquals(false, $eapm->bean_implements('test')); //test with invalid value
@@ -127,13 +123,11 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::markTestIncomplete('eapm table fails');
         
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $eapmTable = $state->pushTable('eapm');
         
         // test
-        
         $eapm = new EAPM();
 
         $eapm->name = 'test';
@@ -175,10 +169,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $eapmTable = $state->pushTable('eapm');
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
-        
-        
-        
-        
+
         $eapm = new EAPM();
 
         //execute the method and test if it works and does not throws an exception.
@@ -190,7 +181,6 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         DBManagerFactory::getInstance()->query("TRUNCATE TABLE eapm");
         
         $state->popTable('aod_index');
@@ -207,10 +197,6 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $eapmTable = $state->pushTable('eapm');
         
         // test
-        
-        
-        
-        
         $eapm = new EAPM();
 
         //execute the method and test if it works and does not throws an exception.
@@ -231,13 +217,11 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsave_cleanup()
     {
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $eapmTable = $state->pushTable('eapm');
         
         // test
-        
         $eapm = new EAPM();
 
         //execute the method and verify attributes are set accordingly
@@ -257,16 +241,11 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testdelete_user_accounts()
     {
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $eapmTable = $state->pushTable('eapm');
         
         // test
-        
-        
-        
-        
         $eapm = new EAPM();
 
         //execute the method and test if it works and does not throws an exception.
@@ -287,18 +266,14 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetEAPMExternalApiDropDown()
     {
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $eapmTable = $state->pushTable('eapm');
         
         // test
-        
-
         $result = getEAPMExternalApiDropDown();
         $this->assertEquals(array('' => ''), $result);
-        
-        
+
         // clean up
         DBManagerFactory::getInstance()->query("TRUNCATE TABLE eapm");
         

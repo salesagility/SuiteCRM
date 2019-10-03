@@ -95,7 +95,7 @@ class SecurityGroup extends SecurityGroup_sugar
      *
      * @return string
      */
-    public function getGroupJoin($table_name, $module, $user_id)
+    public static function getGroupJoin($table_name, $module, $user_id)
     {
 
         //need a different query if doing a securitygroups check
@@ -122,7 +122,7 @@ class SecurityGroup extends SecurityGroup_sugar
      *
      * @return string
      */
-    public function getGroupUsersJoin($user_id)
+    public static function getGroupUsersJoin($user_id)
     {
         return " LEFT JOIN (
             select distinct sec.user_id as id from securitygroups_users sec
@@ -204,13 +204,12 @@ class SecurityGroup extends SecurityGroup_sugar
         ) {
             //check to see if a member of more than 1 group...if not then just inherit the one.
             //Otherwise, this is taken on the edit view on create now
-            $groupFocus = new self();
-            $security_modules = $groupFocus->getSecurityModules();
+            $security_modules = self::getSecurityModules();
             if (in_array($focus->module_dir, array_keys($security_modules))) {
                 //check if user is in more than 1 group. If so then set the session var otherwise inherit it's only group
                 global $current_user;
 
-                $memberships = $groupFocus->getMembershipCount($current_user->id);
+                $memberships = self::getMembershipCount($current_user->id);
                 if ($memberships > 1) {
                     return;
                 }
@@ -227,13 +226,12 @@ class SecurityGroup extends SecurityGroup_sugar
     {
         if (!$isUpdate) {
             //inherit only for those that support Security Groups
-            $groupFocus = new self();
-            $security_modules = $groupFocus->getSecurityModules();
+            $security_modules = self::getSecurityModules();
             if (!in_array($focus->module_dir, array_keys($security_modules))) {
                 return;
             }
 
-            $defaultGroups = $groupFocus->retrieveDefaultGroups();
+            $defaultGroups = self::retrieveDefaultGroups();
             foreach ($defaultGroups as $default_id => $defaultGroup) {
                 if ($defaultGroup['module'] == 'All' || $defaultGroup['module'] == $focus->module_dir) {
                     if ($focus->module_dir == 'Users') {
@@ -274,8 +272,7 @@ class SecurityGroup extends SecurityGroup_sugar
             }
 
             //inherit only for those that support Security Groups
-            $groupFocus = new self();
-            $security_modules = $groupFocus->getSecurityModules();
+            $security_modules = self::getSecurityModules();
 
             if (in_array($focus->module_dir, array_keys($security_modules))) {
                 $query = 'INSERT INTO securitygroups_records(id,securitygroup_id,record_id,module,date_modified,deleted) '
@@ -308,8 +305,7 @@ class SecurityGroup extends SecurityGroup_sugar
             if (!empty($focus->assigned_user_id)) {
                 $assigned_user_id = $focus->assigned_user_id;
                 //inherit only for those that support Security Groups
-                $groupFocus = new self();
-                $security_modules = $groupFocus->getSecurityModules();
+                $security_modules = self::getSecurityModules();
                 //if(in_array($focus->module_dir,$security_modules)) {
                 if (in_array($focus->module_dir, array_keys($security_modules))) {
                     $query = 'INSERT INTO securitygroups_records(id,securitygroup_id,record_id,module,date_modified,deleted) '
@@ -347,8 +343,7 @@ class SecurityGroup extends SecurityGroup_sugar
             $focus_id = $focus->id;
 
             //inherit only for those that support Security Groups
-            $groupFocus = new self();
-            $security_modules = $groupFocus->getSecurityModules();
+            $security_modules = self::getSecurityModules();
             //if(!in_array($focus_module_dir,$security_modules)) {
             if (!in_array($focus_module_dir, array_keys($security_modules))) {
                 //rost fix2
@@ -481,7 +476,7 @@ class SecurityGroup extends SecurityGroup_sugar
      * @param string $module
      * @return boolean
      */
-    public function inheritOne($user_id, $record_id, $module)
+    public static function inheritOne($user_id, $record_id, $module)
     {
         //check to see if in just one group...if so, inherit that group and return true
         $db = DBManagerFactory::getInstance();
@@ -517,7 +512,7 @@ class SecurityGroup extends SecurityGroup_sugar
      * @param string $user_id
      * @return
      */
-    public function getMembershipCount($user_id)
+    public static function getMembershipCount($user_id)
     {
         $db = DBManagerFactory::getInstance();
 
@@ -542,7 +537,7 @@ class SecurityGroup extends SecurityGroup_sugar
     /**
      * @return array
      */
-    public function retrieveDefaultGroups()
+    public static function retrieveDefaultGroups()
     {
         $db = DBManagerFactory::getInstance();
 
@@ -568,30 +563,36 @@ class SecurityGroup extends SecurityGroup_sugar
      * @param string $group_id
      * @param string $module
      */
-    public function saveDefaultGroup($group_id, $module)
+    public static function saveDefaultGroup($group_id, $module)
     {
+        $db = DBManagerFactory::getInstance();
+
         $query = 'INSERT INTO securitygroups_default (id, securitygroup_id, module, date_modified, deleted) '
             . 'VALUES ( ';
-        if ($this->db->dbType == 'mysql') {
+        if ($db->dbType === 'mysql') {
             $query .= ' uuid() ';
-        } elseif ($this->db->dbType == 'mssql') {
+        } elseif ($db->dbType === 'mssql') {
             $query .= ' lower(newid()) ';
         }
         $query .= ",'" . htmlspecialchars($group_id, ENT_QUOTES) . "', '" . htmlspecialchars(
             $module,
                 ENT_QUOTES
-        ) . "'," . $this->db->convert('', 'today') . ',0 )';
+        ) . "'," . $db->convert('', 'today') . ',0 )';
+      
         $GLOBALS['log']->debug("SecuritySuite: Save Default Group: $query");
-        $this->db->query($query);
+        $db->query($query);
     }
 
     /**
      * @param string $default_id
      */
-    public function removeDefaultGroup($default_id)
+    public static function removeDefaultGroup($default_id)
     {
-        $query = "DELETE FROM securitygroups_default WHERE id = '" . htmlspecialchars($default_id) . "' ";
-        $this->db->query($query);
+        $db = DBManagerFactory::getInstance();
+
+        $query = "DELETE FROM securitygroups_default WHERE id = '" . htmlspecialchars($default_id,
+                ENT_QUOTES | ENT_HTML5) . "' ";
+        $db->query($query);
     }
 
     /**
@@ -600,7 +601,7 @@ class SecurityGroup extends SecurityGroup_sugar
      *
      * This will be used for things such as default groups for modules, etc.
      */
-    public function getSecurityModules()
+    public static function getSecurityModules()
     {
         global $app_list_strings;
 
@@ -643,7 +644,7 @@ class SecurityGroup extends SecurityGroup_sugar
      * @param string $rel_module
      * @return
      */
-    public function getLinkName($this_module, $rel_module)
+    public static function getLinkName($this_module, $rel_module)
     {
         $GLOBALS['log']->debug("SecurityGroup->getLinkName this_module: $this_module rel_module: $rel_module");
         include_once 'modules/Relationships/RelationshipHandler.php';
@@ -683,7 +684,7 @@ class SecurityGroup extends SecurityGroup_sugar
      * @param string $record_id
      * @param string $securitygroup_id
      */
-    public function removeGroupFromRecord($module, $record_id, $securitygroup_id)
+    public static function removeGroupFromRecord($module, $record_id, $securitygroup_id)
     {
         if (empty($module) || empty($record_id) || empty($securitygroup_id)) {
             return; //missing data
@@ -700,7 +701,7 @@ class SecurityGroup extends SecurityGroup_sugar
      * @param string $user_id
      * @return array
      */
-    public function getUserSecurityGroups($user_id)
+    public static function getUserSecurityGroups($user_id)
     {
         $db = DBManagerFactory::getInstance();
         $query = 'select securitygroups.id, securitygroups.name from securitygroups_users '
@@ -721,7 +722,7 @@ class SecurityGroup extends SecurityGroup_sugar
     /**
      * Return a list of all groups.
      */
-    public function getAllSecurityGroups()
+    public static function getAllSecurityGroups()
     {
         $db = DBManagerFactory::getInstance();
         $query = 'SELECT id, name FROM securitygroups '
@@ -791,5 +792,81 @@ order by securitygroups_users.primary_group desc ";
         }
 
         return $primary_group_id;
+    }
+
+    //used in EditView2 to figure out what the parent security groups are set to
+    public static function getParentGroups($focus)
+    {
+        $parent_groups = [];
+
+        if (empty($_REQUEST['return_module']) || empty($_REQUEST['return_id'])) {
+            //not a subpanel create so bounce
+            return $parent_groups;
+        }
+
+        $parent_type = $_REQUEST['return_module'];
+        $parent_id = $_REQUEST['return_id'];
+
+        $parent_bean = self::getParentBean($parent_id, $parent_type);
+
+        if (!empty($parent_bean)) {
+            $rel_name = 'SecurityGroups';
+            if ($parent_type !== 'Users') {
+                $rel_name = self::getLinkName($parent_type, 'SecurityGroups');
+            }
+
+            $parent_bean->load_relationship($rel_name);
+            if (!empty($parent_bean->$rel_name)) {
+                $groups = $parent_bean->$rel_name->getBeans();
+                //reorganize to index by id
+                if (!empty($groups)) {
+                    foreach ($groups as $group) {
+                        $parent_groups[$group->id] = $group;
+                    }
+                }
+            }
+        }
+
+
+        return $parent_groups;
+    }
+
+    //for displaying on the list, detail, edit views
+    public static function getRecordGroups($focus)
+    {
+        $parent_groups = [];
+
+        if (empty($focus)) {
+            return $parent_groups;
+        }
+
+        $rel_name = 'SecurityGroups';
+        if ($focus->module_dir !== 'Users') {
+            $rel_name = self::getLinkName($focus->module_dir, 'SecurityGroups');
+        }
+
+        $focus->load_relationship($rel_name);
+
+        if (!empty($focus->$rel_name)) {
+            $groups = $focus->$rel_name->getBeans();
+            //reorganize to index by id
+            if (!empty($groups)) {
+                foreach ($groups as $group) {
+                    $parent_groups[$group->id] = $group;
+                }
+            }
+        }
+
+        return $parent_groups;
+    }
+
+    public static function getParentBean($parent_id, $parent_type)
+    {
+
+        if (empty($parent_id) || empty($parent_type)) {
+            return false;
+        }
+
+        return BeanFactory::getBean($parent_type, $parent_id);
     }
 }

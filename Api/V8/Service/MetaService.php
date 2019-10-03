@@ -139,7 +139,7 @@ class MetaService
         $modules = query_module_access_list($current_user);
         \ACLController::filterModuleList($modules, false);
 
-        if(!in_array($module, $modules)) {
+        if (!in_array($module, $modules)) {
             throw new NotAllowedException('The API user does not have access to this module.');
         }
     }

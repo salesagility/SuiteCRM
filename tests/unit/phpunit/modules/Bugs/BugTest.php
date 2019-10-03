@@ -30,11 +30,6 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $bug = new Bug();
 
         //test without setting name
@@ -43,8 +38,6 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with name set//test with name set
         $bug->name = 'test';
         $this->assertEquals('test', $bug->get_summary_text());
-        
-        // clean up
     }
 
     public function testcreate_list_query()
@@ -81,12 +74,6 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $bug = new Bug();
 
         //execute the method and test if it works and does not throws an exception.
@@ -96,8 +83,6 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfill_in_additional_detail_fields()

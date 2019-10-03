@@ -39,8 +39,6 @@
  */
 namespace SuiteCRM\API\v8\Exception;
 
-use SuiteCRM\LangText;
-
 /**
  * Class BadRequestException
  * @package SuiteCRM\API\v8\Exception

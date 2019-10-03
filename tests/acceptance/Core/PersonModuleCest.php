@@ -6,12 +6,6 @@ use JeroenDesloovere\VCard\VCard;
 class PersonModuleCest
 {
     /**
-     * @var string $lastView helps the test skip some repeated tests in order to make the test framework run faster at the
-     * potential cost of being accurate and reliable
-     */
-    protected $lastView;
-
-    /**
      * @var Generator $fakeData
      */
     protected $fakeData;
@@ -28,7 +22,7 @@ class PersonModuleCest
     {
         if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
-            $this->fakeDataSeed = rand(0, 2048);
+            $this->fakeDataSeed = mt_rand(0, 2048);
         }
         $this->fakeData->seed($this->fakeDataSeed);
     }
@@ -44,22 +38,16 @@ class PersonModuleCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to create and deploy a person module so that I can test
      * that the person functionality is working. Given that I have already created a module I expect to deploy
      * the module before testing.
      */
     public function testScenarioCreatePersonModule(
-       \AcceptanceTester $I,
-       \Step\Acceptance\ModuleBuilder $moduleBuilder,
-        \Helper\WebDriverHelper $webDriverHelper
+        \AcceptanceTester $I,
+        \Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a person module for testing');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 
@@ -68,15 +56,12 @@ class PersonModuleCest
             \Page\PersonModule::$NAME,
             \SuiteCRM\Enumerator\SugarObjectType::person
         );
-
-        $this->lastView = 'ModuleBuilder';
     }
 
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view my person test module so that I can see if it has been
      * deployed correctly.
@@ -84,13 +69,9 @@ class PersonModuleCest
     public function testScenarioViewPersonTestModule(
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View Person Test Module');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 
@@ -98,7 +79,6 @@ class PersonModuleCest
         $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 
     /**
@@ -107,7 +87,6 @@ class PersonModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a record with my person test module so that I can test
      * the standard fields.
@@ -117,21 +96,14 @@ class PersonModuleCest
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Create Person Test Module Record');
-        if ($this->lastView !== 'ListView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
-
-            // Go to Person Test Module
-            $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
-            $listView->waitForListViewVisible();
-        }
+        // Go to Person Test Module
+        $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
+        $listView->waitForListViewVisible();
 
         // Select create Person Test Module form the current menu
         $navigationBar->clickCurrentMenuItem('Create ' . \Page\PersonModule::$NAME);
@@ -168,7 +140,6 @@ class PersonModuleCest
         $editView->clickSaveButton();
 
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -176,7 +147,6 @@ class PersonModuleCest
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view the record by selecting it in the list view
      */
@@ -184,13 +154,9 @@ class PersonModuleCest
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Select Record from list view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 
@@ -214,7 +180,6 @@ class PersonModuleCest
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($name);
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -223,7 +188,6 @@ class PersonModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to edit the record by selecting it in the detail view
      */
@@ -232,38 +196,32 @@ class PersonModuleCest
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Edit Person Test Module Record from detail view');
-        if ($this->lastView !== 'DetailView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
 
-            $I->loginAsAdmin();
+        $I->loginAsAdmin();
 
-            // Go to Person Test Module
-            $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
-            $listView->waitForListViewVisible();
+        // Go to Person Test Module
+        $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Select record from list view
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $name = $this->fakeData->title;
-            $name .= ' ';
-            $this->fakeData->seed($this->fakeDataSeed);
-            $name = $this->fakeData->firstName;
-            $name .= ' ';
-            $this->fakeData->seed($this->fakeDataSeed);
-            $name .= $this->fakeData->lastName;
-            $listView->fillField('#search_name_basic', $name);
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickNameLink($name);
-        }
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $name = $this->fakeData->title;
+        $name .= ' ';
+        $this->fakeData->seed($this->fakeDataSeed);
+        $name = $this->fakeData->firstName;
+        $name .= ' ';
+        $this->fakeData->seed($this->fakeDataSeed);
+        $name .= $this->fakeData->lastName;
+        $listView->fillField('#search_name_basic', $name);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickNameLink($name);
 
         // Edit Record
         $detailView->clickActionMenuItem('Edit');
@@ -272,7 +230,6 @@ class PersonModuleCest
         $editView->click('Save');
 
         $detailView->waitForDetailViewVisible();
-        $this->lastView = "DetailView";
     }
 
     /**
@@ -281,7 +238,6 @@ class PersonModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to duplicate the record
      */
@@ -290,39 +246,32 @@ class PersonModuleCest
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Duplicate Person Test Module Record from detail view');
 
-        if ($this->lastView !== 'DetailView') {
-            $I->amOnUrl(
-                $webDriverHelper->getInstanceURL()
-            );
+        $I->loginAsAdmin();
 
-            $I->loginAsAdmin();
+        // Go to Person Test Module
+        $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
+        $listView->waitForListViewVisible();
 
-            // Go to Person Test Module
-            $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
-            $listView->waitForListViewVisible();
-
-            // Select record from list view
-            $listView->clickFilterButton();
-            $listView->click('Quick Filter');
-            $this->fakeData->seed($this->fakeDataSeed);
-            $name = $this->fakeData->title;
-            $name .= ' ';
-            $this->fakeData->seed($this->fakeDataSeed);
-            $name = $this->fakeData->firstName;
-            $name .= ' ';
-            $this->fakeData->seed($this->fakeDataSeed);
-            $name .= $this->fakeData->lastName;
-            $listView->fillField('#search_name_basic', $name);
-            $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
-            $this->fakeData->seed($this->fakeDataSeed);
-            $listView->clickNameLink($name);
-        }
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $name = $this->fakeData->title;
+        $name .= ' ';
+        $this->fakeData->seed($this->fakeDataSeed);
+        $name = $this->fakeData->firstName;
+        $name .= ' ';
+        $this->fakeData->seed($this->fakeDataSeed);
+        $name .= $this->fakeData->lastName;
+        $listView->fillField('#search_name_basic', $name);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickNameLink($name);
         // Edit Record
         $detailView->clickActionMenuItem('Duplicate');
 
@@ -344,7 +293,6 @@ class PersonModuleCest
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to delete the record by selecting it in the detail view
      */
@@ -352,13 +300,9 @@ class PersonModuleCest
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Delete Person Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 
@@ -388,7 +332,6 @@ class PersonModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 
     /**
@@ -397,7 +340,6 @@ class PersonModuleCest
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to delete the record by selecting it in the detail view
      */
@@ -406,14 +348,9 @@ class PersonModuleCest
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\SideBar $sideBar,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Create a Person Record using a vcard');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
 
         // Create VCard for test
         $vcard = new VCard();
@@ -453,11 +390,10 @@ class PersonModuleCest
         $I->waitForElementVisible('.import-vcard');
 
         $I->attachFile('#vcard_file', $fileName);
-        $I->wait(1);
+        $I->waitForElementVisible('.import-vcard #import_vcard_button');
         $I->click('#import_vcard_button', '.import-vcard');
 
         $detailView->waitForDetailViewVisible();
-        $this->lastView = ' DetailView';
         $detailView->see($firstname.' '.$lastname, '.module-title-text');
 
         // Delete Record
@@ -465,7 +401,6 @@ class PersonModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
 
         $I->deleteFile($fileDir.$fileName);
     }

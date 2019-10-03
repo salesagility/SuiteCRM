@@ -382,7 +382,7 @@ class SugarView
         $GLOBALS['app']->headerDisplayed = true;
 
         $themeObject = SugarThemeRegistry::current();
-        $theme = $themeObject->__toString();
+        $theme = (string)$themeObject;
 
         $ss = new Sugar_Smarty();
         $ss->assign("APP", $app_strings);
@@ -709,7 +709,7 @@ class SugarView
             foreach ($groupTabs as $key => $tabGroup) {
                 if (count($topTabs) >= $max_tabs - 1 && $key !== $app_strings['LBL_TABGROUP_ALL'] && in_array(
                     $tabGroup['modules'][$moduleTab],
-                        $tabGroup['extra']
+                    $tabGroup['extra']
                 )
                 ) {
                     unset($groupTabs[$key]['modules'][$moduleTab]);
@@ -1218,7 +1218,7 @@ EOHTML;
     protected function _checkModule()
     {
         if (!empty($this->module) && !file_exists('modules/' . $this->module)) {
-            $error = str_replace("[module]", "$this->module", $GLOBALS['app_strings']['ERR_CANNOT_FIND_MODULE']);
+            $error = str_replace("[module]", (string)$this->module, $GLOBALS['app_strings']['ERR_CANNOT_FIND_MODULE']);
             $GLOBALS['log']->fatal($error);
             echo $error;
             die();
@@ -1617,9 +1617,9 @@ EOHTML;
             if (!empty($iconPath) && !$browserTitle) {
                 if (SugarThemeRegistry::current()->directionality == "ltr") {
                     return $app_strings['LBL_SEARCH_ALT'] . "&nbsp;"
-                        . "$firstParam";
+                        . (string)$firstParam;
                 }
-                return "$firstParam" . "&nbsp;" . $app_strings['LBL_SEARCH'];
+                return (string)$firstParam . "&nbsp;" . $app_strings['LBL_SEARCH'];
             }
             return $firstParam;
         }

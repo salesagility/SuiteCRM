@@ -41,7 +41,6 @@
 namespace SuiteCRM\API\JsonApi\v1\Filters\Validators;
 
 use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ValidatorInterface;
-use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
 use SuiteCRM\Exception\InvalidArgumentException;
 
 /**

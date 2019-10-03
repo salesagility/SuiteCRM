@@ -148,7 +148,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
     }
         $doQuery = true;
 
-        if ($file_type == 'documents') {
+        if ($file_type == 'documents' && !isset($image_field)) {
             // cn: bug 9674 document_revisions table has no 'name' column.
             $query = "SELECT filename name FROM document_revisions INNER JOIN documents ON documents.id = document_revisions.document_id ";
             $query .= "WHERE document_revisions.id = '" . $db->quote($_REQUEST['id']) . "' ";
@@ -226,8 +226,9 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             $name = str_replace("+", "_", $name);
         }
 
-        header("Pragma: public");
-        header("Cache-Control: maxage=1, post-check=0, pre-check=0");
+        header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+        header('Cache-Control: post-check=0, pre-check=0', false);
+        header('Pragma: no-cache');
         if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == "SugarFieldImage")) {
             $mime = getimagesize($download_location);
             if (!empty($mime)) {
@@ -237,10 +238,10 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             }
         } else {
             header('Content-type: ' . $mime_type);
-            if ($_REQUEST['preview'] === "yes") {
-                header("Content-Disposition: inline; filename=\"".$name."\";");
+            if (isset($_REQUEST['preview']) && $_REQUEST['preview'] === 'yes') {
+                header('Content-Disposition: inline; filename="' . $name . '";');
             } else {
-                header("Content-Disposition: attachment; filename=\"" . $name . "\";");
+                header('Content-Disposition: attachment; filename="' . $name . '";');
             }
         }
         // disable content type sniffing in MSIE

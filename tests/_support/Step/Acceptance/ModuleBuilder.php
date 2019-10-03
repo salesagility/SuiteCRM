@@ -1,7 +1,6 @@
 <?php
 namespace Step\Acceptance;
 
-use Helper\WebDriverHelper;
 use SuiteCRM\Enumerator\SugarObjectType;
 
 class ModuleBuilder extends Administration
@@ -16,13 +15,14 @@ class ModuleBuilder extends Administration
     {
         $I = $this;
 
-        $I->gotoAdministration();
+        $I->visitPage('Administration', 'index');
 
         // Go To Module Builder
         $I->click('#moduleBuilder');
 
         $packageExists = $I->seePageHas($packageName, '#Buttons');
         if ($packageExists === false) {
+            $I->waitForElementVisible('#newPackageLink');
             // Create new package
             $I->click('#newPackageLink');
 
@@ -91,13 +91,13 @@ class ModuleBuilder extends Administration
     {
         $I = $this;
 
-        $I->gotoAdministration();
+        $I->visitPage('Administration', 'index');
 
         // Go To Module Builder
         $I->click('#moduleBuilder');
-        $I->waitForElementVisible('.bodywrapper', 30);
+        $I->waitForElementVisible('.bodywrapper');
         $I->click($packageName, '.bodywrapper');
-        $I->waitForElementVisible(['name' => 'author'], 30);
+        $I->waitForElementVisible(['name' => 'author']);
     }
 
 
@@ -109,23 +109,23 @@ class ModuleBuilder extends Administration
     {
         $I = $this;
 
-        $I->gotoAdministration();
+        $I->visitPage('Administration', 'index');
 
         // Go To Module Builder
         $I->click('#moduleBuilder');
-        $I->waitForElementVisible('.bodywrapper', 30);
+        $I->waitForElementVisible('.bodywrapper');
         $I->click($packageName, '.bodywrapper');
-        $I->waitForElementVisible(['name' => 'author'], 30);
+        $I->waitForElementVisible(['name' => 'author']);
         $I->click($moduleName, '#package_modules');
-        $I->waitForElementVisible(['name' => 'savebtn'], 30);
+        $I->waitForElementVisible(['name' => 'savebtn']);
     }
 
 
     public function closePopupSuccess()
     {
         $I = $this;
-        $I->waitForElementVisible('#sugarMsgWindow_mask', 30);
-        $I->waitForText('This operation is completed successfully', 30, '#sugarMsgWindow_c');
+        $I->waitForElementVisible('#sugarMsgWindow_mask');
+        $I->waitForText('This operation is completed successfully', null, '#sugarMsgWindow_c');
         $I->click('.container-close');
     }
 
@@ -139,11 +139,11 @@ class ModuleBuilder extends Administration
     {
         $I = $this;
 
-        $I->gotoAdministration();
+        $I->visitPage('Administration', 'index');
 
         // Go To Module Builder
         $I->click('#moduleBuilder');
-        $I->waitForElementVisible('.bodywrapper', 30);
+        $I->waitForElementVisible('.bodywrapper');
         $I->click($packageName, '.bodywrapper');
         $I->waitForElementVisible('[name="name"]');
         $I->click('Deploy');
@@ -156,6 +156,6 @@ class ModuleBuilder extends Administration
         $I->closePopupSuccess();
 
         // Wait for page to refresh and look for new package link
-        $I->waitForElement('#newPackageLink', 360);
+        $I->waitForElement('#newPackageLink');
     }
 }

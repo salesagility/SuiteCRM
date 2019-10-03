@@ -23,33 +23,25 @@ class jjwg_MarkersCest
             $this->fakeData = Faker\Factory::create();
         }
 
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\MapsMarkers $mapsMarkers
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the mapsMarkers module.
      */
     public function testScenarioViewMapsMarkersModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\MapsMarkers $mapsMarkers,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the mapsMarkers module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to mapsMarkers list-view
         $I->loginAsAdmin();
-        $mapsMarkers->gotoMapsMarkers();
+        $I->visitPage('jjwg_Markers', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Maps - Markers', '.module-title-text');
@@ -60,7 +52,6 @@ class jjwg_MarkersCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\MapsMarkers $mapMarker
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a map marker so that I can test
      * the standard fields.
@@ -69,18 +60,13 @@ class jjwg_MarkersCest
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\MapsMarkers $mapMarker,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\MapsMarkers $mapMarker
     ) {
         $I->wantTo('Create a Map Marker');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to map markers list-view
         $I->loginAsAdmin();
-        $mapMarker->gotoMapsMarkers();
+        $I->visitPage('jjwg_Markers', 'index');
         $listView->waitForListViewVisible();
 
         // Create map marker

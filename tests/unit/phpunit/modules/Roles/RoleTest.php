@@ -30,11 +30,6 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $role = new Role();
 
         //test without setting name
@@ -43,8 +38,6 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with name set
         $role->name = 'test';
         $this->assertEquals('test', $role->get_summary_text());
-        
-        // clean up
     }
 
     public function testcreate_export_query()

@@ -33,8 +33,6 @@ class GroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
         $state->pushTable('users');
-        
-        
 
         $group = new Group();
 
@@ -47,7 +45,6 @@ class GroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         $state->popTable('users');
         $state->popTable('tracker');
         $state->popTable('aod_index');

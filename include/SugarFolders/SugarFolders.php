@@ -960,8 +960,6 @@ class SugarFolder
             }
             $label = ($a['name'] == 'My Email' ? $this->modStrings['LNK_MY_INBOX'] : $a['name']);
 
-            $unseen = $this->getCountNewItems($a['id'], array('field' => 'status', 'value' => 'unread'), $a);
-
             $folderNode = new ExtNode($a['id'], $label);
             $folderNode->dynamicloadfunction = '';
             $folderNode->expanded = false;
@@ -978,7 +976,6 @@ class SugarFolder
             $folderNode->set_property('is_group', ($a['is_group'] == 1) ? 'true' : 'false');
             $folderNode->set_property('is_dynamic', ($a['is_dynamic'] == 1) ? 'true' : 'false');
             $folderNode->set_property('mbox', $folderNode->_properties['id']);
-            $folderNode->set_property('unseen', $unseen);
             $folderNode->set_property('id', $a['id']);
             $folderNode->set_property('folder_type', $a['folder_type']);
             $folderNode->set_property('children', array());
@@ -1077,8 +1074,6 @@ class SugarFolder
             $label = $this->modStrings['LBL_LIST_TITLE_MY_SENT'];
         }
 
-        $unseen = $this->getCountNewItems($a['id'], array('field' => 'status', 'value' => 'unread'), $a);
-
         $folderNode = new ExtNode($a['id'], $label);
         $folderNode->dynamicloadfunction = '';
         $folderNode->expanded = false;
@@ -1103,7 +1098,6 @@ class SugarFolder
         $folderNode->set_property('mbox', $a['id']);
         $folderNode->set_property('is_group', ($a['is_group'] == 1) ? 'true' : 'false');
         $folderNode->set_property('is_dynamic', ($a['is_dynamic'] == 1) ? 'true' : 'false');
-        $folderNode->set_property('unseen', $unseen);
         $folderNode->set_property('folder_type', $a['folder_type']);
 
         if (in_array($a['id'], $subscriptions) && $a['has_child'] == 1) {
@@ -1250,7 +1244,6 @@ class SugarFolder
             $query3 = "UPDATE folders SET has_child = 1 WHERE id = " . $this->db->quoted($this->parent_folder);
             $r3 = $this->db->query($query3);
         } else {
-
             $query = "UPDATE folders SET " .
                 "name = " . $this->db->quoted($this->name) . ", " .
                 "parent_folder = " . $this->db->quoted($this->parent_folder) . ", " .

@@ -205,7 +205,7 @@ class UsersLastImport extends SugarBean
 
         while ($row2 = $this->db->fetchByAssoc($result2)) {
             if (!$this->db->getOne(
-                    "SELECT email_address_id
+                "SELECT email_address_id
                         FROM email_addr_bean_rel
                         WHERE email_address_id = '{$row2['email_address_id']}'"
             )) {

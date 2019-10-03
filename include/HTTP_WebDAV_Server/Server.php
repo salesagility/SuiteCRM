@@ -574,8 +574,8 @@ class HTTP_WebDAV_Server
                             $files["files"][$filekey]["props"][]
                                 = $this->mkprop(
                                     "DAV:",
-                                                "lockdiscovery",
-                                                $this->lockdiscovery($files["files"][$filekey]['path'])
+                                    "lockdiscovery",
+                                    $this->lockdiscovery($files["files"][$filekey]['path'])
                                 );
                         } else {
                             // add empty value for this property
@@ -916,7 +916,7 @@ class HTTP_WebDAV_Server
             $this->http_status("404 not found");
         }
 
-        $this->http_status("$status");
+        $this->http_status((string)$status);
     }
 
 
@@ -1117,7 +1117,7 @@ class HTTP_WebDAV_Server
                 }
             }
 
-            $options["stream"] = fopen("php://input", "r");
+            $options["stream"] = fopen("php://input", 'rb');
 
             $stat = $this->PUT($options);
 
@@ -1378,7 +1378,7 @@ class HTTP_WebDAV_Server
             !strncmp(
                 $_SERVER["SCRIPT_NAME"],
                 $path,
-                     strlen($_SERVER["SCRIPT_NAME"])
+                strlen($_SERVER["SCRIPT_NAME"])
             )) {
             $options["dest"] = substr($path, strlen($_SERVER["SCRIPT_NAME"]));
             if (!$this->_check_lock_status($options["dest"])) {
@@ -1478,15 +1478,15 @@ class HTTP_WebDAV_Server
             // PEAR style method name
             return $this->checkAuth(
                 @$_SERVER["AUTH_TYPE"],
-                                     @$_SERVER["PHP_AUTH_USER"],
-                                     @$_SERVER["PHP_AUTH_PW"]
+                @$_SERVER["PHP_AUTH_USER"],
+                @$_SERVER["PHP_AUTH_PW"]
             );
         } elseif (method_exists($this, "check_auth")) {
             // old (pre 1.0) method name
             return $this->check_auth(
                 @$_SERVER["AUTH_TYPE"],
-                                     @$_SERVER["PHP_AUTH_USER"],
-                                     @$_SERVER["PHP_AUTH_PW"]
+                @$_SERVER["PHP_AUTH_USER"],
+                @$_SERVER["PHP_AUTH_PW"]
             );
         }
         // no method found -> no authentication required

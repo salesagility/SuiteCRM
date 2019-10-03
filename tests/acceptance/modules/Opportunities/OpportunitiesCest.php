@@ -23,33 +23,25 @@ class OpportunitiesCest
             $this->fakeData = Faker\Factory::create();
         }
 
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Opportunities $opportunities
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the opportunities module.
      */
     public function testScenarioViewOpportunitiesModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Opportunities $opportunities,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the opportunities module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to opportunities list-view
         $I->loginAsAdmin();
-        $opportunities->gotoOpportunities();
+        $I->visitPage('Opportunities', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Opportunities', '.module-title-text');
@@ -61,7 +53,6 @@ class OpportunitiesCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Opportunities $opportunities
      * @param \Step\Acceptance\Accounts $account
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create an opportunity so that I can test
      * the standard fields.
@@ -71,18 +62,13 @@ class OpportunitiesCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Opportunities $opportunities,
-        \Step\Acceptance\Accounts $account,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Accounts $account
     ) {
         $I->wantTo('Create an opportunity');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $account->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -91,7 +77,7 @@ class OpportunitiesCest
         $account->createAccount($account_name);
 
         // Navigate to opportunities list-view
-        $opportunities->gotoOpportunities();
+        $I->visitPage('Opportunities', 'index');
         $listView->waitForListViewVisible();
 
         // Create opportunity
@@ -104,7 +90,7 @@ class OpportunitiesCest
         $listView->waitForListViewVisible();
 
         // Delete account
-        $account->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
         $listView->clickFilterButton();
         $I->fillField('#name_basic', $account_name);

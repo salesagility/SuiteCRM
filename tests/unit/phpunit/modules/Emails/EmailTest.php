@@ -340,19 +340,16 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
     public function testbean_implements()
     {
         // save state
-
         $state = new StateSaver();
         $state->pushTable('aod_indexevent');
 
         // test
-        
         $email = new Email();
         $this->assertEquals(false, $email->bean_implements('')); //test with blank value
         $this->assertEquals(false, $email->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $email->bean_implements('ACL')); //test with valid value
         
         // clean up
-        
         $state->popTable('aod_indexevent');
     }
 
@@ -511,9 +508,7 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
 
     public function testsaveAndOthers()
     {
-
-    // save state
-
+        // save state
         $state = new StateSaver();
         $state->pushTable('email_addresses');
         $state->pushTable('emails');
@@ -524,8 +519,6 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
 
         // test
-        
-        
         $email = new Email();
 
         $email->from_addr = 'from@email.com';
@@ -570,7 +563,6 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->delete($email->id);
 
         // clean up
-        
         $state->popGlobals();
         $state->popTable('aod_index');
         $state->popTable('tracker');
@@ -1048,12 +1040,10 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         self::markTestIncomplete('environment dependency (span os a?)');
         
         // save state
-
         $state = new StateSaver();
         $state->pushGlobals();
         
         // test
-        
         $email = new Email();
 
         $expected = array('MAIN' => 'span', 'PARENT' => 'a', 'CONTACT' => 'span');
@@ -1061,7 +1051,6 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
 
         // clean up
-        
         $state->popGlobals();
     }
 
@@ -1180,7 +1169,6 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
     public function testquickCreateForm()
     {
         $email = new Email();
-        $sugar_theme = SugarThemeRegistry::current();
 
         $expected = '~/images/advanced_search~';
 
@@ -1208,15 +1196,11 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
 
     public function test_generateSearchImportWhereClause()
     {
-        
-    // save state
-
+        // save state
         $state = new StateSaver();
         $state->pushGlobals();
 
         // test
-        
-        
         $email = new Email();
 
         //test without request params
@@ -1247,7 +1231,6 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
 
 
         // clean up
-        
         $state->popGlobals();
     }
 
@@ -1280,14 +1263,11 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
 
     public function testdistributionForm()
     {
-
-    // save state
-
+        // save state
         $state = new StateSaver();
         $state->pushGlobals();
 
         // test
-        
         require_once 'include/utils/layout_utils.php';
         $email = new Email();
 
@@ -1300,7 +1280,6 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan(0, strlen($result));
 
         // clean up
-        
         $state->popGlobals();
     }
 
@@ -1339,12 +1318,6 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
 
     public function testfillPrimaryParentFields()
     {
-        $state = new StateSaver();
-        
-        
-        
-        
-        
         $email = new Email();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1354,18 +1327,10 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testcid2Link()
     {
-        $state = new StateSaver();
-        
-        
-        
-        
-        
         $email = new Email();
 
         $email->description_html = '<img class="image" src="cid:1">';
@@ -1378,18 +1343,10 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testcids2Links()
     {
-        $state = new StateSaver();
-        
-        
-        
-        
-        
         $email = new Email();
 
         $email->description_html = '<img class="image" src="cid:1">';
@@ -1402,18 +1359,10 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testsetFieldNullable()
     {
-        $state = new StateSaver();
-        
-        
-        
-        
-        
         $email = new Email();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1423,18 +1372,10 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testrevertFieldNullable()
     {
-        $state = new StateSaver();
-        
-        
-        
-        
-        
         $email = new Email();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1444,7 +1385,5 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 }

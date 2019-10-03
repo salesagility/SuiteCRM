@@ -14,16 +14,6 @@ class UsersTester extends \AcceptanceTester
     }
 
     /**
-     * Navigate to users module
-     */
-    public function gotoUsers()
-    {
-        $I = new NavigationBar($this->getScenario());
-        $I->clickUserMenuItem('Admin');
-        $I->see('ADMINISTRATION');
-    }
-
-    /**
      * Logout a user
      */
     public function logoutUser()

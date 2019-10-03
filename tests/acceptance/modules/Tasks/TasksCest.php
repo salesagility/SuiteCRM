@@ -23,33 +23,25 @@ class TasksCest
             $this->fakeData = Faker\Factory::create();
         }
 
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Tasks $tasks
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the tasks module.
      */
     public function testScenarioViewTasksModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Tasks $tasks,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the tasks module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to tasks list-view
         $I->loginAsAdmin();
-        $tasks->gotoTasks();
+        $I->visitPage('Tasks', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Tasks', '.module-title-text');

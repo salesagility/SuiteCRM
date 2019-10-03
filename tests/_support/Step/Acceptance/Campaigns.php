@@ -5,15 +5,6 @@ namespace Step\Acceptance;
 class Campaigns extends \AcceptanceTester
 {
     /**
-     * Navigate to campaigns module
-     */
-    public function gotoCampaigns()
-    {
-        $I = new NavigationBar($this->getScenario());
-        $I->clickAllMenuItem('Campaigns');
-    }
-
-    /**
      * Create a non-emails campaign
      *
      * @param $name
@@ -57,7 +48,7 @@ class Campaigns extends \AcceptanceTester
         $I->click('#wiz_submit_finish_button');
 
         // Step 4
-        $I->wait(3);
+        $I->waitForText('You have no associated targets in your selected target list(s) for this campaign. You can populate your list after finishing.');
         $I->see('You have no associated targets in your selected target list(s) for this campaign. You can populate your list after finishing.');
         $Sidebar->clickSideBarAction('View Campaigns');
     }
@@ -113,52 +104,52 @@ class Campaigns extends \AcceptanceTester
         $I->click('#next_button_div');
 
         // Step 5
-        $I->wait(3);
+        $I->waitForElementVisible('#marketing_name');
         $I->fillField('#marketing_name', $faker->email);
         $I->selectOption('#inbound_email_id', 'Test_BounceHandling');
         $I->click('#date_start_trigger');
         $I->click('#callnav_today');
-        $I->wait(3);
+        $I->waitForElementVisible('#wiz_submit_button');
         $I->click('#wiz_submit_button');
 
         // Step 6
-        $I->wait(3);
+        $I->waitForText('You cannot send a marketing email until your subscription list has at least one entry. You can populate your list after finishing.');
         $I->see('You cannot send a marketing email until your subscription list has at least one entry. You can populate your list after finishing.');
 
         // Populate target list
-        $targetList->gotoTargetList();
+        $I->visitPage('ProspectLists', 'index');
         $listView->waitForListViewVisible();
         $I->click($name . ' Subscription List');
         $detailView->waitForDetailViewVisible();
-        $I->wait(3);
+        $I->waitForElementVisible('#whole_subpanel_contacts');
         $I->click('#whole_subpanel_contacts');
-        $I->wait(3);
+        $I->waitForElementVisible('#prospect_list_contacts_create_button');
         $I->click('#prospect_list_contacts_create_button');
-        $I->wait(3);
+        $I->waitForElementVisible('#last_name');
         $I->fillField('#last_name', $faker->name);
         $I->click('Save');
 
-        $targetList->gotoTargetList();
+        $I->visitPage('ProspectLists', 'index');
         $listView->waitForListViewVisible();
         $I->click($name . ' Unsubscription List');
         $detailView->waitForDetailViewVisible();
-        $I->wait(3);
+        $I->waitForElementVisible('#whole_subpanel_contacts');
         $I->click('#whole_subpanel_contacts');
-        $I->wait(3);
+        $I->waitForElementVisible('#prospect_list_contacts_create_button');
         $I->click('#prospect_list_contacts_create_button');
-        $I->wait(3);
+        $I->waitForElementVisible('#last_name');
         $I->fillField('#last_name', $faker->name);
         $I->click('Save');
 
-        $targetList->gotoTargetList();
+        $I->visitPage('ProspectLists', 'index');
         $listView->waitForListViewVisible();
         $I->click($name . ' Test List');
         $detailView->waitForDetailViewVisible();
-        $I->wait(3);
+        $I->waitForElementVisible('#whole_subpanel_contacts');
         $I->click('#whole_subpanel_contacts');
-        $I->wait(3);
+        $I->waitForElementVisible('#prospect_list_contacts_create_button');
         $I->click('#prospect_list_contacts_create_button');
-        $I->wait(3);
+        $I->waitForElementVisible('#last_name');
         $I->fillField('#last_name', $faker->name);
         $I->click('Save');
     }

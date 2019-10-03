@@ -1237,8 +1237,9 @@
     }).done(function (jsonResponse) {
       var response = JSON.parse(jsonResponse);
       var urlParams = new URLSearchParams(window.location.search);
-	  var act = urlParams.get('action');
+	    var act = urlParams.get('action');
       if (typeof response.data !== "undefined" && act !== "ReplyTo" && act !== "ReplyToAll") {
+        $('.file-attachments').empty();
         $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse(response);
       }
       if (typeof response.errors !== "undefined") {
@@ -1271,7 +1272,6 @@
 
   $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse = function (response) {
     var isDraft = (typeof response.data.draft !== undefined && response.data.draft ? true : false);
-    $('.file-attachments').empty();
     var inputName = 'template_attachment[]';
     var removeName = 'temp_remove_attachment[]';
     if (isDraft) {
@@ -1283,13 +1283,6 @@
         .attr('type', 'hidden')
         .attr('name', 'removeAttachment')
         .appendTo($('.file-attachments'));
-      if (!isDraft) {
-        $('<input>')
-          .attr('type', 'hidden')
-          .attr('name', 'ignoreParentAttachments')
-          .attr('value', '1')
-          .appendTo($('.file-attachments'));
-      }
       for (i = 0; i < response.data.attachments.length; i++) {
         var id = response.data.attachments[i]['id'];
         var fileGroupContainer = $('<div></div>')

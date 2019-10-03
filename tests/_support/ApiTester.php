@@ -71,8 +71,8 @@ class ApiTester extends \Codeception\Actor
     public function loginAsAdminWithClientCredentials()
     {
         $this->loginWithClientCredentialsGrant(
-              $this->getClientCredentialsGrantClientId(),
-              $this->getClientCredentialsGrantClientSecret()
+            $this->getClientCredentialsGrantClientId(),
+            $this->getClientCredentialsGrantClientSecret()
         );
     }
 
@@ -299,6 +299,35 @@ class ApiTester extends \Codeception\Actor
     {
         $db = DBManagerFactory::getInstance();
         $query = sprintf("DELETE FROM %s WHERE id = %s", $tableName, $db->quoted($id));
+        $db->query($query);
+    }
+
+    /**
+     * This is also temporary till we fix this.
+     *
+     * @param array $relationshipMeta
+     * @param array $ids
+     */
+    public function deleteRelationship($relationshipMeta, $ids)
+    {
+        $tableName = $relationshipMeta['tableName'];
+        $sourceIdName = $relationshipMeta['sourceIdName'];
+        $relatedIdName = $relationshipMeta['relatedIdName'];
+
+        $sourceId = $ids['sourceId'];
+        $relatedId = $ids['relatedId'];
+
+        $db = DBManagerFactory::getInstance();
+
+        $query = sprintf(
+            'DELETE FROM %s WHERE %s = %s AND %s = %s',
+            $tableName,
+            $sourceIdName,
+            $sourceId,
+            $relatedIdName,
+            $relatedId
+        );
+
         $db->query($query);
     }
 }

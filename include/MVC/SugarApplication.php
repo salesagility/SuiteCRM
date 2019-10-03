@@ -345,11 +345,7 @@ class SugarApplication
      */
     public static function preLoadLanguages()
     {
-        if (!empty($_SESSION['authenticated_user_language'])) {
-            $GLOBALS['current_language'] = $_SESSION['authenticated_user_language'];
-        } else {
-            $GLOBALS['current_language'] = $GLOBALS['sugar_config']['default_language'];
-        }
+        $GLOBALS['current_language'] = get_current_language();
         $GLOBALS['log']->debug('current_language is: ' . $GLOBALS['current_language']);
         //set module and application string arrays based upon selected language
         $GLOBALS['app_strings'] = return_application_language($GLOBALS['current_language']);
@@ -361,11 +357,7 @@ class SugarApplication
      */
     public function loadLanguages()
     {
-        if (!empty($_SESSION['authenticated_user_language'])) {
-            $GLOBALS['current_language'] = $_SESSION['authenticated_user_language'];
-        } else {
-            $GLOBALS['current_language'] = $GLOBALS['sugar_config']['default_language'];
-        }
+        $GLOBALS['current_language'] = get_current_language();
         $GLOBALS['log']->debug('current_language is: ' . $GLOBALS['current_language']);
         //set module and application string arrays based upon selected language
         $GLOBALS['app_strings'] = return_application_language($GLOBALS['current_language']);
@@ -651,7 +643,7 @@ class SugarApplication
      * @param	string	$url	The URL to redirect to
      */
     public static function redirect(
-    $url
+        $url
     ) {
         /*
          * If the headers have been sent, then we cannot send an additional location header
@@ -785,20 +777,27 @@ class SugarApplication
     /**
      * Wrapper for the PHP setcookie() function, to handle cases where headers have
      * already been sent
+     * @param $name
+     * @param $value
+     * @param int $expire
+     * @param null $path
+     * @param null $domain
+     * @param bool $secure
+     * @param bool $httponly
      */
     public static function setCookie(
-    $name,
+        $name,
         $value,
         $expire = 0,
-        $path = '/',
+        $path = null,
         $domain = null,
         $secure = false,
         $httponly = true
     ) {
-        if(isSSL()){
-	        $secure = true;
+        if (isSSL()) {
+            $secure = true;
         }
-        if (is_null($domain)) {
+        if ($domain === null) {
             if (isset($_SERVER["HTTP_HOST"])) {
                 $domain = $_SERVER["HTTP_HOST"];
             } else {

@@ -23,33 +23,25 @@ class QuotesCest
             $this->fakeData = Faker\Factory::create();
         }
 
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Quotes $quotes
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the quotes module.
      */
     public function testScenarioViewQuotesModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Quotes $quotes,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the quotes module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to quotes list-view
         $I->loginAsAdmin();
-        $quotes->gotoQuotes();
+        $I->visitPage('AOS_Quotes', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Quotes', '.module-title-text');
