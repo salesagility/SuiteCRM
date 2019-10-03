@@ -41,14 +41,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/* this table should never get created, it should only be used as a template for the acutal audit tables
- * for each moudule.
+/* This table should never get created, it should only be used as a template for the actual audit tables
+ * for each module.
  */
 $dictionary['audit'] =
         array( 'table' => 'audit',
                   'fields' => array(
-                        'id'=> array('name' =>'id', 'type' =>'id', 'len'=>'36','required'=>true),
-                        'parent_id'=>array('name' =>'parent_id', 'type' =>'id', 'len'=>'36','required'=>true),
+                      'id'=> array('name' =>'id', 'type' =>'id', 'len'=>'36','required'=>true),
+                      'parent_id'=>array('name' =>'parent_id', 'type' =>'id', 'len'=>'36','required'=>true),
                       'date_created'=>array('name' =>'date_created','type' => 'datetime'),
                       'created_by'=>array('name' =>'created_by','type' => 'varchar','len' => 36),
                       'field_name'=>array('name' =>'field_name','type' => 'varchar','len' => 100),
