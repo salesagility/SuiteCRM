@@ -133,7 +133,7 @@ class RepairCommands extends \Robo\Tasks
      */
     public function repairRebuildRelationships(array $opts = ['show-output' => false])
     {
-        $this->say("Rebuilding Relationships...");
+        $this->say('Rebuilding Relationships...');
 
         $_REQUEST['silent'] = 'no';
 
