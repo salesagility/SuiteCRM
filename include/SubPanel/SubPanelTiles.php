@@ -211,7 +211,7 @@ class SubPanelTiles
             // so we need to do a merge while attempting as best we can to preserve the sense of the specified order
             // this is complicated by the different ordering schemes used in the two sources for the panels: the user's layout uses an ordinal layout, the panels from getTabs have an explicit ordering driven by the 'order' parameter
             // it's not clear how to best reconcile these two schemes; so we punt on it, and add all new panels to the end of the user's layout. At least this will give them a clue that something has changed...
-            // we also now check for tabs that have been removed since the user saved his or her preferences.
+            // we also now check for tabs that have been removed since the user saved their preferences.
 
             $tabs = $this->getTabs($showContainer, $selected_group) ;
 
