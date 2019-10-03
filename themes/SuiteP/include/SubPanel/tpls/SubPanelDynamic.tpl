@@ -90,7 +90,7 @@
                 <td>{$cell}</td>
             {/foreach}
             <td>
-                {if $ROWS_BUTTONS.$rowHeader|@count gt 0}
+                {if isset($ROWS_BUTTONS.$rowHeader) and  $ROWS_BUTTONS.$rowHeader|@count gt 0}
                     {sugar_action_menu id="$rowHeader" buttons=$ROWS_BUTTONS.$rowHeader class="" flat=false}
                 {/if}
             </td>

@@ -842,7 +842,7 @@ class parseCSV
     public function _rfile($file = null)
     {
         if (is_readable($file)) {
-            if (!($fh = fopen($file, 'r'))) {
+            if (!($fh = fopen($file, 'rb'))) {
                 return false;
             }
             $data = fread($fh, filesize($file));

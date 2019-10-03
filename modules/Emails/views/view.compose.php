@@ -57,6 +57,8 @@ class EmailsViewCompose extends ViewEdit
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->type = 'compose';
         if (empty($_REQUEST['return_module'])) {
             $this->options['show_title'] = false;

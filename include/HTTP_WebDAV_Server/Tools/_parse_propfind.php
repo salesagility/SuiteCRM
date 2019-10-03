@@ -74,7 +74,7 @@ class _parse_propfind
         $had_input = false;
 
         // open input stream
-        $f_in = fopen($path, "r");
+        $f_in = fopen($path, 'rb');
         if (!$f_in) {
             $this->success = false;
             return;

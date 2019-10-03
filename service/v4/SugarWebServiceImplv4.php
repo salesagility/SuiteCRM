@@ -497,10 +497,6 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
                 if ($beanName != "User"
                     && $beanName != "ProjectTask"
                     ) {
-                    $searchForm = new SearchForm($seed, $name) ;
-
-                    $searchForm->setup(array($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
-                    $where_clauses = $searchForm->generateSearchWhere() ;
                     require_once 'include/SearchForm/SearchForm2.php' ;
                     $searchForm = new SearchForm($seed, $name) ;
 
@@ -584,8 +580,6 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
                     if ($beanName == "ProjectTask") {
                         $filterFields = array('id', 'name', 'project_id', 'project_name');
                         $main_query = "select {$seed->table_name}.project_task_id id,{$seed->table_name}.project_id, {$seed->table_name}.name, project.name project_name from {$seed->table_name} ";
-                        $seed->add_team_security_where_clause($main_query);
-                        $main_query .= "LEFT JOIN teams ON $seed->table_name.team_id=teams.id AND (teams.deleted=0) ";
                         $main_query .= "LEFT JOIN project ON $seed->table_name.project_id = project.id ";
                         $main_query .= "where {$seed->table_name}.name like '{$search_string}%'";
                     } // if
