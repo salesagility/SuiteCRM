@@ -464,12 +464,13 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetTypeOptionsForSearch()
     {
-        //execute the method and verify that it retunrs expected results
-        $expected = array(
-                '' => '',
-                'campaign' => 'Campaign',
-                'email' => 'Email',
-        );
+        //execute the method and verify that it returns expected results
+        $expected = [
+            '' => '',
+            'campaign' => 'Campaign',
+            'email' => 'Email',
+            'event' => 'Event'
+        ];
         $actual = EmailTemplate::getTypeOptionsForSearch();
         $this->assertSame($expected, $actual);
     }
