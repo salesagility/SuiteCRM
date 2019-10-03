@@ -90,7 +90,7 @@ class RepairCommands extends \Robo\Tasks
         $total = count($queries);
 
         if (!$opts['no-execute']) {
-            $this->say("Database synchronized with vardefs!");
+            $this->say('Database synchronized with vardefs!');
             $this->say("Executed queries: {$total}");
             return;
         }
