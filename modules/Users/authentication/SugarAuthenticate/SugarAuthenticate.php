@@ -95,7 +95,7 @@ class SugarAuthenticate
     /**
      * Authenticates a user based on the username and password
      * returns true if the user was authenticated false otherwise
-     * it also will load the user into current user if he was authenticated
+     * it also will load the user into current user if they were authenticated
      *
      * @param string $username
      * @param string $password
