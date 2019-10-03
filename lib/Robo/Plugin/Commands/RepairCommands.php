@@ -111,7 +111,7 @@ class RepairCommands extends \Robo\Tasks
     public function repairRebuildExtensions(array $opts = ['show-output' => false])
     {
         $this->say("Rebuilding Extensions...");
-        require_once 'modules/Administration/QuickRepairAndRebuild.php';
+        require_once __DIR__ . '/../../../../modules/Administration/QuickRepairAndRebuild.php';
         global $current_user;
         $current_user->is_admin = '1';
         $tool = new \RepairAndClear();
