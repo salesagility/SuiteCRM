@@ -65,7 +65,7 @@ class Administration extends SugarBean
         'sugarpdf',
     );
     public $disable_custom_fields = true;
-    public $checkbox_fields = array("notify_send_by_default", "mail_smtpauth_req", "notify_on", 'portal_on', 'skypeout_on', 'system_mailmerge_on', 'proxy_auth', 'proxy_on', 'system_ldap_enabled', 'captcha_on');
+    public $checkbox_fields = array("notify_send_by_default", "mail_smtpauth_req", "notify_on", 'portal_on', 'system_mailmerge_on', 'proxy_auth', 'proxy_on', 'system_ldap_enabled', 'captcha_on');
 
     public function __construct()
     {
