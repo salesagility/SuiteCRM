@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,37 +37,9 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/* bootstrap composer's autoloader */
-require_once __DIR__ . '/../vendor/autoload.php';
-
-/* bootstrap sugarcrm */
-error_reporting(E_ALL);
-define('sugarEntry', true);
-global $sugar_config, $db;
-require_once __DIR__ . '/../include/utils.php';
-require_once __DIR__ . '/../include/modules.php';
-require_once __DIR__ . '/../include/entryPoint.php';
-
-// Load up the config.test.php file. This is used to define configuration values for the test environment.
-$testConfig = [];
-
-if (is_file(__DIR__ . '/../tests/config.test.php')) {
-    require_once __DIR__ . '/../tests/config.test.php';
-}
-
-foreach (array_keys($testConfig) as $key) {
-    if (isset($sugar_config[$key])) {
-        $sugar_config[$key] = $testConfig[$key];
-    } else {
-        $sugar_config[] = $testConfig[$key];
-    }
-}
-
-//Oddly entry point loads app_strings but not app_list_strings, manually do this here.
-$GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['current_language']);
-
-/* VERY BAD :-( - but for now at least tests are running */
-$GLOBALS['sugar_config']['resource_management']['default_limit'] = 999999;
-
-
-define('SUITE_PHPUNIT_RUNNER', true);
+# This is an example configuration file that should be copied to a file named config.test.php.
+# The config.test.php file allows you to define configuration values for the test environment.
+# It can be customized without committing it to git. (config.test.php is ignored by the gitignore).
+$testConfig = [
+    'imap_test' => true,
+];
