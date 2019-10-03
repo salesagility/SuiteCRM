@@ -733,7 +733,7 @@ HTML;
         $email_mod_strings = return_module_language($current_language, 'Emails');
         $modStrings = "var mod_strings = new Object();\n";
         foreach ($email_mod_strings as $k => $v) {
-            $v = str_replace("'", "\'", $v);
+            $v = str_replace("'", "\'",str_replace("\\'", "'", $v));
             $modStrings .= "mod_strings.{$k} = '{$v}';\n";
         }
         $lang .= "\n\n{$modStrings}\n";

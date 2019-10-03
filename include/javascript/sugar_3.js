@@ -336,8 +336,7 @@ else{return confirm(SUGAR.language.get('app_strings','NTC_UPDATE_CONFIRMATION_NU
 sugarListView.get_num_selected_is_exact=function(){var the_form=document.MassUpdate;return(typeof the_form=='undefined'||the_form.select_entire_list.value!=1||!the_form.show_plus.value);}
 sugarListView.get_num_selected_string=function(){var count=sugarListView.get_num_selected().toString();if(!sugarListView.get_num_selected_is_exact()){count+='+';}
 return count;}
-sugarListView.get_num_selected=function(){if(typeof document.MassUpdate!='undefined'){var the_form=document.MassUpdate;if(typeof the_form!='undefined'&&the_form.select_entire_list.value==1){var selectCount=$("input[name='selectCount[]']:first");if(selectCount.length>0)
-return parseInt(selectCount.val().replace("+",""));}}
+sugarListView.get_num_selected=function(){var the_form=document.MassUpdate;if(typeof the_form!='undefined'&&the_form.select_entire_list.value==1){var selectCount=$("input[name='selectCount[]']:first");if(selectCount.length>0){return parseInt(selectCount.val().replace("+",""));}}
 return sugarListView.get_checks_count();}
 sugarListView.update_count=function(count,add){if(typeof document.MassUpdate!='undefined'){the_form=document.MassUpdate;for(var wp=0;wp<the_form.elements.length;wp++){if(typeof the_form.elements[wp].name!='undefined'&&the_form.elements[wp].name=='selectCount[]'){if(add){the_form.elements[wp].value=parseInt(the_form.elements[wp].value,10)+count;if(!sugarListView.get_num_selected_is_exact()){the_form.elements[wp].value+='+';}}else{if(!sugarListView.get_num_selected_is_exact()){the_form.elements[wp].value=count+'+';}else{the_form.elements[wp].value=count;}}}}}}
 sugarListView.prototype.use_external_mail_client=function(no_record_txt,module){selected_records=sugarListView.get_checks_count();if(selected_records<1){alert(no_record_txt);return false;}
