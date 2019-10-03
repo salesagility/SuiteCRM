@@ -40,6 +40,12 @@
 
 namespace SuiteCRM\Robo\Plugin\Commands;
 
+use DBManagerFactory;
+use RepairAndClear;
+use Robo\Tasks as RoboTasks;
+use RuntimeException;
+use VardefManager;
+
 /**
  * Class RepairCommands
  *
@@ -49,9 +55,7 @@ namespace SuiteCRM\Robo\Plugin\Commands;
  * @license  GNU GPLv3
  * @link     RepairCommands
  */
-
-
-class RepairCommands extends \Robo\Tasks
+class RepairCommands extends RoboTasks
 {
     /**
      * Synchronize database tables with vardefs.
@@ -64,9 +68,9 @@ class RepairCommands extends \Robo\Tasks
     {
         global $beanFiles;
         $this->say('Repairing database...');
-        $db = \DBManagerFactory::getInstance();
+        $db = DBManagerFactory::getInstance();
         $queries = [];
-        \VardefManager::clearVardef();
+        VardefManager::clearVardef();
 
         foreach ($beanFiles as $bean_name => $file) {
             if (!file_exists($file)) {
@@ -114,7 +118,7 @@ class RepairCommands extends \Robo\Tasks
         require_once __DIR__ . '/../../../../modules/Administration/QuickRepairAndRebuild.php';
         global $current_user;
         $current_user->is_admin = '1';
-        $tool = new \RepairAndClear();
+        $tool = new RepairAndClear();
         $tool->show_output = $opts['show-output'];
         $tool->rebuildExtensions();
 
