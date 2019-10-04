@@ -120,12 +120,19 @@ $viewdefs[$module_name]['DetailView'] = array(
                     'label' => 'LBL_BODY'
                 ),
             ),
-            array(
-                'date_entered' => array(
-                    'name' => 'date_entered',
-                    'label' => 'LBL_DATE_ENTERED',
-                )
-            )
+            [
+                'attachment' => [
+                    'name' => 'attachment',
+                    'label' => 'LBL_ATTACHMENTS',
+                  ]
+              ],
+            [
+                'date_sent_received' => [
+                    'name' => 'date_sent_received',
+                    'customCode' => '{$fields.date_entered.value}',
+                    'label' => 'LBL_DATE_SENT_RECEIVED',
+                ]
+            ]
         )
     )
 );

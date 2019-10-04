@@ -101,7 +101,6 @@ class ImapHandlerFactoryTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testSaveTestSettingsKeyOK()
     {
-        $state = new SuiteCRM\StateSaver();
         $settingsFile = __DIR__ . '/../../../../../include/Imap' . ImapHandlerFactory::SETTINGS_KEY_FILE;
         $factory = new ImapHandlerFactory();
         $existsBefore = file_exists($settingsFile);

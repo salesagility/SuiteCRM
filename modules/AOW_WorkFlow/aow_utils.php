@@ -80,7 +80,7 @@ function getModuleFields(
                     if (array_key_exists($mod->module_dir, $blockedModuleFields)) {
                         if (in_array(
                             $arr['name'],
-                                $blockedModuleFields[$mod->module_dir]
+                            $blockedModuleFields[$mod->module_dir]
                             ) && !$current_user->isAdmin()
                         ) {
                             $GLOBALS['log']->debug('hiding ' . $arr['name'] . ' field from ' . $current_user->name);
@@ -528,7 +528,8 @@ function getModuleField(
             $fieldlist[$name]['options'] = $mod_strings[$fieldlist[$name]['options']];
         }
         // Bug 22730: make sure all enums have the ability to select blank as the default value.
-        if (!isset($fieldlist[$name]['options'][''])) {
+        // Make sure the enum has an 'options' array to append a new value to.
+        if (isset($fieldlist[$name]['options']) && is_array($fieldlist[$name]['options']) && !isset($fieldlist[$name]['options'][''])) {
             $fieldlist[$name]['options'][''] = '';
         }
     }
@@ -1003,7 +1004,7 @@ function fixUpFormatting($module, $field, $value)
                 $value = false;
             } elseif (true === $value || 1 == $value) {
                 $value = true;
-            } elseif (in_array(strval($value), $boolean_false_values)) {
+            } elseif (in_array((string)$value, $boolean_false_values)) {
                 $value = false;
             } else {
                 $value = true;

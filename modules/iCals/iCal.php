@@ -434,7 +434,7 @@ class iCal extends vCal
 
             $idx = 0;
             foreach ($transitions as $transition) {
-                if ($transition['isdst'] && intval(substr($transition["time"], 0, 4)) == intval(date("Y"))) {
+                if ($transition['isdst'] && (int)substr($transition["time"], 0, 4) == (int)date("Y")) {
                     break;
                 }
                 $idx++;

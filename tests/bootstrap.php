@@ -47,6 +47,22 @@ global $sugar_config, $db;
 require_once __DIR__ . '/../include/utils.php';
 require_once __DIR__ . '/../include/modules.php';
 require_once __DIR__ . '/../include/entryPoint.php';
+
+// Load up the config.test.php file. This is used to define configuration values for the test environment.
+$testConfig = [];
+
+if (is_file(__DIR__ . '/../tests/config.test.php')) {
+    require_once __DIR__ . '/../tests/config.test.php';
+}
+
+foreach (array_keys($testConfig) as $key) {
+    if (isset($sugar_config[$key])) {
+        $sugar_config[$key] = $testConfig[$key];
+    } else {
+        $sugar_config[] = $testConfig[$key];
+    }
+}
+
 //Oddly entry point loads app_strings but not app_list_strings, manually do this here.
 $GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['current_language']);
 

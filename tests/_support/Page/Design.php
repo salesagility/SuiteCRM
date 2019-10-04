@@ -5,7 +5,6 @@ namespace Page;
 use \AcceptanceTester as Tester;
 
 use Codeception\Module;
-use Helper\WebDriverHelper;
 use SuiteCRM\Enumerator\DesignBreakPoint;
 
 class Design extends Module

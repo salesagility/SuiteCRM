@@ -480,6 +480,14 @@ class ViewConvertLead extends SugarView
                     } else {
                         $bean->$leadsRel->add($lead->id);
                     }
+
+                    /* BEGIN - SECURITY GROUPS */
+                    global $sugar_config;
+                    if(isset($sugar_config['securitysuite_inherit_parent']) && $sugar_config['securitysuite_inherit_parent'] == true)
+                    {
+                        SecurityGroup::inherit_parentQuery($bean, $lead->module_dir, $lead->id, $bean->id, $bean->module_dir);
+                    }
+                    /* END - SECURITY GROUPS */
                 }
             }
             //Special case code for opportunities->Accounts
@@ -516,8 +524,10 @@ class ViewConvertLead extends SugarView
                 !empty($beans['Contacts']->id) && !empty($beans['Contacts']->photo)) {
                 $bCopied = false;
                 if (($lead->photo === $beans['Contacts']->photo) && is_readable('upload/' . $lead->id . '_photo')) {
-                    $bCopied = copy('upload/' . $lead->id . '_photo',
-                                   'upload/' . $beans['Contacts']->id . '_photo');
+                    $bCopied = copy(
+                        'upload/' . $lead->id . '_photo',
+                        'upload/' . $beans['Contacts']->id . '_photo'
+                    );
                 }
                 if ($bCopied) {
                     $beans['Contacts']->photo = $lead->photo;

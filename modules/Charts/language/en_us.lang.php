@@ -44,9 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $mod_strings = array(
     'ERR_NO_OPPS' => 'Please create some Opportunities to see Opportunity graphs.',
-    'LBL_ALL_OPPORTUNITIES' => 'Total amount of all opportunities is ',
+    'LBL_ALL_OPPORTUNITIES' => 'Total amount of all opportunities is',
     'LBL_CHART_TYPE' => 'Chart Type:',
-    'LBL_CREATED_ON' => 'Last run on ',
+    'LBL_CREATED_ON' => 'Last run on',
     'LBL_CLOSE_DATE_START' => 'Expected Close Date - From:',
     'LBL_CLOSE_DATE_END' => 'Expected Close Date - To:',
     'LBL_DATE_END' => 'End Date:',
@@ -76,7 +76,7 @@ $mod_strings = array(
     'LBL_SALES_STAGE_FORM_DESC' => 'Shows cumulative opportunity amounts by selected sales stages for selected users where the expected closed date is within the specified date range.',
     'LBL_SALES_STAGE_FORM_TITLE' => 'Pipeline By Sales Stage',
     'LBL_SALES_STAGES' => 'Sales Stages:',
-    'LBL_TOTAL_PIPELINE' => 'Pipeline total is ',
+    'LBL_TOTAL_PIPELINE' => 'Pipeline total is',
     'LBL_USERS' => 'Users:',
     'LBL_YEAR_BY_OUTCOME' => 'Pipeline By Month By Outcome',
     'LBL_YEAR' => 'Year:',
@@ -91,7 +91,7 @@ $mod_strings = array(
     'LNK_NEW_TASK' => 'Create Task',
     'NTC_NO_LEGENDS' => 'None',
 
-    'LBL_TITLE' => 'Title: ',
+    'LBL_TITLE' => 'Title:',
     'LBL_MY_MODULES_USED_SIZE' => 'Access Count',
 
     'LBL_CHART_PIPELINE_BY_SALES_STAGE' => 'Pipeline by Sales Stage',

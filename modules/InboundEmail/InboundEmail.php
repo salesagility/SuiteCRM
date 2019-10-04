@@ -378,6 +378,8 @@ class InboundEmail extends SugarBean
      */
     public function checkWithPagination($offset = 0, $pageSize = 20, $order = array(), $filter = array(), $columns = array())
     {
+        --$pageSize;
+
         $mailboxInfo = array('Nmsgs' => 0);
         if ($this->connectMailserver() !== 'true') {
             LoggerManager::getLogger()->error('Unable to connect to IMAP server.');
@@ -514,7 +516,7 @@ class InboundEmail extends SugarBean
             foreach ($emailHeaders as $i=> $emailHeader) {
                 $structure = $this->getImap()->fetchStructure($emailHeader['uid'], FT_UID);
 
-                $emailHeaders[$i]['has_attachment'] = $this->mesageStructureHasAttachment($structure);
+                $emailHeaders[$i]['has_attachment'] = $this->messageStructureHasAttachment($structure);
             }
         }
 
@@ -548,22 +550,21 @@ class InboundEmail extends SugarBean
      * @param $imapStructure
      * @return bool
      */
-    private function mesageStructureHasAttachment($imapStructure)
+    public function messageStructureHasAttachment($imapStructure)
     {
-        if (!isset($imapStructure->parts)
-            && isset($imapStructure->disposition)
-            && $imapStructure->disposition == 'attachment') {
+        if (($imapStructure->type !== 0) && ($imapStructure->type !== 1)) {
             return true;
         }
 
-        if (isset($imapStructure->parts)) {
-            foreach ($imapStructure->parts as $part) {
-                if ($this->mesageStructureHasAttachment($part)) {
-                    return true;
-                }
+        $attachments = [];
+
+        foreach ($imapStructure->parts as $i => $part) {
+            if (is_string($part->dparameters[0]->value)) {
+                $attachments[] = $part->dparameters[0]->value;
             }
         }
-        return false;
+
+        return !empty($attachments);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -1082,7 +1083,7 @@ class InboundEmail extends SugarBean
                 if (!empty($tmp)) {
                     $tmp .= ", ";
                 }
-                $tmp .= "{$uid}";
+                $tmp .= (string)($uid);
             }
             $GLOBALS['log']->info("INBOUNDEMAIL-CACHE: filter UIDs: [ {$tmp} ]");
 
@@ -1093,7 +1094,7 @@ class InboundEmail extends SugarBean
                     $cols .= ",";
                 }
 
-                $cols .= "{$colDef['name']}";
+                $cols .= (string)($colDef['name']);
             }
             foreach ($insert as $overview) {
                 if (in_array($overview->imap_uid, $uids)) {
@@ -1190,7 +1191,7 @@ class InboundEmail extends SugarBean
                     $cols .= ",";
                 }
 
-                $cols .= "{$colDef['name']}";
+                $cols .= (string)($colDef['name']);
             }
 
             foreach ($update as $overview) {
@@ -1425,7 +1426,7 @@ class InboundEmail extends SugarBean
                     }
                     $results = array_slice(array_keys($diff), 0, 50);
                     $data = serialize($newDiff);
-                    if ($fh = @fopen($cacheFilePath, "w")) {
+                    if ($fh = @fopen($cacheFilePath, 'wb')) {
                         fputs($fh, $data);
                         fclose($fh);
                     } // if
@@ -1455,7 +1456,7 @@ class InboundEmail extends SugarBean
 
                 $results = array_slice(array_keys($diff), 0, 50);
                 $data = serialize($newDiff);
-                if ($fh = @fopen($cacheFilePath, "w")) {
+                if ($fh = @fopen($cacheFilePath, 'wb')) {
                     fputs($fh, $data);
                     fclose($fh);
                 } // if
@@ -1892,7 +1893,7 @@ class InboundEmail extends SugarBean
                 if (count($searchResults) > 0) {
                     $results = $searchResults;
                     $data = serialize($searchResults);
-                    if ($fh = @fopen($cacheFilePath, "w")) {
+                    if ($fh = @fopen($cacheFilePath, 'wb')) {
                         fputs($fh, $data);
                         fclose($fh);
                     } // if
@@ -2838,7 +2839,7 @@ class InboundEmail extends SugarBean
             } // if
             $stored_options['only_since'] = $onlySince;
             $stored_options['filter_domain'] = '';
-            $storedOptions['folderDelimiter'] = $delimiter;
+            $stored_options['folderDelimiter'] = $delimiter;
             $stored_options['outbound_email'] = (isset($_REQUEST['outbound_email'])) ? $_REQUEST['outbound_email'] : $oe->id;
             $this->stored_options = base64_encode(serialize($stored_options));
 
@@ -3677,9 +3678,9 @@ class InboundEmail extends SugarBean
                 }
 
                 $et->subject = "Re:" . " " . str_replace(
-                        '%1',
-                        $c->case_number,
-                        $c->getEmailSubjectMacro() . " " . $c->name
+                    '%1',
+                    $c->case_number,
+                    $c->getEmailSubjectMacro() . " " . $c->name
                     );
 
                 $html = trim($email->description_html);
@@ -3961,6 +3962,7 @@ class InboundEmail extends SugarBean
     public function getMessageTextWithUid($uid, $type, $structure, $fullHeader, $clean_email = true, $bcOffset = "")
     {
         global $sugar_config;
+        $cacheDir = $GLOBALS['sugar_config']['cache_dir'] . 'images/';
 
         $msgPart = '';
         $bc = $this->buildBreadCrumbs($structure->parts, $type);
@@ -3989,9 +3991,8 @@ class InboundEmail extends SugarBean
                                 continue;
                             }
                             $partid = substr($part->id, 1, -1); // strip <> around
-                            if (isset($this->inlineImages[$partid])) {
-                                $imageName = $this->inlineImages[$partid];
-                                $newImagePath = "class=\"image\" src=\"{$this->imagePrefix}{$imageName}\"";
+                            if ($part->parameters[0]->value) {
+                                $newImagePath = "class=\"image\" src=\"{$cacheDir}{$this->inlineImages[$partid]}\"";
                                 $preImagePath = "src=\"cid:$partid\"";
                                 $msgPartRaw = str_replace($preImagePath, $newImagePath, $msgPartRaw);
                             }
@@ -4026,6 +4027,16 @@ class InboundEmail extends SugarBean
             if (is_array($upperCaseKeyDecodeHeader['CONTENT-TYPE']) && isset($upperCaseKeyDecodeHeader['CONTENT-TYPE']['charset']) && !empty($upperCaseKeyDecodeHeader['CONTENT-TYPE']['charset'])) {
                 // we have an explicit content type, use it
                 $msgPart = $this->handleCharsetTranslation($text, $upperCaseKeyDecodeHeader['CONTENT-TYPE']['charset']);
+            } elseif (is_array($upperCaseKeyDecodeHeader['CONTENT-TYPE']) && isset($upperCaseKeyDecodeHeader['CONTENT-TYPE']['boundary'])) {
+                $email_segments = explode('--' . $upperCaseKeyDecodeHeader['CONTENT-TYPE']['boundary'], $text);
+                array_shift($email_segments);
+                foreach ($email_segments as $segment)
+                {
+                    if (false !== stripos($segment, 'Content-Type: text/plain'))
+                    {
+                        $msgPart = preg_replace('/Content-(Type|ID|Disposition|Transfer-Encoding):.*?\r\n/is', '', $segment);
+                    }
+                }
             } else {
                 // make a best guess as to what our content type is
                 $msgPart = $this->convertToUtf8($text);
@@ -4599,6 +4610,11 @@ class InboundEmail extends SugarBean
         if ((strtolower($part->disposition) == 'inline' && in_array($part->subtype, $this->imageTypes))
             || ($part->type == 5)
         ) {
+
+            if (!is_dir($cacheDir)) {
+                mkdir($cacheDir);
+            }
+
             if (copy($uploadDir . $fileName, sugar_cached("images/{$fileName}.") . strtolower($part->subtype))) {
                 $id = substr($part->id, 1, -1); //strip <> around
                 $this->inlineImages[$id] = $attach->id . "." . strtolower($part->subtype);
@@ -5361,20 +5377,33 @@ class InboundEmail extends SugarBean
                 $this->imagePrefix = 'cid:';
             }
             // handle multi-part email bodies
-            $email->description_html = $this->getMessageTextWithUid(
-                $uid,
-                'HTML',
-                $structure,
-                $fullHeader,
-                $clean_email
-            ); // runs through handleTranserEncoding() already
-            $email->description = $this->getMessageTextWithUid(
-                $uid,
-                'PLAIN',
-                $structure,
-                $fullHeader,
-                $clean_email
-            ); // runs through handleTranserEncoding() already
+            $subtypeArray = [
+                'MIXED',
+                'ALTERNATIVE',
+                'RELATED',
+                'REPORT',
+                'HTML'
+            ];
+
+            if (in_array(strtoupper($structure->subtype), $subtypeArray, true)) {
+                $email->description_html = $this->getMessageTextWithUid(
+                    $uid,
+                    $structure->subtype,
+                    $structure,
+                    $fullHeader,
+                    $clean_email
+                );
+            } elseif ($structure->subtype === 'PLAIN') {
+                $email->description = $this->getMessageTextWithUid(
+                    $uid,
+                    'PLAIN',
+                    $structure,
+                    $fullHeader,
+                    $clean_email
+                );
+            } else {
+                LoggerManager::getLogger()->warn('Unknown MIME subtype in fetch request');
+            }
             $this->imagePrefix = $oldPrefix;
 
 
@@ -5631,7 +5660,7 @@ class InboundEmail extends SugarBean
                 if (in_array(strtoupper($structure->subtype), $subtypeArray, true)) {
                     $email->description_html = $this->getMessageTextWithUid(
                         $uid,
-                        'HTML',
+                        $structure->subtype,
                         $structure,
                         $fullHeader,
                         true
@@ -6903,6 +6932,7 @@ class InboundEmail extends SugarBean
         }
 
         $return = true;
+        $msgnos = [];
 
         if ($this->protocol == 'imap') {
             $trashFolder = $this->get_stored_options("trashFolder");
@@ -6919,7 +6949,6 @@ class InboundEmail extends SugarBean
                 $return = true;
             }
         } else {
-            $msgnos = array();
             foreach ($uids as $uid) {
                 $msgnos[] = $this->getCorrectMessageNoForPop3($uid);
             }
@@ -6932,7 +6961,7 @@ class InboundEmail extends SugarBean
             $GLOBALS['log']->debug("NOOP: could not expunge deleted email.");
             $return = false;
         } else {
-            $GLOBALS['log']->info("INBOUNDEMAIL: hard-deleted mail with MSgno's' [ {$msgnos} ]");
+            LoggerManager::getLogger()->info("INBOUNDEMAIL: hard-deleted mail with MSgno's' [ {$msgnos} ]");
         }
 
         return $return;
@@ -7933,7 +7962,7 @@ eoq;
                         }
                         $query = 'SELECT count(emails.message_id) as cnt, emails.message_id AS mid FROM emails WHERE emails.message_id IN ("' . implode(
                             '","',
-                                $query
+                            $query
                         ) . '") and emails.deleted = 0 group by emails.message_id';
                         $r = $this->db->query($query);
                         $tmp = array();

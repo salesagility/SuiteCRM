@@ -29,7 +29,7 @@ class UsersCest
             $this->fakeData = Factory::create();
         }
 
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
     
@@ -85,7 +85,10 @@ class UsersCest
 
         // Create account
         $this->fakeData->seed($this->fakeDataSeed);
-        $accounts->createAccount('Test_'. $this->fakeData->company());
+        $accountId = $accounts->createAccount('Test_'. $this->fakeData->company());
+
+        $I->visitPage('Accounts', 'DetailView', $accountId);
+        $DetailView->waitForDetailViewVisible();
 
         // View the Subpanels Hint
         $I->see('Leads (0)', '//*[@id="subpanel_title_leads"]/div/div');

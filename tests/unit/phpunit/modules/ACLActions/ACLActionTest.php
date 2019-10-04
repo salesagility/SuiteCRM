@@ -56,7 +56,6 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan($action_count, count($actual));
         
         // clean up
-        
         $state->popTable('aod_index');
         $state->popTable('acl_actions');
     }
@@ -125,7 +124,6 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', 'Accounts', 'list')); //test with valid module and action
         
         // clean up
-        
         $state->popGlobals();
     }
 
@@ -143,7 +141,6 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(ACLAction::userHasAccess('1', 'Users', 'list')); //test with valid User, module and action
         
         // clean up
-        
         $state->popGlobals();
     }
 

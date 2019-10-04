@@ -4,7 +4,6 @@ class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testFP_events()
     {
-
         //execute the contructor and check for the Object type and  attributes
         $fpEvents = new FP_events();
         $this->assertInstanceOf('FP_events', $fpEvents);
@@ -22,10 +21,7 @@ class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testemail_templates()
     {
         $state = new SuiteCRM\StateSaver();
-        
         $state->pushGlobals();
-        
-        
 
         global $app_list_strings;
 
@@ -35,7 +31,6 @@ class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(is_array($app_list_strings['email_templet_list']));
         
         // clean up
-        
         $state->popGlobals();
     }
 }

@@ -72,11 +72,6 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdelete()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
         $db = DBManagerFactory::getInstance();
         
         //execute the method and test if it works and does not throws an exception.
@@ -86,8 +81,6 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testget_other_module()
@@ -193,12 +186,6 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_relationship_cache()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $relationship = new Relationship();
 
         //execute the method and test if it works and does not throws an exception.
@@ -208,8 +195,6 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testcache_file_dir()
@@ -226,12 +211,6 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdelete_cache()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         //execute the method and test if it works and does not throws an exception.
         try {
             Relationship::delete_cache();
@@ -239,8 +218,6 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testtrace_relationship_module()

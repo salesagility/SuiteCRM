@@ -448,7 +448,7 @@
                      }
 
                      $Ring  = $MaxConnections - $Connections;
-                     $Angle = rand(0, 360);
+                     $Angle = mt_rand(0, 360);
            
                      $this->Data[$Key]["X"] = cos(deg2rad($Angle)) * ($Ring*$this->RingSize) + $CenterX;
                      $this->Data[$Key]["Y"] = sin(deg2rad($Angle)) * ($Ring*$this->RingSize) + $CenterY;
@@ -488,14 +488,14 @@
                                  $Tries = 0;
                                  while (!$Done && $Tries <= $Weight*2) {
                                      $Tries++;
-                                     $Angle = floor(rand(0, $Weight)*$AngleDivision);
+                                     $Angle = floor(mt_rand(0, $Weight)*$AngleDivision);
                                      if (!isset($this->Data[$BiggestPartner]["Angular"][$Angle]) || !isset($this->Data[$BiggestPartner]["Angular"])) {
                                          $this->Data[$BiggestPartner]["Angular"][$Angle] = $Angle;
                                          $Done = true;
                                      }
                                  }
                                  if (!$Done) {
-                                     $Angle = rand(0, 360);
+                                     $Angle = mt_rand(0, 360);
                                      $this->Data[$BiggestPartner]["Angular"][$Angle] = $Angle;
                                  }
 
@@ -526,7 +526,7 @@
 
                          if ($Connections == $i) {
                              $Ring  = $MaxConnections - $Connections;
-                             $Angle = rand(0, 360);
+                             $Angle = mt_rand(0, 360);
 
                              $X = cos(deg2rad($Angle)) * ($Ring*$this->RingSize) + $CenterX;
                              $Y = sin(deg2rad($Angle)) * ($Ring*$this->RingSize) + $CenterY;
@@ -542,8 +542,8 @@
          } elseif ($Algorithm == ALGORITHM_RANDOM) {
              foreach ($this->Data as $Key => $Settings) {
                  if ($Settings["Type"] == NODE_TYPE_FREE) {
-                     $this->Data[$Key]["X"] = $CenterX + rand(-20, 20);
-                     $this->Data[$Key]["Y"] = $CenterY + rand(-20, 20);
+                     $this->Data[$Key]["X"] = $CenterX + mt_rand(-20, 20);
+                     $this->Data[$Key]["Y"] = $CenterY + mt_rand(-20, 20);
                  }
                  if ($Settings["Type"] == NODE_TYPE_CENTRAL) {
                      $this->Data[$Key]["X"] = $CenterX;

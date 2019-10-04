@@ -1,7 +1,5 @@
 <?php
 
-use \Faker\Factory;
-
 /**
  * Class LoginCest
  *
@@ -29,7 +27,7 @@ class AOW_WorkflowCest
             $this->fakeData->addProvider(new Faker\Provider\en_US\Address($this->fakeData));
             $this->fakeData->addProvider(new Faker\Provider\en_US\PhoneNumber($this->fakeData));
             $this->fakeData->addProvider(new Faker\Provider\en_US\Company($this->fakeData));
-            $this->fakeDataSeed = rand(0, 2048);
+            $this->fakeDataSeed = mt_rand(0, 2048);
         }
         $this->fakeData->seed($this->fakeDataSeed);
     }
@@ -108,7 +106,7 @@ class AOW_WorkflowCest
     // TODO: This test relied on state from the previous test, so it breaks when
     // the test order is randomized or cookies are cleared between tests. This should
     // be fixed.
-    // 
+    //
     // public function testScenarioDeleteWorkflow(
     //     AcceptanceTester $I,
     //     \Step\Acceptance\NavigationBar $navigationBar,
@@ -121,15 +119,14 @@ class AOW_WorkflowCest
     // ) {
     //     $I->wantTo('Delete workflow');
     //     $I->loginAsAdmin();
-    // 
+    //
     //     $dashboard->waitForDashboardVisible();
     //     // TODO: Create a workflow and navigate to its DetailView here.
     //
     //     // Delete Record
     //     $detailView->clickActionMenuItem('Delete');
     //     $detailView->acceptPopup();
-    // 
+    //
     //     $listView->waitForListViewVisible();
-    //     $this->lastView = 'ListView';
     // }
 }

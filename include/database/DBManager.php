@@ -1038,7 +1038,9 @@ abstract class DBManager
                         continue;
                     }
                 } else {
-                    if (array_map('strtolower', $fielddef1[$key]) == array_map('strtolower', $fielddef2[$key])) {
+                    $f1 = fixIndexArrayFormat($fielddef1[$key]);
+                    $f2 = fixIndexArrayFormat($fielddef2[$key]);
+                    if (array_map('strtolower', $f1) == array_map('strtolower', $f2)) {
                         continue;
                     }
                 }
@@ -2151,7 +2153,7 @@ abstract class DBManager
                         return 0;
                     }
 
-                    return intval($val);
+                    return (int)$val;
                 case 'bigint':
                     $val = (float)$val;
                     if (!empty($fieldDef['required']) && $val == false) {
@@ -2172,7 +2174,7 @@ abstract class DBManager
                         return 0;
                     }
 
-                    return floatval($val);
+                    return (float)$val;
                 case 'time':
                 case 'date':
                     // empty date can't be '', so convert it to either NULL or empty date value
@@ -3005,7 +3007,7 @@ abstract class DBManager
                 //if the type and values match, do nothing.
                 if (!($this->_emptyValue($before_value, $field_type) && $this->_emptyValue(
                     $after_value,
-                        $field_type
+                    $field_type
                 ))
                 ) {
                     $change = false;

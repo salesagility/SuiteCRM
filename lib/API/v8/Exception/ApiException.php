@@ -41,7 +41,6 @@
 
 namespace SuiteCRM\API\v8\Exception;
 
-use SuiteCRM\API\v8\Controller\ApiController;
 use SuiteCRM\LangException;
 use SuiteCRM\LangText;
 

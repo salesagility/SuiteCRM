@@ -43,7 +43,6 @@ namespace SuiteCRM\API\JsonApi\v1\Repositories;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use SuiteCRM\API\JsonApi\v1\Filters\Parsers\FilterParser;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
-use Interop\Container\Exception\ContainerException;
 use Psr\Container\ContainerInterface;
 use SuiteCRM\API\v8\Exception\BadRequestException;
 

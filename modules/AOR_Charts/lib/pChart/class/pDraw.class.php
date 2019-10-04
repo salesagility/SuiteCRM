@@ -6837,7 +6837,7 @@
      /* Returns a random color */
      public function getRandomColor($Alpha=100)
      {
-         return(array("R"=>rand(0, 255),"G"=>rand(0, 255),"B"=>rand(0, 255),"Alpha"=>$Alpha));
+         return(array("R"=>mt_rand(0, 255),"G"=>mt_rand(0, 255),"B"=>mt_rand(0, 255),"Alpha"=>$Alpha));
      }
  
      /* Validate a palette */
@@ -6853,17 +6853,17 @@
              if (isset($Values["R"])) {
                  $Result[$Key]["R"] = $Values["R"];
              } else {
-                 $Result[$Key]["R"] = rand(0, 255);
+                 $Result[$Key]["R"] = mt_rand(0, 255);
              }
              if (isset($Values["G"])) {
                  $Result[$Key]["G"] = $Values["G"];
              } else {
-                 $Result[$Key]["G"] = rand(0, 255);
+                 $Result[$Key]["G"] = mt_rand(0, 255);
              }
              if (isset($Values["B"])) {
                  $Result[$Key]["B"] = $Values["B"];
              } else {
-                 $Result[$Key]["B"] = rand(0, 255);
+                 $Result[$Key]["B"] = mt_rand(0, 255);
              }
              if (isset($Values["Alpha"])) {
                  $Result[$Key]["Alpha"] = $Values["Alpha"];

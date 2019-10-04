@@ -237,9 +237,14 @@ class CalendarActivity
                     $bean->disable_row_level_security = true;
                 }
 
-                $where = self::get_occurs_within_where_clause($bean->table_name,
-                    isset($bean->rel_users_table) ? $bean->rel_users_table : null, $view_start_time, $view_end_time,
-                    $activity['start'], $activity['end']);
+                $where = self::get_occurs_within_where_clause(
+                    $bean->table_name,
+                    isset($bean->rel_users_table) ? $bean->rel_users_table : null,
+                    $view_start_time,
+                    $view_end_time,
+                    $activity['start'],
+                    $activity['end']
+                );
 
                 if ($key === 'Meetings') {
                     $where .= $completedMeetings;

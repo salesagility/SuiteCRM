@@ -4,6 +4,7 @@
 <!--- Describe your changes in detail -->
 <!--- If fixing a bug, there should be an issue describing it with steps to reproduce -->
 <!--- Please link to the issue here unless your commit contains the issue number -->
+<!--- Ensure that all code ``` is surrounded ``` by triple back quotes. This can also be done over multiple lines -->
 
 ## Motivation and Context
 <!--- Why is this change required? What problem does it solve? -->

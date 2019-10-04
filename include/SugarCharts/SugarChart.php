@@ -265,7 +265,7 @@ class SugarChart
         $yAxis = $this->tab("<yAxis>", 1);
 
         foreach ($this->chart_yAxis as $key => $value) {
-            $yAxis .= $this->tabValue("{$key}", $value, 2);
+            $yAxis .= $this->tabValue((string)($key), $value, 2);
         }
 
         $yAxis .= $this->tab("</yAxis>", 1);
