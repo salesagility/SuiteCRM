@@ -79,6 +79,7 @@ before_script:
 script:
   # Run the wizard installer
   - echo "using install wizard"
+  - php -r "echo PHP_VERSION .\"\n\";"
   - ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter
   - ./build/push_output.sh
 
