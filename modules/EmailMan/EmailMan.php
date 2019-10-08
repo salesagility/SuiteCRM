@@ -874,7 +874,7 @@ class EmailMan extends SugarBean
 
         //make sure tracking url ends with '/' character
         $strLen = strlen($this->tracking_url);
-        if ($this->tracking_url{$strLen - 1} != '/') {
+        if ($this->tracking_url[$strLen - 1] != '/') {
             $this->tracking_url .= '/';
         }
 
