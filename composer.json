@@ -59,7 +59,11 @@
     "mockery/mockery": "^0.9.9",
     "symfony/yaml": "^3.4"
   },
-  "scripts": {},
+  "scripts": {
+    "post-install-cmd": [
+      "php ./install/composer_post_install_cmd.php"
+    ]
+  },
   "prefer-stable": true,
   "autoload": {
     "files": [
