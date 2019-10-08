@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -482,67 +482,18 @@ class SugarFeed extends Basic
         return $replyHTML;
     }
 
+    /**
+     * Deprecated in favour of TimeDate::getTimeLapse.
+     * @param string $startDate date epoch.
+     * @return string human readable date string.
+     * @deprecated Deprecated method, please update your code to use TimeDate->getTimeLapse instead.
+     */
     public static function getTimeLapse($startDate)
     {
-        global $timedate;
+        LoggerManager::getLogger()->deprecated(__FUNCTION__ . ' is deprecated and will be removed in a future release, 
+        please update your code to use TimeDate->getTimeLapse instead.');
 
-        $nowTs = $timedate->getNow()->ts;
-
-        if (null !== ($userStartDate = $timedate->fromUser($startDate))) {
-            $userStartDateTs = $userStartDate->ts;
-        } else {
-            LoggerManager::getLogger()->warn('Invalid $startDate');
-
-            return '';
-        }
-
-        $seconds = $nowTs - $userStartDateTs;
-        $minutes = $seconds / 60;
-        $seconds = $seconds % 60;
-        $hours = floor($minutes / 60);
-        $minutes = $minutes % 60;
-        $days = floor($hours / 24);
-        $hours = $hours % 24;
-        $weeks = floor($days / 7);
-        $days = $days % 7;
-        $result = '';
-        if ($weeks == 1) {
-            return translate('LBL_TIME_LAST_WEEK', 'SugarFeed') . ' ';
-        } elseif ($weeks > 1) {
-            $result .= $weeks . ' ' . translate('LBL_TIME_WEEKS', 'SugarFeed') . ' ';
-            if ($days > 0) {
-                $result .= ' ' . translate('LBL_TIME_AND', 'SugarFeed') . ' ';
-                $result .= $days . ' ' . translate('LBL_TIME_DAYS', 'SugarFeed') . ' ';
-            }
-        } else {
-            if ($days == 1) {
-                $result .= $days . ' ' . translate('LBL_TIME_DAY', 'SugarFeed') . ' ';
-            } elseif ($days > 1) {
-                $result .= $days . ' ' . translate('LBL_TIME_DAYS', 'SugarFeed') . ' ';
-            } else {
-                if ($hours == 1) {
-                    $result .= $hours . ' ' . translate('LBL_TIME_HOUR', 'SugarFeed') . ' ';
-                } else {
-                    $result .= $hours . ' ' . translate('LBL_TIME_HOURS', 'SugarFeed') . ' ';
-                }
-                if ($hours < 6) {
-                    if ($minutes == 1) {
-                        $result .= $minutes . ' ' . translate('LBL_TIME_MINUTE', 'SugarFeed') . ' ';
-                    } else {
-                        $result .= $minutes . ' ' . translate('LBL_TIME_MINUTES', 'SugarFeed') . ' ';
-                    }
-                }
-                if ($hours == 0 && $minutes == 0) {
-                    if ($seconds == 1) {
-                        $result = $seconds . ' ' . translate('LBL_TIME_SECOND', 'SugarFeed');
-                    } else {
-                        $result = $seconds . ' ' . translate('LBL_TIME_SECONDS', 'SugarFeed');
-                    }
-                }
-            }
-        }
-
-        return $result . ' ' . translate('LBL_TIME_AGO', 'SugarFeed');
+        return (new TimeDate)->getTimeLapse($startDate);
     }
 
     /**

@@ -123,60 +123,18 @@ class SecurityGroupMessage extends Basic
         $message->save();
     }
 
+    /**
+     * Deprecated in favour of TimeDate::getTimeLapse.
+     * @param string $startDate date epoch.
+     * @return string human readable date string.
+     * @deprecated Deprecated method, please update your code to use TimeDate->getTimeLapse instead.
+     */
     public function getTimeLapse($startDate)
     {
-        $startDate = $GLOBALS['timedate']->to_db($startDate);
-        $start = array();
-        preg_match('/(\d+)\-(\d+)\-(\d+) (\d+)\:(\d+)\:(\d+)/', $startDate, $start);
-        $end = gmdate('Y-m-d H:i:s');
-        $start_time = gmmktime($start[4], $start[5], $start[6], $start[2], $start[3], $start[1]);
-        $seconds = time()- $start_time;
-        $minutes =   $seconds/60;
-        $seconds = $seconds % 60;
-        $hours = floor($minutes / 60);
-        $minutes = $minutes % 60;
-        $days = floor($hours / 24);
-        $hours = $hours % 24;
-        $weeks = floor($days / 7);
-        $days = $days % 7;
-        $result = '';
-        if ($weeks == 1) {
-            $result = translate('LBL_TIME_LAST_WEEK', 'SugarFeed').' ';
-            return $result;
-        } elseif ($weeks > 1) {
-            $result .= $weeks . ' '.translate('LBL_TIME_WEEKS', 'SugarFeed').' ';
-            if ($days > 0) {
-                $result .= $days . ' '.translate('LBL_TIME_DAYS', 'SugarFeed').' ';
-            }
-        } else {
-            if ($days == 1) {
-                $result = translate('LBL_TIME_YESTERDAY', 'SugarFeed').' ';
-                return $result;
-            } elseif ($days > 1) {
-                $result .= $days . ' '. translate('LBL_TIME_DAYS', 'SugarFeed').' ';
-            } else {
-                if ($hours == 1) {
-                    $result .= $hours . ' '.translate('LBL_TIME_HOUR', 'SugarFeed').' ';
-                } else {
-                    $result .= $hours . ' '.translate('LBL_TIME_HOURS', 'SugarFeed').' ';
-                }
-                if ($hours < 6) {
-                    if ($minutes == 1) {
-                        $result .= $minutes . ' ' . translate('LBL_TIME_MINUTE', 'SugarFeed'). ' ';
-                    } else {
-                        $result .= $minutes . ' ' . translate('LBL_TIME_MINUTES', 'SugarFeed'). ' ';
-                    }
-                }
-                if ($hours == 0 && $minutes == 0) {
-                    if ($seconds == 1) {
-                        $result = $seconds . ' ' . translate('LBL_TIME_SECOND', 'SugarFeed');
-                    } else {
-                        $result = $seconds . ' ' . translate('LBL_TIME_SECONDS', 'SugarFeed');
-                    }
-                }
-            }
-        }
-        return $result . ' ' . translate('LBL_TIME_AGO', 'SugarFeed');
+        LoggerManager::getLogger()->deprecated(__FUNCTION__ . ' is deprecated and will be removed in a future release, 
+        please update your code to use TimeDate->getTimeLapse instead.');
+
+        return (new TimeDate)->getTimeLapse($startDate);
     }
 
     public function bean_implements($interface)
