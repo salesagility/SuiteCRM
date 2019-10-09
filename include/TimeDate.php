@@ -2133,22 +2133,18 @@ class TimeDate
 
         $secondsElapsed = self::$timedate->getNow(true)->ts - $userStartDate->ts;
         $minutesElapsed = $secondsElapsed / 60;
-        $secondsElapsed %= 60;
-        $hoursElapsed = floor($minutesElapsed / 60);
-        $minutesElapsed %= 60;
-        $daysElapsed = floor($hoursElapsed / 24);
-        $hoursElapsed %= 24;
-        $weeksElapsed = floor($daysElapsed / 7);
-        $daysElapsed %= 7;
+        $hoursElapsed = $minutesElapsed / 60;
+        $daysElapsed = $hoursElapsed / 24;
+        $weeksElapsed = $daysElapsed / 7;
 
         return $this->formatDateString(
             $module,
             [
-                'seconds' => $secondsElapsed,
-                'minutes' => $minutesElapsed,
-                'hours' => $hoursElapsed,
-                'days' => $daysElapsed,
-                'weeks' => $weeksElapsed,
+                'seconds' => intval(floor($secondsElapsed)),
+                'minutes' => intval(floor($minutesElapsed)),
+                'hours' => intval(floor($hoursElapsed)),
+                'days' => intval(floor($daysElapsed)),
+                'weeks' => intval(floor($weeksElapsed)),
             ]
         );
     }
