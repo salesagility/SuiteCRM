@@ -2161,40 +2161,42 @@ class TimeDate
     ) {
         $result = '';
 
-        if ($dateArray['weeks'] === 1) {
+        if ($dateArray['weeks'] === 1 && $dateArray['days'] === 0) {
             return translate('LBL_TIME_LAST_WEEK', $module) . ' ';
         }
 
         if ($dateArray['weeks'] > 1) {
             $result .= $dateArray['weeks'] . ' ' . translate('LBL_TIME_WEEKS', $module) . ' ';
-            if ($dateArray['days'] > 0) {
-                $result .= ' ' . translate('LBL_TIME_AND', $module) . ' ';
+            $result .= ' ' . translate('LBL_TIME_AND', $module) . ' ';
+            if ($dateArray['days'] === 1) {
+                $result .= $dateArray['days'] . ' ' . translate('LBL_TIME_DAY', $module) . ' ';
+            } else {
                 $result .= $dateArray['days'] . ' ' . translate('LBL_TIME_DAYS', $module) . ' ';
             }
         } elseif ($dateArray['days'] === 1) {
             $result .= $dateArray['days'] . ' ' . translate('LBL_TIME_DAY', $module) . ' ';
+            $result .= ' ' . translate('LBL_TIME_AND', $module) . ' ';
+            $result .= $dateArray['hours'] . ' ' . translate('LBL_TIME_HOURS', $module) . ' ';
         } elseif ($dateArray['days'] > 1) {
             $result .= $dateArray['days'] . ' ' . translate('LBL_TIME_DAYS', $module) . ' ';
-        } else {
+            $result .= ' ' . translate('LBL_TIME_AND', $module) . ' ';
+            $result .= $dateArray['hours'] . ' ' . translate('LBL_TIME_HOURS', $module) . ' ';
+        } elseif ($dateArray['hours'] > 0) {
             if ($dateArray['hours'] === 1) {
                 $result .= $dateArray['hours'] . ' ' . translate('LBL_TIME_HOUR', $module) . ' ';
             } else {
                 $result .= $dateArray['hours'] . ' ' . translate('LBL_TIME_HOURS', $module) . ' ';
             }
-            if ($dateArray['hours'] < 6) {
-                if ($dateArray['hours'] === 1) {
-                    $result .= $dateArray['minutes'] . ' ' . translate('LBL_TIME_MINUTE', $module) . ' ';
-                } else {
-                    $result .= $dateArray['minutes'] . ' ' . translate('LBL_TIME_MINUTES', $module) . ' ';
-                }
+            $result .= ' ' . translate('LBL_TIME_AND', $module) . ' ';
+            $result .= $dateArray['minutes'] . ' ' . translate('LBL_TIME_MINUTES', $module) . ' ';
+        } else {
+            if ($dateArray['minutes'] === 1) {
+                $result .= $dateArray['minutes'] . ' ' . translate('LBL_TIME_MINUTE', $module) . ' ';
+            } else {
+                $result .= $dateArray['minutes'] . ' ' . translate('LBL_TIME_MINUTES', $module) . ' ';
             }
-            if ($dateArray['hours'] === 0 && $dateArray['minutes'] === 0) {
-                if ($dateArray['seconds'] === 1) {
-                    $result = $dateArray['seconds'] . ' ' . translate('LBL_TIME_SECOND', $module);
-                } else {
-                    $result = $dateArray['seconds'] . ' ' . translate('LBL_TIME_SECONDS', $module);
-                }
-            }
+            $result .= ' ' . translate('LBL_TIME_AND', $module) . ' ';
+            $result .= $dateArray['seconds'] . ' ' . translate('LBL_TIME_SECONDS', $module) . ' ';
         }
 
         return $result . ' ' . translate('LBL_TIME_AGO', $module);
