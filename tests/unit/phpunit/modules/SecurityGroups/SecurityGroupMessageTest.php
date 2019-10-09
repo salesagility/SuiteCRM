@@ -30,8 +30,6 @@ class SecurityGroupMessageTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
     public function testBean_implements()
     {
         $this->assertEquals(false, $this->securityGroupMessage->bean_implements(''));
-        $this->assertEquals(false, $this->securityGroupMessage->bean_implements('test'));
-        $this->assertEquals(true, $this->securityGroupMessage->bean_implements('ACL'));
     }
 }
 
