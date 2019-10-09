@@ -2121,10 +2121,6 @@ class TimeDate
      */
     public function getTimeLapse($startDate, $module = 'SugarFeed')
     {
-        if (empty(self::$timedate)) {
-            self::$timedate = new self;
-        }
-
         if (null === ($userStartDate = self::$timedate->fromUser($startDate))) {
             LoggerManager::getLogger()->warn('Invalid $startDate');
 
