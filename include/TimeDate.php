@@ -2112,4 +2112,95 @@ class TimeDate
 
         return '23:00'; //default
     }
+
+    /**
+     * Calculates the time elapsed in seconds/minutes/days/weeks for a given epoch.
+     * @param string $startDate date epoch.
+     * @param string $module the module to pull language strings from.
+     * @return string human readable date string.
+     */
+    public function getTimeLapse($startDate, $module = 'SugarFeed')
+    {
+        if (empty(self::$timedate)) {
+            self::$timedate = new self;
+        }
+
+        if (null === ($userStartDate = self::$timedate->fromUser($startDate))) {
+            LoggerManager::getLogger()->warn('Invalid $startDate');
+
+            return '';
+        }
+
+        $secondsElapsed = self::$timedate->getNow(true)->ts - $userStartDate->ts;
+        $minutesElapsed = $secondsElapsed / 60;
+        $secondsElapsed %= 60;
+        $hoursElapsed = floor($minutesElapsed / 60);
+        $minutesElapsed %= 60;
+        $daysElapsed = floor($hoursElapsed / 24);
+        $hoursElapsed %= 24;
+        $weeksElapsed = floor($daysElapsed / 7);
+        $daysElapsed %= 7;
+
+        return $this->formatDateString(
+            $module,
+            [
+                'seconds' => $secondsElapsed,
+                'minutes' => $minutesElapsed,
+                'hours' => $hoursElapsed,
+                'days' => $daysElapsed,
+                'weeks' => $weeksElapsed,
+            ]
+        );
+    }
+
+    /**
+     * Generates a human readable string of the time elapsed in seconds/minutes/days/weeks for a given epoch.
+     * @param string $module the module to pull language strings from.
+     * @param array $dateArray the time elapsed in seconds/minutes/days/weeks.
+     * @return string human readable date string.
+     */
+    protected function formatDateString(
+        $module,
+        array $dateArray
+    ) {
+        $result = '';
+
+        if ($dateArray['weeks'] === 1) {
+            return translate('LBL_TIME_LAST_WEEK', $module) . ' ';
+        }
+
+        if ($dateArray['weeks'] > 1) {
+            $result .= $dateArray['weeks'] . ' ' . translate('LBL_TIME_WEEKS', $module) . ' ';
+            if ($dateArray['days'] > 0) {
+                $result .= ' ' . translate('LBL_TIME_AND', $module) . ' ';
+                $result .= $dateArray['days'] . ' ' . translate('LBL_TIME_DAYS', $module) . ' ';
+            }
+        } elseif ($dateArray['days'] === 1) {
+            $result .= $dateArray['days'] . ' ' . translate('LBL_TIME_DAY', $module) . ' ';
+        } elseif ($dateArray['days'] > 1) {
+            $result .= $dateArray['days'] . ' ' . translate('LBL_TIME_DAYS', $module) . ' ';
+        } else {
+            if ($dateArray['hours'] === 1) {
+                $result .= $dateArray['hours'] . ' ' . translate('LBL_TIME_HOUR', $module) . ' ';
+            } else {
+                $result .= $dateArray['hours'] . ' ' . translate('LBL_TIME_HOURS', $module) . ' ';
+            }
+            if ($dateArray['hours'] < 6) {
+                if ($dateArray['hours'] === 1) {
+                    $result .= $dateArray['minutes'] . ' ' . translate('LBL_TIME_MINUTE', $module) . ' ';
+                } else {
+                    $result .= $dateArray['minutes'] . ' ' . translate('LBL_TIME_MINUTES', $module) . ' ';
+                }
+            }
+            if ($dateArray['hours'] === 0 && $dateArray['minutes'] === 0) {
+                if ($dateArray['seconds'] === 1) {
+                    $result = $dateArray['seconds'] . ' ' . translate('LBL_TIME_SECOND', $module);
+                } else {
+                    $result = $dateArray['seconds'] . ' ' . translate('LBL_TIME_SECONDS', $module);
+                }
+            }
+        }
+
+        return $result . ' ' . translate('LBL_TIME_AGO', $module);
+    }
 }
