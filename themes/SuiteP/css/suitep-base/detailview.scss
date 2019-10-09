@@ -41,6 +41,7 @@ p.msg {
 .nav-tabs > li.tab-inline-pagination .btn-pagination[disabled]:hover {
   background-color: $disabled-btn-bg;
   text-decoration: none;
+  cursor: default;
 }
 
 .btn-pagination .suitepicon {
