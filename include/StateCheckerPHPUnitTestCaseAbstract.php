@@ -41,7 +41,9 @@
 
 namespace SuiteCRM;
 
+use LoggerManager;
 use PHPUnit_Framework_TestCase;
+use SuiteCRM\Test\TestLogger;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -55,9 +57,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_TestCase
 {
     use StateCheckerTrait;
-    
+
     protected static $verbose = true;
-    
+
+    /**
+     * @var LoggerManager
+     */
+    protected $log;
+
     /**
      * Collect state information and storing a hash
      */
@@ -70,11 +77,14 @@ abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_Tes
                 fwrite(STDOUT, ".");
             }
         }
-        
+
+        $this->log = $GLOBALS['log'];
+        $GLOBALS['log'] = new TestLogger();
+
         $this->beforeStateCheck();
         parent::setUp();
     }
-    
+
     /**
      * Collect state information and comparing hash
      */
@@ -82,7 +92,7 @@ abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_Tes
     {
         parent::tearDown();
         $this->afterStateCheck();
-        
+
         if (self::$verbose) {
             fwrite(STDOUT, " [done]\n");
         }
