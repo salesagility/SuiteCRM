@@ -2137,14 +2137,20 @@ class TimeDate
         $daysElapsed = $hoursElapsed / 24;
         $weeksElapsed = $daysElapsed / 7;
 
+        $remainingSeconds = $minutesElapsed % $secondsElapsed;
+        $minutesElapsed %= 60;
+        $hoursElapsed %= 24;
+        $daysElapsed %= 7;
+        $weeksElapsed %= 7;
+
         return $this->formatDateString(
             $module,
             [
-                'seconds' => intval(floor($secondsElapsed)),
-                'minutes' => intval(floor($minutesElapsed)),
-                'hours' => intval(floor($hoursElapsed)),
-                'days' => intval(floor($daysElapsed)),
-                'weeks' => intval(floor($weeksElapsed)),
+                'seconds' => $remainingSeconds,
+                'minutes' => $minutesElapsed,
+                'hours' => $hoursElapsed,
+                'days' => $daysElapsed,
+                'weeks' => $weeksElapsed,
             ]
         );
     }
@@ -2192,11 +2198,16 @@ class TimeDate
         } else {
             if ($dateArray['minutes'] === 1) {
                 $result .= $dateArray['minutes'] . ' ' . translate('LBL_TIME_MINUTE', $module) . ' ';
-            } else {
+                $result .= ' ' . translate('LBL_TIME_AND', $module) . ' ';
+            } elseif ($dateArray['minutes'] > 1) {
+                $result .= $dateArray['minutes'] . ' ' . translate('LBL_TIME_MINUTES', $module) . ' ';
+                $result .= ' ' . translate('LBL_TIME_AND', $module) . ' ';
+            }
+            if ($dateArray['seconds'] === 0) {
+                $result .= $dateArray['minutes'] . ' ' . translate('LBL_TIME_MINUTE', $module) . ' ';
+            } elseif ($dateArray['minutes'] > 1) {
                 $result .= $dateArray['minutes'] . ' ' . translate('LBL_TIME_MINUTES', $module) . ' ';
             }
-            $result .= ' ' . translate('LBL_TIME_AND', $module) . ' ';
-            $result .= $dateArray['seconds'] . ' ' . translate('LBL_TIME_SECONDS', $module) . ' ';
         }
 
         return $result . ' ' . translate('LBL_TIME_AGO', $module);
