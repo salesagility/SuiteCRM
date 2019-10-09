@@ -102,7 +102,6 @@ This project and all community members are expected to uphold the [SuiteCRM Code
 | `Reports` | [search][search-suitecrm-label-Reports] | Issues & PRs related to all things regarding reports |
 | `Upgrading` | [search][search-suitecrm-label-Upgrading] | Issues & PRs related to all things regarding upgrading & UpgradeWizard |
 | `Workflow` | [search][search-suitecrm-label-Workflow] | Issues & PRs related to all things regarding workflow |
-| `Security` | [search][search-suitecrm-label-Security] | Pull requests that address a security vulnerability |
 | `Studio` | [search][search-suitecrm-label-Studio] | Issues & PRs related to all things regarding studio & module builder |
 | `Styling` | [search][search-suitecrm-label-Styling] | Issues & PRs related to all things regarding styling |
 
@@ -163,7 +162,6 @@ This project and all community members are expected to uphold the [SuiteCRM Code
 [search-suitecrm-label-Styling]: https://github.com/salesagility/SuiteCRM/labels/Styling
 [search-suitecrm-label-Upgrading]: https://github.com/salesagility/SuiteCRM/labels/Upgrading
 [search-suitecrm-label-Workflow]: https://github.com/salesagility/SuiteCRM/labels/Workflow
-[search-suitecrm-label-Security]: https://github.com/salesagility/SuiteCRM/labels/Security
 
 [search-suitecrm-label-Duplicate]: https://github.com/salesagility/SuiteCRM/labels/Duplicate
 [search-suitecrm-label-Assessed]: https://github.com/salesagility/SuiteCRM/labels/Assessed
