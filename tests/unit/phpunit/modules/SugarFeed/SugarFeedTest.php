@@ -213,6 +213,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testGetTimeLapse()
     {
+        $GLOBALS['log']->reset();
         /** @noinspection PhpDeprecationInspection */
         $result = SugarFeed::getTimeLapse('2016-01-15 11:16:02');
         self::assertCount(1, $GLOBALS['log']->calls['deprecated']);
