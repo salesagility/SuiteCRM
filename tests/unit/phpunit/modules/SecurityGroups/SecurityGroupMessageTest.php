@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../../../../../modules/SecurityGroups/SecurityGroupMessage.php';
+
 /**
  * Class SecurityGroupMessageTest
  */
