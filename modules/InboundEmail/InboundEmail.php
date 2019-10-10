@@ -4611,8 +4611,8 @@ class InboundEmail extends SugarBean
             || ($part->type == 5)
         ) {
 
-            if (!is_dir($cacheDir)) {
-                mkdir($cacheDir);
+            if (!is_dir($cacheDir) && !mkdir($cacheDir) && !is_dir($cacheDir)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $cacheDir));
             }
 
             if (copy($uploadDir . $fileName, sugar_cached("images/{$fileName}.") . strtolower($part->subtype))) {
