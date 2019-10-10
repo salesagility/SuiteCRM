@@ -702,9 +702,8 @@ class GoogleSyncBase
         }
 
         // Validate and quote the meetingID
-        $valMeetingId = $this->db->quote($meeting_id);
         $isValidator = new SuiteValidator();
-        if (!$isValidator->isValidId($valMeetingId)) {
+        if (!$isValidator->isValidId($this->db->quote($meeting_id))) {
             throw new GoogleSyncException('Meeting ID could not be validated', GoogleSyncException::RECORD_VALIDATION_FAILURE);
         }
 
@@ -718,10 +717,10 @@ class GoogleSyncBase
             $this->logger->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Received Success Status Code: ' . $statusCode . ' on delete.');
 
             // This removes the gsync_id reference from the table.
-            $sql = "UPDATE meetings SET gsync_id = '' WHERE id = {$valMeetingId}";
+            $sql = "UPDATE meetings SET gsync_id = '' WHERE id = {$this->db->quoted($meeting_id)}";
             $res = $this->db->query($sql);
             if (!$res) {
-                $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to remove gsync_id from record' . $valMeetingId);
+                $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to remove gsync_id from record ' . $meeting_id);
             }
             return $meeting_id;
         }
