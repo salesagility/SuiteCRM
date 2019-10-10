@@ -21,17 +21,10 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testretrieve()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $emailMarketing = new EmailMarketing();
 
         $result = $emailMarketing->retrieve();
         $this->assertInstanceOf('EmailMarketing', $result);
-        
-        // clean up
     }
 
     public function testget_summary_text()
@@ -49,7 +42,6 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreate_export_query()
     {
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
         
@@ -66,9 +58,7 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $emailMarketing->create_export_query('email_marketing.id', 'email_marketing.name=""');
         $this->assertSame($expected, $actual);
 
-
         // clean up
-        
         $state->popGlobals();
     }
 

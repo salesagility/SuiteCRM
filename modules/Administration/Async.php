@@ -105,7 +105,7 @@ switch ($_REQUEST['adminAction']) {
                 // populate to_repair array
                 $q2 = "SELECT id FROM {$bean->table_name}";
                 $r2 = $bean->db->query($q2);
-                $ids = '';
+                $ids = [];
                 while ($a2 = $bean->db->fetchByAssoc($r2)) {
                     $ids[] = $a2['id'];
                 }
@@ -123,7 +123,7 @@ switch ($_REQUEST['adminAction']) {
             // populate to_repair array
             $q2 = "SELECT id FROM {$bean->table_name}";
             $r2 = $bean->db->query($q2);
-            $ids = '';
+            $ids = [];
             while ($a2 = $bean->db->fetchByAssoc($r2)) {
                 $ids[] = $a2['id'];
             }

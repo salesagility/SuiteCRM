@@ -1454,7 +1454,7 @@ class wsdl extends nusoap_base
                     $tt_prefix = $this->getPrefixFromNamespace('http://xml.apache.org/xml-soap');
                     if (! $tt_prefix) {
                         $this->debug('in serializeType: Add namespace for Apache SOAP type');
-                        $tt_prefix = 'ns' . rand(1000, 9999);
+                        $tt_prefix = 'ns' . mt_rand(1000, 9999);
                         $this->namespaces[$tt_prefix] = 'http://xml.apache.org/xml-soap';
                         // force this to be added to usedNamespaces
                         $tt_prefix = $this->getPrefixFromNamespace('http://xml.apache.org/xml-soap');

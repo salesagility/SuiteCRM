@@ -353,12 +353,12 @@ if (isset($_REQUEST['emailUIAction'])) {
 
             switch ($_REQUEST['type']) {
                 case "headers":
-                    $title = "{$app_strings['LBL_EMAIL_VIEW_HEADERS']}";
+                    $title = (string)($app_strings['LBL_EMAIL_VIEW_HEADERS']);
                     $text = $ie->getFormattedHeaders($_REQUEST['uid']);
                     break;
 
                 case "raw":
-                    $title = "{$app_strings['LBL_EMAIL_VIEW_RAW']}";
+                    $title = (string)($app_strings['LBL_EMAIL_VIEW_RAW']);
                     $text = $ie->getFormattedRawSource($_REQUEST['uid']);
                     break;
 
@@ -1765,7 +1765,7 @@ eoq;
                 $person = $_REQUEST['person'];
             }
             if (!empty($_REQUEST['start'])) {
-                $start = intval($_REQUEST['start']);
+                $start = (int)$_REQUEST['start'];
             } else {
                 $start = 0;
             }

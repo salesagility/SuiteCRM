@@ -62,7 +62,7 @@ if (isset($_REQUEST['root_directory'])) {
         }
         //if boolean has been set, concatenate files
         if ($forceReb) {
-            ConcatenateFiles("$from");
+            ConcatenateFiles((string)$from);
         }
     }
     //We are only allowing rebuilding of concat files from browser.

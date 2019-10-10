@@ -104,7 +104,8 @@ function appendHiddenFields(_form, ln, id) {
         fieldInput = $("#aor_conditions_value\\["+ln+"\\]\\[0\\]").val();
         fieldInput = updateTimeDateFields(fieldInput, ln);
     } else {
-        fieldInput = $("#aor_conditions_value\\[" + ln + "\\]").val();
+    	fieldInput = $("[name='aor_conditions_value\\[" + ln + "\\]']").val();
+    	fieldInput = updateTimeDateFields(fieldInput, ln);
     }
 
   _form.append('<input type="hidden" name="parameter_value[' + ln + ']" value="' + fieldInput + '">');

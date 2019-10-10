@@ -20,6 +20,7 @@ install/status.json
 /config.php
 /config_override.php
 /config_si.php
+tests/config.test.php
 # Connector configuration should also be ignored.
 custom/modules/Connectors/connectors/sources/ext/*/*/config.php
 # Logs files can safely be ignored.
@@ -110,3 +111,4 @@ include/Imap/ImapTestSettings.txt
 
 # Ignore custom codeception environments so they won't be committed.
 tests/_envs/custom.yml
+codeception.yml

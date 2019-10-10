@@ -242,6 +242,37 @@ function array_search_insensitive($key, $haystack)
     return $found;
 }
 
+
+/**
+ * This function is useful to format properly indices definitions before
+ * compare them to decide if this index should be created in database or not.
+ *
+ * Example:
+ * If an index definition in vardefs.php contains a field like this:
+ *   => 'last_name  (  30 ) ',
+ *
+ * This function formats this string like this:
+ *  => 'last_name (30)',
+ *
+ * The function replaces
+ *  - one o more whitespace by only one whitespace.
+ *  - trim the string.
+ *  - whitespace after '('
+ *  - whitespace before ')'
+ * @param  array $indexArray an index definition
+ * @return array $indexArray an index definition
+ */
+function fixIndexArrayFormat($indexArray)
+{
+    foreach ($indexArray as $key => $value) {
+        $indexArray[$key] = preg_replace("/\s+/u", " ", $value);
+        $indexArray[$key] = trim($indexArray[$key]);
+        $indexArray[$key] = str_replace(['( ', ' )'], ['(', ')'], $indexArray[$key]);
+    }
+    return $indexArray;
+}
+
+
 /**
  * Wrapper around PHP's ArrayObject class that provides dot-notation recursive searching
  * for multi-dimensional arrays

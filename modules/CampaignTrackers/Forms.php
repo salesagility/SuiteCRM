@@ -108,7 +108,7 @@ function get_new_record_form()
         : $_REQUEST['module_select'];
     $form->assign('MOD', $mod_strings);
     $form->assign('APP', $app_strings);
-    $form->assign('THEME', SugarThemeRegistry::current()->__toString());
+    $form->assign('THEME', (string)SugarThemeRegistry::current());
     $form->assign("JAVASCRIPT", get_set_focus_js().get_validate_record_js());
     $form->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['campaign_status_dom'], "Planning"));
     $form->assign("TYPE_OPTIONS", get_select_options_with_id($app_list_strings['campaign_type_dom'], ""));

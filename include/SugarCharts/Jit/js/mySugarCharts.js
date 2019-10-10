@@ -1,4 +1,3 @@
-<!--
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,26 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
--->
-<!-- BEGIN: main -->
-<p>
-<form name="RebuildConfig" method="post" action="index.php">
-<input type="hidden" name="module" value="Administration">
-<input type="hidden" name="action" value="RebuildConfig">
-<input type="hidden" name="return_module" value="Administration">
-<input type="hidden" name="return_action" value="RebuildConfig">
-<input type="hidden" name="perform_rebuild" value="true">
-<table cellspacing="{CELLSPACING}" class="other view">
-<tr>
-    <td width="20%" scope="row">{LBL_CONFIG_CHECK}</td>
-    <td>{CONFIG_CHECK}</td>
-</tr>
-<tr>
-    <td scope="row">{LBL_PERFORM_REBUILD}</td>
-    <td><input type="submit" name="button" {DISABLE_CONFIG_REBUILD} value="{BTN_PERFORM_REBUILD}"></td>
-</tr>
-</table>
-</form>
-</p>
-<!-- END: main -->
+initmySugarCharts=function(){SUGAR.mySugar.sugarCharts=function(){var activeTab=activePage,charts=new Object();return{loadSugarCharts:function(activeTab){var chartFound=false;for(id in charts[activeTab]){if(id!='undefined'){chartFound=true;loadSugarChart(charts[activeTab][id]['chartId'],charts[activeTab][id]['jsonFilename'],charts[activeTab][id]['css'],charts[activeTab][id]['chartConfig']);}}
+charts=new Object();},addToChartsArrayJson:function(json,activeTab){for(id in json){if(json[id]['supported']=="true"){SUGAR.mySugar.sugarCharts.addToChartsArray(json[id]['chartId'],json[id]['filename'],json[id]['css'],json[id]['chartConfig'],activeTab);}}},addToChartsArray:function(chartId,jsonFilename,css,chartConfig,activeTab){if(charts[activeTab]==null){charts[activeTab]=new Object();}
+charts[activeTab][chartId]=new Object();charts[activeTab][chartId]['chartId']=chartId;charts[activeTab][chartId]['jsonFilename']=jsonFilename;charts[activeTab][chartId]['css']=css;charts[activeTab][chartId]['chartConfig']=chartConfig;}}}();};

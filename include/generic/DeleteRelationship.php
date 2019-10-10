@@ -84,8 +84,8 @@ require_once('include/formbase.php');
      }
  }
 
+$focus->retrieve($record);
 if ($bean_name === 'Team') {
-    $focus->retrieve($record);
     $focus->remove_user_from_team($linked_id);
 } else {
 

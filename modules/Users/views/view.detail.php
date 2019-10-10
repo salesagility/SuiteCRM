@@ -131,7 +131,7 @@ class UsersViewDetail extends ViewDetail
                     $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => "<input id='duplicate_button' title='" . $app_strings['LBL_DUPLICATE_BUTTON_TITLE'] . "' accessKey='" . $app_strings['LBL_DUPLICATE_BUTTON_KEY'] . "' class='button' onclick=\"this.form.return_module.value='Users'; this.form.return_action.value='DetailView'; this.form.isDuplicate.value=true; this.form.action.value='EditView'\" type='submit' name='Duplicate' value='" . $app_strings['LBL_DUPLICATE_BUTTON_LABEL'] . "'>");
 
                     if ($this->bean->id != $current_user->id) {
-                        $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => "<input id='delete_button' type='button' class='button' onclick='confirmDelete();' value='" . $app_strings['LBL_DELETE_BUTTON_LABEL'] . "' />");
+                        $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => "<input id='delete_button' title='" . $app_strings['LBL_DELETE_BUTTON_LABEL'] . "' type='button' class='button' onclick='confirmDelete();' value='" . $app_strings['LBL_DELETE_BUTTON_LABEL'] . "' />");
                     }
 
                     if (!$this->bean->portal_only && !$this->bean->is_group && !$this->bean->external_auth_only

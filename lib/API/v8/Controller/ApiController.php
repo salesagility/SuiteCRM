@@ -41,7 +41,6 @@
 namespace SuiteCRM\API\v8\Controller;
 
 use Interop\Container\Exception\ContainerException;
-use InvalidArgumentException;
 use JsonSchema\Validator;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
@@ -54,7 +53,6 @@ use RuntimeException;
 use SuiteCRM\API\JsonApi\v1\JsonApi;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\InvalidJsonApiRequestException;
-use SuiteCRM\API\v8\Exception\InvalidJsonApiResponseException;
 use SuiteCRM\API\v8\Exception\NotAcceptableException;
 use SuiteCRM\API\v8\Exception\UnsupportedMediaTypeException;
 use SuiteCRM\ErrorMessage;

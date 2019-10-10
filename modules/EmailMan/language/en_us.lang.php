@@ -55,6 +55,7 @@ $mod_strings = array(
     'LBL_DEFAULT_LOCATION' => 'Default',
 
     'LBL_EMAIL_DEFAULT_DELETE_ATTACHMENTS' => 'Delete related notes & attachments with deleted Emails',
+    'LBL_EMAIL_WARNING_NOTIFICATIONS' => 'Email warning notifications',
     'LBL_EMAIL_ENABLE_CONFIRM_OPT_IN' => 'Opt In Settings',
     'LBL_EMAIL_ENABLE_SEND_OPT_IN' => 'Automatically Send Opt In Email',
     'LBL_EMAIL_CONFIRM_OPT_IN_TEMPLATE_ID' => 'Confirm Opt In Email Template',
@@ -107,7 +108,7 @@ $mod_strings = array(
     'TRACKING_ENTRIES_LOCATION_DEFAULT_VALUE' => 'Value of Config.php setting site_url',
     'TXT_REMOVE_ME_ALT' => 'To remove yourself from this email list go to',
     'TXT_REMOVE_ME_CLICK' => 'click here',
-    'TXT_REMOVE_ME' => 'To remove yourself from this email list ',
+    'TXT_REMOVE_ME' => 'To remove yourself from this email list',
     'LBL_NOTIFY_SEND_FROM_ASSIGNING_USER' => 'Send notification from the email address of the assigning user',
 
     'LBL_SECURITY_TITLE' => 'Email Security Settings',
