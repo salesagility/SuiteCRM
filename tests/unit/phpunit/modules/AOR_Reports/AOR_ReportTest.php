@@ -249,7 +249,10 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //execute the method with required data preset and verify it returns expected result
         $fields = array('label' => array('display' => 1, 'total' => 'SUM', 'label' => 'total'));
         $totals = array('label' => array(10, 20, 30));
-        $expected = "<table width='100%' class='list view table-responsive aor_reports'><thead class='fc-head'><tr><th>total Sum</th></tr></thead><tbody><tr class='oddListRowS1'><td>60</td></tr></tbody></table>";
+        $expected = "<table width='100%' class='list view table-responsive aor_reports'><thead class='fc-head'><tr><th>total Sum</th></tr></thead><tbody><tr class='oddListRowS1'><td>
+                     <span class=\"sugar_field\" id=\"duration_hours\">
+                     60
+                     </span></td></tr></tbody></table>";
 
 
         $aor_Report = new AOR_Report();
