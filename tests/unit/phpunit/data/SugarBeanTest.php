@@ -2,7 +2,6 @@
 include_once __DIR__ . '/SugarBeanMock.php';
 include_once __DIR__ . '/../../../../include/SubPanel/SubPanelDefinitions.php';
 
-use SuiteCRM\StateCheckerConfig;
 use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
 
 /** @noinspection PhpUndefinedClassInspection */
@@ -47,6 +46,35 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     {
         $object = new Contact();
         $object->field_defs = $this->fieldDefsStore[$key]['Contact'];
+    }
+
+    public function testFactoryGetCachedDeleted()
+    {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('leads');
+        $state->pushTable('leads_cstm');
+        $state->pushTable('sugarfeed');
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+
+        // Create a lead and cache it
+        $lead = new Lead();
+        $lead->save();
+
+        $bean = BeanFactory::getBean($lead->module_dir, $lead->id);
+        $this->assertNotEmpty($bean);
+
+        // Don't return a cached result if the bean was deleted
+        $lead->mark_deleted($lead->id);
+        $this->assertEmpty(BeanFactory::getBean($lead->module_dir, $lead->id));
+        // Unless explicitly specified
+        $this->assertNotEmpty(BeanFactory::getBean($lead->module_dir, $lead->id, [], false));
+
+        $state->popGlobals();
+        $state->popTable('aod_indexevent');
+        $state->popTable('sugarfeed');
+        $state->popTable('leads_cstm');
+        $state->popTable('leads');
     }
 
     /**

@@ -1083,7 +1083,7 @@ class InboundEmail extends SugarBean
                 if (!empty($tmp)) {
                     $tmp .= ", ";
                 }
-                $tmp .= "{$uid}";
+                $tmp .= (string)($uid);
             }
             $GLOBALS['log']->info("INBOUNDEMAIL-CACHE: filter UIDs: [ {$tmp} ]");
 
@@ -1094,7 +1094,7 @@ class InboundEmail extends SugarBean
                     $cols .= ",";
                 }
 
-                $cols .= "{$colDef['name']}";
+                $cols .= (string)($colDef['name']);
             }
             foreach ($insert as $overview) {
                 if (in_array($overview->imap_uid, $uids)) {
@@ -1191,7 +1191,7 @@ class InboundEmail extends SugarBean
                     $cols .= ",";
                 }
 
-                $cols .= "{$colDef['name']}";
+                $cols .= (string)($colDef['name']);
             }
 
             foreach ($update as $overview) {
@@ -1426,7 +1426,7 @@ class InboundEmail extends SugarBean
                     }
                     $results = array_slice(array_keys($diff), 0, 50);
                     $data = serialize($newDiff);
-                    if ($fh = @fopen($cacheFilePath, "w")) {
+                    if ($fh = @fopen($cacheFilePath, 'wb')) {
                         fputs($fh, $data);
                         fclose($fh);
                     } // if
@@ -1456,7 +1456,7 @@ class InboundEmail extends SugarBean
 
                 $results = array_slice(array_keys($diff), 0, 50);
                 $data = serialize($newDiff);
-                if ($fh = @fopen($cacheFilePath, "w")) {
+                if ($fh = @fopen($cacheFilePath, 'wb')) {
                     fputs($fh, $data);
                     fclose($fh);
                 } // if
@@ -1893,7 +1893,7 @@ class InboundEmail extends SugarBean
                 if (count($searchResults) > 0) {
                     $results = $searchResults;
                     $data = serialize($searchResults);
-                    if ($fh = @fopen($cacheFilePath, "w")) {
+                    if ($fh = @fopen($cacheFilePath, 'wb')) {
                         fputs($fh, $data);
                         fclose($fh);
                     } // if
@@ -2839,7 +2839,7 @@ class InboundEmail extends SugarBean
             } // if
             $stored_options['only_since'] = $onlySince;
             $stored_options['filter_domain'] = '';
-            $storedOptions['folderDelimiter'] = $delimiter;
+            $stored_options['folderDelimiter'] = $delimiter;
             $stored_options['outbound_email'] = (isset($_REQUEST['outbound_email'])) ? $_REQUEST['outbound_email'] : $oe->id;
             $this->stored_options = base64_encode(serialize($stored_options));
 

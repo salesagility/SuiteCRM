@@ -656,7 +656,7 @@ class TTFontFile
             }
             $this->capHeight = $this->ascent;
         }
-        $this->stemV = 50 + intval(pow(($usWeightClass / 65.0), 2));
+        $this->stemV = 50 + (int)pow(($usWeightClass / 65.0), 2);
 
         ///////////////////////////////////
         // post - PostScript table
@@ -835,7 +835,7 @@ class TTFontFile
                     $val = $this->read_short();
                     if (count($glyphToChar[$left])==1 && count($glyphToChar[$right])==1) {
                         if ($left != 32 && $right != 32) {
-                            $this->kerninfo[$glyphToChar[$left][0]][$glyphToChar[$right][0]] = intval($val*$scale);
+                            $this->kerninfo[$glyphToChar[$left][0]][$glyphToChar[$right][0]] = (int)($val * $scale);
                         }
                     }
                 }
@@ -1930,7 +1930,7 @@ class TTFontFile
                 foreach ($glyphToChar[$glyph] as $char) {
                     //$this->charWidths[$char] = intval(round($scale*$aw));
                     if ($char != 0 && $char != 65535) {
-                        $w = intval(round($scale*$aw));
+                        $w = (int)round($scale * $aw);
                         if ($w == 0) {
                             $w = 65535;
                         }
@@ -1946,7 +1946,7 @@ class TTFontFile
         $data = $this->get_chunk(($start+$numberOfHMetrics*4), ($numGlyphs*2));
         $arr = unpack("n*", $data);
         $diff = $numGlyphs-$numberOfHMetrics;
-        $w = intval(round($scale*$aw));
+        $w = (int)round($scale * $aw);
         if ($w == 0) {
             $w = 65535;
         }

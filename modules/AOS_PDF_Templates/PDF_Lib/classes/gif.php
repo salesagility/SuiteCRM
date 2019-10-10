@@ -237,7 +237,7 @@ class CGIFLZW
 
         $iRet = 0;
         for ($i = $this->CurBit, $j = 0; $j < $this->CodeSize; $i++, $j++) {
-            $iRet |= (($this->Buf[intval($i / 8)] & (1 << ($i % 8))) != 0) << $j;
+            $iRet |= (($this->Buf[(int)($i / 8)] & (1 << ($i % 8))) != 0) << $j;
         }
 
         $this->CurBit += $this->CodeSize;
@@ -302,7 +302,7 @@ class CGIFCOLORTABLE
 
     public function colorIndex($rgb)
     {
-        $rgb  = intval($rgb) & 0xFFFFFF;
+        $rgb  = (int)$rgb & 0xFFFFFF;
         $r1   = ($rgb & 0x0000FF);
         $g1   = ($rgb & 0x00FF00) >>  8;
         $b1   = ($rgb & 0xFF0000) >> 16;

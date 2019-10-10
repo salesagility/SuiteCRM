@@ -82,7 +82,7 @@ class OAuth2Clients extends SugarBean
      */
     public function get_summary_text()
     {
-        return "$this->name";
+        return (string)$this->name;
     }
 
     /**

@@ -72,7 +72,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
         if (!empty($options)) {
             foreach ($options as $k=>$v) {
                 if (is_array($v)) {
-                    $html = wrapTag($k, "$html", $v);
+                    $html = wrapTag($k, (string)$html, $v);
                 }
             }
         }

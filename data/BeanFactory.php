@@ -87,6 +87,8 @@ class BeanFactory
      * The Last 10 loaded beans are cached in memory to prevent multiple retrieves per request.
      * If no id is passed, a new bean is created.
      *
+     * @static
+     *
      * @param string $module
      * @param string $id
      * @param array $params
@@ -143,6 +145,10 @@ class BeanFactory
             ++self::$touched[$module][$id];
 
             $bean = self::$loadedBeans[$module][$id];
+
+            if ($deleted && $bean->deleted) {
+                return false;
+            }
         }
 
         return $bean;

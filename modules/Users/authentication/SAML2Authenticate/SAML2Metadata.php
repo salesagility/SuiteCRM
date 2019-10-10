@@ -1,4 +1,4 @@
-<!--
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,29 +34,21 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
--->
-<!-- BEGIN: main -->
-<p>
-<form name="RebuildConfig" method="post" action="index.php">
-<input type="hidden" name="module" value="Administration">
-<input type="hidden" name="action" value="RebuildConfig">
-<input type="hidden" name="return_module" value="Administration">
-<input type="hidden" name="return_action" value="RebuildConfig">
-<input type="hidden" name="perform_rebuild" value="true">
-<table cellspacing="{CELLSPACING}" class="other view">
-<tr>
-    <td width="20%" scope="row">{LBL_CONFIG_CHECK}</td>
-    <td>{CONFIG_CHECK}</td>
-</tr>
-<tr>
-    <td scope="row">{LBL_PERFORM_REBUILD}</td>
-    <td><input type="submit" name="button" {DISABLE_CONFIG_REBUILD} value="{BTN_PERFORM_REBUILD}"></td>
-</tr>
-</table>
-</form>
-</p>
-<!-- END: main -->
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+require_once __DIR__ . '/SAML2Authenticate.php';
+require_once __DIR__ . '/lib/onelogin/settings.php';
+
+try {
+    $xml = getSAML2Metadata($settingsInfo);
+    header('Content-Type: text/xml');
+    echo $xml;
+} catch (Exception $e) {
+    echo $e->getMessage();
+}

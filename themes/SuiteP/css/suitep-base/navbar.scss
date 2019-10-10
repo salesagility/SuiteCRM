@@ -2192,6 +2192,7 @@
     display: inline-block;
     visibility: visible;
     text-align: right;
+    margin-top: 6px;
   }
 }
 
@@ -2343,7 +2344,7 @@
   .globalLinks-desktop .dropdown-toggle {
     margin-left: 0;
     border: none;
-    width: 48px;
+    width: auto;
     height: 48px;
   }
 }

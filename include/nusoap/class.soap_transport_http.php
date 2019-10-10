@@ -1126,7 +1126,7 @@ class soap_transport_http extends nusoap_base
         $this->response_status_line = $header_array[0];
         $arr = explode(' ', $this->response_status_line, 3);
         $http_version = $arr[0];
-        $http_status = intval($arr[1]);
+        $http_status = (int)$arr[1];
         $http_reason = count($arr) > 2 ? $arr[2] : '';
 
         // see if we need to resend the request with http digest authentication
