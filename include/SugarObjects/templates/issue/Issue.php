@@ -42,12 +42,6 @@ require_once 'include/SugarObjects/templates/basic/Basic.php';
 
 class Issue extends Basic
 {
-
-    /**
-     * Issue constructor.
-     */
-
-
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be removed in 8.0,
      *     please update your code, use __construct instead

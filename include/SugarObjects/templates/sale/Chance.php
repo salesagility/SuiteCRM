@@ -46,12 +46,6 @@ require_once 'include/SugarObjects/templates/basic/Basic.php';
 
 class Chance extends Basic
 {
-
-    /**
-     * Chance constructor.
-     */
-
-
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 8.0,
      * please update your code, use __construct instead

@@ -83,12 +83,7 @@ class SugarCacheRedis extends SugarCacheAbstract
             
         return false;
     }
-    
-    /**
-     * @see SugarCacheAbstract::__construct()
-     */
 
-    
     /**
      * Get the memcache object; initialize if needed
      */

@@ -51,11 +51,6 @@ class Basic extends SugarBean
     );
 
     /**
-     * Constructor
-     */
-
-
-    /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be removed in 8.0,
      *     please update your code, use __construct instead
      */

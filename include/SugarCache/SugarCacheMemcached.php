@@ -76,12 +76,7 @@ class SugarCacheMemcached extends SugarCacheAbstract
             
         return false;
     }
-    
-    /**
-     * @see SugarCacheAbstract::__construct()
-     */
 
-    
     /**
      * Get the memcached object; initialize if needed
      */
