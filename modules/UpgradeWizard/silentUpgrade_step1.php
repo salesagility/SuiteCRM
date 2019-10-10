@@ -541,10 +541,8 @@ if ($upgradeType !== constant('DCE_INSTANCE')) {
 
     $unzip_dir = sugar_cached('upgrades/temp');
 
-    include "$unzip_dir/manifest.php";
-    if (is_file("$unzip_dir/manifest.php")) {
-        include "{$argv[1]}/manifest.php";
-    }
+    $install_file = $sugar_config['upload_dir'] . '/upgrades/patch/' . basename($argv[1]);
+    sugar_mkdir($sugar_config['upload_dir'] . '/upgrades/patch', 0775, true);
 
     if (isset($manifest['copy_files']['from_dir']) && $manifest['copy_files']['from_dir'] !== "") {
         $zip_from_dir = $manifest['copy_files']['from_dir'];
