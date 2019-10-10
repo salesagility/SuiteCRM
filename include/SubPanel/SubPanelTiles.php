@@ -443,7 +443,6 @@ class SubPanelTiles
         $widget_contents = smarty_function_sugar_action_menu(
             [
                 'buttons' => $buttons,
-                'flat' => !empty($thisPanel->_instance_properties['flat']),
                 'class' => 'clickMenu fancymenu',
             ],
             $this->xTemplate
