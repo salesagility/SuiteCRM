@@ -1000,41 +1000,21 @@ class AOR_Report extends Basic
             if ($field['total'] && isset($totals[$label])) {
                 $type = $field['total'];
                 $total = $this->calculateTotal($type, $totals[$label]);
-                // Customise display based on the field type
-                $moduleBean = BeanFactory::newBean(isset($field['module']) ? $field['module'] : null);
-                if (!is_object($moduleBean)) {
-                    LoggerManager::getLogger()->warn('Unable to create new module bean when trying to build report html. Module bean was: ' . (isset($field['module']) ? $field['module'] : 'NULL'));
-                    $moduleBeanFieldDefs = null;
-                } elseif (!isset($moduleBean->field_defs)) {
-                    LoggerManager::getLogger()->warn('File definition not found for module when trying to build report html. Module bean was: ' . get_class($moduleBean));
-                    $moduleBeanFieldDefs = null;
-                } else {
-                    $moduleBeanFieldDefs = $moduleBean->field_defs;
-                }
-                $fieldDefinition = $moduleBeanFieldDefs[isset($field['field']) ? $field['field'] : null];
-                $fieldDefinitionType = $fieldDefinition['type'];
-                switch ($fieldDefinitionType) {
-                    case "currency":
-                        // Customise based on type of function
-                        switch ($type) {
-                            case 'SUM':
-                            case 'AVG':
-                                if ($currency->id == -99) {
-                                    $total = $currency->symbol . format_number($total, null, null);
-                                } else {
-                                    $total = $currency->symbol . format_number(
-                                        $total,
-                                        null,
-                                        null,
-                                        array('convert' => true)
-                                    );
-                                }
-                                break;
-                            case 'COUNT':
-                            default:
-                                break;
-                        }
+                switch ($type) {
+                    case 'SUM':
+                    case 'AVG':
+                        $total = getModuleField(
+                            $field['module'],
+                            $field['field'],
+                            $field['field'],
+                            'DetailView',
+                            $total,
+                            '',
+                            $currency->id,
+                            $field['params']
+                        );
                         break;
+                    case 'COUNT':
                     default:
                         break;
                 }
