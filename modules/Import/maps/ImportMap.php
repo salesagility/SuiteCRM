@@ -97,10 +97,7 @@ class ImportMap extends SugarBean
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     /**
      * Returns an array with the field mappings

@@ -66,10 +66,7 @@ class SurveyResponses extends Basic
     public $assigned_user_link;
     public $SecurityGroups;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     public function bean_implements($interface)
     {

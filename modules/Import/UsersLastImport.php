@@ -83,10 +83,7 @@ class UsersLastImport extends SugarBean
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     /**
      * Extends SugarBean::listviewACLHelper

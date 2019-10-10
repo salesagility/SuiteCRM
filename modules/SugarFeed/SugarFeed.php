@@ -66,10 +66,7 @@ class SugarFeed extends Basic
     public $assigned_user_name;
     public $assigned_user_link;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

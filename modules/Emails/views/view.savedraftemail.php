@@ -51,10 +51,7 @@ class EmailsViewSaveDraftEmail extends ViewAjax
     public $bean;
 
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     public function display()
     {

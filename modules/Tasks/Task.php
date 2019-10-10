@@ -89,10 +89,7 @@ class Task extends SugarBean
     public $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'contact_name', 'contact_phone', 'contact_email', 'parent_name');
 
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

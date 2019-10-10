@@ -54,10 +54,7 @@ class ViewImportvcardsave extends SugarView
 {
     public $type = 'save';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     /**
      * @see SugarView::display()

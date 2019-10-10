@@ -53,10 +53,7 @@ class JsChart extends SugarChart
     public $height;
     public $chartType;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     public function isSupported($chartType)
     {

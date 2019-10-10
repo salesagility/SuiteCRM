@@ -50,10 +50,7 @@ class Chance extends Basic
     /**
      * Chance constructor.
      */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 8.0,

@@ -27,10 +27,7 @@ require_once 'modules/AOW_WorkFlow/aow_utils.php';
 require_once 'modules/AOR_Reports/aor_utils.php';
 class AOR_ReportsViewEdit extends ViewEdit
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     public function preDisplay()
     {

@@ -44,10 +44,7 @@
 require_once('modules/FP_events/FP_events_sugar.php');
 class FP_events extends FP_events_sugar
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

@@ -4,10 +4,7 @@ require_once('include/ListView/ListViewSmarty.php');
 
 class MeetingsListViewSmarty extends ListViewSmarty
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

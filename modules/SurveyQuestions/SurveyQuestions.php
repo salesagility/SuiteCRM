@@ -65,10 +65,7 @@ class SurveyQuestions extends Basic
     public $sort_order;
     public $type;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     public function bean_implements($interface)
     {

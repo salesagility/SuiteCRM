@@ -44,10 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SpotsViewEdit extends ViewEdit
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     public function display()
     {

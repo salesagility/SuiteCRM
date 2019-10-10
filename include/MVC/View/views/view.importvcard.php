@@ -56,10 +56,7 @@ class ViewImportvcard extends SugarView
 {
     public $type = 'edit';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     /**
      * @see SugarView::display()

@@ -44,10 +44,5 @@ class Jit extends JsChart
 {
     /**
      * This class is kept for backwards compatibility only.
-     * Jit constructor.
      */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 }

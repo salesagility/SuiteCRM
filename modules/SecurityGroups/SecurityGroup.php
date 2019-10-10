@@ -7,10 +7,7 @@ class SecurityGroup extends SecurityGroup_sugar
     /**
      * SecurityGroup constructor.
      */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     /**
      * @deprecated 7.6 PHP4 Style Constructors are deprecated and will be remove in 8.0, please update your code

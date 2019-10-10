@@ -47,10 +47,7 @@ class TemplateText extends TemplateField
     public $type='varchar';
     public $supports_unified_search = true;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     public function get_xtpl_edit()
     {

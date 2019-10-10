@@ -130,10 +130,7 @@ class ListViewDataEmails extends ListViewData
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
 
     /**

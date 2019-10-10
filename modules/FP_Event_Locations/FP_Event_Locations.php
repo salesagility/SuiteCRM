@@ -44,10 +44,7 @@
 require_once('modules/FP_Event_Locations/FP_Event_Locations_sugar.php');
 class FP_Event_Locations extends FP_Event_Locations_sugar
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

@@ -80,10 +80,7 @@ class SugarCacheMemcached extends SugarCacheAbstract
     /**
      * @see SugarCacheAbstract::__construct()
      */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
     
     /**
      * Get the memcached object; initialize if needed

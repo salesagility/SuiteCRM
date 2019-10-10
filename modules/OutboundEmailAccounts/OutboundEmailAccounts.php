@@ -50,10 +50,7 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
      */
     public $mail_smtppass;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     public function save($check_notify = false)
     {

@@ -59,10 +59,7 @@ class iCal extends vCal
     /**
     * Constructor for the iCal class.
     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     /**
     * Gets a UTC formatted string from the given dateTime

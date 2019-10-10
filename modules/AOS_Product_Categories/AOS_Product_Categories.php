@@ -44,10 +44,7 @@
 require_once('modules/AOS_Product_Categories/AOS_Product_Categories_sugar.php');
 class AOS_Product_Categories extends AOS_Product_Categories_sugar
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

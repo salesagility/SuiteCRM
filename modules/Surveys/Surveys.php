@@ -122,10 +122,7 @@ class Surveys extends Basic
     /**
      * Surveys constructor.
      */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     /**
      * @param string $interface

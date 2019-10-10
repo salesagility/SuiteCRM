@@ -71,10 +71,7 @@ class TemplateSectionLine_sugar extends Basic
     public $assigned_user_link;
     public $grp;
     
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
     
     public function bean_implements($interface)
     {
