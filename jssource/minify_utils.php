@@ -304,7 +304,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                             //Check to see that ReadNextLine is true, if so then add the last line collected
                             //make sure the last line is either the end to a comment block, or starts with '//'
                             //else do not add as it is live code.
-                            if (!empty($newLine) && ((strpos($newLine, '*/')!== false) || ($newLine{0}.$newLine{1}== '//'))) {
+                            if (!empty($newLine) && ((strpos($newLine, '*/')!== false) || ($newLine[0].$newLine[1]== '//'))) {
                                 //add new line to license string
                                 $lic_str .=$newLine;
                             }
