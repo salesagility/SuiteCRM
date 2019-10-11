@@ -1,11 +1,11 @@
-<?php
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2019 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,28 +37,25 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+*}
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+<p>
+    <form name="RebuildConfig" method="post" action="index.php">
+        <input type="hidden" name="module" value="Administration">
+        <input type="hidden" name="action" value="RebuildConfig">
+        <input type="hidden" name="return_module" value="Administration">
+        <input type="hidden" name="return_action" value="RebuildConfig">
+        <input type="hidden" name="perform_rebuild" value="true">
 
-$mod_strings = array(
-    'LBL_ROLE' => 'Role:',
-    'LBL_LANGUAGE' => 'Language:',
-    'LBL_MODULE_NAME' => 'Roles',
-    'LBL_MODULE_TITLE' => 'Roles: Home',
-    'LBL_SEARCH_FORM_TITLE' => 'Role Search',
-    'LBL_LIST_FORM_TITLE' => 'Role List',
-    'LNK_NEW_ROLE' => 'Create Role',
-    'LNK_ROLES' => 'Roles',
-    'LBL_NAME' => 'Name:',
-    'LBL_DESCRIPTION' => 'Description:',
-    'LBL_ALLOWED_MODULES' => 'Allowed Modules:',
-    'LBL_DISALLOWED_MODULES' => 'Disallowed Modules:',
-    'LBL_ASSIGN_MODULES' => 'Edit Modules:',
-    'LBL_DEFAULT_SUBPANEL_TITLE' => 'Roles',
-    'LBL_USERS' => 'Users',
-
-    'LBL_USERS_SUBPANEL_TITLE' => 'Users',
-    'LBL_MODULES' => 'Modules',
-);
+        <table cellspacing="{$CELLSPACING}" class="other view">
+        <tr>
+            <td width="20%" scope="row">{$LBL_CONFIG_CHECK}</td>
+            <td>{$CONFIG_CHECK}</td>
+        </tr>
+        <tr>
+            <td scope="row">{$LBL_PERFORM_REBUILD}</td>
+            <td><input type="submit" name="button" {$DISABLE_CONFIG_REBUILD} value="{$BTN_PERFORM_REBUILD}"></td>
+        </tr>
+        </table>
+    </form>
+</p>

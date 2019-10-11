@@ -359,6 +359,10 @@ td {
   border: none;
 }
 
+textarea {
+  resize: vertical; /* user can resize vertically, but width is fixed */
+}
+
 #header ul li {
   display: inline;
 }
@@ -4406,8 +4410,11 @@ td.inlineEditActive {
   height: auto;
 }
 
-.edit-view-pagination .btn-pagination[disabled] {
+.edit-view-pagination .btn-pagination[disabled],
+.edit-view-pagination .btn-pagination[disabled]:hover {
   background-color: $disabled-btn-bg;
+  text-decoration: none;
+  cursor: default;
 }
 
 .edit-view-pagination .btn-pagination {
@@ -4416,7 +4423,8 @@ td.inlineEditActive {
   font-weight: 600;
   height: 28px;
   line-height: 18px;
-  padding: 0 10px 0 10px;
+  padding: 5px 10px 0 10px;
+  display: inline-block;
 }
 
 .edit-view-pagination .btn-pagination:hover {

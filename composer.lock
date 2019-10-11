@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc589ecb036dc2e3bf8c2762bb89bee4",
+    "content-hash": "ad3bb802d8c66c55e2b2da79d8a84525",
     "packages": [
         {
             "name": "consolidation/annotated-command",
@@ -1098,7 +1098,7 @@
                 {
                     "name": "Luís Otávio Cobucci Oblonczyk",
                     "email": "lcobucci@gmail.com",
-                    "role": "Developer"
+                    "role": "developer"
                 }
             ],
             "description": "A simple library to work with JSON Web Token and JSON Web Signature",
@@ -1512,6 +1512,56 @@
                 "random"
             ],
             "time": "2019-01-03T20:59:08+00:00"
+        },
+        {
+            "name": "phpoption/phpoption",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmittjoh/php-option.git",
+                "reference": "94e644f7d2051a5f0fcf77d81605f152eecff0ed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/94e644f7d2051a5f0fcf77d81605f152eecff0ed",
+                "reference": "94e644f7d2051a5f0fcf77d81605f152eecff0ed",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.7.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "PhpOption\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache2"
+            ],
+            "authors": [
+                {
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Option Type for PHP",
+            "keywords": [
+                "language",
+                "option",
+                "php",
+                "type"
+            ],
+            "time": "2015-07-25T16:39:46+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -2701,6 +2751,63 @@
                 "psr-7"
             ],
             "time": "2018-04-03T06:12:18+00:00"
+        },
+        {
+            "name": "vlucas/phpdotenv",
+            "version": "v3.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vlucas/phpdotenv.git",
+                "reference": "1bdf24f065975594f6a117f0f1f6cabf1333b156"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/1bdf24f065975594f6a117f0f1f6cabf1333b156",
+                "reference": "1bdf24f065975594f6a117f0f1f6cabf1333b156",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.4 || ^7.0",
+                "phpoption/phpoption": "^1.5",
+                "symfony/polyfill-ctype": "^1.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35 || ^5.0 || ^6.0 || ^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dotenv\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "graham@alt-three.com",
+                    "homepage": "https://gjcampbell.co.uk/"
+                },
+                {
+                    "name": "Vance Lucas",
+                    "email": "vance@vancelucas.com",
+                    "homepage": "https://vancelucas.com/"
+                }
+            ],
+            "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
+            "keywords": [
+                "dotenv",
+                "env",
+                "environment"
+            ],
+            "time": "2019-09-10T21:37:39+00:00"
         },
         {
             "name": "wikimedia/composer-merge-plugin",
@@ -4060,9 +4167,9 @@
             "authors": [
                 {
                     "name": "Jeroen Desloovere",
+                    "role": "Developer",
                     "email": "info@jeroendesloovere.be",
-                    "homepage": "http://jeroendesloovere.be",
-                    "role": "Developer"
+                    "homepage": "http://jeroendesloovere.be"
                 }
             ],
             "description": "This VCard PHP class can generate a vCard with some data. When using an iOS device it will export as a .ics file because iOS devices don't support the default .vcf files.",
@@ -4386,22 +4493,22 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.8.1",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "1927e75f4ed19131ec9bcc3b002e07fb1173ee76"
+                "reference": "f6811d96d97bdf400077a0cc100ae56aa32b9203"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/1927e75f4ed19131ec9bcc3b002e07fb1173ee76",
-                "reference": "1927e75f4ed19131ec9bcc3b002e07fb1173ee76",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/f6811d96d97bdf400077a0cc100ae56aa32b9203",
+                "reference": "f6811d96d97bdf400077a0cc100ae56aa32b9203",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
-                "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0",
+                "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0|^5.0",
                 "sebastian/comparator": "^1.1|^2.0|^3.0",
                 "sebastian/recursion-context": "^1.0|^2.0|^3.0"
             },
@@ -4445,7 +4552,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2019-06-13T12:50:23+00:00"
+            "time": "2019-10-03T11:07:50+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -4496,8 +4603,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
@@ -4544,8 +4651,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "FilterIterator implementation that filters files based on a list of suffixes.",
@@ -4586,8 +4693,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Simple template engine.",
@@ -4635,8 +4742,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "Utility class for timing",
@@ -4754,8 +4861,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "The PHP Unit Testing framework.",
@@ -5228,8 +5335,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
