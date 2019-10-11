@@ -50,7 +50,12 @@ set_include_path(
 );
 
 if (!defined('PHP_VERSION_ID')) {
+
     $version_array = explode('.', phpversion());
+    // Fix issue with outputting a non-numeric value if the version ends with `-dev`.
+    if (substr_compare($version_array[2], '-dev', -strlen('-dev')) === 0) {
+        $version_array[2] = $version_array[2][0];
+    }
     define('PHP_VERSION_ID', ($version_array[0] * 10000 + $version_array[1] * 100 + $version_array[2]));
 }
 
