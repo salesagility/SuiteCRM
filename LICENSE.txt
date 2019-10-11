@@ -101,7 +101,7 @@ menu, a prominent item in the list meets this criterion.
 
   The "source code" for a work means the preferred form of the work
 for making modifications to it.  "Object code" means any non-source
-form of a work.
+form of work.
 
   A "Standard Interface" means an interface that either is an official
 standard defined by a recognized standards body, or, in the case of
@@ -109,7 +109,7 @@ interfaces specified for a particular programming language, one that
 is widely used among developers working in that language.
 
   The "System Libraries" of an executable work include anything, other
-than the work as a whole, that (a) is included in the normal form of
+then the work as a whole, that (a) is included in the normal form of
 packaging a Major Component, but which is not part of that Major
 Component, and (b) serves only to enable use of the work with that
 Major Component, or to implement a Standard Interface for which an
@@ -450,7 +450,7 @@ the predecessor has it or can get it with reasonable efforts.
 
   You may not impose any further restrictions on the exercise of the
 rights granted or affirmed under this License.  For example, you may
-not impose a license fee, royalty, or other charge for exercise of
+not impose a license fee, royalty, or other charges for exercise of
 rights granted under this License, and you may not initiate litigation
 (including a cross-claim or counterclaim in a lawsuit) alleging that
 any patent claim is infringed by making, using, selling, offering for
