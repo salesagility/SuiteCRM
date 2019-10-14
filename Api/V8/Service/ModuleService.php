@@ -96,6 +96,10 @@ class ModuleService
         $where = $params->getFilter();
         $fields = $params->getFields();
 
+        if (empty($fields)) {
+            $fields = $this->beanManager->getDefaultFields($bean);
+        }
+
         $size = $params->getPage()->getSize();
         $number = $params->getPage()->getNumber();
 
@@ -113,23 +117,6 @@ class ModuleService
         $limit = $size === BeanManager::DEFAULT_ALL_RECORDS ? BeanManager::DEFAULT_LIMIT : $size;
         $deleted = $params->getDeleted();
 
-        if (empty($fields)) {
-            $fields = array_column($bean->field_defs, 'name');
-        }
-
-        $filteredFields = array_filter(
-            $fields,
-            function ($field) use ($bean) {
-                return (
-                    in_array($field, array_column($bean->field_defs, 'name'), true)
-                    && (
-                        empty($bean->field_defs[$field]['link_type'])
-                        || $bean->field_defs[$field]['link_type'] !== 'relationship_info'
-                    )
-                );
-            }
-        );
-
         $beanListResponse = $this->beanManager->getList($module)
             ->orderBy($orderBy)
             ->where($where)
@@ -137,7 +124,7 @@ class ModuleService
             ->limit($limit)
             ->max($size)
             ->deleted($deleted)
-            ->fields($filteredFields)
+            ->fields($this->beanManager->filterAcceptanceFields($bean, $fields))
             ->fetch();
 
         $data = [];
