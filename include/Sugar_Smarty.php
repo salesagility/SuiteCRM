@@ -172,7 +172,6 @@ class Sugar_Smarty extends Smarty
      * @param string $_smarty_include_tpl_file
      * @param string $_smarty_include_vars
      */
-
     function _smarty_include($params)
     {
         $params['smarty_include_tpl_file'] = get_custom_file_if_exists($params['smarty_include_tpl_file']);
@@ -187,7 +186,7 @@ class Sugar_Smarty extends Smarty
     public function trigger_error($error_msg, $error_type = E_USER_WARNING)
     {
         $error_msg = htmlentities($error_msg);
-
+        
         switch ($error_type) {
             case E_USER_ERROR:
                 $GLOBALS['log']->error('Smarty: ' . $error_msg);
