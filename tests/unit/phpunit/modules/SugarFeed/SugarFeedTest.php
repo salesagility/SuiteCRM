@@ -48,7 +48,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         SugarFeed::disableModuleFeed('Accounts');
         $admin->retrieveSettings('sugarfeed');
         $this->assertEquals(0, $admin->settings['sugarfeed_module_Accounts']);
-        
+
         // clean up
         $state->popTable('config');
     }
@@ -82,11 +82,11 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = SugarFeed::getActiveFeedModules();
 
         $expected = array(
-                'UserFeed' => 'UserFeed',
-                'Cases' => 'Cases',
-                'Contacts' => 'Contacts',
-                'Leads' => 'Leads',
-                'Opportunities' => 'Opportunities',
+            'UserFeed' => 'UserFeed',
+            'Cases' => 'Cases',
+            'Contacts' => 'Contacts',
+            'Leads' => 'Leads',
+            'Opportunities' => 'Opportunities',
         );
 
         $this->assertEquals($expected, $result);
@@ -96,12 +96,12 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $result = SugarFeed::getAllFeedModules();
         $expected = array(
-                      'UserFeed' => 'UserFeed',
-                      'Cases' => 'Cases',
-                      'Contacts' => 'Contacts',
-                      'Leads' => 'Leads',
-                      'Opportunities' => 'Opportunities',
-                    );
+            'UserFeed' => 'UserFeed',
+            'Cases' => 'Cases',
+            'Contacts' => 'Contacts',
+            'Leads' => 'Leads',
+            'Opportunities' => 'Opportunities',
+        );
 
         $this->assertEquals($expected, $result);
     }
@@ -130,7 +130,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //mark the record as deleted
         $sugarFeed->mark_deleted($sugarFeed->id);
-        
+
         // clean up
         $state->popTable('sugarfeed');
         $state->popTable('aod_index');
@@ -158,7 +158,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //mark the record as deleted
         $sugarFeed->mark_deleted($sugarFeed->id);
-        
+
         // clean up
         $state->popTable('sugarfeed');
     }
@@ -176,9 +176,9 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = SugarFeed::getLinkTypes();
 
         $expected = array(
-                'Image' => 'Image',
-                'Link' => 'Link',
-                'YouTube' => 'YouTube',
+            'Image' => 'Image',
+            'Link' => 'Link',
+            'YouTube' => 'YouTube',
         );
         $this->assertEquals($expected, $result);
     }
@@ -209,14 +209,6 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $sugarFeed->get_list_view_data();
         $this->assertTrue(is_array($result));
-    }
-
-    public function testGetTimeLapse()
-    {
-        $GLOBALS['log']->reset();
-        /** @noinspection PhpDeprecationInspection */
-        SugarFeed::getTimeLapse('2016-01-15 11:16:02');
-        self::assertCount(1, $GLOBALS['log']->calls['deprecated']);
     }
 
     public function testparseMessage()

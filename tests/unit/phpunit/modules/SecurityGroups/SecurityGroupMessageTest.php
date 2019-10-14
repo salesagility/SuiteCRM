@@ -20,14 +20,6 @@ class SecurityGroupMessageTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
         $this->securityGroupMessage = new SecurityGroupMessage();
     }
 
-    public function testGetTimeLapse()
-    {
-        $GLOBALS['log']->reset();
-        /** @noinspection PhpDeprecationInspection */
-        $this->securityGroupMessage->getTimeLapse('2016-01-15 11:16:02');
-        self::assertCount(1, $GLOBALS['log']->calls['deprecated']);
-    }
-
     public function testBean_implements()
     {
         $this->assertEquals(false, $this->securityGroupMessage->bean_implements(''));
