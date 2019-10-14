@@ -434,10 +434,12 @@ class SugarFeed extends Basic
             $delete = ' | <a id="sugarFieldDeleteLink'.$dataId.'" href="#" onclick=\'SugarFeed.deleteFeed("'. $dataId . '", "{this.id}"); return false;\'>'. $GLOBALS['app_strings']['LBL_DELETE_BUTTON_LABEL'].'</a>';
         }
 
-        $data['NAME'] .= $this->getTimeLapse($dataDateEntered) . '&nbsp;</span><div class="byLineRight"><a id="sugarFeedReplyLink'.$dataId.'" href="#" onclick=\'SugarFeed.buildReplyForm("'.$dataId.'", "{this.id}", this); return false;\'>'.$GLOBALS['app_strings']['LBL_EMAIL_REPLY'].'</a>' .$delete. '</div></div>';
-
+        $timeDate = new TimeDate();
+        $data['NAME'] .= $timeDate->getTimeLapse($dataDateEntered,
+                'SugarFeed') . '&nbsp;</span><div class="byLineRight"><a id="sugarFeedReplyLink' . $dataId . '" href="#" onclick=\'SugarFeed.buildReplyForm("' . $dataId . '", "{this.id}", this); return false;\'>' . $GLOBALS['app_strings']['LBL_EMAIL_REPLY'] . '</a>' . $delete . '</div></div>';
         $data['NAME'] .= $this->fetchReplies($data);
-        return  $data ;
+
+        return $data;
     }
 
     public function fetchReplies($data)
@@ -472,10 +474,12 @@ class SugarFeed extends Basic
             if (!empty($user) && !empty($user->picture)) {
                 $image_url = 'index.php?entryPoint=download&id=' . $user->picture . '&type=SugarFieldImage&isTempFile=1&isProfile=1';
             }
-
-            $replyHTML .= '<div style="float: left; margin-right: 3px; width: 50px; height: 50px;"><!--not_in_theme!--><img src="'.$image_url.'" style="max-width: 50px; max-height: 50px;"></div> ';
-            $replyHTML .= str_replace("{this.CREATED_BY}", get_assigned_user_name($reply->created_by), html_entity_decode($reply->name)).'<br>';
-            $replyHTML .= '<div class="byLineBox"><span class="byLineLeft">'. $this->getTimeLapse($reply->date_entered) . '&nbsp;</span><div class="byLineRight">  &nbsp;' .$delete. '</div></div><div class="clear"></div>';
+            $timeDate = new TimeDate();
+            $replyHTML .= '<div style="float: left; margin-right: 3px; width: 50px; height: 50px;"><!--not_in_theme!--><img src="' . $image_url . '" style="max-width: 50px; max-height: 50px;"></div> ';
+            $replyHTML .= str_replace("{this.CREATED_BY}", get_assigned_user_name($reply->created_by),
+                    html_entity_decode($reply->name)) . '<br>';
+            $replyHTML .= '<div class="byLineBox"><span class="byLineLeft">' . $timeDate->getTimeLapse($reply->date_entered,
+                    'SugarFeed') . '&nbsp;</span><div class="byLineRight">  &nbsp;' . $delete . '</div></div><div class="clear"></div>';
         }
 
         $replyHTML .= '</blockquote>';
