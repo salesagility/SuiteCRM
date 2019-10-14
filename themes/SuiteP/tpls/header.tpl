@@ -38,7 +38,11 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-{include file="themes/SuiteP/tpls/_head.tpl"}
+{if file_exists('custom/themes/SuiteP/tpls/_head.tpl')}
+    {include file="custom/themes/SuiteP/tpls/_head.tpl"}
+{else}
+    {include file="themes/SuiteP/tpls/_head.tpl"}
+{/if}
 <body onMouseOut="closeMenus();">
 
 {if $AUTHENTICATED}

@@ -2462,7 +2462,7 @@ function testThis()
     $priorPath = '';
     foreach ($files as $file) {
         $relativeFile = clean_path(str_replace(getcwd().'/test', '', $file));
-        $relativeFile = ($relativeFile{0} == '/') ? substr($relativeFile, 1, strlen($relativeFile)) : $relativeFile;
+        $relativeFile = ($relativeFile[0] == '/') ? substr($relativeFile, 1, strlen($relativeFile)) : $relativeFile;
 
         $relativePath = dirname($relativeFile);
 

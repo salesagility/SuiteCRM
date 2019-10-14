@@ -36,6 +36,7 @@ eolBranches:
 
 invalidBranches:
   - master
+  - 7.10.x
 
 invalid: >
   Hello and thanks for the contribution! would you be able to rebase this pull request to the hotfix-7.10.x branch?
