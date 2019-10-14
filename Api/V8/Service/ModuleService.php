@@ -96,10 +96,6 @@ class ModuleService
         $where = $params->getFilter();
         $fields = $params->getFields();
 
-        if (empty($fields)) {
-            $fields = $this->beanManager->getDefaultFields($bean);
-        }
-
         $size = $params->getPage()->getSize();
         $number = $params->getPage()->getNumber();
 
@@ -116,6 +112,10 @@ class ModuleService
         $realRowCount = $this->beanManager->countRecords($module, $where);
         $limit = $size === BeanManager::DEFAULT_ALL_RECORDS ? BeanManager::DEFAULT_LIMIT : $size;
         $deleted = $params->getDeleted();
+
+        if (empty($fields)) {
+            $fields = $this->beanManager->getDefaultFields($bean);
+        }
 
         $beanListResponse = $this->beanManager->getList($module)
             ->orderBy($orderBy)

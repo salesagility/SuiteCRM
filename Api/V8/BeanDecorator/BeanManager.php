@@ -251,7 +251,7 @@ class BeanManager
 
         return array_filter(
             $fields,
-            function ($field) use ($bean) {
+            static function ($field) use ($bean) {
                 return (
                     in_array($field, array_column($bean->field_defs, 'name'), true)
                     && (
