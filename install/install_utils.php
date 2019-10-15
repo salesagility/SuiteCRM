@@ -1103,19 +1103,22 @@ EOQ;
         $fp = fopen($htaccess_file, 'rb');
         $skip = false;
         while ($line = fgets($fp)) {
-            if (preg_match("/\s*#\s*BEGIN\s*SUITECRM\s*RESTRICTIONS/i", $line)) {
+            if (preg_match("/\s*#\s*BEGIN\s*SUITECRM\s*RESTRICTIONS/i",
+                    $line) || preg_match("/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
                 if (!$skip) {
                     $contents .= $line;
                 }
                 $skip = true;
-                if (preg_match("/\s*#\s*END\s*SUITECRM\s*RESTRICTIONS/i", $line)) {
+                if (preg_match("/\s*#\s*END\s*SUITECRM\s*RESTRICTIONS/i",
+                        $line) || preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
                     $skip = false;
                 }
             }
             if (!$skip) {
                 $contents .= $line;
             }
-            if (preg_match("/\s*#\s*END\s*SUITECRM\s*RESTRICTIONS/i", $line)) {
+            if (preg_match("/\s*#\s*END\s*SUITECRM\s*RESTRICTIONS/i",
+                    $line) || preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
                 $skip = false;
             }
         }
