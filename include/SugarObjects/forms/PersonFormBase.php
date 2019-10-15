@@ -240,7 +240,15 @@ abstract class PersonFormBase extends FormBase
             }
         } //if
 
-        return !empty($rows) ? $rows : null;
+        $can_view = [];
+        foreach ($rows as $row) {
+            $bean = BeanFactory::getBean($this->moduleName, $row['id']);
+            if ($bean->ACLAccess('view')) {
+                $can_view[] = $row;
+            }
+        }
+
+        return !empty($can_view) ? $can_view : null;
     }
 
 

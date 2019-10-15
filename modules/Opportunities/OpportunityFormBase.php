@@ -59,22 +59,24 @@ class OpportunityFormBase
             $query .= getLikeForEachWord('name', $_POST[$prefix.'name']);
         }
 
+        $rows = array();
         if (!empty($query)) {
-            $rows = array();
             $db = DBManagerFactory::getInstance();
             $result = $db->query($query.')');
-            $i=-1;
             while (($row=$db->fetchByAssoc($result)) != null) {
-                $i++;
-                $rows[$i] = $row;
+                $rows[] = $row;
             }
-            if ($i==-1) {
-                return null;
-            }
-        
-            return $rows;
         }
-        return null;
+
+        $can_view = [];
+        foreach ($rows as $row) {
+            $bean = BeanFactory::getBean('Opportunities', $row['id']);
+            if ($bean->ACLAccess('view')) {
+                $can_view[] = $row;
+            }
+        }
+
+        return !empty($can_view) ? $can_view : null;
     }
 
 
