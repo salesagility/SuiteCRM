@@ -102,7 +102,6 @@ $uw_files = array(
     'XTemplate/xtpl.php',
     'include/database/DBManager.php',
     'include/database/DBManagerFactory.php',
-    'include/database/MssqlHelper.php',
     'include/database/MssqlManager.php',
     'include/database/MysqlHelper.php',
     'include/database/MysqlManager.php',
