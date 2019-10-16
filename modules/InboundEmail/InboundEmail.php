@@ -1814,7 +1814,7 @@ class InboundEmail extends SugarBean
                 'mbox' => $mailbox,
                 'totalcount' => $total
             );
-            $GLOBALS['log']->info("INBOUNDEMAIL: $status : Downloaded " . $start + sizeof($searchResults) . "messages of $total");
+            $GLOBALS['log']->info("INBOUNDEMAIL: $status : Downloaded " . ($start + sizeof($searchResults)) . " messages of $total");
         } else {
             $GLOBALS['log']->info("INBOUNDEMAIL: no results for mailbox [ {$mailbox} ]");
             $ret = array('status' => 'done');
