@@ -109,13 +109,6 @@ $timedate = TimeDate::getInstance();
 setPhpIniSettings();
 $locale = new Localization();
 
-if (get_magic_quotes_gpc() == 1) {
-    $_REQUEST = array_map("stripslashes_checkstrings", $_REQUEST);
-    $_POST = array_map("stripslashes_checkstrings", $_POST);
-    $_GET = array_map("stripslashes_checkstrings", $_GET);
-}
-
-
 $GLOBALS['log'] = LoggerManager::getLogger();
 $setup_sugar_version = $suitecrm_version;
 $install_script = true;
