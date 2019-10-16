@@ -56,17 +56,14 @@ class LayoutManager
     public $defs = array();
     public $widget_prefix = 'SugarWidget';
     public $default_widget_name = 'Field';
-    public $DBHelper;
+    public $DBManager;
 
     public function __construct()
     {
         // set a sane default for context
         $this->defs['context'] = 'Detail';
-        $this->DBHelper = DBManagerFactory::getInstance();
+        $this->DBManager = DBManagerFactory::getInstance();
     }
-
-
-
 
     public function setAttribute($key, $value)
     {
@@ -259,7 +256,7 @@ class LayoutManager
                     if (isset($widget_def['type'])) {
                         $widget_def['widget_class'] = 'Field' . $widget_def['type'];
                     } else {
-                        $widget_def['widget_class'] = 'Field' . $this->DBHelper->getFieldType($widget_def);
+                        $widget_def['widget_class'] = 'Field' . $this->DBManager->getFieldType($widget_def);
                     }
             }
         }
