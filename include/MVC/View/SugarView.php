@@ -1123,7 +1123,7 @@ EOHTML;
                 '&help_action=' .
                 $this->action .
                 '&key=' .
-                (isset($GLOBALS['server_unique_key']) ? $GLOBALS['server_unique_key'] : null) .
+                (isset($server_unique_key) ? $server_unique_key : null) .
                 '\'))';
             $label =
                 (isset($GLOBALS['app_list_strings']['moduleList'][$this->module]) ?
