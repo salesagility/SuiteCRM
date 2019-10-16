@@ -103,7 +103,6 @@ $uw_files = array(
     'include/database/DBManager.php',
     'include/database/DBManagerFactory.php',
     'include/database/MssqlManager.php',
-    'include/database/MysqlHelper.php',
     'include/database/MysqlManager.php',
     'include/database/DBManagerFactory.php',
 );
