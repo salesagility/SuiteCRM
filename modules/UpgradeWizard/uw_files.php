@@ -100,7 +100,6 @@ $uw_files = array(
     'include/Localization/Localization.php',
     'install/language/en_us.lang.php',
     'XTemplate/xtpl.php',
-    'include/database/DBHelper.php',
     'include/database/DBManager.php',
     'include/database/DBManagerFactory.php',
     'include/database/MssqlHelper.php',
