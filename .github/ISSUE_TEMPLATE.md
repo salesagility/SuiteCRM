@@ -4,6 +4,7 @@
 
 #### Issue
 <!--- Provide a more detailed introduction to the issue itself, and why you consider it to be a bug -->
+<!--- Ensure that all code ``` is surrounded ``` by triple back quotes. This can also be done over multiple lines -->
 
 #### Expected Behavior
 <!--- Tell us what should happen -->

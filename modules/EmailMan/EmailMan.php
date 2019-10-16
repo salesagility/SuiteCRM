@@ -932,6 +932,12 @@ class EmailMan extends SugarBean
                 }
             }
 
+            if (isset($this->restricted_addresses[$lower_email_address])) {
+                $this->set_as_sent($lower_email_address, true, null, null, 'blocked');
+
+                return true;
+            }
+
             //test for duplicate email address by marketing id.
             $dup_query = "select id from campaign_log where more_information='" . $this->db->quote($module->email1) . "' and marketing_id='" . $this->marketing_id . "'";
             $dup = $this->db->query($dup_query);
@@ -1269,7 +1275,7 @@ class EmailMan extends SugarBean
      */
     public function mark_deleted($id)
     {
-        $this->db->query("DELETE FROM {$this->table_name} WHERE id=" . intval($id));
+        $this->db->query("DELETE FROM {$this->table_name} WHERE id=" . (int)$id);
     }
 
     /**

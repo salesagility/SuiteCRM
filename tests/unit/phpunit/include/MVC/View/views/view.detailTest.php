@@ -25,9 +25,7 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testViewDetail()
     {
-        
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
@@ -41,7 +39,6 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals('detail', 'type', $view);
         
         // clean up
-        
         $state->popTable('email_addresses');
         $state->popGlobals();
     }
@@ -73,22 +70,18 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->asserttrue(is_array($view->dv->defs));
         
         // clean up
-        
         $state->popTable('email_addresses');
         $state->popGlobals();
     }
 
     public function testdisplay()
     {
-        
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
         // test
-
         //execute the method with essential parameters set. it should return some html.
         $view = new ViewDetail();
         $view->module = 'Users';
@@ -104,7 +97,6 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan(0, strlen($renderedContent));
         
         // clean up
-        
         $state->popTable('email_addresses');
         $state->popGlobals();
     }

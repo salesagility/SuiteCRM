@@ -158,7 +158,7 @@ class campaign_charts
                                 "numerical_value" => $count,
                                 "group_text" => $translation,
                                 "group_key" => "",
-                                "count" => "{$count}",
+                                "count" => (string)($count),
                                 "group_label" => $alttext,
                                 "numerical_label" => "Hits",
                                 "numerical_key" => "hits",

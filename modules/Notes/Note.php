@@ -190,7 +190,7 @@ class Note extends File
 
     public function get_summary_text()
     {
-        return "$this->name";
+        return (string)$this->name;
     }
 
     /**

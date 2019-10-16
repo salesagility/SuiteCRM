@@ -271,7 +271,7 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
         // We do not need to check if file position points to the end of "file".
         // Only append operation is supported now
 
-        settype($value, 'integer');
+        $value = (int)$value;
         $this->_data .= chr($value>>24 & 0xFF) .
                         chr($value>>16 & 0xFF) .
                         chr($value>>8  & 0xFF) .
@@ -327,7 +327,7 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
          * fseek() and ftell() use long for offset. Thus, largest index segment file size in 32bit mode is 2Gb
          */
         if (PHP_INT_SIZE > 4) {
-            settype($value, 'integer');
+            $value = (int)$value;
             $this->_data .= chr($value>>56 & 0xFF) .
                             chr($value>>48 & 0xFF) .
                             chr($value>>40 & 0xFF) .
@@ -441,7 +441,7 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
         // We do not need to check if file position points to the end of "file".
         // Only append operation is supported now
 
-        settype($value, 'integer');
+        $value = (int)$value;
         while ($value > 0x7F) {
             $this->_data .= chr( ($value & 0x7F)|0x80 );
             $value >>= 7;
@@ -536,7 +536,7 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
         // Only append operation is supported now
 
         // convert input to a string before iterating string characters
-        settype($str, 'string');
+        $str = (string)$str;
 
         $chars = $strlen = strlen($str);
         $containNullChars = false;

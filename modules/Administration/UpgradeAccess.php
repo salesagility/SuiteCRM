@@ -53,17 +53,26 @@ if (empty($basePath)) {
     $basePath = '/';
 }
 
+$cacheDir = $sugar_config['cache_dir'];
+
 $restrict_str = <<<EOQ
 # BEGIN SUGARCRM RESTRICTIONS
 RedirectMatch 403 {$ignoreCase}.*\.log$
 RedirectMatch 403 {$ignoreCase}/+not_imported_.*\.txt
-RedirectMatch 403 {$ignoreCase}/+(soap|cache|xtemplate|data|examples|include|log4php|metadata|modules)/+.*\.(php|tpl)
+RedirectMatch 403 {$ignoreCase}/+(soap|cache|xtemplate|data|examples|include|log4php|metadata|modules|vendor|custom)/+.*\.(php|tpl)
 RedirectMatch 403 {$ignoreCase}/+emailmandelivery\.php
-RedirectMatch 403 {$ignoreCase}/+upload
+RedirectMatch 403 {$ignoreCase}/+.git
+RedirectMatch 403 {$ignoreCase}/+.{$cacheDir}
+RedirectMatch 403 {$ignoreCase}/+tests
+RedirectMatch 403 {$ignoreCase}/+RoboFile\.php
+RedirectMatch 403 {$ignoreCase}/+composer\.json
+RedirectMatch 403 {$ignoreCase}/+composer\.lock
 RedirectMatch 403 {$ignoreCase}/+cache/+diagnostic
 RedirectMatch 403 {$ignoreCase}/+files\.md5\$
+
 <IfModule mod_rewrite.c>
     Options +SymLinksIfOwnerMatch
+    Options -Indexes
     RewriteEngine On
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
@@ -90,7 +99,7 @@ RedirectMatch 403 {$ignoreCase}/+files\.md5\$
 EOQ;
 
 if (file_exists($htaccess_file)) {
-    $fp = fopen($htaccess_file, 'r');
+    $fp = fopen($htaccess_file, 'rb');
     $skip = false;
     while ($line = fgets($fp)) {
         if (preg_match('/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i', $line)) {

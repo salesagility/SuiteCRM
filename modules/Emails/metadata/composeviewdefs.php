@@ -50,10 +50,10 @@ $viewdefs['Emails']['ComposeView'] = array(
             'footerTpl' => 'modules/Emails/include/ComposeView/ComposeViewToolbar.tpl',
             'buttons' => array(
                 array('customCode' => '<button class="btn btn-send-email" title="{$MOD.LBL_SEND_BUTTON_TITLE}"><span class="glyphicon glyphicon-send"></span></button>'),
-                array('customCode' => '<button class="vertical-seperator"></button>'),
+                array('customCode' => '<button class="vertical-separator"></button>'),
                 array('customCode' => '<button class="btn btn-attach-file" title="{$MOD.LBL_ATTACH_FILES}"><span class="glyphicon glyphicon-paperclip"></span></button>'),
                 array('customCode' => '<button class="btn btn-attach-document" title="{$MOD.LBL_ATTACH_DOCUMENTS}"><span class="glyphicon suitepicon suitepicon-module-documents"></span></button>'),
-                array('customCode' => '<button class="vertical-seperator"></button>'),
+                array('customCode' => '<button class="vertical-separator"></button>'),
                 array('customCode' => '<button class="btn btn-save-draft" title="{$MOD.LBL_SAVE_AS_DRAFT_BUTTON_TITLE}"><span class="glyphicon glyphicon-floppy-save"></span></button>'),
                 array('customCode' => '<button class="btn btn-disregard-draft" title="{$MOD.LBL_DISREGARD_DRAFT_BUTTON_TITLE}"><span class="glyphicon glyphicon-trash"></span></button>'),
             )

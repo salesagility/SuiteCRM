@@ -2512,8 +2512,7 @@ class Email extends Basic
         ////    ATTACHMENTS FROM DRAFTS
         if (($this->type == 'out' || $this->type == 'draft')
             && $this->status == 'draft'
-            && isset($_REQUEST['record'])
-            && empty($_REQUEST['ignoreParentAttachments'])) {
+            && isset($_REQUEST['record'])) {
             $this->getNotes($_REQUEST['record']); // cn: get notes from OLD email for use in new email
         }
         ////    END ATTACHMENTS FROM DRAFTS
@@ -2962,11 +2961,15 @@ class Email extends Basic
         $mail = $this->setMailer($mail, '', $ieId);
 
         if (($mail->oe->type === 'system') && (!isset($sugar_config['email_allow_send_as_user']) || (!$sugar_config['email_allow_send_as_user']))) {
-            $mail->From =
-            $sender =
-            $ReplyToAddr = $mail->oe->smtp_from_addr;
+            $fromAddr = $mail->oe->smtp_from_addr;
+            $fromName = $mail->oe->smtp_from_name;
+
+            $mail->From = $fromAddr;
+            $sender = $fromAddr;
+            $ReplyToAddr = $fromAddr;
             isValidEmailAddress($mail->From);
-            $ReplyToName = $mail->oe->smtp_from_name;
+            $ReplyToName = $fromName;
+            $mail->FromName = $fromName;
         } else {
 
             // FROM ADDRESS
@@ -3674,7 +3677,7 @@ class Email extends Basic
             $mod_strings = return_module_language($current_language, 'Emails');
         }
 
-        return $mod_strings['LBL_QUICK_CREATE'] . "&nbsp;<a id='$this->id' onclick='return quick_create_overlib(\"{$this->id}\", \"" . SugarThemeRegistry::current()->__toString() . "\", this);' href=\"#\" >" . SugarThemeRegistry::current()->getImage(
+        return $mod_strings['LBL_QUICK_CREATE'] . "&nbsp;<a id='$this->id' onclick='return quick_create_overlib(\"{$this->id}\", \"" . (string)SugarThemeRegistry::current() . "\", this);' href=\"#\" >" . SugarThemeRegistry::current()->getImage(
             "advanced_search",
             "border='0' align='absmiddle'",
             null,

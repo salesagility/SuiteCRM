@@ -242,7 +242,7 @@ class SugarAuthenticateUser
         if (function_exists('random_int')) {
             $token = random_int($min, $max);
         } else {
-            $token = rand($min, $max);
+            $token = mt_rand($min, $max);
         }
 
         $emailTemplate = new EmailTemplate();

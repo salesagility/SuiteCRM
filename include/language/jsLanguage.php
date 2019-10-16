@@ -88,7 +88,7 @@ EOQ;
 
         $cacheDir = create_cache_directory('jsLanguage/' . $moduleDir . '/');
 
-        if ($fh = @fopen($cacheDir . $lang . '.js', "w")) {
+        if ($fh = @fopen($cacheDir . $lang . '.js', 'wb')) {
             fputs($fh, $str);
             fclose($fh);
         }

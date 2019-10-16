@@ -1209,7 +1209,7 @@ class SugarBean
         /**
          * if the row_offset is set to 'end' go to the end of the list
          */
-        $toEnd = strval($row_offset) == 'end';
+        $toEnd = (string)$row_offset == 'end';
         global $sugar_config;
         $use_count_query = false;
         if (!method_exists($subpanel_def, 'isCollection')) {
@@ -2539,7 +2539,7 @@ class SugarBean
                             }
                             break;
                         case 'bool':
-                            if (empty($this->$field) || in_array(strval($this->$field), $bool_false_values)) {
+                            if (empty($this->$field) || in_array((string)$this->$field, $bool_false_values)) {
                                 $this->$field = false;
                             } elseif (true === $this->$field || 1 == $this->$field) {
                                 $this->$field = true;
@@ -2855,7 +2855,7 @@ class SugarBean
                                 //if before value is not empty then attempt to delete relationship
                                 $GLOBALS['log']->debug("save_relationship_changes(): From field_defs - attempting to " .
                                     "remove the relationship record: {$linkField} = " .
-                                    "{$this->rel_fields_before_value[$idName]}");
+                                    (string)($this->rel_fields_before_value[$idName]));
                                 $success = $this->$linkField->delete(
                                     $this->id,
                                     $this->rel_fields_before_value[$idName]
@@ -3680,7 +3680,7 @@ class SugarBean
             } elseif ((!isset($data['source']) || $data['source'] == 'custom_fields')
                 && (!empty($alias) || !empty($filter))) {
                 //add this column only if it has NOT already been added to select statement string
-                $colPos = strpos($ret_array['select'], "$this->table_name" . "_cstm" . ".$field");
+                $colPos = strpos($ret_array['select'], (string)$this->table_name . "_cstm" . ".$field");
                 if (!$colPos || $colPos < 0) {
                     $ret_array['select'] .= ", $this->table_name" . "_cstm" . ".$field $alias";
                 }
@@ -4159,7 +4159,7 @@ class SugarBean
         /**
          * if the row_offset is set to 'end' go to the end of the list
          */
-        $toEnd = strval($row_offset) == 'end';
+        $toEnd = (string)$row_offset == 'end';
         $GLOBALS['log']->debug("process_list_query: " . $query);
         if ($max_per_page == -1) {
             $max_per_page = $sugar_config['list_max_entries_per_page'];

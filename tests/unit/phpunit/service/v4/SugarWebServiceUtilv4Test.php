@@ -4,7 +4,6 @@ namespace SuiteCRM;
 
 use aCase;
 use SugarWebServiceUtilv4_1;
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
 
 class SugarWebServiceUtilv4Test extends StateCheckerPHPUnitTestCaseAbstract
 {

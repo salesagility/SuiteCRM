@@ -52,11 +52,6 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testskipParentUpdate()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $projectTask = new ProjectTask();
 
         //test with default parameter value
@@ -66,14 +61,11 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with parameter value  = true
         $projectTask->skipParentUpdate(false);
         $this->assertAttributeEquals(false, '_skipParentUpdate', $projectTask);
-        
-        // clean up
     }
 
     public function testsave()
     {
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('project_task');
@@ -82,7 +74,6 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
 
         // test
-        
         $projectTask = new ProjectTask();
 
         $projectTask->name = 'test';
@@ -106,7 +97,6 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(null, $result);
         
         // clean up
-        
         $state->popGlobals();
         $state->popTable('aod_index');
         $state->popTable('tracker');
@@ -127,12 +117,6 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testupdateParentProjectTaskPercentage()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $projectTask = new ProjectTask();
 
         //execute the method and test if it works and does not throws an exception.
@@ -142,8 +126,6 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testgetProjectTaskParent()
@@ -166,12 +148,9 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testupdateStatistic()
     {
         $state = new SuiteCRM\StateSaver();
-        
         $state->pushGlobals();
-        
-        
-        
-        
+
+        // test
         $projectTask = new ProjectTask();
 
         //execute the method and test if it works and does not throws an exception.
@@ -183,7 +162,6 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         $state->popGlobals();
     }
 
@@ -306,12 +284,10 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testlistviewACLHelper()
     {
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
         // test
-        
         $projectTask = new ProjectTask();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'PARENT_TASK' => 'a');
@@ -319,11 +295,8 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
         
         // clean up
-        
         $state->popGlobals();
     }
-
-
 
     public function testgetUtilizationDropdown()
     {

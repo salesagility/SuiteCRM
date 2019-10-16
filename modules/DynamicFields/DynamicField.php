@@ -474,14 +474,14 @@ class DynamicField
                     }
                     if ($isUpdate) {
                         if ($first) {
-                            $query .= " $name=$quote" . $this->db->quote($val) . "$quote";
+                            $query .= " $name=$quote" . $this->db->quote($val) . (string)$quote;
                         } else {
-                            $query .= " ,$name=$quote" . $this->db->quote($val) . "$quote";
+                            $query .= " ,$name=$quote" . $this->db->quote($val) . (string)$quote;
                         }
                     }
                     $first = false;
                     $queryInsert .= " ,$name";
-                    $values .= " ,$quote" . $this->db->quote($val) . "$quote";
+                    $values .= " ,$quote" . $this->db->quote($val) . (string)$quote;
                 }
             }
             if ($isUpdate) {

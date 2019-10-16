@@ -83,7 +83,7 @@ class _parse_proppatch
         $this->props = array();
         $had_input = false;
 
-        $f_in = fopen($path, "r");
+        $f_in = fopen($path, 'rb');
         if (!$f_in) {
             $this->success = false;
             return;

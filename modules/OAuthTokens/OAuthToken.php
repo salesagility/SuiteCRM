@@ -42,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once 'Zend/Oauth/Provider.php';
 require_once 'modules/OAuthKeys/OAuthKey.php';
 
 /**
@@ -120,7 +119,7 @@ class OAuthToken extends SugarBean
      */
     protected static function randomValue()
     {
-        $zop = new Zend_Oauth_Provider();
+        $zop = new SuiteCRM\Zend_Oauth_Provider();
         return bin2hex($zop->generateToken(6));
     }
 
@@ -258,17 +257,17 @@ class OAuthToken extends SugarBean
         $res = $db->query(sprintf("SELECT * FROM oauth_nonce WHERE conskey='%s' AND nonce_ts > %d", $db->quote($key), $ts));
         if ($res && $db->fetchByAssoc($res)) {
             // we have later ts
-            return Zend_Oauth_Provider::BAD_TIMESTAMP;
+            return SuiteCRM\Zend_Oauth_Provider::BAD_TIMESTAMP;
         }
 
         $res = $db->query(sprintf("SELECT * FROM oauth_nonce WHERE conskey='%s' AND nonce='%s' AND nonce_ts = %d", $db->quote($key), $db->quote($nonce), $ts));
         if ($res && $db->fetchByAssoc($res)) {
             // Already seen this one
-            return Zend_Oauth_Provider::BAD_NONCE;
+            return SuiteCRM\Zend_Oauth_Provider::BAD_NONCE;
         }
         $db->query(sprintf("DELETE FROM oauth_nonce WHERE conskey='%s' AND nonce_ts < %d", $db->quote($key), $ts));
         $db->query(sprintf("INSERT INTO oauth_nonce(conskey, nonce, nonce_ts) VALUES('%s', '%s', %d)", $db->quote($key), $db->quote($nonce), $ts));
-        return Zend_Oauth_Provider::OK;
+        return SuiteCRM\Zend_Oauth_Provider::OK;
     }
 
     /**

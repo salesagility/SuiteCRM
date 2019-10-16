@@ -17,8 +17,7 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aos_products_quotes');
         $state->pushTable('tracker');
-        
-        
+
         $aosProductsQuotes = new AOS_Products_Quotes();
 
         $aosProductsQuotes->name = 'test';
@@ -37,7 +36,6 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         $this->assertEquals(null, $result);
         
         // clean up
-        
         $state->popTable('tracker');
         $state->popTable('aos_products_quotes');
     }
@@ -45,7 +43,6 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
     public function testsave_lines()
     {
         $state = new SuiteCRM\StateSaver();
-        
         $state->pushTable('aos_products_quotes');
         $state->pushTable('tracker');
         $state->pushGlobals();
