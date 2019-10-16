@@ -94,7 +94,7 @@ script:
   - ./vendor/bin/codecept run tests/api/V8/ -f --ext DotReporter
   # RUN Basic Acceptance test
   - echo "\$sugar_config['imap_test'] = true;" >> config_override.php
-  - ./vendor/bin/codecept run acceptance --env travis-ci-hub -f --ext DotReporter
+  - ./vendor/bin/codecept run acceptance --env travis-ci-hub --ext DotReporter
 
 after_script:
   - ./build/push_output.sh
