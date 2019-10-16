@@ -59,3 +59,4 @@ ignore:
   - "install/demoData.en_us.php"
   - "include/tcpdf/.*"
   - "modules/AOR_Charts/lib/.*"
+  - "lib/API/.*"
