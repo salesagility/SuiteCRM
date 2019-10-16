@@ -5,12 +5,6 @@ sudo: required
 matrix:
   fast_finish: true
   include:
-    - name: "PHP 5.6 / MySQL 5.7"
-      php: "5.6"
-      dist: xenial
-    - name: "PHP 7.3 / MySQL 5.7"
-      php: "7.3"
-      dist: xenial
     - name: "PHP 7.4 / MySQL 5.7"
       php: "7.4snapshot"
       dist: xenial
@@ -20,10 +14,6 @@ matrix:
       dist: xenial
       before_script: composer install
       script: composer validate
-    - name: "code coverage"
-      php: "7.0"
-      dist: xenial
-      script: ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 1;" >> config_override.php  ; ./vendor/bin/robo code:coverage --ci; cat codeception.dist.yml; bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
 
 services:
   - mysql
