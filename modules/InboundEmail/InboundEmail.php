@@ -4363,7 +4363,7 @@ class InboundEmail extends SugarBean
             $name = urldecode($name);
         }
 
-        return (isset($encoding) && strtolower($encoding) == 'utf-8') ? $name : isset($encoding) ? $GLOBALS['locale']->translateCharset(
+        return ((isset($encoding) && strtolower($encoding) == 'utf-8') ? $name : isset($encoding)) ? $GLOBALS['locale']->translateCharset(
             $name,
             $encoding,
             'UTF-8'
