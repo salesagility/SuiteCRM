@@ -202,6 +202,11 @@ class LanguageManager
                     'custom/modules/'.$module.'/Ext/Language/'.$lang.'.lang.ext.php',
                  );
 
+        require_once __DIR__ . '/../../ModuleInstall/ModuleInstaller.php';
+        $mi = new ModuleInstaller();
+        $mi->modules = [($module)];
+        $mi->merge_files('Ext/Language/', $lang . '.lang.ext.php', $lang);
+
         #27023, if this module template language file was not attached , get the template from this module vardef cache file if exsits and load the template language files.
         static $createdModules;
         if (empty($createdModules[$module]) && isset($GLOBALS['beanList'][$module])) {
