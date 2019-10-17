@@ -81,9 +81,6 @@ curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
 $post_data = '';
 if (!empty($_POST)) {
     foreach ($_POST as $k=>$v) {
-        if (get_magic_quotes_gpc()) {
-            $v = stripslashes($v);
-        }
         if (!empty($post_data)) {
             $post_data .= '&';
         }
