@@ -1,6 +1,9 @@
 <?php
 namespace Api\V8\BeanDecorator;
 
+use \SugarBean;
+use \Person;
+
 class BeanManager
 {
     const DEFAULT_OFFSET = 0;
@@ -224,5 +227,39 @@ class BeanManager
         )["cnt"];
 
         return (int)$rowCount;
+    }
+
+    /**
+     * @param SugarBean $bean
+     * @return array
+     */
+    public function getDefaultFields(SugarBean $bean)
+    {
+        return array_column($bean->field_defs, 'name');
+    }
+
+    /**
+     * @param SugarBean $bean
+     * @param array $fields
+     * @return array
+     */
+    public function filterAcceptanceFields(SugarBean $bean, array $fields)
+    {
+        if (!$bean instanceof Person) {
+            return $fields;
+        }
+
+        return array_filter(
+            $fields,
+            static function ($field) use ($bean) {
+                return (
+                    in_array($field, array_column($bean->field_defs, 'name'), true)
+                    && (
+                        empty($bean->field_defs[$field]['link_type'])
+                        || $bean->field_defs[$field]['link_type'] !== 'relationship_info'
+                    )
+                );
+            }
+        );
     }
 }

@@ -403,7 +403,7 @@ class MysqliManager extends MysqlManager
             "MySQLi Host Info" => @mysqli_get_host_info($this->database),
             "MySQLi Server Info" => @mysqli_get_server_info($this->database),
             "MySQLi Client Encoding" => @mysqli_character_set_name($this->database),
-            "MySQL Character Set Settings" => join(", ", $charset_str),
+            "MySQL Character Set Settings" => implode(", ", $charset_str),
         );
     }
 

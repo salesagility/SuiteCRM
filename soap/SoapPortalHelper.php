@@ -323,7 +323,7 @@ function get_module_in($module_name)
         $module_name_list[] = DBManagerFactory::getInstance()->quote($name);
     }
 
-    $mod_in = "('" . join("','", $module_name_list) . "')";
+    $mod_in = "('" . implode("','", $module_name_list) . "')";
     $_SESSION['viewable'][strtolower($module_name).'_in'] = $mod_in;
 
     return $mod_in;
@@ -471,7 +471,7 @@ function portal_get_entry_list_limited($session, $module_name, $where, $order_by
     $output_list = filter_return_list($output_list, $select_fields, $module_name);
     $field_list = filter_field_list($field_list, $select_fields, $module_name);
 
-    return array('result_count'=>sizeof($output_list), 'next_offset'=>0,'field_list'=>$field_list, 'entry_list'=>$output_list, 'error'=>$error->get_soap_array());
+    return array('result_count'=>count($output_list), 'next_offset'=>0,'field_list'=>$field_list, 'entry_list'=>$output_list, 'error'=>$error->get_soap_array());
 }
 
 $invalid_contact_fields = array('portal_password'=>1, 'portal_active'=>1);

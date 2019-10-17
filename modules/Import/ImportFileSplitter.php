@@ -153,7 +153,7 @@ class ImportFileSplitter
             }
             $line = $enclosure.implode($enclosure.$delimiter.$enclosure, $row).$enclosure.PHP_EOL;
             //Would normally use fputcsv() here. But when enclosure character is used and the field value doesn't include delimiter, enclosure, escape character, "\n", "\r", "\t", or " ", php default function 'fputcsv' will not use enclosure for this string.
-            fputs($fw, $line);
+            fwrite($fw, $line);
             $count++;
         }
 

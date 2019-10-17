@@ -140,8 +140,8 @@ class UpgradeMetaHelper
     public function saveMatchingFilesQueries($currStep, $value)
     {
         $upgrade_progress_dir = sugar_cached('upgrades/temp');
-        if (!is_dir($upgrade_progress_dir)) {
-            mkdir($upgrade_progress_dir);
+        if (!is_dir($upgrade_progress_dir) && !mkdir($upgrade_progress_dir) && !is_dir($upgrade_progress_dir)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $upgrade_progress_dir));
         }
         $file_queries_file = $upgrade_progress_dir.'/files_queries.php';
         if (file_exists($file_queries_file)) {
@@ -363,25 +363,28 @@ class UpgradeMetaHelper
      */
     public function create_upgrade_directory()
     {
-        $dir = $this->upgrade_dir.'/modules';
-        if (!file_exists($this->upgrade_dir)) {
-            mkdir($this->upgrade_dir, 0755);
+        $dir = $this->upgrade_dir . '/modules';
+        if (!file_exists($this->upgrade_dir) && !mkdir($concurrentDirectory = $this->upgrade_dir,
+                0755) && !is_dir($concurrentDirectory)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
-        if (!file_exists($dir)) {
-            mkdir($dir, 0755);
+        if (!file_exists($dir) && !mkdir($dir, 0755) && !is_dir($dir)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir));
         }
 
-        foreach ($this->upgrade_modules as $module=>$files) {
-            if (!file_exists($dir.'/'.$module)) {
-                mkdir($dir.'/'.$module, 0755);
+        foreach ($this->upgrade_modules as $module => $files) {
+            if (!file_exists($dir . '/' . $module) && !mkdir($concurrentDirectory = $dir . '/' . $module,
+                    0755) && !is_dir($concurrentDirectory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
             }
-            if (!file_exists($dir.'/'.$module.'/metadata')) {
-                mkdir($dir.'/'.$module.'/metadata', 0755);
+            if (!file_exists($dir . '/' . $module . '/metadata') && !mkdir($concurrentDirectory = $dir . '/' . $module . '/metadata',
+                    0755) && !is_dir($concurrentDirectory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
             }
 
             foreach ($files as $file) {
                 if (file_exists($file) && is_file($file)) {
-                    copy($file, $this->upgrade_dir.'/'.$file);
+                    copy($file, $this->upgrade_dir . '/' . $file);
                 } //if
             } //foreach
         }
