@@ -161,7 +161,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
 
         // Save it to the cache file
         if ($fh = @sugar_fopen($file, 'w')) {
-            fputs($fh, $contents);
+            fwrite($fh, $contents);
             fclose($fh);
         }
     }

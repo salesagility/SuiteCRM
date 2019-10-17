@@ -75,7 +75,7 @@ class OauthTokensViewAuthorize extends SugarView
 //                $roles[$role->id] = $role->name;
 //            }
 //            $sugar_smarty->assign('roles', $roles);
-            $hash = md5(rand());
+            $hash = md5(mt_rand());
             $_SESSION['oauth_hash'] = $hash;
             $sugar_smarty->assign('hash', $hash);
             echo $sugar_smarty->fetch('modules/OAuthTokens/tpl/authorize.tpl');
@@ -86,7 +86,7 @@ class OauthTokensViewAuthorize extends SugarView
             $verify = $token->authorize(array("user" => $current_user->id));
             if (!empty($token->callback_url)) {
                 $redirect_url=$token->callback_url;
-                if (strchr($redirect_url, "?") !== false) {
+                if (strstr($redirect_url, "?") !== false) {
                     $redirect_url .= '&';
                 } else {
                     $redirect_url .= '?';

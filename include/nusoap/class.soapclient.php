@@ -349,7 +349,7 @@ class nusoap_client extends nusoap_base
             $use = $opData['input']['use'];
             // add ns to ns array
             if ($namespace != '' && !isset($this->wsdl->namespaces[$namespace])) {
-                $nsPrefix = 'ns' . rand(1000, 9999);
+                $nsPrefix = 'ns' . mt_rand(1000, 9999);
                 $this->wsdl->namespaces[$nsPrefix] = $namespace;
             }
             $nsPrefix = $this->wsdl->getPrefixFromNamespace($namespace);
@@ -388,7 +388,7 @@ class nusoap_client extends nusoap_base
         } else {
             // no WSDL
             //$this->namespaces['ns1'] = $namespace;
-            $nsPrefix = 'ns' . rand(1000, 9999);
+            $nsPrefix = 'ns' . mt_rand(1000, 9999);
             // serialize
             $payload = '';
             if (is_string($params)) {
@@ -469,7 +469,7 @@ class nusoap_client extends nusoap_base
         if (is_array($return)) {
             // multiple 'out' parameters, which we return wrapped up
             // in the array
-            if (sizeof($return) > 1) {
+            if (count($return) > 1) {
                 return $return;
             }
             // single 'out' parameter (normally the return value)
@@ -868,7 +868,7 @@ class nusoap_client extends nusoap_base
     */
     public function getProxy()
     {
-        $r = rand();
+        $r = mt_rand();
         $evalStr = $this->_getProxyClassCode($r);
         //$this->debug("proxy class: $evalStr");
         if ($this->getError()) {
@@ -935,7 +935,7 @@ class nusoap_client extends nusoap_base
         foreach ($this->operations as $operation => $opData) {
             if ($operation != '') {
                 // create param string and param comment string
-                if (sizeof($opData['input']['parts']) > 0) {
+                if (count($opData['input']['parts']) > 0) {
                     $paramStr = '';
                     $paramArrayStr = '';
                     $paramCommentStr = '';
@@ -977,7 +977,7 @@ class nusoap_client extends nusoap_base
     */
     public function getProxyClassCode()
     {
-        $r = rand();
+        $r = mt_rand();
         return $this->_getProxyClassCode($r);
     }
 
@@ -1068,10 +1068,10 @@ class nusoap_client extends nusoap_base
      */
     public function checkCookies()
     {
-        if (sizeof($this->cookies) == 0) {
+        if (count($this->cookies) == 0) {
             return true;
         }
-        $this->debug('checkCookie: check ' . sizeof($this->cookies) . ' cookies');
+        $this->debug('checkCookie: check ' . count($this->cookies) . ' cookies');
         $curr_cookies = $this->cookies;
         $this->cookies = array();
         foreach ($curr_cookies as $cookie) {
@@ -1089,7 +1089,7 @@ class nusoap_client extends nusoap_base
                 $this->cookies[] = $cookie;
             }
         }
-        $this->debug('checkCookie: '.sizeof($this->cookies).' cookies left in array');
+        $this->debug('checkCookie: '.count($this->cookies).' cookies left in array');
         return true;
     }
 
@@ -1102,15 +1102,15 @@ class nusoap_client extends nusoap_base
      */
     public function UpdateCookies($cookies)
     {
-        if (sizeof($this->cookies) == 0) {
+        if (count($this->cookies) == 0) {
             // no existing cookies: take whatever is new
-            if (sizeof($cookies) > 0) {
+            if (count($cookies) > 0) {
                 $this->debug('Setting new cookie(s)');
                 $this->cookies = $cookies;
             }
             return true;
         }
-        if (sizeof($cookies) == 0) {
+        if (count($cookies) == 0) {
             // no new cookies: keep what we've got
             return true;
         }

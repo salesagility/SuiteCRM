@@ -71,11 +71,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        //error_reporting(E_ERROR | E_PARSE);
-
         $prospectList = new ProspectList();
 
         //test without setting name
@@ -84,8 +79,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with name set
         $prospectList->name = "test";
         $this->assertEquals('test', $prospectList->get_summary_text());
-        
-        // clean up
+    
     }
 
 
@@ -107,9 +101,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-
-    // save state
-
+        // save state
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
@@ -118,7 +110,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
 
         // test
-        
         $prospectList = new ProspectList();
 
         $prospectList->name = "test";
@@ -145,7 +136,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(null, $result);
 
         // clean up
-        
         $state->popGlobals();
         $state->popTable('tracker');
         $state->popTable('prospect_lists');
@@ -214,9 +204,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testmark_relationships_deleted()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
+
         $prospectList = new ProspectList();
 
         //execute the method and test if it works and does not throws an exception.
@@ -235,8 +223,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testfill_in_additional_list_fields()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
+
         $prospectList = new ProspectList();
 
         //execute the method and test if it works and does not throws an exception.
@@ -264,11 +251,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testupdate_currency_id()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
 
         $prospectList = new ProspectList();
 

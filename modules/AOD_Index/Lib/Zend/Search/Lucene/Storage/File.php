@@ -167,7 +167,7 @@ abstract class Zend_Search_Lucene_Storage_File
      */
     public function writeInt($value)
     {
-        settype($value, 'integer');
+        $value = (int)$value;
         $this->_fwrite(chr($value>>24 & 0xFF) .
                         chr($value>>16 & 0xFF) .
                         chr($value>>8  & 0xFF) .
@@ -216,7 +216,7 @@ abstract class Zend_Search_Lucene_Storage_File
          * fseek() and ftell() use long for offset. Thus, largest index segment file size in 32bit mode is 2Gb
          */
         if (PHP_INT_SIZE > 4) {
-            settype($value, 'integer');
+            $value = (int)$value;
             $this->_fwrite(chr($value>>56 & 0xFF) .
                             chr($value>>48 & 0xFF) .
                             chr($value>>40 & 0xFF) .
@@ -324,7 +324,7 @@ abstract class Zend_Search_Lucene_Storage_File
      */
     public function writeVInt($value)
     {
-        settype($value, 'integer');
+        $value = (int)$value;
         while ($value > 0x7F) {
             $this->_fwrite(chr(($value & 0x7F)|0x80));
             $value >>= 7;
@@ -411,7 +411,7 @@ abstract class Zend_Search_Lucene_Storage_File
          */
 
         // convert input to a string before iterating string characters
-        settype($str, 'string');
+        $str = (string)$str;
 
         $chars = $strlen = strlen($str);
         $containNullChars = false;

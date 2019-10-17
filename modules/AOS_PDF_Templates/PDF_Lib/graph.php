@@ -104,7 +104,7 @@ function print_graph($g, $pgwidth)
     }
 
     if ($g['attr']['DPI']) {
-        $dpi = intval($g['attr']['DPI']);
+        $dpi = (int)$g['attr']['DPI'];
     }
     if (!$dpi || $dpi < 50 || $dpi > 2400) {
         $dpi = 150;
@@ -239,7 +239,7 @@ function print_graph($g, $pgwidth)
     for ($r=($rowbegin-1);$r<$rowend;$r++) {
         for ($c=($colbegin-1);$c<$colend;$c++) {
             if (isset($g['data'][$r][$c])) {
-                $g['data'][$r][$c] = floatval($g['data'][$r][$c]);
+                $g['data'][$r][$c] = (float)$g['data'][$r][$c];
             } else {
                 $g['data'][$r][$c] = 0;
             }
@@ -322,7 +322,7 @@ function print_graph($g, $pgwidth)
 
 
     if (count($data)>0 && $type) {
-        $figure_file = "graph_cache/".rand(11111, 999999999).".".$img_type;
+        $figure_file = "graph_cache/".mt_rand(11111, 999999999).".".$img_type;
         if ($bandw) {
             $colours = array('snow1','black','snow4','snow3','snow2','cadetblue4','cadetblue3','cadetblue1','bisque4','bisque2','beige');
         } else {

@@ -374,7 +374,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
             }
 
             // open input stream
-            $options["stream"] = fopen("php://input", "r");
+            $options["stream"] = fopen("php://input", 'rb');
             $content = '';
 
             // read in input stream

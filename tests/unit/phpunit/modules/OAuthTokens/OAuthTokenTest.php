@@ -13,7 +13,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function test__construct()
     {
-
         //execute the contructor and check for the Object type and  attributes
         $oauthToken = new OAuthToken();
 
@@ -29,17 +28,10 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsetState()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $oauthToken = new OAuthToken();
         $oauthToken->setState($oauthToken::REQUEST);
 
         $this->assertEquals($oauthToken::REQUEST, $oauthToken->tstate);
-        
-        // clean up
     }
 
     public function testsetConsumer()
@@ -76,15 +68,12 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndOthers()
     {
-
-    // save state
-
+        // save state
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
 
         // test
-        
         $oauthToken = OAuthToken::generate();
 
         $oauthToken->save();
@@ -107,7 +96,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->mark_deleted($oauthToken->id);
         
         // clean up
-        
         $state->popTable('aod_index');
         $state->popTable('tracker');
     }
@@ -212,12 +200,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcleanup()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         //execute the method and test if it works and does not throws an exception.
         try {
             OAuthToken::cleanup();
@@ -225,8 +207,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testcheckNonce()
@@ -238,12 +218,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdeleteByConsumer()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         //execute the method and test if it works and does not throws an exception.
         try {
             OAuthToken::deleteByConsumer('1');
@@ -251,18 +225,10 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testdeleteByUser()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         //execute the method and test if it works and does not throws an exception.
         try {
             OAuthToken::deleteByUser('1');
@@ -270,8 +236,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testdisplayDateFromTs()

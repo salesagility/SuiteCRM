@@ -522,7 +522,7 @@ $rebuildResult .= "<a href='javascript:void(0); toggleRebuild();'>{$mod_strings[
 $rebuildResult = '';
 
 $skipped_queries_Desc = '';
-if (isset($_SESSION['sqlSkippedQueries']) && $_SESSION['sqlSkippedQueries'] != null && is_array($_SESSION['sqlSkippedQueries']) && sizeof($_SESSION['sqlSkippedQueries']) > 0) {
+if (isset($_SESSION['sqlSkippedQueries']) && $_SESSION['sqlSkippedQueries'] != null && is_array($_SESSION['sqlSkippedQueries']) && count($_SESSION['sqlSkippedQueries']) > 0) {
     $skipped_queries_Desc .= "<b>{$mod_strings['LBL_UW_SKIPPED_QUERIES_ALREADY_EXIST']}</b><br />";
     $skipped_queries_Desc .= "<a href='javascript:void(0); toggleNwFiles(\"skippedQueries\");'>{$mod_strings['LBL_UW_SHOW']}</a>";
     $skipped_queries_Desc .= "<div id='skippedQueries' style='display:none;'>";

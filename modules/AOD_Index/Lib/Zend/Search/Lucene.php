@@ -1047,11 +1047,11 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
                     $sortArgs[] = &$sortFieldValues[$fieldName];
                 }
 
-                if ($count + 1 < count($argList)  &&  is_integer($argList[$count+1])) {
+                if ($count + 1 < count($argList)  &&  is_int($argList[$count+1])) {
                     $count++;
                     $sortArgs[] = &$argList[$count];
 
-                    if ($count + 1 < count($argList)  &&  is_integer($argList[$count+1])) {
+                    if ($count + 1 < count($argList)  &&  is_int($argList[$count+1])) {
                         $count++;
                         $sortArgs[] = &$argList[$count];
                     } else {

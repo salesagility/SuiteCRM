@@ -494,7 +494,7 @@ class nusoap_base
         // if name has ns, add ns prefix to name
         $xmlns = '';
         if ($name_ns) {
-            $prefix = 'nu'.rand(1000, 9999);
+            $prefix = 'nu'.mt_rand(1000, 9999);
             $name = $prefix.':'.$name;
             $xmlns .= " xmlns:$prefix=\"$name_ns\"";
         }
@@ -504,7 +504,7 @@ class nusoap_base
             // w/o checking against typemap
             $type_prefix = 'xsd';
         } elseif ($type_ns) {
-            $type_prefix = 'ns'.rand(1000, 9999);
+            $type_prefix = 'ns'.mt_rand(1000, 9999);
             $xmlns .= " xmlns:$type_prefix=\"$type_ns\"";
         }
         // serialize attributes if present
@@ -569,7 +569,7 @@ class nusoap_base
                     $xml .= "<$name$xmlns xsi:type=\"xsd:boolean\"$atts>$val</$name>";
                 }
                 break;
-            case (is_int($val) || is_long($val) || $type == 'int'):
+            case (is_int($val) || is_int($val) || $type == 'int'):
                 $this->debug("serialize_val: serialize int");
                 if ($use == 'literal') {
                     $xml .= "<$name$xmlns$atts>$val</$name>";
@@ -577,7 +577,7 @@ class nusoap_base
                     $xml .= "<$name$xmlns xsi:type=\"xsd:int\"$atts>$val</$name>";
                 }
                 break;
-            case (is_float($val)|| is_double($val) || $type == 'float'):
+            case (is_float($val)|| is_float($val) || $type == 'float'):
                 $this->debug("serialize_val: serialize float");
                 if ($use == 'literal') {
                     $xml .= "<$name$xmlns$atts>$val</$name>";
@@ -661,7 +661,7 @@ class nusoap_base
                             if ($tt_ns != '' && $tt_ns == $this->namespaces['xsd']) {
                                 $array_typename = 'xsd:' . $tt;
                             } elseif ($tt_ns) {
-                                $tt_prefix = 'ns' . rand(1000, 9999);
+                                $tt_prefix = 'ns' . mt_rand(1000, 9999);
                                 $array_typename = "$tt_prefix:$tt";
                                 $xmlns .= " xmlns:$tt_prefix=\"$tt_ns\"";
                             } else {

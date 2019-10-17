@@ -910,7 +910,7 @@ function systemCheckJsonCheckFiles($persistence)
     $persistence['filesNotWritable'] = (count($filesNotWritable) > 0) ? true : false;
 
     if (count($filesNotWritable) < 1) {
-        $filesOut = "{$mod_strings['LBL_UW_FILE_NO_ERRORS']}";
+        $filesOut = (string)($mod_strings['LBL_UW_FILE_NO_ERRORS']);
         $persistence['step']['systemCheck'] = 'success';
     }
 

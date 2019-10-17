@@ -250,7 +250,7 @@ if (!$imap->isAvailable()) {
 // standard assigns
 $xtpl->assign('MOD', $mod_strings);
 $xtpl->assign('APP', $app_strings);
-$xtpl->assign('THEME', SugarThemeRegistry::current()->__toString());
+$xtpl->assign('THEME', (string)SugarThemeRegistry::current());
 $xtpl->assign('GRIDLINE', $gridline);
 $xtpl->assign('MODULE', 'InboundEmail');
 $xtpl->assign('RETURN_MODULE', 'InboundEmail');

@@ -165,7 +165,7 @@ class aCase extends Basic
      */
     public function get_summary_text()
     {
-        return "$this->name";
+        return (string)$this->name;
     }
 
     /**

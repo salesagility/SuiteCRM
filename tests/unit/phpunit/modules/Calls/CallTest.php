@@ -36,8 +36,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
-        
-        
 
         $call = new Call();
 
@@ -50,14 +48,12 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertFalse($call->ACLAccess('edit'));
         
         // clean up
-        
         $state->popGlobals();
     }
 
     public function testSaveAndMarkDeleted()
     {
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
@@ -67,7 +63,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
 
         // test
-        
         $call = new Call();
 
         $call->name = 'test';
@@ -83,7 +78,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(null, $result);
         
         // clean up
-        
         $state->popGlobals();
         $state->popTable('vcals');
         $state->popTable('tracker');
@@ -150,12 +144,10 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testfill_in_additional_detail_fields()
     {
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
         // test
-        
         $call = new Call();
 
         //execute the method and verify it sets up the intended fields
@@ -170,7 +162,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('Accounts', $call->parent_type);
 
         // clean up
-        
         $state->popGlobals();
     }
 
@@ -188,8 +179,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //self::markTestIncomplete('environment dependency');
                 
         $call = new Call();
-
-        $current_theme = SugarThemeRegistry::current();
 
         $call->assigned_user_id = 1;
         $call->created_by = 1;
@@ -223,7 +212,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('Administrator', $call->modified_by_name);
 
         // clean up
-        
         $state->popGlobals();
     }
 
@@ -276,7 +264,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testset_accept_status()
     {
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('calls_users');
         $state->pushTable('tracker');
@@ -284,7 +271,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
 
         // test
-        
         $call = new Call();
         $call->id = 1;
 
@@ -300,7 +286,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $call->delete_linked($call->id);
         
         // clean up
-        
         $state->popGlobals();
         $state->popTable('vcals');
         $state->popTable('tracker');
@@ -335,30 +320,21 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::markTestIncomplete('environment dependency');
         
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
         // test
-        
         $call = new Call();
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $call->listviewACLHelper();
         $this->assertSame($expected, $actual);
 
         // clean up
-        
         $state->popGlobals();
     }
 
     public function testsave_relationship_changes()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $call = new Call();
 
         //execute the method and test if it works and does not throws an exception.
@@ -368,8 +344,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testgetDefaultStatus()

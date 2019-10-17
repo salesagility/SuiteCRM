@@ -30,7 +30,7 @@
          $this->Codes   = "";
          $this->Reverse = "";
 
-         $FileHandle = @fopen($BasePath."data/39.db", "r");
+         $FileHandle = @fopen($BasePath."data/39.db", 'rb');
 
          if (!$FileHandle) {
              die("Cannot find barcode database (".$BasePath."data/39.db).");
