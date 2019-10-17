@@ -173,7 +173,7 @@ class EmailTemplateParser
         }
 
         $parts = explode($charUnderscore, ltrim($variable, $charVariable));
-        list($moduleName, $attribute) = [array_shift($parts), join($charUnderscore, $parts)];
+        list($moduleName, $attribute) = [array_shift($parts), implode($charUnderscore, $parts)];
 
         /* Leads/Prospects/Users have a special variable naming scheme.
         $contact_xxx for leads/prospects and $contact_user_xxx for users */

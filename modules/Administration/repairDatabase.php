@@ -54,7 +54,7 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
     isset($_REQUEST['execute'])? $execute=$_REQUEST['execute'] : $execute= false;
     $export = false;
 
-    if (sizeof($_POST) && isset($_POST['raction'])) {
+    if (count($_POST) && isset($_POST['raction'])) {
         if (isset($_POST['raction']) && strtolower($_POST['raction']) == "export") {
             //jc - output buffering is being used. if we do not clean the output buffer
             //the contents of the buffer up to the length of the repair statement(s)

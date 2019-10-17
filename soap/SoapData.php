@@ -143,7 +143,7 @@ function sync_get_modified_relationships($session, $module_name, $related_module
         $output_list[] = $val;
     }
     $xml .= '</items>';
-    $next_offset = $offset + sizeof($output_list);
+    $next_offset = $offset + count($output_list);
 
     if ($php_serialize == 0) {
         $myoutput = base64_encode($xml);
@@ -151,7 +151,7 @@ function sync_get_modified_relationships($session, $module_name, $related_module
         $myoutput = get_encoded($output_list);
     }
 
-    return array('result_count'=>sizeof($output_list),'next_offset'=>0, 'total_count'=>sizeof($output_list), 'field_list'=>array(), 'entry_list'=>$myoutput , 'error'=>$error->get_soap_array());
+    return array('result_count'=>count($output_list),'next_offset'=>0, 'total_count'=>count($output_list), 'field_list'=>array(), 'entry_list'=>$myoutput , 'error'=>$error->get_soap_array());
 }
 
 

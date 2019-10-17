@@ -71,13 +71,13 @@ function create_cache_directory($file)
     if (!file_exists($dir)) {
         sugar_mkdir($dir, 0775);
     }
-    for ($i = 0; $i < sizeof($paths) - 1; $i++) {
+    for ($i = 0; $i < count($paths) - 1; $i++) {
         $dir .= '/' . $paths[$i];
         if (!file_exists($dir)) {
             sugar_mkdir($dir, 0775);
         }
     }
-    return $dir . '/'. $paths[sizeof($paths) - 1];
+    return $dir . '/'. $paths[count($paths) - 1];
 }
 
 function get_module_dir_list()
@@ -164,13 +164,13 @@ function create_custom_directory($file)
     if (!file_exists($dir)) {
         sugar_mkdir($dir, 0755);
     }
-    for ($i = 0; $i < sizeof($paths) - 1; $i++) {
+    for ($i = 0; $i < count($paths) - 1; $i++) {
         $dir .= '/' . $paths[$i];
         if (!file_exists($dir)) {
             sugar_mkdir($dir, 0755);
         }
     }
-    return $dir . '/'. $paths[sizeof($paths) - 1];
+    return $dir . '/'. $paths[count($paths) - 1];
 }
 
 /**

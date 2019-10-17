@@ -1542,7 +1542,7 @@ class Email extends Basic
             $GLOBALS['sugar_config']['email_address_separator'] :
             ',';
 
-        return join($separator, array_values($arr));
+        return implode($separator, array_values($arr));
     }
 
     /**

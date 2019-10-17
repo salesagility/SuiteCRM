@@ -382,7 +382,7 @@ function portal_set_entry($session, $module_name, $name_value_list)
         return array('id'=>-1, 'error'=>$error->get_soap_array());
     }
 
-    if ($_SESSION['type'] == 'contact' && !key_exists($module_name, $valid_modules_for_contact)) {
+    if ($_SESSION['type'] == 'contact' && !array_key_exists($module_name, $valid_modules_for_contact)) {
         $error->set_error('no_access');
         return array('id'=>-1, 'error'=>$error->get_soap_array());
     }
@@ -417,10 +417,10 @@ function portal_set_entry($session, $module_name, $name_value_list)
     }
 
     if (!$is_update) {
-        if (isset($_SESSION['assigned_user_id']) && (!key_exists('assigned_user_id', $values_set) || empty($values_set['assigned_user_id']))) {
+        if (isset($_SESSION['assigned_user_id']) && (!array_key_exists('assigned_user_id', $values_set) || empty($values_set['assigned_user_id']))) {
             $seed->assigned_user_id = $_SESSION['assigned_user_id'];
         }
-        if (isset($_SESSION['account_id']) && (!key_exists('account_id', $values_set) || empty($values_set['account_id']))) {
+        if (isset($_SESSION['account_id']) && (!array_key_exists('account_id', $values_set) || empty($values_set['account_id']))) {
             $seed->account_id = $_SESSION['account_id'];
         }
         $seed->portal_flag = 1;
@@ -633,7 +633,7 @@ function portal_get_related_notes($session, $module_name, $module_id, $select_fi
     $field_list = filter_field_list($field_list, $select_fields, $module_name);
 
 
-    return array('result_count'=>sizeof($output_list), 'next_offset'=>0,'field_list'=>$field_list, 'entry_list'=>$output_list, 'error'=>$error->get_soap_array());
+    return array('result_count'=>count($output_list), 'next_offset'=>0,'field_list'=>$field_list, 'entry_list'=>$output_list, 'error'=>$error->get_soap_array());
 }
 
 $server->register(
@@ -709,7 +709,7 @@ function portal_get_module_fields($session, $module_name)
         return array('module_name'=>$module_name, 'module_fields'=>$module_fields, 'error'=>$error->get_soap_array());
     }
 
-    if (($_SESSION['type'] == 'portal'||$_SESSION['type'] == 'contact') &&  !key_exists($module_name, $valid_modules_for_contact)) {
+    if (($_SESSION['type'] == 'portal'||$_SESSION['type'] == 'contact') &&  !array_key_exists($module_name, $valid_modules_for_contact)) {
         $error->set_error('no_module');
         return array('module_name'=>$module_name, 'module_fields'=>$module_fields, 'error'=>$error->get_soap_array());
     }
