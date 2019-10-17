@@ -75,14 +75,14 @@ class DeleteTestCampaigns
         $test_list_ids = array_keys($test_list_ids);
         unset($res);
         if (!empty($test_ids)) {
-            $focus->db->query("UPDATE emails SET deleted=1 WHERE id IN ('".join("','", $test_ids)."')");
+            $focus->db->query("UPDATE emails SET deleted=1 WHERE id IN ('".implode("','", $test_ids)."')");
         }
 
         if (!empty($test_list_ids)) {
-            $query = "DELETE FROM emailman WHERE campaign_id = '{$focus->id}' AND list_id IN ('".join("','", $test_list_ids)."')";
+            $query = "DELETE FROM emailman WHERE campaign_id = '{$focus->id}' AND list_id IN ('".implode("','", $test_list_ids)."')";
             $focus->db->query($query);
 
-            $query = "UPDATE campaign_log SET deleted=1 WHERE campaign_id = '{$focus->id}' AND list_id IN ('".join("','", $test_list_ids)."')";
+            $query = "UPDATE campaign_log SET deleted=1 WHERE campaign_id = '{$focus->id}' AND list_id IN ('".implode("','", $test_list_ids)."')";
 
             $focus->db->query($query);
         }

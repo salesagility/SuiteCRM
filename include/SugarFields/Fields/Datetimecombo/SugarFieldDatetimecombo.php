@@ -192,7 +192,7 @@ class SugarFieldDatetimecombo extends SugarFieldBase
                     // is kind of reasonable - no sane time format puts seconds first
                     $timeparts = explode($sep, $timepart);
                     if (!empty($timeparts[2])) {
-                        $timepart = join($sep, array($timeparts[0], $timeparts[1]));
+                        $timepart = implode($sep, array($timeparts[0], $timeparts[1]));
                     }
                 }
             }

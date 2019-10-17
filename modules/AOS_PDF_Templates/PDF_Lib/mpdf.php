@@ -33153,7 +33153,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         }
 
         $Present=0;
-        $size=sizeof($this->Reference);
+        $size=count($this->Reference);
 
         if ($this->directionality == 'rtl') {	// *RTL*
         $txt = str_replace(':', ' - ', $txt);	// *RTL*
@@ -33289,7 +33289,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         if ($this->ColActive) {
             $this->SetColumns(0);
         }	// *COLUMNS*
-        $size=sizeof($this->Reference);
+        $size=count($this->Reference);
         if ($size == 0) {
             return false;
         }
@@ -33316,7 +33316,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         }
         //Alphabetic sort of the references
         usort($this->Reference, 'cmp');
-        $size=sizeof($this->Reference);
+        $size=count($this->Reference);
         $this->breakpoints[$this->CurrCol][] = $this->y; 	// *COLUMNS*
 
         $divlettjuststarted = false;

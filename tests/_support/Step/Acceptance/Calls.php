@@ -7,8 +7,7 @@ class Calls extends \AcceptanceTester
     /**
      * Create a call
      *
-     * @param $name
-     *
+     * @param string $name
      */
     public function createCall($name)
     {
@@ -59,9 +58,7 @@ class Calls extends \AcceptanceTester
             }
         }
 
-
         $I->waitForElementVisible('#date_start_hours');
-
 
         $I->selectOption('#parent_type', $module);
         $I->fillField('#parent_name', $module_name);

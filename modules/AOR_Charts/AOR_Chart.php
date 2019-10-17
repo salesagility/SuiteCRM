@@ -266,7 +266,7 @@ class AOR_Chart extends Basic
                 $hash = md5($onelabel);
                 $colours[] = substr($hash, 0, 6);
             }
-            $this->colours = "['#" . implode($colours, "','#") . "']";
+            $this->colours = "['#" . implode("','#", $colours) . "']";
             return true;
         }
         LoggerManager::getLogger()->warn('Incorrect labels given. Using default colours in charts.');

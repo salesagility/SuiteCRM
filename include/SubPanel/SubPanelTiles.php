@@ -381,7 +381,7 @@ class SubPanelTiles
             array_push($tab_names, $tab);
         }
 
-        $tab_names = '["' . join($tab_names, '","') . '"]';
+        $tab_names = '["' . implode('","', $tab_names) . '"]';
 
         $module_sub_panels = array_map('array_keys', $module_sub_panels);
         $module_sub_panels = json_encode($module_sub_panels);
