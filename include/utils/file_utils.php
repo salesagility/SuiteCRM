@@ -116,7 +116,7 @@ function remove_file_extension($filename)
 
 function write_array_to_file($the_name, $the_array, $the_file, $mode="w", $header='')
 {
-    if (!empty($header) && ($mode != 'a' || !file_exists($the_file))) {
+    if (!empty($header) && ($mode !== 'a' || $mode !== 'ab' || !file_exists($the_file))) {
         $the_string = $header;
     } else {
         $the_string =   "<?php\n" .
@@ -127,6 +127,27 @@ function write_array_to_file($the_name, $the_array, $the_file, $mode="w", $heade
                     ";";
 
     return sugar_file_put_contents($the_file, $the_string, LOCK_EX) !== false;
+}
+
+function write_override_label_to_file($the_name, $the_array, $the_file, $mode = 'w', $header = '')
+{
+    if (!empty($header) && ($mode !== 'a' || $mode !== 'ab' || !file_exists($the_file))) {
+        $the_string = $header;
+    } else {
+        $the_string = "<?php\n" .
+            '// created: ' . date('Y-m-d H:i:s') . "\n";
+    }
+
+    foreach ($the_array as $labelName => $labelValue) {
+        $the_string .= '$' . "{$the_name}['{$labelName}'] = '{$labelValue}';\n";
+    }
+
+    $result = sugar_file_put_contents($the_file, $the_string, LOCK_EX) !== false;
+
+    if (function_exists('opcache_invalidate')) {
+        opcache_invalidate($the_file, true);
+    }
+    return $result;
 }
 
 function write_encoded_file($soap_result, $write_to_dir, $write_to_file="")
