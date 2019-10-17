@@ -181,8 +181,6 @@ $dictionary['AM_TaskTemplates'] = array(
                 'reportable' => true,
                 'unified_search' => false,
                 'merge_filter' => 'disabled',
-                'len' => '1',
-                'size' => '20',
             ),
         'relationship_type' =>
             array(
