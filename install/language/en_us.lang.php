@@ -249,7 +249,6 @@ $mod_strings = array(
     'LBL_ML_UNINSTALLABLE' => 'Uninstallable',
     'LBL_ML_VERSION' => 'Version',
     'LBL_MSSQL' => 'SQL Server',
-    'LBL_MSSQL2' => 'SQL Server (FreeTDS)',
     'LBL_MSSQL_SQLSRV' => 'SQL Server (Microsoft SQL Server Driver for PHP)',
     'LBL_MYSQL' => 'MySQL',
     'LBL_MYSQLI' => 'MySQL (mysqli extension)',

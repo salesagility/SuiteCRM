@@ -418,7 +418,6 @@ function export($type, $records = null, $members = false, $sample=false)
             $i++;
         }
 
-
         foreach ($records as $record) {
             $line = implode("\"" . getDelimiter() . "\"", $record);
             $line = "\"" . $line;

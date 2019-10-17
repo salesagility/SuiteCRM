@@ -4633,15 +4633,6 @@ function code2utf($num)
     return '';
 }
 
-/*
- * @deprecated use DBManagerFactory::isFreeTDS
- */
-
-function is_freetds()
-{
-    return DBManagerFactory::isFreeTDS();
-}
-
 /**
  * Chart dashlet helper function that returns the correct CSS file, dependent on the current theme.
  *
@@ -4812,10 +4803,13 @@ function filterInboundEmailPopSelection($protocol)
 
 /**
  * The function is used because currently we are not supporting mbstring.func_overload
- * For some user using mssql without FreeTDS, they may store multibyte charaters in varchar using latin_general collation. It cannot store so many mutilbyte characters, so we need to use strlen.
- * The varchar in MySQL, Orcale, and nvarchar in FreeTDS, we can store $length mutilbyte charaters in it. we need mb_substr to keep more info.
+ * For some users using mssql, they may store multibyte characters in
+ * varchar using latin_general collation. It cannot store so many mutilbyte characters,
+ * so we need to use strlen.
+ * The varchar in MySQL and Oracle, we can store $length mutilbyte characters in it.
+ * We need mb_substr to keep more info.
  *
- * @returns the substred strings.
+ * @returns the substr'd strings.
  */
 function sugar_substr($string, $length, $charset = 'UTF-8')
 {
