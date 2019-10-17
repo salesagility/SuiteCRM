@@ -54,6 +54,8 @@
     "symfony/yaml": "^3.4",
     "tedivm/jshrink": "^1.3",
     "tuupola/slim-jwt-auth": "^2.0",
+    "vakata/jstree": "^3.3",
+    "fullcalendar/fullcalendar": "^3.9",
     "wikimedia/composer-merge-plugin": "^1.4",
     "tinymce/tinymce": "^4.9"
   },
