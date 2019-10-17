@@ -27,7 +27,6 @@ class ActivitiesCest
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
-
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
