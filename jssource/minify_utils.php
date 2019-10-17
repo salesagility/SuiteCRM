@@ -222,14 +222,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
         //iterate through each directory and create if needed
 
         foreach ($bu_dir_arr as $bu_dir) {
-            if (!file_exists($prefix_process_path.'/'.$bu_dir)) {
+            if (!file_exists($prefix_process_path . '/' . $bu_dir)) {
                 if (function_exists('sugar_mkdir')) {
-                    sugar_mkdir($prefix_process_path.'/'.$bu_dir);
-                } else {
-                    mkdir($prefix_process_path.'/'.$bu_dir);
+                    sugar_mkdir($prefix_process_path . '/' . $bu_dir);
+                } elseif (!mkdir($concurrentDirectory = $prefix_process_path . '/' . $bu_dir) && !is_dir($concurrentDirectory)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
                 }
             }
-            $prefix_process_path = $prefix_process_path.'/'.$bu_dir;
+            $prefix_process_path = $prefix_process_path . '/' . $bu_dir;
         }
     }
 

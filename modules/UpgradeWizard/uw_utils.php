@@ -3095,8 +3095,8 @@ function post_install_progress($progArray='', $action='')
         }
         return $currProg;
     } elseif ($action=='set') {
-        if (!is_dir($upgrade_progress_dir)) {
-            mkdir($upgrade_progress_dir);
+        if (!is_dir($upgrade_progress_dir) && !mkdir($upgrade_progress_dir) && !is_dir($upgrade_progress_dir)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $upgrade_progress_dir));
         }
         if (file_exists($upgrade_progress_file)) {
             include($upgrade_progress_file);
