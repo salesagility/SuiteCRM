@@ -100,7 +100,7 @@ class CustomLoader
         $result = [];
         foreach ((array)$arrays as $array) {
             foreach ($array as $key => $value) {
-                if (is_integer($key)) {
+                if (is_int($key)) {
                     // is indexed?
                     $result[] = $value;
                 } elseif (isset($result[$key]) && is_array($value) && is_array($result[$key])) {

@@ -763,7 +763,7 @@ class nusoap_base
                     $xml .= "<$name$xmlns xsi:type=\"xsd:boolean\"$atts>$val</$name>";
                 }
                 break;
-            case (is_int($val) || is_long($val) || $type == 'int'):
+            case (is_int($val) || is_int($val) || $type == 'int'):
                 $this->debug("serialize_val: serialize int");
                 if ($use == 'literal') {
                     $xml .= "<$name$xmlns$atts>$val</$name>";
@@ -771,7 +771,7 @@ class nusoap_base
                     $xml .= "<$name$xmlns xsi:type=\"xsd:int\"$atts>$val</$name>";
                 }
                 break;
-            case (is_float($val)|| is_double($val) || $type == 'float'):
+            case (is_float($val)|| is_float($val) || $type == 'float'):
                 $this->debug("serialize_val: serialize float");
                 if ($use == 'literal') {
                     $xml .= "<$name$xmlns$atts>$val</$name>";
@@ -1843,7 +1843,7 @@ class nusoap_xmlschema extends nusoap_base
     {
         // parse xml file
         if ($xml != "") {
-            $xmlStr = @join("", @file($xml));
+            $xmlStr = @implode("", @file($xml));
             if ($xmlStr == "") {
                 $msg = 'Error reading XML from '.$xml;
                 $this->setError($msg);
@@ -2316,7 +2316,7 @@ class nusoap_xmlschema extends nusoap_base
         $xml = '';
         // imports
         $schemaLocationCount = 0;
-        if (sizeof($this->imports) > 0) {
+        if (count($this->imports) > 0) {
             foreach ($this->imports as $ns => $list) {
                 foreach ($list as $ii) {
                     if ($ii['location'] != '') {
@@ -3501,7 +3501,7 @@ class soap_transport_http extends nusoap_base
 
             // set response timeout
             $this->debug('set response timeout to ' . $response_timeout);
-            socket_set_timeout($this->fp, $response_timeout);
+            stream_set_timeout($this->fp, $response_timeout);
 
             $this->debug('socket connected');
             return true;
@@ -4025,7 +4025,7 @@ class soap_transport_http extends nusoap_base
 
         if ($this->io_method() == 'socket') {
             // send payload
-            if (!fputs($this->fp, $this->outgoing_payload, strlen($this->outgoing_payload))) {
+            if (!fwrite($this->fp, $this->outgoing_payload, strlen($this->outgoing_payload))) {
                 $this->setError('couldn\'t write message data to socket');
                 $this->debug('couldn\'t write message data to socket');
                 return false;
@@ -5470,10 +5470,10 @@ class nusoap_server extends nusoap_base
             $this->debug('got a(n) '.gettype($this->methodreturn).' from method');
             $this->debug('serializing return value');
             if ($this->wsdl) {
-                if (sizeof($this->opData['output']['parts']) > 1) {
+                if (count($this->opData['output']['parts']) > 1) {
                     $this->debug('more than one output part, so use the method return unchanged');
                     $opParams = $this->methodreturn;
-                } elseif (sizeof($this->opData['output']['parts']) == 1) {
+                } elseif (count($this->opData['output']['parts']) == 1) {
                     $this->debug('exactly one output part, so wrap the method return in a simple array');
                     // TODO: verify that it is not already wrapped!
                     //foreach ($this->opData['output']['parts'] as $name => $type) {
@@ -5628,7 +5628,7 @@ class nusoap_server extends nusoap_base
         print $payload;
         ob_flush();
 
-        $this->response = join("\r\n", $this->outgoing_headers)."\r\n\r\n".$payload;
+        $this->response = implode("\r\n", $this->outgoing_headers)."\r\n\r\n".$payload;
     }
 
     /**
@@ -7062,7 +7062,7 @@ class wsdl extends nusoap_base
         }
         $xml .= '>';
         // imports
-        if (sizeof($this->import) > 0) {
+        if (count($this->import) > 0) {
             foreach ($this->import as $ns => $list) {
                 foreach ($list as $ii) {
                     if ($ii['location'] != '') {
@@ -7296,9 +7296,9 @@ class wsdl extends nusoap_base
 
         // set input params
         $xml = '';
-        if (isset($opData[$direction]['parts']) && sizeof($opData[$direction]['parts']) > 0) {
+        if (isset($opData[$direction]['parts']) && count($opData[$direction]['parts']) > 0) {
             $parts = &$opData[$direction]['parts'];
-            $part_count = sizeof($parts);
+            $part_count = count($parts);
             $style = $opData['style'];
             $use = $opData[$direction]['use'];
             $this->debug("have $part_count part(s) to serialize using $style/$use");
@@ -7398,7 +7398,7 @@ class wsdl extends nusoap_base
 
         // set input params
         $xml = '';
-        if (isset($opData[$direction]['parts']) && sizeof($opData[$direction]['parts']) > 0) {
+        if (isset($opData[$direction]['parts']) && count($opData[$direction]['parts']) > 0) {
             $use = $opData[$direction]['use'];
             $this->debug("use=$use");
             $this->debug('got ' . count($opData[$direction]['parts']) . ' part(s)');
@@ -7696,15 +7696,15 @@ class wsdl extends nusoap_base
             if (isset($typeDef['multidimensional'])) {
                 $nv = array();
                 foreach ($value as $v) {
-                    $cols = ',' . sizeof($v);
+                    $cols = ',' . count($v);
                     $nv = array_merge($nv, $v);
                 }
                 $value = $nv;
             } else {
                 $cols = '';
             }
-            if (is_array($value) && sizeof($value) >= 1) {
-                $rows = sizeof($value);
+            if (is_array($value) && count($value) >= 1) {
+                $rows = count($value);
                 $contents = '';
                 foreach ($value as $k => $v) {
                     $this->debug("serializing array element: $k, $v of type: $typeDef[arrayType]");
@@ -8423,7 +8423,7 @@ class nusoap_parser extends nusoap_base
                     $this->soapheader = $this->message[$this->root_header]['result'];
                 }
                 // resolve hrefs/ids
-                if (sizeof($this->multirefs) > 0) {
+                if (count($this->multirefs) > 0) {
                     foreach ($this->multirefs as $id => $hrefs) {
                         $this->debug('resolving multirefs for id: '.$id);
                         $idVal = $this->buildVal($this->ids[$id]);
@@ -9496,7 +9496,7 @@ class nusoap_client extends nusoap_base
         if (is_array($return)) {
             // multiple 'out' parameters, which we return wrapped up
             // in the array
-            if (sizeof($return) > 1) {
+            if (count($return) > 1) {
                 return $return;
             }
             // single 'out' parameter (normally the return value)
@@ -9962,7 +9962,7 @@ class nusoap_client extends nusoap_base
         foreach ($this->operations as $operation => $opData) {
             if ($operation != '') {
                 // create param string and param comment string
-                if (sizeof($opData['input']['parts']) > 0) {
+                if (count($opData['input']['parts']) > 0) {
                     $paramStr = '';
                     $paramArrayStr = '';
                     $paramCommentStr = '';
@@ -10095,10 +10095,10 @@ class nusoap_client extends nusoap_base
      */
     public function checkCookies()
     {
-        if (sizeof($this->cookies) == 0) {
+        if (count($this->cookies) == 0) {
             return true;
         }
-        $this->debug('checkCookie: check ' . sizeof($this->cookies) . ' cookies');
+        $this->debug('checkCookie: check ' . count($this->cookies) . ' cookies');
         $curr_cookies = $this->cookies;
         $this->cookies = array();
         foreach ($curr_cookies as $cookie) {
@@ -10116,7 +10116,7 @@ class nusoap_client extends nusoap_base
                 $this->cookies[] = $cookie;
             }
         }
-        $this->debug('checkCookie: '.sizeof($this->cookies).' cookies left in array');
+        $this->debug('checkCookie: '.count($this->cookies).' cookies left in array');
         return true;
     }
 
@@ -10129,15 +10129,15 @@ class nusoap_client extends nusoap_base
      */
     public function UpdateCookies($cookies)
     {
-        if (sizeof($this->cookies) == 0) {
+        if (count($this->cookies) == 0) {
             // no existing cookies: take whatever is new
-            if (sizeof($cookies) > 0) {
+            if (count($cookies) > 0) {
                 $this->debug('Setting new cookie(s)');
                 $this->cookies = $cookies;
             }
             return true;
         }
-        if (sizeof($cookies) == 0) {
+        if (count($cookies) == 0) {
             // no new cookies: keep what we've got
             return true;
         }

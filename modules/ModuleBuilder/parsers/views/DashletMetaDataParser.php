@@ -210,7 +210,7 @@ class DashletMetaDataParser extends ListLayoutMetaDataParser
             }
             $out .= "\$dashletData['$writeTodashletName']['searchFields'] = " . var_export_helper($dashletData[$dashletName]['searchFields']) . ";\n";
             $out .= "\$dashletData['$writeTodashletName']['columns'] = " . var_export_helper($dashletData[$dashletName]['columns']) . ";\n";
-            fputs($fh, $out);
+            fwrite($fh, $out);
             fclose($fh);
         }
     }

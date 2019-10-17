@@ -118,7 +118,7 @@ if (!isset($_POST['dashName'])) {
 
     $sugar_smarty = new Sugar_Smarty();
     $sugar_smarty->assign('columns', $display);
-    $sugar_smarty->assign('selectedPage', sizeof($pages) - 1);
+    $sugar_smarty->assign('selectedPage', count($pages) - 1);
     $sugar_smarty->assign('mod', $home_mod_strings);
     $sugar_smarty->assign('app', $GLOBALS['app_strings']);
     $sugar_smarty->assign('lblAddDashlets', $home_mod_strings['LBL_ADD_DASHLETS']);

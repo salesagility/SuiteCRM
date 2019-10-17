@@ -104,9 +104,9 @@ class ImapHandlerFakeData
      */
     protected function getCall($name, $args = null)
     {
-        if (key_exists($name, $this->calls)) {
+        if (array_key_exists($name, $this->calls)) {
             $argsEncoded = $this->encodeArgs($args);
-            if (key_exists($argsEncoded, $this->calls[$name])) {
+            if (array_key_exists($argsEncoded, $this->calls[$name])) {
                 $ret = $this->getNextCallReturn($name, $argsEncoded);
                 return $ret;
             } else {
