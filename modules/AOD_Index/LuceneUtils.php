@@ -23,14 +23,6 @@
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 
-
-
-function requireLucene()
-{
-    set_include_path(get_include_path() . PATH_SEPARATOR . "modules/AOD_Index/Lib");
-    require_once('Zend/Search/Lucene.php');
-}
-
 function getDocumentRevisionPath($revisionId)
 {
     return "upload/$revisionId";
