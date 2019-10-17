@@ -294,7 +294,7 @@ abstract class DBManager
     }
 
     /**
-     * Returns this instance's DBHelper
+     * Returns this instance's DBManager
      * Actually now returns $this
      * @deprecated
      * @return DBManager
