@@ -20,6 +20,11 @@ matrix:
     - name: "PHP 7.3 / MySQL 5.7"
       php: "7.3"
       dist: xenial
+    - name: "PHP 7.3 / MySQL 8.0"
+      php: "7.3"
+      env:
+        - MYSQL_VERSION=8.0
+      dist: xenial
     # Run composer validate to make sure the composer.json and composer.lock are in sync.
     - name: "composer validate"
       php: "7.2"
@@ -59,6 +64,13 @@ install:
   - composer self-update && composer --version
 
 before_script:
+  - if [[ $MYSQL_VERSION == '8.0' ]]; then wget https://repo.mysql.com//mysql-apt-config_0.8.10-1_all.deb ; fi
+  - if [[ $MYSQL_VERSION == '8.0' ]]; then sudo dpkg -i mysql-apt-config_0.8.10-1_all.deb ; fi
+  - if [[ $MYSQL_VERSION == '8.0' ]]; then sudo apt-get update -q ; fi
+  - if [[ $MYSQL_VERSION == '8.0' ]]; then sudo apt-get install -q -y --allow-unauthenticated -o Dpkg::Options::=--force-confnew mysql-server ; fi
+  - if [[ $MYSQL_VERSION == '8.0' ]]; then sudo systemctl restart mysql ; fi
+  - if [[ $MYSQL_VERSION == '8.0' ]]; then sudo mysql_upgrade ; fi
+  - mysql --version
   # Set up MySQL
   - mysql -e "CREATE DATABASE automated_tests CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
   - mysql -u root -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
