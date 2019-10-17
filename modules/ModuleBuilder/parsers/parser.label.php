@@ -184,25 +184,19 @@ class ParserLabel
      */
     public static function addLabels($language, $labels, $moduleName, $basepath = null, $forRelationshipLabel = false)
     {
-        $GLOBALS [ 'log' ]->debug("ParserLabel::addLabels($language, \$labels, $moduleName, $basepath );");
-        $GLOBALS [ 'log' ]->debug('$labels:'.print_r($labels, true));
+        $GLOBALS ['log']->debug("ParserLabel::addLabels($language, \$labels, $moduleName, $basepath );");
+        $GLOBALS ['log']->debug('$labels:' . print_r($labels, true));
 
         $deployedModule = false;
         if (null === $basepath) {
             $deployedModule = true;
-            $basepath = "custom/modules/$moduleName/language";
-            if ($forRelationshipLabel) {
-                $basepath = "custom/modules/$moduleName/Ext/Language";
-            }
+            $basepath = "custom/Extension/modules/$moduleName/Ext/Language";
             if (!is_dir($basepath)) {
                 mkdir_recursive($basepath);
             }
         }
 
-        $filename = "$basepath/$language.lang.php";
-        if ($forRelationshipLabel) {
-            $filename = "$basepath/$language.lang.ext.php";
-        }
+        $filename = "$basepath/_override_$language.lang.php";
         $dir_exists = is_dir($basepath);
 
         $mod_strings = array();
@@ -233,7 +227,7 @@ class ParserLabel
         if ($changed) {
             $GLOBALS [ 'log' ]->debug("ParserLabel::addLabels: writing new mod_strings to $filename");
             $GLOBALS [ 'log' ]->debug('ParserLabel::addLabels: mod_strings='.print_r($mod_strings, true));
-            if (!write_array_to_file('mod_strings', $mod_strings, $filename)) {
+            if (!write_override_label_to_file('mod_strings', $mod_strings, $filename)) {
                 $GLOBALS [ 'log' ]->fatal("Could not write $filename");
             } else {
                 // if we have a cache to worry about, then clear it now
