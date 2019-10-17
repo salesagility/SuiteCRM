@@ -8,7 +8,7 @@
 [![codecov](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix-7.10.x/graph/badge.svg)](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix-7.10.x)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/suitecrm/Lobby)
 [![LICENSE](https://img.shields.io/github/license/suitecrm/suitecrm.svg)](https://github.com/salesagility/suitecrm/blob/master/LICENSE.txt)
-![GitHub contributors](https://img.shields.io/github/contributors/salesagility/suitecrm)
+[![GitHub contributors](https://img.shields.io/github/contributors/salesagility/suitecrm)](https://github.com/salesagility/SuiteCRM/graphs/contributors)
 [![Twitter](https://img.shields.io/twitter/follow/suitecrm.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=suitecrm)
 
 [Website](https://suitecrm.com) | 
