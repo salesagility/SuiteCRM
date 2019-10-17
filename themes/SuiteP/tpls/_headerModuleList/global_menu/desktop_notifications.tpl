@@ -39,20 +39,8 @@
  */
  *}
 
-<!--Start Responsive Top Navigation Menu -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        {include file="themes/SuiteP/tpls/_headerModuleList/mobile_menu.tpl"}
-        {include file="themes/SuiteP/tpls/_headerModuleList/toolbar.tpl"}
-
-        <!-- Right side of the main navigation -->
-        {include file="themes/SuiteP/tpls/_headerModuleList/global_menu.tpl"}
-    </div>
-</nav>
-<!--End Responsive Top Navigation Menu -->
-{if $THEME_CONFIG.display_sidebar}
-    <!--Start Page Container and Responsive Sidebar -->
-    {include file="themes/SuiteP/tpls/_headerModuleList/sidebar.tpl"}
-    <!--End Responsive Sidebar -->
-{/if}
-<!--Start Page content -->
+<button class="alertsButton btn dropdown-toggle suitepicon suitepicon-action-alerts" data-toggle="dropdown"
+        aria-expanded="false">
+    <span class="alert_count hidden">0</span>
+</button>
+<div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>

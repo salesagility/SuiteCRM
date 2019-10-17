@@ -39,20 +39,30 @@
  */
  *}
 
-<!--Start Responsive Top Navigation Menu -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        {include file="themes/SuiteP/tpls/_headerModuleList/mobile_menu.tpl"}
-        {include file="themes/SuiteP/tpls/_headerModuleList/toolbar.tpl"}
+{*label*}
 
-        <!-- Right side of the main navigation -->
-        {include file="themes/SuiteP/tpls/_headerModuleList/global_menu.tpl"}
-    </div>
-</nav>
-<!--End Responsive Top Navigation Menu -->
-{if $THEME_CONFIG.display_sidebar}
-    <!--Start Page Container and Responsive Sidebar -->
-    {include file="themes/SuiteP/tpls/_headerModuleList/sidebar.tpl"}
-    <!--End Responsive Sidebar -->
-{/if}
-<!--Start Page content -->
+{*<!-- LABEL -->*}
+
+{{if isset($colData.field.customLabel)}}
+    {{$colData.field.customLabel}}
+{{elseif isset($colData.field.label) && strpos($colData.field.label, '$')}}
+    {capture name="label" assign="label"}{{$colData.field.label}}{/capture}
+    {$label|strip_semicolon}:
+{{elseif isset($colData.field.label)}}
+    {capture name="label" assign="label"}{sugar_translate label='{{$colData.field.label}}' module='{{$module}}'}{/capture}
+    {$label|strip_semicolon}:
+{{elseif isset($fields[$colData.field.name])}}
+    {capture name="label" assign="label"}{sugar_translate label='{{$fields[$colData.field.name].vname}}' module='{{$module}}'}{/capture}
+    {$label|strip_semicolon}:
+{{else}}
+    &nbsp;
+{{/if}}
+
+{{if isset($colData.field.popupHelp) || isset($fields[$colData.field.name]) && isset($fields[$colData.field.name].popupHelp) }}
+    {{if isset($colData.field.popupHelp) }}
+        {capture name="popupText" assign="popupText"}{sugar_translate label="{{$colData.field.popupHelp}}" module="{{$module}}"}{/capture}
+    {{elseif isset($fields[$colData.field.name].popupHelp)}}
+        {capture name="popupText" assign="popupText"}{sugar_translate label="{{$fields[$colData.field.name].popupHelp}}" module='{{$module}}'}{/capture}
+    {{/if}}
+    {sugar_help text=$popupText WIDTH=400}
+{{/if}}

@@ -39,20 +39,36 @@
  */
  *}
 
-<!--Start Responsive Top Navigation Menu -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        {include file="themes/SuiteP/tpls/_headerModuleList/mobile_menu.tpl"}
-        {include file="themes/SuiteP/tpls/_headerModuleList/toolbar.tpl"}
+{{if $fieldCount < $smarty.foreach.colIteration.total && !empty($colData.field.name)}}
 
-        <!-- Right side of the main navigation -->
-        {include file="themes/SuiteP/tpls/_headerModuleList/global_menu.tpl"}
+    {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
+        {*<!-- DIV inside - colspan != 3 -->*}
+        {{if $smarty.foreach.colIteration.index == 0}}
+        	<div class="col-xs-12 col-sm-4 label col-1-label">
+    	{{else}}
+        	<div class="col-xs-12 col-sm-4 label col-2-label">
+    	{{/if}}
+    {{else}}
+        {*<!-- DIV inside - colspan = 3 -->*}
+        <div class="col-xs-12 col-sm-2 label col-1-label">
+    {{/if}}
+
+        {{include file='themes/SuiteP/include/DetailView/tab_panel_content/field/label.tpl'}}
+
     </div>
-</nav>
-<!--End Responsive Top Navigation Menu -->
-{if $THEME_CONFIG.display_sidebar}
-    <!--Start Page Container and Responsive Sidebar -->
-    {include file="themes/SuiteP/tpls/_headerModuleList/sidebar.tpl"}
-    <!--End Responsive Sidebar -->
-{/if}
-<!--Start Page content -->
+    {*<!-- /DIV inside  -->*}
+
+    {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
+        {*<!-- phone (version 1) -->*}
+        <div class="col-xs-12 col-sm-8 detail-view-field {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
+    {{else}}
+        {*<!-- phone (version 2) -->*}
+        <div class="col-xs-12 col-sm-10 detail-view-field {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
+    {{/if}}
+
+        {{include file='themes/SuiteP/include/DetailView/tab_panel_content/field/value_detail.tpl'}}
+
+    </div>
+    {*<!-- /phone (version 1/2) -->*}
+
+{{/if}}

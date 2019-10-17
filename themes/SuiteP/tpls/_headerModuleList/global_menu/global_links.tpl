@@ -39,20 +39,18 @@
  */
  *}
 
-<!--Start Responsive Top Navigation Menu -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        {include file="themes/SuiteP/tpls/_headerModuleList/mobile_menu.tpl"}
-        {include file="themes/SuiteP/tpls/_headerModuleList/toolbar.tpl"}
-
-        <!-- Right side of the main navigation -->
-        {include file="themes/SuiteP/tpls/_headerModuleList/global_menu.tpl"}
-    </div>
-</nav>
-<!--End Responsive Top Navigation Menu -->
-{if $THEME_CONFIG.display_sidebar}
-    <!--Start Page Container and Responsive Sidebar -->
-    {include file="themes/SuiteP/tpls/_headerModuleList/sidebar.tpl"}
-    <!--End Responsive Sidebar -->
-{/if}
-<!--Start Page content -->
+<ul class="dropdown-menu user-dropdown user-menu" role="menu" aria-labelledby="dropdownMenu2">
+    <li role="presentation">
+        <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
+            {$APP.LBL_PROFILE}
+        </a>
+    </li>
+    {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
+        <li role="presentation">
+            <a id="{$gcl_key}_link"
+               href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
+        </li>
+    {/foreach}
+    <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'
+                               class='utilsLink'>{$LOGOUT_LABEL}</a></li>
+</ul>

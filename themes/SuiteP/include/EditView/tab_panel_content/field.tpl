@@ -39,20 +39,47 @@
  */
  *}
 
-<!--Start Responsive Top Navigation Menu -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        {include file="themes/SuiteP/tpls/_headerModuleList/mobile_menu.tpl"}
-        {include file="themes/SuiteP/tpls/_headerModuleList/toolbar.tpl"}
+{{if $fieldCount < $smarty.foreach.colIteration.total && $addressCount < 1 && !empty($colData.field.name) && empty($colData.field.hideIf)}}
+    {{if !empty($colData.field.hideLabel) && $colData.field.hideLabel == true}}
+    {*hide label*}
+    {{else}}
 
-        <!-- Right side of the main navigation -->
-        {include file="themes/SuiteP/tpls/_headerModuleList/global_menu.tpl"}
+    {*<!-- LABEL -->*}
+    {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
+        <div class="col-xs-12 col-sm-4 label" data-label="{{$fields[$colData.field.name].vname}}">
+    {{else}}
+         <div class="col-xs-12 col-sm-2 label" data-label="{{$fields[$colData.field.name].vname}}">
+    {{/if}}
+
+            {{include file='themes/SuiteP/include/EditView/tab_panel_content/field/label.tpl'}}
+
+        </div>
+    {{/if}}
+
+    {*<!-- VALUE -->*}
+    {{if !empty($colData.field.hideLabel) && $colData.field.hideLabel == true && $colData.colspan != 3}}
+        {{assign var="fieldClasses" value="col-xs-12 col-sm-12"}}
+    {{else}}
+        {{assign var="fieldClasses" value="col-xs-12 col-sm-8"}}
+    {{/if}}
+
+    <div class="{{$fieldClasses}} edit-view-field {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
+
+        {{include file='themes/SuiteP/include/EditView/tab_panel_content/field/value_edit.tpl'}}
+
     </div>
-</nav>
-<!--End Responsive Top Navigation Menu -->
-{if $THEME_CONFIG.display_sidebar}
-    <!--Start Page Container and Responsive Sidebar -->
-    {include file="themes/SuiteP/tpls/_headerModuleList/sidebar.tpl"}
-    <!--End Responsive Sidebar -->
-{/if}
-<!--Start Page content -->
+{{else}}
+
+{{/if}}
+
+{{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}<div class="inlineEditIcon col-xs-1">
+    {sugar_getimage name="inline_edit_icon.svg" attr='border="0" ' alt="$alt_edit"}
+    </div>
+{{/if}}
+
+{*Field Exceptions*}
+{{if !empty($colData.field.type)}}
+    {{if $colData.field.type == 'address'}}
+         {{counter name="addressCount" print=false}}
+    {{/if}}
+{{/if}}

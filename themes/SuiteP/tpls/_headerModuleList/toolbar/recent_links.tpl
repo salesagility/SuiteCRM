@@ -39,20 +39,34 @@
  */
  *}
 
-<!--Start Responsive Top Navigation Menu -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        {include file="themes/SuiteP/tpls/_headerModuleList/mobile_menu.tpl"}
-        {include file="themes/SuiteP/tpls/_headerModuleList/toolbar.tpl"}
+{* when records are found for the current module show recent header *}
+{counter start=0 name="moduleRecentRecordsTotal" assign="moduleRecentRecordsTotal"  print=false}
+{foreach from=$recentRecords item=item name=lastViewed}
+    {if $item.module_name == $module_name and $moduleRecentRecordsTotal == 0}
+        <li class="recent-links-title"><a><strong>{$APP.LBL_LAST_VIEWED}</strong></a></li>
+        {counter name="moduleRecentRecordsTotal" print=false}
+    {/if}
+{/foreach}
+<li class="current-module-recent-links">
+    <ul>
+        {* when records are found for the current module show the first 3 records *}
+        {counter start=0 name="moduleRecentRecords" assign="moduleRecentRecords"  print=false}
+        {foreach from=$recentRecords item=item name=lastViewed}
+            {if $item.module_name == $module_name and $moduleRecentRecords < 3}
+                <li class="recentlinks" role="presentation">
+                    <a title="{sugar_translate module=$item.module_name label=LBL_MODULE_NAME}"
+                       accessKey="{$smarty.foreach.lastViewed.iteration}"
+                       href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}" class="recent-links-detail">
 
-        <!-- Right side of the main navigation -->
-        {include file="themes/SuiteP/tpls/_headerModuleList/global_menu.tpl"}
-    </div>
-</nav>
-<!--End Responsive Top Navigation Menu -->
-{if $THEME_CONFIG.display_sidebar}
-    <!--Start Page Container and Responsive Sidebar -->
-    {include file="themes/SuiteP/tpls/_headerModuleList/sidebar.tpl"}
-    <!--End Responsive Sidebar -->
-{/if}
-<!--Start Page content -->
+                        <span aria-hidden="true">{$item.item_summary_short}</span>
+                    </a>
+                    {capture assign='access'}{suite_check_access module=$item.module_name action='edit' record=$item.item_id }{/capture}
+                    {if $access}
+                        <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" class="recent-links-edit"><span class=" glyphicon glyphicon-pencil"></a>
+                    {/if}
+                </li>
+                {counter name="moduleRecentRecords" print=false}
+            {/if}
+        {/foreach}
+    </ul>
+</li>

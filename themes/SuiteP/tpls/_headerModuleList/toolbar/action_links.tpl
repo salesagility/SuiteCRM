@@ -39,20 +39,17 @@
  */
  *}
 
-<!--Start Responsive Top Navigation Menu -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        {include file="themes/SuiteP/tpls/_headerModuleList/mobile_menu.tpl"}
-        {include file="themes/SuiteP/tpls/_headerModuleList/toolbar.tpl"}
-
-        <!-- Right side of the main navigation -->
-        {include file="themes/SuiteP/tpls/_headerModuleList/global_menu.tpl"}
-    </div>
-</nav>
-<!--End Responsive Top Navigation Menu -->
-{if $THEME_CONFIG.display_sidebar}
-    <!--Start Page Container and Responsive Sidebar -->
-    {include file="themes/SuiteP/tpls/_headerModuleList/sidebar.tpl"}
-    <!--End Responsive Sidebar -->
-{/if}
-<!--Start Page content -->
+<li class="current-module-action-links">
+    <ul>
+        {if is_array($shortcutTopMenu.$module_name)
+            && count($shortcutTopMenu.$module_name) > 0}
+            {foreach from=$shortcutTopMenu.$module_name item=item}
+                {if $item.URL == "-"}
+                    {*<li><a></a><span>&nbsp;</span></li>*}
+                {else}
+                    <li><a href="{$item.URL}"><span class="topnav-fake-icon">{* fakes the space the icon takes *}</span><span aria-hidden="true">{$item.LABEL}</span></a></li>
+                {/if}
+            {/foreach}
+        {/if}
+    </ul>
+</li>

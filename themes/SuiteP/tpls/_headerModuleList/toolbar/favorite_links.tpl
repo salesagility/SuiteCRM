@@ -39,20 +39,34 @@
  */
  *}
 
-<!--Start Responsive Top Navigation Menu -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        {include file="themes/SuiteP/tpls/_headerModuleList/mobile_menu.tpl"}
-        {include file="themes/SuiteP/tpls/_headerModuleList/toolbar.tpl"}
-
-        <!-- Right side of the main navigation -->
-        {include file="themes/SuiteP/tpls/_headerModuleList/global_menu.tpl"}
-    </div>
-</nav>
-<!--End Responsive Top Navigation Menu -->
-{if $THEME_CONFIG.display_sidebar}
-    <!--Start Page Container and Responsive Sidebar -->
-    {include file="themes/SuiteP/tpls/_headerModuleList/sidebar.tpl"}
-    <!--End Responsive Sidebar -->
-{/if}
-<!--Start Page content -->
+{* when records are found for the current module show favorites header *}
+{counter start=0 name="moduleFavoriteRecordsTotal" assign="moduleFavoriteRecordsTotal"  print=false}
+{foreach from=$favoriteRecords item=item name=lastViewed}
+    {if $item.module_name == $module_name and $moduleFavoriteRecordsTotal == 0}
+        <li class="favorite-links-title"><a><strong>{$APP.LBL_FAVORITES}</strong></a></li>
+        {counter name="moduleFavoriteRecordsTotal" print=false}
+    {/if}
+{/foreach}
+<li class="current-module-favorite-links">
+    <ul>
+        {* when records are found for the current module show the first 3 records *}
+        {counter start=0 name="moduleFavoriteRecords" assign="moduleFavoriteRecords" print=false}
+        {foreach from=$favoriteRecords item=item name=lastViewed}
+            {if $item.module_name == $module_name and $moduleFavoriteRecords < 3}
+                <li class="favoritelinks" role="presentation">
+                    <a title="{$item.module_name}"
+                       accessKey="{$smarty.foreach.lastViewed.iteration}"
+                       href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}" class="favorite-links-detail">
+                        <span class="suitepicon suitepicon-module-{$item.module_name|lower|replace:'_':'-'}"></span>
+                        <span aria-hidden="true">{$item.item_summary_short}</span>
+                    </a>
+                    {capture assign='access'}{suite_check_access module=$item.module_name action='edit' record=$item.item_id }{/capture}
+                    {if $access}
+                        <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}" class="favorite-links-edit"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
+                    {/if}
+                </li>
+                {counter name="moduleFavoriteRecords" print=false}
+            {/if}
+        {/foreach}
+    </ul>
+</li>

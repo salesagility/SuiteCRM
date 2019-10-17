@@ -37,22 +37,57 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
- *}
+*}
 
-<!--Start Responsive Top Navigation Menu -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        {include file="themes/SuiteP/tpls/_headerModuleList/mobile_menu.tpl"}
-        {include file="themes/SuiteP/tpls/_headerModuleList/toolbar.tpl"}
 
-        <!-- Right side of the main navigation -->
-        {include file="themes/SuiteP/tpls/_headerModuleList/global_menu.tpl"}
-    </div>
-</nav>
-<!--End Responsive Top Navigation Menu -->
-{if $THEME_CONFIG.display_sidebar}
-    <!--Start Page Container and Responsive Sidebar -->
-    {include file="themes/SuiteP/tpls/_headerModuleList/sidebar.tpl"}
-    <!--End Responsive Sidebar -->
+{{if !empty($colData.field.name)}}
+
+{*<!-- simple hidden start -->*}
+{if !$fields.{{$colData.field.name}}.hidden}
+
+{{/if}}
+
+{{$colData.field.prefix}}
+
+
+{{if ($colData.field.customCode && !$colData.field.customCodeRenderField) || $colData.field.assign}}
+    {counter name="panelFieldCount" print=false}
+    <span id="{{$colData.field.name}}" class="sugar_field">{{sugar_evalcolumn var=$colData.field colData=$colData}}</span>
+{{elseif $fields[$colData.field.name] && !empty($colData.field.fields) }}
+
+    {{foreach from=$colData.field.fields item=subField}}
+        {{if $fields[$subField]}}
+            {counter name="panelFieldCount" print=false}
+            {{sugar_field parentFieldArray='fields' tabindex=$tabIndex vardef=$fields[$subField] displayType='DetailView'}}&nbsp;
+        {{else}}
+            {counter name="panelFieldCount" print=false}
+            {{$subField}}
+        {{/if}}
+    {{/foreach}}
+
+{{elseif $fields[$colData.field.name]}}
+    {counter name="panelFieldCount" print=false}
+    {{sugar_field parentFieldArray='fields' vardef=$fields[$colData.field.name] displayType='DetailView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type}}
+{{/if}}
+
+{{if !empty($colData.field.customCode) && $colData.field.customCodeRenderField}}
+    {counter name="panelFieldCount" print=false}
+    <span id="{{$colData.field.name}}" class="sugar_field">{{sugar_evalcolumn var=$colData.field colData=$colData}}</span>
+{{/if}}
+
+{{$colData.field.suffix}}
+
+{{if !empty($colData.field.name)}}
+
+
+
 {/if}
-<!--Start Page content -->
+{*<!-- simple hidden finish -->*}
+
+{{/if}}
+
+{{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}
+<div class="inlineEditIcon col-xs-hidden">
+    <span class="suitepicon suitepicon-action-edit"></span>
+</div>
+{{/if}}

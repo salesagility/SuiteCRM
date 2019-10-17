@@ -39,20 +39,21 @@
  */
  *}
 
-<!--Start Responsive Top Navigation Menu -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        {include file="themes/SuiteP/tpls/_headerModuleList/mobile_menu.tpl"}
-        {include file="themes/SuiteP/tpls/_headerModuleList/toolbar.tpl"}
-
-        <!-- Right side of the main navigation -->
-        {include file="themes/SuiteP/tpls/_headerModuleList/global_menu.tpl"}
-    </div>
-</nav>
-<!--End Responsive Top Navigation Menu -->
-{if $THEME_CONFIG.display_sidebar}
-    <!--Start Page Container and Responsive Sidebar -->
-    {include file="themes/SuiteP/tpls/_headerModuleList/sidebar.tpl"}
-    <!--End Responsive Sidebar -->
-{/if}
-<!--Start Page content -->
+<button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton suitepicon suitepicon-action-search" data-toggle="dropdown" aria-expanded="true">
+</button>
+<div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
+    <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
+          onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+        <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+        <input type="hidden" class="form-control" name="module" value="Home">
+        <input type="hidden" class="form-control" name="search_form" value="false">
+        <input type="hidden" class="form-control" name="advanced" value="false">
+        <div class="input-group">
+            <input type="text" class="form-control query_string" name="query_string" id="query_string"
+                   placeholder="{$APP.LBL_SEARCH_BUTTON}..." value="{$SEARCH}"/>
+        <span class="input-group-btn">
+            <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
+        </span>
+        </div>
+    </form>
+</div>
