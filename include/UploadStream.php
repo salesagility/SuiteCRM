@@ -258,7 +258,9 @@ class UploadStream
             // if we will be writing, try to transparently create the directory
             $this->fp = @fopen($fullpath, $mode);
             if (!$this->fp && !file_exists(dirname($fullpath))) {
-                mkdir(dirname($fullpath), 0755, true);
+                if (!mkdir($concurrentDirectory = dirname($fullpath), 0755, true) && !is_dir($concurrentDirectory)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+                }
                 $this->fp = fopen($fullpath, $mode);
             }
         }

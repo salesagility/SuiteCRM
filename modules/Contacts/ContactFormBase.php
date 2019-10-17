@@ -457,7 +457,7 @@ EOQ;
             ACLController::displayNoAccess(true);
             sugar_cleanup(true);
         }
-        if ($_REQUEST['action'] != 'BusinessCard' && $_REQUEST['action'] != 'ConvertLead' && $_REQUEST['action'] != 'ConvertProspect') {
+        if ($_REQUEST['action'] != 'ConvertLead' && $_REQUEST['action'] != 'ConvertProspect') {
             if (!empty($_POST[$prefix.'sync_contact']) || !empty($focus->sync_contact)) {
                 $focus->contacts_users_id = $current_user->id;
             } else {
