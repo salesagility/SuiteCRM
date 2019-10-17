@@ -615,7 +615,7 @@ class SearchForm
     {
         $this->formData = array();
         $this->fieldDefs = array();
-        if (!is_null($this->searchdefs['layout']) && !is_null($this->searchdefs['layout'][$this->displayView])) {
+        if (!is_null($this->searchdefs) && !is_null($this->searchdefs['layout']) && !is_null($this->searchdefs['layout'][$this->displayView])) {
             foreach ((array)$this->searchdefs['layout'][$this->displayView] as $data) {
                 if (is_array($data)) {
                     //Fields may be listed but disabled so that when they are enabled, they have the correct custom display data.
