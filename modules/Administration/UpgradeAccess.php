@@ -98,6 +98,7 @@ RedirectMatch 403 {$ignoreCase}/+files\.md5\$
 # END SUGARCRM RESTRICTIONS
 EOQ;
 
+$oldcontents = '';
 if (file_exists($htaccess_file)) {
     $fp = fopen($htaccess_file, 'rb');
     $skip = false;
