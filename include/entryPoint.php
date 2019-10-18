@@ -85,11 +85,6 @@ if (empty($GLOBALS['installing']) && empty($sugar_config['dbconfig']['db_name'])
 $GLOBALS['sugar_config'] = !empty($sugar_config) ? $sugar_config : [];
 require_once 'include/SugarObjects/SugarConfig.php';
 
-if (!empty($sugar_config['xhprof_config'])) {
-    require_once 'include/SugarXHprof/SugarXHprof.php';
-    SugarXHprof::getInstance()->start();
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 ////	DATA SECURITY MEASURES
 require_once 'include/utils.php';
