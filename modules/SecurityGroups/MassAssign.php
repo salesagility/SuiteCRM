@@ -7,7 +7,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/SecurityGroups/SecurityGroup.php');
 
 require_once('include/formbase.php');
-global $current_user, $db;
+global $current_user;
+$db = DBManagerFactory::getInstance();
 
 
 $module = $_REQUEST['return_module'];

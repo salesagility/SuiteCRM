@@ -1251,7 +1251,7 @@ function drop_table_install(&$focus)
 // Creating new tables if they don't exist.
 function create_table_if_not_exist(&$focus)
 {
-    global  $db;
+    $db = DBManagerFactory::getInstance();
     $table_created = false;
 
     // normal code follows

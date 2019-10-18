@@ -35,7 +35,8 @@ class AM_ProjectTemplatesController extends SugarController
 
     public function action_create_project()
     {
-        global $current_user, $db, $mod_strings;
+        global $current_user, $mod_strings;
+        $db = DBManagerFactory::getInstance();
 
         $project_name = $_POST['p_name'];
         $template_id = $_POST['template_id'];
@@ -314,7 +315,7 @@ class AM_ProjectTemplatesController extends SugarController
     //Create new project task
     public function action_update_GanttChart()
     {
-        global $current_user, $db;
+        global $current_user;
 
         $task_name = $_POST['task_name'];
         $project_id = $_POST['project_id'];
