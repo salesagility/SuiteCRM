@@ -211,8 +211,8 @@ class LanguageManager
                 $object = 'Case';
             }
 
-            if (!empty($GLOBALS["dictionary"]["$object"]["templates"])) {
-                $templates = $GLOBALS["dictionary"]["$object"]["templates"];
+            if (!empty($GLOBALS["dictionary"][(string)$object]["templates"])) {
+                $templates = $GLOBALS["dictionary"][(string)$object]["templates"];
                 $loaded_mod_strings = LanguageManager::loadTemplateLanguage($module, $templates, $lang, $loaded_mod_strings);
                 $createdModules[$module] = true;
             }

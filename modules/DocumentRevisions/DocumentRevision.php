@@ -147,7 +147,7 @@ class DocumentRevision extends SugarBean
     }
     public function get_summary_text()
     {
-        return "$this->filename";
+        return (string)$this->filename;
     }
 
     public function retrieve($id = -1, $encode=false, $deleted=true)

@@ -149,7 +149,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
     } else {
         $doQuery = true;
 
-        if ($file_type == 'documents') {
+        if ($file_type == 'documents' && !isset($image_field)) {
             // cn: bug 9674 document_revisions table has no 'name' column.
             $query = "SELECT filename name FROM document_revisions INNER JOIN documents ON documents.id = document_revisions.document_id ";
             $query .= "WHERE document_revisions.id = '" . $db->quote($_REQUEST['id']) . "' ";
@@ -239,10 +239,10 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             }
         } else {
             header('Content-type: ' . $mime_type);
-            if ($_REQUEST['preview'] === "yes") {
-                header("Content-Disposition: inline; filename=\"".$name."\";");
+            if (isset($_REQUEST['preview']) && $_REQUEST['preview'] === 'yes') {
+                header('Content-Disposition: inline; filename="' . $name . '";');
             } else {
-                header("Content-Disposition: attachment; filename=\"" . $name . "\";");
+                header('Content-Disposition: attachment; filename="' . $name . '";');
             }
         }
         // disable content type sniffing in MSIE

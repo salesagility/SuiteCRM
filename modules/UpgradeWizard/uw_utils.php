@@ -1291,7 +1291,7 @@ function logThis($entry, $path='')
         if (function_exists('sugar_fopen')) {
             $fp = @sugar_fopen($log, 'w+'); // attempts to create file
         } else {
-            $fp = fopen($log, 'w+'); // attempts to create file
+            $fp = fopen($log, 'wb+'); // attempts to create file
         }
         if (!is_resource($fp)) {
             $GLOBALS['log']->fatal('UpgradeWizard could not create the upgradeWizard.log file');
@@ -1301,7 +1301,7 @@ function logThis($entry, $path='')
         if (function_exists('sugar_fopen')) {
             $fp = @sugar_fopen($log, 'a+'); // write pointer at end of file
         } else {
-            $fp = @fopen($log, 'a+'); // write pointer at end of file
+            $fp = @fopen($log, 'ab+'); // write pointer at end of file
         }
 
         if (!is_resource($fp)) {
@@ -1361,7 +1361,7 @@ function updateQuickCreateDefs()
                 if (file_exists($quickcreatedefs) && is_readable($quickcreatedefs)) {
                     $file = file($quickcreatedefs);
                     //replace 'EditView' with 'QuickCreate'
-                    $fp = fopen($quickcreatedefs, 'w');
+                    $fp = fopen($quickcreatedefs, 'wb');
                     foreach ($file as &$line) {
                         if (preg_match('/^\s*\'EditView\'\s*=>\s*$/', $line) > 0) {
                             $line = "'QuickCreate' =>\n";
@@ -1874,7 +1874,7 @@ eoq;
                 if (function_exists('sugar_fopen')) {
                     $fp = sugar_fopen($destFile, 'r');
                 } else {
-                    $fp = fopen($destFile, 'r');
+                    $fp = fopen($destFile, 'rb');
                 }
                 $filesize = filesize($destFile);
                 if ($filesize > 0) {
@@ -2093,7 +2093,7 @@ function getImageForType($type)
 if (!function_exists('getLanguagePackName')) {
     function getLanguagePackName($the_file)
     {
-        require_once("$the_file");
+        require_once((string)$the_file);
         if (isset($app_list_strings["language_pack_name"])) {
             return($app_list_strings["language_pack_name"]);
         }
@@ -2675,7 +2675,7 @@ function checkFiles($files, $echo=false)
     // not a stop error
     $errors['files']['filesNotWritable'] = (count($filesNotWritable) > 0) ? true : false;
     if (count($filesNotWritable) < 1) {
-        $filesOut = "{$mod_strings['LBL_UW_FILE_NO_ERRORS']}";
+        $filesOut = (string)($mod_strings['LBL_UW_FILE_NO_ERRORS']);
     }
 
     return $filesOut;
@@ -2735,7 +2735,7 @@ function parseAndExecuteSqlFile($sqlScript, $forStepQuery='', $resumeFromQuery='
         $resumeFromQuery = explode(",", $resumeFromQuery);
     }
     if (file_exists($sqlScript)) {
-        $fp = fopen($sqlScript, 'r');
+        $fp = fopen($sqlScript, 'rb');
         $contents = stream_get_contents($fp);
         $anyScriptChanges =$contents;
         $resumeAfterFound = false;
@@ -2835,7 +2835,7 @@ function set_upgrade_vars()
     if (file_exists($upgrade_progress_file)) {
         include($upgrade_progress_file);
     } else {
-        fopen($upgrade_progress_file, 'w+');
+        fopen($upgrade_progress_file, 'wb+');
     }
     if (!isset($upgrade_config) || $upgrade_config == null) {
         $upgrade_config = array();
@@ -2921,7 +2921,7 @@ function set_upgrade_progress($currStep, $currState, $currStepSub='', $currStepS
         if (function_exists('sugar_fopen')) {
             sugar_fopen($upgrade_progress_file, 'w+');
         } else {
-            fopen($upgrade_progress_file, 'w+');
+            fopen($upgrade_progress_file, 'wb+');
         }
     }
     if (!isset($upgrade_config) || $upgrade_config == null) {
@@ -3108,7 +3108,7 @@ function post_install_progress($progArray='', $action='')
         if (file_exists($upgrade_progress_file)) {
             include($upgrade_progress_file);
         } else {
-            fopen($upgrade_progress_file, 'w+');
+            fopen($upgrade_progress_file, 'wb+');
         }
         if (!is_array($upgrade_config[sizeof($upgrade_config)]['commit']['post_install'])) {
             $upgrade_config[sizeof($upgrade_config)]['commit']['post_install']=array();

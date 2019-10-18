@@ -5,11 +5,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOR_Report()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         //execute the contructor and check for the Object type and  attributes
         $aor_Report = new AOR_Report();
         $this->assertInstanceOf('AOR_Report', $aor_Report);
@@ -22,8 +17,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'new_schema', $aor_Report);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $aor_Report);
         $this->assertAttributeEquals(true, 'importable', $aor_Report);
-        
-        // clean up
     }
 
     public function testbean_implements()

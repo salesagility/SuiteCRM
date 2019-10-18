@@ -136,7 +136,7 @@ class UpgradeMetaHelper
             if (function_exists('sugar_fopen')) {
                 sugar_fopen($file_queries_file, 'w+');
             } else {
-                fopen($file_queries_file, 'w+');
+                fopen($file_queries_file, 'wb+');
             }
         }
         if (!isset($files_queries) || $files_queries == null) {
@@ -325,7 +325,7 @@ class UpgradeMetaHelper
                 include('modules/'.$module_name.'/vardefs.php');
                 $bean_name = $beanList[$module_name];
                 $newFile = $this->upgrade_dir.'/modules/'.$module_name.'/metadata/'.$lowerCaseView.'defs.php';
-                $evfp = fopen($newFile, 'w');
+                $evfp = fopen($newFile, 'wb');
 
                 $bean_name = $bean_name == 'aCase' ? 'Case' : $bean_name;
                 fwrite($evfp, $parser->parse(

@@ -62,7 +62,7 @@ class TasksQuickCreate extends QuickCreate
         $this->ss->assign("TIME_FORMAT", '('. $timedate->get_user_time_format().')');
         
         $focus = new Task();
-        $time_start_hour = intval(substr($focus->time_start, 0, 2));
+        $time_start_hour = (int)substr($focus->time_start, 0, 2);
         $time_start_minutes = substr($focus->time_start, 3, 5);
         if ($time_start_minutes > 45) {
             $time_start_hour += 1;

@@ -60,7 +60,7 @@ class ACLRole extends SugarBean
     // bug 16790 - missing get_summary_text method led Tracker to display SugarBean's "base implementation"
     public function get_summary_text()
     {
-        return "$this->name";
+        return (string)$this->name;
     }
 
 
@@ -120,7 +120,7 @@ class ACLRole extends SugarBean
      * returns a list of Role names for a given user id
      *
      * @param GUID $user_id
-     * @return a list of ACLRole Names
+     * @return array a list of ACLRole Names
      */
     public function getUserRoleNames($user_id)
     {

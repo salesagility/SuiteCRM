@@ -111,6 +111,11 @@ class ViewConfig extends SugarView
         $this->ss->assign("notify_fromaddress", $focus->settings['notify_fromaddress']);
         $this->ss->assign("notify_send_from_assigning_user", (isset($focus->settings['notify_send_from_assigning_user']) && !empty($focus->settings['notify_send_from_assigning_user'])) ? "checked='checked'" : "");
         $this->ss->assign("notify_on", ($focus->settings['notify_on']) ? "checked='checked'" : "");
+        if ($sugar_config['email_warning_notifications']) {
+            $this->ss->assign("email_warning_notifications", "checked='checked'");
+        } else {
+            $this->ss->assign("email_warning_notifications", '');
+        }
         $this->ss->assign("notify_fromname", $focus->settings['notify_fromname']);
         $this->ss->assign("notify_allow_default_outbound_on", (!empty($focus->settings['notify_allow_default_outbound']) && $focus->settings['notify_allow_default_outbound']) ? "checked='checked'" : "");
 
@@ -240,6 +245,12 @@ class ViewConfig extends SugarView
             $preserveAttachments = 'CHECKED';
         }
         $this->ss->assign('DEFAULT_EMAIL_DELETE_ATTACHMENTS', $preserveAttachments);
+
+        $emailNotifications = '';
+        if (isset($sugar_config['email_warning_notifications']) && $sugar_config['email_warning_notifications'] === true) {
+            $emailNotifications = 'CHECKED';
+        }
+        $this->ss->assign('LBL_EMAIL_WARNING_NOTIFICATIONS', $emailNotifications);
 
         $emailEnableConfirmOptIn = isset($configurator->config['email_enable_confirm_opt_in']) ? $configurator->config['email_enable_confirm_opt_in'] : '';
 

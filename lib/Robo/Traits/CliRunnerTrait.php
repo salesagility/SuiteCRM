@@ -40,7 +40,7 @@
 namespace SuiteCRM\Robo\Traits;
 
 /**
- * This Trait creates a fully working instance of SugarCRM.
+ * This Trait creates a fully working instance of SuiteCRM.
  *
  * The main advantage of this class is that it establish a working database connection to be used from your CLIs.
  *

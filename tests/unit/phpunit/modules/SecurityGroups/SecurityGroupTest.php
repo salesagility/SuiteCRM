@@ -140,12 +140,9 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testinherit()
     {
         $state = new SuiteCRM\StateSaver();
-        
         $state->pushGlobals();
         
-        
-        
-        
+        // test
         $account = new Account();
         $account->id = 1;
 
@@ -160,18 +157,11 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         $state->popGlobals();
     }
 
     public function testassign_default_groups()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $account = new Account();
         $account->id = 1;
 
@@ -182,18 +172,10 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testinherit_creator()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $account = new Account();
         $account->id = 1;
 
@@ -204,18 +186,10 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testinherit_assigned()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $account = new Account();
         $account->id = 1;
         $account->assigned_user_id = 1;
@@ -227,18 +201,10 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testinherit_parent()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $account = new Account();
         $account->id = 1;
 
@@ -249,18 +215,10 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testinherit_parentQuery()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $account = new Account();
         $account->id = 1;
 
@@ -271,8 +229,6 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testinheritOne()
@@ -285,38 +241,30 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetMembershipCount()
     {
-
-    // save state
-
+        // save state
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
         // test
-        
-
         $securityGroup = new SecurityGroup();
 
         $result = $securityGroup->getMembershipCount('1');
         $this->assertEquals(0, $result);
 
         // clean up
-        
         $state->popGlobals();
     }
 
     public function testSaveAndRetrieveAndRemoveDefaultGroups()
     {
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('securitygroups');
         $state->pushTable('tracker');
 
         // test
-        
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
+        // unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
@@ -351,7 +299,6 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $securityGroup->mark_deleted($securityGroup->id);
         
         // clean up
-        
         $state->popTable('tracker');
         $state->popTable('securitygroups');
         $state->popTable('aod_index');
@@ -414,10 +361,6 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetLinkName()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
@@ -431,23 +374,15 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $securityGroup->getLinkName('SecurityGroups', 'ACLRoles');
         $this->assertEquals('aclroles', $result);
-
-        //error_reporting(E_ALL);
-        //
-        
-        // clean up
     }
 
     public function testaddGroupToRecord()
     {
         $state = new SuiteCRM\StateSaver();
-        
         $state->pushTable('securitygroups_records');
         
-        
-        
-        
-        //unset and reconnect Db to resolve mysqli fetch exeception
+        // test
+        // unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         //$db->disconnect();
         unset($db->database);
@@ -464,18 +399,11 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         $state->popTable('securitygroups_records');
     }
 
     public function testremoveGroupFromRecord()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         //$db->disconnect();
@@ -491,8 +419,6 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testgetUserSecurityGroups()

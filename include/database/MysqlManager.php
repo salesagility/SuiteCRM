@@ -991,7 +991,12 @@ class MysqlManager extends DBManager
             $name = strtolower($row['Key_name']);
             $indices[$name]['name'] = $name;
             $indices[$name]['type'] = $index_type;
-            $indices[$name]['fields'][] = strtolower($row['Column_name']);
+            $field = strtolower($row['Column_name']);
+
+            if (is_numeric($row['Sub_part'])) {
+                $field = strtolower($row['Column_name'])." ({$row['Sub_part']})";
+            }
+            $indices[$name]['fields'][] = $field;
         }
 
         return $indices;

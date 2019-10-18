@@ -113,7 +113,7 @@ class Opportunity extends SugarBean
 
     public function get_summary_text()
     {
-        return "$this->name";
+        return (string)$this->name;
     }
 
     public function create_list_query($order_by, $where, $show_deleted = 0)

@@ -804,7 +804,7 @@ class AOW_WorkFlow extends Basic
                     default:
                         if (in_array($data['type'], $dateFields) && trim($value) != '') {
                             $value = strtotime($value);
-                        } elseif ($data['type'] == 'bool' && (!boolval($value) || strtolower($value) == 'false')) {
+                        } elseif ($data['type'] == 'bool' && (!(bool)$value || strtolower($value) == 'false')) {
                             $value = 0;
                         }
                         break;

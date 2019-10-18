@@ -703,7 +703,7 @@ class SugarEmailAddress extends SugarBean
                             }
                         }
                         $now = $this->db->now();
-                        $upd_eabr = "INSERT INTO email_addr_bean_rel (id, email_address_id,bean_id, bean_module,primary_address,reply_to_address,date_created,date_modified,deleted) VALUES('" . $this->db->quote($guid) . "', '" . $this->db->quote($emailId) . "', '" . $this->db->quote($id) . "', '" . $this->db->quote($module) . "', " . intval($primary) . ", " . intval($address['reply_to_address']) . ", $now, $now, 0)";
+                        $upd_eabr = "INSERT INTO email_addr_bean_rel (id, email_address_id,bean_id, bean_module,primary_address,reply_to_address,date_created,date_modified,deleted) VALUES('" . $this->db->quote($guid) . "', '" . $this->db->quote($emailId) . "', '" . $this->db->quote($id) . "', '" . $this->db->quote($module) . "', " . (int)$primary . ", " . (int)$address['reply_to_address'] . ", $now, $now, 0)";
                     }
 
                     if (!empty($upd_eabr)) {
@@ -1237,8 +1237,8 @@ class SugarEmailAddress extends SugarBean
     public function AddUpdateEmailAddress($addr, $invalid = 0, $opt_out = 0, $id = null, $optInFlag = null)
     {
         // sanity checks to avoid SQL injection.
-        $invalid = intval($invalid);
-        $opt_out = intval($opt_out);
+        $invalid = (int)$invalid;
+        $opt_out = (int)$opt_out;
 
         $address = $this->db->quote($this->_cleanAddress($addr));
         $addressCaps = strtoupper($address);
@@ -1269,11 +1269,11 @@ class SugarEmailAddress extends SugarBean
                 $before_email = $this->stateBeforeWorkflow[$current_email['id']];
 
                 // our logic is as follows: choose from parameter, unless workflow made a change to the value, then choose final value
-                if (intval($before_email['opt_out']) != intval($current_email['opt_out'])) {
-                    $new_opt_out = intval($current_email['opt_out']);
+                if ((int)$before_email['opt_out'] != (int)$current_email['opt_out']) {
+                    $new_opt_out = (int)$current_email['opt_out'];
                 }
-                if (intval($before_email['invalid_email']) != intval($current_email['invalid_email'])) {
-                    $new_invalid = intval($current_email['invalid_email']);
+                if ((int)$before_email['invalid_email'] != (int)$current_email['invalid_email']) {
+                    $new_invalid = (int)$current_email['invalid_email'];
                 }
             }
         }
@@ -2387,7 +2387,7 @@ class SugarEmailAddress extends SugarBean
     public function getConfirmOptInTokenGenerateIfNotExists()
     {
         if (!$this->confirm_opt_in_token) {
-            $this->confirm_opt_in_token = md5(time() . md5($this->email_address) . md5(rand(0, 9999999))) . md5(rand(0, 9999999));
+            $this->confirm_opt_in_token = md5(time() . md5($this->email_address) . md5(mt_rand(0, 9999999))) . md5(mt_rand(0, 9999999));
             $this->save();
         }
         return $this->confirm_opt_in_token;

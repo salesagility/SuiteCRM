@@ -494,7 +494,7 @@ function uninstallLangPack()
 if (!function_exists('getLanguagePackName')) {
     function getLanguagePackName($the_file)
     {
-        require_once("$the_file");
+        require_once((string)$the_file);
         if (isset($app_list_strings["language_pack_name"])) {
             return($app_list_strings["language_pack_name"]);
         }
@@ -1037,7 +1037,7 @@ EOQ;
 </IfModule>
 EOQ;
     if (file_exists($htaccess_file)) {
-        $fp = fopen($htaccess_file, 'r');
+        $fp = fopen($htaccess_file, 'rb');
         $skip = false;
         while ($line = fgets($fp)) {
             if (preg_match("/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
@@ -2006,9 +2006,9 @@ function createWebAddress()
     global $seed;
     global $tlds;
 
-    $one = $seed[rand(0, count($seed)-1)];
-    $two = $seed[rand(0, count($seed)-1)];
-    $tld = $tlds[rand(0, count($tlds)-1)];
+    $one = $seed[mt_rand(0, count($seed)-1)];
+    $two = $seed[mt_rand(0, count($seed)-1)];
+    $tld = $tlds[mt_rand(0, count($tlds)-1)];
 
     return "www.{$one}{$two}{$tld}";
 }
@@ -2022,13 +2022,13 @@ function createEmailAddress()
     global $seed;
     global $tlds;
 
-    $part[0] = $seed[rand(0, count($seed)-1)];
-    $part[1] = $seed[rand(0, count($seed)-1)];
-    $part[2] = $seed[rand(0, count($seed)-1)];
+    $part[0] = $seed[mt_rand(0, count($seed)-1)];
+    $part[1] = $seed[mt_rand(0, count($seed)-1)];
+    $part[2] = $seed[mt_rand(0, count($seed)-1)];
 
-    $tld = $tlds[rand(0, count($tlds)-1)];
+    $tld = $tlds[mt_rand(0, count($tlds)-1)];
 
-    $len = rand(1, 3);
+    $len = mt_rand(1, 3);
 
     $ret = '';
     for ($i=0; $i<$len; $i++) {
@@ -2037,7 +2037,7 @@ function createEmailAddress()
     }
 
     if ($len == 1) {
-        $ret .= rand(10, 99);
+        $ret .= mt_rand(10, 99);
     }
 
     return "{$ret}@example{$tld}";
@@ -2143,10 +2143,10 @@ function create_db_user_creds($numChars=10)
     //chars to select from
     $charBKT = "abcdefghijklmnpqrstuvwxyz123456789ABCDEFGHIJKLMNPQRSTUVWXYZ";
     // seed the random number generator
-    srand((double)microtime()*1000000);
+    mt_srand((double)microtime()*1000000);
     $password="";
     for ($i=0;$i<$numChars;$i++) {  // loop and create password
-        $password = $password . substr($charBKT, rand() % strlen($charBKT), 1);
+        $password = $password . substr($charBKT, mt_rand() % strlen($charBKT), 1);
     }
 
     return $password;
