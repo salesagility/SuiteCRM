@@ -13,7 +13,8 @@ require_once('include/social/twitter/twitter_auth/twitteroauth/twitteroauth.php'
 require_once('modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 require_once('include/social/twitter/twitter_helper.php');
 
-global $sugar_config, $db;
+global $sugar_config;
+$db = DBManagerFactory::getInstance();
 
 /*
  * Pull in connector settings for creating the authentication between Suite and Twitter.

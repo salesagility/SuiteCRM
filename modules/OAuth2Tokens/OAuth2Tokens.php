@@ -126,7 +126,7 @@ class OAuth2Tokens extends SugarBean
     public static function getNowDateString()
     {
         /** @var DBManager */
-        global $db;
+        $db = DBManagerFactory::getInstance();
         return $db->convert('', 'now');
     }
 }
