@@ -65,7 +65,7 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         global $app_list_strings;
 
         $selected_datax = array();
-        if (!empty($this->pbls_lead_sources) && sizeof($this->pbls_lead_sources) > 0) {
+        if (!empty($this->pbls_lead_sources) && count($this->pbls_lead_sources) > 0) {
             foreach ($this->pbls_lead_sources as $key) {
                 $selected_datax[] = $key;
             }

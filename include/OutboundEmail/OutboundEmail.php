@@ -521,7 +521,7 @@ class OutboundEmail
         $values = $this->getValues($cols);
 
         if ($this->new_with_id) {
-            $q = sprintf("INSERT INTO outbound_email (%s) VALUES (%s)", implode($cols, ","), implode($values, ","));
+            $q = sprintf("INSERT INTO outbound_email (%s) VALUES (%s)", implode(",", $cols), implode(",", $values));
         } else {
             $updvalues = array();
             foreach ($values as $k => $val) {

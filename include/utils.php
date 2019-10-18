@@ -2294,22 +2294,11 @@ function clean_incoming_data()
     global $sugar_config;
     global $RAW_REQUEST;
 
-    if (get_magic_quotes_gpc()) {
-        // magic quotes screw up data, we'd have to clean up
-        $RAW_REQUEST = array_map('cleanup_slashes', $_REQUEST);
-    } else {
-        $RAW_REQUEST = $_REQUEST;
-    }
+    $RAW_REQUEST = $_REQUEST;
 
-    if (get_magic_quotes_gpc() == 1) {
-        $req = array_map('preprocess_param', $_REQUEST);
-        $post = array_map('preprocess_param', $_POST);
-        $get = array_map('preprocess_param', $_GET);
-    } else {
-        $req = array_map('securexss', $_REQUEST);
-        $post = array_map('securexss', $_POST);
-        $get = array_map('securexss', $_GET);
-    }
+    $req = array_map('securexss', $_REQUEST);
+    $post = array_map('securexss', $_POST);
+    $get = array_map('securexss', $_GET);
 
     // PHP cannot stomp out superglobals reliably
     foreach ($post as $k => $v) {
@@ -2434,10 +2423,6 @@ function securexsskey($value, $die = true)
 function preprocess_param($value)
 {
     if (is_string($value)) {
-        if (get_magic_quotes_gpc() == 1) {
-            $value = stripslashes($value);
-        }
-
         $value = securexss($value);
     } elseif (is_array($value)) {
         foreach ($value as $key => $element) {

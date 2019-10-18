@@ -1276,7 +1276,7 @@ class InboundEmail extends SugarBean
             LoggerManager::getLogger()->fatal('POP 3 sould be a valid resource');
             return false;
         }
-        fputs($this->pop3socket, "QUIT\r\n");
+        fwrite($this->pop3socket, "QUIT\r\n");
         $buf = fgets($this->pop3socket, 1024);
         fclose($this->pop3socket);
         return true;
@@ -1300,7 +1300,7 @@ class InboundEmail extends SugarBean
             LoggerManager::getLogger()->fatal('Invalid POP 3 Socket');
             return false;
         }
-        fputs($this->pop3socket, $command);
+        fwrite($this->pop3socket, $command);
 
         if ($return) {
             $ret = trim(fgets($this->pop3socket, 1024));
@@ -1427,7 +1427,7 @@ class InboundEmail extends SugarBean
                     $results = array_slice(array_keys($diff), 0, 50);
                     $data = serialize($newDiff);
                     if ($fh = @fopen($cacheFilePath, 'wb')) {
-                        fputs($fh, $data);
+                        fwrite($fh, $data);
                         fclose($fh);
                     } // if
                 }
@@ -1457,7 +1457,7 @@ class InboundEmail extends SugarBean
                 $results = array_slice(array_keys($diff), 0, 50);
                 $data = serialize($newDiff);
                 if ($fh = @fopen($cacheFilePath, 'wb')) {
-                    fputs($fh, $data);
+                    fwrite($fh, $data);
                     fclose($fh);
                 } // if
             } else {
@@ -1485,7 +1485,7 @@ class InboundEmail extends SugarBean
             $GLOBALS['log']->info("[EMAIL] Start POP3 fetch overview on mailbox [{$this->mailbox}] for user [{$current_user->user_name}] on 50 data");
             $fetchedOverviews = $this->getImap()->fetchOverview($concatResults);
             $GLOBALS['log']->info("[EMAIL] End POP3 fetch overview on mailbox [{$this->mailbox}] for user [{$current_user->user_name}] on "
-                . sizeof($fetchedOverviews) . " data");
+                . count($fetchedOverviews) . " data");
 
             // clean up cache entry
             foreach ($fetchedOverviews as $k => $overview) {
@@ -1787,11 +1787,11 @@ class InboundEmail extends SugarBean
         $searchResults = $this->getCachedIMAPSearch($criteria);
 
         if (!empty($searchResults)) {
-            $total = sizeof($searchResults);
+            $total = count($searchResults);
             $searchResults = array_slice($searchResults, $start, $max);
 
             $GLOBALS['log']->info("INBOUNDEMAIL: there are  $total messages in [{$mailbox}], we are on $start");
-            $GLOBALS['log']->info("INBOUNDEMAIL: getting the next " . sizeof($searchResults) . " messages");
+            $GLOBALS['log']->info("INBOUNDEMAIL: getting the next " . count($searchResults) . " messages");
             $concatResults = implode(",", $searchResults);
             $GLOBALS['log']->info("INBOUNDEMAIL: Start IMAP fetch overview on mailbox [{$mailbox}] for user [{$current_user->user_name}]");
             $fetchedOverview = $this->getImap()->fetchOverview($concatResults, FT_UID);
@@ -1807,14 +1807,14 @@ class InboundEmail extends SugarBean
                 $this->fetchCheckedEmails($fetchedOverview);
                 $GLOBALS['log']->info("INBOUNDEMAIL: Done fetching emails for mailbox [{$mailbox}] for user [{$current_user->user_name}]");
             }
-            $status = ($total > $start + sizeof($searchResults)) ? 'continue' : 'done';
+            $status = ($total > $start + count($searchResults)) ? 'continue' : 'done';
             $ret = array(
                 'status' => $status,
-                'count' => $start + sizeof($searchResults),
+                'count' => $start + count($searchResults),
                 'mbox' => $mailbox,
                 'totalcount' => $total
             );
-            $GLOBALS['log']->info("INBOUNDEMAIL: $status : Downloaded " . $start + sizeof($searchResults) . "messages of $total");
+            $GLOBALS['log']->info("INBOUNDEMAIL: $status : Downloaded " . ($start + count($searchResults)) . " messages of $total");
         } else {
             $GLOBALS['log']->info("INBOUNDEMAIL: no results for mailbox [ {$mailbox} ]");
             $ret = array('status' => 'done');
@@ -1894,7 +1894,7 @@ class InboundEmail extends SugarBean
                     $results = $searchResults;
                     $data = serialize($searchResults);
                     if ($fh = @fopen($cacheFilePath, 'wb')) {
-                        fputs($fh, $data);
+                        fwrite($fh, $data);
                         fclose($fh);
                     } // if
                 }
@@ -1932,10 +1932,10 @@ class InboundEmail extends SugarBean
             $mbox = $mailboxes[0];
             $count = 0;
         }
-        $GLOBALS['log']->info("INBOUNDEMAIL:found " . sizeof($mailboxes) . " Mailboxes");
+        $GLOBALS['log']->info("INBOUNDEMAIL:found " . count($mailboxes) . " Mailboxes");
         $index = array_search($mbox, $mailboxes) + 1;
         $ret = $this->checkEmailOneMailboxPartial($mbox, $prefetch, $synch, $count, 100);
-        while ($ret['status'] == 'done' && $index < sizeof($mailboxes)) {
+        while ($ret['status'] == 'done' && $index < count($mailboxes)) {
             if ($ret['count'] > 100) {
                 $ret['mbox'] = $mailboxes[$index];
                 $ret['status'] = 'continue';
@@ -3603,7 +3603,7 @@ class InboundEmail extends SugarBean
 
             $GLOBALS['log']->debug('finding related accounts with address ' . $contactAddr);
             if ($accountIds = $this->getRelatedId($contactAddr, 'accounts')) {
-                if (sizeof($accountIds) == 1) {
+                if (count($accountIds) == 1) {
                     $c->account_id = $accountIds[0];
 
                     $acct = new Account();
@@ -4363,7 +4363,7 @@ class InboundEmail extends SugarBean
             $name = urldecode($name);
         }
 
-        return (isset($encoding) && strtolower($encoding) == 'utf-8') ? $name : isset($encoding) ? $GLOBALS['locale']->translateCharset(
+        return ((isset($encoding) && strtolower($encoding) == 'utf-8') ? $name : isset($encoding)) ? $GLOBALS['locale']->translateCharset(
             $name,
             $encoding,
             'UTF-8'
@@ -4611,8 +4611,8 @@ class InboundEmail extends SugarBean
             || ($part->type == 5)
         ) {
 
-            if (!is_dir($cacheDir)) {
-                mkdir($cacheDir);
+            if (!is_dir($cacheDir) && !mkdir($cacheDir) && !is_dir($cacheDir)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $cacheDir));
             }
 
             if (copy($uploadDir . $fileName, sugar_cached("images/{$fileName}.") . strtolower($part->subtype))) {
@@ -4838,7 +4838,7 @@ class InboundEmail extends SugarBean
                 if (preg_match("/OK/", $buf) > 0) {
                     $mailserverResponse = explode(" ", $buf);
                     // if the cachedUIDL and the UIDL from mail server matches then its the correct messageno
-                    if (trim($mailserverResponse[sizeof($mailserverResponse) - 1]) == $messageId) {
+                    if (trim($mailserverResponse[count($mailserverResponse) - 1]) == $messageId) {
                         $foundMessageNo = true;
                     }
                 } //if

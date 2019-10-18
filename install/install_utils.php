@@ -1829,7 +1829,7 @@ function getLangPacks($display_commit = true, $types = array('langpack'), $notic
             $md5_matches = $uh->findByMd5($the_md5);
         }
 
-        if ($manifest['type']!= 'module' || 0 == sizeof($md5_matches)) {
+        if ($manifest['type']!= 'module' || 0 == count($md5_matches)) {
             $name = empty($manifest['name']) ? $file : $manifest['name'];
             $version = empty($manifest['version']) ? '' : $manifest['version'];
             $published_date = empty($manifest['published_date']) ? '' : $manifest['published_date'];

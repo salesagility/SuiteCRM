@@ -201,7 +201,7 @@ class nusoap_wsdlcache
                 $this->releaseMutex($filename);
                 return false;
             }
-            fputs($fp, $s);
+            fwrite($fp, $s);
             fclose($fp);
             $this->debug("Put $wsdl_instance->wsdl ($filename) in cache");
             $this->releaseMutex($filename);
