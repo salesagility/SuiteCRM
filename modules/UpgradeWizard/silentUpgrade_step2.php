@@ -479,6 +479,10 @@ if (version_compare($sugar_version, '6.5.0', '<') && function_exists('repairUpgr
 $repair = new RepairAndClear();
 $repair->repairAndClearAll(['clearAll'], ['All Modules']);
 
+// Rebuild .htaccess
+require_once __DIR__ . '/../../install/install_utils.php';
+handleHtaccess();
+
 //TAKE OUT TRASH
 if (empty($errors)) {
     set_upgrade_progress('end', 'in_progress', 'unlinkingfiles', 'in_progress');
