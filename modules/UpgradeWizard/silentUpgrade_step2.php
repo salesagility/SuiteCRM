@@ -475,13 +475,6 @@ if (version_compare($sugar_version, '6.5.0', '<') && function_exists('repairUpgr
     repairUpgradeHistoryTable();
 }
 
-// Run quick repair and rebuild
-$repair = new RepairAndClear();
-$repair->repairAndClearAll(['clearAll'], ['All Modules']);
-
-// Rebuild .htaccess
-require_once __DIR__ . '/../../install/install_utils.php';
-handleHtaccess();
 
 //TAKE OUT TRASH
 if (empty($errors)) {
@@ -491,6 +484,15 @@ if (empty($errors)) {
     removeSilentUpgradeVarsCache();
     logThis('Taking out the trash, done.', $path);
 }
+
+// Clear language cache
+$repair = new RepairAndClear();
+$repair->clearJsLangFiles();
+$repair->clearLanguageCache();
+
+// Rebuild .htaccess
+require_once __DIR__ . '/../../install/install_utils.php';
+handleHtaccess();
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	RECORD ERRORS
