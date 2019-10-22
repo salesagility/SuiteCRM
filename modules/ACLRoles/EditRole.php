@@ -93,7 +93,7 @@ if (isset($_REQUEST['return_module'])) {
 $sugar_smarty->assign('RETURN', $return);
 $names = ACLAction::setupCategoriesMatrix($categories);
 if (!empty($names)) {
-    $tdwidth = 100 / sizeof($names);
+    $tdwidth = 100 / count($names);
 }
 $sugar_smarty->assign('CATEGORIES', $categories);
 $sugar_smarty->assign('CATEGORY_NAME', $_REQUEST['category_name']);

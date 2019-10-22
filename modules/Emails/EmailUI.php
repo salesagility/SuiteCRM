@@ -1561,7 +1561,7 @@ HTML;
                 $attachmentHtmlData = $meta['attachments'];
                 $actualAttachmentInfo = array();
                 $this->parseAttachmentInfo($actualAttachmentInfo, $attachmentHtmlData);
-                if (sizeof($actualAttachmentInfo) > 0) {
+                if (count($actualAttachmentInfo) > 0) {
                     foreach ($actualAttachmentInfo as $key => $value) {
                         $info_vars = array();
                         parse_str($value, $info_vars);
@@ -3498,7 +3498,7 @@ eoq;
 ?>
 eoq;
         if ($fh = @sugar_fopen($file, "w")) {
-            fputs($fh, $the_string);
+            fwrite($fh, $the_string);
             fclose($fh);
 
             return true;

@@ -37,8 +37,11 @@ p.msg {
   line-height: $tab-height;
 }
 
-.nav-tabs > li.tab-inline-pagination .btn-pagination[disabled] {
+.nav-tabs > li.tab-inline-pagination .btn-pagination[disabled],
+.nav-tabs > li.tab-inline-pagination .btn-pagination[disabled]:hover {
   background-color: $disabled-btn-bg;
+  text-decoration: none;
+  cursor: default;
 }
 
 .btn-pagination .suitepicon {
@@ -60,7 +63,8 @@ p.msg {
   font-weight: 600;
   height: 28px;
   line-height: 18px;
-  padding: 0 10px 0 10px;
+  padding: 5px 10px 0 10px;
+  display: inline-block;
 }
 
 .buttons .pagination .btn-pagination:hover {

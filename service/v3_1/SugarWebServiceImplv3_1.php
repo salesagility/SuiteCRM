@@ -748,7 +748,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
         } // foreach
 
         // Calculate the offset for the start of the next page
-        $next_offset = $offset + sizeof($output_list);
+        $next_offset = $offset + count($output_list);
 
         $returnRelationshipList = array();
         foreach ($linkoutput_list as $rel) {
@@ -771,7 +771,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
         $GLOBALS['log']->info('End: SugarWebServiceImpl->get_entry_list');
 
         return array(
-            'result_count' => sizeof($output_list),
+            'result_count' => count($output_list),
             'total_count' => $totalRecordCount,
             'next_offset' => $next_offset,
             'entry_list' => $output_list,
