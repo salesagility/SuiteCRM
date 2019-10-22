@@ -477,7 +477,7 @@ function getModuleField(
 
         // Save it to the cache file
         if ($fh = @sugar_fopen($file, 'w')) {
-            fputs($fh, $contents);
+            fwrite($fh, $contents);
             fclose($fh);
         }
     }
@@ -528,7 +528,8 @@ function getModuleField(
             $fieldlist[$name]['options'] = $mod_strings[$fieldlist[$name]['options']];
         }
         // Bug 22730: make sure all enums have the ability to select blank as the default value.
-        if (!isset($fieldlist[$name]['options'][''])) {
+        // Make sure the enum has an 'options' array to append a new value to.
+        if (isset($fieldlist[$name]['options']) && is_array($fieldlist[$name]['options']) && !isset($fieldlist[$name]['options'][''])) {
             $fieldlist[$name]['options'][''] = '';
         }
     }
@@ -855,7 +856,7 @@ function setLastUser($user_id, $id)
 eoq;
 
     if ($fh = @sugar_fopen($file, 'w')) {
-        fputs($fh, $content);
+        fwrite($fh, $content);
         fclose($fh);
     }
     return true;

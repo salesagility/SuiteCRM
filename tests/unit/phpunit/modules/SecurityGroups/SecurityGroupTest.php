@@ -291,6 +291,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
             'FP_Event_Locations',
             'Tasks',
             'jjwg_Markers',
+            'EmailMarketing',
             'EmailTemplates',
             'Campaigns',
             'jjwg_Areas',

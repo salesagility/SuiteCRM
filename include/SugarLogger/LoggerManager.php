@@ -45,17 +45,28 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * Log management
  * @api
+ * @method debug(string $string)
+ * @method info(string $string)
+ * @method warn(string $string)
+ * @method deprecated(string $string)
+ * @method error(string $string)
+ * @method fatal(string $string)
+ * @method security(string $string)
+ * @method off(string $string)
  */
 class LoggerManager
 {
-    //this the the current log level;
+    /**
+     * This is the current log level
+     * @var string
+     */
     private static $_level = 'fatal';
 
     //this is a list of different loggers that have been loaded
     protected static $_loggers = [];
 
-    //this is the instance of the LoggerManager
     /**
+     * This is the instance of the LoggerManager
      * @var null|LoggerManager
      */
     private static $_instance;
@@ -65,7 +76,7 @@ class LoggerManager
         'default' => 'SugarLogger',
     ];
 
-    //these are the log level mappings anything with a lower value than your current log level will be logged
+    // These are the log level mappings anything with a lower value than your current log level will be logged
     private static $_levelMapping = [
         'debug' => 100,
         'info' => 70,
@@ -133,11 +144,14 @@ class LoggerManager
         if (!isset(self::$_levelMapping[$method])) {
             $method = self::$_level;
         }
-
-        return $method === self::$_level
+        if ($method === self::$_level
             //otherwise if we have a level mapping for the method and that level is less than or equal to the current level let's let it log
             || (!empty(self::$_levelMapping[$method])
-                && self::$_levelMapping[self::$_level] >= self::$_levelMapping[$method]);
+                && self::$_levelMapping[self::$_level] >= self::$_levelMapping[$method])) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -201,20 +215,19 @@ class LoggerManager
      */
     protected function _findAvailableLoggers()
     {
-        $locations = array('include/SugarLogger', 'custom/include/SugarLogger');
-        foreach ($locations as $location) {
+        foreach (['include/SugarLogger', 'custom/include/SugarLogger'] as $location) {
             if (is_dir($location) && $dir = opendir($location)) {
                 while (($file = readdir($dir)) !== false) {
-                    if ($file == ".."
-                        || $file == "."
-                        || $file == "LoggerTemplate.php"
-                        || $file == "LoggerManager.php"
+                    if ($file === '..'
+                        || $file === '.'
+                        || $file === 'LoggerTemplate.php'
+                        || $file === 'LoggerManager.php'
                         || !is_file("$location/$file")
                     ) {
                         continue;
                     }
                     require_once("$location/$file");
-                    $loggerClass = basename($file, ".php");
+                    $loggerClass = basename($file, '.php');
                     if (class_exists($loggerClass) && class_implements($loggerClass, 'LoggerTemplate')) {
                         self::$_loggers[$loggerClass] = new $loggerClass();
                     }

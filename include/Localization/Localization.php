@@ -494,7 +494,7 @@ class Localization
      * @param bool is_currency Flag to also return the currency symbol
      * @return string Formatted number
      */
-    public function getLocaleFormattedNumber($number, $currencySymbol='', $is_currency=true, $user=null)
+    public function getLocaleFormattedNumber($number, $currencySymbol = '', $is_currency = true, $user = null)
     {
         $fnum            = $number;
         $majorDigits    = '';
@@ -510,8 +510,8 @@ class Localization
             if (strlen($exNum[0]) > 3) {
                 $offset = strlen($exNum[0]) % 3;
                 if ($offset > 0) {
-                    for ($i=0; $i<$offset; $i++) {
-                        $majorDigits .= $exNum[0]{$i};
+                    for ($i = 0; $i < $offset; $i++) {
+                        $majorDigits .= $exNum[0][$i];
                     }
                 }
 
@@ -521,7 +521,7 @@ class Localization
                         $majorDigits .= $thou; // add separator
                     }
 
-                    $majorDigits .= $exNum[0]{$i};
+                    $majorDigits .= $exNum[0][$i];
                     $tic++;
                 }
             } else {
@@ -693,7 +693,7 @@ eoq;
         // parse localeNameFormat
         $formattedName = '';
         for ($i=0; $i<strlen($this->localeNameFormat); $i++) {
-            $formattedName .= array_key_exists($this->localeNameFormat{$i}, $names) ? $names[$this->localeNameFormat{$i}] : $this->localeNameFormat{$i};
+            $formattedName .= array_key_exists($this->localeNameFormat[$i], $names) ? $names[$this->localeNameFormat[$i]] : $this->localeNameFormat[$i];
         }
 
         $formattedName = trim($formattedName);
