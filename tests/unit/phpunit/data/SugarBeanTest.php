@@ -50,13 +50,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
     public function testFactoryGetCachedDeleted()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('leads');
-        $state->pushTable('leads_cstm');
-        $state->pushTable('sugarfeed');
-        $state->pushTable('aod_indexevent');
-        $state->pushGlobals();
-
         // Create a lead and cache it
         $lead = new Lead();
         $lead->save();
@@ -69,12 +62,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEmpty(BeanFactory::getBean($lead->module_dir, $lead->id));
         // Unless explicitly specified
         $this->assertNotEmpty(BeanFactory::getBean($lead->module_dir, $lead->id, [], false));
-
-        $state->popGlobals();
-        $state->popTable('aod_indexevent');
-        $state->popTable('sugarfeed');
-        $state->popTable('leads_cstm');
-        $state->popTable('leads');
     }
 
     /**

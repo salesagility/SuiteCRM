@@ -39,12 +39,6 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
 
     public function testmark_delete_related()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aow_conditions');
-        $state->pushTable('aow_workflow');
-        $state->pushTable('aod_indexevent');
-        $state->pushGlobals();
-
         // Create a workflow and a related condition
         $aowWorkFlow = new AOW_WorkFlow();
         $aowWorkFlow->name = 'test';
@@ -67,11 +61,6 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         BeanFactory::unregisterBean('AOW_Conditions', $conditionID);
         $cond = BeanFactory::getBean('AOW_Conditions', $conditionID);
         $this->assertEmpty($cond);
-
-        $state->popGlobals();
-        $state->popTable('aod_indexevent');
-        $state->popTable('aow_workflow');
-        $state->popTable('aow_conditions');
     }
 
     public function testsave()

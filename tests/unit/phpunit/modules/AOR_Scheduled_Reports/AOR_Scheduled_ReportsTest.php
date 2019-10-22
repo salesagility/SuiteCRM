@@ -59,14 +59,6 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
     }
 
     public function test_ReportRelation() {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aor_reports');
-        $state->pushTable('aor_scheduled_reports');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('aod_index');
-        $state->pushGlobals();
-        $state->pushPHPConfigOptions();
-
         $_POST['aor_fields_field'] = [];
         $report = new AOR_Report();
         $report->name = "Foobar";
@@ -79,13 +71,6 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
         $aorScheduledReports->retrieve($aorScheduledReports->id);
         $this->assertEquals($report->name, $aorScheduledReports->aor_report_name);
         $this->assertEquals($report->id, $aorScheduledReports->aor_report_id);
-
-        $state->popPHPConfigOptions();
-        $state->popGlobals();
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
-        $state->popTable('aor_scheduled_reports');
-        $state->popTable('aor_reports');
     }
 
     public function testbean_implements()
