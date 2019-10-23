@@ -178,6 +178,9 @@ class Call extends SugarBean
 
     // save date_end by calculating user input
     // this is for calendar
+    private static $remindersInSaving = false;
+
+
     public function save($check_notify = false)
     {
         global $timedate;
@@ -238,11 +241,13 @@ class Call extends SugarBean
             vCal::cache_sugar_vcal($current_user);
         }
 
-        if (isset($_REQUEST['reminders_data'])) {
+        if (isset($_REQUEST['reminders_data']) && !self::$remindersInSaving) {
+            self::$remindersInSaving = true;
             $reminderData = json_encode(
                 $this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
             );
             Reminder::saveRemindersDataJson('Calls', $return_id, $reminderData);
+            self::$remindersInSaving = false;
         }
 
         return $return_id;
@@ -830,11 +835,12 @@ class Call extends SugarBean
         $def = $this->field_defs['status'];
         if (isset($def['default'])) {
             return $def['default'];
-        }
-        $app = return_app_list_strings_language($GLOBALS['current_language']);
-        if (isset($def['options']) && isset($app[$def['options']])) {
-            $keys = array_keys($app[$def['options']]);
-            return $keys[0];
+        } else {
+            $app = return_app_list_strings_language($GLOBALS['current_language']);
+            if (isset($def['options']) && isset($app[$def['options']])) {
+                $keys = array_keys($app[$def['options']]);
+                return $keys[0];
+            }
         }
 
         return '';
