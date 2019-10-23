@@ -94,20 +94,4 @@ class JSON
     {
         return json_decode($string, $assoc);
     }
-
-    /**
-     * @deprecated use JSON::encode() instead
-     */
-    public static function encodeReal($string)
-    {
-        return self::encode($string);
-    }
-
-    /**
-     * @deprecated use JSON::decode() instead
-     */
-    public static function decodeReal($string)
-    {
-        return self::decode($string);
-    }
 }

@@ -609,7 +609,7 @@ class quicksearchQuery
     {
         $json = getJSONobj();
 
-        return $json->encodeReal($data);
+        return $json->encode($data);
     }
 
     /**
