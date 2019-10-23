@@ -86,19 +86,6 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $Account->clear_account_case_relationship('','');*/
     }
 
-    public function testremove_redundant_http()
-    {
-        $Account = new Account();
-
-        //this method has no implementation. so test for exceptions only.
-        try {
-            $Account->remove_redundant_http();
-            $this->assertTrue(true);
-        } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
-        }
-    }
-
     public function testfill_in_additional_list_fields()
     {
         $Account = new Account('');
