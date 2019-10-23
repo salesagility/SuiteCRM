@@ -82,18 +82,30 @@ class ACLAction extends SugarBean
     * @param STRING $category - the category (e.g module name - Accounts, Contacts)
     * @param STRING $type - the type (e.g. 'module', 'field')
     */
-    public static function addActions($category, $type='module')
+    public static function addActions($category, $type = 'module')
     {
         global $ACLActions;
-        $db = DBManagerFactory::getInstance();
+
         if (isset($ACLActions[$type])) {
-            foreach ($ACLActions[$type]['actions'] as $action_name =>$action_def) {
+            foreach ($ACLActions[$type]['actions'] as $action_name => $action_def) {
                 $action = new ACLAction();
-                $query = "SELECT * FROM " . $action->table_name . " WHERE name='$action_name' AND category = '$category' AND acltype='$type' AND deleted=0 ";
-                $result = $db->query($query);
-                //only add if an action with that name and category don't exist
-                $row=$db->fetchByAssoc($result);
-                if ($row == null) {
+
+                $tableNameQuoted = $this->db->quoted($action->table_name);
+                $actionNameQuoted = $this->db->quoted($action_name);
+                $categoryQuoted = $this->db->quoted($category);
+                $typeQuoted = $this->db->quoted($type);
+
+                $query = "SELECT * FROM " . $tableNameQuoted .
+                         " WHERE name = " . $actionNameQuoted .
+                         " AND category = " . $categoryQuoted .
+                         " AND acltype = " . $typeQuoted .
+                         " AND deleted = 0";
+
+                $result = $this->db->query($query);
+
+                // Only add if an action with that name and category don't exist
+                $row = $this->db->fetchByAssoc($result);
+                if ($row === null) {
                     $action->name = $action_name;
                     $action->category = $category;
                     $action->aclaccess = $action_def['default'];
@@ -118,14 +130,26 @@ class ACLAction extends SugarBean
     public static function removeActions($category, $type='module')
     {
         global $ACLActions;
-        $db = DBManagerFactory::getInstance();
+
         if (isset($ACLActions[$type])) {
-            foreach ($ACLActions[$type]['actions'] as $action_name =>$action_def) {
+            foreach ($ACLActions[$type]['actions'] as $action_name => $action_def) {
                 $action = new ACLAction();
-                $query = "SELECT * FROM " . $action->table_name . " WHERE name='$action_name' AND category = '$category' AND acltype='$type' and deleted=0";
+
+                $tableNameQuoted = $this->db->quoted($action->table_name);
+                $actionNameQuoted = $this->db->quoted($action_name);
+                $categoryQuoted = $this->db->quoted($category);
+                $typeQuoted = $this->db->quoted($type);
+
+                $query = "SELECT * FROM " . $tableNameQuoted .
+                         " WHERE name=" . $actionNameQuoted .
+                         " AND category = " . $categoryQuoted .
+                         " AND acltype = " . $typeQuoted .
+                         " AND deleted = 0";
+
                 $result = $db->query($query);
-                //only add if an action with that name and category don't exist
-                $row=$db->fetchByAssoc($result);
+
+                // Only add if an action with that name and category don't exist
+                $row=$this->db->fetchByAssoc($result);
                 if ($row != null) {
                     $action->mark_deleted($row['id']);
                 }

@@ -1,11 +1,16 @@
 <?php
+
 namespace Api\V8\OAuth2\Repository;
 
 use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\OAuth2\Entity\AccessTokenEntity;
+use DateTime;
+use InvalidArgumentException;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
+use OAuth2Tokens;
+use User;
 
 class AccessTokenRepository implements AccessTokenRepositoryInterface
 {
@@ -52,23 +57,38 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     public function persistNewAccessToken(AccessTokenEntityInterface $accessTokenEntity)
     {
         $clientId = $accessTokenEntity->getClient()->getIdentifier();
+        $userId = null;
 
-        /** @var \User $user */
+        /** @var User $user */
         $client = $this->beanManager->getBeanSafe('OAuth2Clients', $clientId);
 
-        /** @var \User $user */
+        /** @var User $user */
         $user = $this->beanManager->newBeanSafe('Users');
 
-        if (!empty($_POST['username'])) {
-            $user->retrieve_by_string_fields(
-                ['user_name' => $_POST['username']]
-            );
+        switch ($client->allowed_grant_type) {
+            case 'password':
+                if (!empty($_POST['username'])) {
+                    /** @var User $user */
+                    $user = $this->beanManager->newBeanSafe('Users');
+                    $user->retrieve_by_string_fields(
+                        ['user_name' => $_POST['username']]
+                    );
+                    $userId = $user->id;
+                }
+                break;
+            case 'client_credentials':
+                $userId = $client->assigned_user_id;
+                break;
+        }
+
+        if ($userId === null) {
+            throw new InvalidArgumentException('No user found');
         }
 
         $userId = !empty($user->id) ? $user->id : $client->assigned_user_id;
 
-        /** @var \OAuth2Tokens $token */
-        $token = $this->beanManager->newBeanSafe(\OAuth2Tokens::class);
+        /** @var OAuth2Tokens $token */
+        $token = $this->beanManager->newBeanSafe(OAuth2Tokens::class);
 
         $token->access_token = $accessTokenEntity->getIdentifier();
 
@@ -84,17 +104,17 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     /**
      * @inheritdoc
      *
-     * @throws \InvalidArgumentException When access token is not found.
+     * @throws InvalidArgumentException When access token is not found.
      */
     public function revokeAccessToken($tokenId)
     {
-        $token = $this->beanManager->newBeanSafe(\OAuth2Tokens::class);
+        $token = $this->beanManager->newBeanSafe(OAuth2Tokens::class);
         $token->retrieve_by_string_fields(
             ['access_token' => $tokenId]
         );
 
         if ($token->id === null) {
-            throw new \InvalidArgumentException('Access token is not found for this client');
+            throw new InvalidArgumentException('Access token is not found for this client');
         }
 
         $token->mark_deleted($token->id);
@@ -105,12 +125,12 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
      */
     public function isAccessTokenRevoked($tokenId)
     {
-        /** @var \OAuth2Tokens $token */
-        $token = $this->beanManager->newBeanSafe(\OAuth2Tokens::class);
+        /** @var OAuth2Tokens $token */
+        $token = $this->beanManager->newBeanSafe(OAuth2Tokens::class);
         $token->retrieve_by_string_fields(
             ['access_token' => $tokenId]
         );
 
-        return $token->id === null || $token->token_is_revoked === '1' || new \DateTime() > new \DateTime($token->access_token_expires);
+        return $token->id === null || $token->token_is_revoked === '1' || new DateTime() > new DateTime($token->access_token_expires);
     }
 }
