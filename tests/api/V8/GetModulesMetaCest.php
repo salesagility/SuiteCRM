@@ -36,9 +36,9 @@ class GetModulesMetaCest
             [
                 'data' =>
                     [
-                        'Accounts' => [
-                            'label' => 'Accounts',
-                            'access' => ['access']
+                        'type' => 'modules',
+                        'attributes' => [
+
                         ],
                     ],
             ]
