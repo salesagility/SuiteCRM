@@ -234,7 +234,6 @@ class CompanyModuleCest
         $I->wantTo('Duplicate Company Test Module Record from detail view');
         $I->loginAsAdmin();
 
-
         // Go to Company Test Module
         $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
         $listView->waitForListViewVisible();

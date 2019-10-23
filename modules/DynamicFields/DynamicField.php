@@ -764,7 +764,7 @@ class DynamicField
         }
 
         if ($fh = @sugar_fopen($file_loc, 'w')) {
-            fputs($fh, $out);
+            fwrite($fh, $out);
             fclose($fh);
 
             return true;

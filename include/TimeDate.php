@@ -1068,7 +1068,7 @@ class TimeDate
             's' => $date->format("s")
         );
         if ($ampm) {
-            $datearr['a'] = ($ampm{0} == 'a') ? $date->format("a") : $date->format("A");
+            $datearr['a'] = ($ampm[0] == 'a') ? $date->format("a") : $date->format("A");
         }
 
         return $datearr;
@@ -2077,7 +2077,7 @@ class TimeDate
         }
 
         $menu = "<select name='" . $prefix . "meridiem' " . $attrs . ">";
-        if ($am{0} == 'a') {
+        if ($am[0] == 'a') {
             $menu .= "<option value='am'{$selected["am"]}>am";
             $menu .= "<option value='pm'{$selected["pm"]}>pm";
         } else {

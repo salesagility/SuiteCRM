@@ -258,7 +258,7 @@ echo get_validate_chart_js();
                 foreach ($user_id as $the_id) {
                     $id[] = "'".$the_id."'";
                 }
-                $ids = join(",", $id);
+                $ids = implode(",", $id);
                 $where .= "opportunities.assigned_user_id IN ($ids) ";
             }
 
@@ -440,7 +440,7 @@ echo get_validate_chart_js();
             foreach ($user_id as $the_id) {
                 $id[] = "'".$the_id."'";
             }
-            $ids = join(",", $id);
+            $ids = implode(",", $id);
             $where .= "opportunities.assigned_user_id IN ($ids) ";
         }
 

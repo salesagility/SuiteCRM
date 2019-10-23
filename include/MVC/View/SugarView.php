@@ -1019,8 +1019,8 @@ EOHTML;
         if (empty($this->responseTime)) {
             $this->_calculateFooterMetrics();
         }
-        global $app_strings;
-        global $mod_strings;
+        global $app_strings, $sugar_config;
+        $server_unique_key = isset($sugar_config['unique_key']) ? $sugar_config['unique_key'] : '';
         $themeObject = SugarThemeRegistry::current();
 
         $ss = new Sugar_Smarty();
@@ -1131,7 +1131,7 @@ EOHTML;
         // here we allocate the help link data
         $help_actions_blacklist = array('Login'); // we don't want to show a context help link here
         if (!in_array($this->action, $help_actions_blacklist)) {
-            if (!isset($GLOBALS['server_unique_key'])) {
+            if (!isset($server_unique_key)) {
                 LoggerManager::getLogger()->warn('Undefined index: server_unique_key');
             }
             $url =
@@ -1147,7 +1147,7 @@ EOHTML;
                 '&help_action=' .
                 $this->action .
                 '&key=' .
-                (isset($GLOBALS['server_unique_key']) ? $GLOBALS['server_unique_key'] : null) .
+                (isset($server_unique_key) ? $server_unique_key : null) .
                 '\'))';
             $label =
                 (isset($GLOBALS['app_list_strings']['moduleList'][$this->module]) ?

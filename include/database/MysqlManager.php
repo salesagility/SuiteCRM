@@ -1151,7 +1151,7 @@ class MysqlManager extends DBManager
             }
         }
         if (!empty($sql)) {
-            $sql = "ALTER TABLE $tablename " . join(",", $sql) . ";";
+            $sql = "ALTER TABLE $tablename " . implode(",", $sql) . ";";
             if ($execute) {
                 $this->query($sql);
             }
@@ -1267,7 +1267,7 @@ class MysqlManager extends DBManager
         foreach ($exclude_terms as $term) {
             $condition[] = "-" . $this->quoteTerm($term);
         }
-        $condition = $this->quoted(join(" ", $condition));
+        $condition = $this->quoted(implode(" ", $condition));
 
         return "MATCH($field) AGAINST($condition IN BOOLEAN MODE)";
     }
@@ -1300,7 +1300,7 @@ class MysqlManager extends DBManager
             "MySQL Host Info" => @mysql_get_host_info($this->database),
             "MySQL Server Info" => @mysql_get_server_info($this->database),
             "MySQL Client Encoding" => @mysql_client_encoding($this->database),
-            "MySQL Character Set Settings" => join(", ", $charset_str),
+            "MySQL Character Set Settings" => implode(", ", $charset_str),
         );
     }
 

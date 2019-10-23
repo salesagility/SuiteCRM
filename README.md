@@ -8,7 +8,7 @@
 [![codecov](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix/graph/badge.svg)](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/suitecrm/Lobby)
 [![LICENSE](https://img.shields.io/github/license/suitecrm/suitecrm.svg)](https://github.com/salesagility/suitecrm/blob/master/LICENSE.txt)
-![GitHub contributors](https://img.shields.io/github/contributors/salesagility/suitecrm)
+[![GitHub contributors](https://img.shields.io/github/contributors/salesagility/suitecrm)](https://github.com/salesagility/SuiteCRM/graphs/contributors)
 [![Twitter](https://img.shields.io/twitter/follow/suitecrm.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=suitecrm)
 
 [Website](https://suitecrm.com) | 
@@ -20,7 +20,7 @@
 [Extensions Directory](https://store.suitecrm.com/) |
 [Translations](https://crowdin.com/project/suitecrmtranslations) | [Code of Conduct](https://docs.suitecrm.com/community/code-of-conduct/)
 
-[SuiteCRM](https://suitecrm.com) is the award winning open source, enterprise ready Customer Relationship Management (CRM) software application.
+[SuiteCRM](https://suitecrm.com) is the award-winning open-source, enterprise-ready Customer Relationship Management (CRM) software application.
 
 Our vision is to be the most adopted open source enterprise CRM in the world, giving users full control of their data and freedom to own and customise their business solution.
 
@@ -51,7 +51,7 @@ Then consider a small [donation](https://opencollective.com/SuiteCRM/contribute)
 
 ### Security ###
 
-We take Security seriously here at SuiteCRM so if you have discovered a security risk report it by
+We take security seriously here at SuiteCRM so if you have discovered a security risk report it by
 emailing [security@suitecrm.com](mailto:security@suitecrm.com). This will be delivered to the product team who handle security issues.
 Please don't disclose security bugs publicly until they have been handled by the security team.
 
@@ -65,7 +65,7 @@ View the [Roadmap](https://suitecrm.com/roadmap/) and [LTS](https://suitecrm.com
 
 ### Support ###
 
-SuiteCRM is an open source project. If you require help with support then please use our [support forum](https://suitecrm.com/suitecrm/forum/). By using the forums the knowledge is shared with everyone in the community. Our developer and community team members answer questions on the forum daily but it also gives the other members of the community the opportunity to contribute. If you would like customisations to specifically fit your SuiteCRM  needs then please visit the [website](https://suitecrm.com/).
+SuiteCRM is an open-source project. If you require help with support then please use our [support forum](https://suitecrm.com/suitecrm/forum/). By using the forums the knowledge is shared with everyone in the community. Our developer and community team members answer questions on the forum daily but it also allows the other members of the community to contribute. If you would like customisations to specifically fit your SuiteCRM needs then please visit the [website](https://suitecrm.com/).
 
 ### License [![AGPLv3](https://img.shields.io/github/license/suitecrm/suitecrm.svg)](./LICENSE.txt)
 

@@ -16,7 +16,6 @@ class InboundEmailTester extends \AcceptanceTester
 
     /**
      * Populate bounce email account
-     *
      */
     public function createBounceEmail()
     {

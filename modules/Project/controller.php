@@ -136,7 +136,7 @@ class ProjectController extends SugarController
 
             if ($bh) {
                 $bh = $bh[0];
-                if ($bh->open) {
+                if ($bh->open_status) {
                     $open_h = $bh ? $bh->opening_hours : 9;
                     $close_h = $bh ? $bh->closing_hours : 17;
 

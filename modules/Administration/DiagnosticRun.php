@@ -168,7 +168,7 @@ function array_as_table($header, $values)
         $contents .= "<tr>";
         foreach ($field as $item) {
             if (is_array($item)) {
-                $item = join(",", $item);
+                $item = implode(",", $item);
             }
             $contents .= "<td class=\"tabDetailViewDF\">$item</td>";
         }

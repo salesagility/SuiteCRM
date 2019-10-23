@@ -130,7 +130,7 @@ class Gantt
                                 echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
                                         <div class="milestone link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
-                                           <img src="custom/modules/Project/images/add_milestone.png" />
+                                           <img src="modules/Project/images/add_milestone.png" />
                                         </div>
                                     </div>
                                   </div></td><td class="inner_td"><div class="cell_width day_block"></div></td>';
@@ -159,7 +159,7 @@ class Gantt
                                     echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
                                         <div class="milestone link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
-                                            <img src="custom/modules/Project/images/add_milestone.png" />
+                                            <img src="modules/Project/images/add_milestone.png" />
                                         </div>
                                     </div>
                                   </div></td>';
@@ -188,7 +188,7 @@ class Gantt
                                         echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
                                         <div class="milestone link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
-                                            <img src="custom/modules/Project/images/add_milestone.png" />
+                                            <img src="modules/Project/images/add_milestone.png" />
                                         </div>
                                     </div>
                                   </div></td><td class="inner_td"><div class="cell_width day_block"></div></td>';
@@ -285,7 +285,7 @@ class Gantt
 
     public function substr_unicode($str, $s, $l = null)
     {
-        return join("", array_slice(
+        return implode("", array_slice(
             preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY),
             $s,
             $l

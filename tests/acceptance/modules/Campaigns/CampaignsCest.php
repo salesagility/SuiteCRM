@@ -53,8 +53,8 @@ class CampaignsCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Campaigns $campaign
      *
-     * As administrative user I want to create a non-emails campaign so that I can test
-     * the standard fields.
+     * As an admin user, I want to create a non-emails campaign so that I can
+     * test the standard fields.
      */
     public function testScenarioCreateNonEmailCampaign(
         \AcceptanceTester $I,
@@ -96,8 +96,8 @@ class CampaignsCest
      * @param \Step\Acceptance\InboundEmailTester $inboundEmailTester
      * @param \Step\Acceptance\EmailMan $EmailManTester
      *
-     * As administrative user I want to create a Newsletter campaign so that I can test
-     * the standard fields.
+     * As an admin user I want to create a Newsletter campaign so that I can
+     * test the standard fields.
      */
     public function testScenarioCreateNewsletterCampaign(
         \AcceptanceTester $I,

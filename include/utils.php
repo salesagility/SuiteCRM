@@ -2298,22 +2298,11 @@ function clean_incoming_data()
     global $sugar_config;
     global $RAW_REQUEST;
 
-    if (get_magic_quotes_gpc()) {
-        // magic quotes screw up data, we'd have to clean up
-        $RAW_REQUEST = array_map('cleanup_slashes', $_REQUEST);
-    } else {
-        $RAW_REQUEST = $_REQUEST;
-    }
+    $RAW_REQUEST = $_REQUEST;
 
-    if (get_magic_quotes_gpc() == 1) {
-        $req = array_map('preprocess_param', $_REQUEST);
-        $post = array_map('preprocess_param', $_POST);
-        $get = array_map('preprocess_param', $_GET);
-    } else {
-        $req = array_map('securexss', $_REQUEST);
-        $post = array_map('securexss', $_POST);
-        $get = array_map('securexss', $_GET);
-    }
+    $req = array_map('securexss', $_REQUEST);
+    $post = array_map('securexss', $_POST);
+    $get = array_map('securexss', $_GET);
 
     // PHP cannot stomp out superglobals reliably
     foreach ($post as $k => $v) {
@@ -2439,10 +2428,6 @@ function securexsskey($value, $die = true)
 function preprocess_param($value)
 {
     if (is_string($value)) {
-        if (get_magic_quotes_gpc() == 1) {
-            $value = stripslashes($value);
-        }
-
         $value = securexss($value);
     } elseif (is_array($value)) {
         foreach ($value as $key => $element) {
@@ -3051,7 +3036,7 @@ function javascript_escape($str)
         } elseif (ord(substr($str, $i, 1)) == 13) {
             $new_str .= '\r';
         } else {
-            $new_str .= $str{$i};
+            $new_str .= $str[$i];
         }
     }
 
@@ -3631,7 +3616,7 @@ function mark_delete_components($sub_object_array, $run_second_level = false, $s
 function return_bytes($val)
 {
     $val = trim($val);
-    $last = strtolower($val{strlen($val) - 1});
+    $last = strtolower($val[strlen($val) - 1]);
     $val = preg_replace("/[^0-9,.]/", "", $val);
 
     switch ($last) {
@@ -3683,7 +3668,7 @@ function is_windows()
  */
 function is_writable_windows($file)
 {
-    if ($file{strlen($file) - 1} == '/') {
+    if ($file[strlen($file) - 1] == '/') {
         return is_writable_windows($file . uniqid(mt_rand()) . '.tmp');
     }
 

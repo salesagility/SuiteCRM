@@ -147,7 +147,7 @@ class UploadStream
      */
     public static function register()
     {
-        stream_register_wrapper(self::STREAM_NAME, __CLASS__);
+        stream_wrapper_register(self::STREAM_NAME, __CLASS__);
     }
 
     /**
@@ -258,7 +258,9 @@ class UploadStream
             // if we will be writing, try to transparently create the directory
             $this->fp = @fopen($fullpath, $mode);
             if (!$this->fp && !file_exists(dirname($fullpath))) {
-                mkdir(dirname($fullpath), 0755, true);
+                if (!mkdir($concurrentDirectory = dirname($fullpath), 0755, true) && !is_dir($concurrentDirectory)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+                }
                 $this->fp = fopen($fullpath, $mode);
             }
         }

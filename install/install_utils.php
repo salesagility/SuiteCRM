@@ -970,15 +970,17 @@ function handleHtaccess()
     global $mod_strings;
     global $sugar_config;
     $ignoreCase = (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2') > 0) ? '(?i)' : '';
-    $htaccess_file = ".htaccess";
+    $htaccess_file = '.htaccess';
     $contents = '';
     $basePath = parse_url($sugar_config['site_url'], PHP_URL_PATH);
     if (empty($basePath)) {
         $basePath = '/';
     }
+    $cacheDir = $sugar_config['cache_dir'];
+
     $restrict_str = <<<EOQ
 
-# BEGIN SUGARCRM RESTRICTIONS
+# BEGIN SUITECRM RESTRICTIONS
 
 EOQ;
     if (ini_get('suhosin.perdir') !== false && strpos(ini_get('suhosin.perdir'), 'e') !== false) {
@@ -987,19 +989,27 @@ EOQ;
     $restrict_str .= <<<EOQ
 RedirectMatch 403 {$ignoreCase}.*\.log$
 RedirectMatch 403 {$ignoreCase}/+not_imported_.*\.txt
-RedirectMatch 403 {$ignoreCase}/+(soap|cache|xtemplate|data|examples|include|log4php|metadata|modules)/+.*\.(php|tpl)
+RedirectMatch 403 {$ignoreCase}/+(soap|cache|xtemplate|data|examples|include|log4php|metadata|modules|vendor)/+.*\.(php|tpl)
 RedirectMatch 403 {$ignoreCase}/+emailmandelivery\.php
+RedirectMatch 403 {$ignoreCase}/+.git
+RedirectMatch 403 {$ignoreCase}/+.{$cacheDir}
+RedirectMatch 403 {$ignoreCase}/+tests
+RedirectMatch 403 {$ignoreCase}/+RoboFile\.php
+RedirectMatch 403 {$ignoreCase}/+composer\.json
+RedirectMatch 403 {$ignoreCase}/+composer\.lock
 RedirectMatch 403 {$ignoreCase}/+upload
 RedirectMatch 403 {$ignoreCase}/+custom/+blowfish
 RedirectMatch 403 {$ignoreCase}/+cache/+diagnostic
-RedirectMatch 403 {$ignoreCase}/+files\.md5$
-# END SUGARCRM RESTRICTIONS
+RedirectMatch 403 {$ignoreCase}/+files\.md5\$
+
 EOQ;
 
     $cache_headers = <<<EOQ
 
 <IfModule mod_rewrite.c>
     Options +SymLinksIfOwnerMatch
+    Options -Indexes
+    Options -MultiViews
     RewriteEngine On
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
@@ -1014,20 +1024,77 @@ EOQ;
     RewriteRule ^Api/access_token$ Api/index.php/access_token [L]
     RewriteRule ^Api/V8/(.*?)$ Api/index.php/V8/$1 [L]
 </IfModule>
-<FilesMatch "\.(jpg|png|gif|js|css|ico)$">
-        <IfModule mod_headers.c>
-                Header set ETag ""
-                Header set Cache-Control "max-age=2592000"
-                Header set Expires "01 Jan 2112 00:00:00 GMT"
-        </IfModule>
-</FilesMatch>
+<IfModule mod_headers.c>
+    Header unset ETag
+    FileETag None
+</IfModule>
+<IfModule mod_headers.c>
+    Header unset X-Powered-By
+    Header always unset X-Powered-By
+</IfModule>
 <IfModule mod_expires.c>
-        ExpiresByType text/css "access plus 1 month"
-        ExpiresByType text/javascript "access plus 1 month"
-        ExpiresByType application/x-javascript "access plus 1 month"
-        ExpiresByType image/gif "access plus 1 month"
-        ExpiresByType image/jpg "access plus 1 month"
-        ExpiresByType image/png "access plus 1 month"
+ ExpiresActive on
+ ExpiresDefault "access plus 1 month"
+
+ # CSS
+ ExpiresByType text/css "access plus 1 year"
+ 
+ # Data
+ ExpiresByType application/atom+xml "access plus 1 hour"
+ ExpiresByType application/rdf+xml "access plus 1 hour"
+ ExpiresByType application/rss+xml "access plus 1 hour"
+ ExpiresByType application/json "access plus 0 seconds"
+ ExpiresByType application/ld+json "access plus 0 seconds"
+ ExpiresByType application/schema+json "access plus 0 seconds"
+ ExpiresByType application/geo+json "access plus 0 seconds"
+ ExpiresByType application/xml "access plus 0 seconds"
+ ExpiresByType text/calendar "access plus 0 seconds"
+ ExpiresByType text/xml "access plus 0 seconds"
+
+ # Favicon
+ ExpiresByType image/x-icon "access plus 1 week"
+
+ # HTML
+ ExpiresByType text/html "access plus 0 seconds"
+
+ # JavaScript
+ ExpiresByType application/javascript "access plus 1 year"
+ ExpiresByType application/x-javascript "access plus 1 year"
+ ExpiresByType text/javascript "access plus 1 year"
+
+ # Markdown
+ ExpiresByType text/markdown "access plus 0 seconds"
+
+ # Media files
+ ExpiresByType audio/ogg "access plus 1 month"
+ ExpiresByType image/bmp "access plus 1 month"
+ ExpiresByType image/gif "access plus 1 month"
+ ExpiresByType image/jpeg "access plus 1 month"
+ ExpiresByType image/jpg "access plus 1 month"
+ ExpiresByType image/png "access plus 1 month"
+ ExpiresByType image/svg+xml "access plus 1 month"
+ ExpiresByType image/webp "access plus 1 month"
+ ExpiresByType video/mp4 "access plus 1 month"
+ ExpiresByType video/ogg "access plus 1 month"
+ ExpiresByType video/webm "access plus 1 month"
+
+ # Fonts
+ ExpiresByType font/eot "access plus 1 month"
+ ExpiresByType font/opentype "access plus 1 month"
+ ExpiresByType font/otf "access plus 1 month"
+ ExpiresByType application/x-font-ttf "access plus 1 month"
+ ExpiresByType font/ttf "access plus 1 month"
+ ExpiresByType application/font-woff "access plus 1 month"
+ ExpiresByType application/x-font-woff "access plus 1 month"
+ ExpiresByType font/woff "access plus 1 month"
+ ExpiresByType application/font-woff2 "access plus 1 month"
+ ExpiresByType font/woff2 "access plus 1 month"
+
+ # Other
+ ExpiresByType text/x-cross-domain-policy "access plus 1 week"
+</IfModule>
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
 </IfModule>
 <IfModule mod_rewrite.c>
         RewriteEngine On
@@ -1035,24 +1102,28 @@ EOQ;
         RewriteCond %{REQUEST_URI} (.+)/$
         RewriteRule ^ %1 [R=301,L]
 </IfModule>
+# END SUITECRM RESTRICTIONS
 EOQ;
     if (file_exists($htaccess_file)) {
         $fp = fopen($htaccess_file, 'rb');
         $skip = false;
         while ($line = fgets($fp)) {
-            if (preg_match("/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
+            if (preg_match("/\s*#\s*BEGIN\s*SUITECRM\s*RESTRICTIONS/i",
+                    $line) || preg_match("/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
                 if (!$skip) {
                     $contents .= $line;
                 }
                 $skip = true;
-                if (preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
+                if (preg_match("/\s*#\s*END\s*SUITECRM\s*RESTRICTIONS/i",
+                        $line) || preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
                     $skip = false;
                 }
             }
             if (!$skip) {
                 $contents .= $line;
             }
-            if (preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
+            if (preg_match("/\s*#\s*END\s*SUITECRM\s*RESTRICTIONS/i",
+                    $line) || preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
                 $skip = false;
             }
         }
@@ -1770,7 +1841,7 @@ function getLangPacks($display_commit = true, $types = array('langpack'), $notic
             $md5_matches = $uh->findByMd5($the_md5);
         }
 
-        if ($manifest['type']!= 'module' || 0 == sizeof($md5_matches)) {
+        if ($manifest['type']!= 'module' || 0 == count($md5_matches)) {
             $name = empty($manifest['name']) ? $file : $manifest['name'];
             $version = empty($manifest['version']) ? '' : $manifest['version'];
             $published_date = empty($manifest['published_date']) ? '' : $manifest['published_date'];

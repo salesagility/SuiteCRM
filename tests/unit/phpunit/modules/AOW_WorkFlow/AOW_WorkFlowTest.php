@@ -35,6 +35,43 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $aowWorkFlow->bean_implements('ACL')); //test with valid value
     }
 
+    public function testmark_delete_related()
+    {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aow_conditions');
+        $state->pushTable('aow_workflow');
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+
+        // Create a workflow and a related condition
+        $aowWorkFlow = new AOW_WorkFlow();
+        $aowWorkFlow->name = 'test';
+        $aowWorkFlow->flow_module = 'test';
+        $aowWorkFlow->save();
+
+        $condition = new AOW_Condition();
+        $condition->aow_workflow_id = $aowWorkFlow->id;
+        $condition->save();
+
+        $linked = $aowWorkFlow->get_linked_beans('aow_conditions');
+        $this->assertCount(1, $linked);
+        $conditionID = $linked[0]->id;
+
+        // Deleting the workflow should delete also the condition
+        BeanFactory::unregisterBean('AOW_Conditions', $conditionID);
+        $cond = BeanFactory::getBean('AOW_Conditions', $conditionID);
+        $this->assertNotEmpty($cond);
+        $aowWorkFlow->mark_deleted($aowWorkFlow->id);
+        BeanFactory::unregisterBean('AOW_Conditions', $conditionID);
+        $cond = BeanFactory::getBean('AOW_Conditions', $conditionID);
+        $this->assertEmpty($cond);
+
+        $state->popGlobals();
+        $state->popTable('aod_indexevent');
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_conditions');
+    }
+
     public function testsave()
     {
         $state = new SuiteCRM\StateSaver();
