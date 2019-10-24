@@ -3610,7 +3610,7 @@ eoq;
     }
 
     /**
-     * Unify the seperator as ,
+     * Unify the separator as ,
      *
      * @param String $str email address string
      * @return String converted string
