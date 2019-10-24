@@ -4881,7 +4881,7 @@ function create_export_query_relate_link_patch($module, $searchFields, $where)
             $join = $seed->$fieldLink->getJoin($params, true);
             $join_table_alias = 'join_' . $field['name'];
             if (isset($field['db_concat_fields'])) {
-                $db_field = db_concat($join_table_alias, $field['db_concat_fields']);
+                $db_field = DBManager::concat($join_table_alias, $field['db_concat_fields']);
                 $where = preg_replace('/' . $field['name'] . '/', $db_field, $where);
             } else {
                 $where = preg_replace('/(^|[\s(])' . $field['name'] . '/', '${1}' . $join_table_alias . '.' . $field['rname'], $where);
