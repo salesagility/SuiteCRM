@@ -326,22 +326,6 @@ class SugarDateTime extends DateTime
     }
 
     /**
-     * Get the beginning of the last day of i's the month
-     * @deprecated
-     * FIXME: no idea why this function exists and what's the use of it
-     * @param int $month_index Month, January is 0
-     * @return SugarDateTime
-     */
-    public function get_day_by_index_this_year($month_index)
-    {
-        $newdate = clone $this;
-        $newdate->setDate($this->year, $month_index+1, 1);
-        $newdate->setDate($newdate->year, $newdate->month, $newdate->days_in_month);
-        $newdate->setTime(0, 0);
-        return $newdate;
-    }
-
-    /**
      * Get the beginning of i's day of the month
      * @param int $day_index 0 is the first day of the month (sic!)
      * @return SugarDateTime
