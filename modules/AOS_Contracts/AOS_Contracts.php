@@ -104,6 +104,9 @@ class AOS_Contracts extends AOS_Contracts_sugar
      */
     public function createLink()
     {
+        LoggerManager::getLogger()->deprecated('AOS_Contracts->createLink is deprecated and will be 
+        removed in a future release');
+
         require_once('modules/Calls/Call.php');
         $call = new call();
 
