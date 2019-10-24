@@ -735,6 +735,44 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $q = /** @lang sql */
             "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
         $db->query($q);
+
+        // test if email address is deleted then no results
+        $i = 3;
+        $this->getBeansByEmailAddressDeletedLinksTest($db, $i, 1, 0);
+        // test if bean is deleted then no results
+        $i = 4;
+        $this->getBeansByEmailAddressDeletedLinksTest($db, $i, 0, 1);
+
+    }
+
+    private function getBeansByEmailAddressDeletedLinksTest($db, $i, $ea_deleted, $bean_deleted) {
+        // must have differing values
+        self::assertFalse($ea_deleted == $bean_deleted);
+        $q = /** @lang sql */
+            "
+          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
+          VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
+        ";
+        $db->query($q);
+        $q = /** @lang sql */
+            "INSERT INTO email_addresses (id, email_address_caps, deleted) VALUES ('test_email_{$i}', 'TEST{$i}@EMAIL.COM', $ea_deleted)";
+        $db->query($q);
+        $q = /** @lang sql */
+            "INSERT INTO contacts (id, first_name, deleted) VALUES ('test_contact_{$i}', 'Test_$i}', $bean_deleted)";
+        $db->query($q);
+
+        $results = $this->ea->getBeansByEmailAddress("test{$i}@email.com");
+        self::assertEquals(array(), $results);
+
+        $q = /** @lang sql */
+            "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
+        $db->query($q);
+        $q = /** @lang sql */
+            "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
+        $db->query($q);
+        $q = /** @lang sql */
+            "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
+        $db->query($q);
     }
 
     /**
