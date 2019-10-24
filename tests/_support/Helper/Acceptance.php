@@ -1,25 +1,34 @@
 <?php
+
 namespace Helper;
 
 // here you can define custom actions
 // all public methods declared in helper class will be available in $I
 
-class Acceptance extends \Codeception\Module
+use Codeception\Exception\ModuleException;
+use Codeception\Module;
+use PHPUnit_Framework_AssertionFailedError;
+use SuiteCRM\Test\Driver\WebDriver;
+
+class Acceptance extends Module
 {
     public function seePageHas($text, $selector = null)
     {
         try {
-            $this->getModule('\SuiteCRM\Test\Driver\WebDriver')->see($text, $selector);
-        } catch (\PHPUnit_Framework_AssertionFailedError $f) {
+            $this->getModule(WebDriver::class)->see($text, $selector);
+        } catch (PHPUnit_Framework_AssertionFailedError $f) {
+            return false;
+        } catch (ModuleException $e) {
             return false;
         }
+
         return true;
     }
 
     // Clean up any files left behind by module builder tests.
     // This needs to be run both before _and_ after to handle the case where
     // the test run is cancelled or fails and the afterSuite() hook isn't run.
-    public function _beforeSuite($settings = array())
+    public function _beforeSuite($settings = [])
     {
         $this->deleteModulesHelper();
     }
@@ -31,8 +40,9 @@ class Acceptance extends \Codeception\Module
     }
 
     // Clean up any files left behind by module builder tests.
-    private function deleteModulesHelper() {
-        $modules = array(
+    private function deleteModulesHelper()
+    {
+        $modules = [
             'BasicTestModule',
             'CompanyTestModule',
             'FileTestModule',
@@ -40,10 +50,14 @@ class Acceptance extends \Codeception\Module
             'PersonTestModule',
             'SaleTestModule',
             'TestModuleFields'
-        );
-        
+        ];
+
         foreach ($modules as $module) {
-            $this->deleteModuleFiles($module);
+            try {
+                $this->deleteModuleFiles($module);
+            } catch (ModuleException $e) {
+                return false;
+            }
         }
     }
 
@@ -51,18 +65,20 @@ class Acceptance extends \Codeception\Module
      * Deletes module files and directories created by the module builder.
      * This allows the acceptance tests to be re-run.
      * @param string $module
+     * @throws ModuleException
      */
-    private function deleteModuleFiles($module) {
-        $directories = array(
+    private function deleteModuleFiles($module)
+    {
+        $directories = [
             "custom/modulebuilder/builds/{$module}",
             "custom/modulebuilder/packages/{$module}",
             "modules/Test_{$module}"
-        );
-        
-        $files = array(
+        ];
+
+        $files = [
             "custom/application/Ext/Include/modules.ext.php",
             "custom/Extension/application/Ext/Include/{$module}.php"
-        );
+        ];
 
         foreach ($directories as $_index => $directory) {
             if (is_dir($directory)) {

@@ -261,15 +261,15 @@ class TimeDate
      * The order is: supplied parameter, TimeDate's user, global current user
      *
      * @param User $user User object, default is current user
-     * @internal
      * @return User
+     * @internal
      */
     protected function _getUser(User $user = null)
     {
-        if (empty($user)) {
+        if ($user === null) {
             $user = $this->user;
         }
-        if (empty($user)) {
+        if ($user === null && isset($GLOBALS['current_user'])) {
             $user = $GLOBALS['current_user'];
         }
 

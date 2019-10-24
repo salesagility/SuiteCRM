@@ -1,4 +1,5 @@
 <?php
+
 namespace Page;
 
 use \AcceptanceTester as Tester;

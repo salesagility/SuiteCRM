@@ -1,5 +1,11 @@
 <?php
 
+use Api\V8\Controller\BaseController;
+use Codeception\Actor;
+use Codeception\Exception\ModuleException;
+use Codeception\Lib\Friend;
+use Helper\PhpBrowserDriverHelper;
+
 
 /**
  * Inherited Methods
@@ -12,11 +18,11 @@
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class ApiTester extends \Codeception\Actor
+ */
+class ApiTester extends Actor
 {
     use _generated\ApiTesterActions;
 
@@ -45,7 +51,7 @@ class ApiTester extends \Codeception\Actor
     private static $tokenExpiresIn;
 
     /**
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function loginAsAdmin()
     {
@@ -53,7 +59,7 @@ class ApiTester extends \Codeception\Actor
     }
 
     /**
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function loginAsAdminWithPassword()
     {
@@ -66,7 +72,7 @@ class ApiTester extends \Codeception\Actor
     }
 
     /**
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function loginAsAdminWithClientCredentials()
     {
@@ -82,6 +88,7 @@ class ApiTester extends \Codeception\Actor
      * @param string $secret
      * @param string $username
      * @param string $password
+     * @throws ModuleException
      */
     public function loginWithPasswordGrant($client, $secret, $username, $password)
     {
@@ -92,25 +99,25 @@ class ApiTester extends \Codeception\Actor
         }
 
         /**
-         * @var \Helper\PhpBrowserDriverHelper $browserDriverHelper
+         * @var PhpBrowserDriverHelper $browserDriverHelper
          */
         $I->sendPOST(
-            $I->getInstanceURL().'/api/oauth/access_token',
-            array(
+            $I->getInstanceURL() . '/api/oauth/access_token',
+            [
                 'username' => $username,
                 'password' => $password,
                 'grant_type' => 'password',
                 'scope' => '',
                 'client_id' => $client,
                 'client_secret' => $secret
-            )
+            ]
         );
         $I->canSeeResponseIsJson();
         $I->seeResponseCodeIs(200);
 
         $response = json_decode($I->grabResponse(), true);
         self::$tokenType = $response['token_type'];
-        self::$tokenExpiresIn =  (int)$response['expires_in'];
+        self::$tokenExpiresIn = (int)$response['expires_in'];
         self::$accessToken = $response['access_token'];
         self::$refreshToken = $response['refresh_token'];
     }
@@ -119,25 +126,26 @@ class ApiTester extends \Codeception\Actor
      * Logins into API with Client Credentials grant type
      * @param string $client
      * @param string $secret
+     * @throws ModuleException
      */
     public function loginWithClientCredentialsGrant($client, $secret)
     {
         $I = $this;
 
         $I->sendPOST(
-            $I->getInstanceURL().'/api/oauth/access_token',
-            array(
+            $I->getInstanceURL() . '/api/oauth/access_token',
+            [
                 'grant_type' => 'client_credentials',
                 'client_id' => $client,
                 'client_secret' => $secret
-            )
+            ]
         );
         $I->canSeeResponseIsJson();
         $I->seeResponseCodeIs(200);
 
         $response = json_decode($I->grabResponse(), true);
         self::$tokenType = $response['token_type'];
-        self::$tokenExpiresIn =  (int)$response['expires_in'];
+        self::$tokenExpiresIn = (int)$response['expires_in'];
         self::$accessToken = $response['access_token'];
     }
 
@@ -155,7 +163,7 @@ class ApiTester extends \Codeception\Actor
     public function sendJwtAuthorisation()
     {
         $I = $this;
-        $I->setHeader('Authorization', self::$tokenType.' '. self::$accessToken);
+        $I->setHeader('Authorization', self::$tokenType . ' ' . self::$accessToken);
     }
 
     /**
@@ -224,7 +232,7 @@ class ApiTester extends \Codeception\Actor
      * This is only temporary till we fix this.
      * Please set your environment variables up for your test fw settings.
      *
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function login()
     {
@@ -239,7 +247,7 @@ class ApiTester extends \Codeception\Actor
 
         $response = json_decode($this->grabResponse(), true);
         $this->setHeader('Authorization', sprintf('%s %s', $response['token_type'], $response['access_token']));
-        $this->setHeader('Content-Type', \Api\V8\Controller\BaseController::MEDIA_TYPE);
+        $this->setHeader('Content-Type', BaseController::MEDIA_TYPE);
 
         $this->seeResponseCodeIs(200);
         $this->canSeeResponseIsJson();
