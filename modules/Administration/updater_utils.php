@@ -246,7 +246,7 @@ function check_now($send_usage_info=true, $get_request_data=false, $response_dat
         $license->saveSetting('license', 'latest_versions', '')	;
     }
 
-    if (sizeof($resultData) == 1 && !empty($resultData['versions'][0]['version'])
+    if (count($resultData) == 1 && !empty($resultData['versions'][0]['version'])
         && compareVersions($sugar_version, $resultData['versions'][0]['version'])) {
         $resultData['versions'][0]['version'] = $sugar_version;
         $resultData['versions'][0]['description'] = "You have the latest version.";
@@ -372,7 +372,7 @@ function loginLicense()
 
             unset($_SESSION['license_seats_needed']);
             loadLicense();
-            set_last_check_date_config_setting("$current_date_time");
+            set_last_check_date_config_setting((string)$current_date_time);
             include('sugar_version.php');
 
             $newVersion = '';

@@ -266,8 +266,8 @@ function get_sugar_config_defaults()
         'default_currency_symbol' => return_session_value_or_default('default_currency_symbol', '$'),
         'default_currency_iso4217' => return_session_value_or_default('default_currency_iso4217', 'USD'),
         'default_currency_significant_digits' => return_session_value_or_default('default_currency_significant_digits', 2),
-        'default_number_grouping_seperator' => return_session_value_or_default('default_number_grouping_seperator', ','),
-        'default_decimal_seperator' => return_session_value_or_default('default_decimal_seperator', '.'),
+        'default_number_grouping_separator' => return_session_value_or_default('default_number_grouping_separator', ','),
+        'default_decimal_separator' => return_session_value_or_default('default_decimal_separator', '.'),
         'default_date_format' => 'm/d/Y',
         'default_locale_name_format' => 's f l',
         'default_export_charset' => 'UTF-8',
@@ -1051,7 +1051,7 @@ function _mergeCustomAppListStrings($file, $app_list_strings)
 
     foreach ($app_list_strings as $key => $value) {
         if (!in_array($key, $exemptDropdowns) && array_key_exists($key, $app_list_strings_original)) {
-            unset($app_list_strings_original["$key"]);
+            unset($app_list_strings_original[(string)$key]);
         }
     }
     $app_list_strings = sugarArrayMergeRecursive($app_list_strings_original, $app_list_strings);
@@ -1973,11 +1973,11 @@ function unTranslateNum($num)
 
     if ($dec_sep == null) {
         $user_dec_sep = $current_user->getPreference('dec_sep');
-        $dec_sep = (empty($user_dec_sep) ? $sugar_config['default_decimal_seperator'] : $user_dec_sep);
+        $dec_sep = (empty($user_dec_sep) ? $sugar_config['default_decimal_separator'] : $user_dec_sep);
     }
     if ($num_grp_sep == null) {
         $user_num_grp_sep = $current_user->getPreference('num_grp_sep');
-        $num_grp_sep = (empty($user_num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $user_num_grp_sep);
+        $num_grp_sep = (empty($user_num_grp_sep) ? $sugar_config['default_number_grouping_separator'] : $user_num_grp_sep);
     }
 
     $num = preg_replace("'" . preg_quote($num_grp_sep) . "'", '', $num);
@@ -2294,22 +2294,11 @@ function clean_incoming_data()
     global $sugar_config;
     global $RAW_REQUEST;
 
-    if (get_magic_quotes_gpc()) {
-        // magic quotes screw up data, we'd have to clean up
-        $RAW_REQUEST = array_map('cleanup_slashes', $_REQUEST);
-    } else {
-        $RAW_REQUEST = $_REQUEST;
-    }
+    $RAW_REQUEST = $_REQUEST;
 
-    if (get_magic_quotes_gpc() == 1) {
-        $req = array_map('preprocess_param', $_REQUEST);
-        $post = array_map('preprocess_param', $_POST);
-        $get = array_map('preprocess_param', $_GET);
-    } else {
-        $req = array_map('securexss', $_REQUEST);
-        $post = array_map('securexss', $_POST);
-        $get = array_map('securexss', $_GET);
-    }
+    $req = array_map('securexss', $_REQUEST);
+    $post = array_map('securexss', $_POST);
+    $get = array_map('securexss', $_GET);
 
     // PHP cannot stomp out superglobals reliably
     foreach ($post as $k => $v) {
@@ -2434,10 +2423,6 @@ function securexsskey($value, $die = true)
 function preprocess_param($value)
 {
     if (is_string($value)) {
-        if (get_magic_quotes_gpc() == 1) {
-            $value = stripslashes($value);
-        }
-
         $value = securexss($value);
     } elseif (is_array($value)) {
         foreach ($value as $key => $element) {
@@ -3043,7 +3028,7 @@ function javascript_escape($str)
         } elseif (ord(substr($str, $i, 1)) == 13) {
             $new_str .= '\r';
         } else {
-            $new_str .= $str{$i};
+            $new_str .= $str[$i];
         }
     }
 
@@ -3622,7 +3607,7 @@ function mark_delete_components($sub_object_array, $run_second_level = false, $s
 function return_bytes($val)
 {
     $val = trim($val);
-    $last = strtolower($val{strlen($val) - 1});
+    $last = strtolower($val[strlen($val) - 1]);
     $val = preg_replace("/[^0-9,.]/", "", $val);
 
     switch ($last) {
@@ -3674,7 +3659,7 @@ function is_windows()
  */
 function is_writable_windows($file)
 {
-    if ($file{strlen($file) - 1} == '/') {
+    if ($file[strlen($file) - 1] == '/') {
         return is_writable_windows($file . uniqid(mt_rand()) . '.tmp');
     }
 
@@ -4896,7 +4881,7 @@ function create_export_query_relate_link_patch($module, $searchFields, $where)
             $join = $seed->$fieldLink->getJoin($params, true);
             $join_table_alias = 'join_' . $field['name'];
             if (isset($field['db_concat_fields'])) {
-                $db_field = db_concat($join_table_alias, $field['db_concat_fields']);
+                $db_field = DBManager::concat($join_table_alias, $field['db_concat_fields']);
                 $where = preg_replace('/' . $field['name'] . '/', $db_field, $where);
             } else {
                 $where = preg_replace('/(^|[\s(])' . $field['name'] . '/', '${1}' . $join_table_alias . '.' . $field['rname'], $where);

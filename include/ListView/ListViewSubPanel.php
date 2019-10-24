@@ -380,13 +380,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
                  * $field_acl['DetailView'] = $aItem->ACLAccess('DetailView');
                  * $field_acl['ListView'] = $aItem->ACLAccess('ListView');
                  * $field_acl['EditView'] = $aItem->ACLAccess('EditView');
-                 * $field_acl['Delete'] = $aItem->ACLAccess('Delete');
                  */
                 //pass is_owner, in_group...vars defined above
                 $field_acl['DetailView'] = $aItem->ACLAccess('DetailView', $aclaccess_is_owner, $aclaccess_in_group);
                 $field_acl['ListView'] = $aItem->ACLAccess('ListView', $aclaccess_is_owner, $aclaccess_in_group);
                 $field_acl['EditView'] = $aItem->ACLAccess('EditView', $aclaccess_is_owner, $aclaccess_in_group);
-                $field_acl['Delete'] = $aItem->ACLAccess('Delete', $aclaccess_is_owner, $aclaccess_in_group);
                 /* END - SECURITY GROUPS */
                 foreach ($thepanel->get_list_fields() as $field_name => $list_field) {
                     //add linked field attribute to the array.
@@ -490,7 +488,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                                         $widget_contents[$aVal][$field_name] = '&nbsp;';
                                     }
                                 } elseif (preg_match("/button/i", $list_field['name'])) {
-                                    if ((($list_field['name'] === 'edit_button' && $field_acl['EditView']) || ($list_field['name'] === 'close_button' && $field_acl['EditView']) || ($list_field['name'] === 'remove_button' && $field_acl['Delete'])) && '' != ($_content = $layout_manager->widgetDisplay($list_field))) {
+                                    if ((($list_field['name'] === 'edit_button' && $field_acl['EditView']) || ($list_field['name'] === 'close_button' && $field_acl['EditView']) || ($list_field['name'] === 'remove_button' && $field_acl['EditView'])) && '' != ($_content = $layout_manager->widgetDisplay($list_field))) {
                                         $button_contents[$aVal][] = $_content;
                                         unset($_content);
                                     } else {

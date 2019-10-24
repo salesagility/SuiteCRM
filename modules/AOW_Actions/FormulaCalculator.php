@@ -330,9 +330,9 @@ class FormulaCalculator
         if (($params = $this->evaluateFunctionParams("substring", $text, $childItems)) != null) {
             // Workaround for PHP < 5.4.8
             if (isset($params[2])) {
-                return mb_substr($params[0], intval($params[1]), intval($params[2]));
+                return mb_substr($params[0], (int)$params[1], (int)$params[2]);
             }
-            return mb_substr($params[0], intval($params[1]));
+            return mb_substr($params[0], (int)$params[1]);
         }
 
         if (($params = $this->evaluateFunctionParams("length", $text, $childItems)) != null) {
@@ -643,7 +643,7 @@ class FormulaCalculator
      */
     private function parseFloat($value)
     {
-        return floatval(str_replace(",", ".", $value));
+        return (float)str_replace(",", ".", $value);
     }
 
     /**

@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 global $theme;
 global $mod_strings;
@@ -57,4 +51,4 @@ if (isset($_REQUEST['step'])) {
 } else {
     $step = '1';
 }
-include('modules/MailMerge/Step'. intval($step). '.php');
+include('modules/MailMerge/Step'. (int)$step . '.php');

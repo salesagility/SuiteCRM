@@ -132,8 +132,8 @@ class Localization
             'default_locale_name_format'            => 's f l',
             'name_formats'                          => array('s f l' => 's f l', 'f l' => 'f l', 's l' => 's l', 'l, s f' => 'l, s f',
                                                             'l, f' => 'l, f', 's l, f' => 's l, f', 'l s f' => 'l s f', 'l f s' => 'l f s'),
-            'default_number_grouping_seperator'        => ',',
-            'default_decimal_seperator'                => '.',
+            'default_number_grouping_separator'        => ',',
+            'default_decimal_separator'                => '.',
             'export_delimiter'                        => ',',
             'default_email_charset'                    => $this->default_email_charset,
         );
@@ -464,14 +464,14 @@ class Localization
     ////	NUMBER DISPLAY FORMATTING CODE
     public function getDecimalSeparator($user=null)
     {
-        // Bug50887 this is purposefully misspelled as ..._seperator to match the way it's defined throughout the app.
-        $dec = $this->getPrecedentPreference('default_decimal_seperator', $user);
+        // Bug50887 this is purposefully misspelled as ..._separator to match the way it's defined throughout the app.
+        $dec = $this->getPrecedentPreference('default_decimal_separator', $user);
         return $dec;
     }
 
     public function getNumberGroupingSeparator($user=null)
     {
-        $sep = $this->getPrecedentPreference('default_number_grouping_seperator', $user);
+        $sep = $this->getPrecedentPreference('default_number_grouping_separator', $user);
         return $sep;
     }
 
@@ -494,7 +494,7 @@ class Localization
      * @param bool is_currency Flag to also return the currency symbol
      * @return string Formatted number
      */
-    public function getLocaleFormattedNumber($number, $currencySymbol='', $is_currency=true, $user=null)
+    public function getLocaleFormattedNumber($number, $currencySymbol = '', $is_currency = true, $user = null)
     {
         $fnum            = $number;
         $majorDigits    = '';
@@ -510,8 +510,8 @@ class Localization
             if (strlen($exNum[0]) > 3) {
                 $offset = strlen($exNum[0]) % 3;
                 if ($offset > 0) {
-                    for ($i=0; $i<$offset; $i++) {
-                        $majorDigits .= $exNum[0]{$i};
+                    for ($i = 0; $i < $offset; $i++) {
+                        $majorDigits .= $exNum[0][$i];
                     }
                 }
 
@@ -521,7 +521,7 @@ class Localization
                         $majorDigits .= $thou; // add separator
                     }
 
-                    $majorDigits .= $exNum[0]{$i};
+                    $majorDigits .= $exNum[0][$i];
                     $tic++;
                 }
             } else {
@@ -609,8 +609,8 @@ class Localization
 
 			function setSigDigits() {
 				var sym = document.getElementById('symbol').value;
-				var thou = document.getElementById('default_number_grouping_seperator').value;
-				var dec = document.getElementById('default_decimal_seperator').value;
+				var thou = document.getElementById('default_number_grouping_separator').value;
+				var dec = document.getElementById('default_decimal_separator').value;
 				var precision = document.getElementById('sigDigits').value;
 				//umber(n, num_grp_sep, dec_sep, round, precision)
 				var newNumber = sym + formatNumber(exampleDigits, thou, dec, precision, precision);
@@ -693,7 +693,7 @@ eoq;
         // parse localeNameFormat
         $formattedName = '';
         for ($i=0; $i<strlen($this->localeNameFormat); $i++) {
-            $formattedName .= array_key_exists($this->localeNameFormat{$i}, $names) ? $names[$this->localeNameFormat{$i}] : $this->localeNameFormat{$i};
+            $formattedName .= array_key_exists($this->localeNameFormat[$i], $names) ? $names[$this->localeNameFormat[$i]] : $this->localeNameFormat[$i];
         }
 
         $formattedName = trim($formattedName);
@@ -782,7 +782,7 @@ eoq;
      */
     public function createInvalidLocaleNameFormatUpgradeNotice()
     {
-        $fh = fopen($this->invalidNameFormatUpgradeFilename, 'w');
+        $fh = fopen($this->invalidNameFormatUpgradeFilename, 'wb');
         fclose($fh);
     }
 

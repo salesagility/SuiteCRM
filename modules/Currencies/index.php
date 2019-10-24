@@ -174,7 +174,7 @@ EOQ;
     
     $sugar_smarty->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
     $sugar_smarty->assign("JAVASCRIPT", get_set_focus_js());
-    $sugar_smarty->assign("THEME", SugarThemeRegistry::current()->__toString());
+    $sugar_smarty->assign("THEME", (string)SugarThemeRegistry::current());
     $sugar_smarty->assign("ID", $focus->id);
     $sugar_smarty->assign('NAME', $focus->name);
     $sugar_smarty->assign('STATUS', $focus->status);

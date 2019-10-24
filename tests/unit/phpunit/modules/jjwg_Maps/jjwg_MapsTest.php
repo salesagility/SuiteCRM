@@ -23,11 +23,6 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testconfiguration()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $jjwgMaps = new jjwg_Maps();
 
         //execute the method and test if it works and does not throws an exception.
@@ -37,8 +32,6 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testsaveConfiguration()
@@ -327,12 +320,6 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlogGeocodeInfo()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $jjwgMaps = new jjwg_Maps();
 
         $bean = new Meeting();
@@ -346,8 +333,6 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testgetProspectLists()

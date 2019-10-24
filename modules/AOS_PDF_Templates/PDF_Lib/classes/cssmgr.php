@@ -1090,7 +1090,7 @@ class cssmgr
         $ret = $arrays[0];
         for ($i = 1; $i < $narrays; $i ++) {
             foreach ($arrays[$i] as $key => $value) {
-                if (((string) $key) === ((string) intval($key))) { // integer or string as integer key - append
+                if (((string) $key) === ((string)(int)$key)) { // integer or string as integer key - append
                     $ret[] = $value;
                 } else { // string key - merge
                     if (is_array($value) && isset($ret[$key])) {

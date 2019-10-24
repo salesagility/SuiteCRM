@@ -1,7 +1,6 @@
 <?php
 namespace SuiteCRM\Test;
 
-use User;
 use DBManagerFactory;
 
 /** @noinspection PhpUndefinedClassInspection */

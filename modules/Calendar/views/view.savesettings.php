@@ -79,8 +79,8 @@ class CalendarViewSaveSettings extends SugarView
     
     private function to_db_time($hours, $minutes, $mer)
     {
-        $hours = intval($hours);
-        $minutes = intval($minutes);
+        $hours = (int)$hours;
+        $minutes = (int)$minutes;
         $mer = strtolower($mer);
         if (!empty($mer)) {
             if (($mer) == 'am') {

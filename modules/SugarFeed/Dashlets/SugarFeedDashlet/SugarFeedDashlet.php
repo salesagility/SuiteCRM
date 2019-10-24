@@ -267,6 +267,7 @@ class SugarFeedDashlet extends DashletGeneric
             $all_modules = array_merge($regular_modules,$owner_modules);
             if(!is_admin($GLOBALS['current_user']) && count($all_modules) > 0)
             {
+                $securitygroup_where = '';
                 $first = true;
                 foreach($all_modules as $module)
                 {
@@ -526,7 +527,7 @@ class SugarFeedDashlet extends DashletGeneric
         global $sugar_config, $timedate, $current_user, $theme;
         $options = array();
         $options['title'] = $req['title'];
-        $rows = intval($_REQUEST['rows']);
+        $rows = (int)$_REQUEST['rows'];
         if ($rows <= 0) {
             $rows = 15;
         }
@@ -659,8 +660,8 @@ enableQS(false);
     public function getPostForm()
     {
         global $current_user;
-        
-        if (!empty($this->selectedCategories) && !in_array('User Feed', $this->categories, true)) {
+
+        if (!empty($this->selectedCategories) && !array_key_exists('UserFeed', $this->categories)) {
             // The user feed system isn't enabled, don't let them post notes
             return '';
         }

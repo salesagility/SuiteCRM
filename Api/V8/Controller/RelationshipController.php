@@ -2,6 +2,7 @@
 namespace Api\V8\Controller;
 
 use Api\V8\Param\CreateRelationshipParams;
+use Api\V8\Param\CreateRelationshipByLinkParams;
 use Api\V8\Param\DeleteRelationshipParams;
 use Api\V8\Param\GetRelationshipParams;
 use Api\V8\Service\RelationshipService;
@@ -58,6 +59,29 @@ class RelationshipController extends BaseController
     ) {
         try {
             $jsonResponse = $this->relationshipService->createRelationship($params);
+
+            return $this->generateResponse($response, $jsonResponse, 201);
+        } catch (\Exception $exception) {
+            return $this->generateErrorResponse($response, $exception, 400);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @param CreateRelationshipByLinkParams $params
+     *
+     * @return Response
+     */
+    public function createRelationshipByLink(
+        Request $request,
+        Response $response,
+        array $args,
+        CreateRelationshipByLinkParams $params
+    ) {
+        try {
+            $jsonResponse = $this->relationshipService->createRelationshipByLink($params);
 
             return $this->generateResponse($response, $jsonResponse, 201);
         } catch (\Exception $exception) {
