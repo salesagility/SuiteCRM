@@ -212,7 +212,7 @@ EOF;
     public function action_createLeadsSpotsData($filepath)
     {
         global $mod_strings, $app_list_strings;
-        $returnArray = array();
+        $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
         $mysqlSelect = <<<EOF
