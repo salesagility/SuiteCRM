@@ -1125,23 +1125,28 @@ class ListView
             str_replace(' ', '', trim($subpanel_def->_instance_properties['sort_by'])) == 'last_name,first_name') {
             $this->sortby = 'last_name '.$this->sort_order.', first_name ';
         }
+        try {
+            if (!empty($this->response)) {
+                $response =& $this->response;
+                echo 'cached';
+            } else {
+                $response = SugarBean::get_union_related_list(
+                    $sugarbean,
+                    $this->sortby,
+                    $this->sort_order,
+                    $this->query_where,
+                    $current_offset,
+                    -1,
+                    $this->records_per_page,
+                    $this->query_limit,
+                    $subpanel_def
+                );
+                $this->response =& $response;
+            }
+        } catch (Exception $ex) {
+            LoggerManager::getLogger()->fatal('[' . __METHOD__ . "] . {$ex->getMessage()}");
 
-        if (!empty($this->response)) {
-            $response =& $this->response;
-            echo 'cached';
-        } else {
-            $response = SugarBean::get_union_related_list(
-                $sugarbean,
-                $this->sortby,
-                $this->sort_order,
-                $this->query_where,
-                $current_offset,
-                -1,
-                $this->records_per_page,
-                $this->query_limit,
-                $subpanel_def
-            );
-            $this->response =& $response;
+            return ['list' => [], 'parent_data' => [], 'query' => ''];
         }
         $list = $response['list'];
         
