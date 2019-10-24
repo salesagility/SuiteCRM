@@ -1143,12 +1143,10 @@ class ListView
                 );
                 $this->response =& $response;
             }
-        }
-        catch (Exception $ex){
-            global $log;
-            $log->fatal("[" . __METHOD__ . "] An error occurred processingUnionBeans ");
-            $log->fatal("[" . __METHOD__ . "] . {$ex->getMessage()}");
-            return array('list'=> [], 'parent_data'=> [], 'query'=> "");
+        } catch (Exception $ex) {
+            LoggerManager::getLogger()->fatal('[' . __METHOD__ . "] . {$ex->getMessage()}");
+
+            return ['list' => [], 'parent_data' => [], 'query' => ''];
         }
         $list = $response['list'];
         
