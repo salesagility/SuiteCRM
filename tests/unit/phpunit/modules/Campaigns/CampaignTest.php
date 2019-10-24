@@ -1,5 +1,7 @@
 <?php
 
+require_once 'modules/Campaigns/utils.php';
+
 
 class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
@@ -10,6 +12,68 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
+    }
+
+    public function testSubscribeUnsubscribeFromNewsLetterCampaign()
+    {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('sugarfeed');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('leads_cstm');
+        $state->pushTable('leads');
+        $state->pushTable('campaigns');
+        $state->pushTable('prospect_lists');
+        $state->pushTable('prospect_list_campaigns');
+        $state->pushTable('prospect_lists_prospects');
+        $state->pushGlobals();
+
+        $campaign = new Campaign();
+        $campaign->name = create_guid();
+        $campaign->campaign_type = "NewsLetter";
+        $campaign->save();
+        $campaign->load_relationship('prospectlists');
+
+        // Add the lists to the campaign
+        $exempt_list = new ProspectList();
+        $exempt_list->list_type = "exempt";
+        $exempt_list->save();
+        $campaign->prospectlists->add($exempt_list->id);
+
+        $default_list = new ProspectList();
+        $default_list->list_type = "default";
+        $default_list->save();
+        $campaign->prospectlists->add($default_list->id);
+
+        $test_list = new ProspectList();
+        $test_list->list_type = "test";
+        $test_list->save();
+        $campaign->prospectlists->add($test_list->id);
+
+        $lead = new Lead();
+        $lead->save();
+
+        // Subscribe
+        subscribe($campaign->id, null, $lead, true);
+        $keyed = get_subscription_lists_keyed($lead);
+        $this->assertArrayHasKey($campaign->name, $keyed['subscribed']);
+        $this->assertEquals($default_list->id, $keyed['subscribed'][$campaign->name]['prospect_list_id']);
+
+        // Unsubscribe
+        unsubscribe($campaign->id, $lead);
+        $keyed = get_subscription_lists_keyed($lead);
+        $this->assertArrayNotHasKey($campaign->name, $keyed['subscribed']);
+        $this->assertArrayHasKey($campaign->name, $keyed['unsubscribed']);
+        $this->assertEquals($default_list->id, $keyed['unsubscribed'][$campaign->name]['prospect_list_id']);
+
+        $state->popGlobals();
+        $state->popTable('prospect_lists_prospects');
+        $state->popTable('prospect_list_campaigns');
+        $state->popTable('prospect_lists');
+        $state->popTable('campaigns');
+        $state->popTable('leads');
+        $state->popTable('leads_cstm');
+        $state->popTable('aod_indexevent');
+        $state->popTable('sugarfeed');
     }
 
     public function testCampaign()
@@ -29,19 +93,12 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlist_view_parse_additional_sections()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $campaign = new Campaign();
 
         //test with attributes preset and verify template variables are set accordingly
         $tpl = new Sugar_Smarty();
         $campaign->list_view_parse_additional_sections($tpl);
         $this->assertEquals('', isset($tpl->_tpl_vars['ASSIGNED_USER_NAME']) ? $tpl->_tpl_vars['ASSIGNED_USER_NAME'] : null);
-        
-        // clean up
     }
 
     public function testget_summary_text()
@@ -74,12 +131,6 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testclear_campaign_prospect_list_relationship()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $campaign = new Campaign();
 
         //execute the method and test if it works and does not throws an exception.
@@ -90,18 +141,10 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testmark_relationships_deleted()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $campaign = new Campaign();
 
         //execute the method and test if it works and does not throws an exception.
@@ -112,18 +155,10 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $campaign = new Campaign();
 
         //execute the method and test if it works and does not throws an exception.
@@ -133,18 +168,10 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfill_in_additional_detail_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $campaign = new Campaign();
 
         //execute the method and test if it works and does not throws an exception.
@@ -154,18 +181,10 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testupdate_currency_id()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $campaign = new Campaign();
 
         //execute the method and test if it works and does not throws an exception.
@@ -175,17 +194,13 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testget_list_view_data()
     {
         $campaign = new Campaign();
 
-        $current_theme = SugarThemeRegistry::current();
         //execute the method and verify that it returns expected results
-
         $expected = array(
                 'DELETED' => 0,
                 'TRACKER_COUNT' => '0',
@@ -229,9 +244,7 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndMarkDeleted()
     {
-        
-    // save state
-
+        // save state
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
@@ -257,7 +270,6 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(null, $result);
         
         // clean up
-        
         $state->popGlobals();
         $state->popTable('tracker');
         $state->popTable('campaigns');

@@ -379,7 +379,22 @@ class Dashlet
             $autoRefresh = $this->autoRefresh;
         }
 
-        return $autoRefresh * 1000;
+        $ret = $autoRefresh * 1000;
+
+        /**
+           This number is used by setInterval() function in JS
+           We should consider a limit of 2**31 -1
+           https://stackoverflow.com/questions/12633405/what-is-the-maximum-delay-for-setinterval/12633556#comment78208539_12633488
+         */
+        if ($ret > (pow(2, 31) - 1)) {
+            $ret = pow(2, 31) - 1;
+            LoggerManager::getLogger()->warn(
+                "The value of autoRefresh key in Dashlet: {$this->title} must be less than 2.147.483 seconds."
+                ."{$autoRefresh} was configured. Using 2.147.483 seconds instead."
+            );
+        }
+
+        return $ret;
     }
 
     /**

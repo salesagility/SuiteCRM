@@ -43,9 +43,11 @@ class Filter
             unset($params['operator']);
         }
 
+        $params = $this->addDeletedParameter($params);
+
         $where = [];
         foreach ($params as $field => $expr) {
-            if (!property_exists($bean, $field)) {
+            if (empty($bean->field_defs[$field])) {
                 throw new \InvalidArgumentException(sprintf(
                     'Filter field %s in %s module is not found',
                     $field,
@@ -70,6 +72,23 @@ class Filter
         }
 
         return implode(sprintf(' %s ', $operator), $where);
+    }
+
+    /**
+     * Only return deleted records if they were explicitly requested
+     *
+     * @param array $params
+     * @return array
+     */
+    protected function addDeletedParameter(array $params)
+    {
+        if (!array_key_exists('deleted', $params)) {
+            $params['deleted'] = [
+                'eq' => 0
+            ];
+        }
+
+        return $params;
     }
 
     /**

@@ -140,6 +140,9 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 } else {
                     if (array_key_exists($k, $person) || array_key_exists($k, $person->field_defs)) {
                         if (in_array($k, $possiblePersonCaptureFields)) {
+                            if (is_array($v)) {
+                                $v = encodeMultienumValue($v);
+                            }
                             $person->$k = $v;
                         } else {
                             LoggerManager::getLogger()->warn('Trying to set a non-valid field via WebToPerson Form: ' . $k);
@@ -240,13 +243,9 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                         $configurator = new Configurator();
                         if ($configurator->isConfirmOptInEnabled()) {
                             $emailman = new EmailMan();
-                            $now = TimeDate::getInstance()->nowDb();
-                            
+
                             if (!$emailman->sendOptInEmail($sea, $person->module_name, $person->id)) {
                                 $errors[] = 'Confirm Opt In email sending failed, please check email address is correct: ' . $sea->email_address;
-                                $sea->confirm_opt_in_fail_date = $now;
-                            } else {
-                                $sea->confirm_opt_in_sent_date = $now;
                             }
                         }
                         if ($configurator->isOptInEnabled()) {

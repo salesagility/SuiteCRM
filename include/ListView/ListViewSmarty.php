@@ -133,13 +133,18 @@ class ListViewSmarty extends ListViewDisplay
 
         $totalWidth = 0;
         foreach ((array)$this->displayColumns as $name => $params) {
-            $totalWidth += (int)$params['width'];
+            $totalWidth += isset($params['width'])? (int)$params['width'] : 0;
         }
         $adjustment = $totalWidth / 100;
 
         $contextMenuObjectsTypes = array();
         foreach ((array)$this->displayColumns as $name => $params) {
-            $this->displayColumns[$name]['width'] = floor(((int)$this->displayColumns[$name]['width']) / $adjustment);
+            if (!isset($this->displayColumns[$name]['width']) || 0 === $adjustment) {
+                $this->displayColumns[$name]['width'] = 0;
+            } else {
+                $this->displayColumns[$name]['width'] = floor(((int)$this->displayColumns[$name]['width']) / $adjustment);
+            }
+
             // figure out which contextMenu objectsTypes are required
             if (!empty($params['contextMenu']['objectType'])) {
                 $contextMenuObjectsTypes[$params['contextMenu']['objectType']] = true;
@@ -288,10 +293,10 @@ class ListViewSmarty extends ListViewDisplay
         if (!isset($this->data['pageData']['offsets'])) {
             $GLOBALS['log']->warn("Incorrect pageData: trying to display but offset is not set");
         } else {
-            if (!isset($data['data'])) {
+            if (!isset($this->data['data'])) {
                 $data['data'] = null;
                 LoggerManager::getLogger()->warn('List view smarty data must be an array, undefined data given and converting to an empty array.');
-            } elseif (!is_array($data['data'])) {
+            } elseif (!is_array($this->data['data'])) {
                 LoggerManager::getLogger()->warn('List view smarty data must be an array, ' . gettype($this->data['data']) . ' given and converting to an array.');
             }
             $this->data['pageData']['offsets']['lastOffsetOnPage'] = $this->data['pageData']['offsets']['current'] + count((array)$this->data['data']);

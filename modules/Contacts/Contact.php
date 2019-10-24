@@ -215,7 +215,7 @@ class Contact extends Person implements EmailInterface
         if (!ACLController::moduleSupportsACL('Accounts') || ACLController::checkAccess(
             'Accounts',
             'view',
-                $is_owner
+            $is_owner
         )
         ) {
             $array_assign['ACCOUNT'] = 'a';
@@ -261,16 +261,16 @@ class Contact extends Person implements EmailInterface
         }
 
         return parent::create_new_list_query(
-                $order_by,
-                $where,
-                $filter,
-                $params,
-                $show_deleted,
-                $join_type,
-                $return_array,
-                $parentbean,
-                $singleSelect,
-                $ifListForExport
+            $order_by,
+            $where,
+            $filter,
+            $params,
+            $show_deleted,
+            $join_type,
+            $return_array,
+            $parentbean,
+            $singleSelect,
+            $ifListForExport
             );
     }
 

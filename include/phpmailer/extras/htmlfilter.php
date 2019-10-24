@@ -44,12 +44,12 @@ function tln_tagprint($tagname, $attary, $tagtype)
         $fulltag = '</' . $tagname . '>';
     } else {
         $fulltag = '<' . $tagname;
-        if (is_array($attary) && sizeof($attary)) {
+        if (is_array($attary) && count($attary)) {
             $atts = array();
             foreach ($attary as $attname => $attvalue) {
                 array_push($atts, "$attname=$attvalue");
             }
-            $fulltag .= ' ' . join(' ', $atts);
+            $fulltag .= ' ' . implode(' ', $atts);
         }
         if ($tagtype == 3) {
             $fulltag .= ' /';
@@ -84,7 +84,7 @@ function tln_casenormalize(&$val)
 function tln_skipspace($body, $offset)
 {
     preg_match('/^(\s*)/s', substr($body, $offset), $matches);
-    if (sizeof($matches[1])) {
+    if (count($matches[1])) {
         $count = strlen($matches[1]);
         $offset += $count;
     }
@@ -441,9 +441,9 @@ function tln_getnxtag($body, $offset)
 function tln_deent(&$attvalue, $regex, $hex = false)
 {
     preg_match_all($regex, $attvalue, $matches);
-    if (is_array($matches) && sizeof($matches[0]) > 0) {
+    if (is_array($matches) && count($matches[0]) > 0) {
         $repl = array();
-        for ($i = 0; $i < sizeof($matches[0]); $i++) {
+        for ($i = 0; $i < count($matches[0]); $i++) {
             $numval = $matches[1][$i];
             if ($hex) {
                 $numval = hexdec($numval);
@@ -795,7 +795,7 @@ function tln_body2div($attary, $trans_image_path)
     $text = '#000000';
     $has_bgc_stl = $has_txt_stl = false;
     $styledef = '';
-    if (is_array($attary) && sizeof($attary) > 0) {
+    if (is_array($attary) && count($attary) > 0) {
         foreach ($attary as $attname=>$attvalue) {
             $quotchar = substr($attvalue, 0, 1);
             $attvalue = str_replace($quotchar, "", $attvalue);
@@ -886,12 +886,12 @@ function tln_sanitize(
                 if (!empty($attary)) {
                     $attary = tln_fixatts(
                         $tagname,
-                                         $attary,
-                                         $rm_attnames,
-                                         $bad_attvals,
-                                         $add_attr_to_tag,
-                                         $trans_image_path,
-                                         $block_external_images
+                        $attary,
+                        $rm_attnames,
+                        $bad_attvals,
+                        $add_attr_to_tag,
+                        $trans_image_path,
+                        $block_external_images
                                          );
                 }
                 $trusted .= tln_tagprint($tagname, $attary, $tagtype);
@@ -972,7 +972,7 @@ function tln_sanitize(
                             /**
                              * This is where we run other checks.
                              */
-                            if (is_array($attary) && sizeof($attary) > 0) {
+                            if (is_array($attary) && count($attary) > 0) {
                                 $attary = tln_fixatts(
                                     $tagname,
                                     $attary,

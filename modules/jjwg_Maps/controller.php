@@ -500,11 +500,11 @@ class jjwg_MapsController extends SugarController
         $output = array();
         foreach ($fields as $field) {
             $output[] = preg_match("/(?:${delimiter_esc}|${enclosure_esc}|\s)/", $field) ? (
-                    $enclosure . str_replace($enclosure, $enclosure . $enclosure, $field) . $enclosure
+                $enclosure . str_replace($enclosure, $enclosure . $enclosure, $field) . $enclosure
                     ) : $field;
         }
 
-        return (join($delimiter, $output) . "\n");
+        return (implode($delimiter, $output) . "\n");
     }
 
     /**
@@ -865,7 +865,7 @@ class jjwg_MapsController extends SugarController
                         ' FROM '.$this->display_object->table_name.' '.
                             'LEFT JOIN prospect_lists_prospects ON prospect_lists_prospects.related_id = '.$this->display_object->table_name.'.id AND prospect_lists_prospects.deleted=0 '.
                             'LEFT JOIN prospect_lists ON prospect_lists_prospects.prospect_list_id = prospect_lists.id AND prospect_lists.deleted=0 ',
-                            $query
+                        $query
                     );
                     // Restrict WHERE to related type and $list_id
                     $query .= ' AND prospect_lists_prospects.related_type = \''.$this->display_object->module_name.'\' AND '.

@@ -120,7 +120,7 @@ class StateCheckerConfig
      * (Slow working but give more information about the error location, use in development only)
      * @var boolean
      */
-    protected static $saveTraces = true;
+    protected static $saveTraces = false;
     
     /**
      * Redefine memory limit

@@ -41,9 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-require_once('include/Smarty/Smarty.class.php');
-
 if (!defined('SUGAR_SMARTY_DIR')) {
     define('SUGAR_SMARTY_DIR', sugar_cached('smarty/'));
 }
@@ -143,7 +140,7 @@ class Sugar_Smarty extends Smarty
         /// if the tpl exists in the theme folder then set the resource_name to the tpl in the theme folder.
         /// otherwise fall back to the default tpl
         $current_theme = SugarThemeRegistry::current();
-        $theme_directory = $current_theme->__toString();
+        $theme_directory = (string)$current_theme;
         if (strpos($resource_name, "themes" . DIRECTORY_SEPARATOR . $theme_directory) === false) {
             $test_path = SUGAR_PATH . DIRECTORY_SEPARATOR . "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
             if (file_exists($test_path)) {
@@ -157,17 +154,16 @@ class Sugar_Smarty extends Smarty
         $this->assign('MOD', $mod_strings);
         $this->assign('APP_CONFIG', $sugar_config);
 
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel('sugar_smarty_errors', 'error_reporting', false);
+
         if (!(isset($sugar_config['developerMode']) && $sugar_config['developerMode'])) {
             $level = isset($sugar_config['smarty_error_level']) ? $sugar_config['smarty_error_level'] : 0;
-            $errorLevelStored = error_reporting();
             error_reporting($level);
         }
         $fetch = parent::fetch(get_custom_file_if_exists($resource_name), $cache_id, $compile_id, $display);
-        if (!(isset($sugar_config['developerMode']) && $sugar_config['developerMode'])) {
-            $level = isset($sugar_config['smarty_error_level']) ? $sugar_config['smarty_error_level'] : 0;
-            error_reporting($errorLevelStored);
-        }
-        
+        $state->popErrorLevel('sugar_smarty_errors', 'error_reporting', false);
+
         return $fetch;
     }
 

@@ -127,9 +127,9 @@ class contextMenu
             $this->addMenuItem(
                 $def['text'],
                 $def['action'],
-                               (empty($def['module']) ? null : $def['module']),
-                               (empty($def['aclAction']) ? null : $def['aclAction']),
-                               (empty($def['params']) ? null : $def['params'])
+                (empty($def['module']) ? null : $def['module']),
+                (empty($def['aclAction']) ? null : $def['aclAction']),
+                (empty($def['params']) ? null : $def['params'])
             );
         }
     }

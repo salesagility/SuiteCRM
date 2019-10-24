@@ -439,7 +439,7 @@ class MBModule
             $this->copyMetaRecursive($this->path . '/metadata/', $path . '/metadata/', true) ;
             $this->copyMetaRecursive(
                 $this->path . '/Dashlets/' . $this->key_name . 'Dashlet/',
-                                       $path . '/Dashlets/' . $this->key_name . 'Dashlet/',
+                $path . '/Dashlets/' . $this->key_name . 'Dashlet/',
                 true
             ) ;
             $app_list_strings['moduleList'][$this->key_name] = $this->mblanguage->label;

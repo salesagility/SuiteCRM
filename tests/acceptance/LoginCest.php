@@ -22,14 +22,10 @@ class LoginCest
     }
 
     // tests
-    public function testScenarioLoginAsAdministrator(AcceptanceTester $I, \Helper\WebDriverHelper $webDriverHelper)
+    public function testScenarioLoginAsAdministrator(AcceptanceTester $I)
     {
-        $I->wantTo('Login into SuiteCRM as an administrator');
-        $I->amOnUrl($webDriverHelper->getInstanceURL());
+        $I->wantTo('Login as an administrator');
         // Login as Administrator
-        $I->login(
-            $webDriverHelper->getAdminUser(),
-            $webDriverHelper->getAdminPassword()
-        );
+        $I->loginAsAdmin();
     }
 }

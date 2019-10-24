@@ -64,7 +64,6 @@ $mod_strings = array(
     'LNK_NEW_MEETING' => 'Schedule Meeting',
     'LNK_NEW_TASK' => 'Create Task',
     'LNK_NEW_BUG' => 'Report Bug',
-    'LBL_ADD_BUSINESSCARD' => 'Enter Business Card',
     'LNK_NEW_SEND_EMAIL' => 'Compose Email',
     'LBL_NO_ACCESS' => 'You do not have access to this area. Contact your site administrator to obtain access',
     'LBL_NO_RESULTS_IN_MODULE' => '-- No Results --',
@@ -234,8 +233,8 @@ $mod_strings = array(
     'LBL_HOUR_ABBREV' => 'hour',
     'LBL_HOURS_ABBREV' => 'hours',
     'LBL_MINSS_ABBREV' => 'minutes',
-    'LBL_LOCATION' => 'Location: ',
-    'LBL_STATUS' => 'Status: ',
+    'LBL_LOCATION' => 'Location:',
+    'LBL_STATUS' => 'Status:',
     'LBL_DESCRIPTION' => 'Description: ',
     //End Events
 );

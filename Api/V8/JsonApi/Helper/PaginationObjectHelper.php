@@ -55,6 +55,6 @@ class PaginationObjectHelper
         $queryParams = $request->getQueryParams();
         $queryParams['page']['number'] = $number;
 
-        return sprintf('/%s?%s', $request->getUri()->getPath(), urldecode(http_build_query($queryParams)));
+        return sprintf('%s?%s', $request->getUri()->getPath(), urldecode(http_build_query($queryParams)));
     }
 }

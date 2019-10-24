@@ -1,6 +1,5 @@
 <?php
 
-
 class SuiteLoggerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     /**

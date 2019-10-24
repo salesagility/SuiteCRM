@@ -61,18 +61,13 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
             return $temp;
         }
 
-        global $app_strings, $current_user, $sugar_config;
+        global $app_strings, $current_user;
         $title = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_TITLE'];
         $value = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
 
         //martin Bug 19660
-        $userPref = $current_user->getPreference('email_link_type');
-        $defaultPref = $sugar_config['email_default_client'];
-        if ($userPref != '') {
-            $client = $userPref;
-        } else {
-            $client = $defaultPref;
-        }
+        $client = $current_user->getEmailClient();
+
         /** @var Person|Company|Opportunity $bean */
         $bean = $defines['focus'];
 

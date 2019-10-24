@@ -45,8 +45,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
-
 include_once __DIR__ . '/../../../../include/utils.php';
 
 class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
@@ -79,5 +77,43 @@ class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         unset($app_strings['TEST_NONEXISTS_LABEL']);
+    }
+
+    public function testencodeMultienumValue()
+    {
+        $this->assertEquals('', encodeMultienumValue(array()));
+        $this->assertEquals('^foo^', encodeMultienumValue(array('foo')));
+        $this->assertEquals('^foo^,^bar^', encodeMultienumValue(array('foo', 'bar')));
+    }
+
+    public function testunencodeMultienumValue()
+    {
+        $this->assertEquals(array('foo'), unencodeMultienum('^foo^'));
+        $this->assertEquals(array('foo', 'bar'), unencodeMultienum('^foo^,^bar^'));
+    }
+
+    public function testget_languages()
+    {
+        $this->assertEquals(get_languages(), ['en_us' => 'English (US)']);
+        $this->assertEquals(get_all_languages(), ['en_us' => 'English (US)']);
+        $this->assertEquals(get_language_display('en_us'), 'English (US)');
+    }
+
+    public function testget_current_language()
+    {
+        global $sugar_config;
+        $state = new StateSaver();
+        $state->pushGlobals();
+
+        $_SESSION['authenticated_user_language'] = 'foo';
+        $this->assertEquals(get_current_language(), 'foo');
+        $this->assertEquals(get_current_language(), 'foo');
+
+        $sugar_config['default_language'] = 'bar';
+        $this->assertEquals(get_current_language(), 'foo');
+        unset($_SESSION['authenticated_user_language']);
+        $this->assertEquals(get_current_language(), 'bar');
+
+        $state->popGlobals();
     }
 }

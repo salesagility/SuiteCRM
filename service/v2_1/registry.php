@@ -83,9 +83,9 @@ class registry_v2_1 extends registry
         $this->serviceClass->registerType(
             'link_lists',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:link_list2[]')
@@ -96,9 +96,9 @@ class registry_v2_1 extends registry
         $this->serviceClass->registerType(
             'link_array_list',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:link_value2[]')

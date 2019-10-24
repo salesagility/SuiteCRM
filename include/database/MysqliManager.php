@@ -356,6 +356,11 @@ class MysqliManager extends MysqlManager
         }
         mysqli_set_charset($this->database, "utf8");
 
+        // https://github.com/salesagility/SuiteCRM/issues/7107
+        // MySQL 5.7 is stricter regarding missing values in SQL statements and makes some tests fail.
+        // Remove STRICT_TRANS_TABLES from sql_mode so we get the old behaviour again.
+        mysqli_query($this->database, "SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode, 'STRICT_TRANS_TABLES', ''))");
+
         if ($this->checkError('Could Not Connect', $dieOnError)) {
             $GLOBALS['log']->info("connected to db");
         }
@@ -398,7 +403,7 @@ class MysqliManager extends MysqlManager
             "MySQLi Host Info" => @mysqli_get_host_info($this->database),
             "MySQLi Server Info" => @mysqli_get_server_info($this->database),
             "MySQLi Client Encoding" => @mysqli_character_set_name($this->database),
-            "MySQL Character Set Settings" => join(", ", $charset_str),
+            "MySQL Character Set Settings" => implode(", ", $charset_str),
         );
     }
 

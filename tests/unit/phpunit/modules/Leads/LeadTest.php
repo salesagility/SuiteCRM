@@ -16,7 +16,6 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //self::markTestIncomplete('Test changes error level');
 
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('inbound_email');
         
@@ -39,8 +38,6 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'importable', $lead);
         
         // clean up
-        
-        
         $state->popTable('inbound_email');
     }
 
@@ -176,9 +173,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_list_fields()
     {
-
-    // save state
-
+        // save state
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
@@ -197,9 +192,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertEquals("firstn lastn", $lead->name);
 
-        
         // clean up
-        
         $state->popTable('tracker');
         $state->popTable('sugarfeed');
         $state->popTable('leads_cstm');
@@ -223,9 +216,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_list_view_data()
     {
-
-    // save state
-
+        // save state
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
         $state->pushTable('tracker');
@@ -242,10 +233,11 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'CONVERTED' => '0',
             'ENCODED_NAME' => ' ',
             'EMAIL1' => '',
-            'EMAIL1_LINK' =>
-                '<a class="email-link"'
-                . ' onclick="$(document).openComposeViewModal(this);" data-module="Leads"'
-                . ' data-record-id="" data-module-name=" " data-email-address=""></a>',
+            'EMAIL1_LINK' => '            <a class="email-link" href="mailto:"
+                    onclick="$(document).openComposeViewModal(this);"
+                    data-module="Leads" data-record-id=""
+                    data-module-name=" " data-email-address=""
+                ></a>',
             'ACC_NAME_FROM_ACCOUNTS' => null,
         );
 
@@ -259,7 +251,6 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals($expected['EMAIL1_LINK'], $actual['EMAIL1_LINK']);
         
         // clean up
-        
         $state->popTable('tracker');
         $state->popTable('email_addresses');
     }
@@ -351,12 +342,10 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testlistviewACLHelper()
     {
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
         // test
-        
         $lead = BeanFactory::getBean('Leads');
 
         $expected = array("MAIN" => "a", "ACCOUNT" => "a", "OPPORTUNITY" => "a", "CONTACT" => "a");
@@ -364,7 +353,6 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
 
         // clean up
-        
         $state->popGlobals();
     }
 

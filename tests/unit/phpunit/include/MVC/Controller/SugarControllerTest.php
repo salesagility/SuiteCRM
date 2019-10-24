@@ -63,20 +63,18 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testexecute()
     {
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
         $state->pushGlobals();
-        
+        $state->pushPHPConfigOptions();
+
+        // suppress output during the test
+        $this->setOutputCallback(function () {});
+
         // test
-        
-        
-        
         $SugarController = new SugarController();
 
         // replace and use a temporary logger
-
-
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
 
@@ -88,29 +86,20 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         // change back to original logger
-
         $testLogger = $GLOBALS['log'];
         $GLOBALS['log'] = $logger;
 
         // exam log
-
-
         $this->assertTrue(true);
         
         // clean up
-        
+        $state->popPHPConfigOptions();
         $state->popGlobals();
         $state->popTable('tracker');
     }
 
     public function testprocess()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $SugarController = new SugarController();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -121,8 +110,6 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        // clean up
     }
 
     public function testpre_save()
@@ -154,7 +141,6 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(true);
         
         // cleanup
-        
         if (isset($session)) {
             $_SESSION = $session;
         } else {
@@ -170,6 +156,8 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
+        $state->pushTable('users');
+        $state->pushTable('user_preferences');
         
         if (isset($_SESSION)) {
             $session = $_SESSION;
@@ -199,7 +187,6 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(true);
         
         // cleanup
-        
         if (isset($session)) {
             $_SESSION = $session;
         } else {
@@ -209,6 +196,8 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $query = "UPDATE users SET date_modified = '$testUserDateModified' WHERE id = '$testUserId' LIMIT 1";
         DBManagerFactory::getInstance()->query($query);
         
+        $state->popTable('user_preferences');
+        $state->popTable('users');
         $state->popTable('tracker');
         $state->popTable('aod_index');
     }
@@ -217,22 +206,21 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $SugarController = new SugarController();
 
-        //first check with default value of attribute
+        // check with default value of attribute
         $this->assertAttributeEquals('classic', 'view', $SugarController);
 
-        //secondly check for attribute value change on method execution.
+        // check for attribute value change on method execution.
         $SugarController->action_spot();
         $this->assertAttributeEquals('spot', 'view', $SugarController);
     }
 
     public function testgetActionFilename()
     {
-
-        //first check with a invalid value
+        // check with an invalid value
         $action = SugarController::getActionFilename('');
         $this->assertEquals('', $action);
 
-        //secondly check with a valid value
+        // check with a valid value
         $action = SugarController::getActionFilename('editview');
         $this->assertEquals('EditView', $action);
     }
@@ -240,28 +228,25 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcheckEntryPointRequiresAuth()
     {
         // store state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         
         // test
-        
         $SugarController = new SugarController();
 
-        //check with a invalid value
+        // check with a invalid value
         $result = $SugarController->checkEntryPointRequiresAuth('');
         $this->assertTrue($result);
 
-        //cehck with a valid True value
+        // check with a valid True value
         $result = $SugarController->checkEntryPointRequiresAuth('download');
         $this->assertTrue($result);
 
-        //cehck with a valid False value
+        // check with a valid False value
         $result = $SugarController->checkEntryPointRequiresAuth('GeneratePassword');
         $this->assertFalse($result);
         
         // clean up
-        
         $state->popGlobals();
     }
 }

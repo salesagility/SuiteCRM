@@ -67,7 +67,7 @@ require_once('include/upload_file.php');
 
 
 
-$GLOBALS['log'] = LoggerManager::getLogger('SugarCRM');
+$GLOBALS['log'] = LoggerManager::getLogger();
 
 ///////////////////////////////////////////////////////////////////////////////
 ////    PREP VARS FOR LANG PACK

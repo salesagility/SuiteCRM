@@ -560,7 +560,7 @@ class MssqlManager extends DBManager
                                                 OVER (ORDER BY " . preg_replace(
                                 '/^' . $dist_str . '\s+/',
                                 '',
-                                    $this->returnOrderBy($sql, $orderByMatch[3])
+                                $this->returnOrderBy($sql, $orderByMatch[3])
                             ) . ') AS row_number,
                                                 count(*) counter, ' . $distinctSQLARRAY[0] . '
                                                 ' . $distinctSQLARRAY[1] . '
@@ -667,7 +667,7 @@ class MssqlManager extends DBManager
                     );
                     $p_sql = substr($p_sql, 0, $nested_pos + $beg_sin) . ' ##' . $patt . $i . '## ' . substr(
                         $p_sql,
-                            $sec_sin + 1
+                        $sec_sin + 1
                     );
                     ++$i;
                     continue;
@@ -1171,7 +1171,7 @@ class MssqlManager extends DBManager
                 return 'getutcdate()';
         }
 
-        return "$string";
+        return (string)$string;
     }
 
     /**

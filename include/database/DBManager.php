@@ -905,7 +905,7 @@ abstract class DBManager
                 }
                 $altersql = $this->alterColumnSQL($tablename, $value, $ignorerequired);
                 if (is_array($altersql)) {
-                    $altersql = join("\n", $altersql);
+                    $altersql = implode("\n", $altersql);
                 }
                 $sql .= $altersql . "\n";
                 if ($execute) {
@@ -975,7 +975,7 @@ abstract class DBManager
                     if ($execute) {
                         $this->query($rename, true, "Cannot rename index");
                     }
-                    $sql .= is_array($rename) ? join("\n", $rename) . "\n" : $rename . "\n";
+                    $sql .= is_array($rename) ? implode("\n", $rename) . "\n" : $rename . "\n";
                 } else {
                     // ok we need this field lets create it
                     $sql .= "/*MISSING INDEX IN DATABASE - $name -{$value['type']}  ROW */\n";
@@ -1038,7 +1038,9 @@ abstract class DBManager
                         continue;
                     }
                 } else {
-                    if (array_map('strtolower', $fielddef1[$key]) == array_map('strtolower', $fielddef2[$key])) {
+                    $f1 = fixIndexArrayFormat($fielddef1[$key]);
+                    $f2 = fixIndexArrayFormat($fielddef2[$key]);
+                    if (array_map('strtolower', $f1) == array_map('strtolower', $f2)) {
                         continue;
                     }
                 }
@@ -1082,7 +1084,7 @@ abstract class DBManager
                 // Exists on table1 but not table2
                 $returnArray['msg'] = 'not_exists_table2';
             } else {
-                if (sizeof($row1) != sizeof($row2)) {
+                if (count($row1) != count($row2)) {
                     $returnArray['msg'] = 'no_match';
                 } else {
                     $returnArray['msg'] = 'match';
@@ -1169,7 +1171,7 @@ abstract class DBManager
             }
         }
         if (!empty($alters)) {
-            $sql = join(";\n", $alters) . ";\n";
+            $sql = implode(";\n", $alters) . ";\n";
         } else {
             $sql = '';
         }
@@ -1199,7 +1201,7 @@ abstract class DBManager
             }
         }
         if (!empty($sqls)) {
-            return join(";\n", $sqls) . ";";
+            return implode(";\n", $sqls) . ";";
         }
         return '';
     }
@@ -2039,7 +2041,7 @@ abstract class DBManager
             }
         }
 
-        if (sizeof($columns) == 0) {
+        if (count($columns) == 0) {
             return "";
         } // no columns set
 
@@ -2151,7 +2153,7 @@ abstract class DBManager
                         return 0;
                     }
 
-                    return intval($val);
+                    return (int)$val;
                 case 'bigint':
                     $val = (float)$val;
                     if (!empty($fieldDef['required']) && $val == false) {
@@ -2172,7 +2174,7 @@ abstract class DBManager
                         return 0;
                     }
 
-                    return floatval($val);
+                    return (float)$val;
                 case 'time':
                 case 'date':
                     // empty date can't be '', so convert it to either NULL or empty date value
@@ -2823,7 +2825,7 @@ abstract class DBManager
 
             return $result;
         }
-        if (strchr($name, ".")) {
+        if (strstr($name, ".")) {
             // this is a compound name with dots, handle separately
             $parts = explode(".", $name);
             if (count($parts) > 2) {
@@ -2832,7 +2834,7 @@ abstract class DBManager
             }
             $parts = $this->getValidDBName($parts, $ensureUnique, $type, $force);
 
-            return join(".", $parts);
+            return implode(".", $parts);
         }
         // first strip any invalid characters - all but word chars (which is alphanumeric and _)
         $name = preg_replace('/[^\w]+/i', '', $name);
@@ -2920,7 +2922,7 @@ abstract class DBManager
         $values['parent_id'] = $this->massageValue($bean->id, $fieldDefs['parent_id']);
         $values['field_name'] = $this->massageValue($changes['field_name'], $fieldDefs['field_name']);
         $values['data_type'] = $this->massageValue($changes['data_type'], $fieldDefs['data_type']);
-        if ($changes['data_type'] == 'text') {
+        if ($changes['data_type'] == 'text' || $changes['data_type'] == 'multienum') {
             $values['before_value_text'] = $this->massageValue($changes['before'], $fieldDefs['before_value_text']);
             $values['after_value_text'] = $this->massageValue($changes['after'], $fieldDefs['after_value_text']);
         } else {
@@ -3005,7 +3007,7 @@ abstract class DBManager
                 //if the type and values match, do nothing.
                 if (!($this->_emptyValue($before_value, $field_type) && $this->_emptyValue(
                     $after_value,
-                        $field_type
+                    $field_type
                 ))
                 ) {
                     $change = false;

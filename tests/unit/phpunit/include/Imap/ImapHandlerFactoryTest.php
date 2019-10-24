@@ -108,8 +108,8 @@ class ImapHandlerFactoryTest extends StateCheckerPHPUnitTestCaseAbstract
         $results = $factory->saveTestSettingsKey('testCaseExample');
         $existsAfter = file_exists($settingsFile);
         $this->assertTrue($existsAfter);
-        $this->assertTrue(unlink($settingsFile));
         $this->assertTrue($results);
+        $factory->deleteTestSettings();
     }
     
     /**
@@ -120,5 +120,6 @@ class ImapHandlerFactoryTest extends StateCheckerPHPUnitTestCaseAbstract
         $factory = new ImapHandlerFactory();
         $results = $factory->getImapHandler();
         $this->assertInstanceOf(ImapHandlerInterface::class, $results);
+        $factory->deleteTestSettings();
     }
 }

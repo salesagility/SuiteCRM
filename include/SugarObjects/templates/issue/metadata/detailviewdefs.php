@@ -51,48 +51,50 @@ $viewdefs[$module_name]['DetailView'] = array(
     ),
 
     'panels' => array(
-
-        array(
-            $_object_name . '_number',
-            'assigned_user_name',
-        ),
-
-        array(
-            'priority',
-        ),
-
-        array(
-            'resolution',
-            'status',
-        ),
-
-        array(
-            array(
-                'name' => 'date_entered',
-                'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-                'label' => 'LBL_DATE_ENTERED',
-            ),
-            array(
-                'name' => 'date_modified',
-                'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-                'label' => 'LBL_DATE_MODIFIED',
-            ),
-        ),
-
-        array(
+        'default' => array(
 
             array(
-                'name' => 'name',
-                'label' => 'LBL_SUBJECT',
+                $_object_name . '_number',
+                'assigned_user_name',
             ),
-        ),
 
-        array(
-            'description',
-        ),
+            array(
+                'priority',
+            ),
 
-        array(
-            'work_log',
-        ),
+            array(
+                'resolution',
+                'status',
+            ),
+
+            array(
+                array(
+                    'name' => 'date_entered',
+                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+                    'label' => 'LBL_DATE_ENTERED',
+                ),
+                array(
+                    'name' => 'date_modified',
+                    'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+                    'label' => 'LBL_DATE_MODIFIED',
+                ),
+            ),
+
+            array(
+
+                array(
+                    'name' => 'name',
+                    'label' => 'LBL_SUBJECT',
+                ),
+            ),
+
+            array(
+                'description',
+            ),
+
+            array(
+                'work_log',
+            ),
+        )
     )
 );

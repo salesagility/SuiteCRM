@@ -13,7 +13,6 @@ class CurrentLanguageTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     private static $language;
 
-
     public function setUp()
     {
         parent::setUp();
@@ -21,8 +20,6 @@ class CurrentLanguageTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             self::$language = new \SuiteCRM\Utility\CurrentLanguage();
         }
     }
-
-
 
     public function testGetCurrentLanguage()
     {

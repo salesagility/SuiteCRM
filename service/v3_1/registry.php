@@ -102,8 +102,8 @@ class registry_v3_1 extends registry_v3
         parent::registerTypes();
         
         $this->serviceClass->registerType(
-             'md5_results',
-             'complexType',
+            'md5_results',
+            'complexType',
             'array',
             '',
             'SOAP-ENC:Array',
@@ -118,10 +118,10 @@ class registry_v3_1 extends registry_v3
         $this->serviceClass->registerType(
             'module_list',
             'complexType',
-             'struct',
-             'all',
-              '',
-                array(
+            'struct',
+            'all',
+            '',
+            array(
                     'modules'=>array('name'=>'modules', 'type'=>'tns:module_list_array'),
                 )
         );
@@ -129,9 +129,9 @@ class registry_v3_1 extends registry_v3
         $this->serviceClass->registerType(
             'module_list_array',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:module_list_entry[]')
@@ -142,10 +142,10 @@ class registry_v3_1 extends registry_v3
         $this->serviceClass->registerType(
             'module_list_entry',
             'complexType',
-             'struct',
-             'all',
-              '',
-                array(
+            'struct',
+            'all',
+            '',
+            array(
                     'module_key'=>array('name'=>'module_key', 'type'=>'xsd:string'),
                     'module_label'=>array('name'=>'module_label', 'type'=>'xsd:string'),
                     'acls'=>array('name'=>'acls', 'type'=>'tns:acl_list'),
@@ -155,9 +155,9 @@ class registry_v3_1 extends registry_v3
         $this->serviceClass->registerType(
             'acl_list',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:acl_list_entry[]')
@@ -168,21 +168,21 @@ class registry_v3_1 extends registry_v3
         $this->serviceClass->registerType(
             'acl_list_entry',
             'complexType',
-             'struct',
-             'all',
-              '',
-                array(
+            'struct',
+            'all',
+            '',
+            array(
                     'action'=>array('name'=>'action', 'type'=>'xsd:string'),
                     'access'=>array('name'=>'access', 'type'=>'xsd:string'),
                 )
         );
         
         $this->serviceClass->registerType(
-             'get_entry_list_result_version2',
-             'complexType',
-             'struct',
-             'all',
-              '',
+            'get_entry_list_result_version2',
+            'complexType',
+            'struct',
+            'all',
+            '',
             array(
                 'result_count' => array('name'=>'result_count', 'type'=>'xsd:int'),
                 'total_count' => array('name'=>'total_count', 'type'=>'xsd:int'),
@@ -195,10 +195,10 @@ class registry_v3_1 extends registry_v3
         $this->serviceClass->registerType(
             'new_module_fields',
             'complexType',
-             'struct',
-             'all',
-              '',
-                array(
+            'struct',
+            'all',
+            '',
+            array(
                     'module_name'=>array('name'=>'module_name', 'type'=>'xsd:string'),
                     'module_name'=>array('name'=>'table_name', 'type'=>'xsd:string'),
                     'module_fields'=>array('name'=>'module_fields', 'type'=>'tns:field_list'),
@@ -220,9 +220,9 @@ class registry_v3_1 extends registry_v3
         $this->serviceClass->registerType(
             'link_lists',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:link_list2[]')
@@ -233,9 +233,9 @@ class registry_v3_1 extends registry_v3
         $this->serviceClass->registerType(
             'link_array_list',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:link_value2[]')

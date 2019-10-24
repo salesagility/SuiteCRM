@@ -68,7 +68,7 @@ class ListViewService
      *
      * @var array
      */
-    private static $listViewColumnInterface = [
+    protected static $listViewColumnInterface = [
         'fieldName' => '',
         'width' => '',
         'label' => '',
@@ -83,22 +83,22 @@ class ListViewService
     /**
      * @var BeanManager
      */
-    private $beanManager;
+    protected $beanManager;
 
     /**
      * @var AttributeObjectHelper
      */
-    private $attributeHelper;
+    protected $attributeHelper;
 
     /**
      * @var RelationshipObjectHelper
      */
-    private $relationshipHelper;
+    protected $relationshipHelper;
 
     /**
      * @var PaginationObjectHelper
      */
-    private $paginationHelper;
+    protected $paginationHelper;
 
     /**
      * @param BeanManager $beanManager

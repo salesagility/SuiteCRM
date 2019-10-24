@@ -5,11 +5,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOR_Report()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         //execute the contructor and check for the Object type and  attributes
         $aor_Report = new AOR_Report();
         $this->assertInstanceOf('AOR_Report', $aor_Report);
@@ -22,8 +17,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'new_schema', $aor_Report);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $aor_Report);
         $this->assertAttributeEquals(true, 'importable', $aor_Report);
-        
-        // clean up
     }
 
     public function testbean_implements()
@@ -129,10 +122,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testload_report_beans()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
+        $state->pushGlobals();
         
         $aor_Report = new AOR_Report();
 
@@ -145,11 +135,11 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        $state->popGlobals();
     }
 
     public function testgetReportFields()
     {
-
         //execute the method and verify that it returns an array
         $aor_Report = new AOR_Report();
         $result = $aor_Report->getReportFields();
@@ -180,7 +170,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         unset($GLOBALS['_SESSION']);
         unset($GLOBALS['objectList']);
         unset($GLOBALS['mod_strings']);
@@ -202,7 +191,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
         
         // test
-        
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
         $aor_Report->id = '1';
@@ -225,7 +213,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertNotEquals($html2, $html3);
         
         // clean up
-        
         $state->popGlobals();
     }
 
@@ -254,17 +241,27 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertContains('testidentifier', $html3);
         
         // clean up
-        
         $state->popGlobals();
     }
 
     public function testgetTotalHTML()
     {
-
         //execute the method with required data preset and verify it returns expected result
-        $fields = array('label' => array('display' => 1, 'total' => 'SUM', 'label' => 'total'));
+        $fields = array(
+            'label' => array(
+                'display' => 1,
+                'total' => 'SUM',
+                'label' => 'total',
+                'module' => 'Meetings',
+                'field' => 'duration_hours',
+                'params' => ''
+            )
+        );
         $totals = array('label' => array(10, 20, 30));
-        $expected = "<table><thead class='fc-head'><tr><th>total Sum</th></tr></thead><tbody><tr class='oddListRowS1'><td>60</td></tr></tbody></table>";
+        $expected = "<table><thead class='fc-head'><tr><th>total Sum</th></tr></thead><tbody><tr class='oddListRowS1'><td>
+<span class=\"sugar_field\" id=\"duration_hours\">
+60
+</span></td></tr></tbody></table>";
 
         $aor_Report = new AOR_Report();
         $actual = $aor_Report->getTotalHTML($fields, $totals);
@@ -274,7 +271,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcalculateTotal()
     {
-
         //execute the method with data preset and verify it returns expected result
         $totals = array(10, 20, 30);
 
@@ -317,7 +313,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThanOrEqual(0, strlen($actual));
         
         // clean up
-        
         $state->popGlobals();
     }
 
@@ -382,7 +377,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('', $result);
         
         // clean up
-        
         $state->popGlobals();
     }
 
@@ -400,7 +394,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
         
         // clean up
-        
         $state->popGlobals();
     }
 }

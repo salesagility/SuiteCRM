@@ -180,7 +180,7 @@ function commitCopyNewFiles($unzip_dir, $zip_from_dir, $path='')
         if (is_dir(clean_path(getcwd().'/modules/'.$mod.'/.500'))) {
             $files = array();
             $files= findAllFiles(clean_path(getcwd().'/modules/'.$mod.'/.500'), $files);
-            if (sizeof($files) >0) {
+            if (count($files) >0) {
                 //backward compatibility is on
                 $backwardModules[] = $mod;
             }
@@ -204,7 +204,7 @@ function commitCopyNewFiles($unzip_dir, $zip_from_dir, $path='')
         $cleanFile = str_replace($zipPath, '', $file);
         $srcFile = $zipPath . $cleanFile;
         $targetFile = clean_path(getcwd() . '/' . $cleanFile);
-        if ($backwardModules != null && sizeof($backwardModules) >0) {
+        if ($backwardModules != null && count($backwardModules) >0) {
             foreach ($backwardModules as $mod) {
                 $splitPath = explode('/', trim($cleanFile));
                 if ('modules' == trim($splitPath[1]) && $mod == trim($splitPath[2])) {
@@ -957,7 +957,7 @@ function getValidPatchName($returnFull = true)
 
         /* If a patch is in the /patch dir AND has no record in the upgrade_history table we assume that it's the one we want.
          * Edge-case: manual upgrade with a FTP of a patch; UH table has no entry for it.  Assume nothing. :( */
-        if (0 == sizeof($md5_matches)) {
+        if (0 == count($md5_matches)) {
             $target_manifest = remove_file_extension($upgrade_content) . '-manifest.php';
             require_once($target_manifest);
 
@@ -1287,7 +1287,7 @@ function logThis($entry, $path='')
         if (function_exists('sugar_fopen')) {
             $fp = @sugar_fopen($log, 'w+'); // attempts to create file
         } else {
-            $fp = fopen($log, 'w+'); // attempts to create file
+            $fp = fopen($log, 'wb+'); // attempts to create file
         }
         if (!is_resource($fp)) {
             $GLOBALS['log']->fatal('UpgradeWizard could not create the upgradeWizard.log file');
@@ -1297,7 +1297,7 @@ function logThis($entry, $path='')
         if (function_exists('sugar_fopen')) {
             $fp = @sugar_fopen($log, 'a+'); // write pointer at end of file
         } else {
-            $fp = @fopen($log, 'a+'); // write pointer at end of file
+            $fp = @fopen($log, 'ab+'); // write pointer at end of file
         }
 
         if (!is_resource($fp)) {
@@ -1357,7 +1357,7 @@ function updateQuickCreateDefs()
                 if (file_exists($quickcreatedefs) && is_readable($quickcreatedefs)) {
                     $file = file($quickcreatedefs);
                     //replace 'EditView' with 'QuickCreate'
-                    $fp = fopen($quickcreatedefs, 'w');
+                    $fp = fopen($quickcreatedefs, 'wb');
                     foreach ($file as &$line) {
                         if (preg_match('/^\s*\'EditView\'\s*=>\s*$/', $line) > 0) {
                             $line = "'QuickCreate' =>\n";
@@ -1870,7 +1870,7 @@ eoq;
                 if (function_exists('sugar_fopen')) {
                     $fp = sugar_fopen($destFile, 'r');
                 } else {
-                    $fp = fopen($destFile, 'r');
+                    $fp = fopen($destFile, 'rb');
                 }
                 $filesize = filesize($destFile);
                 if ($filesize > 0) {
@@ -2089,7 +2089,7 @@ function getImageForType($type)
 if (!function_exists('getLanguagePackName')) {
     function getLanguagePackName($the_file)
     {
-        require_once("$the_file");
+        require_once((string)$the_file);
         if (isset($app_list_strings["language_pack_name"])) {
             return($app_list_strings["language_pack_name"]);
         }
@@ -2462,7 +2462,7 @@ function testThis()
     $priorPath = '';
     foreach ($files as $file) {
         $relativeFile = clean_path(str_replace(getcwd().'/test', '', $file));
-        $relativeFile = ($relativeFile{0} == '/') ? substr($relativeFile, 1, strlen($relativeFile)) : $relativeFile;
+        $relativeFile = ($relativeFile[0] == '/') ? substr($relativeFile, 1, strlen($relativeFile)) : $relativeFile;
 
         $relativePath = dirname($relativeFile);
 
@@ -2653,8 +2653,8 @@ function checkFiles($files, $echo=false)
                 // don't warn yet - we're going to use this to check against replacement files
                 $filesNotWritable[$i] = $file;
                 $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
-                $owner = posix_getpwuid(fileowner($file));
-                $group = posix_getgrgid(filegroup($file));
+                $owner = function_exists('posix_getpwuid') ? posix_getpwuid(fileowner($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_USER'];
+                $group = function_exists('posix_getgrgid') ? posix_getgrgid(filegroup($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP'];
                 $filesOut .= "<tr>".
                     "<td><span class='error'>{$file}</span></td>".
                     "<td>{$filesNWPerms[$i]}</td>".
@@ -2670,7 +2670,7 @@ function checkFiles($files, $echo=false)
     // not a stop error
     $errors['files']['filesNotWritable'] = (count($filesNotWritable) > 0) ? true : false;
     if (count($filesNotWritable) < 1) {
-        $filesOut = "{$mod_strings['LBL_UW_FILE_NO_ERRORS']}";
+        $filesOut = (string)($mod_strings['LBL_UW_FILE_NO_ERRORS']);
     }
 
     return $filesOut;
@@ -2729,7 +2729,7 @@ function parseAndExecuteSqlFile($sqlScript, $forStepQuery='', $resumeFromQuery='
         $resumeFromQuery = explode(",", $resumeFromQuery);
     }
     if (file_exists($sqlScript)) {
-        $fp = fopen($sqlScript, 'r');
+        $fp = fopen($sqlScript, 'rb');
         $contents = stream_get_contents($fp);
         $anyScriptChanges =$contents;
         $resumeAfterFound = false;
@@ -2749,7 +2749,7 @@ function parseAndExecuteSqlFile($sqlScript, $forStepQuery='', $resumeFromQuery='
                             if (!$resumeAfterFound) {
                                 if (strpos($query, ",") != false) {
                                     $queArray = explode(",", $query);
-                                    for ($i=0;$i<sizeof($resumeFromQuery);$i++) {
+                                    for ($i=0; $i<count($resumeFromQuery); $i++) {
                                         if (strcasecmp(trim($resumeFromQuery[$i]), trim($queArray[$i]))==0) {
                                             $resumeAfterFound = true;
                                         } else {
@@ -2828,7 +2828,7 @@ function set_upgrade_vars()
     if (file_exists($upgrade_progress_file)) {
         include($upgrade_progress_file);
     } else {
-        fopen($upgrade_progress_file, 'w+');
+        fopen($upgrade_progress_file, 'wb+');
     }
     if (!isset($upgrade_config) || $upgrade_config == null) {
         $upgrade_config = array();
@@ -2860,7 +2860,7 @@ function set_upgrade_vars()
         $upgrade_vars['zip_from_dir']=$_SESSION['zip_from_dir'];
     }
     //place into the upgrade_config array and rewrite config array only if new values are being inserted
-    if (isset($upgrade_vars) && $upgrade_vars != null && sizeof($upgrade_vars) > 0) {
+    if (isset($upgrade_vars) && $upgrade_vars != null && count($upgrade_vars) > 0) {
         foreach ($upgrade_vars as $key=>$val) {
             if ($key != null && $val != null) {
                 $upgrade_config[1]['upgrade_vars'][$key]=$upgrade_vars[$key];
@@ -2870,7 +2870,7 @@ function set_upgrade_vars()
         if (is_writable($upgrade_progress_file) && write_array_to_file(
             "upgrade_config",
             $upgrade_config,
-                $upgrade_progress_file
+            $upgrade_progress_file
         )) {
             //writing to the file
         }
@@ -2883,10 +2883,10 @@ function initialize_session_vars()
     $upgrade_progress_file = $upgrade_progress_dir.'/upgrade_progress.php';
     if (file_exists($upgrade_progress_file)) {
         include($upgrade_progress_file);
-        if (isset($upgrade_config) && $upgrade_config != null && is_array($upgrade_config) && sizeof($upgrade_config) >0) {
+        if (isset($upgrade_config) && $upgrade_config != null && is_array($upgrade_config) && count($upgrade_config) >0) {
             $currVarsArray=$upgrade_config[1]['upgrade_vars'];
             //print_r($currVarsArray);
-            if (isset($currVarsArray) && $currVarsArray != null && is_array($currVarsArray) && sizeof($currVarsArray)>0) {
+            if (isset($currVarsArray) && $currVarsArray != null && is_array($currVarsArray) && count($currVarsArray)>0) {
                 foreach ($currVarsArray as $key=>$val) {
                     if ($key != null && $val !=null) {
                         //set session variables
@@ -2914,7 +2914,7 @@ function set_upgrade_progress($currStep, $currState, $currStepSub='', $currStepS
         if (function_exists('sugar_fopen')) {
             sugar_fopen($upgrade_progress_file, 'w+');
         } else {
-            fopen($upgrade_progress_file, 'w+');
+            fopen($upgrade_progress_file, 'wb+');
         }
     }
     if (!isset($upgrade_config) || $upgrade_config == null) {
@@ -2925,24 +2925,24 @@ function set_upgrade_progress($currStep, $currState, $currStepSub='', $currStepS
         $upgrade_config[1]['upgrade_vars'] = array();
     }
     if ($currStep != null && $currState != null) {
-        if (sizeof($upgrade_config) > 0) {
+        if (count($upgrade_config) > 0) {
             if ($currStepSub != null && $currStepSubState !=null) {
                 //check if new status to be set or update
                 //get the latest in array. since it has sub components prepare an array
-                if (!empty($upgrade_config[sizeof($upgrade_config)][$currStep]) && is_array($upgrade_config[sizeof($upgrade_config)][$currStep])) {
-                    $latestStepSub = currSubStep($upgrade_config[sizeof($upgrade_config)][$currStep]);
+                if (!empty($upgrade_config[count($upgrade_config)][$currStep]) && is_array($upgrade_config[count($upgrade_config)][$currStep])) {
+                    $latestStepSub = currSubStep($upgrade_config[count($upgrade_config)][$currStep]);
                     if ($latestStepSub == $currStepSub) {
-                        $upgrade_config[sizeof($upgrade_config)][$currStep][$latestStepSub]=$currStepSubState;
-                        $upgrade_config[sizeof($upgrade_config)][$currStep][$currStep] = $currState;
+                        $upgrade_config[count($upgrade_config)][$currStep][$latestStepSub]=$currStepSubState;
+                        $upgrade_config[count($upgrade_config)][$currStep][$currStep] = $currState;
                     } else {
-                        $upgrade_config[sizeof($upgrade_config)][$currStep][$currStepSub]=$currStepSubState;
-                        $upgrade_config[sizeof($upgrade_config)][$currStep][$currStep] = $currState;
+                        $upgrade_config[count($upgrade_config)][$currStep][$currStepSub]=$currStepSubState;
+                        $upgrade_config[count($upgrade_config)][$currStep][$currStep] = $currState;
                     }
                 } else {
                     $currArray = array();
                     $currArray[$currStep] = $currState;
                     $currArray[$currStepSub] = $currStepSubState;
-                    $upgrade_config[sizeof($upgrade_config)+1][$currStep] = $currArray;
+                    $upgrade_config[count($upgrade_config)+1][$currStep] = $currArray;
                 }
             } else {
                 //get the current upgrade progress
@@ -2950,22 +2950,22 @@ function set_upgrade_progress($currStep, $currState, $currStepSub='', $currStepS
                 //set the upgrade progress
                 if ($latestStep == $currStep) {
                     //update the current step with new progress status
-                    $upgrade_config[sizeof($upgrade_config)][$latestStep]=$currState;
+                    $upgrade_config[count($upgrade_config)][$latestStep]=$currState;
                 } else {
                     //it's a new step
-                    $upgrade_config[sizeof($upgrade_config)+1][$currStep]=$currState;
+                    $upgrade_config[count($upgrade_config)+1][$currStep]=$currState;
                 }
                 // now check if there elements within array substeps
             }
         } else {
             //set the upgrade progress  (just starting)
-            $upgrade_config[sizeof($upgrade_config)+1][$currStep]= $currState;
+            $upgrade_config[count($upgrade_config)+1][$currStep]= $currState;
         }
 
         if (is_writable($upgrade_progress_file) && write_array_to_file(
             "upgrade_config",
             $upgrade_config,
-                $upgrade_progress_file
+            $upgrade_progress_file
         )) {
             //writing to the file
         }
@@ -2983,8 +2983,8 @@ function get_upgrade_progress()
         if (!isset($upgrade_config) || $upgrade_config == null) {
             $upgrade_config = array();
         }
-        if ($upgrade_config != null && sizeof($upgrade_config) >1) {
-            $currArr = $upgrade_config[sizeof($upgrade_config)];
+        if ($upgrade_config != null && count($upgrade_config) >1) {
+            $currArr = $upgrade_config[count($upgrade_config)];
             if (is_array($currArr)) {
                 foreach ($currArr as $key=>$val) {
                     $currState = $key;
@@ -3036,8 +3036,8 @@ function didThisStepRunBefore($step, $SubStep='')
     $stepRan = false;
     if (file_exists($upgrade_progress_file)) {
         include($upgrade_progress_file);
-        if (isset($upgrade_config) && $upgrade_config != null && is_array($upgrade_config) && sizeof($upgrade_config) >0) {
-            for ($i=1;$i<=sizeof($upgrade_config);$i++) {
+        if (isset($upgrade_config) && $upgrade_config != null && is_array($upgrade_config) && count($upgrade_config) >0) {
+            for ($i=1; $i<=count($upgrade_config); $i++) {
                 if (is_array($upgrade_config[$i])) {
                     foreach ($upgrade_config[$i] as $key=>$val) {
                         if ($key==$step) {
@@ -3087,35 +3087,35 @@ function post_install_progress($progArray='', $action='')
         $currProg = array();
         if (file_exists($upgrade_progress_file)) {
             include($upgrade_progress_file);
-            if (is_array($upgrade_config[sizeof($upgrade_config)]['commit']['post_install']) && sizeof($upgrade_config[sizeof($upgrade_config)]['commit']['post_install'])>0) {
-                foreach ($upgrade_config[sizeof($upgrade_config)]['commit']['post_install'] as $k=>$v) {
+            if (is_array($upgrade_config[count($upgrade_config)]['commit']['post_install']) && count($upgrade_config[count($upgrade_config)]['commit']['post_install'])>0) {
+                foreach ($upgrade_config[count($upgrade_config)]['commit']['post_install'] as $k=> $v) {
                     $currProg[$k]=$v;
                 }
             }
         }
         return $currProg;
     } elseif ($action=='set') {
-        if (!is_dir($upgrade_progress_dir)) {
-            mkdir($upgrade_progress_dir);
+        if (!is_dir($upgrade_progress_dir) && !mkdir($upgrade_progress_dir) && !is_dir($upgrade_progress_dir)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $upgrade_progress_dir));
         }
         if (file_exists($upgrade_progress_file)) {
             include($upgrade_progress_file);
         } else {
-            fopen($upgrade_progress_file, 'w+');
+            fopen($upgrade_progress_file, 'wb+');
         }
-        if (!is_array($upgrade_config[sizeof($upgrade_config)]['commit']['post_install'])) {
-            $upgrade_config[sizeof($upgrade_config)]['commit']['post_install']=array();
-            $upgrade_config[sizeof($upgrade_config)]['commit']['post_install']['post_install'] = 'in_progress';
+        if (!is_array($upgrade_config[count($upgrade_config)]['commit']['post_install'])) {
+            $upgrade_config[count($upgrade_config)]['commit']['post_install']=array();
+            $upgrade_config[count($upgrade_config)]['commit']['post_install']['post_install'] = 'in_progress';
         }
         if ($progArray != null && is_array($progArray)) {
             foreach ($progArray as $key=>$val) {
-                $upgrade_config[sizeof($upgrade_config)]['commit']['post_install'][$key]=$val;
+                $upgrade_config[count($upgrade_config)]['commit']['post_install'][$key]=$val;
             }
         }
         if (is_writable($upgrade_progress_file) && write_array_to_file(
             "upgrade_config",
             $upgrade_config,
-                $upgrade_progress_file
+            $upgrade_progress_file
         )) {
             //writing to the file
         }
@@ -3209,7 +3209,7 @@ function upgradeUserPreferences()
         $localization->createInvalidLocaleNameFormatUpgradeNotice();
     }
 
-    $db = &DBManagerFactory::getInstance();
+    $db = DBManagerFactory::getInstance();
     $result = $db->query("SELECT id FROM users where deleted = '0'");
     while ($row = $db->fetchByAssoc($result)) {
         $current_user = new User();
@@ -3445,7 +3445,7 @@ function upgradeTeamColumn($bean, $column_name)
             }
         }
         if ($fh = @sugar_fopen($file, 'wt')) {
-            fputs($fh, $contents);
+            fwrite($fh, $contents);
             fclose($fh);
         }
 

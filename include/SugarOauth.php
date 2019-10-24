@@ -39,7 +39,6 @@
  */
 
 
-    require_once 'Zend/Oauth/Consumer.php';
     // use ZF oauth
     /**
      * Sugar Oauth consumer
@@ -147,9 +146,9 @@
          */
         public function getAccessToken(
             $url,
-                                       Zend_Oauth_Token_Request $token = null,
-                                       $httpMethod = null,
-                                       Zend_Oauth_Http_AccessToken $request = null
+            Zend_Oauth_Token_Request $token = null,
+            $httpMethod = null,
+            Zend_Oauth_Http_AccessToken $request = null
         ) {
             $this->setAccessTokenUrl($url);
             $this->_last = $token = parent::getAccessToken($_REQUEST, $this->makeRequestToken());

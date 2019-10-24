@@ -13,7 +13,6 @@ class AOS_PDF_TemplatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAOS_PDF_Templates()
     {
-
         //execute the contructor and check for the Object type and  attributes
         $aosPdfTemplates = new AOS_PDF_Templates();
         $this->assertInstanceOf('AOS_PDF_Templates', $aosPdfTemplates);

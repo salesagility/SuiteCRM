@@ -24,4 +24,7 @@ return CustomLoader::mergeCustomArray([
     ApiHelper\PaginationObjectHelper::class => function (Container $container) {
         return new ApiHelper\PaginationObjectHelper();
     },
+    Helper\ModuleListProvider::class => function (Container $container) {
+        return new Helper\ModuleListProvider();
+    },
 ], basename(__FILE__));

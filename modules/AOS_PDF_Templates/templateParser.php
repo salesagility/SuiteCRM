@@ -71,7 +71,7 @@ class templateParser
                     $repl_arr[$key . "_" . $fieldName] = implode(", ", $translatedVals);
                 } //Fix for Windows Server as it needed to be converted to a string.
                 elseif ($field_def['type'] == 'int') {
-                    $repl_arr[$key . "_" . $fieldName] = strval($focus->$fieldName);
+                    $repl_arr[$key . "_" . $fieldName] = (string)$focus->$fieldName;
                 } elseif ($field_def['type'] == 'bool') {
                     if ($focus->$fieldName == "1") {
                         $repl_arr[$key . "_" . $fieldName] = "true";
@@ -85,7 +85,7 @@ class templateParser
                     if (!file_exists('public')) {
                         sugar_mkdir('public', 0777);
                     }
-                    if (!copy($file_location, "public/{$focus->id}".  '_' . "$fieldName")) {
+                    if (!copy($file_location, "public/{$focus->id}".  '_' . (string)$fieldName)) {
                         $secureLink = $sugar_config['site_url'] . '/'. $file_location;
                     }
 
@@ -106,12 +106,12 @@ class templateParser
 
         foreach ($repl_arr as $name => $value) {
             if (strpos($name, 'product_discount') !== false || strpos($name, 'quotes_discount') !== false) {
-                if ($value != '' && $value != '0.00') {
+                if ($value !== '') {
                     if ($isValidator->isPercentageField($repl_arr['aos_products_quotes_discount'])) {
-                        $sep = get_number_seperators();
+                        $sep = get_number_separators();
                         $value = rtrim(
                             rtrim(format_number($value), '0'),
-                                $sep[1]
+                            $sep[1]
                         ) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
                     }
                 } else {
@@ -122,15 +122,15 @@ class templateParser
                 $value = '<img src="' . $value . '" class="img-responsive"/>';
             }
             if ($name === 'aos_products_quotes_product_qty') {
-                $sep = get_number_seperators();
+                $sep = get_number_separators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]);
             }
 
             if ($isValidator->isPercentageField($name)) {
-                $sep = get_number_seperators();
+                $sep = get_number_separators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
             }
-            if ($focus->field_defs[$name][dbType] == 'datetime' &&
+            if ($focus->field_defs[$name]['dbType'] == 'datetime' &&
                 (strpos($name, 'date') > 0 || strpos($name, 'expiration') > 0)) {
                 if ($value != '') {
                     $dt = explode(' ', $value);

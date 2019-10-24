@@ -278,13 +278,29 @@ class SugarTheme
     private $_clearCacheOnDestroy = false;
 
     private $imageExtensions = array(
-            'svg',
-            'gif',
-            'png',
-            'jpg',
-            'tif',
-            'bmp',
+            'svg' => 'image/svg+xml',
+            'gif' => 'image/gif',
+            'png' => 'image/png',
+            'jpg' => 'image/jpeg',
+            'tif' => 'image/tiff',
+            'bmp' => 'image/bmp',
     );
+
+    /**
+     * Returns the mime type for the image extension in case it is supported.
+     * In case the extension isn't supported returns null.
+     *
+     * @param $extension The extension name, e.g. 'png'
+     * @return string|null
+     */
+    public function getMimeType($extension)
+    {
+        if (!isset($this->imageExtensions[$extension])) {
+            return null;
+        }
+
+        return $this->imageExtensions[$extension];
+    }
 
     /**
      * Constructor
@@ -964,7 +980,7 @@ EOHTML;
             return $imageName;
         }
         $pathParts = pathinfo($imageName);
-        foreach ($this->imageExtensions as $extension) {
+        foreach (array_keys($this->imageExtensions) as $extension) {
             if (isset($pathParts['extension'])) {
                 if (($extension != $pathParts['extension'])
                         && is_file($pathParts['dirname'].'/'.$pathParts['filename'].'.'.$extension)) {

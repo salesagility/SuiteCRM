@@ -43,7 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-require_once('include/MVC/View/views/view.detail.php');
 
 class BugsViewDetail extends ViewDetail
 {

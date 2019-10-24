@@ -6532,7 +6532,7 @@ var Selector = {
             fn = (useNative) ? Y.Selector._nativeQuery : Y.Selector._bruteQuery;
 
         if (selector && fn) {
-            // split group into seperate queries
+            // split group into separate queries
             if (!skipNative && // already done if skipping
                     (!useNative || root.tagName)) { // split native when element scoping is needed
                 queries = Selector._splitQueries(selector, root);

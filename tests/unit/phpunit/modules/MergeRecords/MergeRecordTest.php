@@ -13,7 +13,6 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testMergeRecord()
     {
-
         //execute the contructor and check for the Object type and  attributes
         $mergeRecord = new MergeRecord();
 

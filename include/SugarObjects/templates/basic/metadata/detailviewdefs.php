@@ -56,28 +56,30 @@ $viewdefs[$module_name]['DetailView'] = array(
         ),
     ),
 
-    'panels' => array(
-
+    'panels' =>
         array(
-            'name',
-            'assigned_user_name',
-        ),
+            'default' =>
+                array(
+                    array(
+                        'name',
+                        'assigned_user_name',
+                    ),
+                    array(
+                        array(
+                            'name' => 'date_entered',
+                            'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+                            'label' => 'LBL_DATE_ENTERED',
+                        ),
+                        array(
+                            'name' => 'date_modified',
+                            'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+                            'label' => 'LBL_DATE_MODIFIED',
+                        ),
+                    ),
 
-        array(
-            array(
-                'name' => 'date_entered',
-                'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-                'label' => 'LBL_DATE_ENTERED',
-            ),
-            array(
-                'name' => 'date_modified',
-                'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-                'label' => 'LBL_DATE_MODIFIED',
-            ),
-        ),
-
-        array(
-            'description',
-        ),
-    )
+                    array(
+                        'description',
+                    ),
+                )
+        )
 );

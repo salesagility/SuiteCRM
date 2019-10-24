@@ -291,31 +291,38 @@ class StateSaver
             }
         }
     }
-    
+
     /**
      * Save Error Reporting Level into the store at an optional key and namespace.
      * (note: error level should not be changed for any reason, so use it for own risk)
      *
      * @param string $key
      * @param string $namespace
+     * @param bool $doLogging
+     * @throws StateSaverException
      */
-    public function pushErrorLevel($key = 'level', $namespace = 'error_reporting')
+    public function pushErrorLevel($key = 'level', $namespace = 'error_reporting', $doLogging = true)
     {
-        LoggerManager::getLogger()->warn('Saving error level. Try to remove the error_reporting() function from your code.');
+        if ($doLogging) {
+            LoggerManager::getLogger()->warn('Saving error level. Try to remove the error_reporting() function from your code.');
+        }
         $level = error_reporting();
         $this->push($level, $key, $namespace);
     }
-    
+
     /**
      * Restore Error Reporting Level from the store at an optional key and namespace.
      * (note: error level should not be changed for any reason, so use it for own risk)
      *
      * @param string $key
      * @param string $namespace
+     * @param bool $doLogging
      */
-    public function popErrorLevel($key = 'level', $namespace = 'error_reporting')
+    public function popErrorLevel($key = 'level', $namespace = 'error_reporting', $doLogging = true)
     {
-        LoggerManager::getLogger()->error('Pop error level. Try to remove the error_reporting() function from your code.');
+        if ($doLogging) {
+            LoggerManager::getLogger()->error('Pop error level. Try to remove the error_reporting() function from your code.');
+        }
         $level = $this->pop($key, $namespace);
         error_reporting($level);
     }
@@ -351,8 +358,11 @@ class StateSaver
     public function popTable($table, $namespace = 'db_table')
     {
         $rows = $this->pop($table, $namespace);
-        
-        DBManagerFactory::getInstance()->query("TRUNCATE TABLE " . DBManagerFactory::getInstance()->quote($table));
+
+        $db = DBManagerFactory::getInstance();
+        if (!$db->query("TRUNCATE TABLE " . $db->quote($table))) {
+            throw new StateSaverException('Truncate failed for table: ' . $table);
+        }
         
         if (!is_array($rows)) {
             throw new StateSaverException('Table information is not an array. Are you sure you pushed this table "' . $table . '" previously?');
@@ -362,10 +372,12 @@ class StateSaver
             $query .= (implode(', ', array_keys($row)) . ') VALUES (');
             $quoteds = [];
             foreach ($row as $value) {
-                $quoteds[] = (null === $value) ? 'NULL' : "'$value'";
+                $quoteds[] = (null === $value) ? 'NULL' : $db->quoted($value);
             }
             $query .= (implode(', ', $quoteds)) . ')';
-            DBManagerFactory::getInstance()->query($query);
+            if (!$db->query($query)) {
+                throw new StateSaverException('Restore failed for table: ' . $table);
+            }
         }
         
         return $rows;

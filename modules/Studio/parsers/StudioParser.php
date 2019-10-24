@@ -267,7 +267,7 @@ EOQ;
         $return_view = '';
         $slotCount = 0;
         $slotLookup = array();
-        for ($i = 0; $i < sizeof($this->positions); $i ++) {
+        for ($i = 0; $i < count($this->positions); $i ++) {
             //used for reverse lookups to figure out where the associated slot is
             $slotLookup[$this->positions[$i][2]][$this->positions[$i][3]] = array('position'=>$i, 'value'=>$this->positions[$i][4]);
         }
@@ -276,7 +276,7 @@ EOQ;
 
         //now we set it to the new values
 
-        for ($i = 0; $i < sizeof($this->positions); $i ++) {
+        for ($i = 0; $i < count($this->positions); $i ++) {
             $slot = $this->positions[$i];
 
             if (empty($slot[3])) {
@@ -327,7 +327,7 @@ EOQ;
             }
         }
 
-        for ($i = 0; $i < sizeof($this->positions); $i ++) {
+        for ($i = 0; $i < count($this->positions); $i ++) {
             $slot = $this->positions[$i];
             $explode = explode($slot[0], $view, 2);
             $explode[0] .= "<span sugar='". $slot[1] . $slot[2]. $slot[3]. "'>";
@@ -364,8 +364,8 @@ EOQ;
                 //preg_replace_callback doesn't seem to work w/o anonymous method
                 $output = preg_replace_callback(
                     "/name\s*=\s*[\"']([^\"']*)[\"']/Us",
-                $function,
-                                                          $fileparts[1]
+                    $function,
+                    $fileparts[1]
                 );
 
 
@@ -595,7 +595,7 @@ EOQ;
         $counter = 0;
         $return_view = '';
         $slotCount = 0;
-        for ($i = 0; $i < sizeof($this->positions); $i ++) {
+        for ($i = 0; $i < count($this->positions); $i ++) {
             $slot = $this->positions[$i];
             $class = '';
 
@@ -637,7 +637,7 @@ EOQ;
         if ($filebk) {
             $content = file_get_contents($filebk);
             $positions = $this->parsePositions($content, true);
-            for ($i = 0; $i < sizeof($positions); $i ++) {
+            for ($i = 0; $i < count($positions); $i ++) {
                 $position = $positions[$i];
                 //used for reverse lookups to figure out where the associated slot is
                 $slotLookup[$position[2]][$position[3]] = array('position'=>$i, 'value'=>$position[4]);

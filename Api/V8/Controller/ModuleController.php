@@ -15,7 +15,7 @@ class ModuleController extends BaseController
     /**
      * @var ModuleService
      */
-    private $moduleService;
+    protected $moduleService;
 
     /**
      * @param ModuleService $moduleService

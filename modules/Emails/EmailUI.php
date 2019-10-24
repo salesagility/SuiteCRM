@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once("include/utils.php");
 require_once("include/ytree/Tree.php");
 require_once("include/ytree/ExtNode.php");
 require_once("include/SugarFolders/SugarFolders.php");
@@ -435,18 +436,20 @@ eoq;
         global $current_user;
 
         if ($current_user->getEmailClient() == 'sugar') {
-            return '<a class="email-link"'
-                . ' onclick="$(document).openComposeViewModal(this);"'
-                . ' data-module="' . $module_name
-                . '" data-record-id="' . $record_id
-                . '" data-module-name="' . $name
-                . '" data-email-address="' . $addr  . '">'
-                . $text . '</a>';
+            $html =<<<HTML
+            <a class="email-link" href="mailto:{$addr}"
+                    onclick="$(document).openComposeViewModal(this);"
+                    data-module="{$module_name}" data-record-id="{$record_id}"
+                    data-module-name="{$name}" data-email-address="{$addr}"
+                >{$text}</a>
+HTML;
+        } else {
+            $html =<<<HTML
+                <a class="email-link" href="mailto:{$addr}">{$text}</a>
+HTML;
         }
 
-        return '<a class="email-link"'
-            . ' href="mailto:' .  $addr . '">'
-            . $text . '</a>';
+        return $html;
     }
 
     /**
@@ -730,7 +733,7 @@ eoq;
         $email_mod_strings = return_module_language($current_language, 'Emails');
         $modStrings = "var mod_strings = new Object();\n";
         foreach ($email_mod_strings as $k => $v) {
-            $v = str_replace("'", "\'", $v);
+            $v = str_replace("'", "\'",str_replace("\\'", "'", $v));
             $modStrings .= "mod_strings.{$k} = '{$v}';\n";
         }
         $lang .= "\n\n{$modStrings}\n";
@@ -950,7 +953,7 @@ eoq;
             $this->smarty->assign("app_strings", $app_strings);
             $this->smarty->assign(
                 "contact_strings",
-                return_module_language($_SESSION['authenticated_user_language'], 'Contacts')
+                return_module_language(get_current_language(), 'Contacts')
             );
             $this->smarty->assign("contact", $contactMeta);
 
@@ -1457,7 +1460,7 @@ eoq;
                 if ($mailbox != "") {
                     $mailbox .= ".";
                 }
-                $mailbox .= "{$exMbox[$i]}";
+                $mailbox .= (string)($exMbox[$i]);
             }
 
             $mailbox = substr($key, strpos($key, '.'));
@@ -1558,7 +1561,7 @@ eoq;
                 $attachmentHtmlData = $meta['attachments'];
                 $actualAttachmentInfo = array();
                 $this->parseAttachmentInfo($actualAttachmentInfo, $attachmentHtmlData);
-                if (sizeof($actualAttachmentInfo) > 0) {
+                if (count($actualAttachmentInfo) > 0) {
                     foreach ($actualAttachmentInfo as $key => $value) {
                         $info_vars = array();
                         parse_str($value, $info_vars);
@@ -2198,6 +2201,23 @@ eoq;
         return true;
     }
 
+    /**
+     * @param array $userIds
+     * @return array
+     */
+    public function getAssignedEmailsCountForUsers($userIds)
+    {
+        $counts = [];
+        foreach ($userIds as $id) {
+            $idQuoted = $this->db->quoted($id);
+            $r = $this->db->query("SELECT count(*) AS c FROM emails WHERE assigned_user_id = $idQuoted AND status = 'unread'");
+            $a = $this->db->fetchByAssoc($r);
+            $counts[$id] = $a['c'];
+        }
+
+        return $counts;
+    }
+
     public function getLastRobin($ie)
     {
         $lastRobin = "";
@@ -2583,7 +2603,7 @@ eoq;
      */
     public function getRelatedEmail($beanType, $whereArr, $relatedBeanInfoArr = '')
     {
-        global $beanList, $current_user, $app_strings, $db;
+        global $beanList, $current_user, $app_strings;
         $finalQuery = '';
         $searchBeans = null;
         if ($beanType === 'LBL_DROPDOWN_LIST_ALL') {
@@ -2821,7 +2841,7 @@ eoq;
 
         $q = "SELECT * FROM folders f WHERE f.created_by = '{$user->id}' AND f.deleted = 0 AND coalesce(" . $user->db->convert(
             "f.folder_type",
-                "length"
+            "length"
         ) . ",0) > 0";
         $r = $user->db->query($q);
 
@@ -2934,7 +2954,7 @@ eoq;
 
         if (ACLController::checkAccess('EmailTemplates', 'list', true) && ACLController::checkAccess(
             'EmailTemplates',
-                'view',
+            'view',
             true
         )
         ) {
@@ -3203,14 +3223,21 @@ eoq;
         $ieAccountsFull = $ie->retrieveAllByGroupId($current_user->id);
         $ieAccountsShowOptionsMeta = array();
         $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
-
         $defaultIEAccount = $ie->getUsersDefaultOutboundServerId($current_user);
 
         foreach ($ieAccountsFull as $k => $v) {
-            $selected = (!empty($showFolders) && in_array($v->id, $showFolders)) ? true : false;
-            $default = ($defaultIEAccount == $v->id) ? true : false;
-            $has_groupfolder = !empty($v->groupfolder_id) ? true : false;
-            $type = ($v->is_personal) ? $mod_strings['LBL_MAILBOX_TYPE_PERSONAL'] : $mod_strings['LBL_MAILBOX_TYPE_GROUP'];
+            $default = $defaultIEAccount == $v->id;
+            $has_groupfolder = !empty($v->groupfolder_id);
+            $type = $v->is_personal ? $mod_strings['LBL_MAILBOX_TYPE_PERSONAL'] : $mod_strings['LBL_MAILBOX_TYPE_GROUP'];
+
+            $personalSelected = (!empty($showFolders) && in_array($v->id, $showFolders, true));
+            $allowOutboundGroupUsage = $v->get_stored_options('allow_outbound_group_usage', false);
+            $selected = $personalSelected || $allowOutboundGroupUsage  || is_admin($current_user);
+
+            if (!$selected) {
+                LoggerManager::getLogger()->debug("Inbound Email {$v->name}, not selected and will not be available for selection within compose UI.");
+                continue;
+            }
 
             $ieAccountsShowOptionsMeta[] = array(
                 "id" => $v->id,
@@ -3471,7 +3498,7 @@ eoq;
 ?>
 eoq;
         if ($fh = @sugar_fopen($file, "w")) {
-            fputs($fh, $the_string);
+            fwrite($fh, $the_string);
             fclose($fh);
 
             return true;
@@ -3583,7 +3610,7 @@ eoq;
     }
 
     /**
-     * Unify the seperator as ,
+     * Unify the separator as ,
      *
      * @param String $str email address string
      * @return String converted string

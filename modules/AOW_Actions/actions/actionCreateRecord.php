@@ -89,7 +89,7 @@ class actionCreateRecord extends actionBase
         $html .= '<tr>';
         $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate(
             'LBL_ADD_FIELD',
-                'AOW_Actions'
+            'AOW_Actions'
         ).'" id="addcrline'.$line.'" onclick="add_crLine('.$line.')" /></td>';
         $html .= '</tr>';
         $html .= '<tr>';
@@ -98,7 +98,7 @@ class actionCreateRecord extends actionBase
         $html .= '<tr>';
         $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate(
             'LBL_ADD_RELATIONSHIP',
-                'AOW_Actions'
+            'AOW_Actions'
         ).'" id="addcrrelline'.$line.'" onclick="add_crRelLine('.$line.')" /></td>';
         $html .= '</tr>';
 
@@ -109,7 +109,7 @@ class actionCreateRecord extends actionBase
             $html .= 'cr_fields[' . $line . '] = "' . trim(preg_replace(
                 '/\s+/',
                 ' ',
-                    getModuleFields(
+                getModuleFields(
                         $params['record_type'],
                         'EditView',
                         '',
@@ -120,7 +120,7 @@ class actionCreateRecord extends actionBase
             $html .= 'cr_relationships[' . $line . '] = "' . trim(preg_replace(
                 '/\s+/',
                 ' ',
-                    getModuleRelationships($params['record_type'])
+                getModuleRelationships($params['record_type'])
             )) . '";';
             $html .= 'cr_module[' .$line. '] = "' .$params['record_type']. '";';
             if (isset($params['field'])) {
@@ -380,7 +380,20 @@ class actionCreateRecord extends actionBase
         $record->process_save_dates =false;
         $record->new_with_id = false;
 
+        /* Since we only work on non-deleted records this means the delete field
+         * was set during this action.
+         * Complete the deletion process by calling mark_deleted() after save() */
+        $was_deleted = false;
+        if ($record->deleted) {
+            $record->deleted = 0;
+            $was_deleted = true;
+        }
+
         $record->save($check_notify);
+
+        if ($was_deleted) {
+            $record->mark_deleted($record->id);
+        }
 
         $record->processed = $bean_processed;
     }

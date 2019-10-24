@@ -48,18 +48,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-require_once('include/MVC/View/views/view.classic.php');
 
 class EmailTemplatesViewClassic extends ViewClassic
 {
     public function __construct()
     {
+    }
 
+    public function display()
+    {
         /* BEGIN - SECURITY GROUPS - The whole file is custom but the purpose is the following code */
         //turn on normal display of subpanels
-        $this->options['show_subpanels'] = true;
+        if ($this->action == 'DetailView') {
+            $this->options['show_subpanels'] = true;
+        }
         /* END - SECURITY GROUPS */
-        parent::__construct();
+        return parent::display();
     }
 
     /**

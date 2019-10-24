@@ -458,7 +458,7 @@ class ListViewData
                 $editViewAccess = $temp->ACLAccess('EditView');
                 $pageData['rowAccess'][$dataIndex] = array('view' => $detailViewAccess, 'edit' => $editViewAccess);
                 $additionalDetailsAllow = $this->additionalDetails && $detailViewAccess && (file_exists(
-                         'modules/' . $temp->module_dir . '/metadata/additionalDetails.php'
+                    'modules/' . $temp->module_dir . '/metadata/additionalDetails.php'
                      ) || file_exists('custom/modules/' . $temp->module_dir . '/metadata/additionalDetails.php'));
                 $additionalDetailsEdit = $editViewAccess;
                 if ($additionalDetailsAllow) {
@@ -473,8 +473,8 @@ class ListViewData
                         require_once($additionalDetailsFile);
                         $ar = $this->getAdditionalDetails(
                             $data[$dataIndex],
-                                    (empty($this->additionalDetailsFunction) ? 'additionalDetails' : $this->additionalDetailsFunction) . $this->seed->object_name,
-                                    $additionalDetailsEdit
+                            (empty($this->additionalDetailsFunction) ? 'additionalDetails' : $this->additionalDetailsFunction) . $this->seed->object_name,
+                            $additionalDetailsEdit
                         );
                     }
                     $pageData['additionalDetails'][$dataIndex] = $ar['string'];

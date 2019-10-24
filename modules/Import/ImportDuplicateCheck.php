@@ -251,9 +251,9 @@ class ImportDuplicateCheck
                 $emailAddress = new SugarEmailAddress();
                 $email = $index['fields'][0];
                 if ($emailAddress->getCountEmailAddressByBean(
-                        $this->_focus->$email,
-                        $this->_focus,
-                        ($index['name'] == 'special_idx_email1')
+                    $this->_focus->$email,
+                    $this->_focus,
+                    ($index['name'] == 'special_idx_email1')
                         ) > 0) {
                     foreach ($index['fields'] as $field) {
                         if ($field !='deleted') {

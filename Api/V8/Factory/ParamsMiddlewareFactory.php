@@ -5,6 +5,7 @@ use Api\V8\Middleware\ParamsMiddleware;
 use Interop\Container\ContainerInterface as Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Api\V8\BeanDecorator\BeanManager;
 
 class ParamsMiddlewareFactory
 {
@@ -31,7 +32,7 @@ class ParamsMiddlewareFactory
         $container = $this->container;
 
         return function (Request $request, Response $response, callable $next) use ($containerId, $container) {
-            $paramMiddleware = new ParamsMiddleware($container->get($containerId));
+            $paramMiddleware = new ParamsMiddleware($container->get($containerId), $container->get(BeanManager::class));
 
             return $paramMiddleware($request, $response, $next);
         };

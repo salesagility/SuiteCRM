@@ -874,7 +874,7 @@ class EmailMan extends SugarBean
 
         //make sure tracking url ends with '/' character
         $strLen = strlen($this->tracking_url);
-        if ($this->tracking_url{$strLen - 1} != '/') {
+        if ($this->tracking_url[$strLen - 1] != '/') {
             $this->tracking_url .= '/';
         }
 
@@ -942,6 +942,12 @@ class EmailMan extends SugarBean
                         return true;
                     }
                 }
+            }
+
+            if (isset($this->restricted_addresses[$lower_email_address])) {
+                $this->set_as_sent($lower_email_address, true, null, null, 'blocked');
+
+                return true;
             }
 
             //test for duplicate email address by marketing id.
@@ -1144,16 +1150,16 @@ class EmailMan extends SugarBean
 
                     $email_id=$this->create_ref_email(
                         $this->marketing_id,
-                                            $this->current_emailtemplate->subject,
-                                            $this->current_emailtemplate->body,
-                                            $this->current_emailtemplate->body_html,
-                                            $this->current_campaign->name,
-                                            $this->mailbox_from_addr,
-                                            $this->user_id,
-                                            $this->notes_array,
-                                            $macro_nv,
-                                            $this->newmessage,
-                                            $fromAddressName
+                        $this->current_emailtemplate->subject,
+                        $this->current_emailtemplate->body,
+                        $this->current_emailtemplate->body_html,
+                        $this->current_campaign->name,
+                        $this->mailbox_from_addr,
+                        $this->user_id,
+                        $this->notes_array,
+                        $macro_nv,
+                        $this->newmessage,
+                        $fromAddressName
                      );
                     $this->newmessage = false;
                 }
@@ -1281,7 +1287,7 @@ class EmailMan extends SugarBean
      */
     public function mark_deleted($id)
     {
-        $this->db->query("DELETE FROM {$this->table_name} WHERE id=" . intval($id));
+        $this->db->query("DELETE FROM {$this->table_name} WHERE id=" . (int)$id);
     }
 
     /**
@@ -1477,18 +1483,22 @@ class EmailMan extends SugarBean
 
         $mailer->replace('sugarurl', $sugar_config['site_url']);
 
+        $timedate = TimeDate::getInstance();
         if (!$mailer->send()) {
+            $emailAddress->confirm_opt_in_fail_date = $timedate->nowDb();
             $ret = false;
             $log->fatal(
                 'Confirm Opt In Email sending failed. Mailer Error Info: '
                 . $mailer->ErrorInfo
             );
         } else {
+            $emailAddress->confirm_opt_in_sent_date = $timedate->nowDb();
             $log->debug(
                 'Confirm Opt In Email sent: '
                 . $emailAddress->email_address
             );
         }
+        $emailAddress->save();
 
         return $ret;
     }

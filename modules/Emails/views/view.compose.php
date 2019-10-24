@@ -57,6 +57,8 @@ class EmailsViewCompose extends ViewEdit
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->type = 'compose';
         if (empty($_REQUEST['return_module'])) {
             $this->options['show_title'] = false;
@@ -166,7 +168,7 @@ class EmailsViewCompose extends ViewEdit
             return $email;
         }
         $GLOBALS['log']->warn(
-                'EmailsController::composeSignature() was unable to get the signature id for user: '.
+            'EmailsController::composeSignature() was unable to get the signature id for user: '.
                 $user->name
             );
         return false;

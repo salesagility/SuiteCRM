@@ -52,9 +52,6 @@ class UserWizardCest
         // ---------- Email Settings ---------------
         
         $I2->wantTo('Save an outgoing email configuration');
-        $I2->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
         // Navigate to email configuration and save settings
         $I2->loginAsAdmin();
         $I2->createEmailSettings();

@@ -45,7 +45,6 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
         unset($aorScheduledReports);
 
         // clean up
-                
         $state->popGlobals();
         $state->popTable('tracker');
         $state->popTable('aod_index');
@@ -69,24 +68,43 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
         $this->assertAttributeEquals(false, 'importable', $aorScheduledReports);
     }
 
+    public function test_ReportRelation() {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aor_reports');
+        $state->pushTable('aor_scheduled_reports');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aod_index');
+        $state->pushGlobals();
+        $state->pushPHPConfigOptions();
+
+        $_POST['aor_fields_field'] = [];
+        $report = new AOR_Report();
+        $report->name = "Foobar";
+        $report->save();
+
+        $aorScheduledReports = new AOR_Scheduled_Reports();
+        $aorScheduledReports->save();
+        $aorScheduledReports->load_relationships();
+        $aorScheduledReports->aor_report->add($report);
+        $aorScheduledReports->retrieve($aorScheduledReports->id);
+        $this->assertEquals($report->name, $aorScheduledReports->aor_report_name);
+        $this->assertEquals($report->id, $aorScheduledReports->aor_report_id);
+
+        $state->popPHPConfigOptions();
+        $state->popGlobals();
+        $state->popTable('aod_indexevent');
+        $state->popTable('aod_index');
+        $state->popTable('aor_scheduled_reports');
+        $state->popTable('aor_reports');
+    }
+
     public function testbean_implements()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-
-        
-
         $aorScheduledReports = new AOR_Scheduled_Reports();
         $this->assertEquals(false, $aorScheduledReports->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aorScheduledReports->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $aorScheduledReports->bean_implements('ACL')); //test with valid value
-        
-        // clean up
     }
-
-
-
 
     public function testshouldRun()
     {

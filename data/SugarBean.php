@@ -1226,7 +1226,7 @@ class SugarBean
         /**
          * if the row_offset is set to 'end' go to the end of the list
          */
-        $toEnd = strval($row_offset) == 'end';
+        $toEnd = (string)$row_offset == 'end';
         global $sugar_config;
         $use_count_query = false;
         if (!method_exists($subpanel_def, 'isCollection')) {
@@ -1682,14 +1682,14 @@ class SugarBean
                 return true;
             }
             return false;
-        } elseif (isset($this->assigned_user_id)) {
+        } elseif (!empty($this->assigned_user_id)) {
             if ($this->assigned_user_id == $user_id) {
                 return true;
             }
             return false;
         }
         //other wise if there is a created_by that is the owner
-        if (isset($this->created_by) && $this->created_by == $user_id) {
+        if (!empty($this->created_by) && $this->created_by == $user_id) {
             return true;
         }
 
@@ -2532,7 +2532,7 @@ class SugarBean
                     case 'currency':
                     case 'float':
                         if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
-                            continue;
+                            break;
                         }
                         if (is_string($this->$field)) {
                             $this->$field = (float)unformat_number($this->$field);
@@ -2546,7 +2546,7 @@ class SugarBean
                     case 'tinyint':
                     case 'int':
                         if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
-                            continue;
+                            break;
                         }
                         if (is_string($this->$field)) {
                             $this->$field = (int)unformat_number($this->$field);
@@ -2554,7 +2554,7 @@ class SugarBean
                         }
                         break;
                     case 'bool':
-                        if (empty($this->$field) || in_array(strval($this->$field), $bool_false_values)) {
+                        if (empty($this->$field) || in_array((string)$this->$field, $bool_false_values)) {
                             $this->$field = false;
                         } elseif (true === $this->$field || 1 == $this->$field) {
                             $this->$field = true;
@@ -2869,7 +2869,7 @@ class SugarBean
                                 //if before value is not empty then attempt to delete relationship
                                 $GLOBALS['log']->debug("save_relationship_changes(): From field_defs - attempting to " .
                                     "remove the relationship record: {$linkField} = " .
-                                    "{$this->rel_fields_before_value[$idName]}");
+                                    (string)($this->rel_fields_before_value[$idName]));
                                 $success = $this->$linkField->delete(
                                     $this->id,
                                     $this->rel_fields_before_value[$idName]
@@ -3028,10 +3028,10 @@ class SugarBean
             }
             require_once('data/Link2.php');
             $rel = Relationship::retrieve_by_modules(
-                        $new_rel_link,
-                        $this->module_dir,
-                        $this->db,
-                        'many-to-many'
+                $new_rel_link,
+                $this->module_dir,
+                $this->db,
+                'many-to-many'
                     );
 
             if (!empty($rel)) {
@@ -3295,11 +3295,8 @@ class SugarBean
             $locale->translateCharsetMIME(trim($notify_name), 'UTF-8', $OBCharset)
         );
 
-        if (empty($_SESSION['authenticated_user_language'])) {
-            $current_language = $sugar_config['default_language'];
-        } else {
-            $current_language = $_SESSION['authenticated_user_language'];
-        }
+
+        $current_language = get_current_language();
         $xtpl = new XTemplate(get_notify_template_file($current_language));
         if ($this->module_dir == "Cases") {
             //we should use Case, you can refer to the en_us.notify_template.html.
@@ -3697,7 +3694,7 @@ class SugarBean
             } elseif ((!isset($data['source']) || $data['source'] == 'custom_fields')
                 && (!empty($alias) || !empty($filter))) {
                 //add this column only if it has NOT already been added to select statement string
-                $colPos = strpos($ret_array['select'], "$this->table_name" . "_cstm" . ".$field");
+                $colPos = strpos($ret_array['select'], (string)$this->table_name . "_cstm" . ".$field");
                 if (!$colPos || $colPos < 0) {
                     $ret_array['select'] .= ", $this->table_name" . "_cstm" . ".$field $alias";
                 }
@@ -4176,7 +4173,7 @@ class SugarBean
         /**
          * if the row_offset is set to 'end' go to the end of the list
          */
-        $toEnd = strval($row_offset) == 'end';
+        $toEnd = (string)$row_offset == 'end';
         $GLOBALS['log']->debug("process_list_query: " . $query);
         if ($max_per_page == -1) {
             $max_per_page = $sugar_config['list_max_entries_per_page'];
@@ -4983,6 +4980,8 @@ class SugarBean
                                         $this->$name = $mod->name;
                                     }
                                 }
+                                // The related bean is incomplete due to $fill_in_rel_depth, we don't want to cache it
+                                BeanFactory::unregisterBean($related_module, $this->$id_name);
                             }
                         }
                     }

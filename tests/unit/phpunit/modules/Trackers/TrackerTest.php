@@ -33,12 +33,10 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testget_recently_viewed()
     {
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
         // test
-        
         $tracker = new Tracker();
 
         $result = $tracker->get_recently_viewed(1);
@@ -47,18 +45,11 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(is_array($result));
         
         // clean up
-        
         $state->popGlobals();
     }
 
     public function testmakeInvisibleForAll()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $tracker = new Tracker();
 
         //execute the method and test if it works and does not throws an exception.
@@ -68,8 +59,6 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testbean_implements()
@@ -88,8 +77,6 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         $state->pushGlobals();
-        
-        
 
         //test without setting headerDisplayed
         Tracker::logPage();
@@ -103,7 +90,6 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //$this->assertEquals(time(), null);
         
         // clean up
-        
         $state->popGlobals();
     }
 }

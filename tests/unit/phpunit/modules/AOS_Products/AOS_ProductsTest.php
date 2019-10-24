@@ -13,7 +13,6 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAOS_Products()
     {
-
         //execute the contructor and check for the Object type and  attributes
         $aosProducts = new AOS_Products();
         $this->assertInstanceOf('AOS_Products', $aosProducts);
@@ -74,25 +73,25 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //execute the method and verify that it returns expected results
         $expected = "SELECT * FROM (
- 				SELECT
-					aos_quotes.*,
-					accounts.id AS account_id,
-					accounts.name AS billing_account,
+                SELECT
+                    aos_quotes.*,
+                    accounts.id AS account_id,
+                    accounts.name AS billing_account,
 
-					opportunity_id AS opportunity,
-					billing_contact_id AS billing_contact,
-					'' AS created_by_name,
-					'' AS modified_by_name,
-					'' AS assigned_user_name
-				FROM
-					aos_products
+                    opportunity_id AS opportunity,
+                    billing_contact_id AS billing_contact,
+                    '' AS created_by_name,
+                    '' AS modified_by_name,
+                    '' AS assigned_user_name
+                FROM
+                    aos_products
 
-				JOIN aos_products_quotes ON aos_products_quotes.product_id = aos_products.id AND aos_products.id = '1' AND aos_products_quotes.deleted = 0 AND aos_products.deleted = 0
-				JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage = 'Closed Accepted' AND aos_quotes.deleted = 0
-				JOIN accounts ON accounts.id = aos_quotes.billing_account_id -- AND accounts.deleted = 0
+                JOIN aos_products_quotes ON aos_products_quotes.product_id = aos_products.id AND aos_products.id = '1' AND aos_products_quotes.deleted = 0 AND aos_products.deleted = 0
+                JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage = 'Closed Accepted' AND aos_quotes.deleted = 0
+                JOIN accounts ON accounts.id = aos_quotes.billing_account_id -- AND accounts.deleted = 0
 
-				GROUP BY accounts.id
-			) AS aos_quotes";
+                GROUP BY accounts.id
+            ) AS aos_quotes";
         $actual = $aosProducts->getCustomersPurchasedProductsQuery();
         $this->assertSame(trim($expected), trim($actual));
     }

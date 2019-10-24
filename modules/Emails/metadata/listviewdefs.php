@@ -66,6 +66,9 @@ $viewdefs['Emails']['ListView'] = array(
                     'customCode' => '<a data-action="emails-import-multiple" title="{$MOD.LBL_IMPORT}">{$MOD.LBL_IMPORT}</a>'
                 ),
                 array(
+                    'customCode' => '<a data-action="emails-delete-multiple" title="{$MOD.LBL_BUTTON_DELETE_IMAP}">{$MOD.LBL_BUTTON_DELETE_IMAP}</a>'
+                ),
+                array(
                     'customCode' => '<a data-action="emails-mark" data-for="unread" title="{$MOD.LBL_MARK_UNREAD}">{$MOD.LBL_MARK_UNREAD}</a>',
                 ),
                 array(
@@ -108,6 +111,9 @@ $viewdefs['Emails']['ListView'] = array(
             array(
                 'file' => 'modules/Emails/include/ListView/MarkEmails.js',
             ),
+            [
+                'file' => 'modules/Emails/include/ListView/DeleteEmailAction.js',
+            ],
         ),
         'options' => array(
             'hide_edit_link' => true

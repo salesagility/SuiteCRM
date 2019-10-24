@@ -141,7 +141,7 @@ class XHProfRuns_Default implements iXHProfRuns
         }
 
         $file_name = $this->file_name($run_id, $type);
-        $file = fopen($file_name, 'w');
+        $file = fopen($file_name, 'wb');
 
         if ($file) {
             fwrite($file, $xhprof_data);
