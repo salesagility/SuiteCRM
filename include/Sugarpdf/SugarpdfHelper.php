@@ -113,7 +113,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
         static $override_currency_id = null;
         static $currency;
 
-        $seps = get_number_seperators();
+        $seps = get_number_separators();
         $num_grp_sep = $seps[0];
         $dec_sep = $seps[1];
 

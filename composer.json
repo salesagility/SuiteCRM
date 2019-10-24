@@ -62,6 +62,7 @@
     "leafo/scssphp": "^0.7.7",
     "mikey179/vfsstream": "1.6.*",
     "mockery/mockery": "^0.9.9",
+    "phpunit/phpunit": "^4.8",
     "symfony/yaml": "^3.4"
   },
   "scripts": {},

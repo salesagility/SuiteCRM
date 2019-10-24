@@ -3926,20 +3926,20 @@ class Email extends Basic
         //Hanlde date from and to separately
         if ($bothDateRangesSet) {
             $dbFormatDateFrom = $timedate->to_db_date($_REQUEST['searchDateFrom'], false);
-            $dbFormatDateFrom = db_convert("'" . $dbFormatDateFrom . "'", 'datetime');
+            $dbFormatDateFrom = DBManager::convert("'" . $dbFormatDateFrom . "'", 'datetime');
 
             $dbFormatDateTo = $timedate->to_db_date($_REQUEST['searchDateTo'], false);
-            $dbFormatDateTo = db_convert("'" . $dbFormatDateTo . "'", 'datetime');
+            $dbFormatDateTo = DBManager::convert("'" . $dbFormatDateTo . "'", 'datetime');
 
             $additionalWhereClause[] = "( emails.date_sent_received >= $dbFormatDateFrom AND
                                           emails.date_sent_received <= $dbFormatDateTo )";
         } elseif ($isdateToSearchSet) {
             $dbFormatDateTo = $timedate->to_db_date($_REQUEST['searchDateTo'], false);
-            $dbFormatDateTo = db_convert("'" . $dbFormatDateTo . "'", 'datetime');
+            $dbFormatDateTo = DBManager::convert("'" . $dbFormatDateTo . "'", 'datetime');
             $additionalWhereClause[] = "emails.date_sent_received <= $dbFormatDateTo ";
         } elseif ($isDateFromSearchSet) {
             $dbFormatDateFrom = $timedate->to_db_date($_REQUEST['searchDateFrom'], false);
-            $dbFormatDateFrom = db_convert("'" . $dbFormatDateFrom . "'", 'datetime');
+            $dbFormatDateFrom = DBManager::convert("'" . $dbFormatDateFrom . "'", 'datetime');
             $additionalWhereClause[] = "emails.date_sent_received >= $dbFormatDateFrom ";
         }
 

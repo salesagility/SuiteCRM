@@ -198,7 +198,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('100.00', format_money('100', false));
     }
 
-    public function testget_number_seperators()
+    public function testget_number_separators()
     {
         $this->assertEquals(array(',', '.'), get_number_seperators());
         $this->assertEquals(array(',', '.'), get_number_seperators(false));

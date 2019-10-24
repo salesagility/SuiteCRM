@@ -34,11 +34,11 @@ class GetModulesMetaCest
         $I->seeResponseContainsJson(['type' => 'modules']);
         $I->seeResponseContainsJson(
             [
-                'attributes' =>
+                'data' =>
                     [
-                        'Accounts' => [
-                            'label' => 'Accounts',
-                            'access' => ['access']
+                        'type' => 'modules',
+                        'attributes' => [
+
                         ],
                     ],
             ]
