@@ -42,14 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
-
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- *********************************************************************************/
-
-
-/**
  * PHP wrapper class for Javascript driven TinyMCE WYSIWYG HTML editor
  */
 class SugarTinyMCE

@@ -41,12 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- * *******************************************************************************/
 
 if (!is_admin($current_user)) {
     sugar_die($app_strings['ERR_NOT_ADMIN']);
@@ -260,7 +255,7 @@ if (isset($_REQUEST['step']) && $_REQUEST['step'] !=null) {
         //echo 'Previous run '.$previouUpgradeRun.'</br>';
         $upgradeStepFile = $previouUpgradeRun;
         //reset REQUEST
-        for ($i=0;$i<sizeof($steps['files']);$i++) {
+        for ($i=0; $i<count($steps['files']); $i++) {
             if ($steps['files'][$i]== $previouUpgradeRun) {
                 $_REQUEST['step']=$i;
                 break;

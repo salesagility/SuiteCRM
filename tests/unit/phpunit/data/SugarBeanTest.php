@@ -107,6 +107,35 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $object->field_defs = $this->fieldDefsStore[$key][$module];
     }
 
+    public function testFactoryGetCachedDeleted()
+    {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('leads');
+        $state->pushTable('leads_cstm');
+        $state->pushTable('sugarfeed');
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+
+        // Create a lead and cache it
+        $lead = new Lead();
+        $lead->save();
+
+        $bean = BeanFactory::getBean($lead->module_dir, $lead->id);
+        $this->assertNotEmpty($bean);
+
+        // Don't return a cached result if the bean was deleted
+        $lead->mark_deleted($lead->id);
+        $this->assertEmpty(BeanFactory::getBean($lead->module_dir, $lead->id));
+        // Unless explicitly specified
+        $this->assertNotEmpty(BeanFactory::getBean($lead->module_dir, $lead->id, [], false));
+
+        $state->popGlobals();
+        $state->popTable('aod_indexevent');
+        $state->popTable('sugarfeed');
+        $state->popTable('leads_cstm');
+        $state->popTable('leads');
+    }
+
     protected function getModuleBean($module)
     {
         $object = BeanFactory::getBean($module);

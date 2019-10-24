@@ -230,8 +230,10 @@ class SugarWidgetField extends SugarWidget
 
     public function getVardef($layout_def)
     {
-        $myName = $layout_def['column_key'];
-        $vardef = $this->layout_manager->defs['reporter']->all_fields[$myName];
+        if (!empty($layout_def['column_key']) && !empty($this->layout_manager->defs['reporter'])) {
+            $myName = $layout_def['column_key'];
+            $vardef = $this->layout_manager->defs['reporter']->all_fields[$myName];
+        }
 
         if (!isset($vardef)) {
             // No vardef, return an empty array

@@ -104,11 +104,12 @@ script:
 after_script:
   - ./build/push_output.sh
   - curl -i -F file=@suitecrm.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
-  - curl -i -F file=@var/log/apache2/error.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
+  - curl -i -F file=@error.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
+  - curl -i -F file=@install.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
   # ElasticSearch Indexing logs
   - cat search_index.log
   - sudo cat /var/log/apache2/error.log
-  - echo $TRAVIS_COMMIT_RANGE
+ - echo $TRAVIS_COMMIT_RANGE
 
 branches:
   only:

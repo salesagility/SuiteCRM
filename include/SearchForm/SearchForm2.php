@@ -1223,7 +1223,7 @@ class SearchForm
                                 $values[] = $tmpfield_value;
                             }
 
-                            $field_value = join('<>', $values);
+                            $field_value = implode('<>', $values);
 
                             if (!empty($parms['enable_range_search']) && $parms['operator'] == '=' && $type != 'int') {
                                 // Databases can't really search for floating point numbers, because they can't be accurately described in binary,

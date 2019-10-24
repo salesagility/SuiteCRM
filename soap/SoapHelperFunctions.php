@@ -707,7 +707,7 @@ function new_handle_set_entries($module_name, $name_value_lists, $select_fields 
     require_once($beanFiles[$class_name]);
     $ids = array();
     $count = 1;
-    $total = sizeof($name_value_lists);
+    $total = count($name_value_lists);
     foreach ($name_value_lists as $name_value_list) {
         $seed = new $class_name();
 
@@ -917,7 +917,7 @@ function filter_field_list(&$field_list, $select_fields, $module_name)
  */
 function filter_return_list(&$output_list, $select_fields, $module_name)
 {
-    for ($sug = 0; $sug < sizeof($output_list); $sug++) {
+    for ($sug = 0; $sug < count($output_list); $sug++) {
         if ($module_name == 'Contacts') {
             global $invalid_contact_fields;
             if (is_array($invalid_contact_fields)) {

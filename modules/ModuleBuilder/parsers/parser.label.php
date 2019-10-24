@@ -306,7 +306,7 @@ class ParserLabel
 
                 try {
                     $file_contents = fopen($extension_filename, 'wb');
-                    fputs($file_contents, $out, strlen($out));
+                    fwrite($file_contents, $out, strlen($out));
                     fclose($file_contents);
                 } catch (Exception $e) {
                     $GLOBALS ['log']->fatal("Could not write $filename");
@@ -353,7 +353,7 @@ class ParserLabel
                 $failed_to_write = false;
                 try {
                     $file_contents = fopen($relationships_filename, 'wb');
-                    fputs($file_contents, $out, strlen($out));
+                    fwrite($file_contents, $out, strlen($out));
                     fclose($file_contents);
                 } catch (Exception $e) {
                     $GLOBALS ['log']->fatal("Could not write $filename");

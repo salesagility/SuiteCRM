@@ -247,9 +247,21 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetTotalHTML()
     {
         //execute the method with required data preset and verify it returns expected result
-        $fields = array('label' => array('display' => 1, 'total' => 'SUM', 'label' => 'total'));
+        $fields = array(
+            'label' => array(
+                'display' => 1,
+                'total' => 'SUM',
+                'label' => 'total',
+                'module' => 'Meetings',
+                'field' => 'duration_hours',
+                'params' => ''
+            )
+        );
         $totals = array('label' => array(10, 20, 30));
-        $expected = "<table><thead class='fc-head'><tr><th>total Sum</th></tr></thead><tbody><tr class='oddListRowS1'><td>60</td></tr></tbody></table>";
+        $expected = "<table><thead class='fc-head'><tr><th>total Sum</th></tr></thead><tbody><tr class='oddListRowS1'><td>
+<span class=\"sugar_field\" id=\"duration_hours\">
+60
+</span></td></tr></tbody></table>";
 
         $aor_Report = new AOR_Report();
         $actual = $aor_Report->getTotalHTML($fields, $totals);

@@ -970,7 +970,7 @@ class ListView
         );
 
         foreach ($priority_map as $p) {
-            if (key_exists($p, $sortOrderList)) {
+            if (array_key_exists($p, $sortOrderList)) {
                 $order = strtolower($sortOrderList[$p]);
                 if (in_array($order, array('asc', 'desc'))) {
                     return $order;
