@@ -56,6 +56,6 @@ class NotAllowedException extends Exception
      */
     public function __construct($message = '', $code = ExceptionCode::API_CONTENT_NEGOTIATION_FAILED, $previous = null)
     {
-        parent::__construct('[Not Allowed] ' . $message . ' ', $code, $previous);
+        parent::__construct('[Not Allowed] ' . $message, $code, $previous);
     }
 }
