@@ -542,16 +542,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(1, preg_match('/^one\d{0,}\@email\.com$/', $actual['email']));
     }
 
-
-    public function testencrypt_password()
-    {
-        $user = new User();
-
-        $result = $user->encrypt_password("test");
-        $this->assertTrue(isset($result));
-        $this->assertGreaterThan(0, strlen($result));
-    }
-
     public function testgetPasswordHash()
     {
         $result = User::getPasswordHash("test");
@@ -560,10 +550,8 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan(0, strlen($result));
     }
 
-
     public function testcheckPassword()
     {
-
         //test with empty password and empty hash
         $result = User::checkPassword("", '');
         $this->assertEquals(false, $result);

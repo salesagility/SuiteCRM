@@ -1040,22 +1040,6 @@ class User extends Person implements EmailInterface
     }
 
     /**
-     * @deprecated
-     * @param string $user_name - Must be non null and at least 2 characters
-     * @param string $username_password - Must be non null and at least 1 character.
-     * @desc Take an unencrypted username and password and return the encrypted password
-     * @return string encrypted password for storage in DB and comparison against DB password.
-     */
-    public function encrypt_password($username_password)
-    {
-        // encrypt the password.
-        $salt = substr($this->user_name, 0, 2);
-        $encrypted_password = crypt($username_password, $salt);
-
-        return $encrypted_password;
-    }
-
-    /**
      * Authenicates the user; returns true if successful
      *
      * @param string $password MD5-encoded password
