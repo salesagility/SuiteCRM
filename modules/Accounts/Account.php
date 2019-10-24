@@ -175,8 +175,6 @@ class Account extends Company implements EmailInterface
         return $this->get_linked_beans('contacts', 'Contact');
     }
 
-
-
     public function clear_account_case_relationship($account_id='', $case_id='')
     {
         if (empty($case_id)) {
@@ -186,20 +184,6 @@ class Account extends Company implements EmailInterface
         }
         $query = "UPDATE cases SET account_name = '', account_id = '' WHERE account_id = '$account_id' AND deleted = 0 " . $where;
         $this->db->query($query, true, "Error clearing account to case relationship: ");
-    }
-
-    /**
-    * This method is used to provide backward compatibility with old data that was prefixed with http://
-    * We now automatically prefix http://
-    * @deprecated.
-    */
-    public function remove_redundant_http()
-    {	/*
-        if(preg_match("@http://@", $this->website))
-        {
-            $this->website = substr($this->website, 7);
-        }
-        */
     }
 
     public function fill_in_additional_list_fields()
