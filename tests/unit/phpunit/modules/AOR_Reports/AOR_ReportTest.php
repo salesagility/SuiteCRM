@@ -255,6 +255,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 'module' => 'Meetings',
                 'field' => 'duration_hours',
                 'params' => ''
+
             ]
         ];
         $totals = ['label' => [10, 20, 30]];

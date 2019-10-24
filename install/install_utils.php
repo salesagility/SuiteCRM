@@ -1103,19 +1103,22 @@ EOQ;
         $fp = fopen($htaccess_file, 'rb');
         $skip = false;
         while ($line = fgets($fp)) {
-            if (preg_match("/\s*#\s*BEGIN\s*SUITECRM\s*RESTRICTIONS/i", $line)) {
+            if (preg_match("/\s*#\s*BEGIN\s*SUITECRM\s*RESTRICTIONS/i",
+                    $line) || preg_match("/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
                 if (!$skip) {
                     $contents .= $line;
                 }
                 $skip = true;
-                if (preg_match("/\s*#\s*END\s*SUITECRM\s*RESTRICTIONS/i", $line)) {
+                if (preg_match("/\s*#\s*END\s*SUITECRM\s*RESTRICTIONS/i",
+                        $line) || preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
                     $skip = false;
                 }
             }
             if (!$skip) {
                 $contents .= $line;
             }
-            if (preg_match("/\s*#\s*END\s*SUITECRM\s*RESTRICTIONS/i", $line)) {
+            if (preg_match("/\s*#\s*END\s*SUITECRM\s*RESTRICTIONS/i",
+                    $line) || preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
                 $skip = false;
             }
         }
@@ -1829,7 +1832,7 @@ function getLangPacks($display_commit = true, $types = array('langpack'), $notic
             $md5_matches = $uh->findByMd5($the_md5);
         }
 
-        if ($manifest['type']!= 'module' || 0 == sizeof($md5_matches)) {
+        if ($manifest['type']!= 'module' || 0 == count($md5_matches)) {
             $name = empty($manifest['name']) ? $file : $manifest['name'];
             $version = empty($manifest['version']) ? '' : $manifest['version'];
             $published_date = empty($manifest['published_date']) ? '' : $manifest['published_date'];

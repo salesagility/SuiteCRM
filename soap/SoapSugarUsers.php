@@ -472,10 +472,10 @@ function get_entry_list(
     $field_list = filter_return_list($field_list, $select_fields, $module_name);
 
     // Calculate the offset for the start of the next page
-    $next_offset = $offset + sizeof($output_list);
+    $next_offset = $offset + count($output_list);
 
     return array(
-        'result_count' => sizeof($output_list),
+        'result_count' => count($output_list),
         'next_offset' => $next_offset,
         'field_list' => $field_list,
         'entry_list' => $output_list,
@@ -934,7 +934,7 @@ function get_related_notes($session, $module_name, $module_id, $select_fields)
     $field_list = filter_field_list($field_list, $select_fields, $module_name);
 
     return array(
-        'result_count' => sizeof($output_list),
+        'result_count' => count($output_list),
         'next_offset' => 0,
         'field_list' => $field_list,
         'entry_list' => $output_list,
@@ -1890,10 +1890,10 @@ function search_by_module($user_name, $password, $search_string, $modules, $offs
         }//end foreach
     }
 
-    $next_offset = $offset + sizeof($output_list);
+    $next_offset = $offset + count($output_list);
 
     return array(
-        'result_count' => sizeof($output_list),
+        'result_count' => count($output_list),
         'next_offset' => $next_offset,
         'field_list' => $field_list,
         'entry_list' => $output_list,
@@ -2436,7 +2436,7 @@ function handle_set_entries($module_name, $name_value_lists, $select_fields = fa
     require_once($beanFiles[$class_name]);
     $ids = array();
     $count = 1;
-    $total = sizeof($name_value_lists);
+    $total = count($name_value_lists);
 
     foreach ($name_value_lists as $name_value_list) {
         $seed = new $class_name();

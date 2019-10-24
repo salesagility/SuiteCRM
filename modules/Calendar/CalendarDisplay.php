@@ -372,7 +372,7 @@ class CalendarDisplay
 
         if ($view == 'month' || $view == 'sharedMonth') {
             for ($i=0; $i<strlen($dateFormat['date']); $i++) {
-                switch ($dateFormat['date']{$i}) {
+                switch ($dateFormat['date'][$i]) {
                     case "Y":
                         $str .= " ".$date_time->year;
                         break;
@@ -388,7 +388,7 @@ class CalendarDisplay
             $last_day = $first_day->get("+6 days");
 
             for ($i=0; $i<strlen($dateFormat['date']); $i++) {
-                switch ($dateFormat['date']{$i}) {
+                switch ($dateFormat['date'][$i]) {
                         case "Y":
                             $str .= " ".$first_day->year;
                             break;
@@ -402,7 +402,7 @@ class CalendarDisplay
             }
             $str .= " - ";
             for ($i=0; $i<strlen($dateFormat['date']); $i++) {
-                switch ($dateFormat['date']{$i}) {
+                switch ($dateFormat['date'][$i]) {
                         case "Y":
                             $str .= " ".$last_day->year;
                             break;
@@ -418,7 +418,7 @@ class CalendarDisplay
             $str .= $date_time->get_day_of_week()." ";
 
             for ($i=0; $i<strlen($dateFormat['date']); $i++) {
-                switch ($dateFormat['date']{$i}) {
+                switch ($dateFormat['date'][$i]) {
                             case "Y":
                                 $str .= " ".$date_time->year;
                                 break;
@@ -434,7 +434,7 @@ class CalendarDisplay
             $str .= $date_time->get_day_of_week()." ";
 
             for ($i=0; $i<strlen($dateFormat['date']); $i++) {
-                switch ($dateFormat['date']{$i}) {
+                switch ($dateFormat['date'][$i]) {
                         case "Y":
                             $str .= " ".$date_time->year;
                             break;
@@ -456,7 +456,7 @@ class CalendarDisplay
             $last_day = $first_day->get("+6 days");
 
             for ($i=0; $i<strlen($dateFormat['date']); $i++) {
-                switch ($dateFormat['date']{$i}) {
+                switch ($dateFormat['date'][$i]) {
                         case "Y":
                             $str .= " ".$first_day->year;
                             break;
@@ -470,7 +470,7 @@ class CalendarDisplay
             }
             $str .= " - ";
             for ($i=0; $i<strlen($dateFormat['date']); $i++) {
-                switch ($dateFormat['date']{$i}) {
+                switch ($dateFormat['date'][$i]) {
                         case "Y":
                             $str .= " ".$last_day->year;
                             break;
