@@ -199,7 +199,7 @@ class SugarApplication
         //check if user can access
 
         // call after load user custom hook, with the user
-        LogicHook::initialize()->call_custom_logic('', 'after_load_user');
+        LogicHook::initialize()->call_custom_logic('', 'after_user_load');
     }
 
     public function ACLFilter()
