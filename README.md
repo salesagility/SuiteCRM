@@ -20,9 +20,9 @@
 [Extensions Directory](https://store.suitecrm.com/) |
 [Translations](https://crowdin.com/project/suitecrmtranslations) | [Code of Conduct](https://docs.suitecrm.com/community/code-of-conduct/)
 
-[SuiteCRM](https://suitecrm.com) is the award winning open source, enterprise ready Customer Relationship Management (CRM) software application.
+[SuiteCRM](https://suitecrm.com) is the award-winning open-source, enterprise-ready Customer Relationship Management (CRM) software application.
 
-Our vision is to be the most adopted open source enterprise CRM in the world, giving users full control of their data and freedom to own and customise their business solution.
+Our vision is to be the most adopted open source enterprise CRM in the world, giving users full control of their data and freedom to own and customize their business solution.
 
 Try out a free fully working [SuiteCRM demo available here](https://suitecrm.com/demo/)
 
@@ -51,12 +51,12 @@ Then consider a small [donation](https://opencollective.com/SuiteCRM/contribute)
 
 ### Security ###
 
-We take Security seriously here at SuiteCRM so if you have discovered a security risk report it by
-emailing [security@suitecrm.com](mailto:security@suitecrm.com). This will be delivered to the product team who handle security issues.
+We take security seriously here at SuiteCRM so if you have discovered a security risk report it by
+emailing [security@suitecrm.com](mailto:security@suitecrm.com). This will be delivered to the product team that handles security issues.
 Please don't disclose security bugs publicly until they have been handled by the security team.
 
 Your email will be acknowledged within 24 hours during the business week (Mon - Fri), and you’ll receive a more
-detailed response to your email within 72 hours during the business week (Mon - Fri) indicating the next steps in
+a detailed response to your email within 72 hours during the business week (Mon - Fri) indicating the next steps in
 handling your report.
 
 ### Roadmap ### 
@@ -65,7 +65,7 @@ View the [Roadmap](https://suitecrm.com/roadmap/) and [LTS](https://suitecrm.com
 
 ### Support ###
 
-SuiteCRM is an open source project. If you require help with support then please use our [support forum](https://suitecrm.com/suitecrm/forum/). By using the forums the knowledge is shared with everyone in the community. Our developer and community team members answer questions on the forum daily but it also gives the other members of the community the opportunity to contribute. If you would like customisations to specifically fit your SuiteCRM  needs then please visit the [website](https://suitecrm.com/).
+SuiteCRM is an open-source project. If you require help with support then please use our [support forum](https://suitecrm.com/suitecrm/forum/). By using the forums the knowledge is shared with everyone in the community. Our developer and community team members answer questions on the forum daily but it also allows the other members of the community to contribute. If you would like customizations to specifically fit your SuiteCRM needs then please visit the [website](https://suitecrm.com/).
 
 ### License [![AGPLv3](https://img.shields.io/github/license/suitecrm/suitecrm.svg)](./LICENSE.txt)
 
