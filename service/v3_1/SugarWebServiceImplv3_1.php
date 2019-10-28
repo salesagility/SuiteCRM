@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 /**
- * This class is an implemenatation class for all the rest services
+ * This class is an implementation class for all the rest services
  */
 require_once('service/v3/SugarWebServiceImplv3.php');
 require_once('SugarWebServiceUtilv3_1.php');
@@ -138,7 +138,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
 
 
     /**
-     * Retrieve a list of SugarBean's based on provided IDs. This API will not wotk with report module
+     * Retrieve a list of SugarBean's based on provided IDs. This API will not work with report module
      *
      * @param String $session -- Session ID returned by a previous call to login.
      * @param String $module_name -- The name of the module to return records from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
@@ -420,7 +420,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
             $_SESSION['authenticated_user_id'] = $current_user->id;
             $_SESSION['unique_key'] = $sugar_config['unique_key'];
             $current_user->call_custom_logic('after_login');
-            $GLOBALS['log']->info('End: SugarWebServiceImpl->login - succesful login');
+            $GLOBALS['log']->info('End: SugarWebServiceImpl->login - successful login');
             $nameValueArray = array();
             global $current_language;
             $nameValueArray['user_id'] = self::$helperObject->get_name_value('user_id', $current_user->id);

@@ -56,7 +56,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class LoggerManager
 {
-    //this the the current log level;
+    //this is the current log level;
     private static $_level = 'fatal';
 
     //this is a list of different loggers that have been loaded

@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Class Controller handles the the actions for the search settings.
+ * Class Controller handles the actions for the search settings.
  */
 class Controller extends MVC\Controller
 {
