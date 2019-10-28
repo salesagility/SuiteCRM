@@ -21,7 +21,7 @@ _Aside from this readme you can find a lot more info on [jstree.com](http://www.
 <!-- MarkdownTOC depth=0 autolink=true bracket=round -->
 
 - [Getting Started](#getting-started)
-  - [Include all neccessary files](#include-all-neccessary-files)
+  - [Include all necessary files](#include-all-neccessary-files)
   - [Populating a tree using HTML](#populating-a-tree-using-html)
   - [Populating a tree using an array \(or JSON\)](#populating-a-tree-using-an-array-or-json)
     - [The required JSON format](#the-required-json-format)
@@ -53,7 +53,7 @@ _Aside from this readme you can find a lot more info on [jstree.com](http://www.
 
 ## Getting Started
 
-### Include all neccessary files
+### Include all necessary files
 To get started you need 3 things in your page:
  1. jQuery (anything above 1.9.1 will work)
  2. A jstree theme (there is only one theme supplied by default)
