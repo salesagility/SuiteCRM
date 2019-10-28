@@ -507,7 +507,7 @@ $contact_user_link_guid',
     'NEW_LOGO_HELP' => 'The image file format can be either .png or .jpg. The maximum height is 170px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions.',
     'COMPANY_LOGO_UPLOAD_BTN' => 'Upload',
     'CURRENT_LOGO' => 'Current Logo:',
-    'CURRENT_LOGO_HELP' => 'This logo is displayed in the left-hand corner of the footer of the SuiteCRM application.',
+    'CURRENT_LOGO_HELP' => 'This logo is displayed in the centre of the login screen of the SuiteCRM application.',
 
 
     //Scenario selection of modules
