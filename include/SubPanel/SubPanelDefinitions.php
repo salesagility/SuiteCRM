@@ -641,7 +641,7 @@ class SubPanelDefinitions
 
         if (isset($this->layout_defs [ 'subpanel_setup' ])) { // bug 17434 - belts-and-braces - check that we have some subpanels first
             //retrieve list of hidden subpanels
-            $hidden_panels = $this->get_hidden_subpanels();
+            $hidden_panels = self::get_hidden_subpanels();
 
             //activities is a special use case in that if it is hidden,
             //then the history tab should be hidden too.
@@ -767,7 +767,7 @@ class SubPanelDefinitions
      * return all available subpanels that belong to the list of tab modules.  You can optionally return all
      * available subpanels, and also optionally group by module (prepends the key with the bean class name).
      */
-    public function get_all_subpanels($return_tab_modules_only = true, $group_by_module = false)
+    public static function get_all_subpanels($return_tab_modules_only = true, $group_by_module = false)
     {
         global $moduleList, $beanFiles, $beanList, $module;
 
@@ -843,7 +843,7 @@ class SubPanelDefinitions
     /*
      * retrieve hidden subpanels
      */
-    public function get_hidden_subpanels()
+    public static function get_hidden_subpanels()
     {
         global $moduleList;
 
