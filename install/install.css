@@ -109,13 +109,12 @@ a:link, a:visited {
 	font-size: 12px; color: #333333;
     text-decoration: none;
 	font-family:  Arial, Verdana, Helvetica, sans-serif;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 a:hover {
 	color: #EA1313;
     text-decoration: none;
-    text-decoration: underline;
 }
 
 li {
@@ -208,7 +207,7 @@ textarea {
 
 .stop a:link, a:visited  {
 	color: #cc0000;
-	text-decoration: underline;
+	text-decoration: none;
 	text-align: left;
 }
 
