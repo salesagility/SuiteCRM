@@ -9,7 +9,6 @@ class ModulesCest
 {
     private static $ACCOUNT_RESOURCE = '/api/v8/modules/Accounts';
     private static $RECORD = '11111111-1111-1111-1111-111111111111';
-    private static $RECORD_TYPE = 'Accounts';
     private static $PRODUCT_RESOURCE = '/api/v8/modules/AOS_Products';
     private static $PRODUCT_RECORD_TYPE = 'AOS_Products';
     private static $PRODUCT_RECORD_ID = '11111111-1111-1111-1111-111111111111';
@@ -17,8 +16,8 @@ class ModulesCest
     private static $PRODUCT_CATEGORY_RECORD_TYPE = 'AOS_Product_Categories';
     private static $PRODUCT_CATEGORY_RECORD_ID = '11111111-1111-1111-1111-111111111111';
     private static $PRODUCT_CATEGORY_RELATED_RECORD_IDS = array();
-    private static $MEETINGS_RESOURCE = '/api/v8/modules/Meetings';
-    private static $MEETINGS_RECORD_ID = '11111111-1111-1111-1111-111111111111';
+//  private static $MEETINGS_RESOURCE = '/api/v8/modules/Meetings';
+//  private static $MEETINGS_RECORD_ID = '11111111-1111-1111-1111-111111111111';
     private static $NOTES_RESOURCE = '/api/v8/modules/Notes';
     private static $NOTES_RESOURCE_ID = '11111111-1111-1111-1111-111111111111';
     private static $DOCUMENTS_RESOURCE = '/api/v8/modules/Documents';
