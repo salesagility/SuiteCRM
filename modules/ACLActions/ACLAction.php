@@ -91,12 +91,12 @@ class ACLAction extends SugarBean
             foreach ($ACLActions[$type]['actions'] as $action_name => $action_def) {
                 $action = new ACLAction();
 
-                $tableNameQuoted = $db->quoted($action->table_name);
+                $tableName = $action->table_name;
                 $actionNameQuoted = $db->quoted($action_name);
                 $categoryQuoted = $db->quoted($category);
                 $typeQuoted = $db->quoted($type);
 
-                $query = "SELECT * FROM " . $tableNameQuoted .
+                $query = "SELECT * FROM " . $tableName .
                     " WHERE name = " . $actionNameQuoted .
                     " AND category = " . $categoryQuoted .
                     " AND acltype = " . $typeQuoted .
@@ -138,13 +138,13 @@ class ACLAction extends SugarBean
             foreach ($ACLActions[$type]['actions'] as $action_name => $action_def) {
                 $action = new ACLAction();
 
-                $tableNameQuoted = $db->quoted($action->table_name);
+                $tableName = $action->table_name;
                 $actionNameQuoted = $db->quoted($action_name);
                 $categoryQuoted = $db->quoted($category);
                 $typeQuoted = $db->quoted($type);
 
-                $query = "SELECT * FROM " . $tableNameQuoted .
-                    " WHERE name=" . $actionNameQuoted .
+                $query = "SELECT * FROM " . $tableName .
+                    " WHERE name = " . $actionNameQuoted .
                     " AND category = " . $categoryQuoted .
                     " AND acltype = " . $typeQuoted .
                     " AND deleted = 0";
