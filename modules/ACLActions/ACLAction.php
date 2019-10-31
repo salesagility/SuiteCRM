@@ -106,7 +106,7 @@ class ACLAction extends SugarBean
 
                 // Only add if an action with that name and category don't exist
                 $row = $db->fetchByAssoc($result);
-                if ($row === null) {
+                if ($row === false) {
                     $action->name = $action_name;
                     $action->category = $category;
                     $action->aclaccess = $action_def['default'];
@@ -153,7 +153,7 @@ class ACLAction extends SugarBean
 
                 // Only add if an action with that name and category don't exist
                 $row = $db->fetchByAssoc($result);
-                if ($row !== null) {
+                if ($row !== false) {
                     $action->mark_deleted($row['id']);
                 }
             }
