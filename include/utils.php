@@ -3292,6 +3292,22 @@ function pre_login_check()
     }
 }
 
+/**
+ * Like exit() but will throw an exception if called during tests.
+ *
+ * This is to avoid exit() stopping the test suite without us noticing.
+ *
+ * @param int|string $status
+ * @throws Exception
+ */
+function suite_exit($status = 0)
+{
+    if (defined('SUITE_PHPUNIT_RUNNER'))
+        throw new Exception("exit() called during tests with status: $status");
+    else
+        exit($status);
+}
+
 function sugar_cleanup($exit = false)
 {
     static $called = false;
@@ -3309,7 +3325,7 @@ function sugar_cleanup($exit = false)
     //added this check to avoid errors during install.
     if (empty($sugar_config['dbconfig'])) {
         if ($exit) {
-            exit;
+            suite_exit();
         }
         return;
     }
@@ -3344,7 +3360,7 @@ function sugar_cleanup($exit = false)
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         if ($exit) {
-            exit;
+            suite_exit();
         }
     }
 }
