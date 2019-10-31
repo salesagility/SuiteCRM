@@ -65,7 +65,7 @@ View the [Roadmap](https://suitecrm.com/roadmap/) and [LTS](https://suitecrm.com
 
 ### Support ###
 
-SuiteCRM is an open source project. If you require help with support then please use our [support forum](https://suitecrm.com/suitecrm/forum/). By using the forums the knowledge is shared with everyone in the community. Our developer and community team members answer questions on the forum daily but it also gives the other members of the community the opportunity to contribute. If you would like customisations to specifically fit your SuiteCRM  needs then please visit the [website](https://suitecrm.com/).
+SuiteCRM is an open source project. If you require help with support then please use our [support forum](https://suitecrm.com/suitecrm/forum/). By using the forums, the knowledge is shared with everyone in the community. Our developer and community team members answer questions on the forum daily but it also gives the other members of the community the opportunity to contribute. If you would like customisations to specifically fit your SuiteCRM needs, then please visit the [website](https://suitecrm.com/).
 
 ### License [![AGPLv3](https://img.shields.io/github/license/suitecrm/suitecrm.svg)](./LICENSE.txt)
 
