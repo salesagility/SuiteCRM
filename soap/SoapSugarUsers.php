@@ -2244,7 +2244,7 @@ $server->register(
     $NAMESPACE
 );
 /**
- *   Once we have successfuly done a mail merge on a campaign, we need to notify Sugar of the targets
+ *   Once we have successfully done a mail merge on a campaign, we need to notify Sugar of the targets
  *   and the campaign_id for tracking purposes
  *
  * @param session        the session id of the authenticated user

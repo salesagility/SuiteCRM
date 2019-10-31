@@ -76,7 +76,7 @@ function retrieve_relationships_properties($module_1, $module_2, $relationship_n
 
 
 /*
- * retireves relationships between two modules
+ * Retrieves relationships between two modules
  * This will return all viewable relationships between two modules
  * module_query is a filter on the first module
  * related_module_query is a filter on the second module
