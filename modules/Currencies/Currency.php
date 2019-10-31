@@ -260,7 +260,7 @@ class Currency extends SugarBean
  *
  * This method is a wrapper designed exclusively for formatting currency values
  * with the assumption that the method caller wants a currency formatted value
- * matching his/her user preferences(if set) or the system configuration defaults
+ * matching their user preferences(if set) or the system configuration defaults
  *(if user preferences are not defined).
  *
  * @param $amount The amount to be formatted
