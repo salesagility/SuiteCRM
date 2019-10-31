@@ -10,7 +10,7 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         get_sugar_config_defaults();
         $current_user = new User();
     }
-    
+
     protected function tearDown()
     {
         parent::tearDown();
@@ -18,7 +18,7 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testACLAction()
     {
-//        self::markTestIncomplete('environment dependency');
+        self::markTestIncomplete('environment dependency');
 //
 //        $state = new SuiteCRM\StateSaver();
 //        $state->pushTable('acl_actions');
@@ -44,7 +44,7 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testaddActions()
     {
-//        self::markTestIncomplete('environment dependency');
+        self::markTestIncomplete('environment dependency');
 //
 //        $state = new SuiteCRM\StateSaver();
 //        $state->pushTable('acl_actions');
@@ -97,15 +97,15 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetUserActions()
     {
-//        $result1 = ACLAction::getUserActions('1');
-//        $result2 = ACLAction::getUserActions('1', false, 'Accounts');
-//        $result3 = ACLAction::getUserActions('1', false, 'Accounts', 'list');
-//
-//        self::markTestIncomplete('Need to implement: verify that all three results retunred are different.');
-//        //verify that all three results retunred are different
-//        //$this->assertNotSame($result1, $result2);
-//        //$this->assertNotSame($result1, $result3);
-//        //$this->assertNotSame($result2, $result3);
+        self::markTestIncomplete('Need to implement: verify that all three results returned are different.');
+        // $result1 = ACLAction::getUserActions('1');
+        // $result2 = ACLAction::getUserActions('1', false, 'Accounts');
+        // $result3 = ACLAction::getUserActions('1', false, 'Accounts', 'list');
+
+        //verify that all three results returned are different
+        //$this->assertNotSame($result1, $result2);
+        //$this->assertNotSame($result1, $result3);
+        //$this->assertNotSame($result2, $result3);
     }
 
     public function testhasAccess()
@@ -123,18 +123,18 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
-        
+
         $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', '', ''));//test with empty module and action
-        $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', 'Accounts', 'list')); //test with valid module and action
-        
+        $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', 'Accounts',
+            'list')); //test with valid module and action
+
         // clean up
-        
         $state->popGlobals();
     }
 
     public function testuserHasAccess()
     {
-//        self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
+        self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
 //
 //        $state = new SuiteCRM\StateSaver();
 //        $state->pushGlobals();
@@ -152,7 +152,7 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetUserAccessLevel()
     {
-//        self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
+        self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
 //
 //
 //        //tes for accoounts module with two different actions
@@ -166,7 +166,7 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testuserNeedsOwnership()
     {
-//        self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
+        self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
 //
 //
 //        //test with invalid values
@@ -190,12 +190,36 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $names_expected = array('list' => 'List', 'edit' => 'Edit');
 
         $categories_expected = array(
-                'Accounts' => array(
-                        'module' => array(
-                                'list' => array('list', 'accessColor' => false, 'accessName' => false, 'accessLabel' => false, 'accessOptions' => array(90 => 'All', 80 => 'Group', 75 => 'Owner', 0 => 'Not Set', -99 => 'None')),
-                                'edit' => array('edit', 'accessColor' => false, 'accessName' => false, 'accessLabel' => false, 'accessOptions' => array(90 => 'All', 80 => 'Group', 75 => 'Owner', 0 => 'Not Set', -99 => 'None')),
-                        ),
+            'Accounts' => array(
+                'module' => array(
+                    'list' => array(
+                        'list',
+                        'accessColor' => false,
+                        'accessName' => false,
+                        'accessLabel' => false,
+                        'accessOptions' => array(
+                            90 => 'All',
+                            80 => 'Group',
+                            75 => 'Owner',
+                            0 => 'Not Set',
+                            -99 => 'None'
+                        )
+                    ),
+                    'edit' => array(
+                        'edit',
+                        'accessColor' => false,
+                        'accessName' => false,
+                        'accessLabel' => false,
+                        'accessOptions' => array(
+                            90 => 'All',
+                            80 => 'Group',
+                            75 => 'Owner',
+                            0 => 'Not Set',
+                            -99 => 'None'
+                        )
+                    ),
                 ),
+            ),
         );
 
         //execute the method and verify that it retunrs expected results

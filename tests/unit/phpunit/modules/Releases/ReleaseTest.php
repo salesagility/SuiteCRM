@@ -20,11 +20,6 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $release = new Release();
 
         //test without setting name
@@ -33,8 +28,6 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with name set
         $release->name = 'test';
         $this->assertEquals('test', $release->get_summary_text());
-        
-        // clean up
     }
 
     public function testget_releases()
@@ -52,12 +45,6 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $release = new Release();
 
         //execute the method and test if it works and does not throws an exception.
@@ -67,18 +54,10 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfill_in_additional_detail_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $release = new Release();
 
         //execute the method and test if it works and does not throws an exception.
@@ -88,8 +67,6 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testget_list_view_data()

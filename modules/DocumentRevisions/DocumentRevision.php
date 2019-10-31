@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description: TODO:  To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 
 
@@ -159,7 +153,7 @@ class DocumentRevision extends SugarBean
     }
     public function get_summary_text()
     {
-        return "$this->filename";
+        return (string)$this->filename;
     }
 
     public function retrieve($id = -1, $encode=false, $deleted=true)

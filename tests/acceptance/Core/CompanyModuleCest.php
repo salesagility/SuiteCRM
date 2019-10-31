@@ -24,7 +24,7 @@ class CompanyModuleCest
             $this->fakeData->addProvider(new Faker\Provider\en_US\Address($this->fakeData));
             $this->fakeData->addProvider(new Faker\Provider\en_US\PhoneNumber($this->fakeData));
             $this->fakeData->addProvider(new Faker\Provider\en_US\Company($this->fakeData));
-            $this->fakeDataSeed = rand(0, 2048);
+            $this->fakeDataSeed = mt_rand(0, 2048);
         }
         $this->fakeData->seed($this->fakeDataSeed);
     }
@@ -233,7 +233,6 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Duplicate Company Test Module Record from detail view');
         $I->loginAsAdmin();
-
 
         // Go to Company Test Module
         $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);

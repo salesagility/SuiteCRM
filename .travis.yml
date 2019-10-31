@@ -5,17 +5,8 @@ sudo: required
 matrix:
   fast_finish: true
   include:
-    - name: "PHP 5.6 / MySQL 5.6"
+    - name: "PHP 5.6 / MySQL 5.7"
       php: "5.6"
-      dist: trusty
-    - name: "PHP 7.0 / MySQL 5.7"
-      php: "7.0"
-      dist: xenial
-    - name: "PHP 7.1 / MySQL 5.7"
-      php: "7.1"
-      dist: xenial
-    - name: "PHP 7.2 / MySQL 5.7"
-      php: "7.2"
       dist: xenial
     - name: "PHP 7.3 / MySQL 5.7"
       php: "7.3"
@@ -26,11 +17,10 @@ matrix:
       dist: xenial
       before_script: composer install
       script: composer validate
-    - stage: codecoverage
-      if: type IN (pull_request) OR branch in (master, develop, hotfix)
+    - name: "code coverage"
       php: "7.0"
       dist: xenial
-      script: ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 1;" >> config_override.php  ; ./vendor/bin/robo code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
+      script: ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 1;" >> config_override.php  ; ./vendor/bin/robo code:coverage --ci; cat codeception.dist.yml; bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
 
 services:
   - mysql
@@ -89,7 +79,7 @@ script:
   - echo "using install wizard"
   - ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter
   - ./build/push_output.sh
-  
+
   # Run the unit tests
   - sudo chmod -R 777 .
   - ./vendor/bin/phpunit --stop-on-failure --stop-on-error --colors --configuration ./tests/phpunit.xml.dist ./tests/unit/phpunit
@@ -114,11 +104,12 @@ script:
 after_script:
   - ./build/push_output.sh
   - curl -i -F file=@suitecrm.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
-  - curl -i -F file=@var/log/apache2/error.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
+  - curl -i -F file=@error.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
+  - curl -i -F file=@install.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
   # ElasticSearch Indexing logs
   - cat search_index.log
   - sudo cat /var/log/apache2/error.log
-  - echo $TRAVIS_COMMIT_RANGE
+ - echo $TRAVIS_COMMIT_RANGE
 
 branches:
   only:

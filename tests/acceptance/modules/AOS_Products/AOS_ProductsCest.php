@@ -23,7 +23,7 @@ class ProductsCest
             $this->fakeData = Faker\Factory::create();
         }
 
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
@@ -31,7 +31,7 @@ class ProductsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the products module.
+     * As an admin user, I want to view the products module.
      */
     public function testScenarioViewProductsModule(
         \AcceptanceTester $I,
@@ -53,7 +53,7 @@ class ProductsCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Products $product
      *
-     * As administrative user I want to create a product so that I can test
+     * As an admin user, I want to create a product so I can test
      * the standard fields.
      */
     public function testScenarioCreateAccount(

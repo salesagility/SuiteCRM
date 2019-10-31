@@ -422,13 +422,13 @@ class jjwg_Maps extends jjwg_Maps_sugar
 
             if (isset($data['valid_geocode_modules'])) {
                 if (is_array($data['valid_geocode_modules'])) {
-                    $data['valid_geocode_modules'] = join(', ', $data['valid_geocode_modules']);
+                    $data['valid_geocode_modules'] = implode(', ', $data['valid_geocode_modules']);
                 }
                 $admin->saveSetting($category, 'valid_geocode_modules', $data['valid_geocode_modules']);
             }
             if (isset($data['valid_geocode_tables'])) {
                 if (is_array($data['valid_geocode_tables'])) {
-                    $data['valid_geocode_tables'] = join(', ', $data['valid_geocode_tables']);
+                    $data['valid_geocode_tables'] = implode(', ', $data['valid_geocode_tables']);
                 }
                 $admin->saveSetting($category, 'valid_geocode_tables', $data['valid_geocode_tables']);
             }

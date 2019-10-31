@@ -121,7 +121,7 @@ class Task extends SugarBean
 
     public function get_summary_text()
     {
-        return "$this->name";
+        return (string)$this->name;
     }
 
     public function create_export_query($order_by, $where, $relate_link_join='')

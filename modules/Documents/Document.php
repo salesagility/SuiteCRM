@@ -221,7 +221,7 @@ class Document extends File
 
     public function get_summary_text()
     {
-        return "$this->document_name";
+        return (string)$this->document_name;
     }
 
     public function is_authenticated()

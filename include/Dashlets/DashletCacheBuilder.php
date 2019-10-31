@@ -70,6 +70,21 @@ class DashletCacheBuilder
         $allDashlets = array_merge($dashletFiles, $dashletFilesCustom);
         $dashletFiles = array();
         foreach ($allDashlets as $num => $file) {
+            $fileName =  basename($file);
+
+            $customFilePath = sprintf(
+                'custom/%s',
+                str_replace(
+                    $fileName,
+                    'Custom' . $fileName,
+                    $file
+                )
+            );
+
+            if (in_array($customFilePath, $allDashlets, true)) {
+                continue;
+            }
+
             if (substr_count($file, '.meta') == 0) { // ignore meta data files
                 $class = substr($file, strrpos($file, '/') + 1, -4);
                 $dashletFiles[$class] = array();

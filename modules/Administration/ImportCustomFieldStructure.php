@@ -73,7 +73,7 @@ EOQ;
             $fmd = BeanFactory::getBean('EditCustomFields');
         } else {
             $ln = explode(':::', $line, 2);
-            if (sizeof($ln) == 2) {
+            if (count($ln) == 2) {
                 $KEY = trim($ln[0]);
                 if ($KEY === 'table_name') {
                     continue;

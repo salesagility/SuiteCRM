@@ -19,7 +19,7 @@ class EmailManCest
         if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
         }
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 

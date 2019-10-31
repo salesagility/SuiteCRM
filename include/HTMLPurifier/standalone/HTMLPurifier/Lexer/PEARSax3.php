@@ -110,8 +110,8 @@ class HTMLPurifier_Lexer_PEARSax3 extends HTMLPurifier_Lexer
             if (strlen($data) >= 2 && substr($data, -2) == "--") {
                 $data = substr($data, 0, -2);
             }
-            if (isset($this->stack[sizeof($this->stack) - 1]) &&
-                $this->stack[sizeof($this->stack) - 1] == "style") {
+            if (isset($this->stack[count($this->stack) - 1]) &&
+                $this->stack[count($this->stack) - 1] == "style") {
                 $this->tokens[] = new HTMLPurifier_Token_Text($data);
             } else {
                 $this->tokens[] = new HTMLPurifier_Token_Comment($data);

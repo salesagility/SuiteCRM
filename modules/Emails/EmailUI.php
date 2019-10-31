@@ -733,7 +733,7 @@ HTML;
         $email_mod_strings = return_module_language($current_language, 'Emails');
         $modStrings = "var mod_strings = new Object();\n";
         foreach ($email_mod_strings as $k => $v) {
-            $v = str_replace("'", "\'", $v);
+            $v = str_replace("'", "\'",str_replace("\\'", "'", $v));
             $modStrings .= "mod_strings.{$k} = '{$v}';\n";
         }
         $lang .= "\n\n{$modStrings}\n";
@@ -1460,7 +1460,7 @@ HTML;
                 if ($mailbox != "") {
                     $mailbox .= ".";
                 }
-                $mailbox .= "{$exMbox[$i]}";
+                $mailbox .= (string)($exMbox[$i]);
             }
 
             $mailbox = substr($key, strpos($key, '.'));
@@ -1561,7 +1561,7 @@ HTML;
                 $attachmentHtmlData = $meta['attachments'];
                 $actualAttachmentInfo = array();
                 $this->parseAttachmentInfo($actualAttachmentInfo, $attachmentHtmlData);
-                if (sizeof($actualAttachmentInfo) > 0) {
+                if (count($actualAttachmentInfo) > 0) {
                     foreach ($actualAttachmentInfo as $key => $value) {
                         $info_vars = array();
                         parse_str($value, $info_vars);
@@ -3498,7 +3498,7 @@ eoq;
 ?>
 eoq;
         if ($fh = @sugar_fopen($file, "w")) {
-            fputs($fh, $the_string);
+            fwrite($fh, $the_string);
             fclose($fh);
 
             return true;

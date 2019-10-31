@@ -37,13 +37,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 namespace SuiteCRM\Robo\Plugin\Commands;
 
 use SuiteCRM\Utility\OperatingSystem;
 use SuiteCRM\Robo\Traits\RoboTrait;
 use Robo\Task\Base\loadTasks;
-use SuiteCRM\Utility\Paths;
-use Symfony\Component\Yaml\Yaml;
 
 class CodeCoverageCommands extends \Robo\Tasks
 {
@@ -51,18 +50,21 @@ class CodeCoverageCommands extends \Robo\Tasks
     use RoboTrait;
 
     /**
-     * Runs code coverage for travis ci
-     * @throws RuntimeException
+     * Runs code coverage
+     * @param array $opts
+     * @option bool $ci Should be set to true if using a Continuous Integration environment.
      */
-    public function codeCoverage()
+    public function codeCoverage($opts = ['ci' => false])
     {
         $this->say('Code Coverage');
 
         // Get environment
-        if ($this->isEnvironmentTravisCI()) {
-            $range = $this->getCommitRangeForTravisCi();
-        } else {
-            throw new \RuntimeException('unable to detect continuous integration environment');
+        if ($opts['ci'] === true) {
+            if ($this->isEnvironmentTravisCI()) {
+                $range = $this->getCommitRangeForTravisCi();
+            } else {
+                throw new \RuntimeException('Unable to detect continuous integration environment');
+            }
         }
 
         $this->disableStateChecker();
@@ -94,6 +96,7 @@ class CodeCoverageCommands extends \Robo\Tasks
     private function generateCodeCoverageFile()
     {
         $this->_exec($this->getCodeCoverageCommand());
+        $this->say('Code coverage xml outputted to ./tests/_output/coverage.xml');
     }
 
     /**
@@ -119,6 +122,7 @@ class CodeCoverageCommands extends \Robo\Tasks
         $command =
             $os->toOsPath('./vendor/bin/phpunit')
             . ' --configuration ./tests/phpunit.xml.dist --coverage-clover ./tests/_output/coverage.xml ./tests/unit/phpunit';
+
         return $command;
     }
 }

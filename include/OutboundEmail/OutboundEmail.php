@@ -222,7 +222,7 @@ class OutboundEmail
                 if (!empty($system->mail_smtpserver)) {
                     $ret[] = array(
                         'id' => $system->id,
-                        'name' => "$system->name",
+                        'name' => (string)$system->name,
                         'mail_smtpserver' => $system->mail_smtpdisplay,
                         'is_editable' => $isEditable,
                         'type' => $system->type,
@@ -493,7 +493,7 @@ class OutboundEmail
                 if (empty($this->$def)) {
                     $this->$def = 0;
                 }
-                $values[] = intval($this->$def);
+                $values[] = (int)$this->$def;
                 $validKeys[] = $def;
             } else {
                 if (isset($this->$def)) {
@@ -522,7 +522,7 @@ class OutboundEmail
         $values = $this->getValues($cols);
 
         if ($this->new_with_id) {
-            $q = sprintf("INSERT INTO outbound_email (%s) VALUES (%s)", implode($cols, ","), implode($values, ","));
+            $q = sprintf("INSERT INTO outbound_email (%s) VALUES (%s)", implode(",", $cols), implode(",", $values));
         } else {
             $updvalues = array();
             foreach ($values as $k => $val) {

@@ -402,8 +402,8 @@ class AbstractRelationships
                 }
             }
             
-            $fh = fopen($filename, 'w') ;
-            fputs($fh, $out, strlen($out)) ;
+            $fh = fopen($filename, 'wb') ;
+            fwrite($fh, $out, strlen($out)) ;
             fclose($fh) ;
             
             
@@ -440,7 +440,7 @@ class AbstractRelationships
         list($rhs_module, $properties) = each($relationshipMetaData) ;
         $filename = "$basepath/relationships/{$relationshipName}MetaData.php" ;
         $GLOBALS [ 'log' ]->debug(get_class($this) . "->saveRelationshipMetaData(): saving the following to {$filename}" . print_r($properties, true)) ;
-        write_array_to_file('dictionary["' . $relationshipName . '"]', $properties, "{$filename}", 'w') ;
+        write_array_to_file('dictionary["' . $relationshipName . '"]', $properties, (string)($filename), 'w') ;
         $installDefs [ $relationshipName ] = array( /*'module' => $rhs_module , 'module_vardefs' => "<basepath>/Vardefs/{$relationshipName}.php" ,*/ 'meta_data' => "{$installDefPrefix}/relationships/relationships/{$relationshipName}MetaData.php" ) ;
         
         return $installDefs ;

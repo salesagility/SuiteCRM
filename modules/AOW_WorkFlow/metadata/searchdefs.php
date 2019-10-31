@@ -37,6 +37,7 @@ $module_name = 'AOW_WorkFlow';
                         'advanced_search' => array(
                             'name',
                             'status',
+                            'flow_module',
                             array('name' => 'assigned_user_id', 'label' => 'LBL_ASSIGNED_TO', 'type' => 'enum', 'function' => array('name' => 'get_user_array', 'params' => array(false))),
                         ),
                     ),
