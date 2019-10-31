@@ -123,7 +123,7 @@ $mod_strings = array(
     'LBL_NEW_FORM_TITLE' => 'Archive Email',
     'LBL_NONE' => 'None',
     'LBL_NOT_SENT' => 'Send Error',
-    'LBL_NOTES_SUBPANEL_TITLE' => 'Attachments','LBL_MODULE_TITLE' => 'Emails:',
+    'LBL_NOTES_SUBPANEL_TITLE' => 'Attachments',
     'LBL_OPPORTUNITY_SUBPANEL_TITLE' => 'Opportunities',
     'LBL_PROJECT_SUBPANEL_TITLE' => 'Projects',
     'LBL_PROJECT_TASK_SUBPANEL_TITLE' => 'Project Tasks',
