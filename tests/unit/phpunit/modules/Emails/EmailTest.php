@@ -1,4 +1,6 @@
-<?php
+<?php /** @noinspection InvisibleCharacter */
+/** @noinspection InvisibleCharacter */
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
