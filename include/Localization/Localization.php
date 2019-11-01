@@ -403,6 +403,26 @@ class Localization
     }
 
     /**
+     * Prefixes the input with a BOM.
+     *
+     * @param string $string The string to add a BOM to
+     * @param string $fromCharset The charset of the input string
+     * @return string The input string including a BOM
+     * @throws UnexpectedValueException in case the encoding isn't supported
+     */
+    public function addBOM($string, $fromCharset) {
+        $charset  = $this->normalizeCharset($fromCharset);
+        if ($charset === 'utf8') {
+            return "\xef\xbb\xbf" . $string;
+        } else if ($charset === 'utf16le') {
+            return "\xff\xfe" . $string;
+        } else if ($charset === 'utf16be') {
+            return "\xfe\xff" . $string;
+        }
+        throw new UnexpectedValueException('Encoding not supported: ' . $fromCharset);
+    }
+
+    /**
      * translates a character set from one to another, and the into MIME-header friendly format
      */
     public function translateCharsetMIME($string, $fromCharset, $toCharset='UTF-8', $encoding="Q")
