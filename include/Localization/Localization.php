@@ -196,7 +196,7 @@ class Localization
     {
         // doing it dirty here
         global $sugar_config;
-        if (empty($sugar_config)) {
+        if (empty($sugar_config['dbconfig'])) {
             return array();
         }
         $db = DBManagerFactory::getInstance();
