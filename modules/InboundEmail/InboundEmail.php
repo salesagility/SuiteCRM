@@ -4566,7 +4566,7 @@ class InboundEmail extends SugarBean
      */
     public function saveAttachmentBinaries($attach, $msgNo, $thisBc, $part, $forDisplay)
     {
-        // decide where to place the file temporarily
+        $cacheDir = $GLOBALS['sugar_config']['cache_dir'] . 'images/';
 
         if (isset($attach->id) &&
             strpos($attach->id, "..") !== false &&

@@ -405,13 +405,10 @@ class Account extends Company implements EmailInterface
 				aos_products_quotes.*
 			FROM
 				aos_products_quotes
-            JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id
-            AND aos_quotes.stage LIKE 'Closed Accepted'
-            AND aos_quotes.deleted = 0
-            AND aos_products_quotes.deleted = 0
-            JOIN accounts ON accounts.id = aos_quotes.billing_account_id
-            AND accounts.id = " . $idQuoted;
+			JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage LIKE 'Closed Accepted' AND aos_quotes.deleted = 0 AND aos_products_quotes.deleted = 0
+			JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = $idQuoted
 
+			";
         return $query;
     }
 }
