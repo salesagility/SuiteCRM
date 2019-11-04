@@ -137,9 +137,9 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method and verify that it retunrs expected results
         $expected = array(
-                    'CONVERSION_RATE' => '0.0000000000',
-                    'HIDE' => '',
-                    'UNHIDE' => '',
+            'CONVERSION_RATE' => '0.0000000000',
+            'HIDE' => '',
+            'UNHIDE' => '',
         );
 
         $actual = $currency->get_list_view_data();
@@ -200,8 +200,13 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_number_separators()
     {
-        $this->assertEquals(array(',', '.'), get_number_seperators());
-        $this->assertEquals(array(',', '.'), get_number_seperators(false));
+        $this->assertEquals([',', '.'], get_number_separators());
+        $this->assertEquals([',', '.'], get_number_separators(false));
+    }
+
+    public function testget_number_seperators()
+    {
+        $this->assertEquals(null, get_number_seperators(false));
     }
 
     public function testtoString()
