@@ -3884,34 +3884,36 @@ class Email extends Basic
     }
 
     /**
+     * @return array|string
      * @global $timedate
      * Generate the where clause for searching imported emails.
-     * @return array|string
      */
     public function _generateSearchImportWhereClause()
     {
         global $timedate;
+
+        $db = DBManagerFactory::getInstance();
 
         //The clear button was removed so if a user removes the asisgned user name, do not process the id.
         if (empty($_REQUEST['assigned_user_name']) && !empty($_REQUEST['assigned_user_id'])) {
             unset($_REQUEST['assigned_user_id']);
         }
 
-        $availableSearchParam = array(
-            'name' => array('table_name' => 'emails'),
-            'data_parent_id_search' => array('table_name' => 'emails', 'db_key' => 'parent_id', 'opp' => '='),
-            'assigned_user_id' => array('table_name' => 'emails', 'opp' => '=')
-        );
+        $availableSearchParam = [
+            'name' => ['table_name' => 'emails'],
+            'data_parent_id_search' => ['table_name' => 'emails', 'db_key' => 'parent_id', 'opp' => '='],
+            'assigned_user_id' => ['table_name' => 'emails', 'opp' => '=']
+        ];
 
-        $additionalWhereClause = array();
+        $additionalWhereClause = [];
         foreach ($availableSearchParam as $key => $properties) {
             if (!empty($_REQUEST[$key])) {
                 $db_key = isset($properties['db_key']) ? $properties['db_key'] : $key;
                 $searchValue = $this->db->quote($_REQUEST[$key]);
 
                 $opp = isset($properties['opp']) ? $properties['opp'] : 'like';
-                if ($opp == 'like') {
-                    $searchValue = "%" . $searchValue . "%";
+                if ($opp === 'like') {
+                    $searchValue = '%' . $searchValue . '%';
                 }
 
                 $additionalWhereClause[] = "{$properties['table_name']}.$db_key $opp '$searchValue' ";
@@ -3921,29 +3923,29 @@ class Email extends Basic
 
         $isDateFromSearchSet = !empty($_REQUEST['searchDateFrom']);
         $isdateToSearchSet = !empty($_REQUEST['searchDateTo']);
-        $bothDateRangesSet = $isDateFromSearchSet & $isdateToSearchSet;
+        $bothDateRangesSet = $isDateFromSearchSet && $isdateToSearchSet;
 
-        //Hanlde date from and to separately
+        // Handle date from and to separately
         if ($bothDateRangesSet) {
             $dbFormatDateFrom = $timedate->to_db_date($_REQUEST['searchDateFrom'], false);
-            $dbFormatDateFrom = DBManager::convert("'" . $dbFormatDateFrom . "'", 'datetime');
+            $dbFormatDateFrom = $db->convert("'" . $dbFormatDateFrom . "'", 'datetime');
 
             $dbFormatDateTo = $timedate->to_db_date($_REQUEST['searchDateTo'], false);
-            $dbFormatDateTo = DBManager::convert("'" . $dbFormatDateTo . "'", 'datetime');
+            $dbFormatDateTo = $db->convert("'" . $dbFormatDateTo . "'", 'datetime');
 
             $additionalWhereClause[] = "( emails.date_sent_received >= $dbFormatDateFrom AND
                                           emails.date_sent_received <= $dbFormatDateTo )";
         } elseif ($isdateToSearchSet) {
             $dbFormatDateTo = $timedate->to_db_date($_REQUEST['searchDateTo'], false);
-            $dbFormatDateTo = DBManager::convert("'" . $dbFormatDateTo . "'", 'datetime');
+            $dbFormatDateTo = $db->convert("'" . $dbFormatDateTo . "'", 'datetime');
             $additionalWhereClause[] = "emails.date_sent_received <= $dbFormatDateTo ";
         } elseif ($isDateFromSearchSet) {
             $dbFormatDateFrom = $timedate->to_db_date($_REQUEST['searchDateFrom'], false);
-            $dbFormatDateFrom = DBManager::convert("'" . $dbFormatDateFrom . "'", 'datetime');
+            $dbFormatDateFrom = $db->convert("'" . $dbFormatDateFrom . "'", 'datetime');
             $additionalWhereClause[] = "emails.date_sent_received >= $dbFormatDateFrom ";
         }
 
-        $additionalWhereClause = implode(" AND ", $additionalWhereClause);
+        $additionalWhereClause = implode(' AND ', $additionalWhereClause);
 
         return $additionalWhereClause;
     }
