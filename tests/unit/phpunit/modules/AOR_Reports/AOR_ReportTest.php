@@ -164,29 +164,25 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         $this->assertContains('testidentifier', $html3);
     }
 
-    public function testgetTotalHTML()
+    public function testGetTotalHTML()
     {
         //execute the method with required data preset and verify it returns expected result
-        $fields = array(
-            'label' => array(
+        $fields = [
+            'label' => [
                 'display' => 1,
                 'total' => 'SUM',
                 'label' => 'total',
                 'module' => 'Meetings',
                 'field' => 'duration_hours',
                 'params' => ''
-            )
-        );
-        $totals = array('label' => array(10, 20, 30));
-        $expected = "<table><thead class='fc-head'><tr><th>total Sum</th></tr></thead><tbody><tr class='oddListRowS1'><td>
-<span class=\"sugar_field\" id=\"duration_hours\">
-60
-</span></td></tr></tbody></table>";
 
-        $aor_Report = new AOR_Report();
-        $actual = $aor_Report->getTotalHTML($fields, $totals);
+            ]
+        ];
+        $totals = ['label' => [10, 20, 30]];
+        $actual = (new AOR_Report())->getTotalHTML($fields, $totals);
 
-        $this->assertSame($expected, $actual);
+        $this->assertContains('sugar_field', $actual);
+        $this->assertContains('duration_hours', $actual);
     }
 
     public function testcalculateTotal()

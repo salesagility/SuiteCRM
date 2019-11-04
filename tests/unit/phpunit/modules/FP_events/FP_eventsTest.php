@@ -30,7 +30,7 @@ class FP_eventsTest extends SuitePHPUnitFrameworkTestCase
         $fpEvents = new FP_events();
 
         $fpEvents->email_templates();
-        $this->assertTrue(is_array($app_list_strings['email_templet_list']));
+        $this->assertTrue(is_array($app_list_strings['emailTemplates_type_list']));
         
 
 
