@@ -270,7 +270,8 @@ class ACLRole extends SugarBean
     public function mark_relationships_deleted($id)
     {
         //we need to delete the actions relationship by hand (special case)
-        $date_modified = db_convert("'".TimeDate::getInstance()->nowDb()."'", 'datetime');
+        $date_modified = DBManagerFactory::getInstance()->convert("'" . TimeDate::getInstance()->nowDb() . "'",
+            'datetime');
         $query =  "UPDATE acl_roles_actions SET deleted=1 , date_modified=$date_modified WHERE role_id = '$id' AND deleted=0";
         $this->db->query($query);
         parent::mark_relationships_deleted($id);
