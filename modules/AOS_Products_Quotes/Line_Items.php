@@ -87,7 +87,7 @@ function display_lines($focus, $field, $value, $view)
         $sql = "SELECT pg.id, pg.group_id FROM aos_products_quotes pg LEFT JOIN aos_line_item_groups lig ON pg.group_id = lig.id WHERE pg.parent_type = '".$focus->object_name."' AND pg.parent_id = '".$focus->id."' AND pg.deleted = 0 ORDER BY lig.number ASC, pg.number ASC";
 
         $result = $focus->db->query($sql);
-        $sep = get_number_seperators();
+        $sep = get_number_separators();
 
         $html .= "<table border='0' width='100%' cellpadding='0' cellspacing='0'>";
 

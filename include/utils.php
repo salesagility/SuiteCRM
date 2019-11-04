@@ -266,8 +266,8 @@ function get_sugar_config_defaults()
         'default_currency_symbol' => return_session_value_or_default('default_currency_symbol', '$'),
         'default_currency_iso4217' => return_session_value_or_default('default_currency_iso4217', 'USD'),
         'default_currency_significant_digits' => return_session_value_or_default('default_currency_significant_digits', 2),
-        'default_number_grouping_seperator' => return_session_value_or_default('default_number_grouping_seperator', ','),
-        'default_decimal_seperator' => return_session_value_or_default('default_decimal_seperator', '.'),
+        'default_number_grouping_separator' => return_session_value_or_default('default_number_grouping_separator', ','),
+        'default_decimal_separator' => return_session_value_or_default('default_decimal_separator', '.'),
         'default_date_format' => 'm/d/Y',
         'default_locale_name_format' => 's f l',
         'default_export_charset' => 'UTF-8',
@@ -1973,11 +1973,11 @@ function unTranslateNum($num)
 
     if ($dec_sep == null) {
         $user_dec_sep = $current_user->getPreference('dec_sep');
-        $dec_sep = (empty($user_dec_sep) ? $sugar_config['default_decimal_seperator'] : $user_dec_sep);
+        $dec_sep = (empty($user_dec_sep) ? $sugar_config['default_decimal_separator'] : $user_dec_sep);
     }
     if ($num_grp_sep == null) {
         $user_num_grp_sep = $current_user->getPreference('num_grp_sep');
-        $num_grp_sep = (empty($user_num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $user_num_grp_sep);
+        $num_grp_sep = (empty($user_num_grp_sep) ? $sugar_config['default_number_grouping_separator'] : $user_num_grp_sep);
     }
 
     $num = preg_replace("'" . preg_quote($num_grp_sep) . "'", '', $num);
@@ -4881,7 +4881,7 @@ function create_export_query_relate_link_patch($module, $searchFields, $where)
             $join = $seed->$fieldLink->getJoin($params, true);
             $join_table_alias = 'join_' . $field['name'];
             if (isset($field['db_concat_fields'])) {
-                $db_field = db_concat($join_table_alias, $field['db_concat_fields']);
+                $db_field = DBManager::concat($join_table_alias, $field['db_concat_fields']);
                 $where = preg_replace('/' . $field['name'] . '/', $db_field, $where);
             } else {
                 $where = preg_replace('/(^|[\s(])' . $field['name'] . '/', '${1}' . $join_table_alias . '.' . $field['rname'], $where);

@@ -238,13 +238,13 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('currencies');
     }
 
-    public function testget_number_seperators()
+    public function testget_number_separators()
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('currencies');
         
-        $this->assertEquals(array(',', '.'), get_number_seperators());
-        $this->assertEquals(array(',', '.'), get_number_seperators(false));
+        $this->assertEquals(array(',', '.'), get_number_separators());
+        $this->assertEquals(array(',', '.'), get_number_separators(false));
         
         // clean up
         $state->popTable('currencies');

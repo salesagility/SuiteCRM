@@ -309,18 +309,18 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
 
         // Cast to integer
         $deleted = (int)$deleted;
-        $query = "(m1.date_modified > " . db_convert(
+        $query = "(m1.date_modified > " . DBManager::convert(
             "'" . DBManagerFactory::getInstance()->quote($from_date) . "'",
             'datetime'
-        ) . " AND m1.date_modified <= " . db_convert(
+        ) . " AND m1.date_modified <= " . DBManager::convert(
             "'" . DBManagerFactory::getInstance()->quote($to_date) . "'",
             'datetime'
                 ) . " AND {0}.deleted = $deleted)";
         if (isset($deletion_date) && !empty($deletion_date)) {
-            $query .= " OR ({0}.date_modified > " . db_convert(
+            $query .= " OR ({0}.date_modified > " . DBManager::convert(
                 "'" . DBManagerFactory::getInstance()->quote($deletion_date) . "'",
                 'datetime'
-            ) . " AND {0}.date_modified <= " . db_convert(
+            ) . " AND {0}.date_modified <= " . DBManager::convert(
                 "'" . DBManagerFactory::getInstance()->quote($to_date) . "'",
                 'datetime'
                     ) . " AND {0}.deleted = 1)";

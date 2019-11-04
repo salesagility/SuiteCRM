@@ -7,7 +7,7 @@
     * |                                                                                |
     * | RGraph is dual licensed under the Open Source GPL (General Public License)     |
     * | v2.0 license and a commercial license which means that you're not bound by     |
-    * | the terms of the GPL. The commercial license is just £99 (GBP) and you can     |
+    * | the terms of the GPL. The commercial license is just ï¿½99 (GBP) and you can     |
     * | read about it here:                                                            |
     * |                      http://www.rgraph.net/license                             |
     * o--------------------------------------------------------------------------------o
@@ -1507,7 +1507,7 @@
 
 
     /**
-    * Formats a number with thousand seperators so it's easier to read
+    * Formats a number with thousand separators so it's easier to read
     * 
     * @param  integer obj The chart object
     * @param  integer num The number to format
@@ -1527,8 +1527,8 @@
         var append  = arguments[3] ? String(arguments[3]) : '';
         var output  = '';
         var decimal = '';
-        var decimal_seperator  = typeof prop['chart.scale.point'] == 'string' ? prop['chart.scale.point'] : '.';
-        var thousand_seperator = typeof prop['chart.scale.thousand'] == 'string' ? prop['chart.scale.thousand'] : ',';
+        var decimal_separator  = typeof prop['chart.scale.point'] == 'string' ? prop['chart.scale.point'] : '.';
+        var thousand_separator = typeof prop['chart.scale.thousand'] == 'string' ? prop['chart.scale.thousand'] : ',';
         RegExp.$1   = '';
         var i,j;
 
@@ -1551,19 +1551,19 @@
             decimal = tmp.replace(/(.*)\.(.*)/, '$2'); // The decimal part of the number
         }
 
-        // Thousand seperator
-        //var seperator = arguments[1] ? String(arguments[1]) : ',';
-        var seperator = thousand_seperator;
+        // Thousand separator
+        //var separator = arguments[1] ? String(arguments[1]) : ',';
+        var separator = thousand_separator;
         
         /**
-        * Work backwards adding the thousand seperators
+        * Work backwards adding the thousand separators
         */
         var foundPoint;
         for (i=(num.length - 1),j=0; i>=0; j++,i--) {
             var character = num.charAt(i);
             
             if ( j % 3 == 0 && j != 0) {
-                output += seperator;
+                output += separator;
             }
             
             /**
@@ -1589,7 +1589,7 @@
 
         // Reappend the decimal
         if (decimal.length) {
-            output =  output + decimal_seperator + decimal;
+            output =  output + decimal_separator + decimal;
             decimal = '';
             RegExp.$1 = '';
         }
@@ -3137,11 +3137,11 @@
     */
     RG.AJAX.getCSV = function (url, callback)
     {
-        var seperator = arguments[2] ? arguments[2] : ',';
+        var separator = arguments[2] ? arguments[2] : ',';
 
         RG.AJAX(url, function ()
         {
-            var regexp = new RegExp(seperator);
+            var regexp = new RegExp(separator);
             var arr = this.responseText.split(regexp);
             
             // Convert the strings to numbers
@@ -4390,7 +4390,7 @@
     */
     RG.stringsToNumbers = function (str)
     {
-        // An optional seperator to use intead of a comma
+        // An optional separator to use intead of a comma
         var sep = arguments[1] || ',';
         
         
