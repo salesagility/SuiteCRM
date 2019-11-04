@@ -2870,6 +2870,7 @@ $app_list_strings ['emailTemplates_type_list'] = array(
     '' => '',
     'campaign' => 'Campaign',
     'email' => 'Email',
+    'event' => 'Event',
 );
 
 $app_list_strings ['emailTemplates_type_list_campaigns'] = array(
@@ -2881,6 +2882,7 @@ $app_list_strings ['emailTemplates_type_list_no_workflow'] = array(
     '' => '',
     'campaign' => 'Campaign',
     'email' => 'Email',
+    'event' => 'Event',
     'system' => 'System',
 );
 
@@ -3503,8 +3505,8 @@ $app_strings['LBL_RESCHEDULE_COUNT'] = 'Call Attempts';
 
 //SecurityGroups
 $app_list_strings['moduleList']['SecurityGroups'] = 'Security Suite Management';
-$app_strings['LBL_LOGIN_AS'] = 'Login as ';
-$app_strings['LBL_LOGOUT_AS'] = 'Logout as ';
+$app_strings['LBL_LOGIN_AS'] = 'Login as';
+$app_strings['LBL_LOGOUT_AS'] = 'Logout as';
 $app_strings['LBL_SECURITYGROUP'] = 'Security Group';
 
 $app_list_strings['moduleList']['OutboundEmailAccounts'] = 'Outbound Email Accounts';

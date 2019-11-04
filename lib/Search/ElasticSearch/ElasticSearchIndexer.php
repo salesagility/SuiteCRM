@@ -43,18 +43,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use SugarBean;
 use BeanFactory;
 use Carbon\Carbon;
+use Monolog\Logger;
 use Elasticsearch\Client;
 use JsonSchema\Exception\RuntimeException;
-use Monolog\Logger;
-use SugarBean;
 use SuiteCRM\Search\Index\AbstractIndexer;
-use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
 use SuiteCRM\Search\Index\IndexingLockFileTrait;
+use Symfony\Component\Yaml\Parser as YamlParser;
 use SuiteCRM\Search\Index\IndexingSchedulerTrait;
 use SuiteCRM\Search\Index\IndexingStatisticsTrait;
-use Symfony\Component\Yaml\Parser as YamlParser;
+use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
+use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
 
 /**
  * Class ElasticSearchIndexer takes care of creating a search index for the database.
@@ -195,56 +196,62 @@ class ElasticSearchIndexer extends AbstractIndexer
     /** @inheritdoc */
     public function indexModule($module)
     {
-        $seed = BeanFactory::getBean($module);
-        $tableName = $seed->table_name;
         $isDifferential = $this->differentialIndexing();
+        $dataPuller = new ElasticSearchModuleDataPuller($module, $isDifferential, $this->logger);
+        
+        $this->buildWhereClause($dataPuller, $isDifferential, $module);
 
-        $where = "";
-        $showDeleted = 0;
-
-        if ($isDifferential) {
-            try {
-                $datetime = $this->getModuleLastIndexed($module);
-                $where = "$tableName.date_modified > '$datetime' OR $tableName.date_entered > '$datetime'";
-                $showDeleted = -1;
-            } catch (\Exception $exception) {
-                $this->logger->notice("Time metadata not found for $module, performing full index for this module");
-                $isDifferential = false;
-            }
-        }
+        $this->logger->debug(sprintf('Indexing module %s...', $module));
 
         try {
             $beanTime = Carbon::now()->toDateTimeString();
-            $beans = $seed->get_full_list("", $where, false, $showDeleted);
+            
+            while ($beans = $dataPuller->pullNextBatch()) {                
+                $this->indexBeans($module, $beans);
+            }
+            $this->logger->debug(sprintf('Finished %s. Processed %d Records', $module, $dataPuller->recordsPulled));
+
         } catch (RuntimeException $exception) {
             $this->logger->error("Failed to index module $module");
             $this->logger->error($exception);
             return;
         }
 
-        if ($beans === null) {
+        if ($dataPuller->recordsPulled === 0) {
             if (!$isDifferential) {
-                $this->logger->notice(sprintf('Skipping %s because $beans was null. The table is probably empty', $module));
+                $this->logger->notice(sprintf('Skipped %s because $beans was null. The table is probably empty', $module));
             }
             return;
         }
-
-        $this->logger->debug(sprintf('Indexing module %s...', $module));
-        $this->indexBeans($module, $beans);
+        
         $this->putMeta($module, ['last_index' => $beanTime]);
         $this->indexedModulesCount++;
     }
 
+    /**
+     * For differential runs, attempt to pull the Last Index time and set on dataPuller
+     *
+     * @param ElasticSearchModuleDataPuller $dataPuller
+     * @param bool $isDifferential
+     * @param string $module
+     * @return void
+     */
+    protected function buildWhereClause($dataPuller, $isDifferential, $module)
+    {
+        if ($isDifferential) {
+            try {
+                $datetime = $this->getModuleLastIndexed($module);
+                $dataPuller->setLastIndexTime($datetime)->setShowDeleted(-1);
+            } catch (\Exception $exception) {
+                $this->logger->notice("Time metadata not found for $module, performing full index for this module");
+                $dataPuller->setDifferential(false);
+            }
+        }
+    }
+    
     /** @inheritdoc */
     public function indexBeans($module, array $beans)
     {
-        if (!is_array($beans)) {
-            $this->logger->error("Non-array type found while indexing $module. "
-                . gettype($beans)
-                . ' found instead. Skipping this module!');
-            return;
-        }
-
         $oldCount = $this->indexedRecordsCount;
         $oldRemCount = $this->removedRecordsCount;
         $this->indexBatch($module, $beans);
@@ -252,7 +259,7 @@ class ElasticSearchIndexer extends AbstractIndexer
         $remDiff = $this->removedRecordsCount - $oldRemCount;
         $total = count($beans) - $remDiff;
         $type = $total === $diff ? Logger::DEBUG : Logger::WARNING;
-        $this->logger->log($type, sprintf('Indexed %d/%d %s', $diff, $total, $module));
+        $this->logger->log($type, sprintf('Indexed %d', $diff));
     }
 
     /** Removes all the indexes from Elasticsearch, effectively nuking all data. */

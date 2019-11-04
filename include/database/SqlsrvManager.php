@@ -547,7 +547,7 @@ EOSQL;
         }
 
         if (!empty($messages)) {
-            return join("\n", $messages);
+            return implode("\n", $messages);
         }
 
         return false;

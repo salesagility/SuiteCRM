@@ -78,11 +78,11 @@ class grad
                 for ($j=0;$j<count($patch_array[$i]['colors']);$j++) {
                     //each color component as 8 bit // OPACITY
                     if ($colspace=='RGB') {
-                        $this->mpdf->gradients[$n]['stream_trans'].=chr(intval(ord($patch_array[$i]['colors'][$j][4])*2.55));
+                        $this->mpdf->gradients[$n]['stream_trans'].=chr((int)(ord($patch_array[$i]['colors'][$j][4]) * 2.55));
                     } elseif ($colspace=='CMYK') {
-                        $this->mpdf->gradients[$n]['stream_trans'].=chr(intval(ord($patch_array[$i]['colors'][$j][5])*2.55));
+                        $this->mpdf->gradients[$n]['stream_trans'].=chr((int)(ord($patch_array[$i]['colors'][$j][5]) * 2.55));
                     } elseif ($colspace=='Gray') {
-                        $this->mpdf->gradients[$n]['stream_trans'].=chr(intval(ord($patch_array[$i]['colors'][$j][3])*2.55));
+                        $this->mpdf->gradients[$n]['stream_trans'].=chr((int)(ord($patch_array[$i]['colors'][$j][3]) * 2.55));
                     }
                 }
             }

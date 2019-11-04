@@ -71,13 +71,13 @@ function create_cache_directory($file)
     if (!file_exists($dir)) {
         sugar_mkdir($dir, 0775);
     }
-    for ($i = 0; $i < sizeof($paths) - 1; $i++) {
+    for ($i = 0; $i < count($paths) - 1; $i++) {
         $dir .= '/' . $paths[$i];
         if (!file_exists($dir)) {
             sugar_mkdir($dir, 0775);
         }
     }
-    return $dir . '/'. $paths[sizeof($paths) - 1];
+    return $dir . '/'. $paths[count($paths) - 1];
 }
 
 function get_module_dir_list()
@@ -126,13 +126,7 @@ function write_array_to_file($the_name, $the_array, $the_file, $mode="w", $heade
                     var_export_helper($the_array) .
                     ";";
 
-    $result = sugar_file_put_contents($the_file, $the_string, LOCK_EX) !== false;
-
-    if (function_exists('opcache_invalidate')) {
-        opcache_invalidate($the_file, true);
-    }
-
-    return $result;
+    return sugar_file_put_contents($the_file, $the_string, LOCK_EX) !== false;
 }
 
 function write_encoded_file($soap_result, $write_to_dir, $write_to_file="")
@@ -170,13 +164,13 @@ function create_custom_directory($file)
     if (!file_exists($dir)) {
         sugar_mkdir($dir, 0755);
     }
-    for ($i = 0; $i < sizeof($paths) - 1; $i++) {
+    for ($i = 0; $i < count($paths) - 1; $i++) {
         $dir .= '/' . $paths[$i];
         if (!file_exists($dir)) {
             sugar_mkdir($dir, 0755);
         }
     }
-    return $dir . '/'. $paths[sizeof($paths) - 1];
+    return $dir . '/'. $paths[count($paths) - 1];
 }
 
 /**

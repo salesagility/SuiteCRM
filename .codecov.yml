@@ -12,9 +12,11 @@ coverage:
       default:
         target: 0%
         threshold: 5%
-        base: auto 
+        base: parent
         branches: null
+        if_no_uploads: error
         if_not_found: success
+        if_ci_failed: error
         only_pulls: false
         flags: null
         paths: null
@@ -32,7 +34,7 @@ parsers:
 comment:
   layout: "header, diff"
   behavior: default
-  require_changes: no
+  require_changes: false
 
 ignore:
   - "include/timezone/.*"
@@ -57,3 +59,5 @@ ignore:
   - "install/demoData.en_us.php"
   - "include/tcpdf/.*"
   - "modules/AOR_Charts/lib/.*"
+  # The old lowercase v8 API is deprecated/unsupported and the CI doesn't run the tests for it. The new API uses an upper-case V.
+  - "lib/API/.*"

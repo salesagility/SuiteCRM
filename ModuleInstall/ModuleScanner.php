@@ -752,7 +752,7 @@ class ModuleScanner
             $res[] = $component;
         }
 
-        return join("/", $res);
+        return implode("/", $res);
     }
 
     /**

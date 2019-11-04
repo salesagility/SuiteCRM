@@ -251,3 +251,8 @@ $dictionary['EmailMarketing'] = array(
     ),
   ),
 );
+
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
+}
+VardefManager::createVardef('EmailMarketing', 'EmailMarketing', ['security_groups']);

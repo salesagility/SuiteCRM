@@ -404,7 +404,7 @@ class SugarAuthenticate
                 if ($_SESSION["ipaddress"] != $clientIP && empty($classCheck)) {
                     $GLOBALS['log']->fatal("IP Address mismatch: SESSION IP: {$_SESSION['ipaddress']} CLIENT IP: {$clientIP}");
                     session_destroy();
-                    die($mod_strings['ERR_IP_CHANGE'] . "<a href=\"{$sugar_config['site_url']}\">" + $mod_strings['ERR_RETURN'] + "</a>");
+                    die($mod_strings['ERR_IP_CHANGE'] . "<a href=\"{$sugar_config['site_url']}\">" . $mod_strings['ERR_RETURN'] . "</a>");
                 }
             } else {
                 $_SESSION["ipaddress"] = $clientIP;

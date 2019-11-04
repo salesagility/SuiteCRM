@@ -586,7 +586,7 @@ class ListView
             $this->records_per_page = $sugar_config['list_max_entries_per_page'] + 0;
             $this->initialized = true;
             global $app_strings, $currentModule;
-            $this->local_theme = SugarThemeRegistry::current()->__toString();
+            $this->local_theme = (string)SugarThemeRegistry::current();
             $this->local_app_strings =$app_strings;
             $this->local_image_path = SugarThemeRegistry::current()->getImagePath();
             $this->local_current_module = $currentModule;
@@ -970,7 +970,7 @@ class ListView
         );
 
         foreach ($priority_map as $p) {
-            if (key_exists($p, $sortOrderList)) {
+            if (array_key_exists($p, $sortOrderList)) {
                 $order = strtolower($sortOrderList[$p]);
                 if (in_array($order, array('asc', 'desc'))) {
                     return $order;
@@ -1635,7 +1635,7 @@ class ListView
         reset($data);
 
         //GETTING OFFSET
-        $offset = intval($this->getOffset($html_varName));
+        $offset = (int)$this->getOffset($html_varName);
         $timeStamp = $this->unique_id();
         $_SESSION[$html_varName."_FROM_LIST_VIEW"] = $timeStamp;
 

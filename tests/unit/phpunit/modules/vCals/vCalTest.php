@@ -30,12 +30,6 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-
         $vcal = new vCal();
 
         //test without setting name
@@ -44,17 +38,11 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with name set
         $vcal->name = 'test';
         $this->assertEquals('', $vcal->get_summary_text());
-        
-        // clean up
     }
 
     public function testfill_in_additional_list_fields()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
         
         $vcal = new vCal();
 
@@ -136,12 +124,10 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreate_sugar_freebusy()
     {
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
         // test
-        
         global $locale, $timedate;
 
         $vcal = new vCal();
@@ -155,14 +141,12 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThanOrEqual(0, strlen($result));
         
         // clean up
-        
         $state->popGlobals();
     }
 
     public function testget_vcal_freebusy()
     {
         // save state
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
@@ -179,7 +163,6 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertStringEndsWith($expectedEnd, $result);
 
         // clean up
-        
         $state->popGlobals();
     }
 
@@ -192,10 +175,6 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
-        
-        
-        
-        
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -208,7 +187,6 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         $state->popGlobals();
         $state->popTable('aod_index');
         $state->popTable('vcals');
@@ -238,7 +216,6 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         $state->popGlobals();
         $state->popTable('vcals');
         $state->popTable('tracker');

@@ -71,7 +71,6 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
         $state->pushTable('aos_line_item_groups');
         $state->pushTable('tracker');
         
-        
         $aosLineItemGroup = new AOS_Line_Item_Groups();
         $aosLineItemGroup->name = 'test';
         $aosLineItemGroup->total_amount = 100;

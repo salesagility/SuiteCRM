@@ -12,7 +12,7 @@ class PageParams extends BaseParam
      */
     public function getSize()
     {
-        return isset($this->parameters['size']) ? intval($this->parameters['size']) : BeanManager::DEFAULT_ALL_RECORDS;
+        return isset($this->parameters['size']) ? (int)$this->parameters['size'] : BeanManager::DEFAULT_ALL_RECORDS;
     }
 
     /**
@@ -20,7 +20,7 @@ class PageParams extends BaseParam
      */
     public function getNumber()
     {
-        return isset($this->parameters['number']) ? intval($this->parameters['number']) : BeanManager::DEFAULT_OFFSET;
+        return isset($this->parameters['number']) ? (int)$this->parameters['number'] : BeanManager::DEFAULT_OFFSET;
     }
 
     /**

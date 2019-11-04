@@ -13,7 +13,6 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testNote()
     {
-
         //execute the contructor and check for the Object type and  attributes
         $note = new Note();
 
@@ -30,11 +29,6 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsafeAttachmentName()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $note = new Note();
 
         //test with valid file name
@@ -47,20 +41,14 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $note->safeAttachmentName();
         $this->assertEquals('.txt', $note->name);
         $this->assertEquals('test.php.txt', $note->filename);
-        
-        // clean up
     }
 
     public function testmark_deleted()
     {
         $state = new SuiteCRM\StateSaver();
-        
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
-        
-        
-        
-        
+
         $note = new Note();
 
         //execute the method and test if it works and does not throws an exception.
@@ -72,22 +60,18 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         $state->popTable('tracker');
         $state->popTable('aod_index');
     }
 
     public function testdeleteAttachment()
     {
-
-    // save state
-
+        // save state
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('tracker');
 
         // test
-        
         $note = new Note();
 
         $note->id = 1;
@@ -95,7 +79,6 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $result);
 
         // clean up
-        
         $state->popTable('tracker');
         $state->popGlobals();
     }
@@ -129,12 +112,6 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $note = new Note();
 
         //execute the method and test if it works and does not throws an exception.
@@ -144,18 +121,10 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfill_in_additional_detail_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $note = new Note();
 
         //execute the method and test if it works and does not throws an exception.
@@ -165,8 +134,6 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testget_list_view_data()
@@ -196,14 +163,11 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
-
-    // save state
-
+        // save state
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
         // test
-        
         $note = new Note();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
@@ -211,7 +175,6 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
 
         // clean up
-        
         $state->popGlobals();
     }
 

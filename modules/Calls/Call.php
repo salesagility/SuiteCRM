@@ -1,4 +1,7 @@
 <?php
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,9 +41,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+
 
 
 class Call extends SugarBean
@@ -109,14 +110,14 @@ class Call extends SugarBean
 
     // This is used to retrieve related fields from form posts.
     public $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'contact_id', 'user_id', 'contact_name');
-    public $relationship_fields = array(    'account_id'        => 'accounts',
-                                        'opportunity_id'    => 'opportunities',
-                                        'contact_id'        => 'contacts',
-                                        'case_id'            => 'cases',
-                                        'user_id'            => 'users',
-                                        'assigned_user_id'    => 'users',
-                                        'note_id'            => 'notes',
-                                        'lead_id'            => 'leads',
+    public $relationship_fields = array(	'account_id'		=> 'accounts',
+                                        'opportunity_id'	=> 'opportunities',
+                                        'contact_id'		=> 'contacts',
+                                        'case_id'			=> 'cases',
+                                        'user_id'			=> 'users',
+                                        'assigned_user_id'	=> 'users',
+                                        'note_id'			=> 'notes',
+                                        'lead_id'			=> 'leads',
                                 );
 
     public function __construct()
@@ -310,7 +311,7 @@ class Call extends SugarBean
 
     public function get_summary_text()
     {
-        return "$this->name";
+        return (string)$this->name;
     }
 
     public function create_list_query($order_by, $where, $show_deleted=0)
@@ -337,7 +338,7 @@ class Call extends SugarBean
         $query .= " FROM calls ";
 
         if (preg_match("/contacts/", $where)) {
-            $query .=    "LEFT JOIN calls_contacts
+            $query .=	"LEFT JOIN calls_contacts
 	                    ON calls.id=calls_contacts.call_id
 	                    LEFT JOIN contacts
 	                    ON calls_contacts.contact_id=contacts.id ";
@@ -353,10 +354,8 @@ class Call extends SugarBean
         $where_auto = '1=1';
         if ($show_deleted == 0) {
             $where_auto = " $this->table_name.deleted=0  ";
-        } else {
-            if ($show_deleted == 1) {
-                $where_auto = " $this->table_name.deleted=1 ";
-            }
+        } elseif ($show_deleted == 1) {
+            $where_auto = " $this->table_name.deleted=1 ";
         }
 
         //$where_auto .= " GROUP BY calls.id";
@@ -529,7 +528,7 @@ class Call extends SugarBean
         }
         $mergeTime = isset($call_fields['DATE_START']) ? $call_fields['DATE_START'] : null; //$timedate->merge_date_time($call_fields['DATE_START'], $call_fields['TIME_START']);
         $date_db = $timedate->to_db($mergeTime);
-        if ($date_db    < $today) {
+        if ($date_db	< $today) {
             if ($call_fields['STATUS']=='Held' || $call_fields['STATUS']=='Not Held') {
                 $call_fields['DATE_START']= "<font>".$call_fields['DATE_START']."</font>";
             } else {
@@ -541,12 +540,10 @@ class Call extends SugarBean
                 }
                 $call_fields['DATE_START']= "<font class='overdueTask'>".$dateStart."</font>";
             }
+        } elseif ($date_db < $nextday) {
+            $call_fields['DATE_START'] = "<font class='todaysTask'>".$call_fields['DATE_START']."</font>";
         } else {
-            if ($date_db < $nextday) {
-                $call_fields['DATE_START'] = "<font class='todaysTask'>".$call_fields['DATE_START']."</font>";
-            } else {
-                $call_fields['DATE_START'] = "<font class='futureTask'>".$call_fields['DATE_START']."</font>";
-            }
+            $call_fields['DATE_START'] = "<font class='futureTask'>".$call_fields['DATE_START']."</font>";
         }
         $this->fill_in_additional_detail_fields();
 
@@ -672,18 +669,14 @@ class Call extends SugarBean
             if ($this->update_vcal) {
                 vCal::cache_sugar_vcal($user);
             }
-        } else {
-            if ($user->object_name == 'Contact') {
-                $relate_values = array('contact_id'=>$user->id,'call_id'=>$this->id);
-                $data_values = array('accept_status'=>$status);
-                $this->set_relationship($this->rel_contacts_table, $relate_values, true, true, $data_values);
-            } else {
-                if ($user->object_name == 'Lead') {
-                    $relate_values = array('lead_id'=>$user->id,'call_id'=>$this->id);
-                    $data_values = array('accept_status'=>$status);
-                    $this->set_relationship($this->rel_leads_table, $relate_values, true, true, $data_values);
-                }
-            }
+        } elseif ($user->object_name == 'Contact') {
+            $relate_values = array('contact_id'=>$user->id,'call_id'=>$this->id);
+            $data_values = array('accept_status'=>$status);
+            $this->set_relationship($this->rel_contacts_table, $relate_values, true, true, $data_values);
+        } elseif ($user->object_name == 'Lead') {
+            $relate_values = array('lead_id'=>$user->id,'call_id'=>$this->id);
+            $data_values = array('accept_status'=>$status);
+            $this->set_relationship($this->rel_leads_table, $relate_values, true, true, $data_values);
         }
     }
 
@@ -698,15 +691,15 @@ class Call extends SugarBean
         //		$GLOBALS['log']->debug('Call.php->get_notification_recipients():'.print_r($this,true));
         $list = array();
         if (!is_array($this->contacts_arr)) {
-            $this->contacts_arr =    array();
+            $this->contacts_arr =	array();
         }
 
         if (!is_array($this->users_arr)) {
-            $this->users_arr =    array();
+            $this->users_arr =	array();
         }
 
         if (!is_array($this->leads_arr)) {
-            $this->leads_arr =    array();
+            $this->leads_arr =	array();
         }
 
         foreach ($this->users_arr as $user_id) {
@@ -763,13 +756,11 @@ class Call extends SugarBean
             }
             /* BEGIN - SECURITY GROUPS */
             //parent_name_owner not being set for whatever reason so we need to figure this out
-            else {
-                if (!empty($this->parent_type) && !empty($this->parent_id)) {
-                    global $current_user;
-                    $parent_bean = BeanFactory::getBean($this->parent_type, $this->parent_id);
-                    if ($parent_bean !== false) {
-                        $is_owner = $current_user->id == $parent_bean->assigned_user_id;
-                    }
+            elseif (!empty($this->parent_type) && !empty($this->parent_id)) {
+                global $current_user;
+                $parent_bean = BeanFactory::getBean($this->parent_type, $this->parent_id);
+                if ($parent_bean !== false) {
+                    $is_owner = $current_user->id == $parent_bean->assigned_user_id;
                 }
             }
             require_once("modules/SecurityGroups/SecurityGroup.php");
@@ -844,12 +835,11 @@ class Call extends SugarBean
         $def = $this->field_defs['status'];
         if (isset($def['default'])) {
             return $def['default'];
-        } else {
-            $app = return_app_list_strings_language($GLOBALS['current_language']);
-            if (isset($def['options']) && isset($app[$def['options']])) {
-                $keys = array_keys($app[$def['options']]);
-                return $keys[0];
-            }
+        }
+        $app = return_app_list_strings_language($GLOBALS['current_language']);
+        if (isset($def['options']) && isset($app[$def['options']])) {
+            $keys = array_keys($app[$def['options']]);
+            return $keys[0];
         }
 
         return '';

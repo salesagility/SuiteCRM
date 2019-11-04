@@ -4,27 +4,30 @@ include_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFakeData.php';
 include_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFake.php';
 require_once __DIR__ . '/../../../../../modules/InboundEmail/InboundEmail.php';
 
+/**
+ * Like tempfile() but takes a mode
+ *
+ * @param $mode
+ * @return bool|resource
+ */
+function tempFileWithMode($mode)
+{
+    $path = tempnam(sys_get_temp_dir(), '');
+    $file = fopen($path, $mode);
+    register_shutdown_function(function() use($path) {
+        if (file_exists($path)) {
+            unlink($path);
+        }
+    });
+    return $file;
+}
+
 class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    public static $class_state = null;
-
-    public static function setUpBeforeClass()
-    {
-        // FIXME: The tests here depend on the email_cache table staying around and the right test order.
-        // Until that is fixed (run with RUN_PER_TESTS to see the problem) we at least restore after the class is done.
-        self::$class_state = new SuiteCRM\StateSaver();
-        self::$class_state->pushTable('email_cache');
-    }
-
-    public static function tearDownAfterClass()
-    {
-        self::$class_state->popTable('email_cache');
-    }
 
     protected function storeStateAll()
     {
         // save state
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('inbound_email_cache_ts');
         $state->pushTable('inbound_email_autoreply');
@@ -33,6 +36,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('folders');
         $state->pushTable('folders_subscriptions');
         $state->pushTable('config');
+        $state->pushTable('email_cache');
+        $state->pushFile('config.php');
         $state->pushGlobals();
         
         return $state;
@@ -41,8 +46,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     protected function restoreStateAll($state)
     {
         // clean up
-        
         $state->popGlobals();
+        $state->popFile('config.php');
         $state->popTable('config');
         $state->popTable('folders_subscriptions');
         $state->popTable('folders');
@@ -50,23 +55,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('inbound_email');
         $state->popTable('inbound_email_autoreply');
         $state->popTable('inbound_email_cache_ts');
+        $state->popTable('email_cache');
     }
 
-
-    public function testThisCallback()
-    {
-        $str = ['nope', '%foo', 'bar%', '%bazz%'];
-        $ret = this_callback($str);
-        $result = [];
-        for ($i = 0; $i < strlen($ret); $i++) {
-            $result[] = ord($ret[$i]);
-        }
-        $this->assertEquals([14, 15, 186, 186], $result);
-    }
-
-    // ---------------------------------------------
-    // ----- FOLLOWIN TESTS ARE USING FAKE IMAP ----
-    // ------------------------------------------------->
+    // ---------------------------------------------------------->
+    // ----- FOLLOWING TESTS ARE USING A FAKE IMAP Connection---->
+    // ---------------------------------------------------------->
 
 
     public function testConnectMailServerFolderInboundForceFirstMailbox()
@@ -80,7 +74,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('close', null, [null]);
         $fake->add('ping', null, [true]);
@@ -106,7 +100,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('close', null, [null]);
         $fake->add('ping', null, [true]);
@@ -131,7 +125,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('close', null, [null]);
         $fake->add('ping', null, [true]);
@@ -155,7 +149,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('close', null, [null]);
         $fake->add('ping', null, [true]);
@@ -183,12 +177,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [2, 15], [true]);
         $fake->add('setTimeout', [3, 15], [true]);
         $fake->add('open', ["{:/service=/ssl/tls/validate-cert/secure}", null, null, 0, 0, []], [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getLastError', null, ['Too many login failures']);
         $fake->add('getAlerts', null, [null]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/ssl/tls/validate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
@@ -215,7 +209,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('ping', null, [true]);
@@ -254,12 +248,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getLastError', null, ["SECURITY PROBLEM: insecure server advertised AUTH=PLAIN"]);
         $fake->add('getAlerts', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
@@ -292,12 +286,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getLastError', null, ['Too many login failures']);
         $fake->add('getAlerts', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
@@ -340,12 +334,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getLastError', null, [false]);
         $fake->add('getAlerts', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
@@ -388,12 +382,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('open', ["{:/service=/ssl/tls/validate-cert/secure}", null, null, 0, 0, []], [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getLastError', null, [false]);
         $fake->add('getAlerts', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return fopen('fakeImapResource', 'w+');
+            return tempFileWithMode('wb+');
         }]);
         $fake->add('getMailboxes', ['{:/service=/ssl/tls/validate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
@@ -962,15 +956,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->restoreStateAll($state);
     }
 
-    public function testsetCacheValue()
-    {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
-        
+    private function setDummyCacheValue() {
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->id = 1;
@@ -992,6 +978,15 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //execute the method to populate email cache
         $inboundEmail->setCacheValue('INBOX', $inserts);
         $inboundEmail->setCacheValue('INBOX.Trash', $inserts);
+        return $inboundEmail;
+    }
+
+    public function testsetCacheValue()
+    {
+        // save state
+
+        $state = $this->storeStateAll();
+        $inboundEmail = $this->setDummyCacheValue();
 
         //retrieve back to verify the records created
         $result = $inboundEmail->getCacheValue('INBOX');
@@ -1073,8 +1068,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = $this->storeStateAll();
         
         // test
-        
-        
+
         $inboundEmail = new InboundEmail();
 
         //test without a valid id
@@ -1082,7 +1076,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(false, $result);
 
         //test with a valid id set
-        $inboundEmail->id = 1;
+        $inboundEmail = $this->setDummyCacheValue();
         $result = $inboundEmail->validCacheExists('');
         $this->assertEquals(true, $result);
         
@@ -1124,9 +1118,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test
         
         
-        $inboundEmail = new InboundEmail();
-
-        $inboundEmail->id = 1;
+        $inboundEmail = $this->setDummyCacheValue();
 
         //test with invalid mailbox
         $result = $inboundEmail->getCacheUnreadCount('OUTBOX');
@@ -1150,9 +1142,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test
         
         
-        $inboundEmail = new InboundEmail();
-
-        $inboundEmail->id = 1;
+        $inboundEmail = $this->setDummyCacheValue();
 
         //test with invalid mailbox
         $result = $inboundEmail->getCacheCount('OUTBOX');
@@ -1174,11 +1164,10 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = $this->storeStateAll();
         
         // test
-        
-        
-        $inboundEmail = new InboundEmail();
 
-        $inboundEmail->id = 1;
+
+        $inboundEmail = $this->setDummyCacheValue();
+
 
         //test with invalid mailbox
         $result = $inboundEmail->getCacheUnread('OUTBOX');
@@ -1200,11 +1189,9 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = $this->storeStateAll();
         
         // test
-        
-        
-        $inboundEmail = new InboundEmail();
 
-        $inboundEmail->id = 1;
+
+        $inboundEmail = $this->setDummyCacheValue();
 
         //execute the method to populate answered field
         $inboundEmail->mark_answered(1, 'pop3');
@@ -1228,9 +1215,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test
         
         
-        $inboundEmail = new InboundEmail();
-
-        $inboundEmail->id = 1;
+        $inboundEmail = $this->setDummyCacheValue();
 
         $result = $inboundEmail->pop3_shiftCache(array('1' => '1'), array('1'));
 
@@ -1254,9 +1239,9 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test
         
         
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = $this->setDummyCacheValue();
 
-        $inboundEmail->id = 1;
+        $inboundEmail->pop3_shiftCache(array('1' => '1'), array('1'));
 
         //test with invalid msgNo
         $result = $inboundEmail->getUIDLForMessage('2');
@@ -1306,9 +1291,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test
         
         
-        $inboundEmail = new InboundEmail();
-
-        $inboundEmail->id = 1;
+        $inboundEmail = $this->setDummyCacheValue();
+        $inboundEmail->pop3_shiftCache(array('1' => '1'), array('1'));
 
         $result = $inboundEmail->pop3_getCacheUidls();
 

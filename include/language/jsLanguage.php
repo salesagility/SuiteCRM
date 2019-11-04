@@ -84,7 +84,7 @@ EOQ;
 
         $cacheDir = create_cache_directory('jsLanguage/');
         if ($fh = @sugar_fopen($cacheDir . $lang . '.js', "w")) {
-            fputs($fh, $str);
+            fwrite($fh, $str);
             fclose($fh);
         }
     }
@@ -100,8 +100,8 @@ EOQ;
 
         $cacheDir = create_cache_directory('jsLanguage/' . $moduleDir . '/');
 
-        if ($fh = @fopen($cacheDir . $lang . '.js', "w")) {
-            fputs($fh, $str);
+        if ($fh = @fopen($cacheDir . $lang . '.js', 'wb')) {
+            fwrite($fh, $str);
             fclose($fh);
         }
 

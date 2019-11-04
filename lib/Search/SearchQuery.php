@@ -28,6 +28,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SearchQuery implements \JsonSerializable
 {
+    const DEFAULT_SEARCH_SIZE = 10;
+
     /** @var string Search query string */
     private $query;
     /** @var int The number of results per page */
@@ -49,13 +51,10 @@ class SearchQuery implements \JsonSerializable
      * @param int         $from         Offset of the search. Used for pagination
      * @param array       $options      [optional] used for additional options by SearchEngines.
      */
-    private function __construct($searchString, $engine = null, $size = 10, $from = 0, array $options = [])
+    private function __construct($searchString, $engine = null, $size = null, $from = 0, array $options = [])
     {
         $this->query = strval($searchString);
-        $this->size = intval($size);
-        if ($this->size < 0) {
-            $this->size = 1;
-        }
+        $this->size = $size ? intval($size) : $this->getDefaultSearchSize();
         $this->from = intval($from);
         $this->options = $options;
         $this->engine = $engine !== null ? strval($engine) : null;
@@ -95,7 +94,7 @@ class SearchQuery implements \JsonSerializable
     {
         $searchQuery = self::filterArray($request, 'search-query-string', '', FILTER_SANITIZE_STRING);
         $searchQueryAlt = self::filterArray($request, 'query_string', '', FILTER_SANITIZE_STRING);
-        $searchSize = self::filterArray($request, 'search-query-size', 10, FILTER_SANITIZE_NUMBER_INT);
+        $searchSize = self::filterArray($request, 'search-query-size', null, FILTER_SANITIZE_NUMBER_INT);
         $searchFrom = self::filterArray($request, 'search-query-from', 0, FILTER_SANITIZE_NUMBER_INT);
         $searchEngine = self::filterArray($request, 'search-engine', null, FILTER_SANITIZE_STRING);
 
@@ -171,6 +170,26 @@ class SearchQuery implements \JsonSerializable
             $this->size = 1;
         }
         return (int)$this->size;
+    }
+
+    /**
+     * Get the default Search size by checking the config or falling back to Constant value
+     *
+     * @return int
+     */
+    public function getDefaultSearchSize()
+    {
+        global $sugar_config;
+
+        if(isset($sugar_config['search']['query_size'])){
+            return (int) $sugar_config['search']['query_size'];
+        }
+
+        if(isset($sugar_config['search']['pagination']['min'])){
+            return (int) $sugar_config['search']['pagination']['min'];
+        }
+
+        return static::DEFAULT_SEARCH_SIZE;
     }
 
     /**

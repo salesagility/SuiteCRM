@@ -54,7 +54,7 @@ class SugarView
     const ERR_NOT_ARRAY = 3;
     const ERR_NOT_SUB_ARRAY = 4;
     const WARN_SCOPE_EXISTS = 5;
-    
+
     /**
      * @var array $view_object_map
      * This array is meant to hold an objects/data that we would like to pass between
@@ -136,7 +136,7 @@ class SugarView
      * @var array
      */
     private $settings = [];
-    
+
     /**
      * SugarView constructor.
      * @deprecated since version 7.11
@@ -145,7 +145,7 @@ class SugarView
     {
         LoggerManager::getLogger()->deprecated();
     }
-    
+
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 8.0
      * please update your code, use __construct instead
@@ -397,7 +397,7 @@ class SugarView
         $GLOBALS['app']->headerDisplayed = true;
 
         $themeObject = SugarThemeRegistry::current();
-        $theme = $themeObject->__toString();
+        $theme = (string)$themeObject;
 
         $ss = new Sugar_Smarty();
         $ss->assign("APP", $app_strings);
@@ -1019,8 +1019,8 @@ EOHTML;
         if (empty($this->responseTime)) {
             $this->_calculateFooterMetrics();
         }
-        global $app_strings;
-        global $mod_strings;
+        global $app_strings, $sugar_config;
+        $server_unique_key = isset($sugar_config['unique_key']) ? $sugar_config['unique_key'] : '';
         $themeObject = SugarThemeRegistry::current();
 
         $ss = new Sugar_Smarty();
@@ -1131,7 +1131,7 @@ EOHTML;
         // here we allocate the help link data
         $help_actions_blacklist = array('Login'); // we don't want to show a context help link here
         if (!in_array($this->action, $help_actions_blacklist)) {
-            if (!isset($GLOBALS['server_unique_key'])) {
+            if (!isset($server_unique_key)) {
                 LoggerManager::getLogger()->warn('Undefined index: server_unique_key');
             }
             $url =
@@ -1147,7 +1147,7 @@ EOHTML;
                 '&help_action=' .
                 $this->action .
                 '&key=' .
-                (isset($GLOBALS['server_unique_key']) ? $GLOBALS['server_unique_key'] : null) .
+                (isset($server_unique_key) ? $server_unique_key : null) .
                 '\'))';
             $label =
                 (isset($GLOBALS['app_list_strings']['moduleList'][$this->module]) ?
@@ -1243,7 +1243,7 @@ EOHTML;
     protected function _checkModule()
     {
         if (!empty($this->module) && !file_exists('modules/' . $this->module)) {
-            $error = str_replace("[module]", "$this->module", $GLOBALS['app_strings']['ERR_CANNOT_FIND_MODULE']);
+            $error = str_replace("[module]", (string)$this->module, $GLOBALS['app_strings']['ERR_CANNOT_FIND_MODULE']);
             $GLOBALS['log']->fatal($error);
             echo $error;
             die();
@@ -1643,19 +1643,16 @@ EOHTML;
             if (!empty($iconPath) && !$browserTitle) {
                 if (SugarThemeRegistry::current()->directionality == "ltr") {
                     return $app_strings['LBL_SEARCH_ALT'] . "&nbsp;"
-                        . "$firstParam";
-                } else {
-                    return "$firstParam" . "&nbsp;" . $app_strings['LBL_SEARCH'];
+                        . (string)$firstParam;
                 }
-            } else {
-                return $firstParam;
+                return (string)$firstParam . "&nbsp;" . $app_strings['LBL_SEARCH'];
             }
+            return $firstParam;
+        }
+        if (!empty($iconPath) && !$browserTitle) {
+            //return "<a href='index.php?module={$this->module}&action=index'>$this->module</a>";
         } else {
-            if (!empty($iconPath) && !$browserTitle) {
-                //return "<a href='index.php?module={$this->module}&action=index'>$this->module</a>";
-            } else {
-                return $firstParam;
-            }
+            return $firstParam;
         }
     }
 
@@ -1976,7 +1973,7 @@ EOHTML;
     public function mergeDeepArray($arrays)
     {
         $result = array();
-        
+
         if (!is_array($arrays)) {
             throw new InvalidArgumentException('Parameter should be an array to merging. ' . gettype($arrays) . ' given.', self::ERR_NOT_ARRAY);
         }
@@ -1987,7 +1984,7 @@ EOHTML;
 
         return $result;
     }
-    
+
     /**
      *
      * @param array $array

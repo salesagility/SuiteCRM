@@ -1216,4 +1216,71 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     {
 //        $this->markTestIncomplete('TODO: Implement Tests');
     }
+
+    /**
+     *
+     *
+     */
+    public function testWipeLocalSyncData()
+    {
+        $state = new StateSaver();
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('users');
+        $state->pushTable('user_preferences');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aod_index');
+        $state->pushTable('vcals');
+        $state->pushTable('tracker');
+
+        // Create a User
+        $user = BeanFactory::getBean('Users');
+        $user->last_name = 'UNIT_TESTS';
+        $user->user_name = 'UNIT_TESTS';
+        $user->save();
+
+        // Create a meeting with gsync fields populated and save it to the DB for testing.
+        $meeting1 = BeanFactory::getBean('Meetings');
+        $meeting1->name = 'UNIT_TEST_1';
+        $meeting1->assigned_user_id = $user->id;
+        $meeting1->status = 'Not Held';
+        $meeting1->type = 'Sugar';
+        $meeting1->description = 'test description';
+        $meeting1->duration_hours = 1;
+        $meeting1->duration_minutes = 1;
+        $meeting1->date_start = '2016-02-11 17:30:00';
+        $meeting1->date_end = '2016-02-11 17:30:00';
+        $meeting1->gsync_id = 'GSYNCID';
+        $meeting1->gsync_lastsync = '1234567890';
+        $meeting_id = $meeting1->save();
+
+        // Get a DB object
+        $db = DBManagerFactory::getInstance();
+
+        // Make sure the values we set are saved in the DB
+        $query = "SELECT gsync_id, gsync_lastsync FROM meetings WHERE id = {$db->quoted($meeting_id)}";
+        $result = $db->query($query);
+        $row = $db->fetchByAssoc($result);
+        $this->assertEquals('GSYNCID', $row['gsync_id']);
+        $this->assertEquals('1234567890', $row['gsync_lastsync']);
+
+        // Call the tested function to wipe the gsync data
+        $helper = new GoogleSyncHelper;
+        $helper->wipeLocalSyncData($user->id);
+
+        // Check the raw DB values
+        $result = $db->query($query);
+        $row = $db->fetchByAssoc($result);
+        $this->assertEquals('', $row['gsync_id']);
+        $this->assertEquals('', $row['gsync_lastsync']);
+
+        $state->popTable('meetings');
+        $state->popTable('meetings_cstm');
+        $state->popTable('users');
+        $state->popTable('user_preferences');
+        $state->popTable('aod_indexevent');
+        $state->popTable('aod_index');
+        $state->popTable('vcals');
+        $state->popTable('tracker');
+    }
 }
