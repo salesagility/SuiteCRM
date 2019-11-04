@@ -41,12 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- *********************************************************************************/
 
 require_once("include/entryPoint.php");
 
@@ -105,7 +100,7 @@ switch ($_REQUEST['adminAction']) {
                 // populate to_repair array
                 $q2 = "SELECT id FROM {$bean->table_name}";
                 $r2 = $bean->db->query($q2);
-                $ids = '';
+                $ids = [];
                 while ($a2 = $bean->db->fetchByAssoc($r2)) {
                     $ids[] = $a2['id'];
                 }
@@ -123,7 +118,7 @@ switch ($_REQUEST['adminAction']) {
             // populate to_repair array
             $q2 = "SELECT id FROM {$bean->table_name}";
             $r2 = $bean->db->query($q2);
-            $ids = '';
+            $ids = [];
             while ($a2 = $bean->db->fetchByAssoc($r2)) {
                 $ids[] = $a2['id'];
             }

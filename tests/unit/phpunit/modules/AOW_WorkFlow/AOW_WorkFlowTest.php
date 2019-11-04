@@ -13,7 +13,6 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAOW_WorkFlow()
     {
-
         //execute the contructor and check for the Object type and  attributes
         $aowWorkFlow = new AOW_WorkFlow();
         $this->assertInstanceOf('AOW_WorkFlow', $aowWorkFlow);
@@ -30,17 +29,47 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $aowWorkFlow = new AOW_WorkFlow();
         $this->assertEquals(false, $aowWorkFlow->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aowWorkFlow->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $aowWorkFlow->bean_implements('ACL')); //test with valid value
-        
-        // clean up
+    }
+
+    public function testmark_delete_related()
+    {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aow_conditions');
+        $state->pushTable('aow_workflow');
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+
+        // Create a workflow and a related condition
+        $aowWorkFlow = new AOW_WorkFlow();
+        $aowWorkFlow->name = 'test';
+        $aowWorkFlow->flow_module = 'test';
+        $aowWorkFlow->save();
+
+        $condition = new AOW_Condition();
+        $condition->aow_workflow_id = $aowWorkFlow->id;
+        $condition->save();
+
+        $linked = $aowWorkFlow->get_linked_beans('aow_conditions');
+        $this->assertCount(1, $linked);
+        $conditionID = $linked[0]->id;
+
+        // Deleting the workflow should delete also the condition
+        BeanFactory::unregisterBean('AOW_Conditions', $conditionID);
+        $cond = BeanFactory::getBean('AOW_Conditions', $conditionID);
+        $this->assertNotEmpty($cond);
+        $aowWorkFlow->mark_deleted($aowWorkFlow->id);
+        BeanFactory::unregisterBean('AOW_Conditions', $conditionID);
+        $cond = BeanFactory::getBean('AOW_Conditions', $conditionID);
+        $this->assertEmpty($cond);
+
+        $state->popGlobals();
+        $state->popTable('aod_indexevent');
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_conditions');
     }
 
     public function testsave()
@@ -53,7 +82,7 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
         
-        
+        // test
         $aowWorkFlow = new AOW_WorkFlow();
 
         $aowWorkFlow->name = 'test';
@@ -71,7 +100,6 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(null, $result);
         
         // clean up
-        
         $state->popGlobals();
         $state->popTable('tracker');
         $state->popTable('aod_index');
@@ -82,12 +110,6 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testload_flow_beans()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $aowWorkFlow = new AOW_WorkFlow();
 
         //execute the method and test if it works and does not throws an exception.
@@ -97,34 +119,24 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testrun_flows()
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
-        
-        
+
         $aowWorkFlow = new AOW_WorkFlow();
 
         $result = $aowWorkFlow->run_flows();
         $this->assertTrue($result);
         
         // clean up
-        
         $state->popGlobals();
     }
 
     public function testrun_flow()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $aowWorkFlow = new AOW_WorkFlow();
 
         //execute the method and test if it works and does not throws an exception.
@@ -134,8 +146,6 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testrun_bean_flows()
@@ -332,8 +342,8 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aow_processed');
         $state->pushTable('tracker');
-                
-                
+
+        // test
         $aowWorkFlow = new AOW_WorkFlow();
 
         //prepare the required objects and variables
@@ -359,7 +369,6 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(null, $result);
         
         // clean up
-        
         $state->popTable('tracker');
         $state->popTable('aow_processed');
     }

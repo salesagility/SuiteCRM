@@ -69,6 +69,6 @@ class FP_events extends FP_events_sugar
     {
         global $app_list_strings;
 
-        $app_list_strings['email_templet_list'] = get_bean_select_array(true, 'EmailTemplate', 'name');
+        $app_list_strings['emailTemplates_type_list'] = get_bean_select_array(true, 'EmailTemplate', 'name', "type='event'");
     }
 }

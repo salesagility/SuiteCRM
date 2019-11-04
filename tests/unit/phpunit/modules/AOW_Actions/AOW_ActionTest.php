@@ -33,11 +33,9 @@ class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsave_lines()
     {
         $state = new SuiteCRM\StateSaver();
-        
         $state->pushTable('aow_actions');
-        
-        
 
+        // test
         $aowAction = new AOW_Action();
 
         //populate required values
@@ -62,22 +60,14 @@ class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         $state->popTable('aow_actions');
     }
 
     public function testbean_implements()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $aowAction = new AOW_Action();
         $this->assertEquals(false, $aowAction->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aowAction->bean_implements('test')); //test with invalid value
         $this->assertEquals(false, $aowAction->bean_implements('ACL')); //test with valid value
-        
-        // clean up
     }
 }

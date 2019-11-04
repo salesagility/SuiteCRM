@@ -27,10 +27,6 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testconvertToDollar()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-
         $currency = new Currency();
 
         //test without setting attributes
@@ -39,8 +35,6 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with required attributes set
         $currency->conversion_rate = 1.6;
         $this->assertEquals(62.5, $currency->convertToDollar(100, 2));
-        
-        // clean up
     }
 
     public function testconvertFromDollar()
@@ -191,7 +185,6 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('$100.0', currency_format_number(100, array('round' => 1, 'decimals' => 1)));
         
         // clean up
-        
         $state->popTable('currencies');
     }
 
@@ -205,7 +198,6 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('$100.1', format_number(100.09, 1, 1, array('convert' => 1, 'currency_symbol' => 'R')));
         
         // clean up
-        
         $state->popTable('currencies');
     }
 
@@ -219,7 +211,6 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('100', format_place_symbol(100, '', false));
         
         // clean up
-        
         $state->popTable('currencies');
     }
 
@@ -232,7 +223,6 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('100', unformat_number(100));
         
         // clean up
-        
         $state->popTable('currencies');
     }
 
@@ -245,7 +235,6 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('100.00', format_money('100', false));
         
         // clean up
-        
         $state->popTable('currencies');
     }
 
@@ -258,7 +247,6 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(array(',', '.'), get_number_seperators(false));
         
         // clean up
-        
         $state->popTable('currencies');
     }
 
@@ -271,7 +259,6 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, toString(false));
         
         // clean up
-        
         $state->popTable('currencies');
     }
 
@@ -301,7 +288,6 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
         
         // clean up
-        
         $state->popTable('currencies');
     }
 
@@ -317,10 +303,8 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = $expected = "<select name=\"currency_name\" id=\"currency_name\" />\n<OPTION value='\$'>\$</OPTION></select>";
         $actual = getCurrencySymbolDropDown(null, 'currency_name', '', 'EditView');
         $this->assertSame($expected, $actual);
-        
-        
+
         // clean up
-        
         $state->popTable('currencies');
     }
 }

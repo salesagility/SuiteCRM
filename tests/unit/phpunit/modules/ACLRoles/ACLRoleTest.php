@@ -71,8 +71,6 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetUserRoles()
     {
-        $state = new SuiteCRM\StateSaver();
-
         $aclRole = new ACLRole();
 
         //test with default/true getAsNameArray param value

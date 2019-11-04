@@ -39,7 +39,6 @@
  */
 namespace SuiteCRM\API\JsonApi\v1;
 
-use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use SuiteCRM\API\JsonApi\v1\Enumerator\LinksMessage;

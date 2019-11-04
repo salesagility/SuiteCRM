@@ -115,7 +115,7 @@ function smarty_function_html_select_time($params, &$smarty)
         for ($i = 0, $for_max = count($all_minutes); $i < $for_max; $i+= $minute_interval) {
             $minutes[] = sprintf('%02d', $all_minutes[$i]);
         }
-        $selected = intval(floor(strftime('%M', $time) / $minute_interval) * $minute_interval);
+        $selected = (int)(floor(strftime('%M', $time) / $minute_interval) * $minute_interval);
         $html_result .= '<select name=';
         if (null !== $field_array) {
             $html_result .= '"' . $field_array . '[' . $prefix . 'Minute]"';
@@ -145,7 +145,7 @@ function smarty_function_html_select_time($params, &$smarty)
         for ($i = 0, $for_max = count($all_seconds); $i < $for_max; $i+= $second_interval) {
             $seconds[] = sprintf('%02d', $all_seconds[$i]);
         }
-        $selected = intval(floor(strftime('%S', $time) / $second_interval) * $second_interval);
+        $selected = (int)(floor(strftime('%S', $time) / $second_interval) * $second_interval);
         $html_result .= '<select name=';
         if (null !== $field_array) {
             $html_result .= '"' . $field_array . '[' . $prefix . 'Second]"';

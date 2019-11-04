@@ -31,11 +31,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testadd_list_count_joins()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
         $this->markTestIncomplete('Breaks on php 7.1');
-        
 
         $contact = new Contact();
 
@@ -58,10 +54,6 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = "\n	            LEFT JOIN accounts_contacts\n	            ON contacts.id=accounts_contacts.contact_id\n	            LEFT JOIN accounts\n	            ON accounts_contacts.account_id=accounts.id\n	                 LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ";
         $contact->add_list_count_joins($query, 'contacts.name');
         $this->assertSame(" LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ", $query);
-
-
-        
-        // clean up
     }
 
     public function testlistviewACLHelper()
@@ -165,11 +157,6 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testload_contacts_users_relationship()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
         $contact = new Contact();
 
         //execute the method and test if it works and does not throws an exception.
@@ -179,21 +166,16 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testget_list_view_data()
     {
-
-    // save state
-
+        // save state
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
         $state->pushTable('tracker');
 
         // test
-        
         $contact = new Contact();
 
         //test with attributes preset and verify attributes are set accordingly
@@ -225,11 +207,9 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         
         // clean up
-        
         $state->popTable('tracker');
         $state->popTable('email_addresses');
     }
-
 
     public function testbuild_generic_where_clause()
     {
@@ -271,20 +251,11 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(null, $result);
 
 
-        
-        
-
         $this->markTestSkipped('Invalid Columns(email1,email2) in Query ');
     }
 
     public function testsave_relationship_changes()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $contact = new Contact();
 
         //execute the method and test if it works and does not throws an exception.
@@ -295,8 +266,6 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testbean_implements()
@@ -326,12 +295,6 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testprocess_sync_to_outlook()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $contact = new Contact();
 
         //execute the method and test if it works and does not throws an exception.
@@ -342,7 +305,6 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-
         //execute the method and test if it works and does not throws an exception.
         try {
             $contact->process_sync_to_outlook("1");
@@ -350,9 +312,5 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-
-
-        
-        // clean up
     }
 }
