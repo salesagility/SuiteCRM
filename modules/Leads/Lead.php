@@ -177,8 +177,13 @@ class Lead extends Person implements EmailInterface
 
             if (!empty($result)) {
                 $row = $this->db->fetchByAssoc($result);
-                $this->account_name = $row['name'];
-                $this->account_name_owner = $row['account_name_owner'];
+                if (!is_null($row)) {
+                    $this->account_name = $row['name'];
+                    $this->account_name_owner = $row['account_name_owner'];
+                } else {
+                    $this->account_name = null;
+                    $this->account_name_owner = null;
+                }
                 $this->account_name_mod = 'Accounts';
             }
         }
