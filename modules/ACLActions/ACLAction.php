@@ -590,7 +590,7 @@ class ACLAction extends SugarBean
      * STATIC function userNeedsOwnership($user_id, $category, $action,$type='module')
      * checks if a user should have ownership to do an action
      *
-     * @param GUID $user_id
+     * @param string $user_id GUID
      * @param string $category
      * @param string $action
      * @param string $type
@@ -606,12 +606,11 @@ class ACLAction extends SugarBean
 
 
         if (!empty($_SESSION['ACL'][$user_id][$category][$type][$action])) {
-            return $_SESSION['ACL'][$user_id][$category][$type][$action]['aclaccess'] === ACL_ALLOW_OWNER;
+            // Requires loose type casting
+            return $_SESSION['ACL'][$user_id][$category][$type][$action]['aclaccess'] == ACL_ALLOW_OWNER;
         }
-
         return false;
     }
-
     /**
      *
      * static pass by ref setupCategoriesMatrix(&$categories)
