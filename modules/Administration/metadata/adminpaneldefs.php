@@ -191,13 +191,20 @@ $admin_option_defs['jjwg_Maps']['address_cache'] = array(
     'address-cache'
 );
 
+$admin_option_defs['Administration']['google_calendar_settings'] = array(
+    'Google Calendar Settings',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_TITLE',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_DESC',
+    './index.php?module=Administration&action=GoogleCalendarSettings',
+    'system-settings'
+);
 
 $admin_group_header[] = array(
-    'LBL_JJWG_MAPS_ADMIN_HEADER',
+    'LBL_GOOGLE_SUITE_ADMIN_HEADER',
     '',
     false,
     $admin_option_defs,
-    'LBL_JJWG_MAPS_ADMIN_DESC'
+    'LBL_GOOGLE_SUITE_ADMIN_DESC'
 );
 
 
