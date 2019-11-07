@@ -359,6 +359,7 @@ function getModuleField(
     $displayParams = array();
 
     if (!is_file($file)
+        || $view === 'EditView'
         || inDeveloperMode()
         || !empty($_SESSION['developerMode'])) {
         if (!isset($vardef)) {
