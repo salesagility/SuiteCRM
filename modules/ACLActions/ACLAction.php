@@ -651,7 +651,8 @@ class ACLAction extends SugarBean
                             LoggerManager::getLogger()->warn('Categories / category name: [' . $cat_name . '] / module / access / aclaccess is not set for ACLAction::setupCategoriesMatrix()');
                         }
 
-                        if ($act_name !== 'aclaccess' && $catModAccACL === ACL_ALLOW_DISABLED) {
+                        // Requires loose comparison
+                        if ($act_name !== 'aclaccess' && $catModAccACL == ACL_ALLOW_DISABLED) {
                             $categories[$cat_name][$type_name][$act_name]['accessColor'] = 'darkgray';
                             $disabled[] = $cat_name;
                         }
