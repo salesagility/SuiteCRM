@@ -80,4 +80,5 @@ class GoogleSyncException extends Exception
     const RECORD_VALIDATION_FAILURE = 128;
     const SQL_FAILURE = 129;
     const ACCSESS_TOKEN_PARAMETER_MISSING = 130;
+    const GCAL_SUITECRM_MULTIOWNER = 131;
 }

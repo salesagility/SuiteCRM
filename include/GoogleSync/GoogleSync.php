@@ -296,9 +296,10 @@ class GoogleSync extends GoogleSyncBase
                     $this->doSync($key);
                 } catch (Exception $e) { // We need to catch any exception here, otherwise the foreach loop cannot continue to the next user.
                     // FUTURE: We'll inform the user that the sync failed.
-                    $this->logger->fatal('Caught Exception While Syncing User:' . $key);
-                    $this->logger->error($e->getTraceAsString());
+                    $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Caught Exception While Syncing User:' . $key);
+                    $this->logger->error('EXCEPTION TRACE:' . PHP_EOL . $e->getTraceAsString());
                     $failures++;
+                    $this->exceptionHandle($e, $key);
                 }
             }
         }
@@ -307,5 +308,42 @@ class GoogleSync extends GoogleSyncBase
         }
         $this->logger->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $failures . ' failure(s) found at syncAllUsers method.');
         return false;
+    }
+
+    /**
+     * Handle exceptions for users
+     *
+     * When the sync produces an exception, this function is called to handle any actions to take with it.
+     *
+     * @param Exception $e The exception to process
+     * @param String $user_id The id of the user the exception was produced by
+     *
+     * @return null
+     */
+    protected function exceptionHandle(Exception $e, $user_id) {
+
+        $e_code = $e->getCode();
+        $e_message = $e->getMessage();
+        switch ($e_code) {
+            case GoogleSyncException::GCAL_SUITECRM_MULTIOWNER:
+                $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Calendar for user: ' . $user_id . ' has too many owners!');
+                $alert = BeanFactory::newBean('Alerts');
+                $alert->name = 'Google Sync Failure';
+                $alert->description = 'Your SuiteCRM Google calendar has more than one owner!';
+                $alert->assigned_user_id = $user_id;
+                $alert->type = 'warning';
+                $alert->is_read = 0;
+                $alert->save();
+                break;
+            default:
+                $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Caught Exception While Syncing User:' . $user_id);
+                $alert = BeanFactory::newBean('Alerts');
+                $alert->name = 'Google Sync Failure';
+                $alert->description = 'Unknown Error!';
+                $alert->assigned_user_id = $user_id;
+                $alert->type = 'warning';
+                $alert->is_read = 0;
+                $alert->save();
+        }
     }
 }
