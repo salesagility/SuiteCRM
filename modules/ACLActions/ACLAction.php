@@ -493,8 +493,7 @@ class ACLAction extends SugarBean
     /**
      * STATIC function userNeedsSecurityGroup($user_id, $category, $action,$type='module')
      * checks if a user should have ownership to do an action
-     *
-     * @param GUID $user_id
+     * @param string $user_id GUID
      * @param string $category
      * @param string $action
      * @param string $type
@@ -502,14 +501,15 @@ class ACLAction extends SugarBean
      */
     public static function userNeedsSecurityGroup($user_id, $category, $action, $type = 'module')
     {
-        //check if we don't have it set in the cache if not lets reload the cache
+        // Check if we don't have it set in the cache if not lets reload the cache.
 
         if (empty($_SESSION['ACL'][$user_id][$category][$type][$action])) {
             self::getUserActions($user_id, false);
         }
 
         if (!empty($_SESSION['ACL'][$user_id][$category][$type][$action])) {
-            return $_SESSION['ACL'][$user_id][$category][$type][$action]['aclaccess'] === ACL_ALLOW_GROUP;
+            // Requires loose comparison.
+            return $_SESSION['ACL'][$user_id][$category][$type][$action]['aclaccess'] == ACL_ALLOW_GROUP;
         }
 
         return false;
