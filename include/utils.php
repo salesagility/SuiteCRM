@@ -504,26 +504,6 @@ function addCronAllowedUser($addUser)
 }
 
 /**
- * @deprecated use SugarView::getMenu() instead
- */
-function load_menu($path)
-{
-    global $module_menu;
-
-    if (file_exists($path . 'Menu.php')) {
-        require $path . 'Menu.php';
-    }
-    if (file_exists('custom/' . $path . 'Ext/Menus/menu.ext.php')) {
-        require 'custom/' . $path . 'Ext/Menus/menu.ext.php';
-    }
-    if (file_exists('custom/application/Ext/Menus/menu.ext.php')) {
-        require 'custom/application/Ext/Menus/menu.ext.php';
-    }
-
-    return $module_menu;
-}
-
-/**
  * get_notify_template_file
  * This function will return the location of the email notifications template to use.
  *
