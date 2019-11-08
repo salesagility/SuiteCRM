@@ -322,13 +322,15 @@ class GoogleSync extends GoogleSyncBase
      */
     protected function exceptionHandle(Exception $excp, $user_id) {
 
+        global $app_strings;
+
         $e_code = $excp->getCode();
         switch ($e_code) {
             case GoogleSyncException::GCAL_SUITECRM_MULTIOWNER:
                 $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Calendar for user: ' . $user_id . ' has too many owners!');
                 $alert = BeanFactory::newBean('Alerts');
-                $alert->name = 'Google Sync Failure';
-                $alert->description = 'Your SuiteCRM Google calendar has more than one owner!';
+                $alert->name = $app_strings['LBL_GOOGLESYNC_FAILURE_ALERT_SUBJECT'];
+                $alert->description = $app_strings['LBL_GOOGLESYNC_TOO_MANY_OWNERS_ERROR'];
                 $alert->assigned_user_id = $user_id;
                 $alert->type = 'warning';
                 $alert->is_read = 0;
@@ -338,8 +340,8 @@ class GoogleSync extends GoogleSyncBase
             case GoogleSyncException::ACCESS_TOKEN_PARAMETER_MISSING:
                 $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'GoogleApiToken missing access_token key for user: ' . $user_id);
                 $alert = BeanFactory::newBean('Alerts');
-                $alert->name = 'Google Sync Failure';
-                $alert->description = 'Google API Token missing or corrupt. You may need to reauthorize.';
+                $alert->name = $app_strings['LBL_GOOGLESYNC_FAILURE_ALERT_SUBJECT'];
+                $alert->description = $app_strings['LBL_GOOGLESYNC_JSON_ACCESS_TOKEN_ERROR'];
                 $alert->assigned_user_id = $user_id;
                 $alert->type = 'warning';
                 $alert->is_read = 0;
@@ -348,8 +350,8 @@ class GoogleSync extends GoogleSyncBase
             default:
                 $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Caught Exception While Syncing User:' . $user_id);
                 $alert = BeanFactory::newBean('Alerts');
-                $alert->name = 'Google Sync Failure';
-                $alert->description = 'Please contact the Admin about this!';
+                $alert->name = $app_strings['LBL_GOOGLESYNC_FAILURE_ALERT_SUBJECT'];
+                $alert->description = $app_strings['LBL_GOOGLESYNC_GENERIC_ERROR'];
                 $alert->assigned_user_id = $user_id;
                 $alert->type = 'warning';
                 $alert->is_read = 0;
