@@ -2457,7 +2457,7 @@ class SugarBean
                     (strpos($type, 'char') !== false || strpos($type, 'text') !== false || $type == 'enum') &&
                     !empty($this->$key)
                 ) {
-                    $this->$key = htmlentities(SugarCleaner::cleanHtml($this->$key, true));
+                    $this->$key = SugarCleaner::cleanHtml($this->$key, true);
                 }
             }
         }
