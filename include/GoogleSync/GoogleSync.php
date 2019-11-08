@@ -320,10 +320,9 @@ class GoogleSync extends GoogleSyncBase
      *
      * @return null
      */
-    protected function exceptionHandle(Exception $e, $user_id) {
+    protected function exceptionHandle(Exception $excp, $user_id) {
 
-        $e_code = $e->getCode();
-        $e_message = $e->getMessage();
+        $e_code = $excp->getCode();
         switch ($e_code) {
             case GoogleSyncException::GCAL_SUITECRM_MULTIOWNER:
                 $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Calendar for user: ' . $user_id . ' has too many owners!');
@@ -335,11 +334,22 @@ class GoogleSync extends GoogleSyncBase
                 $alert->is_read = 0;
                 $alert->save();
                 break;
+            case GoogleSyncException::JSON_KEY_MISSING_USER:
+            case GoogleSyncException::ACCESS_TOKEN_PARAMETER_MISSING:
+                $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'GoogleApiToken missing access_token key for user: ' . $user_id);
+                $alert = BeanFactory::newBean('Alerts');
+                $alert->name = 'Google Sync Failure';
+                $alert->description = 'Google API Token missing or corrupt. You may need to reauthorize.';
+                $alert->assigned_user_id = $user_id;
+                $alert->type = 'warning';
+                $alert->is_read = 0;
+                $alert->save();
+                break;
             default:
                 $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Caught Exception While Syncing User:' . $user_id);
                 $alert = BeanFactory::newBean('Alerts');
                 $alert->name = 'Google Sync Failure';
-                $alert->description = 'Unknown Error!';
+                $alert->description = 'Please contact the Admin about this!';
                 $alert->assigned_user_id = $user_id;
                 $alert->type = 'warning';
                 $alert->is_read = 0;

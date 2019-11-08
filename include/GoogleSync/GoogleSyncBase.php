@@ -180,7 +180,7 @@ class GoogleSyncBase
         $accessToken = json_decode(base64_decode($this->workingUser->getPreference('GoogleApiToken', 'GoogleSync')), true);
         if (!array_key_exists('access_token', $accessToken)) {
             // The Token is invalid JSON or missing
-            throw new GoogleSyncException('GoogleApiToken missing access_token key', GoogleSyncException::JSON_KEY_MISSING);
+            throw new GoogleSyncException('GoogleApiToken missing access_token key', GoogleSyncException::JSON_KEY_MISSING_USER);
         }
 
         // The refresh token is only provided once, on first authentication. It must be added afterwards.
@@ -208,7 +208,7 @@ class GoogleSyncBase
     protected function getGoogleClient($accessToken)
     {
         if (empty($accessToken)) {
-            throw new GoogleSyncException('Access Token Parameter Missing', GoogleSyncException::ACCSESS_TOKEN_PARAMETER_MISSING);
+            throw new GoogleSyncException('Access Token Parameter Missing', GoogleSyncException::ACCESS_TOKEN_PARAMETER_MISSING);
         }
 
         // New Google Client
