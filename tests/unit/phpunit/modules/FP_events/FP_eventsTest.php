@@ -28,7 +28,7 @@ class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fpEvents = new FP_events();
 
         $fpEvents->email_templates();
-        $this->assertTrue(is_array($app_list_strings['email_templet_list']));
+        $this->assertInternalType('array', $app_list_strings['emailTemplates_type_list']);
         
         // clean up
         $state->popGlobals();
