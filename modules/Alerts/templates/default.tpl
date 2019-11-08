@@ -32,9 +32,9 @@
         </a>
         {/if}
         </h4>
-        <p class="alert-body">
-            {$result->name|nl2br}<br/>
-            {$result->description|nl2br}
+        <p class="alert-body alert-body-{if $result->type != null}{$result->type}{else}info{/if}">
+            <span class="alert-name alert-name-{if $result->type != null}{$result->type}{else}info{/if}">{$result->name|nl2br}</span><br/>
+            <span class="alert-description alert-description-{if $result->type != null}{$result->type}{else}info{/if}">{$result->description|nl2br}</span>
         </p>
     </div>
 {/foreach}
