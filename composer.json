@@ -55,7 +55,6 @@
   },
   "require-dev": {
     "codeception/codeception": "^2.0",
-    "phpunit/phpunit": "^4.8",
     "flow/jsonpath": "^0.4",
     "fzaninotto/faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
