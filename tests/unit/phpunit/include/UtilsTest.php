@@ -114,4 +114,27 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         unset($_SESSION['authenticated_user_language']);
         $this->assertEquals(get_current_language(), 'bar');
     }
+
+    public function testcheck_php_version()
+    {
+        // These are used because the tests would fail if the supported
+        // versions changed, and the constants can't be redefined. So we
+        // instead pass the min/recommended versions directly to the
+        // function.
+        $minimumVersion = '5.5.0';
+        $recommendedVersion = '7.1.0';
+
+        // Returns -1 when the version is less than the minimum version.
+        $this->assertEquals(check_php_version("5.4.0", $minimumVersion, $recommendedVersion), -1);
+
+        // Returns 0 when the version is above the minimum but below the recommended version.
+        $this->assertEquals(check_php_version("7.0.0", $minimumVersion, $recommendedVersion), 0);
+
+        // Returns 1 when the version is at or above the recommended version.
+        $this->assertEquals(check_php_version("7.1.0", $minimumVersion, $recommendedVersion), 1);
+        $this->assertEquals(check_php_version("7.2.0", $minimumVersion, $recommendedVersion), 1);
+        $this->assertEquals(check_php_version("8.0.0", $minimumVersion, $recommendedVersion), 1);
+        // Handles versions with a `-dev` suffix correctly.
+        $this->assertEquals(check_php_version("7.4.0-dev", $minimumVersion, $recommendedVersion), 1);
+    }
 }

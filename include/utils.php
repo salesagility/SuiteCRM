@@ -3173,21 +3173,29 @@ function decodeJavascriptUTF8($str)
  * Do not pass in any pararameter to default to a check against the
  * current environment's PHP version.
  *
- * @param string Version to check against, defaults to the current environment's.
- *
- * @return integer1 if version is greater than the recommended PHP version,
- * 0 if version is between minimun and recomended PHP versions,
- * -1 otherwise (less than minimum or buggy version)
+ * @param string $sys_php_version Version to check against, defaults to the current environment's.
+ * @param string $min_php_version Minimum version to check against. Defaults to the SUITECRM_PHP_MIN_VERSION constant.
+ * @param string $rec_php_version Recommended version. Defaults to the SUITECRM_PHP_REC_VERSION constant
+ * 
+ * @return integer 1 if version is greater than the recommended PHP version,
+ *   0 if version is between minimun and recomended PHP versions,
+ *   -1 otherwise (less than minimum or buggy version)
  */
-function check_php_version($sys_php_version = '')
+function check_php_version($sys_php_version = '', $min_php_version = '', $rec_php_version = '')
 {
     if ($sys_php_version === '') {
         $sys_php_version = constant('PHP_VERSION');
     }
+    if ($min_php_version === '') {
+        $min_php_version = constant('SUITECRM_PHP_MIN_VERSION');
+    }
+    if ($rec_php_version === '') {
+        $rec_php_version = constant('SUITECRM_PHP_REC_VERSION');
+    }
 
     // versions below MIN_PHP_VERSION are not accepted, so return early.
-    if (version_compare($sys_php_version, constant('SUITECRM_PHP_MIN_VERSION'), '<') === true) {
-        return - 1;
+    if (version_compare($sys_php_version, $min_php_version, '<') === true) {
+        return -1;
     }
 
     // If there are some bug ridden versions, we should include them here
@@ -3199,8 +3207,8 @@ function check_php_version($sys_php_version = '')
         }
     }
 
-    //If the checked version is between the minimum and recommended versions, return 0
-    if (version_compare($sys_php_version, constant('SUITECRM_PHP_REC_VERSION'), '<') === true) {
+    // If the checked version is between the minimum and recommended versions, return 0.
+    if (version_compare($sys_php_version, $rec_php_version, '<') === true) {
         return 0;
     }
 
