@@ -7,7 +7,6 @@ class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testsugarEncode()
     {
-
         //execute the method and test if it returns expected values
         //key param does nothing currently.
 

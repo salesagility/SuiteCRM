@@ -44,7 +44,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 include_once __DIR__ . '/../../../../include/utils.php';

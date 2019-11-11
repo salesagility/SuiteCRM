@@ -49,7 +49,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         parent::tearDown();
     }
 
-
     /**
      * Test for save() method.
      */
@@ -88,7 +87,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-
     /**
      * Tests for constructor.
      */
@@ -104,7 +102,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($indexBefore, $indexAfter - 1);
         self::assertEquals($countBefore, $countAfter - 1);
     }
-
 
     /**
      * Tests old constructor.
@@ -122,7 +119,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($countBefore, $countAfter - 1);
     }
 
-
     /**
      * Test for handleLegacySave() method.
      */
@@ -131,7 +127,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_REQUEST)) {
             $_request = $_REQUEST;
         }
-
 
         $c = new Contact();
 
@@ -169,15 +164,12 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame('0', $this->ea->addresses[1]['opt_out']);
         self::assertNull($this->ea->addresses[1]['email_address_id']);
 
-
-
         if (isset($_request)) {
             $_REQUEST = $_request;
         } else {
             unset($_REQUEST);
         }
     }
-
 
     /**
      * Test for handleLegacyRetrieve() method.
@@ -197,7 +189,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             'email1' => 'test5@email.com',
         ), $c->fetched_row);
     }
-
 
     /**
      * Test for populateLegacyFields() method.
@@ -230,8 +221,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(0, $c->invalid_email);
         self::assertEquals('test6@email.com', $c->email2);
     }
-
-
 
     /**
      * Test for saveEmail() method.
@@ -938,8 +927,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testAddAddress()
     {
-
-
         $query = "SELECT * FROM email_addr_bean_rel";
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
@@ -1208,8 +1195,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             $rows[] = $row;
         }
         $tableEmailAddresses = $rows;
-
-
 
 
         $db = DBManagerFactory::getInstance();

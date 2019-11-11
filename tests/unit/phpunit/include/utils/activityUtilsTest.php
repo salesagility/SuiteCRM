@@ -17,12 +17,6 @@ class activity_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbuild_related_list_by_user_id()
     {
-
-
-        
-        
-        
-
         //execute the method and test if it returns true
 
         //with rel_users_table manually set
@@ -35,8 +29,5 @@ class activity_utilsTest extends SuitePHPUnitFrameworkTestCase
         $bean = new Meeting();
         $list = build_related_list_by_user_id($bean, '1', '');
         $this->assertTrue(is_array($list));
-        
-
-
     }
 }

@@ -42,7 +42,6 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         $this->assertInstanceOf('User', $result->bean);
     }
 
-
     public function testgetHooksMap()
     {
         //execute the method and test if it returns true
@@ -464,7 +463,6 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-
     public function testcall_custom_logic()
     {
         //execute the method and test if it doesn't throws an exception
@@ -478,7 +476,6 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
-
 
     public function testprocess_hooks()
     {

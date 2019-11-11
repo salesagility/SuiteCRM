@@ -7,9 +7,7 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testvar_export_helper()
     {
-
         //execute the method and test if it returns expected values
-
         $tempArray = array('Key1' => 'value1', 'Key2' => 'value2');
 
         $expected = "array (\n  'Key1' => 'value1',\n  'Key2' => 'value2',\n)";
@@ -19,9 +17,7 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testoverride_value_to_string()
     {
-
         //execute the method and test if it returns expected values
-
         $expected = "\$array_name['value_name'] = 'value';";
         $actual = override_value_to_string('array_name', 'value_name', 'value');
         $this->assertSame($actual, $expected);
@@ -29,7 +25,6 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testadd_blank_option()
     {
-
         //execute the method with array not having any blank key value pair. function will return an array with blank key value pair added.
         $tempArray = array('Key1' => 'value1', 'Key2' => 'value2');
         $expected = array('' => '', 'Key1' => 'value1', 'Key2' => 'value2');
@@ -47,7 +42,6 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testoverride_value_to_string_recursive()
     {
-
         //execute the method and test if it returns expected values
 
         //without keys
@@ -61,13 +55,12 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
         $tempArray['Key1']['Key2'] = array('Key3' => 'value', 'Key4' => 'value');
         $expected = "\$tempArray['key1']['key2']=array (\n  'Key1' => \n  array (\n    'Key2' => \n    array (\n      'Key3' => 'value',\n      'Key4' => 'value',\n    ),\n  ),\n);";
         $actual = override_value_to_string_recursive(array('key1', 'key2'), 'tempArray', $tempArray);
-        //var_dump( nl2br($actual));
+
         $this->assertSame($actual, $expected);
     }
 
     public function testoverride_recursive_helper()
     {
-
         //execute the method and test if it returns expected values
 
         //without keys
@@ -86,7 +79,6 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testoverride_value_to_string_recursive2()
     {
-
         //execute the method and test if it returns expected values
 
         //null array
@@ -128,7 +120,6 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdeepArrayDiff()
     {
-
         //execute the method and test if it returns expected values
 
         //same simple arrays
@@ -169,7 +160,6 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetDeepArrayValue()
     {
-
         //execute the method and test if it returns expected values
 
         //add to existing array
@@ -227,7 +217,6 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget()
     {
-
         //execute the method and test if it returns expected values
 
         //test for a top level key
@@ -245,7 +234,6 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function teststaticGet()
     {
-
         //execute the method and test if it returns expected values
 
         //test for a top level key
