@@ -699,11 +699,12 @@ function get_user_name($id)
 {
     $db = DBManagerFactory::getInstance();
 
-    if (empty($db)) {
+    if ($db === null) {
         $db = DBManagerFactory::getInstance();
     }
 
-    $q = "SELECT user_name FROM users WHERE id='{$id}'";
+    $idQuoted = $db->quoted($id);
+    $q = "SELECT user_name FROM users WHERE id='$idQuoted'";
     $r = $db->query($q);
     $a = $db->fetchByAssoc($r);
 
