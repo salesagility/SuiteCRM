@@ -16,7 +16,6 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetUserDateTimePreferences()
     {
-
         $user = new User();
         $user->retrieve('1');
 
@@ -24,16 +23,11 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $userPreference->getUserDateTimePreferences();
         $this->assertTrue(is_array($result));
-
-
-
-
     }
 
     public function testSetAndGetPreference()
     {
         $this->markTestIncomplete('state is incorrect');
-        
 
         global $sugar_config;
 
@@ -61,15 +55,10 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $userPreference->getPreference('chartEngine');
         $this->assertEquals($sugar_config['chartEngine'], $result);
-        
-
-
-
     }
     
     public function testgetDefaultPreference()
     {
-
         global $sugar_config;
         $userPreference = new UserPreference();
 
@@ -93,15 +82,10 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         $email_link_type = (isset($sugar_config['email_link_type']) ? $sugar_config['email_link_type'] : null) != '' ? (isset($sugar_config['email_link_type']) ? $sugar_config['email_link_type'] : null) : $sugar_config['email_default_client'];
         $result = $userPreference->getDefaultPreference('email_link_type');
         $this->assertEquals($email_link_type, $result);
-        
-
-        
-
     }
 
     public function test__construct()
     {
-
         // execute the constructor and check for the Object type and  attributes
         $userPreference = new UserPreference();
 
@@ -114,9 +98,6 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
 
         $this->assertAttributeEquals(true, 'new_schema', $userPreference);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $userPreference);
-        
-
-
     }
     
     public function testSavePreferencesToDBAndResetPreferences()

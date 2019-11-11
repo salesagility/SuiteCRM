@@ -90,14 +90,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSet_user_relationshipAndCheck_user_role_count()
     {
-
-    // save state
-
-
-
-
         // test
-        
         $role = new Role();
 
         $role->id = 1;
@@ -120,10 +113,6 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         //test clear_user_relationship method
         $this->clear_user_relationship($role->id, '1');
         $this->clear_user_relationship($role->id, '2');
-        
-
-        
-
     }
 
     public function get_users($id)
