@@ -29,7 +29,5 @@ class ViewImportvcardsaveTest extends SuitePHPUnitFrameworkTestCase
         ob_end_clean();
         $this->assertGreaterThan(0,strlen($renderedContent));
         */
-
-
     }
 }

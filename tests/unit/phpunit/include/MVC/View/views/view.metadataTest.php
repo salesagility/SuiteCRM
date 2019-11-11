@@ -107,12 +107,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         $renderedContent = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
-        
-        
 
-        
-        
-        
         if (isset($request)) {
             $_REQUEST = $request;
         } else {
@@ -122,7 +117,6 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetModules()
     {
-
         //execute the method and test if it returns a array.
         $modules = VardefBrowser::getModules();
         $this->assertTrue(is_array($modules));
