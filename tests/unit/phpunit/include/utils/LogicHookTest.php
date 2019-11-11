@@ -1,20 +1,17 @@
 <?php
 
 
-class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
-{
-    protected $stateSaver;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+class LogicHookTest extends SuitePHPUnitFrameworkTestCase
+{
     public function setUp()
     {
         parent::setUp();
-        $this->stateSaver = new SuiteCRM\StateSaver();
-        $this->stateSaver->pushTable('email_addresses');
     }
     
     public function tearDown()
     {
-        $this->stateSaver->popTable('email_addresses');
         parent::tearDown();
     }
     

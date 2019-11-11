@@ -2460,8 +2460,8 @@ function clear_register_value($category, $name)
 // this function cleans id's when being imported
 function convert_id($string)
 {
-    $stateSaver = new SuiteCRM\StateSaver();
-    $stateSaver->pushErrorLevel();
+    $errorLevelStored = error_reporting();
+    error_reporting(0);
 
     $function = function ($matches) {
         return ord($matches[0]);
@@ -2471,7 +2471,7 @@ function convert_id($string)
         LoggerManager::getLogger()->warn('Function not created');
     }
 
-    $stateSaver->popErrorLevel();
+    error_reporting($errorLevelStored);
 
     return preg_replace_callback('|[^A-Za-z0-9\-]|', $function, $string);
 }

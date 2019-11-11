@@ -1,6 +1,8 @@
 <?php
 
-class Calls_RescheduleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class Calls_RescheduleTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

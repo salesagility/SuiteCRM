@@ -1,6 +1,8 @@
 <?php
 
-class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewQuickcreateTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -36,7 +38,7 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $view->preDisplay();
         $this->assertNotSame($request, $_REQUEST);
         
-        // clean up
+
         
         if (isset($_request)) {
             $_REQUEST = $_request;
@@ -55,7 +57,7 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $_request = $_REQUEST;
         }
         
-        $state = new SuiteCRM\StateSaver();
+
         
         
         
@@ -78,7 +80,7 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertEquals(false, json_decode($renderedContent)); //check that it doesn't return json.
         
-        // clean up
+
         
         
         

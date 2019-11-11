@@ -1,7 +1,9 @@
 <?php
 
 
-class SugarAutoLoaderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class SugarAutoLoaderTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testautoload()
     {
@@ -22,7 +24,7 @@ class SugarAutoLoaderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testloadAll()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         
         
@@ -38,6 +40,6 @@ class SugarAutoLoaderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+
     }
 }

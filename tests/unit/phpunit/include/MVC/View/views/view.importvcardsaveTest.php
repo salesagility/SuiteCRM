@@ -1,6 +1,8 @@
 <?php
 
-class ViewImportvcardsaveTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewImportvcardsaveTest extends SuitePHPUnitFrameworkTestCase
 {
     public function test__construct()
     {
@@ -28,6 +30,6 @@ class ViewImportvcardsaveTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         $this->assertGreaterThan(0,strlen($renderedContent));
         */
 
-        // clean up
+
     }
 }

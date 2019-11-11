@@ -1,6 +1,8 @@
 <?php
 
-class ViewModulelistmenuTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewModulelistmenuTest extends SuitePHPUnitFrameworkTestCase
 {
     public function test__construct()
     {

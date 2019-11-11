@@ -1,7 +1,9 @@
 <?php
 
 
-class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class jjwg_MarkersTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testjjwg_Markers()
     {

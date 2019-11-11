@@ -1,6 +1,8 @@
 <?php
 
-class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class aCaseTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -42,22 +44,22 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('environment dependency');
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
+
+
         
         $aCase = new aCase();
         $expected = array('MAIN' => 'span', 'ACCOUNT' => 'span');
         $actual = $aCase->listviewACLHelper();
         $this->assertSame($expected, $actual);
         
-        // clean up
-        $state->popGlobals();
+
+
     }
 
     public function testsave_relationship_changes()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
+
+
         
         $aCase = new aCase();
 
@@ -71,8 +73,8 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
-        $state->popTable('aod_indexevent');
+
+
     }
 
     public function testset_case_contact_relationship()
@@ -221,14 +223,6 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('aop_case_events');
-        $state->pushTable('cases');
-        $state->pushTable('sugarfeed');
-        $state->pushTable('tracker');
-        $state->pushTable('cases_cstm');
-        $state->pushGlobals();
         
         
         $aCase = new aCase();
@@ -245,16 +239,6 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aCase->mark_deleted($aCase->id);
         $result = $aCase->retrieve($aCase->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('cases_cstm');
-        $state->popTable('tracker');
-        $state->popTable('sugarfeed');
-        $state->popTable('cases');
-        $state->popTable('aop_case_events');
-        $state->popTable('aod_indexevent');
     }
 
     public function testgetEmailSubjectMacro()

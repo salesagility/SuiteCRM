@@ -1,8 +1,10 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
 require_once 'include/utils/activity_utils.php';
 
-class activity_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class activity_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -15,8 +17,8 @@ class activity_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_related_list_by_user_id()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
+
+
         
         
         
@@ -34,7 +36,7 @@ class activity_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $list = build_related_list_by_user_id($bean, '1', '');
         $this->assertTrue(is_array($list));
         
-        // clean up
-        $state->popGlobals();
+
+
     }
 }

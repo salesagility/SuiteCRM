@@ -1,6 +1,8 @@
 <?php
 
-class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -40,7 +42,7 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             self::assertTrue(true);
         }
 
-        // clean up
+
 
         if (isset($session)) {
             $_SESSION = $session;

@@ -1,6 +1,8 @@
 <?php
 
-class ViewEditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewEditTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -44,7 +46,7 @@ class ViewEditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $view->preDisplay();
         $this->assertInstanceOf('EditView', $view->ev);
         
-        // clean up
+
         if (isset($session)) {
             $_SESSION = $session;
         } else {

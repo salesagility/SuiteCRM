@@ -1,6 +1,8 @@
 <?php
 
-class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class RoleTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -91,8 +93,8 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     // save state
 
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('email_addresses');
+
+
 
         // test
         
@@ -119,9 +121,9 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->clear_user_relationship($role->id, '1');
         $this->clear_user_relationship($role->id, '2');
         
-        // clean up
+
         
-        $state->popTable('email_addresses');
+
     }
 
     public function get_users($id)

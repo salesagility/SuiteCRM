@@ -1,6 +1,8 @@
 <?php
 
-class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class SugarViewTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -29,12 +31,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testprocess()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-        $state->pushPHPConfigOptions();
-
         // test
         $SugarView = new SugarView();
         $SugarView->module = 'Users';
@@ -54,11 +50,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        $state->popPHPConfigOptions();
-        $state->popGlobals();
-        $state->popTable('tracker');
     }
 
     public function testdisplayErrors()

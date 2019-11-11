@@ -1,8 +1,10 @@
 <?php
 
-require_once ('include/Localization/Localization.php');
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class LocalizationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+require_once __DIR__ . '/../../../../../include/Localization/Localization.php';
+
+class LocalizationTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testaddBOM()
     {

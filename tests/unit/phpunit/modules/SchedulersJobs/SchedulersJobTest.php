@@ -1,6 +1,8 @@
 <?php
 
-class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -13,8 +15,8 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSchedulersJob()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('email_addresses');
+
+
         
         //execute the contructor and check for the Object type and  attributes
         $schedulersJob = new SchedulersJob();
@@ -32,8 +34,8 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(30, 'min_interval', $schedulersJob);
         $this->assertAttributeEquals(true, 'job_done', $schedulersJob);
         
-        // clean up
-        $state->popTable('email_addresses');
+
+
     }
 
     public function testcheck_date_relationships_load()
@@ -109,12 +111,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfailJob()
     {
-        // save state
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        
-        // test
+
         
         $schedulersJob = new SchedulersJob();
 
@@ -130,19 +127,14 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $schedulersJob->mark_deleted($schedulersJob->id);
         
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
+
+
+
     }
 
     public function testsucceedJob()
     {
-        // save state
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        
-        // test
+
         $schedulersJob = new SchedulersJob();
 
         $result = $schedulersJob->succeedJob();
@@ -157,14 +149,14 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $schedulersJob->mark_deleted($schedulersJob->id);
         
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
+
+
+
     }
 
     public function testonFailureRetry()
     {
-        $state = new SuiteCRM\StateSaver();
+
 
         $schedulersJob = new SchedulersJob();
 
@@ -178,12 +170,12 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
         
-        // clean up
+
     }
 
     public function testOnFinalFailure()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         
         //
@@ -201,18 +193,12 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
         
-        // clean up
+
     }
 
     public function testresolveJob()
     {
-        // save state
-        $state = new SuiteCRM\StateSaver();
-        
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        
-        // test
+
         $schedulersJob = new SchedulersJob();
 
         //test for JOB_FAILURE
@@ -235,19 +221,14 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $schedulersJob->mark_deleted($schedulersJob->id);
         
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
+
+
+
     }
 
     public function testpostponeJobAndMark_deleted()
     {
-        // save state
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        
-        // test
+
         $schedulersJob = new SchedulersJob();
 
         $result = $schedulersJob->postponeJob('test message', 1);
@@ -266,19 +247,14 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $schedulersJob->retrieve($schedulersJob->id);
         $this->assertEquals(null, $result);
         
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
+
+
+
     }
 
     public function testunexpectedExit()
     {
-        // save state
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        
-        // test
+
         $schedulersJob = new SchedulersJob();
 
         //create conditions to mark job_done as false
@@ -295,19 +271,14 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $schedulersJob->mark_deleted($schedulersJob->id);
         
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
+
+
+
     }
 
     public function testrunJobId()
     {
-        // save state
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        
-        // test
+
 
         //test with invalid job id
         $result = SchedulersJob::runJobId('1', '');
@@ -332,18 +303,14 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $schedulersJob->mark_deleted($schedulersJob->id);
         
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
+
+
+
     }
 
     public function testerrorHandler()
     {
-        // save state
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        
-        // test
+
         $schedulersJob = new SchedulersJob();
 
         //execute the method with different Error Types
@@ -364,8 +331,8 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $schedulersJob->errorHandler(E_RECOVERABLE_ERROR, 'test err', 'testfile', '1');
         $this->assertEquals("Recoverable Error [4096]: test err in testfile on line 1\n", $schedulersJob->errors);
         
-        // clean up
-        $state->popTable('aod_index');
+
+
     }
 
     public function testrunJob()

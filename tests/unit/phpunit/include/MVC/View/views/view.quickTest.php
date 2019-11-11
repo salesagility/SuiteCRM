@@ -1,6 +1,8 @@
 <?php
 
-class ViewQuickTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewQuickTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -42,7 +44,7 @@ class ViewQuickTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $view->dv->setup('Users', $view->bean);
 
 
-        // clean up
+
 
         if (isset($session)) {
             $_SESSION = $session;

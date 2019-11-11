@@ -1,7 +1,9 @@
 <?php
 
 
-class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class EmailMarketingTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testEmailMarketing()
     {
@@ -42,8 +44,8 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreate_export_query()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
+
+
         
         
         $emailMarketing = new EmailMarketing();
@@ -58,8 +60,8 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $emailMarketing->create_export_query('email_marketing.id', 'email_marketing.name=""');
         $this->assertSame($expected, $actual);
 
-        // clean up
-        $state->popGlobals();
+
+
     }
 
     public function testget_list_view_data()

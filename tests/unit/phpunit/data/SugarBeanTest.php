@@ -2,10 +2,10 @@
 include_once __DIR__ . '/SugarBeanMock.php';
 include_once __DIR__ . '/../../../../include/SubPanel/SubPanelDefinitions.php';
 
-use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 /** @noinspection PhpUndefinedClassInspection */
-class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
+class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 {
 
 
@@ -50,13 +50,6 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
 
     public function testFactoryGetCachedDeleted()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('leads');
-        $state->pushTable('leads_cstm');
-        $state->pushTable('sugarfeed');
-        $state->pushTable('aod_indexevent');
-        $state->pushGlobals();
-
         // Create a lead and cache it
         $lead = new Lead();
         $lead->save();
@@ -69,12 +62,6 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $this->assertEmpty(BeanFactory::getBean($lead->module_dir, $lead->id));
         // Unless explicitly specified
         $this->assertNotEmpty(BeanFactory::getBean($lead->module_dir, $lead->id, [], false));
-
-        $state->popGlobals();
-        $state->popTable('aod_indexevent');
-        $state->popTable('sugarfeed');
-        $state->popTable('leads_cstm');
-        $state->popTable('leads');
     }
 
     /**
@@ -930,12 +917,6 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     {
         self::markTestIncomplete('environment dependency');
 
-        // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-
         // test
         global $sugar_config;
         
@@ -1277,11 +1258,6 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
-        
-        // clean up
-        
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
     }
 
     /**
@@ -1884,6 +1860,88 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
+        $this->db->query(/** @lang sql */
+            "INSERT INTO contacts (
+            id, 
+            date_entered, 
+            date_modified, 
+            modified_user_id, 
+            created_by, 
+            description, 
+            deleted, 
+            assigned_user_id, 
+            salutation, 
+            first_name, 
+            last_name, 
+            title, 
+            photo, 
+            department, 
+            do_not_call, 
+            phone_home, 
+            phone_mobile, 
+            phone_work, 
+            phone_other, 
+            phone_fax, 
+            primary_address_street, 
+            primary_address_city, 
+            primary_address_state, 
+            primary_address_postalcode, 
+            primary_address_country, 
+            alt_address_street, 
+            alt_address_city, 
+            alt_address_state, 
+            alt_address_postalcode, 
+            alt_address_country, 
+            assistant, 
+            assistant_phone, 
+            lead_source, 
+            reports_to_id, 
+            birthdate, 
+            campaign_id, 
+            joomla_account_id, 
+            portal_account_disabled, 
+            portal_user_type
+            ) VALUES (
+            'test_parent_contact_1', 
+            '2017-08-04 00:00:11', 
+            '2017-08-11 00:00:22', 
+            'aaa', 
+            'bbb', 
+            'ccc', 
+            '0', 
+            'eee', 
+            'fff', 
+            'ggg', 
+            'hhh', 
+            'jjj', 
+            'kkk', 
+            'lll', 
+            '1', 
+            'mmm', 
+            'nnn', 
+            'ooo', 
+            'ppp', 
+            NULL, 
+            NULL, 
+            NULL, 
+            NULL, 
+            NULL, 
+            NULL, 
+            NULL, 
+            NULL, 
+            NULL, 
+            NULL, 
+            NULL, 
+            NULL, 
+            NULL, 
+            NULL, 
+            NULL, 
+            NULL, 
+            NULL, 
+            NULL, 
+            NULL, 
+            'Single');"
+        );
         $bean = new Contact();
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->unPopulateDefaultValues();
@@ -2287,14 +2345,6 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
      */
     public function testSave()
     {
-        // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-        $state->pushTable('users');
-        $state->pushGlobals();
-
         $userFieldDefs = BeanFactory::getBean('Users')->field_defs;
         $contactFieldDefs = BeanFactory::getBean('Contacts')->field_defs;
 
@@ -2576,14 +2626,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $this->db->query("DELETE FROM email_addr_bean_rel WHERE bean_id LIKE 'testBean_1'");
         $this->db->query("DELETE FROM email_addresses WHERE email_address LIKE 'testbean1@email.com'");
         
-        // clean up
+
         BeanFactory::getBean('Users')->field_defs = $userFieldDefs;
         BeanFactory::getBean('Contacts')->field_defs = $contactFieldDefs;
-
-        $state->popGlobals();
-        $state->popTable('users');
-        $state->popTable('aod_index');
-        $state->popTable('tracker');
     }
 
     /**

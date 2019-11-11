@@ -1,6 +1,8 @@
 <?php
 
-class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -13,12 +15,6 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
 
     public function testSaveAndGet_email_recipients()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aor_scheduled_reports');
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-        $state->pushGlobals();
-
         $aorScheduledReports = new AOR_Scheduled_Reports();
         $aorScheduledReports->name = "test";
         $aorScheduledReports->description = "test description";
@@ -43,12 +39,6 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
 
         $aorScheduledReports->mark_deleted($aorScheduledReports->id);
         unset($aorScheduledReports);
-
-        // clean up
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
-        $state->popTable('aor_scheduled_reports');
     }
     
     public function testAOR_Scheduled_Reports()
@@ -69,14 +59,6 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
     }
 
     public function test_ReportRelation() {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aor_reports');
-        $state->pushTable('aor_scheduled_reports');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('aod_index');
-        $state->pushGlobals();
-        $state->pushPHPConfigOptions();
-
         $_POST['aor_fields_field'] = [];
         $report = new AOR_Report();
         $report->name = "Foobar";
@@ -89,13 +71,6 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
         $aorScheduledReports->retrieve($aorScheduledReports->id);
         $this->assertEquals($report->name, $aorScheduledReports->aor_report_name);
         $this->assertEquals($report->id, $aorScheduledReports->aor_report_id);
-
-        $state->popPHPConfigOptions();
-        $state->popGlobals();
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
-        $state->popTable('aor_scheduled_reports');
-        $state->popTable('aor_reports');
     }
 
     public function testbean_implements()

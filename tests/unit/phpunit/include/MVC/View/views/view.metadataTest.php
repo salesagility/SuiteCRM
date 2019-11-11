@@ -1,6 +1,8 @@
 <?php
 
-class ViewMetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testdisplayCheckBoxes()
     {
@@ -83,7 +85,7 @@ class ViewMetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $request = $_REQUEST;
         }
         
-        $state = new SuiteCRM\StateSaver();
+
         
         
         
@@ -107,7 +109,7 @@ class ViewMetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan(0, strlen($renderedContent));
         
         
-        // clean up
+
         
         
         

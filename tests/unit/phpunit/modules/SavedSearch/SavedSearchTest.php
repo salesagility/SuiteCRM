@@ -1,6 +1,8 @@
 <?php
 
-class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -144,11 +146,7 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_list_fields()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('saved_search');
 
-        // test
         $savedSearch = new SavedSearch();
 
         $savedSearch->assigned_user_id = 1;
@@ -158,19 +156,11 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertEquals('Leads', $savedSearch->search_module);
         $this->assertEquals('Administrator', $savedSearch->assigned_user_name);
-        
-        // clean up
-        $state->popTable('saved_search');
     }
 
     public function testpopulateRequest()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('saved_search');
-        $state->pushGlobals();
 
-        // test
         $savedSearch = new SavedSearch();
 
         $savedSearch->contents = array('search_module' => 'Accounts',
@@ -184,9 +174,5 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('Accounts', $_REQUEST['search_module']);
         $this->assertEquals('test text', $_REQUEST['description']);
         $this->assertEquals('some content', $_REQUEST['test_content']);
-
-        // clean up
-        $state->popTable('saved_search');
-        $state->popGlobals();
     }
 }
