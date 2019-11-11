@@ -704,7 +704,7 @@ function get_user_name($id)
     }
 
     $idQuoted = $db->quoted($id);
-    $q = "SELECT user_name FROM users WHERE id='$idQuoted'";
+    $q = "SELECT user_name FROM users WHERE id=$idQuoted";
     $r = $db->query($q);
     $a = $db->fetchByAssoc($r);
 
