@@ -3276,7 +3276,7 @@ function check_iis_version($sys_iis_version = '')
     // versions below $min_considered_iis_version considered invalid by default,
     // versions equal to or above this ver will be considered depending
     // on the rules that follow
-    $min_considered_iis_version = '6.0';
+    $min_considered_iis_version = '6.0'; 
 
     // only the supported versions,
     // should be mutually exclusive with $invalid_iis_versions
