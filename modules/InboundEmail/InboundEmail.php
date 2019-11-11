@@ -191,6 +191,8 @@ class InboundEmail extends SugarBean
      */
     public function __construct(ImapHandlerInterface $imapHandler = null, MailMimeParser $mailParser = null)
     {
+        global $sugar_config;
+
         if (null === $mailParser) {
             $mailParser = new MailMimeParser();
         }
@@ -223,7 +225,10 @@ class InboundEmail extends SugarBean
 
         $this->smarty = new Sugar_Smarty();
         $this->overview = new Overview();
-        $this->imagePrefix = "{$GLOBALS['sugar_config']['site_url']}/cache/images/";
+
+        if (isset($sugar_config['site_url'])) {
+            $this->imagePrefix = $sugar_config['site_url'] . '/cache/images/';
+        }
     }
 
     /**
