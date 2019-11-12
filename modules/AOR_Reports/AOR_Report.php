@@ -1612,6 +1612,9 @@ class AOR_Report extends Basic
 
                     if (!empty($this->user_parameters[$condition->id]) && $condition->parameter) {
                         $condParam = $this->user_parameters[$condition->id];
+                        if ($data['type'] === 'multienum' && $condParam['type'] !== 'Multi') {
+                            $condParam['value'] = encodeMultienumValue(explode(',', $condParam['value'] ));
+                        }
                         $condition->value = $condParam['value'];
                         $condition->operator = $condParam['operator'];
                         $condition->value_type = $condParam['type'];
