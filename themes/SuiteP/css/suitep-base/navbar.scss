@@ -1147,6 +1147,7 @@
 .desktop_notifications .has-alerts {
   background-color: $navbar-main-menu-bg;
   border-radius: 2px;
+  left: -140px;
 }
 
 .desktop_notifications .has-alerts .alert-info {
@@ -1196,6 +1197,40 @@
 .desktop_notifications .has-alerts .alert-header img {
   width: 16px;
   height: 16px;
+}
+
+.desktop_notifications .dropdown-menu {
+  min-width: 280px;
+}
+
+.desktop_notifications .alert-name {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.desktop_notifications .alert-name-active {
+  color: black;
+  background-color: white;
+}
+
+.desktop_notifications .alert-name-success {
+  color: green;
+  background-color: white;
+}
+
+.desktop_notifications .alert-name-warning {
+  color: yellow;
+  background-color: grey;
+}
+
+.desktop_notifications .alert-name-danger {
+  color: red;
+  background-color: grey;
+}
+
+.desktop_notifications .alert-name-info {
+  color: black;
+  background-color: white;
 }
 
 .modulelinks > .dropdown-menu {

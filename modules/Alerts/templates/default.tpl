@@ -26,7 +26,7 @@
                 <span class="suitepicon suitepicon-module-{$result->target_module|lower|replace:'_':'-'}{if substr($result->target_module, -1) !== 's'}s{/if}"></span>
                 <strong class="text-{if $result->type != null}{$result->type}{else}info{/if}">{$result->target_module}</strong>
             {else}
-                <strong class="text-{if $result->type != null}{$result->type}{else}info{/if}">Alert</strong>
+                <strong class="text-{if $result->type != null}{$result->type}{else}info{/if}">{if $result->type != null}Alert - {$result->type|capitalize:true}{else}Alert - Info{/if}</strong>
             {/if}
         {if $result->url_redirect != null }
         </a>
