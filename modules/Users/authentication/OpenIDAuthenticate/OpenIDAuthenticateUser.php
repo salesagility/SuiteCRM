@@ -83,8 +83,7 @@ class OpenIDAuthenticateUser extends SugarAuthenticateUser
             $realm=$sugar_config['OPENID_PROVIDER']['realm'];
             $redirectUri=$sugar_config['OPENID_PROVIDER']['redirectUri'];        
             $logouturl=$authurl.'/realms/'.$realm.'/protocol/openid-connect/logout?redirect_uri='.$redirectUri;                                
-            header("Location: $logouturl");    
-                     die;     	
+            header("Location: $logouturl");     	
         }
        
     }

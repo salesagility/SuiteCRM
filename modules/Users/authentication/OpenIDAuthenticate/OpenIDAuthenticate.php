@@ -90,7 +90,7 @@ class OpenIDAuthenticate extends SugarAuthenticate
         $realm=$sugar_config['OPENID_PROVIDER']['realm'];
         $redirectUri=$sugar_config['OPENID_PROVIDER']['redirectUri'];        
         $logouturl=$authurl.'/realms/'.$realm.'/protocol/openid-connect/logout?redirect_uri='.$redirectUri;        
-    	echo "<script>window.location='$logouturl';</script>";
+    	echo "<script>parent.window.location='$logouturl';</script>";
 
         session_start();
         session_destroy();
@@ -105,38 +105,33 @@ class OpenIDAuthenticate extends SugarAuthenticate
     }
     public function pre_login()
     {
-    	global $authcontroller,$sugar_config;
+    	global $sugar_config;
         $return_uid_fieldname = $sugar_config['OPENID_PROVIDER']['return_uid_fieldname'];
         
-    	$GLOBALS['ssoprovider'] =  $this->getProvider();
+    	$ssoprovider =  $this->getProvider();
     	// echo 'authenticateRemotely';die;
 
     	 if (!isset($_GET['code'])) {
                     // If we don't have an authorization code then get one
-                    $authUrl = $GLOBALS['ssoprovider']->getAuthorizationUrl();
+                    $authUrl = $ssoprovider->getAuthorizationUrl();
                     if(isset($_SESSION['oauth2state']))
                     {
-                        // echo 'login success';die;
                         header('Location: index.php');    
                     }
                     else
                     {
-                        $_SESSION['oauth2state'] = $GLOBALS['ssoprovider']->getState();
+                        $_SESSION['oauth2state'] = $ssoprovider->getState();
                         header('Location: '.$authUrl);    
                     }
                     
-                    exit;
                 // Check given state against previously stored one to mitigate CSRF attack
                 } elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
                     unset($_SESSION['oauth2state']);
                     header('Location: index.php');    
-                    exit('Invalid state, make sure HTTP sessions are enabled.');
                 } else {
                     // Try to get an access token (using the authorization coe grant)
-                    // echo 'have token';
-                    // echo 'have state';
                     try {
-                        $token = $GLOBALS['ssoprovider']->getAccessToken('authorization_code', [
+                        $token = $ssoprovider->getAccessToken('authorization_code', [
                             'code' => $_GET['code']
                         ]);
 
@@ -145,10 +140,9 @@ class OpenIDAuthenticate extends SugarAuthenticate
                     }
                     // Optional: Now you have a token you can look up a users profile data
                     try {
-                        $user = $GLOBALS['ssoprovider']->getResourceOwner($token);
+                        $user = $ssoprovider->getResourceOwner($token);
                         $userinfo=$user->toArray();
                         //received [email_verified,name,preferred_username,given_name,family_name,email]
-                        // print_r($userinfo);die;
                         $uid=$userinfo[$return_uid_fieldname];
                         $email=$userinfo['email'];
                         $authController = new AuthenticationController();
@@ -159,7 +153,8 @@ class OpenIDAuthenticate extends SugarAuthenticate
                       
 
                     } catch (Exception $e) {
-                        exit('Failed to get resource owner: '.$e->getMessage());
+                        $GLOBALS['log']->error('Failed to get resource owner: '.$e->getMessage());
+                        header('Location: index.php');    
                     }
                     header('Location: index.php');    
                 }
