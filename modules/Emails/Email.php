@@ -562,13 +562,15 @@ class Email extends Basic
      */
     public function __construct()
     {
-        global $current_user;
+        global $current_user, $sugar_config;
         $this->cachePath = sugar_cached('modules/Emails');
         parent::__construct();
 
         $this->emailAddress = new SugarEmailAddress();
 
-        $this->imagePrefix = rtrim($GLOBALS['sugar_config']['site_url'], "/") . "/cache/images/";
+        if (isset($sugar_config['site_url'])) {
+            $this->imagePrefix = $sugar_config['site_url'] . '/cache/images/';
+        }
     }
 
     /**
