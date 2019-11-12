@@ -74,6 +74,7 @@ class AuthenticationController
      */
     protected function getAuthController($type)
     {
+        global $sugar_config;
         if (!$type) {
             $type = !empty($GLOBALS['sugar_config']['authenticationClass'])
                 ? $GLOBALS['sugar_config']['authenticationClass'] : 'SugarAuthenticate';
@@ -100,6 +101,13 @@ class AuthenticationController
             )) {
             $type = 'SugarAuthenticate';
         }
+
+        if(!empty($sugar_config['OPENID_PROVIDER']) &&$sugar_config['OPENID_PROVIDER']['enable']== true)
+        {
+             $type='OpenIDAuthenticate';    
+            require_once('modules/Users/authentication/'.$type.'/'.$type.'.php');
+            
+        }        
 
         return new $type();
     }
