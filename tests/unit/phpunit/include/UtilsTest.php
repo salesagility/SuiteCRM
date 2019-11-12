@@ -114,4 +114,20 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         unset($_SESSION['authenticated_user_language']);
         $this->assertEquals(get_current_language(), 'bar');
     }
+
+    public function testis_admin()
+    {
+        // Returns true if the user is an admin.
+        $user = new \User();
+        $user->is_admin = true;
+        $this->assertTrue(is_admin($user));
+
+        // Returns false if the user is not an admin.
+        $user2 = new \User();
+        $user2->is_admin = false;
+        $this->assertFalse(is_admin($user2));
+
+        // Returns false if no user object is passed.
+        $this->assertFalse(is_admin(null));
+    }
 }
