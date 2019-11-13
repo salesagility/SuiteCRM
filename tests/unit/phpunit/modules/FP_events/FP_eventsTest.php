@@ -26,6 +26,5 @@ class FP_eventsTest extends SuiteCRM\Test\SuitePHPUnitFrameworkTestCase
 
         $fpEvents->email_templates();
         $this->assertInternalType('array', $app_list_strings['emailTemplates_type_list']);
-        
     }
 }

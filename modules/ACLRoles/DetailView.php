@@ -48,8 +48,8 @@ $sugar_smarty->assign('APP', $app_strings);
 $sugar_smarty->assign('APP_LIST', $app_list_strings);
 
 $role = new ACLRole();
+$categories = $role->getRoleActions($_REQUEST['record']);
 $role->retrieve($_REQUEST['record']);
-$categories = (new ACLRole)->getRoleActions($_REQUEST['record']);
 $names = ACLAction::setupCategoriesMatrix($categories);
 if (!empty($names)) {
     $tdWidth = 100 / count($names);
