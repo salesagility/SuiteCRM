@@ -6,6 +6,10 @@ use \AcceptanceTester as Tester;
 
 class Workflow extends Tester
 {
+    /**
+     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\ListView $listView
+     */
     public function navigateToWorkflow(
         NavigationBar $navigationBar,
         ListView $listView
@@ -15,6 +19,9 @@ class Workflow extends Tester
         $this->see('WORKFLOW');
     }
 
+    /**
+     * @param $module
+     */
     public function selectWorkflowModule($module)
     {
         $this->selectOption('#flow_module', $module);
@@ -25,31 +32,41 @@ class Workflow extends Tester
         $this->click('#btn_ConditionLine');
     }
 
-
+    /**
+     * @param $row
+     * @param $module
+     * @param $field
+     */
     public function setConditionModuleField($row, $module, $field)
     {
         $this->selectOption('#aow_conditions_module_path' . $row, $module);
         $this->selectOption('#aow_conditions_field' . $row, $field);
     }
 
+    /**
+     * @param $row
+     * @param $operator
+     * @param $type
+     */
     public function setConditionOperator($row, $operator, $type)
     {
-        $this->waitForElementVisible('#aow_conditions_operator[' . $row . ']', 10);
+        $this->waitForElementVisible('#aow_conditions_operator[' . $row . ']');
         $this->selectOption('#aow_conditions_operator[' . $row . ']', $operator);
 
-        $this->waitForElementVisible('#aow_conditions_value_type[' . $row . ']', 10);
+        $this->waitForElementVisible('#aow_conditions_value_type[' . $row . ']');
         $this->selectOption('#aow_conditions_value_type[' . $row . ']', $type);
     }
 
+    /**
+     * @param $row
+     */
     public function setConditionOperatorDateTimeValue($row)
     {
-        $now = new \DateTime();
-        $valueDateDay =$now->format('d');
         $calendarButton = '#aow_conditions_value'.$row.'_trigger';
         $calendarField = '#aow_conditions_value'.$row.'_date';
         $calendarDialog = '#aow_conditions_value'.$row.'_trigger_div';
         $this->click($calendarButton);
-        $this->waitForElementVisible($calendarDialog, 10);
+        $this->waitForElementVisible($calendarDialog);
         $this->click('.today > .selector', $calendarDialog);
         $this->cantSeeInField($calendarField, '');
     }

@@ -60,7 +60,7 @@ class UserController extends BaseController
     /**
      * @var UserService
      */
-    private $userService;
+    protected $userService;
     
     /**
      * @param UserService $userService
@@ -71,7 +71,7 @@ class UserController extends BaseController
     }
     
     /**
-     * 
+     *
      * @param Request $request
      * @param Response $response
      * @param array $args

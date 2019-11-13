@@ -147,7 +147,6 @@ class Account extends Company implements EmailInterface
     {
         parent::__construct();
 
-
         $this->setupCustomFields('Accounts');
 
         foreach ($this->field_defs as $field) {
@@ -191,14 +190,19 @@ class Account extends Company implements EmailInterface
 
 
 
-    public function clear_account_case_relationship($account_id='', $case_id='')
+    public function clear_account_case_relationship($account_id = '', $case_id = '')
     {
-        if (empty($case_id)) {
-            $where = '';
-        } else {
-            $where = " and id = '$case_id'";
+        $where = '';
+
+        $accountIdQuoted = $this->db->quoted($account_id);
+
+        if (!empty($case_id)) {
+            $caseIdQuoted = $this->db->quoted($case_id);
+            $where = " and id = " . $caseIdQuoted;
         }
-        $query = "UPDATE cases SET account_name = '', account_id = '' WHERE account_id = '$account_id' AND deleted = 0 " . $where;
+
+        $query = "UPDATE cases SET account_name = '', account_id = '' WHERE account_id = " . $accountIdQuoted . " AND deleted = 0 " . $where;
+
         $this->db->query($query, true, "Error clearing account to case relationship: ");
     }
 
@@ -230,7 +234,10 @@ class Account extends Company implements EmailInterface
         //rrs bug: 28184 - instead of removing this code altogether just adding this check to ensure that if the parent_name
         //is empty then go ahead and fill it.
         if (empty($this->parent_name) && !empty($this->id)) {
-            $query = "SELECT a1.name from accounts a1, accounts a2 where a1.id = a2.parent_id and a2.id = '$this->id' and a1.deleted=0";
+
+            $idQuoted = $this->db->quoted($this->id);
+
+            $query = "SELECT a1.name FROM accounts a1, accounts a2 WHERE a1.id = a2.parent_id AND a2.id = " . $idQuoted . " and a1.deleted=0";
             $result = $this->db->query($query, true, " Error filling in additional detail fields: ");
 
             // Get the id and the name.
@@ -246,7 +253,10 @@ class Account extends Company implements EmailInterface
         // Set campaign name if there is a campaign id
         if (!empty($this->campaign_id)) {
             $camp = new Campaign();
-            $where = "campaigns.id='{$this->campaign_id}'";
+
+            $campaignIdQuoted = $this->db->quoted($this->campaign_id);
+
+            $where = "campaigns.id = " . $campaignIdQuoted;
             $campaign_list = $camp->get_full_list("campaigns.name", $where, true);
             $this->campaign_name = $campaign_list[0]->name;
         }
@@ -302,17 +312,17 @@ class Account extends Company implements EmailInterface
         foreach (explode('AND', $where) as $whereClause) {
             $newWhereClause = str_replace('( ', '(', $whereClause);
             foreach ($this->field_defs as $field_def) {
-                $needle = '(' . $field_def['name'] . ' like';
+                $needle = '(' . $field_def['name'] . ' LIKE';
                 if (strpos($newWhereClause, $needle) !== false) {
                     $joinAlias = 'rjt' . count($relatedJoins);
-                    $relatedJoins[] = ' LEFT JOIN ' . $field_def['table'] . ' as ' . $joinAlias . ' on ' .
+                    $relatedJoins[] = ' LEFT JOIN ' . $field_def['table'] . ' as ' . $joinAlias . ' ON ' .
                             $joinAlias . '.id ' . ' = accounts.' . $field_def['id_name'] . ' ';
                     $relatedSelects[] = ' ,' . $joinAlias . '.id ,' . $joinAlias . '.' . $field_def['rname'] . ' ';
                     $newWhereClause = str_replace(
-                            $field_def['name'],
-                            $joinAlias . '.' . $field_def['rname'],
-                            $newWhereClause
-                        );
+                        $field_def['name'],
+                        $joinAlias . '.' . $field_def['rname'],
+                        $newWhereClause
+                    );
                     $where = str_replace($whereClause, $newWhereClause, $where);
                 }
             }
@@ -321,21 +331,24 @@ class Account extends Company implements EmailInterface
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
         $query = "SELECT
-                                accounts.*,
-                                email_addresses.email_address email_address,
-                                '' email_addresses_non_primary, " . // email_addresses_non_primary needed for get_field_order_mapping()
-                                "accounts.name as account_name,
-                                users.user_name as assigned_user_name ";
+                    accounts.*,
+                    email_addresses.email_address email_address,
+                    '' email_addresses_non_primary, " . // email_addresses_non_primary needed for get_field_order_mapping()
+                    "accounts.name as account_name,
+                    users.user_name as assigned_user_name ";
         $query .= $custom_join['select'];
 
         $query .= implode('', $relatedSelects);
 
         $query .= " FROM accounts ";
         $query .= "LEFT JOIN users
-	                                ON accounts.assigned_user_id=users.id ";
+	                ON accounts.assigned_user_id = users.id ";
 
         //join email address table too.
-        $query .=  ' LEFT JOIN  email_addr_bean_rel on accounts.id = email_addr_bean_rel.bean_id and email_addr_bean_rel.bean_module=\'Accounts\' and email_addr_bean_rel.deleted=0 and email_addr_bean_rel.primary_address=1 ';
+        $query .=  ' LEFT JOIN email_addr_bean_rel ON accounts.id = email_addr_bean_rel.bean_id
+                     AND email_addr_bean_rel.bean_module=\'Accounts\'
+                     AND email_addr_bean_rel.deleted = 0
+                     AND email_addr_bean_rel.primary_address = 1 ';
         $query .=  ' LEFT JOIN email_addresses on email_addresses.id = email_addr_bean_rel.email_address_id ' ;
 
         $query .= implode('', $relatedJoins);
@@ -385,13 +398,15 @@ class Account extends Company implements EmailInterface
      */
     public function getProductsServicesPurchasedQuery()
     {
+        $idQuoted = $this->db->quoted($this->id);
+
         $query = "
 			SELECT
 				aos_products_quotes.*
 			FROM
 				aos_products_quotes
 			JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage LIKE 'Closed Accepted' AND aos_quotes.deleted = 0 AND aos_products_quotes.deleted = 0
-			JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = '{$this->id}'
+			JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = $idQuoted
 
 			";
         return $query;

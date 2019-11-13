@@ -113,7 +113,6 @@ class UsersController extends SugarController
         // save and redirect to new view
         $_REQUEST['return_module'] = 'Home';
         $_REQUEST['return_action'] = 'index';
-        require('modules/Users/Save.php');
     }
 
     protected function action_saveftsmodules()
@@ -122,14 +121,6 @@ class UsersController extends SugarController
         $GLOBALS['current_user']->setPreference('fts_disabled_modules', $_REQUEST['disabled_modules']);
     }
 
-    /**
-     * action "save" (with a lower case S that is for OSX users ;-)
-     * @see SugarController::action_save()
-     */
-    public function action_save()
-    {
-        require 'modules/Users/Save.php';
-    }
 
     protected function action_editview()
     {

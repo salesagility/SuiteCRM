@@ -71,13 +71,13 @@ function create_cache_directory($file)
     if (!file_exists($dir)) {
         sugar_mkdir($dir, 0775);
     }
-    for ($i = 0; $i < sizeof($paths) - 1; $i++) {
+    for ($i = 0; $i < count($paths) - 1; $i++) {
         $dir .= '/' . $paths[$i];
         if (!file_exists($dir)) {
             sugar_mkdir($dir, 0775);
         }
     }
-    return $dir . '/'. $paths[sizeof($paths) - 1];
+    return $dir . '/'. $paths[count($paths) - 1];
 }
 
 function get_module_dir_list()
@@ -126,13 +126,7 @@ function write_array_to_file($the_name, $the_array, $the_file, $mode="w", $heade
                     var_export_helper($the_array) .
                     ";";
 
-    $result = sugar_file_put_contents($the_file, $the_string, LOCK_EX) !== false;
-
-    if (function_exists('opcache_invalidate')) {
-        opcache_invalidate($the_file, true);
-    }
-
-    return $result;
+    return sugar_file_put_contents($the_file, $the_string, LOCK_EX) !== false;
 }
 
 function write_encoded_file($soap_result, $write_to_dir, $write_to_file="")
@@ -170,27 +164,27 @@ function create_custom_directory($file)
     if (!file_exists($dir)) {
         sugar_mkdir($dir, 0755);
     }
-    for ($i = 0; $i < sizeof($paths) - 1; $i++) {
+    for ($i = 0; $i < count($paths) - 1; $i++) {
         $dir .= '/' . $paths[$i];
         if (!file_exists($dir)) {
             sugar_mkdir($dir, 0755);
         }
     }
-    return $dir . '/'. $paths[sizeof($paths) - 1];
+    return $dir . '/'. $paths[count($paths) - 1];
 }
 
 /**
  * This function will recursively generates md5s of files and returns an array of all md5s.
- *
- * @param	$path The path of the root directory to scan - must end with '/'
- * @param	$ignore_dirs array of filenames/directory names to ignore running md5 on - default 'cache' and 'upload'
- * @result	$md5_array an array containing path as key and md5 as value
+ * @param string $path The path of the root directory to scan - must end with '/'
+ * @param array $ignore_dirs array of filenames/directory names to ignore running md5 on - default 'cache' and 'upload'
+ * @return array
  */
-function generateMD5array($path, $ignore_dirs = array('cache', 'upload'))
+function generateMD5array($path, $ignore_dirs = ['cache', 'upload', '.git', 'vendor', '.idea'])
 {
-    $dh  = opendir($path);
+    $current_dir_content = [];
+    $dh = opendir($path);
     if (!$dh) {
-        return array();
+        return [];
     }
     while (false !== ($filename = readdir($dh))) {
         $current_dir_content[] = $filename;
@@ -200,23 +194,23 @@ function generateMD5array($path, $ignore_dirs = array('cache', 'upload'))
     $current_dir_content = array_diff($current_dir_content, $ignore_dirs);
 
     sort($current_dir_content);
-    $md5_array = array();
+    $md5_array = [];
 
     foreach ($current_dir_content as $file) {
         // make sure that it's not dir '.' or '..'
-        if (strcmp($file, ".") && strcmp($file, "..")) {
-            if (is_dir($path.$file)) {
+        if (strcmp($file, '.') && strcmp($file, '..')) {
+            if (is_dir($path . $file)) {
                 // For testing purposes - uncomment to see all files and md5s
                 //echo "<BR>Dir:  ".$path.$file."<br>";
                 //generateMD5array($path.$file."/");
 
-                $md5_array += generateMD5array($path.$file."/", $ignore_dirs);
+                $md5_array += generateMD5array($path . $file . '/', $ignore_dirs);
             } else {
                 // For testing purposes - uncomment to see all files and md5s
                 //echo "   File: ".$path.$file."<br>";
                 //echo md5_file($path.$file)."<BR>";
 
-                $md5_array[$path.$file] = md5_file($path.$file);
+                $md5_array[$path . $file] = md5_file($path . $file);
             }
         }
     }
@@ -471,7 +465,7 @@ CIA;
 */
 function cleanFileName($name)
 {
-    return preg_replace('/[^\w-._]+/i', '', $name);
+    return preg_replace('/[^\w\-._]+/i', '', $name);
 }
 
 /**

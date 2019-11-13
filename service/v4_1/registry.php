@@ -85,12 +85,12 @@ class registry_v4_1 extends registry_v4
         parent::registerTypes();
 
         $this->serviceClass->registerType(
-               'error_value',
-               'complexType',
-               'struct',
-               'all',
-               '',
-               array(
+            'error_value',
+            'complexType',
+            'struct',
+            'all',
+            '',
+            array(
                    'number'=>array('name'=>'number', 'type'=>'xsd:string'),
                    'name'=>array('name'=>'name', 'type'=>'xsd:string'),
                    'description'=>array('name'=>'description', 'type'=>'xsd:string'),
@@ -100,27 +100,27 @@ class registry_v4_1 extends registry_v4
         //modified_relationship_entry_list
         //This type holds the array of modified_relationship_entry types
         $this->serviceClass->registerType(
-                'modified_relationship_entry_list',
-                'complexType',
-                'array',
-                '',
-                'SOAP-ENC:Array',
-                array(),
-                array(
+            'modified_relationship_entry_list',
+            'complexType',
+            'array',
+            '',
+            'SOAP-ENC:Array',
+            array(),
+            array(
                     array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:modified_relationship_entry[]')
                 ),
-                'tns:modified_relationship_entry'
+            'tns:modified_relationship_entry'
             );
 
         //modified_relationship_entry
         //This type consists of id, module_name and name_value_list type
         $this->serviceClass->registerType(
-                 'modified_relationship_entry',
-                 'complexType',
-                 'struct',
-                 'all',
-                 '',
-                 array(
+            'modified_relationship_entry',
+            'complexType',
+            'struct',
+            'all',
+            '',
+            array(
                      'id' => array('name'=>'id', 'type'=>'xsd:string'),
                      'module_name' => array('name'=>'module_name', 'type'=>'xsd:string'),
                      'name_value_list' => array('name'=>'name_value_lists', 'type'=>'tns:name_value_list')
@@ -130,12 +130,12 @@ class registry_v4_1 extends registry_v4
         //modified_relationship_result
         //the top level result array
         $this->serviceClass->registerType(
-                'modified_relationship_result',
-                'complexType',
-                'struct',
-                'all',
-                '',
-                array(
+            'modified_relationship_result',
+            'complexType',
+            'struct',
+            'all',
+            '',
+            array(
                    'result_count' => array('name'=>'result_count', 'type'=>'xsd:int'),
                    'next_offset' => array('name'=>'next_offset', 'type'=>'xsd:int'),
                    'entry_list' => array('name'=>'entry_list', 'type'=>'tns:modified_relationship_entry_list'),

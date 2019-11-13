@@ -213,22 +213,18 @@ function multiFiles( list_target){
             element.onchange = function() {
                 var url = 'index.php?to_pdf=1&module=EmailTemplates&action=AttachFiles',
                     new_element;
-
-                // allow attachments with TinyMCE or Direct HTML;
-                if (typeof mozaik == 'undefined') {
-                    var mozaik={};
-                }
+                var isMozaik = typeof mozaik !== 'undefined';
 
                 //AJAX call begins
                 YAHOO.util.Connect.setForm(document.getElementById("upload_form"), true, true);
                 YAHOO.util.Connect.asyncRequest('POST', url, {upload: function(e) {
-					if(mozaik.uploadPathField) {
+					if(isMozaik && mozaik.uploadPathField) {
 						var resp = JSON.parse(e.responseText);
 						document.getElementById(mozaik.uploadPathField).value = resp[0];
 					}
 				}}, null);
                 //AJAX call ends
-				if(!mozaik.uploadPathField) {
+				if(!isMozaik || !mozaik.uploadPathField) {
 					// New file input
 					new_element = document.createElement('input');
 					new_element.type = 'file';

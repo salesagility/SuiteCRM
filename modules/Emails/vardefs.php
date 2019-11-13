@@ -131,9 +131,9 @@ $dictionary['Email'] = array(
             'inline_edit' => false,
 
         ),
-        'date_sent' => array(
-            'name' => 'date_sent',
-            'vname' => 'LBL_DATE_SENT',
+        'date_sent_received' => array(
+            'name' => 'date_sent_received',
+            'vname' => 'LBL_DATE_SENT_RECEIVED',
             'type' => 'datetime',
             'inline_edit' => false,
         ),
@@ -318,6 +318,24 @@ $dictionary['Email'] = array(
                 'name' => 'displaySubjectField',
                 'returns' => 'html',
                 'include' => 'modules/Emails/include/displaySubjectField.php',
+                'onListView' =>  true
+            ),
+        ),
+
+        'attachment' => array(
+            'name' => 'attachment',
+            'vname' => 'LBL_ATTACHMENTS',
+            'type' => 'function',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'studio' => 'visible',
+            'inline_edit' => false,
+            'function' => array(
+                'name' => 'displayAttachmentField',
+                'returns' => 'html',
+                'include' => 'modules/Emails/include/displayAttachmentField.php',
                 'onListView' =>  true
             ),
         ),
@@ -701,8 +719,13 @@ $dictionary['Email'] = array(
             'lhs_key' => 'id',
             'rhs_module' => 'Meetings',
             'rhs_table' => 'meetings',
-            'rhs_key' => 'parent_id',
-            'relationship_type' => 'one-to-many',
+            'rhs_key' => 'id',
+            'relationship_type' => 'many-to-many',
+            'join_table' => 'emails_beans',
+            'join_key_lhs' => 'email_id',
+            'join_key_rhs' => 'bean_id',
+            'relationship_role_column' => 'bean_module',
+            'relationship_role_column_value' => 'Meetings',
         ),
     ), // end relationships
     'indices' => array(

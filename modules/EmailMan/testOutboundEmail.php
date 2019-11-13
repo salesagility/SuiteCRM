@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 
 
@@ -79,9 +73,9 @@ $out = $email->sendEmailTest(
     $_REQUEST['mail_smtpserver'],
     $_REQUEST['mail_smtpport'],
     $_REQUEST['mail_smtpssl'],
-                                    ($_REQUEST['mail_smtpauth_req'] == 'true' ? 1 : 0),
+    ($_REQUEST['mail_smtpauth_req'] == 'true' ? 1 : 0),
     $_REQUEST['mail_smtpuser'],
-                                    $pass,
+    $pass,
     $_REQUEST['outboundtest_from_address'],
     $_REQUEST['outboundtest_to_address'],
     $_REQUEST['mail_sendtype'],

@@ -75,7 +75,7 @@ class SuiteEditorConnector
                         onClickTemplateBody();
                     });
                 },
-                plugins: ['code', 'table', 'link'],
+                plugins: ['code', 'table', 'link', 'image'],
             }");
     }
 

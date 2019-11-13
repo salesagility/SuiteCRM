@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,6 +38,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /**
 
  * Description:
@@ -74,14 +75,14 @@ if (ob_get_level() < 1) {
 require_once('modules/InboundEmail/language/'.$current_language.'.lang.php');
 global $theme;
 
-$title				= '';
-$msg				= '';
-$tls				= '';
-$cert				= '';
-$ssl				= '';
-$notls				= '';
-$novalidate_cert	= '';
-$useSsl				= false;
+$title                = '';
+$msg                = '';
+$tls                = '';
+$cert                = '';
+$ssl                = '';
+$notls                = '';
+$novalidate_cert    = '';
+$useSsl                = false;
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	TITLES
@@ -103,8 +104,7 @@ if (isset($_REQUEST['ssl']) && ($_REQUEST['ssl'] == "true" || $_REQUEST['ssl'] =
     $msg .= $mod_strings['LBL_FIND_SSL_WARN'];
     $useSsl = true;
 }
-
-
+        
 $ie                 = new InboundEmail();
 if (!empty($_REQUEST['ie_id'])) {
     $ie->retrieve($_REQUEST['ie_id']);

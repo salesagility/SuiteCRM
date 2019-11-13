@@ -129,11 +129,6 @@ class EmailAuthenticateUser extends SugarAuthenticateUser
         $notify_mail->CharSet = $sugar_config['default_charset'];
         $notify_mail->AddAddress(((!empty($row['email1']))?$row['email1']: $row['email2']), $locale->translateCharsetMIME(trim($row['first_name'] . ' ' . $row['last_name']), 'UTF-8', $OBCharset));
 
-        if (empty($_SESSION['authenticated_user_language'])) {
-            $current_language = $sugar_config['default_language'];
-        } else {
-            $current_language = $_SESSION['authenticated_user_language'];
-        }
         $notify_mail->Subject = 'Sugar Token';
         $notify_mail->Body = 'Your sugar session authentication token  is: ' . $password;
         $notify_mail->setMailerForSystem();

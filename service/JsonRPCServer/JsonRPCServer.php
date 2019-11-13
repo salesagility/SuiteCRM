@@ -45,6 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once __DIR__ . '/../../soap/SoapHelperFunctions.php';
 require_once __DIR__ . '/../../include/json_config.php';
+require_once __DIR__ . '/../../include/utils.php';
 require_once __DIR__ . '/JsonRPCServerUtils.php';
 require_once __DIR__ . '/JsonRPCServerCalls.php';
 
@@ -99,11 +100,7 @@ class JsonRPCServer
         session_start();
         $log->debug('JSON_SERVER:session started');
 
-        if (isset($_SESSION['authenticated_user_language']) && $_SESSION['authenticated_user_language'] !== '') {
-            $current_language = $_SESSION['authenticated_user_language'];
-        } else {
-            $current_language = $sugar_config['default_language'];
-        }
+        $current_language = get_current_language();
 
         $log->debug('JSON_SERVER: current_language:' . $current_language);
 

@@ -43,7 +43,7 @@ namespace SuiteCRM\API\v8\Library;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use League\Url\Components\Query;
+use League\Uri\Components\Query;
 use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\FilterInterpreter;
 use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\SuiteInterpreter;
 use SuiteCRM\API\JsonApi\v1\Links;
@@ -51,7 +51,6 @@ use SuiteCRM\API\JsonApi\v1\Repositories\FilterRepository;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
 use SuiteCRM\API\v8\Exception\BadRequestException;
 use SuiteCRM\API\v8\Exception\ModuleNotFoundException;
-use SuiteCRM\API\v8\Exception\NotAllowedException;
 
 /**
  * Class ModulesLib
@@ -326,7 +325,7 @@ class ModulesLib
     ) {
         $config = $this->containers->get('ConfigurationManager');
         $query = new Query();
-        $pagination = array();
+        $pagination = [];
 
         if ($offset !== null) {
             $pagination['page']['offset'] = $offset;
@@ -338,24 +337,24 @@ class ModulesLib
 
 
         if ($filter !== null) {
-            $query->modify(array('filter' => $filter));
+            $query->withContent(['filter' => $filter]);
         }
 
         if ($sort !== null) {
-            $query->modify(array('sort' => implode(',', $sort)));
+            $query->withContent(['sort' => implode(',', $sort)]);
         }
 
 
         if ($fields !== null) {
-            $queryFields = array();
+            $queryFields = [];
             foreach ($fields as $module => $moduleFields) {
                 $queryFields['fields'][$module] = $fields[$module];
             }
-            $query->modify($queryFields);
+            $query->withContent($queryFields);
         }
 
-        $query->modify($pagination);
-        $queryString = $query->get();
+        $query->withContent($pagination);
+        $queryString = (string)$query;
         if ($queryString !== null) {
             return $config['site_url'] . '/api/' . $req->getUri()->getPath() . '?' . $queryString;
         }

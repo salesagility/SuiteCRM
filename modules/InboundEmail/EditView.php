@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,6 +37,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+include_once __DIR__ . '/../../include/Imap/ImapHandlerFactory.php';
+
 require_once 'modules/AOP_Case_Updates/util.php';
 
 $_REQUEST['edit']='true';
@@ -238,13 +242,15 @@ if ($focus->mailbox_type == 'template') {
     $xtpl = new XTemplate('modules/InboundEmail/EditView.html');
 }
 // if no IMAP libraries available, disable Save/Test Settings
-if (!function_exists('imap_open')) {
+$imapFactory = new ImapHandlerFactory();
+$imap = $imapFactory->getImapHandler();
+if (!$imap->isAvailable()) {
     $xtpl->assign('IE_DISABLED', 'DISABLED');
 }
 // standard assigns
 $xtpl->assign('MOD', $mod_strings);
 $xtpl->assign('APP', $app_strings);
-$xtpl->assign('THEME', SugarThemeRegistry::current()->__toString());
+$xtpl->assign('THEME', (string)SugarThemeRegistry::current());
 $xtpl->assign('GRIDLINE', $gridline);
 $xtpl->assign('MODULE', 'InboundEmail');
 $xtpl->assign('RETURN_MODULE', 'InboundEmail');

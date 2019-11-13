@@ -41,12 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- * *******************************************************************************/
 
 
 ////	COMMON
@@ -892,8 +887,8 @@ function systemCheckJsonCheckFiles($persistence)
                 // don't warn yet - we're going to use this to check against replacement files
                 $filesNotWritable[$i] = $file;
                 $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
-                $owner = posix_getpwuid(fileowner($file));
-                $group = posix_getgrgid(filegroup($file));
+                $owner = function_exists('posix_getpwuid') ? posix_getpwuid(fileowner($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_USER'];
+                $group = function_exists('posix_getgrgid') ? posix_getgrgid(filegroup($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP'];
                 $filesOut .= "<tr>".
                                 "<td valign='top'><span class='error'>{$file}</span></td>".
                                 "<td valign='top'>{$filesNWPerms[$i]}</td>".
@@ -910,7 +905,7 @@ function systemCheckJsonCheckFiles($persistence)
     $persistence['filesNotWritable'] = (count($filesNotWritable) > 0) ? true : false;
 
     if (count($filesNotWritable) < 1) {
-        $filesOut = "{$mod_strings['LBL_UW_FILE_NO_ERRORS']}";
+        $filesOut = (string)($mod_strings['LBL_UW_FILE_NO_ERRORS']);
         $persistence['step']['systemCheck'] = 'success';
     }
 

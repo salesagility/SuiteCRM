@@ -145,7 +145,7 @@ class nusoap_wsdlcache
                 $this->releaseMutex($filename);
                 return null;
             }
-            $fp = @fopen($filename, "r");
+            $fp = @fopen($filename, 'rb');
             if ($fp) {
                 $s = implode("", @file($filename));
                 fclose($fp);
@@ -176,7 +176,7 @@ class nusoap_wsdlcache
             $this->debug("Lock for $filename already exists");
             return false;
         }
-        $this->fplock[md5($filename)] = fopen($filename.".lock", "w");
+        $this->fplock[md5($filename)] = fopen($filename.".lock", 'wb');
         if ($mode == "r") {
             return flock($this->fplock[md5($filename)], LOCK_SH);
         }
@@ -195,13 +195,13 @@ class nusoap_wsdlcache
         $filename = $this->createFilename($wsdl_instance->wsdl);
         $s = serialize($wsdl_instance);
         if ($this->obtainMutex($filename, "w")) {
-            $fp = fopen($filename, "w");
+            $fp = fopen($filename, 'wb');
             if (! $fp) {
                 $this->debug("Cannot write $wsdl_instance->wsdl ($filename) in cache");
                 $this->releaseMutex($filename);
                 return false;
             }
-            fputs($fp, $s);
+            fwrite($fp, $s);
             fclose($fp);
             $this->debug("Put $wsdl_instance->wsdl ($filename) in cache");
             $this->releaseMutex($filename);

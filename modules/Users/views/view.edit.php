@@ -227,6 +227,22 @@ class UsersViewEdit extends ViewEdit
 EOD
         ;
         $action_button_header[] = <<<EOD
+                    <script>
+                       $('#EditView').submit(function(){
+                                            var theForm =$('#EditView');
+                                           if (!set_password(theForm[0],newrules('{$minpwdlength}','{$maxpwdlength}','{$REGEX}'))){
+                                             return false;
+                                           }
+                                           if (!Admin_check()){
+                                                return false;
+                                            }
+                                             $('#EditView input[name=action]').val('save');
+                                            return true;
+                        });
+                     </script>
+EOD
+        ;
+        $action_button_header[] = <<<EOD
                     <input	title="{$APP['LBL_CANCEL_BUTTON_TITLE']}" id="CANCEL_HEADER" accessKey="{$APP['LBL_CANCEL_BUTTON_KEY']}"
                               class="button" onclick="var _form = $('#EditView')[0]; _form.action.value='{$RETURN_ACTION}'; _form.module.value='{$RETURN_MODULE}'; _form.record.value='{$RETURN_ID}'; _form.submit()"
                               type="button" name="button" value="{$APP['LBL_CANCEL_BUTTON_LABEL']}">

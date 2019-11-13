@@ -43,7 +43,7 @@ if (!defined('sugarEntry')) {
 
 
 /**
- * This class is an implemenatation class for all the rest services
+ * This class is an implementation class for all the rest services
  */
 require_once('service/core/SugarWebServiceImpl.php');
 require_once('SugarWebServiceUtilv3.php');
@@ -134,7 +134,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
             $_SESSION['authenticated_user_id'] = $current_user->id;
             $_SESSION['unique_key'] = $sugar_config['unique_key'];
             $current_user->call_custom_logic('after_login');
-            $GLOBALS['log']->info('End: SugarWebServiceImpl->login - succesful login');
+            $GLOBALS['log']->info('End: SugarWebServiceImpl->login - successful login');
             $nameValueArray = array();
             global $current_language;
             $nameValueArray['user_id'] = self::$helperObject->get_name_value('user_id', $current_user->id);
@@ -621,7 +621,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
             $list = $result['rows'];
             $filterFields = $result['fields_set_on_rows'];
 
-            if (sizeof($list) > 0) {
+            if (count($list) > 0) {
                 // get the related module name and instantiate a bean for that.
                 $submodulename = $mod->$link_field_name->getRelatedModuleName();
                 $submoduleclass = $beanList[$submodulename];

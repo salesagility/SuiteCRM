@@ -2240,7 +2240,7 @@ class HTMLPurifier_Config
             if (is_null($this->get($type . '.DefinitionID'))) {
                 // fatally error out if definition ID not set
                 throw new HTMLPurifier_Exception(
-                        "Cannot retrieve raw version without specifying %$type.DefinitionID"
+                    "Cannot retrieve raw version without specifying %$type.DefinitionID"
                     );
             }
         }
@@ -2251,14 +2251,14 @@ class HTMLPurifier_Config
                         " (try moving this code block earlier in your initialization)" :
                         "";
                 throw new HTMLPurifier_Exception(
-                        "Cannot retrieve raw definition after it has already been setup" .
+                    "Cannot retrieve raw definition after it has already been setup" .
                         $extra
                     );
             }
             if ($def->optimized === null) {
                 $extra = $this->chatty ? " (try flushing your cache)" : "";
                 throw new HTMLPurifier_Exception(
-                        "Optimization status of definition is unknown" . $extra
+                    "Optimization status of definition is unknown" . $extra
                     );
             }
             if ($def->optimized !== $optimized) {
@@ -2267,7 +2267,7 @@ class HTMLPurifier_Config
                         " (this backtrace is for the first inconsistent call, which was for a $msg raw definition)"
                         : "";
                 throw new HTMLPurifier_Exception(
-                        "Inconsistent use of optimized and unoptimized raw definition retrievals" . $extra
+                    "Inconsistent use of optimized and unoptimized raw definition retrievals" . $extra
                     );
             }
         }
@@ -2301,7 +2301,7 @@ class HTMLPurifier_Config
             if (!is_null($this->get($type . '.DefinitionID'))) {
                 if ($this->chatty) {
                     $this->triggerError(
-                            'Due to a documentation error in previous version of HTML Purifier, your ' .
+                        'Due to a documentation error in previous version of HTML Purifier, your ' .
                             'definitions are not being cached.  If this is OK, you can remove the ' .
                             '%$type.DefinitionRev and %$type.DefinitionID declaration.  Otherwise, ' .
                             'modify your code to use maybeGetRawDefinition, and test if the returned ' .
@@ -2309,12 +2309,12 @@ class HTMLPurifier_Config
                             'cached version is available, and no raw operations are necessary).  See ' .
                             '<a href="http://htmlpurifier.org/docs/enduser-customize.html#optimized">' .
                             'Customize</a> for more details',
-                            E_USER_WARNING
+                        E_USER_WARNING
                         );
                 } else {
                     $this->triggerError(
-                            "Useless DefinitionID declaration",
-                            E_USER_WARNING
+                        "Useless DefinitionID declaration",
+                        E_USER_WARNING
                         );
                 }
             }
@@ -8232,7 +8232,7 @@ class HTMLPurifier_StringHashParser
         if (!file_exists($file)) {
             return false;
         }
-        $fh = fopen($file, 'r');
+        $fh = fopen($file, 'rb');
         if (!$fh) {
             return false;
         }
@@ -8252,7 +8252,7 @@ class HTMLPurifier_StringHashParser
             return false;
         }
         $ret = array();
-        $fh = fopen($file, 'r');
+        $fh = fopen($file, 'rb');
         if (!$fh) {
             return false;
         }
@@ -9140,7 +9140,7 @@ class HTMLPurifier_URIParser
             return false;
         } // *really* invalid URI
 
-        // seperate out parts
+        // separate out parts
         $scheme     = !empty($matches[1]) ? $matches[2] : null;
         $authority  = !empty($matches[3]) ? $matches[4] : null;
         $path       = $matches[5]; // always present, can be empty
@@ -14132,9 +14132,9 @@ class HTMLPurifier_ChildDef_Chameleon extends HTMLPurifier_ChildDef
             );
         }
         return $this->inline->validateChildren(
-                $children,
-                $config,
-                $context
+            $children,
+            $config,
+            $context
             );
     }
 }
@@ -18541,7 +18541,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
         }
         if ($collect) {
             $tokens[] = $this->factory->createStart(
-                    $tag_name = $node->tagName, // somehow, it get's dropped
+                $tag_name = $node->tagName, // somehow, it get's dropped
                     $attr
                 );
         }
@@ -19410,7 +19410,7 @@ class HTMLPurifier_Strategy_Core extends HTMLPurifier_Strategy_Composite
  * The second objective is to ensure that explicitly excluded elements of
  * an element do not appear in its children.  Code that accomplishes this
  * task is pervasive through the strategy, though the two are distinct tasks
- * and could, theoretically, be seperated (although it's not recommended).
+ * and could, theoretically, be separated (although it's not recommended).
  *
  * @note Whether or not unrecognized children are silently dropped or
  *       translated into text depends on the child definitions.

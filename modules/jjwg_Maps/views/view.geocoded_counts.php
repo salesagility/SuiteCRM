@@ -39,15 +39,20 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView
             echo '<br /><br />';
         }
 
-        echo '<table cellspacing="0" cellpadding="0" border="0" class="list view" style="width: 50% !important;"><tbody>';
+        echo '<div class="list-view-rounded-corners">';
+
+        echo '<table cellspacing="0" cellpadding="0" border="0" class="list view" style="width: 50% !important;">';
+        echo '<thead>';
         echo '<tr><th>'.$GLOBALS['mod_strings']['LBL_MODULE_HEADING'].'</th>';
         foreach ($this->bean->geocoded_headings as $heading) {
-            echo '<th>'.$heading.'</th>';
+            echo '<th>'.$GLOBALS['mod_strings']['LBL_'.$heading].'</th>';
         }
         echo '<th>'.$GLOBALS['mod_strings']['LBL_MODULE_TOTAL_HEADING'].'</th>';
         echo '<th>'.$GLOBALS['mod_strings']['LBL_MODULE_RESET_HEADING'].'</th>';
         echo '</tr>'."\n";
+        echo '</thead>';
 
+        echo '<tbody>';
         foreach ($GLOBALS['jjwg_config']['valid_geocode_modules'] as $module) {
             $geocode_url = './index.php?module=jjwg_Maps&action=geocode_addresses&display_module='.$module;
             $reset_url = './index.php?module=jjwg_Maps&action=reset_geocoding&display_module='.$module;
@@ -63,6 +68,9 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView
         }
 
         echo '</tbody></table>';
+
+        echo '</div>';
+
         echo '<br /><br />';
 
         // Custom Entry Point Registry:

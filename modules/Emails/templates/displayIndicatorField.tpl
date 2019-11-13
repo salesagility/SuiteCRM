@@ -38,12 +38,13 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
+
 <div class="email-indicator">
     {if $bean}
         {if $bean.status == 'unread'}
             <div class="email-new"></div>
         {/if}
-        {if $bean.is_imported == true}
+        {if $bean.is_imported == true AND $bean.inbound_email_record == $smarty.request.inbound_email_record}
             <div class="email-imported"><span class="glyphicon glyphicon-ok"></span></div>
         {/if}
         {if $bean.flagged == 1}

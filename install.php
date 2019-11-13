@@ -109,14 +109,7 @@ $timedate = TimeDate::getInstance();
 setPhpIniSettings();
 $locale = new Localization();
 
-if (get_magic_quotes_gpc() == 1) {
-    $_REQUEST = array_map("stripslashes_checkstrings", $_REQUEST);
-    $_POST = array_map("stripslashes_checkstrings", $_POST);
-    $_GET = array_map("stripslashes_checkstrings", $_GET);
-}
-
-
-$GLOBALS['log'] = LoggerManager::getLogger('SugarCRM');
+$GLOBALS['log'] = LoggerManager::getLogger();
 $setup_sugar_version = $suitecrm_version;
 $install_script = true;
 
@@ -125,7 +118,7 @@ $install_script = true;
 $css = 'install/install.css';
 $icon = 'include/images/sugar_icon.ico';
 $sugar_md = 'include/images/sugar_md_open.png';
-$loginImage = 'include/images/sugarcrm_login.png';
+$loginImage = 'include/images/suitecrm_login.png';
 $common = 'install/installCommon.js';
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -266,7 +259,10 @@ if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") 
 
         // TODO--low: validate file size & image width/height and save, show status result to client js
 
-        echo "<script>window.top.window.{$_REQUEST['callback']}(" . json_encode($result) . ");</script>";
+        if (isset($_REQUEST['callback']) && $_REQUEST['callback'] === 'uploadLogoCallback') {
+            echo "<script>window.top.window.uploadLogoCallback" . json_encode($result) . ");</script>";
+        }
+
         return;
     }
 
@@ -646,6 +642,8 @@ EOQ;
         $_SESSION['oc_username']    = $_REQUEST['oc_username'];
         $_SESSION['oc_password']   	= $_REQUEST['oc_password'];
         $the_file = 'oc_convert.php';
+    } elseif ($next_step === 9) {
+        $the_file = $workflow[4];
     } else {
         $the_file = $workflow[$next_step];
     }
@@ -785,12 +783,12 @@ EOQ;
 }
 
 
-$the_file = clean_string($the_file, 'FILE');
+$the_file = 'install/' . clean_string($the_file, 'FILE');
 
-installerHook('pre_installFileRequire', array('the_file' => $the_file));
-
-// change to require to get a good file load error message if the file is not available.
-
-require('install/' . $the_file);
-
-installerHook('post_installFileRequire', array('the_file' => $the_file));
+if (is_file($the_file)) {
+    installerHook('pre_installFileRequire', ['the_file' => $the_file]);
+    require($the_file);
+    installerHook('post_installFileRequire', ['the_file' => $the_file]);
+} else {
+    LoggerManager::getLogger()->fatal('Install file not found: ' . $the_file);
+}

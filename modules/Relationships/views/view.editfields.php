@@ -42,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
  
-require_once('include/MVC/View/views/view.ajax.php');
 
 class ViewEditFields extends ViewAjax
 {

@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 
 
@@ -64,7 +58,7 @@ foreach ($_SESSION as $key => $val) {
     $_SESSION[$key] = ''; // cannot just overwrite session data, causes segfaults in some versions of PHP
 }
 if (isset($_COOKIE[session_name()])) {
-    setcookie(session_name(), '', time()-42000, '/', null, false, true);
+    setcookie(session_name(), '', time()-42000, '/', null, isSSL(), true);
 }
 
 //Update the tracker_sessions table

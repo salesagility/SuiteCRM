@@ -1,6 +1,12 @@
 <?php
 
+use Faker\Factory;
 use Faker\Generator;
+use Step\Acceptance\Accounts;
+use Step\Acceptance\DetailView;
+use Step\Acceptance\EditView;
+use Step\Acceptance\ListView;
+use Step\Acceptance\UsersTester;
 
 class UsersCest
 {
@@ -20,27 +26,40 @@ class UsersCest
     public function _before(AcceptanceTester $I)
     {
         if (!$this->fakeData) {
-            $this->fakeData = Faker\Factory::create();
+            $this->fakeData = Factory::create();
         }
 
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
+    }
+    
+    public function testEmailSettingsMailAccountAdd(AcceptanceTester $I, UsersTester $Users)
+    {
+        $I->loginAsAdmin();
+        $Users->gotoProfile();
+        $I->see('User Profile', '.panel-heading');
+        $I->click('Settings');
+        $I->see('Mail Accounts');
+        $I->click('Mail Accounts');
+        $I->click('Add');
+        $I->executeJS('javascript:SUGAR.email2.accounts.fillInboundGmailDefaults();'); // <-- instead of $I->click('Prefill Gmail™ Defaults');
+        $I->fillField('ie_name', 'testuser_acc');
+        $I->fillField('email_user', 'testuser_name');
+        $I->fillField('email_password', 'testuser_pass');
+        $I->click('Test Settings');
+        $I->waitForText('Connection completed successfully.');
+        $I->see('Connection completed successfully.');
     }
 
     public function testShowCollapsedSubpanelHint(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $DetailView,
-        \Step\Acceptance\Users $Users,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\EditView $EditView,
-        \Step\Acceptance\Accounts $accounts,
-        \Helper\WebDriverHelper $webDriverHelper
+        AcceptanceTester $I,
+        DetailView $DetailView,
+        UsersTester $Users,
+        ListView $listView,
+        EditView $EditView,
+        Accounts $accounts
     ) {
         $I->wantTo('View the collapsed subpanel hints on Accounts');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to Users list-view
         $I->loginAsAdmin();
@@ -50,7 +69,7 @@ class UsersCest
         $I->see('User Profile', '.panel-heading');
 
         $I->click("Layout Options");
-        $I->wait(5);
+        $I->waitForElementVisible('input[name="user_count_collapsed_subpanels"]');
         $I->seeElement('input', ['name' => 'user_count_collapsed_subpanels']);
         $I->checkOption(['name' => 'user_count_collapsed_subpanels']);
         $EditView->clickSaveButton();
@@ -61,12 +80,15 @@ class UsersCest
         $I->wantTo('Create an Account');
 
         // Navigate to accounts list-view
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
         $this->fakeData->seed($this->fakeDataSeed);
-        $accounts->createAccount('Test_'. $this->fakeData->company());
+        $accountId = $accounts->createAccount('Test_'. $this->fakeData->company());
+
+        $I->visitPage('Accounts', 'DetailView', $accountId);
+        $DetailView->waitForDetailViewVisible();
 
         // View the Subpanels Hint
         $I->see('Leads (0)', '//*[@id="subpanel_title_leads"]/div/div');

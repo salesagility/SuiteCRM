@@ -901,7 +901,7 @@ class EditView
         $this->th->ss->assign('CALENDAR_FDOW', $current_user->get_first_day_of_week());
         $this->th->ss->assign('TIME_SEPARATOR', $time_separator);
 
-        $seps = get_number_seperators();
+        $seps = get_number_separators();
         $this->th->ss->assign('NUM_GRP_SEP', $seps[0]);
         $this->th->ss->assign('DEC_SEP', $seps[1]);
 
@@ -932,76 +932,58 @@ class EditView
             $ajaxSave,
             $this->defs
         );
-
-        /* BEGIN - SECURITY GROUPS */
+        /* BEGIN - SECURITY GROUPS */ 
         //if popup select add panel if user is a member of multiple groups to metadataFile
         global $sugar_config;
-        if (
-            $this->focus->module_dir !== "Users" &&
-            $this->focus->module_dir !== "SugarFeed" &&
-            $sugar_config['securitysuite_popup_select'] === true &&
-            isset($sugar_config['securitysuite_popup_select']) &&
-            empty($this->focus->fetched_row['id'])
-        ) {
+        if(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true
+            && empty($this->focus->fetched_row['id']) && $this->focus->module_dir != "Users" && $this->focus->module_dir != "SugarFeed") {
 
             //there are cases such as uploading an attachment to an email template where the request module may
             //not be the same as the current bean module. If that happens we can just skip it
             //however...let quickcreate through
-            if ($this->view !== 'QuickCreate' && (empty($_REQUEST['module']) || $_REQUEST['module'] !== $this->focus->module_dir)) {
-                return $str;
-            }
+            if($this->view != 'QuickCreate' && (empty($_REQUEST['module']) || $_REQUEST['module'] != $this->focus->module_dir)) return $str;
 
             require_once('modules/SecurityGroups/SecurityGroup.php');
-            $groupFocus = new SecurityGroup();
-            $security_modules = $groupFocus->getSecurityModules();
-            if (array_key_exists($this->focus->module_dir, $security_modules)) {
+            $security_modules = SecurityGroup::getSecurityModules();
+            if(in_array($this->focus->module_dir,array_keys($security_modules))) {
                 global $current_user;
 
-                $group_count = $groupFocus->getMembershipCount($current_user->id);
-                if ($group_count > 1) {
-                    $groups = $groupFocus->getUserSecurityGroups($current_user->id);
+                $group_count = SecurityGroup::getMembershipCount($current_user->id);
+                if($group_count > 1) {
+
+                    //https://www.sugaroutfitters.com/support/securitysuite/2313
+                    //if there is a parent then use the groups on that record as the default selected
+                    //note: only the user's groups show in the drop down. A request may be made to include any already on parent
+                    $parent_groups = SecurityGroup::getParentGroups($this->focus);
+
+                    $groups = SecurityGroup::getUserSecurityGroups($current_user->id);
                     $group_options = '';
-                    foreach ($groups as $group) {
-                        $group_options .= '<option value="' . $group['id'] . '" label="' . $group['name'] . '" selected="selected">' . $group['name'] . '</option>';
+                    foreach($groups as $group) {
+                        $group_options .= '<option value="'.$group['id'].'" label="'.$group['name'].'" '.(empty($group['noninheritable'])?'selected="selected"':'').'>'.$group['name'].'</option>';
                     }
                     //multilingual support
                     global $current_language;
-                    $ss_mod_strings = return_module_language($current_language, 'SecurityGroups');
-
+                    $ss_mod_strings = return_module_language($current_language, 'SecurityGroups');  
+                    
                     $lbl_securitygroups_select = $ss_mod_strings['LBL_GROUP_SELECT'];
                     $lbl_securitygroups = $ss_mod_strings['LBL_LIST_FORM_TITLE'];
 
-                    $group_panel = <<<EOQ
-<div class="edit view edit508 " id="detailpanel_securitygroups">
-    <h4>&nbsp;&nbsp;
-    $lbl_securitygroups_select
-    </h4>
-    <table width="100%" cellspacing="1" cellpadding="0" border="0" class="edit view panelContainer" id="LBL_PANEL_SECURITYGROUPS">
-    <tbody><tr>
-    <td width="12.5%" valign="top" scope="col" id="account_type_label">
-        $lbl_securitygroups:
-    </td>
-    <td width="37.5%" valign="top">
-        <select title="" id="securitygroup_list" name="securitygroup_list[]" multiple="multiple" size="${group_count}">
-        $group_options
-        </select>
-    </td>
-    </tr>
-    </tbody></table>
-</div>
-EOQ;
-                    $group_panel = preg_replace("/[\r\n]+/", "", $group_panel);
-
+                    $smarty = new Sugar_Smarty();
+                    $smarty->assign('SECURITY_GROUP_SELECT', $lbl_securitygroups_select);
+                    $smarty->assign('SECURITY_GROUPS', $lbl_securitygroups);
+                    $smarty->assign('SECURITY_GROUP_OPTIONS', $group_options);
+                    $smarty->assign('SECURITY_GROUP_COUNT', $group_count);
+                    $group_panel = $smarty->fetch('include/EditView/SecurityGroups.tpl');
+                    $group_panel = preg_replace("/[\r\n]+/", '', $group_panel);
                     $group_panel_append = <<<EOQ
-<script>
-    $('#${form_name}_tabs div:first').append($('${group_panel}'));
-</script>
+    <script>
+        $('#${form_name}_tabs .panel-content').append($('${group_panel}'));
+    </script>
 EOQ;
                     $str .= $group_panel_append;
                 }
             }
         }
-
         /* END - SECURITY GROUPS */
 
         return $str;

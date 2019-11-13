@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,31 +37,38 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-        $subpanel_layout = array(
-    
-        'top_buttons' => array(
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+$subpanel_layout = array(
+    'top_buttons' => array(),
+    'where' => '',
+    'list_fields' => array(
+        'name' => array(
+            'vname' => 'LBL_LIST_NAME',
+            'widget_class' => 'SubPanelDetailViewLink',
+            'width' => '70%',
         ),
-    
-        'where' => '',
-    
-    
-        'list_fields' => array(
-            'name'=>array(
-                'vname' => 'LBL_LIST_NAME',
-                'widget_class' => 'SubPanelDetailViewLink',
-                'width' => '70%',
-            ),
-            'date_start'=>array(
-                'vname' => 'LBL_DATE_START',
-                'width' => '15%',
-            ),
-            'date_finish'=>array(
-                'vname' => 'LBL_DATE_FINISH',
-                'width' => '15%',
-            ),
+        'date_start' => array(
+            'vname' => 'LBL_DATE_START',
+            'width' => '15%',
         ),
-    );
+        'date_finish' => array(
+            'vname' => 'LBL_DATE_FINISH',
+            'width' => '15%',
+        ),
+        'remove_button' => array(
+            'vname' => 'LBL_REMOVE',
+            'widget_class' => 'SubPanelRemoveButton',
+            'module' => 'ProjectTask',
+            'width' => '3%',
+        ),
+        'edit_button' =>
+            array(
+                'vname' => 'LBL_EDIT_BUTTON',
+                'widget_class' => 'SubPanelEditButton',
+                'module' => 'Project',
+                'width' => '3%',
+            ),
+    ),
+);

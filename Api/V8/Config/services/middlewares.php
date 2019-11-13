@@ -12,6 +12,7 @@ use Api\V8\OAuth2\Repository\UserRepository;
 use Interop\Container\ContainerInterface as Container;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Grant\PasswordGrant;
+use League\OAuth2\Server\Grant\RefreshTokenGrant;
 use League\OAuth2\Server\ResourceServer;
 use Api\Core\Loader\CustomLoader;
 
@@ -33,6 +34,24 @@ return CustomLoader::mergeCustomArray([
             sprintf('file://%s/%s', $baseDir, ApiConfig::OAUTH2_PRIVATE_KEY),
             sprintf('file://%s/%s', $baseDir, ApiConfig::OAUTH2_PUBLIC_KEY)
         );
+
+        if (empty(ApiConfig::OAUTH2_ENCRYPTION_KEY)) {
+            $oldKey = "OAUTH2_ENCRYPTION_KEY = '" . ApiConfig::OAUTH2_ENCRYPTION_KEY;
+            $key = "OAUTH2_ENCRYPTION_KEY = '" . base64_encode(random_bytes(32));
+            $apiConfig = file_get_contents('Api/Core/Config/ApiConfig.php');
+
+            $configFileContents = str_replace(
+                $oldKey,
+                $key,
+                $apiConfig
+            );
+            file_put_contents(
+                'Api/Core/Config/ApiConfig.php',
+                $configFileContents,
+                LOCK_EX
+            );
+        }
+
         $server->setEncryptionKey(ApiConfig::OAUTH2_ENCRYPTION_KEY);
 
         // Client credentials grant
@@ -47,6 +66,17 @@ return CustomLoader::mergeCustomArray([
                 new UserRepository($container->get(BeanManager::class)),
                 new RefreshTokenRepository($container->get(BeanManager::class))
             ),
+            new \DateInterval('PT1H')
+        );
+
+        $refreshGrant = new RefreshTokenGrant(
+            new RefreshTokenRepository($container->get(BeanManager::class))
+        );
+
+        $refreshGrant->setRefreshTokenTTL(new \DateInterval('P1M'));
+
+        $server->enableGrantType(
+            $refreshGrant,
             new \DateInterval('PT1H')
         );
 

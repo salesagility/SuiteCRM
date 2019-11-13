@@ -489,8 +489,7 @@ function get_subscription_lists($focus, $descriptions = false)
                 } else {
                     //this list is not exempt, and user is subscribed, so add to subscribed array, and unset from the unsubs_arr
                     //as long as this list is not in exempt array
-                    $temp = "prospect_list@".$news_list['prospect_list_id']."@campaign@".$news_list['campaign_id'];
-                    if (!array_search($temp, $unsubs_arr)) {
+                    if (!array_key_exists($news_list['name'], $unsubs_arr)) {
                         $subs_arr[$news_list['name']] = "prospect_list@".$news_list['prospect_list_id']."@campaign@".$news_list['campaign_id'];
                         $match = 'true';
                         unset($unsubs_arr[$news_list['name']]);
@@ -619,7 +618,7 @@ function process_subscriptions($subscription_string_to_parse)
 
         //--grab all the lists for the passed in campaign id
         $pl_qry ="select id, list_type from prospect_lists where id in (select prospect_list_id from prospect_list_campaigns ";
-        $pl_qry .= "where campaign_id = '$campaign') and deleted = 0 ";
+        $pl_qry .= "where campaign_id = " . $focus->db->quoted($campaign) . ") and deleted = 0 ";
         $GLOBALS['log']->debug("In Campaigns Util: subscribe function, about to run query: ".$pl_qry);
         $pl_qry_result = $focus->db->query($pl_qry);
 
@@ -631,7 +630,7 @@ function process_subscriptions($subscription_string_to_parse)
 
         //--grab all the prospect_lists this user belongs to
         $curr_pl_qry ="select prospect_list_id, related_id  from prospect_lists_prospects ";
-        $curr_pl_qry .="where related_id = '$focus->id'  and deleted = 0 ";
+        $curr_pl_qry .="where related_id = " . $focus->db->quoted($focus->id) . " and deleted = 0 ";
         $GLOBALS['log']->debug("In Campaigns Util: subscribe function, about to run query: ".$curr_pl_qry);
         $curr_pl_qry_result = $focus->db->query($curr_pl_qry);
 
@@ -711,7 +710,7 @@ function process_subscriptions($subscription_string_to_parse)
         $relationship = strtolower($focus->getObjectName()).'s';
         //--grab all the list for this campaign id
         $pl_qry ="select id, list_type from prospect_lists where id in (select prospect_list_id from prospect_list_campaigns ";
-        $pl_qry .= "where campaign_id = '$campaign') and deleted = 0 ";
+        $pl_qry .= "where campaign_id = " . $focus->db->quoted($campaign) . ") and deleted = 0 ";
         $pl_qry_result = $focus->db->query($pl_qry);
         //build the array with list information
         $pl_arr = array();

@@ -545,7 +545,7 @@ class Scheduler extends SugarBean
                     // cn: empty() bug 5914;
                     // if(!empty) should be checked, becasue if a scheduler is defined to run every day 4pm, then after 4pm, and it runs as 4pm,
                     // the $validJobTime will be empty, and it should not catch up.
-                    // If $focus->last_run is the the day before yesterday,  it should run yesterday and tomorrow,
+                    // If $focus->last_run is the day before yesterday,  it should run yesterday and tomorrow,
                     // but it hadn't run yesterday, then it should catch up today.
                     // But today is already filtered out when doing date check before. The catch up will not work on this occasion.
                     // If the scheduler runs at least one time on each day, I think this bug can be avoided.
@@ -1071,7 +1071,7 @@ class Scheduler extends SugarBean
 
             // job functions
             self::$job_strings = array('url::' => 'URL');
-            foreach (self::$job_strings as $k=>$v) {
+            foreach ($job_strings as $k=>$v) {
                 self::$job_strings['function::' . $v] = $mod_strings['LBL_'.strtoupper($v)];
             }
         }

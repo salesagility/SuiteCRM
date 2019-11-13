@@ -43,7 +43,7 @@ if (!defined('sugarEntry')) {
 
 
 /**
- * This class is an implemenatation class for all the rest services
+ * This class is an implementation class for all the rest services
  */
 require_once('service/v3_1/SugarWebServiceImplv3_1.php');
 require_once('SugarWebServiceUtilv4.php');
@@ -164,8 +164,8 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
 
             $num_grp_sep = $current_user->getPreference('num_grp_sep');
             $dec_sep = $current_user->getPreference('dec_sep');
-            $nameValueArray['user_number_seperator'] = self::$helperObject->get_name_value('user_number_seperator', empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep);
-            $nameValueArray['user_decimal_seperator'] = self::$helperObject->get_name_value('user_decimal_seperator', empty($dec_sep) ? $sugar_config['default_decimal_seperator'] : $dec_sep);
+            $nameValueArray['user_number_separator'] = self::$helperObject->get_name_value('user_number_separator', empty($num_grp_sep) ? $sugar_config['default_number_grouping_separator'] : $num_grp_sep);
+            $nameValueArray['user_decimal_separator'] = self::$helperObject->get_name_value('user_decimal_separator', empty($dec_sep) ? $sugar_config['default_decimal_separator'] : $dec_sep);
 
             $nameValueArray['mobile_max_list_entries'] = self::$helperObject->get_name_value('mobile_max_list_entries', $sugar_config['wl_list_max_entries_per_page']);
             $nameValueArray['mobile_max_subpanel_entries'] = self::$helperObject->get_name_value('mobile_max_subpanel_entries', $sugar_config['wl_list_max_entries_per_subpanel']);
@@ -236,23 +236,33 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
     /**
      * Retrieve a list of beans.  This is the primary method for getting list of SugarBeans from Sugar using the SOAP API.
      *
-     * @param String $session -- Session ID returned by a previous call to login.
-     * @param String $module_name -- The name of the module to return records from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
-     * @param String $query -- SQL where clause without the word 'where'
-     * @param String $order_by -- SQL order by clause without the phrase 'order by'
+     * @param string $session -- Session ID returned by a previous call to login.
+     * @param string $module_name -- The name of the module to return records from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method)..
+     * @param string $query -- SQL where clause without the word 'where'
+     * @param string $order_by -- SQL order by clause without the phrase 'order by'
      * @param integer $offset -- The record offset to start from.
-     * @param Array  $select_fields -- A list of the fields to be included in the results. This optional parameter allows for only needed fields to be retrieved.
-     * @param Array $link_name_to_fields_array -- A list of link_names and for each link_name, what fields value to be returned. For ex.'link_name_to_fields_array' => array(array('name' =>  'email_addresses', 'value' => array('id', 'email_address', 'opt_out', 'primary_address')))
-    * @param integer $max_results -- The maximum number of records to return.  The default is the sugar configuration value for 'list_max_entries_per_page'
-     * @param integer $deleted -- false if deleted records should not be include, true if deleted records should be included.
-     * @return Array 'result_count' -- integer - The number of records returned
+     * @param array $select_fields -- A list of the fields to be included in the results. This optional parameter allows for only needed fields to be retrieved.
+     * @param array $link_name_to_fields_array -- A list of link_names and for each link_name, what fields value to be returned. For ex.'link_name_to_fields_array' => array(array('name' =>  'email_addresses', 'value' => array('id', 'email_address', 'opt_out', 'primary_address')))
+     * @param integer $max_results -- The maximum number of records to return.  The default is the sugar configuration value for 'list_max_entries_per_page'
+     * @param bool $deleted -- false if deleted records should not be include, true if deleted records should be included.
+     * @return array 'result_count' -- integer - The number of records returned
      *               'next_offset' -- integer - The start of the next page (This will always be the previous offset plus the number of rows returned.  It does not indicate if there is additional data unless you calculate that the next_offset happens to be closer than it should be.
      *               'entry_list' -- Array - The records that were retrieved
-     *	     		 'relationship_list' -- Array - The records link field data. The example is if asked about accounts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
-    * @exception 'SoapFault' -- The SOAP error, if any
-    */
-    public function get_entry_list($session, $module_name, $query, $order_by, $offset, $select_fields, $link_name_to_fields_array, $max_results, $deleted, $favorites = false)
-    {
+     *                 'relationship_list' -- Array - The records link field data. The example is if asked about accounts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
+     * @exception 'SoapFault' -- The SOAP error, if any
+     */
+    public function get_entry_list(
+        $session = null,
+        $module_name = null,
+        $query = null,
+        $order_by = null,
+        $offset = null,
+        $select_fields = null,
+        $link_name_to_fields_array = null,
+        $max_results = null,
+        $deleted = false,
+        $favorites = false
+    ) {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_entry_list');
         global  $beanList, $beanFiles;
         $error = new SoapError();
@@ -318,7 +328,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
         } // foreach
 
         // Calculate the offset for the start of the next page
-        $next_offset = $offset + sizeof($output_list);
+        $next_offset = $offset + count($output_list);
 
         $returnRelationshipList = array();
         foreach ($linkoutput_list as $rel) {
@@ -339,7 +349,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
         }
 
         $GLOBALS['log']->info('End: SugarWebServiceImpl->get_entry_list - SUCCESS');
-        return array('result_count'=>sizeof($output_list), 'total_count' => $totalRecordCount, 'next_offset'=>$next_offset, 'entry_list'=>$output_list, 'relationship_list' => $returnRelationshipList);
+        return array('result_count'=>count($output_list), 'total_count' => $totalRecordCount, 'next_offset'=>$next_offset, 'entry_list'=>$output_list, 'relationship_list' => $returnRelationshipList);
     } // fn
 
     /**
@@ -487,10 +497,6 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
                 if ($beanName != "User"
                     && $beanName != "ProjectTask"
                     ) {
-                    $searchForm = new SearchForm($seed, $name) ;
-
-                    $searchForm->setup(array($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
-                    $where_clauses = $searchForm->generateSearchWhere() ;
                     require_once 'include/SearchForm/SearchForm2.php' ;
                     $searchForm = new SearchForm($seed, $name) ;
 
@@ -574,8 +580,6 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
                     if ($beanName == "ProjectTask") {
                         $filterFields = array('id', 'name', 'project_id', 'project_name');
                         $main_query = "select {$seed->table_name}.project_task_id id,{$seed->table_name}.project_id, {$seed->table_name}.name, project.name project_name from {$seed->table_name} ";
-                        $seed->add_team_security_where_clause($main_query);
-                        $main_query .= "LEFT JOIN teams ON $seed->table_name.team_id=teams.id AND (teams.deleted=0) ";
                         $main_query .= "LEFT JOIN project ON $seed->table_name.project_id = project.id ";
                         $main_query .= "where {$seed->table_name}.name like '{$search_string}%'";
                     } // if

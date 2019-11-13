@@ -87,14 +87,6 @@
             {if isset($col.type) && ($col.type == 'phone')}
                 {$icon_phone}
             {/if}
-            {* BEGIN SUGARCRM flav=pro ONLY *}
-            {if isset($field_defs.$field.calculated) && $field_defs.$field.calculated}
-                {sugar_getimage name="SugarLogic/icon_calculated" alt=$mod_strings.LBL_CALCULATED ext=".png" other_attributes='class="right_icon" '}
-            {/if}
-            {if isset($field_defs.$field.dependency) && $field_defs.$field.dependency}
-                {sugar_getimage name="SugarLogic/icon_dependent" ext=".png" alt=$mod_strings.LBL_DEPENDANT other_attributes='class="right_icon" '}
-            {/if}
-            {* END SUGARCRM flav=pro ONLY *}
             <span id='le_label_{$idCount}'>
             {if !empty($translate) && isset($col.label) && !empty($col.label)}
                 {eval var=$col.label data2=$col assign='newLabel'}
@@ -144,7 +136,7 @@
         </div>
         {if $panelid ne 'default'}
             {capture assign="otherAttributes"}class="le_edit" style="float:left; cursor:pointer;" onclick="editPanelProperties('{$idCount}');"{/capture}
-            <img src="themes/SuiteP/images/edit_inline.svg" {$otherAttributes}/>
+            <span class="glyphicon glyphicon-pencil" {$otherAttributes}></span>
         {/if}
         <span id="le_paneltype_{$idCount}" style="float:left;">
         &nbsp;&nbsp;{sugar_translate label="LBL_TABDEF_TYPE" module="ModuleBuilder"}&nbsp;{sugar_help text=$mod.LBL_TABDEF_TYPE_OPTION_HELP}:
@@ -185,14 +177,6 @@
                     {if isset($col.type) && ($col.type == 'phone')}
                         {$icon_phone}
                     {/if}
-                    {* BEGIN SUGARCRM flav=pro ONLY *}
-                    {if isset($field_defs.$field.calculated) && $field_defs.$field.calculated}
-                        {sugar_getimage name="SugarLogic/icon_calculated" alt=$mod_strings.LBL_CALCULATED ext=".png" other_attributes='class="right_icon"'}
-                    {/if}
-                    {if isset($field_defs.$field.dependency) && $field_defs.$field.dependency}
-                        {sugar_getimage name="SugarLogic/icon_dependent" ext=".png" alt=$mod_strings.LBL_DEPENDANT other_attributes='class="right_icon"'}
-                    {/if}
-                    {* END SUGARCRM flav=pro ONLY *}
                     <span id='le_label_{$idCount}'>
                     {if !empty($translate) && isset($col.label) && !empty($col.label)}
                         {eval var=$col.label data1=$col assign='label'}

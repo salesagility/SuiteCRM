@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -55,6 +55,7 @@ $mod_strings = array(
     'LBL_IMPORT' => 'Import',
     'LBL_LOADING' => 'Loading',
     'LBL_MARKING' => 'Marking',
+    'LBL_DELETING' => 'Deleting',
 
     'LBL_CONFIRM_DELETE_EMAIL' => 'Are you sure you want to delete this email?',
     'LBL_ENTER_FOLDER_NAME' => 'Please enter a folder name',
@@ -80,7 +81,7 @@ $mod_strings = array(
     'LBL_CONTACT_NAME' => 'Contact:',
     'LBL_CONTACTS_SUBPANEL_TITLE' => 'Contacts',
     'LBL_CREATED_BY' => 'Created by',
-    'LBL_DATE_SENT' => 'Date Sent:',
+    'LBL_DATE_SENT_RECEIVED' => 'Date Sent/Received:',
     'LBL_DATE' => 'Date Sent:',
     'LBL_DELETE_FROM_SERVER' => 'Delete message from server',
     'LBL_DESCRIPTION' => 'Description',
@@ -117,12 +118,12 @@ $mod_strings = array(
     'LBL_MESSAGE_SENT' => 'Message Sent',
     'LBL_MODIFIED_BY' => 'Modified By',
     'LBL_MODULE_NAME' => 'All Emails',
-    'LBL_MODULE_TITLE' => 'Emails: ',
+    'LBL_MODULE_TITLE' => 'Emails:',
     'LBL_MY_EMAILS' => 'Emails',
     'LBL_NEW_FORM_TITLE' => 'Archive Email',
     'LBL_NONE' => 'None',
     'LBL_NOT_SENT' => 'Send Error',
-    'LBL_NOTES_SUBPANEL_TITLE' => 'Attachments',
+    'LBL_NOTES_SUBPANEL_TITLE' => 'Attachments','LBL_MODULE_TITLE' => 'Emails:',
     'LBL_OPPORTUNITY_SUBPANEL_TITLE' => 'Opportunities',
     'LBL_PROJECT_SUBPANEL_TITLE' => 'Projects',
     'LBL_PROJECT_TASK_SUBPANEL_TITLE' => 'Project Tasks',
@@ -162,8 +163,8 @@ $mod_strings = array(
 
     'LBL_LIST_ASSIGNED' => 'Assigned',
     'LBL_LIST_CONTACT_NAME' => 'Contact Name',
-    'LBL_LIST_DATE_SENT' => 'Date Sent',
     'LBL_LIST_DATE' => 'Date Sent',
+    'LBL_LIST_DATE_SENT_RECEIVED' => 'Date Sent/Received',
     'LBL_LIST_FORM_DRAFTS_TITLE' => 'Draft',
     'LBL_LIST_FORM_SENT_TITLE' => 'Sent Emails',
     'LBL_LIST_FORM_TITLE' => 'Email List',
@@ -185,11 +186,12 @@ $mod_strings = array(
     'LBL_BUTTON_FORWARD' => 'Forward',
     'LBL_BUTTON_REPLY_TITLE' => 'Reply',
     'LBL_BUTTON_REPLY_ALL' => 'Reply All',
+    'LBL_BUTTON_DELETE_IMAP' => 'Delete from IMAP',
     'LBL_CASES_SUBPANEL_TITLE' => 'Cases',
     'LBL_INBOUND_TITLE' => 'Inbound Email',
     'LBL_INTENT' => 'Intent',
     'LBL_MESSAGE_ID' => 'Message ID',
-    'LBL_REPLY_HEADER_1' => 'On ',
+    'LBL_REPLY_HEADER_1' => 'On',
     'LBL_REPLY_HEADER_2' => 'wrote:',
     'LBL_REPLY_TO_ADDRESS' => 'Reply-to Address',
     'LBL_REPLY_TO_NAME' => 'Reply-to Name',
@@ -221,11 +223,11 @@ $mod_strings = array(
     'LBL_NEW' => 'New',
     'LBL_NEXT_EMAIL' => 'Next Free Item',
     'LBL_REPLIED' => 'Replied',
-    'LBL_TO' => 'To: ',
+    'LBL_TO' => 'To:',
     'LBL_TOGGLE_ALL' => 'Toggle All',
     'LBL_UNKNOWN' => 'Unknown',
     'LBL_USE' => 'Assign:',
-    'LBL_ASSIGN_SELECTED_RESULTS_TO' => 'Assign Selected Results To: ',
+    'LBL_ASSIGN_SELECTED_RESULTS_TO' => 'Assign Selected Results To:',
     'LBL_USER_SELECT' => 'Select Users',
     'LBL_USING_RULES' => 'Using Rules:',
     'LBL_WARN_NO_DIST' => 'No Distribution Method Selected',
@@ -287,7 +289,7 @@ $mod_strings = array(
     'LBL_SELECTED_ADDR' => 'Selected',
     'LBL_ADD_CC_BCC_SEP' => '|',
     'LBL_SEND_EMAIL_FAIL_TITLE' => 'Error Sending Email',
-    'LBL_EMAIL_DETAIL_VIEW_SHOW' => 'show ',
+    'LBL_EMAIL_DETAIL_VIEW_SHOW' => 'show',
     'LBL_EMAIL_DETAIL_VIEW_MORE' => ' more',
     'LBL_MORE_OPTIONS' => 'More',
     'LBL_LESS_OPTIONS' => 'Less',
@@ -370,7 +372,7 @@ $mod_strings = array(
     'LBL_ORPHANED' => 'Orphaned',
     'LBL_IMAP_KEYWORDS' => 'IMAP Keywords',
     'LBL_ERROR_NO_FOLDERS' => 'Error: There are no folders available. Please check your email settings.',
-    'LBL_ORIGINAL_MESSAGE_SEPERATOR' => '---',
+    'LBL_ORIGINAL_MESSAGE_SEPARATOR' => '---',
 
 
     'LBL_MARK_UNREAD' => 'Mark As Unread',
@@ -385,4 +387,28 @@ $mod_strings = array(
 
     'LBL_LIST_DATE_MODIFIED' => 'Last Modified',
     'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
+    
+    // Email Validation Error messages. Typicaly for Email Validation:
+    'ERR_FIELD_FROM_IS_NOT_SET' => 'From field is not set.',
+    'ERR_FIELD_FROM_IS_EMPTY' => 'From field is empty.',
+    'ERR_FIELD_FROM_IS_INVALID' => 'From field is invalid.',
+    'ERR_FIELD_FROM_ADDR_IS_NOT_SET' => 'From address is not set.',
+    'ERR_FIELD_FROM_ADDR_IS_EMPTY' => 'From address is empty.',
+    'ERR_FIELD_FROM_ADDR_IS_INVALID' => 'From address is invalid.',
+    'ERR_FIELD_FROMNAME_IS_NOT_SET' => 'From-name is not set.',
+    'ERR_FIELD_FROMNAME_IS_EMPTY' => 'From-name is empty.',
+    'ERR_FIELD_FROMNAME_IS_INVALID' => 'From-name is invalid.',
+    'ERR_FIELD_FROM_NAME_IS_NOT_SET' => 'From name is not set.',
+    'ERR_FIELD_FROM_NAME_IS_EMPTY' => 'From name is empty.',
+    'ERR_FIELD_FROM_NAME_IS_INVALID' => 'From name is invalid.',
+    'ERR_FIELD_FROM_ADDR_NAME_IS_NOT_SET' => 'From address and name pair is not set.',
+    'ERR_FIELD_FROM_ADDR_NAME_IS_EMPTY' => 'From address and name pair is empty.',
+    'ERR_FIELD_FROM_ADDR_NAME_IS_INVALID' => 'From address and name pair is invalid.',
+    'ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX' => 'From address and name pair format is incorrect, use "from@emailaddress.org <Name of Person>" format.',
+    'ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART' => 'Invalid name part of From address and name pair.',
+    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART' => 'Invalid email address part of From address and name pair.',
+    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM' => 'From address and name pair does not match to from name or email address.',
+    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR' => 'From address and name pair does not match to from address.',
+    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME' => 'From address and name pair does not match to from-name.',
+    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME' => 'From address and name pair does not match to from name.',
 );

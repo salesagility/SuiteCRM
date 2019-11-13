@@ -245,13 +245,13 @@ function disableReturnSubmission(e) {
                     </td>
                     <td nowrap="nowrap" scope="row">{sugar_translate module='Administration' label='LBL_LOCALE_DEFAULT_NUMBER_GROUPING_SEP'}: </td>
                     <td>
-                        <input type='text' size='3' maxlength='1' name='default_number_grouping_seperator' value='{$config.default_number_grouping_seperator}'>
+                        <input type='text' size='3' maxlength='1' name='default_number_grouping_separator' value='{$config.default_number_grouping_separator}'>
                     </td>
                 </tr>
                 <tr>
                     <td nowrap="nowrap" scope="row">{sugar_translate module='Administration' label='LBL_LOCALE_DEFAULT_DECIMAL_SEP'}: </td>
                     <td>
-                        <input type='text' size='3' maxlength='1' name='default_decimal_seperator'  value='{$config.default_decimal_seperator}'>
+                        <input type='text' size='3' maxlength='1' name='default_decimal_separator'  value='{$config.default_decimal_separator}'>
                     </td>
                     <td nowrap="nowrap" scope="row"></td>
                     <td></td>

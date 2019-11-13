@@ -1,6 +1,5 @@
 <?php
 
-require_once('include/MVC/View/views/view.list.php');
 require_once('modules/Accounts/AccountsListViewSmarty.php');
 
 class AccountsViewList extends ViewList

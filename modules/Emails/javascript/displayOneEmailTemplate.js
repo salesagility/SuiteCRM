@@ -70,7 +70,7 @@ SUGAR.email2.templates['displayOneEmail'] =
 '				</tr>' +
 '				<tr>' +
 '					<td NOWRAP valign="top" class="displayEmailLabel">' +
-'						{app_strings.LBL_EMAIL_DATE_SENT_BY_SENDER}:' +
+'						{app_strings.LBL_EMAIL_DATE_SENT_RECEIVED_BY_SENDER}:' +
 '					</td>' +
 '					<td class="displayEmailValue">' +
 '						{email.date_start} {email.time_start}' +

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -77,13 +77,13 @@ $mod_strings = array(
     'LBL_OTHER_PHONE' => 'Other Phone:',
     'LBL_NOTES' => 'Notes:',
     'LBL_DEPARTMENT' => 'Department:',
-    'LBL_TITLE' => 'Title:',
+    'LBL_TITLE' => 'Job Title:',
     'LBL_ANY_ADDRESS' => 'Any Address:',
     'LBL_ANY_PHONE' => 'Any Phone:',
     'LBL_ANY_EMAIL' => 'Any Email:',
     'LBL_ADDRESS' => 'Address:',
     'LBL_CITY' => 'City:',
-    'LBL_STATE' => 'State:',
+    'LBL_STATE' => 'State/Region:',
     'LBL_POSTAL_CODE' => 'Postal Code:',
     'LBL_COUNTRY' => 'Country:',
     'LBL_NAME' => 'Name:',

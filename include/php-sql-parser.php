@@ -209,7 +209,7 @@ EOREGEX
                     $trim=trim(substr(
                         $trim,
                         0,
-                                strpos($trim, '(')
+                        strpos($trim, '(')
                     ));
                 }
                 $tokens[$i]=$trim;
@@ -787,12 +787,12 @@ EOREGEX
                 #remove the last token
                 array_pop($tokens);
 
-                $base_expr = join("", $tokens);
+                $base_expr = implode("", $tokens);
             }
         }
 
         if (!$alias) {
-            $base_expr=join("", $tokens);
+            $base_expr=implode("", $tokens);
             $alias = $base_expr;
         }
 

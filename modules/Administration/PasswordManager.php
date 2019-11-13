@@ -45,6 +45,8 @@ if (!is_admin($current_user)) {
     sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }
 
+include_once __DIR__ . '/../../include/Imap/ImapHandlerFactory.php';
+
 function clearPasswordSettings()
 {
     $_POST['passwordsetting_SystemGeneratedPasswordON'] = '';
@@ -63,7 +65,7 @@ function clearPasswordSettings()
 
 require_once('modules/Administration/Forms.php');
 echo getClassicModuleTitle(
-        "Administration",
+    "Administration",
     array(
     "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME', 'Administration') . "</a>",
     $mod_strings['LBL_MANAGE_PASSWORD_TITLE'],
@@ -78,7 +80,8 @@ $configurator->parseLoggerSettings();
 $valid_public_key = true;
 if (!empty($_POST['saveConfig'])) {
     if ($_POST['captcha_on'] == '1') {
-        $handle = @fopen("http://www.google.com/recaptcha/api/challenge?k=" . $_POST['captcha_public_key'] . "&cachestop=35235354", "r");
+        $handle = @fopen("http://www.google.com/recaptcha/api/challenge?k=" . $_POST['captcha_public_key'] . "&cachestop=35235354",
+            'rb');
         $buffer = '';
         if ($handle) {
             while (!feof($handle)) {
@@ -130,6 +133,7 @@ if (!empty($_POST['saveConfig'])) {
         $configurator->config['passwordsetting']['onelower'] = $_POST['passwordsetting_onelower'];
         $configurator->config['passwordsetting']['onenumber'] = $_POST['passwordsetting_onenumber'];
         $configurator->config['passwordsetting']['onespecial'] = $_POST['passwordsetting_onespecial'];
+		$configurator->config['passwordsetting']['minpwdlength'] = $_POST['passwordsetting_minpwdlength'];
 
         $configurator->saveConfig();
 
@@ -146,7 +150,9 @@ require_once('include/SugarLogger/SugarLogger.php');
 $sugar_smarty = new Sugar_Smarty();
 
 // if no IMAP libraries available, disable Save/Test Settings
-if (!function_exists('imap_open')) {
+$imapFactory = new ImapHandlerFactory();
+$imap = $imapFactory->getImapHandler();
+if (!$imap->isAvailable()) {
     $sugar_smarty->assign('IE_DISABLED', 'DISABLED');
 }
 

@@ -219,7 +219,7 @@ EOQ;
             </div>
 
             <footer id="install_footer">
-                <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
+                <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/suitecrm/forum" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
             </footer>
         </div>
     </body>
@@ -569,7 +569,7 @@ EOQ3;
             foreach ($_SESSION['installation_scenarios'] as $scenario) {
                 $key = $scenario['key'];
                 $description = $scenario['description'];
-                $scenarioModuleList =  implode($scenario['modulesScenarioDisplayName'], ',');
+                $scenarioModuleList = implode(',', $scenario['modulesScenarioDisplayName']);
                 $title = $scenario['title'];
 
                 $scenarioSelection.= "<input type='checkbox' name='scenarios[]' value='$key' checked><b>$title</b>.  $description ($scenarioModuleList).<br>";
@@ -1083,13 +1083,13 @@ EOQ;
                 <!--
                 <div class="formrow">
                     <label>{$mod_strings['LBL_NUMBER_GROUPING_SEP']}</label>
-                    <input type="text" name="default_number_grouping_seperator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_number_grouping_seperator']}">
+                    <input type="text" name="default_number_grouping_separator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_number_grouping_separator']}">
                 </div>
 
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_DECIMAL_SEP']}</label>
-                    <input type="text" name="default_decimal_seperator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_decimal_seperator']}">
+                    <input type="text" name="default_decimal_separator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_decimal_separator']}">
                 </div>
 
                 <div class="clear"></div>

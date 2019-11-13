@@ -376,8 +376,8 @@ EOD;
                         sum(amount_usdollar/1000) AS total
                     FROM users,opportunities  ";
         $query .= " WHERE opportunities.assigned_user_id IN ('{$GLOBALS['current_user']->id}') " .
-            " AND opportunities.date_closed >= ". db_convert("'".$this->mypbss_date_start."'", 'date').
-            " AND opportunities.date_closed <= ".db_convert("'".$this->mypbss_date_end."'", 'date') .
+            " AND opportunities.date_closed >= ". DBManager::convert("'".$this->mypbss_date_start."'", 'date').
+            " AND opportunities.date_closed <= ". DBManager::convert("'".$this->mypbss_date_end."'", 'date') .
             " AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
         if (count($this->mypbss_sales_stages) > 0) {
             $query .= " AND opportunities.sales_stage IN ('" . implode("','", $this->mypbss_sales_stages) . "') ";

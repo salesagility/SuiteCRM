@@ -116,17 +116,21 @@
   $.fn.openComposeViewModal = function (source) {
     "use strict";
 
+    window.event.preventDefault();
+    window.event.stopImmediatePropagation();
+
     var self = this;
-    var beanId = $('[name="record"]').val();
     self.emailComposeView = null;
     var opts = $.extend({}, $.fn.EmailsComposeViewModal.defaults);
     var composeBox = $('<div></div>').appendTo(opts.contentSelector);
     composeBox.messageBox({"showHeader": false, "showFooter": false, "size": 'lg'});
     composeBox.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
     composeBox.show();
+    var relatedId = $('[name="record"]').val();
     var ids = '&ids=';
     if ($(source).attr('data-record-id') !== '') {
       ids = ids + $(source).attr('data-record-id');
+      relatedId = $(source).attr('data-record-id');
     }
     else{
       var inputs = document.MassUpdate.elements;
@@ -136,11 +140,12 @@
         }
       }
     }
+
     var targetModule = currentModule;
     if ($(source).attr('data-module') !== '') {
       targetModule = $(source).attr('data-module');
     }
-    var url = 'index.php?module=Emails&action=ComposeView&in_popup=1&targetModule=' + targetModule + ids + '&relatedModule=' + currentModule + '&relatedId=' + beanId;
+    var url = 'index.php?module=Emails&action=ComposeView&in_popup=1&targetModule=' + targetModule + ids + '&relatedModule=' + currentModule + '&relatedId=' + relatedId;
     $.ajax({
       type: "GET",
       cache: false,
@@ -185,19 +190,16 @@
         if (dataEmailAddress !== '') {
           populateEmailAddress = dataEmailAddress;
         }
-        if (targetCount > 0) {
-          targetList = targetList + ',';
+        if (populateEmailAddress !== '') {
+          if (targetCount > 0) {
+            targetList = targetList + ',';
+          }
+          targetList = targetList + dataEmailName + ' <' + populateEmailAddress + '>';
+          targetCount++;
         }
-        targetList = targetList + dataEmailName + ' <' + populateEmailAddress + '>';
-        targetCount++;
       });
       if (targetCount > 0) {
-        if (populateEmailAddress !== '') {
-          $(self.emailComposeView).find('#to_addrs_names').val(targetList);
-        }
-        else {
-          $(self.emailComposeView).find('#name').val(populateModuleName);
-        }
+        $(self.emailComposeView).find('#to_addrs_names').val(targetList);
         if (targetCount < 2) {
           $(self.emailComposeView).find('#parent_type').val(populateModule);
           $(self.emailComposeView).find('#parent_name').val(populateModuleName);

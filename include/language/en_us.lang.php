@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -447,6 +447,11 @@ $app_list_strings = array(
 
         'Tasks' => 'Task',
 
+        'AOS_Contracts' => 'Contract',
+        'AOS_Invoices' => 'Invoice',
+        'AOS_Quotes' => 'Quote',
+        'AOS_Products' => 'Product',
+
     ),
 
     'record_type_display_notes' => array(
@@ -465,6 +470,11 @@ $app_list_strings = array(
 
         'Meetings' => 'Meeting',
         'Calls' => 'Call',
+
+        'AOS_Contracts' => 'Contract',
+        'AOS_Invoices' => 'Invoice',
+        'AOS_Quotes' => 'Quote',
+        'AOS_Products' => 'Product',
     ),
 
     'parent_type_display' => array(
@@ -481,6 +491,11 @@ $app_list_strings = array(
         'ProjectTask' => 'Project Task',
 
         'Prospects' => 'Target',
+        
+        'AOS_Contracts' => 'Contract',
+        'AOS_Invoices' => 'Invoice',
+        'AOS_Quotes' => 'Quote',
+        'AOS_Products' => 'Product',        
 
     ),
     'parent_line_items' => array(
@@ -1176,7 +1191,7 @@ $app_strings = array(
     'LBL_EMAIL_FOLDERS' => SugarThemeRegistry::current()->getImage(
         'icon_email_folder',
         'align=absmiddle border=0',
-            null,
+        null,
         null,
         '.gif',
         ''
@@ -1347,7 +1362,7 @@ $app_strings = array(
     'LBL_EMAIL_SETTINGS_TITLE_LAYOUT' => 'Visual Settings',
     'LBL_EMAIL_SETTINGS_TITLE_PREFERENCES' => 'Preferences',
     'LBL_EMAIL_SETTINGS_USER_FOLDERS' => 'Available User Folders',
-    'LBL_EMAIL_ERROR_PREPEND' => 'Error:',
+    'LBL_EMAIL_ERROR_PREPEND' => 'An email error occurred:',
     'LBL_EMAIL_INVALID_PERSONAL_OUTBOUND' => 'The outbound mail server selected for the mail account you are using is invalid. Check the settings or select a different mail server for the mail account.',
     'LBL_EMAIL_INVALID_SYSTEM_OUTBOUND' => 'An outgoing mail server is not configured to send emails. Please configure an outgoing mail server or select an outgoing mail server for the mail account that you are using in Settings >> Mail Account.',
     'LBL_DEFAULT_EMAIL_SIGNATURES' => 'Default Signature',
@@ -2852,6 +2867,7 @@ $app_list_strings ['emailTemplates_type_list'] = array(
     '' => '',
     'campaign' => 'Campaign',
     'email' => 'Email',
+    'event' => 'Event',
 );
 
 $app_list_strings ['emailTemplates_type_list_campaigns'] = array(
@@ -2863,6 +2879,7 @@ $app_list_strings ['emailTemplates_type_list_no_workflow'] = array(
     '' => '',
     'campaign' => 'Campaign',
     'email' => 'Email',
+    'event' => 'Event',
     'system' => 'System',
 );
 
@@ -3478,8 +3495,6 @@ $app_strings['LBL_RESCHEDULE_COUNT'] = 'Call Attempts';
 
 //SecurityGroups
 $app_list_strings['moduleList']['SecurityGroups'] = 'Security Suite Management';
-$app_strings['LBL_LOGIN_AS'] = 'Login as ';
-$app_strings['LBL_LOGOUT_AS'] = 'Logout as ';
 $app_strings['LBL_SECURITYGROUP'] = 'Security Group';
 
 $app_list_strings['moduleList']['OutboundEmailAccounts'] = 'Outbound Email Accounts';
@@ -3645,7 +3660,7 @@ $app_list_strings['oauth2_duration_units'] = [
 
 
 $app_strings['LBL_DEFAULT_API_ERROR_TITLE'] = 'JSON API Error';
-$app_strings['LBL_DEFAULT_API_ERROR_DETAIL'] = 'JSON API Error occured.';
+$app_strings['LBL_DEFAULT_API_ERROR_DETAIL'] = 'JSON API Error occurred.';
 $app_strings['LBL_API_EXCEPTION_DETAIL'] = 'Api Version: 8';
 $app_strings['LBL_BAD_REQUEST_EXCEPTION_DETAIL'] = 'Please ensure you fill in the fields required';
 $app_strings['LBL_EMPTY_BODY_EXCEPTION_DETAIL'] = 'Json API expects body of the request to be JSON';
@@ -3658,3 +3673,12 @@ $app_strings['LBL_UNSUPPORTED_MEDIA_TYPE_EXCEPTION_DETAIL'] = 'Json API expects 
 $app_strings['MSG_BROWSER_NOTIFICATIONS_ENABLED'] = 'Desktop notifications are now enabled for this web browser.';
 $app_strings['MSG_BROWSER_NOTIFICATIONS_DISABLED'] = 'Desktop notifications are disabled for this web browser. Use your browser preferences to enable them again.';
 $app_strings['MSG_BROWSER_NOTIFICATIONS_UNSUPPORTED'] = 'This browser does not support desktop notifications.';
+
+$app_strings['IMAP_HANDLER_ERROR'] = 'ERROR: {error}; key was: "{key}".';
+$app_strings['IMAP_HANDLER_SUCCESS'] = 'OK: test settings changed to "{key}"';
+$app_strings['IMAP_HANDLER_ERROR_INVALID_REQUEST'] = 'Invalid request, use "{var}" value.';
+$app_strings['IMAP_HANDLER_ERROR_UNKNOWN_BY_KEY'] = 'Unknown error occurred, key "{key}" not saved.';
+$app_strings['IMAP_HANDLER_ERROR_NO_TEST_SET'] = 'Test settings does not exists.';
+$app_strings['IMAP_HANDLER_ERROR_NO_KEY'] = 'Key not found.';
+$app_strings['IMAP_HANDLER_ERROR_KEY_SAVE'] = 'Key saving error.';
+$app_strings['IMAP_HANDLER_ERROR_UNKNOWN'] = 'Unknown error';

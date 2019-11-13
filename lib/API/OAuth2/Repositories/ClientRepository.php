@@ -42,7 +42,6 @@ namespace SuiteCRM\API\OAuth2\Repositories;
 
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
 use SuiteCRM\API\OAuth2\Entities\ClientEntity;
-use League\OAuth2\Server\Exception\OAuthServerException;
 use SuiteCRM\API\OAuth2\Exception\GrantTypeNotAllowedForClient;
 
 class ClientRepository implements ClientRepositoryInterface
@@ -66,7 +65,7 @@ class ClientRepository implements ClientRepositoryInterface
         if (
             $mustValidateSecret === true
             && (bool)$client->is_confidential === true
-            && password_verify($clientSecret, $client->secret) === false
+            && hash('sha256', $clientSecret) !== $client->secret
         ) {
             return null;
         }

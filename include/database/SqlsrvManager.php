@@ -314,7 +314,7 @@ class SqlsrvManager extends MssqlManager
     {
         if ((isset($fielddef2['dbType']) && $fielddef2['dbType'] == 'id') || preg_match(
             '/(_id$|^id$)/',
-                $fielddef2['name']
+            $fielddef2['name']
         )
         ) {
             if (isset($fielddef1['type']) && isset($fielddef2['type'])) {
@@ -408,7 +408,7 @@ class SqlsrvManager extends MssqlManager
 
             if (!empty($row['IS_NULLABLE']) && $row['IS_NULLABLE'] == 'NO' && (empty($row['KEY']) || !stristr(
                 $row['KEY'],
-                        'PRI'
+                'PRI'
             ))
             ) {
                 $columns[strtolower($row['COLUMN_NAME'])]['required'] = 'true';
@@ -546,7 +546,7 @@ EOSQL;
         }
 
         if (!empty($messages)) {
-            return join("\n", $messages);
+            return implode("\n", $messages);
         }
 
         return false;

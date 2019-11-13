@@ -25,7 +25,7 @@ function smarty_make_timestamp($string)
             substr($string, 8, 2),
             substr($string, 10, 2),
             substr($string, 12, 2),
-                       substr($string, 4, 2),
+            substr($string, 4, 2),
             substr($string, 6, 2),
             substr($string, 0, 4)
         );

@@ -1,6 +1,9 @@
 <?php
+
 namespace Helper;
 
+use Codeception\Exception\ModuleException;
+use Codeception\Module;
 use SuiteCRM\Enumerator\DatabaseDriver;
 
 /**
@@ -8,23 +11,22 @@ use SuiteCRM\Enumerator\DatabaseDriver;
  * @package Helper
  * Helps to get configuration / environment variables for the PhpBrowser Driver
  */
-class PhpBrowserDriverHelper extends \Codeception\Module
+class PhpBrowserDriverHelper extends Module
 {
 
     /**
      * @return array|mixed|null
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function getConfig()
     {
-        $webDriver = $this->moduleContainer->getModule('PhpBrowser');
-        return $webDriver->_getConfig();
+        return $this->moduleContainer->getModule('PhpBrowser')->_getConfig();
     }
 
     /**
      * Gets the 'INSTANCE_URL' environment variable or 'url' in a yaml file.
      * @return string the test instance url.
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function getInstanceURL()
     {
@@ -36,9 +38,9 @@ class PhpBrowserDriverHelper extends \Codeception\Module
 
     /**
      * Gets the 'DATABASE_DRIVER' environment variable or 'database_driver' in a yaml file.
-     * @see DatabaseDriver
      * @return string
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
+     * @see DatabaseDriver
      */
     public function getDatabaseDriver()
     {
@@ -51,7 +53,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
     /**
      * Gets the 'DATABASE_NAME' environment variable or 'database_name' in a yaml file.
      * @return string
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function getDatabaseName()
     {
@@ -65,7 +67,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
     /**
      * Gets the 'DATABASE_HOST' environment variable or 'database_host' in a yaml file.
      * @return string
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function getDatabaseHost()
     {
@@ -78,7 +80,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
     /**
      * Gets the 'DATABASE_USER' environment variable or 'database_user' in a yaml file.
      * @return string the test instance url.
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function getDatabaseUser()
     {
@@ -91,7 +93,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
     /**
      * Gets the 'DATABASE_PASSWORD' environment variable or 'database_password' in a yaml file.
      * @return string
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function getDatabasePassword()
     {
@@ -106,7 +108,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
      * Gets the 'INSTANCE_ADMIN_USER' environment variable or 'instance_admin_user' in a yaml file.
      *
      * @return string
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function getAdminUser()
     {
@@ -119,7 +121,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
     /**
      * Gets the 'INSTANCE_ADMIN_PASSWORD' environment variable or 'instance_admin_password' in a yaml file.
      * @return string
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function getAdminPassword()
     {
@@ -131,7 +133,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
 
     /**
      * @return array|false|string
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function getPasswordGrantClientId()
     {
@@ -143,7 +145,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
 
     /**
      * @return string
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function getPasswordGrantClientSecret()
     {
@@ -155,7 +157,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
 
     /**
      * @return array|false|string
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function getClientCredentialsGrantClientId()
     {
@@ -167,7 +169,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
 
     /**
      * @return string
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function getClientCredentialsGrantClientSecret()
     {
@@ -181,7 +183,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
      * @param string $variable
      * @param string $default
      * @return string
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     private function getEnvironmentVariableOrDefault($variable, $default)
     {
@@ -190,16 +192,14 @@ class PhpBrowserDriverHelper extends \Codeception\Module
 
         $env = getenv($upperCase);
         if ($env === false) {
-            $webDriver = $this->moduleContainer->getModule('PhpBrowser');
-            $config = $webDriver->_getConfig();
+            $config = $this->moduleContainer->getModule('PhpBrowser')->_getConfig();
             if (empty($config[$upperCase])) {
-                // return default
                 return $default;
-            } else {
-                return $config[$lowerCase];
             }
-        } else {
-            return $env;
+
+            return $config[$lowerCase];
         }
+
+        return $env;
     }
 }

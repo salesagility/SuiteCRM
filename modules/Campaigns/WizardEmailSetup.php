@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,22 +38,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
-
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
-/*************** general UI Stuff ****************/
-
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+       die('Not A Valid Entry Point');
+}
 
 global $mod_strings,$app_list_strings,$app_strings,$current_user;
 
+require_once __DIR__ . "/../../include/Imap/ImapHandlerFactory.php";
 
 if (!is_admin($current_user)&& !is_admin_for_module($GLOBALS['current_user'], 'Campaigns')) {
     sugar_die("Unauthorized access to administration.");
@@ -177,7 +165,12 @@ $mboxTable .= "</table>";
 $ss->assign("MAILBOXES_DETECTED_MESSAGE", $mboxTable);
 $ss->assign("MBOX_NEEDED", $need_mbox);
 $ss->assign('ROLLOVER', $email->rolloverStyle);
-if (!function_exists('imap_open')) {
+
+
+
+$imapFactory = new ImapHandlerFactory();
+$imap = $imapFactory->getImapHandler();
+if (!$imap->isAvailable()) {
     $ss->assign('IE_DISABLED', 'DISABLED');
 }
 /**************************** SUMMARY UI DIV Stuff *******************/
@@ -202,7 +195,7 @@ if (!function_exists('imap_open')) {
     }
     
     //this function will copy as much information as possible from the first step in wizard
-    //onto the the second step in wizard
+    //onto the second step in wizard
     function copy_down() {
         document.getElementById("name").value = document.getElementById("notify_fromname").value;
         document.getElementById("email_user").value = document.getElementById("notify_fromaddress").value;

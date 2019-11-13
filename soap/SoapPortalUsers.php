@@ -61,10 +61,10 @@ THIS IS FOR PORTAL USERS
 this authenticates a user as a portal user and returns the session id or it returns false otherwise;
 */
 $server->register(
-        'portal_login',
-        array('portal_auth'=>'tns:user_auth','user_name'=>'xsd:string', 'application_name'=>'xsd:string'),
-        array('return'=>'tns:set_entry_result'),
-        $NAMESPACE
+    'portal_login',
+    array('portal_auth'=>'tns:user_auth','user_name'=>'xsd:string', 'application_name'=>'xsd:string'),
+    array('return'=>'tns:set_entry_result'),
+    $NAMESPACE
 );
 
 function portal_login($portal_auth, $user_name, $application_name)
@@ -148,10 +148,10 @@ function portal_validate_authenticated($session_id)
 
 
 $server->register(
-        'portal_logout',
-        array('session'=>'xsd:string'),
-        array('return'=>'tns:error_value'),
-        $NAMESPACE
+    'portal_logout',
+    array('session'=>'xsd:string'),
+    array('return'=>'tns:error_value'),
+    $NAMESPACE
 );
 function portal_logout($session)
 {
@@ -165,10 +165,10 @@ function portal_logout($session)
 }
 
 $server->register(
-        'portal_get_sugar_id',
-        array('session'=>'xsd:string'),
-        array('return'=>'tns:set_entry_result'),
-        $NAMESPACE
+    'portal_get_sugar_id',
+    array('session'=>'xsd:string'),
+    array('return'=>'tns:set_entry_result'),
+    $NAMESPACE
 );
 function portal_get_sugar_id($session)
 {
@@ -181,10 +181,10 @@ function portal_get_sugar_id($session)
 }
 
 $server->register(
-        'portal_get_sugar_contact_id',
-        array('session'=>'xsd:string'),
-        array('return'=>'tns:set_entry_result'),
-        $NAMESPACE
+    'portal_get_sugar_contact_id',
+    array('session'=>'xsd:string'),
+    array('return'=>'tns:set_entry_result'),
+    $NAMESPACE
 );
 function portal_get_sugar_contact_id($session)
 {
@@ -275,7 +275,7 @@ function portal_get_entry_list_filter($session, $module_name, $order_by, $select
 
                         $where .=  "$sugar->table_name$cstm.$name $operator ";
                         if ($sugar->field_defs['name']['type'] == 'datetime') {
-                            $where .= db_convert("'".DBManagerFactory::getInstance()->quote($value)."'", 'datetime');
+                            $where .= DBManager::convert("'".DBManagerFactory::getInstance()->quote($value)."'", 'datetime');
                         } else {
                             if (empty($value)) {
                                 $tmp = array();
@@ -382,7 +382,7 @@ function portal_set_entry($session, $module_name, $name_value_list)
         return array('id'=>-1, 'error'=>$error->get_soap_array());
     }
 
-    if ($_SESSION['type'] == 'contact' && !key_exists($module_name, $valid_modules_for_contact)) {
+    if ($_SESSION['type'] == 'contact' && !array_key_exists($module_name, $valid_modules_for_contact)) {
         $error->set_error('no_access');
         return array('id'=>-1, 'error'=>$error->get_soap_array());
     }
@@ -417,10 +417,10 @@ function portal_set_entry($session, $module_name, $name_value_list)
     }
 
     if (!$is_update) {
-        if (isset($_SESSION['assigned_user_id']) && (!key_exists('assigned_user_id', $values_set) || empty($values_set['assigned_user_id']))) {
+        if (isset($_SESSION['assigned_user_id']) && (!array_key_exists('assigned_user_id', $values_set) || empty($values_set['assigned_user_id']))) {
             $seed->assigned_user_id = $_SESSION['assigned_user_id'];
         }
-        if (isset($_SESSION['account_id']) && (!key_exists('account_id', $values_set) || empty($values_set['account_id']))) {
+        if (isset($_SESSION['account_id']) && (!array_key_exists('account_id', $values_set) || empty($values_set['account_id']))) {
             $seed->account_id = $_SESSION['account_id'];
         }
         $seed->portal_flag = 1;
@@ -458,10 +458,10 @@ function portal_set_entry($session, $module_name, $name_value_list)
 NOTE SPECIFIC CODE
 */
 $server->register(
-        'portal_set_note_attachment',
-        array('session'=>'xsd:string','note'=>'tns:note_attachment'),
-        array('return'=>'tns:set_entry_result'),
-        $NAMESPACE
+    'portal_set_note_attachment',
+    array('session'=>'xsd:string','note'=>'tns:note_attachment'),
+    array('return'=>'tns:set_entry_result'),
+    $NAMESPACE
 );
 
 function portal_set_note_attachment($session, $note)
@@ -633,7 +633,7 @@ function portal_get_related_notes($session, $module_name, $module_id, $select_fi
     $field_list = filter_field_list($field_list, $select_fields, $module_name);
 
 
-    return array('result_count'=>sizeof($output_list), 'next_offset'=>0,'field_list'=>$field_list, 'entry_list'=>$output_list, 'error'=>$error->get_soap_array());
+    return array('result_count'=>count($output_list), 'next_offset'=>0,'field_list'=>$field_list, 'entry_list'=>$output_list, 'error'=>$error->get_soap_array());
 }
 
 $server->register(
@@ -709,7 +709,7 @@ function portal_get_module_fields($session, $module_name)
         return array('module_name'=>$module_name, 'module_fields'=>$module_fields, 'error'=>$error->get_soap_array());
     }
 
-    if (($_SESSION['type'] == 'portal'||$_SESSION['type'] == 'contact') &&  !key_exists($module_name, $valid_modules_for_contact)) {
+    if (($_SESSION['type'] == 'portal'||$_SESSION['type'] == 'contact') &&  !array_key_exists($module_name, $valid_modules_for_contact)) {
         $error->set_error('no_module');
         return array('module_name'=>$module_name, 'module_fields'=>$module_fields, 'error'=>$error->get_soap_array());
     }

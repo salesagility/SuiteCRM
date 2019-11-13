@@ -88,7 +88,6 @@ $dictionary['OAuth2Clients'] = [
             'vname' => 'LBL_IS_CONFIDENTIAL',
             'type' => 'bool',
             'default' => true,
-            'required' => true,
             'reportable' => false,
             'api-visible' => false,
             'inline_edit' => false,
@@ -170,7 +169,8 @@ $dictionary['OAuth2Clients'] = [
             'table' => 'users',
             'id_name' => 'assigned_user_id',
             'module' => 'Users',
-            'duplicate_merge' => 'disabled'
+            'duplicate_merge' => 'disabled',
+            'required' => true,
         ],
         'assigned_user_link' => [
             'name' => 'assigned_user_link',

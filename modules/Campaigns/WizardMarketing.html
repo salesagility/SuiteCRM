@@ -299,15 +299,6 @@
 
 			var func = emailTemplateCopyId || $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
 
-//			<!-- BEGIN: NoInbound1 -->
-//			addUploadFiles('wizform');
-//			addUploadDocs('wizform');
-//			<!-- END: NoInbound1 -->
-
-//			var getAttachmentsForAdd = function() {
-//				// todo: !@#
-//			};
-//
 			var getAttachmentsForRemove = function() {
 				var attachmentsForRemove = [];
 				$('#step1_uploader input[type="checkbox"]').each(function(){
@@ -570,7 +561,7 @@
 					<div class="button-group" id="show_buttons_frm">
 						<input type="button" id="LBL_SAVE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_SAVE_EMAIL_TEMPLATE_BTN}" onclick="EmailTemplateController('save')">
 					<!-- </div> -->
-					<!-- <div class="button-group-seperator"></div> -->
+					<!-- <div class="button-group-separator"></div> -->
 					<!-- <div class="button-group"> -->
 						<input type="button" id="LBL_CREATE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_CREATE_EMAIL_TEMPLATE_BTN}" onclick="EmailTemplateController('create')" class="">
 					</div>
@@ -591,7 +582,7 @@
 					<div class="button-group">
 						<input type="button" value="{$MOD.LBL_INSERT_TRACKER_BTN}" onclick="EmailTrackerController('insert', '{$CAMPAIGN_ID}');">
 					</div>
-					<div class="button-group-seperator"></div>
+					<div class="button-group-separator"></div>
 					<div class="button-group">
 						<input type='button' id="LBL_CREATE_TRACKER_BTN" tabindex="0" class='button' value='{$MOD.LBL_CREATE_TRACKER_BTN}' onclick="EmailTrackerController('create', '{$CAMPAIGN_ID}')">
 						<input type='button' id="LBL_EDIT_TRACKER_BTN" tabindex="0" class='button' value='{$MOD.LBL_EDIT_TRACKER_BTN}' onclick="EmailTrackerController('edit', '{$CAMPAIGN_ID}')">
@@ -758,21 +749,6 @@
 							</div>
 						</div>
 						{/if}
-
-						<div class="panel-toolbar">
-
-							<div class="template-container-full">
-								{if !$hide_width_set}
-								<label>{$MOD.LBL_CLICK_TO_ADD}</label>
-								<br>
-								{/if}
-								{$BODY_EDITOR}
-							</div>
-							<!--
-                            <iframe id="html_frame" src="" style="width:100%; height:500px"></iframe>
-                            <pre id="email_template_view"></pre>
-                            -->
-						</div>
 					</div>
 				</div>
 			</div>
@@ -1373,7 +1349,7 @@
 					<span class="suitepicon suitepicon-module-emails"></span> {$MOD.LBL_SEND_AS_TEST}
 					</a>
 				</div>
-				<div class="button-group-seperator"></div>
+				<div class="button-group-separator"></div>
 				<div class="button-group">
 					<a class="btn btn-primary btn-sm" href="index.php?module=Campaigns&action=DetailView&record={$CAMPAIGN_ID}" style="border-radius: 0px;">{$MOD.LBL_TODETAIL_BUTTON_TITLE}</a>
 				</div>
@@ -1392,6 +1368,16 @@
 </td>
 </tr>
 </table>
+
+<div class="template-panel-container panel" id="step1_editor">
+	<div class="template-container-full">
+		{if !$hide_width_set}
+		<label>{$MOD.LBL_CLICK_TO_ADD}</label>
+		<br>
+		{/if}
+		{$BODY_EDITOR}
+	</div>
+</div>
 
 {literal}
 <script language="javascript">
@@ -1474,6 +1460,9 @@ function determine_back(){
 				// show uploader form below template form only
 
 				$('#step1_uploader').css('display', $('#step1').css('display'));
+
+				// only show the template editor below step 1
+				$('#step1_editor').css('display', $('#step1').css('display'));
 
 				// hide cancel and save button on summary page
 

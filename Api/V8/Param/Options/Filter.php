@@ -14,6 +14,10 @@ class Filter extends BaseOption
     public function add(OptionsResolver $resolver)
     {
         $resolver
+            ->setDefaults(['filter' => [
+                'deleted' => [
+                    'eq' => 0
+                ]]])
             ->setDefined('filter')
             ->setAllowedTypes('filter', 'array')
             ->setAllowedValues('filter', $this->validatorFactory->createClosure([

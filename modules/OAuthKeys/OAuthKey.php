@@ -43,8 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-require_once 'Zend/Oauth/Provider.php';
-
 /**
  * OAuth customer key
  */

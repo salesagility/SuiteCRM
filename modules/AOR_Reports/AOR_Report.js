@@ -104,7 +104,8 @@ function appendHiddenFields(_form, ln, id) {
         fieldInput = $("#aor_conditions_value\\["+ln+"\\]\\[0\\]").val();
         fieldInput = updateTimeDateFields(fieldInput, ln);
     } else {
-        fieldInput = $("#aor_conditions_value\\[" + ln + "\\]").val();
+    	fieldInput = $("[name='aor_conditions_value\\[" + ln + "\\]']").val();
+    	fieldInput = updateTimeDateFields(fieldInput, ln);
     }
 
   _form.append('<input type="hidden" name="parameter_value[' + ln + ']" value="' + fieldInput + '">');
@@ -153,9 +154,9 @@ function setProspectReturn(popup_reply_data) {
   var prospect_id = popup_reply_data.name_to_value_array.prospect_id;
   var record = document.getElementsByName('record')[0].value;
 
-  YAHOO.util.Connect.asyncRequest("GET", "index.php?module=AOR_Reports&action=addToProspectList&record=" + record + "&prospect_id=" + prospect_id, callback);
-
-
+  var form = addParametersToForm("addToProspectList");
+  var query = form.serialize();
+  YAHOO.util.Connect.asyncRequest("GET", "index.php?" + query + "&prospect_id=" + prospect_id, callback);
 }
 
 function changeReportPage(record, offset, group_value, table_id) {

@@ -23,33 +23,25 @@ class CasesCest
             $this->fakeData = Faker\Factory::create();
         }
 
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Cases $cases
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the cases module.
      */
     public function testScenarioViewCasesModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Cases $cases,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the cases module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to cases list-view
         $I->loginAsAdmin();
-        $cases->gotoCases();
+        $I->visitPage('Cases', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Cases', '.module-title-text');
@@ -61,7 +53,6 @@ class CasesCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Cases $cases
      * @param \Step\Acceptance\Cases $account
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a case so that I can test
      * the standard fields.
@@ -71,18 +62,13 @@ class CasesCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Cases $cases,
-        \Step\Acceptance\Accounts $account,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Accounts $account
     ) {
         $I->wantTo('Create a Case');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $account->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -91,7 +77,7 @@ class CasesCest
         $account->createAccount($account_name);
 
         // Navigate to cases list-view
-        $cases->gotoCases();
+        $I->visitPage('Cases', 'index');
         $listView->waitForListViewVisible();
 
         // Create case
@@ -104,7 +90,7 @@ class CasesCest
         $listView->waitForListViewVisible();
 
         // Delete account
-        $account->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
         $listView->clickFilterButton();
         $I->fillField('#name_basic', $account_name);

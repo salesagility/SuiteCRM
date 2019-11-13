@@ -19,27 +19,22 @@ class EmailManCest
         if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
         }
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\EmailMan $emailMan
-     * @param \Helper\WebDriverHelper $webDriverHelper
+     * @param \Step\Acceptance\EmailManTester $emailMan
      *
      * As an administrator I want to test outgoing mail configuration.
      */
     public function testScenarioAdminEmailSettings(
         \AcceptanceTester $I,
-        \Step\Acceptance\EmailMan $emailMan,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\EmailManTester $emailMan
     ) {
         $I->wantTo('Save an outgoing email configuration');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         // Navigate to email configuration and save settings
         $I->loginAsAdmin();

@@ -328,9 +328,9 @@ function xhprof_normalize_metrics($raw_data, $num_runs)
 function xhprof_aggregate_runs(
     $xhprof_runs_impl,
     $runs,
-                               $wts,
+    $wts,
     $source="phprof",
-                               $use_script_name=false
+    $use_script_name=false
 ) {
     $raw_data_total = null;
     $raw_data       = null;
@@ -387,7 +387,7 @@ function xhprof_aggregate_runs(
                 $raw_data["main()"] = $new_main;
                 $raw_data[xhprof_build_parent_child_key(
                     "main()",
-                                                "__script::$page"
+                    "__script::$page"
                 )]
           = $fake_edge;
             } else {
@@ -409,7 +409,7 @@ function xhprof_aggregate_runs(
                     if (substr($child, 0, 10) != "__script::") {
                         $parent_child = xhprof_build_parent_child_key(
                             "__script::$page",
-                                                          $child
+                            $child
                         );
                     }
                 }
@@ -443,7 +443,7 @@ function xhprof_aggregate_runs(
                          "$runs_string $wts_string\n";
     $data['raw'] = xhprof_normalize_metrics(
         $raw_data_total,
-                                          $normalization_count
+        $normalization_count
     );
     $data['bad_runs'] = $bad_runs;
 

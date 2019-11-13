@@ -368,6 +368,10 @@ installStatus($mod_strings['STAT_CREATE_DEFAULT_SETTINGS']);
     installerHook('post_createDefaultSchedulers');
 
 
+installLog($mod_strings['LBL_CREATE_DEFAULT_ENC_KEY']);
+createEncryptionKey();
+
+
     echo $mod_strings['LBL_PERFORM_DONE'];
 
 
@@ -727,8 +731,6 @@ $_POST['user_theme'] = (string) SugarThemeRegistry::getDefault();
 
 // save and redirect to new view
 $_REQUEST['do_not_redirect'] = true;
-installLog('DBG: require modules/Users/Save.php');
-require('modules/Users/Save.php');
 
 // restore superglobals and vars
 $GLOBALS = $varStack['GLOBALS'];
@@ -765,7 +767,7 @@ $out =<<<EOQ
 <p><b>{$fpResult}</b></p>
 </div>
 <footer id="install_footer">
-    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
+    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/suitecrm/forum" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>
 </div>
 </body>

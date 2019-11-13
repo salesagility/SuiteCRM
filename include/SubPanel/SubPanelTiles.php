@@ -193,7 +193,7 @@ class SubPanelTiles
         $default_div_display = 'inline';
         if (!empty($sugar_config['hide_subpanels_on_login'])) {
             if (!isset($_SESSION['visited_details'][$this->focus->module_dir])) {
-                setcookie($this->focus->module_dir . '_divs', '', 0, null, null, false, true);
+                setcookie($this->focus->module_dir . '_divs', '', 0, null, null, isSSL(), true);
                 unset($_COOKIE[$this->focus->module_dir . '_divs']);
                 $_SESSION['visited_details'][$this->focus->module_dir] = true;
             }
@@ -381,7 +381,7 @@ class SubPanelTiles
             array_push($tab_names, $tab);
         }
 
-        $tab_names = '["' . join($tab_names, '","') . '"]';
+        $tab_names = '["' . implode('","', $tab_names) . '"]';
 
         $module_sub_panels = array_map('array_keys', $module_sub_panels);
         $module_sub_panels = json_encode($module_sub_panels);
@@ -440,10 +440,13 @@ class SubPanelTiles
             }
         }
         require_once('include/Smarty/plugins/function.sugar_action_menu.php');
-        $widget_contents = smarty_function_sugar_action_menu(array(
-            'buttons' => $buttons,
-            'class' => 'clickMenu fancymenu',
-        ), $this->xTemplate);
+        $widget_contents = smarty_function_sugar_action_menu(
+            [
+                'buttons' => $buttons,
+                'class' => 'clickMenu fancymenu',
+            ],
+            $this->xTemplate
+        );
         return $widget_contents;
     }
 }

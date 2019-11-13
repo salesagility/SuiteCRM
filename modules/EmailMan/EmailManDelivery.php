@@ -105,6 +105,7 @@ if ($test) {
     $select_query .= " join prospect_list_campaigns plc on em.campaign_id = plc.campaign_id";
     $select_query .= " join prospect_lists pl on pl.id = plc.prospect_list_id ";
     $select_query .= " WHERE em.list_id = pl.id and pl.list_type = 'test'";
+    $select_query .= " AND pl.deleted = 0 AND plc.deleted = 0 AND em.deleted = 0";
     $select_query .= " AND em.send_date_time <= " . $db->now();
     $select_query .= " AND (em.in_queue ='0' OR em.in_queue IS NULL OR (em.in_queue ='1' AND em.in_queue_date <= " . $db->convert($db->quoted($timedate->fromString("-1 day")->asDb()), "datetime") . "))";
     $select_query .= " AND em.campaign_id='{$campaign_id}'";
@@ -117,6 +118,7 @@ if ($test) {
     $select_query = " SELECT *";
     $select_query .= " FROM $emailman->table_name";
     $select_query .= " WHERE send_date_time <= " . $db->now();
+    $select_query .= " AND deleted = 0";
     $select_query .= " AND (in_queue ='0' OR in_queue IS NULL OR ( in_queue ='1' AND in_queue_date <= " . $db->convert($db->quoted($timedate->fromString("-1 day")->asDb()), "datetime") . ")) " . ($confirmOptInEnabled ? ' OR related_confirm_opt_in = 1 ' : ' AND related_confirm_opt_in = 0');
 
     if (!empty($campaign_id)) {
@@ -263,8 +265,7 @@ do {
                 $emailAddress = new EmailAddress();
                 $emailAddress->email_address = $emailAddress->getAddressesByGUID($row['related_id'], $row['related_type']);
                 
-                $date = new DateTime();
-                $now = $date->format($timedate::DB_DATETIME_FORMAT);
+                $now = TimeDate::getInstance()->nowDb();
                     
                 if (!$emailman->sendOptInEmail($emailAddress, $row['related_type'], $row['related_id'])) {
                     $GLOBALS['log']->fatal("Confirm Opt In Email delivery FAILURE:" . print_r($row, true));

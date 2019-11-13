@@ -72,11 +72,11 @@ class registry_v4 extends registry_v3_1
         parent::registerTypes();
 
         $this->serviceClass->registerType(
-             'return_search_result',
-             'complexType',
-             'struct',
-             'all',
-              '',
+            'return_search_result',
+            'complexType',
+            'struct',
+            'all',
+            '',
             array(
                 'entry_list' => array('name' =>'entry_list', 'type'=>'tns:search_link_list'),
             )
@@ -85,9 +85,9 @@ class registry_v4 extends registry_v3_1
         $this->serviceClass->registerType(
             'search_link_list',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:search_link_name_value[]')
@@ -98,10 +98,10 @@ class registry_v4 extends registry_v3_1
         $this->serviceClass->registerType(
             'search_link_name_value',
             'complexType',
-             'struct',
-             'all',
-              '',
-                array(
+            'struct',
+            'all',
+            '',
+            array(
                     'name'=>array('name'=>'name', 'type'=>'xsd:string'),
                     'records'=>array('name'=>'records', 'type'=>'tns:search_link_array_list'),
                 )
@@ -110,9 +110,9 @@ class registry_v4 extends registry_v3_1
         $this->serviceClass->registerType(
             'search_link_array_list',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:link_value[]')
@@ -123,10 +123,10 @@ class registry_v4 extends registry_v3_1
         $this->serviceClass->registerType(
             'module_list_entry',
             'complexType',
-             'struct',
-             'all',
-              '',
-                array(
+            'struct',
+            'all',
+            '',
+            array(
                     'module_key'=>array('name'=>'module_key', 'type'=>'xsd:string'),
                     'module_label'=>array('name'=>'module_label', 'type'=>'xsd:string'),
                     'favorite_enabled'=>array('name'=>'favorite_enabled', 'type'=>'xsd:boolean'),
@@ -137,10 +137,10 @@ class registry_v4 extends registry_v3_1
         $this->serviceClass->registerType(
             'new_module_fields',
             'complexType',
-             'struct',
-             'all',
-              '',
-                array(
+            'struct',
+            'all',
+            '',
+            array(
                     'module_name'=>array('name'=>'module_name', 'type'=>'xsd:string'),
                     'table_name'=>array('name'=>'table_name', 'type'=>'xsd:string'),
                     'module_fields'=>array('name'=>'module_fields', 'type'=>'tns:field_list'),

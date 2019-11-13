@@ -55,8 +55,10 @@ if (substr($sapi_type, 0, 3) != 'cli') {
 if (!is_windows()) {
     require_once 'include/utils.php';
     $cronUser = getRunningUser();
-
-    if (array_key_exists('cron', $sugar_config) && array_key_exists('allowed_cron_users', $sugar_config['cron'])) {
+ 
+    if ($cronUser == '') {
+        $GLOBALS['log']->warning('cron.php: can\'t determine running user. No cron user checks will occur.');
+    } elseif (array_key_exists('cron', $sugar_config) && array_key_exists('allowed_cron_users', $sugar_config['cron'])) {
         if (!in_array($cronUser, $sugar_config['cron']['allowed_cron_users'])) {
             $GLOBALS['log']->fatal("cron.php: running as $cronUser is not allowed in allowed_cron_users ".
                                    "in config.php. Exiting.");

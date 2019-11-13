@@ -104,7 +104,7 @@ $dictionary['Surveys'] = array(
                 'include' => 'modules/Surveys/Utils/utils.php'
             ),
         ),
-        
+
         'submit_text'              => array(
             'required'   => false,
             'name'       => 'submit_text',
@@ -171,6 +171,15 @@ $dictionary['Surveys'] = array(
         'surveys_surveyresponses' => array(
             'rhs_module'        => 'SurveyResponses',
             'rhs_table'         => 'surveyresponses',
+            'rhs_key'           => 'survey_id',
+            'lhs_module'        => 'Surveys',
+            'lhs_table'         => 'surveys',
+            'lhs_key'           => 'id',
+            'relationship_type' => 'one-to-many',
+        ),
+        'surveys_campaigns' => array(
+            'rhs_module'        => 'Campaigns',
+            'rhs_table'         => 'campaigns',
             'rhs_key'           => 'survey_id',
             'lhs_module'        => 'Surveys',
             'lhs_table'         => 'surveys',
