@@ -111,7 +111,7 @@ class OpenIDAuthenticate extends SugarAuthenticate
     	$ssoprovider =  $this->getProvider();
     	// echo 'authenticateRemotely';die;
 
-    	 if (!isset($_GET['code'])) {
+    	 if (!isset($_GET['code'])  {
                     // If we don't have an authorization code then get one
                     $authUrl = $ssoprovider->getAuthorizationUrl();
                     if(isset($_SESSION['oauth2state']))
@@ -128,7 +128,7 @@ class OpenIDAuthenticate extends SugarAuthenticate
                 } elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
                     unset($_SESSION['oauth2state']);
                     header('Location: index.php');    
-                } else {
+                } else if(!empty($ssoprovider))){
                     // Try to get an access token (using the authorization coe grant)
                     try {
                         $token = $ssoprovider->getAccessToken('authorization_code', [
@@ -150,7 +150,11 @@ class OpenIDAuthenticate extends SugarAuthenticate
 
                         $loginsuccess = $openidcontroller->login($uid, '', array());
                         
-                      
+                         if(!$loginsuccess)
+                        {
+                                return ;
+                        }
+
 
                     } catch (Exception $e) {
                         $GLOBALS['log']->error('Failed to get resource owner: '.$e->getMessage());
