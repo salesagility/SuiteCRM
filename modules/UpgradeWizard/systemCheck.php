@@ -58,7 +58,13 @@ $skipDirs = array(
     '.svn',
     '.git',
 );
-$files = uwFindAllFiles(getcwd(), array(), true, $skipDirs);
+
+$files = new RecursiveIteratorIterator(
+    new RecursiveDirectoryIterator(
+        getcwd(),
+        RecursiveDirectoryIterator::SKIP_DOTS | RecursiveIteratorIterator::SELF_FIRST
+    )
+);
 
 $i=0;
 $filesOut = "
@@ -74,6 +80,10 @@ $filesOut = "
 
 $isWindows = is_windows();
 foreach ($files as $file) {
+    if (dirInArray($file, $skipDirs)) {
+        continue;
+    }
+
     if ($isWindows) {
         if (!is_writable_windows($file) && file_exists($file)) {
             logThis('WINDOWS: File ['.$file.'] not readable - saving for display');
