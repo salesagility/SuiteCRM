@@ -58,4 +58,21 @@ class DBManagerTest extends SuitePHPUnitFrameworkTestCase
             "SELECT foo FROM bar WHERE baz != 'foo';"
         );
     }
+
+    // Make sure createPreparedQuery returns the correct SQL query when
+    // using '\?' in the input.
+    public function testcreatePreparedQueryWithEscapedToken()
+    {
+        $db = DBManagerFactory::getInstance();
+
+        // Match baz to the input variable with a question mark appended... for some reason.
+        $sql = "SELECT foo FROM bar WHERE baz = '?\?';";
+
+        $stmt = $db->prepareQuery($sql);
+
+        $this->assertEquals(
+            $db->createPreparedQuery($stmt, ["foo"]),
+            "SELECT foo FROM bar WHERE baz = 'foo?';"
+        );
+    }
 }

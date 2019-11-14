@@ -1839,10 +1839,13 @@ abstract class DBManager
      */
     public function prepareQuery($sql)
     {
-        //parse out the tokens
-        $tokens = preg_split('/((?<!\\\)[&?!])/', $sql, -1, PREG_SPLIT_DELIM_CAPTURE);
+        // Parse out the tokens
+        // - Don't select the "!" in "!=".
+        // - No backslashes before tokens.
+        // - Only detect "&", "?", or "!".
+        $tokens = preg_split('/((?<!\\\)(?!!=)[&?!])/', $sql, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-        //maintain a count of the actual tokens for quick reference in execute
+        // Maintain a count of the actual tokens for quick reference in execute
         $count = 0;
 
         $sqlStr = '';
@@ -1851,12 +1854,6 @@ abstract class DBManager
                 case '?':
                 case '!':
                 case '&':
-                    // If the next character after the `!` is an `=`, don't
-                    // try to replace it. `!=` is valid SQL and shouldn't be
-                    // replaced like it's a token in a prepared statement.
-                    if ($val === '!' && strpos($tokens[$key + 1], '=') === 0) {
-                        break;
-                    }
                     $count++;
                     $sqlStr .= '?';
                     break;
@@ -1911,14 +1908,6 @@ abstract class DBManager
                         $query .= file_get_contents($filename);
                         break;
                     case '!':
-                        // If the next character after the `!` is an `=`, don't
-                        // try to replace it. `!=` is valid SQL and shouldn't be
-                        // replaced like it's a token in a prepared statement.
-                        if ($val === '!' && strpos($tokens[$key + 1], '=') === 0) {
-                            // Re-insert the `!`.
-                            $query .= '!';
-                            break;
-                        }
                         $query .= $data[$dataIndex++];
                         break;
                     default:
