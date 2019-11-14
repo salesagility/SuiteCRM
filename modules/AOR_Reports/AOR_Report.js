@@ -104,8 +104,12 @@ function appendHiddenFields(_form, ln, id) {
         fieldInput = $("#aor_conditions_value\\["+ln+"\\]\\[0\\]").val();
         fieldInput = updateTimeDateFields(fieldInput, ln);
     } else {
-    	fieldInput = $("[name='aor_conditions_value\\[" + ln + "\\]']").val();
-    	fieldInput = updateTimeDateFields(fieldInput, ln);
+        fieldInput = $('#aor_conditions_value' + ln).val();
+        fieldInput = updateTimeDateFields(fieldInput, ln);
+
+        if (typeof fieldInput === "undefined") {
+            fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
+        }
     }
 
   _form.append('<input type="hidden" name="parameter_value[' + ln + ']" value="' + fieldInput + '">');
@@ -184,7 +188,12 @@ function changeReportPage(record, offset, group_value, table_id) {
         fieldInput = $("#aor_conditions_value\\["+ln+"\\]\\[0\\]").val();
         fieldInput = updateTimeDateFields(fieldInput, ln);
     } else {
-      fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
+        fieldInput = $('#aor_conditions_value' + ln).val();
+        fieldInput = updateTimeDateFields(fieldInput, ln);
+
+        if (typeof fieldInput === "undefined") {
+            fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
+        }
     }
     query += "&parameter_value[]=" + fieldInput;
   });
