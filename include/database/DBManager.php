@@ -1851,6 +1851,12 @@ abstract class DBManager
                 case '?':
                 case '!':
                 case '&':
+                    // If the next character after the `!` is an `=`, don't
+                    // try to replace it. `!=` is valid SQL and shouldn't be
+                    // replaced like it's a token in a prepared statement.
+                    if ($val === '!' && strpos($tokens[$key + 1], '=') === 0) {
+                        break;
+                    }
                     $count++;
                     $sqlStr .= '?';
                     break;
@@ -1876,7 +1882,7 @@ abstract class DBManager
      * @param  array $data The array of data to replace the tokens with.
      * @return resource result set or false on error
      */
-    public function executePreparedQuery($stmt, $data = array())
+    public function createPreparedQuery($stmt, $data = array())
     {
         if (!empty($this->preparedTokens[$stmt])) {
             if (!is_array($data)) {
@@ -1895,7 +1901,7 @@ abstract class DBManager
             $query = '';
             $dataIndex = 0;
             $tokens = $pTokens['tokens'];
-            foreach ($tokens as $val) {
+            foreach ($tokens as $key => $val) {
                 switch ($val) {
                     case '?':
                         $query .= $this->quote($data[$dataIndex++]);
@@ -1905,6 +1911,14 @@ abstract class DBManager
                         $query .= file_get_contents($filename);
                         break;
                     case '!':
+                        // If the next character after the `!` is an `=`, don't
+                        // try to replace it. `!=` is valid SQL and shouldn't be
+                        // replaced like it's a token in a prepared statement.
+                        if ($val === '!' && strpos($tokens[$key + 1], '=') === 0) {
+                            // Re-insert the `!`.
+                            $query .= '!';
+                            break;
+                        }
                         $query .= $data[$dataIndex++];
                         break;
                     default:
@@ -1912,7 +1926,7 @@ abstract class DBManager
                         break;
                 }//switch
             }//foreach
-            return $this->query($query);
+            return $query;
         }
         return false;
     }
@@ -1928,7 +1942,9 @@ abstract class DBManager
     {
         $stmt = $this->prepareQuery($sql);
 
-        return $this->executePreparedQuery($stmt, $data);
+        $query = $this->createPreparedQuery($stmt, $data);
+
+        return $this->query($query);
     }
 
     /********************** SQL FUNCTIONS ****************************/
