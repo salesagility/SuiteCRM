@@ -1890,16 +1890,27 @@ EOQ;
         global $mod_strings;
         global $app_strings;
 
-        $format['f'] = $mod_strings['LBL_LOCALE_DESC_FIRST'];
-        $format['l'] = $mod_strings['LBL_LOCALE_DESC_LAST'];
-        $format['s'] = $mod_strings['LBL_LOCALE_DESC_SALUTATION'];
-        $format['t'] = $mod_strings['LBL_LOCALE_DESC_TITLE'];
+        if (is_null($mod_strings)) {
+            $format['f'] = null;
+            $format['l'] = null;
+            $format['s'] = null;
+            $format['t'] = null;
 
-        $name['f'] = $app_strings['LBL_LOCALE_NAME_EXAMPLE_FIRST'];
-        $name['l'] = $app_strings['LBL_LOCALE_NAME_EXAMPLE_LAST'];
-        $name['s'] = $app_strings['LBL_LOCALE_NAME_EXAMPLE_SALUTATION'];
-        $name['t'] = $app_strings['LBL_LOCALE_NAME_EXAMPLE_TITLE'];
+            $name['f'] = null;
+            $name['l'] = null;
+            $name['s'] = null;
+            $name['t'] = null;
+        } else {
+            $format['f'] = $mod_strings['LBL_LOCALE_DESC_FIRST'];
+            $format['l'] = $mod_strings['LBL_LOCALE_DESC_LAST'];
+            $format['s'] = $mod_strings['LBL_LOCALE_DESC_SALUTATION'];
+            $format['t'] = $mod_strings['LBL_LOCALE_DESC_TITLE'];
 
+            $name['f'] = $app_strings['LBL_LOCALE_NAME_EXAMPLE_FIRST'];
+            $name['l'] = $app_strings['LBL_LOCALE_NAME_EXAMPLE_LAST'];
+            $name['s'] = $app_strings['LBL_LOCALE_NAME_EXAMPLE_SALUTATION'];
+            $name['t'] = $app_strings['LBL_LOCALE_NAME_EXAMPLE_TITLE'];
+        }
         $macro = $locale->getLocaleFormatMacro();
 
         $ret1 = '';
