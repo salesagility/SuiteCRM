@@ -1026,8 +1026,10 @@ function getMeetingsExternalApiDropDown($focus = null, $name = null, $value = nu
         $dictionaryMeeting = $dictionary['Meeting'];
     }
 
+    // Protect against null.
     if (
-        is_null($dictionaryMeeting['fields'])
+        is_null($dictionaryMeeting)
+        || is_null($dictionaryMeeting['fields'])
         || is_null($dictionaryMeeting['fields']['type'])
         || $dictionaryMeeting['fields']['type']['options'] != "eapm_list"
     ) {
