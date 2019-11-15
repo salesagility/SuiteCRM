@@ -4264,12 +4264,15 @@ eoq;
     {
         global $theme;
         global $mod_strings;
-        $out = '<div><input	title="' . $mod_strings['LBL_BUTTON_CHECK_TITLE'] . '"
+        $buttonCheckTitle = is_null($mod_strings) ? null : $mod_strings['LBL_BUTTON_CHECK_TITLE'];
+        $buttonCheck = is_null($mod_strings) ? null : $mod_strings['LBL_BUTTON_CHECK'];
+
+        $out = '<div><input	title="' . $buttonCheckTitle . '"
 						class="button"
 						type="button" name="button"
 						onClick="window.location=\'index.php?module=Emails&action=Check&type=' . $type . '\';"
 						style="margin-bottom:2px"
-						value="  ' . $mod_strings['LBL_BUTTON_CHECK'] . '  "></div>';
+						value="  ' . $buttonCheck . '  "></div>';
 
         return $out;
     }
