@@ -5961,7 +5961,11 @@ class InboundEmail extends SugarBean
             $r = $this->db->query($q, true);
             $a = $this->db->fetchByAssoc($r);
 
-            return $a['id'];
+            if ($a === false) {
+                return null;
+            } else {
+                return $a['id'];
+            }
         }
 
         return false;
@@ -6154,7 +6158,7 @@ class InboundEmail extends SugarBean
         $storedOptions = unserialize(base64_decode($this->stored_options));
 
         //TODO figure out if the since date is UDT
-        if ($storedOptions['only_since']) {// POP3 does not support Unseen flags
+        if (!is_bool($storedOptions) && $storedOptions['only_since']) {// POP3 does not support Unseen flags
             if (!isset($storedOptions['only_since_last']) && !empty($storedOptions['only_since_last'])) {
                 $q = "SELECT last_run FROM schedulers WHERE job = '{$this->job_name}'";
                 $r = $this->db->query($q, true);
