@@ -1933,7 +1933,11 @@ abstract class DBManager
 
         $query = $this->createPreparedQuery($stmt, $data);
 
-        return $this->query($query);
+        if ($query === false) {
+            return false;
+        } else {
+            return $this->query($query);
+        }
     }
 
     /********************** SQL FUNCTIONS ****************************/
