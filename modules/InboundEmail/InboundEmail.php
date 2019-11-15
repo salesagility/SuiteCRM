@@ -3121,7 +3121,11 @@ class InboundEmail extends SugarBean
         );
 
         if (!$this->getImap()->isAvailable()) {
-            $retArray['err'][0] = $mod_strings['ERR_NO_IMAP'];
+            if (is_null($mod_strings)) {
+                $retArray['err'][0] = null;
+            } else {
+                $retArray['err'][0] = $mod_strings['ERR_NO_IMAP'];
+            }
 
             return $retArray;
         }
