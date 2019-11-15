@@ -2106,6 +2106,11 @@ class Email extends Basic
     public function js_set_archived()
     {
         global $mod_strings;
+        if (is_null($mod_strings)) {
+            $archiveEmailError = null;
+        } else {
+            $archiveEmailError = $mod_strings['ERR_ARCHIVE_EMAIL'];
+        }
         $script = '
 		<script type="text/javascript" language="JavaScript"><!-- Begin
 			function setArchived() {
@@ -2135,7 +2140,7 @@ class Email extends Basic
 
 					form.submit();
 				} else {
-					alert("' . $mod_strings['ERR_ARCHIVE_EMAIL'] . '");
+					alert("' . $archiveEmailError . '");
 				}
 
 			}
