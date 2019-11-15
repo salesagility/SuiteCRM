@@ -643,10 +643,11 @@ class Scheduler extends SugarBean
         $intVal = array('-', ',');
         if (is_null($mod_strings)) {
             $intSub = array(null, null);
+            $intInt = array(0 => null, 1 => null);
         } else {
             $intSub = array($mod_strings['LBL_RANGE'], $mod_strings['LBL_AND']);
+            $intInt = array(0 => $mod_strings['LBL_MINS'], 1 => $mod_strings['LBL_HOUR']);
         }
-        $intInt = array(0 => $mod_strings['LBL_MINS'], 1 => $mod_strings['LBL_HOUR']);
         $tempInt = '';
         $iteration = '';
 
