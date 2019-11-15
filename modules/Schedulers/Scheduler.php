@@ -559,17 +559,30 @@ class Scheduler extends SugarBean
     public function handleIntervalType($type, $value, $mins, $hours)
     {
         global $mod_strings;
-        /* [0]:min [1]:hour [2]:day of month [3]:month [4]:day of week */
-        $days = array(
-            1 => $mod_strings['LBL_MON'],
-            2 => $mod_strings['LBL_TUE'],
-            3 => $mod_strings['LBL_WED'],
-            4 => $mod_strings['LBL_THU'],
-            5 => $mod_strings['LBL_FRI'],
-            6 => $mod_strings['LBL_SAT'],
-            0 => $mod_strings['LBL_SUN'],
-            '*' => $mod_strings['LBL_ALL']
-        );
+        if (is_null($mod_strings)) {
+            $days = array(
+                1 => "Monday",
+                2 => "Tuesday",
+                3 => "Wednesday",
+                4 => "Thursday",
+                5 => "Friday",
+                6 => "Saturday",
+                0 => "Sunday",
+                '*' => "All"
+            );
+        } else {
+            /* [0]:min [1]:hour [2]:day of month [3]:month [4]:day of week */
+            $days = array(
+                1 => $mod_strings['LBL_MON'],
+                2 => $mod_strings['LBL_TUE'],
+                3 => $mod_strings['LBL_WED'],
+                4 => $mod_strings['LBL_THU'],
+                5 => $mod_strings['LBL_FRI'],
+                6 => $mod_strings['LBL_SAT'],
+                0 => $mod_strings['LBL_SUN'],
+                '*' => $mod_strings['LBL_ALL']
+            );
+        }
         switch ($type) {
             case 0: // minutes
                 if ($value == '0') {
