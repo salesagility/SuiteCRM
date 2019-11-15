@@ -6339,7 +6339,11 @@ class InboundEmail extends SugarBean
                         $msg .= $errors;
                     }
                     $msg .= '<p>' . $alerts . '<p>';
-                    $msg .= '<p>' . $mod_strings['ERR_TEST_MAILBOX'];
+                    if (is_null($mod_strings)) {
+                        $msg .= '<p>';
+                    } else {
+                        $msg .= '<p>' . $mod_strings['ERR_TEST_MAILBOX'];
+                    }
                 }
             } else {
                 $successful = true;
