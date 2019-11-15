@@ -628,7 +628,11 @@ class Scheduler extends SugarBean
         /* [0]:min [1]:hour [2]:day of month [3]:month [4]:day of week */
         $ints = $this->intervalParsed;
         $intVal = array('-', ',');
-        $intSub = array($mod_strings['LBL_RANGE'], $mod_strings['LBL_AND']);
+        if (is_null($mod_strings)) {
+            $intSub = array(null, null);
+        } else {
+            $intSub = array($mod_strings['LBL_RANGE'], $mod_strings['LBL_AND']);
+        }
         $intInt = array(0 => $mod_strings['LBL_MINS'], 1 => $mod_strings['LBL_HOUR']);
         $tempInt = '';
         $iteration = '';
