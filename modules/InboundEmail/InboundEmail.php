@@ -3232,7 +3232,11 @@ class InboundEmail extends SugarBean
                     || (strpos($errors, 'AUTHENTICATE') !== false && strpos($errors, 'failed') !== false)
                 ) {
                     $GLOBALS['log']->debug($l . ': I-E failed using [' . $serviceTest . ']');
-                    $retArray['err'][$k] = $mod_strings['ERR_BAD_LOGIN_PASSWORD'];
+                    if (is_null($mod_strings)) {
+                        $retArray['err'][$k] = null;
+                    } else {
+                        $retArray['err'][$k] = $mod_strings['ERR_BAD_LOGIN_PASSWORD'];
+                    }
                     $retArray['bad'][$k] = $serviceTest;
                     $GLOBALS['log']->debug($l . ': I-E ERROR: $ie->findOptimums() failed due to bad user credentials for user login: ' . $this->email_user);
 
