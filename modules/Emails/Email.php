@@ -4005,7 +4005,11 @@ class Email extends Basic
 
 
         $out = '<form name="Distribute" id="Distribute">';
-        $out .= get_form_header($mod_strings['LBL_DIST_TITLE'], '', false);
+        if (is_null($mod_strings)) {
+            $out .= get_form_header(null, '', false);
+        } else {
+            $out .= get_form_header($mod_strings['LBL_DIST_TITLE'], '', false);
+        }
         $out .= <<<eoq
 		<script>
 			enableQS(true);
