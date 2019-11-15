@@ -639,7 +639,11 @@ class InboundEmail extends SugarBean
             $r = $this->db->query($q);
             $a = $this->db->fetchByAssoc($r);
             $ret = array();
-            $raw = $this->convertToUtf8($a['raw_source']);
+            if ($a === false) {
+                $raw = null;
+            } else {
+                $raw = $this->convertToUtf8($a['raw_source']);
+            }
             if (empty($raw)) {
                 $raw = $app_strings['LBL_EMAIL_ERROR_VIEW_RAW_SOURCE'];
             }
@@ -6251,7 +6255,11 @@ class InboundEmail extends SugarBean
 
                 return $ret;
             }
-            $service = $opts['service'];
+            if (is_bool($opts)) {
+                $service = $opts;
+            } else {
+                $service = $opts['service'];
+            }
             $service = str_replace('foo', '', $service); // foo there to support no-item explodes
         } else {
             $service = $this->getServiceString();
@@ -7008,7 +7016,11 @@ class InboundEmail extends SugarBean
         $r = $this->db->query($query);
         $a = $this->db->fetchByAssoc($r);
 
-        return $a['message_id'];
+        if ($a === false) {
+            return null;
+        } else {
+            return $a['message_id'];
+        }
     }
 
     /**
