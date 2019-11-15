@@ -2190,12 +2190,20 @@ class Email extends Basic
     {
         global $theme;
         global $mod_strings;
-        $out = '<div><input	title="' . $mod_strings['LBL_BUTTON_GRAB_TITLE'] . '"
+        if (is_null($mod_strings)) {
+            $buttonGrabTitle = null;
+            $buttonGrab = null;
+        } else {
+            $buttonGrabTitle = $mod_strings['LBL_BUTTON_GRAB_TITLE'];
+            $buttonGrab = $mod_strings['LBL_BUTTON_GRAB'];
+        }
+
+        $out = '<div><input	title="' . $buttonGrabTitle . '"
 						class="button"
 						type="button" name="button"
 						onClick="window.location=\'index.php?module=Emails&action=Grab\';"
 						style="margin-bottom:2px"
-						value="  ' . $mod_strings['LBL_BUTTON_GRAB'] . '  "></div>';
+						value="  ' . $buttonGrab . '  "></div>';
 
         return $out;
     }
