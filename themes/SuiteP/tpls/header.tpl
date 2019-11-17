@@ -47,7 +47,11 @@
 
 {if $AUTHENTICATED}
     <div id="ajaxHeader">
-        {include file="themes/SuiteP/tpls/_headerModuleList.tpl"}
+        {if file_exists('custom/themes/SuiteP/tpls/_headerModuleList.tpl')}
+            {include file="custom/themes/SuiteP/tpls/_headerModuleList.tpl"}
+        {else}
+            {include file="themes/SuiteP/tpls/_headerModuleList.tpl"}
+        {/if}
     </div>
 {/if}
 {literal}
