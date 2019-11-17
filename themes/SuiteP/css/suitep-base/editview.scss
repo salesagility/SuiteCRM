@@ -1930,15 +1930,14 @@ a.tabFormAdvLink:visited {
 
 #ajaxStatusDiv {
   position: fixed;
-  top: 7px;
+  top: 65px;
   background: $panel-bg;
   color: $danger;
   padding: 5px;
   border: 1px solid $panel-default-border;
   filter: alpha(opacity=80);
   opacity: .8;
-  z-index: 20;
-
+  z-index: 1040;
 }
 
 .detail508 tr td[scope="col"] {
