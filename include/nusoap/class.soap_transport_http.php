@@ -298,7 +298,7 @@ class soap_transport_http extends nusoap_base
         
             // set response timeout
             $this->debug('set response timeout to ' . $response_timeout);
-            socket_set_timeout($this->fp, $response_timeout);
+            stream_set_timeout($this->fp, $response_timeout);
 
             $this->debug('socket connected');
             return true;
@@ -822,7 +822,7 @@ class soap_transport_http extends nusoap_base
 
         if ($this->io_method() == 'socket') {
             // send payload
-            if (!fputs($this->fp, $this->outgoing_payload, strlen($this->outgoing_payload))) {
+            if (!fwrite($this->fp, $this->outgoing_payload, strlen($this->outgoing_payload))) {
                 $this->setError('couldn\'t write message data to socket');
                 $this->debug('couldn\'t write message data to socket');
                 return false;

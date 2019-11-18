@@ -1,6 +1,8 @@
 <?php
 
-class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -80,25 +82,21 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testverify_data()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('email_addresses');
 
-        // test
         $employee = new Employee();
         $this->assertEquals(true, $employee->verify_data());
 
-        // clean up
-        $state->popTable('email_addresses');
+
+
     }
 
     public function testget_list_view_data()
     {
         // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('email_addresses');
-        $state->pushTable('tracker');
+
+
+
+
         
         
         $employee = new Employee();
@@ -127,10 +125,10 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $employee->get_list_view_data();
         $this->assertSame($expected, $actual);
 
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('email_addresses');
-        $state->popTable('aod_index');
+
+
+
+
     }
 
     public function testlist_view_parse_additional_sections()
@@ -202,11 +200,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testhasCustomFields()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('email_addresses');
 
-        // test
         
         
         $employee = new Employee();
@@ -214,8 +208,8 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(false, $result);
         
         
-        // clean up
-        $state->popTable('email_addresses');
+
+
     }
     
     public function testError()
@@ -246,7 +240,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = '<span class=\'error\'>Hello error<br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
         $this->assertContains($expected, $contents);
         
-        // clean up
+
         unset($app_strings['TEST_ERROR_MESSAGE']);
     }
 }

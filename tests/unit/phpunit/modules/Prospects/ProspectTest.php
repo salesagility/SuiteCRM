@@ -1,7 +1,9 @@
 <?php
 
 
-class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ProspectTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -78,7 +80,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testconverted_prospect()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         $prospect = new Prospect();
 
@@ -92,7 +94,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->markTestIncomplete('Multiple errors in query');
         
-        // clean up
+
     }
 
     public function testbean_implements()

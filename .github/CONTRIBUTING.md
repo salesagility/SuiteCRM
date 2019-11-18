@@ -21,7 +21,7 @@ This project and all community members are expected to uphold the [SuiteCRM Code
 
 * To provide a code contribution for an issue you will need to set up your own fork of the SuiteCRM repository, make your code changes, commit the changes and make a Pull Request to the appropriate branch on the SuiteCM repository. See our [Quick Guide to Fork SuiteCRM.](https://suitecrm.com/wiki/index.php/Contributing_to_SuiteCRM#Quick_Guide_to_Fork_SuiteCRM) Once you have set up your forked repository you can begin making commits to the project.
 
-* Determine which base branch your bug fix should use. If your bug is present in both hotfix and hotfix-7.10.x then you will need to make a seperate pull request for each branch.
+* Determine which base branch your bug fix should use. If your bug is present in both hotfix and hotfix-7.10.x then you will need to make a separate pull request for each branch.
 
 * Separate each fix into a new branch in your repository and name it with the issue ID e.g. bugfix_3062 or issue-1234.
 

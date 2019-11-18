@@ -1,6 +1,8 @@
 <?php
 
-class ViewJsonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewJsonTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testViewJson()
     {

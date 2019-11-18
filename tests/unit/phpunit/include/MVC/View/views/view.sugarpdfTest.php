@@ -1,7 +1,9 @@
 <?php
 
 
-class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewSugarpdfTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -40,7 +42,7 @@ class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals('someValue', 'sugarpdf', $view);
         $this->assertAttributeEquals(null, 'sugarpdfBean', $view);
 
-        // clean up
+
         
         if (isset($_request)) {
             $_REQUEST = $_request;

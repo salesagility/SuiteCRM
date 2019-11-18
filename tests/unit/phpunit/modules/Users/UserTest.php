@@ -1,7 +1,9 @@
 <?php
 
 
-class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class UserTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testgetSignatureButtons()
     {
@@ -68,9 +70,9 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetDefaultSignature()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
+
+
+
         
         // test
         $db = DBManagerFactory::getInstance();
@@ -85,9 +87,9 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $user->getDefaultSignature();
         $this->assertTrue(is_array($result));
         
-        // clean up
-        $state->popTable('email_addresses');
-        $state->popGlobals();
+
+
+
     }
 
 
@@ -328,7 +330,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsaveAndOthers()
     {
         self::markTestIncomplete('environment dependency');
-        $state = new SuiteCRM\StateSaver();
+
         
         
         
@@ -396,7 +398,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $user->save();
         $user->mark_deleted($user->id);
         
-        // clean up
+
     }
 
     public function retrieve($id)
@@ -684,9 +686,9 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testget_list_view_data()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
+
+
+
         
         // test
         global $mod_strings;
@@ -699,9 +701,9 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $user->get_list_view_data();
         $this->assertTrue(is_array($result));
         
-        // clean up
-        $state->popTable('email_addresses');
-        $state->popGlobals();
+
+
+
     }
 
     public function testlist_view_parse_additional_sections()
@@ -806,9 +808,9 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetEmailLink2()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
+
+
+
         
         // test
         $user = new User();
@@ -852,10 +854,10 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $user->getEmailLink2("abc@email.com", $contact);
         $this->assertSame($expected, $actual);
         
-        // clean up
+
         
-        $state->popTable('email_addresses');
-        $state->popGlobals();
+
+
     }
 
 
@@ -934,9 +936,9 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetDeveloperModules()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
+
+
+
         
         // test
         $user = new User();
@@ -946,17 +948,17 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $user->getDeveloperModules();
         $this->assertTrue(is_array($result));
         
-        // clean up
-        $state->popTable('email_addresses');
-        $state->popGlobals();
+
+
+
     }
 
     public function testisDeveloperForModule()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
+
+
+
         
         // test
         $user = new User();
@@ -975,17 +977,17 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $user->is_admin = 1;
         $this->assertEquals(true, $user->isDeveloperForModule("Accounts"));
         
-        // clean up
-        $state->popTable('email_addresses');
-        $state->popGlobals();
+
+
+
     }
 
     public function testgetAdminModules()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
+
+
+
         
         // test
         $user = new User();
@@ -995,17 +997,17 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $user->getAdminModules();
         $this->assertTrue(is_array($result));
         
-        // clean up
-        $state->popTable('email_addresses');
-        $state->popGlobals();
+
+
+
     }
 
     public function testisAdminForModule()
     {
         // store state
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
+
+
+
         
         // test
         $user = new User();
@@ -1022,9 +1024,9 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $user->isAdminForModule("Accounts"));
         
         
-        // clean up
-        $state->popTable('email_addresses');
-        $state->popGlobals();
+
+
+
     }
 
     public function testshowLastNameFirst()
@@ -1128,9 +1130,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testError()
     {
         global $app_strings;
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('email_addresses_audit');
 
         // setup
         $this->assertTrue(!isset($app_strings['TEST_ERROR_MESSAGE']));
@@ -1156,9 +1155,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = '<span class=\'error\'>Hello error<br><br>' . "\n"  . $app_strings['NTC_CLICK_BACK'] . '</span>';
         $this->assertContains($expected, $contents);
         
-        // clean up
-        unset($app_strings['TEST_ERROR_MESSAGE']);
 
-        $state->popTable('email_addresses_audit');
+        unset($app_strings['TEST_ERROR_MESSAGE']);
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
-class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class FP_eventsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testFP_events()
     {
@@ -20,17 +22,17 @@ class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testemail_templates()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
+
+
 
         global $app_list_strings;
 
         $fpEvents = new FP_events();
 
         $fpEvents->email_templates();
-        $this->assertTrue(is_array($app_list_strings['email_templet_list']));
+        $this->assertTrue(is_array($app_list_strings['emailTemplates_type_list']));
         
-        // clean up
-        $state->popGlobals();
+
+
     }
 }

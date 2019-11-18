@@ -1,7 +1,9 @@
 <?php
 
 
-class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class CallTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -34,8 +36,8 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testACLAccess()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
+
+
 
         $call = new Call();
 
@@ -47,22 +49,12 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $call->recurring_source = 'test';
         $this->assertFalse($call->ACLAccess('edit'));
         
-        // clean up
-        $state->popGlobals();
+
+
     }
 
     public function testSaveAndMarkDeleted()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('calls');
-        $state->pushTable('tracker');
-        $state->pushTable('vcals');
-        $state->pushGlobals();
-
-        // test
         $call = new Call();
 
         $call->name = 'test';
@@ -76,14 +68,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $call->mark_deleted($call->id);
         $result = $call->retrieve($call->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('vcals');
-        $state->popTable('tracker');
-        $state->popTable('calls');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
 
     public function testget_contacts()
@@ -143,11 +127,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_detail_fields()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-
-        // test
         $call = new Call();
 
         //execute the method and verify it sets up the intended fields
@@ -161,23 +140,14 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(false, $call->email_reminder_checked);
         $this->assertEquals('Accounts', $call->parent_type);
 
-        // clean up
-        $state->popGlobals();
+
+
     }
 
     public function testget_list_view_data()
     {
         self::markTestIncomplete('environment dependency (php5/php7)');
-        
-        // save state
 
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-
-        // test
-        //
-        //self::markTestIncomplete('environment dependency');
-                
         $call = new Call();
 
         $call->assigned_user_id = 1;
@@ -210,9 +180,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('Administrator', $call->assigned_user_name);
         $this->assertEquals('Administrator', $call->created_by_name);
         $this->assertEquals('Administrator', $call->modified_by_name);
-
-        // clean up
-        $state->popGlobals();
     }
 
     public function testset_notification_body()
@@ -263,14 +230,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testset_accept_status()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('calls_users');
-        $state->pushTable('tracker');
-        $state->pushTable('vcals');
-        $state->pushGlobals();
-
-        // test
         $call = new Call();
         $call->id = 1;
 
@@ -284,12 +243,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(1, count($call_users));
 
         $call->delete_linked($call->id);
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('vcals');
-        $state->popTable('tracker');
-        $state->popTable('calls_users');
     }
 
     public function testget_notification_recipients()
@@ -318,19 +271,10 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testlistviewACLHelper()
     {
         self::markTestIncomplete('environment dependency');
-        
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-
-        // test
         $call = new Call();
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $call->listviewACLHelper();
         $this->assertSame($expected, $actual);
-
-        // clean up
-        $state->popGlobals();
     }
 
     public function testsave_relationship_changes()

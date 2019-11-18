@@ -1,6 +1,8 @@
 <?php
 
-class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class TrackerTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -32,11 +34,7 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_recently_viewed()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
 
-        // test
         $tracker = new Tracker();
 
         $result = $tracker->get_recently_viewed(1);
@@ -44,8 +42,8 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertInstanceOf('BreadCrumbStack', $_SESSION['breadCrumbs']);
         $this->assertTrue(is_array($result));
         
-        // clean up
-        $state->popGlobals();
+
+
     }
 
     public function testmakeInvisibleForAll()
@@ -74,9 +72,9 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('Test parameters and local variables are not set');
                 
-        $state = new SuiteCRM\StateSaver();
+
         
-        $state->pushGlobals();
+
 
         //test without setting headerDisplayed
         Tracker::logPage();
@@ -89,7 +87,7 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         //$this->assertEquals(time(), null);
         
-        // clean up
-        $state->popGlobals();
+
+
     }
 }

@@ -1,7 +1,9 @@
 <?php
 
 
-class ViewXMLTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewXMLTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testViewXML()
     {
@@ -15,7 +17,7 @@ class ViewXMLTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdisplay()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         
         
@@ -38,6 +40,6 @@ class ViewXMLTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+
     }
 }

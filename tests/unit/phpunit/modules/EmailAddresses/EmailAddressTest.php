@@ -1,7 +1,9 @@
 <?php
 
 
-class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class EmailAddressTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testEmailAddress()
     {
@@ -21,13 +23,7 @@ class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('email_addresses');
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-        
-        // test
+
         $email = new EmailAddress();
 
         $email->email_address = 'test@test.com';
@@ -44,9 +40,9 @@ class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $email->retrieve($email->id);
         $this->assertEquals(null, $result);
 
-        // clean up
-        $state->popTable('aod_index');
-        $state->popTable('tracker');
-        $state->popTable('email_addresses');
+
+
+
+
     }
 }

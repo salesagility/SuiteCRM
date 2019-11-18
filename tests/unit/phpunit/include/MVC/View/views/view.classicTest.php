@@ -1,6 +1,8 @@
 <?php
 
-class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -35,7 +37,7 @@ class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $session = $_SESSION;
         }
         
-        $state = new SuiteCRM\StateSaver();
+
 
         //test with a valid module but invalid action. it should return false.
         $view = new ViewClassic();
@@ -72,7 +74,7 @@ class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertTrue($ret);
         
-        // clean up
+
         if (isset($session)) {
             $_SESSION = $session;
         } else {

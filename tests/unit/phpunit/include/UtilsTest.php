@@ -45,9 +45,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
 include_once __DIR__ . '/../../../../include/utils.php';
 
-class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
+class UtilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testGetAppString()
     {
@@ -75,7 +77,7 @@ class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
         $result = getAppString('TEST_NONEXISTS_LABEL');
         $this->assertEquals('Hello test', $result);
         
-        // clean up
+
         unset($app_strings['TEST_NONEXISTS_LABEL']);
     }
 
@@ -102,8 +104,6 @@ class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
     public function testget_current_language()
     {
         global $sugar_config;
-        $state = new StateSaver();
-        $state->pushGlobals();
 
         $_SESSION['authenticated_user_language'] = 'foo';
         $this->assertEquals(get_current_language(), 'foo');
@@ -113,7 +113,5 @@ class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(get_current_language(), 'foo');
         unset($_SESSION['authenticated_user_language']);
         $this->assertEquals(get_current_language(), 'bar');
-
-        $state->popGlobals();
     }
 }

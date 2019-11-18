@@ -1,11 +1,13 @@
 <?php
 
 
-class ViewFactoryTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewFactoryTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testloadView()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         
         
@@ -23,7 +25,7 @@ class ViewFactoryTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $view = ViewFactory::loadView('list', 'Users');
         $this->assertInstanceOf('UsersViewList', $view);
         
-        // clean up
+
     }
 
     public function test_loadConfig()

@@ -1,6 +1,8 @@
 <?php
 
-class ViewHtmlTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewHtmlTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -22,7 +24,7 @@ class ViewHtmlTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdisplay()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
         
         
@@ -37,6 +39,6 @@ class ViewHtmlTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+
     }
 }

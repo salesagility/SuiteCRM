@@ -1,40 +1,15 @@
 <?php
 
-class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
-{
-    /**
-     *
-     * @var SuiteCRM\StateSaver
-     */
-    protected $state;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+class TaskTest extends SuitePHPUnitFrameworkTestCase
+{
     public function setUp()
     {
         parent::setUp();
-
-        $this->state = new SuiteCRM\StateSaver();
-        $this->state->pushTable('aod_index');
-        $this->state->pushTable('aod_indexevent');
-        $this->state->pushTable('tasks');
-        $this->state->pushTable('tracker');
-        $this->state->pushFile('config.php');
-        $this->state->pushGlobals();
-
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
-    }
-
-    public function tearDown()
-    {
-        $this->state->popTable('tracker');
-        $this->state->popTable('tasks');
-        $this->state->popTable('aod_indexevent');
-        $this->state->popTable('aod_index');
-        $this->state->popGlobals();
-        $this->state->popFile('config.php');
-
-        parent::tearDown();
     }
 
     public function testTask()
@@ -129,7 +104,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+
     }
 
     public function testfill_in_additional_parent_fields()

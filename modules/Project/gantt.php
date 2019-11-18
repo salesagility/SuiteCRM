@@ -269,7 +269,7 @@ class Gantt
 
     public function substr_unicode($str, $s, $l = null)
     {
-        return join("", array_slice(
+        return implode("", array_slice(
             preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY),
             $s,
             $l

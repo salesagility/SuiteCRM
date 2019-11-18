@@ -681,8 +681,8 @@ class UserViewHelper
 
         $num_grp_sep = $this->bean->getPreference('num_grp_sep');
         $dec_sep = $this->bean->getPreference('dec_sep');
-        $this->ss->assign("NUM_GRP_SEP", (empty($num_grp_sep) ? $GLOBALS['sugar_config']['default_number_grouping_seperator'] : $num_grp_sep));
-        $this->ss->assign("DEC_SEP", (empty($dec_sep) ? $GLOBALS['sugar_config']['default_decimal_seperator'] : $dec_sep));
+        $this->ss->assign("NUM_GRP_SEP", (empty($num_grp_sep) ? $GLOBALS['sugar_config']['default_number_grouping_separator'] : $num_grp_sep));
+        $this->ss->assign("DEC_SEP", (empty($dec_sep) ? $GLOBALS['sugar_config']['default_decimal_separator'] : $dec_sep));
         $this->ss->assign('getNumberJs', $locale->getNumberJs());
 
         //// Name display format

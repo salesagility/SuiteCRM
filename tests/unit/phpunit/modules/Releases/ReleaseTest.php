@@ -1,6 +1,8 @@
 <?php
 
-class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ReleaseTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testRelease()
     {
