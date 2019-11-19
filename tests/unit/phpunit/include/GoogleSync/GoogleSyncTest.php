@@ -1,13 +1,13 @@
 <?php
 
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 use SuiteCRM\StateSaver;
 use SuiteCRM\Utility\SuiteValidator;
 
 require_once __DIR__ . '/../../../../../include/GoogleSync/GoogleSync.php';
 require_once __DIR__ . '/GoogleSyncMock.php';
 
-class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
+class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
 {
     /** @var UnitTester */
     protected $tester;

@@ -41,7 +41,7 @@
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Search\SearchResults;
 use SuiteCRM\Search\UI\SearchResultsController;
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 use SuiteCRM\StateSaver;
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -53,7 +53,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author gyula
  */
-class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract
+class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
 {
     
     /**

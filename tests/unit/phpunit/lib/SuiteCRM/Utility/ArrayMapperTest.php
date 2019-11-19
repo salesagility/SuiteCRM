@@ -37,10 +37,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 use SuiteCRM\Utility\ArrayMapper;
 
-class ArrayMapperTest extends StateCheckerPHPUnitTestCaseAbstract
+class ArrayMapperTest extends SuitePHPUnitFrameworkTestCase
 {
     public function test()
     {

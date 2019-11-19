@@ -46,10 +46,10 @@ include_once __DIR__ . '/GoogleApiKeySaverEntryPointMock.php';
  * @author gyula
  */
 
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
 use SuiteCRM\StateSaver;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class GoogleApiKeySaverEntryPointTest extends StateCheckerPHPUnitTestCaseAbstract
+class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testHandleRequestError()
     {
