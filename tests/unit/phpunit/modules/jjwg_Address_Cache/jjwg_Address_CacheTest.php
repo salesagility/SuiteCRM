@@ -7,15 +7,7 @@ class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testjjwg_Address_Cache()
     {
-        // store state
-
-
-
-        
-        // test
-        
-
-        //execute the contructor and check for the Object type and  attributes
+        // execute the constructor and check for the Object type and attributes
         $jjwgAddressCache = new jjwg_Address_Cache();
         $this->assertInstanceOf('jjwg_Address_Cache', $jjwgAddressCache);
         $this->assertInstanceOf('Basic', $jjwgAddressCache);
@@ -28,10 +20,6 @@ class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'new_schema', $jjwgAddressCache);
         $this->assertAttributeEquals(true, 'importable', $jjwgAddressCache);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $jjwgAddressCache);
-
-
-
-
     }
 
     public function testconfiguration()
@@ -94,12 +82,7 @@ class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
     public function testis_valid_lat()
     {
         self::markTestIncomplete('Incorrect state hash (in PHPUnitTest): Hash doesn\'t match at key "database::email_addresses".');
-        // store state
-        
 
-
-
-        
         // test
         $jjwgAddressCache = new jjwg_Address_Cache();
 
@@ -111,9 +94,5 @@ class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
         //test with valid values
         $this->assertEquals(true, $jjwgAddressCache->is_valid_lat(90));
         $this->assertEquals(true, $jjwgAddressCache->is_valid_lat(-90));
-
-
-
-
     }
 }

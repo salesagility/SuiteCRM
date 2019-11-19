@@ -15,7 +15,6 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
     public function testEmployee()
     {
-
         //execute the contructor and check for the Object type and  attributes
         $employee = new Employee();
         $this->assertInstanceOf('Employee', $employee);
@@ -28,7 +27,6 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'new_schema', $employee);
     }
 
-
     public function testget_summary_text()
     {
         $employee = new Employee();
@@ -40,7 +38,6 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $employee->retrieve(1);
         $this->assertEquals('Administrator', $employee->get_summary_text());
     }
-
 
     public function testfill_in_additional_list_fields()
     {
@@ -58,7 +55,6 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
     public function testfill_in_additional_detail_fields()
     {
         $employee = new Employee();
-
 
         //test with a empty employee bean
         $employee->fill_in_additional_detail_fields();
@@ -79,26 +75,14 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestSkipped('Bug in query: employee_name parameter is wrongly used as user_name');
     }
 
-
     public function testverify_data()
     {
-
         $employee = new Employee();
         $this->assertEquals(true, $employee->verify_data());
-
-
-
     }
 
     public function testget_list_view_data()
     {
-        // save state
-
-
-
-
-        
-        
         $employee = new Employee();
 
         $expected = array(
@@ -124,11 +108,6 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
         $actual = $employee->get_list_view_data();
         $this->assertSame($expected, $actual);
-
-
-
-
-
     }
 
     public function testlist_view_parse_additional_sections()
@@ -144,7 +123,6 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
-
 
     public function testcreate_export_query()
     {
@@ -197,19 +175,11 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete();
     }
 
-
     public function testhasCustomFields()
     {
-
-        
-        
         $employee = new Employee();
         $result = $employee->hasCustomFields();
         $this->assertEquals(false, $result);
-        
-        
-
-
     }
     
     public function testError()
@@ -239,7 +209,6 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         ob_end_clean();
         $expected = '<span class=\'error\'>Hello error<br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
         $this->assertContains($expected, $contents);
-        
 
         unset($app_strings['TEST_ERROR_MESSAGE']);
     }
