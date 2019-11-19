@@ -1511,20 +1511,6 @@ function displayWorkflowForCurrentUser()
     return false;
 }
 
-// return an array with all modules where the user is an admin.
-function get_admin_modules_for_user($user)
-{
-    $GLOBALS['log']->deprecated('get_admin_modules_for_user() is deprecated as of 6.2.2 and may disappear in the future, use Users->getDeveloperModules() instead');
-
-    if (!isset($user)) {
-        $modules = array();
-
-        return $modules;
-    }
-
-    return $user->getDeveloperModules();
-}
-
 function get_workflow_admin_modules_for_user($user)
 {
     if (isset($_SESSION['get_workflow_admin_modules_for_user'])) {
@@ -1609,32 +1595,6 @@ function is_admin($user)
     }
 
     return $user->isAdmin();
-}
-
-/**
- * Return the display name for a theme if it exists.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- *
- * @deprecated use SugarThemeRegistry::get($theme)->name instead
- */
-function get_theme_display($theme)
-{
-    return SugarThemeRegistry::get($theme)->name;
-}
-
-/**
- * Return an array of directory names.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- *
- * @deprecated use SugarThemeRegistry::availableThemes() instead.
- */
-function get_themes()
-{
-    return SugarThemeRegistry::availableThemes();
 }
 
 /**
@@ -5574,22 +5534,6 @@ function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL
     } else {
         return strrpos($haystack, $needle, $offset);
     }
-}
-
-/**
- * @deprecated deprecated since version 7.10 please use the SuiteValidator class
- */
-function isValidId($id)
-{
-    $deprecatedMessage = 'isValidId method is deprecated please update your code';
-    if (isset($GLOBALS['log'])) {
-        $GLOBALS['log']->deprecated($deprecatedMessage);
-    } else {
-        trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-    }
-    $isValidator = new \SuiteCRM\Utility\SuiteValidator();
-    $result = $isValidator->isValidId($id);
-    return $result;
 }
 
 function isValidEmailAddress($email, $message = 'Invalid email address given', $orEmpty = true, $logInvalid = 'error')
