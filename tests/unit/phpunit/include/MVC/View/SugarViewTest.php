@@ -16,7 +16,6 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
     public function testinit()
     {
         //error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception

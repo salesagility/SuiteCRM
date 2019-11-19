@@ -1,8 +1,6 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
-
-class FP_eventsTest extends SuitePHPUnitFrameworkTestCase
+class FP_eventsTest extends SuiteCRM\Test\SuitePHPUnitFrameworkTestCase
 {
     public function testFP_events()
     {
@@ -22,17 +20,11 @@ class FP_eventsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testemail_templates()
     {
-
-
-
         global $app_list_strings;
 
         $fpEvents = new FP_events();
 
         $fpEvents->email_templates();
-        $this->assertTrue(is_array($app_list_strings['emailTemplates_type_list']));
-        
-
-
+        $this->assertInternalType('array', $app_list_strings['emailTemplates_type_list']);
     }
 }

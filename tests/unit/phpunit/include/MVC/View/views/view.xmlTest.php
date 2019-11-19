@@ -7,7 +7,6 @@ class ViewXMLTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testViewXML()
     {
-
         //execute the contructor and check for the Object type and type attribute
         $view = new ViewXML();
         $this->assertInstanceOf('ViewXML', $view);
@@ -17,13 +16,6 @@ class ViewXMLTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdisplay()
     {
-
-        
-        
-        
-        
-        
-
         //execute the method and check for rexcetions. it should return some html.
         $view = new ViewXML();
 
@@ -39,7 +31,5 @@ class ViewXMLTest extends SuitePHPUnitFrameworkTestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-
     }
 }

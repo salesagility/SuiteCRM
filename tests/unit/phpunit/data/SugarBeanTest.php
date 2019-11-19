@@ -7,20 +7,16 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 /** @noinspection PhpUndefinedClassInspection */
 class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 {
-
-
     /**
      * @var array
      */
     protected $fieldDefsStore;
-    
 
     public function setUp()
     {
         parent::setUp();
         $this->fieldDefsStore();
     }
-
 
     public function tearDown()
     {

@@ -550,6 +550,9 @@ function get_notify_template_file($language)
     return $file;
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function sugar_config_union($default, $override)
 {
     // a little different then array_merge and array_merge_recursive.  we want
@@ -570,6 +573,9 @@ function sugar_config_union($default, $override)
     return $override;
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function make_not_writable($file)
 {
     // Returns true if the given file/dir has been made not writable
@@ -593,10 +599,14 @@ function make_not_writable($file)
     return $ret_val;
 }
 
-/** This function returns the name of the person.
- * It currently returns "first last".  It should not put the space if either name is not available.
+/**
+ * This function returns the name of the person.
+ * It currently returns "first last". It should not put the space if either name is not available.
  * It should not return errors if either name is not available.
  * If no names are present, it will return ""
+ *
+ * @deprecated This function is unused and will be removed in a future release.
+ *
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
@@ -643,6 +653,9 @@ function get_languages()
     return $lang;
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function get_all_languages()
 {
     global $sugar_config;
@@ -650,6 +663,9 @@ function get_all_languages()
     return $sugar_config['languages'];
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function get_language_display($key)
 {
     global $sugar_config;
@@ -699,11 +715,12 @@ function get_user_name($id)
 {
     $db = DBManagerFactory::getInstance();
 
-    if (empty($db)) {
+    if ($db === null) {
         $db = DBManagerFactory::getInstance();
     }
 
-    $q = "SELECT user_name FROM users WHERE id='{$id}'";
+    $idQuoted = $db->quoted($id);
+    $q = "SELECT user_name FROM users WHERE id=$idQuoted";
     $r = $db->query($q);
     $a = $db->fetchByAssoc($r);
 
@@ -1304,7 +1321,11 @@ function return_mod_list_strings_language($language, $module)
     return $return_value;
 }
 
-/** This function retrieves a theme's language file and returns the array of strings included.
+/**
+ * This function retrieves a theme's language file and returns the array of strings included.
+ *
+ * @deprecated This function is unused and will be removed in a future release.
+ * 
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
@@ -2001,6 +2022,9 @@ function isSSL()
     return false;
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function add_http($url)
 {
     if (!preg_match('@://@i', $url)) {
@@ -2556,6 +2580,9 @@ function getJSPath($relative_path, $additional_attrs = '')
     return getVersionedPath($relative_path) . (!empty($additional_attrs) ? "&$additional_attrs" : '');
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function getSWFPath($relative_path, $additional_params = '')
 {
     $path = $relative_path;
@@ -2569,6 +2596,9 @@ function getSWFPath($relative_path, $additional_params = '')
     return $path;
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function getSQLDate($date_str)
 {
     if (preg_match('/^(\d{1,2})-(\d{1,2})-(\d{4})$/', $date_str, $match)) {
@@ -2593,6 +2623,9 @@ function getSQLDate($date_str)
     return '';
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function clone_history(&$db, $from_id, $to_id, $to_type)
 {
     global $timedate;
@@ -2656,6 +2689,9 @@ function clone_history(&$db, $from_id, $to_id, $to_type)
     }
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function values_to_keys($array)
 {
     $new_array = array();
@@ -3006,6 +3042,9 @@ function insert_charset_header()
     header('Content-Type: text/html; charset=UTF-8');
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function getCurrentURL()
 {
     $href = 'http:';
@@ -3173,21 +3212,29 @@ function decodeJavascriptUTF8($str)
  * Do not pass in any pararameter to default to a check against the
  * current environment's PHP version.
  *
- * @param string Version to check against, defaults to the current environment's.
- *
- * @return integer1 if version is greater than the recommended PHP version,
- * 0 if version is between minimun and recomended PHP versions,
- * -1 otherwise (less than minimum or buggy version)
+ * @param string $sys_php_version Version to check against, defaults to the current environment's.
+ * @param string $min_php_version Minimum version to check against. Defaults to the SUITECRM_PHP_MIN_VERSION constant.
+ * @param string $rec_php_version Recommended version. Defaults to the SUITECRM_PHP_REC_VERSION constant
+ * 
+ * @return integer 1 if version is greater than the recommended PHP version,
+ *   0 if version is between minimun and recomended PHP versions,
+ *   -1 otherwise (less than minimum or buggy version)
  */
-function check_php_version($sys_php_version = '')
+function check_php_version($sys_php_version = '', $min_php_version = '', $rec_php_version = '')
 {
     if ($sys_php_version === '') {
         $sys_php_version = constant('PHP_VERSION');
     }
+    if ($min_php_version === '') {
+        $min_php_version = constant('SUITECRM_PHP_MIN_VERSION');
+    }
+    if ($rec_php_version === '') {
+        $rec_php_version = constant('SUITECRM_PHP_REC_VERSION');
+    }
 
     // versions below MIN_PHP_VERSION are not accepted, so return early.
-    if (version_compare($sys_php_version, constant('SUITECRM_PHP_MIN_VERSION'), '<') === true) {
-        return - 1;
+    if (version_compare($sys_php_version, $min_php_version, '<') === true) {
+        return -1;
     }
 
     // If there are some bug ridden versions, we should include them here
@@ -3199,8 +3246,8 @@ function check_php_version($sys_php_version = '')
         }
     }
 
-    //If the checked version is between the minimum and recommended versions, return 0
-    if (version_compare($sys_php_version, constant('SUITECRM_PHP_REC_VERSION'), '<') === true) {
+    // If the checked version is between the minimum and recommended versions, return 0.
+    if (version_compare($sys_php_version, $rec_php_version, '<') === true) {
         return 0;
     }
 
@@ -3581,6 +3628,9 @@ function get_sub_cookies($name)
     return $cookies;
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function mark_delete_components($sub_object_array, $run_second_level = false, $sub_sub_array = '')
 {
     if (!empty($sub_object_array)) {
@@ -3987,6 +4037,8 @@ function string_format($format, $args, $escape = true)
  * numbers using a DB auto-increment key from offline clients and still
  * have the number be unique (since it is modified by the system_id.
  *
+ * @deprecated This function is unused and will be removed in a future release.
+ * 
  * @param   $num       of bean
  * @param   $system_id from system
  *
@@ -4004,6 +4056,9 @@ function format_number_display($num, $system_id)
     }
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function checkLoginUserStatus()
 {
 }
@@ -4204,7 +4259,8 @@ function sugarArrayMergeRecursive($gimp, $dom)
 }
 
 /**
- * finds the correctly working versions of PHP-JSON.
+ * Finds the correctly working versions of PHP-JSON.
+ * @deprecated This function is unused and will be removed in a future release.
  *
  * @return bool True if NOT found or WRONG version
  */
@@ -4353,6 +4409,9 @@ function generate_search_where(
     return $where_clauses;
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function add_quotes($str)
 {
     return "'{$str}'";
@@ -4427,13 +4486,23 @@ function getJavascriptSiteURL()
     return $site_url;
 }
 
-// works nicely with array_map() -- can be used to wrap single quotes around each element in an array
+
+/**
+ * Works nicely with array_map() -- can be used to wrap single quotes around
+ * each element in an array.
+ * 
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function add_squotes($str)
 {
     return "'" . $str . "'";
 }
 
-// recursive function to count the number of levels within an array
+
+/**
+ * Recursive function to count the number of levels within an array.
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function array_depth($array, $depth_count = -1, $depth_array = array())
 {
     ++$depth_count;
@@ -4619,6 +4688,8 @@ function is_freetds()
 /**
  * Chart dashlet helper function that returns the correct CSS file, dependent on the current theme.
  *
+ * @deprecated This function is unused and will be removed in a future release.
+ *
  * @todo this won't work completely right until we impliment css compression and combination
  *       for now, we'll just include the last css file found.
  *
@@ -4633,6 +4704,7 @@ function chartStyle()
  * Chart dashlet helper functions that returns the correct XML color file for charts,
  * dependent on the current theme.
  *
+ * @deprecated This function is unused and will be removed in a future release.
  * @return sugarColors.xml to use
  */
 function chartColors()
@@ -4649,6 +4721,8 @@ function chartColors()
 /**
  * This function is designed to set up the php enviroment
  * for AJAX requests.
+ * 
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function ajaxInit()
 {
@@ -4810,7 +4884,12 @@ function sugar_ucfirst($string, $charset = 'UTF-8')
 }
 
 /**
- *
+ * Given a multienum encoded as a string, convert it to an array of strings,
+ * e.g. `"^Monday^,^Tuesday^,^Wednesday^,^Thursday^"` becomes
+ * `["Monday", "Tuesday", "Wednesday", "Thursday"]`.
+ * 
+ * @param string|string[] $string The encoded multienum value. If this is already an array, the array will be returned unchanged.
+ * @return string[] An array of strings representing the multienum's values.
  */
 function unencodeMultienum($string)
 {
@@ -4950,8 +5029,9 @@ function should_hide_iframes()
 /**
  * Given a version such as 5.5.0RC1 return RC. If we have a version such as: 5.5 then return GA.
  *
- * @param string $version
+ * @deprecated This function is unused and will be removed in a future release.
  *
+ * @param string $version
  * @return string RC, BETA, GA
  */
 function getVersionStatus($version)
@@ -4965,6 +5045,8 @@ function getVersionStatus($version)
 /**
  * Return the numeric portion of a version. For example if passed 5.5.0RC1 then return 5.5. If given
  * 5.5.1RC1 then return 5.5.1.
+ *
+ * @deprecated This function is unused and will be removed in a future release.
  *
  * @param string $version
  *
@@ -5216,8 +5298,9 @@ function getFTSEngineType()
 }
 
 /**
- * @param string $optionName - name of the option to be retrieved from app_list_strings
+ * @deprecated This function is unused and will be removed in a future release.
  *
+ * @param string $optionName - name of the option to be retrieved from app_list_strings
  * @return array - the array to be used in option element
  */
 function getFTSBoostOptions($optionName)
@@ -5233,6 +5316,8 @@ function getFTSBoostOptions($optionName)
  *
  * This function walks through an Array and recursively calls utf8_encode on the
  * values of each of the elements.
+ * 
+ * @deprecated This function is unused and will be removed in a future release.
  *
  * @param $data Array of data to encode
  *
@@ -5288,6 +5373,8 @@ function get_custom_file_if_exists($file)
  * This will return the URL used to redirect the user to the help documentation.
  * It can be overriden completely by setting the custom_help_url or partially by setting the custom_help_base_url
  * in config.php or config_override.php.
+ *
+ * @deprecated This function is unused and will be removed in a future release.
  *
  * @param string $send_edition
  * @param string $send_version
@@ -5401,6 +5488,8 @@ function clean_sensitive_data($defs, $data)
 
 /**
  * Return relations with labels for duplicates.
+ *
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function getDuplicateRelationListWithTitle($def, $var_def, $module)
 {
@@ -5491,6 +5580,9 @@ function sugar_unserialize($value)
 
 define('DEFAULT_UTIL_SUITE_ENCODING', 'UTF-8');
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function suite_strlen($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strlen')) {
@@ -5499,6 +5591,9 @@ function suite_strlen($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
     return strlen($input);
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function suite_substr($input, $start, $length = null, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_substr')) {
@@ -5507,6 +5602,9 @@ function suite_substr($input, $start, $length = null, $encoding = DEFAULT_UTIL_S
     return substr($input, $start, $length);
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function suite_strtoupper($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strtoupper')) {
@@ -5515,6 +5613,9 @@ function suite_strtoupper($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
     return strtoupper($input);
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function suite_strtolower($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strtolower')) {
@@ -5523,6 +5624,9 @@ function suite_strtolower($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
     return strtolower($input);
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function suite_strpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strpos')) {
@@ -5531,6 +5635,9 @@ function suite_strpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL_
     return strpos($haystack, $needle, $offset);
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strrpos')) {

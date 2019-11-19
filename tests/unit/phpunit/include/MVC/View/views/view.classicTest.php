@@ -17,7 +17,7 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the contructor and check for the Object type and type attribute
 
-        //test with no paramerters
+        //test with no parameters
         $view = new ViewClassic();
         $this->assertInstanceOf('ViewClassic', $view);
         $this->assertInstanceOf('SugarView', $view);
@@ -36,8 +36,6 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_SESSION)) {
             $session = $_SESSION;
         }
-        
-
 
         //test with a valid module but invalid action. it should return false.
         $view = new ViewClassic();

@@ -34,15 +34,9 @@ class db_utilsTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testdb_convert($string, $type, $params, $expected)
     {
-
-
-        
         //execute the method and test if it returns expected values for all types
         $actual = db_convert($string, $type, $params);
         $this->assertSame($expected, $actual);
-        
-
-
     }
 
     public function testdb_concat()
