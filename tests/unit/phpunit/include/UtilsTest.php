@@ -130,6 +130,7 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
 
         // Returns false if no user object is passed.
         $this->assertFalse(is_admin(null));
+    }
   
     public function testcheck_php_version()
     {
