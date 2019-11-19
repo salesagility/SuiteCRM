@@ -87,10 +87,12 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('^foo^,^bar^', encodeMultienumValue(array('foo', 'bar')));
     }
 
-    public function testunencodeMultienumValue()
+    public function testunencodeMultienum()
     {
         $this->assertEquals(array('foo'), unencodeMultienum('^foo^'));
         $this->assertEquals(array('foo', 'bar'), unencodeMultienum('^foo^,^bar^'));
+        // Will return the same array if given an array.
+        $this->assertEquals(array('foo', 'bar'), unencodeMultienum(['foo', 'bar']));
     }
 
     public function testget_languages()

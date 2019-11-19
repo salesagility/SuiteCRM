@@ -4884,7 +4884,12 @@ function sugar_ucfirst($string, $charset = 'UTF-8')
 }
 
 /**
- *
+ * Given a multienum encoded as a string, convert it to an array of strings,
+ * e.g. `"^Monday^,^Tuesday^,^Wednesday^,^Thursday^"` becomes
+ * `["Monday", "Tuesday", "Wednesday", "Thursday"]`.
+ * 
+ * @param string|string[] $string The encoded multienum value. If this is already an array, the array will be returned unchanged.
+ * @return string[] An array of strings representing the multienum's values.
  */
 function unencodeMultienum($string)
 {
