@@ -138,8 +138,6 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
 
     public function testhandleOfflineClient()
     {
-
-
         $SugarApplication = new SugarApplication();
 
         //execute the method and test if it works and does not throws an exception.

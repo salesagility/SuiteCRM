@@ -19,8 +19,6 @@ class ViewSugarpdfTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_REQUEST)) {
             $_request = $_REQUEST;
         }
-        
-        
 
         //execute the method without request parameters and test if it works. it should output some headers and throw headers output exception.
         try {
@@ -30,7 +28,6 @@ class ViewSugarpdfTest extends SuitePHPUnitFrameworkTestCase
             $msg = $e->getMessage();
             $this->assertStringStartsWith('Cannot modify header information', $msg, 'Cannot modify header information? : ' . $msg . "\nTrace\n" . $e->getTraceAsString());
         }
-
 
         //execute the method with request parameters and test if it works.
         $_REQUEST['sugarpdf'] = 'someValue';
@@ -42,8 +39,6 @@ class ViewSugarpdfTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals('someValue', 'sugarpdf', $view);
         $this->assertAttributeEquals(null, 'sugarpdfBean', $view);
 
-
-        
         if (isset($_request)) {
             $_REQUEST = $_request;
         } else {
