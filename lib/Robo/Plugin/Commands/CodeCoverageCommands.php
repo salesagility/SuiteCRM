@@ -66,8 +66,6 @@ class CodeCoverageCommands extends \Robo\Tasks
                 throw new \RuntimeException('Unable to detect continuous integration environment');
             }
         }
-
-        $this->disableStateChecker();
         $this->generateCodeCoverageFile();
 
         $this->say('Code Coverage Completed');
@@ -97,23 +95,6 @@ class CodeCoverageCommands extends \Robo\Tasks
     {
         $this->_exec($this->getCodeCoverageCommand());
         $this->say('Code coverage xml outputted to ./tests/_output/coverage.xml');
-    }
-
-    /**
-     * Disables the state checker
-     */
-    private function disableStateChecker()
-    {
-        global $sugar_config;
-        require_once 'include/utils/file_utils.php';
-
-        $sugar_config['state_checker']['test_state_check_mode'] = 0;
-
-        return write_array_to_file(
-            'sugar_config',
-            $sugar_config,
-            'config_override.php'
-        );
     }
 
     private function getCodeCoverageCommand()

@@ -1,68 +1,28 @@
 <?php
-
+include_once __DIR__ . '/SugarBeanMock.php';
 include_once __DIR__ . '/../../../../include/SubPanel/SubPanelDefinitions.php';
 include_once __DIR__ . '/../../../../modules/Campaigns/ProspectLink.php';
 include_once __DIR__ . '/../../../../modules/AM_ProjectTemplates/AM_ProjectTemplates_sugar.php';
 
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
-use SuiteCRM\StateSaver;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 use SuiteCRM\Utility\SuiteValidator;
 
 /** @noinspection PhpUndefinedClassInspection */
-class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
+class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 {
-
-
     /**
-     * @var StateSaver
+     * @var array
      */
-    protected $state;
+    protected $fieldDefsStore;
 
-    protected $fieldDefsStore = [];
-
-    protected function getTouchedModules()
-    {
-        return ['Users', 'Contacts', 'AM_ProjectTemplates_sugar', 'AOBH_BusinessHours'];
-    }
-    
-    protected function getStateSaver()
-    {
-        if (!isset($this->state)) {
-            $this->state = new StateSaver();
-        }
-        return $this->state;
-    }
-
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
         $this->fieldDefsStore();
-        $this->getStateSaver()->pushTable('tracker');
-        $this->getStateSaver()->pushTable('aod_index');
-        $this->getStateSaver()->pushTable('users');
-        $this->getStateSaver()->pushTable('contacts_cstm');
-        $this->getStateSaver()->pushGlobals();
-
-        // these tests assume that only admin user are in the database so we should delete everything else
-        $query = "delete from users where id != 1";
-        DBManagerFactory::getInstance()->query($query);
-        // and check if admin is there?
-        $user = BeanFactory::getBean('Users');
-        $result = $user->retrieve(1);
-        $this->assertSame($user, $result);
-        $this->assertNotFalse($user);
-        $this->assertNotNull($user);
-        $this->assertEquals(1, $user->id);
     }
 
-
-    protected function tearDown()
+    public function tearDown()
     {
-        $this->getStateSaver()->popGlobals();
-        $this->getStateSaver()->popTable('contacts_cstm');
-        $this->getStateSaver()->popTable('users');
-        $this->getStateSaver()->popTable('aod_index');
-        $this->getStateSaver()->popTable('tracker');
         $this->fieldDefsRestore();
         parent::tearDown();
     }
@@ -73,9 +33,8 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     protected function fieldDefsStore($key = 'base')
     {
-        foreach ($this->getTouchedModules() as $module) {
-            $this->fieldDefsStoreBean($module, $key);
-        }
+        $object = new Contact();
+        $this->fieldDefsStore[$key]['Contact'] = $object->field_defs;
     }
 
     /**
@@ -84,38 +43,12 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     protected function fieldDefsRestore($key = 'base')
     {
-        foreach ($this->getTouchedModules() as $module) {
-            $this->fieldDefsRestoreBean($module, $key);
-        }
-    }
-
-    protected function fieldDefsStoreBean($module, $key = 'base')
-    {
-        $object = $this->getModuleBean($module);
-        if (isset($this->fieldDefsStore[$key][$module])) {
-            throw new Exception('Field definition already stored for module ' . $module . ' at key ' . $key);
-        }
-        $this->fieldDefsStore[$key][$module] = $object->field_defs;
-    }
-
-    protected function fieldDefsRestoreBean($module, $key = 'base')
-    {
-        $object = $this->getModuleBean($module);
-        if (!isset($this->fieldDefsStore[$key][$module])) {
-            throw new Exception('Field definition is not stored for module ' . $module . ' at key ' . $key);
-        }
-        $object->field_defs = $this->fieldDefsStore[$key][$module];
+        $object = new Contact();
+        $object->field_defs = $this->fieldDefsStore[$key]['Contact'];
     }
 
     public function testFactoryGetCachedDeleted()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('leads');
-        $state->pushTable('leads_cstm');
-        $state->pushTable('sugarfeed');
-        $state->pushTable('aod_indexevent');
-        $state->pushGlobals();
-
         // Create a lead and cache it
         $lead = new Lead();
         $lead->save();
@@ -128,12 +61,6 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertEmpty(BeanFactory::getBean($lead->module_dir, $lead->id));
         // Unless explicitly specified
         $this->assertNotEmpty(BeanFactory::getBean($lead->module_dir, $lead->id, [], false));
-
-        $state->popGlobals();
-        $state->popTable('aod_indexevent');
-        $state->popTable('sugarfeed');
-        $state->popTable('leads_cstm');
-        $state->popTable('leads');
     }
 
     protected function getModuleBean($module)
@@ -1866,6 +1793,11 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testSaveQuick()
     {
+        $userFieldDefs = BeanFactory::getBean('Users')->field_defs;
+        $contactFieldDefs = BeanFactory::getBean('Contacts')->field_defs;
+
+        // test
+        
         global $current_user;
 
         // test
@@ -2123,6 +2055,9 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         DBManagerFactory::getInstance()->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'testBean_1'");
         DBManagerFactory::getInstance()->query("DELETE FROM email_addr_bean_rel WHERE bean_id LIKE 'testBean_1'");
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses WHERE email_address LIKE 'testbean1@email.com'");
+
+        BeanFactory::getBean('Users')->field_defs = $userFieldDefs;
+        BeanFactory::getBean('Contacts')->field_defs = $contactFieldDefs;
     }
 
     /**

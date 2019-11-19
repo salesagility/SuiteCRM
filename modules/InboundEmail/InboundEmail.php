@@ -38,8 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\StateSaver;
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -342,11 +340,10 @@ class InboundEmail extends SugarBean
         $this->connectMailserver();
         $oldConnect = $this->getConnectString('', $oldName);
         $newConnect = $this->getConnectString('', $newName);
-        $state = new StateSaver();
-        $state->pushErrorLevel();
+        $errorLevelStored = error_reporting();
         error_reporting(0);
         $imapRenameMailbox = $this->getImap()->renameMailbox($oldConnect, $newConnect);
-        $state->popErrorLevel();
+        error_reporting($errorLevelStored);
         if (!$imapRenameMailbox) {
             $GLOBALS['log']->debug("***INBOUNDEMAIL: failed to rename mailbox [ {$oldConnect} ] to [ {$newConnect} ]");
         } else {

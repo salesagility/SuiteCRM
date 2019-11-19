@@ -1,6 +1,8 @@
 <?php
 
-class AOK_KnowledgeBaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AOK_KnowledgeBaseTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOK_KnowledgeBase()
     {

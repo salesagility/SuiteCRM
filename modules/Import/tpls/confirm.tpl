@@ -147,14 +147,14 @@
                         <td ><span><input type="text" disabled id="sigDigitsExample" name="sigDigitsExample"></span></td>
                     </tr>
                     <tr>
-                        <td scope="col"><span><label for="default_number_grouping_seperator">{$MOD.LBL_NUMBER_GROUPING_SEP}</label></span></td>
+                        <td scope="col"><span><label for="default_number_grouping_separator">{$MOD.LBL_NUMBER_GROUPING_SEP}</label></span></td>
                         <td ><span>
-                            <input tabindex='4' name='importlocale_num_grp_sep' id='default_number_grouping_seperator'
+                            <input tabindex='4' name='importlocale_num_grp_sep' id='default_number_grouping_separator'
                                    type='text' maxlength='1' size='1' value='{$NUM_GRP_SEP}' onkeydown='setSigDigits();' onkeyup='setSigDigits();'>
                         </span></td>
-                        <td scope="col"><span><label for="default_decimal_seperator">{$MOD.LBL_DECIMAL_SEP}</label></span></td>
+                        <td scope="col"><span><label for="default_decimal_separator">{$MOD.LBL_DECIMAL_SEP}</label></span></td>
                         <td ><span>
-                            <input tabindex='4' name='importlocale_dec_sep' id='default_decimal_seperator'
+                            <input tabindex='4' name='importlocale_dec_sep' id='default_decimal_separator'
                                    type='text' maxlength='1' size='1' value='{$DEC_SEP}' onkeydown='setSigDigits();' onkeyup='setSigDigits();'>
                         </span></td>
                     </tr>

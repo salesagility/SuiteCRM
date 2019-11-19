@@ -1,7 +1,9 @@
 <?php
 
 
-class SugarAutoLoaderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class SugarAutoLoaderTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testautoload()
     {
@@ -22,13 +24,6 @@ class SugarAutoLoaderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testloadAll()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
-
         //execute the method and check if it works and doesn't throws an exception
         //this method only includes file so there is no output to test.
         try {
@@ -37,7 +32,5 @@ class SugarAutoLoaderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 }

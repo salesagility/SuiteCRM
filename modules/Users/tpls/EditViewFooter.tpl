@@ -386,7 +386,7 @@
                     </slot>&nbsp;{sugar_help text=$MOD.LBL_NUMBER_GROUPING_SEP_TEXT }</td>
                 <td>
                     <slot>
-                        <input tabindex='14' name='num_grp_sep' id='default_number_grouping_seperator'
+                        <input tabindex='14' name='num_grp_sep' id='default_number_grouping_separator'
                                type='text' maxlength='1' size='1' value='{$NUM_GRP_SEP}'
                                onkeydown='setSigDigits();' onkeyup='setSigDigits();'>
                     </slot>
@@ -404,7 +404,7 @@
                     <slot>{$MOD.LBL_DECIMAL_SEP}:</slot>&nbsp;{sugar_help text=$MOD.LBL_DECIMAL_SEP_TEXT }</td>
                 <td>
                     <slot>
-                        <input tabindex='14' name='dec_sep' id='default_decimal_seperator'
+                        <input tabindex='14' name='dec_sep' id='default_decimal_separator'
                                type='text' maxlength='1' size='1' value='{$DEC_SEP}'
                                onkeydown='setSigDigits();' onkeyup='setSigDigits();'>
                     </slot>

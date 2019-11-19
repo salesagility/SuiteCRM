@@ -1,6 +1,8 @@
 <?php
 
-class ViewMetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testdisplayCheckBoxes()
     {
@@ -83,7 +85,7 @@ class ViewMetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $request = $_REQUEST;
         }
         
-        $state = new SuiteCRM\StateSaver();
+
         
         
         
@@ -105,12 +107,7 @@ class ViewMetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $renderedContent = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
-        
-        
-        // clean up
-        
-        
-        
+
         if (isset($request)) {
             $_REQUEST = $request;
         } else {
@@ -120,7 +117,6 @@ class ViewMetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetModules()
     {
-
         //execute the method and test if it returns a array.
         $modules = VardefBrowser::getModules();
         $this->assertTrue(is_array($modules));

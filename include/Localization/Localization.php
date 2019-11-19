@@ -132,8 +132,8 @@ class Localization
             'default_locale_name_format'            => 's f l',
             'name_formats'                          => array('s f l' => 's f l', 'f l' => 'f l', 's l' => 's l', 'l, s f' => 'l, s f',
                                                             'l, f' => 'l, f', 's l, f' => 's l, f', 'l s f' => 'l s f', 'l f s' => 'l f s'),
-            'default_number_grouping_seperator'        => ',',
-            'default_decimal_seperator'                => '.',
+            'default_number_grouping_separator'        => ',',
+            'default_decimal_separator'                => '.',
             'export_delimiter'                        => ',',
             'default_email_charset'                    => $this->default_email_charset,
         );
@@ -404,6 +404,26 @@ class Localization
     }
 
     /**
+     * Prefixes the input with a BOM.
+     *
+     * @param string $string The string to add a BOM to
+     * @param string $fromCharset The charset of the input string
+     * @return string The input string including a BOM
+     * @throws UnexpectedValueException in case the encoding isn't supported
+     */
+    public function addBOM($string, $fromCharset) {
+        $charset  = $this->normalizeCharset($fromCharset);
+        if ($charset === 'utf8') {
+            return "\xef\xbb\xbf" . $string;
+        } else if ($charset === 'utf16le') {
+            return "\xff\xfe" . $string;
+        } else if ($charset === 'utf16be') {
+            return "\xfe\xff" . $string;
+        }
+        throw new UnexpectedValueException('Encoding not supported: ' . $fromCharset);
+    }
+
+    /**
      * translates a character set from one to another, and the into MIME-header friendly format
      */
     public function translateCharsetMIME($string, $fromCharset, $toCharset='UTF-8', $encoding="Q")
@@ -465,14 +485,14 @@ class Localization
     ////	NUMBER DISPLAY FORMATTING CODE
     public function getDecimalSeparator($user=null)
     {
-        // Bug50887 this is purposefully misspelled as ..._seperator to match the way it's defined throughout the app.
-        $dec = $this->getPrecedentPreference('default_decimal_seperator', $user);
+        // Bug50887 this is purposefully misspelled as ..._separator to match the way it's defined throughout the app.
+        $dec = $this->getPrecedentPreference('default_decimal_separator', $user);
         return $dec;
     }
 
     public function getNumberGroupingSeparator($user=null)
     {
-        $sep = $this->getPrecedentPreference('default_number_grouping_seperator', $user);
+        $sep = $this->getPrecedentPreference('default_number_grouping_separator', $user);
         return $sep;
     }
 
@@ -610,8 +630,8 @@ class Localization
 
 			function setSigDigits() {
 				var sym = document.getElementById('symbol').value;
-				var thou = document.getElementById('default_number_grouping_seperator').value;
-				var dec = document.getElementById('default_decimal_seperator').value;
+				var thou = document.getElementById('default_number_grouping_separator').value;
+				var dec = document.getElementById('default_decimal_separator').value;
 				var precision = document.getElementById('sigDigits').value;
 				//umber(n, num_grp_sep, dec_sep, round, precision)
 				var newNumber = sym + formatNumber(exampleDigits, thou, dec, precision, precision);
