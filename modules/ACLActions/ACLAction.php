@@ -365,20 +365,20 @@ class ACLAction extends SugarBean
         /* END - SECURITY GROUPS */
         while ($row = $db->fetchByAssoc($result, false)) {
             /* BEGIN - SECURITY GROUPS */
-            if ($has_user_role === false && $row['user_role'] === 1) {
+            if ($has_user_role == false && $row['user_role'] == 1) {
                 $has_user_role = true;
             }
-            if ($has_role === false && ($row['user_role'] === 1 || $row['user_role'] === 0)) {
+            if ($has_role == false && ($row['user_role'] == 1 || $row['user_role'] ==0)) {
                 $has_role = true;
             }
             //if user roles should take precedence over group roles and we have a user role
             //break when we get to processing the group roles
-            if ($has_user_role === true && $row['user_role'] === 0
+            if ($has_user_role == true && $row['user_role'] == 0
                 && isset($sugar_config['securitysuite_user_role_precedence'])
-                && $sugar_config['securitysuite_user_role_precedence'] === true) {
+                && $sugar_config['securitysuite_user_role_precedence'] == true) {
                 break;
             }
-            if ($row['user_role'] === -1 && $has_role === true) {
+            if ($row['user_role'] == -1 && $has_role == true) {
                 break; //no need for default actions when a role is assigned to the user or user's group already
             }
             /* END - SECURITY GROUPS */
@@ -482,7 +482,7 @@ class ACLAction extends SugarBean
             )) {
             return true;
         }
-        if ($action !== null && isset($action->aclaccess)) {
+        if (!is_null($action) && isset($action->aclaccess)) {
             if ($action->aclaccess == ACL_ALLOW_ALL
                 || ($is_owner && $action->aclaccess == ($access == ACL_ALLOW_OWNER || $access == ACL_ALLOW_GROUP))
                 || ($in_group && $access == ACL_ALLOW_GROUP) //need to pass if in group with access somehow
@@ -499,8 +499,7 @@ class ACLAction extends SugarBean
     /**
      * STATIC function userNeedsSecurityGroup($user_id, $category, $action,$type='module')
      * checks if a user should have ownership to do an action
-     *
-     * @param GUID $user_id
+     * @param string $user_id GUID
      * @param string $category
      * @param string $action
      * @param string $type
@@ -508,14 +507,15 @@ class ACLAction extends SugarBean
      */
     public static function userNeedsSecurityGroup($user_id, $category, $action, $type = 'module')
     {
-        //check if we don't have it set in the cache if not lets reload the cache
+        // Check if we don't have it set in the cache if not lets reload the cache.
 
         if (empty($_SESSION['ACL'][$user_id][$category][$type][$action])) {
             self::getUserActions($user_id, false);
         }
 
         if (!empty($_SESSION['ACL'][$user_id][$category][$type][$action])) {
-            return $_SESSION['ACL'][$user_id][$category][$type][$action]['aclaccess'] === ACL_ALLOW_GROUP;
+            // Requires loose comparison.
+            return $_SESSION['ACL'][$user_id][$category][$type][$action]['aclaccess'] == ACL_ALLOW_GROUP;
         }
 
         return false;
@@ -596,7 +596,7 @@ class ACLAction extends SugarBean
      * STATIC function userNeedsOwnership($user_id, $category, $action,$type='module')
      * checks if a user should have ownership to do an action
      *
-     * @param GUID $user_id
+     * @param string $user_id GUID
      * @param string $category
      * @param string $action
      * @param string $type
@@ -612,12 +612,11 @@ class ACLAction extends SugarBean
 
 
         if (!empty($_SESSION['ACL'][$user_id][$category][$type][$action])) {
-            return $_SESSION['ACL'][$user_id][$category][$type][$action]['aclaccess'] === ACL_ALLOW_OWNER;
+            // Requires loose type casting
+            return $_SESSION['ACL'][$user_id][$category][$type][$action]['aclaccess'] == ACL_ALLOW_OWNER;
         }
-
         return false;
     }
-
     /**
      *
      * static pass by ref setupCategoriesMatrix(&$categories)
@@ -644,7 +643,7 @@ class ACLAction extends SugarBean
                     }
 
                     $categories[$cat_name][$type_name][$act_name]['accessColor'] = self::AccessColor($actionAclAccess);
-                    if ($type_name === 'module') {
+                    if ($type_name == 'module') {
                         $catModAccACL = null;
                         if (isset($categories[$cat_name]['module']['access']['aclaccess'])) {
                             $catModAccACL = $categories[$cat_name]['module']['access']['aclaccess'];
@@ -652,7 +651,8 @@ class ACLAction extends SugarBean
                             LoggerManager::getLogger()->warn('Categories / category name: [' . $cat_name . '] / module / access / aclaccess is not set for ACLAction::setupCategoriesMatrix()');
                         }
 
-                        if ($act_name !== 'aclaccess' && $catModAccACL === ACL_ALLOW_DISABLED) {
+                        // Requires loose comparison
+                        if ($act_name != 'aclaccess' && $catModAccACL == ACL_ALLOW_DISABLED) {
                             $categories[$cat_name][$type_name][$act_name]['accessColor'] = 'darkgray';
                             $disabled[] = $cat_name;
                         }
@@ -668,7 +668,7 @@ class ACLAction extends SugarBean
                     $categories[$cat_name][$type_name][$act_name]['accessName'] = ACLAction::AccessName($actionAclAccess);
                     $categories[$cat_name][$type_name][$act_name]['accessLabel'] = ACLAction::AccessLabel($actionAclAccess);
 
-                    if ($cat_name === 'Users' && $act_name === 'admin') {
+                    if ($cat_name == 'Users' && $act_name == 'admin') {
                         $categories[$cat_name][$type_name][$act_name]['accessOptions'][ACL_ALLOW_DEFAULT] = ACLAction::AccessName(ACL_ALLOW_DEFAULT);;
                         $categories[$cat_name][$type_name][$act_name]['accessOptions'][ACL_ALLOW_DEV] = ACLAction::AccessName(ACL_ALLOW_DEV);;
                     } else {
