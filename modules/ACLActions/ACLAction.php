@@ -73,6 +73,9 @@ class ACLAction extends SugarBean
         $this->__construct();
     }
 
+    function __construct() {
+        parent::__construct();
+    }
 
     /**
      * static addActions($category, $type='module')
