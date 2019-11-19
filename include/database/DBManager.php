@@ -1875,6 +1875,53 @@ abstract class DBManager
     /**
      * Takes a prepared stmt index and the data to replace and creates the query and runs it.
      *
+     * @deprecated This is no longer used and will be removed in a future release.
+     * 
+     * @param  int $stmt The index of the prepared statement from preparedTokens
+     * @param  array $data The array of data to replace the tokens with.
+     * @return resource result set or false on error
+     */
+    public function executePreparedQuery($stmt, $data = array())
+    {
+        if (!empty($this->preparedTokens[$stmt])) {
+            if (!is_array($data)) {
+                $data = array($data);
+            }
+            $pTokens = $this->preparedTokens[$stmt];
+            //ensure that the number of data elements matches the number of replacement tokens
+            //we found in prepare().
+            if (count($data) != $pTokens['tokenCount']) {
+                //error the data count did not match the token count
+                return false;
+            }
+            $query = '';
+            $dataIndex = 0;
+            $tokens = $pTokens['tokens'];
+            foreach ($tokens as $val) {
+                switch ($val) {
+                    case '?':
+                        $query .= $this->quote($data[$dataIndex++]);
+                        break;
+                    case '&':
+                        $filename = $data[$dataIndex++];
+                        $query .= file_get_contents($filename);
+                        break;
+                    case '!':
+                        $query .= $data[$dataIndex++];
+                        break;
+                    default:
+                        $query .= $val;
+                        break;
+                }//switch
+            }//foreach
+            return $this->query($query);
+        }
+        return false;
+    }
+
+    /**
+     * Takes a prepared stmt index and the data to replace and creates the query and runs it.
+     *
      * @param  int $stmt The index of the prepared statement from preparedTokens
      * @param  array $data The array of data to replace the tokens with.
      * @return resource result set or false on error
