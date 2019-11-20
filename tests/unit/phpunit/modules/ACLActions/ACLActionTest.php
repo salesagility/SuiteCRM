@@ -155,7 +155,6 @@ class ACLActionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetupCategoriesMatrix()
     {
-
         //preset required data
         $categories = array();
         $categories['Accounts']['module']['list'][] = 'list';

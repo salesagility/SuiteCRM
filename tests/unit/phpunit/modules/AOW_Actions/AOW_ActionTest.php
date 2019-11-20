@@ -16,7 +16,6 @@ class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testAOW_Action()
     {
-
         // Execute the constructor and check for the Object type and  attributes
         $aowAction = new AOW_Action();
         $this->assertInstanceOf('AOW_Action', $aowAction);

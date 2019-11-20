@@ -16,7 +16,6 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
 
     public function testAdministration()
     {
-
         // Execute the constructor and check for the Object type and type attribute
         $admin = new Administration();
         $this->assertInstanceOf('Administration', $admin);

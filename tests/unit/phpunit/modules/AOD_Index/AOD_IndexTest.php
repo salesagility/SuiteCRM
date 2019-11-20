@@ -6,7 +6,6 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOD_Index()
     {
-
         // Execute the constructor and check for the Object type and type attribute
         $aod_index = new AOD_Index();
         $this->assertInstanceOf('AOD_Index', $aod_index);
@@ -102,7 +101,6 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
 
     public function testisModuleSearchable()
     {
-
         //test with an invalid module
         $this->assertFalse(AOD_Index::isModuleSearchable('', ''));
 

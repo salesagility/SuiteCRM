@@ -16,7 +16,6 @@ class AlertTest extends SuitePHPUnitFrameworkTestCase
 
     public function testAlert()
     {
-
         // Execute the constructor and check for the Object type and type attribute
         $alert = new Alert();
         $this->assertInstanceOf('Alert', $alert);

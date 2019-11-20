@@ -6,7 +6,6 @@ class AOK_Knowledge_Base_CategoriesTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOK_Knowledge_Base_Categories()
     {
-
         // Execute the constructor and check for the Object type and type attribute
         $aok_KBCategories = new AOK_Knowledge_Base_Categories();
         $this->assertInstanceOf('AOK_Knowledge_Base_Categories', $aok_KBCategories);

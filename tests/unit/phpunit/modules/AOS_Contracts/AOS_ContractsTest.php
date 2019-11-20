@@ -15,7 +15,6 @@ class AOS_ContractsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testAOS_Contracts()
     {
-
         // Execute the constructor and check for the Object type and attributes
         $aosContracts = new AOS_Contracts();
         $this->assertInstanceOf('AOS_Contracts', $aosContracts);

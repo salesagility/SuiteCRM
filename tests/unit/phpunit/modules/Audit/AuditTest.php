@@ -38,8 +38,6 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_export_query()
     {
-
-        
         $audit = new Audit();
 
         // Execute the method and test that it works and doesn't throw an exception.
@@ -51,14 +49,10 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
-        
-
     }
 
     public function testfill_in_additional_list_fields()
     {
-
-        
         $audit = new Audit();
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -69,14 +63,10 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
-        
-
     }
 
     public function testfill_in_additional_detail_fields()
     {
-
-        
         $audit = new Audit();
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -87,14 +77,10 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
-        
-
     }
 
     public function testfill_in_additional_parent_fields()
     {
-
-        
         $audit = new Audit();
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -105,14 +91,10 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
-        
-
     }
 
     public function testget_list_view_data()
     {
-
-        
         $audit = new Audit();
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -123,14 +105,10 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
-        
-
     }
 
     public function testget_audit_link()
     {
-
-        
         $audit = new Audit();
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -141,8 +119,6 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
-        
-
     }
 
     public function testget_audit_list()

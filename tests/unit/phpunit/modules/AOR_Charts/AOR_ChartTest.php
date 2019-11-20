@@ -24,8 +24,6 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsave_lines()
     {
-
-        
         $this->markTestSkipped('Skipping AOR Charts Tests');
         
         $aorChart = new AOR_Chart();
@@ -49,8 +47,6 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-
     }
 
     public function testbuildChartImageBar()

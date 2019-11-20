@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AM_ProjectTemplatesTest extends SuitePHPUnitFrameworkTestCase

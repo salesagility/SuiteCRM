@@ -6,7 +6,6 @@ class AOR_ConditionTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOR_Condition()
     {
-
         // Execute the constructor and check for the Object type and  attributes
         $aor_Condition = new AOR_Condition();
         $this->assertInstanceOf('AOR_Condition', $aor_Condition);

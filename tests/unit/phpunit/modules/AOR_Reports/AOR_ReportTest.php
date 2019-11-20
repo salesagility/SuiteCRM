@@ -95,17 +95,15 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
     {
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
-        
+
         $chartBean = BeanFactory::getBean('AOR_Charts');
         $charts = (array)$chartBean->get_full_list();
-        
 
         //execute the method and verify that it returns chart display script. strings returned vary due to included chart id.
         $result = $aor_Report->build_report_chart();
         foreach ($charts as $chart) {
             $this->assertContains($chart->id, $result);
         }
-        
 
         unset($GLOBALS['_SESSION']);
         unset($GLOBALS['objectList']);
@@ -200,7 +198,6 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbuild_report_csv()
     {
-
         //this method uses exit so it cannot be tested
 
         /*$aor_Report = new AOR_Report();

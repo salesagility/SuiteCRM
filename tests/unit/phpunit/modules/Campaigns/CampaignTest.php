@@ -4,7 +4,6 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'modules/Campaigns/utils.php';
 
-
 class CampaignTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
@@ -59,7 +58,6 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
     public function testCampaign()
     {
-
         // Execute the constructor and check for the Object type and  attributes
         $campaign = new Campaign();
         $this->assertInstanceOf('Campaign', $campaign);

@@ -6,7 +6,6 @@ class AOK_KnowledgeBaseTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOK_KnowledgeBase()
     {
-
         // Execute the constructor and check for the Object type and type attribute
         $aok_KnowledgeBase = new AOK_KnowledgeBase();
         $this->assertInstanceOf('AOK_KnowledgeBase', $aok_KnowledgeBase);

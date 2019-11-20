@@ -36,9 +36,6 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testACLAccess()
     {
-
-
-
         $call = new Call();
 
         //test without setting recurring_source attribute
@@ -48,9 +45,6 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         //test with recurring_source attribute set
         $call->recurring_source = 'test';
         $this->assertFalse($call->ACLAccess('edit'));
-        
-
-
     }
 
     public function testSaveAndMarkDeleted()
@@ -139,9 +133,6 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(-1, $call->email_reminder_time);
         $this->assertEquals(false, $call->email_reminder_checked);
         $this->assertEquals('Accounts', $call->parent_type);
-
-
-
     }
 
     public function testget_list_view_data()

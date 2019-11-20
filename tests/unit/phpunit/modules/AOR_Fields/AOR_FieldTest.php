@@ -7,7 +7,6 @@ class AOR_FieldTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOR_Field()
     {
-
         // Execute the constructor and check for the Object type and  attributes
         $aor_Field = new AOR_Field();
         $this->assertInstanceOf('AOR_Field', $aor_Field);
