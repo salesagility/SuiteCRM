@@ -152,8 +152,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         $resource = DBManagerFactory::getInstance()->query($query);
         $row = $resource->fetch_assoc();
         $testUserDateModified = $row['date_modified'];
-        
-        
+
         $SugarController = new SugarController();
         $SugarController->setModule('Users');
         $SugarController->record = "1";
@@ -176,7 +175,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         } else {
             unset($_SESSION);
         }
-        
+
         $query = "UPDATE users SET date_modified = '$testUserDateModified' WHERE id = '$testUserId' LIMIT 1";
         DBManagerFactory::getInstance()->query($query);
     }
@@ -219,8 +218,5 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         // check with a valid False value
         $result = $SugarController->checkEntryPointRequiresAuth('GeneratePassword');
         $this->assertFalse($result);
-        
-
-
     }
 }

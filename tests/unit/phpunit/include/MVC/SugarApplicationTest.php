@@ -66,7 +66,6 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->assertTrue(true);
-        
 
         if (isset($session)) {
             $_SESSION = $session;
@@ -127,7 +126,6 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->assertTrue(true);
-        
 
         if (isset($session)) {
             $_SESSION = $session;

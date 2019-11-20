@@ -17,11 +17,7 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
     public function testquery_module_access_list()
     {
         self::markTestIncomplete('Test fails only in travis and php 7, Test has environment specific issue.');
-        
 
-
-
-        
         //execute the method and test it it returns expected contents
 
         $user = new User('1');
@@ -62,15 +58,10 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
             'AOK_Knowledge_Base_Categories' => 'AOK_Knowledge_Base_Categories',
             'EmailTemplates' => 'EmailTemplates',
             'Surveys' => 'Surveys',
-
         );
 
         $actual = query_module_access_list($user);
         $this->assertSame($expected, $actual);
-        
-
-
-
     }
 
     public function testquery_user_has_roles()
@@ -117,9 +108,6 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testquery_client_ip()
     {
-
-
-        
         //test without setting any server parameters
         $this->assertSame(null, query_client_ip());
 
@@ -132,9 +120,6 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
 
         $_SERVER['HTTP_CLIENT_IP'] = '1.1.1.1';
         $this->assertSame('1.1.1.1', query_client_ip());
-        
-
-
     }
 
     public function testget_val_array()
