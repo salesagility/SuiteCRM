@@ -104,7 +104,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
     {
         $Account = new Account('');
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $Account->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -117,7 +117,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
     {
         $Account = new Account('');
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $Account->fill_in_additional_detail_fields();
             $this->assertTrue(true);

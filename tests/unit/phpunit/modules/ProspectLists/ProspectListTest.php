@@ -193,7 +193,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
 
         $prospectList = new ProspectList();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $prospectList->mark_relationships_deleted('');
             $this->assertTrue(true);
@@ -212,7 +212,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
 
         $prospectList = new ProspectList();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $prospectList->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -240,7 +240,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
 
         $prospectList = new ProspectList();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $prospectList->update_currency_id('', '');
             $this->assertTrue(true);

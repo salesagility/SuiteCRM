@@ -68,7 +68,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
     {
         $scheduler = new Scheduler();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $scheduler->checkPendingJobs(new SugarJobQueue());
             $this->assertTrue(true);
@@ -168,7 +168,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
     {
         $scheduler = new Scheduler();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $scheduler->checkCurl();
             $this->assertTrue(true);
@@ -198,7 +198,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         
         $scheduler = new Scheduler();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $scheduler->rebuildDefaultSchedulers();
             $this->assertTrue(true);
@@ -228,7 +228,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('environment dependency');
         $scheduler = new Scheduler();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $scheduler->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -243,7 +243,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
         $scheduler = new Scheduler();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $scheduler->fill_in_additional_detail_fields();
             $this->assertTrue(true);

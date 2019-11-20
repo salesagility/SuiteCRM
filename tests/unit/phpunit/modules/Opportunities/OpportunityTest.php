@@ -79,7 +79,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
     {
         $opportunity = new Opportunity();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
 
             //test without force_load_details
@@ -99,7 +99,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
     {
         $opportunity = new Opportunity();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $opportunity->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -120,7 +120,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
     {
         $opportunity = new Opportunity();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $opportunity->update_currency_id(array('GBP', 'EUR'), 'USD');
             $this->assertTrue(true);
@@ -274,7 +274,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
     {
 
         
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             getCurrencyType();
             $this->assertTrue(true);

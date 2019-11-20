@@ -74,7 +74,7 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         $_REQUEST['relate_id'] = 2;
         $_REQUEST['relate_to'] = "contacts";
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $project->save_relationship_changes(true);
             $this->assertTrue(true);

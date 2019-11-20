@@ -266,7 +266,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
 
         $notify_user = new User(1);
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $meeting->send_assignment_notifications($notify_user, $admin);
             $this->assertTrue(true);
@@ -332,7 +332,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
     {
         $meeting = new Meeting();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $meeting->save_relationship_changes(false);
             $this->assertTrue(true);
@@ -348,7 +348,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
     {
         require_once 'data/Link.php';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $meeting = new Meeting();
             //test without parent_type

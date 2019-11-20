@@ -91,7 +91,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aod_index->commit();
             $this->assertTrue(true);
@@ -144,7 +144,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aod_index->remove('Accounts', 1);
             $this->assertTrue(true);

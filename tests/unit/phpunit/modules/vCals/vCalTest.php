@@ -48,7 +48,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         
         $vcal = new vCal();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $vcal->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -71,7 +71,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         
         $vcal = new vCal();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $vcal->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -94,7 +94,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         
         $vcal = new vCal();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $vcal->get_list_view_data();
             $this->assertTrue(true);
@@ -165,7 +165,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $vcal = new vCal();
         $user_focus = new User('1');
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $vcal->cache_sugar_vcal($user_focus);
             $this->assertTrue(true);
@@ -179,7 +179,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $vcal = new vCal();
         $user_focus = new User('1');
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $vcal->cache_sugar_vcal_freebusy($user_focus);
             $this->assertTrue(true);

@@ -76,7 +76,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
     {
         $db = DBManagerFactory::getInstance();
         
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             Relationship::delete('test_test', $db);
             $this->assertTrue(true);
@@ -190,7 +190,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
     {
         $relationship = new Relationship();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $relationship->build_relationship_cache();
             $this->assertTrue(true);
@@ -213,7 +213,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdelete_cache()
     {
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             Relationship::delete_cache();
             $this->assertTrue(true);

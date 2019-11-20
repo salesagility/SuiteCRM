@@ -78,7 +78,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
     {
         $bug = new Bug();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $bug->fill_in_additional_list_fields();
             $this->assertTrue(true);

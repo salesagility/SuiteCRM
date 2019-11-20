@@ -84,7 +84,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
         
         $prospect = new Prospect();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             //$prospect->converted_prospect('1', '2', '3', '4');
             $this->assertTrue(true);

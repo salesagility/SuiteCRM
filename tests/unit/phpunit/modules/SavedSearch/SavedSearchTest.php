@@ -112,7 +112,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
     {
         $savedSearch = new SavedSearch();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $savedSearch->returnSavedSearch($id);
             $this->assertTrue(true);
@@ -125,7 +125,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
     {
         $savedSearch = new SavedSearch();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $savedSearch->returnSavedSearchContents($id);
             $this->assertTrue(true);

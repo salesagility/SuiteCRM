@@ -42,7 +42,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         
         $audit = new Audit();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $audit->create_export_query('', '');
             $this->assertTrue(true);
@@ -60,7 +60,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
         
         $audit = new Audit();
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $audit->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -78,7 +78,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
         
         $audit = new Audit();
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $audit->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -96,7 +96,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
         
         $audit = new Audit();
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $audit->fill_in_additional_parent_fields();
             $this->assertTrue(true);
@@ -114,7 +114,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
         
         $audit = new Audit();
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $audit->get_list_view_data();
             $this->assertTrue(true);
@@ -132,7 +132,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
         
         $audit = new Audit();
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $audit->get_audit_link();
             $this->assertTrue(true);

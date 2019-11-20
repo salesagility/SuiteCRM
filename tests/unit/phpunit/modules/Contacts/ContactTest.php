@@ -156,7 +156,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
     {
         $contact = new Contact();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $contact->load_contacts_users_relationship();
             $this->assertTrue(true);
@@ -250,7 +250,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
     {
         $contact = new Contact();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $contact->save_relationship_changes(true);
             $contact->save_relationship_changes(false);
@@ -289,7 +289,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
     {
         $contact = new Contact();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $contact->process_sync_to_outlook("all");
             $this->assertTrue(true);
@@ -297,7 +297,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $contact->process_sync_to_outlook("1");
             $this->assertTrue(true);

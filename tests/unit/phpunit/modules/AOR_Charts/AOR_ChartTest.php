@@ -42,7 +42,7 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
 
         $bean = new AOR_Report();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $aorChart->save_lines($post, $bean, $postKey);
             $this->assertTrue(true);

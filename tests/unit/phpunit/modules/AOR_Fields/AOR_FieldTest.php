@@ -41,7 +41,7 @@ class AOR_FieldTest extends SuitePHPUnitFrameworkTestCase
         $post_data['group_order'][] = 'desc';
         $post_data['group_display'][] = '1';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aor_Field->save_lines($post_data, new AOR_Report());
             $this->assertTrue(true);

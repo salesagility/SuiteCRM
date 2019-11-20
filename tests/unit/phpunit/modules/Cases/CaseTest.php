@@ -63,7 +63,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         
         $aCase = new aCase();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aCase->save_relationship_changes(true);
             $aCase->save_relationship_changes(false);
@@ -81,7 +81,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
     {
         $aCase = new aCase();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aCase->set_case_contact_relationship(1);
             $this->assertTrue(true);
@@ -94,7 +94,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
     {
         $aCase = new aCase();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aCase->fill_in_additional_list_fields();
             $this->assertTrue(true);

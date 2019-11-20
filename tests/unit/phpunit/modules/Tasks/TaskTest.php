@@ -80,7 +80,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
     {
         $task = new Task();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $task->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -96,7 +96,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         $task = new Task();
         $task->contact_id = 1;
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $task->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -113,7 +113,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         $task->parent_type = 'Accounts';
         $task->parent_id = '1';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $task->fill_in_additional_parent_fields();
             $this->assertTrue(true);

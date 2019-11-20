@@ -528,7 +528,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $inboundEmail->retrieve($id);
         $this->assertFalse((bool)$inboundEmail->conn);
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $success = $inboundEmail->renameFolder('mailbox1', 'new_mailbox');
             $this->assertFalse((bool)$success);
@@ -1196,7 +1196,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->deletePop3Cache();
             $this->assertTrue(true);
@@ -1232,7 +1232,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->pop3_cleanUp();
             $this->assertTrue(true);
@@ -1318,7 +1318,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
         $inboundEmail->protocol = 'pop3';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $inboundEmail->pop3_checkPartialEmail();
             $this->assertEquals('could not open socket connection to POP3 server', $result);
@@ -1341,7 +1341,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
         $inboundEmail->protocol = 'pop3';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $inboundEmail->pop3_checkEmail();
             $this->assertEquals(false, $result);
@@ -1364,7 +1364,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
 
         //test for IMAP
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $inboundEmail->getMessagesInEmailCache(0, 1);
             $this->assertTrue(true);
@@ -1374,7 +1374,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         //test for pop3
         $inboundEmail->protocol = 'pop3';
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $inboundEmail->getMessagesInEmailCache(1, 0);
             $this->assertTrue(true);
@@ -1484,7 +1484,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $inboundEmail = new InboundEmail();
 
         //test for IMAP
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->checkEmail('INBOX');
             $this->assertTrue(true);
@@ -1495,7 +1495,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         //test for pop3
         $inboundEmail->protocol = 'pop3';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->checkEmail('INBOX');
             $this->assertTrue(true);
@@ -1516,7 +1516,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail = new InboundEmail();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->syncEmail();
             $this->assertTrue(true);
@@ -1536,7 +1536,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail->id = 1;
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->deleteCachedMessages('1,2', 'test');
             $this->assertTrue(true);
@@ -1651,7 +1651,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail = new InboundEmail();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->markEmails('1', 'unread');
             $inboundEmail->markEmails('1', 'read');
@@ -2091,7 +2091,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $email->from_addr = 'test@email.com';
         $contactAddr = 'test@email.com';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $inboundEmail->handleAutoresponse($email, $contactAddr);
             $this->assertTrue(true);
@@ -2142,7 +2142,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail->mailbox_type = 'support';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->handleMailboxType($email, $header);
             $this->assertTrue(true);
@@ -2196,7 +2196,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $email = new Email();
         $email->name = 'test';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->handleCreateCase($email, 1);
             $this->assertTrue(true);
@@ -2278,7 +2278,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 ////
 ////        $inboundEmail = new InboundEmail();
 ////
-////        //execute the method and test if it works and does not throws an exception.
+////        // Execute the method and test that it works and doesn't throw an exception.
 ////        try {
 ////            $result = $inboundEmail->getMessageTextFromSingleMimePart(1, 1, $structure);
 ////            $this->assertTrue(true);
@@ -2326,7 +2326,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 ////
 ////        $inboundEmail = new InboundEmail();
 ////
-////        //execute the method and test if it works and does not throws an exception.
+////        // Execute the method and test that it works and doesn't throw an exception.
 ////        try {
 ////            $result = $inboundEmail->getMessageText(1, 'PLAIN', $structure, $fullHeader);
 ////            $this->assertTrue(true);
@@ -2401,7 +2401,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail = new InboundEmail();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $inboundEmail->buildBreadCrumbs(array(), 'ALTERNATIVE', '1');
             $this->assertTrue(true);
@@ -2425,7 +2425,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail = new InboundEmail();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->buildBreadCrumbsHTML(array());
             $this->assertTrue(true);
@@ -2509,7 +2509,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail = new InboundEmail();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->saveAttachments('1', array(), '1', '0', true);
             $this->assertTrue(true);
@@ -2578,7 +2578,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $part = (Object) array('disposition' => 'multipart', 'subtype' => 10);
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->saveAttachmentBinaries(new Note(), '1', '1.1', $part, 1);
             $this->assertTrue(true);
@@ -2675,7 +2675,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail = new InboundEmail();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $inboundEmail->getDuplicateEmailId('1', '1');
             $this->assertTrue(true);
@@ -2696,7 +2696,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $inboundEmail->mailbox = 'INBOX';
         $inboundEmail->id = 1;
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $inboundEmail->importOneEmail('1', '1');
             $this->assertEquals(false, $result);
@@ -2989,7 +2989,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail = new InboundEmail();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->disconnectMailserver();
             $this->assertTrue(true);
@@ -3025,7 +3025,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail = new InboundEmail();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->checkImap();
             $this->assertTrue(true);
@@ -3169,7 +3169,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail = new InboundEmail();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->cleanOutCache();
             $this->assertTrue(true);
@@ -3189,7 +3189,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 //
 //        $inboundEmail->id = 1;
 //
-//        //execute the method and test if it works and does not throws an exception.
+//        // Execute the method and test that it works and doesn't throw an exception.
 //        try {
 //            $result = $inboundEmail->copyEmails(1, 'INBOX', 1, 'TRASH', array(1));
 //            $this->assertTrue(true);
@@ -3248,7 +3248,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail = new InboundEmail();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->deleteMessageOnMailServerForPop3('1');
             $this->assertTrue(true);
@@ -3524,7 +3524,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail->id = '101';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->insertMailBoxFolders(array('INBOX', 'OUTBOX'));
             $this->assertTrue(true);
@@ -3640,7 +3640,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail = new InboundEmail();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->getNewEmailsForSyncedMailbox();
             $this->assertTrue(true);
@@ -3659,7 +3659,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $inboundEmail = new InboundEmail();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $inboundEmail->protocol = 'pop3';
             $inboundEmail->importMessages();

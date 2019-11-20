@@ -74,7 +74,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
     {
         $aor_Report = new AOR_Report();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aor_Report->load_report_beans();
             $this->assertTrue(true);

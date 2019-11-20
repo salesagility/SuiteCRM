@@ -49,7 +49,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
 
     public function testflushBackendCache()
     {
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             SugarFeed::flushBackendCache();
             $this->assertTrue(true);

@@ -43,7 +43,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
     {
         $employee = new Employee();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $employee->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -114,7 +114,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
     {
         $employee = new Employee();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $ss = new Sugar_Smarty();
             $employee->list_view_parse_additional_sections($ss, null);
@@ -144,7 +144,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
     {
         $employee = new Employee();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $employee->preprocess_fields_on_save();
             $this->assertTrue(true);

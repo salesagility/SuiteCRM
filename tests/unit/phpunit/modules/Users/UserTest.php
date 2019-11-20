@@ -203,7 +203,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         $user->retrieve(1);
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $user->savePreferencesToDB();
             $this->assertTrue(true);
@@ -996,7 +996,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     {
         $user = new User();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $user->afterImportSave();
             $this->assertTrue(true);

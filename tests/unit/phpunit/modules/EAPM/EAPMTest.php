@@ -94,7 +94,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
 
         $eapm = new EAPM();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $eapm->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -107,7 +107,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
     {
         $eapm = new EAPM();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $eapm->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -132,7 +132,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
     {
         $eapm = new EAPM();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $eapm->delete_user_accounts(1);
             $this->assertTrue(true);

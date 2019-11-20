@@ -35,7 +35,7 @@ class AOR_ConditionTest extends SuitePHPUnitFrameworkTestCase
         $post_data['operator'][] = 'test';
         $post_data['value_type'][] = 'test type';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aor_Condition->save_lines($post_data, new AOR_Report());
             $this->assertTrue(true);

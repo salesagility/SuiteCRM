@@ -1262,7 +1262,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     {
         $email = new Email();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $email->fillPrimaryParentFields();
             $this->assertTrue(true);
@@ -1278,7 +1278,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $email->description_html = '<img class="image" src="cid:1">';
         $email->imagePrefix = 'prfx';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $email->cid2Link('1', 'image/png');
             $this->assertTrue(true);
@@ -1294,7 +1294,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $email->description_html = '<img class="image" src="cid:1">';
         $email->imagePrefix = 'prfx';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $email->cids2Links();
             $this->assertTrue(true);
@@ -1307,7 +1307,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     {
         $email = new Email();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $email->setFieldNullable('description');
             $this->assertTrue(true);
@@ -1320,7 +1320,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     {
         $email = new Email();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $email->revertFieldNullable('description');
             $this->assertTrue(true);
