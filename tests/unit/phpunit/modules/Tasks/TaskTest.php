@@ -14,7 +14,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
 
     public function testTask()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $task = new Task();
 
         $this->assertInstanceOf('Task', $task);

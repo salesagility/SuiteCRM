@@ -16,7 +16,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
     public function testaCase()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aCase = new aCase();
         $this->assertInstanceOf('aCase', $aCase);
         $this->assertInstanceOf('Basic', $aCase);

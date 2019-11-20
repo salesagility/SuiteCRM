@@ -7,7 +7,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
     public function testAOD_Index()
     {
 
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $aod_index = new AOD_Index();
         $this->assertInstanceOf('AOD_Index', $aod_index);
         $this->assertInstanceOf('Basic', $aod_index);

@@ -122,7 +122,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
 
     public function testEmailTemplate()
     {
-        // execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and attributes
         $emailTemplate = new EmailTemplate();
 
         $this->assertInstanceOf('EmailTemplate', $emailTemplate);

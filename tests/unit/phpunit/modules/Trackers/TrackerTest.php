@@ -15,7 +15,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
     
     public function testTracker()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $tracker = new Tracker();
 
         $this->assertInstanceOf('Tracker', $tracker);

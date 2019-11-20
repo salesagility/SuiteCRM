@@ -15,7 +15,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSugarFeed()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $sugarFeed = new SugarFeed();
 
         $this->assertInstanceOf('SugarFeed', $sugarFeed);

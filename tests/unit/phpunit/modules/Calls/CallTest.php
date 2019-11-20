@@ -16,7 +16,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testCall()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $call = new Call();
         $this->assertInstanceOf('Call', $call);
         $this->assertInstanceOf('SugarBean', $call);

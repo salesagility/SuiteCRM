@@ -283,7 +283,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     public function testEmail()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $email = new Email();
         $this->assertInstanceOf('Email', $email);
         $this->assertInstanceOf('SugarBean', $email);

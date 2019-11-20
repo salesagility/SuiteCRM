@@ -15,7 +15,7 @@ class ViewHtmlTest extends SuitePHPUnitFrameworkTestCase
 
     public function testViewHtml()
     {
-        //execute the contructor and check for the Object type
+        // Execute the constructor and check for the Object type
         $view = new ViewHtml();
         $this->assertInstanceOf('ViewHtml', $view);
         $this->assertInstanceOf('SugarView', $view);

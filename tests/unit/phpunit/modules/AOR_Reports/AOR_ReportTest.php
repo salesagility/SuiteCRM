@@ -7,7 +7,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOR_Report()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aor_Report = new AOR_Report();
         $this->assertInstanceOf('AOR_Report', $aor_Report);
         $this->assertInstanceOf('Basic', $aor_Report);

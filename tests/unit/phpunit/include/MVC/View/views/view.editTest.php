@@ -15,7 +15,7 @@ class ViewEditTest extends SuitePHPUnitFrameworkTestCase
 
     public function testViewEdit()
     {
-        //execute the contructor and check for the Object type and attributes
+        // Execute the constructor and check for the Object type and attributes
         $view = new ViewEdit();
         $this->assertInstanceOf('ViewEdit', $view);
         $this->assertInstanceOf('SugarView', $view);

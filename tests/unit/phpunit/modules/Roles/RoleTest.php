@@ -15,7 +15,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
 
     public function testRole()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $role = new Role();
 
         $this->assertInstanceOf('Role', $role);

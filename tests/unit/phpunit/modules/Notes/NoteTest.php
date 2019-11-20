@@ -15,7 +15,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
 
     public function testNote()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $note = new Note();
 
         $this->assertInstanceOf('Note', $note);

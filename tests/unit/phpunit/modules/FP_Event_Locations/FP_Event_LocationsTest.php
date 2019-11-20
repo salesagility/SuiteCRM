@@ -6,7 +6,7 @@ class FP_Event_LocationsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testFP_Event_Locations()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $fpEventLoc = new FP_Event_Locations();
         $this->assertInstanceOf('FP_Event_Locations', $fpEventLoc);
         $this->assertInstanceOf('Basic', $fpEventLoc);

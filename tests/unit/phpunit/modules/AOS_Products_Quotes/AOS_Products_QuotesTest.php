@@ -64,7 +64,7 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
     public function testAOS_Products_Quotes()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aosProductsQuotes = new AOS_Products_Quotes();
         $this->assertInstanceOf('AOS_Products_Quotes', $aosProductsQuotes);
         $this->assertInstanceOf('Basic', $aosProductsQuotes);

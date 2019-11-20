@@ -348,7 +348,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testInboundEmail()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $inboundEmail = new InboundEmail();
 
         $this->assertInstanceOf('InboundEmail', $inboundEmail);
@@ -3677,7 +3677,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 //        $this->markTestIncomplete('Fatal error: Class \'Overview\' not found');
 ////
 ////
-////        //execute the contructor and check for the Object type and  attributes
+////        // Execute the constructor and check for the Object type and  attributes
 ////        $overview = new Overview();
 ////
 ////        $this->assertInstanceOf('Overview', $overview);

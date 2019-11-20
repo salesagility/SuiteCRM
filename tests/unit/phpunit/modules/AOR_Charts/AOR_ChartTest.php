@@ -8,7 +8,7 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
     public function testAOR_Chart()
     {
         $this->markTestSkipped('Skipping AOR Charts Tests');
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aorChart = new AOR_Chart();
         $this->assertInstanceOf('AOR_Chart', $aorChart);
         $this->assertInstanceOf('Basic', $aorChart);

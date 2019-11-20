@@ -15,7 +15,7 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
 
     public function testProject()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $project = new Project();
 
         $this->assertInstanceOf('Project', $project);

@@ -15,7 +15,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
 
     public function testOpportunity()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $opportunity = new Opportunity();
 
         $this->assertInstanceOf('Opportunity', $opportunity);

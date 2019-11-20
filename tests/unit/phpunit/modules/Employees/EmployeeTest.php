@@ -15,7 +15,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
     public function testEmployee()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $employee = new Employee();
         $this->assertInstanceOf('Employee', $employee);
         $this->assertInstanceOf('Person', $employee);

@@ -19,7 +19,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
     public function test__construct()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $scheduler = new Scheduler();
 
         $this->assertInstanceOf('Scheduler', $scheduler);

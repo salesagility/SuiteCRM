@@ -39,7 +39,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
 
     public function testEmailMan()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $emailMan = new EmailMan();
         $this->assertInstanceOf('EmailMan', $emailMan);
         $this->assertInstanceOf('SugarBean', $emailMan);

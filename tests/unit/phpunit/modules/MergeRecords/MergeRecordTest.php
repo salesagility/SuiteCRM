@@ -15,7 +15,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
 
     public function testMergeRecord()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $mergeRecord = new MergeRecord();
 
         $this->assertInstanceOf('MergeRecord', $mergeRecord);

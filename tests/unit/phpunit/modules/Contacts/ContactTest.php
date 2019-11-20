@@ -16,7 +16,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
     public function testContact()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $contact = new Contact();
         $this->assertInstanceOf('Contact', $contact);
         $this->assertInstanceOf('Person', $contact);

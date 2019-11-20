@@ -16,7 +16,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
     public function testAudit()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $audit = new Audit();
         $this->assertInstanceOf('Audit', $audit);
         $this->assertInstanceOf('SugarBean', $audit);

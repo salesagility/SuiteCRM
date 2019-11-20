@@ -15,7 +15,7 @@ class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testViewPopup()
     {
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $view = new ViewPopup();
         $this->assertInstanceOf('ViewPopup', $view);
         $this->assertInstanceOf('SugarView', $view);

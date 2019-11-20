@@ -15,7 +15,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
 
     public function testAOW_WorkFlow()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aowWorkFlow = new AOW_WorkFlow();
         $this->assertInstanceOf('AOW_WorkFlow', $aowWorkFlow);
         $this->assertInstanceOf('Basic', $aowWorkFlow);

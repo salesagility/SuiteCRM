@@ -7,7 +7,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
     public function testRelationship()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $relationship = new Relationship();
 
         $this->assertInstanceOf('Relationship', $relationship);

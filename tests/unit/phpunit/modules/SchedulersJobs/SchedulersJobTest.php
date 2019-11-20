@@ -18,7 +18,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 
 
         
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $schedulersJob = new SchedulersJob();
 
         $this->assertInstanceOf('SchedulersJob', $schedulersJob);

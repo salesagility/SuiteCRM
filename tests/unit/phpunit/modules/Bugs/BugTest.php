@@ -16,7 +16,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
 
     public function testBug()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $bug = new Bug();
         $this->assertInstanceOf('Bug', $bug);
         $this->assertInstanceOf('SugarBean', $bug);

@@ -7,7 +7,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
     public function testRelease()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $release = new Release();
 
         $this->assertInstanceOf('Release', $release);

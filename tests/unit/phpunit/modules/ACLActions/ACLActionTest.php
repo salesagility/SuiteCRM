@@ -23,7 +23,7 @@ class ACLActionTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('environment dependency');
 
         $_POST['foo'] = 'bar123ase';
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $aclAction = new ACLAction();
         $this->assertInstanceOf('ACLAction', $aclAction);
         $this->assertInstanceOf('SugarBean', $aclAction);

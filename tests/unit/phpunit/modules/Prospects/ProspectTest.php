@@ -17,7 +17,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
     public function testProspect()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $prospect = new Prospect();
 
         $this->assertInstanceOf('Prospect', $prospect);

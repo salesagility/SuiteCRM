@@ -15,7 +15,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
 
     public function testLead()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $lead = BeanFactory::getBean('Leads');
 
         $this->assertInstanceOf('Lead', $lead);

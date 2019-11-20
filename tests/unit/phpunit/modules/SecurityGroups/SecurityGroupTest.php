@@ -16,7 +16,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
     public function testSecurityGroup()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $securityGroup = new SecurityGroup();
 
         $this->assertInstanceOf('SecurityGroup', $securityGroup);

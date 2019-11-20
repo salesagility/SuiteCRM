@@ -47,7 +47,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
 
     public function testAccount()
     {
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $Account = new Account();
         $this->assertInstanceOf('Account', $Account);
         $this->assertInstanceOf('Company', $Account);

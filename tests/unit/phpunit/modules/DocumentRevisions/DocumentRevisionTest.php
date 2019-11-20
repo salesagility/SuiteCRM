@@ -15,7 +15,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testDocumentRevision()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $documentRevision = new DocumentRevision();
         $this->assertInstanceOf('DocumentRevision', $documentRevision);
         $this->assertInstanceOf('SugarBean', $documentRevision);

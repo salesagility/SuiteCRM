@@ -15,7 +15,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
     public function testvCal()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $vcal = new vCal();
 
         $this->assertInstanceOf('vCal', $vcal);

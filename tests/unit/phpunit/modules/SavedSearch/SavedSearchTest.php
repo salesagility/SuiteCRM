@@ -16,7 +16,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
     public function testSavedSearch()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $savedSearch = new SavedSearch();
 
         $this->assertInstanceOf('SavedSearch', $savedSearch);

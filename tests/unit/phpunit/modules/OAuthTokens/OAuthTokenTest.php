@@ -15,7 +15,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function test__construct()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $oauthToken = new OAuthToken();
 
         $this->assertInstanceOf('OAuthToken', $oauthToken);
