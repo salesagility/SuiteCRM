@@ -40,7 +40,6 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
 
     public function testACLAccess()
     {
-
         $meeting = new Meeting();
 
         //test without recurring_source
@@ -55,9 +54,6 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(false, $meeting->ACLAccess('save'));
         $this->assertEquals(false, $meeting->ACLAccess('editview'));
         $this->assertEquals(false, $meeting->ACLAccess('delete'));
-        
-
-
     }
 
     public function testhasIntegratedMeeting()
@@ -128,7 +124,6 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_detail_fields()
     {
-
         $meeting = new Meeting();
 
         //preset required attributes
@@ -154,14 +149,10 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(-1, $meeting->email_reminder_time);
         $this->assertEquals(false, $meeting->email_reminder_checked);
         $this->assertEquals('Accounts', $meeting->parent_type);
-
-
-
     }
 
     public function testget_list_view_data()
     {
-
         $meeting = new Meeting();
         $current_theme = SugarThemeRegistry::current();
 
@@ -205,9 +196,6 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected['CONTACT_ID'], $actual['CONTACT_ID']);
         $this->assertEquals($expected['REPEAT_INTERVAL'], $actual['REPEAT_INTERVAL']);
         $this->assertEquals($expected['PARENT_MODULE'], $actual['PARENT_MODULE']);
-
-
-
     }
 
     public function testset_notification_body()
@@ -317,15 +305,11 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
 
     public function testlistviewACLHelper()
     {
-
         $meeting = new Meeting();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $meeting->listviewACLHelper();
         $this->assertSame($expected, $actual);
-        
-
-
     }
 
     public function testsave_relationship_changes()

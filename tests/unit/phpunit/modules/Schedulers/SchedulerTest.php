@@ -18,7 +18,6 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
     public function test__construct()
     {
-
         // Execute the constructor and check for the Object type and  attributes
         $scheduler = new Scheduler();
 
@@ -239,8 +238,6 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_detail_fields()
     {
-
-
         $scheduler = new Scheduler();
 
         // Execute the method and test that it works and doesn't throw an exception.
@@ -252,8 +249,6 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
-        
-
     }
 
     public function testget_list_view_data()

@@ -7,7 +7,6 @@ class jjwg_MarkersTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testjjwg_Markers()
     {
-
         // Execute the constructor and check for the Object type and  attributes
         $jjwgMarkers = new jjwg_Markers();
 

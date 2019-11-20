@@ -18,8 +18,6 @@ class iCalTest extends SuitePHPUnitFrameworkTestCase
 
 //    public function testgetVcalIcal()
 //    {
-//
-//
 //        //error_reporting(E_ERROR | E_PARSE);
 //
 //        $ical = new iCal();
@@ -34,10 +32,5 @@ class iCalTest extends SuitePHPUnitFrameworkTestCase
 //        //match the leading and trailing string parts to verify it returns expected results
 //        $this->assertStringStartsWith($expectedStart, $actual);
 //        $this->assertStringEndsWith($expectedEnd, $actual);
-//
-//
-//
-//
-//
 //    }
 }

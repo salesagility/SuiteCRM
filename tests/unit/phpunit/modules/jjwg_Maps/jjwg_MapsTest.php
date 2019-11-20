@@ -6,7 +6,6 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testjjwg_Maps()
     {
-
         // Execute the constructor and check for the Object type and  attributes
         $jjwgMaps = new jjwg_Maps();
 

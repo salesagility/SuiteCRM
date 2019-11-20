@@ -32,10 +32,6 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
 
     public function testMain()
     {
-
-
-
-
         // test
         $oauthKey = new OAuthKey();
 
@@ -54,10 +50,6 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
 
         //test mark_deleted method
         $this->mark_deleted($oauthKey->id);
-        
-
-
-
     }
 
     public function getByKey($key)

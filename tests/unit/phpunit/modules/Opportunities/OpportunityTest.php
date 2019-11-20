@@ -251,15 +251,11 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
 
     public function testlistviewACLHelper()
     {
-
         $opportunity = new Opportunity();
 
         $expected = array('MAIN' => 'a', 'ACCOUNT' => 'a');
         $actual = $opportunity->listviewACLHelper();
         $this->assertSame($expected, $actual);
-
-
-
     }
 
     public function testget_account_detail()
@@ -272,8 +268,6 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetCurrencyType()
     {
-
-        
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             getCurrencyType();
@@ -283,7 +277,5 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('This method has no implementation');
-        
-
     }
 }

@@ -44,8 +44,6 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-
-        
         $vcal = new vCal();
 
         // Execute the method and test that it works and doesn't throw an exception.
@@ -57,18 +55,10 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
-        
-
     }
 
     public function testfill_in_additional_detail_fields()
     {
-
-        
-        
-        
-        
-        
         $vcal = new vCal();
 
         // Execute the method and test that it works and doesn't throw an exception.
@@ -80,18 +70,10 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
-        
-
     }
 
     public function testget_list_view_data()
     {
-
-        
-        
-        
-        
-        
         $vcal = new vCal();
 
         // Execute the method and test that it works and doesn't throw an exception.
@@ -103,8 +85,6 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
-        
-
     }
 
     public function testget_freebusy_lines_cache()
@@ -125,7 +105,6 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_sugar_freebusy()
     {
-
         global $locale, $timedate;
 
         $vcal = new vCal();
@@ -137,14 +116,10 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $vcal->create_sugar_freebusy($user_bean, $start_date_time, $end_date_time);
         $this->assertGreaterThanOrEqual(0, strlen($result));
-        
-
-
     }
 
     public function testget_vcal_freebusy()
     {
-
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -155,9 +130,6 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
         $this->assertStringStartsWith($expectedStart, $result);
         $this->assertStringEndsWith($expectedEnd, $result);
-
-
-
     }
 
     public function testcache_sugar_vcal()

@@ -161,7 +161,6 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetLinkClass()
     {
-
         //test with invalid LinkType
         $result = SugarFeed::getLinkClass('test');
         $this->assertEquals(false, $result);

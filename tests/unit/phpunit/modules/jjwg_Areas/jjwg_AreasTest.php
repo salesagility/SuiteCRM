@@ -1,13 +1,11 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testjjwg_Areas()
     {
-
         // Execute the constructor and check for the Object type and  attributes
         $jjwgAreas = new jjwg_Areas();
 

@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
@@ -15,7 +14,6 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
     }
     public function testSecurityGroup()
     {
-
         // Execute the constructor and check for the Object type and  attributes
         $securityGroup = new SecurityGroup();
 
@@ -30,11 +28,6 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetGroupWhere()
     {
-
-        
-        
-        
-
         $securityGroup = new SecurityGroup();
 
         //test with securitygroups module
@@ -65,8 +58,6 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
                                AND secg.deleted = 0) ";
         $actual = $securityGroup->getGroupWhere($table_name, $module, $user_id);
         $this->assertSame($expected, $actual);
-        
-
     }
 
     public function testgetGroupUsersWhere()
@@ -125,7 +116,6 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgroupHasAccess()
     {
-
         //test for listview
         $result = SecurityGroup::groupHasAccess('', '[SELECT_ID_LIST]');
         $this->assertEquals(true, $result);

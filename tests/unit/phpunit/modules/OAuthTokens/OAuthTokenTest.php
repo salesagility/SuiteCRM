@@ -70,7 +70,6 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSaveAndOthers()
     {
-
         $oauthToken = OAuthToken::generate();
 
         $oauthToken->save();
@@ -91,10 +90,6 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
         //test mark_deleted method
         $this->mark_deleted($oauthToken->id);
-        
-
-
-
     }
 
     public function load($id)
@@ -140,8 +135,6 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreateAuthorized()
     {
-
-        
         $oauthKey = new OAuthKey();
         $oauthKey->id = '1';
 
@@ -161,10 +154,6 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
         //finally mark deleted for cleanup
         $oauthToken->mark_deleted($oauthToken->id);
-        
-
-        
-
     }
 
     public function copyAuthData($token)

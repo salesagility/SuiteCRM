@@ -104,12 +104,6 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
 
-        
-        
-        
-        
-        
-
         $mergeRecord = new MergeRecord();
 
         $mergeRecord->load_merge_bean('Users', false, 1);
@@ -121,21 +115,12 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-
     }
 
     public function testfill_in_additional_detail_fields()
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
-
-
-        
-        
-        
-        
-        
         $mergeRecord = new MergeRecord();
 
         $mergeRecord->load_merge_bean('Users', false, 1);
@@ -147,15 +132,11 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-
     }
 
     public function testget_summary_text()
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
-
-
 
         $mergeRecord = new MergeRecord();
 
@@ -186,7 +167,6 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
     public function testbuild_generic_where_clause()
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
-
 
 
         $mergeRecord = new MergeRecord();
@@ -237,7 +217,6 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
 
-
         $mergeRecord = new MergeRecord();
 
         $mergeRecord->load_merge_bean('Meetings');
@@ -257,11 +236,6 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
 
-
-        
-        
-        
-
         $mergeRecord = new MergeRecord();
 
         $mergeRecord->load_merge_bean('Meetings');
@@ -271,8 +245,6 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         $result = $mergeRecord->get_inputs_for_search_params(array('nameSearchField' => 'test', 'idSearchField' => '1'));
 
         $this->assertSame($expected, $result);
-        
-
     }
 
     public function testemail_addresses_query()
@@ -308,7 +280,6 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
     public function testcreate_where_statement()
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
-
 
 
         //unset and reconnect Db to resolve mysqli fetch exeception

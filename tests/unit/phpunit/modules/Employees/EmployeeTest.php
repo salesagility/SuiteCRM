@@ -133,7 +133,6 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $actual = $employee->create_export_query('', '');
         $this->assertSame($expected, $actual);
 
-
         //test with valid string params
         $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE users.user_name=\"\" AND  users.deleted = 0 ORDER BY users.id";
         $actual = $employee->create_export_query('users.id', 'users.user_name=""');

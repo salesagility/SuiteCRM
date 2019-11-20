@@ -43,7 +43,6 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals("Administrator", $project->assigned_user_name);
     }
 
-
     public function testfill_in_additional_list_fields()
     {
         $project = new Project();
@@ -52,22 +51,14 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         $project->fill_in_additional_list_fields();
         $this->assertEquals("", $project->assigned_user_name);
 
-
         //test with assigned_user_id set
         $project->assigned_user_id = 1;
         $project->fill_in_additional_list_fields();
         $this->assertEquals("Administrator", $project->assigned_user_name);
     }
 
-
     public function testsave_relationship_changes()
     {
-
-        
-
-        
-        
-        
         $project = new Project();
 
         $project->id =1;
@@ -81,10 +72,6 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-
-        
-
     }
 
 
@@ -93,12 +80,10 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('Can Not be implemented: Unknown column parent_id in where clause \n Argument 3 passed to MysqlManager::convert() must be of the type array, integer given');
     }
 
-
     public function test_get_total_actual_effort()
     {
         $this->markTestIncomplete('Can Not be implemented: Unknown column parent_id in where clause \n Argument 3 passed to MysqlManager::convert() must be of the type array, integer given');
     }
-
 
     public function testget_summary_text()
     {
@@ -111,7 +96,6 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         $project->name = "test";
         $this->assertEquals('test', $project->get_summary_text());
     }
-
 
     public function testbuild_generic_where_clause()
     {

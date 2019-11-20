@@ -15,7 +15,6 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSavedSearch()
     {
-
         // Execute the constructor and check for the Object type and  attributes
         $savedSearch = new SavedSearch();
 
@@ -146,7 +145,6 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-
         $savedSearch = new SavedSearch();
 
         $savedSearch->assigned_user_id = 1;
@@ -160,7 +158,6 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
     public function testpopulateRequest()
     {
-
         $savedSearch = new SavedSearch();
 
         $savedSearch->contents = array('search_module' => 'Accounts',
