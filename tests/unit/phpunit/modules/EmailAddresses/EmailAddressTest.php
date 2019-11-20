@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class EmailAddressTest extends SuitePHPUnitFrameworkTestCase
@@ -23,7 +22,6 @@ class EmailAddressTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsave()
     {
-
         $email = new EmailAddress();
 
         $email->email_address = 'test@test.com';
@@ -39,10 +37,5 @@ class EmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $email->mark_deleted($email->id);
         $result = $email->retrieve($email->id);
         $this->assertEquals(null, $result);
-
-
-
-
-
     }
 }

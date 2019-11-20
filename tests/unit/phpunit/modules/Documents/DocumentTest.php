@@ -16,7 +16,6 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
 
     public function testDocument()
     {
-
         // Execute the constructor and check for the Object type and  attributes
         $document = new Document();
         $this->assertInstanceOf('Document', $document);

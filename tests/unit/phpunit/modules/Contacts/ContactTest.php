@@ -15,7 +15,6 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
 
     public function testContact()
     {
-
         // Execute the constructor and check for the Object type and  attributes
         $contact = new Contact();
         $this->assertInstanceOf('Contact', $contact);
@@ -68,10 +67,6 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         $expected = array( "MAIN"=>"span", "ACCOUNT"=>"span");
         $actual = $contact->listviewACLHelper();
         $this->assertSame($expected, $actual);
-
-
-        
-
     }
 
     /**
@@ -95,7 +90,6 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         */
         $this->assertTrue(true, "NEEDS FIXING!");
     }
-
 
     public function testaddress_popup_create_new_list_query()
     {
@@ -151,7 +145,6 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals("", $contact->report_to_name);
     }
 
-
     public function testload_contacts_users_relationship()
     {
         $contact = new Contact();
@@ -167,7 +160,6 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-
         $contact = new Contact();
 
         //test with attributes preset and verify attributes are set accordingly
@@ -196,11 +188,6 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected['FULL_NAME'], $actual['FULL_NAME']);
         $this->assertEquals($expected['ENCODED_NAME'], $actual['ENCODED_NAME']);
         $this->assertEquals($expected['EMAIL_AND_NAME1'], $actual['EMAIL_AND_NAME1']);
-
-        
-
-
-
     }
 
     public function testbuild_generic_where_clause()
@@ -283,7 +270,6 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         $actual = $contact->get_unlinked_email_query();
         $this->assertSame($expected, $actual);
     }
-
 
     public function testprocess_sync_to_outlook()
     {

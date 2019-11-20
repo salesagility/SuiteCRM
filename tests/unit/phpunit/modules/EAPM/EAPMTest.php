@@ -91,7 +91,6 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_detail_fields()
     {
-
         $eapm = new EAPM();
 
         // Execute the method and test that it works and doesn't throw an exception.

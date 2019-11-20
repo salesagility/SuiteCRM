@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class EmailManTest extends SuitePHPUnitFrameworkTestCase

@@ -15,7 +15,6 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testaCase()
     {
-
         // Execute the constructor and check for the Object type and  attributes
         $aCase = new aCase();
         $this->assertInstanceOf('aCase', $aCase);
@@ -43,24 +42,16 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
     public function testlistviewACLHelper()
     {
         self::markTestIncomplete('environment dependency');
-        
 
 
-        
         $aCase = new aCase();
         $expected = array('MAIN' => 'span', 'ACCOUNT' => 'span');
         $actual = $aCase->listviewACLHelper();
         $this->assertSame($expected, $actual);
-        
-
-
     }
 
     public function testsave_relationship_changes()
     {
-
-
-        
         $aCase = new aCase();
 
         // Execute the method and test that it works and doesn't throw an exception.
@@ -72,9 +63,6 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-
-
     }
 
     public function testset_case_contact_relationship()
@@ -223,8 +211,6 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsave()
     {
-        
-        
         $aCase = new aCase();
         $aCase->name = 'test';
         $aCase->priority = 'P1';
