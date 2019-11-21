@@ -60,19 +60,20 @@ function smarty_function_sugar_evalcolumn_old($params, &$smarty)
         return;
     }
 
+    global $mod_strings, $app_strings;
     if (is_array($params['var'])) {
         foreach ($params['var'] as $key => $value) {
-            $params['var'][$key] = searchReplace($value, $params['rowData']);
+            $params['var'][$key] = searchReplace($value, merge_array($app_strings,$mod_strings,$params['rowData']));
         }
     } else {
-        $params['var'] = searchReplace($params['var'], $params['rowData']);
+        $params['var'] = searchReplace($params['var'], merge_array($app_strings,$mod_strings,$params['rowData']));
     }
 
     if (isset($params['toJSON'])) {
         $json = getJSONobj();
         $params['var'] = $json->encode($params['var']);
     }
-    
+
     if (!empty($params['assign'])) {
         $smarty->assign($params['assign'], $params['var']);
     } else {

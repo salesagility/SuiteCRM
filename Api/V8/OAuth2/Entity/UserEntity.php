@@ -6,11 +6,21 @@ use League\OAuth2\Server\Entities\UserEntityInterface;
 class UserEntity implements UserEntityInterface
 {
     /**
-     * @inheritdoc
+     * UserEntity constructor.
+     * @param string $id
      */
-    public function getIdentifier()
+    public function __construct($id)
     {
-        // we skip this right now, since we are not using scopes atm
-        return true;
+        $this->id = $id;
     }
+
+    /**
+     * Returns the registered identifier (as a string).
+     *
+     * @return string|string[]
+     */
+	public function getIdentifier()
+	{
+		return $this->id;
+	}
 }

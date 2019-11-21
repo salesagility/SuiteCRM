@@ -42,70 +42,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class OAuth2ClientsViewEdit extends ViewEdit
-{
-    /**
-     * @var OAuth2Clients $bean
-     */
-    public $bean;
+$module_name = 'OAuth2AuthCodes';
 
-    /**
-     * @var string $formName
-     */
-    public $formName;
-
-    /**
-     * @see SugarView::preDisplay()
-     */
-    public function getMetaDataFile()
-    {
-        $this->setViewType();
-        return parent::getMetaDataFile();
-    }
-
-    /**
-     *
-     */
-    private function setViewType()
-    {
-        switch ($this->bean->allowed_grant_type) {
-            case 'password':
-                $this->type = 'editpassword';
-                $this->formName = 'EditPassword';
-                break;
-            case 'client_credentials':
-                $this->type = 'editcredentials';
-                $this->formName = 'EditCredentials';
-                break;
-            case 'authorization_code':
-                $this->type = 'editauthorizationcode';
-                $this->formName = 'EditAuthorizationCode';
-                break;
-        }
-        if (!empty($_REQUEST['action'])) {
-            switch ($_REQUEST['action']) {
-                case 'EditViewPassword':
-                    $this->type = 'editpassword';
-                    $this->formName = 'EditPassword';
-                    break;
-                case 'EditViewCredentials':
-                    $this->type = 'editcredentials';
-                    $this->formName = 'EditCredentials';
-                    break;
-                case 'EditViewAuthorizationCode':
-                    $this->type = 'editauthorizationcode';
-                    $this->formName = 'EditAuthorizationCode';
-                    break;
-            }
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function display()
-    {
-        $this->ev->formName = $this->formName;
-        parent::display();
-    }
-}
+$searchFields[$module_name] = [
+    'id' =>
+        [
+            'query_type' => 'default',
+        ],
+    'name' =>
+        [
+            'query_type' => 'default',
+        ],
+];

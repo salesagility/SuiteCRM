@@ -40,7 +40,7 @@ class ClientRepository implements ClientRepositoryInterface
 
         $this->clientEntity->setIdentifier($clientIdentifier);
         $this->clientEntity->setName($client->name);
-        $this->clientEntity->setRedirectUri(isset($client->redirect_uri) ? $client->redirect_uri : '');
+        $this->clientEntity->setRedirectUri(isset($client->redirect_url) ? $client->redirect_url : '');
 
         return $this->clientEntity;
     }

@@ -5,12 +5,14 @@ use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\OAuth2\Entity\AccessTokenEntity;
 use Api\V8\OAuth2\Entity\ClientEntity;
 use Api\V8\OAuth2\Repository\AccessTokenRepository;
+use Api\V8\OAuth2\Repository\AuthCodeRepository;
 use Api\V8\OAuth2\Repository\ClientRepository;
 use Api\V8\OAuth2\Repository\RefreshTokenRepository;
 use Api\V8\OAuth2\Repository\ScopeRepository;
 use Api\V8\OAuth2\Repository\UserRepository;
 use Interop\Container\ContainerInterface as Container;
 use League\OAuth2\Server\AuthorizationServer;
+use League\OAuth2\Server\Grant\AuthCodeGrant;
 use League\OAuth2\Server\Grant\PasswordGrant;
 use League\OAuth2\Server\Grant\RefreshTokenGrant;
 use League\OAuth2\Server\ResourceServer;
@@ -77,6 +79,16 @@ return CustomLoader::mergeCustomArray([
 
         $server->enableGrantType(
             $refreshGrant,
+            new \DateInterval('PT1H')
+        );
+
+        // Authorization code grant
+        $server->enableGrantType(
+            new AuthCodeGrant(
+                new AuthCodeRepository($container->get(BeanManager::class)),
+                new RefreshTokenRepository($container->get(BeanManager::class)),
+                new \DateInterval('PT10M')
+            ),
             new \DateInterval('PT1H')
         );
 

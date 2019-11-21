@@ -42,70 +42,94 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class OAuth2ClientsViewEdit extends ViewEdit
+/**
+ * Class OAuth2AuthCodes
+ */
+class OAuth2AuthCodes extends SugarBean
 {
     /**
-     * @var OAuth2Clients $bean
+     * @var string
      */
-    public $bean;
+    public $table_name = 'oauth2authcodes';
 
     /**
-     * @var string $formName
+     * @var string
      */
-    public $formName;
+    public $object_name = 'OAuth2AuthCodes';
 
     /**
-     * @see SugarView::preDisplay()
+     * @var string
      */
-    public function getMetaDataFile()
+    public $module_dir = 'OAuth2AuthCodes';
+
+    /**
+     * @var bool
+     */
+    public $disable_row_level_security = true;
+
+    /**
+     * @var bool
+     */
+    public $auth_code_revoked;
+
+    /**
+     * @var string
+     */
+    public $auth_code_expires;
+
+    /**
+     * @var string
+     */
+    public $auth_code;
+
+    /**
+     * @var string
+     */
+    public $scopes;
+
+    /**
+     * @var string
+     */
+    public $state;
+
+    /**
+     * @var string
+     */
+    public $client;
+
+    /**
+     * @see SugarBean::get_summary_text()
+     */
+    public function get_summary_text()
     {
-        $this->setViewType();
-        return parent::getMetaDataFile();
+        return substr($this->id, 0, 10) . '...';
     }
 
     /**
-     *
+     * @return boolean
      */
-    private function setViewType()
+    public function is_revoked()
     {
-        switch ($this->bean->allowed_grant_type) {
-            case 'password':
-                $this->type = 'editpassword';
-                $this->formName = 'EditPassword';
-                break;
-            case 'client_credentials':
-                $this->type = 'editcredentials';
-                $this->formName = 'EditCredentials';
-                break;
-            case 'authorization_code':
-                $this->type = 'editauthorizationcode';
-                $this->formName = 'EditAuthorizationCode';
-                break;
-        }
-        if (!empty($_REQUEST['action'])) {
-            switch ($_REQUEST['action']) {
-                case 'EditViewPassword':
-                    $this->type = 'editpassword';
-                    $this->formName = 'EditPassword';
-                    break;
-                case 'EditViewCredentials':
-                    $this->type = 'editcredentials';
-                    $this->formName = 'EditCredentials';
-                    break;
-                case 'EditViewAuthorizationCode':
-                    $this->type = 'editauthorizationcode';
-                    $this->formName = 'EditAuthorizationCode';
-                    break;
-            }
-        }
+        return $this->id === null || $this->auth_code_is_revoked === '1' || new \DateTime() > new \DateTime($this->auth_code_expires);
     }
 
     /**
-     * @inheritdoc
+     * @return boolean
      */
-    public function display()
+    public function is_scope_authorized(\League\OAuth2\Server\RequestTypes\AuthorizationRequest $authRequest)
     {
-        $this->ev->formName = $this->formName;
-        parent::display();
+        $this->retrieve_by_string_fields([
+            'client' => $authRequest->getClient()->getIdentifier(),
+            'assigned_user_id' => $authRequest->getUser()->getIdentifier(),
+			'auto_authorize' => '1',
+        ]);
+
+        // Check for scope changes here in future
+
+		if($this->id == null){
+			return false;
+		} else {
+	        return true;
+		}
     }
 }

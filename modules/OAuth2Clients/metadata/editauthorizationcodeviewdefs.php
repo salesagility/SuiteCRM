@@ -42,70 +42,50 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class OAuth2ClientsViewEdit extends ViewEdit
-{
-    /**
-     * @var OAuth2Clients $bean
-     */
-    public $bean;
+$module_name = 'OAuth2Clients';
 
-    /**
-     * @var string $formName
-     */
-    public $formName;
-
-    /**
-     * @see SugarView::preDisplay()
-     */
-    public function getMetaDataFile()
-    {
-        $this->setViewType();
-        return parent::getMetaDataFile();
-    }
-
-    /**
-     *
-     */
-    private function setViewType()
-    {
-        switch ($this->bean->allowed_grant_type) {
-            case 'password':
-                $this->type = 'editpassword';
-                $this->formName = 'EditPassword';
-                break;
-            case 'client_credentials':
-                $this->type = 'editcredentials';
-                $this->formName = 'EditCredentials';
-                break;
-            case 'authorization_code':
-                $this->type = 'editauthorizationcode';
-                $this->formName = 'EditAuthorizationCode';
-                break;
-        }
-        if (!empty($_REQUEST['action'])) {
-            switch ($_REQUEST['action']) {
-                case 'EditViewPassword':
-                    $this->type = 'editpassword';
-                    $this->formName = 'EditPassword';
-                    break;
-                case 'EditViewCredentials':
-                    $this->type = 'editcredentials';
-                    $this->formName = 'EditCredentials';
-                    break;
-                case 'EditViewAuthorizationCode':
-                    $this->type = 'editauthorizationcode';
-                    $this->formName = 'EditAuthorizationCode';
-                    break;
-            }
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function display()
-    {
-        $this->ev->formName = $this->formName;
-        parent::display();
-    }
-}
+$viewdefs[$module_name]['EditView'] = [
+    'templateMeta' => [
+        'maxColumns' => '1',
+        'widths' => [
+            ['label' => '30', 'field' => '70'],
+        ],
+        'includes' => [
+            [
+                'file' => 'modules/OAuth2Clients/js/ClientCredentialsValidation.js'
+            ]
+        ],
+    ],
+    'panels' => [
+        'default' =>
+        [
+            0 =>
+            [
+                'name' => 'name',
+            ],
+            1 =>
+            [
+                0 =>
+                [
+                    'name' => 'secret',
+                    'label' => 'LBL_SECRET_HASHED',
+                    'customCode' => '<input type="password" name="new_secret" id="new_secret" placeholder="{$MOD.LBL_LEAVE_BLANK}" size="30">'
+                    . '<input type="hidden" name="allowed_grant_type" id="allowed_grant_type" value="authorization_code">'
+                    . '<br /><span>{$MOD.LBL_REMEMBER_SECRET}</span>',
+                ],
+            ],
+            2 =>
+            [
+                'name' => 'redirect_url'
+            ],
+            3 =>
+            [
+                'name' => 'is_confidential',
+            ],
+            4 =>
+            [
+                'name' => 'assigned_user_name',
+            ],
+        ],
+    ],
+];

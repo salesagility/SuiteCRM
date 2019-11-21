@@ -59,13 +59,16 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
         $clientId = $accessTokenEntity->getClient()->getIdentifier();
         $userId = null;
 
-        /** @var User $user */
+        /** @var \OAuth2Client $client */
         $client = $this->beanManager->getBeanSafe('OAuth2Clients', $clientId);
 
         /** @var User $user */
         $user = $this->beanManager->newBeanSafe('Users');
 
         switch ($client->allowed_grant_type) {
+            case 'authorization_code':
+                $userId = $accessTokenEntity->getUserIdentifier();
+                break;
             case 'password':
                 if (!empty($_POST['username'])) {
                     /** @var User $user */
@@ -84,8 +87,6 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
         if ($userId === null) {
             throw new InvalidArgumentException('No user found');
         }
-
-        $userId = !empty($user->id) ? $user->id : $client->assigned_user_id;
 
         /** @var OAuth2Tokens $token */
         $token = $this->beanManager->newBeanSafe(OAuth2Tokens::class);

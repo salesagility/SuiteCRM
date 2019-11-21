@@ -24,4 +24,24 @@ class ClientEntity implements ClientEntityInterface
     {
         $this->redirectUri = $uri;
     }
+	
+    /**
+     * Returns the registered name (as a string).
+     *
+     * @return string|string[]
+     */
+	public function getName()
+	{
+		return $this->name;
+	}
+
+	/**
+     * Returns the registered redirect URI (as a string).
+     *
+     * @return string|string[]
+     */
+	public function getRedirectUri()
+	{
+		return $this->redirectUri;
+	}
 }
