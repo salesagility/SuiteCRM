@@ -356,6 +356,13 @@ class MBPackage
             $node['children'][] = $this->modules[$module]->getNodes();
         }
 
+        usort($node["children"], function ($a, $b) {
+            if ($a["name"] == $b["name"]) {
+                return 0;
+            }
+            return ($a["name"] < $b["name"]) ? -1 : 1;
+        });
+
         return $node;
     }
 
@@ -720,7 +727,7 @@ class MBPackage
                     continue;
                 }
                 include("$langDir/$langFile");
-                $out = "<?php \n // created: " . date('Y-m-d H:i:s') . "\n";
+                $out = "<?php \n";
                 foreach ($mod_strings as $lbl_key => $lbl_val) {
                     $out .= override_value_to_string('mod_strings', $lbl_key, $lbl_val) . "\n";
                 }
