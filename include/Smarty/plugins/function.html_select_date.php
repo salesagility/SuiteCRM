@@ -323,7 +323,7 @@ function smarty_function_html_select_date($params, &$smarty)
                 $html_result .= $year_result;
                 break;
         }
-        // Add the field seperator
+        // Add the field separator
         if ($i < $field_separator_count) {
             $html_result .= $field_separator;
         }

@@ -1,7 +1,9 @@
 <?php
 
 
-class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AlertTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -14,8 +16,7 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAlert()
     {
-
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $alert = new Alert();
         $this->assertInstanceOf('Alert', $alert);
         $this->assertInstanceOf('Basic', $alert);

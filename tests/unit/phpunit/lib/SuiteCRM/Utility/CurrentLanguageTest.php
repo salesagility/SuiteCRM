@@ -1,7 +1,9 @@
 <?php
 
 
-class CurrentLanguageTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class CurrentLanguageTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
      * @var \UnitTester
@@ -23,12 +25,7 @@ class CurrentLanguageTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testGetCurrentLanguage()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushFile('config_override.php');
-        
         $language = self::$language->getCurrentLanguage();
         $this->assertNotEmpty($language);
-        
-        $state->popFile('config_override.php');
     }
 }

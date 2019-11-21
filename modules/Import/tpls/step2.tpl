@@ -133,17 +133,15 @@
           {/if}
           {foreach from=$custom_imports key=key item=item name=saved}
           <tr id="custom_import_{$smarty.foreach.saved.index}">
-            <td scope="row" colspan="2" width="10%" style="padding-right: 10px;">
+            <td scope="row" colspan="2" style="padding-right: 10px;">
                 <input class="radio" type="radio" name="source" value="custom:{$item.IMPORT_ID}"/>
                 &nbsp;{$item.IMPORT_NAME}
-            </td>
-            <td scope="row">
                 {if $is_admin}
                 <input type="button" name="publish" value="{$MOD.LBL_PUBLISH}" class="button" publish="yes"
                     onclick="publishMapping(this, 'yes','{$item.IMPORT_ID}', '{$IMPORT_MODULE}');">
                 {/if}
                 <input type="button" name="delete" value="{$MOD.LBL_DELETE}" class="button"
-					onclick="if(confirm('{$MOD.LBL_DELETE_MAP_CONFIRMATION}')){literal}{{/literal} deleteMapping('custom_import_{$smarty.foreach.saved.index}', '{$item.IMPORT_ID}' );{literal}}{/literal}">
+					onclick="if(confirm('{$MOD.LBL_DELETE_MAP_CONFIRMATION}')){literal}{{/literal} deleteMapping('custom_import_{$smarty.foreach.saved.index}', '{$item.IMPORT_ID}', '{$IMPORT_MODULE}' );{literal}}{/literal}">
             </td>
           </tr>
           {/foreach}

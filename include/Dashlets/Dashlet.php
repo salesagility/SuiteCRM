@@ -398,7 +398,7 @@ class Dashlet
     }
 
     /**
-     * Override this if your dashlet is configurable (this is called when the the configureDashlet form is shown)
+     * Override this if your dashlet is configurable (this is called when the configureDashlet form is shown)
      * Filters the array for only the parameters it needs to save
      *
      * @param array $req the array to pull options from

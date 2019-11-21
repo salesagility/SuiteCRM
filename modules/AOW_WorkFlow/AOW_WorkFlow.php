@@ -148,6 +148,19 @@ class AOW_WorkFlow extends Basic
         return $return_id;
     }
 
+    public function mark_deleted($id)
+    {
+        // These are owned by the workflow, so delete them instead of just removing the link
+        $beans = $this->get_linked_beans('aow_conditions');
+        $beans = array_merge($beans, $this->get_linked_beans('aow_actions'));
+        $beans = array_merge($beans, $this->get_linked_beans('aow_processed'));
+        foreach ($beans as $bean) {
+            $bean->mark_deleted($bean->id);
+        }
+
+        parent::mark_deleted($id);
+    }
+
     public function load_flow_beans()
     {
         global $beanList, $app_list_strings;
@@ -516,7 +529,8 @@ class AOW_WorkFlow extends Basic
                                         LoggerManager::getLogger()->warn('Date operator is not set in app_list_string[' . $params1 . ']');
                                     }
 
-                                    $value = "DATE_ADD($value, INTERVAL ".$dateOp." $params2 ".$params3.")";
+                                    $field = 'DATE_FORMAT('.$field.", '%Y-%m-%d %H:%i')";
+                                    $value = "DATE_FORMAT(DATE_ADD($value, INTERVAL ".$dateOp." $params2 ".$params3."), '%Y-%m-%d %H:%i')";
                                 }
                                 break;
                         }

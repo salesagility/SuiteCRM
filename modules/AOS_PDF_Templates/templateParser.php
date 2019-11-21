@@ -108,7 +108,7 @@ class templateParser
             if (strpos($name, 'product_discount') !== false || strpos($name, 'quotes_discount') !== false) {
                 if ($value !== '') {
                     if ($isValidator->isPercentageField($repl_arr['aos_products_quotes_discount'])) {
-                        $sep = get_number_seperators();
+                        $sep = get_number_separators();
                         $value = rtrim(
                             rtrim(format_number($value), '0'),
                             $sep[1]
@@ -122,12 +122,12 @@ class templateParser
                 $value = '<img src="' . $value . '" class="img-responsive"/>';
             }
             if ($name === 'aos_products_quotes_product_qty') {
-                $sep = get_number_seperators();
+                $sep = get_number_separators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]);
             }
 
             if ($isValidator->isPercentageField($name)) {
-                $sep = get_number_seperators();
+                $sep = get_number_separators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
             }
             if ($focus->field_defs[$name]['dbType'] == 'datetime' &&

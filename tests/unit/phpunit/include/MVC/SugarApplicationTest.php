@@ -1,7 +1,9 @@
 <?php
 
 
-class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -56,7 +58,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $SugarApplication = new SugarApplication();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $SugarApplication->ACLFilter();
         } catch (Exception $e) {
@@ -64,8 +66,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        // clean up
+
         if (isset($session)) {
             $_SESSION = $session;
         } else {
@@ -98,7 +99,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $SugarApplication = new SugarApplication();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $SugarApplication->setupPrint();
         } catch (Exception $e) {
@@ -117,7 +118,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $SugarApplication->preProcess();
         } catch (Exception $e) {
@@ -125,8 +126,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        // clean up
+
         if (isset($session)) {
             $_SESSION = $session;
         } else {
@@ -136,11 +136,9 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testhandleOfflineClient()
     {
-        $state = new SuiteCRM\StateSaver();
-
         $SugarApplication = new SugarApplication();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $SugarApplication->handleOfflineClient();
         } catch (Exception $e) {
@@ -148,8 +146,6 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        // clean up
     }
 
     public function testhandleAccessControl()
@@ -208,7 +204,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcheckDatabaseVersion()
     {
         self::markTestIncomplete('environment dependency');
-        $state = new SuiteCRM\StateSaver();
+
 
         $SugarApplication = new SugarApplication();
 
@@ -220,15 +216,13 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $GLOBALS['sugar_db_version'] = $sugar_db_version;
         $result = $SugarApplication->checkDatabaseVersion(false);
         $this->assertTrue($result);
-        
-        // clean up
     }
 
     public function testloadDisplaySettings()
     {
         $SugarApplication = new SugarApplication();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $SugarApplication->loadDisplaySettings();
         } catch (Exception $e) {
@@ -242,7 +236,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $SugarApplication = new SugarApplication();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $SugarApplication->loadLicense();
         } catch (Exception $e) {
@@ -261,7 +255,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $SugarApplication->loadGlobals();
         } catch (Exception $e) {
@@ -270,7 +264,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertTrue(true);
         
-        // clean up
+
         if (isset($request)) {
             $_REQUEST = $request;
         } else {
@@ -289,7 +283,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             if (!headers_sent()) {
                 $SugarApplication->startSession();
@@ -316,7 +310,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             if ($this->sessionStartedOk) {
                 $SugarApplication->endSession();
@@ -402,7 +396,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $SugarApplication = new SugarApplication();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $vars = $SugarApplication->createLoginVars();
         } catch (Exception $e) {

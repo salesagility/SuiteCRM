@@ -1,6 +1,8 @@
 <?php
 
-class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class OpportunityTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -13,7 +15,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testOpportunity()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $opportunity = new Opportunity();
 
         $this->assertInstanceOf('Opportunity', $opportunity);
@@ -77,7 +79,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $opportunity = new Opportunity();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
 
             //test without force_load_details
@@ -97,7 +99,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $opportunity = new Opportunity();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $opportunity->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -118,7 +120,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $opportunity = new Opportunity();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $opportunity->update_currency_id(array('GBP', 'EUR'), 'USD');
             $this->assertTrue(true);
@@ -172,17 +174,6 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('opportunities');
-        $state->pushTable('opportunities_cstm');
-        $state->pushTable('sugarfeed');
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-        $state->pushGlobals();
-
-        // test
         $opportunity = new Opportunity();
 
         $opportunity->name = 'test';
@@ -201,15 +192,6 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $opportunity->mark_deleted($opportunity->id);
         $result = $opportunity->retrieve($opportunity->id);
         $this->assertEquals(null, $result);
-
-        // clean up
-        $state->popGlobals();
-        $state->popTable('aod_index');
-        $state->popTable('tracker');
-        $state->popTable('sugarfeed');
-        $state->popTable('opportunities_cstm');
-        $state->popTable('opportunities');
-        $state->popTable('aod_indexevent');
     }
 
     public function testsave_relationship_changes()
@@ -269,19 +251,11 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-
-        // test
         $opportunity = new Opportunity();
 
         $expected = array('MAIN' => 'a', 'ACCOUNT' => 'a');
         $actual = $opportunity->listviewACLHelper();
         $this->assertSame($expected, $actual);
-
-        // clean up
-        $state->popGlobals();
     }
 
     public function testget_account_detail()
@@ -294,9 +268,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetCurrencyType()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             getCurrencyType();
             $this->assertTrue(true);
@@ -305,7 +277,5 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->markTestIncomplete('This method has no implementation');
-        
-        // clean up
     }
 }

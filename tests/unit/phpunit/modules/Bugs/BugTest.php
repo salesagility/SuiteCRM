@@ -1,7 +1,9 @@
 <?php
 
 
-class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class BugTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -14,7 +16,7 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testBug()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $bug = new Bug();
         $this->assertInstanceOf('Bug', $bug);
         $this->assertInstanceOf('SugarBean', $bug);
@@ -76,7 +78,7 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $bug = new Bug();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $bug->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -187,17 +189,6 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('bugs');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-
-        // test
-        
         $bug = new Bug();
 
         $bug->name = 'test';
@@ -217,14 +208,6 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $bug->mark_deleted($bug->id);
         $result = $bug->retrieve($bug->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('bugs');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
 
     public function testgetReleaseDropDown()

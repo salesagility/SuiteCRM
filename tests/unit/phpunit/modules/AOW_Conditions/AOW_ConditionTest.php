@@ -1,6 +1,8 @@
 <?php
 
-class AOW_ConditionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -13,8 +15,7 @@ class AOW_ConditionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAOW_Condition()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aowCondition = new AOW_Condition();
         $this->assertInstanceOf('AOW_Condition', $aowCondition);
         $this->assertInstanceOf('Basic', $aowCondition);
@@ -31,25 +32,14 @@ class AOW_ConditionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $aowCondition = new AOW_Condition();
         $this->assertEquals(false, $aowCondition->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aowCondition->bean_implements('test')); //test with invalid value
         $this->assertEquals(false, $aowCondition->bean_implements('ACL')); //test with valid value
-        
-        // clean up
     }
 
     public function testsave_lines()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aow_conditions');
-        $state->pushTable('aod_indexevent');
-        
         $aowCondition = new AOW_Condition();
 
         //populate required values
@@ -74,10 +64,5 @@ class AOW_ConditionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         foreach ($aow_conditions as $lineItem) {
             $lineItem->mark_deleted($lineItem->id);
         }
-        
-        // clean up
-        
-        $state->popTable('aod_indexevent');
-        $state->popTable('aow_conditions');
     }
 }
