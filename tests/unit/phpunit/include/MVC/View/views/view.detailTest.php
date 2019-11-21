@@ -19,7 +19,7 @@ class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testViewDetail()
     {
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $view = new ViewDetail();
         $this->assertInstanceOf('ViewDetail', $view);
         $this->assertInstanceOf('SugarView', $view);

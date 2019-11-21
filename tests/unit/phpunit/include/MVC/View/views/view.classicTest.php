@@ -15,7 +15,7 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
 
     public function test__construct()
     {
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
 
         //test with no parameters
         $view = new ViewClassic();

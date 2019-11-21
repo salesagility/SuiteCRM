@@ -6,7 +6,7 @@ class EmailTextTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testEmailText()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $emailText = new EmailText();
 
         $this->assertInstanceOf('EmailText', $emailText);

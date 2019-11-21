@@ -16,8 +16,7 @@ class CampaignLogTest extends SuitePHPUnitFrameworkTestCase
 
     public function testCampaignLog()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $campaignLog = new CampaignLog();
         $this->assertInstanceOf('CampaignLog', $campaignLog);
         $this->assertInstanceOf('SugarBean', $campaignLog);

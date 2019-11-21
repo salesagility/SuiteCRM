@@ -15,7 +15,7 @@ class AOS_Line_Item_GroupsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testAOS_Line_Item_Groups()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aosLineItemGroup = new AOS_Line_Item_Groups();
         $this->assertInstanceOf('AOS_Line_Item_Groups', $aosLineItemGroup);
         $this->assertInstanceOf('Basic', $aosLineItemGroup);

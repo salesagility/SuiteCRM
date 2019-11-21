@@ -122,7 +122,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
 
     public function testEmailTemplate()
     {
-        // execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and attributes
         $emailTemplate = new EmailTemplate();
 
         $this->assertInstanceOf('EmailTemplate', $emailTemplate);
@@ -178,7 +178,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
     {
         $emailTemplate = new EmailTemplate();
 
-        // execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $emailTemplate->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -248,7 +248,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
     {
         $emailTemplate = new EmailTemplate();
 
-        // execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $emailTemplate->fill_in_additional_parent_fields();
             $this->assertTrue(true);

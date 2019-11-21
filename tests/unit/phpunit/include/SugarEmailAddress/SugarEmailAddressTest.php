@@ -6,7 +6,6 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 /** @noinspection PhpUndefinedClassInspection */
 class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 {
-
     /**
      * @var SugarEmailAddress
      */
@@ -72,8 +71,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertCount(1, $GLOBALS['log']->calls['deprecated']);
 
         $GLOBALS['log'] = $logger;
-
-
 
         DBManagerFactory::getInstance()->query("DELETE FROM email_addr_bean_rel");
         foreach ($tableEmailAddrBeanRel as $row) {

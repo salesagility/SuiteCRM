@@ -32,7 +32,7 @@ class GroupTest extends SuitePHPUnitFrameworkTestCase
 
         $group = new Group();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $group->mark_deleted('');
             $this->assertTrue(true);

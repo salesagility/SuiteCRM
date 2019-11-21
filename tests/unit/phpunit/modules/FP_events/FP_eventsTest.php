@@ -4,7 +4,7 @@ class FP_eventsTest extends SuiteCRM\Test\SuitePHPUnitFrameworkTestCase
 {
     public function testFP_events()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $fpEvents = new FP_events();
         $this->assertInstanceOf('FP_events', $fpEvents);
         $this->assertInstanceOf('Basic', $fpEvents);

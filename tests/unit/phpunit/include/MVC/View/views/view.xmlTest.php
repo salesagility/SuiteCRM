@@ -7,7 +7,7 @@ class ViewXMLTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testViewXML()
     {
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $view = new ViewXML();
         $this->assertInstanceOf('ViewXML', $view);
         $this->assertInstanceOf('SugarView', $view);

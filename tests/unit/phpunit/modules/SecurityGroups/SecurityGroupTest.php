@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
@@ -15,8 +14,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
     }
     public function testSecurityGroup()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $securityGroup = new SecurityGroup();
 
         $this->assertInstanceOf('SecurityGroup', $securityGroup);
@@ -30,11 +28,6 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetGroupWhere()
     {
-
-        
-        
-        
-
         $securityGroup = new SecurityGroup();
 
         //test with securitygroups module
@@ -65,8 +58,6 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
                                AND secg.deleted = 0) ";
         $actual = $securityGroup->getGroupWhere($table_name, $module, $user_id);
         $this->assertSame($expected, $actual);
-        
-
     }
 
     public function testgetGroupUsersWhere()
@@ -125,7 +116,6 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgroupHasAccess()
     {
-
         //test for listview
         $result = SecurityGroup::groupHasAccess('', '[SELECT_ID_LIST]');
         $this->assertEquals(true, $result);
@@ -146,7 +136,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
         $_REQUEST['subpanel_field_name'] = 'id';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             SecurityGroup::inherit($account, false);
             $this->assertTrue(true);
@@ -160,7 +150,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         $account = new Account();
         $account->id = 1;
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             SecurityGroup::assign_default_groups($account, false);
             $this->assertTrue(true);
@@ -174,7 +164,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         $account = new Account();
         $account->id = 1;
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             SecurityGroup::inherit_creator($account, false);
             $this->assertTrue(true);
@@ -189,7 +179,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         $account->id = 1;
         $account->assigned_user_id = 1;
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             SecurityGroup::inherit_assigned($account, false);
             $this->assertTrue(true);
@@ -203,7 +193,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         $account = new Account();
         $account->id = 1;
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             SecurityGroup::inherit_parent($account, false);
             $this->assertTrue(true);
@@ -217,7 +207,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         $account = new Account();
         $account->id = 1;
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             SecurityGroup::inherit_parentQuery($account, 'Accounts', 1, 1, $account->module_dir);
             $this->assertTrue(true);
@@ -362,7 +352,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
         $securityGroup = new SecurityGroup();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $securityGroup->addGroupToRecord('Accounts', 1, 1);
             $this->assertTrue(true);
@@ -381,7 +371,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
         $securityGroup = new SecurityGroup();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $securityGroup->removeGroupFromRecord('Accounts', 1, 1);
             $this->assertTrue(true);

@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class EmailManTest extends SuitePHPUnitFrameworkTestCase
@@ -39,7 +38,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
 
     public function testEmailMan()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $emailMan = new EmailMan();
         $this->assertInstanceOf('EmailMan', $emailMan);
         $this->assertInstanceOf('SugarBean', $emailMan);
@@ -125,7 +124,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
     {
         $emailMan = new EmailMan();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         //test with delete true/default
         try {
             $emailMan->set_as_sent('test@test.com', true, null, null, 'send error');
@@ -134,7 +133,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         //test with delete false
         try {
             $emailMan->set_as_sent('test@test.com', false, null, null, 'send error');
@@ -218,7 +217,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
     {
         $emailMan = new EmailMan();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $emailMan->mark_deleted('');
             $this->assertTrue(true);
