@@ -192,6 +192,9 @@ class Monitor implements Trackable
             return false;
         }
 
+        // if no module_name causes errors later
+        if (empty($this->getValue("module_name"))) return false;
+
         if (empty($GLOBALS['tracker_' . $this->table_name])) {
             foreach ($this->stores as $s) {
                 $store = $this->getStore($s);
