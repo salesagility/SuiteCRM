@@ -338,20 +338,20 @@ class ListViewData
         if (!isset($params['custom_order_by'])) {
             $params['custom_order_by'] = '';
         }
-        if($_REQUEST['module'] =='AOS_Quotes'){
+        if ($_REQUEST['module'] =='AOS_Quotes') {
             $parent_tb = 'aos_quotes';
-        }else if($_REQUEST['module'] =='AOS_Contracts'){
+        } elseif ($_REQUEST['module'] =='AOS_Contracts') {
             $parent_tb = 'aos_contracts';
-        }else if($_REQUEST['module'] =='AOS_Invoices'){
+        } elseif ($_REQUEST['module'] =='AOS_Invoices') {
             $parent_tb = 'aos_invoices';
         }
         
         $asq_where =" LEFT JOIN aos_products_quotes asq ON asq.parent_id =".$parent_tb.".id AND asq.deleted=0";
         $ireplace = str_replace("line_items","asq.name",$ret_array['where']);
         
-        if((($_REQUEST['module'] =='AOS_Quotes') || ($_REQUEST['module'] =='AOS_Contracts') || ($_REQUEST['module'] =='AOS_Invoices')) && !empty($_REQUEST['line_items_advanced'] && $_REQUEST['action'] != 'Popup')){
+        if ((($_REQUEST['module'] =='AOS_Quotes') || ($_REQUEST['module'] =='AOS_Contracts') || ($_REQUEST['module'] =='AOS_Invoices')) && !empty($_REQUEST['line_items_advanced'] && $_REQUEST['action'] != 'Popup')) {
             $main_query = $ret_array['select'] . $params['custom_select'] . $ret_array['from'] . $params['custom_from'] . $ret_array['inner_join'].$asq_where. $ireplace . $params['custom_where'] . $ret_array['order_by'] . $params['custom_order_by'];
-        }else{
+        } else {
             $main_query = $ret_array['select'] . $params['custom_select'] . $ret_array['from'] . $params['custom_from'] . $ret_array['inner_join']. $ret_array['where'] . $params['custom_where'] . $ret_array['order_by'] . $params['custom_order_by'];
         }
         //C.L. - Fix for 23461
