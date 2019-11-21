@@ -1300,16 +1300,29 @@ EOQ;
         $userformat = $timedate->get_user_time_format();
         $cal_dateformat = $timedate->get_cal_date_format();
         global $app_strings, $app_list_strings, $theme;
+        $jscalendarImage = SugarThemeRegistry::current()->getImageURL('jscalendar.gif');
 
         $javascriptend = <<<EOQ
-		 
-	<span id="date_start_trigger" class="suitepicon suitepicon-module-calendar" onclick="return false;"></span>
+        <script type="text/javascript">
+        Calendar.setup ({
+        inputField : "{$varname}_date",
+			daFormat : "$cal_dateformat",
+			ifFormat : "$cal_dateformat",
+			showsTime : false,
+			button : "{$varname}_trigger",
+			singleClick : true,
+			step : 1,
+			weekNumbers:false
+		});
+		</script>
 EOQ;
+		 
         $dtscript = getVersionedScript('include/SugarFields/Fields/Datetimecombo/Datetimecombo.js');
         $html = <<<EOQ
 		<td scope="row" width="20%">$displayname</td>
 		<td class='dataField' width="30%"><input onblur="parseDate(this, '$cal_dateformat')" type="text" name='$varname' size="12" id='{$varname}_date' maxlength='10' value="">
-		&nbsp;$javascriptend
+		<img border="0" src="$jscalendarImage" alt='{$app_strings['LBL_MASSUPDATE_DATE']}' id="{$varname}_trigger" title="{$app_strings['LBL_MASSUPDATE_DATE']}"  align="absmiddle">
+        &nbsp;$javascriptend
 
 		<span id="{$varname}_time_section"></span>
 		</td>
