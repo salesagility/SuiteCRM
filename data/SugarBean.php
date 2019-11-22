@@ -3722,7 +3722,7 @@ class SugarBean
             if ($data['type'] == 'parent') {
                 //See if we need to join anything by inspecting the where clause
                 $match = preg_match(
-                    '/(^|[\s(])parent_([a-zA-Z]+_?[a-zA-Z]+)_([a-zA-Z]+_?[a-zA-Z]+)\.name/',
+                    '/(^|[\s(])parent_(\w+)&&(\w+)\.name/',
                     $where,
                     $matches
                 );
@@ -3749,7 +3749,7 @@ class SugarBean
                         ON $localTable.{$data['id_name']} = $joinTableAlias.id";
                     //Replace any references to the relationship in the where clause with the new alias
                     $where = preg_replace(
-                        '/(^|[\s(])parent_' . $joinModule . '_' . $joinTable . '\.name/',
+                        '/(^|[\s(])parent_' . $joinModule . '&&' . $joinTable . '\.name/',
                         '${1}' . $nameField,
                         $where
                     );
