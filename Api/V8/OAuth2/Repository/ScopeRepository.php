@@ -4,6 +4,10 @@ namespace Api\V8\OAuth2\Repository;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
 
+/**
+ * Class ScopeRepository
+ * @package Api\V8\OAuth2\Repository
+ */
 class ScopeRepository implements ScopeRepositoryInterface
 {
     /**

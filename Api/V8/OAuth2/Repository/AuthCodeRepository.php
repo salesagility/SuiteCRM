@@ -6,6 +6,10 @@ use Api\V8\OAuth2\Entity\AuthCodeEntity;
 use League\OAuth2\Server\Entities\AuthCodeEntityInterface;
 use League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface;
 
+/**
+ * Class AuthCodeRepository
+ * @package Api\V8\OAuth2\Repository
+ */
 class AuthCodeRepository implements AuthCodeRepositoryInterface
 {
     /**
@@ -14,7 +18,6 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
     private $beanManager;
 
     /**
-     * @param AuthCodeEntity $authCodeEntity
      * @param BeanManager $beanManager
      */
     public function __construct(BeanManager $beanManager)
@@ -31,9 +34,6 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
 
         $clientId = $authCodeEntity->getClient()->getIdentifier();
 
-        /** @var \OAuth2Clients $client */
-        $client = $this->beanManager->getBeanSafe('OAuth2Clients', $clientId);
-
         /** @var \OAuth2AuthCodes $authCode */
         $authCode = $this->beanManager->newBeanSafe(\OAuth2AuthCodes::class);
 
@@ -44,12 +44,12 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
         $authCode->client = $clientId;
 
         $authCode->assigned_user_id = $authCodeEntity->getUserIdentifier();
-		
-		if(!empty($_POST['confirmed'])) {
-			$authCode->auto_authorize = $_POST['confirmed'] == 'always';
-		} else {
-			$authCode->auto_authorize = 0;
-		}
+
+        if(!empty($_POST['confirmed'])) {
+            $authCode->auto_authorize = $_POST['confirmed'] === 'always';
+        } else {
+            $authCode->auto_authorize = 0;
+        }
 
         $authCode->save();
     }
@@ -69,12 +69,13 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
             throw new \InvalidArgumentException('Authorization code is not found for this client');
         }
 
-		if($authCode->auto_authorize == '1') {
-	        $authCode->auth_code_is_revoked = '1';
-			$authCode->save();
-		} else {
-			$authCode->mark_deleted($authCode->id);
-		}
+        if($authCode->auto_authorize === '1') {
+            $authCode->auth_code_is_revoked = '1';
+            $authCode->save();
+            return;
+        }
+
+        $authCode->mark_deleted($authCode->id);
     }
 
     /**
@@ -97,5 +98,5 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
     public function getNewAuthCode()
     {
         return new AuthCodeEntity();
-	}
+    }
 }

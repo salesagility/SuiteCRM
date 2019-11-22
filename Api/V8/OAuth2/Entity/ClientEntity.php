@@ -5,6 +5,10 @@ use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\Traits\ClientTrait;
 use League\OAuth2\Server\Entities\Traits\EntityTrait;
 
+/**
+ * Class ClientEntity
+ * @package Api\V8\OAuth2\Entity
+ */
 class ClientEntity implements ClientEntityInterface
 {
     use EntityTrait, ClientTrait;
@@ -24,7 +28,7 @@ class ClientEntity implements ClientEntityInterface
     {
         $this->redirectUri = $uri;
     }
-	
+
     /**
      * Returns the registered name (as a string).
      *

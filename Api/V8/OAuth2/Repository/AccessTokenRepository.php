@@ -12,6 +12,10 @@ use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use OAuth2Tokens;
 use User;
 
+/**
+ * Class AccessTokenRepository
+ * @package Api\V8\OAuth2\Repository
+ */
 class AccessTokenRepository implements AccessTokenRepositoryInterface
 {
     /**

@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use League\OAuth2\Server\RequestTypes\AuthorizationRequest;
+
 /**
  * Class OAuth2AuthCodes
  */
@@ -70,7 +72,7 @@ class OAuth2AuthCodes extends SugarBean
     /**
      * @var bool
      */
-    public $auth_code_revoked;
+    public $auth_code_is_revoked;
 
     /**
      * @var string
@@ -107,6 +109,7 @@ class OAuth2AuthCodes extends SugarBean
 
     /**
      * @return boolean
+     * @throws Exception
      */
     public function is_revoked()
     {
@@ -114,9 +117,10 @@ class OAuth2AuthCodes extends SugarBean
     }
 
     /**
+     * @param AuthorizationRequest $authRequest
      * @return boolean
      */
-    public function is_scope_authorized(\League\OAuth2\Server\RequestTypes\AuthorizationRequest $authRequest)
+    public function is_scope_authorized(AuthorizationRequest $authRequest)
     {
         $this->retrieve_by_string_fields([
             'client' => $authRequest->getClient()->getIdentifier(),
@@ -126,10 +130,10 @@ class OAuth2AuthCodes extends SugarBean
 
         // Check for scope changes here in future
 
-		if($this->id == null){
+		if($this->id === null){
 			return false;
-		} else {
-	        return true;
 		}
+
+        return true;
     }
 }
