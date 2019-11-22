@@ -1,7 +1,9 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
 require_once 'include/utils/db_utils.php';
-class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class db_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function db_convertProvider()
     {
@@ -32,15 +34,9 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testdb_convert($string, $type, $params, $expected)
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
-        
         //execute the method and test if it returns expected values for all types
         $actual = db_convert($string, $type, $params);
         $this->assertSame($expected, $actual);
-        
-        // clean up
-        $state->popTable('aod_indexevent');
     }
 
     public function testdb_concat()

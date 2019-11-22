@@ -243,7 +243,7 @@ class SugarXHprof
         }
 
         $rate = 1 / self::$sample_rate * 100;
-        if (rand(0, 100) > $rate) {
+        if (mt_rand(0, 100) > $rate) {
             return;
         }
 

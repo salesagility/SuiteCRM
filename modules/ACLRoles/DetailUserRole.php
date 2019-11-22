@@ -74,7 +74,7 @@ if (!is_admin($focus)) {
     $names = array();
     $names = ACLAction::setupCategoriesMatrix($categories);
     if (!empty($names)) {
-        $tdwidth = 100 / sizeof($names);
+        $tdwidth = 100 / count($names);
     }
     $sugar_smarty->assign('APP', $app_list_strings);
     $sugar_smarty->assign('CATEGORIES', $categories);

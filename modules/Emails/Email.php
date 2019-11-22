@@ -562,13 +562,15 @@ class Email extends Basic
      */
     public function __construct()
     {
-        global $current_user;
+        global $current_user, $sugar_config;
         $this->cachePath = sugar_cached('modules/Emails');
         parent::__construct();
 
         $this->emailAddress = new SugarEmailAddress();
 
-        $this->imagePrefix = rtrim($GLOBALS['sugar_config']['site_url'], "/") . "/cache/images/";
+        if (isset($sugar_config['site_url'])) {
+            $this->imagePrefix = $sugar_config['site_url'] . '/cache/images/';
+        }
     }
 
     /**
@@ -1542,7 +1544,7 @@ class Email extends Basic
             $GLOBALS['sugar_config']['email_address_separator'] :
             ',';
 
-        return join($separator, array_values($arr));
+        return implode($separator, array_values($arr));
     }
 
     /**
@@ -2524,8 +2526,7 @@ class Email extends Basic
         ////    ATTACHMENTS FROM DRAFTS
         if (($this->type == 'out' || $this->type == 'draft')
             && $this->status == 'draft'
-            && isset($_REQUEST['record'])
-            && empty($_REQUEST['ignoreParentAttachments'])) {
+            && isset($_REQUEST['record'])) {
             $this->getNotes($_REQUEST['record']); // cn: get notes from OLD email for use in new email
         }
         ////    END ATTACHMENTS FROM DRAFTS
@@ -2974,11 +2975,15 @@ class Email extends Basic
         $mail = $this->setMailer($mail, '', $ieId);
 
         if (($mail->oe->type === 'system') && (!isset($sugar_config['email_allow_send_as_user']) || (!$sugar_config['email_allow_send_as_user']))) {
-            $mail->From =
-            $sender =
-            $ReplyToAddr = $mail->oe->smtp_from_addr;
+            $fromAddr = $mail->oe->smtp_from_addr;
+            $fromName = $mail->oe->smtp_from_name;
+
+            $mail->From = $fromAddr;
+            $sender = $fromAddr;
+            $ReplyToAddr = $fromAddr;
             isValidEmailAddress($mail->From);
-            $ReplyToName = $mail->oe->smtp_from_name;
+            $ReplyToName = $fromName;
+            $mail->FromName = $fromName;
         } else {
 
             // FROM ADDRESS
@@ -3686,7 +3691,7 @@ class Email extends Basic
             $mod_strings = return_module_language($current_language, 'Emails');
         }
 
-        return $mod_strings['LBL_QUICK_CREATE'] . "&nbsp;<a id='$this->id' onclick='return quick_create_overlib(\"{$this->id}\", \"" . SugarThemeRegistry::current()->__toString() . "\", this);' href=\"#\" >" . SugarThemeRegistry::current()->getImage(
+        return $mod_strings['LBL_QUICK_CREATE'] . "&nbsp;<a id='$this->id' onclick='return quick_create_overlib(\"{$this->id}\", \"" . (string)SugarThemeRegistry::current() . "\", this);' href=\"#\" >" . SugarThemeRegistry::current()->getImage(
             "advanced_search",
             "border='0' align='absmiddle'",
             null,
@@ -3881,34 +3886,36 @@ class Email extends Basic
     }
 
     /**
+     * @return array|string
      * @global $timedate
      * Generate the where clause for searching imported emails.
-     * @return array|string
      */
     public function _generateSearchImportWhereClause()
     {
         global $timedate;
+
+        $db = DBManagerFactory::getInstance();
 
         //The clear button was removed so if a user removes the asisgned user name, do not process the id.
         if (empty($_REQUEST['assigned_user_name']) && !empty($_REQUEST['assigned_user_id'])) {
             unset($_REQUEST['assigned_user_id']);
         }
 
-        $availableSearchParam = array(
-            'name' => array('table_name' => 'emails'),
-            'data_parent_id_search' => array('table_name' => 'emails', 'db_key' => 'parent_id', 'opp' => '='),
-            'assigned_user_id' => array('table_name' => 'emails', 'opp' => '=')
-        );
+        $availableSearchParam = [
+            'name' => ['table_name' => 'emails'],
+            'data_parent_id_search' => ['table_name' => 'emails', 'db_key' => 'parent_id', 'opp' => '='],
+            'assigned_user_id' => ['table_name' => 'emails', 'opp' => '=']
+        ];
 
-        $additionalWhereClause = array();
+        $additionalWhereClause = [];
         foreach ($availableSearchParam as $key => $properties) {
             if (!empty($_REQUEST[$key])) {
                 $db_key = isset($properties['db_key']) ? $properties['db_key'] : $key;
                 $searchValue = $this->db->quote($_REQUEST[$key]);
 
                 $opp = isset($properties['opp']) ? $properties['opp'] : 'like';
-                if ($opp == 'like') {
-                    $searchValue = "%" . $searchValue . "%";
+                if ($opp === 'like') {
+                    $searchValue = '%' . $searchValue . '%';
                 }
 
                 $additionalWhereClause[] = "{$properties['table_name']}.$db_key $opp '$searchValue' ";
@@ -3918,29 +3925,29 @@ class Email extends Basic
 
         $isDateFromSearchSet = !empty($_REQUEST['searchDateFrom']);
         $isdateToSearchSet = !empty($_REQUEST['searchDateTo']);
-        $bothDateRangesSet = $isDateFromSearchSet & $isdateToSearchSet;
+        $bothDateRangesSet = $isDateFromSearchSet && $isdateToSearchSet;
 
-        //Hanlde date from and to separately
+        // Handle date from and to separately
         if ($bothDateRangesSet) {
             $dbFormatDateFrom = $timedate->to_db_date($_REQUEST['searchDateFrom'], false);
-            $dbFormatDateFrom = db_convert("'" . $dbFormatDateFrom . "'", 'datetime');
+            $dbFormatDateFrom = $db->convert("'" . $dbFormatDateFrom . "'", 'datetime');
 
             $dbFormatDateTo = $timedate->to_db_date($_REQUEST['searchDateTo'], false);
-            $dbFormatDateTo = db_convert("'" . $dbFormatDateTo . "'", 'datetime');
+            $dbFormatDateTo = $db->convert("'" . $dbFormatDateTo . "'", 'datetime');
 
             $additionalWhereClause[] = "( emails.date_sent_received >= $dbFormatDateFrom AND
                                           emails.date_sent_received <= $dbFormatDateTo )";
         } elseif ($isdateToSearchSet) {
             $dbFormatDateTo = $timedate->to_db_date($_REQUEST['searchDateTo'], false);
-            $dbFormatDateTo = db_convert("'" . $dbFormatDateTo . "'", 'datetime');
+            $dbFormatDateTo = $db->convert("'" . $dbFormatDateTo . "'", 'datetime');
             $additionalWhereClause[] = "emails.date_sent_received <= $dbFormatDateTo ";
         } elseif ($isDateFromSearchSet) {
             $dbFormatDateFrom = $timedate->to_db_date($_REQUEST['searchDateFrom'], false);
-            $dbFormatDateFrom = db_convert("'" . $dbFormatDateFrom . "'", 'datetime');
+            $dbFormatDateFrom = $db->convert("'" . $dbFormatDateFrom . "'", 'datetime');
             $additionalWhereClause[] = "emails.date_sent_received >= $dbFormatDateFrom ";
         }
 
-        $additionalWhereClause = implode(" AND ", $additionalWhereClause);
+        $additionalWhereClause = implode(' AND ', $additionalWhereClause);
 
         return $additionalWhereClause;
     }

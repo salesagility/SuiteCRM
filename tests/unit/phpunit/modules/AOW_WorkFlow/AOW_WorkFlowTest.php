@@ -1,6 +1,8 @@
 <?php
 
-class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -35,17 +37,34 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $aowWorkFlow->bean_implements('ACL')); //test with valid value
     }
 
+    public function testmark_delete_related()
+    {
+        // Create a workflow and a related condition
+        $aowWorkFlow = new AOW_WorkFlow();
+        $aowWorkFlow->name = 'test';
+        $aowWorkFlow->flow_module = 'test';
+        $aowWorkFlow->save();
+
+        $condition = new AOW_Condition();
+        $condition->aow_workflow_id = $aowWorkFlow->id;
+        $condition->save();
+
+        $linked = $aowWorkFlow->get_linked_beans('aow_conditions');
+        $this->assertCount(1, $linked);
+        $conditionID = $linked[0]->id;
+
+        // Deleting the workflow should delete also the condition
+        BeanFactory::unregisterBean('AOW_Conditions', $conditionID);
+        $cond = BeanFactory::getBean('AOW_Conditions', $conditionID);
+        $this->assertNotEmpty($cond);
+        $aowWorkFlow->mark_deleted($aowWorkFlow->id);
+        BeanFactory::unregisterBean('AOW_Conditions', $conditionID);
+        $cond = BeanFactory::getBean('AOW_Conditions', $conditionID);
+        $this->assertEmpty($cond);
+    }
+
     public function testsave()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aow_conditions');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('aow_workflow');
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-        
-        // test
         $aowWorkFlow = new AOW_WorkFlow();
 
         $aowWorkFlow->name = 'test';
@@ -61,14 +80,6 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aowWorkFlow->mark_deleted($aowWorkFlow->id);
         $result = $aowWorkFlow->retrieve($aowWorkFlow->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
-        $state->popTable('aow_workflow');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aow_conditions');
     }
 
     public function testload_flow_beans()
@@ -86,16 +97,10 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testrun_flows()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-
         $aowWorkFlow = new AOW_WorkFlow();
 
         $result = $aowWorkFlow->run_flows();
         $this->assertTrue($result);
-        
-        // clean up
-        $state->popGlobals();
     }
 
     public function testrun_flow()
@@ -231,13 +236,8 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = array(
                 'where' => array('.name = DATE_ADD(calls., INTERVAL   )'),
         );
-        
-        
-//        $tmpstate = new SuiteCRM\StateSaver();
-//        $tmpstate->pushErrorLevel();
-//        error_reporting(E_ERROR | E_PARSE);
+
         $query = $aowWorkFlow->build_query_where($aowCondition, $call);
-//        $tmpstate->popErrorLevel();
         
         $this->assertEquals($expected, $query);
 
@@ -302,11 +302,6 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testrun_actions()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aow_processed');
-        $state->pushTable('tracker');
-
-        // test
         $aowWorkFlow = new AOW_WorkFlow();
 
         //prepare the required objects and variables
@@ -330,9 +325,5 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $processed->mark_deleted($processed->id);
         $result = $processed->retrieve($processed->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('aow_processed');
     }
 }

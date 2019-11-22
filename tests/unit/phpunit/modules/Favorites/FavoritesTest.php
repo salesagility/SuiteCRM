@@ -1,6 +1,8 @@
 <?php
 
-class FavoritesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class FavoritesTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testFavorites()
     {

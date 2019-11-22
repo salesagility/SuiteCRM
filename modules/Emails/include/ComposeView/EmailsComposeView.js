@@ -1237,6 +1237,7 @@
     }).done(function (jsonResponse) {
       var response = JSON.parse(jsonResponse);
       if (typeof response.data !== "undefined") {
+        $('.file-attachments').empty();
         $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse(response);
       }
       if (typeof response.errors !== "undefined") {
@@ -1269,7 +1270,6 @@
 
   $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse = function (response) {
     var isDraft = (typeof response.data.draft !== undefined && response.data.draft ? true : false);
-    $('.file-attachments').empty();
     var inputName = 'template_attachment[]';
     var removeName = 'temp_remove_attachment[]';
     if (isDraft) {
@@ -1281,13 +1281,6 @@
         .attr('type', 'hidden')
         .attr('name', 'removeAttachment')
         .appendTo($('.file-attachments'));
-      if (!isDraft) {
-        $('<input>')
-          .attr('type', 'hidden')
-          .attr('name', 'ignoreParentAttachments')
-          .attr('value', '1')
-          .appendTo($('.file-attachments'));
-      }
       for (i = 0; i < response.data.attachments.length; i++) {
         var id = response.data.attachments[i]['id'];
         var fileGroupContainer = $('<div></div>')
@@ -1332,6 +1325,7 @@
   $.fn.EmailsComposeView.onTemplateSelect = function (args) {
 
     var confirmed = function (args) {
+      var args = JSON.parse(args);
       var form = $('[name="' + args.form_name + '"]');
       $.post('index.php?entryPoint=emailTemplateData', {
         emailTemplateId: args.name_to_value_array.emails_email_templates_idb
@@ -1348,6 +1342,7 @@
     mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE'));
     mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_BODY'));
     mb.show();
+    var args = JSON.stringify(args);
 
     mb.on('ok', function () {
       "use strict";

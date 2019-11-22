@@ -1,6 +1,8 @@
 <?php
 
-class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -13,7 +15,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testEmployee()
     {
-
         //execute the contructor and check for the Object type and  attributes
         $employee = new Employee();
         $this->assertInstanceOf('Employee', $employee);
@@ -26,7 +27,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'new_schema', $employee);
     }
 
-
     public function testget_summary_text()
     {
         $employee = new Employee();
@@ -38,7 +38,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $employee->retrieve(1);
         $this->assertEquals('Administrator', $employee->get_summary_text());
     }
-
 
     public function testfill_in_additional_list_fields()
     {
@@ -56,7 +55,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testfill_in_additional_detail_fields()
     {
         $employee = new Employee();
-
 
         //test with a empty employee bean
         $employee->fill_in_additional_detail_fields();
@@ -77,30 +75,14 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestSkipped('Bug in query: employee_name parameter is wrongly used as user_name');
     }
 
-
     public function testverify_data()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('email_addresses');
-
-        // test
         $employee = new Employee();
         $this->assertEquals(true, $employee->verify_data());
-
-        // clean up
-        $state->popTable('email_addresses');
     }
 
     public function testget_list_view_data()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('email_addresses');
-        $state->pushTable('tracker');
-        
-        
         $employee = new Employee();
 
         $expected = array(
@@ -126,11 +108,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $actual = $employee->get_list_view_data();
         $this->assertSame($expected, $actual);
-
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('email_addresses');
-        $state->popTable('aod_index');
     }
 
     public function testlist_view_parse_additional_sections()
@@ -146,7 +123,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
-
 
     public function testcreate_export_query()
     {
@@ -199,23 +175,11 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::markTestIncomplete();
     }
 
-
     public function testhasCustomFields()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('email_addresses');
-
-        // test
-        
-        
         $employee = new Employee();
         $result = $employee->hasCustomFields();
         $this->assertEquals(false, $result);
-        
-        
-        // clean up
-        $state->popTable('email_addresses');
     }
     
     public function testError()
@@ -245,8 +209,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         ob_end_clean();
         $expected = '<span class=\'error\'>Hello error<br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
         $this->assertContains($expected, $contents);
-        
-        // clean up
+
         unset($app_strings['TEST_ERROR_MESSAGE']);
     }
 }

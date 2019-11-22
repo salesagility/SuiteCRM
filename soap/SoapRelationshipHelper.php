@@ -76,7 +76,7 @@ function retrieve_relationships_properties($module_1, $module_2, $relationship_n
 
 
 /*
- * retireves relationships between two modules
+ * Retrieves relationships between two modules
  * This will return all viewable relationships between two modules
  * module_query is a filter on the first module
  * related_module_query is a filter on the second module
@@ -279,8 +279,8 @@ function server_save_relationships($list, $from_date, $to_date)
 {
     require_once('include/utils/db_utils.php');
     global  $beanList, $beanFiles;
-    $from_date = db_convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime');
-    $to_date = db_convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime');
+    $from_date = DBManager::convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime');
+    $to_date = DBManager::convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime');
     global $sugar_config;
     $db = DBManagerFactory::getInstance();
 
@@ -307,7 +307,7 @@ function server_save_relationships($list, $from_date, $to_date)
             if ($name == 'date_modified') {
                 $value = $to_date;
             } else {
-                $value = db_convert("'".DBManagerFactory::getInstance()->quote($name_value['value'])."'", 'varchar');
+                $value = DBManager::convert("'".DBManagerFactory::getInstance()->quote($name_value['value'])."'", 'varchar');
             }
             if ($name != 'resolve') {
                 if (empty($insert)) {
@@ -382,7 +382,7 @@ function server_save_relationships($list, $from_date, $to_date)
 function get_from_statement($query)
 {
     $query = explode('FROM', $query);
-    if (sizeof($query) == 1) {
+    if (count($query) == 1) {
         $query = explode('from', $query[0]);
     }
     $query = explode('ORDER BY', $query[1]);

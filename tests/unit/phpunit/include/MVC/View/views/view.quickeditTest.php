@@ -1,6 +1,8 @@
 <?php
 
-class ViewQuickeditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewQuickeditTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -31,8 +33,6 @@ class ViewQuickeditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $_REQUEST['record'] = 1;
         $view->preDisplay();
         $this->assertNotSame($request, $_REQUEST);
-
-        // clean up
 
         if (isset($_request)) {
             $_REQUEST = $_request;

@@ -1,7 +1,9 @@
 <?php
 
 
-class AdministrationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AdministrationTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -59,11 +61,6 @@ class AdministrationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsaveConfig()
     {
         self::markTestIncomplete('environment dependency');
-        
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('config');
-        $state->pushGlobals();
 
         // test
         $admin = new Administration();
@@ -74,20 +71,11 @@ class AdministrationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $admin->saveConfig();
         $actual = $admin->settings['proxy_test'];
         $this->assertEquals($actual, 'test value');
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('config');
     }
 
     public function testsaveSetting()
     {
         self::markTestIncomplete('environment dependency');
-        
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('config');
-        $state->pushGlobals();
 
         // test
         $admin = new Administration();
@@ -97,10 +85,6 @@ class AdministrationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $admin->retrieveSettings('category');
         $actual = $admin->settings['category_key'];
         $this->assertEquals($actual, 'test value');
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('config');
     }
 
     public function testget_config_prefix()

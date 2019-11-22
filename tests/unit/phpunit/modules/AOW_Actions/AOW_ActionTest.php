@@ -1,7 +1,9 @@
 <?php
 
 
-class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -32,10 +34,6 @@ class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave_lines()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aow_actions');
-
-        // test
         $aowAction = new AOW_Action();
 
         //populate required values
@@ -58,9 +56,6 @@ class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         foreach ($aow_actions as $lineItem) {
             $lineItem->mark_deleted($lineItem->id);
         }
-        
-        // clean up
-        $state->popTable('aow_actions');
     }
 
     public function testbean_implements()

@@ -1,7 +1,9 @@
 <?php
 
 
-class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AlertTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

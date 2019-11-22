@@ -1,11 +1,12 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
 require_once 'include/utils/encryption_utils.php';
-class encryption_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testsugarEncode()
     {
-
         //execute the method and test if it returns expected values
         //key param does nothing currently.
 

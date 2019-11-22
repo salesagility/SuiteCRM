@@ -935,8 +935,8 @@ EOQ;
             'call_back_function' => 'set_return',
             'form_name' => 'MassUpdate',
             'field_to_name_array' => array(
-                'id' => "{$id_name}",
-                "$reportsDisplayName" => "{$varname}",
+                'id' => (string)($id_name),
+                (string)$reportsDisplayName => (string)($varname),
             ),
         );
 
@@ -946,7 +946,7 @@ EOQ;
         $qsName = array(
             'form' => 'MassUpdate',
             'method' => 'get_user_array',
-            'modules' => array("{$mod_type}"),
+            'modules' => array((string)($mod_type)),
             'group' => 'or',
             'field_list' => array('user_name', 'id'),
             'populate_list' => array("mass_{$varname}", "mass_{$id_name}"),
@@ -1007,8 +1007,8 @@ EOHTML;
             'call_back_function' => 'set_return',
             'form_name' => 'MassUpdate',
             'field_to_name_array' => array(
-                'id' => "{$id_name}",
-                'name' => "{$varname}",
+                'id' => (string)($id_name),
+                'name' => (string)($varname),
             ),
         );
 
@@ -1018,7 +1018,7 @@ EOHTML;
         $qsName = array(
             'form' => 'MassUpdate',
             'method' => 'query',
-            'modules' => array("{$mod_type}"),
+            'modules' => array((string)($mod_type)),
             'group' => 'or',
             'field_list' => array('name', 'id'),
             'populate_list' => array("mass_{$varname}", "mass_{$id_name}"),
@@ -1078,8 +1078,8 @@ EOHTML;
             'call_back_function' => 'set_return',
             'form_name' => 'MassUpdate',
             'field_to_name_array' => array(
-                'id' => "{$id_name}",
-                'name' => "{$varname}",
+                'id' => (string)($id_name),
+                'name' => (string)($varname),
             ),
         );
 

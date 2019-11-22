@@ -1,7 +1,9 @@
 <?php
 
 
-class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class BugTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -187,17 +189,6 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('bugs');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-
-        // test
-        
         $bug = new Bug();
 
         $bug->name = 'test';
@@ -217,14 +208,6 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $bug->mark_deleted($bug->id);
         $result = $bug->retrieve($bug->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('bugs');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
 
     public function testgetReleaseDropDown()

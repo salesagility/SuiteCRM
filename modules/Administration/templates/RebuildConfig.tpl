@@ -1,3 +1,4 @@
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -36,34 +37,25 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+*}
 
-var abouter = function(){
-	return {
-		display:function(){
-			abouter.div = document.getElementById('abouterdiv');
-			abouter.div.style.display ='';
-			abouter.div.src = "index.php?module=Home&action=PopupSugar&to_pdf=true&style=" + abouter.style;
-		},
-		ab:function(index, style){
-			if(abouter.starter == 3){
-				abouter.style = style;
-				abouter.display();
-			}else{
-				if(index == abouter.starter + 1){
-					abouter.starter++;
-				}else{
-					abouter.starter= 0;
-				}
-			}
+<p>
+    <form name="RebuildConfig" method="post" action="index.php">
+        <input type="hidden" name="module" value="Administration">
+        <input type="hidden" name="action" value="RebuildConfig">
+        <input type="hidden" name="return_module" value="Administration">
+        <input type="hidden" name="return_action" value="RebuildConfig">
+        <input type="hidden" name="perform_rebuild" value="true">
 
-		}
-
-
-
-	}
-
-
-
-}();
-abouter.starter = 0;
-abouter.style = 'inc';
+        <table cellspacing="{$CELLSPACING}" class="other view">
+        <tr>
+            <td width="20%" scope="row">{$LBL_CONFIG_CHECK}</td>
+            <td>{$CONFIG_CHECK}</td>
+        </tr>
+        <tr>
+            <td scope="row">{$LBL_PERFORM_REBUILD}</td>
+            <td><input type="submit" name="button" {$DISABLE_CONFIG_REBUILD} value="{$BTN_PERFORM_REBUILD}"></td>
+        </tr>
+        </table>
+    </form>
+</p>

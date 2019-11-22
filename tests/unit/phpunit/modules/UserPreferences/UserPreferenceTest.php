@@ -1,6 +1,8 @@
 <?php
 
-class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -14,12 +16,6 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetUserDateTimePreferences()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushGlobals();
-
-        // test
         $user = new User();
         $user->retrieve('1');
 
@@ -27,22 +23,12 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $userPreference->getUserDateTimePreferences();
         $this->assertTrue(is_array($result));
-
-        // clean up
-        $state->popTable('aod_index');
-        $state->popGlobals();
     }
 
     public function testSetAndGetPreference()
     {
         $this->markTestIncomplete('state is incorrect');
-        
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushGlobals();
 
-        // test
         global $sugar_config;
 
         $user = new User();
@@ -69,19 +55,10 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $userPreference->getPreference('chartEngine');
         $this->assertEquals($sugar_config['chartEngine'], $result);
-        
-        // clean up
-        $state->popTable('aod_index');
-        $state->popGlobals();
     }
     
     public function testgetDefaultPreference()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-
-        // test
         global $sugar_config;
         $userPreference = new UserPreference();
 
@@ -105,19 +82,10 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $email_link_type = (isset($sugar_config['email_link_type']) ? $sugar_config['email_link_type'] : null) != '' ? (isset($sugar_config['email_link_type']) ? $sugar_config['email_link_type'] : null) : $sugar_config['email_default_client'];
         $result = $userPreference->getDefaultPreference('email_link_type');
         $this->assertEquals($email_link_type, $result);
-        
-        // clean up
-        
-        $state->popTable('aod_index');
     }
 
     public function test__construct()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-
-        // test
         // execute the constructor and check for the Object type and  attributes
         $userPreference = new UserPreference();
 
@@ -130,24 +98,12 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertAttributeEquals(true, 'new_schema', $userPreference);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $userPreference);
-        
-        // clean up
-        $state->popTable('aod_index');
     }
     
     public function testSavePreferencesToDBAndResetPreferences()
     {
         self::markTestIncomplete('environment dependency');
-        
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('email_addresses');
-        $state->pushTable('user_preferences');
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
 
-        // test
         $user = new User();
         $user->retrieve('1');
 
@@ -172,13 +128,6 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 'category' => 'test_category',
         ));
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
-        $state->popTable('user_preferences');
-        $state->popTable('email_addresses');
     }
 
     public function testupdateAllUserPrefs()

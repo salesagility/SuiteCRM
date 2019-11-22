@@ -204,7 +204,7 @@ It's broken down into:
 		<b>[unified_search_default_enabled] (bool)(optional)</b> is this module available by default in global search
 		
 		<b>[optimistic_locking] (bool) (optional)</b> optimistic locking is the concept that on save if the record modifiy time (date_modified)
-			 is newer than the the modify time of the record when it was loaded to edit (this time is stored in the session). 
+			 is newer than the modify time of the record when it was loaded to edit (this time is stored in the session).
 		
 		<b>[favorites] (bool) (optional)</b> should favorites be enabled for this module. Favorites are indicated by the stars next to a record 
 			on lists and deail views. It makes it easier for users to indicate what is important to them right now. It also allows them to filter

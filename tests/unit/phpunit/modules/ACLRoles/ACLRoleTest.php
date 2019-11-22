@@ -1,6 +1,8 @@
 <?php
 
-class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -41,9 +43,6 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsetAction()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('acl_roles_actions');
-        
         $aclRole = new ACLRole();
 
         //take count of relationship initially and then after method execution and test if relationship count increases
@@ -52,9 +51,6 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $final_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
 
         $this->assertGreaterThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
-        
-        // clean up
-        $state->popTable('acl_roles_actions');
     }
 
     public function testmark_relationships_deleted()
@@ -114,7 +110,7 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //test with empty value
         $result = $aclRole->getRoleActions('');
-        $this->assertTrue(is_array($result));
+        $this->assertInternalType('array', $result);
         $exp = [
           'Accounts',
           'Alerts',
@@ -132,6 +128,7 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
           'EmailTemplates',
           'EmailMarketing',
           'Emails',
+            'Employees',
           'FP_events',
           'AOD_Index',
           'AOD_IndexEvent',
@@ -177,7 +174,7 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //test with non empty but non existing role id value, initially no roles exist.
         $result = $aclRole->getRoleActions('1');
-        $this->assertTrue(is_array($result));
+        $this->assertInternalType('array', $result);
         $this->assertEquals($exp, array_keys($result));
     }
 

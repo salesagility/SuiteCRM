@@ -1,6 +1,8 @@
 <?php
 
-class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ProspectListTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -101,15 +103,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('prospect_lists');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-
-        // test
         $prospectList = new ProspectList();
 
         $prospectList->name = "test";
@@ -134,13 +127,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $prospectList->mark_deleted($prospectList->id);
         $result = $prospectList->retrieve($prospectList->id);
         $this->assertEquals(null, $result);
-
-        // clean up
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('prospect_lists');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
 
 
@@ -203,7 +189,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testmark_relationships_deleted()
     {
-        $state = new SuiteCRM\StateSaver();
+
 
         $prospectList = new ProspectList();
 
@@ -217,12 +203,12 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->markTestIncomplete('Method has no implementation');
         
-        // clean up
+
     }
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
+
 
         $prospectList = new ProspectList();
 
@@ -236,7 +222,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->markTestIncomplete('Method has no implementation');
         
-        // clean up
+
     }
 
     public function testfill_in_additional_detail_fields()
@@ -250,7 +236,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testupdate_currency_id()
     {
-        $state = new SuiteCRM\StateSaver();
+
 
         $prospectList = new ProspectList();
 
@@ -264,7 +250,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->markTestIncomplete('Method has no implementation');
         
-        // clean up
+
     }
 
 

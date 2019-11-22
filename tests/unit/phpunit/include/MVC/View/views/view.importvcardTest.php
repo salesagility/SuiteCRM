@@ -1,6 +1,8 @@
 <?php
 
-class ViewImportvcardTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewImportvcardTest extends SuitePHPUnitFrameworkTestCase
 {
     public function test__construct()
     {

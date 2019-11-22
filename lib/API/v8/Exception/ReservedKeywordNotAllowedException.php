@@ -40,10 +40,6 @@
 
 namespace SuiteCRM\API\v8\Exception;
 
-use SuiteCRM\API\v8\Controller\ApiController;
-use SuiteCRM\Enumerator\ExceptionCode;
-use SuiteCRM\Exception\Exception;
-
 /**
  * Class ReservedKeywordNotAllowedException
  * @package SuiteCRM\API\v8\Exception

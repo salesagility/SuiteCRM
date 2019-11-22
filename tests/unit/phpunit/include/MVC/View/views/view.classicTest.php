@@ -1,6 +1,8 @@
 <?php
 
-class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -15,7 +17,7 @@ class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         //execute the contructor and check for the Object type and type attribute
 
-        //test with no paramerters
+        //test with no parameters
         $view = new ViewClassic();
         $this->assertInstanceOf('ViewClassic', $view);
         $this->assertInstanceOf('SugarView', $view);
@@ -34,8 +36,6 @@ class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         if (isset($_SESSION)) {
             $session = $_SESSION;
         }
-        
-        $state = new SuiteCRM\StateSaver();
 
         //test with a valid module but invalid action. it should return false.
         $view = new ViewClassic();
@@ -72,7 +72,7 @@ class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertTrue($ret);
         
-        // clean up
+
         if (isset($session)) {
             $_SESSION = $session;
         } else {

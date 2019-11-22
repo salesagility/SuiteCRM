@@ -1,6 +1,8 @@
 <?php
 
-class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -14,10 +16,6 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
 
     public function testsave()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aos_products_quotes');
-        $state->pushTable('tracker');
-
         $aosProductsQuotes = new AOS_Products_Quotes();
 
         $aosProductsQuotes->name = 'test';
@@ -34,19 +32,10 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         $aosProductsQuotes->mark_deleted($aosProductsQuotes->id);
         $result = $aosProductsQuotes->retrieve($aosProductsQuotes->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('aos_products_quotes');
     }
 
     public function testsave_lines()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aos_products_quotes');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-        
         DBManagerFactory::getInstance()->query('DELETE FROM aos_products_quotes');
         
         
@@ -69,12 +58,6 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         //get the linked beans and verify if records created
         $product_quote_lines = $aosQuote->get_linked_beans('aos_products_quotes', $aosQuote->object_name);
         $this->assertEquals(count($post_data['name']), count($product_quote_lines));
-        
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('aos_products_quotes');
     }
     
     

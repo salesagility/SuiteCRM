@@ -3,9 +3,9 @@
 namespace SuiteCRM\Exception;
 
 use Psr\Log\LogLevel;
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class ExceptionTest extends StateCheckerPHPUnitTestCaseAbstract
+class ExceptionTest extends SuitePHPUnitFrameworkTestCase
 {
     /**#
      * @var Exception $exception

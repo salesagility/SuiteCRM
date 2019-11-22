@@ -43,7 +43,7 @@ if (!defined('sugarEntry')) {
 
 
 /**
- * This class is an implemenatation class for all the web services
+ * This class is an implementation class for all the web services
  */
 require_once('service/core/SoapHelperWebService.php');
 SugarWebServiceImpl::$helperObject = new SoapHelperWebServices();
@@ -244,10 +244,10 @@ class SugarWebServiceImpl
         } // foreach
 
         // Calculate the offset for the start of the next page
-        $next_offset = $offset + sizeof($output_list);
+        $next_offset = $offset + count($output_list);
 
         $GLOBALS['log']->info('End: SugarWebServiceImpl->get_entry_list');
-        return array('result_count'=>sizeof($output_list), 'next_offset'=>$next_offset, 'entry_list'=>$output_list, 'relationship_list' => $linkoutput_list);
+        return array('result_count'=>count($output_list), 'next_offset'=>$next_offset, 'entry_list'=>$output_list, 'relationship_list' => $linkoutput_list);
     } // fn
 
 
@@ -326,7 +326,7 @@ class SugarWebServiceImpl
         } // if
 
         if ((empty($module_names) || empty($module_ids) || empty($link_field_names) || empty($related_ids)) ||
-        (sizeof($module_names) != (sizeof($module_ids) || sizeof($link_field_names) || sizeof($related_ids)))) {
+        (count($module_names) != (count($module_ids) || count($link_field_names) || count($related_ids)))) {
             $error->set_error('invalid_data_format');
             self::$helperObject->setFaultObject($error);
             $GLOBALS['log']->info('End: SugarWebServiceImpl->set_relationships');
@@ -414,7 +414,7 @@ class SugarWebServiceImpl
             $list = $result['rows'];
             $filterFields = $result['fields_set_on_rows'];
 
-            if (sizeof($list) > 0) {
+            if (count($list) > 0) {
                 // get the related module name and instantiate a bean for that.
                 $submodulename = $mod->$link_field_name->getRelatedModuleName();
                 $submoduleclass = $beanList[$submodulename];
@@ -602,7 +602,7 @@ class SugarWebServiceImpl
         $_SESSION['authenticated_user_id'] = $current_user->id;
         $_SESSION['unique_key'] = $sugar_config['unique_key'];
         $current_user->call_custom_logic('after_login');
-        $GLOBALS['log']->info('End: SugarWebServiceImpl->login - succesful login');
+        $GLOBALS['log']->info('End: SugarWebServiceImpl->login - successful login');
         $nameValueArray = array();
         global $current_language;
         $nameValueArray['user_id'] = self::$helperObject->get_name_value('user_id', $current_user->id);
@@ -1104,7 +1104,7 @@ LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id) ";
 
 
     /**
-    *   Once we have successfuly done a mail merge on a campaign, we need to notify Sugar of the targets
+    *   Once we have successfully done a mail merge on a campaign, we need to notify Sugar of the targets
     *   and the campaign_id for tracking purposes
     *
     * @param String session  -- Session ID returned by a previous call to login.

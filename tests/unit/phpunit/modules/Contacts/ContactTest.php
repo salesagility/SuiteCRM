@@ -1,6 +1,8 @@
 <?php
 
-class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ContactTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -60,21 +62,16 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('environment dependency');
 
-        // save state
 
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-
-        // test
         $contact = new Contact();
 
         $expected = array( "MAIN"=>"span", "ACCOUNT"=>"span");
         $actual = $contact->listviewACLHelper();
         $this->assertSame($expected, $actual);
 
-        // clean up
+
         
-        $state->popGlobals();
+
     }
 
     /**
@@ -170,12 +167,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_list_view_data()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('email_addresses');
-        $state->pushTable('tracker');
 
-        // test
         $contact = new Contact();
 
         //test with attributes preset and verify attributes are set accordingly
@@ -206,9 +198,9 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals($expected['EMAIL_AND_NAME1'], $actual['EMAIL_AND_NAME1']);
 
         
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('email_addresses');
+
+
+
     }
 
     public function testbuild_generic_where_clause()

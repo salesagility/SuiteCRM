@@ -43,7 +43,7 @@ if (!defined('sugarEntry')) {
 
 
 /**
- * This class is an implemenatation class for all the rest services
+ * This class is an implementation class for all the rest services
  */
 require_once('service/v3_1/SugarWebServiceImplv3_1.php');
 require_once('SugarWebServiceUtilv4.php');
@@ -164,8 +164,8 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
 
             $num_grp_sep = $current_user->getPreference('num_grp_sep');
             $dec_sep = $current_user->getPreference('dec_sep');
-            $nameValueArray['user_number_seperator'] = self::$helperObject->get_name_value('user_number_seperator', empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep);
-            $nameValueArray['user_decimal_seperator'] = self::$helperObject->get_name_value('user_decimal_seperator', empty($dec_sep) ? $sugar_config['default_decimal_seperator'] : $dec_sep);
+            $nameValueArray['user_number_separator'] = self::$helperObject->get_name_value('user_number_separator', empty($num_grp_sep) ? $sugar_config['default_number_grouping_separator'] : $num_grp_sep);
+            $nameValueArray['user_decimal_separator'] = self::$helperObject->get_name_value('user_decimal_separator', empty($dec_sep) ? $sugar_config['default_decimal_separator'] : $dec_sep);
 
             $nameValueArray['mobile_max_list_entries'] = self::$helperObject->get_name_value('mobile_max_list_entries', $sugar_config['wl_list_max_entries_per_page']);
             $nameValueArray['mobile_max_subpanel_entries'] = self::$helperObject->get_name_value('mobile_max_subpanel_entries', $sugar_config['wl_list_max_entries_per_subpanel']);
@@ -328,7 +328,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
         } // foreach
 
         // Calculate the offset for the start of the next page
-        $next_offset = $offset + sizeof($output_list);
+        $next_offset = $offset + count($output_list);
 
         $returnRelationshipList = array();
         foreach ($linkoutput_list as $rel) {
@@ -349,7 +349,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
         }
 
         $GLOBALS['log']->info('End: SugarWebServiceImpl->get_entry_list - SUCCESS');
-        return array('result_count'=>sizeof($output_list), 'total_count' => $totalRecordCount, 'next_offset'=>$next_offset, 'entry_list'=>$output_list, 'relationship_list' => $returnRelationshipList);
+        return array('result_count'=>count($output_list), 'total_count' => $totalRecordCount, 'next_offset'=>$next_offset, 'entry_list'=>$output_list, 'relationship_list' => $returnRelationshipList);
     } // fn
 
     /**
@@ -497,10 +497,6 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
                 if ($beanName != "User"
                     && $beanName != "ProjectTask"
                     ) {
-                    $searchForm = new SearchForm($seed, $name) ;
-
-                    $searchForm->setup(array($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
-                    $where_clauses = $searchForm->generateSearchWhere() ;
                     require_once 'include/SearchForm/SearchForm2.php' ;
                     $searchForm = new SearchForm($seed, $name) ;
 
@@ -584,8 +580,6 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
                     if ($beanName == "ProjectTask") {
                         $filterFields = array('id', 'name', 'project_id', 'project_name');
                         $main_query = "select {$seed->table_name}.project_task_id id,{$seed->table_name}.project_id, {$seed->table_name}.name, project.name project_name from {$seed->table_name} ";
-                        $seed->add_team_security_where_clause($main_query);
-                        $main_query .= "LEFT JOIN teams ON $seed->table_name.team_id=teams.id AND (teams.deleted=0) ";
                         $main_query .= "LEFT JOIN project ON $seed->table_name.project_id = project.id ";
                         $main_query .= "where {$seed->table_name}.name like '{$search_string}%'";
                     } // if

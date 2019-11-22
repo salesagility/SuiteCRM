@@ -1,6 +1,8 @@
 <?php
 
-class AOW_ProcessedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AOW_ProcessedTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {

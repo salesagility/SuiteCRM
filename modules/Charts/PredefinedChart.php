@@ -203,7 +203,7 @@ class PredefinedChart
             foreach ($new_ids as $the_id=>$the_name) {
                 $id[] = "'".$the_id."'";
             }
-            $ids = join(",", $id);
+            $ids = implode(",", $id);
             $where .= "opportunities.assigned_user_id IN ($ids) ";
         }
         //build the where clause for the query that matches $datax
@@ -213,15 +213,15 @@ class PredefinedChart
             foreach ($datax as $key=>$value) {
                 $dataxArr[] = "'".$key."'";
             }
-            $dataxArr = join(",", $dataxArr);
+            $dataxArr = implode(",", $dataxArr);
             $where .= "AND opportunities.sales_stage IN	($dataxArr) ";
         }
 
         $date_start = $timedate->swap_formats($date_start, $timedate->get_date_format(), $timedate->dbDayFormat);
         $date_end = $timedate->swap_formats($date_end, $timedate->get_date_format(), $timedate->dbDayFormat);
         //build the where clause for the query that matches $date_start and $date_end
-        $where .= "	AND opportunities.date_closed >= ". db_convert("'".$date_start."'", 'date'). "
-					AND opportunities.date_closed <= ".db_convert("'".$date_end."'", 'date') ;
+        $where .= "	AND opportunities.date_closed >= ". DBManager::convert("'".$date_start."'", 'date'). "
+					AND opportunities.date_closed <= ".DBManager::convert("'".$date_end."'", 'date') ;
         $where .= "	AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
 
         //Now do the db queries
@@ -265,7 +265,7 @@ class PredefinedChart
             $GLOBALS['log']->fatal($current_user->getPreference('lsbo_lead_sources'));
         }
         //set $datax using selected sales stage keys
-        if (!empty($tempx) && sizeof($tempx) > 0) {
+        if (!empty($tempx) && count($tempx) > 0) {
             foreach ($tempx as $key) {
                 $datax[$key] = $app_list_strings['lead_source_dom'][$key];
                 array_push($selected_datax, $key);
@@ -305,7 +305,7 @@ class PredefinedChart
             foreach ($user_id as $the_id) {
                 $id[] = "'".$the_id."'";
             }
-            $ids = join(",", $id);
+            $ids = implode(",", $id);
             $where .= "opportunities.assigned_user_id IN ($ids) ";
         }
 
@@ -316,7 +316,7 @@ class PredefinedChart
             foreach ($datay as $key=>$value) {
                 $datayArr[] = "'".$key."'";
             }
-            $datayArr = join(",", $datayArr);
+            $datayArr = implode(",", $datayArr);
             $where .= "AND opportunities.lead_source IN	($datayArr) ";
         }
         $query = "SELECT lead_source,sales_stage,sum(amount_usdollar/1000) as total,count(*) as opp_count FROM opportunities ";
@@ -391,7 +391,7 @@ class PredefinedChart
             foreach ($user_id as $the_id) {
                 $id[] = "'".$the_id."'";
             }
-            $ids = join(",", $id);
+            $ids = implode(",", $id);
             $where .= "opportunities.assigned_user_id IN ($ids) ";
         }
 
@@ -401,10 +401,10 @@ class PredefinedChart
 
         $opp = new Opportunity();
         //build the where clause for the query that matches $date_start and $date_end
-        $where .= "AND opportunities.date_closed >= ".db_convert("'".$date_start."'", 'date')." AND opportunities.date_closed <= ".db_convert("'".$date_end."'", 'date')." AND opportunities.deleted=0";
-        $query = "SELECT sales_stage,".db_convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))." as m, sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ";
+        $where .= "AND opportunities.date_closed >= ".DBManager::convert("'".$date_start."'", 'date')." AND opportunities.date_closed <= ".DBManager::convert("'".$date_end."'", 'date')." AND opportunities.deleted=0";
+        $query = "SELECT sales_stage,".DBManager::convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))." as m, sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ";
         $query .= "WHERE ".$where;
-        $query .= " GROUP BY sales_stage,".db_convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))."ORDER BY m";
+        $query .= " GROUP BY sales_stage,".DBManager::convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))."ORDER BY m";
         return $query;
     }
 
@@ -468,7 +468,7 @@ class PredefinedChart
             foreach ($user_id as $the_id) {
                 $id[] = "'".$the_id."'";
             }
-            $ids = join(",", $id);
+            $ids = implode(",", $id);
             $where .= "opportunities.assigned_user_id IN ($ids) ";
         }
         if (!empty($where)) {
@@ -481,7 +481,7 @@ class PredefinedChart
             foreach ($legends as $key=>$value) {
                 $legendItem[] = "'".$key."'";
             }
-            $legendItems = join(",", $legendItem);
+            $legendItems = implode(",", $legendItem);
             $where .= " opportunities.lead_source IN	($legendItems) ";
         }
         $query = "SELECT lead_source,sum(amount_usdollar/1000) as total,count(*) as opp_count FROM opportunities ";
@@ -494,7 +494,7 @@ class PredefinedChart
     public function myModuleUsageLast30Days()
     {
         global $current_user;
-        $dateValue = db_convert("'".$timedate->getNow()->modify("-30 days")->asDb()."'", "datetime");
+        $dateValue = DBManager::convert("'".$timedate->getNow()->modify("-30 days")->asDb()."'", "datetime");
 
         $query  = "SELECT tracker.module_name as module_name ";
         $query .= ",COUNT(*) count FROM tracker ";

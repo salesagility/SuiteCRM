@@ -1,6 +1,8 @@
 <?php
 
-class ViewQuickTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewQuickTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -13,9 +15,7 @@ class ViewQuickTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testViewQuick()
     {
-
-        //execute the contructor and check for the Object type and type attribute
-
+        //execute the constructor and check for the Object type and type attribute
         $view = new ViewQuick();
 
         $this->assertInstanceOf('ViewQuick', $view);
@@ -29,8 +29,7 @@ class ViewQuickTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         if (isset($_SESSION)) {
             $session = $_SESSION;
         }
-        
-        
+
         $view = new ViewQuick();
 
         //execute the method with required child objects preset. it will return some html.
@@ -40,9 +39,6 @@ class ViewQuickTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $view->bean = new User();
         $view->bean->id = 1;
         $view->dv->setup('Users', $view->bean);
-
-
-        // clean up
 
         if (isset($session)) {
             $_SESSION = $session;

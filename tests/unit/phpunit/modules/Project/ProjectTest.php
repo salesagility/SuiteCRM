@@ -1,6 +1,8 @@
 <?php
 
-class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ProjectTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -60,9 +62,9 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave_relationship_changes()
     {
-        $state = new SuiteCRM\StateSaver();
+
         
-        $state->pushGlobals();
+
         
         
         
@@ -80,9 +82,9 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+
         
-        $state->popGlobals();
+
     }
 
 

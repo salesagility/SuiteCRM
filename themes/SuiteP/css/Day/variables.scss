@@ -964,8 +964,10 @@ $navbar-link-color-hover: $color-50;
 $navbar-main-menu-bg: $color-9;
 $navbar-menu-link-color: $color-80;
 $navbar-menu-link-color-hover: $color-50;
-$navbar-menu-seperator: $color-18;
-$navbar-menu-current-seperator: $color-80;
+$navbar-menu-separator: $color-18;
+$navbar-menu-current-separator: $color-80;
+$navbar-menu-seperator: $navbar-menu-seperator; //needed for backward compatibility
+$navbar-menu-current-seperator: $navbar-menu-current-separator; //needed for backward compatibility
 $navbar-mobile-toolbar-color: $color-80;
 
 $navbar-home-color: $navbar-link-color;
@@ -986,7 +988,8 @@ $navbar-quick-create-btn-bg: $color-33;
 $navbar-quick-create-menu-bg: $color-33;
 $navbar-quick-create-menu-color: $color-80;
 $navbar-quick-create-menu-color-hover: $color-80;
-$navbar-quick-create-menu-seperator: $color-20;
+$navbar-quick-create-menu-separator: $color-20;
+$navbar-quick-create-menu-seperator: $navbar-quick-create-menu-separator; //needed for backward compatibility
 $navbar-quick-create-btn-bg-hover: $navbar-quick-create-menu-bg;
 
 $navbar-alert-color: $navbar-link-color;
@@ -997,7 +1000,8 @@ $navbar-alert-body-color: $main-font-color;
 $navbar-alert-body-bg: $main-bg;
 $navbar-alert-title-bg: $color-9;
 $navbar-alert-title-color: $main-font-color;
-$navbar-alert-seperator: $navbar-menu-seperator;
+$navbar-alert-separator: $navbar-menu-separator;
+$navbar-alert-seperator: $navbar-menu-separator;
 $navbar-alert-count-bg: $color-4;
 
 $navbar-user-color: $navbar-link-color;
@@ -1041,7 +1045,8 @@ $default-tab-color-hover: $color-80;
 $default-tab-color: $color-80;
 $action-tab-bg: $color-4;
 $action-tab-bg-hover: $color-4;
-$action-tab-seperator: $color-53;
+$action-tab-separator: $color-53;
+$action-tab-seperator: $action-tab-separator; //needed for backward compatibility
 $action-tab-color: $color-80;
 $action-tab-color-hover: $color-80;
 $tab-bg: $panel-bg;

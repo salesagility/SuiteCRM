@@ -1,6 +1,8 @@
 <?php
 
-class AOD_IndexEventTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AOD_IndexEventTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOD_IndexEvent()
     {

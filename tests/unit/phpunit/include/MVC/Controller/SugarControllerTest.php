@@ -1,8 +1,9 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 use SuiteCRM\Test\TestLogger;
 
-class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -62,12 +63,6 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testexecute()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-        $state->pushPHPConfigOptions();
-
         // suppress output during the test
         $this->setOutputCallback(function () {});
 
@@ -91,11 +86,6 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // exam log
         $this->assertTrue(true);
-        
-        // clean up
-        $state->popPHPConfigOptions();
-        $state->popGlobals();
-        $state->popTable('tracker');
     }
 
     public function testprocess()
@@ -153,12 +143,6 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testaction_save()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        $state->pushTable('users');
-        $state->pushTable('user_preferences');
-        
         if (isset($_SESSION)) {
             $session = $_SESSION;
         }
@@ -195,11 +179,6 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $query = "UPDATE users SET date_modified = '$testUserDateModified' WHERE id = '$testUserId' LIMIT 1";
         DBManagerFactory::getInstance()->query($query);
-        
-        $state->popTable('user_preferences');
-        $state->popTable('users');
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
     }
 
     public function testaction_spot()
@@ -227,11 +206,6 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcheckEntryPointRequiresAuth()
     {
-        // store state
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        
-        // test
         $SugarController = new SugarController();
 
         // check with a invalid value
@@ -246,7 +220,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $SugarController->checkEntryPointRequiresAuth('GeneratePassword');
         $this->assertFalse($result);
         
-        // clean up
-        $state->popGlobals();
+
+
     }
 }
