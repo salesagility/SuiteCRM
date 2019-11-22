@@ -8,6 +8,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testget_date_format()
     {
+        // Validate that it gets the date format from the user's preferences.
         $user = new User();
         $user->retrieve('1');
         $userPreference = new UserPreference($user);
@@ -21,6 +22,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_time_format()
     {
+        // Validate that it gets the time format from the user's preferences.
         $user = new User();
         $user->retrieve('1');
         $userPreference = new UserPreference($user);
@@ -34,6 +36,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_date_time_format()
     {
+        // Validate that it gets the date time format from the user's preferences.
         $user = new User();
         $user->retrieve('1');
         $userPreference = new UserPreference($user);
@@ -48,6 +51,8 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_first_day_of_week()
     {
+        // Validate that it gets the first day of the week from the user's
+        // preferences.
         $user = new User();
         $user->retrieve('1');
         $userPreference = new UserPreference($user);
@@ -71,6 +76,8 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
 
     public function testmerge_date_time()
     {
+        // Merges the date and time formats given two strings.
+        // Literally just puts a space in between them.
         $timeDate = new TimeDate();
         $actual = $timeDate->merge_date_time('Y-m-d', 'H:i:s');
         $expected = 'Y-m-d H:i:s';
@@ -79,6 +86,8 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsplit_date_time()
     {
+        // Splits the date time format into an array of two items when given 
+        // a valid string.
         $timeDate = new TimeDate();
         $actual = $timeDate->split_date_time('Y-m-d H:i:s');
         $expected = ['Y-m-d', 'H:i:s'];
