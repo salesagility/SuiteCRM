@@ -119,8 +119,8 @@ class SugarRestJSON extends SugarRest
 	* @return array arguments arranged for chosen method
 	*/
 	private function correctParameterArray($className, $methodName, array $data) {
-		$r = new ReflectionMethod($className, $methodName);
-		$params = $r->getParameters();
+		$reflection = new ReflectionMethod($className, $methodName);
+		$params = $reflection->getParameters();
 		$result = array();
 		if (empty($params)) {
 			return $data;
