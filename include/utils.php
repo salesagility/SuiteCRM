@@ -1986,6 +1986,11 @@ function translate($string, $mod = '', $selectedValue = '')
     return $returnValue;
 }
 
+/**
+ * Converts a number from '1,000' to '1000', and '1,50' (if using commas as a decimal separator) to '1.50'.
+ * 
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function unTranslateNum($num)
 {
     static $dec_sep;
