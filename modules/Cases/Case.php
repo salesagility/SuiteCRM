@@ -200,6 +200,11 @@ class aCase extends Basic
      */
     public function save_relationship_changes($is_update, $exclude = array())
     {
+        // performance improvement to not update account relationship if not changing
+        if ($is_update && $this->fetched_row['account_id'] == $this->account_id) {
+			$exclude = array_merge($exclude, ['account_id']);
+		}
+
         parent::save_relationship_changes($is_update, $exclude);
 
         if (!empty($this->contact_id)) {
