@@ -56,6 +56,6 @@ class NotFoundException extends Exception
      */
     public function __construct($message = '', $code = ExceptionCode::API_CONTENT_NEGOTIATION_FAILED, $previous = null)
     {
-        parent::__construct('[Not Found] ' . $message . '', $code, $previous);
+        parent::__construct('[Not Found] ' . $message, $code, $previous);
     }
 }
