@@ -36,7 +36,7 @@ class ClientEntity implements ClientEntityInterface
      */
 	public function getName()
 	{
-		return $this->name;
+	    return $this->name;
 	}
 
 	/**
@@ -46,6 +46,6 @@ class ClientEntity implements ClientEntityInterface
      */
 	public function getRedirectUri()
 	{
-		return $this->redirectUri;
+	    return $this->redirectUri;
 	}
 }
