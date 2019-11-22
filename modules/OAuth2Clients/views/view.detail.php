@@ -78,7 +78,7 @@ class OAuth2ClientsViewDetail extends ViewDetail
                 $this->type = 'detailauthorizationcode';
                 $this->formName = 'DetailAuthorizationCode';
                 break;
-       }
+        }
     }
 
     /**

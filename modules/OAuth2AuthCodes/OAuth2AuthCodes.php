@@ -125,14 +125,14 @@ class OAuth2AuthCodes extends SugarBean
         $this->retrieve_by_string_fields([
             'client' => $authRequest->getClient()->getIdentifier(),
             'assigned_user_id' => $authRequest->getUser()->getIdentifier(),
-			'auto_authorize' => '1',
+            'auto_authorize' => '1',
         ]);
 
         // Check for scope changes here in future
 
-		if($this->id === null){
-			return false;
-		}
+        if($this->id === null){
+            return false;
+        }
 
         return true;
     }

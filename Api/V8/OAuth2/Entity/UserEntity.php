@@ -19,8 +19,8 @@ class UserEntity implements UserEntityInterface
     }
 
     /**
+     * @inheritdoc
      * Returns the registered identifier (as a string).
-     *
      * @return string|string[]
      */
 	public function getIdentifier()
