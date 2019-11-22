@@ -27,7 +27,6 @@ class logic_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     private function getTestHook()
     {
-
         //array containing hooks array to test
 
         $hook_array = array();

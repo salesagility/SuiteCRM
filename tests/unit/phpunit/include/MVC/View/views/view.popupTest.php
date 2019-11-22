@@ -41,8 +41,6 @@ class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
             self::assertTrue(true);
         }
 
-
-
         if (isset($session)) {
             $_SESSION = $session;
         } else {

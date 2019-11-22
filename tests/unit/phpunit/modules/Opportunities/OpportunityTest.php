@@ -81,7 +81,6 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
-
             //test without force_load_details
             $opportunity->fill_in_additional_list_fields();
 

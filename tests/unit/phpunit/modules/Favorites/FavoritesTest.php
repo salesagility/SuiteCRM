@@ -6,7 +6,6 @@ class FavoritesTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testFavorites()
     {
-
         // Execute the constructor and check for the Object type and  attributes
         $favorites = new Favorites();
         $this->assertInstanceOf('Favorites', $favorites);

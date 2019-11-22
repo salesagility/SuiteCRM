@@ -1756,7 +1756,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetFieldDefinition()
     {
-
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');

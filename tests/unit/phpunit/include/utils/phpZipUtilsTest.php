@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/upload_file.php';
@@ -73,7 +72,6 @@ class php_zip_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testzip_files_list()
     {
-
         //execute the method and verify the if zipped file exist
         $cache_dir = rtrim($GLOBALS['sugar_config']['cache_dir'], '/\\');
         $file = $cache_dir.'/ziplistTest.zip';

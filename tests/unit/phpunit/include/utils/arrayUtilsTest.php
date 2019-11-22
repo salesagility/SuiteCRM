@@ -178,7 +178,6 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testarray_merge_values()
     {
-
         //execute the method and test if it returns expected values
 
         //try with two different length arrays
