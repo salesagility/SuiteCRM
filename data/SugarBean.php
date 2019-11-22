@@ -1383,18 +1383,18 @@ class SugarBean
                         foreach ($value['function_params'] as $param) {
                             if (empty($value['function_params_source'])
                                 || $value['function_params_source'] == 'parent') {
-                                if (empty($this->$param)) {
-                                    $can_execute = false;
-                                } elseif ($param == '$this') {
+                                if ($param == '$this') {
                                     $execute_params[] = $this;
+                                } elseif (isset($this->$param)) {
+                                    $can_execute = false;
                                 } else {
                                     $execute_params[] = $this->$param;
                                 }
                             } elseif ($value['function_params_source'] == 'this') {
-                                if (empty($current_bean->$param)) {
-                                    $can_execute = false;
-                                } elseif ($param == '$this') {
+                                if ($param == '$this') {
                                     $execute_params[] = $current_bean;
+                                } elseif (isset($current_bean->$param)) {
+                                    $can_execute = false;
                                 } else {
                                     $execute_params[] = $current_bean->$param;
                                 }
