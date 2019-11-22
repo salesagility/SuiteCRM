@@ -60,6 +60,21 @@ function toggleInlineSearch()
         document.getElementById('inlineSavedSearch').style.display = 'none';		
     }
 }
+
+// help avoid multiple searches running on the server
+window.onload = function () {
+    document.getElementById('search_form').onsubmit = function () {
+        var searchButton = document.getElementById('search_form_submit');
+        if (searchButton == undefined) {
+            searchButton = document.getElementById('search_form_submit_advanced');
+        }
+        if (searchButton != undefined) {
+            searchButton.setAttribute("disabled", "disabled");
+        }
+        return true;
+    }
+}
+
 </script>
 {/literal}
 
