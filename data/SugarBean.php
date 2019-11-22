@@ -4899,12 +4899,12 @@ class SugarBean
                     $table,
                     $GLOBALS['dictionary'][$object]['fields'][$field]['db_concat_fields']
                 );
-                $query .= ' ,' . $concat . ' as ' . $alias;
+                $query .= ' ,' . $concat . ' as ' . DBManagerFactory::getInstance()->quoteIdentifier($alias);
             } elseif (!empty($GLOBALS['dictionary'][$object]['fields'][$field]) &&
                 (empty($GLOBALS['dictionary'][$object]['fields'][$field]['source']) ||
                     $GLOBALS['dictionary'][$object]['fields'][$field]['source'] != "non-db")
             ) {
-                $query .= ' ,' . $table . '.' . $field . ' as ' . $alias;
+                $query .= ' ,' . $table . '.' . $field . ' as ' . DBManagerFactory::getInstance()->quoteIdentifier($alias);
             }
             if (!$return_array) {
                 $this->$alias = '';
