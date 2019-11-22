@@ -3668,7 +3668,12 @@ function mark_delete_components($sub_object_array, $run_second_level = false, $s
 }
 
 /**
- * For translating the php.ini memory values into bytes.  e.g. input value of '8M' will return 8388608.
+ * Translates php.ini memory values into bytes.
+ * For example, an input value of '8M' will return 8388608.
+ * 8M is 8 mebibytes, 1 mebibyte is 1,048,576 bytes or 2^20 bytes.
+ * 
+ * @param string $val A string like '8M'.
+ * @return integer The number of bytes represented by that string.
  */
 function return_bytes($val)
 {
@@ -3695,13 +3700,10 @@ function return_bytes($val)
  */
 function url2html($string)
 {
-    //
     $return_string = preg_replace('/(\w+:\/\/)(\S+)/', ' <a href="\\1\\2" target="_new"  style="font-weight: normal;">\\1\\2</a>', $string);
 
     return $return_string;
 }
-
-// End customization by Julian
 
 /**
  * tries to determine whether the Host machine is a Windows machine.
