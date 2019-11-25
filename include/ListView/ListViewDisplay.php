@@ -411,14 +411,6 @@ class ListViewDisplay
             foreach ($this->actionsMenuExtraItems as $item) {
                 $menuItems[] = $item;
             }
-
-
-            if (
-                $this->delete
-                && !$this->show_action_dropdown_as_delete
-            ) {
-                $menuItems[] = $this->buildDeleteLink($location);
-            }
         }
         $link = array(
             'class' => 'clickMenu selectActions fancymenu',
