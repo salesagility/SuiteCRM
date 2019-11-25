@@ -17,7 +17,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $timeDate = new TimeDate($user);
         $actual = $timeDate->get_date_format();
         $expected = 'Y-m-d';
-        $this->assertEquals($actual, $expected);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testget_time_format()
@@ -31,7 +31,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $timeDate = new TimeDate($user);
         $actual = $timeDate->get_time_format();
         $expected = 'H:i:s';
-        $this->assertEquals($actual, $expected);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testget_date_time_format()
@@ -46,7 +46,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $timeDate = new TimeDate($user);
         $actual = $timeDate->get_date_time_format();
         $expected = 'Y-m-d H:i:s';
-        $this->assertEquals($actual, $expected);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testget_first_day_of_week()
@@ -61,7 +61,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $timeDate = new TimeDate($user);
         $actual = $timeDate->get_first_day_of_week();
         $expected = 1;
-        $this->assertEquals($actual, $expected);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testget_first_day_of_week_defaultResponse()
@@ -71,7 +71,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $timeDate = new TimeDate();
         $actual = $timeDate->get_first_day_of_week();
         $expected = 0;
-        $this->assertEquals($actual, $expected);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testmerge_date_time()
@@ -81,7 +81,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $timeDate = new TimeDate();
         $actual = $timeDate->merge_date_time('Y-m-d', 'H:i:s');
         $expected = 'Y-m-d H:i:s';
-        $this->assertEquals($actual, $expected);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testsplit_date_time()
@@ -91,6 +91,15 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $timeDate = new TimeDate();
         $actual = $timeDate->split_date_time('Y-m-d H:i:s');
         $expected = ['Y-m-d', 'H:i:s'];
-        $this->assertEquals($actual, $expected);
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testhttpTime()
+    {
+        // Returns a timestamp in the format defined by RFC 2616.
+        $timeDate = new TimeDate();
+        $actual = $timeDate->httpTime(1546300800);
+        $expected = 'Tue, 01 Jan 2019 00:00:00 GMT';
+        $this->assertEquals($expected, $actual);
     }
 }
