@@ -145,8 +145,6 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals("1", $lead->opportunity_id);
         */
 
-
-
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $lead->mark_deleted($lead->id);
         $result = $lead->retrieve($lead->id);
