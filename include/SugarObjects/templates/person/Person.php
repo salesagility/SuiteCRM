@@ -170,6 +170,11 @@ class Person extends Basic
             }
         }
 
+        // incase the fullname is blank set to a dash else the link to view is not present
+        if (empty(trim($full_name))) {
+            $full_name = "-";
+        }        
+
         $this->name = $full_name;
         $this->full_name = $full_name; //used by campaigns
     }
