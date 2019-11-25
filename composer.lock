@@ -562,6 +562,7 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
+            "abandoned": "psr/container",
             "time": "2017-02-14T19:40:03+00:00"
         },
         {
@@ -3884,16 +3885,16 @@
         },
         {
             "name": "zbateson/mail-mime-parser",
-            "version": "1.1.6",
+            "version": "1.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zbateson/mail-mime-parser.git",
-                "reference": "70ad506290d830ff2ebbb7d96132dcf9960444f8"
+                "reference": "05e7579f3f37a4fd67933f1d059fefd78db88835"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zbateson/mail-mime-parser/zipball/70ad506290d830ff2ebbb7d96132dcf9960444f8",
-                "reference": "70ad506290d830ff2ebbb7d96132dcf9960444f8",
+                "url": "https://api.github.com/repos/zbateson/mail-mime-parser/zipball/05e7579f3f37a4fd67933f1d059fefd78db88835",
+                "reference": "05e7579f3f37a4fd67933f1d059fefd78db88835",
                 "shasum": ""
             },
             "require": {
@@ -3944,7 +3945,7 @@
                 "parser",
                 "php-imap"
             ],
-            "time": "2019-09-24T18:38:14+00:00"
+            "time": "2019-11-20T00:05:22+00:00"
         },
         {
             "name": "zbateson/mb-wrapper",
