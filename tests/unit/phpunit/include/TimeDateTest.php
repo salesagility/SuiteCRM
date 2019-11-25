@@ -102,4 +102,44 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $expected = 'Tue, 01 Jan 2019 00:00:00 GMT';
         $this->assertEquals($expected, $actual);
     }
+
+    public function testto_db_time()
+    {
+        // Test that the function returns the time but not the date, even if
+        // a date is provided.
+        $user = new User();
+        $user->retrieve('1');
+        $userPreference = new UserPreference($user);
+        $userPreference->setPreference('datef', 'Y-m-d');
+        $userPreference->setPreference('timef', 'H:i:s');
+
+        $timeDate = new TimeDate($user);
+
+        $actual = $timeDate->to_db_time('2019-01-01 11:00:00');
+        $expected = '11:00:00';
+        $this->assertEquals($expected, $actual);
+
+        $actual2 = $timeDate->to_db_time('23:30:00');
+        $expected2 = '23:30:00';
+        $this->assertEquals($expected2, $actual2);
+    }
+
+    public function testto_db_date_time()
+    {
+        // Test that the function returns the full date time as an array.
+        // We create a user here, but it doesn't actually take the user's
+        // preferences into account. This should probably be fixed at some
+        // point.
+        $user = new User();
+        $user->retrieve('1');
+        $userPreference = new UserPreference($user);
+        $userPreference->setPreference('datef', 'Y-m-d');
+        $userPreference->setPreference('timef', 'H:i:s');
+        $timeDate = new TimeDate($user);
+
+        $actual = $timeDate->to_db_date_time('2019-01-01', '11:00:00');
+        $expected = ['2019-01-01', '11:00:00'];
+        $this->assertEquals($expected, $actual);
+    }
+
 }
