@@ -15,7 +15,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSugarFeed()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $sugarFeed = new SugarFeed();
 
         $this->assertInstanceOf('SugarFeed', $sugarFeed);
@@ -49,7 +49,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
 
     public function testflushBackendCache()
     {
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             SugarFeed::flushBackendCache();
             $this->assertTrue(true);
@@ -161,7 +161,6 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetLinkClass()
     {
-
         //test with invalid LinkType
         $result = SugarFeed::getLinkClass('test');
         $this->assertEquals(false, $result);

@@ -194,7 +194,6 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetMenu()
     {
-
         ////error_reporting(E_ALL);
 
         $SugarView = new SugarView();

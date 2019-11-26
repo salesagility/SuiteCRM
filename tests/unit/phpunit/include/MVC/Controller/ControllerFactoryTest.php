@@ -1,13 +1,11 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ControllerFactoryTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testgetController()
     {
-
         //execute the method with invalid input
         $controller = ControllerFactory::getController('');
         $this->assertInstanceOf('SugarController', $controller);

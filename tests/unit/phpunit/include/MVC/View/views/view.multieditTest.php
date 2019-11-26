@@ -6,7 +6,7 @@ class ViewMultieditTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testViewMultiedit()
     {
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $view = new ViewMultiedit();
         $this->assertInstanceOf('ViewMultiedit', $view);
         $this->assertInstanceOf('SugarView', $view);

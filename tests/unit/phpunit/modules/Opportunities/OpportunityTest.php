@@ -15,7 +15,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
 
     public function testOpportunity()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $opportunity = new Opportunity();
 
         $this->assertInstanceOf('Opportunity', $opportunity);
@@ -79,9 +79,8 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
     {
         $opportunity = new Opportunity();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
-
             //test without force_load_details
             $opportunity->fill_in_additional_list_fields();
 
@@ -99,7 +98,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
     {
         $opportunity = new Opportunity();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $opportunity->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -120,7 +119,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
     {
         $opportunity = new Opportunity();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $opportunity->update_currency_id(array('GBP', 'EUR'), 'USD');
             $this->assertTrue(true);
@@ -251,15 +250,11 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
 
     public function testlistviewACLHelper()
     {
-
         $opportunity = new Opportunity();
 
         $expected = array('MAIN' => 'a', 'ACCOUNT' => 'a');
         $actual = $opportunity->listviewACLHelper();
         $this->assertSame($expected, $actual);
-
-
-
     }
 
     public function testget_account_detail()
@@ -272,9 +267,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetCurrencyType()
     {
-
-        
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             getCurrencyType();
             $this->assertTrue(true);
@@ -283,7 +276,5 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('This method has no implementation');
-        
-
     }
 }

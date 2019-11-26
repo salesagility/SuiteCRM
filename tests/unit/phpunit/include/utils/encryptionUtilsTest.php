@@ -28,7 +28,6 @@ class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsugarDecode()
     {
-
         //execute the method and test if it returns expected values
         //key param does nothing currently.
 
@@ -50,13 +49,11 @@ class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testblowfishGetKey()
     {
-
         //execute the method and test if it returns expected length string
 
         //test key
         $actual = blowfishGetKey('test');
         $this->assertGreaterThanOrEqual(36, strlen($actual));
-        
 
         //default key
         $actual = blowfishGetKey('rapelcg_svryq');
@@ -65,7 +62,6 @@ class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testblowfishEncode()
     {
-
         //execute the method and test if it returns expected values
         //it won't work with blank key, will throw an error
 
@@ -82,7 +78,6 @@ class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testblowfishDecode()
     {
-
         //execute the method and test if it returns expected values
         //it won't work with blank key, will throw an error.
 

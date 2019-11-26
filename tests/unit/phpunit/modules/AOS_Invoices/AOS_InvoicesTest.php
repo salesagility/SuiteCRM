@@ -15,7 +15,7 @@ class AOS_InvoicesTest extends SuitePHPUnitFrameworkTestCase
 
     public function testAOS_Invoices()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aosInvoices = new AOS_Invoices();
         $this->assertInstanceOf('AOS_Invoices', $aosInvoices);
         $this->assertInstanceOf('Basic', $aosInvoices);

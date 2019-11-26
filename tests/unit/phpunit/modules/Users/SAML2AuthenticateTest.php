@@ -6,7 +6,6 @@ require_once __DIR__ . '/../../../../../modules/Users/authentication/SAML2Authen
 
 class SAML2MetadataTest extends SuitePHPUnitFrameworkTestCase
 {
-
     public function testEntryPointNoAuth()
     {
         $result = (new SugarController())->checkEntryPointRequiresAuth('SAML2Metadata');

@@ -51,7 +51,6 @@ require_once __DIR__ . '/../../../../../modules/InboundEmail/InboundEmail.php';
  */
 class InboundEmailMock extends InboundEmail
 {
-    
     /**
      *
      * @param bool test Flag to test connection

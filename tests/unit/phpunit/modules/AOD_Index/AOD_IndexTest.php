@@ -6,8 +6,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOD_Index()
     {
-
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $aod_index = new AOD_Index();
         $this->assertInstanceOf('AOD_Index', $aod_index);
         $this->assertInstanceOf('Basic', $aod_index);
@@ -91,7 +90,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aod_index->commit();
             $this->assertTrue(true);
@@ -102,7 +101,6 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
 
     public function testisModuleSearchable()
     {
-
         //test with an invalid module
         $this->assertFalse(AOD_Index::isModuleSearchable('', ''));
 
@@ -144,7 +142,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aod_index->remove('Accounts', 1);
             $this->assertTrue(true);

@@ -15,7 +15,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
 
     public function testLead()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $lead = BeanFactory::getBean('Leads');
 
         $this->assertInstanceOf('Lead', $lead);
@@ -145,14 +145,11 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals("1", $lead->opportunity_id);
         */
 
-
-
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $lead->mark_deleted($lead->id);
         $result = $lead->retrieve($lead->id);
         $this->assertEquals(null, $result);
     }
-
 
     public function testfill_in_additional_list_fields()
     {
@@ -165,7 +162,6 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
 
         $this->assertEquals("firstn lastn", $lead->name);
     }
-
 
     public function testfill_in_additional_detail_fields()
     {
@@ -181,8 +177,6 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-
-        
         $lead = BeanFactory::getBean('Leads');
 
         $expected = array(
@@ -210,7 +204,6 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected['DO_NOT_CALL'], $actual['DO_NOT_CALL']);
         $this->assertEquals($expected['EMAIL1_LINK'], $actual['EMAIL1_LINK']);
     }
-
 
     public function testget_linked_fields()
     {
@@ -297,17 +290,12 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
 
     public function testlistviewACLHelper()
     {
-
         $lead = BeanFactory::getBean('Leads');
 
         $expected = array("MAIN" => "a", "ACCOUNT" => "a", "OPPORTUNITY" => "a", "CONTACT" => "a");
         $actual = $lead->listviewACLHelper();
         $this->assertSame($expected, $actual);
-
-
-
     }
-
 
     public function testconvertCustomFieldsForm()
     {
@@ -323,7 +311,6 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $this->assertgreaterThanOrEqual("", $form); //no filed with source = custom_fields
     }
 
-
     public function testget_unlinked_email_query()
     {
         $lead = BeanFactory::getBean('Leads');
@@ -338,7 +325,6 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $actual = $lead->get_unlinked_email_query();
         $this->assertSame($expected, $actual);
     }
-
 
     public function testget_old_related_calls()
     {
@@ -356,7 +342,6 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-
     public function testgetActivitiesOptions()
     {
         $lead = BeanFactory::getBean('Leads');
@@ -365,7 +350,6 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $actual = $lead->getActivitiesOptions();
         $this->assertSame($expected, $actual);
     }
-
 
     public function testget_old_related_meetings()
     {

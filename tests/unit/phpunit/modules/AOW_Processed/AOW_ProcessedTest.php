@@ -15,7 +15,7 @@ class AOW_ProcessedTest extends SuitePHPUnitFrameworkTestCase
 
     public function testAOW_Processed()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aowProcessed = new AOW_Processed();
         $this->assertInstanceOf('AOW_Processed', $aowProcessed);
         $this->assertInstanceOf('Basic', $aowProcessed);

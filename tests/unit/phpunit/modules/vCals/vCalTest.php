@@ -15,7 +15,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
     public function testvCal()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $vcal = new vCal();
 
         $this->assertInstanceOf('vCal', $vcal);
@@ -44,11 +44,9 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-
-        
         $vcal = new vCal();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $vcal->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -57,21 +55,13 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
-        
-
     }
 
     public function testfill_in_additional_detail_fields()
     {
-
-        
-        
-        
-        
-        
         $vcal = new vCal();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $vcal->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -80,21 +70,13 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
-        
-
     }
 
     public function testget_list_view_data()
     {
-
-        
-        
-        
-        
-        
         $vcal = new vCal();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $vcal->get_list_view_data();
             $this->assertTrue(true);
@@ -103,8 +85,6 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
-        
-
     }
 
     public function testget_freebusy_lines_cache()
@@ -125,7 +105,6 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_sugar_freebusy()
     {
-
         global $locale, $timedate;
 
         $vcal = new vCal();
@@ -137,14 +116,10 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $vcal->create_sugar_freebusy($user_bean, $start_date_time, $end_date_time);
         $this->assertGreaterThanOrEqual(0, strlen($result));
-        
-
-
     }
 
     public function testget_vcal_freebusy()
     {
-
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -155,9 +130,6 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
         $this->assertStringStartsWith($expectedStart, $result);
         $this->assertStringEndsWith($expectedEnd, $result);
-
-
-
     }
 
     public function testcache_sugar_vcal()
@@ -165,7 +137,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $vcal = new vCal();
         $user_focus = new User('1');
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $vcal->cache_sugar_vcal($user_focus);
             $this->assertTrue(true);
@@ -179,7 +151,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $vcal = new vCal();
         $user_focus = new User('1');
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $vcal->cache_sugar_vcal_freebusy($user_focus);
             $this->assertTrue(true);

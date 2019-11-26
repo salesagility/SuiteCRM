@@ -1,13 +1,12 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOR_Report()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aor_Report = new AOR_Report();
         $this->assertInstanceOf('AOR_Report', $aor_Report);
         $this->assertInstanceOf('Basic', $aor_Report);
@@ -74,7 +73,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
     {
         $aor_Report = new AOR_Report();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aor_Report->load_report_beans();
             $this->assertTrue(true);
@@ -95,17 +94,15 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
     {
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
-        
+
         $chartBean = BeanFactory::getBean('AOR_Charts');
         $charts = (array)$chartBean->get_full_list();
-        
 
         //execute the method and verify that it returns chart display script. strings returned vary due to included chart id.
         $result = $aor_Report->build_report_chart();
         foreach ($charts as $chart) {
             $this->assertContains($chart->id, $result);
         }
-        
 
         unset($GLOBALS['_SESSION']);
         unset($GLOBALS['objectList']);
@@ -200,7 +197,6 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbuild_report_csv()
     {
-
         //this method uses exit so it cannot be tested
 
         /*$aor_Report = new AOR_Report();

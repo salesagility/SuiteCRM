@@ -6,8 +6,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testRelationship()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $relationship = new Relationship();
 
         $this->assertInstanceOf('Relationship', $relationship);
@@ -22,7 +21,6 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 
     public function testis_self_referencing()
     {
-
         //test without setting any attributes
         $relationship = new Relationship();
 
@@ -54,7 +52,6 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 
     public function testexists()
     {
-
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
@@ -75,8 +72,8 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
     public function testdelete()
     {
         $db = DBManagerFactory::getInstance();
-        
-        //execute the method and test if it works and does not throws an exception.
+
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             Relationship::delete('test_test', $db);
             $this->assertTrue(true);
@@ -87,7 +84,6 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_other_module()
     {
-
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
@@ -107,7 +103,6 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 
     public function testretrieve_by_sides()
     {
-
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
@@ -134,7 +129,6 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 
     public function testretrieve_by_modules()
     {
-
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
@@ -190,7 +184,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
     {
         $relationship = new Relationship();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $relationship->build_relationship_cache();
             $this->assertTrue(true);
@@ -213,7 +207,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdelete_cache()
     {
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             Relationship::delete_cache();
             $this->assertTrue(true);

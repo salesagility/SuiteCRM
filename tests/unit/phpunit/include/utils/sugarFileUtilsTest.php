@@ -3,9 +3,9 @@
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/sugar_file_utils.php';
+
 class sugar_file_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-
     //@todo: check this - vfs does not seem to be working...
 
     public function testsugar_dosomething()
@@ -47,7 +47,6 @@ class sugar_file_utilsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertNotFalse($result);
     }
 
-
     public function testsugar_file_put_contents()
     {
         //execute the method and test if it doesn't returns false and returns the number of bytes written
@@ -58,8 +57,6 @@ class sugar_file_utilsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(14,$result);
     }
 
-
-
     public function testsugar_file_put_contents_atomic()
     {
         $this->markTestSkipped('Atomic file put cannot be tested with vfsStream');
@@ -68,7 +65,6 @@ class sugar_file_utilsTest extends SuitePHPUnitFrameworkTestCase
         $result = sugar_file_put_contents_atomic( $dir . '/atomictestfile.txt', 'some test data');
         $this->assertTrue($result);
     }
-
 
     public function testsugar_file_get_contents()
     {
@@ -101,7 +97,6 @@ class sugar_file_utilsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($file_dt, $expected );
     }
 
-
     public function testsugar_chmod()
     {
         $this->markTestSkipped('Permissions cannot be tested with vfsStream');
@@ -110,7 +105,6 @@ class sugar_file_utilsTest extends SuitePHPUnitFrameworkTestCase
         $result = sugar_chmod($dir . '/test.txt',0777);
         $this->assertTrue($result);
     }
-
 
     public function testsugar_chown()
     {
@@ -125,7 +119,6 @@ class sugar_file_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     }
 
-
     public function testsugar_chgrp()
     {
         $this->markTestSkipped('Permissions cannot be tested with vfsStream');
@@ -137,7 +130,6 @@ class sugar_file_utilsTest extends SuitePHPUnitFrameworkTestCase
         $result = sugar_chgrp($dir . '/test.txt',org\bovigo\vfs\vfsStream::getCurrentGroup());
         $this->assertFalse($result);
     }
-
 
     public function testget_mode()
     {
@@ -156,7 +148,6 @@ class sugar_file_utilsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertFalse(sugar_is_dir('')); //invalid dir
         $this->assertFalse(sugar_is_dir($dir."/foo")); //invalid dir
         $this->assertTrue(sugar_is_dir($dir."/testDir")); //valid dir
-
     }
 
     public function testsugar_is_file()
@@ -174,7 +165,6 @@ class sugar_file_utilsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($cache_dir . '/', sugar_cached('')); //invalid file
         $this->assertSame($cache_dir . '/config', sugar_cached('config')); //valid file
         $this->assertSame($cache_dir . '/modules' , sugar_cached('modules')); //valid file
-
     }
     */
 }

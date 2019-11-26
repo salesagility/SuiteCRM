@@ -36,7 +36,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
 
     public function testProjectTask()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $projectTask = new ProjectTask();
 
         $this->assertInstanceOf('ProjectTask', $projectTask);
@@ -105,7 +105,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
     {
         $projectTask = new ProjectTask();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $projectTask->updateParentProjectTaskPercentage();
             $this->assertTrue(true);
@@ -135,7 +135,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
     {
         $projectTask = new ProjectTask();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $projectTask->updateStatistic();
             $this->assertTrue(true);
@@ -262,15 +262,11 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
 
     public function testlistviewACLHelper()
     {
-
         $projectTask = new ProjectTask();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'PARENT_TASK' => 'a');
         $actual = $projectTask->listviewACLHelper();
         $this->assertSame($expected, $actual);
-        
-
-
     }
 
     public function testgetUtilizationDropdown()

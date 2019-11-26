@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class CampaignTrackerTest extends SuitePHPUnitFrameworkTestCase
@@ -16,7 +15,7 @@ class CampaignTrackerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testCampaignTracker()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $campaignTracker = new CampaignTracker();
         $this->assertInstanceOf('CampaignTracker', $campaignTracker);
         $this->assertInstanceOf('SugarBean', $campaignTracker);

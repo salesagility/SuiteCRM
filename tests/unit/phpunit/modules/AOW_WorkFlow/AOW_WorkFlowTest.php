@@ -15,7 +15,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
 
     public function testAOW_WorkFlow()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aowWorkFlow = new AOW_WorkFlow();
         $this->assertInstanceOf('AOW_WorkFlow', $aowWorkFlow);
         $this->assertInstanceOf('Basic', $aowWorkFlow);
@@ -86,7 +86,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
     {
         $aowWorkFlow = new AOW_WorkFlow();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aowWorkFlow->load_flow_beans();
             $this->assertTrue(true);
@@ -107,7 +107,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
     {
         $aowWorkFlow = new AOW_WorkFlow();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aowWorkFlow->run_flow();
             $this->assertTrue(true);

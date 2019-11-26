@@ -615,17 +615,19 @@ class SearchForm
     {
         $this->formData = array();
         $this->fieldDefs = array();
-        foreach ((array)$this->searchdefs['layout'][$this->displayView] as $data) {
-            if (is_array($data)) {
-                //Fields may be listed but disabled so that when they are enabled, they have the correct custom display data.
-                if (isset($data['enabled']) && $data['enabled'] == false) {
-                    continue;
+        if (!is_null($this->searchdefs) && !is_null($this->searchdefs['layout']) && !is_null($this->searchdefs['layout'][$this->displayView])) {
+            foreach ((array)$this->searchdefs['layout'][$this->displayView] as $data) {
+                if (is_array($data)) {
+                    //Fields may be listed but disabled so that when they are enabled, they have the correct custom display data.
+                    if (isset($data['enabled']) && $data['enabled'] == false) {
+                        continue;
+                    }
+                    $data['name'] = $data['name'] . '_' . $this->parsedView;
+                    $this->formData[] = array('field' => $data);
+                    $this->fieldDefs[$data['name']] = $data;
+                } else {
+                    $this->formData[] = array('field' => array('name' => $data . '_' . $this->parsedView));
                 }
-                $data['name'] = $data['name'] . '_' . $this->parsedView;
-                $this->formData[] = array('field' => $data);
-                $this->fieldDefs[$data['name']] = $data;
-            } else {
-                $this->formData[] = array('field' => array('name' => $data . '_' . $this->parsedView));
             }
         }
 

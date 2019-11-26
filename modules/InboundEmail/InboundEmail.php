@@ -3447,7 +3447,7 @@ class InboundEmail extends SugarBean
             if ($this->getAutoreplyStatus($contactAddr)
                 && $this->checkOutOfOffice($email->name)
                 && $this->checkFilterDomain($email)
-            ) { // if we haven't sent this guy 10 replies in 24hours
+            ) { // if we haven't sent this user 10 replies in 24hours
 
                 if (!empty($this->stored_options)) {
                     $storedOptions = unserialize(base64_decode($this->stored_options));

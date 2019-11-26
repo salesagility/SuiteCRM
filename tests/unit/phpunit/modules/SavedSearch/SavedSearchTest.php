@@ -15,8 +15,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSavedSearch()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $savedSearch = new SavedSearch();
 
         $this->assertInstanceOf('SavedSearch', $savedSearch);
@@ -112,7 +111,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
     {
         $savedSearch = new SavedSearch();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $savedSearch->returnSavedSearch($id);
             $this->assertTrue(true);
@@ -125,7 +124,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
     {
         $savedSearch = new SavedSearch();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $savedSearch->returnSavedSearchContents($id);
             $this->assertTrue(true);
@@ -146,7 +145,6 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-
         $savedSearch = new SavedSearch();
 
         $savedSearch->assigned_user_id = 1;
@@ -160,7 +158,6 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
     public function testpopulateRequest()
     {
-
         $savedSearch = new SavedSearch();
 
         $savedSearch->contents = array('search_module' => 'Accounts',
