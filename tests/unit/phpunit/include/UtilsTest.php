@@ -97,9 +97,9 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_languages()
     {
-        $this->assertEquals(get_languages(), ['en_us' => 'English (US)']);
-        $this->assertEquals(get_all_languages(), ['en_us' => 'English (US)']);
-        $this->assertEquals(get_language_display('en_us'), 'English (US)');
+        $this->assertEquals(['en_us' => 'English (US)'], get_languages());
+        $this->assertEquals(['en_us' => 'English (US)'], get_all_languages());
+        $this->assertEquals('English (US)', get_language_display('en_us'));
     }
 
     public function testget_current_language()
@@ -107,13 +107,13 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         global $sugar_config;
 
         $_SESSION['authenticated_user_language'] = 'foo';
-        $this->assertEquals(get_current_language(), 'foo');
-        $this->assertEquals(get_current_language(), 'foo');
+        $this->assertEquals('foo', get_current_language());
+        $this->assertEquals('foo', get_current_language());
 
         $sugar_config['default_language'] = 'bar';
-        $this->assertEquals(get_current_language(), 'foo');
+        $this->assertEquals('foo', get_current_language());
         unset($_SESSION['authenticated_user_language']);
-        $this->assertEquals(get_current_language(), 'bar');
+        $this->assertEquals('bar', get_current_language());
     }
 
     public function testis_admin()
@@ -142,38 +142,38 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         $recommendedVersion = '7.1.0';
 
         // Returns -1 when the version is less than the minimum version.
-        $this->assertEquals(check_php_version("5.4.0", $minimumVersion, $recommendedVersion), -1);
+        $this->assertEquals(-1, check_php_version("5.4.0", $minimumVersion, $recommendedVersion));
 
         // Returns 0 when the version is above the minimum but below the recommended version.
-        $this->assertEquals(check_php_version("7.0.0", $minimumVersion, $recommendedVersion), 0);
+        $this->assertEquals(0, check_php_version("7.0.0", $minimumVersion, $recommendedVersion));
 
         // Returns 1 when the version is at or above the recommended version.
-        $this->assertEquals(check_php_version("7.1.0", $minimumVersion, $recommendedVersion), 1);
-        $this->assertEquals(check_php_version("7.2.0", $minimumVersion, $recommendedVersion), 1);
-        $this->assertEquals(check_php_version("8.0.0", $minimumVersion, $recommendedVersion), 1);
+        $this->assertEquals(1, check_php_version("7.1.0", $minimumVersion, $recommendedVersion));
+        $this->assertEquals(1, check_php_version("7.2.0", $minimumVersion, $recommendedVersion));
+        $this->assertEquals(1, check_php_version("8.0.0", $minimumVersion, $recommendedVersion));
         // Handles versions with a `-dev` suffix correctly.
-        $this->assertEquals(check_php_version("7.4.0-dev", $minimumVersion, $recommendedVersion), 1);
+        $this->assertEquals(1, check_php_version("7.4.0-dev", $minimumVersion, $recommendedVersion));
     }
 
     public function testreturn_bytes()
     {
         // Test bytes. If you input just '8', it'll output 8.
-        $this->assertEquals(return_bytes('8'), 8);
+        $this->assertEquals(8, return_bytes('8'));
 
         // Test kibibytes.
-        $this->assertEquals(return_bytes('8K'), 8192);
-        $this->assertEquals(return_bytes('8k'), 8192);
+        $this->assertEquals(8192, return_bytes('8K'));
+        $this->assertEquals(8192, return_bytes('8k'));
 
         // Test mebibytes.
         // 8M is 8 mebibytes, 1 mebibyte is 1,048,576 bytes or 2^20 bytes.
-        $this->assertEquals(return_bytes('8M'), 8388608);
-        $this->assertEquals(return_bytes('8m'), 8388608);
+        $this->assertEquals(8388608, return_bytes('8M'));
+        $this->assertEquals(8388608, return_bytes('8m'));
 
         // Test gibibytes
-        $this->assertEquals(return_bytes('8G'), 8589934592);
-        $this->assertEquals(return_bytes('8g'), 8589934592);
+        $this->assertEquals(8589934592, return_bytes('8G'));
+        $this->assertEquals(8589934592, return_bytes('8g'));
 
         // Make sure it also understands strings with whitespace.
-        $this->assertEquals(return_bytes('  8K  '), 8192);
+        $this->assertEquals(8192, return_bytes('  8K  '));
     }
 }
