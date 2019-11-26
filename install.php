@@ -583,6 +583,9 @@ EOQ;
                 }
                 if (isset($_REQUEST['setup_db_collation'])) {
                     $_SESSION['setup_db_options']['collation'] = $_REQUEST['setup_db_collation'];
+		}
+		if(isset($_REQUEST['setup_db_charset'])) {
+                    $_SESSION['setup_db_options']['charset'] = $_REQUEST['setup_db_charset'];
                 }
                 $_SESSION['setup_site_admin_user_name']             = $_REQUEST['setup_site_admin_user_name'];
                 $_SESSION['setup_site_admin_password']              = $_REQUEST['setup_site_admin_password'];
