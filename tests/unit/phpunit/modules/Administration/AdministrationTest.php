@@ -26,7 +26,7 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'new_schema', $admin);
         $this->assertAttributeEquals(true, 'disable_custom_fields', $admin);
         $this->assertAttributeEquals(array('disclosure', 'notify', 'system', 'portal', 'proxy', 'massemailer', 'ldap', 'captcha', 'sugarpdf'), 'config_categories', $admin);
-        $this->assertAttributeEquals(array('notify_send_by_default', 'mail_smtpauth_req', 'notify_on', 'portal_on', 'skypeout_on', 'system_mailmerge_on', 'proxy_auth', 'proxy_on', 'system_ldap_enabled', 'captcha_on'), 'checkbox_fields', $admin);
+        $this->assertAttributeEquals(array('notify_send_by_default', 'mail_smtpauth_req', 'notify_on', 'portal_on', 'system_mailmerge_on', 'proxy_auth', 'proxy_on', 'system_ldap_enabled', 'captcha_on'), 'checkbox_fields', $admin);
     }
 
     public function testretrieveSettings()

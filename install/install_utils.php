@@ -1355,10 +1355,6 @@ function insert_default_settings()
 
     //insert default tracker settings
     $db->query("INSERT INTO config (category, name, value) VALUES ('tracker', 'Tracker', '1')");
-
-
-
-    $db->query("INSERT INTO config (category, name, value) VALUES ( 'system', 'skypeout_on', '1')");
 }
 
 
