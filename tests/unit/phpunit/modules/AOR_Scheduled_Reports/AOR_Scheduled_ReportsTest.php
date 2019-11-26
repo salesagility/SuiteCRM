@@ -43,7 +43,6 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
     
     public function testAOR_Scheduled_Reports()
     {
-
         // Execute the constructor and check for the Object type and  attributes
         $aorScheduledReports = new AOR_Scheduled_Reports();
         $this->assertInstanceOf('AOR_Scheduled_Reports', $aorScheduledReports);

@@ -154,4 +154,26 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         // Handles versions with a `-dev` suffix correctly.
         $this->assertEquals(check_php_version("7.4.0-dev", $minimumVersion, $recommendedVersion), 1);
     }
+
+    public function testreturn_bytes()
+    {
+        // Test bytes. If you input just '8', it'll output 8.
+        $this->assertEquals(return_bytes('8'), 8);
+
+        // Test kibibytes.
+        $this->assertEquals(return_bytes('8K'), 8192);
+        $this->assertEquals(return_bytes('8k'), 8192);
+
+        // Test mebibytes.
+        // 8M is 8 mebibytes, 1 mebibyte is 1,048,576 bytes or 2^20 bytes.
+        $this->assertEquals(return_bytes('8M'), 8388608);
+        $this->assertEquals(return_bytes('8m'), 8388608);
+
+        // Test gibibytes
+        $this->assertEquals(return_bytes('8G'), 8589934592);
+        $this->assertEquals(return_bytes('8g'), 8589934592);
+
+        // Make sure it also understands strings with whitespace.
+        $this->assertEquals(return_bytes('  8K  '), 8192);
+    }
 }

@@ -1105,7 +1105,6 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function test_generateSearchImportWhereClause()
     {
-
         // test
         $email = new Email();
 

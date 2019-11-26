@@ -568,13 +568,17 @@ function getModuleField(
     if (isset($fieldlist[$fieldname]['id_name']) && $fieldlist[$fieldname]['id_name'] != '' && $fieldlist[$fieldname]['id_name'] != $fieldlist[$fieldname]['name']) {
         $rel_value = $value;
 
-        require_once("include/TemplateHandler/TemplateHandler.php");
-        $template_handler = new TemplateHandler();
-        $quicksearch_js = $template_handler->createQuickSearchCode($fieldlist, $fieldlist, $view);
-        $quicksearch_js = str_replace($fieldname, $aow_field.'_display', $quicksearch_js);
-        $quicksearch_js = str_replace($fieldlist[$fieldname]['id_name'], $aow_field, $quicksearch_js);
+        // avoid printing js content in CLI commands for example cron
+        $sapi_type = php_sapi_name();
+        if (substr($sapi_type, 0, 3) != 'cli') {
+            require_once("include/TemplateHandler/TemplateHandler.php");
+            $template_handler = new TemplateHandler();
+            $quicksearch_js = $template_handler->createQuickSearchCode($fieldlist, $fieldlist, $view);
+            $quicksearch_js = str_replace($fieldname, $aow_field.'_display', $quicksearch_js);
+            $quicksearch_js = str_replace($fieldlist[$fieldname]['id_name'], $aow_field, $quicksearch_js);
 
-        echo $quicksearch_js;
+        	echo $quicksearch_js;
+        }
 
         if (isset($fieldlist[$fieldname]['module']) && $fieldlist[$fieldname]['module'] == 'Users') {
             $rel_value = get_assigned_user_name($value);

@@ -1161,7 +1161,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
 
 
         // If related account address has already been geocoded
-        if (!empty($address) && $fields['jjwg_maps_geocode_status_c'] == 'OK' &&
+        if (!empty($address) && !is_bool($fields) && $fields['jjwg_maps_geocode_status_c'] == 'OK' &&
                 !empty($fields['jjwg_maps_lat_c']) && !empty($fields['jjwg_maps_lng_c'])) {
             $aInfo = array(
                 'address' => $address,

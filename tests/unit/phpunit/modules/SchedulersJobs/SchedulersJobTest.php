@@ -105,8 +105,6 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfailJob()
     {
-
-        
         $schedulersJob = new SchedulersJob();
 
         $result = $schedulersJob->failJob();

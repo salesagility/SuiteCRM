@@ -6,7 +6,6 @@ class ViewSerializedTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testViewSerialized()
     {
-
         // Execute the constructor and check for the Object type
         $view = new ViewSerialized();
         $this->assertInstanceOf('ViewSerialized', $view);
@@ -16,7 +15,6 @@ class ViewSerializedTest extends SuitePHPUnitFrameworkTestCase
     //Incomplete Test. method uses exit() so it cannot be tested.
     public function testdisplay()
     {
-
         /* //this method call uses exit() so it cannot be tested as it forces the PHP unit to quite as well
         $view = new ViewSerialized();
         $view->bean = new User();
