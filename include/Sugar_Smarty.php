@@ -170,6 +170,17 @@ class Sugar_Smarty extends Smarty
     }
 
     /**
+     * called for included templates
+     * @param string $_smarty_include_tpl_file
+     * @param string $_smarty_include_vars
+     */
+    function _smarty_include($params)
+    {
+        $params['smarty_include_tpl_file'] = get_custom_file_if_exists($params['smarty_include_tpl_file']);
+        parent::_smarty_include($params);
+    }
+
+    /**
      * Log smarty error out to default log location
      * @param string $error_msg
      * @param integer $error_type
