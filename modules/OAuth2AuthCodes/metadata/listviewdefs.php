@@ -82,6 +82,6 @@ $listViewDefs[$module_name] = [
         'default' => true,
         'sortable' => false,
         'link' => true,
-        'customCode' => '<input type="button" class="button" onclick="if(confirm(\'{$LBL_DELETE_CONFIRMATION}\')) SUGAR.ajaxUI.go(\'index.php?module=OAuth2AuthCodes&action=Delete&record={$ID}&return_module=OAuth2AuthCodes\'); return false;" value="{$LBL_DELETE_BUTTON_LABEL}" />'
+        'customCode' => '<input type="button" class="button" onclick="if(confirm(\'{$MOD.LBL_DELETE_CONFIRMATION}\')) SUGAR.ajaxUI.go(\'index.php?module=OAuth2AuthCodes&action=Delete&record={$ID}&return_module=OAuth2AuthCodes\'); return false;" value="{$MOD.LBL_DELETE_BUTTON_LABEL}" />'
     ],
 ];
