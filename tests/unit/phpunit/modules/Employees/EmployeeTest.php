@@ -32,7 +32,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $employee = new Employee();
 
         //test without setting name
-        $this->assertEquals(' ', $employee->get_summary_text());
+        $this->assertEquals('-', $employee->get_summary_text());
 
         //test with name set
         $employee->retrieve(1);
