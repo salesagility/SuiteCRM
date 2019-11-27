@@ -180,17 +180,17 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $lead = BeanFactory::getBean('Leads');
 
         $expected = array(
-            'NAME' => ' ',
+            'NAME' => '-',
             'DELETED' => 0,
-            'FULL_NAME' => ' ',
+            'FULL_NAME' => '-',
             'DO_NOT_CALL' => '0',
             'CONVERTED' => '0',
-            'ENCODED_NAME' => ' ',
+            'ENCODED_NAME' => '-',
             'EMAIL1' => '',
             'EMAIL1_LINK' => '            <a class="email-link" href="mailto:"
                     onclick="$(document).openComposeViewModal(this);"
                     data-module="Leads" data-record-id=""
-                    data-module-name=" " data-email-address=""
+                    data-module-name="-" data-email-address=""
                 ></a>',
             'ACC_NAME_FROM_ACCOUNTS' => null,
         );
