@@ -356,11 +356,11 @@ class MBPackage
             $node['children'][] = $this->modules[$module]->getNodes();
         }
 
-        usort($node["children"], function ($a, $b) {
-            if ($a["name"] == $b["name"]) {
+        usort($node["children"], function ($child_item1, $child_item2) {
+            if ($child_item1["name"] == $child_item2["name"]) {
                 return 0;
             }
-            return ($a["name"] < $b["name"]) ? -1 : 1;
+            return ($child_item1["name"] < $child_item2["name"]) ? -1 : 1;
         });
 
         return $node;
