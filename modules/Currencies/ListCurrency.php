@@ -88,8 +88,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
                  $symbols= $_POST['symbol'];
                  $rates  = $_POST['rate'];
                  $isos  = $_POST['iso'];
-                 $size = sizeof($ids);
-                 if ($size != sizeof($names)|| $size != sizeof($isos) || $size != sizeof($symbols) || $size != sizeof($rates)) {
+                 $size = count($ids);
+                 if ($size != count($names)|| $size != count($isos) || $size != count($symbols) || $size != count($rates)) {
                      return;
                  }
             

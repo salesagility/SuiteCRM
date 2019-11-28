@@ -950,7 +950,7 @@ class MBPackage
         }
 
         //if file name does not contain the current module name then it is not a relationship file,
-        //or if the module has the current module name twice seperated with an underscore, then this is a relationship within itself
+        //or if the module has the current module name twice separated with an underscore, then this is a relationship within itself
         //in both cases set the shouldExport flag to true
         $lc_mod = strtolower($module);
         $fn = strtolower($fn);

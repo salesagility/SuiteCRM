@@ -43,7 +43,7 @@ if (!defined('sugarEntry')) {
 
 
 /**
- * This class is an implemenatation class for all the rest services
+ * This class is an implementation class for all the rest services
  */
 require_once('service/core/SugarWebServiceImpl.php');
 

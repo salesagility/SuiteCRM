@@ -108,7 +108,7 @@ require_once('modules/DynamicFields/DynamicField.php');
              }
          }
 
-         echo sizeof($fields) . " field(s) missing from $mod->table_name" . "_cstm<br>";
+         echo count($fields) . " field(s) missing from $mod->table_name" . "_cstm<br>";
          foreach ($fields as $field) {
              echo "Adding Column $field to $mod->table_name" . "_cstm<br>";
              if (!$simulate) {

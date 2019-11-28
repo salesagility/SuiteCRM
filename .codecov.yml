@@ -59,3 +59,5 @@ ignore:
   - "install/demoData.en_us.php"
   - "include/tcpdf/.*"
   - "modules/AOR_Charts/lib/.*"
+  # The old lowercase v8 API is deprecated/unsupported and the CI doesn't run the tests for it. The new API uses an upper-case V.
+  - "lib/API/.*"

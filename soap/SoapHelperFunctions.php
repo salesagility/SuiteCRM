@@ -665,7 +665,7 @@ function get_return_value_for_link_fields($bean, $module, $link_name_to_value_fi
  *
  * @param String $module_name -- The name of the module that the primary record is from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method).
  * @param String $module_id -- The ID of the bean in the specified module
- * @param String $link_field_name - The relationship name for which to create realtionships.
+ * @param String $link_field_name - The relationship name for which to create relationships.
  * @param Array $related_ids -- The array of ids for which we want to create relationships
  * @return true on success, false on failure
  */
@@ -707,7 +707,7 @@ function new_handle_set_entries($module_name, $name_value_lists, $select_fields 
     require_once($beanFiles[$class_name]);
     $ids = array();
     $count = 1;
-    $total = sizeof($name_value_lists);
+    $total = count($name_value_lists);
     foreach ($name_value_lists as $name_value_list) {
         $seed = new $class_name();
 
@@ -911,13 +911,13 @@ function filter_field_list(&$field_list, $select_fields, $module_name)
  * Filter the results of a list query.  Limit the fields returned.
  *
  * @param Array $output_list -- The array of list data
- * @param Array $select_fields -- The list of fields that should be returned.  If this array is specfied, only the fields in the array will be returned.
+ * @param Array $select_fields -- The list of fields that should be returned.  If this array is specified, only the fields in the array will be returned.
  * @param String $module_name -- The name of the module this being worked on
  * @return The filtered array of list data.
  */
 function filter_return_list(&$output_list, $select_fields, $module_name)
 {
-    for ($sug = 0; $sug < sizeof($output_list); $sug++) {
+    for ($sug = 0; $sug < count($output_list); $sug++) {
         if ($module_name == 'Contacts') {
             global $invalid_contact_fields;
             if (is_array($invalid_contact_fields)) {
@@ -1060,7 +1060,7 @@ function check_for_duplicate_contacts($seed)
                     //as an existing contact's account name, then find the match.
                     $contact->load_relationship('accounts');
                     if (empty($seed->account_name) || strcmp($seed->account_name, $contact->account_name) == 0) {
-                        $GLOBALS['log']->info('End: SoapHelperWebServices->check_for_duplicate_contacts - duplicte found ' . $contact->id);
+                        $GLOBALS['log']->info('End: SoapHelperWebServices->check_for_duplicate_contacts - duplicate found ' . $contact->id);
 
                         return $contact->id;
                     }

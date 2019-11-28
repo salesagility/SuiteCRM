@@ -333,7 +333,7 @@ echo get_validate_chart_js();
                 foreach ($new_ids as $the_id=>$the_name) {
                     $id[] = "'".$the_id."'";
                 }
-                $ids = join(",", $id);
+                $ids = implode(",", $id);
                 $where .= "opportunities.assigned_user_id IN ($ids) ";
             }
             //build the where clause for the query that matches $datax
@@ -343,13 +343,13 @@ echo get_validate_chart_js();
                 foreach ($datax as $key=>$value) {
                     $dataxArr[] = "'".$key."'";
                 }
-                $dataxArr = join(",", $dataxArr);
+                $dataxArr = implode(",", $dataxArr);
                 $where .= "AND opportunities.sales_stage IN	($dataxArr) ";
             }
 
             //build the where clause for the query that matches $date_start and $date_end
-            $where .= "	AND opportunities.date_closed >= ". db_convert("'".$date_start."'", 'date'). "
-						AND opportunities.date_closed <= ".db_convert("'".$date_end."'", 'date') ;
+            $where .= "	AND opportunities.date_closed >= ". DBManager::convert("'".$date_start."'", 'date'). "
+						AND opportunities.date_closed <= ".DBManager::convert("'".$date_end."'", 'date') ;
             $where .= "	AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
 
             //Now do the db queries
@@ -580,7 +580,7 @@ echo get_validate_chart_js();
             foreach ($new_ids as $the_id=>$the_name) {
                 $id[] = "'".$the_id."'";
             }
-            $ids = join(",", $id);
+            $ids = implode(",", $id);
             $where .= "opportunities.assigned_user_id IN ($ids) ";
         }
         //build the where clause for the query that matches $datax
@@ -590,13 +590,13 @@ echo get_validate_chart_js();
             foreach ($datax as $key=>$value) {
                 $dataxArr[] = "'".$key."'";
             }
-            $dataxArr = join(",", $dataxArr);
+            $dataxArr = implode(",", $dataxArr);
             $where .= "AND opportunities.sales_stage IN	($dataxArr) ";
         }
 
         //build the where clause for the query that matches $date_start and $date_end
-        $where .= "	AND opportunities.date_closed >= ". db_convert("'".$date_start."'", 'date'). "
-					AND opportunities.date_closed <= ".db_convert("'".$date_end."'", 'date') ;
+        $where .= "	AND opportunities.date_closed >= ". DBManager::convert("'".$date_start."'", 'date'). "
+					AND opportunities.date_closed <= ".DBManager::convert("'".$date_end."'", 'date') ;
         $where .= "	AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
 
         //Now do the db queries

@@ -185,6 +185,9 @@ $mod_strings = array(
     'LBL_DBCONF_SUITE_DB_USER' => 'SuiteCRM Database User',
     'LBL_DBCONF_DB_ADMIN_USER' => 'Database Administrator Username',
     'LBL_DBCONF_DB_ADMIN_PASSWORD' => 'Database Admin Password',
+    'LBL_DBCONF_COLLATION' => 'Collation',
+    'LBL_DBCONF_CHARSET' => 'Character Set',
+    'LBL_DBCONF_ADV_DB_CFG_TITLE' => 'Advanced Database Configuration',
     'LBL_DBCONF_DEMO_DATA' => 'Populate Database with Demo Data?',
     'LBL_DBCONF_DEMO_DATA_TITLE' => 'Choose Demo Data',
     'LBL_DBCONF_HOST_NAME' => 'Host Name',
@@ -507,7 +510,7 @@ $contact_user_link_guid',
     'NEW_LOGO_HELP' => 'The image file format can be either .png or .jpg. The maximum height is 170px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions.',
     'COMPANY_LOGO_UPLOAD_BTN' => 'Upload',
     'CURRENT_LOGO' => 'Current Logo:',
-    'CURRENT_LOGO_HELP' => 'This logo is displayed in the left-hand corner of the footer of the SuiteCRM application.',
+    'CURRENT_LOGO_HELP' => 'This logo is displayed in the centre of the login screen of the SuiteCRM application.',
 
 
     //Scenario selection of modules

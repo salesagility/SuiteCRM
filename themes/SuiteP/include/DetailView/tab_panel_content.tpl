@@ -72,9 +72,7 @@
         {{foreach name=fieldIteration from=$colData key=field item=subField}}
 
             {{if !(!isset($subField.name) || !$subField.name)}}
-
                 {{include file='themes/SuiteP/include/DetailView/tab_panel_content/field.tpl'}}
-
                 {{counter name="fieldCount" print=false}}
             {{/if}}
 
