@@ -38,18 +38,10 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
         $authCode = $this->beanManager->newBeanSafe(\OAuth2AuthCodes::class);
 
         $authCode->auth_code = $authCodeEntity->getIdentifier();
-
         $authCode->auth_code_expires = $authCodeEntity->getExpiryDateTime()->format('Y-m-d H:i:s');
-
         $authCode->client = $clientId;
-
         $authCode->assigned_user_id = $authCodeEntity->getUserIdentifier();
-
-        if(!empty($_POST['confirmed'])) {
-            $authCode->auto_authorize = $_POST['confirmed'] === 'always';
-        } else {
-            $authCode->auto_authorize = 0;
-        }
+        $authCode->auto_authorize = !empty($_POST['confirmed']) && $_POST['confirmed'] === 'always';
 
         $authCode->save();
     }
