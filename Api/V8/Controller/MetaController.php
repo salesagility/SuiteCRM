@@ -56,12 +56,12 @@ use Slim\Http\Response;
  */
 class MetaController extends BaseController
 {
-    
+
     /**
      * @var UserService
      */
     private $metaService;
-    
+
     /**
      * @param MetaService $metaService
      */
@@ -69,7 +69,7 @@ class MetaController extends BaseController
     {
         $this->metaService = $metaService;
     }
-    
+
     /**
      *
      * @param Request $request
@@ -81,6 +81,7 @@ class MetaController extends BaseController
     {
         try {
             $jsonResponse = $this->metaService->getModuleList($request);
+
             return $this->generateResponse($response, $jsonResponse, 200);
         } catch (Exception $exception) {
             return $this->generateErrorResponse($response, $exception, 400);
@@ -92,12 +93,30 @@ class MetaController extends BaseController
      * @param Request $request
      * @param Response $response
      * @param array $args
+     * @param GetFieldListParams $fieldListParams
      * @return Response
      */
     public function getFieldList(Request $request, Response $response, array $args, GetFieldListParams $fieldListParams)
     {
         try {
             $jsonResponse = $this->metaService->getFieldList($request, $fieldListParams);
+
+            return $this->generateResponse($response, $jsonResponse, 200);
+        } catch (Exception $exception) {
+            return $this->generateErrorResponse($response, $exception, 400);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
+    public function getSwaggerSchema(Request $request, Response $response)
+    {
+        try {
+            $jsonResponse = $this->metaService->getSwaggerSchema();
+
             return $this->generateResponse($response, $jsonResponse, 200);
         } catch (Exception $exception) {
             return $this->generateErrorResponse($response, $exception, 400);

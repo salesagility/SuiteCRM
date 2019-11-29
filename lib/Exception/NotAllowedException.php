@@ -43,19 +43,19 @@ namespace SuiteCRM\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class Exception
- * @package SuiteCRM\InvalidArgumentException
+ * Class NotAllowedException
+ * @package SuiteCRM\Exception
  */
-class InvalidArgumentException extends Exception
+class NotAllowedException extends Exception
 {
     /**
-     * ApiException constructor.
-     * @param string $message API Exception "$message"
+     * NotAllowedException constructor.
+     * @param string $message
      * @param int $code
-     * @param $previous
+     * @param null $previous
      */
-    public function __construct($message = '', $code = ExceptionCode::APPLICATION_UNHANDLED_BEHAVIOUR, $previous = null)
+    public function __construct($message = '', $code = ExceptionCode::API_CONTENT_NEGOTIATION_FAILED, $previous = null)
     {
-        parent::__construct('[InvalidArgumentException] '.$message.'', $code, $previous);
+        parent::__construct('[Not Allowed] ' . $message, $code, $previous);
     }
 }
