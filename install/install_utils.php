@@ -68,13 +68,15 @@ function installerHook($function_name, $options = array())
 
     if ($GLOBALS['customInstallHooksExist'] === false) {
         return 'undefined';
+    } else {
+        if (function_exists($function_name)) {
+            installLog("installerHook: function {$function_name} found, calling and returning the return value");
+            return $function_name($options);
+        } else {
+            installLog("installerHook: function {$function_name} not found in custom install hooks file");
+            return 'undefined';
+        }
     }
-    if (function_exists($function_name)) {
-        installLog("installerHook: function {$function_name} found, calling and returning the return value");
-        return $function_name($options);
-    }
-    installLog("installerHook: function {$function_name} not found in custom install hooks file");
-    return 'undefined';
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -89,10 +91,11 @@ function parseAcceptLanguage()
     if (strpos($lang, ';')) {
         $exLang = explode(';', $lang);
         return strtolower(str_replace('-', '_', $exLang[0]));
-    }
-    $match = array();
-    if (preg_match("#\w{2}\-?\_?\w{2}#", $lang, $match)) {
-        return strtolower(str_replace('-', '_', $match[0]));
+    } else {
+        $match = array();
+        if (preg_match("#\w{2}\-?\_?\w{2}#", $lang, $match)) {
+            return strtolower(str_replace('-', '_', $match[0]));
+        }
     }
 
     return '';
@@ -165,8 +168,10 @@ function commitLanguagePack($uninstall=false)
     while ($f = $d->read()) {
         if ($f == "." || $f == "..") {
             continue;
-        } elseif (preg_match("/(.*)\.lang\.php\$/", $f, $match)) {
-            $new_lang_name = $match[1];
+        } else {
+            if (preg_match("/(.*)\.lang\.php\$/", $f, $match)) {
+                $new_lang_name = $match[1];
+            }
         }
     }
     if ($new_lang_name == "") {
@@ -786,6 +791,9 @@ function handleSugarConfig()
         $sugar_config['dbconfigoption']                 = array_merge($sugar_config['dbconfigoption'], $_SESSION['setup_db_options']);
     }
 
+    $sugar_config['dbconfig']['collation']          = $_SESSION['setup_db_collation'];
+    $sugar_config['dbconfig']['charset']            = $_SESSION['setup_db_charset'];
+
     $sugar_config['cache_dir']                      = $cache_dir;
     $sugar_config['default_charset']                = $mod_strings['DEFAULT_CHARSET'];
     $sugar_config['default_email_client']           = 'sugar';
@@ -1243,9 +1251,10 @@ function drop_table_install(&$focus)
         $focus->drop_tables();
         $GLOBALS['log']->info("Dropped old ".$focus->table_name." table.");
         return 1;
+    } else {
+        $GLOBALS['log']->info("Did not need to drop old ".$focus->table_name." table.  It doesn't exist.");
+        return 0;
     }
-    $GLOBALS['log']->info("Did not need to drop old ".$focus->table_name." table.  It doesn't exist.");
-    return 0;
 }
 
 // Creating new tables if they don't exist.
@@ -1355,10 +1364,6 @@ function insert_default_settings()
 
     //insert default tracker settings
     $db->query("INSERT INTO config (category, name, value) VALUES ('tracker', 'Tracker', '1')");
-
-
-
-    $db->query("INSERT INTO config (category, name, value) VALUES ( 'system', 'skypeout_on', '1')");
 }
 
 
@@ -1485,8 +1490,9 @@ function get_boolean_from_request($field)
 
     if (($_REQUEST[$field] == 'on') || ($_REQUEST[$field] == 'yes')) {
         return(true);
+    } else {
+        return(false);
     }
-    return(false);
 }
 
 function stripslashes_checkstrings($value)
@@ -1624,8 +1630,10 @@ function pullSilentInstallVarsIntoSession()
 
     if (file_exists('config_si.php')) {
         require_once('config_si.php');
-    } elseif (empty($sugar_config_si)) {
-        die($mod_strings['ERR_SI_NO_CONFIG']);
+    } else {
+        if (empty($sugar_config_si)) {
+            die($mod_strings['ERR_SI_NO_CONFIG']);
+        }
     }
 
     $config_subset = array(
@@ -1967,12 +1975,13 @@ function langPackUnpack($unpack_type, $full_file)
             copy($manifest_file, $target_manifest);
             unlink($full_file); // remove tempFile
             return "The file $base_filename has been uploaded.<br>\n";
+        } else {
+            unlinkTempFiles($manifest_file, $full_file);
+            return "There was an error uploading the file, please try again!<br>\n";
         }
-        unlinkTempFiles($manifest_file, $full_file);
-        return "There was an error uploading the file, please try again!<br>\n";
+    } else {
+        die("The zip file is missing a manifest.php file.  Cannot proceed.");
     }
-    die("The zip file is missing a manifest.php file.  Cannot proceed.");
-
     unlinkTempFiles($manifest_file, '');
 }
 
