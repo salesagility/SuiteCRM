@@ -98,7 +98,7 @@
 			        <tr>
 			           <td>
 			               <b>{$name}</b>
-			               <input id='value_{$name}' value='{$val}' type = 'hidden'>
+			               <input id='value_{$name}' value="{$val}" type = 'hidden'>
 			               <span class='fieldValue' id='span_{$name}'>
 			                   {if (!isset($val) || $val =='')}[{$MOD.LBL_BLANK}]{else}[{$val}]{/if}
 			               </span>
