@@ -823,7 +823,7 @@ class Scheduler extends SugarBean
 					</span></th>
 				</tr>
 				<tr>
-					<td scope="row" valign=TOP class="oddListRowS1" bgcolor="#fdfdfd" width="70%"><span style="font-weight:unset;">
+					<td scope="row" valign=TOP class="evenListRowS1" width="70%"><span style="font-weight:unset;">
 						'.$mod_strings['LBL_CRON_LINUX_DESC1'].'<br>
                         <b>sudo crontab -e -u '.$webServerUser.'</b><br> '.$mod_strings['LBL_CRON_LINUX_DESC2'].'<br>
 						<b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;
