@@ -61,3 +61,5 @@ ignore:
   - "modules/AOR_Charts/lib/.*"
   # The old lowercase v8 API is deprecated/unsupported and the CI doesn't run the tests for it. The new API uses an upper-case V.
   - "lib/API/.*"
+  # The V8 API uses codeception while our coverage report is generated from phpunit.
+  - "Api/V8/.*"
