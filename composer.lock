@@ -562,6 +562,7 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
+            "abandoned": "psr/container",
             "time": "2017-02-14T19:40:03+00:00"
         },
         {
@@ -2091,16 +2092,16 @@
         },
         {
             "name": "onelogin/php-saml",
-            "version": "3.3.1",
+            "version": "3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/onelogin/php-saml.git",
-                "reference": "bb34489635cd5c7eb1b42833e4c57ca1c786a81a"
+                "reference": "5fbf3486704ac9835b68184023ab54862c95f213"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/onelogin/php-saml/zipball/bb34489635cd5c7eb1b42833e4c57ca1c786a81a",
-                "reference": "bb34489635cd5c7eb1b42833e4c57ca1c786a81a",
+                "url": "https://api.github.com/repos/onelogin/php-saml/zipball/5fbf3486704ac9835b68184023ab54862c95f213",
+                "reference": "5fbf3486704ac9835b68184023ab54862c95f213",
                 "shasum": ""
             },
             "require": {
@@ -2137,7 +2138,7 @@
                 "onelogin",
                 "saml"
             ],
-            "time": "2019-11-06T16:59:38+00:00"
+            "time": "2019-11-25T17:30:07+00:00"
         },
         {
             "name": "paragonie/random_compat",
