@@ -9,7 +9,7 @@ matrix:
       php: "7.3"
       dist: xenial
     - name: "PHP 7.4 / MySQL 5.7"
-      php: "7.4snapshot"
+      php: "7.4"
       dist: xenial
     # Run composer validate to make sure the composer.json and composer.lock are in sync.
     - name: "composer validate"
