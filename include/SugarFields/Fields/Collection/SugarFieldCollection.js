@@ -3,7 +3,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2019 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +14,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,8 +32,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 if(typeof(SUGAR.collection)=="undefined"){SUGAR.collection=function(form_name,field_name,module,popupData){this.more_status=false;this.form=form_name;this.field=field_name;this.field_element_name=this.form+'_'+this.field;this.module=module;this.fields_count=0;this.extra_fields_count=0;this.first=true;this.cloneField=new Array();this.show_more_image=false;this.current_eval_code="";};SUGAR.collection.prototype={new_checkbox:function(id){if(document.getElementById(id).getAttribute('type')=='checkbox'){if(document.getElementById(id).value=='0'||document.getElementById(id).value==null||document.getElementById(id).value==''){document.getElementById(id).value='1';document.getElementById(id).setAttribute('checked','checked');}else{document.getElementById(id).value='0';document.getElementById(id).removeAttribute('checked');}}},correctnewpage:function(table){var tes=table.getElementsByTagName('textarea');for(var i=0;i<tes.length;i++){table.getElementsByTagName('textarea')[i].style.width='100%';}},add_change_control:function(id){if(document.getElementById(id).getAttribute('type')=='checkbox'){var oldonclick='';if(typeof(document.getElementById(id).attributes.onclick)!='undefined'){oldonclick=document.getElementById(id).attributes.onclick.value;}
 var newonclick='collection'+this.field+'.field_row_change(this.id,"add");'+oldonclick;document.getElementById(id).setAttribute('onclick',newonclick);}else{var oldonchange='';if(typeof(document.getElementById(id).attributes.onchange)!='undefined'){oldonchange=document.getElementById(id).attributes.onchange.value;}
