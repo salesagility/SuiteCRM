@@ -855,9 +855,11 @@ class AOR_Report extends Basic
 
             $row_class = $row_class == 'oddListRowS1' ? 'evenListRowS1' : 'oddListRowS1';
         }
-        $html .= "</tbody></table>";
+        $html .= "</tbody>";
 
         $html .= $this->getTotalHTML($fields, $totals);
+
+        $html .= '</table>';
 
         $html .= '</div>';
 
@@ -953,8 +955,7 @@ class AOR_Report extends Basic
         $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
 
         $showTotal = false;
-        $html = "<table width='100%' class='list view table-responsive aor_reports'>";
-        $html .= "<thead class='fc-head'>";
+        $html = "<thead class='fc-head'>";
         $html .= "<tr>";
         foreach ($fields as $label => $field) {
             if (!$field['display']) {
@@ -1022,7 +1023,7 @@ class AOR_Report extends Basic
             }
         }
         $html .= '</tr>';
-        $html .= '</tbody></table>';
+        $html .= '</tbody>';
 
         return $html;
     }
