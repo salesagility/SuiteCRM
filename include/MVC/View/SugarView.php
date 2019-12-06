@@ -1341,7 +1341,13 @@ EOHTML;
 
                 $output = string_format($GLOBALS['app_strings']['LBL_SERVER_MEMORY_LOG_MESSAGE'], $data) . $newline;
                 $output .= $log_message;
-                $fp = fopen("memory_usage.log", "ab");
+
+                $file = 'memory_usage.log';
+                if (isset($GLOBALS['sugar_config']['log_dir'])) {
+                    $file = $GLOBALS['sugar_config']['log_dir'] . '/' . $file;
+                }
+
+                $fp = fopen($file, 'ab');
                 fwrite($fp, $output);
                 fclose($fp);
             }
