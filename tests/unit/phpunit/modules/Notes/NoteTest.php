@@ -15,7 +15,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
 
     public function testNote()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $note = new Note();
 
         $this->assertInstanceOf('Note', $note);
@@ -49,7 +49,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
     {
         $note = new Note();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $note->mark_deleted(1);
             $this->assertTrue(true);
@@ -98,7 +98,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
     {
         $note = new Note();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $note->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -111,7 +111,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
     {
         $note = new Note();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $note->fill_in_additional_detail_fields();
             $this->assertTrue(true);

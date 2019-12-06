@@ -15,7 +15,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
 
     public function testCurrency()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $currency = new Currency();
         $this->assertInstanceOf('Currency', $currency);
         $this->assertInstanceOf('SugarBean', $currency);

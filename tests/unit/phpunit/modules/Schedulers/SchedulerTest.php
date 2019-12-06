@@ -18,8 +18,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
     public function test__construct()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $scheduler = new Scheduler();
 
         $this->assertInstanceOf('Scheduler', $scheduler);
@@ -68,7 +67,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
     {
         $scheduler = new Scheduler();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $scheduler->checkPendingJobs(new SugarJobQueue());
             $this->assertTrue(true);
@@ -168,7 +167,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
     {
         $scheduler = new Scheduler();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $scheduler->checkCurl();
             $this->assertTrue(true);
@@ -198,7 +197,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         
         $scheduler = new Scheduler();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $scheduler->rebuildDefaultSchedulers();
             $this->assertTrue(true);
@@ -228,7 +227,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('environment dependency');
         $scheduler = new Scheduler();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $scheduler->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -239,11 +238,9 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_detail_fields()
     {
-
-
         $scheduler = new Scheduler();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $scheduler->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -252,8 +249,6 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('method has no implementation');
-        
-
     }
 
     public function testget_list_view_data()

@@ -70,7 +70,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
 
     public function testViewList()
     {
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $view = new ViewList();
         $this->assertInstanceOf('ViewList', $view);
         $this->assertInstanceOf('SugarView', $view);

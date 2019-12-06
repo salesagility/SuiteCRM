@@ -12,7 +12,6 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
         get_sugar_config_defaults();
         $current_user = new User();
     }
-    
 
     public function testsave()
     {
@@ -37,8 +36,6 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
     public function testsave_lines()
     {
         DBManagerFactory::getInstance()->query('DELETE FROM aos_products_quotes');
-        
-        
 
         $aosProductsQuotes = new AOS_Products_Quotes();
 
@@ -59,12 +56,10 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
         $product_quote_lines = $aosQuote->get_linked_beans('aos_products_quotes', $aosQuote->object_name);
         $this->assertEquals(count($post_data['name']), count($product_quote_lines));
     }
-    
-    
+
     public function testAOS_Products_Quotes()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aosProductsQuotes = new AOS_Products_Quotes();
         $this->assertInstanceOf('AOS_Products_Quotes', $aosProductsQuotes);
         $this->assertInstanceOf('Basic', $aosProductsQuotes);
@@ -77,7 +72,6 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'disable_row_level_security', $aosProductsQuotes);
         $this->assertAttributeEquals(true, 'importable', $aosProductsQuotes);
     }
-
 
     public function testmark_lines_deleted()
     {

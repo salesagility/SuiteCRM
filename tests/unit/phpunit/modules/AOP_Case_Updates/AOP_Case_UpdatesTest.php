@@ -15,8 +15,7 @@ class AOP_Case_UpdatesTest extends SuitePHPUnitFrameworkTestCase
 
     public function testAOP_Case_Updates()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aopCaseUpdates = new AOP_Case_Updates();
         $this->assertInstanceOf('AOP_Case_Updates', $aopCaseUpdates);
         $this->assertInstanceOf('Basic', $aopCaseUpdates);

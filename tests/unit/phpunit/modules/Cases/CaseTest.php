@@ -15,8 +15,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testaCase()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aCase = new aCase();
         $this->assertInstanceOf('aCase', $aCase);
         $this->assertInstanceOf('Basic', $aCase);
@@ -43,27 +42,19 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
     public function testlistviewACLHelper()
     {
         self::markTestIncomplete('environment dependency');
-        
 
 
-        
         $aCase = new aCase();
         $expected = array('MAIN' => 'span', 'ACCOUNT' => 'span');
         $actual = $aCase->listviewACLHelper();
         $this->assertSame($expected, $actual);
-        
-
-
     }
 
     public function testsave_relationship_changes()
     {
-
-
-        
         $aCase = new aCase();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aCase->save_relationship_changes(true);
             $aCase->save_relationship_changes(false);
@@ -72,16 +63,13 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-
-
     }
 
     public function testset_case_contact_relationship()
     {
         $aCase = new aCase();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aCase->set_case_contact_relationship(1);
             $this->assertTrue(true);
@@ -94,7 +82,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
     {
         $aCase = new aCase();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aCase->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -223,8 +211,6 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsave()
     {
-        
-        
         $aCase = new aCase();
         $aCase->name = 'test';
         $aCase->priority = 'P1';

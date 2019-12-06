@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class UserTest extends SuitePHPUnitFrameworkTestCase
@@ -35,7 +34,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
     public function testUser()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $user = new User();
 
         $this->assertInstanceOf('User', $user);
@@ -203,7 +202,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         $user->retrieve(1);
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $user->savePreferencesToDB();
             $this->assertTrue(true);
@@ -949,8 +948,6 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
             $actual = $user->create_new_list_query('','');
             $this->assertSame($expected,$actual);
 
-
-
             //test with valid string params
             $expected = " SELECT  users.* , '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt2.last_name reports_to_name , jt2.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id  FROM users   LEFT JOIN  users jt2 ON users.reports_to_id=jt2.id AND jt2.deleted=0\n\n AND jt2.deleted=0 where (user_name=\"\") AND users.deleted=0 ORDER BY users.id";
             $actual = $user->create_new_list_query('id','user_name=""');
@@ -996,7 +993,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     {
         $user = new User();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $user->afterImportSave();
             $this->assertTrue(true);

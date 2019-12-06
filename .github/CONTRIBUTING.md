@@ -15,7 +15,7 @@ This project and all community members are expected to uphold the [SuiteCRM Code
 
 * If you're unable to find an open issue that relates to your problem, [open a new one.](https://github.com/salesagility/SuiteCRM/issues/new) Please be sure to follow the issue template as much as possible.
 
-* **Ensure that the bug you are reporting is a core SuiteCRM issue** and not specific to your individual setup. For these types of issues please use the [Community Forum.](https://www.suitecrm.com/forum/suite-forum)
+* **Ensure that the bug you are reporting is a core SuiteCRM issue** and not specific to your individual setup. For these types of issues please use the [Community Forum.](https://community.suitecrm.com/)
 
 #### **Did you fix a bug?**
 
@@ -56,7 +56,7 @@ This project and all community members are expected to uphold the [SuiteCRM Code
 
 * By using [GitHub search](https://help.github.com/articles/searching-issues/) you can use labels to help find issues and pull requests that you are interested in. If for example, you are interested in which PR's will be included in the next release of SuiteCRM, you can use the [open issues "Resolved: Next Release"](https://github.com/salesagility/SuiteCRM/issues?q=is%3Aopen+is%3Aissue+label%3A%22Resolved%3A+Next+Release%22) label.
 
-* We encourage users whom feel an issue should be raised as a higher priority for a next release that they should make a comment to that affect. This also applies to incorrect labelling.
+* We encourage users who feel an issue should be raised as a higher priority for a next release that they should make a comment to that affect. This also applies to incorrect labelling.
 
 #### General Labels
 

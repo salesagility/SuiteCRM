@@ -15,7 +15,7 @@ class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testAOW_Condition()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aowCondition = new AOW_Condition();
         $this->assertInstanceOf('AOW_Condition', $aowCondition);
         $this->assertInstanceOf('Basic', $aowCondition);

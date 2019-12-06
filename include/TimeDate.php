@@ -495,7 +495,6 @@ class TimeDate
         return explode(' ', $datetime, 2);
     }
 
-
     /**
      * Get user date format in Javascript form
      * @return string

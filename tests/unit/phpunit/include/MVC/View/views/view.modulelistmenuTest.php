@@ -6,7 +6,7 @@ class ViewModulelistmenuTest extends SuitePHPUnitFrameworkTestCase
 {
     public function test__construct()
     {
-        //execute the contructor and check for the Object type and options attribute
+        // Execute the constructor and check for the Object type and options attribute
         $view = new ViewModulelistmenu();
 
         $this->assertInstanceOf('ViewModulelistmenu', $view);

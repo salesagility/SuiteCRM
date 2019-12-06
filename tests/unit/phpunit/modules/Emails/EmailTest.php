@@ -50,7 +50,7 @@ require_once __DIR__ . '/EmailMock.php';
 
 class EmailTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
@@ -61,8 +61,6 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSendSaveAndStoreInSentOk()
     {
-
-        
         // handle non-gmail sent folder (mailbox is set)
         $mailer = new SugarPHPMailerMock();
         $ie = new InboundEmail();
@@ -79,14 +77,14 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $ie->setStoredOptions($storedOption);
         $mailer->oe->mail_smtptype = 'foomail';
         $ret = $email->send($mailer, $nonGmailSentFolder, $ie);
+
         $this->assertTrue($ret);
         $this->assertNull($email->getLastSaveAndStoreInSentError());
         $this->assertNull($email->getNonGmailSentFolderHandler());
         $this->assertNull($email->getTempEmailAtSend()->getNonGmailSentFolderHandler()->getLastError());
         $this->assertEquals(Email::NO_ERROR, $email->getTempEmailAtSend()->getLastSaveAndStoreInSentError());
     }
-    
-    
+
     public function testSendSaveAndStoreInSentOkButIEDoesntMatch()
     {
         // handle non-gmail sent folder (mailbox is set)
@@ -105,13 +103,14 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $ie->setStoredOptions($storedOption);
         $mailer->oe->mail_smtptype = 'foomail';
         $ret = $email->send($mailer, $nonGmailSentFolder, $ie);
+
         $this->assertTrue($ret);
         $this->assertNull($email->getLastSaveAndStoreInSentError());
         $this->assertNull($email->getNonGmailSentFolderHandler());
         $this->assertNull($email->getTempEmailAtSend()->getNonGmailSentFolderHandler()->getLastError());
         $this->assertEquals(Email::NO_ERROR, $email->getTempEmailAtSend()->getLastSaveAndStoreInSentError());
     }
-    
+
     public function testSendSaveAndStoreInSentNoSentFolder()
     {
         // handle non-gmail sent folder (mailbox is set but no ie stored option: sentFolder)
@@ -127,6 +126,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $ie->mailbox = 'testmailbox';
         $mailer->oe->mail_smtptype = 'foomail';
         $ret = $email->send($mailer, $nonGmailSentFolder, $ie);
+
         $this->assertTrue($ret);
         $this->assertNull($email->getLastSaveAndStoreInSentError());
         $this->assertNull($email->getNonGmailSentFolderHandler());
@@ -135,14 +135,10 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
             NonGmailSentFolderHandler::ERR_NO_STORED_SENT_FOLDER,
             $email->getTempEmailAtSend()->getNonGmailSentFolderHandler()->getLastError()
         );
-        
-
     }
-    
+
     public function testSendSaveAndStoreInSentNoMailbox()
     {
-
-        
         // mailbox is not set
         $mailer = new SugarPHPMailerMock();
         $ie = new InboundEmail();
@@ -154,19 +150,16 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $email->saved_attachments = [];
         $mailer->oe->mail_smtptype = 'foomail';
         $ret = $email->send($mailer);
+
         $this->assertTrue($ret);
         $this->assertNull($email->getLastSaveAndStoreInSentError());
         $this->assertNull($email->getNonGmailSentFolderHandler());
         $this->assertEquals(Email::ERR_NOT_STORED_AS_SENT, $email->getTempEmailAtSend()->getLastSaveAndStoreInSentError());
         $this->assertEquals(NonGmailSentFolderHandler::ERR_EMPTY_MAILBOX, $email->getTempEmailAtSend()->getNonGmailSentFolderHandler()->getLastError());
-                
-
     }
-    
+
     public function testSendSaveAndStoreInSentNoIE()
     {
-
-        
         // no IE
         $mailer = new SugarPHPMailerMock();
         $_REQUEST['inbound_email_id'] = '123';
@@ -174,81 +167,68 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $email->to_addrs_arr = ['foo@bazz.bar'];
         $email->saved_attachments = [];
         $ret = $email->send($mailer);
+
         $this->assertTrue($ret);
         $this->assertNull($email->getLastSaveAndStoreInSentError());
         $this->assertNull($email->getNonGmailSentFolderHandler());
         $this->assertEquals(Email::ERR_IE_RETRIEVE, $email->getTempEmailAtSend()->getLastSaveAndStoreInSentError());
         $this->assertNull($email->getTempEmailAtSend()->getNonGmailSentFolderHandler());
-                
-
     }
-    
+
     public function testSendSaveAndStoreInSentSendFailedButItsOk()
     {
-
-        
         // should send successfully
         $mailer = new SugarPHPMailerMock();
         $email = new Email();
         $email->to_addrs_arr = ['foo@bazz.bar'];
         $email->saved_attachments = [];
         $ret = $email->send($mailer);
+
         $this->assertTrue($ret);
         $this->assertNull($email->getLastSaveAndStoreInSentError());
         $this->assertNull($email->getNonGmailSentFolderHandler());
         $this->assertNull($email->getTempEmailAtSend());
-                
-
     }
-    
+
     public function testSendSaveAndStoreInSentSendFailed()
     {
-
-        
         // sending should failing
         $email = new Email();
         $email->to_addrs_arr = ['foo@bazz.bar'];
         $email->saved_attachments = [];
         $ret = $email->send();
+
         $this->assertFalse($ret);
         $this->assertNull($email->getLastSaveAndStoreInSentError());
         $this->assertNull($email->getNonGmailSentFolderHandler());
         $this->assertNull($email->getTempEmailAtSend());
-                
-
     }
-    
+
     public function testSendSaveAndStoreInSentSendNoAttachment()
     {
-
-        
         // attachenemt error
         $email = new Email();
         $email->to_addrs_arr = ['foo@bazz.bar'];
         $ret = $email->send();
+
         $this->assertFalse($ret);
         $this->assertNull($email->getLastSaveAndStoreInSentError());
         $this->assertNull($email->getNonGmailSentFolderHandler());
         $this->assertNull($email->getTempEmailAtSend());
-                        
-
     }
-    
+
     public function testSendSaveAndStoreInSentSendNoTo()
     {
-
-        
         // "to" array is required
         $email = new Email();
         $ret = $email->send();
+
         $this->assertFalse($ret);
         $this->assertNull($email->getLastSaveAndStoreInSentError());
         $this->assertNull($email->getNonGmailSentFolderHandler());
         $this->assertNull($email->getTempEmailAtSend());
-                        
-
     }
-    
+
     public function testSetLastSaveAndStoreInSentErrorNo()
     {
         $email = new EmailMock();
@@ -259,7 +239,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
             $this->assertEquals(Email::ERR_CODE_SHOULD_BE_INT, $e->getCode());
         }
     }
-    
+
     public function testSaveAndStoreInSentFolderIfNoGmailWithNoIE()
     {
         $email = new Email();
@@ -268,14 +248,14 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $mail = new SugarPHPMailer();
         $nonGmailSentFolder = new NonGmailSentFolderHandler();
         $ret = $email->saveAndStoreInSentFolderIfNoGmail($ie, $ieId, $mail, $nonGmailSentFolder);
+
         $this->assertNull($ret);
         $this->assertEquals(Email::ERR_IE_RETRIEVE, $email->getLastSaveAndStoreInSentError());
     }
 
     public function testEmail()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $email = new Email();
         $this->assertInstanceOf('Email', $email);
         $this->assertInstanceOf('SugarBean', $email);
@@ -973,6 +953,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('environment dependency (span os a?)');
 
+
         // test
         $email = new Email();
 
@@ -1096,7 +1077,6 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     public function testquickCreateForm()
     {
         $email = new Email();
-        $sugar_theme = SugarThemeRegistry::current();
 
         $expected = '~/images/advanced_search~';
 
@@ -1233,7 +1213,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     {
         $email = new Email();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $email->fillPrimaryParentFields();
             $this->assertTrue(true);
@@ -1249,7 +1229,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $email->description_html = '<img class="image" src="cid:1">';
         $email->imagePrefix = 'prfx';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $email->cid2Link('1', 'image/png');
             $this->assertTrue(true);
@@ -1265,7 +1245,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $email->description_html = '<img class="image" src="cid:1">';
         $email->imagePrefix = 'prfx';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $email->cids2Links();
             $this->assertTrue(true);
@@ -1278,7 +1258,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     {
         $email = new Email();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $email->setFieldNullable('description');
             $this->assertTrue(true);
@@ -1291,7 +1271,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     {
         $email = new Email();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $email->revertFieldNullable('description');
             $this->assertTrue(true);

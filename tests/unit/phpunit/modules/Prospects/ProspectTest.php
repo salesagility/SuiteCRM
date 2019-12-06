@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ProspectTest extends SuitePHPUnitFrameworkTestCase
@@ -16,8 +15,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
 
     public function testProspect()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $prospect = new Prospect();
 
         $this->assertInstanceOf('Prospect', $prospect);
@@ -80,11 +78,9 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
 
     public function testconverted_prospect()
     {
-
-        
         $prospect = new Prospect();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             //$prospect->converted_prospect('1', '2', '3', '4');
             $this->assertTrue(true);
@@ -93,8 +89,6 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('Multiple errors in query');
-        
-
     }
 
     public function testbean_implements()

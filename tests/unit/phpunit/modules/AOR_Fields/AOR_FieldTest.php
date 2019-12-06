@@ -1,14 +1,12 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOR_FieldTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOR_Field()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aor_Field = new AOR_Field();
         $this->assertInstanceOf('AOR_Field', $aor_Field);
         $this->assertInstanceOf('Basic', $aor_Field);
@@ -41,7 +39,7 @@ class AOR_FieldTest extends SuitePHPUnitFrameworkTestCase
         $post_data['group_order'][] = 'desc';
         $post_data['group_display'][] = '1';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aor_Field->save_lines($post_data, new AOR_Report());
             $this->assertTrue(true);

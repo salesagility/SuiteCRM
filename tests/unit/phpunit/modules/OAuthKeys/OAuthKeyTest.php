@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
@@ -16,7 +15,7 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
 
     public function testOAuthKey()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $oauthKey = new OAuthKey();
 
         $this->assertInstanceOf('OAuthKey', $oauthKey);
@@ -32,10 +31,6 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
 
     public function testMain()
     {
-
-
-
-
         // test
         $oauthKey = new OAuthKey();
 
@@ -54,10 +49,6 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
 
         //test mark_deleted method
         $this->mark_deleted($oauthKey->id);
-        
-
-
-
     }
 
     public function getByKey($key)

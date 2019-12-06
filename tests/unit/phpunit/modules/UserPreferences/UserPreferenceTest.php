@@ -12,7 +12,6 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         get_sugar_config_defaults();
         $current_user = new User();
     }
-    
 
     public function testgetUserDateTimePreferences()
     {
