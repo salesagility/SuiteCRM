@@ -1,7 +1,6 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2019 Salesagility Ltd.
  *
@@ -47,7 +46,7 @@ if(typeof(SUGAR.collection) == "undefined") {
         this.more_status = false;
         
         /*
-         * Store the form name containing this field. Example: EditView
+         * Store the form name containing this field.  Example: EditView
          */
         this.form = form_name;
         
@@ -87,144 +86,149 @@ if(typeof(SUGAR.collection) == "undefined") {
          */
         this.cloneField = new Array();
 
-
-        this.show_more_image = false;
-        this.current_eval_code = "";
-
     };
     
     SUGAR.collection.prototype = {
-        new_checkbox: function(id){
-            if(document.getElementById(id).getAttribute('type')=='checkbox'){
-                if (document.getElementById(id).value=='0'||document.getElementById(id).value==null||document.getElementById(id).value==''){
-                    document.getElementById(id).value='1';
-                    document.getElementById(id).setAttribute('checked','checked');
-                }else{
-                    document.getElementById(id).value='0';
-                    document.getElementById(id).removeAttribute('checked');
-                }
+        newCheckbox: function(id){
+            var elid=document.getElementById(id);
+            if (elid.value=="0"||elid.value===null||elid.value===''){
+                elid.value="1";
+                elid.setAttribute("checked","checked");
+            }else{
+                elid.value="0";
+                elid.removeAttribute("checked");
             }
         },
         correctnewpage: function (table) {
-            var tes = table.getElementsByTagName('textarea');
+            var tes = table.getElementsByTagName("textarea");
             for (var i = 0; i < tes.length; i++) {
-                table.getElementsByTagName('textarea')[i].style.width = '100%';
+                tes[i].style.width = "100%";
             }
         },
-        add_change_control: function(id){
-            if (document.getElementById(id).getAttribute('type')=='checkbox'){
-                var oldonclick = '';
-                if(typeof(document.getElementById(id).attributes.onclick) != 'undefined'){
-                    oldonclick=document.getElementById(id).attributes.onclick.value;
+        addChangeControl: function(id){
+            var elid=document.getElementById(id);
+            if (elid.getAttribute("type")==="checkbox"){
+                var oldonclick = "";
+                if(typeof(elid.attributes.onclick) !== "undefined"){
+                    oldonclick=elid.attributes.onclick.value;
                 }
-                var newonclick = 'collection'+this.field+'.field_row_change(this.id,"add");'+oldonclick;
-                document.getElementById(id).setAttribute('onclick',newonclick);
+                var newonclick = "collection"+this.field+".fieldRowChange(this.id,'add');"+oldonclick;
+                elid.setAttribute("onclick",newonclick);
             }else{
-                var oldonchange = '';
-                if(typeof(document.getElementById(id).attributes.onchange) != 'undefined'){
-                    oldonchange=document.getElementById(id).attributes.onchange.value;
+                var oldonchange = "";
+                if(typeof(elid.attributes.onchange) !== "undefined"){
+                    oldonchange=elid.attributes.onchange.value;
                 }
-                var newonchange = 'collection'+this.field+'.field_row_change(this.id,"add");' + oldonchange;
-                document.getElementById(id).setAttribute('onchange',newonchange);
-                this.change_class_sqsEnabled(id);
+                var newonchange = "collection"+this.field+".fieldRowChange(this.id,'add');" + oldonchange;
+                elid.setAttribute("onchange",newonchange);
+                this.changeClassSqsEnabled(id);
             }
         },
-        change_class_sqsEnabled: function(id) {
-            if (document.getElementById(id).getAttribute('class'))
-                if (document.getElementById(id).getAttribute('class').indexOf('sqsEnabled')>=0){
-                    document.getElementById(id).setAttribute('style', 'margin-top: 0px; width: calc(100% - 84px);');
-                    var buttons = document.getElementById(id).nextElementSibling.nextElementSibling;
-                    if (buttons.getAttribute('class').indexOf('id-ff')>=0) {
-                        var oldonclick = buttons.firstElementChild.getAttribute('onclick');
-                        var newonclick = 'collection'+this.field+'.field_row_change(this.id,"add");' + oldonclick;
-                        buttons.firstElementChild.setAttribute('onclick',newonclick);
+        changeClassSqsEnabled: function(id) {
+            var elid=document.getElementById(id);
+            if (elid.getAttribute("class")){
+                if (elid.getAttribute("class").indexOf("sqsEnabled")>=0){
+                    elid.setAttribute("style", "margin-top: 0px; width: calc(100% - 84px);");
+                    var buttons = elid.nextElementSibling.nextElementSibling;
+                    if (buttons.getAttribute("class").indexOf("id-ff")>=0) {
+                        var oldonclick = buttons.firstElementChild.getAttribute("onclick");
+                        var newonclick = "collection"+this.field+".fieldRowChange(this.id,'add');" + oldonclick;
+                        buttons.firstElementChild.setAttribute("onclick",newonclick);
                     }
                 }
+            }
         },
-        field_row_change: function(id, doing){
+        fieldRowChange: function(id, doing){
             var change_raw_list = new Array();
-            if (doing == 'add' || doing == 'clean') {
-                var arr_for_id = id.split('_collection_');
-                var change_raw_list = document.getElementById('collection_' + this.field + '_change').getAttribute('value').split(';');
-                var found = '-1';
-                for(var s=0; s <= change_raw_list.length; s++){
+            var arr_for_id = id.split("_collection_");
+            var fieldChange=document.getElementById("collection_" + this.field + "_change");
+            var found = -1;
+            if (fieldChange.getAttribute("value") !== '' && fieldChange.getAttribute("value")!==null){
+                var change_raw_list = fieldChange.getAttribute("value").split(";");
+                var l=change_raw_list.length;
+                for(var s=0; s < l; s++){
                     if (change_raw_list[s] == arr_for_id[1]) {
                         found = s;
                     }
                 }
-                if (found === '-1' && doing === 'add') change_raw_list[change_raw_list.length] = arr_for_id[1];
-                if (found !== '-1' && doing === 'clean') change_raw_list.splice(found,1);
-            } else if(doing == 'open') {
-                for(var s=0; s <= id; s++){
-                    change_raw_list[s] = s;
-                }
+            }else {
+                var l=0;
             }
-            var list_row = change_raw_list.join(';');
-            document.getElementById('collection_' + this.field + '_change').setAttribute('value',list_row);
+            if (doing === "add" && found===-1) {
+                change_raw_list[l] = arr_for_id[1];
+            }
+            if (doing === "clean" && found > -1) {
+                change_raw_list.splice(found,1);
+            }
+            var list_row = change_raw_list.join(";");
+            fieldChange.setAttribute("value",list_row);
         },
-        select_rows: function(){
+        selectRows: function(){
             var selected_rows = new Array();
             var k=0;
             for(var s=0; s <= this.fields_count; s++){
-                if (document.getElementById('check_' + this.field + '_collection_' + s))
-                    if (document.getElementById('check_' + this.field + '_collection_' + s).value == '1' ) {
+                if (document.getElementById("check_" + this.field + "_collection_" + s))
+                    if (document.getElementById("check_" + this.field + "_collection_" + s).value == "1" ) {
                         selected_rows[k] = s;
                         k++;
                     }
             }
             return selected_rows;
         },
-        save_remove_id: function(num){
-            var id = document.getElementById('id_' + this.field + '_collection_' + num).getAttribute('value');
+        saveRemoveId: function(num){
+            var rb=document.getElementById("collection_" + this.field + "_remove");
+            var id = document.getElementById("id_" + this.field + "_collection_" + num).getAttribute("value");
             var current_list_id = new Array();
-            if (document.getElementById('collection_' + this.field + '_remove').getAttribute('value') != '') {
-                current_list_id = document.getElementById('collection_' + this.field + '_remove').getAttribute('value').split(';');
+            if (rb.getAttribute("value") != "") {
+                current_list_id = rb.getAttribute("value").split(";");
             };
-            if (id != '') {
+            if (id != "") {
                 current_list_id[current_list_id.length] = id;
-                var list_id = current_list_id.join(';')
-                document.getElementById('collection_' + this.field + '_remove').setAttribute('value', list_id);
+                var list_id = current_list_id.join(";");
+                rb.setAttribute("value", list_id);
             };
         },
-        selected_remove: function(){
+        selectedRemove: function(){
             var array_select_rows = new Array();
-            array_select_rows = this.select_rows();
+            array_select_rows = this.selectRows();
             for(var s=0; s < array_select_rows.length; s++){
-                this.save_remove_id(array_select_rows[s]);
+                this.saveRemoveId(array_select_rows[s]);
                 this.remove(array_select_rows[s]);
             };
         },
-        clean_current: function(field_id){
+        cleanCurrent: function(field_id){
             if (field_id) {
-                var current_name = 'clean_' + this.field + '_collection_';
+                var current_name = "clean_" + this.field + "_collection_";
                 var num = field_id.substring(current_name.length);
-                this.save_remove_id(num);
-                var row_elem = document.getElementById('lineFields_'+this.form+'_'+this.field+'_'+num);
+                this.saveRemoveId(num);
+                var row_elem = document.getElementById("lineFields_"+this.form+"_"+this.field+"_"+num);
             } else {
-                var row_elem = document.getElementById('lineFields_'+this.form+'_'+this.field+'_'+this.fields_count);
+                var row_elem = document.getElementById("lineFields_"+this.form+"_"+this.field+"_"+this.fields_count);
 
             }
-            var input_elems = row_elem.getElementsByTagName('input');
+            var input_elems = row_elem.getElementsByTagName("input");
             if (input_elems != "undefined")
                 for ( var x = 0; x < input_elems.length; x++ ){
                     if (input_elems[x].id.length > 0) {
-                        if (document.getElementById(input_elems[x].id).getAttribute('name').indexOf('check_')===0) {
-                            if(document.getElementById(input_elems[x].id).getAttribute('name').indexOf('_collection_0')===-1 && !num)
-                                document.getElementById(input_elems[x].id).setAttribute('style', 'display: inline-block;');
+                        var curel=document.getElementById(input_elems[x].id);
+                        if (curel.getAttribute("name").indexOf("check_")===0) {
+                            if(curel.getAttribute("name").indexOf("_collection_0")===-1 && !num)
+                                curel.setAttribute("style", "display: inline-block;");
                         }else
-                            if (document.getElementById(input_elems[x].id).getAttribute('hidden')) {
-                                document.getElementById(input_elems[x].id).setAttribute('value', '');
+                            if (curel.getAttribute("hidden")) {
+                                curel.setAttribute("value", "");
                             } else {
-                                document.getElementById(input_elems[x].id).value = '';
-                                document.getElementById(input_elems[x].id).innerHTML = '';
+                                curel.value = '';
+                                curel.innerHTML = '';
                             }
                     }
                 }
-            input_elems = row_elem.getElementsByTagName('textarea');
+            input_elems = row_elem.getElementsByTagName("textarea");
             if (input_elems != "undefined")
                 for ( var x = 0; x < input_elems.length; x++ ){
-                    document.getElementById(input_elems[x].id).value = '';
-                    document.getElementById(input_elems[x].id).innerHTML = '';
+                    var curel=document.getElementById(input_elems[x].id);
+                    curel.value = "";
+                    curel.innerHTML = "";
                 }
         },
         /*
@@ -234,8 +238,8 @@ if(typeof(SUGAR.collection) == "undefined") {
             // if there is only one record, clear it instead of removing it
     	    // this is determined by the visibility of the drop down arrow element
             var div_el;
-            div_el = document.getElementById('check_' + this.field + '_collection_' + num);
-            var tr_to_remove = document.getElementById('lineFields_' + this.field_element_name + '_' + num);
+            div_el = document.getElementById("check_" + this.field + "_collection_" + num);
+            var tr_to_remove = document.getElementById("lineFields_" + this.field_element_name + '_' + num);
             div_el.parentNode.parentNode.parentNode.removeChild(tr_to_remove);
         },
        
@@ -247,8 +251,8 @@ if(typeof(SUGAR.collection) == "undefined") {
             this.fields_count++;
             var Field0 = this.init_clone(values);
             this.cloneField[1].appendChild(Field0);
-            if(document.getElementById('more_'+this.field_element_name) && document.getElementById('more_'+this.field_element_name).style.display == 'none'){
-               document.getElementById('more_'+this.field_element_name).style.display='';
+            if(document.getElementById("more_"+this.field_element_name) && document.getElementById("more_"+this.field_element_name).style.display == "none"){
+               document.getElementById("more_"+this.field_element_name).style.display="";
             }            
         },
         /*
@@ -257,7 +261,7 @@ if(typeof(SUGAR.collection) == "undefined") {
         init_clone: function(values){
         	
         	//Safety check, this means that the clone field was not created yet
-        	if(typeof this.cloneField[0] == 'undefined') {
+        	if(typeof this.cloneField[0] == "undefined") {
         	   return;
         	}
         	
@@ -277,7 +281,7 @@ if(typeof(SUGAR.collection) == "undefined") {
             Field0.id = "lineFields_"+this.field_element_name+"_"+count;
                         
             for ( var ii = 0; ii < Field0.childNodes.length; ii++ ){
-                if(typeof(Field0.childNodes[ii].tagName) != 'undefined' && Field0.childNodes[ii].tagName == "TD") {      	
+                if(typeof(Field0.childNodes[ii].tagName) != "undefined" && Field0.childNodes[ii].tagName == "TD") {      	
                     for (var jj = 0; jj < Field0.childNodes[ii].childNodes.length; jj++) {
                     	currentNode = Field0.childNodes[ii].childNodes[jj];
                     	this.process_node(Field0.childNodes[ii], currentNode, values);
@@ -293,102 +297,97 @@ if(typeof(SUGAR.collection) == "undefined") {
          * this may be recursively called
          */
         process_node: function(parentNode, currentNode, values) {
-            if(parentNode.getAttribute('field')!=null){
+            if(parentNode.getAttribute("field")!=null){
                 var toreplace = this.field + "_collection_0";
-                var re = new RegExp(toreplace, 'g');
-                var tdfield=parentNode.getAttribute('field').replace(re, this.field + "_collection_" + this.fields_count);
-                parentNode.setAttribute('field',tdfield);
+                var re = new RegExp(toreplace, "g");
+                var tdfield=parentNode.getAttribute("field").replace(re, this.field + "_collection_" + this.fields_count);
+                parentNode.setAttribute("field",tdfield);
             }
-            if(parentNode.className == 'td_extra_field'){
+            if(parentNode.className == "td_extra_field"){
                 // If this is an extra field
                 if(parentNode.id){
                     parentNode.id='';
                 }
                 var toreplace = this.field + "_collection_0";
-                var re = new RegExp(toreplace, 'g');
+                var re = new RegExp(toreplace, "g");
                 parentNode.innerHTML = parentNode.innerHTML.replace(re, this.field + "_collection_" + this.fields_count);
-            } else if (currentNode.tagName && currentNode.tagName == 'SPAN') { 
-                //If it is our div element, recursively find all input elements to process
-                currentNode.id = /_input/.test(currentNode.id) ? this.field_element_name + '_input_div_' + this.fields_count :  this.field_element_name + '_radio_div_' + this.fields_count;         	
-				if (/_input/.test(currentNode.id)) {
-					currentNode.name = 'teamset_div';
-				}
+            } else if (currentNode.tagName && currentNode.tagName == "SPAN") { 
             	
-            	var input_els = currentNode.getElementsByTagName('input');
+            	var input_els = currentNode.getElementsByTagName("input");
             	for ( var x = 0; x < input_els.length; x++ ){
 
                     //if the input tag id is blank (IE bug), then set it equal to that of the parent span id
-                    if(typeof(input_els[x].id) == 'undefined' || input_els[x].id == '') {
+                    if(typeof(input_els[x].id) == "undefined" || input_els[x].id == '') {
                         input_els[x].id = currentNode.id;
                     }
 
-                	if(input_els[x].tagName && input_els[x].tagName == 'INPUT') {
+                	if(input_els[x].tagName && input_els[x].tagName == "INPUT") {
                 	   this.process_node(parentNode, input_els[x], values);
                 	}
                 }
-            	var button_els = currentNode.getElementsByTagName('button');
+            	var button_els = currentNode.getElementsByTagName("button");
             	for ( var x = 0; x < button_els.length; x++ ){
 
                     //if the input tag id is blank (IE bug), then set it equal to that of the parent span id
-                    if(typeof(button_els[x].id) == 'undefined' || button_els[x].id == '') {
+                    if(typeof(button_els[x].id) == "undefined" || button_els[x].id == "") {
                         button_els[x].id = currentNode.id;
                     }
                     var toreplace = this.field + "_collection_0";
-                    var re = new RegExp(toreplace, 'g');
+                    var re = new RegExp(toreplace, "g");
                     button_els[x].id = button_els[x].id.replace(re, this.field + "_collection_" + this.fields_count);
                     button_els[x].name = button_els[x].name.replace(re, this.field + "_collection_" + this.fields_count);
-                    if (button_els[x].getAttribute('onchange')){
-                        var current_attribute = button_els[x].getAttribute('onchange');
+                    if (button_els[x].getAttribute("onchange")){
+                        var current_attribute = button_els[x].getAttribute("onchange");
                         current_attribute =  current_attribute.replace(re, this.field + "_collection_" + this.fields_count);
-                        button_els[x].removeAttribute('onchange');
-                        button_els[x].setAttribute('onchange', current_attribute);
+                        button_els[x].removeAttribute("onchange");
+                        button_els[x].setAttribute("onchange", current_attribute);
                     };
-                    if (button_els[x].getAttribute('onclick')){
-                        var current_attribute = button_els[x].getAttribute('onclick');
+                    if (button_els[x].getAttribute("onclick")){
+                        var current_attribute = button_els[x].getAttribute("onclick");
                         current_attribute = current_attribute.replace(re, this.field + "_collection_" + this.fields_count);
-                        button_els[x].removeAttribute('onclick');
-                        button_els[x].setAttribute('onclick', current_attribute);
+                        button_els[x].removeAttribute("onclick");
+                        button_els[x].setAttribute("onclick", current_attribute);
                     };
-                    if (button_els[x].getAttribute('onblur')){
-                        var current_attribute = button_els[x].getAttribute('onblur');
+                    if (button_els[x].getAttribute("onblur")){
+                        var current_attribute = button_els[x].getAttribute("onblur");
                         current_attribute = current_attribute.replace(re, this.field + "_collection_" + this.fields_count);
-                        button_els[x].removeAttribute('onblur');
-                        button_els[x].setAttribute('onblur', current_attribute);
+                        button_els[x].removeAttribute("onblur");
+                        button_els[x].setAttribute("onblur", current_attribute);
                     };
                 }
-                var datetime_els = currentNode.getAttribute('class');
-                if (datetime_els === 'dateTime') {
+                var datetime_els = currentNode.getAttribute("class");
+                if (datetime_els === "dateTime") {
                     var current_img = currentNode.innerHTML;
                     var toreplace = this.field + "_collection_0_trigger";
-                    var re = new RegExp(toreplace, 'g');
+                    var re = new RegExp(toreplace, "g");
                     currentNode.innerHTML = current_img.replace(re, this.field + "_collection_" + this.fields_count + "_trigger");
-                    var script_create = currentNode.parentElement.getElementsByTagName('script');
+                    var script_create = currentNode.parentElement.getElementsByTagName("script");
                     var current_script = script_create[0].innerHTML;
                     var toreplace = this.field + "_collection_0";
-                    var re = new RegExp(toreplace, 'g');
+                    var re = new RegExp(toreplace, "g");
                     script_create[0].innerHTML = current_script.replace(re, this.field + "_collection_" + this.fields_count);
                     window.execScript ? setTimeout(function() { execScript(script_create[0].innerHTML) }, 500) : setTimeout(function() { window.eval(script_create[0].innerHTML) }, 500);
                 }
-            } else if (currentNode.tagName && currentNode.tagName == 'SCRIPT') {
+            } else if (currentNode.tagName && currentNode.tagName == "SCRIPT") {
                 var current_script = currentNode.innerHTML;
                 var toreplace = this.field + "_collection_0";
-                var re = new RegExp(toreplace, 'g');
+                var re = new RegExp(toreplace, "g");
                 currentNode.innerHTML = current_script.replace(re, this.field + "_collection_" + this.fields_count);
             } else if (currentNode.name) {
                 // If this is a standard field
                 var toreplace = this.field + "_collection_0";
-                var re = new RegExp(toreplace, 'g');
+                var re = new RegExp(toreplace, "g");
                 var name = currentNode.name;                
                 var new_name = name.replace(re, this.field + "_collection_" + this.fields_count);
                 var new_id = currentNode.id.replace(re, this.field + "_collection_" + this.fields_count);
-                if (currentNode.type == 'checkbox'){
-                    currentNode.setAttribute('value','0');
+                if (currentNode.type == "checkbox"){
+                    currentNode.setAttribute("value","0");
                     var oldonclick = '';
-                    if(typeof(currentNode.attributes.onclick) != 'undefined'){
+                    if(typeof(currentNode.attributes.onclick) != "undefined" && currentNode.id.search("check_"+this.field)!==0){
                         oldonclick=currentNode.attributes.onclick.value;
                     }
-                    var newonclick = 'collection'+this.field+'.new_checkbox(this.id);'+oldonclick;
-                    currentNode.setAttribute('onclick',newonclick);
+                    var newonclick = "collection"+this.field+".newCheckbox(this.id);"+oldonclick;
+                    currentNode.setAttribute("onclick",newonclick);
                 }
                 switch (name) {
                     case toreplace:
@@ -397,14 +396,14 @@ if(typeof(SUGAR.collection) == "undefined") {
                         currentNode.value = values['name'];
                         break;
                     case "id_" + toreplace:
-                        currentNode.name = new_name.replace(RegExp('_0', 'g'), "_" + this.fields_count);
-                        currentNode.id = new_id.replace(RegExp('_0', 'g'), "_" + this.fields_count);
+                        currentNode.name = new_name.replace(RegExp("_0", "g"), "_" + this.fields_count);
+                        currentNode.id = new_id.replace(RegExp("_0", "g"), "_" + this.fields_count);
                         currentNode.value = values['id'];
                         break;
                     case "btn_" + toreplace:
                         currentNode.name = new_name;
-                        currentNode.attributes['onclick'].value = currentNode.attributes['onclick'].value.replace(re, this.field + "_collection_" + this.fields_count);
-                        currentNode.attributes['onclick'].value = currentNode.attributes['onclick'].value.replace(RegExp(this.field + "_collection_0", 'g'), this.field + "_collection_" + this.fields_count);
+                        currentNode.attributes["onclick"].value = currentNode.attributes["onclick"].value.replace(re, this.field + "_collection_" + this.fields_count);
+                        currentNode.attributes["onclick"].value = currentNode.attributes["onclick"].value.replace(RegExp(this.field + "_collection_0", "g"), this.field + "_collection_" + this.fields_count);
                         break;
                     case "allow_new_value_" + toreplace:
                         currentNode.name = new_name;
@@ -413,22 +412,16 @@ if(typeof(SUGAR.collection) == "undefined") {
                     case "remove_" + toreplace:
                         currentNode.name = new_name;
                         currentNode.id = new_id;
-                        currentNode.setAttribute('collection_id', this.field_element_name);
-                        currentNode.setAttribute('remove_id', this.fields_count);
+                        currentNode.setAttribute("collection_id", this.field_element_name);
+                        currentNode.setAttribute("remove_id", this.fields_count);
                         currentNode.onclick = function() { 
-                               collection[this.getAttribute('collection_id')].remove(this.getAttribute('remove_id'));
+                               collection[this.getAttribute("collection_id")].remove(this.getAttribute("remove_id"));
                         };
-                        break;
-                    case "primary_" + this.field + "_collection":
-                        currentNode.id = new_id;
-                        currentNode.value = this.fields_count;
-                        currentNode.checked = false; //Firefox
-                        currentNode.setAttribute('defaultChecked', '');
                         break;
                     case "check_" + toreplace:
                         currentNode.name = new_name;
                         currentNode.id = new_id;
-                        currentNode.removeAttribute('hidden');
+                        currentNode.removeAttribute("hidden");
                         break;
                     default:
                         if (currentNode.name.substring(currentNode.name.indexOf(toreplace)) == toreplace) {
@@ -445,15 +438,12 @@ if(typeof(SUGAR.collection) == "undefined") {
          * Create the clone on load of the page and store it in this.cloneField
          */
         create_clone: function() {
-            var oneField = document.getElementById('lineFields_'+this.field_element_name+'_0');
+            var oneField = document.getElementById("lineFields_"+this.field_element_name+'_0');
             this.cloneField[0] = SUGAR.isIE ?
                 SUGAR.collection.safe_clone(oneField, true) :
                 oneField.cloneNode(true);
             this.cloneField[1] = oneField.parentNode;
-            //fixing bug @48829: Team field shows fully expanded multiple teams instead of hiding multiple teams
-            //this.more_status = true;
-            var clone_id = this.form + '_' + this.field + '_collection_0';
-        },       
+        }
     };
 
 	SUGAR.collection.safe_clone = function(e, recursive)
@@ -467,12 +457,12 @@ if(typeof(SUGAR.collection) == "undefined") {
 		var newNode = document.createElement(e.tagName);
 		if (!newNode) return false;
 
-        var properties = [ 'id', 'class', 'style', 'name', 'type', 'valign', 'border', 'width', 'height', 'top', 'bottom', 'left', 'right', 'scope', 'row', 'columns', 'src', 'href', 'className', 'align', 'nowrap'];
+        var properties = [ "id", "class", "style", "name", "type", "valign", "border", "width", "height", "top", "bottom", "left", "right", "scope", "row", "columns", "src", "href", "className", "align", "nowrap"];
 
         //clee. - Bug: 44976 - IE7 just does not calculate height properties correctly for input elements
-        if(SUGAR.isIE7 && e.tagName.toLowerCase() == 'input')
+        if(SUGAR.isIE7 && e.tagName.toLowerCase() == "input")
         {
-            var properties = [ 'id', 'class', 'style', 'name', 'type', 'valign', 'border', 'width', 'top', 'bottom', 'left', 'right', 'scope', 'row', 'columns', 'src', 'href', 'className', 'align', 'nowrap'];
+            var properties = [ "id", "class", "style", "name", "type", "valign", "border", "width", "top", "bottom", "left", "right", "scope", "row", "columns", "src", "href", "className", "align", "nowrap"];
         }
 		
 		for (var i in properties)
@@ -482,9 +472,9 @@ if(typeof(SUGAR.collection) == "undefined") {
                 //There are two groups of conditional checks here:
                 //The first group is to ignore the style and type attributes for IE browsers
                 //The second group is to ensure that only <a> and <iframe> tags have href attribute
-                if ((properties[i] != 'style' || !SUGAR.isIE) &&
+                if ((properties[i] != "style" || !SUGAR.isIE) &&
                     //Only <a> and <iframe> tags can have hrefs
-                    (properties[i] != 'href'  || e.tagName == 'a' || e.tagName == 'iframe')) {
+                    (properties[i] != "href"  || e.tagName == "a" || e.tagName == "iframe")) {
                         if(properties[i] == "type") {
                             newNode.setAttribute(properties[i], e[properties[i]]);
                         } else {
@@ -505,5 +495,5 @@ if(typeof(SUGAR.collection) == "undefined") {
 			}
 		}
 		return newNode;
-	}
+	};
 }
