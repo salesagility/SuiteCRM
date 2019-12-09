@@ -2,7 +2,6 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2019 Salesagility Ltd.
  *
@@ -115,27 +114,32 @@ class SugarFieldCollection extends SugarFieldBase {
                     foreach($value_list as $name=>$value){
                         if ($name != 'id') {
                             $bean_collection->$name = $value;
-                            if (!empty($value)) $empty_field += 1;
+                            if (!empty($value)){ 
+                                $empty_field += 1;
+                            }
                         }
                     }
                     if ($empty_field > 0) {
                         $bean_collection->assigned_user_id = $bean->assigned_user_id;
                         $bean_collection->save();
-                        if (empty($bean->id))
+                        if (empty($bean->id)){
                             $bean->save();
+                        }
                         $bean->{$link_field}->add($bean_collection->id);
                     }
                 }
             }
-            $delete_id_list = explode(';', $params['collection_'.$link_field.'_remove']);
-            if (!empty($delete_id_list)){
-                foreach ($delete_id_list as $delete_id) {
-                    $bean_collection = new $bean_name();
-                    $bean_collection->retrieve($delete_id);
-                    $bean_collection->mark_deleted($delete_id);
-                }
+            $this->deleteOld($bean_name,$params,$field);
+        }
+    }
+    private function deleteOld($bean_name,$params,$field){
+        $delete_id_list = explode(';', $params['collection_'.$params[$field].'_remove']);
+        if (!empty($delete_id_list)){
+            foreach ($delete_id_list as $delete_id) {
+                $bean_collection = new $bean_name();
+                $bean_collection->retrieve($delete_id);
+                $bean_collection->mark_deleted($delete_id);
             }
         }
     }
 }
-?>
