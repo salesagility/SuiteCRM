@@ -2,7 +2,6 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2019 Salesagility Ltd.
  *
@@ -188,102 +187,94 @@ class ViewSugarFieldCollection{
      * redirect to the good process method.
      */
     function process(){
-        if($this->action_type == 'editview'){
-            $this->viewtype = 'EditView';
-            $this->process_editview();
-        }else {
-            if($this->action_type == 'detailview'){
-                $this->viewtype = 'DetailView';
-                $this->process_detailview();
-            }
-        }
-    }
-    function process_detailview(){
-            $this->process_form();
-    }
-    function process_editview(){
-            $this->process_form();
-    }
-    function process_form(){
         if(isset($this->displayParams['collection_field_list'])){
+            if($this->action_type == 'editview'){
+                $this->viewtype = 'EditView';
+            }else {
+                if($this->action_type == 'detailview'){
+                    $this->viewtype = 'DetailView';
+                }
+            }
             $relatedObject = BeanFactory::getObjectName($this->related_module);
             vardefmanager::loadVardef($this->related_module, $relatedObject);
             foreach($this->value_name as $key_value=>$field_value){
                 $this->count_values[$key_value] = $key_value;
-                foreach($this->displayParams['collection_field_list'] as $k=>$v){
-                    $collection_field_vardef = $GLOBALS['dictionary'][$relatedObject]['fields'][$v['name']];
-                    foreach($v as $k_override=>$v_override){
-                        if($k_override != 'displayParams'){
-                            $collection_field_vardef[$k_override] = $v_override;
-                        }
+                $this->process_form($relatedObject,$key_value,$field_value);
+            }
+            $this->process_label($relatedObject);
+        }else{
+            die("the array collection_field_list isn't set");
+        }
+    }
+    function process_form($relatedObject,$key_value,$field_value){
+        require_once('include/SugarFields/SugarFieldHandler.php');
+        if(!isset($sfh)) {
+            $sfh = new SugarFieldHandler();
+        }
+        foreach($this->displayParams['collection_field_list'] as $k=>$v){
+            $collection_field_vardef = $GLOBALS['dictionary'][$relatedObject]['fields'][$v['name']];
+            $realy_field_name = $collection_field_vardef['name'];
+            $collection_field_vardef['value'] = $field_value[$realy_field_name];
+            $collection_field_vardef['name'] .= "_" . $this->vardef['name'] . "_collection_" . $key_value;
+            if(isset($collection_field_vardef['id_name'])){
+                $collection_field_vardef['id_name'] .= "_" . $this->vardef['name'] . "_collection_" . $key_value;
+            }
+            $name = $collection_field_vardef['name'];
+            $this->displayParams['to_display'][$key_value][$name]['vardefName'] = $this->displayParams['collection_field_list'][$k]['name'];
+            $this->displayParams['to_display'][$key_value][$name]['name'] = $name;
+            $this->displayParams['to_display'][$key_value][$name]['type'] = $collection_field_vardef['type'];
+            if ($this->displayParams['collection_field_list'][$k]['displayParams']['hidden']) {
+                $this->displayParams['to_display'][$key_value][$name]['hidden'] = 'hidden';
+                $this->displayParams['to_display'][$key_value][$name]['field'] = '<input type="text" hidden="hidden" name="'.$collection_field_vardef['name'].'" id="'.$collection_field_vardef['name'].'" value="'.$collection_field_vardef['value'].'">';
+            } else {
+                if (isset($this->displayParams['collection_field_list'][$k]['customCode']) && !empty($this->displayParams['collection_field_list'][$k]['customCode']) && $this->viewtype != 'DetailView') {
+                    $customCode = str_replace('value=""', 'value="'.$collection_field_vardef['value'].'"', $this->displayParams['collection_field_list'][$k]['customCode']);
+                    $customCode = str_replace($realy_field_name, $realy_field_name.'_'.$this->name.'_collection_'.$key_value.'', $customCode);
+//                            $GLOBALS['log']->fatal(get_class()." ". __FUNCTION__." customCode 2:\n ".print_r($customCode,true));
+                    $this->displayParams['to_display'][$key_value][$name]['field'] = $customCode;
+                } else {
+                    if (isset($collection_field_vardef['options']) && !empty($collection_field_vardef['options'])) {
+                        $this->displayParams['to_display'][$key_value][$name]['options'] = $GLOBALS['app_list_strings'][$collection_field_vardef['options']];
                     }
-                    $realy_field_name = $collection_field_vardef['name'];
-                    $collection_field_vardef['value'] = $field_value[$collection_field_vardef['name']];
-                    $collection_field_vardef['name'] .= "_" . $this->vardef['name'] . "_collection_" . $key_value;
-                    if(isset($collection_field_vardef['id_name'])){
-                        $collection_field_vardef['id_name'] .= "_" . $this->vardef['name'] . "_collection_" . $key_value;
-                    }
-                    $name = $collection_field_vardef['name'];
-                    $this->displayParams['to_display'][$key_value][$name]['vardefName'] = $this->displayParams['collection_field_list'][$k]['name'];
-                    $this->displayParams['to_display'][$key_value][$name]['name'] = $name;
-                    $this->displayParams['to_display'][$key_value][$name]['type'] = $collection_field_vardef['type'];
-                    if($collection_field_vardef['type'] == 'relate'){
+                    if ($collection_field_vardef['type'] == 'relate') {
                         $this->displayParams['to_display'][$key_value][$name]['id_name'] = $collection_field_vardef['id_name'];
                         $this->displayParams['to_display'][$key_value][$name]['module'] = $collection_field_vardef['module'];
-                    }
-                    require_once('include/SugarFields/SugarFieldHandler.php');
-                    if(!isset($sfh)) {
-                        $sfh = new SugarFieldHandler();
-                        
-                    }
-                    if ($this->displayParams['collection_field_list'][$k]['displayParams']['hidden']) {
-                        $this->displayParams['to_display'][$key_value][$name]['hidden'] = 'hidden';
-                        $this->displayParams['to_display'][$key_value][$name]['field'] = '<input type="text" hidden="hidden" name="'.$collection_field_vardef['name'].'" id="'.$collection_field_vardef['name'].'" value="'.$collection_field_vardef['value'].'">';
-                    } else {
-                        if (isset($this->displayParams['collection_field_list'][$k]['customCode']) && !empty($this->displayParams['collection_field_list'][$k]['customCode']) && $this->viewtype != 'DetailView') {
-                            $customCode = str_replace($realy_field_name, $realy_field_name.'_'.$this->name.'_collection_'.$key_value.'', $customCode);
-                            $this->displayParams['to_display'][$key_value][$name]['field'] = $customCode;
-                        } else {
-                            if (isset($collection_field_vardef['options']) && !empty($collection_field_vardef['options'])) {
-                                $this->displayParams['to_display'][$key_value][$name]['options'] = $GLOBALS['app_list_strings'][$collection_field_vardef['options']];
+                        $this->displayParams['to_display'][$key_value][$this->displayParams['to_display'][$key_value][$name]['id_name']]['value'] = $this->relay_id[$realy_field_name][$field_value[$realy_field_name]];
+                        $this->displayParams['to_display'][$key_value][$this->displayParams['to_display'][$key_value][$name]['id_name']]['hidden'] = 'hidden';
+                        if (!empty ($v['displayParams']['field_to_name_array'])){
+                            foreach ($v['displayParams']['field_to_name_array'] as $key_field_to_name_array => $value_field_to_name_array) {
+                                $v['displayParams']['field_to_name_array'][$key_field_to_name_array] = $value_field_to_name_array.'_'.$this->name.'_collection_'.$key_value;
                             }
-                            if ($collection_field_vardef['type'] == 'relate') {
-                                if ($this->displayParams['formName'] != 'EditView'){
-                                    $v['displayParams']['formName'] = $this->displayParams['formName'];
-                                    $this->displayParams['to_display'][$key_value][$this->displayParams['to_display'][$key_value][$name]['id_name']]['name'] = $this->displayParams['to_display'][$key_value][$name]['id_name'];
-                                    $this->displayParams['to_display'][$key_value][$this->displayParams['to_display'][$key_value][$name]['id_name']]['hidden'] = 'hidden';
-                                    $this->displayParams['to_display'][$key_value][$this->displayParams['to_display'][$key_value][$name]['id_name']]['value'] = $this->relay_id[$realy_field_name][$field_value[$realy_field_name]];
-                                } else {
-                                    $this->displayParams['to_display'][$key_value][$this->displayParams['to_display'][$key_value][$name]['id_name']]['hidden'] = 'hidden';
-                                    $this->displayParams['to_display'][$key_value][$this->displayParams['to_display'][$key_value][$name]['id_name']]['value'] = $this->relay_id[$realy_field_name][$field_value[$realy_field_name]];
-                                }
-                                if (!empty ($v['displayParams']['field_to_name_array'])){
-                                    foreach ($v['displayParams']['field_to_name_array'] as $key_field_to_name_array => $value_field_to_name_array) {
-                                        $v['displayParams']['field_to_name_array'][$key_field_to_name_array] = $value_field_to_name_array.'_'.$this->name.'_collection_'.$key_value;
-                                    }
-                                }
-                            }
-                            $this->displayParams['to_display'][$key_value][$name]['value'] = $collection_field_vardef['value'];
-                            $this->displayParams['to_display'][$key_value][$name]['field'] = $sfh->displaySmarty('displayParams.to_display.'.$key_value, $collection_field_vardef, $this->viewtype, $v['displayParams'], 1);
                         }
                     }
-                    if ($this->viewtype == 'EditView') {
-                        $this->displayParams['to_display'][$key_value][$name]['field'] .= 
-                            '{literal}
-                                <script type="text/javascript">'."collection" . $this->vardef['name'] . ".add_change_control('{$collection_field_vardef['name']}');
-                                    if(document.getElementById('{$collection_field_vardef['name']}').getAttribute('readonly') == 'readonly'){
-                                        document.getElementById('{$collection_field_vardef['name']}').setAttribute('style', 'background: none;');}".'</script>
-                            {/literal}';             
-                    }
+                    $this->displayParams['to_display'][$key_value][$name]['value'] = $collection_field_vardef['value'];
+                    $this->displayParams['to_display'][$key_value][$name]['field'] = $sfh->displaySmarty('displayParams.to_display.'.$key_value, $collection_field_vardef, $this->viewtype, $v['displayParams'], 1);
                 }
             }
-            foreach($this->displayParams['collection_field_list'] as $k=>$v){
-                if (!isset($this->displayParams['collection_field_list'][$k]['displayParams']['hidden'])) {
-                    if (isset($this->displayParams['collection_field_list'][$k]['label']) && !empty($this->displayParams['collection_field_list'][$k]['label'])) {
-                        $this->displayParams['collection_field_list'][$k]['label'] = "{sugar_translate label='{$this->displayParams['collection_field_list'][$k]['label']}' module='{$this->related_module}'}";
-                    } else {
-                        $this->displayParams['collection_field_list'][$k]['label'] = "{sugar_translate label='{$GLOBALS['dictionary'][$relatedObject]['fields'][$v['name']]['vname']}' module='{$this->related_module}'}";
-                        }
+            if ($this->viewtype != 'DetailView') {
+                $this->process_editview($collection_field_vardef,$relatedObject,$key_value,$field_value,$name);
+            }
+        }
+
+//$GLOBALS['log']->fatal(get_class()." ". __FUNCTION__." this->vardef:\n ".print_r($this->vardef,true));
+    }
+    function process_detailview($cfv,$relatedObject,$key_value,$field_value,$name){
+    }
+    function process_editview($cfv,$relatedObject,$key_value,$field_value,$name){
+        $this->displayParams['to_display'][$key_value][$name]['field'] .= 
+            '{literal}
+                <script type="text/javascript">'."collection" . $this->vardef['name'] . ".addChangeControl('{$cfv['name']}');
+                    if(document.getElementById('{$cfv['name']}').getAttribute('readonly') == 'readonly'){
+                        document.getElementById('{$cfv['name']}').setAttribute('style', 'background: none;');}".'</script>
+            {/literal}';         
+    }
+    function process_label($relatedObject){
+        foreach($this->displayParams['collection_field_list'] as $k=>$v){
+            if (!isset($this->displayParams['collection_field_list'][$k]['displayParams']['hidden'])) {
+                if (isset($this->displayParams['collection_field_list'][$k]['label']) && !empty($this->displayParams['collection_field_list'][$k]['label'])) {
+                    $this->displayParams['collection_field_list'][$k]['label'] = "{sugar_translate label='{$this->displayParams['collection_field_list'][$k]['label']}' module='{$this->related_module}'}";
+                } else {
+                    $this->displayParams['collection_field_list'][$k]['label'] = "{sugar_translate label='{$GLOBALS['dictionary'][$relatedObject]['fields'][$v['name']]['vname']}' module='{$this->related_module}'}";
                 }
             }
         }
@@ -365,17 +356,14 @@ class ViewSugarFieldCollection{
 
     function findTemplate($view){
         static $tplCache = array();
-
         if ( isset($tplCache[$this->type][$view]) ) {
             return $tplCache[$this->type][$view];
         }
-
         $lastClass = get_class($this);
         $classList = array($this->type,str_replace('ViewSugarField','',$lastClass));
         while ( $lastClass = get_parent_class($lastClass) ) {
             $classList[] = str_replace('ViewSugarField','',$lastClass);
         }
-
         $tplName = '';
         foreach ( $classList as $className ) {
             global $current_language;
@@ -398,9 +386,7 @@ class ViewSugarFieldCollection{
                 break;
             }
         }
-
         $tplCache[$this->type][$view] = $tplName;
-
         return $tplName;
     }
 }
