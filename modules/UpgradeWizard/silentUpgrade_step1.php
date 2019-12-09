@@ -848,7 +848,7 @@ if ($upgradeType !== constant('DCE_INSTANCE')) {
                 }
 
                 // Running db insert query as bean save will throw logic hook errors due to dependencies that are not set yet
-                $customID= create_guid();
+                $customID = create_guid();
                 $new_upgrade->date_entered = $GLOBALS['timedate']->nowDb();
 
                 $customIDQuoted = $db->quoted($customID);
@@ -862,7 +862,7 @@ if ($upgradeType !== constant('DCE_INSTANCE')) {
                 $manifestQuoted = $db->quoted($new_upgrade->manifest);
                 $dateQuoted = $db->quoted($new_upgrade->date_entered);
 
-                $upgradeHistoryInsert = "INSERT INTO `upgrade_history` (`id`, `filename`, `md5sum`, `type`, `status`, `version`, `name`, `description`, `id_name`, `manifest`, `date_entered`, `enabled`) 
+                $upgradeHistoryInsert = "INSERT INTO upgrade_history (id, filename, md5sum, type, status, version, name, description, id_name, manifest, date_entered, enabled) 
                                                      VALUES ($customIDQuoted, $fileNameQuoted, $md5Quoted, $typeQuoted, $statusQuoted, $versionQuoted, $nameQuoted, $descriptionQuoted, NULL, $manifestQuoted, $dateQuoted, '1')";
                 $result = $db->query($upgradeHistoryInsert, true, "Error writing upgrade history");
 
