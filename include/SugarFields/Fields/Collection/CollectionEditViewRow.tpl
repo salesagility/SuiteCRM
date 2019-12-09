@@ -2,7 +2,6 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2019 Salesagility Ltd.
  *
@@ -45,11 +44,11 @@
 </script>
 <div id="{$displayParams.formName}_{$vardef.name}" name="{$displayParams.formName}_{$vardef.name}">
     <span class="id-ff">
-        <button class="button" type="button" name="remove_{$vardef.name}_collection_0" tabindex="{$tabindex}" class="utilsLink" onclick="collection{$vardef.name}.selected_remove();">
+        <button class="button" type="button" name="remove_{$vardef.name}_collection_0" tabindex="{$tabindex}" class="utilsLink" onclick="collection{$vardef.name}.selectedRemove();">
             <img id="removeButton_collection_0" name="removeButton_collection_0" src="{sugar_getimagepath file="id-ff-remove-nobg.png"}"/>
             <p value={$APP.LBL_DELETE_BUTTON}></p>
         </button>
-        <button class="button" type="button" name="allow_new_value_{$vardef.name}_collection_0" tabindex="{$tabindex}" class="utilsLink" onclick="collection{$vardef.name}.create_clone();collection{$vardef.name}.add();collection{$vardef.name}.clean_current();">
+        <button class="button" type="button" name="allow_new_value_{$vardef.name}_collection_0" tabindex="{$tabindex}" class="utilsLink" onclick="collection{$vardef.name}.create_clone();collection{$vardef.name}.add();collection{$vardef.name}.cleanCurrent();">
             <img id="addButton_collection_0" name="addButton_collection_0" src="{sugar_getimagepath file="id-ff-add.png"}"/>
             <p value={$APP.LBL_ADD_BUTTON}></p>
         </button>
@@ -94,7 +93,7 @@
             {/foreach}
                     <td style="border-left: solid 1px #999999; text-align: center; vertical-align: middle;">
                         <span class="id-ff multiple">
-                            <button class="button" type="button" name="clean_{$vardef.name}_collection_{$extra_value}" id="clean_{$vardef.name}_collection_{$extra_value}" tabindex="{$tabindex}" class="utilsLink" onclick="collection{$vardef.name}.clean_current(this.id);collection{$vardef.name}.field_row_change(this.id,'clean');">
+                            <button class="button" type="button" name="clean_{$vardef.name}_collection_{$extra_value}" id="clean_{$vardef.name}_collection_{$extra_value}" tabindex="{$tabindex}" class="utilsLink" onclick="collection{$vardef.name}.cleanCurrent(this.id);collection{$vardef.name}.fieldRowChange(this.id,'clean');">
                                 <img id="addButton_collection_{$extra_value}" name="addButton_collection_{$extra_value}" src="{sugar_getimagepath file="id-ff-clear.png"}"/>
                             </button>
                         </span>
