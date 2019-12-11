@@ -1,9 +1,10 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/upload_file.php';
 require_once 'include/utils/php_zip_utils.php';
-class php_zip_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class php_zip_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testunzip()
     {
@@ -31,14 +32,12 @@ class php_zip_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testunzip_file()
     {
-
-        //execute the method and test if it returns true and verify the if unzipped files exist
-
+        // execute the method and test if it returns true and verify the if unzipped files exist
         $cache_dir = rtrim($GLOBALS['sugar_config']['cache_dir'], '/\\');
         $files_list = array('config.php', 'config_override.php');
         $file = $cache_dir.'/zipTest.zip';
 
-        //creata a zip file first, to unzip
+        //create a a zip file first, to unzip
         if (!file_exists($file)) {
             zip_files_list($file, $files_list);
         }
@@ -46,7 +45,7 @@ class php_zip_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = unzip_file($file, null, $cache_dir);
         $this->assertTrue($result);
 
-        $this->markTestIncomplete('File handling doesnt works in localy');
+        $this->markTestIncomplete("File handling doesn't work locally.");
 //        $this->assertFileExists($cache_dir.'/config.php');
 //        $this->assertFileExists($cache_dir.'/config_override.php');
 
@@ -73,7 +72,6 @@ class php_zip_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testzip_files_list()
     {
-
         //execute the method and verify the if zipped file exist
         $cache_dir = rtrim($GLOBALS['sugar_config']['cache_dir'], '/\\');
         $file = $cache_dir.'/ziplistTest.zip';

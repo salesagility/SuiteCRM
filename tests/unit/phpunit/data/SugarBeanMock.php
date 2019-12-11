@@ -1,9 +1,7 @@
 <?php
 
-
 class SugarBeanMock extends SugarBean
 {
-
     /**
      * a value for testing
      * @var mixed

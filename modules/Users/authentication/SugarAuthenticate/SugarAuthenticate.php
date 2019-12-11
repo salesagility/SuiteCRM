@@ -95,7 +95,7 @@ class SugarAuthenticate
     /**
      * Authenticates a user based on the username and password
      * returns true if the user was authenticated false otherwise
-     * it also will load the user into current user if he was authenticated
+     * it also will load the user into current user if they were authenticated
      *
      * @param string $username
      * @param string $password
@@ -401,7 +401,7 @@ class SugarAuthenticate
                 if ($_SESSION["ipaddress"] != $clientIP && empty($classCheck)) {
                     $GLOBALS['log']->fatal("IP Address mismatch: SESSION IP: {$_SESSION['ipaddress']} CLIENT IP: {$clientIP}");
                     session_destroy();
-                    die($mod_strings['ERR_IP_CHANGE'] . "<a href=\"{$sugar_config['site_url']}\">" + $mod_strings['ERR_RETURN'] + "</a>");
+                    die($mod_strings['ERR_IP_CHANGE'] . "<a href=\"{$sugar_config['site_url']}\">" . $mod_strings['ERR_RETURN'] . "</a>");
                 }
             } else {
                 $_SESSION["ipaddress"] = $clientIP;

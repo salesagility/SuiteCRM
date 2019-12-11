@@ -1,9 +1,10 @@
 <?php
 
 use org\bovigo\vfs\vfsStream;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/file_utils.php';
-class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class file_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -448,8 +449,6 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $hash);
         $this->assertSame('config.php', $_SESSION['file2Hash'][$hash]);
 
-        // clean up
-
         if (isset($_session)) {
             $_SESSION = $_session;
         } else {
@@ -473,8 +472,6 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $hash = fileToHash('config.php');
         $actual = hashToFile($hash);
         $this->assertSame('config.php', $actual);
-
-        // clean up
 
         if (isset($_session)) {
             $_SESSION = $_session;

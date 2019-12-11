@@ -1,7 +1,8 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class UserTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testgetSignatureButtons()
     {
@@ -33,8 +34,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testUser()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $user = new User();
 
         $this->assertInstanceOf('User', $user);
@@ -51,7 +51,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(false, 'team_exists', $user);
     }
 
-
     public function testgetSystemUser()
     {
         self::markTestIncomplete('environment dependency');
@@ -64,19 +63,9 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(1, $result->id);
     }
 
-
     public function testgetDefaultSignature()
     {
-        // store state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
-        
         // test
-        
-
-//        self::markTestIncomplete('environment dependency');
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
@@ -88,13 +77,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $user->getDefaultSignature();
         $this->assertTrue(is_array($result));
-        
-        // clean up
-        
-        $state->popTable('email_addresses');
-        $state->popGlobals();
     }
-
 
     public function testgetSignature()
     {
@@ -115,7 +98,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $user->getSignaturesArray();
         $this->assertTrue(is_array($result));
     }
-
 
     public function testgetSignatures()
     {
@@ -138,7 +120,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $user->hasPersonalEmail();
         $this->assertEquals(false, $result);
     }
-
 
     public function testgetUserPrivGuid()
     {
@@ -217,28 +198,18 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsavePreferencesToDB()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $user = new User();
 
         $user->retrieve(1);
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $user->savePreferencesToDB();
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
-
-
 
     public function testgetUserDateTimePreferences()
     {
@@ -260,8 +231,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(isset($result['userGmt']));
         $this->assertTrue(isset($result['userGmtOffset']));
     }
-
-
 
     public function testGetETagSeedAndIncrementETag()
     {
@@ -288,7 +257,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $ETagFinal = $user->getETagSeed('test');
         $this->assertGreaterThan($ETagInitial, $ETagFinal);
     }
-
 
     public function testgetLicensedUsersWhere()
     {
@@ -318,7 +286,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $user->bean_implements('ACL')); //test with valid value
     }
 
-
     public function testcheck_role_membership()
     {
         self::markTestIncomplete('environment dependency');
@@ -332,19 +299,13 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $user->check_role_membership("test", '');
         $this->assertEquals(false, $result);
 
-
         $result = $user->check_role_membership("test", '1');
         $this->assertEquals(false, $result);
     }
 
-
     public function testsaveAndOthers()
     {
         self::markTestIncomplete('environment dependency');
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -408,8 +369,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $user->user_name = "test_deleted";
         $user->save();
         $user->mark_deleted($user->id);
-        
-        // clean up
     }
 
     public function retrieve($id)
@@ -489,7 +448,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $result);
     }
 
-
     public function load_user($id)
     {
         $user = new User();
@@ -544,7 +502,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(1, preg_match('/^one\d{0,}\@email\.com$/', $actual['email']));
     }
 
-
     public function getEmailInfo($id)
     {
         $user = new User();
@@ -554,7 +511,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals('firstn lastn', $actual['name']);
         self::assertEquals(1, preg_match('/^one\d{0,}\@email\.com$/', $actual['email']));
     }
-
 
     public function testencrypt_password()
     {
@@ -573,10 +529,8 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan(0, strlen($result));
     }
 
-
     public function testcheckPassword()
     {
-
         //test with empty password and empty hash
         $result = User::checkPassword("", '');
         $this->assertEquals(false, $result);
@@ -597,10 +551,8 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $result);
     }
 
-
     public function testcheckPasswordMD5()
     {
-
         //test with empty password and empty hash
         $result = User::checkPasswordMD5(md5(""), '');
         $this->assertEquals(false, $result);
@@ -620,7 +572,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = User::checkPasswordMD5(md5("test"), '$1$Gt0.XI4.$tVVSXgE36sfsVMBNo/9la1');
         $this->assertEquals(true, $result);
     }
-
 
     public function testis_authenticated()
     {
@@ -672,7 +623,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         static::assertTrue($result1 == '1' || $result2 == '1');
     }
 
-
     public function testverify_data()
     {
         global $mod_strings;
@@ -696,15 +646,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_list_view_data()
     {
-        // store state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
-        
         // test
-        
-
         global $mod_strings;
         $mod_strings['LBL_CHECKMARK'] = "";
 
@@ -714,11 +656,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $user->get_list_view_data();
         $this->assertTrue(is_array($result));
-        
-        // clean up
-        
-        $state->popTable('email_addresses');
-        $state->popGlobals();
     }
 
     public function testlist_view_parse_additional_sections()
@@ -777,7 +714,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('Error:Only variables should be passed by reference');
     }
 
-
     public function testdisplayEmailCounts()
     {
         $user = new User();
@@ -796,7 +732,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $renderedContent);
     }
 
-
     public function testgetSystemDefaultNameAndEmail()
     {
         $user = new User();
@@ -805,7 +740,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = array_keys($user->getSystemDefaultNameAndEmail());
         $this->assertSame($expected, $actual);
     }
-
 
     public function testsetDefaultsInConfig()
     {
@@ -822,15 +756,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetEmailLink2()
     {
-        // store state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
-        
         // test
-        
-
         $user = new User();
 
         $user->retrieve(1);
@@ -871,11 +797,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 >abc@email.com</a>';
         $actual = $user->getEmailLink2("abc@email.com", $contact);
         $this->assertSame($expected, $actual);
-        
-        // clean up
-        
-        $state->popTable('email_addresses');
-        $state->popGlobals();
     }
 
 
@@ -885,7 +806,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $user = new User();
 
         $user->retrieve(1);
-
 
         //test with accounts module
         $account = new Account();
@@ -953,119 +873,58 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetDeveloperModules()
     {
-        // store state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
-        
         // test
-        
-
-
         $user = new User();
 
         $user->retrieve(1);
 
         $result = $user->getDeveloperModules();
         $this->assertTrue(is_array($result));
-        
-        // clean up
-        
-        $state->popTable('email_addresses');
-        $state->popGlobals();
     }
 
     public function testisDeveloperForModule()
     {
-        // store state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
-        
         // test
-        
-
-
         $user = new User();
-
 
         //test without setting is_admin
         $this->assertEquals(false, $user->isDeveloperForModule("Accounts"));
-
 
         //test with id set
         $user->id = 1;
         $this->assertEquals(false, $user->isDeveloperForModule("Accounts"));
 
-
         //test with id and is_admin set
         $user->is_admin = 1;
         $this->assertEquals(true, $user->isDeveloperForModule("Accounts"));
-        
-        // clean up
-        
-        $state->popTable('email_addresses');
-        $state->popGlobals();
     }
 
     public function testgetAdminModules()
     {
-        // store state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
-        
         // test
-        
-
         $user = new User();
 
         $user->retrieve(1);
 
         $result = $user->getAdminModules();
         $this->assertTrue(is_array($result));
-        
-        // clean up
-        
-        $state->popTable('email_addresses');
-        $state->popGlobals();
     }
 
     public function testisAdminForModule()
     {
-        // store state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('email_addresses');
-        
         // test
-        
-
         $user = new User();
-
 
         //test without setting is_admin
         $this->assertEquals(false, $user->isAdminForModule("Accounts"));
-
 
         //test with id set
         $user->id = 1;
         $this->assertEquals(false, $user->isAdminForModule("Accounts"));
 
-
         //test with id and is_admin set
         $user->is_admin = 1;
         $this->assertEquals(true, $user->isAdminForModule("Accounts"));
-        
-        
-        // clean up
-        
-        $state->popTable('email_addresses');
-        $state->popGlobals();
     }
 
     public function testshowLastNameFirst()
@@ -1089,8 +948,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $actual = $user->create_new_list_query('','');
             $this->assertSame($expected,$actual);
 
-
-
             //test with valid string params
             $expected = " SELECT  users.* , '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt2.last_name reports_to_name , jt2.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id  FROM users   LEFT JOIN  users jt2 ON users.reports_to_id=jt2.id AND jt2.deleted=0\n\n AND jt2.deleted=0 where (user_name=\"\") AND users.deleted=0 ORDER BY users.id";
             $actual = $user->create_new_list_query('id','user_name=""');
@@ -1107,7 +964,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $user->get_first_day_of_week();
         $this->assertTrue(is_numeric($result));
     }
-
 
     public function testgeneratePassword()
     {
@@ -1133,27 +989,18 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(is_array($result));
     }
 
-
     public function testafterImportSave()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        //error_reporting(E_ALL);
-
         $user = new User();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $user->afterImportSave();
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->assertStringStartsWith('Cannot modify header information', $e->getMessage());
         }
-        
-        // clean up
     }
-
 
     public function testisPrimaryEmail()
     {
@@ -1176,9 +1023,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testError()
     {
         global $app_strings;
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('email_addresses_audit');
 
         // setup
         $this->assertTrue(!isset($app_strings['TEST_ERROR_MESSAGE']));
@@ -1204,9 +1048,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = '<span class=\'error\'>Hello error<br><br>' . "\n"  . $app_strings['NTC_CLICK_BACK'] . '</span>';
         $this->assertContains($expected, $contents);
         
-        // clean up
-        unset($app_strings['TEST_ERROR_MESSAGE']);
 
-        $state->popTable('email_addresses_audit');
+        unset($app_strings['TEST_ERROR_MESSAGE']);
     }
 }

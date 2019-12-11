@@ -1,8 +1,8 @@
 <?php
+
 namespace Page;
 
 use \AcceptanceTester as Tester;
-use Faker\Generator;
 
 class FileModule
 {

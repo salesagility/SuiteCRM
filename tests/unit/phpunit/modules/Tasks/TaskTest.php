@@ -1,46 +1,20 @@
 <?php
 
-class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
-{
-    /**
-     *
-     * @var SuiteCRM\StateSaver
-     */
-    protected $state;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+class TaskTest extends SuitePHPUnitFrameworkTestCase
+{
     public function setUp()
     {
         parent::setUp();
-
-        $this->state = new SuiteCRM\StateSaver();
-        $this->state->pushTable('aod_index');
-        $this->state->pushTable('aod_indexevent');
-        $this->state->pushTable('tasks');
-        $this->state->pushTable('tracker');
-        $this->state->pushFile('config.php');
-        $this->state->pushGlobals();
-
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
     }
 
-    public function tearDown()
-    {
-        $this->state->popTable('tracker');
-        $this->state->popTable('tasks');
-        $this->state->popTable('aod_indexevent');
-        $this->state->popTable('aod_index');
-        $this->state->popGlobals();
-        $this->state->popFile('config.php');
-
-        parent::tearDown();
-    }
-
     public function testTask()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $task = new Task();
 
         $this->assertInstanceOf('Task', $task);
@@ -106,7 +80,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $task = new Task();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $task->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -122,15 +96,13 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $task = new Task();
         $task->contact_id = 1;
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $task->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfill_in_additional_parent_fields()
@@ -139,15 +111,13 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $task->parent_type = 'Accounts';
         $task->parent_id = '1';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $task->fill_in_additional_parent_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testget_list_view_data()

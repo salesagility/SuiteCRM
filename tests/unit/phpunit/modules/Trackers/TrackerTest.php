@@ -1,6 +1,8 @@
 <?php
 
-class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class TrackerTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -10,10 +12,10 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         get_sugar_config_defaults();
         $current_user = new User();
     }
-    
+
     public function testTracker()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $tracker = new Tracker();
 
         $this->assertInstanceOf('Tracker', $tracker);
@@ -32,44 +34,25 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_recently_viewed()
     {
-        // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-
-        // test
-        
         $tracker = new Tracker();
 
         $result = $tracker->get_recently_viewed(1);
 
         $this->assertInstanceOf('BreadCrumbStack', $_SESSION['breadCrumbs']);
         $this->assertTrue(is_array($result));
-        
-        // clean up
-        
-        $state->popGlobals();
     }
 
     public function testmakeInvisibleForAll()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $tracker = new Tracker();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $tracker->makeInvisibleForAll(1);
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testbean_implements()
@@ -84,12 +67,6 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testlogPage()
     {
         self::markTestIncomplete('Test parameters and local variables are not set');
-                
-        $state = new SuiteCRM\StateSaver();
-        
-        $state->pushGlobals();
-        
-        
 
         //test without setting headerDisplayed
         Tracker::logPage();
@@ -101,9 +78,5 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(time(), $_SESSION['lpage']);
         
         //$this->assertEquals(time(), null);
-        
-        // clean up
-        
-        $state->popGlobals();
     }
 }

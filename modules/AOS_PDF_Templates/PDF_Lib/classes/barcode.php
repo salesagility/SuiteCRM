@@ -1107,7 +1107,7 @@ class PDFBarcode
                 $new_code = '';
                 $hclen = (strlen($code) / 2);
                 for ($i = 0; $i < $hclen; ++$i) {
-                    $new_code .= chr(intval($code{(2 * $i)}.$code{(2 * $i + 1)}));
+                    $new_code .= chr((int)($code{(2 * $i)} . $code{(2 * $i + 1)}));
                 }
                 $code = $new_code;
                 break;
@@ -1205,7 +1205,7 @@ class PDFBarcode
             // add check digit
             $code .= $r;
             $checkdigit = $r;
-        } elseif ($r !== intval($code[$data_len])) {
+        } elseif ($r !== (int)$code[$data_len]) {
             // wrong checkdigit
             return false;
         }
@@ -1217,7 +1217,7 @@ class PDFBarcode
         if ($upce) {
             // convert UPC-A to UPC-E
             $tmp = substr($code, 4, 3);
-            $prod_code = intval(substr($code, 7, 5));	// product code
+            $prod_code = (int)substr($code, 7, 5);	// product code
             $invalid_upce = false;
             if (($tmp == '000') or ($tmp == '100') or ($tmp == '200')) {
                 // manufacturer code ends in 000, 100, or 200
@@ -1490,7 +1490,7 @@ class PDFBarcode
         // calculate checksum
         $sum = 0;
         for ($i = 0; $i < $len; ++$i) {
-            $sum += intval($code[$i]);
+            $sum += (int)$code[$i];
         }
         $chkd = ($sum % 10);
         if ($chkd > 0) {
@@ -1774,7 +1774,7 @@ class PDFBarcode
             if ($digit == '-') {
                 $dval = 10;
             } else {
-                $dval = intval($digit);
+                $dval = (int)$digit;
             }
             $check += ($dval * $p);
             ++$p;
@@ -1797,7 +1797,7 @@ class PDFBarcode
                 if ($digit == '-') {
                     $dval = 10;
                 } else {
-                    $dval = intval($digit);
+                    $dval = (int)$digit;
                 }
                 $check += ($dval * $p);
                 ++$p;
@@ -2063,7 +2063,7 @@ class PDFBarcode
         for ($count = 0; $count < 8192; ++$count) {
             $bit_count = 0;
             for ($bit_index = 0; $bit_index < 13; ++$bit_index) {
-                $bit_count += intval(($count & (1 << $bit_index)) != 0);
+                $bit_count += (int)(($count & (1 << $bit_index)) != 0);
             }
             // if we don't have the right number of bits on, go on to the next value
             if ($bit_count == $n) {

@@ -1,6 +1,8 @@
 <?php
 
-class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class RoleTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -13,7 +15,7 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testRole()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $role = new Role();
 
         $this->assertInstanceOf('Role', $role);
@@ -30,11 +32,6 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $role = new Role();
 
         //test without setting name
@@ -43,8 +40,6 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with name set
         $role->name = 'test';
         $this->assertEquals('test', $role->get_summary_text());
-        
-        // clean up
     }
 
     public function testcreate_export_query()
@@ -95,14 +90,7 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSet_user_relationshipAndCheck_user_role_count()
     {
-
-    // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('email_addresses');
-
         // test
-        
         $role = new Role();
 
         $role->id = 1;
@@ -125,10 +113,6 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test clear_user_relationship method
         $this->clear_user_relationship($role->id, '1');
         $this->clear_user_relationship($role->id, '2');
-        
-        // clean up
-        
-        $state->popTable('email_addresses');
     }
 
     public function get_users($id)

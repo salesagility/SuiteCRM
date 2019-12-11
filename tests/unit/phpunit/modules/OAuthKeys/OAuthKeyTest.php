@@ -1,7 +1,8 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -14,8 +15,7 @@ class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testOAuthKey()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $oauthKey = new OAuthKey();
 
         $this->assertInstanceOf('OAuthKey', $oauthKey);
@@ -31,13 +31,7 @@ class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testMain()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-        
-        
-
+        // test
         $oauthKey = new OAuthKey();
 
         //preset required attributes
@@ -55,11 +49,6 @@ class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //test mark_deleted method
         $this->mark_deleted($oauthKey->id);
-        
-        // clean up
-        
-        $state->popTable('aod_index');
-        $state->popTable('tracker');
     }
 
     public function getByKey($key)
@@ -77,7 +66,6 @@ class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function fetchKey($key)
     {
-
         //test with a invalid id
         $result = OAuthKey::fetchKey('');
         $this->assertEquals(false, $result);

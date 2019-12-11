@@ -422,13 +422,13 @@ class jjwg_Maps extends jjwg_Maps_sugar
 
             if (isset($data['valid_geocode_modules'])) {
                 if (is_array($data['valid_geocode_modules'])) {
-                    $data['valid_geocode_modules'] = join(', ', $data['valid_geocode_modules']);
+                    $data['valid_geocode_modules'] = implode(', ', $data['valid_geocode_modules']);
                 }
                 $admin->saveSetting($category, 'valid_geocode_modules', $data['valid_geocode_modules']);
             }
             if (isset($data['valid_geocode_tables'])) {
                 if (is_array($data['valid_geocode_tables'])) {
-                    $data['valid_geocode_tables'] = join(', ', $data['valid_geocode_tables']);
+                    $data['valid_geocode_tables'] = implode(', ', $data['valid_geocode_tables']);
                 }
                 $admin->saveSetting($category, 'valid_geocode_tables', $data['valid_geocode_tables']);
             }
@@ -1161,7 +1161,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
 
 
         // If related account address has already been geocoded
-        if (!empty($address) && $fields['jjwg_maps_geocode_status_c'] == 'OK' &&
+        if (!empty($address) && !is_bool($fields) && $fields['jjwg_maps_geocode_status_c'] == 'OK' &&
                 !empty($fields['jjwg_maps_lat_c']) && !empty($fields['jjwg_maps_lng_c'])) {
             $aInfo = array(
                 'address' => $address,

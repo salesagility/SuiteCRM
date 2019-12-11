@@ -1,5 +1,6 @@
 <?php
 
+use Codeception\Actor;
 use Faker\Factory;
 
 /**
@@ -13,13 +14,30 @@ use Faker\Factory;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method click(string $string)
+ * @method acceptPopup()
+ * @method seeInPopup(string $string)
+ * @method wait(int $int)
+ * @method fillField(string $string, string $string1)
+ * @method checkOption(string $string)
+ * @method waitForElementVisible(string $string)
+ * @method selectOption(string $string, string $string1)
+ * @method see(string $string)
+ * @method amOnUrl($getInstanceURL)
+ * @method getInstanceURL()
+ * @method dontSee(string $string)
+ * @method getAdminPassword()
+ * @method getAdminUser()
+ * @method waitForElementNotVisible(string $string)
+ * @method executeJS(string $string)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class AcceptanceTester extends \Codeception\Actor
+ */
+class AcceptanceTester extends Actor
 {
     use _generated\AcceptanceTesterActions;
+
     /**
      * Define custom actions here
      */

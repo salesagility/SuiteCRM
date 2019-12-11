@@ -37,7 +37,7 @@ function smarty_function_fetch($params, &$smarty)
         }
         
         // fetch the file
-        if ($fp = @fopen($params['file'], 'r')) {
+        if ($fp = @fopen($params['file'], 'rb')) {
             while (!feof($fp)) {
                 $content .= fgets($fp, 4096);
             }
@@ -150,32 +150,32 @@ function smarty_function_fetch($params, &$smarty)
                     return;
                 }
                 if ($_is_proxy) {
-                    fputs($fp, 'GET ' . $params['file'] . " HTTP/1.0\r\n");
+                    fwrite($fp, 'GET ' . $params['file'] . " HTTP/1.0\r\n");
                 } else {
-                    fputs($fp, "GET $uri HTTP/1.0\r\n");
+                    fwrite($fp, "GET $uri HTTP/1.0\r\n");
                 }
                 if (!empty($host)) {
-                    fputs($fp, "Host: $host\r\n");
+                    fwrite($fp, "Host: $host\r\n");
                 }
                 if (!empty($accept)) {
-                    fputs($fp, "Accept: $accept\r\n");
+                    fwrite($fp, "Accept: $accept\r\n");
                 }
                 if (!empty($agent)) {
-                    fputs($fp, "User-Agent: $agent\r\n");
+                    fwrite($fp, "User-Agent: $agent\r\n");
                 }
                 if (!empty($referer)) {
-                    fputs($fp, "Referer: $referer\r\n");
+                    fwrite($fp, "Referer: $referer\r\n");
                 }
                 if (isset($extra_headers) && is_array($extra_headers)) {
                     foreach ($extra_headers as $curr_header) {
-                        fputs($fp, $curr_header."\r\n");
+                        fwrite($fp, $curr_header."\r\n");
                     }
                 }
                 if (!empty($user) && !empty($pass)) {
-                    fputs($fp, "Authorization: BASIC ".base64_encode("$user:$pass")."\r\n");
+                    fwrite($fp, "Authorization: BASIC ".base64_encode("$user:$pass")."\r\n");
                 }
 
-                fputs($fp, "\r\n");
+                fwrite($fp, "\r\n");
                 while (!feof($fp)) {
                     $content .= fgets($fp, 4096);
                 }
@@ -193,7 +193,7 @@ function smarty_function_fetch($params, &$smarty)
             }
         } else {
             // ftp fetch
-            if ($fp = @fopen($params['file'], 'r')) {
+            if ($fp = @fopen($params['file'], 'rb')) {
                 while (!feof($fp)) {
                     $content .= fgets($fp, 4096);
                 }

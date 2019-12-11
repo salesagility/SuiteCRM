@@ -185,6 +185,9 @@ $mod_strings = array(
     'LBL_DBCONF_SUITE_DB_USER' => 'SuiteCRM Database User',
     'LBL_DBCONF_DB_ADMIN_USER' => 'Database Administrator Username',
     'LBL_DBCONF_DB_ADMIN_PASSWORD' => 'Database Admin Password',
+    'LBL_DBCONF_COLLATION' => 'Collation',
+    'LBL_DBCONF_CHARSET' => 'Character Set',
+    'LBL_DBCONF_ADV_DB_CFG_TITLE' => 'Advanced Database Configuration',
     'LBL_DBCONF_DEMO_DATA' => 'Populate Database with Demo Data?',
     'LBL_DBCONF_DEMO_DATA_TITLE' => 'Choose Demo Data',
     'LBL_DBCONF_HOST_NAME' => 'Host Name',
@@ -200,7 +203,7 @@ $mod_strings = array(
     'LBL_DISABLED_DESCRIPTION_2' => 'After this change has been made, you may click the "Start" button below to begin your installation. <i>After the installation is complete, you will want to change the value for \'installer_locked\' to \'true\'.</i>',
     'LBL_DISABLED_DESCRIPTION' => 'The installer has already been run once. As a safety measure, it has been disabled from running a second time. If you are absolutely sure you want to run it again, please go to your config.php file and locate (or add) a variable called \'installer_locked\' and set it to \'false\'. The line should look like this:',
     'LBL_DISABLED_HELP_1' => 'For installation help, please visit the SuiteCRM',
-    'LBL_DISABLED_HELP_LNK' => 'https://suitecrm.com/suitecrm/forum/suite-forum',
+    'LBL_DISABLED_HELP_LNK' => 'https://community.suitecrm.com',
     'LBL_DISABLED_HELP_2' => 'support forums',
     'LBL_DISABLED_TITLE_2' => 'SuiteCRM Installation has been Disabled',
     'LBL_HELP' => 'Help',
@@ -507,7 +510,7 @@ $contact_user_link_guid',
     'NEW_LOGO_HELP' => 'The image file format can be either .png or .jpg. The maximum height is 170px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions.',
     'COMPANY_LOGO_UPLOAD_BTN' => 'Upload',
     'CURRENT_LOGO' => 'Current Logo:',
-    'CURRENT_LOGO_HELP' => 'This logo is displayed in the left-hand corner of the footer of the SuiteCRM application.',
+    'CURRENT_LOGO_HELP' => 'This logo is displayed in the centre of the login screen of the SuiteCRM application.',
 
 
     //Scenario selection of modules

@@ -333,7 +333,7 @@ class nusoap_server extends nusoap_base
                     } else {
                         $filename = substr($this->externalWSDLURL, $pos + 7);
                     }
-                    $fp = fopen($this->externalWSDLURL, 'r');
+                    $fp = fopen($this->externalWSDLURL, 'rb');
                     fpassthru($fp);
                 }
             } elseif ($this->wsdl) {
@@ -676,7 +676,7 @@ class nusoap_server extends nusoap_base
         } else {
             if ($class == '') {
                 $this->debug('in invoke_method, calling function using call_user_func_array()');
-                $call_arg = "$this->methodname";	// straight assignment changes $this->methodname to lower case after call_user_func_array()
+                $call_arg = (string)$this->methodname;	// straight assignment changes $this->methodname to lower case after call_user_func_array()
             } elseif ($delim == '..') {
                 $this->debug('in invoke_method, calling class method using call_user_func_array()');
                 $call_arg = array($class, $method);
@@ -722,10 +722,10 @@ class nusoap_server extends nusoap_base
             $this->debug('got a(n) '.gettype($this->methodreturn).' from method');
             $this->debug('serializing return value');
             if ($this->wsdl) {
-                if (sizeof($this->opData['output']['parts']) > 1) {
+                if (count($this->opData['output']['parts']) > 1) {
                     $this->debug('more than one output part, so use the method return unchanged');
                     $opParams = $this->methodreturn;
-                } elseif (sizeof($this->opData['output']['parts']) == 1) {
+                } elseif (count($this->opData['output']['parts']) == 1) {
                     $this->debug('exactly one output part, so wrap the method return in a simple array');
                     // TODO: verify that it is not already wrapped!
                     //foreach ($this->opData['output']['parts'] as $name => $type) {
@@ -876,7 +876,7 @@ class nusoap_server extends nusoap_base
             header($hdr, false);
         }
         print $payload;
-        $this->response = join("\r\n", $this->outgoing_headers)."\r\n\r\n".$payload;
+        $this->response = implode("\r\n", $this->outgoing_headers)."\r\n\r\n".$payload;
     }
 
     /**

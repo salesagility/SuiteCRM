@@ -99,9 +99,9 @@ function sync_get_modified_relationships($session, $module_name, $related_module
         $sugar_config['list_max_entries_per_page'] = $max_results;
     }
 
-    $date_query = "(m1.date_modified > " . db_convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime'). " AND m1.date_modified <= ". db_convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = $deleted)";
+    $date_query = "(m1.date_modified > " . DBManager::convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime'). " AND m1.date_modified <= ". DBManager::convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = $deleted)";
     if (isset($deletion_date) && !empty($deletion_date)) {
-        $date_query .= " OR ({0}.date_modified > " . db_convert("'".DBManagerFactory::getInstance()->quote($deletion_date)."'", 'datetime'). " AND {0}.date_modified <= ". db_convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = 1)";
+        $date_query .= " OR ({0}.date_modified > " . DBManager::convert("'".DBManagerFactory::getInstance()->quote($deletion_date)."'", 'datetime'). " AND {0}.date_modified <= ". DBManager::convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = 1)";
     }
 
     $in = '';
@@ -143,7 +143,7 @@ function sync_get_modified_relationships($session, $module_name, $related_module
         $output_list[] = $val;
     }
     $xml .= '</items>';
-    $next_offset = $offset + sizeof($output_list);
+    $next_offset = $offset + count($output_list);
 
     if ($php_serialize == 0) {
         $myoutput = base64_encode($xml);
@@ -151,7 +151,7 @@ function sync_get_modified_relationships($session, $module_name, $related_module
         $myoutput = get_encoded($output_list);
     }
 
-    return array('result_count'=>sizeof($output_list),'next_offset'=>0, 'total_count'=>sizeof($output_list), 'field_list'=>array(), 'entry_list'=>$myoutput , 'error'=>$error->get_soap_array());
+    return array('result_count'=>count($output_list),'next_offset'=>0, 'total_count'=>count($output_list), 'field_list'=>array(), 'entry_list'=>$myoutput , 'error'=>$error->get_soap_array());
 }
 
 

@@ -59,7 +59,7 @@
 			}
 		}
 		// currency syntax
-		if (document.ConfigureSettings.default_number_grouping_seperator.value == document.ConfigureSettings.default_decimal_seperator.value) {
+		if (document.ConfigureSettings.default_number_grouping_separator.value == document.ConfigureSettings.default_decimal_separator.value) {
 			alert(cannotEq);
 			return false;
 		}
@@ -143,12 +143,12 @@
 		</td>
 		<td  scope="row">{$MOD.LBL_LOCALE_DEFAULT_NUMBER_GROUPING_SEP}: </td>
 		<td  >
-			<input type='text' size='3' maxlength='1' name='default_number_grouping_seperator' value='{$config.default_number_grouping_seperator}'>
+			<input type='text' size='3' maxlength='1' name='default_number_grouping_separator' value='{$config.default_number_grouping_separator}'>
 		</td>
 	</tr><tr>
 		<td  scope="row">{$MOD.LBL_LOCALE_DEFAULT_DECIMAL_SEP}: </td>
 		<td  >
-			<input type='text' size='3' maxlength='1' name='default_decimal_seperator'  value='{$config.default_decimal_seperator}'>
+			<input type='text' size='3' maxlength='1' name='default_decimal_separator'  value='{$config.default_decimal_separator}'>
 		</td>
 		<td  scope="row"></td>
 		<td  ></td>

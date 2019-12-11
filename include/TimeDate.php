@@ -261,15 +261,15 @@ class TimeDate
      * The order is: supplied parameter, TimeDate's user, global current user
      *
      * @param User $user User object, default is current user
-     * @internal
      * @return User
+     * @internal
      */
     protected function _getUser(User $user = null)
     {
-        if (empty($user)) {
+        if ($user === null) {
             $user = $this->user;
         }
-        if (empty($user)) {
+        if ($user === null && isset($GLOBALS['current_user'])) {
             $user = $GLOBALS['current_user'];
         }
 
@@ -493,7 +493,6 @@ class TimeDate
     {
         return explode(' ', $datetime, 2);
     }
-
 
     /**
      * Get user date format in Javascript form
@@ -1067,7 +1066,7 @@ class TimeDate
             's' => $date->format("s")
         );
         if ($ampm) {
-            $datearr['a'] = ($ampm{0} == 'a') ? $date->format("a") : $date->format("A");
+            $datearr['a'] = ($ampm[0] == 'a') ? $date->format("a") : $date->format("A");
         }
 
         return $datearr;
@@ -2008,13 +2007,6 @@ class TimeDate
         $result = array();
         $transitions = $tz->getTransitions($year_date->ts, $year_end->ts);
         $idx = 0;
-        if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-            // <5.3.0 ignores parameters, advance manually to current year
-            $start_ts = $year_date->ts;
-            while (isset($transitions[$idx]) && $transitions[$idx]["ts"] < $start_ts) {
-                $idx++;
-            }
-        }
         // get DST start
         while (isset($transitions[$idx]) && !$transitions[$idx]["isdst"]) {
             $idx++;
@@ -2074,7 +2066,7 @@ class TimeDate
         }
 
         $menu = "<select name='" . $prefix . "meridiem' " . $attrs . ">";
-        if ($am{0} == 'a') {
+        if ($am[0] == 'a') {
             $menu .= "<option value='am'{$selected["am"]}>am";
             $menu .= "<option value='pm'{$selected["pm"]}>pm";
         } else {

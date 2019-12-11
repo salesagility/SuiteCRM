@@ -1,12 +1,12 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testjjwg_Areas()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $jjwgAreas = new jjwg_Areas();
 
         $this->assertInstanceOf('jjwg_Areas', $jjwgAreas);
@@ -29,19 +29,12 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testconfiguration()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $jjwgAreas = new jjwg_Areas();
         $jjwgAreas->configuration();
 
         $this->assertInstanceOf('jjwg_Maps', $jjwgAreas->jjwg_Maps);
         $this->assertTrue(is_array($jjwgAreas->settings));
         $this->assertGreaterThan(0, count($jjwgAreas->settings));
-        
-        // clean up
     }
 
     public function testretrieve()

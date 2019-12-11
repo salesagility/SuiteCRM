@@ -7,7 +7,7 @@
     * |                                                                                |
     * | RGraph is dual licensed under the Open Source GPL (General Public License)     |
     * | v2.0 license and a commercial license which means that you're not bound by     |
-    * | the terms of the GPL. The commercial license is just £99 (GBP) and you can     |
+    * | the terms of the GPL. The commercial license is just ï¿½99 (GBP) and you can     |
     * | read about it here:                                                            |
     * |                      http://www.rgraph.net/license                             |
     * o--------------------------------------------------------------------------------o
@@ -18,7 +18,7 @@
     /**
     * The gantt chart constructor
     * 
-    * @param object conf The configuration object. You can also give seperate arguments if you prefer:
+    * @param object conf The configuration object. You can also give separate arguments if you prefer:
     *                    var foo = new RGraph.Gantt('cvs', [[0,50],[25,50],[50,50]]);
     */
     RGraph.Gantt = function (conf)

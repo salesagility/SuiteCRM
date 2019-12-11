@@ -1,16 +1,11 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class ViewFactoryTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class ViewFactoryTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testloadView()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        //error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
         //check with invalid input. must return sugaview instance
         $view = ViewFactory::loadView('default', '');
         $this->assertInstanceOf('SugarView', $view);
@@ -22,8 +17,6 @@ class ViewFactoryTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //check with a valid module and specific view, must reutern speciifc view instance
         $view = ViewFactory::loadView('list', 'Users');
         $this->assertInstanceOf('UsersViewList', $view);
-        
-        // clean up
     }
 
     public function test_loadConfig()
@@ -50,15 +43,14 @@ class ViewFactoryTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function test_buildFromFile()
     {
-
-        //checck with valid values and test if it returns correct view instance
+        //check with valid values and test if it returns correct view instance
         $type = 'list';
         $target_module = 'Users';
         $bean = null;
         $view = ViewFactory::_buildFromFile('modules/'.$target_module.'/views/view.'.$type.'.php', $bean, array(), $type, $target_module);
         $this->assertInstanceOf('UsersViewList', $view);
 
-        //checck with valid values and test if it returns correct view instance
+        //check with valid values and test if it returns correct view instance
         $type = 'detail';
         $target_module = 'Users';
         $bean = null;
@@ -68,12 +60,11 @@ class ViewFactoryTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function test_buildClass()
     {
-
-        //checck with valid values and test if it returns correct view instance
+        //check with valid values and test if it returns correct view instance
         $view = ViewFactory::_buildClass('UsersViewList', null, array());
         $this->assertInstanceOf('UsersViewList', $view);
 
-        //checck with valid values and test if it returns correct view instance
+        //check with valid values and test if it returns correct view instance
         $view = ViewFactory::_buildClass('UsersViewDetail', null, array());
         $this->assertInstanceOf('UsersViewDetail', $view);
     }

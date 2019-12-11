@@ -60,7 +60,7 @@ class EmailsController extends SugarController
     const ERR_REPLY_TO_FROMAT_INVALID_NO_NAME = 112;
     const ERR_REPLY_TO_FROMAT_INVALID_NO_ADDR = 113;
     const ERR_REPLY_TO_FROMAT_INVALID_AS_FROM = 114;
-    
+
     /**
      * @var Email $bean ;
      */
@@ -812,11 +812,11 @@ class EmailsController extends SugarController
 
         // Move body into original message
         if (!empty($this->bean->description_html)) {
-            $this->bean->description = '<br>' . $mod_strings['LBL_ORIGINAL_MESSAGE_SEPERATOR'] . '<br>' .
+            $this->bean->description = '<br>' . $mod_strings['LBL_ORIGINAL_MESSAGE_SEPARATOR'] . '<br>' .
                 $this->bean->description_html;
         } else {
             if (!empty($this->bean->description)) {
-                $this->bean->description = PHP_EOL . $mod_strings['LBL_ORIGINAL_MESSAGE_SEPERATOR'] . PHP_EOL .
+                $this->bean->description = PHP_EOL . $mod_strings['LBL_ORIGINAL_MESSAGE_SEPARATOR'] . PHP_EOL .
                     $this->bean->description;
             }
         }
