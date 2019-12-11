@@ -3232,6 +3232,37 @@ function decodeJavascriptUTF8($str)
  */
 function check_php_version($sys_php_version = '', $min_php_version = '', $rec_php_version = '')
 {
+    if ($sys_php_version === '') {
+        $sys_php_version = constant('PHP_VERSION');
+    }
+
+    if ($min_php_version === '') {
+        $min_php_version = constant('SUITECRM_PHP_MIN_VERSION');
+    }
+
+    if ($rec_php_version === '') {
+        $rec_php_version = constant('SUITECRM_PHP_REC_VERSION');
+    }
+
+    // versions below MIN_PHP_VERSION are not accepted, so return early.
+    if (version_compare($sys_php_version, $min_php_version, '<') === true) {
+        return -1;
+    }
+
+    // If there are some bug ridden versions, we should include them here
+    // and check immediately for one of this versions
+    $bug_php_versions = array();
+    foreach ($bug_php_versions as $v) {
+        if (version_compare($sys_php_version, $v, '=') === true) {
+            return -1;
+        }
+    }
+
+    // If the checked version is between the minimum and recommended versions, return 0.
+    if (version_compare($sys_php_version, $rec_php_version, '<') === true) {
+        return 0;
+    }
+
     // Everything else is fair game
     return 1;
 }
