@@ -71,7 +71,7 @@ before_script:
 
 script:
   # Test to see what it returns as the php version.
-  - php -r 'echo constant("PHP_VERSION");'
+  - echo $(php -r 'echo constant("PHP_VERSION");')
   # Run the wizard installer
   - echo "using install wizard"
   - ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter
