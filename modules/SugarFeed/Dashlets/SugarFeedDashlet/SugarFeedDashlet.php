@@ -527,7 +527,7 @@ class SugarFeedDashlet extends DashletGeneric
         global $sugar_config, $timedate, $current_user, $theme;
         $options = array();
         $options['title'] = $req['title'];
-        $rows = intval($_REQUEST['rows']);
+        $rows = (int)$_REQUEST['rows'];
         if ($rows <= 0) {
             $rows = 15;
         }
@@ -661,7 +661,7 @@ enableQS(false);
     {
         global $current_user;
 
-        if (!empty($this->selectedCategories) && !key_exists('UserFeed', $this->categories)) {
+        if (!empty($this->selectedCategories) && !array_key_exists('UserFeed', $this->categories)) {
             // The user feed system isn't enabled, don't let them post notes
             return '';
         }

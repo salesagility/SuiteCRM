@@ -48,6 +48,8 @@ class SchedulersViewList extends ViewList
     public function display()
     {
         parent::display();
-        $this->seed->displayCronInstructions();
+        if (!($this->options['show_all'] === false)) {
+            $this->seed->displayCronInstructions();
+        }
     }
 }

@@ -41,8 +41,6 @@
 namespace SuiteCRM\API\JsonApi\v1\Filters\Parsers;
 
 use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface;
-use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ParserInterface;
-use Interop\Container\Exception\ContainerException;
 use Psr\Container\ContainerInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;

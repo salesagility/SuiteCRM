@@ -158,10 +158,10 @@
                                 {if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
                                     {if $pageData.ordering.sortOrder == 'ASC'}
                                         {capture assign="imageName"}arrow_down.{$arrowExt}{/capture}
-                                        <span class="suitepicon suitepicon-action-sorting-descending"></span>
+                                        <span class="suitepicon suitepicon-action-sorting-ascending"></span>
                                     {else}
                                         {capture assign="imageName"}arrow_up.{$arrowExt}{/capture}
-                                        <span class="suitepicon suitepicon-action-sorting-ascending"></span>
+                                        <span class="suitepicon suitepicon-action-sorting-descending"></span>
                                     {/if}
                                 {else}
                                     {capture assign="imageName"}arrow.{$arrowExt}{/capture}

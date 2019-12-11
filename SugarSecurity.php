@@ -56,7 +56,7 @@ class SugarSecure
     
     public function save($file='')
     {
-        $fp = fopen($file, 'a');
+        $fp = fopen($file, 'ab');
         foreach ($this->results as $result) {
             fwrite($fp, $result);
         }

@@ -125,7 +125,7 @@ class ViewLayoutView extends SugarView
             $smarty->assign($image, SugarThemeRegistry::current()->getImage($file, '', null, null, '.gif', $file)) ;
         }
 
-        $requiredFields = implode($parser->getRequiredFields(), ',');
+        $requiredFields = implode(',', $parser->getRequiredFields());
         $slashedRequiredFields = addslashes($requiredFields);
         $buttons = array( ) ;
         $disableLayout = false;

@@ -382,7 +382,7 @@ class SugarView
         $GLOBALS['app']->headerDisplayed = true;
 
         $themeObject = SugarThemeRegistry::current();
-        $theme = $themeObject->__toString();
+        $theme = (string)$themeObject;
 
         $ss = new Sugar_Smarty();
         $ss->assign("APP", $app_strings);
@@ -870,7 +870,7 @@ class SugarView
 
         // Add in the number formatting styles here as well, we have been handling this with individual modules.
         require_once('modules/Currencies/Currency.php');
-        list($num_grp_sep, $dec_sep) = get_number_seperators();
+        list($num_grp_sep, $dec_sep) = get_number_separators();
 
         $the_script =
             "<script type=\"text/javascript\">\n" .
@@ -995,8 +995,8 @@ EOHTML;
         if (empty($this->responseTime)) {
             $this->_calculateFooterMetrics();
         }
-        global $app_strings;
-        global $mod_strings;
+        global $app_strings, $sugar_config;
+        $server_unique_key = isset($sugar_config['unique_key']) ? $sugar_config['unique_key'] : '';
         $themeObject = SugarThemeRegistry::current();
 
         $ss = new Sugar_Smarty();
@@ -1107,7 +1107,7 @@ EOHTML;
         // here we allocate the help link data
         $help_actions_blacklist = array('Login'); // we don't want to show a context help link here
         if (!in_array($this->action, $help_actions_blacklist)) {
-            if (!isset($GLOBALS['server_unique_key'])) {
+            if (!isset($server_unique_key)) {
                 LoggerManager::getLogger()->warn('Undefined index: server_unique_key');
             }
             $url =
@@ -1123,7 +1123,7 @@ EOHTML;
                 '&help_action=' .
                 $this->action .
                 '&key=' .
-                (isset($GLOBALS['server_unique_key']) ? $GLOBALS['server_unique_key'] : null) .
+                (isset($server_unique_key) ? $server_unique_key : null) .
                 '\'))';
             $label =
                 (isset($GLOBALS['app_list_strings']['moduleList'][$this->module]) ?
@@ -1220,7 +1220,7 @@ EOHTML;
         global $beanFiles;
 
         if (!empty($this->module) && !file_exists('modules/' . $this->module) && !file_exists($beanFiles[$this->module])) {
-            $error = str_replace("[module]", "$this->module", $GLOBALS['app_strings']['ERR_CANNOT_FIND_MODULE']);
+            $error = str_replace("[module]", (string)$this->module, $GLOBALS['app_strings']['ERR_CANNOT_FIND_MODULE']);
             $GLOBALS['log']->fatal($error);
             echo $error;
             die();
@@ -1619,9 +1619,9 @@ EOHTML;
             if (!empty($iconPath) && !$browserTitle) {
                 if (SugarThemeRegistry::current()->directionality == "ltr") {
                     return $app_strings['LBL_SEARCH_ALT'] . "&nbsp;"
-                        . "$firstParam";
+                        . (string)$firstParam;
                 }
-                return "$firstParam" . "&nbsp;" . $app_strings['LBL_SEARCH'];
+                return (string)$firstParam . "&nbsp;" . $app_strings['LBL_SEARCH'];
             }
             return $firstParam;
         }

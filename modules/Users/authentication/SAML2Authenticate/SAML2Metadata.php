@@ -1,3 +1,4 @@
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,37 +34,21 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-var abouter = function(){
-	return {
-		display:function(){
-			abouter.div = document.getElementById('abouterdiv');
-			abouter.div.style.display ='';
-			abouter.div.src = "index.php?module=Home&action=PopupSugar&to_pdf=true&style=" + abouter.style;
-		},
-		ab:function(index, style){
-			if(abouter.starter == 3){
-				abouter.style = style;
-				abouter.display();
-			}else{
-				if(index == abouter.starter + 1){
-					abouter.starter++;
-				}else{
-					abouter.starter= 0;
-				}
-			}
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-		}
+require_once __DIR__ . '/SAML2Authenticate.php';
+require_once __DIR__ . '/lib/onelogin/settings.php';
 
-
-
-	}
-
-
-
-}();
-abouter.starter = 0;
-abouter.style = 'inc';
+try {
+    $xml = getSAML2Metadata($settingsInfo);
+    header('Content-Type: text/xml');
+    echo $xml;
+} catch (Exception $e) {
+    echo $e->getMessage();
+}

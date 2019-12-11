@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -75,9 +75,9 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
             // awu: Not all beans have emailAddress property, we must account for this
             if (isset($bean->emailAddress)) {
                 $to_addrs = $bean->emailAddress->getPrimaryAddress($bean);
-                $button = "<input class='button' type='button'  value='$value'  id='" . $this->getWidgetId() . "'  name='" . preg_replace('[ ]', '', $value) . "'   title='$title' onclick=\"location.href='mailto:$to_addrs';return false;\" />";
+                $button = "<input class='button' type='button' value='$value' id='" . $this->getWidgetId() . "' name='" . preg_replace('[ ]', '', $value) . "' title='$title' onclick=\"location.href='mailto:$to_addrs';return false;\"/>";
             } else {
-                $button = "<input class='button' type='button'  value='$value'  id='" . $this->getWidgetId() . "'  name='" . preg_replace('[ ]', '', $value) . "'  title='$title' onclick=\"location.href='mailto:';return false;\" />";
+                $button = "<input class='button' type='button' value='$value' id='" . $this->getWidgetId() . "' name='" . preg_replace('[ ]', '', $value) . "' title='$title' onclick=\"location.href='mailto:';return false;\"/>";
             }
         } else {
             // Generate the compose package for the quick create options.
@@ -112,7 +112,13 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
         $inputID = $this->getWidgetId();
 
         $button = $this->_get_form($defines, $additionalFormFields);
-        $button .= "<a id='$inputID'>$this->form_value</a>";
+
+        global $current_user;
+        $client = $current_user->getEmailClient();
+
+        if ($client == 'sugar') {
+            $button .= "<input class='button' type='button' id='$inputID' value='$this->form_value'>";
+        }
 
         return $button;
     }

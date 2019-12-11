@@ -115,12 +115,12 @@ $(document).ready(function(){
       });
     };
 
-    function loadTreeLeafData(node){
+    function loadTreeLeafData(node) {
       var module = node.module;
       var module_name = node.name;
       var module_path_display = node.module_path_display;
 
-      if(!treeDataLeafs[module]) {
+      if (!treeDataLeafs[module_path_display]) {
         $.getJSON('index.php',
           {
             'module': 'AOR_Reports',
@@ -132,7 +132,7 @@ $(document).ready(function(){
             var treeData = [];
 
             for (var field in fieldData) {
-              if (field) {
+              if (fieldData.hasOwnProperty(field) && field !== '') {
                 treeData.push(
                   {
                     id: field,
@@ -145,56 +145,52 @@ $(document).ready(function(){
                   });
               }
             }
-            //$('#fieldTree').tree('loadData',treeData,node);
-            //node.loaded = true;
-            //$('#fieldTree').tree('openNode', node);
-            treeDataLeafs[module] = treeData;
-            showTreeDataLeafs(treeDataLeafs[module], module, module_name, module_path_display);
+            treeDataLeafs[module_path_display] = treeData;
+            showTreeDataLeafs(treeDataLeafs[module_path_display], module, module_name, module_path_display);
           }
         );
-      }
-      else {
-        showTreeDataLeafs(treeDataLeafs[module], module, module_name, module_path_display);
+      } else {
+        showTreeDataLeafs(treeDataLeafs[module_path_display], module, module_name, module_path_display);
       }
     }
 
     function processTreeData(relData, node){
       var treeData = [];
-
-      for(var field in relData){
-        // We don't want to show the parent module as child of itself
-        if(node && node.module == relData[field]['module']){
-          continue;
-        }
-        if(field) {
+      for (var field in relData) {
+        if (relData.hasOwnProperty(field)) {
+          // We don't want to show the parent module as child of itself
+          if (node && relData[field].type === 'module') {
+            continue;
+          }
           var modulePath = '';
           var modulePathDisplay = '';
-          if(relData[field]['type'] == 'relationship') {
+          if (relData[field].type === 'relationship') {
             modulePath = field;
             if (node) {
               if (node.module_path) {
                 modulePath = node.module_path + ":" + field;
               }
-              modulePathDisplay = node.module_path_display + " : "+relData[field]['module_label'];
-            }else{
-              modulePathDisplay = $('#report_module option:selected').text() + ' : ' + relData[field]['module_label'];
+              modulePathDisplay = node.module_path_display + " : " + relData[field].module_label;
+            } else {
+              modulePathDisplay = $('#report_module option:selected').text() + ' : ' + relData[field].module_label;
             }
-          }else{
+          } else {
             if (node) {
               modulePath = node.module_path;
               modulePathDisplay = node.module_path_display;
-            }else{
-              modulePathDisplay = relData[field]['module_label'];
+            } else {
+              modulePathDisplay = relData[field].module_label;
             }
           }
           var newNode = {
             id: field,
-            label: relData[field]['module_label'],
-            load_on_demand : true,
-            type: relData[field]['type'],
-            module: relData[field]['module'],
+            label: relData[field].module_label,
+            load_on_demand: true,
+            type: relData[field].type,
+            module: relData[field].module,
             module_path: modulePath,
-            module_path_display: modulePathDisplay};
+            module_path_display: modulePathDisplay
+          };
           treeData.push(newNode);
         }
       }

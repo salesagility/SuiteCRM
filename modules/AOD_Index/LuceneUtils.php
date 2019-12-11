@@ -23,14 +23,6 @@
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 
-
-
-function requireLucene()
-{
-    set_include_path(get_include_path() . PATH_SEPARATOR . "modules/AOD_Index/Lib");
-    require_once('Zend/Search/Lucene.php');
-}
-
 function getDocumentRevisionPath($revisionId)
 {
     return "upload/$revisionId";
@@ -89,7 +81,7 @@ function createDocXDocument($path)
  */
 function createDocDocument($path)
 {
-    $fileHandle = fopen($path, "r");
+    $fileHandle = fopen($path, 'rb');
     $line = @fread($fileHandle, filesize($path));
     $lines = explode(chr(0x0D), $line);
     $outtext = "";

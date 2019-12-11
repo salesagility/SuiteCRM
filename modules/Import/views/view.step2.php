@@ -208,13 +208,13 @@ function publishMapping(elem, publish, mappingId, importModule)
     elem.publish = newPublish;
 
 }
-function deleteMapping(elemId, mappingId )
+function deleteMapping(elemId, mappingId, importModule )
 {
     var elem = document.getElementById(elemId);
     var table = elem.parentNode;
     table.deleteRow(elem.rowIndex);
 
-    var url = 'index.php?action=mapping&module=Import&delete_map_id=' + mappingId;
+    var url = 'index.php?action=mapping&module=Import&delete_map_id=' + mappingId + '&import_module=' + importModule;
     var callback = {
                         success: function(o)
                         {

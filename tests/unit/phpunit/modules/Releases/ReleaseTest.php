@@ -1,11 +1,12 @@
 <?php
 
-class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ReleaseTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testRelease()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $release = new Release();
 
         $this->assertInstanceOf('Release', $release);
@@ -47,7 +48,7 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $release = new Release();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $release->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -60,7 +61,7 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $release = new Release();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $release->fill_in_additional_detail_fields();
             $this->assertTrue(true);

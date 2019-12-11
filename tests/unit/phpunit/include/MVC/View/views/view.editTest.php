@@ -1,6 +1,8 @@
 <?php
 
-class ViewEditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewEditTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -13,7 +15,7 @@ class ViewEditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testViewEdit()
     {
-        //execute the contructor and check for the Object type and attributes
+        // Execute the constructor and check for the Object type and attributes
         $view = new ViewEdit();
         $this->assertInstanceOf('ViewEdit', $view);
         $this->assertInstanceOf('SugarView', $view);
@@ -44,7 +46,7 @@ class ViewEditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $view->preDisplay();
         $this->assertInstanceOf('EditView', $view->ev);
         
-        // clean up
+
         if (isset($session)) {
             $_SESSION = $session;
         } else {

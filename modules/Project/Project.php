@@ -495,7 +495,7 @@ class Project extends SugarBean
             $template = new AM_ProjectTemplates();
             $template->retrieve($new_template_id);
 
-            $override_business_hours = intval($template->override_business_hours);
+            $override_business_hours = (int)$template->override_business_hours;
 
 
             //------ build business hours array

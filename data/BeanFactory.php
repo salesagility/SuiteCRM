@@ -110,6 +110,9 @@ class BeanFactory
                 ++self::$hits;
                 ++self::$touched[$module][$id];
                 $bean = self::$loadedBeans[$module][$id];
+                if ($deleted && $bean->deleted) {
+                    return false;
+                }
             }
         } else {
             $bean = new $beanClass();
