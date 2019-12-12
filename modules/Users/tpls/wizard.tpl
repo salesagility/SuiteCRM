@@ -232,12 +232,12 @@
                         <tr>
                             <td width="17%" scope="row" nowrap="nowrap"><span>{$MOD.LBL_DECIMAL_SEP}:</span>&nbsp;{sugar_help text=$MOD.LBL_DECIMAL_SEP_TEXT }</td>
                             <td ><span>
-                                    <input tabindex='14' name='dec_sep' id='default_decimal_seperator'
+                                    <input tabindex='14' name='dec_sep' id='default_decimal_separator'
                                            type='text' maxlength='1' size='1' value='{$DEC_SEP}'
                                            onkeydown='setSigDigits();' onkeyup='setSigDigits();'>
                                 </span></td>
                             <td width="17%" scope="row" nowrap="nowrap"><span>{$MOD.LBL_NUMBER_GROUPING_SEP}:</span>&nbsp;{sugar_help text=$MOD.LBL_NUMBER_GROUPING_SEP_TEXT }</td>
-                            <td><input tabindex='14' name='num_grp_sep' id='default_number_grouping_seperator'
+                            <td><input tabindex='14' name='num_grp_sep' id='default_number_grouping_separator'
                                        type='text' maxlength='1' size='1' value='{$NUM_GRP_SEP}'
                                        onkeydown='setSigDigits();' onkeyup='setSigDigits();'></td>
                         </tr>
@@ -288,14 +288,14 @@
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
                                         <tr><td><img src=include/images/configure.png style="margin-right: 5px;"></td><td><a onclick='document.UserWizard.whatnext.value="studio";document.UserWizard.submit()' href="#"  ><b> {$MOD.LBL_WIZARD_FINISH9} </b></a><br>{$MOD.LBL_WIZARD_FINISH10}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-                                        <tr><td><img src=include/images/university.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/suitecrm/forum/suite-forum" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
+                                        <tr><td><img src=include/images/university.png style="margin-right: 5px;"></td><td><a href="https://community.suitecrm.com" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
                                     {else}
-                                        <tr><td><img src=include/images/university2.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/suitecrm/forum/suite-forum" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
+                                        <tr><td><img src=include/images/university2.png style="margin-right: 5px;"></td><td><a href="https://community.suitecrm.com" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
                                         <tr><td><img src=include/images/docs.png style="margin-right: 5px;"></td><td><a href="https://docs.suitecrm.com/user/" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH14} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH15}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-                                        <tr><td><img src=include/images/forums.png style="margin-right: 5px;"></td><td><a href="https://suitecrm.com/suitecrm/forum/suite-forum" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH18} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH19}</td></tr>
+                                        <tr><td><img src=include/images/forums.png style="margin-right: 5px;"></td><td><a href="https://community.suitecrm.com/" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH18} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH19}</td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
                                     {/if}
                                 </table>

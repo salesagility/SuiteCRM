@@ -1,7 +1,8 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class CampaignLogTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class CampaignLogTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -14,8 +15,7 @@ class CampaignLogTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testCampaignLog()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $campaignLog = new CampaignLog();
         $this->assertInstanceOf('CampaignLog', $campaignLog);
         $this->assertInstanceOf('SugarBean', $campaignLog);
@@ -28,19 +28,12 @@ class CampaignLogTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_list_view_data()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $campaignLog = new CampaignLog();
 
         //execute the method and verify it returns an array
         $actual = $campaignLog->get_list_view_data();
         $this->assertTrue(is_array($actual));
         $this->assertSame(array(), $actual);
-        
-        // clean up
     }
 
     public function testretrieve_email_address()
@@ -55,7 +48,6 @@ class CampaignLogTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $campaignLog = new CampaignLog();
 
         //execute the method and verify that it retunrs expected results for all type parameters
-
         $this->assertEquals('1Emails', $campaignLog->get_related_name(1, 'Emails'));
         $this->assertEquals('1Contacts', $campaignLog->get_related_name(1, 'Contacts'));
         $this->assertEquals('1Leads', $campaignLog->get_related_name(1, 'Leads'));

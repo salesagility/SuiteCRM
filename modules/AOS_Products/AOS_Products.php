@@ -55,7 +55,7 @@ class AOS_Products extends AOS_Products_sugar
             return com_create_guid();
         }
         mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
-        $charid = strtoupper(md5(uniqid(rand(), true)));
+        $charid = strtoupper(md5(uniqid(mt_rand(), true)));
         $hyphen = chr(45);// "-"
         $uuid = substr($charid, 0, 8).$hyphen
                 .substr($charid, 8, 4).$hyphen
@@ -114,7 +114,7 @@ class AOS_Products extends AOS_Products_sugar
 				JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage = 'Closed Accepted' AND aos_quotes.deleted = 0
 				JOIN accounts ON accounts.id = aos_quotes.billing_account_id -- AND accounts.deleted = 0
 
-				GROUP BY accounts.id
+				GROUP BY aos_quotes.id
 			) AS aos_quotes
 
 		";

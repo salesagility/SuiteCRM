@@ -1,7 +1,6 @@
 <?php
 namespace Step\Acceptance;
 
-use Helper\WebDriverHelper;
 use SuiteCRM\Enumerator\SugarObjectType;
 
 class ModuleBuilder extends Administration
@@ -77,13 +76,12 @@ class ModuleBuilder extends Administration
             $I->waitForElementVisible('[name="name"]');
 
             $I->deployPackage($packageName);
-            // Redeploy @TODO seperate this out to new test
+            // Redeploy @TODO separate this out to new test
             $I->deployPackage($packageName, true);
         } else {
             $I->getScenario()->skip($packageName . ' already exists. Please remove package and module manually.');
         }
     }
-
 
     /**
      * @param string $packageName
@@ -100,7 +98,6 @@ class ModuleBuilder extends Administration
         $I->click($packageName, '.bodywrapper');
         $I->waitForElementVisible(['name' => 'author']);
     }
-
 
     /**
      * @param string $packageName
@@ -121,7 +118,6 @@ class ModuleBuilder extends Administration
         $I->waitForElementVisible(['name' => 'savebtn']);
     }
 
-
     public function closePopupSuccess()
     {
         $I = $this;
@@ -135,7 +131,6 @@ class ModuleBuilder extends Administration
      * @param boolean $packageExists
      *
      */
-
     public function deployPackage($packageName, $packageExists = false)
     {
         $I = $this;

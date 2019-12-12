@@ -1,7 +1,8 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class CampaignTrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class CampaignTrackerTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -14,12 +15,7 @@ class CampaignTrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testCampaignTracker()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        
-        
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $campaignTracker = new CampaignTracker();
         $this->assertInstanceOf('CampaignTracker', $campaignTracker);
         $this->assertInstanceOf('SugarBean', $campaignTracker);
@@ -28,23 +24,10 @@ class CampaignTrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals('CampaignTracker', 'object_name', $campaignTracker);
         $this->assertAttributeEquals('campaign_trkrs', 'table_name', $campaignTracker);
         $this->assertAttributeEquals(true, 'new_schema', $campaignTracker);
-        
-        // clean up
-        
-        $state->popTable('aod_index');
     }
 
     public function testsave()
     {
-        // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('campaign_trkrs');
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-
-        // test
-        
         $campaignTracker = new CampaignTracker();
 
         $campaignTracker->tracker_name = 'test';
@@ -60,12 +43,6 @@ class CampaignTrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $campaignTracker->mark_deleted($campaignTracker->id);
         $result = $campaignTracker->retrieve($campaignTracker->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
-        $state->popTable('campaign_trkrs');
     }
 
     public function testget_summary_text()

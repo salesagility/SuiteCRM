@@ -1,6 +1,8 @@
 <?php
 
-class SugarThemeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class SugarThemeTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testGetMimeType()
     {

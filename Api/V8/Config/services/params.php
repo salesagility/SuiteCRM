@@ -67,6 +67,12 @@ return CustomLoader::mergeCustomArray([
             $container->get(BeanManager::class)
         );
     },
+    Param\CreateRelationshipByLinkParams::class => function (Container $container) {
+        return new Param\CreateRelationshipByLinkParams(
+            $container->get(ValidatorFactory::class),
+            $container->get(BeanManager::class)
+        );
+    },
     Param\DeleteRelationshipParams::class => function (Container $container) {
         return new Param\DeleteRelationshipParams(
             $container->get(ValidatorFactory::class),

@@ -1,7 +1,8 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class ProspectTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -14,8 +15,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testProspect()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $prospect = new Prospect();
 
         $this->assertInstanceOf('Prospect', $prospect);
@@ -32,11 +32,6 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $prospect = new Prospect();
 
         $prospect->salutation = 'mr';
@@ -49,8 +44,6 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertAttributeEquals('last', 'full_name', $prospect);
         $this->assertAttributeEquals('last &lt;email1@test.com&gt;', 'email_and_name1', $prospect);
-        
-        // clean up
     }
 
     public function testfill_in_additional_detail_fields()
@@ -85,15 +78,9 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testconverted_prospect()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $prospect = new Prospect();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             //$prospect->converted_prospect('1', '2', '3', '4');
             $this->assertTrue(true);
@@ -102,8 +89,6 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->markTestIncomplete('Multiple errors in query');
-        
-        // clean up
     }
 
     public function testbean_implements()

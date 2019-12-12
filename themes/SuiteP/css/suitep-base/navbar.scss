@@ -94,7 +94,7 @@
         color: $navbar-menu-link-color;
         padding: 7px 10px 7px 10px;
         margin: 0;
-        border-bottom: 1px solid $navbar-menu-seperator;
+        border-bottom: 1px solid $navbar-menu-separator;
         letter-spacing: 0;
         text-decoration: none;
         text-transform: none;
@@ -160,21 +160,21 @@
 
         > a:hover {
           background-color: $navbar-main-menu-bg;
-          border-top: 3px solid $navbar-menu-current-seperator;
+          border-top: 3px solid $navbar-menu-current-separator;
         }
       }
 
       > span.currentTab {
         > a {
           display: inline-block;
-          border-top: 3px solid $navbar-menu-current-seperator;
+          border-top: 3px solid $navbar-menu-current-separator;
           //padding-top: 36px;
           //padding-bottom: 35px;
         }
       }
 
       .currentTab a {
-        color: $navbar-menu-current-seperator;
+        color: $navbar-menu-current-separator;
       }
 
       .currentTab a,
@@ -204,14 +204,14 @@
 
         > a:hover {
           background-color: $navbar-main-menu-bg;
-          border-top: 3px solid $navbar-menu-current-seperator;
+          border-top: 3px solid $navbar-menu-current-separator;
         }
       }
 
       > span.currentTab {
         > a {
           display: inline-block;
-          border-top: 3px solid $navbar-menu-current-seperator;
+          border-top: 3px solid $navbar-menu-current-separator;
           padding-top: 0;
           padding-bottom: 0;
           height: $navbar-height;
@@ -396,27 +396,27 @@
 }
 
 .mobileheader .dropdown-menu li.recentlinks {
-  border-bottom: 1px solid $navbar-menu-seperator;
+  border-bottom: 1px solid $navbar-menu-separator;
 }
 
 .mobileheader .dropdown-menu li.favoritelinks {
-  border-bottom: 1px solid $navbar-menu-seperator;
+  border-bottom: 1px solid $navbar-menu-separator;
 }
 
 .topnav .dropdown-menu li.recentlinks {
-  border-bottom: 1px solid $navbar-menu-seperator;
+  border-bottom: 1px solid $navbar-menu-separator;
 }
 
 .topnav .dropdown-menu li.favoritelinks {
-  border-bottom: 1px solid $navbar-menu-seperator;
+  border-bottom: 1px solid $navbar-menu-separator;
 }
 
 .with-actions .dropdown-menu li.recentlinks {
-  border-bottom: 1px solid $navbar-menu-seperator;
+  border-bottom: 1px solid $navbar-menu-separator;
 }
 
 .with-actions .dropdown-menu li.favoritelinks {
-  border-bottom: 1px solid $navbar-menu-seperator;
+  border-bottom: 1px solid $navbar-menu-separator;
 }
 
 .mobileheader .dropdown-menu ul li a.recent-links-detail {
@@ -780,7 +780,7 @@
   line-height: normal;
   width: 200px;
   min-height: 40px;
-  -webkit-text-fill-color: $navbar-search-bg;
+  -webkit-text-fill-color: $navbar-search-color;
   -webkit-box-shadow: 0 0 0 1000px $navbar-search-bg inset;
 }
 
@@ -1028,7 +1028,7 @@
   background-image: none;
   padding: 10px;
   margin: 0;
-  border-bottom: 1px solid $navbar-quick-create-menu-seperator;
+  border-bottom: 1px solid $navbar-quick-create-menu-separator;
   border-radius: 0;
   letter-spacing: 0;
   text-align: left;
@@ -1153,7 +1153,7 @@
   background-color: $navbar-alert-body-bg;
   color: $navbar-alert-link-color;
   padding: 0;
-  border: 1px solid $navbar-alert-seperator;
+  border: 1px solid $navbar-alert-separator;
   border-radius: 2px;
 
 }
@@ -2179,7 +2179,7 @@
 }
 
 .topnav #overflow-menu > li.with-actions {
-  border-bottom: 1px solid $navbar-menu-seperator;
+  border-bottom: 1px solid $navbar-menu-separator;
 }
 
 .topnav #overflow-menu > li.with-actions .notCurrentTabLeft {
@@ -2192,6 +2192,7 @@
     display: inline-block;
     visibility: visible;
     text-align: right;
+    margin-top: 6px;
   }
 }
 
@@ -2343,7 +2344,7 @@
   .globalLinks-desktop .dropdown-toggle {
     margin-left: 0;
     border: none;
-    width: 48px;
+    width: auto;
     height: 48px;
   }
 }

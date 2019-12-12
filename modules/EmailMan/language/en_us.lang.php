@@ -108,7 +108,7 @@ $mod_strings = array(
     'TRACKING_ENTRIES_LOCATION_DEFAULT_VALUE' => 'Value of Config.php setting site_url',
     'TXT_REMOVE_ME_ALT' => 'To remove yourself from this email list go to',
     'TXT_REMOVE_ME_CLICK' => 'click here',
-    'TXT_REMOVE_ME' => 'To remove yourself from this email list ',
+    'TXT_REMOVE_ME' => 'To remove yourself from this email list',
     'LBL_NOTIFY_SEND_FROM_ASSIGNING_USER' => 'Send notification from the email address of the assigning user',
 
     'LBL_SECURITY_TITLE' => 'Email Security Settings',

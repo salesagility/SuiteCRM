@@ -211,9 +211,6 @@
 
           }
         });
-
-        this.inboundAccountsSettingsTable.subscribe("rowMouseoverEvent", this.inboundAccountsSettingsTable.onEventHighlightRow);
-        this.inboundAccountsSettingsTable.subscribe("rowMouseoutEvent", this.inboundAccountsSettingsTable.onEventUnhighlightRow);
       }
     },
     _setupOutboundAccountTable: function (user) {

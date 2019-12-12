@@ -1,29 +1,30 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
 require_once 'include/utils/db_utils.php';
-class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class db_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function db_convertProvider()
     {
         //array containing all possible types supported by db_convert
         return array(
-                array(gmdate('Y-m-d H:i:s'), 'today', array(), 'CURDATE()'),
-                array('text', 'left', array(2), 'LEFT(text,2)'),
-                array('2015-11-16 19:10:52', 'date_format', array(), 'DATE_FORMAT(2015-11-16 19:10:52,\'%Y-%m-%d\')'),
-                array('2015-11-16 19:10:52', 'time_format', array(), '2015-11-16 19:10:52'),
-                array('2015-11-16', 'date', array(), '2015-11-16'),
-                array('19:10:52', 'time', array(), '19:10:52'),
-                array('2015-11-16 19:10:52', 'datetime', array(), '2015-11-16 19:10:52'),
-                array(null, 'ifnull', array(0), 'IFNULL(0)'),
-                array('value1 ', 'concat', array('value2'), 'CONCAT(value1 ,value2)'),
-                array('2015-11-16 19:10:52', 'quarter', array(), 'QUARTER(2015-11-16 19:10:52)'),
-                array('value1', 'length', array(), 'LENGTH(value1)'),
-                array('2015-11-16 19:32:29', 'month', array(), 'MONTH(2015-11-16 19:32:29)'),
-                array('2015-11-16', 'add_date', array('1', 'DAY'), 'DATE_ADD(2015-11-16, INTERVAL 1 DAY)'),
-                array('19:10:52', 'add_time', array('1', 'HOUR'), 'DATE_ADD(19:10:52, INTERVAL + CONCAT(1, \':\', HOUR) HOUR_MINUTE)'),
-                array('col', 'avg', array(2), 'avg(col)'),
-                array('2015-11-16 19:32:29', 'add_tz_offset', array(), '2015-11-16 19:32:29 + INTERVAL 0 MINUTE'),
-
+            array(gmdate('Y-m-d H:i:s'), 'today', array(), 'CURDATE()'),
+            array('text', 'left', array(2), 'LEFT(text,2)'),
+            array('2015-11-16 19:10:52', 'date_format', array(), 'DATE_FORMAT(2015-11-16 19:10:52,\'%Y-%m-%d\')'),
+            array('2015-11-16 19:10:52', 'time_format', array(), '2015-11-16 19:10:52'),
+            array('2015-11-16', 'date', array(), '2015-11-16'),
+            array('19:10:52', 'time', array(), '19:10:52'),
+            array('2015-11-16 19:10:52', 'datetime', array(), '2015-11-16 19:10:52'),
+            array(null, 'ifnull', array(0), 'IFNULL(0)'),
+            array('value1 ', 'concat', array('value2'), 'CONCAT(value1 ,value2)'),
+            array('2015-11-16 19:10:52', 'quarter', array(), 'QUARTER(2015-11-16 19:10:52)'),
+            array('value1', 'length', array(), 'LENGTH(value1)'),
+            array('2015-11-16 19:32:29', 'month', array(), 'MONTH(2015-11-16 19:32:29)'),
+            array('2015-11-16', 'add_date', array('1', 'DAY'), 'DATE_ADD(2015-11-16, INTERVAL 1 DAY)'),
+            array('19:10:52', 'add_time', array('1', 'HOUR'), 'DATE_ADD(19:10:52, INTERVAL + CONCAT(1, \':\', HOUR) HOUR_MINUTE)'),
+            array('col', 'avg', array(2), 'avg(col)'),
+            array('2015-11-16 19:32:29', 'add_tz_offset', array(), '2015-11-16 19:32:29 + INTERVAL 0 MINUTE'),
         );
     }
 
@@ -32,26 +33,13 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testdb_convert($string, $type, $params, $expected)
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
-        
         //execute the method and test if it returns expected values for all types
         $actual = db_convert($string, $type, $params);
         $this->assertSame($expected, $actual);
-        
-        // clean up
-        
-        $state->popTable('aod_indexevent');
     }
 
     public function testdb_concat()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-
         //execute the method and test if it returns expected values
 
         $table = 'Table1';
@@ -59,8 +47,6 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = "LTRIM(RTRIM(CONCAT(IFNULL(Table1.Col1,''),' ',IFNULL(Table1.Col2,''),' ',IFNULL(Table1.Col3,''))))";
         $actual = db_concat($table, $fields);
         $this->assertSame($expected, $actual);
-        
-        // clean up
     }
 
     public function testfrom_db_convert()

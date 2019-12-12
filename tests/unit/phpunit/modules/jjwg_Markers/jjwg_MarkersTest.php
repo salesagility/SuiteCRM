@@ -1,12 +1,12 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class jjwg_MarkersTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testjjwg_Markers()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $jjwgMarkers = new jjwg_Markers();
 
         $this->assertInstanceOf('jjwg_Markers', $jjwgMarkers);
@@ -24,11 +24,6 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testconfiguration()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $jjwgMarkers = new jjwg_Markers();
 
         $jjwgMarkers->configuration();
@@ -36,8 +31,6 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertInstanceOf('jjwg_Maps', $jjwgMarkers->jjwg_Maps);
         $this->assertTrue(is_array($jjwgMarkers->settings));
         $this->assertGreaterThan(0, count($jjwgMarkers->settings));
-        
-        // clean up
     }
 
     public function testdefine_loc()

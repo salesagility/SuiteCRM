@@ -362,7 +362,7 @@ class SchedulersJob extends Basic
         $this->addMessages($message);
         $this->resolution = self::JOB_PARTIAL;
         if (empty($delay)) {
-            $delay = intval($this->job_delay);
+            $delay = (int)$this->job_delay;
         }
         $this->execute_time = $GLOBALS['timedate']->getNow()->modify("+$delay seconds")->asDb();
         $GLOBALS['log']->info("Postponing job {$this->id} to {$this->execute_time}: $message");

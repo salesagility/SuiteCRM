@@ -1,7 +1,5 @@
 <?php
 
-use \Faker\Factory;
-
 /**
  * Class LoginCest
  *
@@ -29,7 +27,7 @@ class AOW_WorkflowCest
             $this->fakeData->addProvider(new Faker\Provider\en_US\Address($this->fakeData));
             $this->fakeData->addProvider(new Faker\Provider\en_US\PhoneNumber($this->fakeData));
             $this->fakeData->addProvider(new Faker\Provider\en_US\Company($this->fakeData));
-            $this->fakeDataSeed = rand(0, 2048);
+            $this->fakeDataSeed = mt_rand(0, 2048);
         }
         $this->fakeData->seed($this->fakeDataSeed);
     }

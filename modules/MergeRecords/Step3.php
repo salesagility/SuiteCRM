@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 
 
@@ -61,6 +55,7 @@ global $urlPrefix;
 global $currentModule;
 global $theme;
 global $filter_for_valid_editable_attributes;
+global $invalid_attribute_by_name;
 //filter condition for fields in vardefs that can participate in merge.
 $filter_for_valid_editable_attributes =
     array(
@@ -72,6 +67,7 @@ $filter_for_valid_editable_attributes =
          array('type'=>'text','source'=>'db'),
          array('type'=>'date','source'=>'db'),
          array('type'=>'time','source'=>'db'),
+         array('type'=>'bool','source'=>'db'),
          array('type'=>'int','source'=>'db'),
          array('type'=>'long','source'=>'db'),
          array('type'=>'double','source'=>'db'),

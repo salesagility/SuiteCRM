@@ -1,6 +1,8 @@
 <?php
 
-class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class MeetingTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -13,12 +15,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testMeeting()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $meeting = new Meeting();
 
         $this->assertInstanceOf('Meeting', $meeting);
@@ -39,19 +36,10 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertAttributeEquals(null, 'cached_get_users', $meeting);
         $this->assertAttributeEquals(false, 'date_changed', $meeting);
-        
-        // clean up
     }
 
     public function testACLAccess()
     {
-        // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-
-        // test
-        
         $meeting = new Meeting();
 
         //test without recurring_source
@@ -66,10 +54,6 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(false, $meeting->ACLAccess('save'));
         $this->assertEquals(false, $meeting->ACLAccess('editview'));
         $this->assertEquals(false, $meeting->ACLAccess('delete'));
-        
-        // clean up
-        
-        $state->popGlobals();
     }
 
     public function testhasIntegratedMeeting()
@@ -81,23 +65,6 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndMarkdeletedAndSetAcceptStatus()
     {
-
-    // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('meetings');
-        $state->pushTable('meetings_contacts');
-        $state->pushTable('meetings_cstm');
-        $state->pushTable('meetings_leads');
-        $state->pushTable('meetings_users');
-        $state->pushTable('vcals');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-
-        // test
-        
         $meeting = new Meeting();
 
         $meeting->name = 'test';
@@ -136,20 +103,6 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $meeting->mark_deleted($meeting->id);
         $result = $meeting->retrieve($meeting->id);
         $this->assertEquals(null, $result);
-
-        
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('vcals');
-        $state->popTable('meetings_users');
-        $state->popTable('meetings_leads');
-        $state->popTable('meetings_cstm');
-        $state->popTable('meetings_contacts');
-        $state->popTable('meetings');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
 
     public function testget_summary_text()
@@ -171,13 +124,6 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_detail_fields()
     {
-        // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-
-        // test
-        
         $meeting = new Meeting();
 
         //preset required attributes
@@ -203,22 +149,10 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(-1, $meeting->email_reminder_time);
         $this->assertEquals(false, $meeting->email_reminder_checked);
         $this->assertEquals('Accounts', $meeting->parent_type);
-
-        // clean up
-        
-        $state->popGlobals();
     }
 
     public function testget_list_view_data()
     {
-
-    // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-
-        // test
-        
         $meeting = new Meeting();
         $current_theme = SugarThemeRegistry::current();
 
@@ -262,10 +196,6 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals($expected['CONTACT_ID'], $actual['CONTACT_ID']);
         $this->assertEquals($expected['REPEAT_INTERVAL'], $actual['REPEAT_INTERVAL']);
         $this->assertEquals($expected['PARENT_MODULE'], $actual['PARENT_MODULE']);
-
-        // clean up
-        
-        $state->popGlobals();
     }
 
     public function testset_notification_body()
@@ -313,12 +243,6 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsend_assignment_notifications()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $meeting = new Meeting();
 
         $meeting->date_start = '2016-02-11 17:30:00';
@@ -330,15 +254,13 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $notify_user = new User(1);
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $meeting->send_assignment_notifications($notify_user, $admin);
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testget_meeting_users()
@@ -383,43 +305,24 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
-        // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-
-        // test
-        
         $meeting = new Meeting();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $meeting->listviewACLHelper();
         $this->assertSame($expected, $actual);
-        
-        // clean up
-        
-        $state->popGlobals();
     }
 
     public function testsave_relationship_changes()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $meeting = new Meeting();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $meeting->save_relationship_changes(false);
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     /**
@@ -427,15 +330,9 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testafterImportSave()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         require_once 'data/Link.php';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $meeting = new Meeting();
             //test without parent_type
@@ -453,8 +350,6 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testgetDefaultStatus()

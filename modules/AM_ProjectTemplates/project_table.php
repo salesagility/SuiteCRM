@@ -83,7 +83,7 @@ class AM_ProjectTemplatesTable
             foreach ($tasks as $task) {
                 $task->duration_unit = "Days";
                 $task->date_start =  Date('Y-m-d');
-                $task->date_finish = Date('Y-m-d', strtotime("+" . $task->duration -1 . " days"));
+                $task->date_finish = Date('Y-m-d', strtotime("+" . ($task->duration - 1) . " days"));
 
                 echo '<tr class="row_sortable">
                         <td class="project_table_cells"><input class="order_number" name="order_number[]" rel="'.$task->id.'" type="hidden" value="'.$task->order_number.'" />'.$task->task_number.'</td>';

@@ -410,7 +410,7 @@ class SugarSpot
                     $ret_array = $seed->create_new_list_query('', $clause, $allfields, array(), 0, '', true, $seed, true);
                     $query_parts[] = $ret_array_start['select'] . $ret_array['from'] . $ret_array['where'] . $ret_array['order_by'];
                 }
-                $main_query = "(".join(") UNION (", $query_parts).")";
+                $main_query = "(".implode(") UNION (", $query_parts).")";
             } else {
                 foreach ($searchFields[$moduleName] as $k=>$v) {
                     if (isset($seed->field_defs[$k])) {

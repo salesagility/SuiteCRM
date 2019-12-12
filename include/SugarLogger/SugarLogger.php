@@ -208,7 +208,7 @@ class SugarLogger implements LoggerTemplate
 
         //if we haven't opened a file pointer yet let's do that
         if (! $this->fp) {
-            $this->fp = fopen($this->full_log_file, 'a');
+            $this->fp = fopen($this->full_log_file, 'ab');
         }
 
 

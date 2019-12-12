@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 
 
@@ -155,7 +149,7 @@ class Bug extends SugarBean
 
     public function get_summary_text()
     {
-        return "$this->name";
+        return (string)$this->name;
     }
 
     public function create_list_query($order_by, $where, $show_deleted = 0)

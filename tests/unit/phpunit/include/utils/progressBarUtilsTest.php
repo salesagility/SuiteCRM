@@ -1,16 +1,12 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
 require_once 'include/utils/progress_bar_utils.php';
-class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testprogress_bar_flush()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
         try {
@@ -19,18 +15,10 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testdisplay_flow_bar()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
         try {
@@ -41,18 +29,10 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function teststart_flow_bar()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
         try {
@@ -63,18 +43,10 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testdestroy_flow_bar()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
         try {
@@ -85,18 +57,10 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testdisplay_progress_bar()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
         try {
@@ -107,18 +71,10 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testupdate_progress_bar()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
         try {
@@ -129,7 +85,5 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 }

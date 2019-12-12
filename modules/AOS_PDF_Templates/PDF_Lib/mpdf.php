@@ -1833,7 +1833,7 @@ public $aliasNbPgHex;
         }
         if ($this->visibility!='visible') {
             $this->_out('EMC');
-            $this->hasOC=intval($this->hasOC);	// mPDF 5.6.01
+            $this->hasOC= (int)$this->hasOC;	// mPDF 5.6.01
         }
         if ($v=='printonly') {
             $this->_out('/OC /OC1 BDC');
@@ -2912,10 +2912,10 @@ public $aliasNbPgHex;
         $colors = @file($file) or die("Cannot load spot colors file - ".$file);
         foreach ($colors as $sc) {
             list($name, $c, $m, $y, $k) = preg_split("/\t/", $sc);
-            $c = intval($c);
-            $m = intval($m);
-            $y = intval($y);
-            $k = intval($k);
+            $c = (int)$c;
+            $m = (int)$m;
+            $y = (int)$y;
+            $k = (int)$k;
             $this->AddSpotColor($name, $c, $m, $y, $k);
         }
     }
@@ -3510,7 +3510,7 @@ public $aliasNbPgHex;
             }
             $s.="?>";
             if (is_writable(dirname(_MPDF_TTFONTDATAPATH.'x'))) {
-                $fh = fopen(_MPDF_TTFONTDATAPATH.$fontkey.'.mtx.php', "w");
+                $fh = fopen(_MPDF_TTFONTDATAPATH.$fontkey.'.mtx.php', 'wb');
                 fwrite($fh, $s, strlen($s));
                 fclose($fh);
                 $fh = fopen(_MPDF_TTFONTDATAPATH.$fontkey.'.cw.dat', "wb");
@@ -4066,7 +4066,7 @@ public $aliasNbPgHex;
 
     public function SetSpacing($cs, $ws)
     {
-        if (intval($cs*1000)==0) {
+        if ((int)($cs * 1000) ==0) {
             $cs = 0;
         }
         if ($cs) {
@@ -4075,7 +4075,7 @@ public $aliasNbPgHex;
             $this->_out('BT 0 Tc ET');
         }
         $this->charspacing=$cs;
-        if (intval($ws*1000)==0) {
+        if ((int)($ws * 1000) ==0) {
             $ws = 0;
         }
         if ($ws) {
@@ -8333,7 +8333,7 @@ public $aliasNbPgHex;
         // fn. error_get_last is only in PHP>=5.2
         if ($this->debug && function_exists('error_get_last') && error_get_last()) {
             $e = error_get_last();
-            if (($e['type'] < 2048 && $e['type'] != 8) || (intval($e['type']) & intval(ini_get("error_reporting")))) {
+            if (($e['type'] < 2048 && $e['type'] != 8) || ((int)$e['type'] & (int)ini_get("error_reporting"))) {
                 echo "<p>Error message detected - PDF file generation aborted.</p>";
                 echo $e['message'].'<br />';
                 echo 'File: '.$e['file'].'<br />';
@@ -8875,9 +8875,9 @@ public $aliasNbPgHex;
 
                 // And now for any SMP/SIP fonts subset using <HH> format
                 $r = '';
-                $nstr = "$nb";
+                $nstr = (string)$nb;
                 for ($i=0;$i<strlen($nstr);$i++) {
-                    $r .= sprintf("%02s", strtoupper(dechex(intval($nstr[$i])+48)));
+                    $r .= sprintf("%02s", strtoupper(dechex((int)$nstr[$i] +48)));
                 }
                 $thispage=str_replace($this->aliasNbPgHex, $r, $thispage);
             }
@@ -8916,9 +8916,9 @@ public $aliasNbPgHex;
 
                 // And now for any SMP/SIP fonts subset using <HH> format
                 $r = '';
-                $nstr = "$nbt";
+                $nstr = (string)$nbt;
                 for ($i=0;$i<strlen($nstr);$i++) {
-                    $r .= sprintf("%02s", strtoupper(dechex(intval($nstr[$i])+48)));
+                    $r .= sprintf("%02s", strtoupper(dechex((int)$nstr[$i] +48)));
                 }
                 $thispage=str_replace($this->aliasNbPgGpHex, $r, $thispage);
             }
@@ -9363,7 +9363,7 @@ public $aliasNbPgHex;
                         $used = $f['used'];
                         if ($used) {
                             $nChars = (ord($f['cw'][0]) << 8) + ord($f['cw'][1]);
-                            $usage = intval(count($f['subset'])*100 / $nChars);
+                            $usage = (int)(count($f['subset']) * 100 / $nChars);
                             $fsize = $info['length1'];
                             // Always subset the very large TTF files
                             if ($fsize > ($this->maxTTFFilesize *1024)) {
@@ -9471,7 +9471,7 @@ public $aliasNbPgHex;
                 continue;
             }
             if ($this->progressBar) {
-                $this->UpdateProgressBar(2, intval($fctr*100/$nfonts), 'Writing Fonts');
+                $this->UpdateProgressBar(2, (int)($fctr * 100 / $nfonts), 'Writing Fonts');
                 $fctr++;
             }	// *PROGRESS-BAR*
             if (isset($font['asSubset'])) {
@@ -11713,13 +11713,13 @@ public $aliasNbPgHex;
                         $trnsrgb = $trns;
                         if ($targetcs=='DeviceCMYK') {
                             $col = $this->rgb2cmyk(array(3,$trns[0],$trns[1],$trns[2]));
-                            $c1 = intval($col[1]*2.55);
-                            $c2 = intval($col[2]*2.55);
-                            $c3 = intval($col[3]*2.55);
-                            $c4 = intval($col[4]*2.55);
+                            $c1 = (int)($col[1] * 2.55);
+                            $c2 = (int)($col[2] * 2.55);
+                            $c3 = (int)($col[3] * 2.55);
+                            $c4 = (int)($col[4] * 2.55);
                             $trns = array($c1,$c2,$c3,$c4);
                         } elseif ($targetcs=='DeviceGray') {
-                            $c = intval(($trns[0] * .21) + ($trns[1] * .71) + ($trns[2] * .07));
+                            $c = (int)(($trns[0] * .21) + ($trns[1] * .71) + ($trns[2] * .07));
                             $trns = array($c);
                         }
                     } else {	// Indexed
@@ -11733,13 +11733,13 @@ public $aliasNbPgHex;
                             $trnsrgb = $trns;
                             if ($targetcs=='DeviceCMYK') {
                                 $col = $this->rgb2cmyk(array(3,$r,$g,$b));
-                                $c1 = intval($col[1]*2.55);
-                                $c2 = intval($col[2]*2.55);
-                                $c3 = intval($col[3]*2.55);
-                                $c4 = intval($col[4]*2.55);
+                                $c1 = (int)($col[1] * 2.55);
+                                $c2 = (int)($col[2] * 2.55);
+                                $c3 = (int)($col[3] * 2.55);
+                                $c4 = (int)($col[4] * 2.55);
                                 $trns = array($c1,$c2,$c3,$c4);
                             } elseif ($targetcs=='DeviceGray') {
-                                $c = intval(($r * .21) + ($g * .71) + ($b * .07));
+                                $c = (int)(($r * .21) + ($g * .71) + ($b * .07));
                                 $trns = array($c);
                             }
                         }
@@ -11761,10 +11761,10 @@ public $aliasNbPgHex;
 
                     if ($targetcs=='DeviceCMYK') {
                         $col = $this->rgb2cmyk(array(3,$r,$g,$b));
-                        $c1 = intval($col[1]*2.55);
-                        $c2 = intval($col[2]*2.55);
-                        $c3 = intval($col[3]*2.55);
-                        $c4 = intval($col[4]*2.55);
+                        $c1 = (int)($col[1] * 2.55);
+                        $c2 = (int)($col[2] * 2.55);
+                        $c3 = (int)($col[3] * 2.55);
+                        $c4 = (int)($col[4] * 2.55);
                         if ($trnsrgb) {
                             // original pixel was not set as transparent but processed color does match
                             if ($trnsrgb!=array($r,$g,$b) && $trns==array($c1,$c2,$c3,$c4)) {
@@ -11777,7 +11777,7 @@ public $aliasNbPgHex;
                         }
                         $imgdata .= chr($c1).chr($c2).chr($c3).chr($c4);
                     } elseif ($targetcs=='DeviceGray') {
-                        $c = intval(($r * .21) + ($g * .71) + ($b * .07));
+                        $c = (int)(($r * .21) + ($g * .71) + ($b * .07));
                         if ($trnsrgb) {
                             // original pixel was not set as transparent but processed color does match
                             if ($trnsrgb!=array($r,$g,$b) && $trns==array($c)) {
@@ -11795,7 +11795,7 @@ public $aliasNbPgHex;
                     if ($mask) {
                         $col = imagecolorsforindex($im, $rgb);
                         $gammacorr = 2.2;	// gamma correction
-                        $gamma = intval((pow((((127 - $col['alpha']) * 255 / 127) / 255), $gammacorr) * 255));
+                        $gamma = (int)(pow((((127 - $col['alpha']) * 255 / 127) / 255), $gammacorr) * 255);
                         $mimgdata .= chr($gamma);
                     }
                 }
@@ -13428,7 +13428,7 @@ public $aliasNbPgHex;
                     //$this->divheight = $this->table_lineheight*$this->lineheight;
                     if (!empty($textbuffer)) {
                         if ($horf=='F' && preg_match('/{colsum([0-9]*)[_]*}/', $textbuffer[0][0], $m)) {
-                            $rep = sprintf("%01.".intval($m[1])."f", $this->colsums[$colctr-1]);
+                            $rep = sprintf("%01.". (int)$m[1] ."f", $this->colsums[$colctr-1]);
                             $textbuffer[0][0] = preg_replace('/{colsum[0-9_]*}/', $rep, $textbuffer[0][0]);
                         }
 
@@ -15141,8 +15141,8 @@ public $aliasNbPgHex;
                 if ($e[0]=='/') {
                     /*-- PROGRESS-BAR --*/
                     if ($this->progressBar) { 	// 10% increments
-                        if (intval($i*10/$cnt) != $pbc) {
-                            $pbc = intval($i*10/$cnt);
+                        if ((int)($i * 10 / $cnt) != $pbc) {
+                            $pbc = (int)($i * 10 / $cnt);
                             $this->UpdateProgressBar(1, $pbc*10, $tag);
                         }
                     }
@@ -15350,7 +15350,7 @@ public $aliasNbPgHex;
         $currpos = $this->page*1000 + $this->y;
         if (isset($this->blk[$this->blklvl]['float_endpos']) && $this->blk[$this->blklvl]['float_endpos'] > $currpos) {
             $old_page = $this->page;
-            $new_page = intval($this->blk[$this->blklvl]['float_endpos'] /1000);
+            $new_page = (int)($this->blk[$this->blklvl]['float_endpos'] / 1000);
             if ($old_page != $new_page) {
                 $s = $this->PrintPageBackgrounds();
                 // Writes after the marker so not overwritten later by page background etc.
@@ -15943,7 +15943,7 @@ public $aliasNbPgHex;
             $bpcctr = 1;
             while (($ratio / $target) > 1) {
                 if ($this->progressBar) {
-                    $this->UpdateProgressBar(4, intval(100/($ratio/$target)), ('Auto-sizing fixed-position block: '.$bpcctr++));
+                    $this->UpdateProgressBar(4, (int)(100 / ($ratio / $target)), ('Auto-sizing fixed-position block: '.$bpcctr++));
                 }	// *PROGRESS-BAR*
 
                 $this->x = $x;
@@ -16383,12 +16383,12 @@ public $aliasNbPgHex;
         $p['SIZE'] = 'AUTO';
 
         // Uses mPDF original margins as default
-        $p['MARGIN-RIGHT'] = strval($this->orig_rMargin).'mm';
-        $p['MARGIN-LEFT'] = strval($this->orig_lMargin).'mm';
-        $p['MARGIN-TOP'] = strval($this->orig_tMargin).'mm';
-        $p['MARGIN-BOTTOM'] = strval($this->orig_bMargin).'mm';
-        $p['MARGIN-HEADER'] = strval($this->orig_hMargin).'mm';
-        $p['MARGIN-FOOTER'] = strval($this->orig_fMargin).'mm';
+        $p['MARGIN-RIGHT'] = (string)$this->orig_rMargin .'mm';
+        $p['MARGIN-LEFT'] = (string)$this->orig_lMargin .'mm';
+        $p['MARGIN-TOP'] = (string)$this->orig_tMargin .'mm';
+        $p['MARGIN-BOTTOM'] = (string)$this->orig_bMargin .'mm';
+        $p['MARGIN-HEADER'] = (string)$this->orig_hMargin .'mm';
+        $p['MARGIN-FOOTER'] = (string)$this->orig_fMargin .'mm';
 
         // Basic page + selector
         if (isset($this->cssmgr->CSS['@PAGE'])) {
@@ -16733,7 +16733,7 @@ public $aliasNbPgHex;
             return;
         }
         $old_page = $this->page;
-        $new_page = intval($end/1000);
+        $new_page = (int)($end / 1000);
         if ($old_page != $new_page) {
             $s = $this->PrintPageBackgrounds();
             // Writes after the marker so not overwritten later by page background etc.
@@ -18411,7 +18411,7 @@ public $aliasNbPgHex;
 
     // mPDF 5.6.01  - LAYERS
     if (isset($properties['Z-INDEX']) && $this->currentlayer==0) {
-        $v = intval($properties['Z-INDEX']);
+        $v = (int)$properties['Z-INDEX'];
         if ($v > 0) {
             $currblk['z-index'] = $v;
             $this->BeginLayer($v);
@@ -19215,10 +19215,10 @@ public $aliasNbPgHex;
     $colsize = 20; //HTML default value
     $rowsize = 2; //HTML default value
     if (isset($attr['COLS'])) {
-        $colsize = intval($attr['COLS']);
+        $colsize = (int)$attr['COLS'];
     }
     if (isset($attr['ROWS'])) {
-        $rowsize = intval($attr['ROWS']);
+        $rowsize = (int)$attr['ROWS'];
     }
 
     $charsize = $this->GetCharWidth('w', false);
@@ -19711,7 +19711,7 @@ public $aliasNbPgHex;
         }
         // mPDF 5.6.01  - LAYERS
         if (isset($properties['Z-INDEX']) && $this->currentlayer==0) {
-            $v = intval($properties['Z-INDEX']);
+            $v = (int)$properties['Z-INDEX'];
             if ($v > 0) {
                 $objattr['z-index'] = $v;
             }
@@ -21355,7 +21355,7 @@ public $aliasNbPgHex;
         $this->listlvl++;
         // mPDF 5.6.15
         if (isset($attr['START'])) {
-            $this->listnum = intval($attr['START']);
+            $this->listnum = (int)$attr['START'];
         } else {
             $this->listnum = 0;
         }
@@ -21408,7 +21408,7 @@ public $aliasNbPgHex;
           $this->listlvl++; // first depth level
           // mPDF 5.6.15
           if (isset($attr['START'])) {
-              $this->listnum = intval($attr['START']);
+              $this->listnum = (int)$attr['START'];
           } else {
               $this->listnum = 0;
           }
@@ -21427,7 +21427,7 @@ public $aliasNbPgHex;
           $this->listlvl++;
           // mPDF 5.6.15
           if (isset($attr['START'])) {
-              $this->listnum = intval($attr['START']);
+              $this->listnum = (int)$attr['START'];
           } else {
               $this->listnum = 0;
           }
@@ -21918,7 +21918,7 @@ public $aliasNbPgHex;
             $currpos = $this->page*1000 + $this->y;
             if (isset($this->blk[$this->blklvl]['float_endpos']) && $this->blk[$this->blklvl]['float_endpos'] > $currpos) {
                 $old_page = $this->page;
-                $new_page = intval($this->blk[$this->blklvl]['float_endpos'] /1000);
+                $new_page = (int)($this->blk[$this->blklvl]['float_endpos'] / 1000);
                 if ($old_page != $new_page) {
                     $s = $this->PrintPageBackgrounds();
                     // Writes after the marker so not overwritten later by page background etc.
@@ -29405,17 +29405,17 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
 
     public function setBorder(&$var, $flag, $set = true)
     {
-        $flag = intval($flag);
+        $flag = (int)$flag;
         if ($set) {
             $set = true;
         }
-        $var = intval($var);
+        $var = (int)$var;
         $var = $set ? ($var | $flag) : ($var & ~$flag);
     }
     public function issetBorder($var, $flag)
     {
-        $flag = intval($flag);
-        $var = intval($var);
+        $flag = (int)$flag;
+        $var = (int)$var;
         return (($var & $flag) == $flag);
     }
 
@@ -30081,7 +30081,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
         $y = $h = 0;
         for ($i = 0; $i < $numrows ; $i++) { //Rows
       if ($this->progressBar) {
-          $this->UpdateProgressBar(7, intval(30 + ($i*40/$numrows)), ' ');
+          $this->UpdateProgressBar(7, (int)(30 + ($i * 40 / $numrows)), ' ');
       }	// *PROGRESS-BAR*
       if (isset($table['is_tfoot'][$i]) && $table['is_tfoot'][$i] && $level==1) {
           $tablefooterrowheight += $table['hr'][$i];
@@ -30923,11 +30923,11 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
                     if ($level==1) {
                         if (isset($table['is_tfoot'][$i]) && $table['is_tfoot'][$i]) {
                             if (preg_match('/{colsum([0-9]*)[_]*}/', $cell['textbuffer'][0][0], $m)) {
-                                $rep = sprintf("%01.".intval($m[1])."f", $this->colsums[$j]);
+                                $rep = sprintf("%01.". (int)$m[1] ."f", $this->colsums[$j]);
                                 $cell['textbuffer'][0][0] = preg_replace('/{colsum[0-9_]*}/', $rep, $cell['textbuffer'][0][0]);
                             }
                         } elseif (!isset($table['is_thead'][$i])) {
-                            $this->colsums[$j] += floatval(preg_replace('/^[^0-9\.\,]*/', '', $cell['textbuffer'][0][0]));
+                            $this->colsums[$j] += (float)preg_replace('/^[^0-9\.\,]*/', '', $cell['textbuffer'][0][0]);
                         }	// mPDF 5.6.66
                     }
                     $opy = $this->y;
@@ -32213,7 +32213,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
             $this->useRC128encryption = true;
         }
         if ($owner_pass === null) {
-            $owner_pass = uniqid(rand());
+            $owner_pass = uniqid(mt_rand());
         }
         $this->encrypted = true;
         $this->_generateencryptionkey($user_pass, $owner_pass, $protection);
@@ -32331,7 +32331,7 @@ arabic-indic | bengali | cambodian | devanagari | gujarati | gurmukhi | kannada 
         $chars = 'ABCDEF1234567890';
         $id = '';
         for ($i=0; $i<32; $i++) {
-            $id .= $chars{rand(0, 15)};
+            $id .= $chars{mt_rand(0, 15)};
         }
         $this->uniqid = md5($id);
         // Compute O value
@@ -33153,7 +33153,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         }
 
         $Present=0;
-        $size=sizeof($this->Reference);
+        $size=count($this->Reference);
 
         if ($this->directionality == 'rtl') {	// *RTL*
         $txt = str_replace(':', ' - ', $txt);	// *RTL*
@@ -33289,7 +33289,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         if ($this->ColActive) {
             $this->SetColumns(0);
         }	// *COLUMNS*
-        $size=sizeof($this->Reference);
+        $size=count($this->Reference);
         if ($size == 0) {
             return false;
         }
@@ -33316,7 +33316,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         }
         //Alphabetic sort of the references
         usort($this->Reference, 'cmp');
-        $size=sizeof($this->Reference);
+        $size=count($this->Reference);
         $this->breakpoints[$this->CurrCol][] = $this->y; 	// *COLUMNS*
 
         $divlettjuststarted = false;
@@ -35026,7 +35026,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
             // mPDF 5.6.43
             if (count($bdo)) {
                 for ($i=0;$i<count($bdo);$i++) {
-                    $chunk = preg_replace('/[\x{'.dechex(intval(0xf800+$i)).'}\x{'.dechex(intval(0xf880+$i)).'}]/u', $bdo[$i], $chunk);
+                    $chunk = preg_replace('/[\x{'.dechex((int)(0xf800 + $i)).'}\x{'.dechex((int)(0xf880 + $i)).'}]/u', $bdo[$i], $chunk);
                 }
             }
 
@@ -35131,7 +35131,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         }
         // TRY IN BACKUP SUBS FONT
         if (!is_array($this->backupSubsFont)) {
-            $this->backupSubsFont = array("$this->backupSubsFont");
+            $this->backupSubsFont = array((string)$this->backupSubsFont);
         }
         foreach ($this->backupSubsFont as $bsfctr=>$bsf) {
             if ($this->fonttrans[$bsf] == 'chelvetica' || $this->fonttrans[$bsf] == 'ctimes' || $this->fonttrans[$bsf] == 'ccourier') {
@@ -35367,7 +35367,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
 
         // LASTLY TRY IN BACKUP SUBS FONT
         if (!is_array($this->backupSubsFont)) {
-            $this->backupSubsFont = array("$this->backupSubsFont");
+            $this->backupSubsFont = array((string)$this->backupSubsFont);
         }
         foreach ($this->backupSubsFont as $bsfctr=>$bsf) {
             if ($this->currentfontfamily != $bsf) {
@@ -36732,13 +36732,13 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         if (stristr($cores[0], '%')) {
             $cores[0] += 0;
             if ($type=='rgb' || $type=='rgba') {
-                $cores[0] = intval($cores[0]*255/100);
+                $cores[0] = (int)($cores[0] * 255 / 100);
             }
         }
         if ($ncores>1 && stristr($cores[1], '%')) {
             $cores[1] += 0;
             if ($type=='rgb' || $type=='rgba') {
-                $cores[1] = intval($cores[1]*255/100);
+                $cores[1] = (int)($cores[1] * 255 / 100);
             }
             if ($type=='hsl' || $type=='hsla') {
                 $cores[1] = $cores[1]/100;
@@ -36747,7 +36747,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         if ($ncores>2 && stristr($cores[2], '%')) {
             $cores[2] += 0;
             if ($type=='rgb' || $type=='rgba') {
-                $cores[2] = intval($cores[2]*255/100);
+                $cores[2] = (int)($cores[2] * 255 / 100);
             }
             if ($type=='hsl' || $type=='hsla') {
                 $cores[2] = $cores[2]/100;
@@ -36924,9 +36924,9 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
     {
         $rgb = array();
         $colors = 255 - ($c[4]*2.55);
-        $rgb[0] = intval($colors * (255 - ($c[1]*2.55))/255);
-        $rgb[1] = intval($colors * (255 - ($c[2]*2.55))/255);
-        $rgb[2] = intval($colors * (255 - ($c[3]*2.55))/255);
+        $rgb[0] = (int)($colors * (255 - ($c[1] * 2.55)) / 255);
+        $rgb[1] = (int)($colors * (255 - ($c[2] * 2.55)) / 255);
+        $rgb[2] = (int)($colors * (255 - ($c[3] * 2.55)) / 255);
         if ($c[0]==6) {
             return array(5,$rgb[0],$rgb[1],$rgb[2], $c[5]);
         } else {
@@ -37328,8 +37328,8 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         $nstr = (string) $num;
         $rnum = '';
         for ($i=0;$i<strlen($nstr);$i++) {
-            if ($this->_charDefined($this->CurrentFont['cw'], $cp+intval($nstr[$i]))) { // contains arabic-indic numbers
-                $rnum .= code2utf($cp+intval($nstr[$i]));
+            if ($this->_charDefined($this->CurrentFont['cw'], $cp+ (int)$nstr[$i])) { // contains arabic-indic numbers
+                $rnum .= code2utf($cp+ (int)$nstr[$i]);
             } else {
                 $rnum .= $nstr[$i];
             }
@@ -37596,7 +37596,7 @@ public function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='',
         $xref_objid = $m[1];
         preg_match_all('/(\d{10}) (\d{5}) (f|n)/', $m[2], $x);
         for ($i=0; $i<count($x[0]); $i++) {
-            $xref[] = array(intval($x[1][$i]), $x[2][$i], $x[3][$i]);
+            $xref[] = array((int)$x[1][$i], $x[2][$i], $x[3][$i]);
         }
 
         $changes = array();
