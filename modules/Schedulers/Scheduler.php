@@ -403,7 +403,6 @@ class Scheduler extends SugarBean
                 $hrName[] = $hrs;
             }
         }
-        //_pp($hrName);
         // derive minutes
         //$currentMin = date('i');
         $minName = array();
@@ -444,7 +443,6 @@ class Scheduler extends SugarBean
                 $minName[] = $mins;
             }
         }
-        //_pp($minName);
         // prep some boundaries - these are not in GMT b/c gmt is a 24hour period, possibly bridging 2 local days
         if (empty($focus->time_from)  && empty($focus->time_to)) {
             $timeFromTs = 0;
@@ -478,7 +476,6 @@ class Scheduler extends SugarBean
             //			$dateTimeEnd = '2020-12-31 23:59:59'; // if empty, set it to something ridiculous
         }
         $timeEndTs++;
-        /*_pp('hours:'); _pp($hrName);_pp('mins:'); _pp($minName);*/
         $dateobj = $timedate->getNow();
         $nowTs = $dateobj->ts;
         $GLOBALS['log']->debug(sprintf(
@@ -488,19 +485,7 @@ class Scheduler extends SugarBean
             gmdate('Y-m-d H:i:s', $timeEndTs),
             gmdate('Y-m-d H:i:s', $timeToTs),
             $timedate->nowDb()
-            ));
-        //		_pp('currentHour: '. $currentHour);
-        //		_pp('timeStartTs: '.date('r',$timeStartTs));
-        //		_pp('timeFromTs: '.date('r',$timeFromTs));
-        //		_pp('timeEndTs: '.date('r',$timeEndTs));
-        //		_pp('timeToTs: '.date('r',$timeToTs));
-        //		_pp('mktime: '.date('r',mktime()));
-        //		_pp('timeLastRun: '.date('r',$lastRunTs));
-//
-        //		_pp('hours: ');
-        //		_pp($hrName);
-        //		_pp('mins: ');
-        //		_ppd($minName);
+        ));
         foreach ($hrName as $kHr=>$hr) {
             foreach ($minName as $kMin=>$min) {
                 $timedate->tzUser($dateobj);
@@ -514,17 +499,12 @@ class Scheduler extends SugarBean
                                 if ($tsGmt <= $timeToTs) { // start is less than the time_to
                                     $validJobTime[] = $dateobj->asDb();
                                 }
-                                //_pp('Job Time is NOT smaller that TimeTO: '.$tsGmt .'<='. $timeToTs);
                             }
-                            //_pp('Job Time is NOT smaller that DateTimeEnd: '.date('Y-m-d H:i:s',$tsGmt) .'<='. $dateTimeEnd); //_pp( $tsGmt .'<='. $timeEndTs );
                         }
                     }
-                    //_pp('Job Time is NOT bigger that TimeFrom: '.$tsGmt .'>='. $timeFromTs);
                 }
-                //_pp('Job Time is NOT Bigger than DateTimeStart: '.date('Y-m-d H:i',$tsGmt) .'>='. $dateTimeStart);
             }
         }
-        //_ppd($validJobTime);
         // need ascending order to compare oldest time to last_run
         sort($validJobTime);
         /**

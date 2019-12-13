@@ -61,6 +61,5 @@ function get_body(&$ss, $vardef)
     $ss->assign('TARGET_OPTIONS', get_select_options_with_id($app_list_strings['link_target_dom'], $link_target));
     $ss->assign('LINK_TARGET', $link_target);
     $ss->assign('LINK_TARGET_LABEL', $app_list_strings['link_target_dom'][$link_target]);
-    //_ppd($ss->fetch('modules/DynamicFields/templates/Fields/Forms/url.tpl'));
     return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/url.tpl');
 }
