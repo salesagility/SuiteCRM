@@ -46,6 +46,8 @@ if (!defined('SUGAR_SMARTY_DIR')) {
     define('SUGAR_SMARTY_DIR', sugar_cached('smarty/'));
 }
 
+use \Smarty;
+
 /**
  * Smarty wrapper for Sugar
  * @api

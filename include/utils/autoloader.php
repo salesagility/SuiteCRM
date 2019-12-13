@@ -45,6 +45,7 @@ class SugarAutoLoader
         'ListView' => 'include/ListView/ListView.php',
         'Sugar_Smarty' => 'include/Sugar_Smarty.php',
         'Javascript' => 'include/javascript/javascript.php',
+        'Smarty' => 'vendor/smarty/smarty/libs/Smarty.class.php',
     );
 
     public static $noAutoLoad = array(
