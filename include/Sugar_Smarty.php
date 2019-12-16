@@ -46,6 +46,11 @@ if (!defined('SUGAR_SMARTY_DIR')) {
     define('SUGAR_SMARTY_DIR', sugar_cached('smarty/'));
 }
 
+/**
+ * @ignore
+ *
+ * Required for migration of smarty to composer
+ */
 use \Smarty;
 
 /**

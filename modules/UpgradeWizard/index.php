@@ -288,8 +288,7 @@ if ($upgradeStepFile == 'end') {
     //}
 }
 
-if(!$_REQUEST['additional_step'])
-{
+if(!$_REQUEST['additional_step']) {
     require('modules/UpgradeWizard/'.$upgradeStepFile.'.php');
 }
 
@@ -501,11 +500,10 @@ function getSelectedModulesForLayoutMerge()
 eoq;
 
 // If we are on step  4 then force a redirect to run again to pick up changes to smarty before setting the template.
-if($_REQUEST['step'] == 4 && !$_REQUEST['additional_step'])
-{
+if ($_REQUEST['step'] === 4 && !$_REQUEST['additional_step']) {
     // Set session variables
     $_SESSION['UW_MAIN'] = $uwMain;
-    $_SESSION['UW_JS'] =  $js;
+    $_SESSION['UW_JS'] = $js;
     $_SESSION['STEP'] = $step;
     $_SESSION['STEPS'] = $steps;
     $_SESSION['MOD'] = $mod_strings;
@@ -523,11 +521,11 @@ if($_REQUEST['step'] == 4 && !$_REQUEST['additional_step'])
     $_SESSION['STEPS_FILE'] = $steps['files'];
     $_SESSION['UW_HISTORY'] = $uwHistory;
     $_SESSION['disableNextForLicense'] = $disableNextForLicense;
-    $u_allow='true';
-    if (isset($stop) && $stop == true) {
-        $frozen = (isset($frozen)) ? "<br />".$frozen : '';
+    $u_allow = 'true';
+    if (isset($stop) && $stop === true) {
+        $frozen = (isset($frozen)) ? '<br />' . $frozen : '';
         $_SESSION['frozen'] = $frozen;
-        if ($step == 'upload') {
+        if ($step === 'upload') {
             $u_allow = 'false';
         }
     }
@@ -537,12 +535,11 @@ if($_REQUEST['step'] == 4 && !$_REQUEST['additional_step'])
     }
 
     // Redirect to additional step and kill the process
-    header("Location: " . $_SERVER['HTTP_REFERER'] . "?module=UpgradeWizard&action=index&step=4&additional_step=true");
+    header('Location: ' . $_SERVER['HTTP_REFERER'] . '?module=UpgradeWizard&action=index&step=4&additional_step=true');
     die();
 }
 
-if($_REQUEST['step'] == 4 && $_REQUEST['additional_step'])
-{
+if($_REQUEST['step'] === 4 && $_REQUEST['additional_step']) {
     // Set Smarty variables
     $uwMain = $_SESSION['UW_MAIN'];
     $js = $_SESSION['UW_JS'];
@@ -606,27 +603,6 @@ $smarty->assign('includeContainerCSS', false);
 $smarty->display('modules/UpgradeWizard/uw_main.tpl');
 
 // Clear session variables
-unset($_SESSION['UW_MAIN']);
-unset($_SESSION['UW_JS']);
-unset($_SESSION['STEP']);
-unset($_SESSION['STEPS']);
-unset($_SESSION['MOD']);
-unset($_SESSION['APP']);
-unset($_SESSION['showNext']);
-unset($_SESSION['showCancel']);
-unset($_SESSION['showBack']);
-unset($_SESSION['showRecheck']);
-unset($_SESSION['showDone']);
-unset($_SESSION['showExit']);
-unset($_SESSION['STEP_NEXT']);
-unset($_SESSION['STEP_CANCEL']);
-unset($_SESSION['STEP_BACK']);
-unset($_SESSION['STEP_RECHECK']);
-unset($_SESSION['STEPS_FILE']);
-unset($_SESSION['UW_HISTORY']);
-unset($_SESSION['disableNextForLicense']);
-unset($_SESSION['frozen']);
-unset($_SESSION['u_allow']);
-unset($_SESSION['top_message']);
+unset($_SESSION['UW_MAIN'], $_SESSION['UW_JS'], $_SESSION['STEP'], $_SESSION['STEPS'], $_SESSION['MOD'], $_SESSION['APP'], $_SESSION['showNext'], $_SESSION['showCancel'], $_SESSION['showBack'], $_SESSION['showRecheck'], $_SESSION['showDone'], $_SESSION['showExit'], $_SESSION['STEP_NEXT'], $_SESSION['STEP_CANCEL'], $_SESSION['STEP_BACK'], $_SESSION['STEP_RECHECK'], $_SESSION['STEPS_FILE'], $_SESSION['UW_HISTORY'], $_SESSION['disableNextForLicense'], $_SESSION['frozen'], $_SESSION['u_allow'], $_SESSION['top_message']);
 ////	END PAGE OUTPUT
 ///////////////////////////////////////////////////////////////////////////////
