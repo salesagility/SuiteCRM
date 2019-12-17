@@ -871,7 +871,7 @@ HTML;
                 $contactId = $contact['id'];
                 $isValidator = new SuiteValidator();
                 if (!$isValidator->isValidId($contactId)) {
-                    throw new SuiteException("Invalid Inbound Email ID" . $contactId);
+                    throw new SuiteException('Invalid contact ID: ' . $contactId);
                 }
 
                 $q = "INSERT INTO address_book (assigned_user_id, bean, bean_id) VALUES ('{$current_user->id}', '{$contact['module']}', '{$contact['id']}')";
