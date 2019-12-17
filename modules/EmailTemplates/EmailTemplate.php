@@ -804,6 +804,12 @@ class EmailTemplate extends SugarBean
     {
         foreach ($bean_arr as $bean_name => $bean_id) {
             $focus = BeanFactory::getBean($bean_name, $bean_id);
+            if ($focus && $bean_id && !$focus->fetched_row) {
+                // We do not want the cached version for a newly created bean, as some data such as date fields and
+                // auto increment fields will only be correct after a retrieve operation
+                BeanFactory::unregisterBean($focus->module_dir, $focus->id);
+                $focus = BeanFactory::getBean($bean_name, $bean_id);
+            }
 
             if ($bean_name == 'Leads' || $bean_name == 'Prospects') {
                 $bean_name = 'Contacts';
