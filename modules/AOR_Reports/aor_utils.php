@@ -336,8 +336,11 @@ function getPeriodEndDate($dateTimePeriodListSelected)
 {
     switch ($dateTimePeriodListSelected) {
         case 'today':
-        case 'yesterday':
             $datetimePeriod = new DateTime();
+            break;
+        case 'yesterday':
+            $datetimePeriod = new DateTime("yesterday");
+            $datetimePeriod->setTime(23, 59, 59);
             break;
         case 'this_week':
             $datetimePeriod = new DateTime("next week monday");
