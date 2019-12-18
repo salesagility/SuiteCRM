@@ -353,13 +353,11 @@ EOQ;
 
         ///////////////////////////////////////////////////////////////////////////
         ////	ATTACHMENTS FROM DOCUMENTS
-        $count='';
-        //_pp($_REQUEST);
-        //_ppd(count($_REQUEST['document']));
+        $count = '';
         if (!empty($_REQUEST['document'])) {
             $count = count($_REQUEST['document']);
         } else {
-            $count=10;
+            $count = 10;
         }
 
         for ($i=0; $i<$count; $i++) {
