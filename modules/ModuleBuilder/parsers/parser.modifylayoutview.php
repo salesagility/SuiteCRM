@@ -245,7 +245,6 @@ class ParserModifyLayoutView extends ModuleBuilderParser
                 $this->_viewdefs ['panels'] [$panelID] [$rowID] = $newRow;
             }
         }
-        //          _pp($this->_viewdefs);
     }
 
     public function _padFields()

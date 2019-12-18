@@ -2272,7 +2272,6 @@ EOQ;
 
         $itemail = $this->emailAddress->getPrimaryAddress($this);
         //retrieve IT Admin Email
-        //_ppd( $emailTemp->body_html);
         //retrieve email defaults
         $emailObj = new Email();
         $defaults = $emailObj->getSystemDefaultEmail();
