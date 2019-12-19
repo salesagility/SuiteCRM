@@ -109,7 +109,7 @@ after_script:
   # ElasticSearch Indexing logs
   - cat search_index.log
   - sudo cat /var/log/apache2/error.log
- - echo $TRAVIS_COMMIT_RANGE
+  - echo $TRAVIS_COMMIT_RANGE
 
 branches:
   only:
