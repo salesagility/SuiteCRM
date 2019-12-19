@@ -5209,7 +5209,7 @@ function verify_image_file($path, $jpeg = false)
  */
 function verify_uploaded_image($path, $jpeg_only = false)
 {
-    $supportedExtensions = array('jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg');
+    $supportedExtensions = array('jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'tmp' => 'tmp');
     if (!$jpeg_only) {
         $supportedExtensions['png'] = 'image/png';
     }
