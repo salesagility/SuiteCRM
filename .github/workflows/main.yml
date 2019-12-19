@@ -1,0 +1,21 @@
+name: CI
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.x'
+
+      - name: Install dependencies
+        run: gem install travis --no-document
+
+      - name: Run Travis linter
+        run: travis lint .travis.yml
