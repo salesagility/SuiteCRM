@@ -177,8 +177,13 @@ class Lead extends Person implements EmailInterface
 
             if (!empty($result)) {
                 $row = $this->db->fetchByAssoc($result);
-                $this->account_name = $row['name'];
-                $this->account_name_owner = $row['account_name_owner'];
+                if (!is_null($row) && !is_bool($row)) {
+                    $this->account_name = $row['name'];
+                    $this->account_name_owner = $row['account_name_owner'];
+                } else {
+                    $this->account_name = null;
+                    $this->account_name_owner = null;
+                }
                 $this->account_name_mod = 'Accounts';
             }
         }
@@ -194,8 +199,15 @@ class Lead extends Person implements EmailInterface
 
             if (!empty($result)) {
                 $row = $this->db->fetchByAssoc($result);
-                $this->opportunity_name = $row['name'];
-                $this->opportunity_name_owner = $row['opportunity_name_owner'];
+
+                if (!is_null($row) && !is_bool($row)) {
+                    $this->opportunity_name = $row['name'];
+                    $this->opportunity_name_owner = $row['opportunity_name_owner'];
+                } else {
+                    $this->opportunity_name = null;
+                    $this->opportunity_name_owner = null;
+                }
+
                 $this->opportunity_name_mod = 'Opportunities';
             }
         }
@@ -211,8 +223,14 @@ class Lead extends Person implements EmailInterface
             $result = $this->db->limitQuery($query, 0, 1, true, "Want only a single row");
             if (!empty($result)) {
                 $row= $this->db->fetchByAssoc($result);
-                $this->contact_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name']);
-                $this->contact_name_owner = $row['contact_name_owner'];
+
+                if (!is_null($row) && !is_bool($row)) {
+                    $this->contact_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name']);
+                    $this->contact_name_owner = $row['contact_name_owner'];
+                } else {
+                    $this->contact_name = null;
+                    $this->contact_name_owner = null;
+                }
                 $this->contact_name_mod = 'Contacts';
             }
         }

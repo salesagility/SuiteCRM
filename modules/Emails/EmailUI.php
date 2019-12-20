@@ -1028,8 +1028,6 @@ HTML;
 
         $r = $user->db->query($union);
 
-        //_pp($union);
-
         while ($a = $user->db->fetchByAssoc($r)) {
             $c = array();
 
@@ -3610,7 +3608,7 @@ eoq;
     }
 
     /**
-     * Unify the seperator as ,
+     * Unify the separator as ,
      *
      * @param String $str email address string
      * @return String converted string

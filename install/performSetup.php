@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 function installStatus($msg, $cmd = null, $overwrite = false, $before = '[ok]<br>')
 {
@@ -704,20 +705,11 @@ if (isset($_REQUEST['timezone']) && $_REQUEST['timezone']) {
     $current_user->setPreference('timezone', $_REQUEST['timezone']);
 }
 
-//$_POST[''] = $_REQUEST['default_locale_name_format'];
-$_POST['dateformat'] = $_REQUEST['default_date_format'];
-//$_POST[''] = $_REQUEST['default_time_format'];
-//$_POST[''] = $_REQUEST['default_language'];
-//$_POST[''] = $_REQUEST['default_currency_name'];
-//$_POST[''] = $_REQUEST['default_currency_symbol'];
-//$_POST[''] = $_REQUEST['default_currency_iso4217'];
-//$_POST[''] = $_REQUEST['setup_site_session_path'];
-//$_POST[''] = $_REQUEST['setup_site_log_dir'];
-//$_POST[''] = $_REQUEST['setup_site_guid'];
-//$_POST[''] = $_REQUEST['default_email_charset'];
-//$_POST[''] = $_REQUEST['default_export_charset'];
-//$_POST[''] = $_REQUEST['export_delimiter'];
+if (file_exists(__DIR__ . '/../modules/ACL/install_actions.php')) {
+    require_once(__DIR__ . '/../modules/ACL/install_actions.php');
+}
 
+$_POST['dateformat'] = $_REQUEST['default_date_format'];
 $_POST['record'] = $current_user->id;
 $_POST['is_admin'] = ($current_user->is_admin ? 'on' : '');
 $_POST['use_real_names'] = true;

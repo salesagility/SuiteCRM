@@ -1839,10 +1839,13 @@ abstract class DBManager
      */
     public function prepareQuery($sql)
     {
-        //parse out the tokens
-        $tokens = preg_split('/((?<!\\\)[&?!])/', $sql, -1, PREG_SPLIT_DELIM_CAPTURE);
+        // Parse out the tokens
+        // - Don't select the "!" in "!=".
+        // - No backslashes before tokens.
+        // - Only detect "&", "?", or "!".
+        $tokens = preg_split('/((?<!\\\)(?!!=)[&?!])/', $sql, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-        //maintain a count of the actual tokens for quick reference in execute
+        // Maintain a count of the actual tokens for quick reference in execute
         $count = 0;
 
         $sqlStr = '';
@@ -1872,6 +1875,8 @@ abstract class DBManager
     /**
      * Takes a prepared stmt index and the data to replace and creates the query and runs it.
      *
+     * @deprecated This is no longer used and will be removed in a future release. See createPreparedQuery() for an alternative.
+     * 
      * @param  int $stmt The index of the prepared statement from preparedTokens
      * @param  array $data The array of data to replace the tokens with.
      * @return resource result set or false on error
@@ -1882,16 +1887,13 @@ abstract class DBManager
             if (!is_array($data)) {
                 $data = array($data);
             }
-
             $pTokens = $this->preparedTokens[$stmt];
-
             //ensure that the number of data elements matches the number of replacement tokens
             //we found in prepare().
             if (count($data) != $pTokens['tokenCount']) {
                 //error the data count did not match the token count
                 return false;
             }
-
             $query = '';
             $dataIndex = 0;
             $tokens = $pTokens['tokens'];
@@ -1918,6 +1920,54 @@ abstract class DBManager
     }
 
     /**
+     * Takes a prepared stmt index and the data to replace and creates the query and runs it.
+     *
+     * @param  int $stmt The index of the prepared statement from preparedTokens
+     * @param  array $data The array of data to replace the tokens with.
+     * @return resource result set or false on error
+     */
+    public function createPreparedQuery($stmt, $data = array())
+    {
+        if (!empty($this->preparedTokens[$stmt])) {
+            if (!is_array($data)) {
+                $data = array($data);
+            }
+
+            $pTokens = $this->preparedTokens[$stmt];
+
+            //ensure that the number of data elements matches the number of replacement tokens
+            //we found in prepare().
+            if (count($data) != $pTokens['tokenCount']) {
+                //error the data count did not match the token count
+                return false;
+            }
+
+            $query = '';
+            $dataIndex = 0;
+            $tokens = $pTokens['tokens'];
+            foreach ($tokens as $key => $val) {
+                switch ($val) {
+                    case '?':
+                        $query .= $this->quote($data[$dataIndex++]);
+                        break;
+                    case '&':
+                        $filename = $data[$dataIndex++];
+                        $query .= file_get_contents($filename);
+                        break;
+                    case '!':
+                        $query .= $data[$dataIndex++];
+                        break;
+                    default:
+                        $query .= $val;
+                        break;
+                }//switch
+            }//foreach
+            return $query;
+        }
+        return false;
+    }
+
+    /**
      * Run both prepare and execute without the client having to run both individually.
      *
      * @param  string $sql The sql to parse
@@ -1928,7 +1978,13 @@ abstract class DBManager
     {
         $stmt = $this->prepareQuery($sql);
 
-        return $this->executePreparedQuery($stmt, $data);
+        $query = $this->createPreparedQuery($stmt, $data);
+
+        if ($query === false) {
+            return false;
+        } else {
+            return $this->query($query);
+        }
     }
 
     /********************** SQL FUNCTIONS ****************************/

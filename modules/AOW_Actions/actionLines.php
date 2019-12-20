@@ -74,7 +74,7 @@ function display_action_lines(SugarBean $focus, $field, $value, $view)
             $html .= "<script>document.getElementById('btn_ActionLine').disabled = '';</script>";
             if ($focus->id !== '') {
                 $idQuoted = $focus->db->quoted($focus->id);
-                $sql = "SELECT id FROM aow_actions WHERE aow_workflow_id = '" . $idQuoted . "' AND deleted = 0 ORDER BY action_order ASC";
+                $sql = 'SELECT id FROM aow_actions WHERE aow_workflow_id = ' . $idQuoted . ' AND deleted = 0 ORDER BY action_order ASC';
                 $result = $focus->db->query($sql);
 
                 while ($row = $focus->db->fetchByAssoc($result)) {
@@ -91,7 +91,7 @@ function display_action_lines(SugarBean $focus, $field, $value, $view)
     } elseif ($view == 'DetailView') {
         $html .= "<table border='0' width='100%' cellpadding='0' cellspacing='0'>";
         $idQuoted = $focus->db->quoted($focus->id);
-        $sql = "SELECT id FROM aow_actions WHERE aow_workflow_id = '" . $idQuoted . "' AND deleted = 0 ORDER BY action_order ASC";
+        $sql = 'SELECT id FROM aow_actions WHERE aow_workflow_id = ' . $idQuoted . ' AND deleted = 0 ORDER BY action_order ASC';
         $result = $focus->db->query($sql);
 
         while ($row = $focus->db->fetchByAssoc($result)) {

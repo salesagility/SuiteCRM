@@ -68,7 +68,6 @@ $web_assigned_user = '';
 $web_team_user = '';
 $web_form_footer = '';
 $regex = "/^\w+(['\.\-\+]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+\$/";
-//_ppd($web_required_symbol);
 
 $moduleDir = '';
 if (!empty($_REQUEST['moduleDir'])) {

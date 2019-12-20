@@ -79,11 +79,8 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
         }
         @ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
         @ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0); // required for AD
-        // If constant is defined, set the timeout (PHP >= 5.3)
-        if (defined('LDAP_OPT_NETWORK_TIMEOUT')) {
-            // Network timeout, lower than PHP and DB timeouts
-            @ldap_set_option($ldapconn, LDAP_OPT_NETWORK_TIMEOUT, 60);
-        }
+        // Network timeout, lower than PHP and DB timeouts
+        @ldap_set_option($ldapconn, LDAP_OPT_NETWORK_TIMEOUT, 60);
 
         $bind_user = $this->ldap_rdn_lookup($name, $password);
         $GLOBALS['log']->debug("ldapauth.ldap_authenticate_user: ldap_rdn_lookup returned bind_user=" . $bind_user);

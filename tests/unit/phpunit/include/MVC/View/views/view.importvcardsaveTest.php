@@ -1,10 +1,12 @@
 <?php
 
-class ViewImportvcardsaveTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewImportvcardsaveTest extends SuitePHPUnitFrameworkTestCase
 {
     public function test__construct()
     {
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $view = new ViewImportvcardsave();
         $this->assertInstanceOf('ViewImportvcardsave', $view);
         $this->assertInstanceOf('SugarView', $view);
@@ -27,7 +29,5 @@ class ViewImportvcardsaveTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         ob_end_clean();
         $this->assertGreaterThan(0,strlen($renderedContent));
         */
-
-        // clean up
     }
 }

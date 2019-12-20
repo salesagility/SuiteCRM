@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,63 +38,29 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 namespace SuiteCRM;
 
-use LoggerManager;
-use PHPUnit_Framework_TestCase;
-use SuiteCRM\Test\TestLogger;
+use DBManagerFactory;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * StateCheckerPHPUnitTestCaseAbstract
- *
- * @author SalesAgility
+ * Trait DatabaseTransactions
+ * @package SuiteCRM
  */
-abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_TestCase
+trait DatabaseTransactions
 {
-    use StateCheckerTrait;
-
-    protected static $verbose = true;
-
-    /**
-     * @var LoggerManager
-     */
-    protected $log;
-
-    /**
-     * Collect state information and storing a hash
-     */
-    protected function setUp()
+    public function startDBTransaction()
     {
-        if (self::$verbose) {
-            $currentTestName = get_class($this) . '::' . $this->getName(false);
-            fwrite(STDOUT, "\t" . $currentTestName  . " ..");
-            for ($i = 60; $i > strlen($currentTestName); $i--) {
-                fwrite(STDOUT, ".");
-            }
-        }
-
-        $this->log = $GLOBALS['log'];
-        $GLOBALS['log'] = new TestLogger();
-
-        $this->beforeStateCheck();
-        parent::setUp();
+        $db = DBManagerFactory::getInstance();
+        $db->query('START TRANSACTION');
     }
 
-    /**
-     * Collect state information and comparing hash
-     */
-    protected function tearDown()
+    public function rollbackDBTransaction()
     {
-        parent::tearDown();
-        $this->afterStateCheck();
-
-        if (self::$verbose) {
-            fwrite(STDOUT, " [done]\n");
-        }
+        $db = DBManagerFactory::getInstance();
+        $db->query('ROLLBACK');
     }
 }

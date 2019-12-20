@@ -19,6 +19,11 @@ use Helper\PhpBrowserDriverHelper;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method Friend haveFriend($name, $actorClass = null)
+ * @method getInstanceURL()
+ * @method sendGET(string $string)
+ * @method seeResponseCodeIs(int $int)
+ * @method seeResponseIsJson()
+ * @method seeResponseContainsJson(array $array)
  *
  * @SuppressWarnings(PHPMD)
  */

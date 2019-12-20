@@ -44,10 +44,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 include_once __DIR__ . '/../../../../include/utils.php';
 
-class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
+class UtilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testGetAppString()
     {
@@ -75,7 +76,7 @@ class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
         $result = getAppString('TEST_NONEXISTS_LABEL');
         $this->assertEquals('Hello test', $result);
         
-        // clean up
+
         unset($app_strings['TEST_NONEXISTS_LABEL']);
     }
 
@@ -86,34 +87,93 @@ class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('^foo^,^bar^', encodeMultienumValue(array('foo', 'bar')));
     }
 
-    public function testunencodeMultienumValue()
+    public function testunencodeMultienum()
     {
         $this->assertEquals(array('foo'), unencodeMultienum('^foo^'));
         $this->assertEquals(array('foo', 'bar'), unencodeMultienum('^foo^,^bar^'));
+        // Will return the same array if given an array.
+        $this->assertEquals(array('foo', 'bar'), unencodeMultienum(['foo', 'bar']));
     }
 
     public function testget_languages()
     {
-        $this->assertEquals(get_languages(), ['en_us' => 'English (US)']);
-        $this->assertEquals(get_all_languages(), ['en_us' => 'English (US)']);
-        $this->assertEquals(get_language_display('en_us'), 'English (US)');
+        $this->assertEquals(['en_us' => 'English (US)'], get_languages());
+        $this->assertEquals(['en_us' => 'English (US)'], get_all_languages());
+        $this->assertEquals('English (US)', get_language_display('en_us'));
     }
 
     public function testget_current_language()
     {
         global $sugar_config;
-        $state = new StateSaver();
-        $state->pushGlobals();
 
         $_SESSION['authenticated_user_language'] = 'foo';
-        $this->assertEquals(get_current_language(), 'foo');
-        $this->assertEquals(get_current_language(), 'foo');
+        $this->assertEquals('foo', get_current_language());
+        $this->assertEquals('foo', get_current_language());
 
         $sugar_config['default_language'] = 'bar';
-        $this->assertEquals(get_current_language(), 'foo');
+        $this->assertEquals('foo', get_current_language());
         unset($_SESSION['authenticated_user_language']);
-        $this->assertEquals(get_current_language(), 'bar');
+        $this->assertEquals('bar', get_current_language());
+    }
 
-        $state->popGlobals();
+    public function testis_admin()
+    {
+        // Returns true if the user is an admin.
+        $user = new \User();
+        $user->is_admin = true;
+        $this->assertTrue(is_admin($user));
+
+        // Returns false if the user is not an admin.
+        $user2 = new \User();
+        $user2->is_admin = false;
+        $this->assertFalse(is_admin($user2));
+
+        // Returns false if no user object is passed.
+        $this->assertFalse(is_admin(null));
+    }
+  
+    public function testcheck_php_version()
+    {
+        // These are used because the tests would fail if the supported
+        // versions changed, and the constants can't be redefined. So we
+        // instead pass the min/recommended versions directly to the
+        // function.
+        $minimumVersion = '5.5.0';
+        $recommendedVersion = '7.1.0';
+
+        // Returns -1 when the version is less than the minimum version.
+        $this->assertEquals(-1, check_php_version("5.4.0", $minimumVersion, $recommendedVersion));
+
+        // Returns 0 when the version is above the minimum but below the recommended version.
+        $this->assertEquals(0, check_php_version("7.0.0", $minimumVersion, $recommendedVersion));
+
+        // Returns 1 when the version is at or above the recommended version.
+        $this->assertEquals(1, check_php_version("7.1.0", $minimumVersion, $recommendedVersion));
+        $this->assertEquals(1, check_php_version("7.2.0", $minimumVersion, $recommendedVersion));
+        $this->assertEquals(1, check_php_version("8.0.0", $minimumVersion, $recommendedVersion));
+        // Handles versions with a `-dev` suffix correctly.
+        $this->assertEquals(1, check_php_version("7.4.0-dev", $minimumVersion, $recommendedVersion));
+    }
+
+    public function testreturn_bytes()
+    {
+        // Test bytes. If you input just '8', it'll output 8.
+        $this->assertEquals(8, return_bytes('8'));
+
+        // Test kibibytes.
+        $this->assertEquals(8192, return_bytes('8K'));
+        $this->assertEquals(8192, return_bytes('8k'));
+
+        // Test mebibytes.
+        // 8M is 8 mebibytes, 1 mebibyte is 1,048,576 bytes or 2^20 bytes.
+        $this->assertEquals(8388608, return_bytes('8M'));
+        $this->assertEquals(8388608, return_bytes('8m'));
+
+        // Test gibibytes
+        $this->assertEquals(8589934592, return_bytes('8G'));
+        $this->assertEquals(8589934592, return_bytes('8g'));
+
+        // Make sure it also understands strings with whitespace.
+        $this->assertEquals(8192, return_bytes('  8K  '));
     }
 }
