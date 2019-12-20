@@ -47,13 +47,6 @@ if (!defined('SUGAR_SMARTY_DIR')) {
 }
 
 /**
- * @ignore
- *
- * Required for migration of smarty to composer
- */
-use \Smarty;
-
-/**
  * Smarty wrapper for Sugar
  * @api
  */
