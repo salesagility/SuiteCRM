@@ -634,7 +634,7 @@ class AOW_WorkFlow extends Basic
             }
         }
 
-        if (!isset($bean->date_entered)) {
+        if (!isset($bean->date_entered) && $bean->fetched_row !== false) {
             $bean->date_entered = $bean->fetched_row['date_entered'];
         }
 

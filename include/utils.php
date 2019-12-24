@@ -3127,6 +3127,7 @@ function br2nl($str)
  * Private helper function for displaying the contents of a given variable.
  * This function is only intended to be used for SugarCRM internal development.
  * The ppd stands for Pre Print Die.
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function _ppd($mixed)
 {
@@ -3140,6 +3141,7 @@ function _ppd($mixed)
  * @param $mixed var to print_r()
  * @param $die boolean end script flow
  * @param $displayStackTrace also show stack trace
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function _ppl($mixed, $die = false, $displayStackTrace = false, $loglevel = 'fatal')
 {
@@ -3171,6 +3173,7 @@ function _ppl($mixed, $die = false, $displayStackTrace = false, $loglevel = 'fat
  * The ppf stands for Pre[formatted] Print Focus [object].
  *
  * @param object bean The focus bean
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function _ppf($bean, $die = false)
 {
@@ -3180,6 +3183,7 @@ function _ppf($bean, $die = false)
  * Private helper function for displaying the contents of a given variable.
  * This function is only intended to be used for SugarCRM internal development.
  * The pp stands for Pre Print.
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function _pp($mixed)
 {
@@ -3189,6 +3193,7 @@ function _pp($mixed)
  * Private helper function for displaying the contents of a given variable.
  * This function is only intended to be used for SugarCRM internal development.
  * The pp stands for Pre Print.
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function _pstack_trace($mixed = null)
 {
@@ -3198,6 +3203,7 @@ function _pstack_trace($mixed = null)
  * Private helper function for displaying the contents of a given variable.
  * This function is only intended to be used for SugarCRM internal development.
  * The pp stands for Pre Print Trace.
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function _ppt($mixed, $textOnly = false)
 {
@@ -3207,6 +3213,7 @@ function _ppt($mixed, $textOnly = false)
  * Private helper function for displaying the contents of a given variable.
  * This function is only intended to be used for SugarCRM internal development.
  * The pp stands for Pre Print Trace Die.
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function _pptd($mixed)
 {
@@ -3215,6 +3222,7 @@ function _pptd($mixed)
 /**
  * Private helper function for decoding javascript UTF8
  * This function is only intended to be used for SugarCRM internal development.
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function decodeJavascriptUTF8($str)
 {
@@ -5204,7 +5212,7 @@ function verify_image_file($path, $jpeg = false)
  */
 function verify_uploaded_image($path, $jpeg_only = false)
 {
-    $supportedExtensions = array('jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg');
+    $supportedExtensions = array('jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'tmp' => 'tmp');
     if (!$jpeg_only) {
         $supportedExtensions['png'] = 'image/png';
     }

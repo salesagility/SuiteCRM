@@ -271,8 +271,13 @@ class SearchForm
                     $this->searchdefs['templateMeta']['widths']['field'] * $resize;
             }
         }
-        $this->th->ss->assign('templateMeta', $this->searchdefs['templateMeta']);
-        $this->th->ss->assign('HAS_ADVANCED_SEARCH', !empty($this->searchdefs['layout']['advanced_search']));
+        if (is_null($this->searchdefs)) {
+            $this->th->ss->assign('templateMeta', null);
+            $this->th->ss->assign('HAS_ADVANCED_SEARCH', false);
+        } else {
+            $this->th->ss->assign('templateMeta', $this->searchdefs['templateMeta']);
+            $this->th->ss->assign('HAS_ADVANCED_SEARCH', !empty($this->searchdefs['layout']['advanced_search']));
+        }
         $this->th->ss->assign('displayType', $this->displayType);
         // return the form of the shown tab only
         if ($this->showSavedSearchesOptions) {

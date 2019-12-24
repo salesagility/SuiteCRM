@@ -119,7 +119,6 @@ class Campaign extends SugarBean
         $result = $this->db->query($query);
         $user = $this->db->fetchByAssoc($result);
 
-        //_ppd($user);
         if (!empty($user)) {
             if (is_array($user)) {
                 $fullName = $locale->getLocaleFormattedName($user['first_name'], $user['last_name']);
