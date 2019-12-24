@@ -1,6 +1,5 @@
 language: php
 os: linux
-sudo: required
 
 matrix:
   fast_finish: true
