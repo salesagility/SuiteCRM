@@ -43,8 +43,8 @@
     "monolog/monolog": "^1.23",
     "nesbot/carbon": "^1.31",
     "onelogin/php-saml": "^3.0.0",
-    "phpmailer/phpmailer": "^6.0",
     "paragonie/random_compat": "^2.0",
+    "phpmailer/phpmailer": "^6.0",
     "psr/log": "^1.0",
     "slim/slim": "^3.8",
     "smarty/smarty": "^2.6",
@@ -73,7 +73,7 @@
     "leafo/scssphp": "^0.7.7",
     "mikey179/vfsstream": "1.6.*",
     "mockery/mockery": "^1.1.0",
-    "phpunit/phpunit": "^4.8"
+    "phpunit/phpunit": "^5.7"
   },
   "scripts": {
     "post-install-cmd": [
