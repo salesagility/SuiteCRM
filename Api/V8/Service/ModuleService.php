@@ -174,7 +174,6 @@ class ModuleService
      */
     public function createRecord(CreateModuleParams $params, Request $request)
     {
-        $createFile = false;
         $module = $params->getData()->getType();
         $id = $params->getData()->getId();
         $attributes = $params->getData()->getAttributes();
@@ -311,12 +310,12 @@ class ModuleService
             if($property === 'filecontents') {
                 continue;
             }
-            if($property === 'filename') {
+            elseif($property === 'filename') {
                 $createFile = true;
+                continue;
             }
-            else{
-                $bean->$property = $value;
-            }
+
+            $bean->$property = $value;
         }
 
         if($createFile) {
