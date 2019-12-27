@@ -3,6 +3,9 @@
 
 namespace SuiteCRM;
 
+use Zend_Oauth_Exception;
+use Zend_Uri_Http;
+
 /**
  *
  * Basic OAuth provider class
