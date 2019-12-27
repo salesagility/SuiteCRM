@@ -199,25 +199,7 @@ class ModuleService
         }
 
         $this->setRecordUpdateParams($bean, $attributes);
-
-        foreach ($attributes as $property => $value) {
-            if($property === 'filecontents')
-            {
-                continue;
-            }
-            if($property === 'filename')
-            {
-                $createFile = true;
-            }
-            else{
-                $bean->$property = $value;
-            }
-        }
-
-        if($createFile)
-        {
-            $this->addFileToNote($bean, $attributes);
-        }
+        $this->processAttributes($bean, $attributes);
 
         $bean->save();
         $bean->retrieve($bean->id);
@@ -241,35 +223,34 @@ class ModuleService
      */
     private function addFileToNote($bean, $attributes)
     {
-        global $sugar_config;
+        global $sugar_config, $log;
 
-        if(!$bean->id) {
+        if (!$bean->id) {
             $bean->id = create_guid();
             $bean->new_with_id = true;
         }
 
-        // Write temp file to upload dir
+        // Write file to upload dir
         try {
-
             // Checking file extension
-            $ext_pos = strrpos($attributes['filename'], ".");
-            $fileExtension = substr($attributes['filename'], $ext_pos + 1);
-            if (in_array($fileExtension, $sugar_config['upload_badext'])) {
-                echo 'This file type is not valid. Please choose a valid file type.';
-                return;
+            $extPos = strrpos($attributes['filename'], '.');
+            $fileExtension = substr($attributes['filename'], $extPos + 1);
+            if (in_array($fileExtension, $sugar_config['upload_badext'], true)) {
+                throw new \Exception('Attachment file extension is not valid. Please choose a valid file type.');
             }
 
             $fileName = $bean->id;
             $fileContents = $attributes['filecontents'];
-            $targetPath="upload/" . $fileName;
-            $content= base64_decode($fileContents);
+            $targetPath = 'upload/' . $fileName;
+            $content = base64_decode($fileContents);
 
-            $file = fopen($targetPath, 'w');
+            $file = fopen($targetPath, 'b');
             fwrite($file, $content);
             fclose($file);
         }
-        catch (Exception $e) {
-            echo 'Unable to write to attach file: ',  $e->getMessage(), "\n";
+        catch (\Exception $e) {
+            $log->error('addFileToNote: ' . $e->getMessage());
+            throw new \Exception($e->getMessage());
         }
 
         // Fill in file details for use with upload checks
@@ -279,7 +260,6 @@ class ModuleService
         $bean->file_mime_type = $mimeType;
 
         return $bean;
-
     }
 
     /**
@@ -290,7 +270,6 @@ class ModuleService
      */
     public function updateRecord(UpdateModuleParams $params, Request $request)
     {
-        $createFile = false;
         $module = $params->getData()->getType();
         $id = $params->getData()->getId();
         $attributes = $params->getData()->getAttributes();
@@ -301,31 +280,11 @@ class ModuleService
         }
 
         $this->setRecordUpdateParams($bean, $attributes);
-
-        foreach ($attributes as $property => $value) {
-
-            if($property === 'filecontents')
-            {
-                continue;
-            }
-            if($property === 'filename')
-            {
-                $createFile = true;
-            }
-            else{
-                $bean->$property = $value;
-            }
-        }
-
-        if($createFile)
-        {
-            $this->addFileToNote($bean, $attributes);
-        }
+        $this->processAttributes($bean, $attributes);
 
         $bean->save();
         
         $bean->retrieve($bean->id);
-
 
         $dataResponse = $this->getDataResponse(
             $bean,
@@ -337,6 +296,32 @@ class ModuleService
         $response->setData($dataResponse);
 
         return $response;
+    }
+
+    /**
+     * @param $bean
+     * @param $attributes
+     */
+    protected function processAttributes(&$bean, $attributes)
+    {
+        $createFile = false;
+
+        foreach ($attributes as $property => $value) {
+
+            if($property === 'filecontents') {
+                continue;
+            }
+            if($property === 'filename') {
+                $createFile = true;
+            }
+            else{
+                $bean->$property = $value;
+            }
+        }
+
+        if($createFile) {
+            $this->addFileToNote($bean, $attributes);
+        }
     }
 
     /**
