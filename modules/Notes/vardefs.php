@@ -240,7 +240,13 @@ $dictionary['Note'] = array(
     'comment' => 'Record deletion indicator'
   ),
 
-
+  'filecontents' =>
+      array(
+          'name' => 'filecontents',
+          'vname' => 'LBL_FILE_CONTENTS',
+          'type' => 'varchar',
+          'source'=>'non-db',
+   ),
 
  'parent_name'=>
     array(

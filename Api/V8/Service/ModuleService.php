@@ -174,6 +174,7 @@ class ModuleService
      */
     public function createRecord(CreateModuleParams $params, Request $request)
     {
+        $createFile = false;
         $module = $params->getData()->getType();
         $id = $params->getData()->getId();
         $attributes = $params->getData()->getAttributes();
@@ -200,11 +201,25 @@ class ModuleService
         $this->setRecordUpdateParams($bean, $attributes);
 
         foreach ($attributes as $property => $value) {
-            $bean->$property = $value;
+            if($property === 'filecontents')
+            {
+                continue;
+            }
+            if($property === 'filename')
+            {
+                $createFile = true;
+            }
+            else{
+                $bean->$property = $value;
+            }
+        }
+
+        if($createFile)
+        {
+            $this->addFileToNote($bean, $attributes);
         }
 
         $bean->save();
-        
         $bean->retrieve($bean->id);
 
         $dataResponse = $this->getDataResponse(
@@ -220,6 +235,54 @@ class ModuleService
     }
 
     /**
+     * @param $bean
+     * @param $attributes
+     * @return mixed
+     */
+    private function addFileToNote($bean, $attributes)
+    {
+        global $sugar_config;
+
+        if(!$bean->id) {
+            $bean->id = create_guid();
+            $bean->new_with_id = true;
+        }
+
+        // Write temp file to upload dir
+        try {
+
+            // Checking file extension
+            $ext_pos = strrpos($attributes['filename'], ".");
+            $fileExtension = substr($attributes['filename'], $ext_pos + 1);
+            if (in_array($fileExtension, $sugar_config['upload_badext'])) {
+                echo 'This file type is not valid. Please choose a valid file type.';
+                return;
+            }
+
+            $fileName = $bean->id;
+            $fileContents = $attributes['filecontents'];
+            $targetPath="upload/" . $fileName;
+            $content= base64_decode($fileContents);
+
+            $file = fopen($targetPath, 'w');
+            fwrite($file, $content);
+            fclose($file);
+        }
+        catch (Exception $e) {
+            echo 'Unable to write to attach file: ',  $e->getMessage(), "\n";
+        }
+
+        // Fill in file details for use with upload checks
+        $mimeType = mime_content_type($targetPath);
+        $bean->filename = $attributes['filename'];
+        $bean->uploadfile = $attributes['filename'];
+        $bean->file_mime_type = $mimeType;
+
+        return $bean;
+
+    }
+
+    /**
      * @param UpdateModuleParams $params
      * @param Request $request
      * @return DocumentResponse
@@ -227,6 +290,7 @@ class ModuleService
      */
     public function updateRecord(UpdateModuleParams $params, Request $request)
     {
+        $createFile = false;
         $module = $params->getData()->getType();
         $id = $params->getData()->getId();
         $attributes = $params->getData()->getAttributes();
@@ -239,7 +303,23 @@ class ModuleService
         $this->setRecordUpdateParams($bean, $attributes);
 
         foreach ($attributes as $property => $value) {
-            $bean->$property = $value;
+
+            if($property === 'filecontents')
+            {
+                continue;
+            }
+            if($property === 'filename')
+            {
+                $createFile = true;
+            }
+            else{
+                $bean->$property = $value;
+            }
+        }
+
+        if($createFile)
+        {
+            $this->addFileToNote($bean, $attributes);
         }
 
         $bean->save();
