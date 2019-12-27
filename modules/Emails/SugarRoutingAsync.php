@@ -102,8 +102,6 @@ switch ($_REQUEST['routingAction']) {
             );
         }
         
-        //_ppd($ret);
-        
         $out = $json->encode($ret, true);
         echo $out;
     break;

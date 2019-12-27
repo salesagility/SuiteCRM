@@ -57,7 +57,6 @@ ARGS:
   2) $_REQUEST['return_module']; :
   3) $_REQUEST['return_action']; :
 */
-//_ppd($_REQUEST);
 
 
 require_once('include/formbase.php');
