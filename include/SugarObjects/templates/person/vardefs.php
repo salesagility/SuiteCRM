@@ -445,6 +445,7 @@ $vardefs = array(
             'name' => 'email_addresses',
             'type' => 'link',
             'relationship' => strtolower($object_name) . '_email_addresses',
+            'module' => 'EmailAddress',
             'source' => 'non-db',
             'vname' => 'LBL_EMAIL_ADDRESSES',
             'reportable' => false,

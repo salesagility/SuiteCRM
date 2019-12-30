@@ -63,13 +63,11 @@ $focus = populateFromPost('', $focus);
 //store preformatted dates for 2nd save
 $preformat_start_date = $focus->start_date;
 $preformat_end_date = $focus->end_date;
-//_ppd($preformat_end_date);
 
 $focus->save($check_notify);
 $return_id = $focus->id;
 
 $GLOBALS['log']->debug("Saved record with id of ".$return_id);
-
 
 //copy compaign targets on duplicate
 if (!empty($_REQUEST['duplicateSave']) &&  !empty($_REQUEST['duplicateId'])) {

@@ -2,8 +2,6 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-use TimeDate;
-
 class TimeDateTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testget_date_format()
@@ -142,4 +140,44 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected, $actual);
     }
 
+    public function testsplitTime()
+    {
+        // Split time when the input is only a time represented as a string.
+        $timeDate = new TimeDate();
+
+        $actual = $timeDate->splitTime('11:30:00', 'H:i:s');
+        $expected = [
+            'h' => '11',
+            'm' => '30',
+            's' => '00'
+        ];
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testsplitTimeWith24HourDateTime()
+    {
+        // Split time when it has a full date time and uses 24-hour time.
+        $timeDate = new TimeDate();
+        $actual = $timeDate->splitTime('2019-01-01 23:30:15', 'Y-m-d H:i:s');
+        $expected = [
+            'h' => '23',
+            'm' => '30',
+            's' => '15'
+        ];
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testsplitTimeWithPM()
+    {
+        // Split time when it has a full date time and AM/PM.
+        $timeDate = new TimeDate();
+        $actual = $timeDate->splitTime('2019-01-01 9:15:01 PM', 'Y-m-d H:i:s A');
+        $expected = [
+            'h' => '9',
+            'm' => '15',
+            's' => '01',
+            'a' => 'PM'
+        ];
+        $this->assertEquals($expected, $actual);
+    }
 }
