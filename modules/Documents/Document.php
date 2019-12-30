@@ -329,7 +329,6 @@ class Document extends File
 
         global $app_list_strings;
         if (!empty($this->status_id)) {
-            //_pp($this->status_id);
             $this->status = $app_list_strings['document_status_dom'][$this->status_id];
         }
         if (!empty($this->related_doc_id)) {

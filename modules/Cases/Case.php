@@ -407,7 +407,7 @@ class aCase extends Basic
         // Get the id and the name.
         $row = $this->db->fetchByAssoc($result);
 
-        if ($row !== null) {
+        if ($row !== null && $row !== false) {
             $ret_array['account_name'] = stripslashes($row['name']);
             $ret_array['account_id'] = $row['id'];
         } else {

@@ -1035,8 +1035,6 @@ HTML;
 
         $r = $user->db->query($union);
 
-        //_pp($union);
-
         while ($a = $user->db->fetchByAssoc($r)) {
             $c = array();
 
