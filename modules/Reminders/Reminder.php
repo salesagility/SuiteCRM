@@ -302,9 +302,7 @@ class Reminder extends Basic
         $dateTimeMax = $timedate->getNow(true)->modify("+{$app_list_strings['reminder_max_time']} seconds")->asDb(false);
 
         $dateTimeNow = $timedate->getNow(true)->asDb(false);
-
-        $dateTimeNow = $db->convert($db->quoted($dateTimeNow), 'datetime');
-        $dateTimeMax = $db->convert($db->quoted($dateTimeMax), 'datetime');
+        
 
         // Original jsAlert used to a meeting integration.
 
