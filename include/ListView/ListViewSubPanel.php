@@ -422,7 +422,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                                     ? $aItem->{$list_field['alias']}
                                     : $aItem->$field_name;
 
-                                if (($alias_field_def['dbType'] ?? '') === 'datetime') {
+                                if (!empty($alias_field_def['dbType']) && $alias_field_def['dbType'] === 'datetime') {
                                     global $timedate;
                                     $fields[strtoupper($list_field['alias'])] = $timedate->to_display_date_time(
                                         $aItem->{$list_field['alias']}
