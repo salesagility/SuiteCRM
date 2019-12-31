@@ -417,9 +417,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
                                 $alias_field_def['name'] = $list_field['alias'];
                                 // Add alias field def into bean to can render field in subpanel
                                 $aItem->field_defs[$list_field['alias']] = $alias_field_def;
-                                if (!isset($fields[strtoupper($list_field['alias'])]) || empty($fields[strtoupper($list_field['alias'])])) {
+
+                                $fields[strtoupper($list_field['alias'])] = !empty($aItem->{$list_field['alias']})
+                                    ? $aItem->{$list_field['alias']}
+                                    : $aItem->$field_name;
+
+                                if (($alias_field_def['dbType'] ?? '') === 'datetime') {
                                     global $timedate;
-                                    $fields[strtoupper($list_field['alias'])] = (!empty($aItem->$field_name)) ? $aItem->$field_name : $timedate->to_display_date_time($aItem->{$list_field['alias']});
+                                    $fields[strtoupper($list_field['alias'])] = $timedate->to_display_date_time(
+                                        $aItem->{$list_field['alias']}
+                                    );
                                 }
                             } else {
                                 $list_field['name'] = $field_name;
