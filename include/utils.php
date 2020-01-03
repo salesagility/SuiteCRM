@@ -3248,6 +3248,7 @@ function check_php_version($sys_php_version = '', $min_php_version = '', $rec_ph
 
     // versions below MIN_PHP_VERSION are not accepted, so return early.
     if (version_compare($sys_php_version, $min_php_version, '<') === true) {
+        echo "!!!VERSION COMPARE SYS LESS THAN MIN!!!";
         return -1;
     }
 
@@ -3256,12 +3257,14 @@ function check_php_version($sys_php_version = '', $min_php_version = '', $rec_ph
     $bug_php_versions = array();
     foreach ($bug_php_versions as $v) {
         if (version_compare($sys_php_version, $v, '=') === true) {
+            echo "!!!VERSION COMPARE SYS EQUAL TO BUGGED V!!!";
             return -1;
         }
     }
 
     // If the checked version is between the minimum and recommended versions, return 0.
     if (version_compare($sys_php_version, $rec_php_version, '<') === true) {
+        echo "!!!VERSION COMPARE SYS BETWEEN MIN AND REC!!!";
         return 0;
     }
 
