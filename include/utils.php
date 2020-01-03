@@ -3244,6 +3244,8 @@ function check_php_version($sys_php_version = '', $min_php_version = '', $rec_ph
         $rec_php_version = constant('SUITECRM_PHP_REC_VERSION');
     }
 
+    echo "PHP_VERSION is {$sys_php_version}. SUITECRM_PHP_MIN_VERSION is {$min_php_version}. SUITECRM_PHP_REC_VERSION is {$rec_php_version}.";
+
     // versions below MIN_PHP_VERSION are not accepted, so return early.
     if (version_compare($sys_php_version, $min_php_version, '<') === true) {
         return -1;
