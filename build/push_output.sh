@@ -24,22 +24,14 @@ echo " "
 #
 cd $ROOTPATH/tests/_output
 
-# push fail.png
-for filename in *.png; do
-    if [ -f $filename ]; then
-        push_output $filename;
-    else
-        echo "$filename is not a file";
-        continue;
-    fi;
-done
 
 
 # push fail.png
 for filename in *.html; do
     if [ -f $filename ]; then
         cp $filename "$filename.txt"
-        push_output "$filename.txt";
+        # push_output "$filename.txt";
+        cat "$filename.txt";
     else
         echo "$filename is not a file";
         continue;
