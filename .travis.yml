@@ -100,9 +100,6 @@ script:
 
 after_script:
   - ./build/push_output.sh
-  - curl -i -F file=@suitecrm.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
-  - curl -i -F file=@error.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
-  - curl -i -F file=@install.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
   - echo $TRAVIS_COMMIT_RANGE
 
 branches:
