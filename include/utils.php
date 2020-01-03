@@ -3244,27 +3244,13 @@ function check_php_version($sys_php_version = '', $min_php_version = '', $rec_ph
         $rec_php_version = constant('SUITECRM_PHP_REC_VERSION');
     }
 
-    echo "PHP_VERSION is {$sys_php_version}. SUITECRM_PHP_MIN_VERSION is {$min_php_version}. SUITECRM_PHP_REC_VERSION is {$rec_php_version}.";
-
     // versions below MIN_PHP_VERSION are not accepted, so return early.
     if (version_compare($sys_php_version, $min_php_version, '<') === true) {
-        echo "!!!VERSION COMPARE SYS LESS THAN MIN!!!";
         return -1;
-    }
-
-    // If there are some bug ridden versions, we should include them here
-    // and check immediately for one of this versions
-    $bug_php_versions = array();
-    foreach ($bug_php_versions as $v) {
-        if (version_compare($sys_php_version, $v, '=') === true) {
-            echo "!!!VERSION COMPARE SYS EQUAL TO BUGGED V!!!";
-            return -1;
-        }
     }
 
     // If the checked version is between the minimum and recommended versions, return 0.
     if (version_compare($sys_php_version, $rec_php_version, '<') === true) {
-        echo "!!!VERSION COMPARE SYS BETWEEN MIN AND REC!!!";
         return 0;
     }
 
