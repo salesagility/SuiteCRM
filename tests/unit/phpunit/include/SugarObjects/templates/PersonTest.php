@@ -1,4 +1,7 @@
 <?php
+
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,7 +41,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-class PersonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class PersonTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
      * @var \UnitTester
@@ -47,14 +50,6 @@ class PersonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSetLawfulBasis()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('contacts');
-        $state->pushTable('contacts_cstm');
-        $state->pushTable('sugarfeed');
-
-
         $person = new Contact();
         $person->last_name = 'Smith';
 
@@ -82,11 +77,5 @@ class PersonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test that source is being set
         $this->assertEquals('third_party', $person->lawful_basis_source);
-
-        $state->popTable('aod_indexevent');
-        $state->popTable('contacts');
-        $state->popTable('contacts_cstm');
-        $state->popTable('sugarfeed');
-        $state->popGlobals();
     }
 }

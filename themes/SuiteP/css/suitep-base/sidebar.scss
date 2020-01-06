@@ -266,20 +266,15 @@ a.buttontoggle:hover {
   margin: 0 0 5px 0;
 }
 
-footer * {
-  box-sizing: content-box;
-}
-
 footer {
-  box-sizing: content-box;
   bottom: 0;
   background-color: $footer-btn-bg;
   margin: 0 0 0 0;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
-  clear: both;
   line-height: 38px;
   width: 100%;
+  display: inline-block;
 }
 
 footer.expandedSidebar {
@@ -291,8 +286,7 @@ footer.collapsedSidebar {
 }
 
 .footer_left {
-  float: left;
-  width: 48%;
+  display: inline-block;
 }
 
 /*SIDEBAR BREAK POINTS*/

@@ -41,12 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- * *******************************************************************************/
 logThis('[At systemCheck.php]');
 
 $stop = false; // flag to prevent going to next step
@@ -221,7 +216,7 @@ foreach ($errors as $k => $type) {
     }
 }
 
-$GLOBALS['top_message'] = "{$mod_strings['LBL_UW_NEXT_TO_UPLOAD']}";
+$GLOBALS['top_message'] = (string)($mod_strings['LBL_UW_NEXT_TO_UPLOAD']);
 $showBack		= true;
 $showCancel		= true;
 $showRecheck	= true;

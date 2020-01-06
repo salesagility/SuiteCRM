@@ -251,10 +251,18 @@ function change_state(radiobutton) {
 						</tr>
 						<tr>
 							<td width="20%" scope="row" valign='top'>
+								{$MOD.LBL_EMAIL_WARNING_NOTIFICATIONS}:&nbsp;
+							</td>
+							<td width="30%"  valign='top'>
+								<input type='checkbox' class='checkbox' name='email_warning_notifications' value="1" {$LBL_EMAIL_WARNING_NOTIFICATIONS}>
+							</td>
+						</tr>
+						<tr>
+							<td width="20%" scope="row" valign='top'>
 								{$MOD.LBL_EMAIL_DEFAULT_DELETE_ATTACHMENTS}:&nbsp;
 							</td>
 							<td width="30%"  valign='top'>
-								<input type='checkbox' name='email_default_delete_attachments' value="1" {$DEFAULT_EMAIL_DELETE_ATTACHMENTS}>
+								<input type='checkbox' class='checkbox' name='email_default_delete_attachments' value="1" {$DEFAULT_EMAIL_DELETE_ATTACHMENTS}>
 							</td>
 
 							<td scope="row" width="20%">

@@ -23,19 +23,17 @@ class CalendarCest
             $this->fakeData = Faker\Factory::create();
         }
 
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\Calendar $calendar
      *
      * As an administrator I want to view the calendar module.
      */
     public function testScenarioViewCalendarModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\Calendar $calendar
+        \AcceptanceTester $I
     ) {
         $I->wantTo('View the calendar module for testing');
 

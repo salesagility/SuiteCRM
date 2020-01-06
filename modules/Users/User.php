@@ -711,7 +711,7 @@ class User extends Person implements EmailInterface
         if (!$this->is_group && !$this->portal_only) {
             require_once('modules/MySettings/TabController.php');
 
-            global $current_user;
+            global $current_user, $sugar_config;
 
             $display_tabs_def = isset($_REQUEST['display_tabs_def']) ? urldecode($_REQUEST['display_tabs_def']) : '';
             $hide_tabs_def = isset($_REQUEST['hide_tabs_def']) ? urldecode($_REQUEST['hide_tabs_def']) : '';
@@ -728,8 +728,7 @@ class User extends Person implements EmailInterface
             $this->is_group = 0;
             $this->portal_only = 0;
 
-            if ((isset($_POST['is_admin']) && ($_POST['is_admin'] == 'on' || $_POST['is_admin'] == '1')) ||
-              (isset($_POST['UserType']) && $_POST['UserType'] == "Administrator")) {
+            if (is_admin($current_user) && ((isset($_POST['is_admin']) && ($_POST['is_admin'] === 'on' || $_POST['is_admin'] === '1')) || (isset($_POST['UserType']) && $_POST['UserType'] === 'Administrator'))) {
                 $this->is_admin = 1;
             } elseif (isset($_POST['is_admin']) && empty($_POST['is_admin'])) {
                 $this->is_admin = 0;
@@ -950,6 +949,15 @@ class User extends Person implements EmailInterface
             }
             if (isset($_POST['subtheme'])) {
                 $this->setPreference('subtheme', $_POST['subtheme'], 0, 'global');
+            }
+            if ($this->user_hash === null) {
+                $newUser = true;
+                clear_register_value('user_array', $this->object_name);
+            } else {
+                $newUser = false;
+            }
+            if ($newUser && !$this->is_group && !$this->portal_only && isset($sugar_config['passwordsetting']['SystemGeneratedPasswordON'])) {
+                require_once 'modules/Users/GeneratePassword.php';
             }
         }
     }
@@ -1897,12 +1905,12 @@ EOQ;
         $ret1 = '';
         $ret2 = '';
         for ($i = 0; $i < strlen($macro); $i++) {
-            if (array_key_exists($macro{$i}, $format)) {
-                $ret1 .= "<i>" . $format[$macro{$i}] . "</i>";
-                $ret2 .= "<i>" . $name[$macro{$i}] . "</i>";
+            if (array_key_exists($macro[$i], $format)) {
+                $ret1 .= "<i>" . $format[$macro[$i]] . "</i>";
+                $ret2 .= "<i>" . $name[$macro[$i]] . "</i>";
             } else {
-                $ret1 .= $macro{$i};
-                $ret2 .= $macro{$i};
+                $ret1 .= $macro[$i];
+                $ret2 .= $macro[$i];
             }
         }
 
@@ -2211,7 +2219,7 @@ EOQ;
 
         // Create random characters for the ones that doesnt have requirements
         for ($i = 0; $i < $length - $condition; $i++) {  // loop and create password
-            $password = $password . substr($charBKT, rand() % strlen($charBKT), 1);
+            $password = $password . substr($charBKT, mt_rand() % strlen($charBKT), 1);
         }
 
         return $password;
@@ -2264,7 +2272,6 @@ EOQ;
 
         $itemail = $this->emailAddress->getPrimaryAddress($this);
         //retrieve IT Admin Email
-        //_ppd( $emailTemp->body_html);
         //retrieve email defaults
         $emailObj = new Email();
         $defaults = $emailObj->getSystemDefaultEmail();

@@ -1,6 +1,8 @@
 <?php
 
-class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class SugarViewTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -13,12 +15,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testinit()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
         //error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -29,23 +26,11 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        
-        // clean up
     }
 
     public function testprocess()
     {
-        // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-        $state->pushPHPConfigOptions();
-
         // test
-        
-        
         $SugarView = new SugarView();
         $SugarView->module = 'Users';
         $GLOBALS['app'] = new SugarApplication();
@@ -64,22 +49,10 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-
-        $state->popPHPConfigOptions();
-        $state->popGlobals();
-        $state->popTable('tracker');
     }
 
     public function testdisplayErrors()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -91,18 +64,10 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        // clean up
     }
 
     public function testpreDisplay()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -113,18 +78,10 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        // clean up
     }
 
     public function testdisplay()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -135,18 +92,10 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        // clean up
     }
 
     public function testdisplayHeader()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $SugarView = new SugarView();
         $SugarView->module = 'Users';
         $GLOBALS['app'] = new SugarApplication();
@@ -165,18 +114,10 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testgetModuleMenuHTML()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -187,18 +128,10 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        // clean up
     }
 
     public function testincludeClassicFile()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -210,8 +143,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
-        
-        // clean up
     }
 
     public function testgetJavascriptValidation()
@@ -223,11 +154,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdisplayFooter()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -244,18 +170,10 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testrenderJavascript()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -272,13 +190,10 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testgetMenu()
     {
-
         ////error_reporting(E_ALL);
 
         $SugarView = new SugarView();

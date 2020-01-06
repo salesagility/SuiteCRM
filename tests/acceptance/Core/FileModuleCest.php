@@ -5,12 +5,6 @@ use Faker\Generator;
 class FileModuleCest
 {
     /**
-     * @var string $lastView helps the test skip some repeated tests in order to make the test framework run faster at the
-     * potential cost of being accurate and reliable
-     */
-    protected $lastView;
-
-    /**
      * @var Generator $fakeData
      */
     protected $fakeData;
@@ -27,7 +21,7 @@ class FileModuleCest
     {
         if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
-            $this->fakeDataSeed = rand(0, 2048);
+            $this->fakeDataSeed = mt_rand(0, 2048);
         }
         $this->fakeData->seed($this->fakeDataSeed);
     }
@@ -61,8 +55,6 @@ class FileModuleCest
             \Page\FileModule::$NAME,
             \SuiteCRM\Enumerator\SugarObjectType::file
         );
-
-        $this->lastView = 'ModuleBuilder';
     }
 
     /**
@@ -85,7 +77,6 @@ class FileModuleCest
         $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 
     /**
@@ -128,7 +119,6 @@ class FileModuleCest
         // TODO: other fields
         $editView->clickSaveButton();
         $detailview->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
         $detailview->see($fileName, '#uploadfile');
         
         $I->deleteFile($fileDir.$fileName);
@@ -167,7 +157,6 @@ class FileModuleCest
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -209,7 +198,6 @@ class FileModuleCest
         $editView->click('Save');
 
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -259,7 +247,6 @@ class FileModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 
     /**
@@ -297,6 +284,5 @@ class FileModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 }

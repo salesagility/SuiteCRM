@@ -5,12 +5,6 @@ use Faker\Generator;
 class BasicModuleCest
 {
     /**
-     * @var string $lastView helps the test skip some repeated tests in order to make the test framework run faster at the
-     * potential cost of being accurate and reliable
-     */
-    protected $lastView;
-
-    /**
      * @var Generator $fakeData
      */
     protected $fakeData;
@@ -27,7 +21,7 @@ class BasicModuleCest
     {
         if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
-            $this->fakeDataSeed = rand(0, 2048);
+            $this->fakeDataSeed = mt_rand(0, 2048);
         }
         $this->fakeData->seed($this->fakeDataSeed);
     }
@@ -64,7 +58,6 @@ class BasicModuleCest
         );
 
         $repair->clickQuickRepairAndRebuild();
-        $this->lastView = 'ModuleBuilder';
     }
 
     /**
@@ -88,7 +81,6 @@ class BasicModuleCest
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 
     /**
@@ -125,7 +117,6 @@ class BasicModuleCest
         $editView->fillField('#description', $this->fakeData->paragraph);
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -160,7 +151,6 @@ class BasicModuleCest
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($this->fakeData->name);
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -204,7 +194,6 @@ class BasicModuleCest
         $editView->click('Save');
 
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -255,7 +244,6 @@ class BasicModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 
     /**
@@ -295,6 +283,5 @@ class BasicModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 }

@@ -382,7 +382,7 @@ function xhprof_generate_dot_script(
         sprintf(
             "%.1f%%",
             100 * $info["wt"] /
-                ($sym_table[$parent]["wt"] - $sym_table["$parent"]["excl_wt"])
+                ($sym_table[$parent]["wt"] - $sym_table[(string)$parent]["excl_wt"])
         )
         : "0.0%";
 

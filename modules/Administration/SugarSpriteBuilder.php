@@ -344,7 +344,7 @@ class SugarSpriteBuilder
                     $spriteFileName = "{$this->fileName}.png";
                     $cssFileName = "{$this->fileName}.css";
                     $metaFileName = "{$this->fileName}.meta.php";
-                    $nameSpace = "{$name}";
+                    $nameSpace = (string)($name);
                 }
 
                 // directory structure

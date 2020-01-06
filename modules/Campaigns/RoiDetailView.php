@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 
 
@@ -118,7 +112,7 @@ if(!$focus->campaign_type == "NewsLetter"){
     $smarty->assign("CREATED_BY", $focus->created_by_name);
     $smarty->assign("MODIFIED_BY", $focus->modified_by_name);
     $smarty->assign("TRACKER_URL", $sugar_config['site_url'] . '/campaign_tracker.php?track=' . $focus->tracker_key);
-    $smarty->assign("TRACKER_COUNT", intval($focus->tracker_count));
+    $smarty->assign("TRACKER_COUNT", (int)$focus->tracker_count);
     $smarty->assign("TRACKER_TEXT", $focus->tracker_text);
     $smarty->assign("REFER_URL", $focus->refer_url);
     $smarty->assign("IMPRESSIONS", $focus->impressions);
@@ -142,7 +136,7 @@ $campaign_id = $focus->id;
       if (empty($opp_data1['opp_count'])) {
           $opp_data1['opp_count']=0;
       }
-      //_ppd($opp_data1);
+
      $smarty->assign("OPPORTUNITIES_WON", $opp_data1['opp_count']);
           
             $camp_query1  = "select camp.name, count(*) click_thru_link";
@@ -206,7 +200,6 @@ $campaign_id = $focus->id;
     //$cache_file_name	= $current_user->getUserPrivGuid()."_campaign_response_by_activity_type_".$dateFileNameSafe[0]."_".$dateFileNameSafe[1].".xml";
     $cache_file_name_roi	= $current_user->getUserPrivGuid()."_campaign_response_by_roi_".$dateFileNameSafe[0]."_".$dateFileNameSafe[1].".xml";
     $chart= new campaign_charts();
-    //_ppd($roi_vals);
     $smarty->assign("MY_CHART_ROI", $chart->campaign_response_roi($app_list_strings['roi_type_dom'], $app_list_strings['roi_type_dom'], $focus->id, true, true));
     //end chart
     //custom chart code

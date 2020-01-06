@@ -1,6 +1,8 @@
 <?php
 
-class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -13,10 +15,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSchedulersJob()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('email_addresses');
-        
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $schedulersJob = new SchedulersJob();
 
         $this->assertInstanceOf('SchedulersJob', $schedulersJob);
@@ -31,27 +30,16 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'process_save_dates', $schedulersJob);
         $this->assertAttributeEquals(30, 'min_interval', $schedulersJob);
         $this->assertAttributeEquals(true, 'job_done', $schedulersJob);
-        
-        // clean up
-        
-        $state->popTable('email_addresses');
     }
 
     public function testcheck_date_relationships_load()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $schedulersJob = new SchedulersJob();
         $schedulersJob->execute_time = '2015-01-01 00:00:00';
 
         $schedulersJob->check_date_relationships_load();
 
         $this->assertEquals('2015-01-01 00:00:00', $schedulersJob->execute_time_db);
-        
-        // clean up
     }
 
     public function testhandleDateFormat()
@@ -104,35 +92,19 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $schedulersJob = new SchedulersJob();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $schedulersJob->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfailJob()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        
-        // test
-        
         $schedulersJob = new SchedulersJob();
 
         $result = $schedulersJob->failJob();
@@ -146,23 +118,10 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(SchedulersJob::JOB_FAILURE, $schedulersJob->resolution);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
-        
-        // clean up
-        
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
     }
 
     public function testsucceedJob()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        
-        // test
-        
         $schedulersJob = new SchedulersJob();
 
         $result = $schedulersJob->succeedJob();
@@ -176,24 +135,13 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(SchedulersJob::JOB_SUCCESS, $schedulersJob->resolution);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
-        
-        // clean up
-        
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
     }
 
     public function testonFailureRetry()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $schedulersJob = new SchedulersJob();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $schedulersJob->onFailureRetry();
             $this->assertTrue(true);
@@ -202,21 +150,13 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
-        
-        // clean up
     }
 
     public function testOnFinalFailure()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        //
-        
-        
         $schedulersJob = new SchedulersJob();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $schedulersJob->onFinalFailure();
             $this->assertTrue(true);
@@ -225,22 +165,10 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
-        
-        // clean up
     }
 
     public function testresolveJob()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        
-        // test
-        
-        
         $schedulersJob = new SchedulersJob();
 
         //test for JOB_FAILURE
@@ -262,23 +190,10 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(SchedulersJob::JOB_SUCCESS, $schedulersJob->resolution);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
-        
-        // clean up
-        
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
     }
 
     public function testpostponeJobAndMark_deleted()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        
-        // test
-        
         $schedulersJob = new SchedulersJob();
 
         $result = $schedulersJob->postponeJob('test message', 1);
@@ -296,23 +211,10 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $schedulersJob->mark_deleted($schedulersJob->id);
         $result = $schedulersJob->retrieve($schedulersJob->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
     }
 
     public function testunexpectedExit()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        
-        // test
-        
         $schedulersJob = new SchedulersJob();
 
         //create conditions to mark job_done as false
@@ -328,24 +230,10 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(SchedulersJob::JOB_FAILURE, $schedulersJob->resolution);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
-        
-        // clean up
-        
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
     }
 
     public function testrunJobId()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        
-        // test
-        
-
         //test with invalid job id
         $result = SchedulersJob::runJobId('1', '');
         $this->assertEquals('Job 1 not found.', $result);
@@ -368,27 +256,13 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('Job '.$schedulersJob->id.' belongs to another client, can not run as test_client.', $result);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
-        
-        // clean up
-        
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
     }
 
     public function testerrorHandler()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        
-        // test
-        
-
         $schedulersJob = new SchedulersJob();
 
         //execute the method with different Error Types
-
         $schedulersJob->errors = '';
         $schedulersJob->errorHandler(E_USER_WARNING, 'test err', 'testfile', '1');
         $this->assertEquals("Warning [512]: test err in testfile on line 1\n", $schedulersJob->errors);
@@ -404,15 +278,10 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $schedulersJob->errors = '';
         $schedulersJob->errorHandler(E_RECOVERABLE_ERROR, 'test err', 'testfile', '1');
         $this->assertEquals("Recoverable Error [4096]: test err in testfile on line 1\n", $schedulersJob->errors);
-        
-        // clean up
-        
-        $state->popTable('aod_index');
     }
 
     public function testrunJob()
     {
-
         //test without a valid user
         $schedulersJob = new SchedulersJob();
         $schedulersJob->target = 'function::processAOW_Workflow';

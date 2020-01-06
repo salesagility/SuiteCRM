@@ -5,12 +5,6 @@ use Faker\Generator;
 class CompanyModuleCest
 {
     /**
-     * @var string $lastView helps the test skip some repeated tests in order to make the test framework run faster at the
-     * potential cost of being accurate and reliable
-     */
-    protected $lastView;
-
-    /**
      * @var Generator $fakeData
      */
     protected $fakeData;
@@ -30,7 +24,7 @@ class CompanyModuleCest
             $this->fakeData->addProvider(new Faker\Provider\en_US\Address($this->fakeData));
             $this->fakeData->addProvider(new Faker\Provider\en_US\PhoneNumber($this->fakeData));
             $this->fakeData->addProvider(new Faker\Provider\en_US\Company($this->fakeData));
-            $this->fakeDataSeed = rand(0, 2048);
+            $this->fakeDataSeed = mt_rand(0, 2048);
         }
         $this->fakeData->seed($this->fakeDataSeed);
     }
@@ -63,8 +57,6 @@ class CompanyModuleCest
             \Page\CompanyModule::$NAME,
             \SuiteCRM\Enumerator\SugarObjectType::company
         );
-
-        $this->lastView = 'ModuleBuilder';
     }
 
     /**
@@ -88,7 +80,6 @@ class CompanyModuleCest
         $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 
     /**
@@ -141,7 +132,6 @@ class CompanyModuleCest
         $editView->fillField('#description', $this->fakeData->paragraph);
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -178,7 +168,6 @@ class CompanyModuleCest
         $listView->clickNameLink($this->fakeData->company);
 
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -223,7 +212,6 @@ class CompanyModuleCest
         $editView->click('Save');
 
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -244,7 +232,6 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Duplicate Company Test Module Record from detail view');
         $I->loginAsAdmin();
-
 
         // Go to Company Test Module
         $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
@@ -275,7 +262,6 @@ class CompanyModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 
     /**
@@ -317,6 +303,5 @@ class CompanyModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 }

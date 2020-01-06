@@ -41,7 +41,7 @@ class ModulesCest
     {
         if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
-            $this->fakeDataSeed = rand(0, 2048);
+            $this->fakeDataSeed = mt_rand(0, 2048);
         }
         $this->fakeData->seed($this->fakeDataSeed);
     }
@@ -186,7 +186,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
-        $this->fakeData->seed(rand(0, 2148));
+        $this->fakeData->seed(mt_rand(0, 2148));
         $I->sendPOST(
             $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
             json_encode(
@@ -231,7 +231,7 @@ class ModulesCest
         $I->loginAsAdminWithClientCredentials();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
-        $this->fakeData->seed(rand(0, 2148));
+        $this->fakeData->seed(mt_rand(0, 2148));
         $I->sendPOST(
             $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
             json_encode(
@@ -279,7 +279,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
-        $this->fakeData->seed(rand(0, 2148));
+        $this->fakeData->seed(mt_rand(0, 2148));
         $I->sendPOST(
             $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
             json_encode(
@@ -327,7 +327,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
-        $this->fakeData->seed(rand(0, 2148));
+        $this->fakeData->seed(mt_rand(0, 2148));
 
 
         $payload = json_encode(
@@ -412,7 +412,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
-        $this->fakeData->seed(rand(0, 2148));
+        $this->fakeData->seed(mt_rand(0, 2148));
 
         $document_name = $faker->name();
         // Publish date
@@ -661,7 +661,7 @@ class ModulesCest
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
 
-        $this->fakeData->seed(rand(0, 2148));
+        $this->fakeData->seed(mt_rand(0, 2148));
         // Create AOS_Product_Categories
         $payloadProductCategory = json_encode(
             array(
@@ -684,7 +684,7 @@ class ModulesCest
         $responseProductCategory = json_decode($I->grabResponse(), true);
         self::$PRODUCT_CATEGORY_RECORD_ID = $responseProductCategory['data']['id'];
 
-        $this->fakeData->seed(rand(0, 2148));
+        $this->fakeData->seed(mt_rand(0, 2148));
         // Create AOS_Products and Relate to AOS_Product_Categories
         $payload = json_encode(
             array(
@@ -767,7 +767,7 @@ class ModulesCest
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
         // Create AOS_Product_Categories
-        $this->fakeData->seed(rand(0, 2148));
+        $this->fakeData->seed(mt_rand(0, 2148));
         $payloadProductCategory = json_encode(
             array(
                 'data' => array(
@@ -842,7 +842,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
-        $this->fakeData->seed(rand(0, 2148));
+        $this->fakeData->seed(mt_rand(0, 2148));
         // Create AOS_Product_Categories
         $payloadProductCategory = json_encode(
             array(
@@ -962,7 +962,7 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
-        $this->fakeData->seed(rand(0, 2148));
+        $this->fakeData->seed(mt_rand(0, 2148));
         // Create AOS_Product_Categories
         $payloadProductCategory = json_encode(
             array(
@@ -1040,7 +1040,7 @@ class ModulesCest
 
         // Create Products of Product Categories
         // Create AOS_Product #1
-        $this->fakeData->seed(rand(0, 2148));
+        $this->fakeData->seed(mt_rand(0, 2148));
         $payloadProduct1 = json_encode(
             array(
                 'data' => array(
@@ -1065,7 +1065,7 @@ class ModulesCest
         self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[] = $responseProduct1['data']['id'];
 
         // Create AOS_Product #2
-        $this->fakeData->seed(rand(0, 2148));
+        $this->fakeData->seed(mt_rand(0, 2148));
         $payloadProduct2 = json_encode(
             array(
                 'data' => array(
@@ -1091,7 +1091,7 @@ class ModulesCest
 
 
         // Create AOS_Product_Categories Parent
-        $this->fakeData->seed(rand(0, 2148));
+        $this->fakeData->seed(mt_rand(0, 2148));
         $payloadProduct = json_encode(
             array(
                 'data' => array(
@@ -1197,7 +1197,7 @@ class ModulesCest
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
         // Replace the relationships with just one of the related items
-        // We should only see the the item we have posted in the responses
+        // We should only see the item we have posted in the responses
         $payload = json_encode(
             array(
                 'data' => array(
@@ -1260,7 +1260,7 @@ class ModulesCest
         $I->sendJsonApiContentNegotiation();
 
         // Replace the relationships with just one of the related items
-        // We should only see the the item we have posted in the responses
+        // We should only see the item we have posted in the responses
         $payload = json_encode(
             array(
                 'data' => array()
@@ -1310,7 +1310,7 @@ class ModulesCest
 
         // Create Products of Product Categories
         // Create AOS_Product #1
-        $this->fakeData->seed(rand(0, 2148));
+        $this->fakeData->seed(mt_rand(0, 2148));
         $payloadProduct1 = json_encode(
             array(
                 'data' => array(
@@ -1335,7 +1335,7 @@ class ModulesCest
         self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[] = $responseProduct1['data']['id'];
 
         // Create AOS_Product #2
-        $this->fakeData->seed(rand(0, 2148));
+        $this->fakeData->seed(mt_rand(0, 2148));
         $payloadProduct2 = json_encode(
             array(
                 'data' => array(
@@ -1361,7 +1361,7 @@ class ModulesCest
 
 
         // Create AOS_Product_Categories Parent
-        $this->fakeData->seed(rand(0, 2148));
+        $this->fakeData->seed(mt_rand(0, 2148));
         $payloadProduct = json_encode(
             array(
                 'data' => array(

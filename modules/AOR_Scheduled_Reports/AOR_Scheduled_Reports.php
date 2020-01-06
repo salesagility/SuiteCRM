@@ -174,21 +174,41 @@ class AOR_Scheduled_Reports extends basic
         return $emails;
     }
 
+    /**
+     * @param DateTime $date
+     * @return bool
+     * @throws Exception
+     */
     public function shouldRun(DateTime $date)
     {
         global $timedate;
-        if (empty($date)) {
-            $date = new DateTime();
-        }
+
+        $runDate = clone $date;
+        $this->handleTimeZone($runDate);
+
         $cron = Cron\CronExpression::factory($this->schedule);
-        if (empty($this->last_run) && $cron->isDue($date)) {
+        if (empty($this->last_run) && $cron->isDue($runDate)) {
             return true;
         }
+
         $lastRun = $timedate->fromDb($this->last_run);
+        $this->handleTimeZone($lastRun);
         $next = $cron->getNextRunDate($lastRun);
-        if ($next < $date) {
-            return true;
-        }
-        return false;
+
+        return $next <= $runDate;
     }
+
+    /**
+     * @param DateTime $date
+     */
+    protected function handleTimeZone(DateTime $date)
+    {
+        global $sugar_config;
+
+        $timezone = !empty($sugar_config['default_timezone']) ? $sugar_config['default_timezone'] : date_default_timezone_get();
+        $timezone = new DateTimeZone($timezone);
+        $offset = $timezone->getOffset($date);
+        $date->modify($offset . 'second');
+    }
+
 }

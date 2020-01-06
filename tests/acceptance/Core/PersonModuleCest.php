@@ -6,12 +6,6 @@ use JeroenDesloovere\VCard\VCard;
 class PersonModuleCest
 {
     /**
-     * @var string $lastView helps the test skip some repeated tests in order to make the test framework run faster at the
-     * potential cost of being accurate and reliable
-     */
-    protected $lastView;
-
-    /**
      * @var Generator $fakeData
      */
     protected $fakeData;
@@ -28,7 +22,7 @@ class PersonModuleCest
     {
         if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
-            $this->fakeDataSeed = rand(0, 2048);
+            $this->fakeDataSeed = mt_rand(0, 2048);
         }
         $this->fakeData->seed($this->fakeDataSeed);
     }
@@ -62,8 +56,6 @@ class PersonModuleCest
             \Page\PersonModule::$NAME,
             \SuiteCRM\Enumerator\SugarObjectType::person
         );
-
-        $this->lastView = 'ModuleBuilder';
     }
 
     /**
@@ -87,7 +79,6 @@ class PersonModuleCest
         $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 
     /**
@@ -149,7 +140,6 @@ class PersonModuleCest
         $editView->clickSaveButton();
 
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -190,7 +180,6 @@ class PersonModuleCest
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($name);
         $detailView->waitForDetailViewVisible();
-        $this->lastView = 'DetailView';
     }
 
     /**
@@ -241,7 +230,6 @@ class PersonModuleCest
         $editView->click('Save');
 
         $detailView->waitForDetailViewVisible();
-        $this->lastView = "DetailView";
     }
 
     /**
@@ -344,7 +332,6 @@ class PersonModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
     }
 
     /**
@@ -407,7 +394,6 @@ class PersonModuleCest
         $I->click('#import_vcard_button', '.import-vcard');
 
         $detailView->waitForDetailViewVisible();
-        $this->lastView = ' DetailView';
         $detailView->see($firstname.' '.$lastname, '.module-title-text');
 
         // Delete Record
@@ -415,7 +401,6 @@ class PersonModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
-        $this->lastView = 'ListView';
 
         $I->deleteFile($fileDir.$fileName);
     }

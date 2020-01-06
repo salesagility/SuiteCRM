@@ -23,21 +23,19 @@ class CampaignsCest
             $this->fakeData = Faker\Factory::create();
         }
 
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Campaigns $campaigns
      *
      * As an administrator I want to view the campaigns module.
      */
     public function testScenarioViewCampaignsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Campaigns $campaigns
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the campaigns module for testing');
 
@@ -55,8 +53,8 @@ class CampaignsCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Campaigns $campaign
      *
-     * As administrative user I want to create a non-emails campaign so that I can test
-     * the standard fields.
+     * As an admin user, I want to create a non-emails campaign so that I can
+     * test the standard fields.
      */
     public function testScenarioCreateNonEmailCampaign(
         \AcceptanceTester $I,
@@ -98,8 +96,8 @@ class CampaignsCest
      * @param \Step\Acceptance\InboundEmailTester $inboundEmailTester
      * @param \Step\Acceptance\EmailMan $EmailManTester
      *
-     * As administrative user I want to create a Newsletter campaign so that I can test
-     * the standard fields.
+     * As an admin user I want to create a Newsletter campaign so that I can
+     * test the standard fields.
      */
     public function testScenarioCreateNewsletterCampaign(
         \AcceptanceTester $I,

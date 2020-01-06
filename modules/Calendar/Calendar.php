@@ -108,10 +108,10 @@ class Calendar
         
         $date_arr = array();
         if (!empty($_REQUEST['day'])) {
-            $_REQUEST['day'] = intval($_REQUEST['day']);
+            $_REQUEST['day'] = (int)$_REQUEST['day'];
         }
         if (!empty($_REQUEST['month'])) {
-            $_REQUEST['month'] = intval($_REQUEST['month']);
+            $_REQUEST['month'] = (int)$_REQUEST['month'];
         }
 
         if (!empty($_REQUEST['day'])) {
@@ -385,7 +385,7 @@ class Calendar
     {
         list($hour_start, $minute_start) =  explode(":", $this->day_start_time);
         list($hour_end, $minute_end) =  explode(":", $this->day_end_time);
-        $this->scroll_slot = intval($hour_start * (60 / $this->time_step) + ($minute_start / $this->time_step));
+        $this->scroll_slot = (int)($hour_start * (60 / $this->time_step) + ($minute_start / $this->time_step));
         $this->celcount = (($hour_end * 60 + $minute_end) - ($hour_start * 60 + $minute_start)) / $this->time_step;
     }
     

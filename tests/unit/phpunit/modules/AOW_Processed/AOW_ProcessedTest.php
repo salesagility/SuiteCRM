@@ -1,6 +1,8 @@
 <?php
 
-class AOW_ProcessedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AOW_ProcessedTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -13,8 +15,7 @@ class AOW_ProcessedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAOW_Processed()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aowProcessed = new AOW_Processed();
         $this->assertInstanceOf('AOW_Processed', $aowProcessed);
         $this->assertInstanceOf('Basic', $aowProcessed);
@@ -30,16 +31,9 @@ class AOW_ProcessedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $aowProcessed = new AOW_Processed();
         $this->assertEquals(false, $aowProcessed->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aowProcessed->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $aowProcessed->bean_implements('ACL')); //test with valid value
-        
-        // clean up
     }
 }

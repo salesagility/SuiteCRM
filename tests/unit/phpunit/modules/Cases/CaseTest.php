@@ -1,6 +1,8 @@
 <?php
 
-class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class aCaseTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -13,8 +15,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testaCase()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aCase = new aCase();
         $this->assertInstanceOf('aCase', $aCase);
         $this->assertInstanceOf('Basic', $aCase);
@@ -31,48 +32,29 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $aCase = new aCase();
         $this->assertEquals(null, $aCase->get_summary_text());
 
         $aCase->name = 'test';
         $this->assertEquals('test', $aCase->get_summary_text());
-        
-        // clean up
     }
 
     public function testlistviewACLHelper()
     {
         self::markTestIncomplete('environment dependency');
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        
+
+
         $aCase = new aCase();
         $expected = array('MAIN' => 'span', 'ACCOUNT' => 'span');
         $actual = $aCase->listviewACLHelper();
         $this->assertSame($expected, $actual);
-        
-        // clean up
-        
-        $state->popGlobals();
     }
 
     public function testsave_relationship_changes()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
-        
-        
-        
-        
         $aCase = new aCase();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aCase->save_relationship_changes(true);
             $aCase->save_relationship_changes(false);
@@ -81,52 +63,32 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        
-        $state->popTable('aod_indexevent');
     }
 
     public function testset_case_contact_relationship()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $aCase = new aCase();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aCase->set_case_contact_relationship(1);
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $aCase = new aCase();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aCase->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfill_in_additional_detail_fields()
@@ -249,16 +211,6 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('aop_case_events');
-        $state->pushTable('cases');
-        $state->pushTable('sugarfeed');
-        $state->pushTable('tracker');
-        $state->pushTable('cases_cstm');
-        $state->pushGlobals();
-        
-        
         $aCase = new aCase();
         $aCase->name = 'test';
         $aCase->priority = 'P1';
@@ -273,16 +225,6 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aCase->mark_deleted($aCase->id);
         $result = $aCase->retrieve($aCase->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('cases_cstm');
-        $state->popTable('tracker');
-        $state->popTable('sugarfeed');
-        $state->popTable('cases');
-        $state->popTable('aop_case_events');
-        $state->popTable('aod_indexevent');
     }
 
     public function testgetEmailSubjectMacro()

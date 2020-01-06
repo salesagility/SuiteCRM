@@ -131,9 +131,6 @@ class aSubPanel
             } else {
                 $instancePropertiesModule = $this->_instance_properties [ 'module' ];
             }
-            if (!is_dir('modules/' . $instancePropertiesModule)) {
-                _pstack_trace();
-            }
             if (!isset($this->_instance_properties [ 'subpanel_name' ])) {
                 $GLOBALS['log']->fatal('Invalid or missing SubPanelDefinition property: subpanel_name');
                 $def_path = null;

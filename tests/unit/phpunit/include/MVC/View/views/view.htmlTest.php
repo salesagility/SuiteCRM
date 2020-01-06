@@ -1,6 +1,8 @@
 <?php
 
-class ViewHtmlTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewHtmlTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -13,8 +15,7 @@ class ViewHtmlTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testViewHtml()
     {
-
-        //execute the contructor and check for the Object type
+        // Execute the constructor and check for the Object type
         $view = new ViewHtml();
         $this->assertInstanceOf('ViewHtml', $view);
         $this->assertInstanceOf('SugarView', $view);
@@ -22,21 +23,13 @@ class ViewHtmlTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdisplay()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $view = new ViewHtml();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $view->display();
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 }

@@ -23,21 +23,19 @@ class AccountsCest
             $this->fakeData = Faker\Factory::create();
         }
 
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Accounts $accounts
      *
      * As an administrator I want to view the accounts module.
      */
     public function testScenarioViewAccountsModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Accounts $accounts
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the accounts module for testing');
 

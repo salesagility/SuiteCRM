@@ -132,12 +132,12 @@ class TestEnvironmentCommands extends \Robo\Tasks
         $basePath = $os->toOsPath($paths->getProjectPath() . '/build/tmp');
 
         if (!file_exists($basePath)) {
-            if (mkdir($basePath, 0777, true) === false) {
+            if (!mkdir($basePath, 0777, true) && !is_dir($basePath)) {
                 throw new \RuntimeException('Unable to create file structure ' . $basePath);
             }
         } elseif ($opts['reinstall']) {
             $this->_deleteDir($basePath);
-            if (mkdir($basePath, 0777, true) === false) {
+            if (!mkdir($basePath, 0777, true) && !is_dir($basePath)) {
                 throw new \RuntimeException('Unable to create file structure ' . $basePath);
             }
         }
