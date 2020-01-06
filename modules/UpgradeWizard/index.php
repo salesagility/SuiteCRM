@@ -500,7 +500,7 @@ function getSelectedModulesForLayoutMerge()
 eoq;
 
 // If we are on step  4 then force a redirect to run again to pick up changes to smarty before setting the template.
-if ($_REQUEST['step'] === 4 && !$_REQUEST['additional_step']) {
+if ($_REQUEST['step'] === '4' && !$_REQUEST['additional_step']) {
     // Set session variables
     $_SESSION['UW_MAIN'] = $uwMain;
     $_SESSION['UW_JS'] = $js;
@@ -539,7 +539,7 @@ if ($_REQUEST['step'] === 4 && !$_REQUEST['additional_step']) {
     die();
 }
 
-if($_REQUEST['step'] === 4 && $_REQUEST['additional_step']) {
+if($_REQUEST['step'] === '4' && $_REQUEST['additional_step']) {
     // Set Smarty variables
     $uwMain = $_SESSION['UW_MAIN'];
     $js = $_SESSION['UW_JS'];
