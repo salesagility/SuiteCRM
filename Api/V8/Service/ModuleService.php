@@ -243,7 +243,7 @@ class ModuleService
             $targetPath = 'upload/' . $fileName;
             $content = base64_decode($fileContents);
 
-            $file = fopen($targetPath, 'b');
+            $file = fopen($targetPath, 'wb');
             fwrite($file, $content);
             fclose($file);
         }
