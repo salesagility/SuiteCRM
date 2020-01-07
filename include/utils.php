@@ -3255,15 +3255,6 @@ function check_php_version($sys_php_version = '', $min_php_version = '', $rec_ph
         return -1;
     }
 
-    // If there are some bug ridden versions, we should include them here
-    // and check immediately for one of this versions
-    $bug_php_versions = array();
-    foreach ($bug_php_versions as $v) {
-        if (version_compare($sys_php_version, $v, '=') === true) {
-            return -1;
-        }
-    }
-
     // If the checked version is between the minimum and recommended versions, return 0.
     if (version_compare($sys_php_version, $rec_php_version, '<') === true) {
         return 0;
