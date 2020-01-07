@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Service;
 
 use Api\V8\BeanDecorator\BeanManager;
@@ -198,9 +199,12 @@ class ModuleService
         }
 
         $this->setRecordUpdateParams($bean, $attributes);
-        $this->processAttributes($bean, $attributes);
+        $fileUpload = $this->processAttributes($bean, $attributes);
 
         $bean->save();
+        if ($fileUpload) {
+            $this->addFileToNote($bean->id, $attributes);
+        }
         $bean->retrieve($bean->id);
 
         $dataResponse = $this->getDataResponse(
@@ -216,18 +220,16 @@ class ModuleService
     }
 
     /**
-     * @param $bean
+     * @param $beanId
      * @param $attributes
-     * @return mixed
+     * @throws \Exception
      */
-    private function addFileToNote($bean, $attributes)
+    private function addFileToNote($beanId, $attributes)
     {
         global $sugar_config, $log;
 
-        if (!$bean->id) {
-            $bean->id = create_guid();
-            $bean->new_with_id = true;
-        }
+        \BeanFactory::unregisterBean('Notes', $beanId);
+        $bean = $this->beanManager->getBeanSafe('Notes', $beanId);
 
         // Write file to upload dir
         try {
@@ -243,11 +245,10 @@ class ModuleService
             $targetPath = 'upload/' . $fileName;
             $content = base64_decode($fileContents);
 
-            $file = fopen($targetPath, 'b');
+            $file = fopen($targetPath, 'wb');
             fwrite($file, $content);
             fclose($file);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $log->error('addFileToNote: ' . $e->getMessage());
             throw new \Exception($e->getMessage());
         }
@@ -257,8 +258,7 @@ class ModuleService
         $bean->filename = $attributes['filename'];
         $bean->uploadfile = $attributes['filename'];
         $bean->file_mime_type = $mimeType;
-
-        return $bean;
+        $bean->save();
     }
 
     /**
@@ -279,10 +279,12 @@ class ModuleService
         }
 
         $this->setRecordUpdateParams($bean, $attributes);
-        $this->processAttributes($bean, $attributes);
-
+        $fileUpload = $this->processAttributes($bean, $attributes);
         $bean->save();
-        
+
+        if ($fileUpload) {
+            $this->addFileToNote($bean->id, $attributes);
+        }
         $bean->retrieve($bean->id);
 
         $dataResponse = $this->getDataResponse(
@@ -300,6 +302,7 @@ class ModuleService
     /**
      * @param $bean
      * @param $attributes
+     * @return bool
      */
     protected function processAttributes(&$bean, $attributes)
     {
@@ -307,10 +310,9 @@ class ModuleService
 
         foreach ($attributes as $property => $value) {
 
-            if($property === 'filecontents') {
+            if ($property === 'filecontents') {
                 continue;
-            }
-            elseif($property === 'filename') {
+            } elseif ($property === 'filename') {
                 $createFile = true;
                 continue;
             }
@@ -318,9 +320,7 @@ class ModuleService
             $bean->$property = $value;
         }
 
-        if($createFile) {
-            $this->addFileToNote($bean, $attributes);
-        }
+        return $createFile;
     }
 
     /**
