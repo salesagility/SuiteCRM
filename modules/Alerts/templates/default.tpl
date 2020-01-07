@@ -26,15 +26,15 @@
                 <span class="suitepicon suitepicon-module-{$result->target_module|lower|replace:'_':'-'}{if substr($result->target_module, -1) !== 's'}s{/if}"></span>
                 <strong class="text-{if $result->type != null}{$result->type}{else}info{/if}">{$result->target_module}</strong>
             {else}
-                <strong class="text-{if $result->type != null}{$result->type}{else}info{/if}">Alert</strong>
+                <strong class="text-{if $result->type != null}{$result->type}{else}info{/if}">{if $result->type != null}Alert - {$result->type|capitalize:true}{else}Alert - Info{/if}</strong>
             {/if}
         {if $result->url_redirect != null }
         </a>
         {/if}
         </h4>
-        <p class="alert-body">
-            {$result->name|nl2br}<br/>
-            {$result->description|nl2br}
+        <p class="alert-body alert-body-{if $result->type != null}{$result->type}{else}info{/if}">
+            <span class="alert-name alert-name-{if $result->type != null}{$result->type}{else}info{/if}">{$result->name|nl2br}</span><br/>
+            <span class="alert-description alert-description-{if $result->type != null}{$result->type}{else}info{/if}">{$result->description|nl2br}</span>
         </p>
     </div>
 {/foreach}

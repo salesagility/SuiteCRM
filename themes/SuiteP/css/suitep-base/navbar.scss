@@ -1142,11 +1142,14 @@
   padding: 8px;
   margin: 0;
   border-radius: 0;
+  min-width: 280px;
+  left: -140px;
 }
 
 .desktop_notifications .has-alerts {
   background-color: $navbar-main-menu-bg;
   border-radius: 2px;
+  left: -140px;
 }
 
 .desktop_notifications .has-alerts .alert-info {
@@ -1193,9 +1196,68 @@
   line-height: 20px;
 }
 
+.desktop_notifications .has-alerts .alert-header .text-active {
+  color: white;
+}
+
+.desktop_notifications .has-alerts .alert-header .text-success {
+  color: lightgreen;
+}
+
+.desktop_notifications .has-alerts .alert-header .text-warning {
+  color: lightyellow;
+}
+
+.desktop_notifications .has-alerts .alert-header .text-danger {
+  color: pink;
+}
+
+.desktop_notifications .has-alerts .alert-header .text-info {
+  color: white;
+}
+
 .desktop_notifications .has-alerts .alert-header img {
   width: 16px;
   height: 16px;
+}
+
+.desktop_notifications .alert-name {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.desktop_notifications .alert-name-active {
+  color: black;
+}
+
+.desktop_notifications .alert-name-success {
+  color: green;
+}
+
+.desktop_notifications .alert-name-warning {
+  color: darkgoldenrod;
+}
+
+.desktop_notifications .alert-name-danger {
+  color: red;
+}
+
+.desktop_notifications .alert-name-info {
+  color: black;
+}
+
+div.alert-danger {
+  animation: dangerflash 2s infinite;
+}
+
+@keyframes dangerflash {
+  0% {background-color: red;}
+  50%{background-color:brown;}
+  100% {background-color: red;}
+}
+
+.desktop_notifications .alert-dismissible {
+  padding: 10px;
 }
 
 .modulelinks > .dropdown-menu {
@@ -1205,7 +1267,6 @@
 .mobileheader {
   display: inline-block;
 }
-
 
 .globalLinks-desktop {
   .btn-default.active,
@@ -2277,10 +2338,6 @@
 
   .searchbutton {
     display: inline;
-  }
-
-  .desktop_notifications .dropdown-menu {
-    left: -140px;
   }
 
   .topnav .dropdown-menu {
