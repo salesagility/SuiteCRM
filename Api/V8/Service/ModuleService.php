@@ -236,8 +236,10 @@ class ModuleService
             // Checking file extension
             $extPos = strrpos($attributes['filename'], '.');
             $fileExtension = substr($attributes['filename'], $extPos + 1);
-            if (in_array($fileExtension, $sugar_config['upload_badext'], true)) {
-                throw new \Exception('Attachment file extension is not valid. Please choose a valid file type.');
+
+            if ($extPos === false || empty($fileExtension) || in_array($fileExtension, $sugar_config['upload_badext'],
+                    true)) {
+                throw new \Exception('File upload failed: File extension is not included or is not valid.');
             }
 
             $fileName = $bean->id;
