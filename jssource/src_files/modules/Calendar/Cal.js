@@ -942,9 +942,10 @@ $($.fullCalendar).ready(function () {
       slotMinutes: global_timeslots,
       defaultDate: global_year + "-" + global_month + "-" + global_day,
       editable: global_edit,
-      //weekNumbers: true,
+      weekNumbers: global_show_week_numbers,
+      weekNumberCalculation: 'ISO',
       disableDragging: global_items_draggable,
-      eventLimit: 6, // limit before "more" link appears when too many events per day in month view. Use true for unlimited
+      eventLimit: global_event_limit, // allow "more" link when too many events
       defaultView: global_view,
       firstDay: global_start_week_day,
       height: global_basic_min_height,
