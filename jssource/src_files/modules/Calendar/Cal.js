@@ -944,7 +944,7 @@ $($.fullCalendar).ready(function () {
       editable: global_edit,
       //weekNumbers: true,
       disableDragging: global_items_draggable,
-      eventLimit: true, // allow "more" link when too many events
+      eventLimit: 6, // limit before "more" link appears when too many events per day in month view. Use true for unlimited
       defaultView: global_view,
       firstDay: global_start_week_day,
       height: global_basic_min_height,
