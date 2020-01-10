@@ -142,6 +142,11 @@ class templateParser
                     }
                 }
             }
+
+            if (is_numeric($value)) {
+                $value = (string) $value;
+            }
+
             if ($value != '' && is_string($value)) {
                 $string = str_replace("\$$name", $value, $string);
             } elseif (strpos($name, 'address') > 0) {
