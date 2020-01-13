@@ -3,6 +3,10 @@
 
 namespace SuiteCRM;
 
+use Zend_Oauth_Exception;
+use Zend_Oauth_Http_Utility;
+use Zend_Uri_Http;
+
 /**
  *
  * Basic OAuth provider class
@@ -313,7 +317,7 @@ class Zend_Oauth_Provider
         }
 
         if(!is_callable($this->nonceHandler)) {
-            throw new Zend_Oauth_Exception("Nonce handler not callable", self::BAD_NONCE);
+            throw new Zend_Oauth_Exception('Nonce handler not callable', self::BAD_NONCE);
         }
 
         $res = call_user_func($this->nonceHandler, $this);
