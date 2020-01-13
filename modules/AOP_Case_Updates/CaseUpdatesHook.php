@@ -433,6 +433,9 @@ class CaseUpdatesHook
         if (isset($_REQUEST['module']) && $_REQUEST['module'] === 'Import') {
             return;
         }
+        if (!empty($_REQUEST['action']) && $_REQUEST['action'] === 'SaveMerge') {
+            return;
+        }
         if ($arguments['module'] !== 'Cases' || $arguments['related_module'] !== 'Contacts') {
             return;
         }
