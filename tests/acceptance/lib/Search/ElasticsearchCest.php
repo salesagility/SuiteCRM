@@ -125,7 +125,6 @@ class ElasticsearchCest
         $I->see('SEARCH');
         $I->see('Results');
         $I->see('No results matching your search criteria. Try broadening your search.');
-        $I->see('Search performed in');
     }
     
     /**
