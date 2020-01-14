@@ -98,7 +98,7 @@ $app->group('', function () use ($app) {
          */
         $app
             ->post(
-                '/module/{moduleName}/{id}/relationships/{linkFieldName}',
+                '/module/{moduleName}/{id}/relationships',
                 'Api\V8\Controller\RelationshipController:createRelationship'
             )
             ->add($paramsMiddlewareFactory->bind(CreateRelationshipParams::class));

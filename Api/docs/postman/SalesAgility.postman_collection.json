@@ -717,7 +717,7 @@
 							"raw": "{\n  \"data\": {\n    \"type\": \"Contacts\",\n    \"id\": \"11806811-0b4b-fcdd-268b-5b2260e68333\"\n  }\n}"
 						},
 						"url": {
-							"raw": "{{suitecrm.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493/relationships/{linkName}",
+							"raw": "{{suitecrm.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493/relationships",
 							"host": [
 								"{{suitecrm.url}}"
 							],
@@ -726,8 +726,7 @@
 								"module",
 								"Accounts",
 								"11a71596-83e7-624d-c792-5ab9006dd493",
-								"relationships",
-                "{linkName}"
+								"relationships"
 							]
 						},
 						"description": null

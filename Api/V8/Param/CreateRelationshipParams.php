@@ -25,14 +25,6 @@ class CreateRelationshipParams extends BaseParam
     }
 
     /**
-     * @return string
-     */
-    public function getLinkedFieldName()
-    {
-        return $this->parameters['linkFieldName'];
-    }
-
-    /**
      * @return GetRelationshipDataParams
      */
     public function getData()
@@ -103,7 +95,5 @@ class CreateRelationshipParams extends BaseParam
                 );
             })
             ->setAllowedTypes('relatedBean', \SugarBean::class);
-
-        $this->setOptions($resolver, [ParamOption\LinkFieldName::class]);
     }
 }
