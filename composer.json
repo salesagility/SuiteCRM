@@ -28,13 +28,12 @@
     "php": ">=5.6.0",
     "ext-curl": "*",
     "ext-gd": "*",
-    "ext-imap": "*",
     "ext-json": "*",
     "ext-openssl": "*",
     "ext-zip": "*",
     "consolidation/robo": "^1.4",
     "elasticsearch/elasticsearch": "^5.3",
-    "ezyang/htmlpurifier": "^4.12",
+    "ezyang/htmlpurifier": "^4.10",
     "google/apiclient": "^2.0",
     "google/recaptcha": "^1.1",
     "justinrainbow/json-schema": "^5.2",
@@ -43,8 +42,8 @@
     "monolog/monolog": "^1.23",
     "nesbot/carbon": "^1.31",
     "onelogin/php-saml": "^3.0.0",
-    "paragonie/random_compat": "^2.0",
     "phpmailer/phpmailer": "^6.0",
+    "paragonie/random_compat": "^2.0",
     "psr/log": "^1.0",
     "slim/slim": "^3.8",
     "smarty/smarty": "^2.6",
@@ -60,7 +59,8 @@
     "zf1/zend-loader": "^1.12",
     "zf1/zend-oauth": "^1.12",
     "zf1/zend-registry": "^1.12",
-    "zf1/zend-search-lucene": "^1.12"
+    "zf1/zend-search-lucene": "^1.12",
+    "ext-imap": "*"
   },
   "require-dev": {
     "browserstack/browserstack-local": "^1.1",
@@ -72,8 +72,7 @@
     "jeroendesloovere/vcard": "v1.5",
     "leafo/scssphp": "^0.7.7",
     "mikey179/vfsstream": "1.6.*",
-    "mockery/mockery": "^1.1.0",
-    "phpunit/phpunit": "^5.7"
+    "mockery/mockery": "^1.1.0"
   },
   "scripts": {
     "post-install-cmd": [
