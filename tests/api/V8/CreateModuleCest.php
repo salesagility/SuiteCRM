@@ -24,31 +24,31 @@ class CreateModuleCest
      * @throws \Codeception\Exception\ModuleException
      * @throws \Exception
      */
-//    public function shouldWork(ApiTester $I, Example $example)
-//    {
-//        /** @var \ArrayIterator $iterator */
-//        $iterator = $example->getIterator();
-//        $payload = $iterator->offsetGet('payload');
-//
-//        $id = create_guid();
-//        $endpoint = $I->getInstanceURL() . '/Api/V8/module';
-//        $response = [
-//            'type' => \Account::class,
-//        ];
-//
-//        if ($iterator->current() === 'withId') {
-//            $payload['data']['id'] = str_replace('{id}', $id, $payload['data']['id']);
-//            $response = $response + ['id' => $id];
-//        }
-//
-//        $I->sendPOST($endpoint, $payload);
-//        $I->seeResponseCodeIs(201); // 201 or 200 - both is correct?
-//        $I->seeResponseIsJson();
-//        $I->canSeeResponseContainsJson($response);
-//        $I->assertGreaterThanOrEqual(2, count($I->grabDataFromResponseByJsonPath('$.data.attributes')[0]));
-//
-//        $I->deleteBean('accounts', $id);
-//    }
+    public function shouldWork(ApiTester $I, Example $example)
+    {
+        /** @var \ArrayIterator $iterator */
+        $iterator = $example->getIterator();
+        $payload = $iterator->offsetGet('payload');
+
+        $id = create_guid();
+        $endpoint = $I->getInstanceURL() . '/Api/V8/module';
+        $response = [
+            'type' => \Account::class,
+        ];
+
+        if ($iterator->current() === 'withId') {
+            $payload['data']['id'] = str_replace('{id}', $id, $payload['data']['id']);
+            $response = $response + ['id' => $id];
+        }
+
+        $I->sendPOST($endpoint, $payload);
+        $I->seeResponseCodeIs(201); // 201 or 200 - both is correct?
+        $I->seeResponseIsJson();
+        $I->canSeeResponseContainsJson($response);
+        $I->assertGreaterThanOrEqual(2, count($I->grabDataFromResponseByJsonPath('$.data.attributes')[0]));
+
+        $I->deleteBean('accounts', $id);
+    }
 
     /**
      * @param ApiTester $I
@@ -57,36 +57,36 @@ class CreateModuleCest
      * @dataProvider shouldNotWorkDataProvider
      * @throws \Exception
      */
-//    public function shouldNotWork(ApiTester $I, Example $example)
-//    {
-//        /** @var \ArrayIterator $iterator */
-//        $iterator = $example->getIterator();
-//        $detail = $iterator->offsetGet('detail');
-//        $payload = $iterator->offsetGet('payload');
-//
-//        if ($iterator->current() === 'withExistingBean') {
-//            $id = $I->createAccount();
-//            $detail = str_replace('{id}', $id, $detail);
-//            $payload['data']['id'] = str_replace('{id}', $id, $payload['data']['id']);
-//        }
-//        $endpoint = $I->getInstanceURL() . '/Api/V8/module';
-//        $expectedResult = [
-//            'errors' => [
-//                'status' => 400,
-//                'title' => null,
-//                'detail' => $detail
-//            ]
-//        ];
-//
-//        $I->sendPOST($endpoint, $payload);
-//        $I->seeResponseCodeIs(400);
-//        $I->seeResponseIsJson();
-//        $I->seeResponseEquals(json_encode($expectedResult, JSON_PRETTY_PRINT));
-//
-//        if (isset($id)) {
-//            $I->deleteBean('accounts', $id);
-//        }
-//    }
+    public function shouldNotWork(ApiTester $I, Example $example)
+    {
+        /** @var \ArrayIterator $iterator */
+        $iterator = $example->getIterator();
+        $detail = $iterator->offsetGet('detail');
+        $payload = $iterator->offsetGet('payload');
+
+        if ($iterator->current() === 'withExistingBean') {
+            $id = $I->createAccount();
+            $detail = str_replace('{id}', $id, $detail);
+            $payload['data']['id'] = str_replace('{id}', $id, $payload['data']['id']);
+        }
+        $endpoint = $I->getInstanceURL() . '/Api/V8/module';
+        $expectedResult = [
+            'errors' => [
+                'status' => 400,
+                'title' => null,
+                'detail' => $detail
+            ]
+        ];
+
+        $I->sendPOST($endpoint, $payload);
+        $I->seeResponseCodeIs(400);
+        $I->seeResponseIsJson();
+        $I->seeResponseEquals(json_encode($expectedResult, JSON_PRETTY_PRINT));
+
+        if (isset($id)) {
+            $I->deleteBean('accounts', $id);
+        }
+    }
 
     /**
      * @return array
