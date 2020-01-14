@@ -53,7 +53,7 @@ function getDisplayForField($modulePath, $field, $reportModule)
     global $app_list_strings;
     $modulePathDisplay = array();
     $currentBean = BeanFactory::getBean($reportModule);
-    $modulePathDisplay[] = $currentBean->module_name;
+    $modulePathDisplay[$currentBean->module_name] = $currentBean->module_name;
     if (is_array($modulePath)) {
         $split = $modulePath;
     } else {
@@ -92,7 +92,7 @@ function getDisplayForField($modulePath, $field, $reportModule)
         }
 
         if ($moduleName === $moduleDisplay && isset($app_list_strings['moduleList'][$moduleDisplay])) {
-            $app_list_strings['moduleList'][$moduleDisplay];
+            $moduleDisplay = $app_list_strings['moduleList'][$moduleDisplay];
         }
     }
     return array('field' => $fieldDisplay, 'type'=>$fieldType, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
