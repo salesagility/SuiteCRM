@@ -50,7 +50,7 @@ require_once __DIR__ . '/EmailMock.php';
 
 class EmailTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 

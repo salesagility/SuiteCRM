@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         global $current_user;
@@ -12,7 +12,7 @@ class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
     
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
     }

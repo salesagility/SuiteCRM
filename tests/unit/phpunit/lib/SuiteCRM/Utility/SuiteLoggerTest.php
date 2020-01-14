@@ -16,7 +16,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
      */
     private static $oldLogLevel;
 
-    public function setUp()
+    protected function setUp()
     {
         global $sugar_config;
 
@@ -32,7 +32,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         $sugar_config['show_log_trace'] = false;
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         $loggerManager = LoggerManager::getLogger();
         $loggerManager::setLogLevel(self::$oldLogLevel);

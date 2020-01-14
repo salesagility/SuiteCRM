@@ -55,7 +55,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class JsonApiErrorObjectTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         if (!defined('sugarEntry')) {
@@ -79,7 +79,7 @@ class JsonApiErrorObjectTest extends SuitePHPUnitFrameworkTestCase
         include_once __DIR__ . '/../../../../include/LangException.php';
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
     }

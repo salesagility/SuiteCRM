@@ -55,7 +55,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
     /** @var ElasticSearchEngine */
     private $searchEngine;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         echo PHP_EOL;
@@ -71,7 +71,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $this->indexer->removeIndex();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         $this->restore();
 
