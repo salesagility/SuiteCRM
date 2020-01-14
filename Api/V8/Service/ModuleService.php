@@ -113,10 +113,6 @@ class ModuleService
         $limit = $size === BeanManager::DEFAULT_ALL_RECORDS ? BeanManager::DEFAULT_LIMIT : $size;
         $deleted = $params->getDeleted();
 
-        if (empty($fields)) {
-            $fields = $this->beanManager->getDefaultFields($bean);
-        }
-
         $beanListResponse = $this->beanManager->getList($module)
             ->orderBy($orderBy)
             ->where($where)
@@ -124,20 +120,10 @@ class ModuleService
             ->limit($limit)
             ->max($size)
             ->deleted($deleted)
-            ->fields($this->beanManager->filterAcceptanceFields($bean, $fields))
             ->fetch();
 
-
-        $beanArray = [];
-        foreach ($beanListResponse->getBeans() as $bean) {
-            $bean = $this->beanManager->getBeanSafe(
-                $params->getModuleName(),
-                $bean->id
-            );
-            $beanArray[] = $bean;
-        }
         $data = [];
-        foreach ($beanArray as $bean) {
+        foreach ($beanListResponse->getBeans() as $bean) {
             $dataResponse = $this->getDataResponse(
                 $bean,
                 $fields,
