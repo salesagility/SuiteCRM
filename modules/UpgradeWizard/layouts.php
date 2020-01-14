@@ -41,14 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
-
- * Description:
- * Portions created by SugarCRM are Copyright(C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- * *******************************************************************************/
-
-
 logThis('Upgrade Wizard At Layout Commits');
 
 global $mod_strings;
@@ -59,10 +51,8 @@ if (isset($GLOBALS['current_language']) && ($GLOBALS['current_language'] != null
 
 return_module_language($curr_lang, 'UpgradeWizard');
 
-$state = new \SuiteCRM\StateSaver();
-$state->pushErrorLevel();
-$state->pushPHPConfigOptions();
-
+$errorLevelStored = error_reporting();
+$maxExecutionTime = ini_get('max_execution_time');
 error_reporting(E_ERROR);
 set_time_limit(0);
 set_upgrade_progress('layouts', 'in_progress');
@@ -131,8 +121,8 @@ $showNext = true;
 
 set_upgrade_progress('layouts', 'done');
 
-$state->popErrorLevel();
-$state->popPHPConfigOptions();
+error_reporting($errorLevelStored);
+set_time_limit($maxExecutionTime);
 
 /**
  * Clean the merge data results, removing any emptys or blanks that should not be displayed
@@ -212,16 +202,24 @@ function formatLayoutMergeDataForDisplay($layoutMergeData)
         foreach ($v as $layoutPath => $isMerge) {
             if (preg_match('/listviewdefs.php/i', $layoutPath)) {
                 $label = $module_builder_language['LBL_LISTVIEW'];
-            } elseif (preg_match('/detailviewdefs.php/i', $layoutPath)) {
-                $label = $module_builder_language['LBL_DETAILVIEW'];
-            } elseif (preg_match('/editviewdefs.php/i', $layoutPath)) {
-                $label = $module_builder_language['LBL_EDITVIEW'];
-            } elseif (preg_match('/quickcreatedefs.php/i', $layoutPath)) {
-                $label = $module_builder_language['LBL_QUICKCREATE'];
-            } elseif (preg_match('/searchdefs.php/i', $layoutPath)) {
-                $label = $module_builder_language['LBL_SEARCH_BUTTON'];
             } else {
-                continue;
+                if (preg_match('/detailviewdefs.php/i', $layoutPath)) {
+                    $label = $module_builder_language['LBL_DETAILVIEW'];
+                } else {
+                    if (preg_match('/editviewdefs.php/i', $layoutPath)) {
+                        $label = $module_builder_language['LBL_EDITVIEW'];
+                    } else {
+                        if (preg_match('/quickcreatedefs.php/i', $layoutPath)) {
+                            $label = $module_builder_language['LBL_QUICKCREATE'];
+                        } else {
+                            if (preg_match('/searchdefs.php/i', $layoutPath)) {
+                                $label = $module_builder_language['LBL_SEARCH_BUTTON'];
+                            } else {
+                                continue;
+                            }
+                        }
+                    }
+                }
             }
 
             $layouts[] = array('path' => $layoutPath, 'label' => $label);

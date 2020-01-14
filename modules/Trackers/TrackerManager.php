@@ -156,7 +156,7 @@ class TrackerManager
                     $this->metadata[$name]['name'], //name
                                       self::$monitor_id, //monitor_id
                                    $this->metadata[$name]['metadata'],
-                                   $this->metadata[$name]['store'] //store
+                    $this->metadata[$name]['store'] //store
                                    );
                 $this->monitors[$name] = $instance;
                 return $this->monitors[$name];

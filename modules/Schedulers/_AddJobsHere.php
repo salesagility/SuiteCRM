@@ -1,6 +1,7 @@
 <?php
 
 use SuiteCRM\Utility\SuiteValidator;
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -79,7 +80,8 @@ $job_strings = array(
     14 => 'cleanJobQueue',
     15 => 'removeDocumentsFromFS',
     16 => 'trimSugarFeeds',
-
+    17 => 'syncGoogleCalendar',
+    18 => 'runElasticSearchIndexerScheduler',
 );
 
 /**
@@ -170,7 +172,7 @@ function pollMonitoredInboxes()
                         if ($isGroupFolderExists) {
                             if ($ieX->returnImportedEmail($msgNo, $uid)) {
                                 // add to folder
-                                $sugarFolder->addBean($ieX->email);
+                                $sugarFolder->addBean($ieX);
                                 if ($ieX->isPop3Protocol()) {
                                     $messagesToDelete[] = $msgNo;
                                 } else {
@@ -179,7 +181,7 @@ function pollMonitoredInboxes()
                                 if ($ieX->isMailBoxTypeCreateCase()) {
                                     $userId = "";
                                     if ($distributionMethod == 'roundRobin') {
-                                        if (sizeof($users) == 1) {
+                                        if (count($users) == 1) {
                                             $userId = $users[0];
                                             $lastRobin = $users[0];
                                         } else {
@@ -194,7 +196,7 @@ function pollMonitoredInboxes()
                                             }
                                         } // else
                                     } else {
-                                        if (sizeof($users) == 1) {
+                                        if (count($users) == 1) {
                                             foreach ($users as $k => $value) {
                                                 $userId = $value;
                                             } // foreach
@@ -386,7 +388,7 @@ function trimTracker()
             continue;
         }
 
-        $timeStamp = db_convert("'" . $timedate->asDb($timedate->getNow()->get("-" . $prune_interval . " days")) . "'", "datetime");
+        $timeStamp = DBManager::convert("'" . $timedate->asDb($timedate->getNow()->get("-" . $prune_interval . " days")) . "'", "datetime");
         if ($tableName == 'tracker_sessions') {
             $query = "DELETE FROM $tableName WHERE date_end < $timeStamp";
         } else {
@@ -519,6 +521,20 @@ function trimSugarFeeds()
 }
 
 
+/**
+ * + * Job 17
+ * + * this will sync the Google Calendars of users who are configured to do so
+ * + */
+function syncGoogleCalendar()
+{
+    global $sugar_config;
+    require_once 'include/GoogleSync/GoogleSync.php';
+    $googleSync = new GoogleSync($sugar_config);
+    $googleSync->syncAllUsers();
+
+    return true;
+}
+
 function cleanJobQueue($job)
 {
     $td = TimeDate::getInstance();
@@ -549,29 +565,37 @@ function pollMonitoredInboxesAOP()
 
     require_once('modules/Configurator/Configurator.php');
     $aopInboundEmail = new AOPInboundEmail();
+
     $sqlQueryResult = $aopInboundEmail->db->query(
-        'SELECT id, name FROM inbound_email WHERE is_personal = 0 AND deleted=0 AND status=\'Active\''.
+        'SELECT id, name FROM inbound_email WHERE is_personal = 0 AND deleted=0 AND status=\'Active\'' .
         ' AND mailbox_type != \'bounce\''
     );
+
     $GLOBALS['log']->debug('Just got Result from get all Inbounds of Inbound Emails');
 
     while ($inboundEmailRow = $aopInboundEmail->db->fetchByAssoc($sqlQueryResult)) {
         $GLOBALS['log']->debug('In while loop of Inbound Emails');
+
         $aopInboundEmailX = new AOPInboundEmail();
+
         if (!$aopInboundEmailX->retrieve($inboundEmailRow['id']) || !$aopInboundEmailX->id) {
             throw new Exception('Error retrieving AOP Inbound Email: ' . $inboundEmailRow['id']);
         }
+
         $mailboxes = $aopInboundEmailX->mailboxarray;
+
         foreach ($mailboxes as $mbox) {
             $aopInboundEmailX->mailbox = $mbox;
             $newMsgs = array();
             $msgNoToUIDL = array();
             $connectToMailServer = false;
+
             if ($aopInboundEmailX->isPop3Protocol()) {
                 $msgNoToUIDL = $aopInboundEmailX->getPop3NewMessagesToDownloadForCron();
                 // get all the keys which are msgnos;
                 $newMsgs = array_keys($msgNoToUIDL);
             }
+
             if ($aopInboundEmailX->connectMailserver() == 'true') {
                 $connectToMailServer = true;
             } // if
@@ -579,9 +603,11 @@ function pollMonitoredInboxesAOP()
             $GLOBALS['log']->debug('Trying to connect to mailserver for [ ' . $inboundEmailRow['name'] . ' ]');
             if ($connectToMailServer) {
                 $GLOBALS['log']->debug('Connected to mailserver');
+
                 if (!$aopInboundEmailX->isPop3Protocol()) {
                     $newMsgs = $aopInboundEmailX->getNewMessageIds();
                 }
+
                 if (is_array($newMsgs)) {
                     $current = 1;
                     $total = count($newMsgs);
@@ -608,9 +634,11 @@ function pollMonitoredInboxesAOP()
                         } // else
                         if ($isGroupFolderExists) {
                             $emailId = $aopInboundEmailX->returnImportedEmail($msgNo, $uid, false, true, $isGroupFolderExists);
-                            if ($emailId) {
+
+                            if (!empty($emailId)) {
                                 // add to folder
-                                $sugarFolder->addBean($aopInboundEmailX->email);
+
+                                $sugarFolder->addBean($aopInboundEmailX);
                                 if ($aopInboundEmailX->isPop3Protocol()) {
                                     $messagesToDelete[] = $msgNo;
                                 } else {
@@ -620,8 +648,8 @@ function pollMonitoredInboxesAOP()
                                     $userId = $assignManager->getNextAssignedUser();
                                     $GLOBALS['log']->debug('userId [ ' . $userId . ' ]');
                                     $validatior = new SuiteValidator();
-                                    if ((!isset($aopInboundEmailX->email) || !$aopInboundEmailX->email || 
-                                        !isset($aopInboundEmailX->email->id) || !$aopInboundEmailX->email->id) && 
+                                    if ((!isset($aopInboundEmailX->email) || !$aopInboundEmailX->email ||
+                                        !isset($aopInboundEmailX->email->id) || !$aopInboundEmailX->email->id) &&
                                         $validatior->isValidId($emailId)
                                     ) {
                                         $aopInboundEmailX->email = new Email();
@@ -662,7 +690,8 @@ function pollMonitoredInboxesAOP()
                     } // foreach
                     // update Inbound Account with last robin
                 } // if
-                if ($isGroupFolderExists) {
+
+                if (!empty($isGroupFolderExists)) {
                     $leaveMessagesOnMailServer = $aopInboundEmailX->get_stored_options("leaveMessagesOnMailServer", 0);
                     if (!$leaveMessagesOnMailServer) {
                         if ($aopInboundEmailX->isPop3Protocol()) {
@@ -848,6 +877,11 @@ EOF;
         $bean->save();
         return true;
     }
+}
+
+function runElasticSearchIndexerScheduler($data)
+{
+    return \SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer::schedulerJob(json_decode($data));
 }
 
 if (file_exists('custom/modules/Schedulers/_AddJobsHere.php')) {

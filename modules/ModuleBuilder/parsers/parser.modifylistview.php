@@ -103,7 +103,6 @@ class ParserModifyListView extends ModuleBuilderParser
         );
         $this->originalListViewDefs = $loaded['viewdefs'] [$this->module_name];
         $this->_variables = $loaded['variables'];
-        //		_pp($loaded);
         $this->customFile = 'custom/modules/' . $this->module_name . '/metadata/listviewdefs.php';
         if (file_exists($this->customFile)) {
             $loaded = $this->_loadFromFile('ListView', $this->customFile, $this->module_name);
@@ -200,7 +199,7 @@ class ParserModifyListView extends ModuleBuilderParser
         }
         $GLOBALS['log']->debug('parser.modifylistview.php->getAvailableFields(): field_defs=' . print_r(
             $this->availableFields,
-                true
+            true
         ));
         $modFields = !empty($this->module->field_name_map) ? $this->module->field_name_map : $this->module->field_defs;
         foreach ($modFields as $key => $def) {
@@ -339,7 +338,7 @@ class ParserModifyListView extends ModuleBuilderParser
                     // we only check this for custom fields, as we assume that OOB fields have been independently confirmed as ok
                     if (isset($this->module->field_defs [strtolower($fieldname)]) && (in_array(
                         $this->module->field_defs [strtolower($fieldname)] ['type'],
-                                $rejectTypes
+                        $rejectTypes
                     ) || isset($this->module->field_defs [strtolower($fieldname)]['custom_module']))
                     ) {
                         $fields [$fieldname] ['sortable'] = false;

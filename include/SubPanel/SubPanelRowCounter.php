@@ -137,7 +137,6 @@ class SubPanelRowCounter
      */
     public function makeSubPanelRowCountQuery()
     {
-
         $relationshipName = isset($this->subPanelDef['get_subpanel_data']) && $this->subPanelDef['get_subpanel_data'] ? $this->subPanelDef['get_subpanel_data'] : null;
         if (!$relationshipName) {
             throw new \Exception('relationship name can not be empty');

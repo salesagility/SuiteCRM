@@ -43,7 +43,6 @@ namespace SuiteCRM\API\JsonApi\v1\Repositories;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use SuiteCRM\API\JsonApi\v1\Filters\Parsers\FilterParser;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
-use Interop\Container\Exception\ContainerException;
 use Psr\Container\ContainerInterface;
 use SuiteCRM\API\v8\Exception\BadRequestException;
 
@@ -97,10 +96,12 @@ class FilterRepository
                 foreach ($filters as $filterKey => $filter) {
                     $response = array_merge($response, $this->filterParser->parseFilter($filterKey, $filter, $args));
                 }
-            } elseif (is_string($filters)) {
-                $response = array($filters);
             } else {
-                throw new BadRequestException('[JsonApi][v1][Repositories][FilterRepository][filter type is invalid]');
+                if (is_string($filters)) {
+                    $response = array($filters);
+                } else {
+                    throw new BadRequestException('[JsonApi][v1][Repositories][FilterRepository][filter type is invalid]');
+                }
             }
         }
 

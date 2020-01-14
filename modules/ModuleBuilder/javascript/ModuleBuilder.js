@@ -1009,7 +1009,7 @@ if (typeof('console') == 'undefined') {
 
         //check if the deploy completed
         if (!resp.match(/^\s*(\s*(Table already exists : [\w_]*)(<br>)*\s*)*complete$/m)) {
-          //Unknown error occured, warn the user
+          //Unknown error occurred, warn the user
           alert(SUGAR.language.get("ModuleBuilder", "LBL_DEPLOY_FAILED"));
         }
         //Cleanup in the background

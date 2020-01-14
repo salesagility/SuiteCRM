@@ -41,12 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- * *******************************************************************************/
 logThis('At upload.php');
 
 //set the upgrade progress status.
@@ -240,10 +235,12 @@ if (!$stop) {
         $GLOBALS['top_message'] = '';
     }
     $GLOBALS['top_message'] .= "<b>{$mod_strings['LBL_UPLOAD_SUCCESS']}</b>";
-} elseif (!$frozen) {
-    $GLOBALS['top_message'] .= "<br />";
 } else {
-    $GLOBALS['top_message'] = "<b>{$frozen}</b>";
+    if (!$frozen) {
+        $GLOBALS['top_message'] .= "<br />";
+    } else {
+        $GLOBALS['top_message'] = "<b>{$frozen}</b>";
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////

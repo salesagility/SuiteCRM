@@ -98,18 +98,24 @@ class MeetingsQuickCreate extends QuickCreate
 
         $this->ss->assign("DATE_START", $focus->date_start);
         $this->ss->assign("TIME_START", substr($focus->time_start, 0, 5));
-        $time_start_hour = intval(substr($focus->time_start, 0, 2));
+        $time_start_hour = (int)substr($focus->time_start, 0, 2);
         $time_start_minutes = substr($focus->time_start, 3, 5);
         
         if ($time_start_minutes > 0 && $time_start_minutes < 15) {
             $time_start_minutes = "15";
-        } elseif ($time_start_minutes > 15 && $time_start_minutes < 30) {
-            $time_start_minutes = "30";
-        } elseif ($time_start_minutes > 30 && $time_start_minutes < 45) {
-            $time_start_minutes = "45";
-        } elseif ($time_start_minutes > 45) {
-            $time_start_hour += 1;
-            $time_start_minutes = "00";
+        } else {
+            if ($time_start_minutes > 15 && $time_start_minutes < 30) {
+                $time_start_minutes = "30";
+            } else {
+                if ($time_start_minutes > 30 && $time_start_minutes < 45) {
+                    $time_start_minutes = "45";
+                } else {
+                    if ($time_start_minutes > 45) {
+                        $time_start_hour += 1;
+                        $time_start_minutes = "00";
+                    }
+                }
+            }
         }
         
         

@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once("include/utils.php");
 require_once("include/ytree/Tree.php");
 require_once("include/ytree/ExtNode.php");
 require_once("include/SugarFolders/SugarFolders.php");
@@ -423,6 +424,35 @@ eoq;
     }
 
     /**
+     * @param string $module_name
+     * @param string $record_id
+     * @param string $name
+     * @param string $addr
+     * @param string $text
+     * @return string
+     */
+    private function createEmailLink($module_name, $record_id, $name, $addr, $text)
+    {
+        global $current_user;
+
+        if ($current_user->getEmailClient() == 'sugar') {
+            $html =<<<HTML
+            <a class="email-link" href="mailto:{$addr}"
+                    onclick="$(document).openComposeViewModal(this);"
+                    data-module="{$module_name}" data-record-id="{$record_id}"
+                    data-module-name="{$name}" data-email-address="{$addr}"
+                >{$text}</a>
+HTML;
+        } else {
+            $html =<<<HTML
+                <a class="email-link" href="mailto:{$addr}">{$text}</a>
+HTML;
+        }
+
+        return $html;
+    }
+
+    /**
      *
      * @global SugarBean $focus
      * @param SugarBean|null $bean
@@ -458,13 +488,13 @@ eoq;
             $GLOBALS['log']->warn('EmailUI::populateComposeViewFields - $bean is empty');
         }
 
-        $emailLink = '<a class="email-link"'
-            . ' onclick="$(document).openComposeViewModal(this);"'
-            . ' data-module="' . $myBean->module_name
-            . '" data-record-id="' . $myBean->id
-            . '" data-module-name="' . $myBean->name
-            . '" data-email-address="">'
-            . $innerText;
+        $emailLink = $this->createEmailLink(
+            $myBean->module_name,
+            $myBean->id,
+            $myBean->name,
+            '',
+            $innerText
+        );
 
         // focus is set?
         if (!is_object($myBean)) {
@@ -490,25 +520,26 @@ eoq;
 
             foreach ($emailFields as $emailField) {
                 if (!empty($composeData)) {
-                    $emailLink = '<a onclick=" $(document).openComposeViewModal(this);" ' .
-                        'data-module="' . $composeData['parent_type'] . '" ' . 'data-record-id="' .
-                        $composeData['parent_id'] . '" data-module-name="' . $composeData['parent_name'] .
-                        '"  data-email-address="' . $composeData['to_addrs'] . '">';
+                    $emailLink = $this->createEmailLink(
+                        $composeData['parent_type'],
+                        $composeData['parent_id'],
+                        $composeData['parent_name'],
+                        $composeData['to_addrs'],
+                        ''
+                    );
                 } elseif (is_object($myBean) && (property_exists($myBean, $emailField))) {
                     $email_tick = $this->getEmailAddressConfirmOptInTick($myBean, $emailField);
                     $optOut = false;
                     $invalid = false;
 
                     if ($enableConfirmedOptIn === SugarEmailAddress::COI_STAT_DISABLED) {
-                        $emailLink = '<a class="email-link"'
-                            . ' onclick="$(document).openComposeViewModal(this);"'
-                            . ' data-module="'
-                            . $myBean->module_name . '" ' . 'data-record-id="'
-                            . $myBean->id . '" data-module-name="'
-                            . $myBean->name . '" data-email-address="'
-                            . $myBean->{$emailField} . '">';
-
-                        $emailLink .= $myBean->{$emailField} . '</a>';
+                        $emailLink = $this->createEmailLink(
+                            $myBean->module_name,
+                            $myBean->id,
+                            $myBean->name,
+                            $myBean->{$emailField},
+                            $myBean->{$emailField}
+                        );
                         return $emailLink;
                     }
 
@@ -537,35 +568,37 @@ eoq;
                                         $optOut === true
                                         || $invalid === true
                                     ) {
-                                        $emailLink =
-                                            '<a class="email-link"'
-                                            . ' onclick="$(document).openComposeViewModal(this);"'
-                                            . ' data-module="' . $myBean->module_name . '" ' . 'data-record-id="'
-                                            . $myBean->id . '" data-module-name="'
-                                            . $myBean->name . '" data-email-address="'
-                                            . $myBean->{$emailField} . '">';
+                                        $emailText = '';
                                         if ($this->appendTick) {
-                                            $emailLink .= $email_tick;
+                                            $emailText .= $email_tick;
                                         }
-                                        $emailLink .= '<span class="email-line-through">';
-                                        $emailLink .= $myBean->{$emailField};
+                                        $emailText .= '<span class="email-line-through">';
+                                        $emailText .= $myBean->{$emailField};
                                         $emailLink .= '</span>';
-                                    } else {
-                                        $emailLink =
-                                            '<a class="email-link"'
-                                            . ' onclick="$(document).openComposeViewModal(this);"'
-                                            . ' data-module="'
-                                            . $myBean->module_name . '" ' . 'data-record-id="'
-                                            . $myBean->id . '" data-module-name="'
-                                            . $myBean->name . '" data-email-address="'
-                                            . $myBean->{$emailField} . '">';
-                                        if ($this->appendTick) {
-                                            $emailLink .= $email_tick;
-                                        }
-                                        $emailLink .= $myBean->{$emailField};
-                                    }
-                                    $emailLink .= '</a>';
 
+                                        $emailLink = $this->createEmailLink(
+                                            $myBean->module_name,
+                                            $myBean->id,
+                                            $myBean->name,
+                                            $myBean->{$emailField},
+                                            $emailText
+                                        );
+                                    } else {
+                                        $emailText = '';
+                                        if ($this->appendTick) {
+                                            $emailText .= $email_tick;
+                                        }
+
+                                        $emailText .= $myBean->{$emailField};
+
+                                        $emailLink = $this->createEmailLink(
+                                            $myBean->module_name,
+                                            $myBean->id,
+                                            $myBean->name,
+                                            $myBean->{$emailField},
+                                            $emailText
+                                        );
+                                    }
                                     return $emailLink;
                                 }
                             }
@@ -575,8 +608,6 @@ eoq;
                     }
                 }
             }
-
-            $emailLink .= '</a>';
 
             return $emailLink;
         }
@@ -702,7 +733,7 @@ eoq;
         $email_mod_strings = return_module_language($current_language, 'Emails');
         $modStrings = "var mod_strings = new Object();\n";
         foreach ($email_mod_strings as $k => $v) {
-            $v = str_replace("'", "\'", $v);
+            $v = str_replace("'", "\'",str_replace("\\'", "'", $v));
             $modStrings .= "mod_strings.{$k} = '{$v}';\n";
         }
         $lang .= "\n\n{$modStrings}\n";
@@ -922,7 +953,7 @@ eoq;
             $this->smarty->assign("app_strings", $app_strings);
             $this->smarty->assign(
                 "contact_strings",
-                return_module_language($_SESSION['authenticated_user_language'], 'Contacts')
+                return_module_language(get_current_language(), 'Contacts')
             );
             $this->smarty->assign("contact", $contactMeta);
 
@@ -996,8 +1027,6 @@ eoq;
         }
 
         $r = $user->db->query($union);
-
-        //_pp($union);
 
         while ($a = $user->db->fetchByAssoc($r)) {
             $c = array();
@@ -1429,7 +1458,7 @@ eoq;
                 if ($mailbox != "") {
                     $mailbox .= ".";
                 }
-                $mailbox .= "{$exMbox[$i]}";
+                $mailbox .= (string)($exMbox[$i]);
             }
 
             $mailbox = substr($key, strpos($key, '.'));
@@ -1530,7 +1559,7 @@ eoq;
                 $attachmentHtmlData = $meta['attachments'];
                 $actualAttachmentInfo = array();
                 $this->parseAttachmentInfo($actualAttachmentInfo, $attachmentHtmlData);
-                if (sizeof($actualAttachmentInfo) > 0) {
+                if (count($actualAttachmentInfo) > 0) {
                     foreach ($actualAttachmentInfo as $key => $value) {
                         $info_vars = array();
                         parse_str($value, $info_vars);
@@ -1843,7 +1872,7 @@ eoq;
         $smarty->assign('BCC', nl2br($focus->bcc_addrs));
         $smarty->assign('CREATED_BY', $focus->created_by_name);
         $smarty->assign('MODIFIED_BY', $focus->modified_by_name);
-        $smarty->assign('DATE_SENT', $focus->date_entered);
+        $smarty->assign('DATE_SENT_RECEIVED', $focus->date_sent_received);
         $smarty->assign('EMAIL_NAME', 'RE: ' . $focus->name);
         $smarty->assign("TAG", $focus->listviewACLHelper());
         $smarty->assign("SUGAR_VERSION", $GLOBALS['sugar_version']);
@@ -2022,7 +2051,7 @@ eoq;
 
     public function doAssignment($distributeMethod, $ieid, $folder, $uids, $users)
     {
-        global $app_strings;        
+        global $app_strings;
         $users = explode(",", $users);
         $emailIds = explode($app_strings['LBL_EMAIL_DELIMITER'], $uids);
         $out = "";
@@ -2168,6 +2197,23 @@ eoq;
         }
 
         return true;
+    }
+
+    /**
+     * @param array $userIds
+     * @return array
+     */
+    public function getAssignedEmailsCountForUsers($userIds)
+    {
+        $counts = [];
+        foreach ($userIds as $id) {
+            $idQuoted = $this->db->quoted($id);
+            $r = $this->db->query("SELECT count(*) AS c FROM emails WHERE assigned_user_id = $idQuoted AND status = 'unread'");
+            $a = $this->db->fetchByAssoc($r);
+            $counts[$id] = $a['c'];
+        }
+
+        return $counts;
     }
 
     public function getLastRobin($ie)
@@ -2555,7 +2601,7 @@ eoq;
      */
     public function getRelatedEmail($beanType, $whereArr, $relatedBeanInfoArr = '')
     {
-        global $beanList, $current_user, $app_strings, $db;
+        global $beanList, $current_user, $app_strings;
         $finalQuery = '';
         $searchBeans = null;
         if ($beanType === 'LBL_DROPDOWN_LIST_ALL') {
@@ -2793,7 +2839,7 @@ eoq;
 
         $q = "SELECT * FROM folders f WHERE f.created_by = '{$user->id}' AND f.deleted = 0 AND coalesce(" . $user->db->convert(
             "f.folder_type",
-                "length"
+            "length"
         ) . ",0) > 0";
         $r = $user->db->query($q);
 
@@ -2906,7 +2952,7 @@ eoq;
 
         if (ACLController::checkAccess('EmailTemplates', 'list', true) && ACLController::checkAccess(
             'EmailTemplates',
-                'view',
+            'view',
             true
         )
         ) {
@@ -3043,9 +3089,9 @@ eoq;
                 if ($v->is_personal) {
                     $foundInPersonalAccounts = true;
                     break;
-                }
-                $foundInGroupAccounts = true;
-                // else
+                } else {
+                    $foundInGroupAccounts = true;
+                } // else
             } // if
         } // foreach
 
@@ -3175,14 +3221,21 @@ eoq;
         $ieAccountsFull = $ie->retrieveAllByGroupId($current_user->id);
         $ieAccountsShowOptionsMeta = array();
         $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
-
         $defaultIEAccount = $ie->getUsersDefaultOutboundServerId($current_user);
 
         foreach ($ieAccountsFull as $k => $v) {
-            $selected = (!empty($showFolders) && in_array($v->id, $showFolders)) ? true : false;
-            $default = ($defaultIEAccount == $v->id) ? true : false;
-            $has_groupfolder = !empty($v->groupfolder_id) ? true : false;
-            $type = ($v->is_personal) ? $mod_strings['LBL_MAILBOX_TYPE_PERSONAL'] : $mod_strings['LBL_MAILBOX_TYPE_GROUP'];
+            $default = $defaultIEAccount == $v->id;
+            $has_groupfolder = !empty($v->groupfolder_id);
+            $type = $v->is_personal ? $mod_strings['LBL_MAILBOX_TYPE_PERSONAL'] : $mod_strings['LBL_MAILBOX_TYPE_GROUP'];
+
+            $personalSelected = (!empty($showFolders) && in_array($v->id, $showFolders, true));
+            $allowOutboundGroupUsage = $v->get_stored_options('allow_outbound_group_usage', false);
+            $selected = $personalSelected || $allowOutboundGroupUsage  || is_admin($current_user);
+
+            if (!$selected) {
+                LoggerManager::getLogger()->debug("Inbound Email {$v->name}, not selected and will not be available for selection within compose UI.");
+                continue;
+            }
 
             $ieAccountsShowOptionsMeta[] = array(
                 "id" => $v->id,
@@ -3443,14 +3496,15 @@ eoq;
 ?>
 eoq;
         if ($fh = @sugar_fopen($file, "w")) {
-            fputs($fh, $the_string);
+            fwrite($fh, $the_string);
             fclose($fh);
 
             return true;
-        }
-        $GLOBALS['log']->debug("EMAILUI: Could not write cache file [ {$file} ]");
+        } else {
+            $GLOBALS['log']->debug("EMAILUI: Could not write cache file [ {$file} ]");
 
-        return false;
+            return false;
+        }
     }
 
     /**
@@ -3555,7 +3609,7 @@ eoq;
     }
 
     /**
-     * Unify the seperator as ,
+     * Unify the separator as ,
      *
      * @param String $str email address string
      * @return String converted string

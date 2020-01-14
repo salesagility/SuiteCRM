@@ -214,8 +214,9 @@ function merge_passwordsetting($sugar_config, $sugar_version)
 
     if (write_array_to_file("sugar_config", $sugar_config, "config.php")) {
         return true;
+    } else {
+        return false;
     }
-    return false;
 }
 
 function addDefaultModuleRoles($defaultRoles = array())
@@ -274,10 +275,11 @@ function verifyArguments($argv, $usage_dce, $usage_regular)
             echo "FAILURE\n";
             exit(1);
         }
-    } elseif (is_file("{$cwd}/include/entryPoint.php")) {
-        //this should be a regular sugar install
-        $upgradeType = constant('SUGARCRM_INSTALL');
-        //check if this is a valid zip file
+    } else {
+        if (is_file("{$cwd}/include/entryPoint.php")) {
+            //this should be a regular sugar install
+            $upgradeType = constant('SUGARCRM_INSTALL');
+            //check if this is a valid zip file
         if (!is_file($argv[1])) { // valid zip?
             echo "*******************************************************************************\n";
             echo "*** ERROR: First argument must be a full path to the patch file. Got [ {$argv[1]} ].\n";
@@ -285,18 +287,19 @@ function verifyArguments($argv, $usage_dce, $usage_regular)
             echo "FAILURE\n";
             exit(1);
         }
-        if (count($argv) < 5) {
+            if (count($argv) < 5) {
+                echo "*******************************************************************************\n";
+                echo "*** ERROR: Missing required parameters.  Received ".count($argv)." argument(s), require 5.\n";
+                echo $usage_regular;
+                echo "FAILURE\n";
+                exit(1);
+            }
+        } else {
+            //this should be a regular sugar install
             echo "*******************************************************************************\n";
-            echo "*** ERROR: Missing required parameters.  Received ".count($argv)." argument(s), require 5.\n";
-            echo $usage_regular;
-            echo "FAILURE\n";
+            echo "*** ERROR: Tried to execute in a non-SugarCRM root directory.\n";
             exit(1);
         }
-    } else {
-        //this should be a regular sugar install
-        echo "*******************************************************************************\n";
-        echo "*** ERROR: Tried to execute in a non-SugarCRM root directory.\n";
-        exit(1);
     }
 
     if (isset($argv[7]) && file_exists($argv[7].'SugarTemplateUtilties.php')) {
@@ -357,7 +360,7 @@ $_SERVER['PHP_SELF'] = 'silentUpgrade.php';
 ///////////////////////////////////////////////////////////////////////////////
 ////	USAGE
 $usage_dce =<<<eoq1
-Usage: php.exe -f silentUpgrade.php [upgradeZipFile] [logFile] [pathToSugarInstance]
+Usage: php.exe -f silentUpgrade.php [upgradeZipFile] [logFile] [pathToSuiteCRMInstance]
 
 On Command Prompt Change directory to where silentUpgrade.php resides. Then type path to
 php.exe followed by -f silentUpgrade.php and the arguments.
@@ -378,7 +381,7 @@ Arguments:
 eoq1;
 
 $usage_regular =<<<eoq2
-Usage: php.exe -f silentUpgrade.php [upgradeZipFile] [logFile] [pathToSugarInstance] [admin-user]
+Usage: php.exe -f silentUpgrade.php [upgradeZipFile] [logFile] [pathToSuiteCRMInstance] [admin-user]
 
 On Command Prompt Change directory to where silentUpgrade.php resides. Then type path to
 php.exe followed by -f silentUpgrade.php and the arguments.
@@ -389,7 +392,7 @@ Example:
 Arguments:
     upgradeZipFile                       : Upgrade package file.
     logFile                              : Silent Upgarde log file.
-    pathToSugarInstance                  : Sugar Instance instance being upgraded.
+    pathToSuiteCRMInstance                  : Suite Instance instance being upgraded.
     admin-user                           : admin user performing the upgrade
 eoq2;
 ////	END USAGE
@@ -425,7 +428,7 @@ $upgradeType = verifyArguments($argv, $usage_dce, $usage_regular);
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	PREP LOCALLY USED PASSED-IN VARS & CONSTANTS
-//$GLOBALS['log']	= LoggerManager::getLogger('SugarCRM');
+//$GLOBALS['log']	= LoggerManager::getLogger();
 //require_once('/var/www/html/eddy/sugarnode/SugarTemplateUtilities.php');
 
 $path			= $argv[2]; // custom log file, if blank will use ./upgradeWizard.log
@@ -503,7 +506,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
     $isDCEInstance = true;
     $configOptions = $sugar_config['dbconfig'];
 
-    $GLOBALS['log']	= LoggerManager::getLogger('SugarCRM');
+    $GLOBALS['log']	= LoggerManager::getLogger();
     $db				= &DBManagerFactory::getInstance();
     ///////////////////////////////////////////////////////////////////////////////
     ////	MAKE SURE PATCH IS COMPATIBLE
@@ -596,8 +599,8 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
         checkLoggerSettings();
         logThis('end check logger settings .', $path);
 
-        logThis('Set default_max_tabs to 7', $path);
-        $sugar_config['default_max_tabs'] = '7';
+        logThis('Set default_max_tabs to 10', $path);
+        $sugar_config['default_max_tabs'] = 10;
 
         if (!write_array_to_file("sugar_config", $sugar_config, "config.php")) {
             logThis('*** ERROR: could not write config.php! - upgrade will fail!', $path);
@@ -822,7 +825,7 @@ if (file_exists($newtemplate_path . '/include/SugarLogger/LoggerManager.php')) {
     }
     if (class_exists('LoggerManager')) {
         unset($GLOBALS['log']);
-        $GLOBALS['log'] = LoggerManager::getLogger('SugarCRM');
+        $GLOBALS['log'] = LoggerManager::getLogger();
     }
     set_upgrade_progress('logger', 'done');
 }

@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 
 
@@ -155,7 +149,7 @@ class Bug extends SugarBean
 
     public function get_summary_text()
     {
-        return "$this->name";
+        return (string)$this->name;
     }
 
     public function create_list_query($order_by, $where, $show_deleted = 0)
@@ -183,8 +177,10 @@ class Bug extends SugarBean
         $where_auto = '1=1';
         if ($show_deleted == 0) {
             $where_auto = " $this->table_name.deleted=0 ";
-        } elseif ($show_deleted == 1) {
-            $where_auto = " $this->table_name.deleted=1 ";
+        } else {
+            if ($show_deleted == 1) {
+                $where_auto = " $this->table_name.deleted=1 ";
+            }
         }
 
 
@@ -195,10 +191,12 @@ class Bug extends SugarBean
         }
         if (substr_count($order_by, '.') > 0) {
             $query .= " ORDER BY $order_by";
-        } elseif ($order_by != "") {
-            $query .= " ORDER BY $order_by";
         } else {
-            $query .= " ORDER BY bugs.name";
+            if ($order_by != "") {
+                $query .= " ORDER BY $order_by";
+            } else {
+                $query .= " ORDER BY bugs.name";
+            }
         }
         return $query;
     }

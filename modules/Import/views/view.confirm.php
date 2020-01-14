@@ -162,8 +162,10 @@ class ImportViewConfirm extends ImportView
             $hasHeader = !empty($_REQUEST['has_header']) ? $_REQUEST['has_header'] : $hasHeader;
             if ($hasHeader == 'on') {
                 $hasHeader = true;
-            } elseif ($hasHeader == 'off') {
-                $hasHeader = false;
+            } else {
+                if ($hasHeader == 'off') {
+                    $hasHeader = false;
+                }
             }
         }
 
@@ -246,8 +248,9 @@ class ImportViewConfirm extends ImportView
     {
         if (empty($importSource) || $importSource == 'csv') {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     private function getImportMap($importSource)
@@ -296,8 +299,8 @@ class ImportViewConfirm extends ImportView
         $num_grp_sep = isset($field_map['importlocale_num_grp_sep'])? $field_map['importlocale_num_grp_sep'] : $current_user->getPreference('num_grp_sep');
         $dec_sep = isset($field_map['importlocale_dec_sep'])? $field_map['importlocale_dec_sep'] : $current_user->getPreference('dec_sep');
 
-        $this->ss->assign("NUM_GRP_SEP", (empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep));
-        $this->ss->assign("DEC_SEP", (empty($dec_sep)? $sugar_config['default_decimal_seperator'] : $dec_sep));
+        $this->ss->assign("NUM_GRP_SEP", (empty($num_grp_sep) ? $sugar_config['default_number_grouping_separator'] : $num_grp_sep));
+        $this->ss->assign("DEC_SEP", (empty($dec_sep)? $sugar_config['default_decimal_separator'] : $dec_sep));
 
 
         $significantDigits = isset($field_map['importlocale_default_currency_significant_digits']) ? $field_map['importlocale_default_currency_significant_digits']

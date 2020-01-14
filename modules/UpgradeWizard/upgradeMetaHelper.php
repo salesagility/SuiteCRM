@@ -140,8 +140,8 @@ class UpgradeMetaHelper
     public function saveMatchingFilesQueries($currStep, $value)
     {
         $upgrade_progress_dir = sugar_cached('upgrades/temp');
-        if (!is_dir($upgrade_progress_dir)) {
-            mkdir($upgrade_progress_dir);
+        if (!is_dir($upgrade_progress_dir) && !mkdir($upgrade_progress_dir) && !is_dir($upgrade_progress_dir)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $upgrade_progress_dir));
         }
         $file_queries_file = $upgrade_progress_dir.'/files_queries.php';
         if (file_exists($file_queries_file)) {
@@ -150,7 +150,7 @@ class UpgradeMetaHelper
             if (function_exists('sugar_fopen')) {
                 sugar_fopen($file_queries_file, 'w+');
             } else {
-                fopen($file_queries_file, 'w+');
+                fopen($file_queries_file, 'wb+');
             }
         }
         if (!isset($files_queries) || $files_queries == null) {
@@ -160,7 +160,7 @@ class UpgradeMetaHelper
         if (is_writable($file_queries_file) && write_array_to_file(
             "file_queries",
             $file_queries,
-        $file_queries_file
+            $file_queries_file
         )) {
             //writing to the file
         }
@@ -339,15 +339,15 @@ class UpgradeMetaHelper
                 include('modules/'.$module_name.'/vardefs.php');
                 $bean_name = $beanList[$module_name];
                 $newFile = $this->upgrade_dir.'/modules/'.$module_name.'/metadata/'.$lowerCaseView.'defs.php';
-                $evfp = fopen($newFile, 'w');
+                $evfp = fopen($newFile, 'wb');
 
                 $bean_name = $bean_name == 'aCase' ? 'Case' : $bean_name;
                 fwrite($evfp, $parser->parse(
                     $file,
-                                            $dictionary[$bean_name]['fields'],
-                                            $module_name,
-                                            true,
-                                            $this->path_to_master_copy.'/modules/'.$module_name.'/metadata/'.$lowerCaseView.'defs.php'
+                    $dictionary[$bean_name]['fields'],
+                    $module_name,
+                    true,
+                    $this->path_to_master_copy.'/modules/'.$module_name.'/metadata/'.$lowerCaseView.'defs.php'
                 ));
                 fclose($evfp);
             } //if
@@ -363,25 +363,28 @@ class UpgradeMetaHelper
      */
     public function create_upgrade_directory()
     {
-        $dir = $this->upgrade_dir.'/modules';
-        if (!file_exists($this->upgrade_dir)) {
-            mkdir($this->upgrade_dir, 0755);
+        $dir = $this->upgrade_dir . '/modules';
+        if (!file_exists($this->upgrade_dir) && !mkdir($concurrentDirectory = $this->upgrade_dir,
+                0755) && !is_dir($concurrentDirectory)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
-        if (!file_exists($dir)) {
-            mkdir($dir, 0755);
+        if (!file_exists($dir) && !mkdir($dir, 0755) && !is_dir($dir)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir));
         }
 
-        foreach ($this->upgrade_modules as $module=>$files) {
-            if (!file_exists($dir.'/'.$module)) {
-                mkdir($dir.'/'.$module, 0755);
+        foreach ($this->upgrade_modules as $module => $files) {
+            if (!file_exists($dir . '/' . $module) && !mkdir($concurrentDirectory = $dir . '/' . $module,
+                    0755) && !is_dir($concurrentDirectory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
             }
-            if (!file_exists($dir.'/'.$module.'/metadata')) {
-                mkdir($dir.'/'.$module.'/metadata', 0755);
+            if (!file_exists($dir . '/' . $module . '/metadata') && !mkdir($concurrentDirectory = $dir . '/' . $module . '/metadata',
+                    0755) && !is_dir($concurrentDirectory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
             }
 
             foreach ($files as $file) {
                 if (file_exists($file) && is_file($file)) {
-                    copy($file, $this->upgrade_dir.'/'.$file);
+                    copy($file, $this->upgrade_dir . '/' . $file);
                 } //if
             } //foreach
         }

@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class Meeting extends SugarBean
 {
@@ -113,6 +114,8 @@ class Meeting extends SugarBean
     public $cached_get_users = null;
     public $new_schema = true;
     public $date_changed = false;
+    
+    protected static $remindersInSaving = false;
 
     /**
      * sole constructor
@@ -234,7 +237,7 @@ class Meeting extends SugarBean
 
         // Do any external API saving
         // Clear out the old external API stuff if we have changed types
-        if (isset($this->fetched_row) && $this->fetched_row['type'] != $this->type) {
+        if (isset($this->fetched_row) && !is_bool($this->fetched_row) && $this->fetched_row['type'] != $this->type) {
             $this->join_url = '';
             $this->host_url = '';
             $this->external_id = '';
@@ -281,12 +284,18 @@ class Meeting extends SugarBean
             vCal::cache_sugar_vcal($current_user);
         }
 
-        if (isset($_REQUEST['reminders_data']) && empty($this->saving_reminders_data)) {
+
+        if (isset($_REQUEST['reminders_data']) && !self::$remindersInSaving || isset($_REQUEST['reminders_data']) && empty($this->saving_reminders_data)) {
+            self::$remindersInSaving = true;
             $this->saving_reminders_data = true;
+
             $reminderData = json_encode(
                 $this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
             );
             Reminder::saveRemindersDataJson('Meetings', $return_id, $reminderData);
+
+            self::$remindersInSaving = false;
+
             $this->saving_reminders_data = false;
         }
 
@@ -351,7 +360,7 @@ class Meeting extends SugarBean
 
     public function get_summary_text()
     {
-        return "$this->name";
+        return (string)$this->name;
     }
 
     public function create_export_query($order_by, $where, $relate_link_join='')
@@ -419,7 +428,7 @@ class Meeting extends SugarBean
         $this->fill_in_additional_parent_fields();
 
         if (!isset($this->time_hour_start)) {
-            $this->time_start_hour = intval(substr($this->time_start, 0, 2));
+            $this->time_start_hour = (int)substr($this->time_start, 0, 2);
         } //if-else
 
         if (isset($this->time_minute_start)) {
@@ -442,7 +451,7 @@ class Meeting extends SugarBean
         if (isset($this->time_hour_start)) {
             $time_start_hour = $this->time_hour_start;
         } else {
-            $time_start_hour = intval(substr($this->time_start, 0, 2));
+            $time_start_hour = (int)substr($this->time_start, 0, 2);
         }
 
         global $timedate;
@@ -573,13 +582,13 @@ class Meeting extends SugarBean
 
         $mergeTime = $meetingFieldsDateStart; //$timedate->merge_date_time($meeting_fields['DATE_START'], $meeting_fields['TIME_START']);
         $date_db = $timedate->to_db($mergeTime);
-        if ($date_db	< $today) {
+        if ($date_db    < $today) {
             if ($meeting_fields['STATUS']=='Held' || $meeting_fields['STATUS']=='Not Held') {
                 $meeting_fields['DATE_START']= "<font>".$meeting_fields['DATE_START']."</font>";
             } else {
                 $meeting_fields['DATE_START']= "<font class='overdueTask'>".$meetingFieldsDateStart."</font>";
             }
-        } elseif ($date_db	< $nextday) {
+        } elseif ($date_db    < $nextday) {
             $meeting_fields['DATE_START'] = "<font class='todaysTask'>".$meetingFieldsDateStart."</font>";
         } else {
             $meeting_fields['DATE_START'] = "<font class='futureTask'>".$meetingFieldsDateStart."</font>";
@@ -821,15 +830,15 @@ class Meeting extends SugarBean
 
         $list = array();
         if (!is_array($this->contacts_arr)) {
-            $this->contacts_arr =	array();
+            $this->contacts_arr =    array();
         }
 
         if (!is_array($this->users_arr)) {
-            $this->users_arr =	array();
+            $this->users_arr =    array();
         }
 
         if (!isset($this->leads_arr) || !is_array($this->leads_arr)) {
-            $this->leads_arr =	array();
+            $this->leads_arr =    array();
         }
 
         foreach ($this->users_arr as $user_id) {
@@ -1026,7 +1035,13 @@ function getMeetingsExternalApiDropDown($focus = null, $name = null, $value = nu
         $dictionaryMeeting = $dictionary['Meeting'];
     }
 
-    if ($dictionaryMeeting['fields']['type']['options'] != "eapm_list") {
+    // Protect against null.
+    if (
+        is_null($dictionaryMeeting)
+        || is_null($dictionaryMeeting['fields'])
+        || is_null($dictionaryMeeting['fields']['type'])
+        || $dictionaryMeeting['fields']['type']['options'] != "eapm_list"
+    ) {
         $apiList = array_merge(getMeetingTypeOptions($dictionary, $app_list_strings), $apiList);
     }
 

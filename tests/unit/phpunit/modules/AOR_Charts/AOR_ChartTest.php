@@ -1,12 +1,14 @@
 <?php
 
 //require_once 'modules/AOR_Charts/lib/pChart/pChart.php';
-class AOR_ChartTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOR_Chart()
     {
         $this->markTestSkipped('Skipping AOR Charts Tests');
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aorChart = new AOR_Chart();
         $this->assertInstanceOf('AOR_Chart', $aorChart);
         $this->assertInstanceOf('Basic', $aorChart);
@@ -22,12 +24,8 @@ class AOR_ChartTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave_lines()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
         $this->markTestSkipped('Skipping AOR Charts Tests');
         
-
         $aorChart = new AOR_Chart();
 
         //preset the required data
@@ -42,15 +40,13 @@ class AOR_ChartTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $bean = new AOR_Report();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $aorChart->save_lines($post, $bean, $postKey);
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testbuildChartImageBar()

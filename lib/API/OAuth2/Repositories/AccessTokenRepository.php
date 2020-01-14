@@ -41,7 +41,6 @@
 
 namespace SuiteCRM\API\OAuth2\Repositories;
 
-use Faker\Provider\DateTime;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
@@ -55,12 +54,14 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
      */
     public function persistNewAccessToken(AccessTokenEntityInterface $accessTokenEntity)
     {
+        global $timedate;
+
         // Used by password grand
         // Some logic here to save the access token to a database
         $token = new \OAuth2Tokens();
         $token->token_is_revoked = false;
         $token->access_token = $accessTokenEntity->getIdentifier();
-        $token->access_token_expires = $accessTokenEntity->getExpiryDateTime()->format('Y-m-d H:i:s');
+        $token->access_token_expires = $timedate->asUser($accessTokenEntity->getExpiryDateTime());
         $token->client = $accessTokenEntity->getClient()->getIdentifier();
         $token->assigned_user_id = $accessTokenEntity->getUserIdentifier();
 

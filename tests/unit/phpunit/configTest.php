@@ -1,6 +1,8 @@
 <?php
 
-class configTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class configTest extends SuitePHPUnitFrameworkTestCase
 {
     public function test_config()
     {

@@ -622,7 +622,7 @@ class ModuleScanner
             } else {
                 $token['_msi'] = token_name($token[0]);
                 switch ($token[0]) {
-                    case T_WHITESPACE: continue;
+                    case T_WHITESPACE: break;
                     case T_EVAL:
                         if (in_array('eval', $this->blackList) && !in_array('eval', $this->blackListExempt)) {
                             $issues[]= translate('ML_INVALID_FUNCTION') . ' eval()';
@@ -653,12 +653,13 @@ class ModuleScanner
                                     if ($this->methodsBlackList[$token[1]] == '*') {
                                         $issues[]= translate('ML_INVALID_METHOD') . ' ' .$token[1].  '()';
                                         break;
-                                    }
-                                    if ($lastToken[0] == T_DOUBLE_COLON && $index > 2 && $tokens[$index-2][0] == T_STRING) {
-                                        $classname = strtolower($tokens[$index-2][1]);
-                                        if (in_array($classname, $this->methodsBlackList[$token[1]])) {
-                                            $issues[]= translate('ML_INVALID_METHOD') . ' ' .$classname . '::' . $token[1]. '()';
-                                            break;
+                                    } else {
+                                        if ($lastToken[0] == T_DOUBLE_COLON && $index > 2 && $tokens[$index-2][0] == T_STRING) {
+                                            $classname = strtolower($tokens[$index-2][1]);
+                                            if (in_array($classname, $this->methodsBlackList[$token[1]])) {
+                                                $issues[]= translate('ML_INVALID_METHOD') . ' ' .$classname . '::' . $token[1]. '()';
+                                                break;
+                                            }
                                         }
                                     }
                                 }
@@ -751,7 +752,7 @@ class ModuleScanner
             $res[] = $component;
         }
 
-        return join("/", $res);
+        return implode("/", $res);
     }
 
     /**

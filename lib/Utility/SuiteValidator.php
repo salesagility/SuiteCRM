@@ -46,7 +46,6 @@ class SuiteValidator
      * @param string $id
      * @return bool
      */
-
     public function isValidId($id)
     {
         $valid = is_numeric($id) || (is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id));

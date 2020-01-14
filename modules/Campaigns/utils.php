@@ -495,8 +495,9 @@ function get_subscription_lists($focus, $descriptions = false)
                         unset($unsubs_arr[$news_list['name']]);
                     }
                 }
+            } else {
+                //do nothing, there is no match
             }
-            //do nothing, there is no match
         }
         //if this newsletter id never matched a user subscription..
         //..then add to available(unsubscribed) NewsLetters if list is not of type exempt
@@ -559,8 +560,9 @@ function get_subscription_lists_keyed($focus)
                         $match = 'true';
                     }
                 }
+            } else {
+                //do nothing, there is no match
             }
-            //do nothing, there is no match
         }
         //if this newsletter id never matched a user subscription..
         //..then add to available(unsubscribed) NewsLetters if list is not of type exempt
@@ -618,7 +620,7 @@ function process_subscriptions($subscription_string_to_parse)
 
         //--grab all the lists for the passed in campaign id
         $pl_qry ="select id, list_type from prospect_lists where id in (select prospect_list_id from prospect_list_campaigns ";
-        $pl_qry .= "where campaign_id = '$campaign') and deleted = 0 ";
+        $pl_qry .= "where campaign_id = " . $focus->db->quoted($campaign) . ") and deleted = 0 ";
         $GLOBALS['log']->debug("In Campaigns Util: subscribe function, about to run query: ".$pl_qry);
         $pl_qry_result = $focus->db->query($pl_qry);
 
@@ -630,7 +632,7 @@ function process_subscriptions($subscription_string_to_parse)
 
         //--grab all the prospect_lists this user belongs to
         $curr_pl_qry ="select prospect_list_id, related_id  from prospect_lists_prospects ";
-        $curr_pl_qry .="where related_id = '$focus->id'  and deleted = 0 ";
+        $curr_pl_qry .="where related_id = " . $focus->db->quoted($focus->id) . " and deleted = 0 ";
         $GLOBALS['log']->debug("In Campaigns Util: subscribe function, about to run query: ".$curr_pl_qry);
         $curr_pl_qry_result = $focus->db->query($curr_pl_qry);
 
@@ -710,7 +712,7 @@ function process_subscriptions($subscription_string_to_parse)
         $relationship = strtolower($focus->getObjectName()).'s';
         //--grab all the list for this campaign id
         $pl_qry ="select id, list_type from prospect_lists where id in (select prospect_list_id from prospect_list_campaigns ";
-        $pl_qry .= "where campaign_id = '$campaign') and deleted = 0 ";
+        $pl_qry .= "where campaign_id = " . $focus->db->quoted($campaign) . ") and deleted = 0 ";
         $pl_qry_result = $focus->db->query($pl_qry);
         //build the array with list information
         $pl_arr = array();
@@ -839,6 +841,8 @@ function process_subscriptions($subscription_string_to_parse)
             $email_health =$email_health +1;
             $msg .= "<tr><td ><font color='red'><b> ".$mod_strings['LBL_MAILBOX_CHECK2_BAD']." </b></font></td></tr>";
             $errors['mailbox2'] = $mod_strings['LBL_MAILBOX_CHECK2_BAD'];
+        } else {
+            //do nothing, address has been changed
         }
         //do nothing, address has been changed
 

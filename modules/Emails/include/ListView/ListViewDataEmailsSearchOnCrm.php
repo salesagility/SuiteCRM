@@ -62,7 +62,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
      * @param int $offset
      * @return array
      */
-    public function search($filterFields, $request, $where, $inboundEmail, $params, $seed, $singleSelect, $id, $limit, $currentUser, $idField, $offset)
+    public function search($filterFields, $request, $where, InboundEmail $inboundEmail, $params, Email $seed, $singleSelect, $id, $limit, User $currentUser, $idField, $offset)
     {
         // Fix fields in filter fields
 
@@ -78,7 +78,13 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
         if (!empty($where)) {
             $where .= ' AND ';
         }
-        $crmWhere = $where . "mailbox_id LIKE " ."'" . $inboundEmail->id . "'";
+        if ($inboundEmail->id) {
+            $inboundEmailIdQuoted = DBManagerFactory::getInstance()->quote($inboundEmail->id);
+        } else {
+            $inboundEmailIdQuoted = '';
+            LoggerManager::getLogger()->warn('Unable to quote Inbound Email ID, Inbound Email is not set.');
+        }
+        $crmWhere = $where . "mailbox_id LIKE " ."'" . $inboundEmailIdQuoted . "'";
 
 
         // Populates CRM fields
@@ -217,7 +223,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
                 $editViewAccess = $temp->ACLAccess('EditView');
                 $pageData['rowAccess'][$dataIndex] = array('view' => $detailViewAccess, 'edit' => $editViewAccess);
                 $additionalDetailsAllow = $this->lvde->additionalDetails && $detailViewAccess && (file_exists(
-                            'modules/' . $temp->module_dir . '/metadata/additionalDetails.php'
+                    'modules/' . $temp->module_dir . '/metadata/additionalDetails.php'
                         ) || file_exists('custom/modules/' . $temp->module_dir . '/metadata/additionalDetails.php'));
                 $additionalDetailsEdit = $editViewAccess;
                 if ($additionalDetailsAllow) {
@@ -285,27 +291,29 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
             (isset($request["type_basic"]) && (count($request["type_basic"]) > 1 || $request["type_basic"][0] != "")) ||
             (isset($request["module"]) && $request["module"] == "MergeRecords")) {
             $queryString = "-advanced_search";
-        } elseif (isset($request["searchFormTab"]) && $request["searchFormTab"] == "basic_search") {
-            // TODO: figure out what was the SearchFormReports???
-            if ($seed->module_dir == "Reports") {
-                $searchMetaData = SearchFormReports::retrieveReportsSearchDefs();
-            } else {
-                $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);
-            } // TODO: figure out which SearchForm is it?
+        } else {
+            if (isset($request["searchFormTab"]) && $request["searchFormTab"] == "basic_search") {
+                // TODO: figure out what was the SearchFormReports???
+                if ($seed->module_dir == "Reports") {
+                    $searchMetaData = SearchFormReports::retrieveReportsSearchDefs();
+                } else {
+                    $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);
+                } // TODO: figure out which SearchForm is it?
 
-            $basicSearchFields = array();
+                $basicSearchFields = array();
 
-            if (isset($searchMetaData['searchdefs']) && isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'])) {
-                $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
-            }
+                if (isset($searchMetaData['searchdefs']) && isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'])) {
+                    $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
+                }
 
-            foreach ($basicSearchFields as $basicSearchField) {
-                $field_name = (is_array($basicSearchField) && isset($basicSearchField['name'])) ? $basicSearchField['name'] : $basicSearchField;
-                $field_name .= "_basic";
-                if (isset($request[$field_name])  && (!is_array($basicSearchField) || !isset($basicSearchField['type']) || $basicSearchField['type'] == 'text' || $basicSearchField['type'] == 'name')) {
-                    // Ensure the encoding is UTF-8
-                    $queryString = htmlentities($request[$field_name], null, 'UTF-8');
-                    break;
+                foreach ($basicSearchFields as $basicSearchField) {
+                    $field_name = (is_array($basicSearchField) && isset($basicSearchField['name'])) ? $basicSearchField['name'] : $basicSearchField;
+                    $field_name .= "_basic";
+                    if (isset($request[$field_name])  && (!is_array($basicSearchField) || !isset($basicSearchField['type']) || $basicSearchField['type'] == 'text' || $basicSearchField['type'] == 'name')) {
+                        // Ensure the encoding is UTF-8
+                        $queryString = htmlentities($request[$field_name], null, 'UTF-8');
+                        break;
+                    }
                 }
             }
         }

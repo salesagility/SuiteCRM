@@ -28,33 +28,26 @@ class EmailsCest
             $this->fakeData = Factory::create();
         }
 
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
     /**
      * @param AcceptanceTester $I
      * @param ListView $listView
-     * @param EmailsTester $emails
-     * @param WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the emails module.
      */
     public function testScenarioViewEmailsModule(
         AcceptanceTester $I,
-        ListView $listView,
-        EmailsTester $emails,
-        WebDriverHelper $webDriverHelper
+        ListView $listView
     ) {
         $I->wantTo('View the emails module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to emails list-view
         $I->loginAsAdmin();
-        $emails->gotoEmails();
+        
+        $I->visitPage('Emails', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Emails', '.module-title-text');
@@ -74,10 +67,6 @@ class EmailsCest
         // TODO: Refactor
 
         $I->wantTo('View the HTML of two emails');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
         $I->loginAsAdmin();
 

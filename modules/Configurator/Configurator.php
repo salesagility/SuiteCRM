@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class Configurator
 {
+    /** @var array */
     public $config = '';
     public $override = '';
     public $allow_undefined = array('stack_trace_errors', 'export_delimiter', 'use_real_names', 'developerMode', 'default_module_favicon', 'authenticationClass', 'SAML_loginurl', 'SAML_logouturl', 'SAML_X509Cert', 'dashlet_auto_refresh_min', 'show_download_tab', 'enable_action_menu','enable_line_editing_list','enable_line_editing_detail', 'hide_subpanels');
@@ -83,10 +84,10 @@ class Configurator
                 }
             }
             if (isset($this->config[$key]) || in_array($key, $this->allow_undefined)) {
-                if (strcmp("$value", 'true') == 0) {
+                if (strcmp((string)$value, 'true') == 0) {
                     $value = true;
                 }
-                if (strcmp("$value", 'false') == 0) {
+                if (strcmp((string)$value, 'false') == 0) {
                     $value = false;
                 }
                 $this->config[$key] = $value;

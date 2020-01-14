@@ -82,14 +82,14 @@ class registry
         
         $this->serviceClass->registerFunction(
             'login',
-             array('user_auth'=>'tns:user_auth', 'application_name'=>'xsd:string', 'name_value_list'=>'tns:name_value_list'),
-             array('return'=>'tns:entry_value')
+            array('user_auth'=>'tns:user_auth', 'application_name'=>'xsd:string', 'name_value_list'=>'tns:name_value_list'),
+            array('return'=>'tns:entry_value')
              );
              
         $this->serviceClass->registerFunction(
             'logout',
-             array('session'=>'xsd:string'),
-             array()
+            array('session'=>'xsd:string'),
+            array()
         );
              
         $this->serviceClass->registerFunction(
@@ -260,11 +260,11 @@ class registry
         );
 
         $this->serviceClass->registerType(
-             'user_auth',
-             'complexType',
-             'struct',
-             'all',
-              '',
+            'user_auth',
+            'complexType',
+            'struct',
+            'all',
+            '',
             array(
                 'user_name'=>array('name'=>'user_name', 'type'=>'xsd:string'),
                 'password' => array('name'=>'password', 'type'=>'xsd:string'),
@@ -274,10 +274,10 @@ class registry
         $this->serviceClass->registerType(
             'field',
             'complexType',
-             'struct',
-             'all',
-              '',
-                array(
+            'struct',
+            'all',
+            '',
+            array(
                     'name'=>array('name'=>'name', 'type'=>'xsd:string'),
                     'type'=>array('name'=>'type', 'type'=>'xsd:string'),
                     'label'=>array('name'=>'label', 'type'=>'xsd:string'),
@@ -290,9 +290,9 @@ class registry
         $this->serviceClass->registerType(
             'field_list',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'tns:field[]')
@@ -303,10 +303,10 @@ class registry
         $this->serviceClass->registerType(
             'link_field',
             'complexType',
-             'struct',
-             'all',
-              '',
-                array(
+            'struct',
+            'all',
+            '',
+            array(
                     'name'=>array('name'=>'name', 'type'=>'xsd:string'),
                     'type'=>array('name'=>'type', 'type'=>'xsd:string'),
                     'relationship'=>array('name'=>'relationship', 'type'=>'xsd:string'),
@@ -318,9 +318,9 @@ class registry
         $this->serviceClass->registerType(
             'link_field_list',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'tns:link_field[]')
@@ -331,10 +331,10 @@ class registry
         $this->serviceClass->registerType(
             'name_value',
             'complexType',
-             'struct',
-             'all',
-              '',
-                array(
+            'struct',
+            'all',
+            '',
+            array(
                     'name'=>array('name'=>'name', 'type'=>'xsd:string'),
                     'value'=>array('name'=>'value', 'type'=>'xsd:string'),
                 )
@@ -343,9 +343,9 @@ class registry
         $this->serviceClass->registerType(
             'name_value_list',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:name_value[]')
@@ -356,9 +356,9 @@ class registry
         $this->serviceClass->registerType(
             'name_value_lists',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:name_value_list[]')
@@ -369,9 +369,9 @@ class registry
         $this->serviceClass->registerType(
             'select_fields',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'xsd:string[]')
@@ -382,9 +382,9 @@ class registry
         $this->serviceClass->registerType(
             'deleted_array',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'xsd:int[]')
@@ -395,10 +395,10 @@ class registry
         $this->serviceClass->registerType(
             'new_module_fields',
             'complexType',
-             'struct',
-             'all',
-              '',
-                array(
+            'struct',
+            'all',
+            '',
+            array(
                     'module_name'=>array('name'=>'module_name', 'type'=>'xsd:string'),
                     'module_fields'=>array('name'=>'module_fields', 'type'=>'tns:field_list'),
                     'link_fields'=>array('name'=>'link_fields', 'type'=>'tns:link_field_list'),
@@ -408,10 +408,10 @@ class registry
         $this->serviceClass->registerType(
             'entry_value',
             'complexType',
-             'struct',
-             'all',
-              '',
-                array(
+            'struct',
+            'all',
+            '',
+            array(
                     'id'=>array('name'=>'id', 'type'=>'xsd:string'),
                     'module_name'=>array('name'=>'module_name', 'type'=>'xsd:string'),
                     'name_value_list'=>array('name'=>'name_value_list', 'type'=>'tns:name_value_list'),
@@ -421,9 +421,9 @@ class registry
         $this->serviceClass->registerType(
             'entry_list',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:entry_value[]')
@@ -432,11 +432,11 @@ class registry
         );
 
         $this->serviceClass->registerType(
-             'set_entries_detail_result',
-             'complexType',
-             'struct',
-             'all',
-              '',
+            'set_entries_detail_result',
+            'complexType',
+            'struct',
+            'all',
+            '',
             array(
                 'name_value_lists' => array('name'=>'name_value_lists', 'type'=>'tns:name_value_lists'),
             )
@@ -444,9 +444,9 @@ class registry
         $this->serviceClass->registerType(
             'link_names_to_fields_array',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:link_name_to_fields_array[]')
@@ -457,10 +457,10 @@ class registry
         $this->serviceClass->registerType(
             'link_name_to_fields_array',
             'complexType',
-             'struct',
-             'all',
-              '',
-                array(
+            'struct',
+            'all',
+            '',
+            array(
                         'name'=>array('name'=>'name', 'type'=>'xsd:string'),
                         'value'=>array('name'=>'value', 'type'=>'tns:select_fields'),
                 )
@@ -469,9 +469,9 @@ class registry
         $this->serviceClass->registerType(
             'link_value',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:name_value[]')
@@ -482,9 +482,9 @@ class registry
         $this->serviceClass->registerType(
             'link_array_list',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:link_value[]')
@@ -495,10 +495,10 @@ class registry
         $this->serviceClass->registerType(
             'link_name_value',
             'complexType',
-             'struct',
-             'all',
-              '',
-                array(
+            'struct',
+            'all',
+            '',
+            array(
                     'name'=>array('name'=>'name', 'type'=>'xsd:string'),
                     'records'=>array('name'=>'records', 'type'=>'tns:link_array_list'),
                 )
@@ -507,9 +507,9 @@ class registry
         $this->serviceClass->registerType(
             'link_list',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:link_name_value[]')
@@ -520,9 +520,9 @@ class registry
         $this->serviceClass->registerType(
             'link_lists',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:link_list[]')
@@ -531,11 +531,11 @@ class registry
         );
         
         $this->serviceClass->registerType(
-             'get_entry_result_version2',
-             'complexType',
-             'struct',
-             'all',
-              '',
+            'get_entry_result_version2',
+            'complexType',
+            'struct',
+            'all',
+            '',
             array(
                 'entry_list' => array('name' =>'entry_list', 'type'=>'tns:entry_list'),
                 'relationship_list' => array('name' =>'relationship_list', 'type'=>'tns:link_lists'),
@@ -543,22 +543,22 @@ class registry
         );
         
         $this->serviceClass->registerType(
-             'return_search_result',
-             'complexType',
-             'struct',
-             'all',
-              '',
+            'return_search_result',
+            'complexType',
+            'struct',
+            'all',
+            '',
             array(
                 'entry_list' => array('name' =>'entry_list', 'type'=>'tns:link_list'),
             )
         );
 
         $this->serviceClass->registerType(
-             'get_entry_list_result_version2',
-             'complexType',
-             'struct',
-             'all',
-              '',
+            'get_entry_list_result_version2',
+            'complexType',
+            'struct',
+            'all',
+            '',
             array(
                 'result_count' => array('name'=>'result_count', 'type'=>'xsd:int'),
                 'next_offset' => array('name'=>'next_offset', 'type'=>'xsd:int'),
@@ -568,11 +568,11 @@ class registry
         );
         
         $this->serviceClass->registerType(
-             'get_server_info_result',
-             'complexType',
-             'struct',
-             'all',
-              '',
+            'get_server_info_result',
+            'complexType',
+            'struct',
+            'all',
+            '',
             array(
                 'flavor' => array('name'=>'id', 'type'=>'xsd:string'),
                 'version' => array('name'=>'id', 'type'=>'xsd:string'),
@@ -581,22 +581,22 @@ class registry
         );
         
         $this->serviceClass->registerType(
-             'new_set_entry_result',
-             'complexType',
-             'struct',
-             'all',
-              '',
+            'new_set_entry_result',
+            'complexType',
+            'struct',
+            'all',
+            '',
             array(
                 'id' => array('name'=>'id', 'type'=>'xsd:string'),
             )
         );
         
         $this->serviceClass->registerType(
-             'new_set_entries_result',
-             'complexType',
-             'struct',
-             'all',
-              '',
+            'new_set_entries_result',
+            'complexType',
+            'struct',
+            'all',
+            '',
             array(
                 'ids' => array('name'=>'ids', 'type'=>'tns:select_fields'),
             )
@@ -605,9 +605,9 @@ class registry
         $this->serviceClass->registerType(
             'new_set_relationhip_ids',
             'complexType',
-             'array',
-             '',
-              'SOAP-ENC:Array',
+            'array',
+            '',
+            'SOAP-ENC:Array',
             array(),
             array(
                 array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:select_fields[]')
@@ -616,11 +616,11 @@ class registry
         );
         
         $this->serviceClass->registerType(
-             'new_set_relationship_list_result',
-             'complexType',
-             'struct',
-             'all',
-              '',
+            'new_set_relationship_list_result',
+            'complexType',
+            'struct',
+            'all',
+            '',
             array(
                 'created' => array('name'=>'created', 'type'=>'xsd:int'),
                 'failed' => array('name'=>'failed', 'type'=>'xsd:int'),
@@ -658,20 +658,20 @@ class registry
         $this->serviceClass->registerType(
             'module_list',
             'complexType',
-             'struct',
-             'all',
-              '',
-                array(
+            'struct',
+            'all',
+            '',
+            array(
                     'modules'=>array('name'=>'modules', 'type'=>'tns:select_fields'),
                 )
         );
         
         $this->serviceClass->registerType(
-             'get_entries_count_result',
-             'complexType',
-             'struct',
-             'all',
-              '',
+            'get_entries_count_result',
+            'complexType',
+            'struct',
+            'all',
+            '',
             array(
                 'result_count'=>array('name'=>'result_count', 'type'=>'xsd:int'),
             )

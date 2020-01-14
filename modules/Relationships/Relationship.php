@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 
 class Relationship extends SugarBean
@@ -215,8 +209,6 @@ class Relationship extends SugarBean
             $this->load_relationship_meta();
         }
 
-        //		_ppd($GLOBALS['relationships']);
-
         if (array_key_exists($relationship_name, $GLOBALS['relationships'])) {
             foreach ($GLOBALS['relationships'][$relationship_name] as $field=>$value) {
                 $this->$field = $value;
@@ -293,10 +285,10 @@ class Relationship extends SugarBean
             $rel_module2 = $this->get_other_module($rel_attribute2_name, $rel_module1_bean->module_dir, $rel_module1_bean->db);
             $rel_module2_bean = get_module_info($rel_module2);
             return $rel_module2_bean;
+        } else {
+            //no rel_module2, so return rel_module2 bean
+            return $rel_module1_bean;
         }
-        //no rel_module2, so return rel_module2 bean
-        return $rel_module1_bean;
-        
 
         //end function trace_relationship_module
     }

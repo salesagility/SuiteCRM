@@ -77,7 +77,8 @@ class NonGmailSentFolderHandler
         if (null !== $err) {
             LoggerManager::getLogger()->error(
                 'Unhandled non gmail sent folder hander error: ' . $err,
-                self::UNHANDLER_ERROR);
+                self::UNHANDLER_ERROR
+            );
         }
     }
     
@@ -88,7 +89,8 @@ class NonGmailSentFolderHandler
     {
         if (null !== $this->lastError) {
             LoggerManager::getLogger()->fatal(
-                'Clear an unused Last Error of NonGmailSentFolderHandler: ' . $this->lastError);
+                'Clear an unused Last Error of NonGmailSentFolderHandler: ' . $this->lastError
+            );
         }
         $this->lastError = null;
     }
@@ -223,7 +225,8 @@ class NonGmailSentFolderHandler
             return $ret;
         }
         LoggerManager::getLogger()->warn(
-            "could not connect to mail serve for folder {$ie->mailbox} for {$ie->name} error message: $msg");
+            "could not connect to mail serve for folder {$ie->mailbox} for {$ie->name} error message: $msg"
+        );
         return false;
     }
     

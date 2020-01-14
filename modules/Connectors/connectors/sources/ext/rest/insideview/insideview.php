@@ -76,8 +76,9 @@ class ext_rest_insideview extends ext_rest
         foreach ($moduleList as $module) {
             if (!in_array($module, $this->allowedModuleList)) {
                 continue;
+            } else {
+                $outModuleList[$module] = $module;
             }
-            $outModuleList[$module] = $module;
         }
         return $outModuleList;
     }

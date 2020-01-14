@@ -108,8 +108,9 @@ class ParserLabel
             //we are in Module builder
 
             return self::addLabels($language, $labels, $this->moduleName, "custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/language");
+        } else {
+            return self::addLabels($language, $labels, $this->moduleName);
         }
-        return self::addLabels($language, $labels, $this->moduleName);
     }
 
     /**
@@ -225,7 +226,7 @@ class ParserLabel
                 // obtain $mod_strings
                 include $filename;
             } elseif ($forRelationshipLabel) {
-                $fh = fopen($filename, 'a');
+                $fh = fopen($filename, 'ab');
                 fclose($fh);
             }
         } else {
@@ -294,13 +295,18 @@ class ParserLabel
                     }
                 }
 
+                // Fix for issue #551 - save new labels
+                foreach ($labels as $key => $value) {
+                    $mod_strings[$key] = $value;
+                }
+
                 foreach ($mod_strings as $key => $val) {
                     $out .= override_value_to_string_recursive2('mod_strings', $key, $val);
                 }
 
                 try {
-                    $file_contents = fopen($extension_filename, 'w');
-                    fputs($file_contents, $out, strlen($out));
+                    $file_contents = fopen($extension_filename, 'wb');
+                    fwrite($file_contents, $out, strlen($out));
                     fclose($file_contents);
                 } catch (Exception $e) {
                     $GLOBALS ['log']->fatal("Could not write $filename");
@@ -335,14 +341,19 @@ class ParserLabel
                     }
                 }
 
+                // Fix for issue #551 - save new labels
+                foreach ($labels as $key => $value) {
+                    $mod_strings[$key] = $value;
+                }
+
                 foreach ($mod_strings as $key => $val) {
                     $out .= override_value_to_string_recursive2('mod_strings', $key, $val);
                 }
 
                 $failed_to_write = false;
                 try {
-                    $file_contents = fopen($relationships_filename, 'w');
-                    fputs($file_contents, $out, strlen($out));
+                    $file_contents = fopen($relationships_filename, 'wb');
+                    fwrite($file_contents, $out, strlen($out));
                     fclose($file_contents);
                 } catch (Exception $e) {
                     $GLOBALS ['log']->fatal("Could not write $filename");

@@ -58,8 +58,8 @@ if (!isset($_SESSION['licenseKey_submitted']) || !$_SESSION['licenseKey_submitte
     $_SESSION['setup_license_key_expire_date']  = "";
     $_SESSION['setup_license_key']              = "";
     $_SESSION['setup_num_lic_oc']              = 0;
+} else {
 }
-
 
 //php version suggestion
 $php_suggested_ver = '';
@@ -102,9 +102,9 @@ $custom_checked ='';
 if (isset($_SESSION['install_type']) && $_SESSION['install_type']=='custom') {
     $typical_checked ='';
     $custom_checked ='checked';
-}
+} else {
     //do nothing because defaults handle this condition
-
+}
 
 $out .= <<<EOQ2
                 <div id="installoptions">
@@ -129,7 +129,7 @@ $out .= <<<EOQ2
             </form>
         </div>
         <footer id="install_footer">
-    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
+    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/suitecrm/forum" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>
 </div>
 </body>

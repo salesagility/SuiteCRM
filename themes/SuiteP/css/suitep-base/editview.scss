@@ -296,6 +296,7 @@ a#powered_by:hover {
 
 #copyright_data {
   padding-left: 1%;
+  display: inline-block;
 }
 
 .footer_right {
@@ -357,6 +358,10 @@ th {
 td {
   padding: 0;
   border: none;
+}
+
+textarea {
+  resize: vertical; /* user can resize vertically, but width is fixed */
 }
 
 #header ul li {
@@ -577,7 +582,6 @@ table.view {
   text-align: left;
   vertical-align: baseline;
   white-space: pre-wrap;
-  line-height: 10px;
 }
 
 #lineItems {
@@ -1203,12 +1207,6 @@ p.error {
   margin: 0;
 }
 
-.error {
-  border: none;
-  color: $alert-danger-text;
-  background: transparent;
-}
-
 .error:empty {
   padding: 0;
 }
@@ -1226,7 +1224,7 @@ div.content p.error {
 
 .error a {
   font-weight: 600;
-  color: $link-color;
+  color: white;
   text-decoration: underline;
 }
 
@@ -1240,7 +1238,7 @@ div.content p.error {
 }
 
 .error a:hover {
-  color: $link-color-hover;
+  color: black;
 }
 
 .success {
@@ -2632,6 +2630,10 @@ input#btn_ActionLine.button[type="button"] {
   width: 84px;
 }
 
+.col-sm-6 .edit-view-field input[type="text"].date_input {
+    width: auto;
+}
+
 .col-sm-6 .edit-view-field .datetimecombo_time_section {
   display: inline-block;
 }
@@ -3164,7 +3166,7 @@ table#lineItems tr td table tfoot tr td span {
 
 .hr {
   background: $main-alternate-bg;
-  color: $navbar-menu-seperator;
+  color: $navbar-menu-separator;
   height: 1px;
 }
 
@@ -3534,6 +3536,10 @@ select#sales_stage_advanced {
     width: 100%;
   }
 
+  .col-sm-6 .edit-view-field input[type="text"].date_input {
+      width: auto;
+  }
+
   [type="date"] img {
     margin-left: 8px;
   }
@@ -3544,6 +3550,10 @@ select#sales_stage_advanced {
 
   .col-sm-6 .edit-view-field[type="date"] input[type="text"] {
     width: 92%;
+  }
+
+  .col-sm-6 .edit-view-field[type="date"] input[type="text"].date_input {
+      width: auto;
   }
 }
 
@@ -3635,6 +3645,10 @@ select#sales_stage_advanced {
 
   .col-sm-6 .edit-view-field input[type="text"] {
     width: 100%;
+  }
+
+  .col-sm-6 .edit-view-field input[type="text"].date_input {
+      width: auto;
   }
 
   .email-address-options-container {
@@ -3740,6 +3754,10 @@ select#sales_stage_advanced {
     width: 90%;
   }
 
+  .col-sm-6 .edit-view-field input[type="text"].date_input {
+      width: auto;
+  }
+
   .email-address-options-container {
     margin-top: 0;
   }
@@ -3791,6 +3809,9 @@ select#sales_stage_advanced {
     width: 90%;
   }
 
+  .col-sm-6 .edit-view-field input[type="text"].date_input {
+      width: auto;
+  }
 
   #BILLING_address_fieldset input[type=text] {
     width: 90%;
@@ -3851,6 +3872,9 @@ select#sales_stage_advanced {
     width: 90%;
   }
 
+  .col-sm-6 .edit-view-field input[type="text"].date_input {
+      width: auto;
+  }
 
   #BILLING_address_fieldset input[type=text] {
     width: 90%;
@@ -3980,9 +4004,10 @@ select#sales_stage_advanced {
 
 .serverstats {
   padding: 0;
+  padding-left: 20px;
   margin: 0;
-  float: left;
   width: 250px;
+  display: inline-block;
 }
 
 .dashboardTabList li a span {
@@ -4387,8 +4412,11 @@ td.inlineEditActive {
   height: auto;
 }
 
-.edit-view-pagination .btn-pagination[disabled] {
+.edit-view-pagination .btn-pagination[disabled],
+.edit-view-pagination .btn-pagination[disabled]:hover {
   background-color: $disabled-btn-bg;
+  text-decoration: none;
+  cursor: default;
 }
 
 .edit-view-pagination .btn-pagination {
@@ -4397,7 +4425,8 @@ td.inlineEditActive {
   font-weight: 600;
   height: 28px;
   line-height: 18px;
-  padding: 0 10px 0 10px;
+  padding: 5px 10px 0 10px;
+  display: inline-block;
 }
 
 .edit-view-pagination .btn-pagination:hover {
@@ -5429,7 +5458,7 @@ body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shado
   top: 100px;
   padding: 20px;
   width: 100%;
-  z-index: 103100;
+  position: fixed;
 }
 
 body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow[id="container_pbss_date_start_trigger_c"] {

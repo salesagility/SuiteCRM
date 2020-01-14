@@ -905,7 +905,7 @@ abstract class DBManager
                 }
                 $altersql = $this->alterColumnSQL($tablename, $value, $ignorerequired);
                 if (is_array($altersql)) {
-                    $altersql = join("\n", $altersql);
+                    $altersql = implode("\n", $altersql);
                 }
                 $sql .= $altersql . "\n";
                 if ($execute) {
@@ -975,7 +975,7 @@ abstract class DBManager
                     if ($execute) {
                         $this->query($rename, true, "Cannot rename index");
                     }
-                    $sql .= is_array($rename) ? join("\n", $rename) . "\n" : $rename . "\n";
+                    $sql .= is_array($rename) ? implode("\n", $rename) . "\n" : $rename . "\n";
                 } else {
                     // ok we need this field lets create it
                     $sql .= "/*MISSING INDEX IN DATABASE - $name -{$value['type']}  ROW */\n";
@@ -1038,7 +1038,9 @@ abstract class DBManager
                         continue;
                     }
                 } else {
-                    if (array_map('strtolower', $fielddef1[$key]) == array_map('strtolower', $fielddef2[$key])) {
+                    $f1 = fixIndexArrayFormat($fielddef1[$key]);
+                    $f2 = fixIndexArrayFormat($fielddef2[$key]);
+                    if (array_map('strtolower', $f1) == array_map('strtolower', $f2)) {
                         continue;
                     }
                 }
@@ -1082,7 +1084,7 @@ abstract class DBManager
                 // Exists on table1 but not table2
                 $returnArray['msg'] = 'not_exists_table2';
             } else {
-                if (sizeof($row1) != sizeof($row2)) {
+                if (count($row1) != count($row2)) {
                     $returnArray['msg'] = 'no_match';
                 } else {
                     $returnArray['msg'] = 'match';
@@ -1169,7 +1171,7 @@ abstract class DBManager
             }
         }
         if (!empty($alters)) {
-            $sql = join(";\n", $alters) . ";\n";
+            $sql = implode(";\n", $alters) . ";\n";
         } else {
             $sql = '';
         }
@@ -1199,7 +1201,7 @@ abstract class DBManager
             }
         }
         if (!empty($sqls)) {
-            return join(";\n", $sqls) . ";";
+            return implode(";\n", $sqls) . ";";
         }
         return '';
     }
@@ -1837,10 +1839,13 @@ abstract class DBManager
      */
     public function prepareQuery($sql)
     {
-        //parse out the tokens
-        $tokens = preg_split('/((?<!\\\)[&?!])/', $sql, -1, PREG_SPLIT_DELIM_CAPTURE);
+        // Parse out the tokens
+        // - Don't select the "!" in "!=".
+        // - No backslashes before tokens.
+        // - Only detect "&", "?", or "!".
+        $tokens = preg_split('/((?<!\\\)(?!!=)[&?!])/', $sql, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-        //maintain a count of the actual tokens for quick reference in execute
+        // Maintain a count of the actual tokens for quick reference in execute
         $count = 0;
 
         $sqlStr = '';
@@ -1870,6 +1875,8 @@ abstract class DBManager
     /**
      * Takes a prepared stmt index and the data to replace and creates the query and runs it.
      *
+     * @deprecated This is no longer used and will be removed in a future release. See createPreparedQuery() for an alternative.
+     * 
      * @param  int $stmt The index of the prepared statement from preparedTokens
      * @param  array $data The array of data to replace the tokens with.
      * @return resource result set or false on error
@@ -1880,16 +1887,13 @@ abstract class DBManager
             if (!is_array($data)) {
                 $data = array($data);
             }
-
             $pTokens = $this->preparedTokens[$stmt];
-
             //ensure that the number of data elements matches the number of replacement tokens
             //we found in prepare().
             if (count($data) != $pTokens['tokenCount']) {
                 //error the data count did not match the token count
                 return false;
             }
-
             $query = '';
             $dataIndex = 0;
             $tokens = $pTokens['tokens'];
@@ -1916,6 +1920,54 @@ abstract class DBManager
     }
 
     /**
+     * Takes a prepared stmt index and the data to replace and creates the query and runs it.
+     *
+     * @param  int $stmt The index of the prepared statement from preparedTokens
+     * @param  array $data The array of data to replace the tokens with.
+     * @return resource result set or false on error
+     */
+    public function createPreparedQuery($stmt, $data = array())
+    {
+        if (!empty($this->preparedTokens[$stmt])) {
+            if (!is_array($data)) {
+                $data = array($data);
+            }
+
+            $pTokens = $this->preparedTokens[$stmt];
+
+            //ensure that the number of data elements matches the number of replacement tokens
+            //we found in prepare().
+            if (count($data) != $pTokens['tokenCount']) {
+                //error the data count did not match the token count
+                return false;
+            }
+
+            $query = '';
+            $dataIndex = 0;
+            $tokens = $pTokens['tokens'];
+            foreach ($tokens as $key => $val) {
+                switch ($val) {
+                    case '?':
+                        $query .= $this->quote($data[$dataIndex++]);
+                        break;
+                    case '&':
+                        $filename = $data[$dataIndex++];
+                        $query .= file_get_contents($filename);
+                        break;
+                    case '!':
+                        $query .= $data[$dataIndex++];
+                        break;
+                    default:
+                        $query .= $val;
+                        break;
+                }//switch
+            }//foreach
+            return $query;
+        }
+        return false;
+    }
+
+    /**
      * Run both prepare and execute without the client having to run both individually.
      *
      * @param  string $sql The sql to parse
@@ -1926,7 +1978,13 @@ abstract class DBManager
     {
         $stmt = $this->prepareQuery($sql);
 
-        return $this->executePreparedQuery($stmt, $data);
+        $query = $this->createPreparedQuery($stmt, $data);
+
+        if ($query === false) {
+            return false;
+        } else {
+            return $this->query($query);
+        }
     }
 
     /********************** SQL FUNCTIONS ****************************/
@@ -2039,7 +2097,7 @@ abstract class DBManager
             }
         }
 
-        if (sizeof($columns) == 0) {
+        if (count($columns) == 0) {
             return "";
         } // no columns set
 
@@ -2151,7 +2209,7 @@ abstract class DBManager
                         return 0;
                     }
 
-                    return intval($val);
+                    return (int)$val;
                 case 'bigint':
                     $val = (float)$val;
                     if (!empty($fieldDef['required']) && $val == false) {
@@ -2172,7 +2230,7 @@ abstract class DBManager
                         return 0;
                     }
 
-                    return floatval($val);
+                    return (float)$val;
                 case 'time':
                 case 'date':
                     // empty date can't be '', so convert it to either NULL or empty date value
@@ -2823,7 +2881,7 @@ abstract class DBManager
 
             return $result;
         }
-        if (strchr($name, ".")) {
+        if (strstr($name, ".")) {
             // this is a compound name with dots, handle separately
             $parts = explode(".", $name);
             if (count($parts) > 2) {
@@ -2832,7 +2890,7 @@ abstract class DBManager
             }
             $parts = $this->getValidDBName($parts, $ensureUnique, $type, $force);
 
-            return join(".", $parts);
+            return implode(".", $parts);
         }
         // first strip any invalid characters - all but word chars (which is alphanumeric and _)
         $name = preg_replace('/[^\w]+/i', '', $name);
@@ -2920,7 +2978,7 @@ abstract class DBManager
         $values['parent_id'] = $this->massageValue($bean->id, $fieldDefs['parent_id']);
         $values['field_name'] = $this->massageValue($changes['field_name'], $fieldDefs['field_name']);
         $values['data_type'] = $this->massageValue($changes['data_type'], $fieldDefs['data_type']);
-        if ($changes['data_type'] == 'text') {
+        if ($changes['data_type'] == 'text' || $changes['data_type'] == 'multienum') {
             $values['before_value_text'] = $this->massageValue($changes['before'], $fieldDefs['before_value_text']);
             $values['after_value_text'] = $this->massageValue($changes['after'], $fieldDefs['after_value_text']);
         } else {
@@ -3005,7 +3063,7 @@ abstract class DBManager
                 //if the type and values match, do nothing.
                 if (!($this->_emptyValue($before_value, $field_type) && $this->_emptyValue(
                     $after_value,
-                        $field_type
+                    $field_type
                 ))
                 ) {
                     $change = false;

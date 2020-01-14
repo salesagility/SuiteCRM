@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 /************** general UI Stuff *************/
 
@@ -181,7 +175,12 @@ if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
         $campaignId = $db->quote($campaignId);
         $emailMarketings = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '$campaignId'");
         $firstEmailMarketing = $emailMarketings[0];
-        $ret = $firstEmailMarketing->id;
+        if (!is_object($firstEmailMarketing)) {
+            $ret = null;
+            LoggerManager::getLogger()->warn('Campaign Wisard Home trying to get first marketing id but the email marketings does not contains it');
+        } else {
+            $ret = $firstEmailMarketing->id;
+        }
         return $ret;
     }
 

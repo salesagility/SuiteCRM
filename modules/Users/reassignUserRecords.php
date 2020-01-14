@@ -146,7 +146,7 @@ if (!isset($_SESSION['reassignRecords']['assignedModuleListCache'])) {
                 $obj = new $p();
                 if (!isset($obj->field_defs['assigned_user_id']) ||
                      (
-                    isset($obj->field_defs['assigned_user_id']) &&
+                         isset($obj->field_defs['assigned_user_id']) &&
                     isset($obj->field_defs['assigned_user_id']['source']) &&
                     $obj->field_defs['assigned_user_id']['source'] == "non-db"
                 )
@@ -249,10 +249,10 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
 
     global $current_user;
     // Set the from and to user names so that we can display them in the results
-    $fromusername = $_POST['fromuser'];
-    $tousername = $_POST['touser'];
+    $fromUserNameQuoted = $this->db->quote($_POST['fromuser']);
+    $toUserNameQuoted = $this->db->quote($_POST['touser']);
 
-    $query = "select user_name, id from users where id in ('{$_POST['fromuser']}', '{$_POST['touser']}')";
+    $query = "select user_name, id from users where id in ('$fromUserNameQuoted', '$toUserNameQuoted')";
     $res = DBManagerFactory::getInstance()->query($query, true);
     while ($row = DBManagerFactory::getInstance()->fetchByAssoc($res)) {
         if ($row['id'] == $_POST['fromuser']) {
@@ -297,13 +297,16 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
         echo "<tr>\n";
         echo "<td>\n";
 
+        $currentUserID = $this->db->quote($current_user->id);
+        $tableName = $this->db->quote($object->table_name);
+
         $q_select = "select id";
         $q_update = "update ";
-        $q_set = " set assigned_user_id = '{$_POST['touser']}', ".
-                  "date_modified = '".TimeDate::getInstance()->nowDb()."', ".
-                  "modified_user_id = '{$current_user->id}' ";
-        $q_tables   = " {$object->table_name} ";
-        $q_where  = "where {$object->table_name}.deleted=0 and {$object->table_name}.assigned_user_id = '{$_POST['fromuser']}' ";
+        $q_set = " set assigned_user_id = '$toUserNameQuoted', " .
+            "date_modified = '" . TimeDate::getInstance()->nowDb() . "', " .
+            "modified_user_id = '$currentUserID' ";
+        $q_tables = " {$tableName} ";
+        $q_where = "where {$tableName}.deleted=0 and {$tableName}.assigned_user_id = '$fromUserNameQuoted' ";
 
         // Process conditions based on metadata
         if (isset($moduleFilters[$p_module]['fields']) && is_array($moduleFilters[$p_module]['fields'])) {
@@ -314,29 +317,30 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
                 }
                 $is_custom = isset($meta['custom_table']) && $meta['custom_table'] == true;
                 if ($is_custom && !$custom_added) {
-                    $q_tables .= "inner join {$object->table_name}_cstm on {$object->table_name}.id = {$object->table_name}_cstm.id_c ";
+                    $q_tables .= "inner join {$tableName}_cstm on {$tableName}.id = {$tableName}_cstm.id_c ";
                     $custom_added = true;
                 }
                 $addcstm = ($is_custom ? "_cstm" : "");
+                $nameQuoted = $_POST[$meta['name']];
                 switch ($meta['type']) {
                     case "text":
                     case "select":
-                        $q_where .= " and {$object->table_name}{$addcstm}.{$meta['dbname']} = '{$_POST[$meta['name']]}' ";
+                    $q_where .= " and {$tableName}{$addcstm}.{$meta['dbname']} = '{$nameQuoted}' ";
                         break;
                     case "multiselect":
-                        if (empty($_POST[$meta['name']])) {
+                        if (empty($nameQuoted)) {
                             continue;
                         }
                         $in_string = "";
                         $empty_check = "";
-                        foreach ($_POST[$meta['name']] as $onevalue) {
+                        foreach ($nameQuoted as $onevalue) {
                             if (empty($onevalue)) {
-                                $empty_check .= " OR {$object->table_name}{$addcstm}.{$meta['dbname']} is null ";
+                                $empty_check .= " OR {$tableName}{$addcstm}.{$meta['dbname']} is null ";
                             }
                             $in_string .= "'$onevalue', ";
                         }
                         $in_string = substr($in_string, 0, count($in_string) - 3);
-                        $q_where .= " and ({$object->table_name}{$addcstm}.{$meta['dbname']} in ($in_string) $empty_check)";
+                        $q_where .= " and ({$tableName}{$addcstm}.{$meta['dbname']} in ($in_string) $empty_check)";
                         break;
                     default:
                         //echo "Skipping field {$meta['name']} since the type is not supported<BR>";

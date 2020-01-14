@@ -1,7 +1,8 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class ModuleLanguageTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class ModuleLanguageTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
      * @var \UnitTester
@@ -14,15 +15,13 @@ class ModuleLanguageTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     private static $language;
 
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         if (self::$language === null) {
             self::$language = new \SuiteCRM\Utility\ModuleLanguage();
         }
     }
-
-
 
     public function testGetCurrentLanguage()
     {

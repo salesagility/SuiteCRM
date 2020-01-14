@@ -55,7 +55,7 @@ function cascadeAccessOption(action,selectEle) {
 		var roleCell = document.getElementById(selectId+'link');
 		if(roleCell != undefined) {
 			roleCell.innerHTML = accessLabel;
-		}		
+		}
 	}
 }
 {/literal}
@@ -67,7 +67,7 @@ function cascadeAccessOption(action,selectEle) {
 <input type='hidden' name='action' value='Save'>
 <input type='hidden' name='return_record' value='{$RETURN.record}'>
 <input type='hidden' name='return_action' value='{$RETURN.action}'>
-<input type='hidden' name='return_module' value='{$RETURN.module}'> 
+<input type='hidden' name='return_module' value='{$RETURN.module}'>
 <input title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="this.form.action.value='Save';aclviewer.save('ACLEditView');return false;" type="button" name="button" value="  {$APP.LBL_SAVE_BUTTON_LABEL}  " id="SAVE_HEADER"> &nbsp;
 <input title="{$APP.LBL_CANCEL_BUTTON_TITLE}"   class='button' accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" type='button' name='save' value="  {$APP.LBL_CANCEL_BUTTON_LABEL} " class='button' onclick='aclviewer.view("{$ROLE.id}", "All");'>
 </p>
@@ -78,21 +78,21 @@ function cascadeAccessOption(action,selectEle) {
 <td id="ACLEditView_Access_Header_category"></td>
 
 {* BEGIN - SECURITY GROUPS
-Just get the accessOptions for the Accounts module and use for the header select...less file edits this way. 
+Just get the accessOptions for the Accounts module and use for the header select...less file edits this way.
 Not ideal but it'll work since it's the only way to get that info without editing DetailView.php to pass this with ACTION_NAMES
 {foreach from=$ACTION_NAMES item="ACTION_LABEL" key="ACTION_NAME"}
 *}
 {foreach from=$CATEGORIES item="TYPES" key="CATEGORY_NAME"}
 {if $CATEGORY_NAME=='Accounts'}
-	
+
 	{foreach from=$ACTION_NAMES item="ACTION_LABEL" key="ACTION_NAME"}
 		{foreach from=$TYPES item="ACTIONS"}
 			{foreach from=$ACTIONS item="ACTION" key="ACTION_NAME_ACTIVE"}
 			{if $ACTION_NAME==$ACTION_NAME_ACTIVE}
-			
+
 			<td align='center'>
 				<div align='center' id="{$ACTION_NAME}link" onclick="aclviewer.toggleDisplay('{$ACTION_NAME}')"><b>{$ACTION_LABEL}</b></div>
-				<div  style="display: none; text-align: center;" id="{$ACTION_NAME}">
+				<div  style="all: initial; display: none; text-align: center;" id="{$ACTION_NAME}">
 					<select name='act_guid{$ACTION_NAME}' id='act_guid{$ACTION_NAME}' onblur="cascadeAccessOption('{$ACTION_NAME}',this); aclviewer.toggleDisplay('{$ACTION_NAME}');" >
 					{html_options options=$ACTION.accessOptions selected=$ACTION.aclaccess }
 					</select>
@@ -147,8 +147,8 @@ Not ideal but it'll work since it's the only way to get that info without editin
 {*
 					<select name='act_guid{$ACTION.id}' id = 'act_guid{$ACTION.id}' onblur="document.getElementById('{$ACTION.id}link').innerHTML=this.options[this.selectedIndex].text; aclviewer.toggleDisplay('{$ACTION.id}');" >
 *}
-					<select class='{$ACTION_NAME}' name='act_guid{$ACTION.id}' id = 'act_guid{$ACTION.id}' onblur="document.getElementById('{$ACTION.id}link').innerHTML=this.options[this.selectedIndex].text; aclviewer.toggleDisplay('{$ACTION.id}');" >
-{* END - SECURITY GROUPS *}
+                        <select class='{$ACTION_NAME}' style="all: initial" name='act_guid{$ACTION.id}' id = 'act_guid{$ACTION.id}' onblur="document.getElementById('{$ACTION.id}link').innerHTML=this.options[this.selectedIndex].text; aclviewer.toggleDisplay('{$ACTION.id}');" >
+ 					{* END - SECURITY GROUPS *}
 					{html_options options=$ACTION.accessOptions selected=$ACTION.aclaccess }
 					</select>
 					{/if}

@@ -148,14 +148,14 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
         if (self::$helperObject->isLogLevelDebug()) {
             $GLOBALS['log']->debug('SoapHelperWebServices->get_relationships - return data for getRelationshipResults is ' . var_export(
                 $result,
-                    true
+                true
             ));
         } // if
         if ($result) {
             $list = $result['rows'];
             $filterFields = $result['fields_set_on_rows'];
 
-            if (sizeof($list) > 0) {
+            if (count($list) > 0) {
                 // get the related module name and instantiate a bean for that
                 $submodulename = $mod->$link_field_name->getRelatedModuleName();
                 $submoduletemp = BeanFactory::getBean($submodulename);
@@ -288,7 +288,7 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
         if (!self::$helperObject->check_modules_access(
             $current_user,
             $module_name,
-                'read'
+            'read'
         ) || !self::$helperObject->check_modules_access($current_user, $related_module, 'read')
         ) {
             $error->set_error('no_access');
@@ -309,20 +309,20 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
 
         // Cast to integer
         $deleted = (int)$deleted;
-        $query = "(m1.date_modified > " . db_convert(
+        $query = "(m1.date_modified > " . DBManager::convert(
             "'" . DBManagerFactory::getInstance()->quote($from_date) . "'",
-                'datetime'
-        ) . " AND m1.date_modified <= " . db_convert(
-                    "'" . DBManagerFactory::getInstance()->quote($to_date) . "'",
-                'datetime'
+            'datetime'
+        ) . " AND m1.date_modified <= " . DBManager::convert(
+            "'" . DBManagerFactory::getInstance()->quote($to_date) . "'",
+            'datetime'
                 ) . " AND {0}.deleted = $deleted)";
         if (isset($deletion_date) && !empty($deletion_date)) {
-            $query .= " OR ({0}.date_modified > " . db_convert(
+            $query .= " OR ({0}.date_modified > " . DBManager::convert(
                 "'" . DBManagerFactory::getInstance()->quote($deletion_date) . "'",
-                    'datetime'
-            ) . " AND {0}.date_modified <= " . db_convert(
-                        "'" . DBManagerFactory::getInstance()->quote($to_date) . "'",
-                    'datetime'
+                'datetime'
+            ) . " AND {0}.date_modified <= " . DBManager::convert(
+                "'" . DBManagerFactory::getInstance()->quote($to_date) . "'",
+                'datetime'
                     ) . " AND {0}.deleted = 1)";
         }
 

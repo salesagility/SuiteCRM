@@ -110,14 +110,18 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
 
         if (!empty($layout_def['column_key'])) {
             $field_def = $this->reporter->all_fields[$layout_def['column_key']];
-        } elseif (!empty($layout_def['fields'])) {
-            $field_def = $layout_def['fields'];
+        } else {
+            if (!empty($layout_def['fields'])) {
+                $field_def = $layout_def['fields'];
+            }
         }
         $record = '';
         if ($layout_def['table_key'] == 'self' && isset($layout_def['fields']['PRIMARYID'])) {
             $record = $layout_def['fields']['PRIMARYID'];
-        } elseif (isset($layout_def['fields'][strtoupper($layout_def['table_alias']."_id")])) {
-            $record = $layout_def['fields'][strtoupper($layout_def['table_alias']."_id")];
+        } else {
+            if (isset($layout_def['fields'][strtoupper($layout_def['table_alias']."_id")])) {
+                $record = $layout_def['fields'][strtoupper($layout_def['table_alias']."_id")];
+            }
         }
         if (!empty($record)) {
             $field_name = $layout_def['name'];
@@ -132,8 +136,9 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
             }
             $str .= "</div>";
             return $str;
+        } else {
+            return $display;
         }
-        return $display;
     }
 
     public function displayListPlain($layout_def)
@@ -178,8 +183,9 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
     {
         if (strpos($layout_def['name'], '_usdoll') === false) {
             return false;
+        } else {
+            return true;
         }
-        return true;
     }
 
     public function querySelect(&$layout_def)

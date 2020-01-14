@@ -395,9 +395,9 @@ class DashletGeneric extends Dashlet
 
     protected function loadCustomMetadata()
     {
-        $customMetadate = 'custom/modules/'.$this->seedBean->module_dir.'/metadata/dashletviewdefs.php';
-        if (file_exists($customMetadate)) {
-            require($customMetadate);
+        $customMetadata = 'custom/modules/'.$this->seedBean->module_dir.'/metadata/dashletviewdefs.php';
+        if (file_exists($customMetadata)) {
+            require($customMetadata);
             $this->searchFields = $dashletData[$this->seedBean->module_dir.'Dashlet']['searchFields'];
             foreach ($this->searchFields  as $key =>$def) {
                 if ($key == 'assigned_user_name') {
@@ -438,12 +438,14 @@ class DashletGeneric extends Dashlet
                 $displayColumns[strtoupper($val)] = $this->columns[$val];
                 $displayColumns[strtoupper($val)]['label'] = trim($displayColumns[strtoupper($val)]['label'], ':');// strip : at the end of headers
             }
-        } elseif (isset($this->columns)) {
-            // use the default
-            foreach ($this->columns as $name => $val) {
-                if (!empty($val['default']) && $val['default']) {
-                    $displayColumns[strtoupper($name)] = $val;
-                    $displayColumns[strtoupper($name)]['label'] = trim($displayColumns[strtoupper($name)]['label'], ':');
+        } else {
+            if (isset($this->columns)) {
+                // use the default
+                foreach ($this->columns as $name => $val) {
+                    if (!empty($val['default']) && $val['default']) {
+                        $displayColumns[strtoupper($name)] = $val;
+                        $displayColumns[strtoupper($name)]['label'] = trim($displayColumns[strtoupper($name)]['label'], ':');
+                    }
                 }
             }
         }

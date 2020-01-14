@@ -69,12 +69,14 @@ if (file_exists('modules/'. $_REQUEST['target_module'] . '/EditView.php')) {
             $subpanelClass = $customClass;
         }
         $sqc  = new $subpanelClass($target_module, $view);
-    } elseif (file_exists($subpanelView)) {
-        require_once($subpanelView);
-        $subpanelClass = $target_module . 'SubpanelQuickCreate';
-        $sqc  = new $subpanelClass($target_module, $view);
     } else {
-        require_once('include/EditView/SubpanelQuickCreate.php');
-        $sqc  = new SubpanelQuickCreate($target_module, $view);
+        if (file_exists($subpanelView)) {
+            require_once($subpanelView);
+            $subpanelClass = $target_module . 'SubpanelQuickCreate';
+            $sqc  = new $subpanelClass($target_module, $view);
+        } else {
+            require_once('include/EditView/SubpanelQuickCreate.php');
+            $sqc  = new SubpanelQuickCreate($target_module, $view);
+        }
     }
 }

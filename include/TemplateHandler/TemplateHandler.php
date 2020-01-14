@@ -375,11 +375,12 @@ class TemplateHandler
         $file = $this->cacheDir . $this->themeDir . $theme . '/' . $this->templateDir . $module . '/' . $view . '.tpl';
         if (file_exists($file)) {
             return $this->ss->fetch($file);
-        }
-        global $app_strings;
-        $GLOBALS['log']->fatal($app_strings['ERR_NO_SUCH_FILE'] . ": $file");
+        } else {
+            global $app_strings;
+            $GLOBALS['log']->fatal($app_strings['ERR_NO_SUCH_FILE'] . ": $file");
 
-        return $app_strings['ERR_NO_SUCH_FILE'] . ": $file";
+            return $app_strings['ERR_NO_SUCH_FILE'] . ": $file";
+        }
     }
 
     /**
@@ -564,7 +565,7 @@ class TemplateHandler
 
                 if ($field['type'] === 'relate' && isset($field['module']) && (preg_match(
                     '/_name$|_c$/si',
-                            $name
+                    $name
                 ) || !empty($field['quicksearch']))
                 ) {
                     if (!preg_match('/_c$/si', $name)

@@ -78,6 +78,13 @@ function populateFromPost($prefix, &$focus, $skipRetrieve = false, $checkACL = f
 {
     global $current_user;
 
+    /* BEGIN - SECURITY GROUPS */ 
+    if(!empty($_REQUEST['dup_checked']) && !empty($_REQUEST[$prefix.'id']))
+    {
+        $focus->new_with_id = true;
+    }
+    /* END - SECURITY GROUPS */ 
+
     if (!empty($_REQUEST[$prefix.'record']) && !$skipRetrieve) {
         $focus->retrieve($_REQUEST[$prefix.'record']);
     }
@@ -269,21 +276,23 @@ function buildRedirectURL($return_id='', $return_module='')
             // END Meeting Integration
         }
         // if we create a new record "Save", we want to redirect to the DetailView
-        elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == "Save"
+        else {
+            if (isset($_REQUEST['action']) && $_REQUEST['action'] == "Save"
             && $_REQUEST['return_module'] != 'Activities'
             && $_REQUEST['return_module'] != 'Home'
             && $_REQUEST['return_module'] != 'Forecasts'
             && $_REQUEST['return_module'] != 'Calendar'
             && $_REQUEST['return_module'] != 'MailMerge'
             ) {
-            $return_action = 'DetailView';
-        } elseif ($_REQUEST['return_module'] == 'Activities' || $_REQUEST['return_module'] == 'Calendar') {
-            $return_module = $_REQUEST['module'];
-            $return_action = $_REQUEST['return_action'];
-        // wp: return action needs to be set for one-click close in task list
-        } else {
-            // if we "Cancel", we go back to the list view.
-            $return_action = $_REQUEST['return_action'];
+                $return_action = 'DetailView';
+            } elseif ($_REQUEST['return_module'] == 'Activities' || $_REQUEST['return_module'] == 'Calendar') {
+                $return_module = $_REQUEST['module'];
+                $return_action = $_REQUEST['return_action'];
+            // wp: return action needs to be set for one-click close in task list
+            } else {
+                // if we "Cancel", we go back to the list view.
+                $return_action = $_REQUEST['return_action'];
+            }
         }
     } else {
         $return_action = "DetailView";

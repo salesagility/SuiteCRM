@@ -54,11 +54,7 @@ $us->signature = strip_tags(br2nl(from_html($_REQUEST['description'])));
 $us->signature_html = $_REQUEST['description'];
 if (empty($us->user_id) && isset($_REQUEST['the_user_id'])) {
     $us->user_id = $_REQUEST['the_user_id'];
-} else {
-    $us->user_id = $current_user->id;
 }
-//_pp($_REQUEST);
-//_pp($us);
 $us->save();
 
 $js = '

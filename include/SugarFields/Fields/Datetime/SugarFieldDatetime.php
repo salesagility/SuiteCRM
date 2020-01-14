@@ -94,7 +94,7 @@ class SugarFieldDatetime extends SugarFieldBase
         if ($this->isRangeSearchView($vardef)) {
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
             $id = isset($displayParams['idName']) ? $displayParams['idName'] : $vardef['name'];
-            $this->ss->assign('original_id', "{$id}");
+            $this->ss->assign('original_id', (string)($id));
             $this->ss->assign('id_range', "range_{$id}");
             $this->ss->assign('id_range_start', "start_range_{$id}");
             $this->ss->assign('id_range_end', "end_range_{$id}");
@@ -122,11 +122,12 @@ class SugarFieldDatetime extends SugarFieldBase
             }
             // convert without TZ
             return $timedate->to_display($inputField, $timedate->get_db_date_format(), $timedate->get_date_format($user));
+        } else {
+            if (!$timedate->check_matching_format($inputField, TimeDate::DB_DATETIME_FORMAT)) {
+                return $inputField;
+            }
+            return $timedate->to_display_date_time($inputField, true, true, $user);
         }
-        if (!$timedate->check_matching_format($inputField, TimeDate::DB_DATETIME_FORMAT)) {
-            return $inputField;
-        }
-        return $timedate->to_display_date_time($inputField, true, true, $user);
     }
 
     public function save(&$bean, $inputData, $field, $def, $prefix = '')
@@ -175,7 +176,7 @@ class SugarFieldDatetime extends SugarFieldBase
                     // is kind of reasonable - no sane time format puts seconds first
                     $timeparts = explode($sep, $timepart);
                     if (!empty($timeparts[2])) {
-                        $timepart = join($sep, array($timeparts[0], $timeparts[1]));
+                        $timepart = implode($sep, array($timeparts[0], $timeparts[1]));
                     }
                 }
             }

@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 
 global $mod_strings;
@@ -90,7 +84,7 @@ if (isset($focus->parent_type)) {
 $xtpl->assign("PARENT_ID", $focus->parent_id);
 $xtpl->assign("NAME", $focus->name);
 //$xtpl->assign("SENT_BY_USER_NAME", $focus->sent_by_user_name);
-$xtpl->assign("DATE_SENT", $focus->date_start." ".$focus->time_start);
+$xtpl->assign("DATE_SENT_RECEIVED", $focus->date_start." ".$focus->time_start);
 if ($focus->status == 'sent') {
     $xtpl->assign("STATUS", $mod_strings['LBL_MESSAGE_SENT']);
 } else {

@@ -1,4 +1,7 @@
 <?php
+
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,7 +41,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-class PersonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class PersonTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
      * @var \UnitTester
@@ -47,17 +50,25 @@ class PersonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSetLawfulBasis()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('contacts');
-        $state->pushTable('contacts_cstm');
-        $state->pushTable('sugarfeed');
-
-
         $person = new Contact();
         $person->last_name = 'Smith';
 
+        // Test when  basis is not a string
+        try {
+            $person->setLawfulBasis(1, '');
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $ex) {
+            $this->assertEquals('basis must be a string', $ex->getMessage());
+        }
+
+        // test when basis does not exist
+        try {
+            $person->setLawfulBasis('Test Invalid Basis', '');
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $ex) {
+            $this->assertEquals('invalid lawful basis', $ex->getMessage());
+        }
+        
         // test valid basis
         $this->assertEquals(1, $person->setLawfulBasis('', ''));
         $this->assertEquals(1, $person->setLawfulBasis('consent', ''));
@@ -71,6 +82,22 @@ class PersonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test lawful basis has been set
         $person->setLawfulBasis('consent', '');
         $this->assertEquals($person->lawful_basis, '^consent^');
+        
+        // Test when source is not a string
+        try {
+            $person->setLawfulBasis('', 1);
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $ex) {
+            $this->assertEquals('source for lawful basis must be a string', $ex->getMessage());
+        }
+        
+        // test when source does not exist
+        try {
+            $person->setLawfulBasis('', 'Test Invalid Sources');
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $ex) {
+            $this->assertEquals('invalid lawful basis source', $ex->getMessage());
+        }
 
         // test lawful sources
         $this->assertEquals(true, $person->setLawfulBasis('', ''));
@@ -82,11 +109,5 @@ class PersonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test that source is being set
         $this->assertEquals('third_party', $person->lawful_basis_source);
-
-        $state->popTable('aod_indexevent');
-        $state->popTable('contacts');
-        $state->popTable('contacts_cstm');
-        $state->popTable('sugarfeed');
-        $state->popGlobals();
     }
 }

@@ -148,8 +148,9 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
 
         if ($end) {
             return $date->setTime(23, 59, 59);
+        } else {
+            return $date->setTime(0, 0, 0);
         }
-        return $date->setTime(0, 0, 0);
     }
 
     public function queryFilterBefore($layout_def)
@@ -207,12 +208,13 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
 
         if (!$timestamp) {
             return $begin;
+        } else {
+            $begin_parts = explode(' ', $begin);
+            $date_parts=explode('-', $begin_parts[0]);
+            $time_parts=explode(':', $begin_parts[1]);
+            $curr_timestamp=mktime($time_parts[0], $time_parts[1], 0, $date_parts[1], $date_parts[2], $date_parts[0]);
+            return $curr_timestamp;
         }
-        $begin_parts = explode(' ', $begin);
-        $date_parts=explode('-', $begin_parts[0]);
-        $time_parts=explode(':', $begin_parts[1]);
-        $curr_timestamp=mktime($time_parts[0], $time_parts[1], 0, $date_parts[1], $date_parts[2], $date_parts[0]);
-        return $curr_timestamp;
     }
     /**
      * Get specified date and time for a particalur day, in current user's timezone.
@@ -231,11 +233,13 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         if ($time=='start') {
             $begin_parts = explode(' ', $begin);
             $be = $begin_parts[0] . ' 00:00:00';
-        } elseif ($time=='end') {
-            $begin_parts = explode(' ', $begin);
-            $be = $begin_parts[0] . ' 23:59:59';
         } else {
-            $be=$begin;
+            if ($time=='end') {
+                $begin_parts = explode(' ', $begin);
+                $be = $begin_parts[0] . ' 23:59:59';
+            } else {
+                $be=$begin;
+            }
         }
 
         //convert date to db format without converting to GMT.
@@ -537,9 +541,10 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
             if (substr_count($layout_def['type'], 'time') > 0 && $this->get_time_part($content)!= false) {
                 $td = $timedate->to_display_date_time($content);
                 return $td;
-            }  // if date only field
+            } else {// if date only field
                 $td = $timedate->to_display_date($content, false); // Avoid PHP notice of returning by reference.
                 return $td;
+            }
         }
     }
 
@@ -550,8 +555,9 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $date_parts=$timedate->split_date_time($date_time_value);
         if (count($date_parts) > 1) {
             return $date_parts[1];
+        } else {
+            return false;
         }
-        return false;
     }
 
     public function displayList(&$layout_def)
@@ -650,8 +656,9 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
 
         if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a') {
             return $orderBy . " ASC\n";
+        } else {
+            return $orderBy . " DESC\n";
         }
-        return $orderBy . " DESC\n";
     }
 
     /**
@@ -719,8 +726,8 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $column = $this->_get_column_select($layout_def);
         return $this->reporter->db->convert(
             $this->reporter->db->convert($column, "date_format", array('%Y')),
-                'CONCAT',
-                array("'-'", $this->reporter->db->convert($column, "quarter"))
+            'CONCAT',
+            array("'-'", $this->reporter->db->convert($column, "quarter"))
         )
             ." ".$this->_get_column_alias($layout_def)."\n";
     }
@@ -740,8 +747,8 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $column = $this->_get_column_select($layout_def);
         return $this->reporter->db->convert(
             $this->reporter->db->convert($column, "date_format", array('%Y')),
-                'CONCAT',
-                array("'-'", $this->reporter->db->convert($column, "quarter"))
+            'CONCAT',
+            array("'-'", $this->reporter->db->convert($column, "quarter"))
         );
     }
 
@@ -763,8 +770,9 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
 
         if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a') {
             return $orderBy . " ASC\n";
+        } else {
+            return $orderBy . " DESC\n";
         }
-        return $orderBy . " DESC\n";
     }
 
     public function displayInput($layout_def)

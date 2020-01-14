@@ -69,6 +69,9 @@ class campaign_charts
 
         if ($campaign_id) {
             $sugarChart = SugarChartFactory::getInstance('', 'Reports');
+            if (!$sugarChart) {
+                return false;
+            }
             $xmlFile = $sugarChart->getXMLFileName($campaign_id);
 
             if (!file_exists($xmlFile) || $refresh == true) {
@@ -155,7 +158,7 @@ class campaign_charts
                                 "numerical_value" => $count,
                                 "group_text" => $translation,
                                 "group_key" => "",
-                                "count" => "{$count}",
+                                "count" => (string)($count),
                                 "group_label" => $alttext,
                                 "numerical_label" => "Hits",
                                 "numerical_key" => "hits",
@@ -228,7 +231,7 @@ class campaign_charts
             $focus = new Campaign();
             $focus->retrieve($campaign_id);
             $opp_count=0;
-            $opp_query  = "select count(*) opp_count,sum(" . db_convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
+            $opp_query  = "select count(*) opp_count,sum(" . DBManager::convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
             $opp_query .= " from opportunities";
             $opp_query .= " where campaign_id='$campaign_id'";
             $opp_query .= " and sales_stage='Prospecting'";
@@ -332,6 +335,9 @@ class campaign_charts
 
 
         $sugarChart = SugarChartFactory::getInstance();
+        if (!$sugarChart) {
+            return false;
+        }
         $sugarChart->is_currency = true;
         $sugarChart->currency_symbol = $currency_symbol;
 
@@ -383,7 +389,7 @@ class campaign_charts
             $focus = new Campaign();
             $focus->retrieve($campaign_id);
             $opp_count=0;
-            $opp_query  = "select count(*) opp_count,sum(" . db_convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
+            $opp_query  = "select count(*) opp_count,sum(" . DBManager::convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
             $opp_query .= " from opportunities";
             $opp_query .= " where campaign_id='$campaign_id'";
             $opp_query .= " and sales_stage='Prospecting'";
@@ -485,6 +491,9 @@ class campaign_charts
 
 
         $sugarChart = SugarChartFactory::getInstance();
+        if (!$sugarChart) {
+            return false;
+        }
         $sugarChart->is_currency = true;
         $sugarChart->currency_symbol = $currency_symbol;
 

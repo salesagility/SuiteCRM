@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 require_once('include/formbase.php');
 
 global $mod_strings;
@@ -56,8 +50,10 @@ global $mod_strings;
     $campaign_focus = new Campaign();
     if (isset($_REQUEST['record']) && $_REQUEST['record'] && !(isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id'])) {
         $campaign_focus->retrieve($_REQUEST['record']);
-    } elseif (isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id']) {
-        $campaign_focus->retrieve($_REQUEST['campaign_id']);
+    } else {
+        if (isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id']) {
+            $campaign_focus->retrieve($_REQUEST['campaign_id']);
+        }
     }
 
     $camp_steps[] = 'wiz_step1_';

@@ -43,7 +43,6 @@
  */
 require_once('modules/AOD_Index/AOD_Index_sugar.php');
 require_once('modules/AOD_Index/LuceneUtils.php');
-requireLucene();
 
 class AOD_Index extends AOD_Index_sugar
 {
@@ -98,14 +97,15 @@ class AOD_Index extends AOD_Index_sugar
         $index = BeanFactory::getBean('AOD_Index', 1);
         if (!empty($index) && !empty($index->id)) {
             return $index;
+        } else {
+            $index = new AOD_Index();
+            $index->id = 1;
+            $index->new_with_id = true;
+            $index->name = "Index";
+            $index->location = "modules/AOD_Index/Index/Index";
+            $index->save();
+            return $index;
         }
-        $index = new AOD_Index();
-        $index->id = 1;
-        $index->new_with_id = true;
-        $index->name = "Index";
-        $index->location = "modules/AOD_Index/Index/Index";
-        $index->save();
-        return $index;
     }
 
     /**

@@ -137,7 +137,7 @@ class nusoap_xmlschema extends nusoap_base
     {
         // parse xml file
         if ($xml != "") {
-            $xmlStr = @join("", @file($xml));
+            $xmlStr = @implode("", @file($xml));
             if ($xmlStr == "") {
                 $msg = 'Error reading XML from '.$xml;
                 $this->setError($msg);
@@ -186,8 +186,8 @@ class nusoap_xmlschema extends nusoap_base
                 // Display an error message.
                 $errstr = sprintf(
                     'XML error parsing XML schema on line %d: %s',
-                xml_get_current_line_number($this->parser),
-                xml_error_string(xml_get_error_code($this->parser))
+                    xml_get_current_line_number($this->parser),
+                    xml_error_string(xml_get_error_code($this->parser))
                 );
                 $this->debug($errstr);
                 $this->debug("XML payload:\n" . $xml);
@@ -609,7 +609,7 @@ class nusoap_xmlschema extends nusoap_base
         $schemaPrefix = $this->getPrefixFromNamespace($this->XMLSchemaVersion);
         $xml = '';
         // imports
-        if (sizeof($this->imports) > 0) {
+        if (count($this->imports) > 0) {
             foreach ($this->imports as $ns => $list) {
                 foreach ($list as $ii) {
                     if ($ii['location'] != '') {

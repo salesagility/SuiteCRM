@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 require_once('include/formbase.php');
 
 $focus = new CampaignTracker();
@@ -88,5 +82,6 @@ if (isset($_POST['response_json']) && $_POST['response_json']) {
     $results['data'] = array('id' => $focus->id);
     echo json_encode($results);
     die();
-}
+} else {
     handleRedirect('', '');
+}

@@ -681,10 +681,12 @@ class AbstractRelationship
             if (isset($layout_defs[$this->rhs_module]['subpanel_setup'][strtolower($this->lhs_module)]['title_key'])) {
                 return $layout_defs[$this->rhs_module]['subpanel_setup'][strtolower($this->lhs_module)]['title_key'];
             }
-        } elseif (!$this->is_custom &&  file_exists("modules/{$this->lhs_module}/metadata/subpaneldefs.php")) {
-            include("modules/{$this->lhs_module}/metadata/subpaneldefs.php");
-            if (isset($layout_defs[$this->lhs_module]['subpanel_setup'][strtolower($this->rhs_module)]['title_key'])) {
-                return $layout_defs[$this->lhs_module]['subpanel_setup'][strtolower($this->rhs_module)]['title_key'];
+        } else {
+            if (!$this->is_custom &&  file_exists("modules/{$this->lhs_module}/metadata/subpaneldefs.php")) {
+                include("modules/{$this->lhs_module}/metadata/subpaneldefs.php");
+                if (isset($layout_defs[$this->lhs_module]['subpanel_setup'][strtolower($this->rhs_module)]['title_key'])) {
+                    return $layout_defs[$this->lhs_module]['subpanel_setup'][strtolower($this->rhs_module)]['title_key'];
+                }
             }
         }
         

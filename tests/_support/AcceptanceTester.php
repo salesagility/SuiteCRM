@@ -1,5 +1,6 @@
 <?php
 
+use Codeception\Actor;
 use Faker\Factory;
 
 /**
@@ -13,13 +14,30 @@ use Faker\Factory;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method click(string $string)
+ * @method acceptPopup()
+ * @method seeInPopup(string $string)
+ * @method wait(int $int)
+ * @method fillField(string $string, string $string1)
+ * @method checkOption(string $string)
+ * @method waitForElementVisible(string $string)
+ * @method selectOption(string $string, string $string1)
+ * @method see(string $string)
+ * @method amOnUrl($getInstanceURL)
+ * @method getInstanceURL()
+ * @method dontSee(string $string)
+ * @method getAdminPassword()
+ * @method getAdminUser()
+ * @method waitForElementNotVisible(string $string)
+ * @method executeJS(string $string)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class AcceptanceTester extends \Codeception\Actor
+ */
+class AcceptanceTester extends Actor
 {
     use _generated\AcceptanceTesterActions;
+
     /**
      * Define custom actions here
      */
@@ -39,16 +57,13 @@ class AcceptanceTester extends \Codeception\Actor
     public function login($username, $password)
     {
         $I = $this;
-        if ($I->loadSessionSnapshot('login')) {
-            return;
-        }
-        // Log In
-        $I->seeElement('#loginform');
+
+        $I->amOnUrl($I->getInstanceURL());
+        $I->waitForElementVisible('#loginform');
         $I->fillField('#user_name', $username);
         $I->fillField('#username_password', $password);
         $I->click('Log In');
-        $I->waitForElementNotVisible('#loginform', 120);
-        $I->saveSessionSnapshot('login');
+        $I->waitForElementNotVisible('#loginform');
     }
 
     public function loginAsAdmin()
@@ -84,5 +99,24 @@ class AcceptanceTester extends \Codeception\Actor
         $I->dontSee('Error');
         $I->dontSee('error');
         $I->dontSee('PHP');
+    }
+
+    /**
+     * Helper for navigating to a page.
+     *
+     * @param string $module SuiteCRM module name
+     * @param string $action View action name, e.g. index, EditView, DetailView.
+     * @param string|null $record The id of a record, used for EditView and DetailView routes.
+     */
+    public function visitPage($module, $action, $record = null)
+    {
+        $I = $this;
+        $url = $I->getInstanceURL();
+        if ($record !== null) {
+            $url .= "/index.php?module={$module}&action={$action}&record={$record}";
+        } else {
+            $url .= "/index.php?module={$module}&action={$action}";
+        }
+        $I->amOnUrl($url);
     }
 }

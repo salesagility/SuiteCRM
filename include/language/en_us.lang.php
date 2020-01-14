@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -447,6 +447,11 @@ $app_list_strings = array(
 
         'Tasks' => 'Task',
 
+        'AOS_Contracts' => 'Contract',
+        'AOS_Invoices' => 'Invoice',
+        'AOS_Quotes' => 'Quote',
+        'AOS_Products' => 'Product',
+
     ),
 
     'record_type_display_notes' => array(
@@ -465,6 +470,11 @@ $app_list_strings = array(
 
         'Meetings' => 'Meeting',
         'Calls' => 'Call',
+
+        'AOS_Contracts' => 'Contract',
+        'AOS_Invoices' => 'Invoice',
+        'AOS_Quotes' => 'Quote',
+        'AOS_Products' => 'Product',
     ),
 
     'parent_type_display' => array(
@@ -481,6 +491,11 @@ $app_list_strings = array(
         'ProjectTask' => 'Project Task',
 
         'Prospects' => 'Target',
+        
+        'AOS_Contracts' => 'Contract',
+        'AOS_Invoices' => 'Invoice',
+        'AOS_Quotes' => 'Quote',
+        'AOS_Products' => 'Product',        
 
     ),
     'parent_line_items' => array(
@@ -1020,6 +1035,10 @@ $app_list_strings = array(
 );
 
 $app_strings = array(
+    'LBL_SEARCH_REAULTS_TITLE' => 'Results',
+    'ERR_SEARCH_INVALID_QUERY' => 'An error has occurred while performing the search. Your query syntax might not be valid.',
+    'ERR_SEARCH_NO_RESULTS' => 'No results matching your search criteria. Try broadening your search.',
+    'LBL_SEARCH_PERFORMED_IN' => 'Search performed in',
     'LBL_EMAIL_CODE' => 'Email Code:',
     'LBL_SEND' => 'Send',
     'LBL_LOGOUT' => 'Logout',
@@ -1176,7 +1195,7 @@ $app_strings = array(
     'LBL_EMAIL_FOLDERS' => SugarThemeRegistry::current()->getImage(
         'icon_email_folder',
         'align=absmiddle border=0',
-            null,
+        null,
         null,
         '.gif',
         ''
@@ -1347,7 +1366,7 @@ $app_strings = array(
     'LBL_EMAIL_SETTINGS_TITLE_LAYOUT' => 'Visual Settings',
     'LBL_EMAIL_SETTINGS_TITLE_PREFERENCES' => 'Preferences',
     'LBL_EMAIL_SETTINGS_USER_FOLDERS' => 'Available User Folders',
-    'LBL_EMAIL_ERROR_PREPEND' => 'Error:',
+    'LBL_EMAIL_ERROR_PREPEND' => 'An email error occurred:',
     'LBL_EMAIL_INVALID_PERSONAL_OUTBOUND' => 'The outbound mail server selected for the mail account you are using is invalid. Check the settings or select a different mail server for the mail account.',
     'LBL_EMAIL_INVALID_SYSTEM_OUTBOUND' => 'An outgoing mail server is not configured to send emails. Please configure an outgoing mail server or select an outgoing mail server for the mail account that you are using in Settings >> Mail Account.',
     'LBL_DEFAULT_EMAIL_SIGNATURES' => 'Default Signature',
@@ -1821,7 +1840,6 @@ $app_strings = array(
     'MSG_LIST_VIEW_CHANGE_SEARCH' => 'or change your search criteria',
     'MSG_EMPTY_LIST_VIEW_NO_RESULTS' => 'You currently have no records saved. <item2> or <item3> one now.',
 
-    'LBL_CLICK_HERE' => 'Click here',
     // contextMenu strings
     'LBL_ADD_TO_FAVORITES' => 'Add to My Favorites',
     'LBL_CREATE_CONTACT' => 'Create Contact',
@@ -2852,6 +2870,7 @@ $app_list_strings ['emailTemplates_type_list'] = array(
     '' => '',
     'campaign' => 'Campaign',
     'email' => 'Email',
+    'event' => 'Event',
 );
 
 $app_list_strings ['emailTemplates_type_list_campaigns'] = array(
@@ -2863,6 +2882,7 @@ $app_list_strings ['emailTemplates_type_list_no_workflow'] = array(
     '' => '',
     'campaign' => 'Campaign',
     'email' => 'Email',
+    'event' => 'Event',
     'system' => 'System',
 );
 
@@ -2950,9 +2970,16 @@ $app_list_strings['aor_operator_list']['Starts_With'] = 'Starts With';
 $app_list_strings['aor_operator_list']['Ends_With'] = 'Ends With';
 $app_list_strings['aor_format_options'][''] = '';
 $app_list_strings['aor_format_options']['Y-m-d'] = 'Y-m-d';
+$app_list_strings['aor_format_options']['m-d-Y'] = 'm-d-Y';
+$app_list_strings['aor_format_options']['d-m-Y'] = 'd-m-Y';
+$app_list_strings['aor_format_options']['Y/m/d'] = 'Y/m/d';
+$app_list_strings['aor_format_options']['m/d/Y'] = 'm/d/Y';
+$app_list_strings['aor_format_options']['d/m/Y'] = 'd/m/Y';
+$app_list_strings['aor_format_options']['Y.m.d'] = 'Y.m.d';
+$app_list_strings['aor_format_options']['m.d.Y'] = 'm.d.Y';
+$app_list_strings['aor_format_options']['d.m.Y'] = 'd.m.Y';
 $app_list_strings['aor_format_options']['Ymd'] = 'Ymd';
 $app_list_strings['aor_format_options']['Y-m'] = 'Y-m';
-$app_list_strings['aor_format_options']['d/m/Y'] = 'd/m/Y';
 $app_list_strings['aor_format_options']['Y'] = 'Y';
 $app_list_strings['aor_condition_operator_list']['And'] = 'And';
 $app_list_strings['aor_condition_operator_list']['OR'] = 'OR';
@@ -3478,8 +3505,6 @@ $app_strings['LBL_RESCHEDULE_COUNT'] = 'Call Attempts';
 
 //SecurityGroups
 $app_list_strings['moduleList']['SecurityGroups'] = 'Security Suite Management';
-$app_strings['LBL_LOGIN_AS'] = 'Login as ';
-$app_strings['LBL_LOGOUT_AS'] = 'Logout as ';
 $app_strings['LBL_SECURITYGROUP'] = 'Security Group';
 
 $app_list_strings['moduleList']['OutboundEmailAccounts'] = 'Outbound Email Accounts';
@@ -3642,10 +3667,14 @@ $app_list_strings['oauth2_duration_units'] = [
     'month' => 'months',
 ];
 
+$app_list_strings['search_controllers'] = [
+    'Search' => 'Search (new)',
+    'UnifiedSearch' => 'Global Unified Search (legacy)'
+];
 
 
 $app_strings['LBL_DEFAULT_API_ERROR_TITLE'] = 'JSON API Error';
-$app_strings['LBL_DEFAULT_API_ERROR_DETAIL'] = 'JSON API Error occured.';
+$app_strings['LBL_DEFAULT_API_ERROR_DETAIL'] = 'JSON API Error occurred.';
 $app_strings['LBL_API_EXCEPTION_DETAIL'] = 'Api Version: 8';
 $app_strings['LBL_BAD_REQUEST_EXCEPTION_DETAIL'] = 'Please ensure you fill in the fields required';
 $app_strings['LBL_EMPTY_BODY_EXCEPTION_DETAIL'] = 'Json API expects body of the request to be JSON';
@@ -3659,11 +3688,28 @@ $app_strings['MSG_BROWSER_NOTIFICATIONS_ENABLED'] = 'Desktop notifications are n
 $app_strings['MSG_BROWSER_NOTIFICATIONS_DISABLED'] = 'Desktop notifications are disabled for this web browser. Use your browser preferences to enable them again.';
 $app_strings['MSG_BROWSER_NOTIFICATIONS_UNSUPPORTED'] = 'This browser does not support desktop notifications.';
 
+$app_strings['LBL_GOOGLE_SYNC_ERR'] = 'SuiteCRM Google Sync - ERROR';
+$app_strings['LBL_THERE_WAS_AN_ERR'] = 'There was an error: ';
+$app_strings['LBL_CLICK_HERE'] = 'Click here';
+$app_strings['LBL_TO_CONTINUE'] = ' to continue.';
+
 $app_strings['IMAP_HANDLER_ERROR'] = 'ERROR: {error}; key was: "{key}".';
 $app_strings['IMAP_HANDLER_SUCCESS'] = 'OK: test settings changed to "{key}"';
 $app_strings['IMAP_HANDLER_ERROR_INVALID_REQUEST'] = 'Invalid request, use "{var}" value.';
-$app_strings['IMAP_HANDLER_ERROR_UNKNOWN_BY_KEY'] = 'Unknown error occured, key "{key}" not saved.';
+$app_strings['IMAP_HANDLER_ERROR_UNKNOWN_BY_KEY'] = 'Unknown error occurred, key "{key}" not saved.';
 $app_strings['IMAP_HANDLER_ERROR_NO_TEST_SET'] = 'Test settings does not exists.';
 $app_strings['IMAP_HANDLER_ERROR_NO_KEY'] = 'Key not found.';
 $app_strings['IMAP_HANDLER_ERROR_KEY_SAVE'] = 'Key saving error.';
 $app_strings['IMAP_HANDLER_ERROR_UNKNOWN'] = 'Unknown error';
+$app_strings['LBL_SEARCH_TITLE']                   = 'Search';
+$app_strings['LBL_SEARCH_TEXT_FIELD_TITLE_ATTR']   = 'Input Search Criteria';
+$app_strings['LBL_SEARCH_SUBMIT_FIELD_TITLE_ATTR'] = 'Search';
+$app_strings['LBL_SEARCH_SUBMIT_FIELD_VALUE']      = 'Search';
+$app_strings['LBL_SEARCH_QUERY']                   = 'Search query: ';
+$app_strings['LBL_SEARCH_RESULTS_PER_PAGE']        = 'Results per page: ';
+$app_strings['LBL_SEARCH_ENGINE']                  = 'Engine: ';
+$app_strings['LBL_SEARCH_TOTAL'] = 'Total result(s): ';
+$app_strings['LBL_SEARCH_PREV'] = 'Previous';
+$app_strings['LBL_SEARCH_NEXT'] = 'Next';
+$app_strings['LBL_SEARCH_PAGE'] = 'Page ';
+$app_strings['LBL_SEARCH_OF'] = ' of ';

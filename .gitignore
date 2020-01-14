@@ -20,6 +20,7 @@ install/status.json
 /config.php
 /config_override.php
 /config_si.php
+tests/config.test.php
 # Connector configuration should also be ignored.
 custom/modules/Connectors/connectors/sources/ext/*/*/config.php
 # Logs files can safely be ignored.
@@ -70,6 +71,8 @@ Desktop.ini
 *.sln
 *.suo
 *.phpproj
+# Microsoft Visual Studio Code
+.vscode
 # Disytel
 lang_cmp.php
 .kdev4/
@@ -78,6 +81,8 @@ SuiteCRM.kdev4
 #Ignore composer vendor folder
 vendor/
 public/
+
+.php_cs.cache
 
 
 #Ignore bower_components
@@ -99,7 +104,6 @@ browserstack.err
 cache/
 custom/**/
 .sass-cache/
-.php_cs.cache
 
 # Ignore testing environment
 build/tmp/
@@ -107,3 +111,16 @@ build/tmp/
 # IMAP testing
 fakeImapResource
 include/Imap/ImapTestSettings.txt
+
+# Ignore php-cs-fixer cache
+.php_cs.cache
+
+# Ignore custom codeception environments so they won't be committed.
+tests/_envs/custom.yml
+codeception.yml
+
+# Ignore dotenv files so they don't get commited to git.
+# Only .env.dist should be committed.
+.env
+.env.test
+.env.dev

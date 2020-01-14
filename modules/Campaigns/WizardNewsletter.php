@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 /******** general UI Stuff ***********/
 
@@ -226,12 +220,14 @@ $currency = new ListCurrency();
 if (isset($focus->currency_id) && !empty($focus->currency_id)) {
     $selectCurrency = $currency->getSelectOptions($focus->currency_id);
     $ss->assign("CURRENCY", $selectCurrency);
-} elseif ($current_user->getPreference('currency') && !isset($focus->id)) {
-    $selectCurrency = $currency->getSelectOptions($current_user->getPreference('currency'));
-    $ss->assign("CURRENCY", $selectCurrency);
 } else {
-    $selectCurrency = $currency->getSelectOptions();
-    $ss->assign("CURRENCY", $selectCurrency);
+    if ($current_user->getPreference('currency') && !isset($focus->id)) {
+        $selectCurrency = $currency->getSelectOptions($current_user->getPreference('currency'));
+        $ss->assign("CURRENCY", $selectCurrency);
+    } else {
+        $selectCurrency = $currency->getSelectOptions();
+        $ss->assign("CURRENCY", $selectCurrency);
+    }
 }
 global $current_user;
 if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
@@ -244,7 +240,7 @@ if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty(
 
 echo $currency->getJavascript();
 
-$seps = get_number_seperators();
+$seps = get_number_separators();
 $ss->assign("NUM_GRP_SEP", $seps[0]);
 $ss->assign("DEC_SEP", $seps[1]);
 

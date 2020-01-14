@@ -47,7 +47,6 @@ ini_set('zlib.output_compression', 'Off');
 ob_start();
 require_once('include/export_utils.php');
 global $sugar_config;
-global $locale;
 global $current_user;
 global $app_list_strings;
 
@@ -63,10 +62,12 @@ if ($sugar_config['disable_export'] 	|| (!empty($sugar_config['admin_export_only
 if (!empty($_REQUEST['sample'])) {
     //call special method that will create dummy data for bean as well as insert standard help message.
     $content = exportSample(clean_string($_REQUEST['module']));
-} elseif (!empty($_REQUEST['uid'])) {
-    $content = export(clean_string($_REQUEST['module']), $_REQUEST['uid'], isset($_REQUEST['members']) ? $_REQUEST['members'] : false);
 } else {
-    $content = export(clean_string($_REQUEST['module']));
+    if (!empty($_REQUEST['uid'])) {
+        $content = export(clean_string($_REQUEST['module']), $_REQUEST['uid'], isset($_REQUEST['members']) ? $_REQUEST['members'] : false);
+    } else {
+        $content = export(clean_string($_REQUEST['module']));
+    }
 }
 $filename = $_REQUEST['module'];
 //use label if one is defined
@@ -74,28 +75,12 @@ if (!empty($app_list_strings['moduleList'][$_REQUEST['module']])) {
     $filename = $app_list_strings['moduleList'][$_REQUEST['module']];
 }
 
-//strip away any blank spaces
-$filename = str_replace(' ', '', $filename);
-
-$transContent = $GLOBALS['locale']->translateCharset($content, 'UTF-8', $GLOBALS['locale']->getExportCharset());
-
 if (!empty($_REQUEST['members'])) {
     $filename .= '_'.'members';
 }
 ///////////////////////////////////////////////////////////////////////////////
 ////	BUILD THE EXPORT FILE
-ob_clean();
-header("Pragma: cache");
-header("Content-type: application/octet-stream; charset=".$GLOBALS['locale']->getExportCharset());
-header("Content-Disposition: attachment; filename={$filename}.csv");
-header("Content-transfer-encoding: binary");
-header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-header("Last-Modified: " . TimeDate::httpTime());
-header("Cache-Control: post-check=0, pre-check=0", false);
-if (!empty($sugar_config['export_excel_compatible'])) {
-    $transContent=chr(255) . chr(254) . mb_convert_encoding($transContent, 'UTF-16LE', 'UTF-8');
-}
-header("Content-Length: ".mb_strlen($transContent, '8bit'));
-print $transContent;
 
+ob_clean();
+printCSV($content, $filename);
 sugar_cleanup(true);

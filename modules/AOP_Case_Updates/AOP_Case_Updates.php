@@ -151,7 +151,7 @@ class AOP_Case_Updates extends Basic
                 $headElement->parentNode->removeChild($headElement);
             }
             $dom->removeChild($dom->doctype);
-            $dom->appendChild($dom->firstChild);
+            $dom->replaceChild($dom->firstChild->firstChild->firstChild, $dom->firstChild);
             $description = $dom->saveHTML();
 
             foreach (libxml_get_errors() as $xmlError) {
@@ -318,7 +318,7 @@ class AOP_Case_Updates extends Basic
                     $emailObj->parent_type = 'Cases';
                     $emailObj->parent_id = $caseId;
                 }
-                $emailObj->date_sent = TimeDate::getInstance()->nowDb();
+                $emailObj->date_sent_received = TimeDate::getInstance()->nowDb();
                 $emailObj->modified_user_id = '1';
                 $emailObj->created_by = '1';
                 $emailObj->status = 'sent';

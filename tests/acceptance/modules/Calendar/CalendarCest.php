@@ -23,31 +23,23 @@ class CalendarCest
             $this->fakeData = Faker\Factory::create();
         }
 
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\Calendar $calendar
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the calendar module.
      */
     public function testScenarioViewCalendarModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\Calendar $calendar,
-        \Helper\WebDriverHelper $webDriverHelper
+        \AcceptanceTester $I
     ) {
         $I->wantTo('View the calendar module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to calendar list-view
         $I->loginAsAdmin();
-        $calendar->gotoCalendar();
+        $I->visitPage('Calendar', 'index');
 
         $I->see('Calendar', '.moduleTitle');
     }

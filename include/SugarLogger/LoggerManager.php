@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,45 +38,69 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /**
  * Log management
+ *
+ * @method LoggerManager debug(string $message)
+ * @method LoggerManager info(string $message)
+ * @method LoggerManager warn(string $message)
+ * @method LoggerManager deprecated(string $message)
+ * @method LoggerManager error(string $message)
+ * @method LoggerManager fatal(string $message)
+ * @method LoggerManager security(string $message)
+ *
  * @api
+ * @method debug(string $string)
+ * @method info(string $string)
+ * @method warn(string $string)
+ * @method deprecated(string $string)
+ * @method error(string $string)
+ * @method fatal(string $string)
+ * @method security(string $string)
+ * @method off(string $string)
  */
 class LoggerManager
 {
-    //this the the current log level
-    private $_level = 'fatal';
+    /**
+     * This is the current log level
+     * @var string
+     */
+    private static $_level = 'fatal';
 
     //this is a list of different loggers that have been loaded
-    protected static $_loggers = array();
+    protected static $_loggers = [];
 
-    //this is the instance of the LoggerManager
     /**
+     * This is the instance of the LoggerManager
      * @var null|LoggerManager
      */
-    private static $_instance = null;
+    private static $_instance;
 
     //these are the mappings for levels to different log types
-    private static $_logMapping = array(
+    private static $_logMapping = [
         'default' => 'SugarLogger',
-    );
+    ];
 
-    //these are the log level mappings anything with a lower value than your current log level will be logged
-    private static $_levelMapping = array(
-        'debug'      => 100,
-        'info'       => 70,
-        'warn'       => 50,
+    // These are the log level mappings anything with a lower value than your current log level will be logged
+    private static $_levelMapping = [
+        'debug' => 100,
+        'info' => 70,
+        'warn' => 50,
         'deprecated' => 40,
-        'error'      => 25,
-        'fatal'      => 10,
-        'security'   => 5,
-        'off'        => 0,
-    );
+        'error' => 25,
+        'fatal' => 10,
+        'security' => 5,
+        'off' => 0,
+    ];
 
     //only let the getLogger instantiate this object
     private function __construct()
     {
-        $level = SugarConfig::getInstance()->get('logger.level', $this->_level);
+        $level = SugarConfig::getInstance()->get('logger.level', self::$_level);
         if (!empty($level)) {
             $this->setLevel($level);
         }
@@ -98,20 +119,20 @@ class LoggerManager
     public function __call(
         $method,
         $message
-        ) {
+    ) {
         if (!isset(self::$_levelMapping[$method])) {
-            $method = $this->_level;
+            $method = self::$_level;
         }
         //if the method is a direct match to our level let's let it through this allows for custom levels
-        if ($method == $this->_level
-                //otherwise if we have a level mapping for the method and that level is less than or equal to the current level let's let it log
-                || (!empty(self::$_levelMapping[$method])
-                    && (
-                            (isset(self::$_levelMapping[$this->_level]) ? self::$_levelMapping[$this->_level] : null) >=
-                            (isset(self::$_levelMapping[$method]) ? self::$_levelMapping[$method] : null)
-                    ))) {
+        if ($method === self::$_level
+            //otherwise if we have a level mapping for the method and that level is less than or equal to the current level let's let it log
+            || (!empty(self::$_levelMapping[$method])
+                && (
+                    (isset(self::$_levelMapping[self::$_level]) ? self::$_levelMapping[self::$_level] : null) >=
+                    (isset(self::$_levelMapping[$method]) ? self::$_levelMapping[$method] : null)
+                ))) {
             //now we get the logger type this allows for having a file logger an email logger, a firebug logger or any other logger you wish you can set different levels to log differently
-            $logger = (!empty(self::$_logMapping[$method])) ?
+            $logger = !empty(self::$_logMapping[$method]) ?
                 self::$_logMapping[$method] : self::$_logMapping['default'];
             //if we haven't instantiated that logger let's instantiate
             if (!isset(self::$_loggers[$logger])) {
@@ -130,14 +151,15 @@ class LoggerManager
     public function wouldLog($method)
     {
         if (!isset(self::$_levelMapping[$method])) {
-            $method = $this->_level;
+            $method = self::$_level;
         }
-        if ($method == $this->_level
-                //otherwise if we have a level mapping for the method and that level is less than or equal to the current level let's let it log
-                || (!empty(self::$_levelMapping[$method])
-                        && self::$_levelMapping[$this->_level] >= self::$_levelMapping[$method])) {
+        if ($method === self::$_level
+            //otherwise if we have a level mapping for the method and that level is less than or equal to the current level let's let it log
+            || (!empty(self::$_levelMapping[$method])
+                && self::$_levelMapping[self::$_level] >= self::$_levelMapping[$method])) {
             return true;
         }
+
         return false;
     }
 
@@ -145,13 +167,13 @@ class LoggerManager
      * Used for doing design-by-contract assertions in the code; when the condition fails we'll write
      * the message to the debug log
      *
-     * @param string  $message
+     * @param string $message
      * @param boolean $condition
      */
     public function assert(
         $message,
         $condition
-        ) {
+    ) {
         if (!$condition) {
             $this->__call('debug', $message);
         }
@@ -164,9 +186,9 @@ class LoggerManager
      */
     public function setLevel(
         $name
-        ) {
+    ) {
         if (isset(self::$_levelMapping[$name])) {
-            $this->_level = $name;
+            self::$_level = $name;
         }
     }
 
@@ -176,10 +198,11 @@ class LoggerManager
      */
     public static function getLogger()
     {
-        if (!LoggerManager::$_instance) {
-            LoggerManager::$_instance = new LoggerManager();
+        if (!self::$_instance) {
+            self::$_instance = new LoggerManager();
         }
-        return LoggerManager::$_instance;
+
+        return self::$_instance;
     }
 
     /**
@@ -192,7 +215,7 @@ class LoggerManager
     public static function setLogger(
         $level,
         $logger
-        ) {
+    ) {
         self::$_logMapping[$level] = $logger;
     }
 
@@ -201,20 +224,19 @@ class LoggerManager
      */
     protected function _findAvailableLoggers()
     {
-        $locations = array('include/SugarLogger','custom/include/SugarLogger');
-        foreach ($locations as $location) {
+        foreach (['include/SugarLogger', 'custom/include/SugarLogger'] as $location) {
             if (is_dir($location) && $dir = opendir($location)) {
                 while (($file = readdir($dir)) !== false) {
-                    if ($file == ".."
-                            || $file == "."
-                            || $file == "LoggerTemplate.php"
-                            || $file == "LoggerManager.php"
-                            || !is_file("$location/$file")
-                            ) {
+                    if ($file === '..'
+                        || $file === '.'
+                        || $file === 'LoggerTemplate.php'
+                        || $file === 'LoggerManager.php'
+                        || !is_file("$location/$file")
+                    ) {
                         continue;
                     }
                     require_once("$location/$file");
-                    $loggerClass = basename($file, ".php");
+                    $loggerClass = basename($file, '.php');
                     if (class_exists($loggerClass) && class_implements($loggerClass, 'LoggerTemplate')) {
                         self::$_loggers[$loggerClass] = new $loggerClass();
                     }
@@ -240,11 +262,25 @@ class LoggerManager
 
     public static function setLogLevel($level)
     {
-        self::$_instance->_level = $level;
+        $instance = self::$_instance;
+        $instance::$_level = $level;
     }
 
     public static function getLogLevel()
     {
-        return self::$_instance->_level;
+        $instance = self::$_instance;
+
+        return $instance::$_level;
+    }
+
+    /**
+     * Sets the level Mapping.
+     *
+     * @param string $level name of logger level to set it to
+     * @param string $value value of this level
+     */
+    public static function setLevelMapping($level, $value)
+    {
+        self::$_levelMapping[$level] = $value;
     }
 }

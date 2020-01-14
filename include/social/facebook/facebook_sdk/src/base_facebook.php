@@ -407,8 +407,8 @@ abstract class BaseFacebook
             // need to circumvent json_decode by calling _oauthRequest
             // directly, since response isn't JSON format.
             $access_token_response = $this->_oauthRequest(
-        $this->getUrl('graph', '/oauth/access_token'),
-        $params = array(
+                $this->getUrl('graph', '/oauth/access_token'),
+                $params = array(
           'client_id' => $this->getAppId(),
           'client_secret' => $this->getAppSecret(),
           'grant_type' => 'fb_exchange_token',
@@ -435,7 +435,7 @@ abstract class BaseFacebook
         $this->destroySession();
 
         $this->setPersistentData(
-      'access_token',
+            'access_token',
             $response_params['access_token']
     );
     }
@@ -547,11 +547,11 @@ abstract class BaseFacebook
         if (!$this->signedRequest) {
             if ($this->allowSignedRequest && !empty($_REQUEST['signed_request'])) {
                 $this->signedRequest = $this->parseSignedRequest(
-          $_REQUEST['signed_request']
+                    $_REQUEST['signed_request']
         );
             } elseif (!empty($_COOKIE[$this->getSignedRequestCookieName()])) {
                 $this->signedRequest = $this->parseSignedRequest(
-          $_COOKIE[$this->getSignedRequestCookieName()]
+                    $_COOKIE[$this->getSignedRequestCookieName()]
                 );
             }
         }
@@ -649,16 +649,16 @@ abstract class BaseFacebook
         }
 
         return $this->getUrl(
-      'www',
-      'dialog/oauth',
-      array_merge(
-        array(
+            'www',
+            'dialog/oauth',
+            array_merge(
+          array(
           'client_id' => $this->getAppId(),
           'redirect_uri' => $currentUrl, // possibly overwritten
           'state' => $this->state,
           'sdk' => 'php-sdk-'.self::VERSION
         ),
-        $params
+          $params
       )
         );
     }
@@ -675,9 +675,9 @@ abstract class BaseFacebook
     public function getLogoutUrl($params=array())
     {
         return $this->getUrl(
-      'www',
-      'logout.php',
-      array_merge(array(
+            'www',
+            'logout.php',
+            array_merge(array(
         'next' => $this->getCurrentUrl(),
         'access_token' => $this->getUserAccessToken(),
       ), $params)
@@ -693,7 +693,7 @@ abstract class BaseFacebook
     public function getLoginStatusUrl($params=array())
     {
         return $this->getLoginUrl(
-      array_merge(array(
+            array_merge(array(
         'response_type' => 'code',
         'display' => 'none',
       ), $params)
@@ -838,8 +838,8 @@ abstract class BaseFacebook
             // directly, since response isn't JSON format.
             $access_token_response =
         $this->_oauthRequest(
-          $this->getUrl('graph', '/oauth/access_token'),
-          $params = array('client_id' => $this->getAppId(),
+            $this->getUrl('graph', '/oauth/access_token'),
+            $params = array('client_id' => $this->getAppId(),
                           'client_secret' => $this->getAppSecret(),
                           'redirect_uri' => $redirect_uri,
                           'code' => $code)
@@ -878,8 +878,8 @@ abstract class BaseFacebook
         $params['format'] = 'json-strings';
 
         $result = json_decode($this->_oauthRequest(
-      $this->getApiUrl($params['method']),
-      $params
+            $this->getApiUrl($params['method']),
+            $params
     ), true);
 
         // results are returned, errors are thrown
@@ -939,8 +939,8 @@ abstract class BaseFacebook
         }
 
         $result = json_decode($this->_oauthRequest(
-      $this->getUrl($domainKey, $path),
-      $params
+            $this->getUrl($domainKey, $path),
+            $params
     ), true);
 
         // results are returned, errors are thrown
@@ -1042,7 +1042,7 @@ abstract class BaseFacebook
             curl_setopt(
                 $ch,
                 CURLOPT_CAINFO,
-                  dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fb_ca_chain_bundle.crt'
+                dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fb_ca_chain_bundle.crt'
             );
             $result = curl_exec($ch);
         }
@@ -1105,7 +1105,7 @@ abstract class BaseFacebook
         || strtoupper($data['algorithm']) !==  self::SIGNED_REQUEST_ALGORITHM
     ) {
             self::errorLog(
-        'Unknown algorithm. Expected ' . self::SIGNED_REQUEST_ALGORITHM
+                'Unknown algorithm. Expected ' . self::SIGNED_REQUEST_ALGORITHM
             );
             return null;
         }
@@ -1114,7 +1114,7 @@ abstract class BaseFacebook
         $expected_sig = hash_hmac(
             'sha256',
             $payload,
-                              $this->getAppSecret(),
+            $this->getAppSecret(),
             $raw = true
         );
 
@@ -1146,7 +1146,7 @@ abstract class BaseFacebook
     {
         if (!is_array($data)) {
             throw new InvalidArgumentException(
-        'makeSignedRequest expects an array. Got: ' . print_r($data, true)
+                'makeSignedRequest expects an array. Got: ' . print_r($data, true)
             );
         }
         $data['algorithm'] = self::SIGNED_REQUEST_ALGORITHM;
@@ -1486,7 +1486,7 @@ abstract class BaseFacebook
             } else {
                 // @codeCoverageIgnoreStart
                 self::errorLog(
-          'There exists a cookie that we wanted to clear that we couldn\'t '.
+                    'There exists a cookie that we wanted to clear that we couldn\'t '.
           'clear because headers was already sent. Make sure to do the first '.
           'API call before outputing anything.'
         );

@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 function installStatus($msg, $cmd = null, $overwrite = false, $before = '[ok]<br>')
 {
@@ -366,6 +367,10 @@ installStatus($mod_strings['STAT_CREATE_DEFAULT_SETTINGS']);
     installerHook('pre_createDefaultSchedulers');
     $scheduler->rebuildDefaultSchedulers();
     installerHook('post_createDefaultSchedulers');
+
+
+installLog($mod_strings['LBL_CREATE_DEFAULT_ENC_KEY']);
+createEncryptionKey();
 
 
     echo $mod_strings['LBL_PERFORM_DONE'];
@@ -700,20 +705,11 @@ if (isset($_REQUEST['timezone']) && $_REQUEST['timezone']) {
     $current_user->setPreference('timezone', $_REQUEST['timezone']);
 }
 
-//$_POST[''] = $_REQUEST['default_locale_name_format'];
-$_POST['dateformat'] = $_REQUEST['default_date_format'];
-//$_POST[''] = $_REQUEST['default_time_format'];
-//$_POST[''] = $_REQUEST['default_language'];
-//$_POST[''] = $_REQUEST['default_currency_name'];
-//$_POST[''] = $_REQUEST['default_currency_symbol'];
-//$_POST[''] = $_REQUEST['default_currency_iso4217'];
-//$_POST[''] = $_REQUEST['setup_site_session_path'];
-//$_POST[''] = $_REQUEST['setup_site_log_dir'];
-//$_POST[''] = $_REQUEST['setup_site_guid'];
-//$_POST[''] = $_REQUEST['default_email_charset'];
-//$_POST[''] = $_REQUEST['default_export_charset'];
-//$_POST[''] = $_REQUEST['export_delimiter'];
+if (file_exists(__DIR__ . '/../modules/ACL/install_actions.php')) {
+    require_once(__DIR__ . '/../modules/ACL/install_actions.php');
+}
 
+$_POST['dateformat'] = $_REQUEST['default_date_format'];
 $_POST['record'] = $current_user->id;
 $_POST['is_admin'] = ($current_user->is_admin ? 'on' : '');
 $_POST['use_real_names'] = true;
@@ -763,7 +759,7 @@ $out =<<<EOQ
 <p><b>{$fpResult}</b></p>
 </div>
 <footer id="install_footer">
-    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
+    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/suitecrm/forum" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>
 </div>
 </body>

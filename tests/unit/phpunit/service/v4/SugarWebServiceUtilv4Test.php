@@ -4,9 +4,9 @@ namespace SuiteCRM;
 
 use aCase;
 use SugarWebServiceUtilv4_1;
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class SugarWebServiceUtilv4Test extends StateCheckerPHPUnitTestCaseAbstract
+class SugarWebServiceUtilv4Test extends SuitePHPUnitFrameworkTestCase
 {
     public function testGetFieldListParentenum()
     {

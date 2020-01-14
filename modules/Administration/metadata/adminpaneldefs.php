@@ -94,9 +94,22 @@ $admin_option_defs['Administration']['feed_settings']=array('icon_SugarFeed','LB
 
 require_once 'include/SugarOAuthServer.php';
 if (SugarOAuthServer::enabled()) {
-    $admin_option_defs['Administration']['oauth_keys']= array('Password','LBL_OAUTH_TITLE','LBL_OAUTH','./index.php?module=OAuthKeys&action=index');
+    $admin_option_defs['Administration']['oauth_keys'] = array(
+        'Password',
+        'LBL_OAUTH_TITLE',
+        'LBL_OAUTH',
+        './index.php?module=OAuthKeys&action=index',
+        'oauth-keys'
+    );
 }
-$admin_option_defs['Administration']['oauth2_clients']= array('Password','LBL_OAUTH2_CLIENTS_TITLE','LBL_OAUTH2_CLIENTS','./index.php?module=OAuth2Clients&action=index');
+
+$admin_option_defs['Administration']['oauth2_clients'] = array(
+    'Password',
+    'LBL_OAUTH2_CLIENTS_TITLE',
+    'LBL_OAUTH2_CLIENTS',
+    './index.php?module=OAuth2Clients&action=index',
+    'password'
+);
 
 $admin_group_header[]= array('LBL_ADMINISTRATION_HOME_TITLE','',false,$admin_option_defs, 'LBL_ADMINISTRATION_HOME_DESC');
 
@@ -178,13 +191,20 @@ $admin_option_defs['jjwg_Maps']['address_cache'] = array(
     'address-cache'
 );
 
+$admin_option_defs['Administration']['google_calendar_settings'] = array(
+    'Google Calendar Settings',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_TITLE',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_DESC',
+    './index.php?module=Administration&action=GoogleCalendarSettings',
+    'system-settings'
+);
 
 $admin_group_header[] = array(
-    'LBL_JJWG_MAPS_ADMIN_HEADER',
+    'LBL_GOOGLE_SUITE_ADMIN_HEADER',
     '',
     false,
     $admin_option_defs,
-    'LBL_JJWG_MAPS_ADMIN_DESC'
+    'LBL_GOOGLE_SUITE_ADMIN_DESC'
 );
 
 
@@ -237,6 +257,42 @@ $admin_group_header['sagility'] = array(
     $admin_option_defs,
     ''
 );
+
+
+$admin_option_defs = [];
+
+$admin_option_defs['Administration']['search_wrapper'] = [
+    'icon_SearchForm',
+    'LBL_SEARCH_WRAPPER',
+    'LBL_SEARCH_WRAPPER_DESC',
+    './index.php?module=Administration&action=SearchSettings',
+    'global-search'
+];
+
+$admin_option_defs['Administration']['global_search'] = [
+    'icon_SearchForm',
+    'LBL_SEARCH_MODULES',
+    'LBL_SEARCH_MODULES_HELP',
+    './index.php?module=Administration&action=GlobalSearchSettings',
+    'global-search'
+];
+
+$admin_option_defs['Administration']['elastic_search'] = [
+    'ElasticSearchIndexerSettings',
+    'LBL_ELASTIC_SEARCH_SETTINGS',
+    'LBL_ELASTIC_SEARCH_SETTINGS_DESC',
+    './index.php?module=Administration&action=ElasticSearchSettings',
+    'global-search'
+];
+
+// SearchWrapper
+$admin_group_header[] = [
+    'LBL_SEARCH_HEADER',
+    '',
+    false,
+    $admin_option_defs,
+    'LBL_SEARCH_HEADER_DESC'
+];
 
 //bugs.
 $admin_option_defs=array();

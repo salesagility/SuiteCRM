@@ -119,13 +119,13 @@ class OneToOneRelationship extends AbstractRelationship
                 $this->rhs_module,
                 $this->relationship_name,
                 false,
-            'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE'
+                'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE'
             ) ;
             $vardefs [ $this->rhs_module ] [] = $this->getLink2FieldDefinition(
                 $this->lhs_module,
                 $this->relationship_name,
                 false,
-            'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel()) . '_TITLE'
+                'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel()) . '_TITLE'
             ) ;
         }
         
@@ -144,10 +144,11 @@ class OneToOneRelationship extends AbstractRelationship
  
         if ($this->lhs_module == $this->rhs_module) { // don't add in two fields on recursive relationships
             return array( $this->lhs_module => $this->getValidDBName($this->relationship_name . "_name") );
-        }
-        return array(
+        } else {
+            return array(
                 $this->lhs_module => $this->getValidDBName($this->relationship_name . "_name") ,
                 $this->rhs_module => $this->getValidDBName($this->relationship_name . "_name")
             ) ;
+        }
     }
 }

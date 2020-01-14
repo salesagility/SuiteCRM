@@ -103,12 +103,13 @@ class PdfParser
          */
         if (trim($result_data) == '') {
             return null;
-        }
-        // Optimize hyphened words
-        $result_data = preg_replace('/\s*-[\r\n]+\s*/', '', $result_data);
-        $result_data = preg_replace('/\s+/', ' ', $result_data);
+        } else {
+            // Optimize hyphened words
+            $result_data = preg_replace('/\s*-[\r\n]+\s*/', '', $result_data);
+            $result_data = preg_replace('/\s+/', ' ', $result_data);
 
-        return $result_data;
+            return $result_data;
+        }
     }
 
     protected static function extractTextElements($content)
@@ -135,7 +136,7 @@ class PdfParser
                 foreach ($found_octal_values[0] as $value) {
                     $octal = substr($value, 1);
 
-                    if (intval($octal) < 40) {
+                    if ((int)$octal < 40) {
                         // Skips non printable chars
                         $command = str_replace($value, '', $command);
                     } else {

@@ -116,23 +116,27 @@ class SugarSpot
                 //Determine a name to use
                 if (!empty($row['NAME'])) {
                     $name = $row['NAME'];
-                } elseif (!empty($row['DOCUMENT_NAME'])) {
-                    $name = $row['DOCUMENT_NAME'];
                 } else {
-                    $foundName = '';
-                    foreach ($row as $k=>$v) {
-                        if (strpos($k, 'NAME') !== false) {
-                            if (!empty($row[$k])) {
-                                $name = $v;
-                                break;
-                            } elseif (empty($foundName)) {
-                                $foundName = $v;
+                    if (!empty($row['DOCUMENT_NAME'])) {
+                        $name = $row['DOCUMENT_NAME'];
+                    } else {
+                        $foundName = '';
+                        foreach ($row as $k=>$v) {
+                            if (strpos($k, 'NAME') !== false) {
+                                if (!empty($row[$k])) {
+                                    $name = $v;
+                                    break;
+                                } else {
+                                    if (empty($foundName)) {
+                                        $foundName = $v;
+                                    }
+                                }
                             }
                         }
-                    }
 
-                    if (empty($name)) {
-                        $name = $foundName;
+                        if (empty($name)) {
+                            $name = $foundName;
+                        }
                     }
                 }
 
@@ -323,13 +327,17 @@ class SugarSpot
                             unset($searchFields[$moduleName][$k]);
                         }
                     }
-                } elseif (empty($GLOBALS['dictionary'][$class]['fields'][$k])) {
-                    //If module did not have unified_search defined, then check the exception for an email search before we unset
-                    if (strpos($k, 'email') === false || !$searchEmail) {
-                        unset($searchFields[$moduleName][$k]);
+                } else {
+                    if (empty($GLOBALS['dictionary'][$class]['fields'][$k])) {
+                        //If module did not have unified_search defined, then check the exception for an email search before we unset
+                        if (strpos($k, 'email') === false || !$searchEmail) {
+                            unset($searchFields[$moduleName][$k]);
+                        }
+                    } else {
+                        if (!$this->filterSearchType($GLOBALS['dictionary'][$class]['fields'][$k]['type'], $query)) {
+                            unset($searchFields[$moduleName][$k]);
+                        }
                     }
-                } elseif (!$this->filterSearchType($GLOBALS['dictionary'][$class]['fields'][$k]['type'], $query)) {
-                    unset($searchFields[$moduleName][$k]);
                 }
             } //foreach
 
@@ -410,7 +418,7 @@ class SugarSpot
                     $ret_array = $seed->create_new_list_query('', $clause, $allfields, array(), 0, '', true, $seed, true);
                     $query_parts[] = $ret_array_start['select'] . $ret_array['from'] . $ret_array['where'] . $ret_array['order_by'];
                 }
-                $main_query = "(".join(") UNION (", $query_parts).")";
+                $main_query = "(".implode(") UNION (", $query_parts).")";
             } else {
                 foreach ($searchFields[$moduleName] as $k=>$v) {
                     if (isset($seed->field_defs[$k])) {

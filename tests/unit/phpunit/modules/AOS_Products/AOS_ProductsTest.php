@@ -1,8 +1,10 @@
 <?php
 
-class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AOS_ProductsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -13,8 +15,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAOS_Products()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aosProducts = new AOS_Products();
         $this->assertInstanceOf('AOS_Products', $aosProducts);
         $this->assertInstanceOf('Basic', $aosProducts);
@@ -30,14 +31,6 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aos_products');
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-        
-        
-
         $aosProducts = new AOS_Products();
 
         $aosProducts->name = 'test';
@@ -56,44 +49,37 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aosProducts->mark_deleted($aosProducts->id);
         $result = $aosProducts->retrieve($aosProducts->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
-        $state->popTable('aos_products');
     }
 
     public function testgetCustomersPurchasedProductsQuery()
     {
-        self::markTestIncomplete('environment dependency');
-        
-        $aosProducts = new AOS_Products();
-        $aosProducts->id = 1;
-
-        //execute the method and verify that it returns expected results
-        $expected = "SELECT * FROM (
- 				SELECT
-					aos_quotes.*,
-					accounts.id AS account_id,
-					accounts.name AS billing_account,
-
-					opportunity_id AS opportunity,
-					billing_contact_id AS billing_contact,
-					'' AS created_by_name,
-					'' AS modified_by_name,
-					'' AS assigned_user_name
-				FROM
-					aos_products
-
-				JOIN aos_products_quotes ON aos_products_quotes.product_id = aos_products.id AND aos_products.id = '1' AND aos_products_quotes.deleted = 0 AND aos_products.deleted = 0
-				JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage = 'Closed Accepted' AND aos_quotes.deleted = 0
-				JOIN accounts ON accounts.id = aos_quotes.billing_account_id -- AND accounts.deleted = 0
-
-				GROUP BY accounts.id
-			) AS aos_quotes";
-        $actual = $aosProducts->getCustomersPurchasedProductsQuery();
-        $this->assertSame(trim($expected), trim($actual));
+//        self::markTestIncomplete('environment dependency');
+//
+//        $aosProducts = new AOS_Products();
+//        $aosProducts->id = 1;
+//
+//        //execute the method and verify that it returns expected results
+//        $expected = "SELECT * FROM (
+// 				SELECT
+//					aos_quotes.*,
+//					accounts.id AS account_id,
+//					accounts.name AS billing_account,
+//
+//					opportunity_id AS opportunity,
+//					billing_contact_id AS billing_contact,
+//					'' AS created_by_name,
+//					'' AS modified_by_name,
+//					'' AS assigned_user_name
+//				FROM
+//					aos_products
+//
+//				JOIN aos_products_quotes ON aos_products_quotes.product_id = aos_products.id AND aos_products.id = '1' AND aos_products_quotes.deleted = 0 AND aos_products.deleted = 0
+//				JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage = 'Closed Accepted' AND aos_quotes.deleted = 0
+//				JOIN accounts ON accounts.id = aos_quotes.billing_account_id -- AND accounts.deleted = 0
+//
+//				GROUP BY accounts.id
+//			) AS aos_quotes";
+//        $actual = $aosProducts->getCustomersPurchasedProductsQuery();
+//        $this->assertSame(trim($expected), trim($actual));
     }
 }

@@ -221,7 +221,7 @@ class Document extends File
 
     public function get_summary_text()
     {
-        return "$this->document_name";
+        return (string)$this->document_name;
     }
 
     public function is_authenticated()
@@ -292,7 +292,7 @@ class Document extends File
             if (!empty($this->doc_type) && $this->doc_type != 'Sugar' && !empty($this->doc_url)) {
                 $file_url = "<a href='" . $this->doc_url . "' target='_blank'>" . SugarThemeRegistry::current()->getImage(
                     $this->doc_type . '_image_inline',
-                        'border="0"',
+                    'border="0"',
                     null,
                     null,
                     '.png',
@@ -301,7 +301,7 @@ class Document extends File
             } else {
                 $file_url = "<a href='index.php?entryPoint=download&id={$this->document_revision_id}&type=Documents' target='_blank'>" . SugarThemeRegistry::current()->getImage(
                     $img_name,
-                        'border="0"',
+                    'border="0"',
                     null,
                     null,
                     '.gif',
@@ -329,7 +329,6 @@ class Document extends File
 
         global $app_list_strings;
         if (!empty($this->status_id)) {
-            //_pp($this->status_id);
             $this->status = $app_list_strings['document_status_dom'][$this->status_id];
         }
         if (!empty($this->related_doc_id)) {

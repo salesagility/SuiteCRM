@@ -324,9 +324,9 @@ class SugarFieldRelate extends SugarFieldBase
             }
             for ($i = 0; $i < strlen($default_locale_name_format); $i++) {
                 $new_field .= array_key_exists(
-                    $default_locale_name_format{$i},
+                    $default_locale_name_format[$i],
                     $names
-                ) ? $names[$default_locale_name_format{$i}] : $default_locale_name_format{$i};
+                ) ? $names[$default_locale_name_format[$i]] : $default_locale_name_format[$i];
             }
         } else {
             $new_field = $rawField;
@@ -384,8 +384,9 @@ class SugarFieldRelate extends SugarFieldBase
             $returnValue = $settings->$fieldtype($value, $rvardef);
             if (!$returnValue) {
                 return false;
+            } else {
+                $value = $returnValue;
             }
-            $value = $returnValue;
         }
 
         if (isset($vardef['id_name'])) {

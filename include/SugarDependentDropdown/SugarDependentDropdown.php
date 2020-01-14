@@ -41,12 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- *********************************************************************************/
 
 class SugarDependentDropdown
 {
@@ -256,10 +251,11 @@ class SugarDependentDropdown
             }
 
             return $mergedElement;
-        }
-        if ($this->debugMode) {
-            $this->debugOutput("SugarRouting is trying to initialize a non-element:");
-            $this->debugOutput($element);
+        } else {
+            if ($this->debugMode) {
+                $this->debugOutput("SugarRouting is trying to initialize a non-element:");
+                $this->debugOutput($element);
+            }
         }
     }
 
@@ -343,12 +339,12 @@ class SugarDependentDropdown
                 $this->debugOutput((count($metadata) > 1) ? "SugarRouting: all checks passed, valid metadata confirmed" : "SugarRouting: 'handlers' checks passed, valid metadata confirmed.");
             }
             return true;
+        } else {
+            if ($this->debugMode) {
+                $this->debugOutput("SugarRouting: Your metadata does not contain a valid 'elements' array:");
+                $this->debugOutput($metadata);
+            }
         }
-        if ($this->debugMode) {
-            $this->debugOutput("SugarRouting: Your metadata does not contain a valid 'elements' array:");
-            $this->debugOutput($metadata);
-        }
-        
         return false;
     }
 

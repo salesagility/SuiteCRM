@@ -425,9 +425,9 @@ class SugarDateTime extends DateTime
     {
         $newdate = clone $this;
         $newdate->setDate(
-             $year?$year:$this->year,
-             $month?$month:$this->month,
-             $day?$day:$this->day
+            $year?$year:$this->year,
+            $month?$month:$this->month,
+            $day?$day:$this->day
         );
         $newdate->setTime(0, 0);
         return $newdate;
@@ -444,9 +444,9 @@ class SugarDateTime extends DateTime
     {
         $newdate = clone $this;
         $newdate->setDate(
-             $year?$year:$this->year,
-             $month?$month:$this->month,
-             $day?$day:$this->day
+            $year?$year:$this->year,
+            $month?$month:$this->month,
+            $day?$day:$this->day
         );
         $newdate->setTime(23, 59, 59);
         return $newdate;
@@ -601,13 +601,15 @@ class SugarDateTime extends DateTime
                 if ($data["tm_hour"] != 12) {
                     $data["tm_hour"] += 12;
                 }
-            } elseif ($ampm == 'am') {
-                if ($data["tm_hour"] == 12) {
-                    // 12:00am is 00:00
-                    $data["tm_hour"] = 0;
-                }
             } else {
-                return false;
+                if ($ampm == 'am') {
+                    if ($data["tm_hour"] == 12) {
+                        // 12:00am is 00:00
+                        $data["tm_hour"] = 0;
+                    }
+                } else {
+                    return false;
+                }
             }
         }
 
@@ -617,13 +619,15 @@ class SugarDateTime extends DateTime
                 if ($data["tm_hour"] != 12) {
                     $data["tm_hour"] += 12;
                 }
-            } elseif ($ampm == 'AM') {
-                if ($data["tm_hour"] == 12) {
-                    // 12:00am is 00:00
-                    $data["tm_hour"] = 0;
-                }
             } else {
-                return false;
+                if ($ampm == 'AM') {
+                    if ($data["tm_hour"] == 12) {
+                        // 12:00am is 00:00
+                        $data["tm_hour"] = 0;
+                    }
+                } else {
+                    return false;
+                }
             }
         }
 

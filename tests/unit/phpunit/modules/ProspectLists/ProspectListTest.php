@@ -1,6 +1,8 @@
 <?php
 
-class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ProspectListTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -10,7 +12,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         get_sugar_config_defaults();
         $current_user = new User();
     }
-    
 
     public function testcreate_export_query()
     {
@@ -55,8 +56,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testProspectList()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $prospectList = new ProspectList();
 
         $this->assertInstanceOf('ProspectList', $prospectList);
@@ -71,11 +71,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        //error_reporting(E_ERROR | E_PARSE);
-
         $prospectList = new ProspectList();
 
         //test without setting name
@@ -84,10 +79,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with name set
         $prospectList->name = "test";
         $this->assertEquals('test', $prospectList->get_summary_text());
-        
-        // clean up
     }
-
 
     /**
      * @todo: NEEDS FIXING!
@@ -107,18 +99,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-
-    // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('prospect_lists');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-
-        // test
-        
         $prospectList = new ProspectList();
 
         $prospectList->name = "test";
@@ -143,16 +123,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $prospectList->mark_deleted($prospectList->id);
         $result = $prospectList->retrieve($prospectList->id);
         $this->assertEquals(null, $result);
-
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('prospect_lists');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
-
 
     public function testsave_relationship_changes()
     {
@@ -193,7 +164,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->clear_prospect_relationship($id, '3');
     }
 
-
     public function clear_prospect_relationship($id, $related_id)
     {
         $prospectList = new ProspectList();
@@ -210,16 +180,11 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals($initial_count - 1, $expected_count);
     }
 
-
     public function testmark_relationships_deleted()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
         $prospectList = new ProspectList();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $prospectList->mark_relationships_deleted('');
             $this->assertTrue(true);
@@ -228,18 +193,13 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->markTestIncomplete('Method has no implementation');
-        
-        // clean up
     }
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
         $prospectList = new ProspectList();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $prospectList->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -248,8 +208,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->markTestIncomplete('Method has no implementation');
-        
-        // clean up
     }
 
     public function testfill_in_additional_detail_fields()
@@ -260,19 +218,11 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(0, $prospectList->entry_count);
     }
 
-
     public function testupdate_currency_id()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
-
         $prospectList = new ProspectList();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $prospectList->update_currency_id('', '');
             $this->assertTrue(true);
@@ -281,10 +231,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->markTestIncomplete('Method has no implementation');
-        
-        // clean up
     }
-
 
     public function testget_entry_count()
     {
@@ -293,7 +240,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $prospectList->get_entry_count();
         $this->assertEquals(0, $result);
     }
-
 
     public function testget_list_view_data()
     {
@@ -319,7 +265,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $prospectList->build_generic_where_clause('1');
         $this->assertSame($expected, $actual);
     }
-
 
     public function testbean_implements()
     {

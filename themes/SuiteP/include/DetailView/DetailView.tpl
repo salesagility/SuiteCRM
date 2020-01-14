@@ -326,14 +326,14 @@
 
                 <script type="text/javascript">
 
-                    var selectTabDetailView = function(tab) {
+                    let selectTabDetailView = function(tab) {
                         $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
                         $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
-                        $('#content div.panel-content div.panel').hide();
+                        $('#content div.detail-view div.panel-content div.panel.panel').hide();
                         $('#content div.panel-content div.panel.tab-panel-' + tab).show();
                     };
 
-                    var selectTabOnError = function(tab) {
+                    let selectTabOnError = function(tab) {
                         selectTabDetailView(tab);
                         $('#content ul.nav.nav-tabs > li').removeClass('active');
                         $('#content ul.nav.nav-tabs > li a').css('color', '');

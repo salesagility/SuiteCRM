@@ -1,9 +1,10 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class AccountTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -46,8 +47,7 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAccount()
     {
-
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $Account = new Account();
         $this->assertInstanceOf('Account', $Account);
         $this->assertInstanceOf('Company', $Account);
@@ -58,11 +58,6 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         //test without name setting attribute
         $Account = new Account();
         $name = $Account->get_summary_text();
@@ -72,8 +67,6 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $Account->name = 'test account';
         $name = $Account->get_summary_text();
         $this->assertEquals('test account', $name);
-        
-        // clean up
     }
 
     public function testget_contacts()
@@ -87,22 +80,15 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testclear_account_case_relationship()
     {
+        $this->markTestIncomplete('Can Not be implemented - Query has a wrong column name which makes the function to die');
         //This method cannot be tested because Query has a wrong column name which makes the function to die.
 
         /*$Account = new Account();
         $Account->clear_account_case_relationship('','');*/
-
-        $this->markTestIncomplete('Can Not be implemented - Query has a wrong column name which makes the function to die');
     }
 
     public function testremove_redundant_http()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $Account = new Account();
 
         //this method has no implementation. so test for exceptions only.
@@ -112,50 +98,32 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $Account = new Account('');
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $Account->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfill_in_additional_detail_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $Account = new Account('');
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $Account->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testget_list_view_data()
@@ -167,7 +135,11 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'JJWG_MAPS_LNG_C' => '0.00000000',
             'JJWG_MAPS_LAT_C' => '0.00000000',
             'EMAIL1' => '',
-            'EMAIL1_LINK' => '<a class="email-link" href="javascript:void(0);"  onclick="$(document).openComposeViewModal(this);" data-module="Accounts" data-record-id="" data-module-name=""  data-email-address=""></a>',
+            'EMAIL1_LINK' => '            <a class="email-link" href="mailto:"
+                    onclick="$(document).openComposeViewModal(this);"
+                    data-module="Accounts" data-record-id=""
+                    data-module-name=" " data-email-address=""
+                ></a>',
             'ENCODED_NAME' => null,
             'CITY' => null,
             'BILLING_ADDRESS_STREET' => null,

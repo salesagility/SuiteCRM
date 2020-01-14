@@ -214,7 +214,7 @@ function smarty_function_html_select_date($params, &$smarty)
                                                             'values'     => $month_values,
                                                             'selected'   => (int)$time[1] ? strftime($month_value_format, mktime(0, 0, 0, (int)$time[1], 1, 2000)) : '',
                                                             'print_result' => false),
-                                                      $smarty
+            $smarty
         );
         $month_result .= '</select>';
     }
@@ -252,7 +252,7 @@ function smarty_function_html_select_date($params, &$smarty)
                                                           'values'     => $day_values,
                                                           'selected'   => $time[2],
                                                           'print_result' => false),
-                                                    $smarty
+            $smarty
         );
         $day_result .= '</select>';
     }
@@ -301,7 +301,7 @@ function smarty_function_html_select_date($params, &$smarty)
                                                                'values' => $yearvals,
                                                                'selected'   => $time[0],
                                                                'print_result' => false),
-                                                         $smarty
+                $smarty
             );
             $year_result .= '</select>';
         }
@@ -323,7 +323,7 @@ function smarty_function_html_select_date($params, &$smarty)
                 $html_result .= $year_result;
                 break;
         }
-        // Add the field seperator
+        // Add the field separator
         if ($i < $field_separator_count) {
             $html_result .= $field_separator;
         }

@@ -201,6 +201,7 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
         $ret .= $this->end('tbody');
         return $ret;
     }
+
 }
 
 /**
@@ -250,7 +251,7 @@ class HTMLPurifier_Printer_ConfigForm_NullDecorator extends HTMLPurifier_Printer
             'type' => 'checkbox',
             'value' => '1',
             'class' => 'null-toggle',
-            'name' => "$name" . "[Null_$ns.$directive]",
+            'name' => (string)$name . "[Null_$ns.$directive]",
             'id' => "$name:Null_$ns.$directive",
             'onclick' => "toggleWriteability('$name:$ns.$directive',checked)" // INLINE JAVASCRIPT!!!!
         );
@@ -320,7 +321,6 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
                         $value[] = $val;
                     }
                     //TODO does this need a break?
-                    // no break
                 case HTMLPurifier_VarParser::ALIST:
                     $value = implode(PHP_EOL, $value);
                     break;
@@ -340,7 +340,7 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
             $value = serialize($value);
         }
         $attr = array(
-            'name' => "$name" . "[$ns.$directive]",
+            'name' => (string)$name . "[$ns.$directive]",
             'id' => "$name:$ns.$directive"
         );
         if ($value === null) {
@@ -407,7 +407,7 @@ class HTMLPurifier_Printer_ConfigForm_bool extends HTMLPurifier_Printer
 
         $attr = array(
             'type' => 'radio',
-            'name' => "$name" . "[$ns.$directive]",
+            'name' => (string)$name . "[$ns.$directive]",
             'id' => "$name:Yes_$ns.$directive",
             'value' => '1'
         );
@@ -426,7 +426,7 @@ class HTMLPurifier_Printer_ConfigForm_bool extends HTMLPurifier_Printer
 
         $attr = array(
             'type' => 'radio',
-            'name' => "$name" . "[$ns.$directive]",
+            'name' => (string)$name . "[$ns.$directive]",
             'id' => "$name:No_$ns.$directive",
             'value' => '0'
         );

@@ -88,7 +88,7 @@ if ($memory_limit != "" && $memory_limit != "-1") { // if memory_limit is set
     rtrim($memory_limit, 'M');
     $memory_limit_int = (int) $memory_limit;
     if ($memory_limit_int < $memory_needed) {
-        ini_set("memory_limit", "$memory_needed" . "M");
+        ini_set("memory_limit", (string)$memory_needed . "M");
     }
 }
 $large_scale_test = empty($sugar_config['large_scale_test']) ?
@@ -420,10 +420,12 @@ for ($i=0; $i<$number_leads; $i++) {
         $assigned_user_id = mt_rand(6, 8);
         if ($assigned_user_id == 6) {
             $lead->assigned_user_name = "seed_sarah";
-        } elseif ($assigned_user_id == 7) {
-            $lead->assigned_user_name = "seed_sally";
         } else {
-            $lead->assigned_user_name = "seed_max";
+            if ($assigned_user_id == 7) {
+                $lead->assigned_user_name = "seed_sally";
+            } else {
+                $lead->assigned_user_name = "seed_max";
+            }
         }
 
         $lead->assigned_user_id = $lead->assigned_user_name."_id";
@@ -435,6 +437,7 @@ for ($i=0; $i<$number_leads; $i++) {
         if (mt_rand(0, 100) < 90) {
             $assigned_team = $team_demo_data->get_random_team();
             $lead->assigned_user_name = $assigned_team;
+        } else {
         }
     }
     $lead->primary_address_postalcode = mt_rand(10000, 99999);

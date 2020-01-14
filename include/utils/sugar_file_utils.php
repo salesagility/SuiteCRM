@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once(__DIR__.'/../SugarCache/SugarCache.php');
+
 /**
  * sugar_mkdir
  * Call this function instead of mkdir to apply pre-configured permission
@@ -104,14 +106,14 @@ function sugar_mkdir($pathname, $mode = null, $recursive = false, $context = nul
 /**
  * sugar_fopen
  * Call this function instead of fopen to apply pre-configured permission
- * settings when creating the the file.  This method is basically
+ * settings when creating the file.  This method is basically
  * a wrapper to the PHP fopen function except that it supports setting
  * the mode value by using the configuration file (if set).  The mode is
  * 0777 by default.
  *
  * @param string $filename - String value of the file to create
  * @param int $mode - The integer value of the permissions mode to set the created file to
- * @param bool $use_include_path - boolean value indicating whether or not to search the the included_path
+ * @param bool $use_include_path - boolean value indicating whether or not to search the included_path
  * @param resource $context
  *
  * @return resource - Returns a file pointer on success, false otherwise
@@ -125,14 +127,15 @@ function sugar_fopen($filename, $mode, $use_include_path = false, $context = nul
 
     if (empty($context)) {
         return fopen($filename, $mode, $use_include_path);
+    } else {
+        return fopen($filename, $mode, $use_include_path, $context);
     }
-    return fopen($filename, $mode, $use_include_path, $context);
 }
 
 /**
  * sugar_file_put_contents
  * Call this function instead of file_put_contents to apply pre-configured permission
- * settings when creating the the file.  This method is basically
+ * settings when creating the file.  This method is basically
  * a wrapper to the PHP file_put_contents function except that it supports setting
  * the mode value by using the configuration file (if set).  The mode is
  * 0777 by default.
@@ -157,7 +160,10 @@ function sugar_file_put_contents($filename, $data, $flags = null, $context = nul
         return false;
     }
 
-    return file_put_contents($filename, $data, $flags, $context);
+    $result = file_put_contents($filename, $data, $flags, $context);
+    SugarCache::cleanFile($filename);
+
+    return $result;
 }
 
 /**
@@ -211,7 +217,7 @@ function sugar_file_put_contents_atomic($filename, $data, $mode = 'wb')
  * sugar_file_get_contents.
  *
  * @param string $filename - String value of the file to create
- * @param bool $use_include_path - boolean value indicating whether or not to search the the included_path
+ * @param bool $use_include_path - boolean value indicating whether or not to search the included_path
  * @param resource $context
  *
  * @return string|bool - Returns a file data on success, false otherwise
@@ -231,8 +237,9 @@ function sugar_file_get_contents($filename, $use_include_path = false, $context 
 
     if (empty($context)) {
         return file_get_contents($filename, $use_include_path);
+    } else {
+        return file_get_contents($filename, $use_include_path, $context);
     }
-    return file_get_contents($filename, $use_include_path, $context);
 }
 
 /**
@@ -298,8 +305,9 @@ function sugar_chmod($filename, $mode = null)
         }
         if (isset($mode) && $mode > 0) {
             return @chmod($filename, $mode);
+        } else {
+            return false;
         }
-        return false;
     }
 
     return true;
@@ -320,13 +328,15 @@ function sugar_chown($filename, $user = '')
     if (!is_windows()) {
         if (strlen($user)) {
             return chown($filename, $user);
-        }
-        if (strlen($GLOBALS['sugar_config']['default_permissions']['user'])) {
-            $user = $GLOBALS['sugar_config']['default_permissions']['user'];
+        } else {
+            if (strlen($GLOBALS['sugar_config']['default_permissions']['user'])) {
+                $user = $GLOBALS['sugar_config']['default_permissions']['user'];
 
-            return chown($filename, $user);
+                return chown($filename, $user);
+            } else {
+                return false;
+            }
         }
-        return false;
     }
 
     return true;
@@ -347,13 +357,15 @@ function sugar_chgrp($filename, $group = '')
     if (!is_windows()) {
         if (!empty($group)) {
             return chgrp($filename, $group);
-        }
-        if (!empty($GLOBALS['sugar_config']['default_permissions']['group'])) {
-            $group = $GLOBALS['sugar_config']['default_permissions']['group'];
+        } else {
+            if (!empty($GLOBALS['sugar_config']['default_permissions']['group'])) {
+                $group = $GLOBALS['sugar_config']['default_permissions']['group'];
 
-            return chgrp($filename, $group);
+                return chgrp($filename, $group);
+            } else {
+                return false;
+            }
         }
-        return false;
     }
 
     return true;

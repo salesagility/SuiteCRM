@@ -299,28 +299,30 @@ switch ($install_type) {
 
         if ($mode == "Install" || $mode=="Enable") {
             $sugar_config['languages'] = $sugar_config['languages'] + array( $_REQUEST['new_lang_name'] => $_REQUEST['new_lang_desc'] );
-        } elseif ($mode == "Uninstall" || $mode=="Disable") {
-            $new_langs = array();
-            $old_langs = $sugar_config['languages'];
-            foreach ($old_langs as $key => $value) {
-                if ($key != $_REQUEST['new_lang_name']) {
-                    $new_langs += array( $key => $value );
+        } else {
+            if ($mode == "Uninstall" || $mode=="Disable") {
+                $new_langs = array();
+                $old_langs = $sugar_config['languages'];
+                foreach ($old_langs as $key => $value) {
+                    if ($key != $_REQUEST['new_lang_name']) {
+                        $new_langs += array( $key => $value );
+                    }
                 }
-            }
-            $sugar_config['languages'] = $new_langs;
+                $sugar_config['languages'] = $new_langs;
 
-            $default_sugar_instance_lang = 'en_us';
-            if ($current_language == $_REQUEST['new_lang_name']) {
-                $_SESSION['authenticated_user_language'] =$default_sugar_instance_lang;
-                $lang_changed_string = $mod_strings['LBL_CURRENT_LANGUAGE_CHANGE'].$sugar_config['languages'][$default_sugar_instance_lang].'<br/>';
-            }
+                $default_sugar_instance_lang = 'en_us';
+                if ($current_language == $_REQUEST['new_lang_name']) {
+                    $_SESSION['authenticated_user_language'] =$default_sugar_instance_lang;
+                    $lang_changed_string = $mod_strings['LBL_CURRENT_LANGUAGE_CHANGE'].$sugar_config['languages'][$default_sugar_instance_lang].'<br/>';
+                }
 
-            if ($sugar_config['default_language'] == $_REQUEST['new_lang_name']) {
-                $cfg = new Configurator();
-                $cfg->config['languages'] = $new_langs;
-                $cfg->config['default_language'] = $default_sugar_instance_lang;
-                $cfg->handleOverride();
-                $lang_changed_string .= $mod_strings['LBL_DEFAULT_LANGUAGE_CHANGE'].$sugar_config['languages'][$default_sugar_instance_lang].'<br/>';
+                if ($sugar_config['default_language'] == $_REQUEST['new_lang_name']) {
+                    $cfg = new Configurator();
+                    $cfg->config['languages'] = $new_langs;
+                    $cfg->config['default_language'] = $default_sugar_instance_lang;
+                    $cfg->handleOverride();
+                    $lang_changed_string .= $mod_strings['LBL_DEFAULT_LANGUAGE_CHANGE'].$sugar_config['languages'][$default_sugar_instance_lang].'<br/>';
+                }
             }
         }
         ksort($sugar_config);
@@ -335,9 +337,9 @@ switch ($install_type) {
             case "Install":
             //here we can determine if this is an upgrade or a new version
                 if (!empty($previous_version)) {
-                    $mi->install("$unzip_dir", true, $previous_version);
+                    $mi->install((string)$unzip_dir, true, $previous_version);
                 } else {
-                    $mi->install("$unzip_dir");
+                    $mi->install((string)$unzip_dir);
                 }
 
                 $file = "$unzip_dir/" . constant('SUGARCRM_POST_INSTALL_FILE');
@@ -353,7 +355,7 @@ switch ($install_type) {
                 } else {
                     $GLOBALS['mi_remove_tables'] = true;
                 }
-                $mi->uninstall("$unzip_dir");
+                $mi->uninstall((string)$unzip_dir);
                 break;
              case "Disable":
                 if (!$overwrite_files) {
@@ -361,7 +363,7 @@ switch ($install_type) {
                 } else {
                     $GLOBALS['mi_overwrite_files'] = true;
                 }
-                $mi->disable("$unzip_dir");
+                $mi->disable((string)$unzip_dir);
                 break;
              case "Enable":
                 if (!$overwrite_files) {
@@ -369,7 +371,7 @@ switch ($install_type) {
                 } else {
                     $GLOBALS['mi_overwrite_files'] = true;
                 }
-                $mi->enable("$unzip_dir");
+                $mi->enable((string)$unzip_dir);
                 break;
             default:
                 break;
@@ -473,7 +475,7 @@ switch ($mode) {
         $uh = new UpgradeHistory();
         $the_md5 = md5_file($install_file);
         $md5_matches = $uh->findByMd5($the_md5);
-        if (sizeof($md5_matches) == 0) {
+        if (count($md5_matches) == 0) {
             die("{$mod_strings['ERR_UW_NO_UPDATE_RECORD']} $install_file.");
         }
         foreach ($md5_matches as $md5_match) {
@@ -485,7 +487,7 @@ switch ($mode) {
         $uh = new UpgradeHistory();
         $the_md5 = md5_file($install_file);
         $md5_matches = $uh->findByMd5($the_md5);
-        if (sizeof($md5_matches) == 0) {
+        if (count($md5_matches) == 0) {
             die("{$mod_strings['ERR_UW_NO_UPDATE_RECORD']} $install_file.");
         }
         foreach ($md5_matches as $md5_match) {
@@ -498,7 +500,7 @@ switch ($mode) {
         $uh = new UpgradeHistory();
         $the_md5 = md5_file($install_file);
         $md5_matches = $uh->findByMd5($the_md5);
-        if (sizeof($md5_matches) == 0) {
+        if (count($md5_matches) == 0) {
             die("{$mod_strings['ERR_UW_NO_UPDATE_RECORD']} $install_file.");
         }
         foreach ($md5_matches as $md5_match) {
@@ -525,7 +527,7 @@ if (isset($lang_changed_string)) {
     print($lang_changed_string);
 }
 if ($install_type != "module" && $install_type != "langpack") {
-    if (sizeof($files_to_handle) > 0) {
+    if (count($files_to_handle) > 0) {
         echo '<div style="text-align: left; cursor: hand; cursor: pointer; text-decoration: underline;" onclick=\'this.style.display="none"; toggleDisplay("more");\' id="all_text">' . SugarThemeRegistry::current()->getImage('advanced_search', '', null, null, ".gif", $mod_strings['LBL_ADVANCED_SEARCH']) . ' '.$mod_strings['LBL_UW_SHOW_DETAILS'].'</div><div id=\'more\' style=\'display: none\'>
             <div style="text-align: left; cursor: hand; cursor: pointer; text-decoration: underline;" onclick=\'document.getElementById("all_text").style.display=""; toggleDisplay("more");\'>' . SugarThemeRegistry::current()->getImage('basic_search', '', null, null, ".gif", $mod_strings['LBL_BASIC_SEARCH']) .' '.$mod_strings['LBL_UW_HIDE_DETAILS'].'</div><br>';
         print("{$mod_strings['LBL_UW_FOLLOWING_FILES']} $file_action:<br>\n");
@@ -535,8 +537,10 @@ if ($install_type != "module" && $install_type != "langpack") {
         }
         print("</ul>\n");
         echo '</div>';
-    } elseif ($mode != 'Disable' && $mode !='Enable') {
-        print("{$mod_strings['LBL_UW_NO_FILES_SELECTED']} $file_action.<br>\n");
+    } else {
+        if ($mode != 'Disable' && $mode !='Enable') {
+            print("{$mod_strings['LBL_UW_NO_FILES_SELECTED']} $file_action.<br>\n");
+        }
     }
 
     print($mod_strings['LBL_UW_UPGRADE_SUCCESSFUL']);

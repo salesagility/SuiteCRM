@@ -41,6 +41,7 @@
 
 require_once('include/SugarObjects/templates/person/Person.php');
 require_once('include/MVC/SugarModule.php');
+require_once('include/utils.php');
 
 /**
  * quicksearchQuery class, handles AJAX calls from quicksearch.js
@@ -286,11 +287,7 @@ class quicksearchQuery
 
                     // get fields to match enum vals
                     if (empty($app_list_strings)) {
-                        if (isset($_SESSION['authenticated_user_language']) && $_SESSION['authenticated_user_language'] != '') {
-                            $current_language = $_SESSION['authenticated_user_language'];
-                        } else {
-                            $current_language = $sugar_config['default_language'];
-                        }
+                        $current_language = get_current_language();
                         $app_list_strings = return_app_list_strings_language($current_language);
                     }
 
@@ -303,10 +300,12 @@ class quicksearchQuery
 
                 if (isset($listData[$field])) {
                     $data['fields'][$i][$field] = $listData[$field];
-                } elseif (isset($results[$i]->$field)) {
-                    $data['fields'][$i][$field] = $results[$i]->$field;
                 } else {
-                    $data['fields'][$i][$field] = '';
+                    if (isset($results[$i]->$field)) {
+                        $data['fields'][$i][$field] = $results[$i]->$field;
+                    } else {
+                        $data['fields'][$i][$field] = '';
+                    }
                 }
             }
         }
@@ -369,7 +368,7 @@ class quicksearchQuery
     protected function getRawResults($args, $singleSelect = false)
     {
         $orderBy = !empty($args['order']) ? $args['order'] : '';
-        $limit   = !empty($args['limit']) ? intval($args['limit']) : '';
+        $limit   = !empty($args['limit']) ? (int)$args['limit'] : '';
         $data    = array();
 
         foreach ($args['modules'] as $module) {

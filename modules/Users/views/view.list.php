@@ -39,7 +39,6 @@
  */
 
 
-require_once('include/MVC/View/views/view.list.php');
 
 class UsersViewList extends ViewList
 {
@@ -47,7 +46,7 @@ class UsersViewList extends ViewList
     {
         //bug #46690: Developer Access to Users/Teams/Roles
         if (!$GLOBALS['current_user']->isAdminForModule('Users') && !$GLOBALS['current_user']->isDeveloperForModule('Users')) {
-            //instead of just dying here with unauthorized access will send the user back to his/her settings
+            //instead of just dying here with unauthorized access will send the user back to their settings
             SugarApplication::redirect('index.php?module=Users&action=DetailView&record=' . $GLOBALS['current_user']->id);
         }
         $this->lv = new ListViewSmarty();

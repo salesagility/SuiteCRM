@@ -12,7 +12,7 @@ r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.
 
 r53116 - 2009-12-09 17:24:37 -0800 (Wed, 09 Dec 2009) - mitani - Merge Kobe into Windex Revision 51633 to 53087
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -27,11 +27,11 @@ r42807 - 2008-12-29 11:16:59 -0800 (Mon, 29 Dec 2008) - dwong - Branch from trun
 
 r39146 - 2008-08-26 17:16:04 -0700 (Tue, 26 Aug 2008) - awu - Merging pre_5_1_0 to trunk
 
-r35784 - 2008-05-20 14:31:40 -0700 (Tue, 20 May 2008) - dwheeler - 21475: Converted multiselect DynamicField default value to be a multiselect.
+r35784 - 2008-05-20 14:31:40 -0700 (Tue, 20 May 2008) - dwheeler - 21475: Converted multiselect DynamicField default value to be a multiselect. 
 
 r26565 - 2007-09-11 11:09:20 -0700 (Tue, 11 Sep 2007) - clee - Changed to just use explode function.  It is safer than split using commas because values themselves could have commas.
 
-r26564 - 2007-09-11 11:03:41 -0700 (Tue, 11 Sep 2007) - clee - Fixed issues with multienum custom type.
+r26564 - 2007-09-11 11:03:41 -0700 (Tue, 11 Sep 2007) - clee - Fixed issues with multienum custom type.  
 Added:
 trunk/include/SugarFields/Fields/MultiEnum/DetailView.tpl
 trunk/include/Smarty/plugins/modifier.multienum_to_array.php
@@ -65,28 +65,29 @@ trunk/include/EditView/EditView2.php (removed comments)
  */
 function smarty_function_multienum_to_array($params, &$smarty)
 {
-    $ret = "";
-    if (empty($params['string'])) {
-        if (empty($params['default'])) {
+	$ret = "";
+	if(empty($params['string'])) {
+        if (empty($params['default']))
             $ret = array();
-        } elseif (is_array($params['default'])) {
+        else if(is_array($params['default']))
             $ret = $params['default'];
-        } else {
-            $ret = unencodeMultienum($params['default']);
-        }
+        else
+           $ret = unencodeMultienum($params['default']);
     } else {
-        if (is_array($params['string'])) {
-            $ret = $params['string'];
-        } else {
-            $ret = unencodeMultienum($params['string']);
-        }
+    	if (is_array($params['string']))
+    	  $ret = $params['string'];
+    	else
+    	  $ret = unencodeMultienum($params['string']);
     }
+	
     
-    
-    if (!empty($params['assign'])) {
-        $smarty->assign($params['assign'], $ret);
-        return "";
-    }
-    
-    return ($ret);
+	if (!empty($params['assign']))
+	{
+		$smarty->assign($params['assign'], $ret);
+		return "";
+	}
+	
+	return ($ret);
 }
+
+?>

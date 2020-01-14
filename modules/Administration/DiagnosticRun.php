@@ -168,7 +168,7 @@ function array_as_table($header, $values)
         $contents .= "<tr>";
         foreach ($field as $item) {
             if (is_array($item)) {
-                $item = join(",", $item);
+                $item = implode(",", $item);
             }
             $contents .= "<td class=\"tabDetailViewDF\">$item</td>";
         }
@@ -581,32 +581,43 @@ function executecustom_dir()
     //END UPDATING PROGRESS BAR
 }
 
+/**
+ * @param $filesmd5
+ * @param $md5calculated
+ */
 function executemd5($filesmd5, $md5calculated)
 {
     //BEGIN ALL MD5 CHECKS
     global $curdatetime;
     global $skip_md5_diff;
     global $sod_guid;
+
+    $md5_string_calculated = [];
+    $md5_string = [];
+
     if (file_exists('files.md5')) {
-        include('files.md5');
+        include 'files.md5';
+        if (isset($md5_string_calculated)) {
+            $md5_string = $md5_string_calculated;
+        }
     }
     //create dir for md5s
-    $md5_directory = create_cache_directory("diagnostic/".$sod_guid."/diagnostic".$curdatetime."/md5/");
+    $md5_directory = create_cache_directory('diagnostic/' . $sod_guid . '/diagnostic' . $curdatetime . '/md5/');
 
     //skip this if the files.md5 didn't exist
-    if (!$skip_md5_diff) {
-        //make sure the files.md5
-        if ($filesmd5) {
-            if (!copy('files.md5', $md5_directory."files.md5")) {
-                echo "Couldn't copy files.md5 to ".$md5_directory."<br>Skipping md5 checks.<br>";
-            }
-        }
+    //make sure the files.md5
+    if (!$skip_md5_diff && $filesmd5 && !copy('files.md5', $md5_directory . 'files.md5')) {
+        echo "Couldn't copy files.md5 to " . $md5_directory . '<br>Skipping md5 checks.<br>';
     }
 
     $md5_string_calculated = generateMD5array('./');
 
     if ($md5calculated) {
-        write_array_to_file('md5_string_calculated', $md5_string_calculated, $md5_directory."md5_array_calculated.php");
+        write_array_to_file(
+            'md5_string_calculated',
+            $md5_string_calculated,
+            $md5_directory . 'md5_array_calculated.php'
+        );
     }
 
 
@@ -614,7 +625,7 @@ function executemd5($filesmd5, $md5calculated)
     if (!$skip_md5_diff) {
         $md5_string_diff = array_diff($md5_string_calculated, $md5_string);
 
-        write_array_to_file('md5_string_diff', $md5_string_diff, $md5_directory."md5_array_diff.php");
+        write_array_to_file('md5_string_diff', $md5_string_diff, $md5_directory . 'md5_array_diff.php');
     }
     //END ALL MD5 CHECKS
     //BEGIN UPDATING PROGRESS BAR
@@ -751,11 +762,14 @@ function finishDiag()
     chdir(RETURN_FROM_DIAG_DIR);
 
     deleteDir($cacheDir);
+    
+    
+    print "<a href=\"index.php?module=Administration&action=DiagnosticDownload&guid=$sod_guid&time=$curdatetime&to_pdf=1\">".$mod_strings['LBL_DIAGNOSTIC_DOWNLOADLINK']."</a><BR>";
+
+    deleteDir($cacheDir);
 
 
     print "<a href=\"index.php?module=Administration&action=DiagnosticDownload&guid=$sod_guid&time=$curdatetime&to_pdf=1\">".$mod_strings['LBL_DIAGNOSTIC_DOWNLOADLINK']."</a><BR>";
-
-    print "<a href=\"index.php?module=Administration&action=DiagnosticDelete&file=diagnostic".$curdatetime."&guid=".$sod_guid."\">".$mod_strings['LBL_DIAGNOSTIC_DELETELINK']."</a><br>";
 }
 
 //BEGIN check for what we are executing

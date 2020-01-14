@@ -1,13 +1,12 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/layout_utils.php';
-class layout_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class layout_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testget_form_header()
     {
-        
-
         //execute the method and test if it returns html and contains the values provided in parameters
 
         //help param true
@@ -15,7 +14,6 @@ class layout_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan(0, strlen($html1));
         $this->assertContains('test Header', $html1);
         $this->assertContains('test subheader', $html1);
-
 
         // help param false
         $html2 = get_form_header('new test Header', 'new test subheader', false);

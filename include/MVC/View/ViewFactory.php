@@ -85,24 +85,30 @@ class ViewFactory
         if (!empty($target_module)) {
             if (file_exists('custom/modules/'.$target_module.'/views/view.'.$type.'.php')) {
                 $view = ViewFactory::_buildFromFile('custom/modules/'.$target_module.'/views/view.'.$type.'.php', $bean, $view_object_map, $type, $target_module);
-            } elseif (file_exists('modules/'.$target_module.'/views/view.'.$type.'.php')) {
-                $view = ViewFactory::_buildFromFile('modules/'.$target_module.'/views/view.'.$type.'.php', $bean, $view_object_map, $type, $target_module);
+            } else {
+                if (file_exists('modules/'.$target_module.'/views/view.'.$type.'.php')) {
+                    $view = ViewFactory::_buildFromFile('modules/'.$target_module.'/views/view.'.$type.'.php', $bean, $view_object_map, $type, $target_module);
+                }
             }
         }
 
         if (!isset($view)) {
             if (file_exists('custom/modules/'.$module.'/views/view.'.$type.'.php')) {
                 $view = ViewFactory::_buildFromFile('custom/modules/'.$module.'/views/view.'.$type.'.php', $bean, $view_object_map, $type, $module);
-            } elseif (file_exists('modules/'.$module.'/views/view.'.$type.'.php')) {
-                $view = ViewFactory::_buildFromFile('modules/'.$module.'/views/view.'.$type.'.php', $bean, $view_object_map, $type, $module);
-            } elseif (file_exists('custom/include/MVC/View/views/view.'.$type.'.php')) {
-                $view = ViewFactory::_buildFromFile('custom/include/MVC/View/views/view.'.$type.'.php', $bean, $view_object_map, $type, $module);
             } else {
-                //if the module does not handle this view, then check if Sugar handles it OOTB
-                $file = 'include/MVC/View/views/view.'.$type.'.php';
-                if (file_exists($file)) {
-                    //it appears Sugar does have the proper logic for this file.
-                    $view = ViewFactory::_buildFromFile($file, $bean, $view_object_map, $type, $module);
+                if (file_exists('modules/'.$module.'/views/view.'.$type.'.php')) {
+                    $view = ViewFactory::_buildFromFile('modules/'.$module.'/views/view.'.$type.'.php', $bean, $view_object_map, $type, $module);
+                } else {
+                    if (file_exists('custom/include/MVC/View/views/view.'.$type.'.php')) {
+                        $view = ViewFactory::_buildFromFile('custom/include/MVC/View/views/view.'.$type.'.php', $bean, $view_object_map, $type, $module);
+                    } else {
+                        //if the module does not handle this view, then check if Sugar handles it OOTB
+                        $file = 'include/MVC/View/views/view.'.$type.'.php';
+                        if (file_exists($file)) {
+                            //it appears Sugar does have the proper logic for this file.
+                            $view = ViewFactory::_buildFromFile($file, $bean, $view_object_map, $type, $module);
+                        }
+                    }
                 }
             }
         }
@@ -274,7 +280,8 @@ class ViewFactory
         $view->init($bean, $view_object_map);
         if ($view instanceof SugarView) {
             return $view;
+        } else {
+            return new SugarView($bean, $view_object_map);
         }
-        return new SugarView($bean, $view_object_map);
     }
 }

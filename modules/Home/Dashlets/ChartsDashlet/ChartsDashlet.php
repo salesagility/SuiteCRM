@@ -159,7 +159,7 @@ class ChartsDashlet extends Dashlet
             $reporter->saved_report_id = $chartReport->id;
             $xmlFile = get_cache_file_name($reporter);
 
-            $str = $sugarChart->getDashletScript($this->id, $xmlFile);
+            $str = $sugarChart ? $sugarChart->getDashletScript($this->id, $xmlFile) : '';
             return $str;
         }
     }
@@ -204,12 +204,12 @@ class ChartsDashlet extends Dashlet
             $additionalTitle .= '<a href="#" onclick="SUGAR.mySugar.retrieveDashlet(\''
                                 . $this->id . '\', \'chart\'); return false;"><!--not_in_theme!-->'
                                 . SugarThemeRegistry::current()->getImage(
-                    'dashlet-header-refresh',
-                    'border="0" align="absmiddle" title="'. translate('LBL_DASHLET_REFRESH', 'Home') . '"',
-                    null,
-                    null,
-                    '.gif',
-                    translate('LBL_DASHLET_REFRESH', 'Home')
+                                    'dashlet-header-refresh',
+                                    'border="0" align="absmiddle" title="'. translate('LBL_DASHLET_REFRESH', 'Home') . '"',
+                                    null,
+                                    null,
+                                    '.gif',
+                                    translate('LBL_DASHLET_REFRESH', 'Home')
                 ) .'</a>';
         }
         return $additionalTitle;

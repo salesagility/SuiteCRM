@@ -186,7 +186,7 @@ class ImportViewStep3 extends ImportView
         // we export it as email_address, but import as email1
         $field_map['email_address'] = 'email1';
 
-        // build each row; row count is determined by the the number of fields in the import file
+        // build each row; row count is determined by the number of fields in the import file
         $columns = array();
         $mappedFields = array();
 
@@ -225,10 +225,12 @@ class ImportViewStep3 extends ImportView
                 // get field name
                 if (!empty($moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)])) {
                     $displayname = str_replace(":", "", $moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)]);
-                } elseif (!empty($properties['vname'])) {
-                    $displayname = str_replace(":", "", translate($properties['vname'], $this->bean->module_dir));
                 } else {
-                    $displayname = str_replace(":", "", translate($properties['name'], $this->bean->module_dir));
+                    if (!empty($properties['vname'])) {
+                        $displayname = str_replace(":", "", translate($properties['vname'], $this->bean->module_dir));
+                    } else {
+                        $displayname = str_replace(":", "", translate($properties['name'], $this->bean->module_dir));
+                    }
                 }
                 // see if this is required
                 $req_mark  = "";
@@ -288,13 +290,6 @@ class ImportViewStep3 extends ImportView
 
             // Bug 27046 - Sort the column name picker alphabetically
             ksort($options);
-
-            // to be displayed in UTF-8 format
-            if (!empty($charset) && $charset != 'UTF-8') {
-                if (isset($rows[1][$field_count])) {
-                    $rows[1][$field_count] = $locale->translateCharset($rows[1][$field_count], $charset);
-                }
-            }
 
             $cellOneData = isset($rows[0][$field_count]) ? $rows[0][$field_count] : '';
             $cellTwoData = isset($rows[1][$field_count]) ? $rows[1][$field_count] : '';
@@ -457,13 +452,19 @@ class ImportViewStep3 extends ImportView
         if (file_exists("custom/modules/Import/maps/{$customName}.php")) {
             require_once("custom/modules/Import/maps/{$customName}.php");
             return $customName;
-        } elseif (file_exists("custom/modules/Import/maps/{$name}.php")) {
-            require_once("custom/modules/Import/maps/{$name}.php");
-        } elseif (file_exists("modules/Import/maps/{$name}.php")) {
-            require_once("modules/Import/maps/{$name}.php");
-        } elseif (file_exists('custom/modules/Import/maps/ImportMapOther.php')) {
-            require_once('custom/modules/Import/maps/ImportMapOther.php');
-            return 'ImportMapOther';
+        } else {
+            if (file_exists("custom/modules/Import/maps/{$name}.php")) {
+                require_once("custom/modules/Import/maps/{$name}.php");
+            } else {
+                if (file_exists("modules/Import/maps/{$name}.php")) {
+                    require_once("modules/Import/maps/{$name}.php");
+                } else {
+                    if (file_exists('custom/modules/Import/maps/ImportMapOther.php')) {
+                        require_once('custom/modules/Import/maps/ImportMapOther.php');
+                        return 'ImportMapOther';
+                    }
+                }
+            }
         }
 
         return $name;

@@ -1,7 +1,9 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
 require_once 'include/utils/security_utils.php';
-class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class security_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -15,11 +17,7 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testquery_module_access_list()
     {
         self::markTestIncomplete('Test fails only in travis and php 7, Test has environment specific issue.');
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('aod_indexevent');
-        
+
         //execute the method and test it it returns expected contents
 
         $user = new User('1');
@@ -60,25 +58,14 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'AOK_Knowledge_Base_Categories' => 'AOK_Knowledge_Base_Categories',
             'EmailTemplates' => 'EmailTemplates',
             'Surveys' => 'Surveys',
-
         );
 
         $actual = query_module_access_list($user);
         $this->assertSame($expected, $actual);
-        
-        // clean up
-        
-        $state->popTable('aod_indexevent');
-        $state->popGlobals();
     }
 
     public function testquery_user_has_roles()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         // execute the method and test it returns 1 role
         // if the test suite run runs RolesTest first.
         // otherwise it will be 0
@@ -87,8 +74,6 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = '0';
         $actual = query_user_has_roles('1');
         $this->assertSame($expected, $actual);
-        
-        // clean up
     }
 
     public function testget_user_allowed_modules()
@@ -123,9 +108,6 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testquery_client_ip()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        
         //test without setting any server parameters
         $this->assertSame(null, query_client_ip());
 
@@ -138,10 +120,6 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $_SERVER['HTTP_CLIENT_IP'] = '1.1.1.1';
         $this->assertSame('1.1.1.1', query_client_ip());
-        
-        // clean up
-        
-        $state->popGlobals();
     }
 
     public function testget_val_array()

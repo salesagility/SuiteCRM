@@ -102,11 +102,12 @@ function convertQuestionResponseForDisplay($responseArr, $type)
             $date = $timedate->fromUser($responseArr[0]->answer_datetime);
             if (!$date) {
                 return $responseArr[0]->answer_datetime;
-            }
+            } else {
                 $date = $timedate->tzGMT($date);
 
                 return $timedate->asUserDate($date);
-            
+            }
+            // no break
         case "Rating":
             return str_repeat('<img width=20 src="modules/Surveys/imgs/star.png"/>', $responseArr[0]->answer);
         case "Scale":

@@ -62,7 +62,7 @@
      public function writeToCache($ID, $pChartObject)
      {
          /* Compute the paths */
-         $TemporaryFile = $this->CacheFolder."/tmp_".rand(0, 1000).".png";
+         $TemporaryFile = $this->CacheFolder."/tmp_".mt_rand(0, 1000).".png";
          $Database      = $this->CacheFolder."/".$this->CacheDB;
          $Index         = $this->CacheFolder."/".$this->CacheIndex;
 
@@ -74,17 +74,17 @@
          $DBSize      = filesize($Database);
 
          /* Save the index */
-         $Handle = fopen($Index, "a");
+         $Handle = fopen($Index, 'ab');
          fwrite($Handle, $ID.",".$DBSize.",".$PictureSize.",".time().",0      \r\n");
          fclose($Handle);
 
          /* Get the picture raw contents */
-         $Handle = fopen($TemporaryFile, "r");
+         $Handle = fopen($TemporaryFile, 'rb');
          $Raw    = fread($Handle, $PictureSize);
          fclose($Handle);
 
          /* Save the picture in the solid database file */
-         $Handle = fopen($Database, "a");
+         $Handle = fopen($Database, 'ab');
          fwrite($Handle, $Raw);
          fclose($Handle);
 
@@ -137,10 +137,10 @@
          }
 
          /* Open the file handles */
-         $IndexHandle     = @fopen($Index, "r");
-         $IndexTempHandle = @fopen($IndexTemp, "w");
-         $DBHandle        = @fopen($Database, "r");
-         $DBTempHandle    = @fopen($DatabaseTemp, "w");
+         $IndexHandle     = @fopen($Index, 'rb');
+         $IndexTempHandle = @fopen($IndexTemp, 'wb');
+         $DBHandle        = @fopen($Database, 'rb');
+         $DBTempHandle    = @fopen($DatabaseTemp, 'wb');
 
          /* Remove the selected ID from the database */
          while (!feof($IndexHandle)) {
@@ -188,7 +188,7 @@
          $Index = $this->CacheFolder."/".$this->CacheIndex;
 
          /* Search the picture in the index file */
-         $Handle = @fopen($Index, "r");
+         $Handle = @fopen($Index, 'rb');
          while (!feof($Handle)) {
              $IndexPos = ftell($Handle);
              $Entry = fgets($Handle, 4096);
@@ -201,7 +201,7 @@
                      $DBPos       = $Settings[1];
                      $PicSize     = $Settings[2];
                      $GeneratedTS = $Settings[3];
-                     $Hits        = intval($Settings[4]);
+                     $Hits        = (int)$Settings[4];
 
                      if ($UpdateHitsCount) {
                          $Hits++;
@@ -209,7 +209,7 @@
                              $Hits = $Hits.str_repeat(" ", 7-strlen($Hits));
                          }
 
-                         $Handle = @fopen($Index, "r+");
+                         $Handle = @fopen($Index, 'rb+');
                          fseek($Handle, $IndexPos);
                          fwrite($Handle, $PicID.",".$DBPos.",".$PicSize.",".$GeneratedTS.",".$Hits."\r\n");
                          fclose($Handle);
@@ -265,7 +265,7 @@
          }
 
          /* Flush the picture to a file */
-         $Handle = fopen($Destination, "w");
+         $Handle = fopen($Destination, 'wb');
          fwrite($Handle, $Picture);
          fclose($Handle);
 
@@ -291,7 +291,7 @@
          $PicSize = $CacheInfo["PicSize"];
 
          /* Extract the picture from the solid cache file */
-         $Handle = @fopen($Database, "r");
+         $Handle = @fopen($Database, 'rb');
          fseek($Handle, $DBPos);
          $Picture = fread($Handle, $PicSize);
          fclose($Handle);

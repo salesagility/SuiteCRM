@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -40,7 +37,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
+use Api\Core\Config\ApiConfig;
 
 class RepairAndClear
 {
@@ -117,6 +118,9 @@ class RepairAndClear
                 $this->clearExternalAPICache();
                 $this->rebuildExtensions();
                 $this->rebuildAuditTables();
+                if (empty(ApiConfig::OAUTH2_ENCRYPTION_KEY)) {
+                    $this->rebuildEncryptionKey();
+                }
                 $this->repairDatabase();
                 break;
         }
@@ -201,8 +205,10 @@ class RepairAndClear
                         echo "<textarea name=\"sql\" rows=\"24\" cols=\"150\" id=\"repairsql\">$qry_str</textarea>";
                         echo "<br /><input type=\"submit\" value=\"".$mod_strings['LBL_REPAIR_DATABASE_EXECUTE']."\" name=\"raction\" /> <input type=\"submit\" name=\"raction\" value=\"".$mod_strings['LBL_REPAIR_DATABASE_EXPORT']."\" />";
                     }
-                } elseif ($this->show_output) {
-                    echo "<h3>{$mod_strings['LBL_REPAIR_DATABASE_SYNCED']}</h3>";
+                } else {
+                    if ($this->show_output) {
+                        echo "<h3>{$mod_strings['LBL_REPAIR_DATABASE_SYNCED']}</h3>";
+                    }
                 }
             }
         } else {
@@ -376,7 +382,7 @@ class RepairAndClear
         $search_dir=sugar_cached('');
         $src_file = $search_dir . 'modules/unified_search_modules.php';
         if (file_exists($src_file)) {
-            unlink("$src_file");
+            unlink((string)$src_file);
         }
     }
     public function clearExternalAPICache()
@@ -406,11 +412,13 @@ class RepairAndClear
                     $this->_rebuildAuditTablesHelper(new $bean_name());
                 }
             }
-        } elseif (in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
-            foreach ($beanFiles as $bean => $file) {
-                if (file_exists($file)) {
-                    require_once($file);
-                    $this->_rebuildAuditTablesHelper(new $bean());
+        } else {
+            if (in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
+                foreach ($beanFiles as $bean => $file) {
+                    if (file_exists($file)) {
+                        require_once($file);
+                        $this->_rebuildAuditTablesHelper(new $bean());
+                    }
                 }
             }
         }
@@ -440,14 +448,48 @@ class RepairAndClear
                     echo $echo;
                 }
             }
-        } elseif ($this->show_output) {
-            echo $focus->object_name.$mod_strings['LBL_QR_NOT_AUDIT_ENABLED'];
+        } else {
+            if ($this->show_output) {
+                echo $focus->object_name.$mod_strings['LBL_QR_NOT_AUDIT_ENABLED'];
+            }
         }
     }
 
     ///////////////////////////////////////////////////////////////
     ////END REPAIR AUDIT TABLES
 
+    /**
+     * Rebuilds the OAuth2 encryption key
+     * @throws Exception
+     */
+    private function rebuildEncryptionKey()
+    {
+        $oldKey = "OAUTH2_ENCRYPTION_KEY = '" . ApiConfig::OAUTH2_ENCRYPTION_KEY;
+        $key = "OAUTH2_ENCRYPTION_KEY = '" . base64_encode(random_bytes(32));
+        $apiConfig = 'Api/Core/Config/ApiConfig.php';
+
+        if (is_writable($apiConfig)) {
+            $configContents = file_get_contents($apiConfig);
+
+            $configFileContents = str_replace(
+                $oldKey,
+                $key,
+                $configContents
+            );
+
+            $result = file_put_contents(
+                'Api/Core/Config/ApiConfig.php',
+                $configFileContents,
+                LOCK_EX
+            );
+
+            if ($result === false) {
+                LoggerManager::getLogger()->warn('QRR: Failed to update OAUTH2_ENCRYPTION_KEY');
+            }
+        } else {
+            LoggerManager::getLogger()->warn('QRR: API Config not writable: ' . $apiConfig);
+        }
+    }
 
     ///////////////////////////////////////////////////////////////
     //// Recursively unlink all files of the given $extension in the given $thedir.

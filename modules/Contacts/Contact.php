@@ -215,7 +215,7 @@ class Contact extends Person implements EmailInterface
         if (!ACLController::moduleSupportsACL('Accounts') || ACLController::checkAccess(
             'Accounts',
             'view',
-                $is_owner
+            $is_owner
         )
         ) {
             $array_assign['ACCOUNT'] = 'a';
@@ -261,16 +261,16 @@ class Contact extends Person implements EmailInterface
         }
 
         return parent::create_new_list_query(
-                $order_by,
-                $where,
-                $filter,
-                $params,
-                $show_deleted,
-                $join_type,
-                $return_array,
-                $parentbean,
-                $singleSelect,
-                $ifListForExport
+            $order_by,
+            $where,
+            $filter,
+            $params,
+            $show_deleted,
+            $join_type,
+            $return_array,
+            $parentbean,
+            $singleSelect,
+            $ifListForExport
             );
     }
 
@@ -304,7 +304,7 @@ class Contact extends Person implements EmailInterface
         $custom_join = $this->getCustomJoin();
         // MFH - BUG #14208 creates alias name for select
         $select_query = "SELECT ";
-        $select_query .= db_concat($this->table_name, array('first_name', 'last_name')) . " name, ";
+        $select_query .= DBManager::concat($this->table_name, array('first_name', 'last_name')) . " name, ";
         $select_query .= "
 				$this->table_name.*,
                 accounts.name as account_name,

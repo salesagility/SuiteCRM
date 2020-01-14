@@ -1,6 +1,6 @@
 <?php
-if (! defined('sugarEntry') || ! sugarEntry) {
-    die('Not A Valid Entry Point') ;
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
 /**
  *
@@ -266,7 +266,7 @@ class ViewListView extends SugarView
             }
         } else {
             if ($this->subpanel) {
-                $smarty->assign("subpanel", "$this->subpanel") ;
+                $smarty->assign("subpanel", (string)$this->subpanel) ;
             } else {
                 $smarty->assign('description', $GLOBALS [ 'mod_strings' ] [ 'LBL_LISTVIEW_DESCRIPTION' ]) ;
             }

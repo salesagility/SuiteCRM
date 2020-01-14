@@ -51,11 +51,32 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
      */
     public function persistNewAccessToken(AccessTokenEntityInterface $accessTokenEntity)
     {
+        $clientId = $accessTokenEntity->getClient()->getIdentifier();
+
+        /** @var \User $user */
+        $client = $this->beanManager->getBeanSafe('OAuth2Clients', $clientId);
+
+        /** @var \User $user */
+        $user = $this->beanManager->newBeanSafe('Users');
+
+        if (!empty($_POST['username'])) {
+            $user->retrieve_by_string_fields(
+                ['user_name' => $_POST['username']]
+            );
+        }
+
+        $userId = !empty($user->id) ? $user->id : $client->assigned_user_id;
+
         /** @var \OAuth2Tokens $token */
         $token = $this->beanManager->newBeanSafe(\OAuth2Tokens::class);
+
         $token->access_token = $accessTokenEntity->getIdentifier();
+
         $token->access_token_expires = $accessTokenEntity->getExpiryDateTime()->format('Y-m-d H:i:s');
-        $token->client = $accessTokenEntity->getClient()->getIdentifier();
+
+        $token->client = $clientId;
+
+        $token->assigned_user_id = $userId;
 
         $token->save();
     }
@@ -90,10 +111,6 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
             ['access_token' => $tokenId]
         );
 
-        if (new \DateTime() > new \DateTime($token->access_token_expires) || $token->id === null) {
-            return true;
-        }
-
-        return false;
+        return $token->id === null || $token->token_is_revoked === '1' || new \DateTime() > new \DateTime($token->access_token_expires);
     }
 }

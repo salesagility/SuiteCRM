@@ -1,15 +1,14 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 use SuiteCRM\Utility\StringValidator;
 
-class StringValidatorTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class StringValidatorTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
      * @var \UnitTester
      */
     protected $tester;
-
-
 
     public function testStartsWith()
     {

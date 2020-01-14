@@ -973,7 +973,7 @@ class SugarController
 
             if (!empty($this->file_access_control_map['modules'][$module]['actions']) && (in_array(
                 $action,
-                        $this->file_access_control_map['modules'][$module]['actions']
+                $this->file_access_control_map['modules'][$module]['actions']
             ) || !empty($this->file_access_control_map['modules'][$module]['actions'][$action]))
             ) {
                 //check params

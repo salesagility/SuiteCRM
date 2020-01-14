@@ -67,7 +67,7 @@ class AOBH_BusinessHours extends Basic
     public $opening_hours;
     public $closing_hours;
     public $day;
-    public $open;
+    public $open_status;
 
     private $cached = array();
     private $businessHoursSet = null;
@@ -118,8 +118,9 @@ class AOBH_BusinessHours extends Basic
         $bhList = $this->getBusinessHoursForDay($day);
         if ($bhList) {
             return $bhList[0];
+        } else {
+            return BeanFactory::newBean('AOBH_BusinessHours');
         }
-        return BeanFactory::newBean('AOBH_BusinessHours');
     }
 
     /**
@@ -129,7 +130,7 @@ class AOBH_BusinessHours extends Basic
      */
     private function insideThisBusinessHour(DateTime $datetime)
     {
-        if (!$this->open) {
+        if (!$this->open_status) {
             return false;
         }
         $hour = $datetime->format('G');

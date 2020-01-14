@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description: TODO:  To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 global $currentModule;
 global $current_language;
@@ -61,7 +55,7 @@ if (!is_admin($current_user) && !is_admin_for_any_module($current_user)) {
 
 echo getClassicModuleTitle(
     translate('LBL_MODULE_NAME', 'Administration'),
-                      array(translate('LBL_MODULE_NAME', 'Administration')),
+    array(translate('LBL_MODULE_NAME', 'Administration')),
     false
 );
 

@@ -119,7 +119,6 @@ class Campaign extends SugarBean
         $result = $this->db->query($query);
         $user = $this->db->fetchByAssoc($result);
 
-        //_ppd($user);
         if (!empty($user)) {
             if (is_array($user)) {
                 $fullName = $locale->getLocaleFormattedName($user['first_name'], $user['last_name']);
@@ -344,9 +343,11 @@ class Campaign extends SugarBean
 					on campaign_log.id = secondary.id	";
             }
             unset($query_array['group_by']);
-        } elseif (isset($query_array['group_by'])) {
-            $query_array['where'] = $query_array['where'] . ' GROUP BY ' . $query_array['group_by'];
-            unset($query_array['group_by']);
+        } else {
+            if (isset($query_array['group_by'])) {
+                $query_array['where'] = $query_array['where'] . ' GROUP BY ' . $query_array['group_by'];
+                unset($query_array['group_by']);
+            }
         }
 
         $query = (implode(" ", $query_array));

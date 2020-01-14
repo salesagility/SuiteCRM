@@ -1,9 +1,10 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class AlertTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -14,8 +15,7 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAlert()
     {
-
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $alert = new Alert();
         $this->assertInstanceOf('Alert', $alert);
         $this->assertInstanceOf('Basic', $alert);
@@ -31,17 +31,10 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $alert = new Alert();
 
         $this->assertEquals(false, $alert->bean_implements('')); //test with empty value
         $this->assertEquals(false, $alert->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $alert->bean_implements('ACL')); //test with valid value
-        
-        // clean up
     }
 }

@@ -49,8 +49,7 @@ require_once('include/utils/encryption_utils.php');
 function getSystemInfo($send_usage_info=true)
 {
     global $sugar_config;
-    global $administration, $timedate;
-    $db = DBManagerFactory::getInstance();
+    global $db, $administration, $timedate;
     $info=array();
     $info = getBaseSystemInfo($send_usage_info);
     if ($send_usage_info) {
@@ -246,7 +245,7 @@ function check_now($send_usage_info=true, $get_request_data=false, $response_dat
         $license->saveSetting('license', 'latest_versions', '')	;
     }
 
-    if (sizeof($resultData) == 1 && !empty($resultData['versions'][0]['version'])
+    if (count($resultData) == 1 && !empty($resultData['versions'][0]['version'])
         && compareVersions($sugar_version, $resultData['versions'][0]['version'])) {
         $resultData['versions'][0]['version'] = $sugar_version;
         $resultData['versions'][0]['description'] = "You have the latest version.";
@@ -296,8 +295,9 @@ function get_last_check_version_config_setting()
     $admin=$admin->retrieveSettings('Update');
     if (empty($admin->settings) or empty($admin->settings['Update_last_check_version'])) {
         return null;
+    } else {
+        return $admin->settings['Update_last_check_version'];
     }
-    return $admin->settings['Update_last_check_version'];
 }
 
 
@@ -312,8 +312,9 @@ function get_last_check_date_config_setting()
     $admin=$admin->retrieveSettings('Update');
     if (empty($admin->settings) or empty($admin->settings['Update_last_check_date'])) {
         return 0;
+    } else {
+        return $admin->settings['Update_last_check_date'];
     }
-    return $admin->settings['Update_last_check_date'];
 }
 
 function set_sugarbeat($value)
@@ -372,7 +373,7 @@ function loginLicense()
 
             unset($_SESSION['license_seats_needed']);
             loadLicense();
-            set_last_check_date_config_setting("$current_date_time");
+            set_last_check_date_config_setting((string)$current_date_time);
             include('sugar_version.php');
 
             $newVersion = '';

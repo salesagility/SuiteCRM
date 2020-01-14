@@ -287,13 +287,13 @@ if(typeof(SimpleList) == 'undefined'){
         if(record){
             SimpleList.jstransaction.record('changeDropDownValue', {'id':id, 'new':val, 'old':document.getElementById('value_'+ id).value});
         }
-        var dispSpan = document.getElementById('span_'+id);
-        var editSpan = document.getElementById('span_edit_'+id);
-        var textbox = document.getElementById('input_'+id);
+        let dispSpan = document.getElementById('span_'+id);
+        let editSpan = document.getElementById('span_edit_'+id);
 
-        var value = escape(val);
+        let value = encodeURI(val);
         dispSpan.style.display = 'inline';
         editSpan.style.display = 'none';
+        value = decodeURI(value);
         dispSpan.innerHTML = "["+value+"]";
         document.getElementById('value_'+ id).value = value;
         SimpleList.lastEdit = null; // Bug 14662 - clear the last edit point behind us

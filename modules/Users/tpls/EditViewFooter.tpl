@@ -386,7 +386,7 @@
                     </slot>&nbsp;{sugar_help text=$MOD.LBL_NUMBER_GROUPING_SEP_TEXT }</td>
                 <td>
                     <slot>
-                        <input tabindex='14' name='num_grp_sep' id='default_number_grouping_seperator'
+                        <input tabindex='14' name='num_grp_sep' id='default_number_grouping_separator'
                                type='text' maxlength='1' size='1' value='{$NUM_GRP_SEP}'
                                onkeydown='setSigDigits();' onkeyup='setSigDigits();'>
                     </slot>
@@ -404,7 +404,7 @@
                     <slot>{$MOD.LBL_DECIMAL_SEP}:</slot>&nbsp;{sugar_help text=$MOD.LBL_DECIMAL_SEP_TEXT }</td>
                 <td>
                     <slot>
-                        <input tabindex='14' name='dec_sep' id='default_decimal_seperator'
+                        <input tabindex='14' name='dec_sep' id='default_decimal_separator'
                                type='text' maxlength='1' size='1' value='{$DEC_SEP}'
                                onkeydown='setSigDigits();' onkeyup='setSigDigits();'>
                     </slot>
@@ -459,6 +459,32 @@
                         <select tabindex='14'
                                 name='fdow'>{html_options options=$FDOWOPTIONS selected=$FDOWCURRENT}</select>
                     </slot>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="google_options" style="display:{$HIDE_IF_GAUTH_UNCONFIGURED}">
+        <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+            <tr>
+                <th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_GOOGLE_API_SETTINGS}</h4></th>
+            </tr>
+            <tr>
+                <td width="17%" scope="row">
+                    <slot>{$MOD.LBL_GOOGLE_API_TOKEN}:</slot>&nbsp;{sugar_help text=$MOD.LBL_GOOGLE_API_TOKEN_HELP}
+                </td>
+                    <td width="20%">
+                    <slot>Current API Token is: <span style="color:{$GOOGLE_API_TOKEN_COLOR}">{$GOOGLE_API_TOKEN}</span> &nbsp;&nbsp;<input style="display:{$GOOGLE_API_TOKEN_ENABLE_NEW}" class="btn btn-primary btn-sm" id="google_gettoken" type="button" value="{$GOOGLE_API_TOKEN_BTN}" onclick="window.open('{$GOOGLE_API_TOKEN_NEW_URL}', '_self')" /></slot>
+                </td>
+                <td width="63%">
+                    <slot>&nbsp;</slot>
+                </td>
+            </tr>
+            <tr>
+                <td width="17%" scope="row">
+                    <slot>{$MOD.LBL_GSYNC_CAL}:</slot>
+                </td>
+                <td>
+                    <slot><input tabindex='12' name='gsync_cal' class="checkbox" type="checkbox" {$GSYNC_CAL}></slot>
                 </td>
             </tr>
         </table>

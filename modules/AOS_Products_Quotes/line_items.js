@@ -77,7 +77,7 @@ function insertLineItems(product,group){
 
   for(var p in product){
     if(document.getElementById(type + p + ln) !== null){
-      if(product[p] !== '' && isNumeric(product[p]) && p != 'vat'  && p != 'product_id' && p != 'name' && p != "part_number"){
+      if (product[p] !== '' && isNumeric(product[p]) && p !== 'vat' && p !== 'product_id' && p !== 'name' && p !== "part_number" && p !== "description" && p !== "item_description") {
         document.getElementById(type + p + ln).value = format2Number(product[p]);
       } else {
         document.getElementById(type + p + ln).value = product[p];

@@ -23,18 +23,16 @@ class ActivitiesCest
             $this->fakeData = Faker\Factory::create();
         }
 
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
-
 
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Accounts $accounts
+     * @param \Step\Acceptance\AccountsTester $accounts
      * @param \Step\Acceptance\Calls $calls
-     * @param \Step\Acceptance\NavigationBar $NavigationBar
-     * @param \Helper\WebDriverHelper $webDriverHelper
+     * @param \Step\Acceptance\NavigationBarTester $NavigationBar
      *
      * As a user I want to see the due date on the activities module
      */
@@ -42,20 +40,15 @@ class ActivitiesCest
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\Accounts $accounts,
+        \Step\Acceptance\AccountsTester $accounts,
         \Step\Acceptance\Calls $calls,
-        \Step\Acceptance\NavigationBar $NavigationBar,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\NavigationBarTester $NavigationBar
     ) {
         $I->wantTo('See the due date field on Account Activities subpanel');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -72,7 +65,7 @@ class ActivitiesCest
         $calls->createCallRelateModule($callName, $account_name, "Account");
 
         // Navigate to the Account's Detail View and confirm the due date contains data
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Select record from list view
@@ -84,10 +77,11 @@ class ActivitiesCest
         $listView->clickNameLink($account_name);
 
         //Click on Activites subpanel
+        $I->waitForElementVisible(['id'=>'subpanel_title_activities']);
         $I->click(['id'=>'subpanel_title_activities']);
-        $I->waitForElementVisible('#Activities_createtask_button', 60);
+        $I->waitForElementVisible('#Activities_createtask_button');
         $I->expect('the due date is visible');
-        $I->see('01/19/2038', '//*[@id="list_subpanel_activities"]/table/tbody/tr/td[6]');
+        $I->seeInSource('01/19/2038');
 
         // Delete the Account
         $detailView->clickActionMenuItem('Delete');
@@ -99,7 +93,7 @@ class ActivitiesCest
         $listView->waitForListViewVisible();
 
         // Select record from list view
-        $I->wait(4);
+        $I->wait(3);
         $listView->clickFilterButton();
         $listView->click('Quick Filter');
         $listView->fillField('#name_basic', $callName);

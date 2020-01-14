@@ -59,7 +59,7 @@ class AM_ProjectTemplatesController extends SugarController
         $template = new AM_ProjectTemplates();
         $template->retrieve($template_id);
 
-        $override_business_hours = intval($template->override_business_hours);
+        $override_business_hours = (int)$template->override_business_hours;
 
 
         //------ build business hours array
@@ -318,7 +318,7 @@ class AM_ProjectTemplatesController extends SugarController
 
         $task_name = $_POST['task_name'];
         $project_id = $_POST['project_id'];
-        $override_business_hours = intval($_POST['override_business_hours']);
+        $override_business_hours = (int)$_POST['override_business_hours'];
         $task_id = $_POST['task_id'];
         $predecessor = $_POST['predecessor'];
         $rel_type = $_POST['rel_type'];
@@ -329,8 +329,10 @@ class AM_ProjectTemplatesController extends SugarController
 
         if ($_POST['milestone'] == 'Milestone') {
             $milestone_flag = '1';
-        } elseif ($_POST['milestone'] == 'Task') {
-            $milestone_flag = '0';
+        } else {
+            if ($_POST['milestone'] == 'Task') {
+                $milestone_flag = '0';
+            }
         }
 
         $project_template = new AM_ProjectTemplates();

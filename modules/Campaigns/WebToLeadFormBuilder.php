@@ -354,10 +354,14 @@ HTML;
             if (count($colsFirst) > count($colsSecond) || count($colsFirst) == count($colsSecond)) {
                 $columns= count($colsFirst);
             }
-        } elseif (!empty($colsFirst)) {
-            $columns= count($colsFirst);
-        } elseif (!empty($colsSecond)) {
-            $columns= count($colsSecond);
+        } else {
+            if (!empty($colsFirst)) {
+                $columns= count($colsFirst);
+            } else {
+                if (!empty($colsSecond)) {
+                    $columns= count($colsSecond);
+                }
+            }
         }
         return $columns;
     }
@@ -413,21 +417,21 @@ HTML;
 
     public static function generate(
         $request,
-                                    $lead,
-                                    $moduleDir,
-                                    $siteURL,
-                                    $webPostURL,
-                                    $webFormHeader,
-                                    $webFormDescription,
-                                    $appListStrings,
-                                    $webRequiredSymbol,
-                                    $webFormFooter,
-                                    $webFormSubmitLabel,
-                                    $webFormCampaign,
-                                    $webRedirectURL,
-                                    $webAssignedUser,
-                                    $webFormRequiredFieldsMsg,
-                                    $formCols = array('colsFirst', 'colsSecond')
+        $lead,
+        $moduleDir,
+        $siteURL,
+        $webPostURL,
+        $webFormHeader,
+        $webFormDescription,
+        $appListStrings,
+        $webRequiredSymbol,
+        $webFormFooter,
+        $webFormSubmitLabel,
+        $webFormCampaign,
+        $webRedirectURL,
+        $webAssignedUser,
+        $webFormRequiredFieldsMsg,
+        $formCols = array('colsFirst', 'colsSecond')
                                     ) {
         $sugarGrp1Js = getJSPath($siteURL.'/cache/include/javascript/sugar_grp1.js');
 

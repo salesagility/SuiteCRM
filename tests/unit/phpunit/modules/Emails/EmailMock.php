@@ -49,16 +49,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class EmailMock extends Email
 {
-    
     /**
      *
      * @param int $err
-     */    
+     */
     public function setLastSaveAndStoreInSentErrorPublic($err)
     {
         return parent::setLastSaveAndStoreInSentError($err);
     }
-    
+
     /**
      * preps SMTP info for email transmission
      * @param object $mail SugarPHPMailer object
@@ -67,7 +66,8 @@ class EmailMock extends Email
      * @global $current_user
      * @return object mail SugarPHPMailer object
      */
-    public function setMailer($mail, $mailer_id = '', $ieId = '') {
+    public function setMailer($mail, $mailer_id = '', $ieId = '')
+    {
         return $mail; // skipp oe settings
     }
 }

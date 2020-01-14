@@ -12,7 +12,7 @@ function smarty_block_minify($params, $content, &$smarty, &$repeat)
             return '<' . $matches[1] . preg_replace(
                 '#([^\s=]+)(\=([\'"]?)(.*?)\3)?(\s+|$)#s',
                 ' $1$2',
-                        $matches[2]
+                $matches[2]
             ) . $matches[3] . '>';
         }, str_replace("\r", "", $input));
         // Minify inline CSS declaration(s)
@@ -23,7 +23,7 @@ function smarty_block_minify($params, $content, &$smarty, &$repeat)
         }
 
         return preg_replace(
-                array(
+            array(
                     // t = text
                     // o = tag open
                     // c = tag close
@@ -50,7 +50,7 @@ function smarty_block_minify($params, $content, &$smarty, &$repeat)
                     // Remove HTML comment(s) except IE comment(s)
                     '#\s*<!--(?!\[if\s).*?-->\s*|(?<!\>)\n+(?=\<[^!])#s'
                 ),
-                array(
+            array(
                     "<$1$2</$1\x1A>",
                     '$1$2$3',
                     '$1$2$3',
@@ -63,7 +63,7 @@ function smarty_block_minify($params, $content, &$smarty, &$repeat)
                     ' ',
                     ""
                 ),
-                $input
+            $input
         );
 
         return $input;

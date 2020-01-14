@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -99,9 +99,6 @@ $mod_strings = array(
     'LBL_PROXY_USERNAME' => 'User Name',
     'LBL_RESTORE_BUTTON_LABEL' => 'Restore',
     'LBL_SYSTEM_SETTINGS' => 'System Settings',
-    'LBL_SKYPEOUT_ON_DESC' => 'Allows users to click on phone numbers to call using the phone dialer on your mobile device, or a telephony app on your computer (SkypeOut&reg;, etc.). The numbers must be formatted properly to make use of this feature. That is, it must be "+"  "The Country Code" "The Number", like +1 (555) 555-1234.',
-    'LBL_SKYPEOUT_ON' => 'Enable click-to-call for phone numbers',
-    'LBL_SKYPEOUT_TITLE' => 'Click-To-Call',
     'LBL_USE_REAL_NAMES' => 'Show Full Names',
     'LBL_USE_REAL_NAMES_DESC' => 'Display users\' full names instead of their User Names in assignment fields.',
     'LBL_DISALBE_CONVERT_LEAD' => 'Disable convert lead action for converted leads',
@@ -118,10 +115,10 @@ $mod_strings = array(
     'LOG_MEMORY_USAGE' => 'Log memory usage',
     'LOG_SLOW_QUERIES' => 'Log slow queries',
     'CURRENT_LOGO' => 'Current Logo:',
-    'CURRENT_LOGO_HELP' => 'This logo is displayed in the left-hand corner of the footer of the SuiteCRM application.',
+    'CURRENT_LOGO_HELP' => 'This logo is displayed in the centre of the login screen of the SuiteCRM application.',
     'NEW_LOGO' => 'Select Logo:',
     'NEW_LOGO_HELP' => 'The image file format can be either .png or .jpg. The maximum height is 170px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions.',
-    'NEW_LOGO_HELP_NO_SPACE' => 'The image file format can be either .png or .jpg. The maximum height is 170px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions. Image file name must not contain a space character.',
+    'NEW_LOGO_HELP_NO_SPACE' => 'The image file format can be either .png or .jpg. The maximum height is 170px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions.',
     'SLOW_QUERY_TIME_MSEC' => 'Slow query time threshold (msec)',
     'STACK_TRACE_ERRORS' => 'Display stack trace of errors',
     'UPLOAD_MAX_SIZE' => 'Maximum upload size',
@@ -366,5 +363,4 @@ More help : www.tcpdf.org',
     'LBL_WELCOME' => 'Welcome' /*for 508 compliance fix*/,
     'LBL_LOGO' => 'Logo' /*for 508 compliance fix*/,
     'LBL_ENABLE_HISTORY_CONTACTS_EMAILS' => 'Show related contacts\' emails in History subpanel for modules',
-
 );

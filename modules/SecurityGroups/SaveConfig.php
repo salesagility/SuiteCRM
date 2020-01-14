@@ -40,29 +40,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 require_once('modules/Administration/Administration.php');
 require_once('modules/SecurityGroups/SecurityGroup.php');
 
 if (!empty($_REQUEST['remove_default_id'])) {
-    $focus = new SecurityGroup();
-    $focus->removeDefaultGroup($_REQUEST['remove_default_id']);
+    SecurityGroup::removeDefaultGroup($_REQUEST['remove_default_id']);
 } else {
     if (!empty($_REQUEST['default_group'])) {
-        $focus = new SecurityGroup();
-        $focus->saveDefaultGroup($_REQUEST['default_group'], $_REQUEST['default_module']);
+        SecurityGroup::saveDefaultGroup($_REQUEST['default_group'], $_REQUEST['default_module']);
     }
 
 
 
-    require('modules/Configurator/Configurator.php');
+    require_once('modules/Configurator/Configurator.php');
     $cfg = new Configurator();
     
     // save securitysuite_additive setting

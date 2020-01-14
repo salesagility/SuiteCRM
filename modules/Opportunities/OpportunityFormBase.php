@@ -49,7 +49,7 @@ class OpportunityFormBase
     public function checkForDuplicates($prefix)
     {
         require_once('include/formbase.php');
-
+    
         $focus = new Opportunity();
         $query = '';
         $baseQuery = 'select id, name, sales_stage,amount, date_closed  from opportunities where deleted!=1 and (';
@@ -87,7 +87,7 @@ class OpportunityFormBase
             global $mod_strings;
         }
         global $app_strings;
-        $cols = sizeof($rows[0]) * 2 + 1;
+        $cols = count($rows[0]) * 2 + 1;
         $form = '<table width="100%"><tr><td>'.$mod_strings['MSG_DUPLICATE']. '</td></tr><tr><td height="20"></td></tr></table>';
 
         $form .= "<form action='index.php' method='post' name='dupOpps'><input type='hidden' name='selectedOpportunity' value=''>";
@@ -439,10 +439,10 @@ EOQ;
     public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         global $current_user;
-
-
+    
+    
         require_once('include/formbase.php');
-
+    
         $focus = new Opportunity();
         if ($useRequired &&  !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
@@ -469,7 +469,7 @@ EOQ;
             clone_relationship($focus->db, array('opportunities_contacts'), 'opportunity_id', $_POST['duplicate_parent_id'], $focus->id);
         }
         $return_id = $focus->id;
-
+    
         $GLOBALS['log']->debug("Saved record with id of ".$return_id);
         if ($redirect) {
             handleRedirect($return_id, "Opportunities");

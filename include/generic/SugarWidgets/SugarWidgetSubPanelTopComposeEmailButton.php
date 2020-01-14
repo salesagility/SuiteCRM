@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,7 +37,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -61,18 +60,13 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
             return $temp;
         }
 
-        global $app_strings, $current_user, $sugar_config;
+        global $app_strings, $current_user;
         $title = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_TITLE'];
         $value = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
 
         //martin Bug 19660
-        $userPref = $current_user->getPreference('email_link_type');
-        $defaultPref = $sugar_config['email_default_client'];
-        if ($userPref != '') {
-            $client = $userPref;
-        } else {
-            $client = $defaultPref;
-        }
+        $client = $current_user->getEmailClient();
+
         /** @var Person|Company|Opportunity $bean */
         $bean = $defines['focus'];
 
@@ -80,9 +74,9 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
             // awu: Not all beans have emailAddress property, we must account for this
             if (isset($bean->emailAddress)) {
                 $to_addrs = $bean->emailAddress->getPrimaryAddress($bean);
-                $button = "<input class='button' type='button'  value='$value'  id='" . $this->getWidgetId() . "'  name='" . preg_replace('[ ]', '', $value) . "'   title='$title' onclick=\"location.href='mailto:$to_addrs';return false;\" />";
+                $button = "<input class='button' type='button' value='$value' id='" . $this->getWidgetId() . "' name='" . preg_replace('[ ]', '', $value) . "' title='$title' onclick=\"location.href='mailto:$to_addrs';return false;\"/>";
             } else {
-                $button = "<input class='button' type='button'  value='$value'  id='" . $this->getWidgetId() . "'  name='" . preg_replace('[ ]', '', $value) . "'  title='$title' onclick=\"location.href='mailto:';return false;\" />";
+                $button = "<input class='button' type='button' value='$value' id='" . $this->getWidgetId() . "' name='" . preg_replace('[ ]', '', $value) . "' title='$title' onclick=\"location.href='mailto:';return false;\"/>";
             }
         } else {
             // Generate the compose package for the quick create options.
@@ -103,21 +97,35 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
 
             $emailUI = new EmailUI();
             $emailUI->appendTick = false;
-            $button = '<div type="hidden" onclick="$(document).openComposeViewModal(this);" data-module="'
+            $button = '<a class="email-link" onclick="$(document).openComposeViewModal(this);" data-module="'
             . $bean->module_name . '" data-record-id="'
             . $bean->id . '" data-module-name="'
             . $bean->name .'" data-email-address="'
-            . $bean->email1 .'">';
+            . $bean->email1 .'">'
+            . $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL']
+            . '</a>';
         }
+
         return $button;
     }
 
     public function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
+        $focus = new Meeting;
+        if (!$focus->ACLAccess('EditView')) {
+            return '';
+        }
+        
         $inputID = $this->getWidgetId();
 
         $button = $this->_get_form($defines, $additionalFormFields);
-        $button .= "<a id='$inputID'>$this->form_value</a>";
+
+        global $current_user;
+        $client = $current_user->getEmailClient();
+
+        if ($client == 'sugar') {
+            $button .= "<input class='button' type='button' id='$inputID' value='$this->form_value'>";
+        }
 
         return $button;
     }

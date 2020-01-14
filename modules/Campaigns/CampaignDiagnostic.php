@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 /************** general UI Stuff *************/
 
@@ -282,8 +276,9 @@ function define_image($num, $total)
         //if health number is zero, then all checks passed, set green image
         //green
         return SugarThemeRegistry::current()->getImage('green_camp', "align='absmiddle'", null, null, ".gif", $mod_strings['LBL_VALID']);
+    } else {
+        //if health number is between total and num params, then some checks failed but not all, set yellow image
+        //yellow
+        return SugarThemeRegistry::current()->getImage('yellow_camp', "align='absmiddle'", null, null, ".gif", $mod_strings['LBL_ALERT']);
     }
-    //if health number is between total and num params, then some checks failed but not all, set yellow image
-    //yellow
-    return SugarThemeRegistry::current()->getImage('yellow_camp', "align='absmiddle'", null, null, ".gif", $mod_strings['LBL_ALERT']);
 }

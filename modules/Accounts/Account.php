@@ -309,9 +309,9 @@ class Account extends Company implements EmailInterface
                             $joinAlias . '.id ' . ' = accounts.' . $field_def['id_name'] . ' ';
                     $relatedSelects[] = ' ,' . $joinAlias . '.id ,' . $joinAlias . '.' . $field_def['rname'] . ' ';
                     $newWhereClause = str_replace(
-                            $field_def['name'],
-                            $joinAlias . '.' . $field_def['rname'],
-                            $newWhereClause
+                        $field_def['name'],
+                        $joinAlias . '.' . $field_def['rname'],
+                        $newWhereClause
                         );
                     $where = str_replace($whereClause, $newWhereClause, $where);
                 }

@@ -103,7 +103,7 @@ class ViewBackups extends SugarView
                     $errors[] = $mod_strings['LBL_BACKUP_FILENAME_ERROR'];
                 }
         
-                if (sizeof($errors) > 0) {
+                if (count($errors) > 0) {
                     return($errors);
                 }
         
@@ -123,18 +123,20 @@ class ViewBackups extends SugarView
                 if (is_dir("$backup_dir/$backup_zip")) {
                     $errors[] = $mod_strings['LBL_BACKUP_FILE_AS_SUB'];
                 }
-                if (sizeof($errors) == 0) {
+                if (count($errors) == 0) {
                     $run = "confirmed";
                     $input_disabled = "readonly";
                 }
-            } elseif ($run == "confirmed") {
-                ini_set("memory_limit", "-1");
-                ini_set("max_execution_time", "0");
-                zip_dir(".", "$backup_dir/$backup_zip");
-                $run = "done";
+            } else {
+                if ($run == "confirmed") {
+                    ini_set("memory_limit", "-1");
+                    ini_set("max_execution_time", "0");
+                    zip_dir(".", "$backup_dir/$backup_zip");
+                    $run = "done";
+                }
             }
         }
-        if (sizeof($errors) > 0) {
+        if (count($errors) > 0) {
             foreach ($errors as $error) {
                 print("<font color=\"red\">$error</font><br>");
             }
@@ -146,7 +148,7 @@ class ViewBackups extends SugarView
         } else {
             ?>
         
-            <?php 
+            <?php
             echo getClassicModuleTitle(
                 "Administration",
                 array(

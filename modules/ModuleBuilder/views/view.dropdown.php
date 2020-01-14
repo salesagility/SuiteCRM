@@ -154,8 +154,9 @@ class ViewDropdown extends SugarView
             for ($i = 0; $i < 100; $i++) {
                 if (empty($my_list_strings[$use_name])) {
                     break;
+                } else {
+                    $use_name = $pre_pop_name.'_'.$i;
                 }
-                $use_name = $pre_pop_name.'_'.$i;
             }
             $smarty->assign('prepopulated_name', $use_name);
         }

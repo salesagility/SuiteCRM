@@ -2,8 +2,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
- *
+/*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,13 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 
 
@@ -61,6 +54,7 @@ global $urlPrefix;
 global $currentModule;
 global $theme;
 global $filter_for_valid_editable_attributes;
+global $invalid_attribute_by_name;
 //filter condition for fields in vardefs that can participate in merge.
 $filter_for_valid_editable_attributes =
     array(
@@ -72,6 +66,7 @@ $filter_for_valid_editable_attributes =
          array('type'=>'text','source'=>'db'),
          array('type'=>'date','source'=>'db'),
          array('type'=>'time','source'=>'db'),
+         array('type'=>'bool','source'=>'db'),
          array('type'=>'int','source'=>'db'),
          array('type'=>'long','source'=>'db'),
          array('type'=>'double','source'=>'db'),
@@ -367,14 +362,18 @@ foreach ($temp_field_array as $field_array) {
                 $temp_array = array();
                 $tempId = $field_array['id_name'];
                 $json_data['popup_fields'] = array($tempName => $mergeBeanArray[$id]->$tempName,$tempId => $mergeBeanArray[$id]->$tempId,);
-            } elseif ($field_check == 'teamset') {
-                $json_data['field_value'] = TeamSetManager::getCommaDelimitedTeams($mergeBeanArray[$id]->team_set_id, $mergeBeanArray[$id]->team_id, true);
-                $json_data['field_value2'] = TeamSetManager::getTeamsFromSet($mergeBeanArray[$id]->team_set_id);
-                $json_data['field_value3'] =  $mergeBeanArray[$id]->team_set_id;
-            } elseif ($field_check == 'multienum') {
-                $json_data['field_value'] = unencodeMultienum($mergeBeanArray[$id]->$tempName);
             } else {
-                $json_data['field_value'] = $mergeBeanArray[$id]->$tempName;
+                if ($field_check == 'teamset') {
+                    $json_data['field_value'] = TeamSetManager::getCommaDelimitedTeams($mergeBeanArray[$id]->team_set_id, $mergeBeanArray[$id]->team_id, true);
+                    $json_data['field_value2'] = TeamSetManager::getTeamsFromSet($mergeBeanArray[$id]->team_set_id);
+                    $json_data['field_value3'] =  $mergeBeanArray[$id]->team_set_id;
+                } else {
+                    if ($field_check == 'multienum') {
+                        $json_data['field_value'] = unencodeMultienum($mergeBeanArray[$id]->$tempName);
+                    } else {
+                        $json_data['field_value'] = $mergeBeanArray[$id]->$tempName;
+                    }
+                }
             }
             $encoded_json_data = $json->encode($json_data);
             $xtpl->assign('ENCODED_JSON_DATA', $encoded_json_data);

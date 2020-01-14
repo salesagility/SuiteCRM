@@ -458,7 +458,7 @@ class ListViewData
                 $editViewAccess = $temp->ACLAccess('EditView');
                 $pageData['rowAccess'][$dataIndex] = array('view' => $detailViewAccess, 'edit' => $editViewAccess);
                 $additionalDetailsAllow = $this->additionalDetails && $detailViewAccess && (file_exists(
-                         'modules/' . $temp->module_dir . '/metadata/additionalDetails.php'
+                    'modules/' . $temp->module_dir . '/metadata/additionalDetails.php'
                      ) || file_exists('custom/modules/' . $temp->module_dir . '/metadata/additionalDetails.php'));
                 $additionalDetailsEdit = $editViewAccess;
                 if ($additionalDetailsAllow) {
@@ -473,8 +473,8 @@ class ListViewData
                         require_once($additionalDetailsFile);
                         $ar = $this->getAdditionalDetails(
                             $data[$dataIndex],
-                                    (empty($this->additionalDetailsFunction) ? 'additionalDetails' : $this->additionalDetailsFunction) . $this->seed->object_name,
-                                    $additionalDetailsEdit
+                            (empty($this->additionalDetailsFunction) ? 'additionalDetails' : $this->additionalDetailsFunction) . $this->seed->object_name,
+                            $additionalDetailsEdit
                         );
                     }
                     $pageData['additionalDetails'][$dataIndex] = $ar['string'];
@@ -527,26 +527,28 @@ class ListViewData
             isset($_REQUEST["type_basic"]) && (count($_REQUEST["type_basic"] > 1) || $_REQUEST["type_basic"][0] != "") ||
             isset($_REQUEST["module"]) && $_REQUEST["module"] == "MergeRecords") {
             $queryString = "-advanced_search";
-        } elseif (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "basic_search") {
-            if ($seed->module_dir == "Reports") {
-                $searchMetaData = SearchFormReports::retrieveReportsSearchDefs();
-            } else {
-                $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);
-            }
+        } else {
+            if (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "basic_search") {
+                if ($seed->module_dir == "Reports") {
+                    $searchMetaData = SearchFormReports::retrieveReportsSearchDefs();
+                } else {
+                    $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);
+                }
 
-            $basicSearchFields = array();
+                $basicSearchFields = array();
 
-            if (isset($searchMetaData['searchdefs']) && isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'])) {
-                $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
-            }
+                if (isset($searchMetaData['searchdefs']) && isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'])) {
+                    $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
+                }
 
-            foreach ($basicSearchFields as $basicSearchField) {
-                $field_name = (is_array($basicSearchField) && isset($basicSearchField['name'])) ? $basicSearchField['name'] : $basicSearchField;
-                $field_name .= "_basic";
-                if (isset($_REQUEST[$field_name])  && (!is_array($basicSearchField) || !isset($basicSearchField['type']) || $basicSearchField['type'] == 'text' || $basicSearchField['type'] == 'name')) {
-                    // Ensure the encoding is UTF-8
-                    $queryString = htmlentities($_REQUEST[$field_name], null, 'UTF-8');
-                    break;
+                foreach ($basicSearchFields as $basicSearchField) {
+                    $field_name = (is_array($basicSearchField) && isset($basicSearchField['name'])) ? $basicSearchField['name'] : $basicSearchField;
+                    $field_name .= "_basic";
+                    if (isset($_REQUEST[$field_name])  && (!is_array($basicSearchField) || !isset($basicSearchField['type']) || $basicSearchField['type'] == 'text' || $basicSearchField['type'] == 'name')) {
+                        // Ensure the encoding is UTF-8
+                        $queryString = htmlentities($_REQUEST[$field_name], null, 'UTF-8');
+                        break;
+                    }
                 }
             }
         }

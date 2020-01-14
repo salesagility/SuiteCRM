@@ -90,8 +90,10 @@ class VardefManager
     {
         if ($enable && isset($custom_disabled_modules[$module])) {
             unset($custom_disabled_modules[$module]);
-        } elseif (!$enable) {
-            $custom_disabled_modules[$module] = true;
+        } else {
+            if (!$enable) {
+                $custom_disabled_modules[$module] = true;
+            }
         }
     }
 
@@ -368,7 +370,7 @@ class VardefManager
         if (empty($matches)) {
             return false;
         }
-        if (sizeof($matches) == 1) {
+        if (count($matches) == 1) {
             $results = $matches[0];
         } else {
             //For relationships where both sides are the same module, more than one link will be returned

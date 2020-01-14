@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
     require_once('include/entryPoint.php');
 
@@ -67,14 +61,18 @@ $username = '';
 $useremail = '';
 if (isset($_POST['user_name'])) {
     $username = $_POST['user_name'];
-} elseif (isset($_POST['username'])) {
-    $username = $_POST['username'];
+} else {
+    if (isset($_POST['username'])) {
+        $username = $_POST['username'];
+    }
 }
 
 if (isset($_POST['Users0emailAddress0'])) {
     $useremail = $_POST['Users0emailAddress0'];
-} elseif (isset($_POST['user_email'])) {
-    $useremail = $_POST['user_email'];
+} else {
+    if (isset($_POST['user_email'])) {
+        $useremail = $_POST['user_email'];
+    }
 }
 
     $usr= new user();

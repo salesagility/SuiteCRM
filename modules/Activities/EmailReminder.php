@@ -47,6 +47,7 @@ require_once("modules/Calls/Call.php");
 require_once("modules/Users/User.php");
 require_once("modules/Contacts/Contact.php");
 require_once("modules/Leads/Lead.php");
+require_once("include/utils.php");
 
 /**
  * Class for sending email reminders of meetings and call to invitees
@@ -129,33 +130,27 @@ class EmailReminder
      */
     public function sendReminders(SugarBean $bean, Administration $admin, $recipients)
     {
-        if (empty($_SESSION['authenticated_user_language'])) {
-            $current_language = $GLOBALS['sugar_config']['default_language'];
-        } else {
-            $current_language = $_SESSION['authenticated_user_language'];
-        }
+        $current_language = get_current_language();
 
         if (!empty($bean->created_by)) {
             $user_id = $bean->created_by;
+        } elseif (!empty($bean->assigned_user_id)) {
+            $user_id = $bean->assigned_user_id;
         } else {
-            if (!empty($bean->assigned_user_id)) {
-                $user_id = $bean->assigned_user_id;
-            } else {
-                $user_id = $GLOBALS['current_user']->id;
-            }
+            $user_id = $GLOBALS['current_user']->id;
         }
         $user = BeanFactory::getBean('Users', $user_id);
 
         $OBCharset = $GLOBALS['locale']->getPrecedentPreference('default_email_charset');
-        require_once("include/SugarPHPMailer.php");
+        require_once __DIR__ . '/../../include/SugarPHPMailer.php';
         $mail = new SugarPHPMailer();
         $mail->setMailerForSystem();
 
         if (empty($admin->settings['notify_send_from_assigning_user'])) {
             $from_address = $admin->settings['notify_fromaddress'];
-            $from_name = $admin->settings['notify_fromname'] ? "" : $admin->settings['notify_fromname'];
+            $from_name = $admin->settings['notify_fromname'] ? '' : $admin->settings['notify_fromname'];
         } else {
-            $from_address = $user->emailAddress->getReplyToAddress($user);
+            $from_address = (new SugarEmailAddress())->getReplyToAddress($user);
             $from_name = $user->full_name;
         }
 

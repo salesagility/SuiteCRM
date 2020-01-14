@@ -114,8 +114,10 @@ class ImapHandlerFactory
             $info .= "\n[debug info this] " . var_dump($this, true);
             $info .= "\n[debug info callset] " . var_dump($interfaceCallsSettings, true);
             LoggerManager::getLogger()->debug('Imap test setting failure: ' . $info);
-            throw new ImapHandlerException("Test settings does not exists: $testSettings",
-                ImapHandlerException::ERR_TEST_SET_NOT_EXISTS);
+            throw new ImapHandlerException(
+                "Test settings does not exists: $testSettings",
+                ImapHandlerException::ERR_TEST_SET_NOT_EXISTS
+            );
         }
 
         $interfaceCalls = $interfaceCallsSettings[$testSettings];
@@ -142,6 +144,17 @@ class ImapHandlerFactory
 
         return $testSettings;
     }
+
+    /**
+     * Delete's test settings file.
+     * @return void
+     */
+    public function deleteTestSettings()
+    {
+        if (file_exists(__DIR__ . self::SETTINGS_KEY_FILE)) {
+            unlink(__DIR__ . self::SETTINGS_KEY_FILE);
+        }
+    }
     
     /**
      *
@@ -159,8 +172,10 @@ class ImapHandlerFactory
         $calls = include $this->imapHandlerTestInterface['calls'];
 
         if (!isset($calls[$key])) {
-            throw new ImapHandlerException('Key not found: ' . $key,
-                ImapHandlerException::ERR_KEY_NOT_FOUND);
+            throw new ImapHandlerException(
+                'Key not found: ' . $key,
+                ImapHandlerException::ERR_KEY_NOT_FOUND
+            );
         } else {
             if (!file_put_contents(__DIR__ . self::SETTINGS_KEY_FILE, $key)) {
                 throw new ImapHandlerException('Key saving error', ImapHandlerException::ERR_KEY_SAVE_ERROR);
@@ -182,8 +197,10 @@ class ImapHandlerFactory
     {
         if (null === $this->interfaceObject) {
             global $sugar_config;
+
             $test = (isset($sugar_config['imap_test']) && $sugar_config['imap_test']) || $testSettings;
-            
+            $charset = (isset($sugar_config['default_email_charset'])) ? $sugar_config['default_email_charset'] : null;
+
             if (inDeveloperMode()) {
                 $logErrors = true;
                 $logCalls = true;
@@ -191,12 +208,12 @@ class ImapHandlerFactory
                 $logErrors = true;
                 $logCalls = false;
             }
-            
+
             $interfaceClass = ImapHandler::class;
             if ($test) {
                 $this->loadTestSettings($testSettings);
             } else {
-                $this->setInterfaceObject(new $interfaceClass($logErrors, $logCalls));
+                $this->setInterfaceObject(new $interfaceClass($logErrors, $logCalls, $charset));
             }
         }
         return $this->interfaceObject;

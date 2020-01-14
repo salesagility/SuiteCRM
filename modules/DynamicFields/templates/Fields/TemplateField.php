@@ -264,10 +264,12 @@ class TemplateField
             if (!is_null($this->default_value)) { // add a default value if it is not null - we want to set a default even if default_value is '0', which is not null, but which is empty()
                 if (null == trim($this->default_value)) {
                     return " DEFAULT NULL";
+                } else {
+                    return " DEFAULT '$this->default_value'";
                 }
-                return " DEFAULT '$this->default_value'";
+            } else {
+                return '';
             }
-            return '';
         }
     }
 
@@ -333,8 +335,8 @@ class TemplateField
     public function get_db_delete_alter_table($table)
     {
         return DBManagerFactory::getInstance()->getHelper()->dropColumnSQL(
-        $table,
-        $this->get_field_def()
+            $table,
+            $this->get_field_def()
         );
     }
 
@@ -392,10 +394,13 @@ class TemplateField
     {
         if ($value === 'true' || $value === '1' || $value === 1) {
             return  true;
-        } elseif ($value === 'false' || $value === '0' || $value === 0) {
-            return  false;
+        } else {
+            if ($value === 'false' || $value === '0' || $value === 0) {
+                return  false;
+            } else {
+                return $value;
+            }
         }
-        return $value;
     }
 
 
@@ -457,10 +462,12 @@ class TemplateField
         } else {
             if ($this->merge_filter === "selected") {
                 $this->duplicate_merge_dom_value = 3;
-            } elseif (empty($this->duplicate_merge) || $this->duplicate_merge === 'disabled') {
-                $this->duplicate_merge_dom_value = 4;
             } else {
-                $this->duplicate_merge_dom_value = 2;
+                if (empty($this->duplicate_merge) || $this->duplicate_merge === 'disabled') {
+                    $this->duplicate_merge_dom_value = 4;
+                } else {
+                    $this->duplicate_merge_dom_value = 2;
+                }
             }
         }
 

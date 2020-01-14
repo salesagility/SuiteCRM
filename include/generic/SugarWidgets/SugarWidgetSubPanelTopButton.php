@@ -222,10 +222,12 @@ class SugarWidgetSubPanelTopButton extends SugarWidget
             if ($defines['focus']->object_name=='Contact') {
                 $additionalFormFields['parent_id'] = $defines['focus']->account_id;
                 $additionalFormFields['account_id'] = $defines['focus']->account_id;
-            } elseif ($defines['focus']->object_name=='Contract') {
-                $additionalFormFields['contract_id'] = $defines['focus']->id;
             } else {
-                $additionalFormFields['parent_id'] = $defines['focus']->id;
+                if ($defines['focus']->object_name=='Contract') {
+                    $additionalFormFields['contract_id'] = $defines['focus']->id;
+                } else {
+                    $additionalFormFields['parent_id'] = $defines['focus']->id;
+                }
             }
         }
 
@@ -253,22 +255,23 @@ class SugarWidgetSubPanelTopButton extends SugarWidget
             $returnLink = rtrim($returnLink, '&');
 
             return $returnLink;
-        }
-        $form = 'form' . $relationship_name;
-        $button = '<form action="index.php" method="post" name="form" id="' . $form . "\">\n";
-        foreach ($formValues as $key => $value) {
-            $button .= "<input type='hidden' name='" . $key . "' value='" . $value . "' />\n";
-        }
-
-        // fill in additional form fields for all but action
-        foreach ($additionalFormFields as $key => $value) {
-            if ($key != 'action') {
+        } else {
+            $form = 'form' . $relationship_name;
+            $button = '<form action="index.php" method="post" name="form" id="' . $form . "\">\n";
+            foreach ($formValues as $key => $value) {
                 $button .= "<input type='hidden' name='" . $key . "' value='" . $value . "' />\n";
             }
+
+            // fill in additional form fields for all but action
+            foreach ($additionalFormFields as $key => $value) {
+                if ($key != 'action') {
+                    $button .= "<input type='hidden' name='" . $key . "' value='" . $value . "' />\n";
+                }
+            }
+
+
+            return $button;
         }
-
-
-        return $button;
     }
 
     /** This default function is used to create the HTML for a simple button */

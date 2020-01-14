@@ -27,7 +27,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/MVC/View/SugarView.php');
-require_once('include/MVC/View/views/view.list.php');
 
 class AOD_IndexViewIndexData extends SugarView
 {

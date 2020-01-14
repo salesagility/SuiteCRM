@@ -179,7 +179,7 @@ class Person extends Basic
      */
     public function save($check_notify = false)
     {
-        //If we are saving due to relationship changes, don't bother trying to update the emails
+        // If we are saving due to relationship changes, don't bother trying to update the emails
         if (!empty($GLOBALS['resavingRelatedBeans'])) {
             parent::save($check_notify);
 
@@ -188,10 +188,15 @@ class Person extends Basic
         $this->add_address_streets('primary_address_street');
         $this->add_address_streets('alt_address_street');
         $ori_in_workflow = empty($this->in_workflow) ? false : true;
-        $this->emailAddress->handleLegacySave($this);
+	$this->emailAddress->handleLegacySave($this);
+
+        if (empty($this->id)) {
+            $this->id = create_guid();
+            $this->new_with_id = true;
+        }
+
         // bug #39188 - store emails state before workflow make any changes
         $this->emailAddress->stash($this->id, $this->module_dir);
-        parent::save($check_notify);
         $override_email = array();
         if (!empty($this->email1_set_in_workflow)) {
             $override_email['emailAddress0'] = $this->email1_set_in_workflow;
@@ -216,6 +221,7 @@ class Person extends Basic
             );
         }
 
+	parent::save($check_notify);
         return $this->id;
     }
 
@@ -322,7 +328,7 @@ class Person extends Basic
 
         $where_auto = " $table.deleted=0 ";
 
-        if ($where != '') {
+        if (!empty($where)) {
             $query .= "WHERE ($where) AND " . $where_auto;
         } else {
             $query .= 'WHERE ' . $where_auto;

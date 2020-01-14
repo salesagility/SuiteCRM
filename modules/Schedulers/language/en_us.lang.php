@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -57,6 +57,7 @@ $mod_strings = array(
     'LBL_OOTB_SEND_EMAIL_REMINDERS' => 'Run Email Reminder Notifications',
     'LBL_OOTB_CLEANUP_QUEUE' => 'Clean Jobs Queue',
     'LBL_OOTB_REMOVE_DOCUMENTS_FROM_FS' => 'Removal of documents from filesystem',
+    'LBL_OOTB_GOOGLE_CAL_SYNC' => 'Google Calendar Sync',
 
 // List Labels
     'LBL_LIST_JOB_INTERVAL' => 'Interval:',
@@ -74,16 +75,16 @@ $mod_strings = array(
     'LBL_FRI' => 'Friday',
     'LBL_SAT' => 'Saturday',
     'LBL_ALL' => 'Every Day',
-    'LBL_EVERY' => 'Every ',
-    'LBL_FROM' => 'From ',
-    'LBL_ON_THE' => 'On the ',
-    'LBL_RANGE' => ' to ',
-    'LBL_AND' => ' and ',
-    'LBL_MINUTES' => ' minutes ',
-    'LBL_HOUR' => ' hours',
-    'LBL_HOUR_SING' => ' hour',
-    'LBL_OFTEN' => ' As often as possible.',
-    'LBL_MIN_MARK' => ' minute mark',
+    'LBL_EVERY' => 'Every',
+    'LBL_FROM' => 'From',
+    'LBL_ON_THE' => 'On the',
+    'LBL_RANGE' => 'to',
+    'LBL_AND' => 'and',
+    'LBL_MINUTES' => 'minutes',
+    'LBL_HOUR' => 'hours',
+    'LBL_HOUR_SING' => 'hour',
+    'LBL_OFTEN' => 'As often as possible.',
+    'LBL_MIN_MARK' => 'minute mark',
 
 
 // crontabs
@@ -129,10 +130,10 @@ $mod_strings = array(
     'NTC_LIST_ORDER' => 'Set the order this schedule will appear in the Scheduler dropdown lists',
     'LBL_CRON_INSTRUCTIONS_WINDOWS' => 'To Setup Windows Scheduler',
     'LBL_CRON_INSTRUCTIONS_LINUX' => 'To Setup Crontab',
-    'LBL_CRON_LINUX_DESC1' => 'In order to run SuiteCRM Schedulers, edit your web server user\'s crontab file with this command: ',
-    'LBL_CRON_LINUX_DESC2' => '... and add the following line to the crontab file: ',
+    'LBL_CRON_LINUX_DESC1' => 'In order to run SuiteCRM Schedulers, edit your web server user\'s crontab file with this command:',
+    'LBL_CRON_LINUX_DESC2' => '... and add the following line to the crontab file:',
     'LBL_CRON_LINUX_DESC3' => 'You should do this only after the installation is concluded.',
-    'LBL_CRON_WINDOWS_DESC' => 'In order to run the SuiteCRM schedulers, create a batch file to run using Windows Scheduled Tasks. The batch file should include the following commands: ',
+    'LBL_CRON_WINDOWS_DESC' => 'In order to run the SuiteCRM schedulers, create a batch file to run using Windows Scheduled Tasks. The batch file should include the following commands:',
 // Subpanels
     'LBL_JOBS_SUBPANEL_TITLE' => 'Job Log',
     'LBL_EXECUTE_TIME' => 'Execute Time',
@@ -146,7 +147,6 @@ $mod_strings = array(
     'LBL_POLLMONITOREDINBOXESFORBOUNCEDCAMPAIGNEMAILS' => 'Run Nightly Process Bounced Campaign Emails',
     'LBL_PRUNEDATABASE' => 'Prune Database on 1st of Month',
     'LBL_TRIMTRACKER' => 'Prune Tracker Tables',
-    'LBL_TRIMSUGARFEEDS' => 'Prune SuiteCRM Feed Tables',
     'LBL_SENDEMAILREMINDERS' => 'Run Email Reminders Sending',
     'LBL_CLEANJOBQUEUE' => 'Cleanup Job Queue',
     'LBL_REMOVEDOCUMENTSFROMFS' => 'Removal of documents from filesystem',
@@ -157,7 +157,10 @@ $mod_strings = array(
     'LBL_AORRUNSCHEDULEDREPORTS' => 'Run scheduled reports',
     'LBL_PROCESSAOW_WORKFLOW' => 'Process AOW Workflow',
 
+    'LBL_RUNELASTICSEARCHINDEXERSCHEDULER' => 'Elasticsearch indexer',
+
     'LBL_SCHEDULER_TIMES' => 'Scheduler Times',
+    'LBL_SYNCGOOGLECALENDAR' => 'Sync Google Calendars',
 );
 
 global $sugar_config;

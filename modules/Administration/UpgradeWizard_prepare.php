@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,12 +38,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('modules/Administration/UpgradeWizardCommon.php');
-
 
 unset($_SESSION['rebuild_relationships']);
 unset($_SESSION['rebuild_extensions']);
@@ -58,8 +54,9 @@ if (!isset($_REQUEST['mode']) || ($_REQUEST['mode'] == "")) {
     die("No mode specified.");
 }
 
-if (!file_exists($base_tmp_upgrade_dir)) {
-    mkdir($base_tmp_upgrade_dir, 0755, true);
+if (!file_exists($base_tmp_upgrade_dir) && !mkdir($base_tmp_upgrade_dir, 0755,
+        true) && !is_dir($base_tmp_upgrade_dir)) {
+    throw new \RuntimeException(sprintf('Directory "%s" was not created', $base_tmp_upgrade_dir));
 }
 
 $unzip_dir      = mk_temp_dir($base_tmp_upgrade_dir);
@@ -181,8 +178,10 @@ switch ($install_type) {
         while ($f = $d->read()) {
             if ($f == "." || $f == "..") {
                 continue;
-            } elseif (preg_match("/(.*)\.lang\.php\$/", $f, $match)) {
-                $new_lang_name = $match[1];
+            } else {
+                if (preg_match("/(.*)\.lang\.php\$/", $f, $match)) {
+                    $new_lang_name = $match[1];
+                }
             }
         }
         if ($new_lang_name == "") {
@@ -236,12 +235,16 @@ $hidden_fields .= "<input type=hidden name=\"s_manifest\" value='".base64_encode
 if (empty($new_studio_mod_files)) {
     if (!empty($mode) && $mode == 'Uninstall') {
         echo $mod_strings['LBL_UW_UNINSTALL_READY'];
-    } elseif ($mode == 'Disable') {
-        echo $mod_strings['LBL_UW_DISABLE_READY'];
-    } elseif ($mode == 'Enable') {
-        echo $mod_strings['LBL_UW_ENABLE_READY'];
     } else {
-        echo $mod_strings['LBL_UW_PATCH_READY'];
+        if ($mode == 'Disable') {
+            echo $mod_strings['LBL_UW_DISABLE_READY'];
+        } else {
+            if ($mode == 'Enable') {
+                echo $mod_strings['LBL_UW_ENABLE_READY'];
+            } else {
+                echo $mod_strings['LBL_UW_PATCH_READY'];
+            }
+        }
     }
 } else {
     echo $mod_strings['LBL_UW_PATCH_READY2'];
@@ -331,8 +334,10 @@ switch ($mode) {
         if ($install_type == "langpack") {
             print($mod_strings['LBL_UW_LANGPACK_READY_UNISTALL']);
             echo '<br><br>';
-        } elseif ($install_type != "module") {
-            print($mod_strings['LBL_UW_FILES_REMOVED']);
+        } else {
+            if ($install_type != "module") {
+                print($mod_strings['LBL_UW_FILES_REMOVED']);
+            }
         }
         break;
     case "Disable":
@@ -403,16 +408,22 @@ if ($show_files == true) {
     echo '<input type="checkbox" checked onclick="toggle_these(' . count($new_studio_mod_files) . ',' . count($new_files) . ', this)"> '.$mod_strings['LBL_UW_CHECK_ALL'];
     echo '<ul>';
     foreach ($new_sugar_mod_files as $the_file) {
-        $highlight_start    = "";
-        $highlight_end      = "";
-        $checked            = "";
-        $disabled           = "";
+        $highlight_start = "";
+        $highlight_end = "";
+        $checked = "";
+        $disabled = "";
         $unzip_file = "$unzip_dir/$zip_from_dir/$the_file";
-        $new_file   = clean_path("$zip_to_dir/$the_file");
-        $forced_copy    = false;
+        $new_file = clean_path("$zip_to_dir/$the_file");
+        $forced_copy = false;
 
         if ($mode == "Install") {
             $checked = "checked";
+
+            if ($install_type === 'langpack' && $the_file == "./manifest.php") {
+                $checked = '';
+                $disabled = "disabled=\"true\"";
+            }
+
             foreach ($zip_force_copy as $pattern) {
                 if (preg_match("#" . $pattern . "#", $unzip_file)) {
                     $disabled = "disabled=\"true\"";
@@ -421,7 +432,6 @@ if ($show_files == true) {
             }
             if (!$forced_copy && is_file($new_file) && (md5_file($unzip_file) == md5_file($new_file))) {
                 $disabled = "disabled=\"true\"";
-                //$checked = "";
             }
             if ($checked != "" && $disabled != "") {    // need to put a hidden field
                 print("<input name=\"copy_$count\" type=\"hidden\" value=\"" . $the_file . "\">\n");
@@ -431,20 +441,22 @@ if ($show_files == true) {
                 print(" (no changes)");
             }
             print("<br>\n");
-        } elseif ($mode == "Uninstall" && file_exists($new_file)) {
-            if (md5_file($unzip_file) == md5_file($new_file)) {
-                $checked = "checked=\"true\"";
-            } else {
-                $highlight_start    = "<font color=red>";
-                $highlight_end      = "</font>";
+        } else {
+            if ($mode == "Uninstall" && file_exists($new_file)) {
+                if (md5_file($unzip_file) == md5_file($new_file)) {
+                    $checked = "checked=\"true\"";
+                } else {
+                    $highlight_start = "<font color=red>";
+                    $highlight_end = "</font>";
+                }
+                print("<li><input name=\"copy_$count\" type=\"checkbox\" value=\"" . $the_file . "\" $checked $disabled > " . $highlight_start . $new_file . $highlight_end . "<br>\n");
             }
-            print("<li><input name=\"copy_$count\" type=\"checkbox\" value=\"" . $the_file . "\" $checked $disabled > " . $highlight_start . $new_file . $highlight_end . "<br>\n");
         }
         $count++;
     }
     print("</ul>\n");
 }
-//    echo '</div>';
+
 if ($mode == "Disable" || $mode == "Enable") {
     //check to see if any files have been modified
     $modified_files = getDiffFiles($unzip_dir, $install_file, ($mode == 'Enable'), $previous_version);

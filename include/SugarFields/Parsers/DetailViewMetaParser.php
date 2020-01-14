@@ -126,43 +126,45 @@ class DetailViewMetaParser extends MetaParser
                     //If it's a space, simply add a blank string
                     if ($field == '&nbsp;') {
                         $metacolumns[] = "";
-                    } elseif (!empty($field)) {
-                        preg_match_all('/[\{]([^\}].*?)[\}]/s', $field, $matches, PREG_SET_ORDER);
-                        if (!empty($matches)) {
-                            if (count($matches) > 1) {
-                                $def = array();
+                    } else {
+                        if (!empty($field)) {
+                            preg_match_all('/[\{]([^\}].*?)[\}]/s', $field, $matches, PREG_SET_ORDER);
+                            if (!empty($matches)) {
+                                if (count($matches) > 1) {
+                                    $def = array();
 
-                                $def['name'] = preg_match('/_c$/i', $matches[0][1]) ? $matches[0][1] : strtolower($matches[0][1]);
-                                foreach ($matches as $m) {
-                                    if (isset($vardefs[strtolower($m[1])])) {
-                                        $def['name'] = strtolower($m[1]);
+                                    $def['name'] = preg_match('/_c$/i', $matches[0][1]) ? $matches[0][1] : strtolower($matches[0][1]);
+                                    foreach ($matches as $m) {
+                                        if (isset($vardefs[strtolower($m[1])])) {
+                                            $def['name'] = strtolower($m[1]);
+                                        }
                                     }
-                                }
 
-                                $field = preg_replace('/<\{tag\.[a-z_]*?\}/i', '<a', $field);
-                                $field = preg_replace('/<\/\{tag\.[a-z_]*?\}>/i', '</a>', $field);
+                                    $field = preg_replace('/<\{tag\.[a-z_]*?\}/i', '<a', $field);
+                                    $field = preg_replace('/<\/\{tag\.[a-z_]*?\}>/i', '</a>', $field);
 
-                                foreach ($matches as $tag[1]) {
-                                    if (preg_match("/^(mod[\.]|app[\.]).*?/i", $tag[1][1])) {
-                                        $field = str_replace($tag[1][1], '$'.$tag[1][1], $field);
-                                    } else {
-                                        $theField = preg_match('/_c$/i', $tag[1][1]) ? $tag[1][1] : strtolower($tag[1][1]);
-                                        if (!empty($vardefs[$theField])) {
-                                            $field = str_replace($tag[1][1], '$fields.'. $theField.'.value', $field);
+                                    foreach ($matches as $tag[1]) {
+                                        if (preg_match("/^(mod[\.]|app[\.]).*?/i", $tag[1][1])) {
+                                            $field = str_replace($tag[1][1], '$'.$tag[1][1], $field);
                                         } else {
-                                            $phpName = $this->findAssignedVariableName($tag[1][1], $filePath);
-                                            $field = str_replace($tag[1][1], '$fields.'. $theField.'.value', $field);
-                                        } //if-else
+                                            $theField = preg_match('/_c$/i', $tag[1][1]) ? $tag[1][1] : strtolower($tag[1][1]);
+                                            if (!empty($vardefs[$theField])) {
+                                                $field = str_replace($tag[1][1], '$fields.'. $theField.'.value', $field);
+                                            } else {
+                                                $phpName = $this->findAssignedVariableName($tag[1][1], $filePath);
+                                                $field = str_replace($tag[1][1], '$fields.'. $theField.'.value', $field);
+                                            } //if-else
+                                        }
                                     }
-                                }
 
-                                $def['customCode'] = $field;
-                                $def['description'] = 'This field was auto generated';
-                            } else {
-                                $def = strtolower($matches[0][1]);
-                            }
-                        } //if
-                        $metacolumns[] = $def;
+                                    $def['customCode'] = $field;
+                                    $def['description'] = 'This field was auto generated';
+                                } else {
+                                    $def = strtolower($matches[0][1]);
+                                }
+                            } //if
+                            $metacolumns[] = $def;
+                        }
                     } //if
                 } //foreach($tablecolumns as $tcols)
 

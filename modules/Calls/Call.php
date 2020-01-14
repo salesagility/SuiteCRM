@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 
 class Call extends SugarBean
@@ -184,6 +178,9 @@ class Call extends SugarBean
 
     // save date_end by calculating user input
     // this is for calendar
+    private static $remindersInSaving = false;
+
+
     public function save($check_notify = false)
     {
         global $timedate;
@@ -244,11 +241,13 @@ class Call extends SugarBean
             vCal::cache_sugar_vcal($current_user);
         }
 
-        if (isset($_REQUEST['reminders_data'])) {
+        if (isset($_REQUEST['reminders_data']) && !self::$remindersInSaving) {
+            self::$remindersInSaving = true;
             $reminderData = json_encode(
                 $this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
             );
             Reminder::saveRemindersDataJson('Calls', $return_id, $reminderData);
+            self::$remindersInSaving = false;
         }
 
         return $return_id;
@@ -312,7 +311,7 @@ class Call extends SugarBean
 
     public function get_summary_text()
     {
-        return "$this->name";
+        return (string)$this->name;
     }
 
     public function create_list_query($order_by, $where, $show_deleted=0)

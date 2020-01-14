@@ -242,10 +242,10 @@ class UserPreference extends SugarBean
             $_SESSION[$user->user_name . '_PREFERENCES'][$category] = unserialize(base64_decode($row['contents']));
             $user->user_preferences[$category] = unserialize(base64_decode($row['contents']));
             return true;
+        } else {
+            $_SESSION[$user->user_name . '_PREFERENCES'][$category] = array();
+            $user->user_preferences[$category] = array();
         }
-        $_SESSION[$user->user_name . '_PREFERENCES'][$category] = array();
-        $user->user_preferences[$category] = array();
-
         return false;
     }
 
@@ -284,26 +284,27 @@ class UserPreference extends SugarBean
             $prefDate['userGmtOffset'] = $timedate->getUserUTCOffset($user);
 
             return $prefDate;
-        }
-        $prefDate['date'] = $timedate->get_date_format();
-        $prefDate['time'] = $timedate->get_time_format();
-
-        if (!empty($user) && $user->object_name == 'User') {
-            $timeZone = TimeDate::userTimezone($user);
-            // cn: bug 9171 - if user has no time zone, cron.php fails for InboundEmail
-            if (!empty($timeZone)) {
-                $prefDate['userGmt'] = TimeDate::tzName($timeZone);
-                $prefDate['userGmtOffset'] = $timedate->getUserUTCOffset($user);
-            }
         } else {
-            $timeZone = TimeDate::userTimezone($current_user);
-            if (!empty($timeZone)) {
-                $prefDate['userGmt'] = TimeDate::tzName($timeZone);
-                $prefDate['userGmtOffset'] = $timedate->getUserUTCOffset($current_user);
-            }
-        }
+            $prefDate['date'] = $timedate->get_date_format();
+            $prefDate['time'] = $timedate->get_time_format();
 
-        return $prefDate;
+            if (!empty($user) && $user->object_name == 'User') {
+                $timeZone = TimeDate::userTimezone($user);
+                // cn: bug 9171 - if user has no time zone, cron.php fails for InboundEmail
+                if (!empty($timeZone)) {
+                    $prefDate['userGmt'] = TimeDate::tzName($timeZone);
+                    $prefDate['userGmtOffset'] = $timedate->getUserUTCOffset($user);
+                }
+            } else {
+                $timeZone = TimeDate::userTimezone($current_user);
+                if (!empty($timeZone)) {
+                    $prefDate['userGmt'] = TimeDate::tzName($timeZone);
+                    $prefDate['userGmtOffset'] = $timedate->getUserUTCOffset($current_user);
+                }
+            }
+
+            return $prefDate;
+        }
     }
 
     /**
@@ -388,7 +389,7 @@ class UserPreference extends SugarBean
             unset($_SESSION[$user->user_name."_PREFERENCES"][$category]);
         } else {
             if (!empty($_COOKIE['sugar_user_theme']) && !headers_sent()) {
-                setcookie('sugar_user_theme', '', time() - 3600, null, null, false, true); // expire the sugar_user_theme cookie
+                setcookie('sugar_user_theme', '', time() - 3600, null, null, isSSL(), true); // expire the sugar_user_theme cookie
             }
             unset($_SESSION[$user->user_name."_PREFERENCES"]);
             if ($user->id == $GLOBALS['current_user']->id) {

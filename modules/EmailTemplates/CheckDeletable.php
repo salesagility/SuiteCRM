@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 require_once('modules/EmailTemplates/EmailTemplate.php');
 
@@ -62,20 +56,22 @@ if ($_REQUEST['from'] == 'DetailView') {
         return;
     }
     echo 'false';
-} elseif ($_REQUEST['from'] == 'ListView') {
-    $returnString = '';
-    $idArray = explode(',', $_REQUEST['records']);
-    foreach ($idArray as $key => $value) {
-        if ($focus->retrieve($value)) {
-            if (check_email_template_in_use($focus)) {
-                $returnString .= $focus->name . ',';
+} else {
+    if ($_REQUEST['from'] == 'ListView') {
+        $returnString = '';
+        $idArray = explode(',', $_REQUEST['records']);
+        foreach ($idArray as $key => $value) {
+            if ($focus->retrieve($value)) {
+                if (check_email_template_in_use($focus)) {
+                    $returnString .= $focus->name . ',';
+                }
             }
         }
+        $returnString = substr($returnString, 0, -1);
+        echo $returnString;
+    } else {
+        echo '';
     }
-    $returnString = substr($returnString, 0, -1);
-    echo $returnString;
-} else {
-    echo '';
 }
 
 function check_email_template_in_use($focus)

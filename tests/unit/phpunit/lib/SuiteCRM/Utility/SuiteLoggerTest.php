@@ -1,48 +1,47 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Utility\Paths;
+use SuiteCRM\Utility\SuiteLogger;
 
-class SuiteLoggerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
-     * @var \UnitTester
-     */
-    protected $tester;
-
-    /**
-     * @var string $oldLogLevel
-     */
-    private static $oldLogLevel;
-
-    /**
-     * @var \SuiteCRM\Utility\SuiteLogger $logger
+     * @var SuiteLogger
      */
     private static $logger;
 
+    /**
+     * @var string
+     */
+    private static $oldLogLevel;
+
     public function setUp()
     {
+        global $sugar_config;
+
         parent::setUp();
         if (self::$logger === null) {
-            self::$logger = new \SuiteCRM\Utility\SuiteLogger();
+            self::$logger = new SuiteLogger();
         }
-        $loggerManager = LoggerManager::getLogger();
 
-        if (self::$logger === null) {
-            self::$oldLogLevel = $loggerManager::getLogLevel();
-        }
+        $loggerManager = LoggerManager::getLogger();
+        self::$oldLogLevel = $loggerManager::getLogLevel();
 
         $loggerManager::setLogLevel('debug');
+        $sugar_config['show_log_trace'] = false;
     }
 
     public function tearDown()
     {
         $loggerManager = LoggerManager::getLogger();
         $loggerManager::setLogLevel(self::$oldLogLevel);
+        self::$logger = null;
         parent::tearDown();
     }
 
     public function testLogEmergency()
     {
-        self::markTestIncomplete();
         self::$logger->emergency('test');
         $lastLine = $this->getLastLogMessage();
         preg_match('/\[EMERGENCY\] test/', $lastLine, $matches);
@@ -51,7 +50,6 @@ class SuiteLoggerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testLogAlert()
     {
-        self::markTestIncomplete('need to fix: Failed asserting that an array is not empty.');
         self::$logger->alert('test');
         $lastLine = $this->getLastLogMessage();
         preg_match('/\[ALERT\] test/', $lastLine, $matches);
@@ -108,22 +106,30 @@ class SuiteLoggerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testInterpolate()
     {
-        self::$logger->error('test {a}', array('a' => 'apple'));
+        self::$logger->error('test {a}', ['a' => 'apple']);
         $lastLine = $this->getLastLogMessage();
         preg_match('/\[ERROR\] test apple/', $lastLine, $matches);
         $this->assertNotEmpty($matches);
     }
 
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testInvalidLevel()
+    {
+        self::$logger->log('invalid', 'test');
+    }
+
     private function getLastLogMessage()
     {
-        $paths = new \SuiteCRM\Utility\Paths();
-        $loggerPath = $paths->getProjectPath().'/suitecrm.log';
+        $paths = new Paths();
+        $loggerPath = $paths->getProjectPath() . '/suitecrm.log';
         $data = file($loggerPath);
 
         if (empty($data)) {
             $line = '';
         } else {
-            $line = $data[count($data)-1];
+            $line = $data[count($data) - 1];
         }
 
         return $line;

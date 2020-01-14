@@ -72,24 +72,42 @@ class DocumentsParseRule extends BaseRule
                 foreach ($row as $key=>$column) {
                     if ($this->matches($column, '/^related_doc_id$/')) {
                         $panels[$name][$rowCount][$key] = 'related_doc_name';
-                    } elseif ($this->matches($column, '/^related_doc_rev_id$/')) {
-                        $panels[$name][$rowCount][$key] = ($view == 'EditView') ? 'related_doc_rev_number' : 'related_doc_name';
-                    } elseif ($this->matches($column, '/^user_date_format$/')) {
-                        $panels[$name][$rowCount][$key] = 'active_date';
-                    } elseif ($this->matches($column, '/^is_template_checked$/')) {
-                        $panels[$name][$rowCount][$key] = 'is_template';
-                    } elseif ($this->matches($column, '/^last_rev_creator$/')) {
-                        $panels[$name][$rowCount][$key] = 'last_rev_created_name';
-                    } elseif ($this->matches($column, '/^last_rev_date$/')) {
-                        $panels[$name][$rowCount][$key] = 'last_rev_create_date';
-                    } elseif ($this->matches($column, '/^save_file$/')) {
-                        $panels[$name][$rowCount][$key] = 'filename';
-                    } elseif ($this->matches($column, '/^subcategory$/')) {
-                        $panels[$name][$rowCount][$key] = 'subcategory_id';
-                    } elseif ($this->matches($column, '/^category$/')) {
-                        $panels[$name][$rowCount][$key] = 'category_id';
-                    } elseif ($this->matches($column, '/^related_document_version$/')) {
-                        $panels[$name][$rowCount][$key] = 'related_doc_rev_number';
+                    } else {
+                        if ($this->matches($column, '/^related_doc_rev_id$/')) {
+                            $panels[$name][$rowCount][$key] = ($view == 'EditView') ? 'related_doc_rev_number' : 'related_doc_name';
+                        } else {
+                            if ($this->matches($column, '/^user_date_format$/')) {
+                                $panels[$name][$rowCount][$key] = 'active_date';
+                            } else {
+                                if ($this->matches($column, '/^is_template_checked$/')) {
+                                    $panels[$name][$rowCount][$key] = 'is_template';
+                                } else {
+                                    if ($this->matches($column, '/^last_rev_creator$/')) {
+                                        $panels[$name][$rowCount][$key] = 'last_rev_created_name';
+                                    } else {
+                                        if ($this->matches($column, '/^last_rev_date$/')) {
+                                            $panels[$name][$rowCount][$key] = 'last_rev_create_date';
+                                        } else {
+                                            if ($this->matches($column, '/^save_file$/')) {
+                                                $panels[$name][$rowCount][$key] = 'filename';
+                                            } else {
+                                                if ($this->matches($column, '/^subcategory$/')) {
+                                                    $panels[$name][$rowCount][$key] = 'subcategory_id';
+                                                } else {
+                                                    if ($this->matches($column, '/^category$/')) {
+                                                        $panels[$name][$rowCount][$key] = 'category_id';
+                                                    } else {
+                                                        if ($this->matches($column, '/^related_document_version$/')) {
+                                                            $panels[$name][$rowCount][$key] = 'related_doc_rev_number';
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 } //foreach
             } //foreach

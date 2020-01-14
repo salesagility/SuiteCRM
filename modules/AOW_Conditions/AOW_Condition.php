@@ -132,8 +132,10 @@ class AOW_Condition extends Basic
                                         $post_data[$key . $field_name][$i] = encodeMultienumValue($post_data[$key . $field_name][$i]);
                                 }
                             }
-                        } elseif ($field_name === 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
-                            $post_data[$key . $field_name][$i] = fixUpFormatting($_REQUEST['flow_module'], $condition->field, $post_data[$key . $field_name][$i]);
+                        } else {
+                            if ($field_name === 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
+                                $post_data[$key . $field_name][$i] = fixUpFormatting($_REQUEST['flow_module'], $condition->field, $post_data[$key . $field_name][$i]);
+                            }
                         }
                         $condition->$field_name = $post_data[$key . $field_name][$i];
                     }

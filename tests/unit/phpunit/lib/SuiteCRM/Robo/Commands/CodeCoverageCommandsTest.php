@@ -1,8 +1,9 @@
 <?php
 
 use \SuiteCRM\Robo\Plugin\Commands\CodeCoverageCommands;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class CodeCoverageCommandsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class CodeCoverageCommandsTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
      * @var \UnitTester
@@ -12,7 +13,7 @@ class CodeCoverageCommandsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
     /** @var \SuiteCRM\Robo\Plugin\Commands\CodeCoverageCommands **/
     protected static $testClass;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -49,42 +50,9 @@ class CodeCoverageCommandsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
         $this->assertTrue($returnType);
     }
 
-    public function testDisableStateChecker()
-    {
-        // backup configure override
-        $configOverrideData = '';
-        $configOverridePath = 'config_override.php';
-        if (file_exists($configOverridePath)) {
-            $configOverrideData = \file_get_contents($configOverridePath);
-        }
-
-        // Run tests
-        $reflection = new ReflectionClass(CodeCoverageCommands::class);
-        $method = $reflection->getMethod('disableStateChecker');
-        $method->setAccessible(true);
-
-        $actual = $method->invoke(
-            self::$testClass
-        );
-
-        $this->assertTrue($actual);
-
-        // restore config override
-        if (!empty($configOverrideData)) {
-            \file_put_contents($configOverridePath, $configOverrideData);
-        }
-    }
-
     public function testGetCodeCoverageCommand()
     {
-        $paths = new \SuiteCRM\Utility\Paths();
-        $os = new \SuiteCRM\Utility\OperatingSystem();
-        // original
-//        $commandExpected =  $os->toOsPath($paths->getProjectPath())
-//            . DIRECTORY_SEPARATOR
-//            . $os->toOsPath('vendor/bin/codecept')
-//            . ' run unit --coverage-xml';
-        $commandExpected = 'cd tests/ ; ../vendor/bin/phpunit --configuration $(pwd)/phpunit.xml.dist --coverage-clover ./_output/coverage.xml ./tests/unit/phpunit';
+        $commandExpected = './vendor/bin/phpunit --configuration ./tests/phpunit.xml.dist --coverage-clover ./tests/_output/coverage.xml ./tests/unit/phpunit';
         // Run tests
         $reflection = new ReflectionClass(CodeCoverageCommands::class);
         $method = $reflection->getMethod('getCodeCoverageCommand');

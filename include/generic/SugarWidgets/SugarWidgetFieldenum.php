@@ -119,8 +119,10 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
     {
         if (!empty($layout_def['column_key'])) {
             $field_def = $this->reporter->all_fields[$layout_def['column_key']];
-        } elseif (!empty($layout_def['fields'])) {
-            $field_def = $layout_def['fields'];
+        } else {
+            if (!empty($layout_def['fields'])) {
+                $field_def = $layout_def['fields'];
+            }
         }
         $cell = $this->displayListPlain($layout_def);
         $str = $cell;
@@ -140,8 +142,8 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
                 $div_id = $field_def['module'] ."&$record&$field_name";
                 $str = "<div id='$div_id'>" . $cell . "&nbsp;"
                      . SugarThemeRegistry::current()->getImage(
-                        "edit_inline",
-                        "border='0' alt='Edit Layout' align='bottom' onClick='SUGAR.reportsInlineEdit.inlineEdit(" .
+                         "edit_inline",
+                         "border='0' alt='Edit Layout' align='bottom' onClick='SUGAR.reportsInlineEdit.inlineEdit(" .
                         "\"$div_id\",\"$cell\",\"$module\",\"$record\",\"$field_name\",\"$field_type\");'"
                        )
                      . "</div>";
@@ -153,29 +155,35 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
     {
         if (!empty($layout_def['column_key'])) {
             $field_def = $this->reporter->all_fields[$layout_def['column_key']];
-        } elseif (!empty($layout_def['fields'])) {
-            $field_def = $layout_def['fields'];
+        } else {
+            if (!empty($layout_def['fields'])) {
+                $field_def = $layout_def['fields'];
+            }
         }
 
         if (!empty($layout_def['table_key']) &&(empty($field_def['fields']) || empty($field_def['fields'][0]) || empty($field_def['fields'][1]))) {
             $value = $this->_get_list_value($layout_def);
-        } elseif (!empty($layout_def['name']) && !empty($layout_def['fields'])) {
-            $key = strtoupper($layout_def['name']);
-            $value = $layout_def['fields'][$key];
+        } else {
+            if (!empty($layout_def['name']) && !empty($layout_def['fields'])) {
+                $key = strtoupper($layout_def['name']);
+                $value = $layout_def['fields'][$key];
+            }
         }
         $cell = '';
 
         if (isset($field_def['options'])) {
             $cell = translate($field_def['options'], $field_def['module'], $value);
-        } elseif (isset($field_def['type']) && $field_def['type'] == 'enum' && isset($field_def['function'])) {
-            global $beanFiles;
-            if (empty($beanFiles)) {
-                include('include/modules.php');
+        } else {
+            if (isset($field_def['type']) && $field_def['type'] == 'enum' && isset($field_def['function'])) {
+                global $beanFiles;
+                if (empty($beanFiles)) {
+                    include('include/modules.php');
+                }
+                $bean_name = get_singular_bean_name($field_def['module']);
+                require_once($beanFiles[$bean_name]);
+                $list = $field_def['function']();
+                $cell = $list[$value];
             }
-            $bean_name = get_singular_bean_name($field_def['module']);
-            require_once($beanFiles[$bean_name]);
-            $list = $field_def['function']();
-            $cell = $list[$value];
         }
         if (is_array($cell)) {
 

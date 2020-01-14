@@ -176,10 +176,10 @@ function xhprof_generate_dot_script(
     $threshold,
     $source,
     $page,
-                                    $func,
+    $func,
     $critical_path,
     $right=null,
-                                    $left=null
+    $left=null
 ) {
     $max_width = 5;
     $max_height = 3.5;
@@ -210,11 +210,11 @@ function xhprof_generate_dot_script(
                     if ($max_child === null ||
             abs($raw_data[xhprof_build_parent_child_key(
                 $node,
-                                                        $child
+                $child
             )]["wt"]) >
             abs($raw_data[xhprof_build_parent_child_key(
                 $node,
-                                                        $max_child
+                $max_child
             )]["wt"])) {
                         $max_child = $child;
                     }
@@ -381,8 +381,8 @@ function xhprof_generate_dot_script(
             $taillabel = ($sym_table[$parent]["wt"] > 0) ?
         sprintf(
             "%.1f%%",
-                100 * $info["wt"] /
-                ($sym_table[$parent]["wt"] - $sym_table["$parent"]["excl_wt"])
+            100 * $info["wt"] /
+                ($sym_table[$parent]["wt"] - $sym_table[(string)$parent]["excl_wt"])
         )
         : "0.0%";
 
@@ -413,7 +413,7 @@ function xhprof_render_diff_image(
     $xhprof_runs_impl,
     $run1,
     $run2,
-                                   $type,
+    $type,
     $threshold,
     $source
 ) {
@@ -433,10 +433,10 @@ function xhprof_render_diff_image(
         $run_delta,
         $threshold,
         $source,
-                                       null,
+        null,
         null,
         true,
-                                       $symbol_tab1,
+        $symbol_tab1,
         $symbol_tab2
     );
     $content = xhprof_generate_image_by_dot($script, $type);
@@ -467,10 +467,10 @@ function xhprof_get_content_by_run(
     $xhprof_runs_impl,
     $run_id,
     $type,
-                                   $threshold,
+    $threshold,
     $func,
     $source,
-                                   $critical_path
+    $critical_path
 ) {
     if (!$run_id) {
         return "";
@@ -486,7 +486,7 @@ function xhprof_get_content_by_run(
         $raw_data,
         $threshold,
         $source,
-                                       $description,
+        $description,
         $func,
         $critical_path
     );
@@ -517,7 +517,7 @@ function xhprof_render_image(
     $run_id,
     $type,
     $threshold,
-                             $func,
+    $func,
     $source,
     $critical_path
 ) {
@@ -525,8 +525,8 @@ function xhprof_render_image(
         $xhprof_runs_impl,
         $run_id,
         $type,
-                                       $threshold,
-                                       $func,
+        $threshold,
+        $func,
         $source,
         $critical_path
     );

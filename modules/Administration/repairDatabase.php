@@ -38,6 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -54,7 +56,7 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
     isset($_REQUEST['execute'])? $execute=$_REQUEST['execute'] : $execute= false;
     $export = false;
 
-    if (sizeof($_POST) && isset($_POST['raction'])) {
+    if (count($_POST) && isset($_POST['raction'])) {
         if (isset($_POST['raction']) && strtolower($_POST['raction']) == "export") {
             //jc - output buffering is being used. if we do not clean the output buffer
             //the contents of the buffer up to the length of the repair statement(s)
@@ -95,6 +97,7 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
             }
 
             echo "<h3>{$mod_strings['LBL_REPAIR_DATABASE_SYNCED']}</h3>";
+            ElasticSearchIndexer::repairElasticsearchIndex();
         }
     } else {
         if (!$export && empty($_REQUEST['repair_silent'])) {
@@ -173,6 +176,7 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
                 echo $ss->fetch('modules/Administration/templates/RepairDatabase.tpl');
             } else {
                 echo "<h3>{$mod_strings['LBL_REPAIR_DATABASE_SYNCED']}</h3>";
+                ElasticSearchIndexer::repairElasticsearchIndex();
             }
         }
     }

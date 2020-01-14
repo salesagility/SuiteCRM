@@ -59,11 +59,19 @@ class M2MRelationship extends SugarRelationship
 
         $lhsModule = $def['lhs_module'];
         $this->lhsLinkDef = $this->getLinkedDefForModuleByRelationship($lhsModule);
-        $this->lhsLink = $this->lhsLinkDef['name'];
+        if (is_bool($this->lhsLinkDef)) {
+            $this->lhsLink = null;
+        } else {
+            $this->lhsLink = $this->lhsLinkDef['name'];
+        }
 
         $rhsModule = $def['rhs_module'];
         $this->rhsLinkDef = $this->getLinkedDefForModuleByRelationship($rhsModule);
-        $this->rhsLink = $this->rhsLinkDef['name'];
+        if (is_bool($this->rhsLinkDef)) {
+            $this->rhsLink = null;
+        } else {
+            $this->rhsLink = $this->rhsLinkDef['name'];
+        }
 
         if (isset($def['self_referencing'])) {
             $this->self_referencing = $def['self_referencing'];
@@ -86,11 +94,14 @@ class M2MRelationship extends SugarRelationship
             return $results;
         }
         //Multiple links with same relationship name
-        elseif (is_array($results)) {
-            $GLOBALS['log']->error("Warning: Multiple links found for relationship {$this->name} within module {$module}");
-            return $this->getMostAppropriateLinkedDefinition($results);
+        else {
+            if (is_array($results)) {
+                $GLOBALS['log']->error("Warning: Multiple links found for relationship {$this->name} within module {$module}");
+                return $this->getMostAppropriateLinkedDefinition($results);
+            } else {
+                return false;
+            }
         }
-        return false;
     }
 
     /**
@@ -256,13 +267,17 @@ class M2MRelationship extends SugarRelationship
         /* BEGIN - SECURITY GROUPS */
         //Need to hijack this as security groups will not contain a link on the module side
         //due to the way the module works. Plus it would remove the relative ease of adding custom module support
-
+        
         if (get_class($lhs) == 'SecurityGroup' || get_class($rhs) == 'SecurityGroup') {
             $dataToRemove = array(
                 $this->def['join_key_lhs'] => $lhs->id,
                 $this->def['join_key_rhs'] => $rhs->id
             );
 
+            if (!empty($this->def['relationship_role_column']) && !empty($this->def['relationship_role_column_value'])) {
+                $dataToRemove[$this->def['relationship_role_column']] = $this->def['relationship_role_column_value'];
+            }
+            $dataToRemove['deleted'] = 0;
 
             if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes") {
                 if (get_class($lhs) != 'SecurityGroup' && $lhs->$lhsLinkName instanceof Link2) {
@@ -277,7 +292,7 @@ class M2MRelationship extends SugarRelationship
             }
 
             $this->removeRow($dataToRemove);
-
+            
             if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes") {
                 if (get_class($lhs) != 'SecurityGroup' && $lhs->$lhsLinkName instanceof Link2) {
                     $lhs->$lhsLinkName->load();
@@ -472,13 +487,14 @@ class M2MRelationship extends SugarRelationship
                 $query = DBManagerFactory::getInstance()->limitQuery($query, $offset, $params['limit'], false, "", false);
             }
             return $query;
-        }
-        return array(
+        } else {
+            return array(
                 'select' => "SELECT $targetKey id",
                 'from' => "FROM $from",
                 'where' => "WHERE $where AND $rel_table.deleted=$deleted",
                 'order_by' => $order_by
             );
+        }
     }
 
     public function getJoin($link, $params = array(), $return_array = false)
@@ -642,8 +658,10 @@ class M2MRelationship extends SugarRelationship
     {
         if (!empty($this->def['table'])) {
             return $this->def['table'];
-        } elseif (!empty($this->def['join_table'])) {
-            return $this->def['join_table'];
+        } else {
+            if (!empty($this->def['join_table'])) {
+                return $this->def['join_table'];
+            }
         }
 
         return false;

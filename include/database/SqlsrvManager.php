@@ -222,7 +222,7 @@ class SqlsrvManager extends MssqlManager
         $sql = $this->_appendN($sql);
 
         $this->countQuery($sql);
-        LoggerManager::getLogger()->info('Query:' . $this->removeLineBreaks($sql));
+        $GLOBALS['log']->info('Query:' . $sql);
         $this->checkConnection();
         $this->query_time = microtime(true);
 
@@ -297,8 +297,9 @@ class SqlsrvManager extends MssqlManager
     {
         if ($type == 'datetime') { // see http://msdn.microsoft.com/en-us/library/ms187928.aspx for details
             return "CONVERT(datetime,$string,120)";
+        } else {
+            return parent::convert($string, $type, $additional_parameters);
         }
-        return parent::convert($string, $type, $additional_parameters);
     }
 
     /**
@@ -314,7 +315,7 @@ class SqlsrvManager extends MssqlManager
     {
         if ((isset($fielddef2['dbType']) && $fielddef2['dbType'] == 'id') || preg_match(
             '/(_id$|^id$)/',
-                $fielddef2['name']
+            $fielddef2['name']
         )
         ) {
             if (isset($fielddef1['type']) && isset($fielddef2['type'])) {
@@ -408,7 +409,7 @@ class SqlsrvManager extends MssqlManager
 
             if (!empty($row['IS_NULLABLE']) && $row['IS_NULLABLE'] == 'NO' && (empty($row['KEY']) || !stristr(
                 $row['KEY'],
-                        'PRI'
+                'PRI'
             ))
             ) {
                 $columns[strtolower($row['COLUMN_NAME'])]['required'] = 'true';
@@ -546,7 +547,7 @@ EOSQL;
         }
 
         if (!empty($messages)) {
-            return join("\n", $messages);
+            return implode("\n", $messages);
         }
 
         return false;

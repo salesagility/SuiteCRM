@@ -58,8 +58,10 @@ $focus = new EmailMarketing();
 if (isset($_REQUEST['record']) && $_REQUEST['record'] && isset($_REQUEST['parent_id']) && $_REQUEST['parent_id']) {
     SugarApplication::redirect('index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=' . $_REQUEST['parent_id'] . '&campaign_id=' . $_REQUEST['parent_id'] . '&marketing_id=' . $_REQUEST['record'] . '&func=editEmailMarketing');
     return;
-} elseif (isset($_REQUEST['record']) && $_REQUEST['record']) {
-    $focus->retrieve($_REQUEST['record']);
+} else {
+    if (isset($_REQUEST['record']) && $_REQUEST['record']) {
+        $focus->retrieve($_REQUEST['record']);
+    }
 }
 
 if (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {
@@ -77,7 +79,7 @@ if (!ACLController::checkAccess('EmailTemplates', 'edit', true)) {
 }
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
-$xtpl->assign("THEME", SugarThemeRegistry::current()->__toString());
+$xtpl->assign("THEME", (string)SugarThemeRegistry::current());
 // Unimplemented until jscalendar language files are fixed
 // $xtpl->assign("CALENDAR_LANG", ((empty($cal_codes[$current_language])) ? $cal_codes[$default_language] : $cal_codes[$current_language]));
 $xtpl->assign("CALENDAR_LANG", "en");

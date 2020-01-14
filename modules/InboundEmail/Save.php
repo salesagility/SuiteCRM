@@ -415,8 +415,10 @@ function syncSugarFoldersWithBeanChanges($fieldName, $focus)
         case 'status':
             if ($focus->status == 'Inactive') {
                 $f->clearSubscriptionsForFolder($focus->groupfolder_id);
-            } elseif ($focus->mailbox_type != 'bounce') {
-                $f->addSubscriptionsToGroupFolder();
+            } else {
+                if ($focus->mailbox_type != 'bounce') {
+                    $f->addSubscriptionsToGroupFolder();
+                }
             }
             break;
     }

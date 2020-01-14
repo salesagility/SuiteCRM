@@ -42,6 +42,7 @@
 use SuiteCRM\JsonApiErrorObject;
 use SuiteCRM\LangException;
 use SuiteCRM\LangText;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -52,7 +53,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author gyula
  */
-class JsonApiErrorObjectTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class JsonApiErrorObjectTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
     {
@@ -92,7 +93,7 @@ class JsonApiErrorObjectTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
             'status' => '200',
             'code' => '1',
             'title' => 'JSON API Error',
-            'detail' => 'JSON API Error occured.',
+            'detail' => 'JSON API Error occurred.',
             'source' => ['pointer' => null, 'parameter' => null],
             'meta' => [],
         ];
@@ -132,7 +133,7 @@ class JsonApiErrorObjectTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
             'links' => ['about' => null],
             'status' => '200',
             'title' => 'JSON API Error',
-            'detail' => 'JSON API Error occured.',
+            'detail' => 'JSON API Error occurred.',
             'source' => ['pointer' => null, 'parameter' => null],
             'meta' => [
                 'about' => 'Exception',
