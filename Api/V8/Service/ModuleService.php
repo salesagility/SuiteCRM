@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Service;
 
 use Api\V8\BeanDecorator\BeanManager;
@@ -174,7 +175,6 @@ class ModuleService
      */
     public function createRecord(CreateModuleParams $params, Request $request)
     {
-        $createFile = false;
         $module = $params->getData()->getType();
         $id = $params->getData()->getId();
         $attributes = $params->getData()->getAttributes();
@@ -199,27 +199,94 @@ class ModuleService
         }
 
         $this->setRecordUpdateParams($bean, $attributes);
-
-        foreach ($attributes as $property => $value) {
-            if($property === 'filecontents')
-            {
-                continue;
-            }
-            if($property === 'filename')
-            {
-                $createFile = true;
-            }
-            else{
-                $bean->$property = $value;
-            }
-        }
-
-        if($createFile)
-        {
-            $this->addFileToNote($bean, $attributes);
-        }
+        $fileUpload = $this->processAttributes($bean, $attributes);
 
         $bean->save();
+        if ($fileUpload) {
+            $this->addFileToNote($bean->id, $attributes);
+        }
+        $bean->retrieve($bean->id);
+
+        $dataResponse = $this->getDataResponse(
+            $bean,
+            null,
+            $request->getUri()->getPath() . '/' . $bean->id
+        );
+
+        $response = new DocumentResponse();
+        $response->setData($dataResponse);
+
+        return $response;
+    }
+
+    /**
+     * @param $beanId
+     * @param $attributes
+     * @throws \Exception
+     */
+    private function addFileToNote($beanId, $attributes)
+    {
+        global $sugar_config, $log;
+
+        \BeanFactory::unregisterBean('Notes', $beanId);
+        $bean = $this->beanManager->getBeanSafe('Notes', $beanId);
+
+        // Write file to upload dir
+        try {
+            // Checking file extension
+            $extPos = strrpos($attributes['filename'], '.');
+            $fileExtension = substr($attributes['filename'], $extPos + 1);
+
+            if ($extPos === false || empty($fileExtension) || in_array($fileExtension, $sugar_config['upload_badext'],
+                    true)) {
+                throw new \Exception('File upload failed: File extension is not included or is not valid.');
+            }
+
+            $fileName = $bean->id;
+            $fileContents = $attributes['filecontents'];
+            $targetPath = 'upload/' . $fileName;
+            $content = base64_decode($fileContents);
+
+            $file = fopen($targetPath, 'wb');
+            fwrite($file, $content);
+            fclose($file);
+        } catch (\Exception $e) {
+            $log->error('addFileToNote: ' . $e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+
+        // Fill in file details for use with upload checks
+        $mimeType = mime_content_type($targetPath);
+        $bean->filename = $attributes['filename'];
+        $bean->uploadfile = $attributes['filename'];
+        $bean->file_mime_type = $mimeType;
+        $bean->save();
+    }
+
+    /**
+     * @param UpdateModuleParams $params
+     * @param Request $request
+     * @return DocumentResponse
+     * @throws AccessDeniedException
+     */
+    public function updateRecord(UpdateModuleParams $params, Request $request)
+    {
+        $module = $params->getData()->getType();
+        $id = $params->getData()->getId();
+        $attributes = $params->getData()->getAttributes();
+        $bean = $this->beanManager->getBeanSafe($module, $id);
+
+        if (!$bean->ACLAccess('save')) {
+            throw new AccessDeniedException();
+        }
+
+        $this->setRecordUpdateParams($bean, $attributes);
+        $fileUpload = $this->processAttributes($bean, $attributes);
+        $bean->save();
+
+        if ($fileUpload) {
+            $this->addFileToNote($bean->id, $attributes);
+        }
         $bean->retrieve($bean->id);
 
         $dataResponse = $this->getDataResponse(
@@ -237,106 +304,25 @@ class ModuleService
     /**
      * @param $bean
      * @param $attributes
-     * @return mixed
+     * @return bool
      */
-    private function addFileToNote($bean, $attributes)
-    {
-        global $sugar_config;
-
-        if(!$bean->id) {
-            $bean->id = create_guid();
-            $bean->new_with_id = true;
-        }
-
-        // Write temp file to upload dir
-        try {
-
-            // Checking file extension
-            $ext_pos = strrpos($attributes['filename'], ".");
-            $fileExtension = substr($attributes['filename'], $ext_pos + 1);
-            if (in_array($fileExtension, $sugar_config['upload_badext'])) {
-                echo 'This file type is not valid. Please choose a valid file type.';
-                return;
-            }
-
-            $fileName = $bean->id;
-            $fileContents = $attributes['filecontents'];
-            $targetPath="upload/" . $fileName;
-            $content= base64_decode($fileContents);
-
-            $file = fopen($targetPath, 'w');
-            fwrite($file, $content);
-            fclose($file);
-        }
-        catch (Exception $e) {
-            echo 'Unable to write to attach file: ',  $e->getMessage(), "\n";
-        }
-
-        // Fill in file details for use with upload checks
-        $mimeType = mime_content_type($targetPath);
-        $bean->filename = $attributes['filename'];
-        $bean->uploadfile = $attributes['filename'];
-        $bean->file_mime_type = $mimeType;
-
-        return $bean;
-
-    }
-
-    /**
-     * @param UpdateModuleParams $params
-     * @param Request $request
-     * @return DocumentResponse
-     * @throws AccessDeniedException
-     */
-    public function updateRecord(UpdateModuleParams $params, Request $request)
+    protected function processAttributes(&$bean, $attributes)
     {
         $createFile = false;
-        $module = $params->getData()->getType();
-        $id = $params->getData()->getId();
-        $attributes = $params->getData()->getAttributes();
-        $bean = $this->beanManager->getBeanSafe($module, $id);
-
-        if (!$bean->ACLAccess('save')) {
-            throw new AccessDeniedException();
-        }
-
-        $this->setRecordUpdateParams($bean, $attributes);
 
         foreach ($attributes as $property => $value) {
 
-            if($property === 'filecontents')
-            {
+            if ($property === 'filecontents') {
+                continue;
+            } elseif ($property === 'filename') {
+                $createFile = true;
                 continue;
             }
-            if($property === 'filename')
-            {
-                $createFile = true;
-            }
-            else{
-                $bean->$property = $value;
-            }
+
+            $bean->$property = $value;
         }
 
-        if($createFile)
-        {
-            $this->addFileToNote($bean, $attributes);
-        }
-
-        $bean->save();
-        
-        $bean->retrieve($bean->id);
-
-
-        $dataResponse = $this->getDataResponse(
-            $bean,
-            null,
-            $request->getUri()->getPath() . '/' . $bean->id
-        );
-
-        $response = new DocumentResponse();
-        $response->setData($dataResponse);
-
-        return $response;
+        return $createFile;
     }
 
     /**
