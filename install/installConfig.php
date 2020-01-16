@@ -1198,22 +1198,20 @@ EOQ;
         //  Advanced Database Configuration
         // --------------------------------->
 
-        require_once('install/suite_install/collations.php');
+        require_once(__DIR__ . '/suite_install/collations.php');
 
         $collationCB = "<select name='setup_db_collation' id='setup_db_collation' class='select' onChange='document.getElementById(\"setup_db_charset\").value = document.getElementById(\"setup_db_collation\").value.split(\"_\")[0];'>";
         $charset = "<select name='setup_db_charset' id='setup_db_charset' class='select'>";
 
-        if (isset($collations)) {
-            if (isset($_SESSION['setup_db_type']) && $_SESSION['setup_db_type'] == "mysql") {
+        if (isset($collations) && isset($_SESSION['setup_db_type']) && $_SESSION['setup_db_type'] == "mysql") {
                 foreach ($collations['mysql'] as $collation) {
                     $collationCB .= "<option value='" . $collation['name'] . "' >" . $collation['name'] . "</option>";
                     $charset .= "<option value='" . $collation['charset'] . "' >" . $collation['charset'] . "</option>";
                 }
-            }
         }
 
-        $collationCB .= "</select>";
-        $charset .= "</select>";
+        $collationCB .= '</select>';
+        $charset .= '</select>';
 
         $out .= <<<EOQ3
         <div class="floatbox full" id="fb5">
