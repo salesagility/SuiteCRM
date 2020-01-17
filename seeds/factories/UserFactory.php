@@ -1,16 +1,19 @@
 <?php
 
+namespace SuiteCRM\Factories;
+
 use \User;
 use \SuiteCRM\BaseFactory;
-use Faker\Generator as Faker;
+use BeanFactory;
 
 class UserFactory extends BaseFactory {
+    /**
+     * @return User
+     */
     public function define() {
-        self::$factory->define(User::class, function (Faker $faker) {
-            return [
-                'name' => $faker->name,
-                'email' => $faker->unique()->safeEmail
-            ];
-        });
+        $user = BeanFactory::newBean('User');
+        $user->name = $this->faker->firstName();
+        $user->email = $this->faker->unique()->safeEmail();
+        return $user;
     }
 }

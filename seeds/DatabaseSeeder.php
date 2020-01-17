@@ -1,6 +1,9 @@
 <?php
 
+namespace SuiteCRM;
+
 use SuiteCRM\Seeder;
+use SuiteCRM\Seeders\UsersSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -9,9 +12,9 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public static function run()
     {
-        $this->call([
+        parent::call([
             UsersSeeder::class
         ]);
     }

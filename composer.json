@@ -75,7 +75,8 @@
         "lib/",
         "include/",
         "tests/SuiteCRM/",
-        "tests/unit/phpunit/lib/SuiteCRM/"
+        "tests/unit/phpunit/lib/SuiteCRM/",
+        "seeds/"
       ],
       "SuiteCRM\\Custom\\": [
         "custom/lib"

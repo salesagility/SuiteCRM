@@ -2,11 +2,21 @@
 
 namespace SuiteCRM;
 
+use Faker\Generator as Faker;
+
 abstract class BaseFactory {
+    /** @var Faker */
+    public $faker;
+
     /**
-     * The seed factory instance.
+     * Create a new factory instance.
      *
-     * @var \SuiteCRM\Factory
+     * @return void
      */
-    public $factory;
+    public function __construct()
+    {
+        $this->faker = new Faker();
+    }
+
+    abstract function define();
 }
