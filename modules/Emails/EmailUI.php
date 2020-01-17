@@ -38,6 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use SuiteCRM\Utility\SuiteValidator;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -874,18 +876,23 @@ HTML;
     /**
      * Removes contacts from the user's address book
      * @param array ids
+     * @throws SuiteException
      */
     public function removeContacts($ids)
     {
         global $current_user;
 
-        $concat = "";
+        $concat = '';
 
         foreach ($ids as $id) {
             if (!empty($concat)) {
-                $concat .= ", ";
+                $concat .= ', ';
             }
 
+            $isValidator = new SuiteValidator();
+            if (!$isValidator->isValidId($id)) {
+                throw new SuiteException('Invalid contact ID' . $id);
+            }
             $concat .= "'{$id}'";
         }
 
