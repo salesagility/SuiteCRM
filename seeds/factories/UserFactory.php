@@ -12,8 +12,9 @@ class UserFactory extends BaseFactory {
      */
     public function define() {
         $user = BeanFactory::newBean('User');
-        $user->name = $this->faker->firstName();
+        $user->name = $this->faker->name();
         $user->email = $this->faker->unique()->safeEmail();
+        $user->save();
         return $user;
     }
 }

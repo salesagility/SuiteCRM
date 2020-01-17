@@ -2,10 +2,8 @@
 
 namespace SuiteCRM;
 
-use Faker\Generator as Faker;
-
 abstract class BaseFactory {
-    /** @var Faker */
+    /** @var Faker\Generator */
     public $faker;
 
     /**
@@ -15,7 +13,7 @@ abstract class BaseFactory {
      */
     public function __construct()
     {
-        $this->faker = new Faker();
+        $this->faker = \Faker\Factory::create();
     }
 
     abstract function define();

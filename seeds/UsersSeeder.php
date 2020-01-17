@@ -14,6 +14,5 @@ class UsersSeeder extends Seeder
     public static function run() {
         $factory = new UserFactory();
         $user = $factory->define();
-        $user->save();
     }
 }
