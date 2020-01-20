@@ -16,7 +16,8 @@ class UserFactory extends BaseFactory {
             'user_name' => $this->faker->userName(),
             'email1' => $this->faker->unique()->safeEmail(),
             'first_name' => $this->faker->firstName(),
-            'last_name' => $this->faker->lastName()
+            'last_name' => $this->faker->lastName(),
+            'user_hash' => User::getPasswordHash($this->faker->password)
         ];
     }
 
@@ -35,6 +36,7 @@ class UserFactory extends BaseFactory {
             $user->$name = $value;
         }
         $user->save();
+
         return $user;
     }
 }
