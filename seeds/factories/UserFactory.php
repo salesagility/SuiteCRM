@@ -4,7 +4,7 @@ namespace SuiteCRM\Factories;
 
 use \User;
 use \SuiteCRM\BaseFactory;
-use BeanFactory;
+use \BeanFactory;
 
 class UserFactory extends BaseFactory {
     public $defaultProps;
@@ -18,11 +18,11 @@ class UserFactory extends BaseFactory {
     }
 
     /**
-     * @param mixed[] $propertiesArray
+     * @param mixed[] $propertiesArray An array of property names and their values.
      * @return User
      */
     public function define($propertiesArray = []) {
-        $user = BeanFactory::newBean('User');
+        $user = BeanFactory::newBean('Users');
         // Merge the default properties and the properties passed when defining
         // the user. Properties passed into the function should always override
         // the defaults.
