@@ -22,7 +22,7 @@ abstract class BaseFactory {
         $this->faker = Faker\Factory::create();
     }
 
-    abstract function define();
+    abstract function create();
 
     /**
      * @param string $beanName The name of the bean to pass to `BeanFactory::newBean()`.

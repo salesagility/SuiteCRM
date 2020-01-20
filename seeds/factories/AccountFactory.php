@@ -21,7 +21,7 @@ class AccountFactory extends BaseFactory {
      * @param mixed[] $propertiesArray An array of property names and their values.
      * @return Account[] An array of Account beans.
      */
-    public function define($numberOfInstances = 1, $propertiesArray = []) {
+    public function create($numberOfInstances = 1, $propertiesArray = []) {
         return parent::createSeedBeans('Accounts', $numberOfInstances, $propertiesArray);
     }
 }
