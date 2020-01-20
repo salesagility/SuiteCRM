@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         // by end-users.
         $seeders = [
             UsersSeeder::class
-        ]; 
+        ];
         $this->call($seeders);
     }
 }
