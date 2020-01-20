@@ -4,11 +4,8 @@ namespace SuiteCRM\Factories;
 
 use \User;
 use \SuiteCRM\BaseFactory;
-use \BeanFactory;
 
 class UserFactory extends BaseFactory {
-    public $defaultProps;
-
     public function __construct() {
         parent::__construct();
 
@@ -26,15 +23,7 @@ class UserFactory extends BaseFactory {
      * @return User
      */
     public function define($propertiesArray = []) {
-        $user = BeanFactory::newBean('Users');
-        // Merge the default properties and the properties passed when defining
-        // the user. Properties passed into the function should always override
-        // the defaults.
-        $properties = array_merge($propertiesArray, $this->defaultProps);
-        // Assign each property in the array to the user bean.
-        foreach ($properties as $name => $value) {
-            $user->$name = $value;
-        }
+        $user = parent::createSeedBean('Users', $propertiesArray);
         $user->save();
 
         return $user;
