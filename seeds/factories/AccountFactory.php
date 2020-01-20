@@ -15,13 +15,11 @@ class AccountFactory extends BaseFactory {
     }
 
     /**
+     * @param integer $numberOfInstances The number of instances of this bean to create.
      * @param mixed[] $propertiesArray An array of property names and their values.
-     * @return Account
+     * @return Account[] An array of Account beans.
      */
-    public function define($propertiesArray = []) {
-        $account = parent::createSeedBean('Accounts', $propertiesArray);
-        $account->save();
-
-        return $account;
+    public function define($numberOfInstances = 1, $propertiesArray = []) {
+        return parent::createSeedBeans('Accounts', $numberOfInstances, $propertiesArray);
     }
 }

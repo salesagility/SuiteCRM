@@ -10,22 +10,20 @@ class UserFactory extends BaseFactory {
         parent::__construct();
 
         $this->defaultProps = [
-            'user_name' => $this->faker->userName(),
+            'user_name' => $this->faker->unique()->userName(),
             'email1' => $this->faker->unique()->safeEmail(),
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
-            'user_hash' => User::getPasswordHash($this->faker->password)
+            'user_hash' => User::getPasswordHash($this->faker->password())
         ];
     }
 
     /**
+     * @param integer $numberOfInstances The number of instances of this bean to create.
      * @param mixed[] $propertiesArray An array of property names and their values.
-     * @return User
+     * @return User[] An array of user beans.
      */
-    public function define($propertiesArray = []) {
-        $user = parent::createSeedBean('Users', $propertiesArray);
-        $user->save();
-
-        return $user;
+    public function define($numberOfInstances = 1, $propertiesArray = []) {
+        return parent::createSeedBeans('Users', $numberOfInstances, $propertiesArray);
     }
 }
