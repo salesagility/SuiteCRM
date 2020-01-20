@@ -14,7 +14,9 @@ class UserFactory extends BaseFactory {
 
         $this->defaultProps = [
             'user_name' => $this->faker->userName(),
-            'email1' => $this->faker->unique()->safeEmail()
+            'email1' => $this->faker->unique()->safeEmail(),
+            'first_name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName()
         ];
     }
 

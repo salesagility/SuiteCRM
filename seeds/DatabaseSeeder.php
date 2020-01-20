@@ -14,8 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
+        // TODO: Provide a way for custom seeders to be added to this array
+        // by end-users.
+        $seeders = [
             UsersSeeder::class
-        ]);
+        ]; 
+        $this->call($seeders);
     }
 }
