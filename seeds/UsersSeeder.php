@@ -12,6 +12,6 @@ class UsersSeeder extends Seeder
      */
     public function run() {
         $factory = new UserFactory();
-        $factory->define(2);
+        $factory->define(5);
     }
 }

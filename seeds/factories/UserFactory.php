@@ -9,13 +9,15 @@ class UserFactory extends BaseFactory {
     public function __construct() {
         parent::__construct();
 
-        $this->defaultProps = [
-            'user_name' => $this->faker->unique()->userName(),
-            'email1' => $this->faker->unique()->safeEmail(),
-            'first_name' => $this->faker->firstName(),
-            'last_name' => $this->faker->lastName(),
-            'user_hash' => User::getPasswordHash($this->faker->password())
-        ];
+        $this->defaultProps = function() {
+            return [
+                'user_name' => $this->faker->unique()->userName(),
+                'email1' => $this->faker->unique()->safeEmail(),
+                'first_name' => $this->faker->firstName(),
+                'last_name' => $this->faker->lastName(),
+                'user_hash' => User::getPasswordHash($this->faker->password())
+            ];
+        };
     }
 
     /**

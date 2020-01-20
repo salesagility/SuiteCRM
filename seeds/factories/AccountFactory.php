@@ -8,10 +8,12 @@ class AccountFactory extends BaseFactory {
     public function __construct() {
         parent::__construct();
 
-        $this->defaultProps = [
-            'name' => $this->faker->company(),
-            'account_type' => 'Customer'
-        ];
+        $this->defaultProps = function() {
+            return [
+                'name' => $this->faker->company(),
+                'account_type' => 'Customer'
+            ];
+        };
     }
 
     /**

@@ -9,7 +9,7 @@ abstract class BaseFactory {
     /** @var Faker\Generator */
     public $faker;
 
-    /** @var array */
+    /** @var Closure */
     public $defaultProps;
 
     /**
@@ -35,10 +35,11 @@ abstract class BaseFactory {
 
         for ($i = 0; $i < $numberOfInstances; $i++) {
             $bean = BeanFactory::newBean($beanName);
+            $defaultProps = $this->defaultProps;
             // Merge the default properties and the properties passed when defining
             // the user. Properties passed into the function should always override
             // the defaults.
-            $properties = array_merge($propertiesArray, $this->defaultProps);
+            $properties = array_merge($propertiesArray, $defaultProps());
             // Assign each property in the array to the user bean.
             foreach ($properties as $name => $value) {
                 $bean->$name = $value;
