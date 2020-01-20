@@ -21,11 +21,11 @@ class UserFactory extends BaseFactory {
     }
 
     /**
-     * @param integer $numberOfInstances The number of instances of this bean to create.
      * @param mixed[] $propertiesArray An array of property names and their values.
+     * @param integer $numberOfInstances The number of instances of this bean to create.
      * @return User[] An array of user beans.
      */
-    public function create($numberOfInstances = 1, $propertiesArray = []) {
-        return parent::createSeedBeans('Users', $numberOfInstances, $propertiesArray);
+    public function create($propertiesArray = [], $numberOfInstances = 1) {
+        return parent::createSeedBeans('Users', $propertiesArray, $numberOfInstances);
     }
 }

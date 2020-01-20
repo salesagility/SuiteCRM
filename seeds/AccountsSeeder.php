@@ -11,6 +11,7 @@ class AccountsSeeder extends Seeder
      * @return void
      */
     public function run() {
-        AccountFactory::getInstance()->create(5);
+        $factory = new AccountFactory();
+        $factory->create([], 5);
     }
 }

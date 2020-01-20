@@ -11,6 +11,7 @@ class UsersSeeder extends Seeder
      * @return void
      */
     public function run() {
-        UserFactory::getInstance()->create(5);
+        $factory = new UserFactory();
+        $factory->create([], 5);
     }
 }
