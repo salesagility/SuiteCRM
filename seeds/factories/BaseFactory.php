@@ -25,6 +25,15 @@ abstract class BaseFactory {
     abstract function create();
 
     /**
+     * Get an instance of the factory.
+     *
+     * @return BaseFactory
+     */
+    public static function getInstance() {
+        return new self();
+    }
+
+    /**
      * @param string $beanName The name of the bean to pass to `BeanFactory::newBean()`.
      * @param integer $numberOfInstances The number of instances of this bean to create.
      * @param mixed[] $propertiesArray An array of property names and their values.
