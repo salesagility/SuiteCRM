@@ -18,7 +18,8 @@ class SeedCommands extends \Robo\Tasks
      */
     public function dbSeed() {
         $this->say('Seeding the database...');
-        DatabaseSeeder::run();
+        $seeder = new DatabaseSeeder();
+        $seeder->run();
         $this->say('Seeding complete.');
     }
 }

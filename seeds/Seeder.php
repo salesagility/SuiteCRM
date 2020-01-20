@@ -12,7 +12,7 @@ abstract class Seeder
      * @param array|string $class
      * @return $this
      */
-    public static function call($class)
+    public function call($class)
     {
         if (is_null($class)) {
             throw new \InvalidArgumentException('Class is null.');
@@ -23,7 +23,7 @@ abstract class Seeder
         $logger = LoggerManager::getLogger();
 
         foreach ($classes as $class) {
-            $seeder = self::resolve($class);
+            $seeder = $this->resolve($class);
 
             $name = get_class($seeder);
 
@@ -45,7 +45,7 @@ abstract class Seeder
      * @param string $class
      * @return \SuiteCRM\Seeder
      */
-    protected static function resolve($class)
+    protected function resolve($class)
     {
         return new $class;
     }
@@ -64,5 +64,5 @@ abstract class Seeder
         return $this->run();
     }
 
-    abstract public static function run();
+    abstract public function run();
 }

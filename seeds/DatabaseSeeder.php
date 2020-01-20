@@ -12,9 +12,9 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public static function run()
+    public function run()
     {
-        parent::call([
+        $this->call([
             UsersSeeder::class
         ]);
     }
