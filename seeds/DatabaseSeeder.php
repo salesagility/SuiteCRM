@@ -4,6 +4,7 @@ namespace SuiteCRM;
 
 use SuiteCRM\Seeder;
 use SuiteCRM\Seeders\UsersSeeder;
+use SuiteCRM\Seeders\AccountsSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,7 +18,8 @@ class DatabaseSeeder extends Seeder
         // TODO: Provide a way for custom seeders to be added to this array
         // by end-users.
         $seeders = [
-            UsersSeeder::class
+            UsersSeeder::class,
+            AccountsSeeder::class
         ];
         $this->call($seeders);
     }
