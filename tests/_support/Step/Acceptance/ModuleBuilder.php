@@ -1,4 +1,5 @@
 <?php
+
 namespace Step\Acceptance;
 
 use SuiteCRM\Enumerator\SugarObjectType;
@@ -121,8 +122,9 @@ class ModuleBuilder extends Administration
     public function closePopupSuccess()
     {
         $I = $this;
-        $I->waitForElementVisible('#sugarMsgWindow_mask');
-        $I->waitForText('This operation is completed successfully', null, '#sugarMsgWindow_c');
+        // Extensive timeouts like this should be avoided wherever possible.
+        $I->waitForElementVisible('#sugarMsgWindow_mask', 30);
+        $I->waitForText('This operation is completed successfully', 30, '#sugarMsgWindow_c');
         $I->click('.container-close');
     }
 
