@@ -1,39 +1,43 @@
 <?php
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-class Jjwg_MapsViewMap_Markers extends SugarView {
-
-  function __construct() {
-    parent::__construct();
-  }
+class Jjwg_MapsViewMap_Markers extends SugarView
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Jjwg_MapsViewMap_Markers(){
+    public function Jjwg_MapsViewMap_Markers()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-  function display() {
-
-?>
+    public function display()
+    {
+        ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
   <title><?php echo $GLOBALS['mod_strings']['LBL_MAP_DISPLAY']; ?></title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-  <link rel="stylesheet" type="text/css" href="cache/themes/<?php echo $GLOBALS['theme']; ?>/css/style.css" />
-<?php if(!empty($GLOBALS['jjwg_config']['google_maps_api_key'])): ?>
+  <!-- Ici correction lien CSS. -->
+  <link rel="stylesheet" type="text/css" href="cache/themes/<?php echo $GLOBALS['theme']; ?>/css/Dawn/style.css" />
+<?php if (!empty($GLOBALS['jjwg_config']['google_maps_api_key'])): ?>
   <style type="text/css">
     html,body{
       margin:0;
@@ -90,14 +94,19 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
       margin-right: 10px;
     }
   </style>
-  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/css/jquery.dataTables.min.css" />
-  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.5/css/TableTools.min.css" />
+
   <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?= $GLOBALS['jjwg_config']['google_maps_api_key']; ?>&sensor=false&libraries=drawing,geometry"></script>
   <script type="text/javascript" src="modules/jjwg_Areas/javascript/jquery-1.8.0.min.js"></script>
   <script type="text/javascript" src="modules/jjwg_Maps/javascript/jquery.iframe-auto-height.plugin.1.9.3.min.js"></script>
   <script type="text/javascript" src="modules/jjwg_Maps/javascript/markerclusterer_packed.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.5/js/TableTools.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.js"></script>
+
+
   <script type="text/javascript">
 // Define SugarCRM App data for Javascript
 var app_strings = <?php echo (!empty($GLOBALS['app_strings'])) ? json_encode($GLOBALS['app_strings']) : '[]'; ?>;
@@ -115,11 +124,14 @@ if (empty($this->bean->map_center) || (empty($this->bean->map_center['lat']) && 
         // Define default point as map center
         $this->bean->map_center['lat'] = $GLOBALS['jjwg_config']['map_default_center_latitude'];
         $this->bean->map_center['lng'] = $GLOBALS['jjwg_config']['map_default_center_longitude'];
-        if (!isset($this->bean->map_center['html'])) $this->bean->map_center['html'] = $GLOBALS['mod_strings']['LBL_DEFAULT'];
-        if (!isset($this->bean->map_center['name'])) $this->bean->map_center['name'] = $GLOBALS['mod_strings']['LBL_DEFAULT'];
+        if (!isset($this->bean->map_center['html'])) {
+            $this->bean->map_center['html'] = $GLOBALS['mod_strings']['LBL_DEFAULT'];
+        }
+        if (!isset($this->bean->map_center['name'])) {
+            $this->bean->map_center['name'] = $GLOBALS['mod_strings']['LBL_DEFAULT'];
+        }
     }
-}
-?>
+} ?>
 var map_center = <?php echo (!empty($this->bean->map_center)) ? json_encode($this->bean->map_center) : 'null'; ?>;
 var map_markers = <?php echo (!empty($this->bean->map_markers)) ? json_encode($this->bean->map_markers) : '[]'; ?>;
 var map_markers_groups = <?php echo (!empty($this->bean->map_markers_groups)) ? json_encode($this->bean->map_markers_groups) : '[]'; ?>;
@@ -128,40 +140,42 @@ var custom_areas = <?php echo (!empty($this->bean->custom_areas)) ? json_encode(
 <?php
     // Define Map Data
     $num_markers = count($this->bean->map_markers);
-    $num_groups = count($this->bean->map_markers_groups);
-    if ($num_groups > 216) $num_groups = 216;
-    $group_name_to_num = array();
-    $i = 1;
-    // Define Group Name to Icon Number Mapping 1-216(max)
-    if (!empty($this->bean->map_markers_groups)) {
-        foreach ($this->bean->map_markers_groups as $name) {
-            $group_name_to_num[$name] = $i;
-            $i++;
+        $num_groups = count($this->bean->map_markers_groups);
+        if ($num_groups > 216) {
+            $num_groups = 216;
         }
-    }
-    // Define Dir of Group Icons
-    $icons_dir_base = 'themes/default/images/jjwg_Maps/';
-    if ($num_groups <= 10) {
-      $icons_dir = $icons_dir_base.'0-10/';
-    } elseif ($num_groups <= 25) {
-      $icons_dir = $icons_dir_base.'0-25/';
-    } elseif ($num_groups <= 100) {
-      $icons_dir = $icons_dir_base.'0-100/';
-    } elseif ($num_groups <= 216) {
-      $icons_dir = $icons_dir_base.'0-216/';
-    } else {
-      $icons_dir = $icons_dir_base.'0-10/'; // Demo Version
-    }
+        $group_name_to_num = array();
+        $i = 1;
+        // Define Group Name to Icon Number Mapping 1-216(max)
+        if (!empty($this->bean->map_markers_groups)) {
+            foreach ($this->bean->map_markers_groups as $name) {
+                $group_name_to_num[$name] = $i;
+                $i++;
+            }
+        }
+        // Define Dir of Group Icons
+        $icons_dir_base = 'themes/default/images/jjwg_Maps/';
+        if ($num_groups <= 10) {
+            $icons_dir = $icons_dir_base.'0-10/';
+        } elseif ($num_groups <= 25) {
+            $icons_dir = $icons_dir_base.'0-25/';
+        } elseif ($num_groups <= 100) {
+            $icons_dir = $icons_dir_base.'0-100/';
+        } elseif ($num_groups <= 216) {
+            $icons_dir = $icons_dir_base.'0-216/';
+        } else {
+            $icons_dir = $icons_dir_base.'0-10/'; // Demo Version
+        }
 
-    // Define Custom Markers Dir and Common Icons
-    $custom_markers_dir = 'custom/themes/default/images/jjwg_Markers/';
-    $custom_markers_icons = array();
-    foreach($this->bean->custom_markers as $marker) {
-      $custom_markers_icons[] = $marker['image'];
-    }
-    $num_custom_markers = count($this->bean->custom_markers);
-    $custom_markers_icons = array_unique($custom_markers_icons);
-?>
+        // Define Custom Markers Dir and Common Icons
+		//Ici change pth car l'ancien été faux...
+        $custom_markers_dir = '/themes/default/images/jjwg_Markers/';
+        $custom_markers_icons = array();
+        foreach ($this->bean->custom_markers as $marker) {
+            $custom_markers_icons[] = $marker['image'];
+        }
+        $num_custom_markers = count($this->bean->custom_markers);
+        $custom_markers_icons = array_unique($custom_markers_icons); ?>
 
 // Define Map Data for Javascript
 var num_markers = <?php echo (!empty($num_markers)) ? json_encode($num_markers) : '0'; ?>;
@@ -360,7 +374,7 @@ function setClusterControl() {
     controlUI.style.borderWidth = '1px';
     controlUI.style.cursor = 'pointer';
     controlUI.style.textAlign = 'center';
-    controlUI.title = 'Click to Toggle Clustering';
+    controlUI.title = 'Cliquez pour basculer le regroupement'; //Ici changement traduction FR
     clusterControlDiv.appendChild(controlUI);
 
     // Set CSS for the control interior
@@ -371,7 +385,7 @@ function setClusterControl() {
     controlText.style.paddingRight = '4px';
     controlText.style.paddingTop = '1px';
     controlText.style.paddingBottom = '1px';
-    controlText.innerHTML = 'Toggle Clustering';
+    controlText.innerHTML = 'Regroupement'; //Ici changement traduction FR
     controlUI.appendChild(controlText);
 
     clusterControlDiv.index = 1;
@@ -456,7 +470,7 @@ function setDrawingControls() {
     controlUI.style.borderWidth = '1px';
     controlUI.style.cursor = 'pointer';
     controlUI.style.textAlign = 'center';
-    controlUI.title = 'Click to Remove Selected Shape';
+    controlUI.title = 'Cliquez pour supprimer la forme sélectionnée'; //Ici changement traduction FR
     deleteSelectedDiv.appendChild(controlUI);
 
     // Set CSS for the control interior
@@ -467,7 +481,7 @@ function setDrawingControls() {
     controlText.style.paddingRight = '4px';
     controlText.style.paddingTop = '4px';
     controlText.style.paddingBottom = '4px';
-    controlText.innerHTML = 'Remove';
+    controlText.innerHTML = 'Supprimer'; //Ici changement traduction FR
     controlUI.appendChild(controlText);
 
     deleteSelectedDiv.index = 1;
@@ -687,51 +701,14 @@ function setODataTable() {
 
     if (num_markers > 0) {
 
-        //console.log(map_markers);
-
         oDataTable = $('#displayDataTable').dataTable({
-            "bPaginate": true,
-            "bFilter": true,
-            "bStateSave": true,
-            "bProcessing": true,
-            "sDom": '<Tlfrtip>',
-            "oTableTools": {
-                //Define the buttons beneath the Map
-                "aButtons": [
-                    {
-                        //Copy Column Data.
-                        "sExtends": "copy",
-                        "sButtonText": "Copy",
-                        "mColumns": "all"
-
-                    },
-                    {
-                        //Export columns to CSV
-                        "sExtends": "csv",
-                        "sButtonText": "CSV",
-                        "mColumns": "all"
-                    },
-                    {
-                        //Export Columns to XLS
-                        "sExtends": "xls",
-                        "sButtonText": "XLS",
-                        "mColumns": "all"
-                    },
-                    {
-                        //Export Visible columns to PDF
-                        "sExtends": "pdf",
-                        "sButtonText": "PDF",
-                        "mColumns": [1,2,3,4,5,6],
-                    },
-                    {
-                        //Move to "Print" page.
-                        "sExtends": "print",
-                        "sButtonText": "Print",
-                        "mColumns": "all"
-                    },
-                ],
-                "sSwfPath": "http://cdn.datatables.net/tabletools/2.2.2/swf/copy_csv_xls_pdf.swf"
-            },
+            "dom": 'Bfrtip',
+			
+			//ICI Fait a l'aide de : https://datatables.net/extensions/buttons/examples/
+			buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+			],
+			
             "fnDrawCallback": function(oSettings) {
                 if (typeof window.parent.resizeDataTables == 'function') {
                     window.parent.resizeDataTables();
@@ -841,6 +818,7 @@ function setODataTable() {
                 return shown;
             }
         );
+		
 
     }
 }
@@ -861,7 +839,6 @@ function setODataTableShown() {
 
 
 $(document).ready(function(){
-
     // Call Google Map initialize()
     initialize();
 
@@ -951,21 +928,20 @@ $(document).ready(function(){
 
 <?php
   if (!empty($this->bean->map_center) || $num_markers > 0) {
-?>
+      ?>
   <div id="legend">
   <b><?php echo $GLOBALS['mod_strings']['LBL_MAP_LEGEND']; ?></b><br/>
 <?php
   if (!empty($this->bean->map_center)) {
-?>
+      ?>
     <img src="<?php echo './'.$icons_dir.'/marker_0.png'; ?>" align="middle" />
     <?php echo $this->bean->map_center['name']; ?><br/>
 <?php
-  }
-?>
+  } ?>
   <!-- <b><?php echo $GLOBALS['mod_strings']['LBL_MAP_USER_GROUPS']; ?> </b><br/> -->
 <?php
-  foreach($group_name_to_num as $group_name => $group_number) {
-?>
+  foreach ($group_name_to_num as $group_name => $group_number) {
+      ?>
     <img src="<?php echo './'.$icons_dir.'/marker_'.$group_number.'.png'; ?>"
          rel="<?php echo $group_number; ?>" align="middle" />
 <?php
@@ -973,19 +949,16 @@ $(document).ready(function(){
         echo '{'.$GLOBALS['mod_strings']['LBL_MAP_NULL_GROUP_NAME'].'}';
     } else {
         echo htmlentities($group_name, ENT_COMPAT, "UTF-8", false);
-    }
-    ?><br/>
+    } ?><br/>
 <?php
-  }
-?>
+  } ?>
   </div>
 <?php
-  }
-?>
+  } ?>
 
 <?php
   if ($num_markers > 0) {
-?>
+      ?>
     <div id="DataTable">
         <table cellpadding="3" cellspacing="0" border="1" width="100%" class="list view" id="displayDataTable">
             <thead>
@@ -1007,14 +980,13 @@ $(document).ready(function(){
         </table>
     </div>
 <?php
-  }
-?>
+  } ?>
 
 <?php
   if (in_array($this->bean->display_object->module_name, array('Accounts', 'Contacts', 'Leads', 'Prospects', 'Users')) &&
           ($GLOBALS['current_user']->isAdmin() || $this->bean->ACLAccess('list')) &&
           empty($_REQUEST['list_id']) && !empty($this->bean->list_array)) {
-?>
+      ?>
 <br clear="all" />
 <div>
     <form id="tagetList" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="get">
@@ -1022,21 +994,24 @@ $(document).ready(function(){
         <input type="hidden" name="display_module" value="<?php echo htmlspecialchars($this->bean->display_object->module_name); ?>">
         <input type="hidden" name="action" value="add_to_target_list" />
         <input type="hidden" name="to_pdf" value="1" />
-        <?php if (array_key_exists('uid', $_GET)) { ?>
+        <?php if (array_key_exists('uid', $_GET)) {
+          ?>
             <input type="hidden" name="selected_ids" value="<?php echo $_GET['uid'] ?>" />
-        <?php } ?>
+        <?php
+      } ?>
         <select id="list_id" tabindex="3" name="list_id" title="">
-            <?php foreach ($this->bean->list_array as $key=>$value) { ?>
+            <?php foreach ($this->bean->list_array as $key=>$value) {
+          ?>
                 <option value="<?php echo htmlspecialchars($key); ?>"><?php echo htmlspecialchars($value); ?></option>
-            <?php } ?>
+            <?php
+      } ?>
         </select>
         <input type="submit" value="<?php echo $GLOBALS['mod_strings']['LBL_ADD_TO_TARGET_LIST']; ?>">
         <span id="tagetListResult"></span>
     </form>
 </div>
 <?php
-  }
-?>
+  } ?>
 <?php endif ?>
 
 
@@ -1056,6 +1031,5 @@ $(document).ready(function(){
 </body>
 </html>
 <?php
-
-   }
+    }
 }
