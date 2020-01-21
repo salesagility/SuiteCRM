@@ -1,6 +1,7 @@
 <?php
 
 use Codeception\Actor;
+use Codeception\Lib\Friend;
 use Faker\Factory;
 
 /**
@@ -14,16 +15,19 @@ use Faker\Factory;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
- * @method click(string $string)
+ * @method Friend haveFriend($name, $actorClass = null)
+ * @method click(string $packageName, string $string = null)
  * @method acceptPopup()
  * @method seeInPopup(string $string)
  * @method wait(int $int)
- * @method fillField(string $string, string $string1)
+ * @method fillField(string|array $field, string $value)
  * @method checkOption(string $string)
- * @method waitForElementVisible(string $string)
+ * @method waitForElementVisible(string|array $element, int $timeout = 10)
+ * @method waitForText(string $string, int $int, string $string1)
+ * @method waitForElement(string $string)
  * @method selectOption(string $string, string $string1)
  * @method see(string $string)
+ * @method seePageHas(string $packageName, string $string)
  * @method amOnUrl($getInstanceURL)
  * @method getInstanceURL()
  * @method dontSee(string $string)
