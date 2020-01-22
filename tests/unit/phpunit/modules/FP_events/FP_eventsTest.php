@@ -5,7 +5,7 @@ class FP_eventsTest extends SuiteCRM\Test\SuitePHPUnitFrameworkTestCase
     public function testFP_events()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $fpEvents = new FP_events();
+        $fpEvents = BeanFactory::newBean('FP_events');
         $this->assertInstanceOf('FP_events', $fpEvents);
         $this->assertInstanceOf('Basic', $fpEvents);
         $this->assertInstanceOf('SugarBean', $fpEvents);
@@ -22,7 +22,7 @@ class FP_eventsTest extends SuiteCRM\Test\SuitePHPUnitFrameworkTestCase
     {
         global $app_list_strings;
 
-        $fpEvents = new FP_events();
+        $fpEvents = BeanFactory::newBean('FP_events');
 
         $fpEvents->email_templates();
         $this->assertInternalType('array', $app_list_strings['emailTemplates_type_list']);
