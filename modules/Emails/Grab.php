@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $current_user;
 
 
-$focus = new Email();
+$focus = BeanFactory::newBean('Emails');
 // Get Group User IDs
 $groupUserQuery = 'SELECT name, group_id FROM inbound_email ie INNER JOIN users u ON (ie.group_id = u.id AND u.is_group = 1)';
 $r = $focus->db->query($groupUserQuery);
