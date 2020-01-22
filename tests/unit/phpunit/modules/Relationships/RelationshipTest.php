@@ -7,7 +7,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
     public function testRelationship()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $relationship = new Relationship();
+        $relationship = BeanFactory::newBean('Relationships');
 
         $this->assertInstanceOf('Relationship', $relationship);
         $this->assertInstanceOf('SugarBean', $relationship);
@@ -22,13 +22,13 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
     public function testis_self_referencing()
     {
         //test without setting any attributes
-        $relationship = new Relationship();
+        $relationship = BeanFactory::newBean('Relationships');
 
         $result = $relationship->is_self_referencing();
         $this->assertEquals(true, $result);
 
         //test with attributes set to different values
-        $relationship = new Relationship();
+        $relationship = BeanFactory::newBean('Relationships');
 
         $relationship->lhs_table = 'lhs_table';
         $relationship->rhs_table = 'rhs_table';
@@ -39,7 +39,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(false, $result);
 
         //test with attributes set to same values
-        $relationship = new Relationship();
+        $relationship = BeanFactory::newBean('Relationships');
 
         $relationship->lhs_table = 'table';
         $relationship->rhs_table = 'table';
@@ -58,7 +58,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $relationship = new Relationship();
+        $relationship = BeanFactory::newBean('Relationships');
 
         //test with invalid relationship
         $result = $relationship->exists('test_test', $db);
@@ -90,7 +90,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $relationship = new Relationship();
+        $relationship = BeanFactory::newBean('Relationships');
 
         //test with invalid relationship
         $result = $relationship->get_other_module('test_test', 'test', $db);
@@ -109,7 +109,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $relationship = new Relationship();
+        $relationship = BeanFactory::newBean('Relationships');
 
         //test with invalid relationship
         $result = $relationship->retrieve_by_sides('test1', 'test2', $db);
@@ -135,7 +135,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $relationship = new Relationship();
+        $relationship = BeanFactory::newBean('Relationships');
 
         //test with invalid relationship
         $result = $relationship->retrieve_by_modules('test1', 'test2', $db);
@@ -152,7 +152,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 
     public function testretrieve_by_name()
     {
-        $relationship = new Relationship();
+        $relationship = BeanFactory::newBean('Relationships');
 
         //test with invalid relationship
         $result = $relationship->retrieve_by_name('test_test');
@@ -174,7 +174,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 
     public function testload_relationship_meta()
     {
-        $relationship = new Relationship();
+        $relationship = BeanFactory::newBean('Relationships');
 
         $relationship->load_relationship_meta();
         $this->assertTrue(isset($GLOBALS['relationships']));
@@ -182,7 +182,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbuild_relationship_cache()
     {
-        $relationship = new Relationship();
+        $relationship = BeanFactory::newBean('Relationships');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -218,7 +218,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 
     public function testtrace_relationship_module()
     {
-        $relationship = new Relationship();
+        $relationship = BeanFactory::newBean('Relationships');
         $result = $relationship->trace_relationship_module('Roles', 'Users');
         $this->assertInstanceOf('User', $result);
     }
