@@ -115,7 +115,7 @@ EOF;
 
         $javascript = new javascript();
         $javascript->setFormName($formname);
-        $javascript->setSugarBean(new Meeting());
+        $javascript->setSugarBean(BeanFactory::newBean('Meetings'));
         $javascript->addRequiredFields($prefix);
         $form .=$javascript->getScript();
         $mod_strings = $temp_strings;
@@ -181,7 +181,7 @@ EOQ;
         global $current_user;
         global $timedate;
 
-        $focus = new Meeting();
+        $focus = BeanFactory::newBean('Meetings');
 
         if ($useRequired && !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
@@ -233,7 +233,7 @@ EOQ;
 
         // if dates changed
         if (!empty($focus->id)) {
-            $oldBean = new Meeting();
+            $oldBean = BeanFactory::newBean('Meetings');
             $oldBean->retrieve($focus->id);
             if (($focus->date_start != $oldBean->date_start) || ($focus->date_end != $oldBean->date_end)) {
                 $focus->date_changed = true;
