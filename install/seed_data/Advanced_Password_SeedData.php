@@ -61,7 +61,7 @@ if (
     !isset($sugar_config['passwordsetting']['generatepasswordtmpl'])
     || empty($sugar_config['passwordsetting']['generatepasswordtmpl'])
 ) {
-    $EmailTemp = new EmailTemplate();
+    $EmailTemp = BeanFactory::newBean('EmailTemplates');
     $EmailTemp->name = $mod_strings['advanced_password_new_account_email']['name'];
     $EmailTemp->description = $mod_strings['advanced_password_new_account_email']['description'];
     $EmailTemp->subject = $mod_strings['advanced_password_new_account_email']['subject'];
@@ -81,7 +81,7 @@ if (
     !isset($sugar_config['passwordsetting']['lostpasswordtmpl'])
     || empty($sugar_config['passwordsetting']['lostpasswordtmpl'])
 ) {
-    $EmailTemp = new EmailTemplate();
+    $EmailTemp = BeanFactory::newBean('EmailTemplates');
     $EmailTemp->name = $mod_strings['advanced_password_forgot_password_email']['name'];
     $EmailTemp->description = $mod_strings['advanced_password_forgot_password_email']['description'];
     $EmailTemp->subject = $mod_strings['advanced_password_forgot_password_email']['subject'];
@@ -101,7 +101,7 @@ if (
     !isset($sugar_config['passwordsetting']['factoremailtmpl'])
     || empty($sugar_config['passwordsetting']['factoremailtmpl'])
 ) {
-    $EmailTemp = new EmailTemplate();
+    $EmailTemp = BeanFactory::newBean('EmailTemplates');
     $EmailTemp->name = $mod_strings['two_factor_auth_email']['name'];
     $EmailTemp->description = $mod_strings['two_factor_auth_email']['description'];
     $EmailTemp->subject = $mod_strings['two_factor_auth_email']['subject'];
