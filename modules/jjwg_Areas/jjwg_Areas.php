@@ -71,7 +71,7 @@ class jjwg_Areas extends jjwg_Areas_sugar
      */
     public function configuration()
     {
-        $this->jjwg_Maps = new jjwg_Maps();
+        $this->jjwg_Maps = BeanFactory::newBean('jjwg_Maps');
         $this->settings = $GLOBALS['jjwg_config'];
     }
 
