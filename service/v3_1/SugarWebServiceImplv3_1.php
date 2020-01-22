@@ -343,10 +343,10 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->login');
         global $sugar_config, $system_config;
         $error = new SoapError();
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $success = false;
         //rrs
-        $system_config = new Administration();
+        $system_config = BeanFactory::newBean('Administration');
         $system_config->retrieveSettings('system');
         $authController = new AuthenticationController();
         //rrs
@@ -466,7 +466,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
             );
 
 
-            $currencyObject = new Currency();
+            $currencyObject = BeanFactory::newBean('Currencies');
             $currencyObject->retrieve($cur_id);
             $nameValueArray['user_currency_name'] = self::$helperObject->get_name_value(
                 'user_currency_name',
