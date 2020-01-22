@@ -30,7 +30,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     protected function fieldDefsStore($key = 'base')
     {
-        $object = new Contact();
+        $object = BeanFactory::newBean('Contacts');
         $this->fieldDefsStore[$key]['Contact'] = $object->field_defs;
     }
 
@@ -40,14 +40,14 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     protected function fieldDefsRestore($key = 'base')
     {
-        $object = new Contact();
+        $object = BeanFactory::newBean('Contacts');
         $object->field_defs = $this->fieldDefsStore[$key]['Contact'];
     }
 
     public function testFactoryGetCachedDeleted()
     {
         // Create a lead and cache it
-        $lead = new Lead();
+        $lead = BeanFactory::newBean('Leads');
         $lead->save();
 
         $bean = BeanFactory::getBean($lead->module_dir, $lead->id);
@@ -925,7 +925,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
         $query = /** @lang sql */
@@ -957,7 +957,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
         $query = /** @lang sql */
@@ -986,7 +986,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
         $query = /** @lang text */
@@ -1014,7 +1014,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
         $query = /** @lang text */
@@ -1042,7 +1042,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
         $query = /** @lang text */
@@ -1069,7 +1069,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
         $query = /** @lang text */
@@ -1097,7 +1097,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
         $query = /** @lang text */
@@ -1124,7 +1124,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact1';
         $bean->save();
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
@@ -1143,7 +1143,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact1';
         $bean->save();
         $results = $bean->process_union_list_query(null, /** @lang sql */
@@ -1197,7 +1197,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->retrieve('test_contact1');
         $results = $bean->process_union_list_query(null, /** @lang sql */
             'SELECT DISTINCT * FROM contacts', 'end');
@@ -1215,7 +1215,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $sugar_config['disable_count_query'] = 1;
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
         $query = /** @lang text */
@@ -1392,7 +1392,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(array(), $results);
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->getAuditEnabledFieldDefinitions();
         self::assertEquals(array(
             'assigned_user_id' => array(
@@ -1490,7 +1490,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_1';
         $result = $bean->isOwner(null);
         self::assertFalse($result);
@@ -1499,7 +1499,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_1';
         $bean->fetched_row['assigned_user_id'] = 1;
         $result = $bean->isOwner(null);
@@ -1509,7 +1509,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_1';
         $bean->fetched_row['assigned_user_id'] = 1;
         $result = $bean->isOwner(1);
@@ -1519,7 +1519,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_1';
         $bean->assigned_user_id = 1;
         $result = $bean->isOwner(1);
@@ -1529,7 +1529,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_1';
         $bean->assigned_user_id = 1;
         $result = $bean->isOwner(2);
@@ -1539,7 +1539,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_1';
         $bean->created_by = 1;
         $result = $bean->isOwner(1);
@@ -1555,7 +1555,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     {
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $result = $bean->get_custom_table_name();
         self::assertEquals('contacts_cstm', $result);
         self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
@@ -1581,7 +1581,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $result = $bean->getTableName();
         self::assertEquals('contacts', $result);
         self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
@@ -1594,7 +1594,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     {
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $result = $bean->getObjectName();
         self::assertEquals('Contact', $result);
         self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
@@ -1602,7 +1602,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         unset($bean->table_name);
         $result = $bean->getObjectName();
         self::assertEquals('Contact', $result);
@@ -1610,7 +1610,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         unset($bean->object_name);
         $result = $bean->getObjectName();
         self::assertEquals(null, $result);
@@ -1618,7 +1618,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->object_name = false;
         $result = $bean->getObjectName();
         self::assertEquals('contacts', $result);
@@ -1632,7 +1632,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     {
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->object_name = false;
         $results = $bean->getIndices();
         self::assertEquals(array(), $results);
@@ -1640,7 +1640,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->getIndices();
         self::assertEquals(array(
             'id' => array(
@@ -1710,7 +1710,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     {
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->getPrimaryFieldDefinition();
         self::assertEquals(array(
             'name' => 'id',
@@ -1725,7 +1725,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $GLOBALS['log']->reset();
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         unset($bean->field_defs['id']);
         $results = $bean->getPrimaryFieldDefinition();
         self::assertEquals(array(
@@ -1759,7 +1759,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->getFieldDefinition(null);
         self::assertFalse($results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
@@ -1767,7 +1767,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->getFieldDefinition('undefined');
         self::assertFalse($results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
@@ -1776,7 +1776,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->getFieldDefinition('name');
         self::assertEquals(array(
             'name' => 'name',
@@ -1809,7 +1809,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->getFieldValue(null);
         self::assertFalse($results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
@@ -1817,7 +1817,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->getFieldValue('importable');
         self::assertEquals(1, $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
@@ -1825,7 +1825,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->getFieldValue('in_workflow');
         self::assertEquals(0, $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
@@ -1833,7 +1833,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->getFieldValue('portal_user_type');
         self::assertEquals('Single', $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
@@ -1929,7 +1929,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
             NULL, 
             'Single');"
         );
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->unPopulateDefaultValues();
         self::assertEquals(null, $results);
@@ -1944,7 +1944,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->field_defs = false;
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->unPopulateDefaultValues();
@@ -1954,7 +1954,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->unPopulateDefaultValues();
         self::assertEquals(null, $results);
@@ -1969,7 +1969,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $clone = clone $bean;
         self::assertEquals($bean, $clone);
         self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
@@ -1996,7 +1996,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->field_defs = array();
         $results = $bean->get_linked_fields();
         self::assertEquals(array(), $results);
@@ -2005,7 +2005,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->field_defs = array(1);
         $results = $bean->get_linked_fields();
         self::assertEquals(array(), $results);
@@ -2014,7 +2014,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->field_defs = array(array(1));
         $results = $bean->get_linked_fields();
         self::assertEquals(array(), $results);
@@ -2023,7 +2023,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->field_defs = array(array('type' => 'link'));
         $results = $bean->get_linked_fields();
         self::assertEquals(array(
@@ -2042,7 +2042,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->getFieldDefinitions();
         self::assertEquals($bean->field_defs, $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
@@ -2056,7 +2056,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->load_relationship(null);
         self::assertEquals(false, $results);
         self::assertCount(1, $GLOBALS['log']->calls['error']);
@@ -2065,7 +2065,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->load_relationship('test');
         self::assertEquals(false, $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
@@ -2073,7 +2073,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->field_defs['testKey'] = 'testValue';
         $results = $bean->load_relationship('testKey');
         self::assertEquals(false, $results);
@@ -2082,7 +2082,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->field_defs['testKey'] = 'testValue';
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->testKey = new Link2('test', $bean);
@@ -2093,7 +2093,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->field_defs['testKey'] = array('type' => 'link');
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->testKey = 'testValue';
@@ -2106,7 +2106,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->field_defs['testKey'] = array(
             'type' => 'link',
             'link_class' => 'testClass',
@@ -2123,7 +2123,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->field_defs['testKey'] = array(
             'type' => 'link',
             'link_class' => 'testClass',
@@ -2140,7 +2140,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->field_defs['testKey'] = array(
             'type' => 'link',
             'link_class' => 'ProspectLink',
@@ -2158,7 +2158,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->field_defs['testKey'] = array(
             'type' => 'link',
             'link_class' => 'ProspectLink',
@@ -2182,7 +2182,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->get_linked_beans(null);
         self::assertEquals(array(), $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
@@ -2190,7 +2190,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->get_linked_beans(null, 'Case');
         self::assertEquals(array(), $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
@@ -2198,7 +2198,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->testKey = new ProspectLink('test', $bean);
         $results = $bean->get_linked_beans('testKey', 'Case');
@@ -2208,7 +2208,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->testKey = new ProspectLink('test', $bean);
         $results = $bean->get_linked_beans('testKey', 'Case', '', 0, 1);
@@ -2224,7 +2224,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->field_defs = array();
         $results = $bean->get_import_required_fields();
         self::assertEquals(array(), $results);
@@ -2239,7 +2239,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->field_defs = array();
         $results = $bean->get_importable_fields();
         self::assertEquals(array(), $results);
@@ -2252,7 +2252,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     public function testCreateTables()
     {
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         ob_start();
         $bean->create_tables();
         $results = ob_get_contents();
@@ -2269,7 +2269,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     public function testGetACLCategory()
     {
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->getACLCategory();
         self::assertEquals(null !== $bean->acl_category ? $bean->acl_category : $bean->module_dir, $results);
     }
@@ -2285,7 +2285,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $results);
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->is_AuditEnabled();
         self::assertEquals(true, $results);
     }
@@ -2296,7 +2296,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     public function testGetAuditTableNames()
     {
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->get_audit_table_name();
         self::assertEquals('contacts_audit', $results);
     }
@@ -2311,7 +2311,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $this->db->query($query);
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->create_audit_table();
         self::assertEquals(null, $results);
@@ -2487,7 +2487,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
             ),
         );
         /** @noinspection PhpUndefinedFieldInspection */
-        $bean->emailAddress = new EmailAddress();
+        $bean->emailAddress = BeanFactory::newBean('EmailAddresses');
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array(true);
         $results = null;
@@ -2528,7 +2528,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
             ),
         );
         /** @noinspection PhpUndefinedFieldInspection */
-        $bean->emailAddress = new EmailAddress();
+        $bean->emailAddress = BeanFactory::newBean('EmailAddresses');
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array(true);
         $results = null;
@@ -2570,7 +2570,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
             ),
         ));
         /** @noinspection PhpUndefinedFieldInspection */
-        $bean->emailAddress = new EmailAddress();
+        $bean->emailAddress = BeanFactory::newBean('EmailAddresses');
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array('testbean1@email.com');
         $results = null;
@@ -2614,7 +2614,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     public function testCleanBean()
     {
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->field_defs['testField'] = array('type' => 'html');
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField = '<p>test <b>html</b> value</p>';
@@ -2629,13 +2629,13 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     public function testFixUpFormatting()
     {
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->fixUpFormatting();
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'datetime');
@@ -2647,7 +2647,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'datetime');
@@ -2659,7 +2659,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'date');
@@ -2670,7 +2670,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('', $bean->testField1);
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'date');
@@ -2682,7 +2682,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'time');
@@ -2694,7 +2694,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'time');
@@ -2705,7 +2705,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('invalid-format', $bean->testField1);
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'time');
@@ -2717,7 +2717,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'float');
@@ -2729,7 +2729,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'int');
@@ -2741,7 +2741,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'int');
@@ -2753,7 +2753,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
@@ -2766,7 +2766,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotNull($bean->testField1);
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
@@ -2780,7 +2780,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
@@ -2793,7 +2793,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotNull($bean->testField1);
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
@@ -2807,7 +2807,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
@@ -2821,7 +2821,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
@@ -2835,7 +2835,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
@@ -2848,7 +2848,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotNull($bean->testField1);
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
@@ -2862,7 +2862,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
@@ -2876,7 +2876,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
@@ -2892,7 +2892,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
@@ -2904,7 +2904,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'encrypt');
@@ -2919,7 +2919,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('', $bean->testField1);
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'encrypt');
@@ -2939,7 +2939,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testEncrpytBeforeSave()
     {
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
 
         $fake = new SugarBeanMock();
 
@@ -2963,40 +2963,40 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     public function testHasBeenModifiedSince()
     {
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->has_been_modified_since(null, null);
         self::assertFalse($results);
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('wrong1', null);
         self::assertFalse($results);
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->has_been_modified_since(null, 'wrong1');
         self::assertFalse($results);
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('wrong1', 'wrong1');
         self::assertFalse($results);
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('1900-01-01', null);
         self::assertFalse($results);
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $results = $bean->has_been_modified_since(null, '1');
         self::assertFalse($results);
 
         // test
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('1900-01-01', '1');
         self::assertFalse($results);
@@ -3006,7 +3006,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
             "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
         $this->db->query($query);
 
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_11';
         /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('1999-01-01', 'test_user_12');
@@ -3021,7 +3021,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
             "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
         $this->db->query($query);
 
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_11';
         /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('2001-01-01', 'test_user_12');
@@ -3036,7 +3036,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
             "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
         $this->db->query($query);
 
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_11';
         /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('1999-01-01', 'test_user_11');
@@ -3051,7 +3051,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
             "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
         $this->db->query($query);
 
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_11';
         /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('2001-01-01', 'test_user_11');
@@ -3066,7 +3066,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
             "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
         $this->db->query($query);
 
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $bean->id = 'test_contact_11';
         /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('2001-01-01', 'test_user_12');
