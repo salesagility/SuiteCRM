@@ -638,7 +638,7 @@ class PackageManager
                 unzip($found->filename, $unzip_dir);
                 $mi = new ModuleInstaller();
                 $mi->silent = true;
-                $mi->uninstall("$unzip_dir");
+                $mi->uninstall((string)$unzip_dir);
                 $found->delete();
                 unlink(remove_file_extension($found->filename) . '-manifest.php');
                 unlink($found->filename);

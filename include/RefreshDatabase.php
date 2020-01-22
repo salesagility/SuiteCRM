@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -40,17 +40,36 @@
 
 namespace SuiteCRM;
 
-use Exception;
+use DBManagerFactory;
+use SuiteCRM\Exception\Exception;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * StateCheckerException
- *
- * @author SalesAgility
+ * Trait RefreshDatabase
+ * @package SuiteCRM
  */
-class StateCheckerException extends Exception
+trait RefreshDatabase
 {
+    /**
+     * Truncates the database/table before each unit test
+     * @param string $table database table to truncate or 'ALL' to truncate all tables.
+     * @throws Exception
+     */
+    public function refreshDatabase($table = 'ALL')
+    {
+        $db = DBManagerFactory::getInstance();
+
+        if ($table === 'ALL') {
+            foreach ($db->getTablesArray() as $table) {
+                if (!$db->query('TRUNCATE TABLE ' . $table)) {
+                    throw new Exception('Failed to truncate database');
+                }
+            }
+        } elseif (!$db->query('TRUNCATE TABLE ' . $table)) {
+            throw new Exception('Failed to truncate table: ' . $table);
+        }
+    }
 }

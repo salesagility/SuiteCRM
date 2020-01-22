@@ -53,8 +53,8 @@ class StoreQuery
     /**
      * SaveQuery
      *
-     * This function handles saving the query parameters to the user preferences
-     * SavedSearch.php does something very similar when saving saved searches as well
+     * This function handles saving the query parameters to the user preferences.
+     * SavedSearch.php does something very similar when saving saved searches as well.
      *
      * @see SavedSearch
      * @param $name String name  to identify this query
@@ -73,7 +73,14 @@ class StoreQuery
                             $type = $bean->field_defs[$field]['type'];
 
                             if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && !preg_match('/^\[.*?\]$/', $value)) {
-                                $db_format = $timedate->to_db_date($value, false);
+                                // If the value is already in the db date format (e.g. '2019-03-21'), don't re-convert
+                                // it as that causes $db_format to be set to nothing. If the value isn't in
+                                // the format that the db wants (e.g. '3/21/2019'), then we can convert it.
+                                if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
+                                    $db_format = $value;
+                                } else {
+                                    $db_format = $timedate->to_db_date($value, false);
+                                }
                                 $this->query[$key] = $db_format;
                             } elseif ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
                                 if (preg_match('/[^\d]/', $value)) {

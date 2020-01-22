@@ -243,7 +243,9 @@ class ListViewDisplay
      */
     public function process($file, $data, $htmlVar)
     {
-        if (!is_array($data['data'])) {
+        if (!is_array($data)) {
+            LoggerManager::getLogger()->warn('Row data must be an array, ' . gettype($data) . ' given.');
+        } else if (is_array($data) && !is_array($data['data'])) {
             LoggerManager::getLogger()->warn('Row data must be an array, ' . gettype($data['data']) . ' given and converting to an array.');
         }
         $this->rowCount = count((array)$data['data']);

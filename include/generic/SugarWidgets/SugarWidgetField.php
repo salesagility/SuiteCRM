@@ -41,11 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
-
 class SugarWidgetField extends SugarWidget
 {
     public function __construct(&$layout_manager)
@@ -67,11 +62,9 @@ class SugarWidgetField extends SugarWidget
         self::__construct($layout_manager);
     }
 
-
     public function display($layout_def)
     {
-        //print $layout_def['start_link_wrapper']."===";
-        $context = $this->layout_manager->getAttribute('context'); //_ppd($context);
+        $context = $this->layout_manager->getAttribute('context');
         $func_name = 'display'.$context;
 
         if (!empty($context) && method_exists($this, $func_name)) {
@@ -178,7 +171,7 @@ class SugarWidgetField extends SugarWidget
     {
         $value= $this->_get_list_value($layout_def);
         if (isset($layout_def['widget_type']) && $layout_def['widget_type'] =='checkbox') {
-            if ($value != '' &&  ($value == 'on' || intval($value) == 1 || $value == 'yes')) {
+            if ($value != '' &&  ($value == 'on' || (int)$value == 1 || $value == 'yes')) {
                 return "<input name='checkbox_display' class='checkbox' type='checkbox' disabled='true' checked>";
             }
             return "<input name='checkbox_display' class='checkbox' type='checkbox' disabled='true'>";
@@ -229,8 +222,10 @@ class SugarWidgetField extends SugarWidget
 
     public function getVardef($layout_def)
     {
-        $myName = $layout_def['column_key'];
-        $vardef = $this->layout_manager->defs['reporter']->all_fields[$myName];
+        if (!empty($layout_def['column_key']) && !empty($this->layout_manager->defs['reporter'])) {
+            $myName = $layout_def['column_key'];
+            $vardef = $this->layout_manager->defs['reporter']->all_fields[$myName];
+        }
 
         if (!isset($vardef)) {
             // No vardef, return an empty array

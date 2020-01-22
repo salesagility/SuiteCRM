@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 require_once('include/MVC/View/SugarView.php');
 require_once('modules/EmailMan/Forms.php');
@@ -99,7 +93,7 @@ class ViewCampaignconfig extends SugarView
         
         $this->ss->assign("MOD", $mod_strings);
         $this->ss->assign("APP", $app_strings);
-        $this->ss->assign("THEME", SugarThemeRegistry::current()->__toString());
+        $this->ss->assign("THEME", (string)SugarThemeRegistry::current());
         $this->ss->assign("RETURN_MODULE", "Administration");
         $this->ss->assign("RETURN_ACTION", "index");
         

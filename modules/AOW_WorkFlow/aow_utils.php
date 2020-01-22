@@ -477,7 +477,7 @@ function getModuleField(
 
         // Save it to the cache file
         if ($fh = @sugar_fopen($file, 'w')) {
-            fputs($fh, $contents);
+            fwrite($fh, $contents);
             fclose($fh);
         }
     }
@@ -528,7 +528,8 @@ function getModuleField(
             $fieldlist[$name]['options'] = $mod_strings[$fieldlist[$name]['options']];
         }
         // Bug 22730: make sure all enums have the ability to select blank as the default value.
-        if (!isset($fieldlist[$name]['options'][''])) {
+        // Make sure the enum has an 'options' array to append a new value to.
+        if (isset($fieldlist[$name]['options']) && is_array($fieldlist[$name]['options']) && !isset($fieldlist[$name]['options'][''])) {
             $fieldlist[$name]['options'][''] = '';
         }
     }
@@ -567,13 +568,17 @@ function getModuleField(
     if (isset($fieldlist[$fieldname]['id_name']) && $fieldlist[$fieldname]['id_name'] != '' && $fieldlist[$fieldname]['id_name'] != $fieldlist[$fieldname]['name']) {
         $rel_value = $value;
 
-        require_once("include/TemplateHandler/TemplateHandler.php");
-        $template_handler = new TemplateHandler();
-        $quicksearch_js = $template_handler->createQuickSearchCode($fieldlist, $fieldlist, $view);
-        $quicksearch_js = str_replace($fieldname, $aow_field.'_display', $quicksearch_js);
-        $quicksearch_js = str_replace($fieldlist[$fieldname]['id_name'], $aow_field, $quicksearch_js);
+        // avoid printing js content in CLI commands for example cron
+        $sapi_type = php_sapi_name();
+        if (substr($sapi_type, 0, 3) != 'cli') {
+            require_once("include/TemplateHandler/TemplateHandler.php");
+            $template_handler = new TemplateHandler();
+            $quicksearch_js = $template_handler->createQuickSearchCode($fieldlist, $fieldlist, $view);
+            $quicksearch_js = str_replace($fieldname, $aow_field.'_display', $quicksearch_js);
+            $quicksearch_js = str_replace($fieldlist[$fieldname]['id_name'], $aow_field, $quicksearch_js);
 
-        echo $quicksearch_js;
+        	echo $quicksearch_js;
+        }
 
         if (isset($fieldlist[$fieldname]['module']) && $fieldlist[$fieldname]['module'] == 'Users') {
             $rel_value = get_assigned_user_name($value);
@@ -855,7 +860,7 @@ function setLastUser($user_id, $id)
 eoq;
 
     if ($fh = @sugar_fopen($file, 'w')) {
-        fputs($fh, $content);
+        fwrite($fh, $content);
         fclose($fh);
     }
     return true;
@@ -1003,7 +1008,7 @@ function fixUpFormatting($module, $field, $value)
                 $value = false;
             } elseif (true === $value || 1 == $value) {
                 $value = true;
-            } elseif (in_array(strval($value), $boolean_false_values)) {
+            } elseif (in_array((string)$value, $boolean_false_values)) {
                 $value = false;
             } else {
                 $value = true;

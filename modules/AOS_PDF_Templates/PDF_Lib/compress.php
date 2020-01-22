@@ -155,7 +155,7 @@ foreach ($l as $k=>$ln) {
 if (function_exists('file_put_contents')) {
     $check = file_put_contents('mpdf.php', $x);
 } else {
-    $f=fopen('mpdf.php', 'w');
+    $f=fopen('mpdf.php', 'wb');
     $check = fwrite($f, $x);
     fclose($f);
 }

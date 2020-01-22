@@ -414,31 +414,19 @@ class iCal extends vCal
         $idx = 0;
         $result = array();
 
-        if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
-            $year_date = SugarDateTime::createFromFormat("Y", $year, new DateTimeZone("UTC"));
-            $year_end = clone $year_date;
-            $year_end->setDate((int) $year, 12, 31);
-            $year_end->setTime(23, 59, 59);
-            $year_date->setDate((int) $year, 1, 1);
-            $year_date->setTime(0, 0, 0);
+        $year_date = SugarDateTime::createFromFormat("Y", $year, new DateTimeZone("UTC"));
+        $year_end = clone $year_date;
+        $year_end->setDate((int) $year, 12, 31);
+        $year_end->setTime(23, 59, 59);
+        $year_date->setDate((int) $year, 1, 1);
+        $year_date->setTime(0, 0, 0);
 
-            $transitions = $tz->getTransitions($year_date->getTimestamp(), $year_end->getTimestamp());
-            foreach ($transitions as $transition) {
-                if ($transition['isdst']) {
-                    break;
-                }
-                $idx++;
+        $transitions = $tz->getTransitions($year_date->getTimestamp(), $year_end->getTimestamp());
+        foreach ($transitions as $transition) {
+            if ($transition['isdst']) {
+                break;
             }
-        } else {
-            $transitions = $tz->getTransitions();
-
-            $idx = 0;
-            foreach ($transitions as $transition) {
-                if ($transition['isdst'] && intval(substr($transition["time"], 0, 4)) == intval(date("Y"))) {
-                    break;
-                }
-                $idx++;
-            }
+            $idx++;
         }
 
         if (empty($transitions[$idx]["isdst"])) {

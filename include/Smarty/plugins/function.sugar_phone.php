@@ -109,12 +109,10 @@ function smarty_function_sugar_phone($params, &$smarty)
         $smarty->trigger_error("sugar_phone: missing 'value' parameter");
         return '';
     }
-    
-    global $system_config;
-    if (isset($system_config->settings['system_skypeout_on']) && $system_config->settings['system_skypeout_on'] == 1
-        && isset($params['value']) && skype_formatted($params['value'])) {
-        $GLOBALS['log']->debug($params['value']);
-        return '<a href="tel:'.format_skype($params['value']).'">'.$params['value'].'</a>';
+
+    // Render the field as a simple `tel:` link if it has a value.
+    if (isset($params['value'])) {
+        return '<a href="tel:'.$params['value'].'">'.$params['value'].'</a>';
     }
     return $params['value'];
 }

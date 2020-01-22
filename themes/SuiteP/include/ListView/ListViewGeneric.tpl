@@ -173,11 +173,11 @@
 								{if $pageData.ordering.sortOrder == 'ASC'}
 									{capture assign="imageName"}arrow_down.{$arrowExt}{/capture}
 									{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_DESC'}{/capture}
-									<span class="suitepicon suitepicon-action-sorting-descending" title="{$alt_sort}"></span>
+									<span class="suitepicon suitepicon-action-sorting-ascending" title="{$alt_sort}"></span>
 								{else}
 									{capture assign="imageName"}arrow_up.{$arrowExt}{/capture}
 									{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_ASC'}{/capture}
-									<span class="suitepicon suitepicon-action-sorting-ascending" title="{$alt_sort}"></span>
+									<span class="suitepicon suitepicon-action-sorting-descending" title="{$alt_sort}"></span>
 								{/if}
 							{else}
 								{capture assign="imageName"}arrow.{$arrowExt}{/capture}

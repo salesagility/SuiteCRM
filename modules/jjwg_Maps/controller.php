@@ -504,7 +504,7 @@ class jjwg_MapsController extends SugarController
                     ) : $field;
         }
 
-        return (join($delimiter, $output) . "\n");
+        return (implode($delimiter, $output) . "\n");
     }
 
     /**

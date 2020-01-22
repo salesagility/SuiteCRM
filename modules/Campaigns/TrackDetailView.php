@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 
 
@@ -118,7 +112,7 @@ if (isset($focus->campaign_type) && $focus->campaign_type == "NewsLetter") {
     $smarty->assign("CREATED_BY", $focus->created_by_name);
     $smarty->assign("MODIFIED_BY", $focus->modified_by_name);
     $smarty->assign("TRACKER_URL", $sugar_config['site_url'] . '/campaign_tracker.php?track=' . $focus->tracker_key);
-    $smarty->assign("TRACKER_COUNT", intval($focus->tracker_count));
+    $smarty->assign("TRACKER_COUNT", (int)$focus->tracker_count);
     $smarty->assign("TRACKER_TEXT", $focus->tracker_text);
     $smarty->assign("REFER_URL", $focus->refer_url);
 
@@ -268,7 +262,7 @@ $subpanel = new SubPanelTiles($focus, 'Campaigns');
                     }
                 }//end if (isset($subpane['function_parameters'])){
             }//end foreach($subpanels as $subpane_key => $subpane){
-        }//_pp($subpanel->subpanel_definitions->layout_defs);
+        }
     }//end else
 
 $deletedCampaignLogLeadsCount = $focus->getDeletedCampaignLogLeadsCount();

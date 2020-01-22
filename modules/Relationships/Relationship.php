@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 
 class Relationship extends SugarBean
@@ -214,8 +208,6 @@ class Relationship extends SugarBean
         if (empty($GLOBALS['relationships'])) {
             $this->load_relationship_meta();
         }
-
-        //		_ppd($GLOBALS['relationships']);
 
         if (array_key_exists($relationship_name, $GLOBALS['relationships'])) {
             foreach ($GLOBALS['relationships'][$relationship_name] as $field=>$value) {

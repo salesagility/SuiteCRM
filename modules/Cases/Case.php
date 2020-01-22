@@ -38,13 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -165,7 +158,7 @@ class aCase extends Basic
      */
     public function get_summary_text()
     {
-        return "$this->name";
+        return (string)$this->name;
     }
 
     /**
@@ -414,7 +407,7 @@ class aCase extends Basic
         // Get the id and the name.
         $row = $this->db->fetchByAssoc($result);
 
-        if ($row !== null) {
+        if ($row !== null && $row !== false) {
             $ret_array['account_name'] = stripslashes($row['name']);
             $ret_array['account_id'] = $row['id'];
         } else {

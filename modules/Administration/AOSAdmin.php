@@ -70,10 +70,10 @@ $errors = array();
 
 if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     foreach ($_POST as $key => $value) {
-        if (strcmp("$value", 'true') == 0) {
+        if (strcmp((string)$value, 'true') == 0) {
             $value = true;
         }
-        if (strcmp("$value", 'false') == 0) {
+        if (strcmp((string)$value, 'false') == 0) {
             $value = false;
         }
         $_POST[$key] = $value;
@@ -114,7 +114,6 @@ $javascript->setFormName('ConfigureSettings');
 echo $javascript->getScript();
 ?>
 <script language="Javascript" type="text/javascript">
-    addToValidate('ConfigureSettings', 'aos_contracts_renewalReminderPeriod', 'int', false, "Days must be a number");
     addToValidateLessThan('ConfigureSettings', 'aos_invoices_initialNumber', 'int', false, "", 9999999999,"Initial Invoice number cannot be bigger than 9999999999");
 </script>
 

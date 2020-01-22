@@ -43,16 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-/*********************************************************************************
 
-
-
- * Description:  TODO: To be written.
-
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 
 

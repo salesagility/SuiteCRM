@@ -297,8 +297,8 @@ EOQ2;
                 if (!empty($value)) {
                     if (!empty($value['required'])) {
                         $form .= "<span class=\"required\">*</span>";
+                    } else {
                     }
-                    
                     if (!empty($_SESSION[$name])) {
                         $sessval = $_SESSION[$name];
                     } else {
@@ -522,12 +522,6 @@ EOQ;
 </div>
 EOQ;
 
-        $out .= <<<EOQ
-
-EOQ;
-
-
-
         // ------------------
         //  Choose Demo Data
         // ------------------------->
@@ -569,7 +563,7 @@ EOQ3;
             foreach ($_SESSION['installation_scenarios'] as $scenario) {
                 $key = $scenario['key'];
                 $description = $scenario['description'];
-                $scenarioModuleList =  implode($scenario['modulesScenarioDisplayName'], ',');
+                $scenarioModuleList = implode(',', $scenario['modulesScenarioDisplayName']);
                 $title = $scenario['title'];
 
                 $scenarioSelection.= "<input type='checkbox' name='scenarios[]' value='$key' checked><b>$title</b>.  $description ($scenarioModuleList).<br>";
@@ -1083,13 +1077,13 @@ EOQ;
                 <!--
                 <div class="formrow">
                     <label>{$mod_strings['LBL_NUMBER_GROUPING_SEP']}</label>
-                    <input type="text" name="default_number_grouping_seperator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_number_grouping_seperator']}">
+                    <input type="text" name="default_number_grouping_separator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_number_grouping_separator']}">
                 </div>
 
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_DECIMAL_SEP']}</label>
-                    <input type="text" name="default_decimal_seperator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_decimal_seperator']}">
+                    <input type="text" name="default_decimal_separator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_decimal_separator']}">
                 </div>
 
                 <div class="clear"></div>
@@ -1198,10 +1192,56 @@ EOQ;
 </table>
 </div>
 EOQ;
+        $out .= "</div>";
 
-        $out.= "</div>";
+        // --------------------------
+        //  Advanced Database Configuration
+        // --------------------------------->
 
+        require_once(__DIR__ . '/suite_install/collations.php');
 
+        $collationCB = "<select name='setup_db_collation' id='setup_db_collation' class='select' onChange='document.getElementById(\"setup_db_charset\").value = document.getElementById(\"setup_db_collation\").value.split(\"_\")[0];'>";
+        $charset = "<select name='setup_db_charset' id='setup_db_charset' class='select'>";
+
+        if (isset($collations) && isset($_SESSION['setup_db_type']) && $_SESSION['setup_db_type'] == "mysql") {
+                foreach ($collations['mysql'] as $collation) {
+                    $collationCB .= "<option value='" . $collation['name'] . "' >" . $collation['name'] . "</option>";
+                    $charset .= "<option value='" . $collation['charset'] . "' >" . $collation['charset'] . "</option>";
+                }
+        }
+
+        $collationCB .= '</select>';
+        $charset .= '</select>';
+
+        $out .= <<<EOQ3
+        <div class="floatbox full" id="fb5">
+          <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_DBCONF_ADV_DB_CFG_TITLE']}</h3>
+          <div class="form_section" style="display: none;">
+            <!-- smtp settings -->
+	    <br>
+            <!--
+            <p>{$mod_strings['LBL_WIZARD_SMTP_DESC']}</p>
+            -->
+
+	    <!-- smtp types toggler buttons -->
+
+	    <p style="display: inline;">
+
+	    <div>
+                <div class="formrow">
+                    <label>{$mod_strings['LBL_DBCONF_COLLATION']}</label>
+                    {$collationCB}
+                </div>
+                <div class="formrow">
+                    <label>{$mod_strings['LBL_DBCONF_CHARSET']}</label>
+                    {$charset}
+                </div>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+
+EOQ3;
 
         return $out;
     }
@@ -1635,7 +1675,10 @@ EOQ;
                             }
                             postData += "&setup_db_host_name="+document.installForm.setup_db_host_name.value;
                             postData += "&setup_db_admin_user_name="+document.installForm.setup_db_admin_user_name.value;
-                            postData += "&setup_db_admin_password="+encodeURIComponent(document.installForm.setup_db_admin_password.value);
+			    postData += "&setup_db_admin_password="+encodeURIComponent(document.installForm.setup_db_admin_password.value);
+                            postData += "&setup_db_collation="+document.installForm.setup_db_collation.value;
+			    postData += "&setup_db_charset="+document.installForm.setup_db_charset.value;
+
                             if(typeof(document.installForm.setup_db_sugarsales_user) != 'undefined'){
                                 postData += "&setup_db_sugarsales_user="+document.installForm.setup_db_sugarsales_user.value;
                             }
@@ -1853,8 +1896,13 @@ if (!isset($_SESSION['setup_db_manager'])) {
 
 $db = getInstallDbInstance();
 
+if(!isset($_SESSION['setup_db_collation']) || $_SESSION['setup_db_collation'] ==''){
+    $_SESSION['setup_db_collation'] = 'utf8_general_ci';
+}
 
-
+if(!isset($_SESSION['setup_db_charset']) || $_SESSION['setup_db_charset'] ==''){
+    $_SESSION['setup_db_charset'] = 'utf8';
+}
 
 
 //----------------- siteConfig_a.php Site Config & admin user

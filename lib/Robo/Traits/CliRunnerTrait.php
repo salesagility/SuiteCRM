@@ -40,7 +40,7 @@
 namespace SuiteCRM\Robo\Traits;
 
 /**
- * This Trait creates a fully working instance of SugarCRM.
+ * This Trait creates a fully working instance of SuiteCRM.
  *
  * The main advantage of this class is that it establish a working database connection to be used from your CLIs.
  *
@@ -65,12 +65,26 @@ trait CliRunnerTrait
          * since they have side effects and can make other
          * Robo Tasks fail (i.e. failed database connection).
          */
-
         $root = __DIR__ . '/../../../';
 
         require $root . 'config.php';
         require $root . 'config_override.php';
         require_once $root . 'include/entryPoint.php';
+
+        // Load up the config.test.php file. This is used to define configuration values for the test environment.
+        $testConfig = [];
+
+        if (is_file($root . 'tests/config.test.php')) {
+            require_once $root . 'tests/config.test.php';
+        }
+
+        foreach (array_keys($testConfig) as $key) {
+            if (isset($sugar_config[$key])) {
+                $sugar_config[$key] = $testConfig[$key];
+            } else {
+                $sugar_config[] = $testConfig[$key];
+            }
+        }
 
         $current_language = 'en_us';
         $app_list_strings = return_app_list_strings_language($current_language);
