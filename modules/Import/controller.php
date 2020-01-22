@@ -106,12 +106,12 @@ class ImportController extends SugarController
         $results = array('message' => '');
         // handle publishing and deleting import maps
         if (isset($_REQUEST['delete_map_id'])) {
-            $import_map = new ImportMap();
+            $import_map = BeanFactory::newBean('Import_1');
             $import_map->mark_deleted($_REQUEST['delete_map_id']);
         }
 
         if (isset($_REQUEST['publish'])) {
-            $import_map = new ImportMap();
+            $import_map = BeanFactory::newBean('Import_1');
 
             $import_map = $import_map->retrieve($_REQUEST['import_map_id'], false);
 
