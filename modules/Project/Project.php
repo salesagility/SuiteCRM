@@ -308,7 +308,7 @@ class Project extends SugarBean
         $row = $this->db->fetchByAssoc($result);
 
         while ($row != null) {
-            $projectTaskBean = new ProjectTask();
+            $projectTaskBean = BeanFactory::newBean('ProjectTask');
             $projectTaskBean->id = $row['id'];
             $projectTaskBean->retrieve();
             array_push($projectTasks, $projectTaskBean);
@@ -492,7 +492,7 @@ class Project extends SugarBean
             $duration_unit = 'Days';
 
             //Get the project template
-            $template = new AM_ProjectTemplates();
+            $template = BeanFactory::newBean('AM_ProjectTemplates');
             $template->retrieve($new_template_id);
 
             $override_business_hours = (int)$template->override_business_hours;
@@ -574,7 +574,7 @@ class Project extends SugarBean
             //Create new project tasks from the template tasks
             $count=1;
             while ($row = $db->fetchByAssoc($tasks)) {
-                $project_task = new ProjectTask();
+                $project_task = BeanFactory::newBean('ProjectTask');
                 $project_task->name = $row['name'];
                 $project_task->status = $row['status'];
                 $project_task->priority = strtolower($row['priority']);
