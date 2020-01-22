@@ -69,7 +69,7 @@ class CalendarViewGetGRUsers extends SugarView
             if (empty($u_id)) {
                 continue;
             }
-            $bean = new User();
+            $bean = BeanFactory::newBean('Users');
             $bean->retrieve($u_id);
             array_push($users_arr, $json_config->populateBean($bean));
         }
