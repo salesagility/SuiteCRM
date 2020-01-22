@@ -3146,7 +3146,7 @@ class SugarBean
         ) {
             // cn: bug 42727 no need to send email to owner (within workflow)
 
-            $admin = new Administration();
+            $admin = BeanFactory::newBean('Administration');
             $admin->retrieveSettings();
             $sendNotifications = false;
 
@@ -3178,7 +3178,7 @@ class SugarBean
      */
     public function get_notification_recipients()
     {
-        $notify_user = new User();
+        $notify_user = BeanFactory::newBean('Users');
         $notify_user->retrieve($this->assigned_user_id);
         $this->new_assigned_user_name = $notify_user->full_name;
 
@@ -5231,7 +5231,7 @@ class SugarBean
             SugarRelationship::resaveRelatedBeans();
 
             // Take the item off the recently viewed lists
-            $tracker = new Tracker();
+            $tracker = BeanFactory::newBean('Trackers');
             $tracker->makeInvisibleForAll($id);
 
 
