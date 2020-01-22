@@ -38,7 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
 require_once('modules/AOS_PDF_Templates/templateParser.php');
 require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates.php');
 
@@ -153,7 +152,7 @@ foreach ($recordIds as $recordId) {
         $fp = fopen($sugar_config['upload_dir'] . 'nfile.pdf', 'wb');
         fclose($fp);
 
-        $pdf_history->SetAutoFont();
+        $pdf_history->autoLangToFont = true;
         $pdf_history->SetHTMLHeader($header);
         $pdf_history->SetHTMLFooter($footer);
         $pdf_history->WriteHTML($printable);
@@ -161,12 +160,12 @@ foreach ($recordIds as $recordId) {
 
         $pdf->SetHTMLHeader($header);
         $pdf->AddPage();
-        $pdf->setAutoFont();
+        $pdf->autoLangToFont = true;
         $pdf->SetHTMLFooter($footer);
         $pdf->writeHTML($printable);
 
         rename($sugar_config['upload_dir'] . 'nfile.pdf', $sugar_config['upload_dir'] . $note->id);
-    } catch (mPDF_exception $e) {
+    } catch (MpdfException $e) {
         echo $e;
     }
 }

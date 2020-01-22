@@ -106,7 +106,7 @@ if ($bean_name === 'Team') {
      while (($row = $focus->db->fetchByAssoc($result)) != null) {
          $del_query = " update email_marketing_prospect_lists set email_marketing_prospect_lists.deleted=1, email_marketing_prospect_lists.date_modified=" . $focus->db->convert(
              "'" . TimeDate::getInstance()->nowDb() . "'",
-                'datetime'
+             'datetime'
          );
          $del_query .= " WHERE  email_marketing_prospect_lists.id='{$row['id']}'";
          $focus->db->query($del_query);

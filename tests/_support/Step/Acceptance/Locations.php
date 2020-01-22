@@ -5,15 +5,6 @@ namespace Step\Acceptance;
 class Locations extends \AcceptanceTester
 {
     /**
-     * Navigate to locations module
-     */
-    public function gotoLocations()
-    {
-        $I = new NavigationBarTester($this->getScenario());
-        $I->clickAllMenuItem('Locations');
-    }
-
-    /**
      * Create an event location
      *
      * @param $name

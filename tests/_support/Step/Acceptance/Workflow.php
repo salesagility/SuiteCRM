@@ -34,10 +34,10 @@ class Workflow extends Tester
 
     public function setConditionOperator($row, $operator, $type)
     {
-        $this->waitForElementVisible('#aow_conditions_operator[' . $row . ']', 10);
+        $this->waitForElementVisible('#aow_conditions_operator[' . $row . ']');
         $this->selectOption('#aow_conditions_operator[' . $row . ']', $operator);
 
-        $this->waitForElementVisible('#aow_conditions_value_type[' . $row . ']', 10);
+        $this->waitForElementVisible('#aow_conditions_value_type[' . $row . ']');
         $this->selectOption('#aow_conditions_value_type[' . $row . ']', $type);
     }
 
@@ -49,7 +49,7 @@ class Workflow extends Tester
         $calendarField = '#aow_conditions_value'.$row.'_date';
         $calendarDialog = '#aow_conditions_value'.$row.'_trigger_div';
         $this->click($calendarButton);
-        $this->waitForElementVisible($calendarDialog, 10);
+        $this->waitForElementVisible($calendarDialog);
         $this->click('.today > .selector', $calendarDialog);
         $this->cantSeeInField($calendarField, '');
     }

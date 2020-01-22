@@ -41,7 +41,6 @@
 
 namespace SuiteCRM\API\OAuth2\Repositories;
 
-use Faker\Provider\DateTime;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;

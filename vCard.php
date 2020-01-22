@@ -43,13 +43,10 @@
 
 
 require_once('include/vCard.php');
+require_once('include/utils.php');
 
-if (isset($_SESSION['authenticated_user_language']) && $_SESSION['authenticated_user_language'] != '') {
-    $current_language = $_SESSION['authenticated_user_language'];
-} else {
-    $current_language = $sugar_config['default_language'];
-}
 
+$current_language = get_current_language();
 //set module and application string arrays based upon selected language
 $app_strings = return_application_language($current_language);
 $app_list_strings = return_app_list_strings_language($current_language);

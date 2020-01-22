@@ -273,7 +273,7 @@ class AOW_WorkFlow extends Basic
         $name,
         $custom_name,
         SugarBean $module,
-            $query = array()
+        $query = array()
     ) {
         if (!isset($query['join'][$custom_name])) {
             $query['join'][$custom_name] = 'LEFT JOIN '.$module->get_custom_table_name()
@@ -285,7 +285,7 @@ class AOW_WorkFlow extends Basic
     public function build_flow_relationship_query_join(
         $name,
         SugarBean $module,
-            $query = array()
+        $query = array()
     ) {
         if (!isset($query['join'][$name])) {
             if ($module->load_relationship($name)) {
@@ -373,7 +373,7 @@ class AOW_WorkFlow extends Basic
             foreach ($path as $rel) {
                 $query = $this->build_flow_relationship_query_join(
                     $rel,
-                        $condition_module,
+                    $condition_module,
                     $query
                 );
                 $condition_module = new $beanList[getRelatedModule($condition_module->module_dir, $rel)];
@@ -427,9 +427,9 @@ class AOW_WorkFlow extends Basic
                     if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                         $value = $module->table_name.'_cstm.'.$condition->value;
                         $query = $this->build_flow_custom_query_join(
-                                $module->table_name,
+                            $module->table_name,
                             $module->table_name.'_cstm',
-                                $module,
+                            $module,
                             $query
                         );
                     } else {
@@ -478,12 +478,12 @@ class AOW_WorkFlow extends Basic
                                 LoggerManager::getLogger()->warn('Filed def data is missing: ' . get_class($module) . '::$field_defs[' . $params[0] . ']');
                             }
 
-                            if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
-                                $value = $module->table_name.'_cstm.'.$params[0];
-                                $query = $this->build_flow_custom_query_join(
-                                    $module->table_name,
+                        if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
+                            $value = $module->table_name.'_cstm.'.$params[0];
+                            $query = $this->build_flow_custom_query_join(
+                                $module->table_name,
                                 $module->table_name.'_cstm',
-                                    $module,
+                                $module,
                                 $query
                             );
                             } else {
@@ -811,7 +811,7 @@ class AOW_WorkFlow extends Basic
                     default:
                         if (in_array($data['type'], $dateFields) && trim($value) != '') {
                             $value = strtotime($value);
-                        } elseif ($data['type'] == 'bool' && (!boolval($value) || strtolower($value) == 'false')) {
+                        } elseif ($data['type'] == 'bool' && (!(bool)$value || strtolower($value) == 'false')) {
                             $value = 0;
                         }
                         break;

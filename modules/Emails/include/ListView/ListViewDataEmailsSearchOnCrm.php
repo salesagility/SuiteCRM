@@ -223,7 +223,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
                 $editViewAccess = $temp->ACLAccess('EditView');
                 $pageData['rowAccess'][$dataIndex] = array('view' => $detailViewAccess, 'edit' => $editViewAccess);
                 $additionalDetailsAllow = $this->lvde->additionalDetails && $detailViewAccess && (file_exists(
-                            'modules/' . $temp->module_dir . '/metadata/additionalDetails.php'
+                    'modules/' . $temp->module_dir . '/metadata/additionalDetails.php'
                         ) || file_exists('custom/modules/' . $temp->module_dir . '/metadata/additionalDetails.php'));
                 $additionalDetailsEdit = $editViewAccess;
                 if ($additionalDetailsAllow) {

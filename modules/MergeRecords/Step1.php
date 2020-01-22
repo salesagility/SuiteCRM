@@ -135,10 +135,11 @@ $xtpl->assign("FIELD_AVAIL_OPTIONS", get_select_options_with_id($avail_fields, '
 $xtpl->assign("LBL_ADD_BUTTON", translate('LBL_ADD_BUTTON'));
 
 if (isset($_REQUEST['return_id'])) {
-    $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
+    $xtpl->assign("RETURN_ID", validate_input($_REQUEST['return_id']));
 }
-$xtpl->assign("RETURN_ACTION", $_REQUEST['return_action']);
-$xtpl->assign("RETURN_MODULE", $_REQUEST['return_module']);
+
+$xtpl->assign("RETURN_ACTION", validate_input($_REQUEST['return_action']));
+$xtpl->assign("RETURN_MODULE", validate_input($_REQUEST['return_module']));
 
 //set the url
 $port=null;
@@ -164,6 +165,15 @@ $xtpl->parse("main.field_select_block");
 $xtpl->parse("main");
 $xtpl->out("main");
 
+
+/**
+ * @param string $requestData
+ * @return string
+ */
+function validate_input($requestData)
+{
+    return htmlspecialchars(remove_xss($requestData), ENT_QUOTES | ENT_HTML5);
+}
 
 /**
  * This function is equivalent of AddFieldRow in merge.js. is being used to

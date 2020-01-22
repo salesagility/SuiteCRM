@@ -5,15 +5,6 @@ namespace Step\Acceptance;
 class Projects extends \AcceptanceTester
 {
     /**
-     * Navigate to projects module
-     */
-    public function gotoProjects()
-    {
-        $I = new NavigationBarTester($this->getScenario());
-        $I->clickAllMenuItem('Projects');
-    }
-
-    /**
      * Create a project
      *
      * @param $name

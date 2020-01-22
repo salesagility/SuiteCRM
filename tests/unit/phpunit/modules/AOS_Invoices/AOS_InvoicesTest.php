@@ -13,7 +13,6 @@ class AOS_InvoicesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAOS_Invoices()
     {
-
         //execute the contructor and check for the Object type and  attributes
         $aosInvoices = new AOS_Invoices();
         $this->assertInstanceOf('AOS_Invoices', $aosInvoices);
@@ -35,8 +34,6 @@ class AOS_InvoicesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aos_invoices');
         $state->pushTable('tracker');
         
-        
-
         $aosInvoices = new AOS_Invoices();
         $aosInvoices->name = 'test';
 
@@ -53,7 +50,6 @@ class AOS_InvoicesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(null, $result);
         
         // clean up
-        
         $state->popTable('tracker');
         $state->popTable('aos_invoices');
     }

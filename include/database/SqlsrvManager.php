@@ -315,7 +315,7 @@ class SqlsrvManager extends MssqlManager
     {
         if ((isset($fielddef2['dbType']) && $fielddef2['dbType'] == 'id') || preg_match(
             '/(_id$|^id$)/',
-                $fielddef2['name']
+            $fielddef2['name']
         )
         ) {
             if (isset($fielddef1['type']) && isset($fielddef2['type'])) {
@@ -354,8 +354,6 @@ class SqlsrvManager extends MssqlManager
 
     /**
      * Detect if no clustered index has been created for a table; if none created then just pick the first index and make it that
-     *
-     * @see MssqlHelper::indexSQL()
      */
     public function getConstraintSql($indices, $table)
     {
@@ -409,7 +407,7 @@ class SqlsrvManager extends MssqlManager
 
             if (!empty($row['IS_NULLABLE']) && $row['IS_NULLABLE'] == 'NO' && (empty($row['KEY']) || !stristr(
                 $row['KEY'],
-                        'PRI'
+                'PRI'
             ))
             ) {
                 $columns[strtolower($row['COLUMN_NAME'])]['required'] = 'true';

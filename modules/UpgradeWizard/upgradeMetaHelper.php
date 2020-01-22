@@ -79,20 +79,6 @@ class UpgradeMetaHelper
     }
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function UpgradeMetaHelper($dir='upgrade', $masterCopyDirecotry='modules_50', $debugMode = false)
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct($dir, $masterCopyDirecotry, $debugMode);
-    }
-
-    /**
      * getModifiedModules
      * This method returns a two-dimensional Array of Studio enabled
      * modules that have been modified.  The second Array index is an
@@ -150,7 +136,7 @@ class UpgradeMetaHelper
             if (function_exists('sugar_fopen')) {
                 sugar_fopen($file_queries_file, 'w+');
             } else {
-                fopen($file_queries_file, 'w+');
+                fopen($file_queries_file, 'wb+');
             }
         }
         if (!isset($files_queries) || $files_queries == null) {
@@ -160,7 +146,7 @@ class UpgradeMetaHelper
         if (is_writable($file_queries_file) && write_array_to_file(
             "file_queries",
             $file_queries,
-        $file_queries_file
+            $file_queries_file
         )) {
             //writing to the file
         }
@@ -339,15 +325,15 @@ class UpgradeMetaHelper
                 include('modules/'.$module_name.'/vardefs.php');
                 $bean_name = $beanList[$module_name];
                 $newFile = $this->upgrade_dir.'/modules/'.$module_name.'/metadata/'.$lowerCaseView.'defs.php';
-                $evfp = fopen($newFile, 'w');
+                $evfp = fopen($newFile, 'wb');
 
                 $bean_name = $bean_name == 'aCase' ? 'Case' : $bean_name;
                 fwrite($evfp, $parser->parse(
                     $file,
-                                            $dictionary[$bean_name]['fields'],
-                                            $module_name,
-                                            true,
-                                            $this->path_to_master_copy.'/modules/'.$module_name.'/metadata/'.$lowerCaseView.'defs.php'
+                    $dictionary[$bean_name]['fields'],
+                    $module_name,
+                    true,
+                    $this->path_to_master_copy.'/modules/'.$module_name.'/metadata/'.$lowerCaseView.'defs.php'
                 ));
                 fclose($evfp);
             } //if

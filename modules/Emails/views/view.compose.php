@@ -57,6 +57,8 @@ class EmailsViewCompose extends ViewEdit
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->type = 'compose';
         if (empty($_REQUEST['return_module'])) {
             $this->options['show_title'] = false;
@@ -108,14 +110,10 @@ class EmailsViewCompose extends ViewEdit
             } else {
                 if (isset($attachment->name) && $attachment->name) {
                     $attachmentName = $attachment->name;
-                } else {
-                    if (isset($attachment->title) && $attachment->title) {
-                        $attachmentName = $attachment->title;
-                    } else {
-                        if (isset($attachment->subject) && $attachment->subject) {
-                            $attachmentName = $attachment->subject;
-                        }
-                    }
+                } elseif (isset($attachment->title) && $attachment->title) {
+                    $attachmentName = $attachment->title;
+                } elseif (isset($attachment->subject) && $attachment->subject) {
+                    $attachmentName = $attachment->subject;
                 }
             }
         }
@@ -168,12 +166,11 @@ class EmailsViewCompose extends ViewEdit
             $email->description .= $emailSignatures['signature'];
             $email->description_html .= html_entity_decode($emailSignatures['signature_html']);
             return $email;
-        } else {
-            $GLOBALS['log']->warn(
-                'EmailsController::composeSignature() was unable to get the signature id for user: '.
+        }
+        $GLOBALS['log']->warn(
+            'EmailsController::composeSignature() was unable to get the signature id for user: '.
                 $user->name
             );
-            return false;
-        }
+        return false;
     }
 }

@@ -120,7 +120,7 @@ class ViewAdminwizard extends SugarView
         $this->ss->assign('mail_smtpauth_req', ($focus->settings['mail_smtpauth_req']) ? "checked='checked'" : '');
         $this->ss->assign('MAIL_SSL_OPTIONS', get_select_options_with_id($app_list_strings['email_settings_for_ssl'], $focus->settings['mail_smtpssl']));
         $this->ss->assign('notify_allow_default_outbound_on', (!empty($focus->settings['notify_allow_default_outbound']) && $focus->settings['notify_allow_default_outbound'] == 2) ? 'CHECKED' : '');
-        $this->ss->assign('THEME', SugarThemeRegistry::current()->__toString());
+        $this->ss->assign('THEME', (string)SugarThemeRegistry::current());
 
         $this->ss->assign('silentInstall', $silentInstall);
 

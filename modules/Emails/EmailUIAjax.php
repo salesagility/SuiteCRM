@@ -353,12 +353,12 @@ if (isset($_REQUEST['emailUIAction'])) {
 
             switch ($_REQUEST['type']) {
                 case "headers":
-                    $title = "{$app_strings['LBL_EMAIL_VIEW_HEADERS']}";
+                    $title = (string)($app_strings['LBL_EMAIL_VIEW_HEADERS']);
                     $text = $ie->getFormattedHeaders($_REQUEST['uid']);
                     break;
 
                 case "raw":
-                    $title = "{$app_strings['LBL_EMAIL_VIEW_RAW']}";
+                    $title = (string)($app_strings['LBL_EMAIL_VIEW_RAW']);
                     $text = $ie->getFormattedRawSource($_REQUEST['uid']);
                     break;
 
@@ -572,7 +572,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 isset($_REQUEST['folder']) && !empty($_REQUEST['folder']) &&
                 isset($_REQUEST['ieId']) && (!empty($_REQUEST['ieId']) || (empty($_REQUEST['ieId']) && strpos(
                     $_REQUEST['folder'],
-                            'sugar::'
+                    'sugar::'
                 ) !== false))
             ) {
                 $uid = $json->decode(from_html($_REQUEST['uids']));
@@ -592,10 +592,10 @@ if (isset($_REQUEST['emailUIAction'])) {
                 $ret = array();
                 if (strpos(
                     $_REQUEST['folder'],
-                        'sugar::'
+                    'sugar::'
                 ) !== false && ($_REQUEST['type'] == 'deleted') && !ACLController::checkAccess(
-                            'Emails',
-                        'delete'
+                    'Emails',
+                    'delete'
                         )
                 ) {
                     $ret['status'] = false;
@@ -985,7 +985,7 @@ eoq;
                     $sortArray = sugar_unserialize($sortSerial);
                     $GLOBALS['log']->debug("********** EMAIL 2.0********** ary=" . print_r(
                         $sortArray,
-                            true
+                        true
                     ) . ' id=' . $_REQUEST['ieId'] . '; box=' . $_REQUEST['mbox']);
                     $sort = $sortArray[$_REQUEST['ieId']][$_REQUEST['mbox']]['current']['sort'];
                     $direction = $sortArray[$_REQUEST['ieId']][$_REQUEST['mbox']]['current']['direction'];
@@ -1509,7 +1509,7 @@ eoq;
             $ieId = $_REQUEST['ieId'];
             $ie->retrieve($ieId);
 
-            if ($ie->group_id == $current_user->id) {
+            if (($ie->group_id == $current_user->id) || ($current_user->is_admin)) {
                 $ret = array();
 
                 foreach ($ie->field_defs as $k => $v) {
@@ -1767,7 +1767,7 @@ eoq;
                 $person = $_REQUEST['person'];
             }
             if (!empty($_REQUEST['start'])) {
-                $start = intval($_REQUEST['start']);
+                $start = (int)$_REQUEST['start'];
             } else {
                 $start = 0;
             }

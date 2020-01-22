@@ -73,19 +73,7 @@ class ListViewData
         $this->db = DBManagerFactory::getInstance('listviews');
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function ListViewData()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
 
     /**
@@ -458,7 +446,7 @@ class ListViewData
                 $editViewAccess = $temp->ACLAccess('EditView');
                 $pageData['rowAccess'][$dataIndex] = array('view' => $detailViewAccess, 'edit' => $editViewAccess);
                 $additionalDetailsAllow = $this->additionalDetails && $detailViewAccess && (file_exists(
-                         'modules/' . $temp->module_dir . '/metadata/additionalDetails.php'
+                    'modules/' . $temp->module_dir . '/metadata/additionalDetails.php'
                      ) || file_exists('custom/modules/' . $temp->module_dir . '/metadata/additionalDetails.php'));
                 $additionalDetailsEdit = $editViewAccess;
                 if ($additionalDetailsAllow) {
@@ -473,8 +461,8 @@ class ListViewData
                         require_once($additionalDetailsFile);
                         $ar = $this->getAdditionalDetails(
                             $data[$dataIndex],
-                                    (empty($this->additionalDetailsFunction) ? 'additionalDetails' : $this->additionalDetailsFunction) . $this->seed->object_name,
-                                    $additionalDetailsEdit
+                            (empty($this->additionalDetailsFunction) ? 'additionalDetails' : $this->additionalDetailsFunction) . $this->seed->object_name,
+                            $additionalDetailsEdit
                         );
                     }
                     $pageData['additionalDetails'][$dataIndex] = $ar['string'];

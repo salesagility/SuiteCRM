@@ -29,13 +29,13 @@
    var $GridSizeY;
    var $Points;
 
-   /* Class creator */
-   function pSurface($pChartObject)
-    {
-     $this->pChartObject = $pChartObject;
-     $this->GridSize     = 10;
-     $this->Points       = "";
-    }
+     /* Class creator */
+     public function __construct($pChartObject)
+     {
+         $this->pChartObject = $pChartObject;
+         $this->GridSize = 10;
+         $this->Points = "";
+     }
 
    /* Define the grid size and initialise the 2D matrix */
    function setGrid($XSize=10,$YSize=10)

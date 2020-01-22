@@ -45,7 +45,6 @@ $level = error_reporting();
 $state = new \SuiteCRM\StateSaver();
 $state->pushErrorLevel();
 error_reporting(0);
-require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
 require_once('modules/AOS_PDF_Templates/templateParser.php');
 require_once('modules/AOS_PDF_Templates/sendEmail.php');
 require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates.php');
@@ -150,7 +149,7 @@ if ($task == 'pdf' || $task == 'emailpdf') {
     try {
         $orientation = ($template->orientation == "Landscape") ? "-L" : "";
         $pdf = new mPDF('en', $template->page_size . $orientation, '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
-        $pdf->SetAutoFont();
+        $pdf->autoLangToFont = true;
         $pdf->SetHTMLHeader($header);
         $pdf->SetHTMLFooter($footer);
         $pdf->WriteHTML($printable);
@@ -163,7 +162,7 @@ if ($task == 'pdf' || $task == 'emailpdf') {
             $sendEmail = new sendEmail();
             $sendEmail->send_email($bean, $bean->module_dir, '', $file_name, true);
         }
-    } catch (mPDF_exception $e) {
+    } catch (MpdfException $e) {
         echo $e;
     }
 } elseif ($task == 'email') {

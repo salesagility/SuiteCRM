@@ -108,19 +108,7 @@ class Document extends File
         $this->disable_row_level_security = false;
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function Document()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
 
     public function save($check_notify = false)
@@ -221,7 +209,7 @@ class Document extends File
 
     public function get_summary_text()
     {
-        return "$this->document_name";
+        return (string)$this->document_name;
     }
 
     public function is_authenticated()
@@ -292,7 +280,7 @@ class Document extends File
             if (!empty($this->doc_type) && $this->doc_type != 'Sugar' && !empty($this->doc_url)) {
                 $file_url = "<a href='" . $this->doc_url . "' target='_blank'>" . SugarThemeRegistry::current()->getImage(
                     $this->doc_type . '_image_inline',
-                        'border="0"',
+                    'border="0"',
                     null,
                     null,
                     '.png',
@@ -301,7 +289,7 @@ class Document extends File
             } else {
                 $file_url = "<a href='index.php?entryPoint=download&id={$this->document_revision_id}&type=Documents' target='_blank'>" . SugarThemeRegistry::current()->getImage(
                     $img_name,
-                        'border="0"',
+                    'border="0"',
                     null,
                     null,
                     '.gif',

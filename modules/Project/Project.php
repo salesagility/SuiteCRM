@@ -102,19 +102,7 @@ class Project extends SugarBean
         parent::__construct();
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function Project()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
 
     /**
@@ -336,7 +324,8 @@ class Project extends SugarBean
 
     public function save($check_notify = false)
     {
-        global $current_user, $db;
+        global $current_user;
+        $db = DBManagerFactory::getInstance();
         $focus = $this;
 
         //--- check if project template is same or changed.
@@ -494,7 +483,7 @@ class Project extends SugarBean
             $template = new AM_ProjectTemplates();
             $template->retrieve($new_template_id);
 
-            $override_business_hours = intval($template->override_business_hours);
+            $override_business_hours = (int)$template->override_business_hours;
 
 
             //------ build business hours array

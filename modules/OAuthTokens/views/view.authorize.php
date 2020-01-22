@@ -75,7 +75,7 @@ class OauthTokensViewAuthorize extends SugarView
 //                $roles[$role->id] = $role->name;
 //            }
 //            $sugar_smarty->assign('roles', $roles);
-            $hash = md5(rand());
+            $hash = md5(mt_rand());
             $_SESSION['oauth_hash'] = $hash;
             $sugar_smarty->assign('hash', $hash);
             echo $sugar_smarty->fetch('modules/OAuthTokens/tpl/authorize.tpl');

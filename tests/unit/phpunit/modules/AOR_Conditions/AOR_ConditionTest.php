@@ -51,7 +51,6 @@ class AOR_ConditionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
         $state->popGlobals();
         $state->popTable('tracker');
         $state->popTable('aor_conditions');

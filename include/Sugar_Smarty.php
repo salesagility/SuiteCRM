@@ -38,12 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-require_once('include/Smarty/Smarty.class.php');
-
 if (!defined('SUGAR_SMARTY_DIR')) {
     define('SUGAR_SMARTY_DIR', sugar_cached('smarty/'));
 }
@@ -88,19 +82,7 @@ class Sugar_Smarty extends Smarty
         $this->assign("VERSION_MARK", getVersionedPath(''));
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function Sugar_Smarty()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
     /**
      * Override default _unlink method call to fix Bug 53010
@@ -143,7 +125,7 @@ class Sugar_Smarty extends Smarty
         /// if the tpl exists in the theme folder then set the resource_name to the tpl in the theme folder.
         /// otherwise fall back to the default tpl
         $current_theme = SugarThemeRegistry::current();
-        $theme_directory = $current_theme->__toString();
+        $theme_directory = (string)$current_theme;
         if (strpos($resource_name, "themes" . DIRECTORY_SEPARATOR . $theme_directory) === false) {
             $test_path = SUGAR_PATH . DIRECTORY_SEPARATOR . "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
             if (file_exists($test_path)) {

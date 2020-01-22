@@ -165,20 +165,6 @@ class Account extends Company implements EmailInterface
         }
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function Account()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
-
     public function get_summary_text()
     {
         return $this->name;
@@ -189,8 +175,6 @@ class Account extends Company implements EmailInterface
         return $this->get_linked_beans('contacts', 'Contact');
     }
 
-
-
     public function clear_account_case_relationship($account_id='', $case_id='')
     {
         if (empty($case_id)) {
@@ -200,20 +184,6 @@ class Account extends Company implements EmailInterface
         }
         $query = "UPDATE cases SET account_name = '', account_id = '' WHERE account_id = '$account_id' AND deleted = 0 " . $where;
         $this->db->query($query, true, "Error clearing account to case relationship: ");
-    }
-
-    /**
-    * This method is used to provide backward compatibility with old data that was prefixed with http://
-    * We now automatically prefix http://
-    * @deprecated.
-    */
-    public function remove_redundant_http()
-    {	/*
-        if(preg_match("@http://@", $this->website))
-        {
-            $this->website = substr($this->website, 7);
-        }
-        */
     }
 
     public function fill_in_additional_list_fields()
@@ -309,9 +279,9 @@ class Account extends Company implements EmailInterface
                             $joinAlias . '.id ' . ' = accounts.' . $field_def['id_name'] . ' ';
                     $relatedSelects[] = ' ,' . $joinAlias . '.id ,' . $joinAlias . '.' . $field_def['rname'] . ' ';
                     $newWhereClause = str_replace(
-                            $field_def['name'],
-                            $joinAlias . '.' . $field_def['rname'],
-                            $newWhereClause
+                        $field_def['name'],
+                        $joinAlias . '.' . $field_def['rname'],
+                        $newWhereClause
                         );
                     $where = str_replace($whereClause, $newWhereClause, $where);
                 }

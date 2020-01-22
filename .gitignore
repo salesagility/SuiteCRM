@@ -70,6 +70,8 @@ Desktop.ini
 *.sln
 *.suo
 *.phpproj
+# Microsoft Visual Studio Code
+.vscode
 # Disytel
 lang_cmp.php
 .kdev4/
@@ -111,3 +113,7 @@ include/Imap/ImapTestSettings.txt
 
 # Ignore php-cs-fixer cache
 .php_cs.cache
+
+# Ignore custom codeception environments so they won't be committed.
+tests/_envs/custom.yml
+codeception.yml

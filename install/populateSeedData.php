@@ -88,7 +88,7 @@ if ($memory_limit != "" && $memory_limit != "-1") { // if memory_limit is set
     rtrim($memory_limit, 'M');
     $memory_limit_int = (int) $memory_limit;
     if ($memory_limit_int < $memory_needed) {
-        ini_set("memory_limit", "$memory_needed" . "M");
+        ini_set("memory_limit", (string)$memory_needed . "M");
     }
 }
 $large_scale_test = empty($sugar_config['large_scale_test']) ?

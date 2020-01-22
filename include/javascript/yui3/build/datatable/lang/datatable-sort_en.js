@@ -4,5 +4,4 @@
  http://developer.yahoo.com/yui/license.html
  version: 3.3.0
  build: 3167
- */
-YUI.add("lang/datatable-sort_en",function(A){A.Intl.add("datatable-sort","en",{asc:"Ascending",desc:"Descending"});},"3.3.0");
+ */YUI.add("lang/datatable-sort_en",function(A){A.Intl.add("datatable-sort","en",{asc:"Ascending",desc:"Descending"});},"3.3.0");

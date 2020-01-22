@@ -46,6 +46,9 @@ $viewdefs[$module_name]['DetailView'] = array(
                 'EDIT',
                 'DUPLICATE',
                 'DELETE',
+                [
+                    'customCode' => '<input type=button onclick="window.location.href=\'index.php?module=Emails&action=DeleteFromImap&folder=INBOX.TestInbox&folder=inbound&inbound_email_record={$bean->inbound_email_record}&uid={$bean->uid}&msgno={$bean->msgNo}&record={$bean->id}\';" value="{$MOD.LBL_BUTTON_DELETE_IMAP}">'
+                ],
                 'FIND_DUPLICATES',
                 array(
                     'customCode' => '<input type=button onclick="window.location.href=\'index.php?module=Emails&action=ReplyTo&return_module=Emails&return_action=index&folder=INBOX.TestInbox&folder=inbound&inbound_email_record={$bean->inbound_email_record}&uid={$bean->uid}&msgno={$bean->msgno}&record={$bean->id}\';" value="{$MOD.LBL_BUTTON_REPLY_TITLE}">'
@@ -138,15 +141,21 @@ $viewdefs[$module_name]['DetailView'] = array(
             array(
                 'parent_name'
             ),
-            array(
-                'date_entered' => array(
+            [
+                'date_entered' => [
                     'name' => 'date_entered',
+                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
                     'label' => 'LBL_DATE_ENTERED',
-                )
-            ),
-            array(
+                ]
+            ],
+            'date_sent_received' => [
+                'name' => 'date_sent_received',
+                'vname' => 'date_sent_received',
+                'label' => 'LBL_DATE_SENT_RECEIVED',
+            ],
+            [
                 'category_id',
-            ),
+            ],
         )
     )
 );

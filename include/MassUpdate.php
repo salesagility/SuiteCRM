@@ -203,8 +203,8 @@ eoq;
                     }
                     if (!empty($this->sugarbean->field_defs[$post]['dbType']) && strcmp(
                         $this->sugarbean->field_defs[$post]['dbType'],
-                            'varchar'
-                    ) == 0
+                        'varchar'
+                        ) == 0
                     ) {
                         if (strcmp($value, '1') == 0) {
                             $_POST[$post] = 'on';
@@ -453,9 +453,9 @@ eoq;
 
         if ($this->sugarbean->bean_implements('ACL') && (!ACLController::checkAccess(
             $this->sugarbean->module_dir,
-                    'edit',
+            'edit',
             true
-        ) || !ACLController::checkAccess($this->sugarbean->module_dir, 'massupdate', true))
+                ) || !ACLController::checkAccess($this->sugarbean->module_dir, 'massupdate', true))
         ) {
             return '';
         }
@@ -575,24 +575,24 @@ eoq;
                                     translate($field["options"])
                                 );
                                 break;
-                            } else {
-                                if (!empty($field['options'])) {
-                                    $even = !$even;
-                                    $newhtml .= $this->addStatus(
-                                        $displayname,
-                                        $field["name"],
-                                        translate($field["options"])
-                                    );
-                                    break;
-                                } else {
-                                    if (!empty($field['function'])) {
-                                        $functionValue = $this->getFunctionValue($this->sugarbean, $field);
-                                        $even = !$even;
-                                        $newhtml .= $this->addStatus($displayname, $field["name"], $functionValue);
-                                        break;
-                                    }
-                                }
                             }
+                            if (!empty($field['options'])) {
+                                $even = !$even;
+                                $newhtml .= $this->addStatus(
+                                    $displayname,
+                                    $field["name"],
+                                    translate($field["options"])
+                                );
+                                break;
+                            }
+                            if (!empty($field['function'])) {
+                                $functionValue = $this->getFunctionValue($this->sugarbean, $field);
+                                $even = !$even;
+                                $newhtml .= $this->addStatus($displayname, $field["name"], $functionValue);
+                                break;
+                            }
+
+
                             break;
                         case "radioenum":
                             $even = !$even;
@@ -696,17 +696,16 @@ EOJS;
 
         if ($field_count > 0) {
             return $html;
-        } else {
-            //If no fields are found, render either a form that still permits Mass Update deletes or just display a message that no fields are available
-            $html = "<div id='massupdate_form' style='display:none;'><table width='100%' cellpadding='0' cellspacing='0' border='0' class='formHeader h3Row'><tr><td nowrap><h3><span>" . $app_strings['LBL_MASS_UPDATE'] . "</h3></td></tr></table>";
-            if ($this->sugarbean->ACLAccess('Delete', true) && !$hideDeleteIfNoFieldsAvailable) {
-                $html .= "<table cellpadding='0' cellspacing='0' border='0' width='100%'><tr><td><input type='submit' name='Delete' value='$lang_delete' onclick=\"return confirm('{$lang_confirm}')\" class='button'></td></tr></table></div>";
-            } else {
-                $html .= $app_strings['LBL_NO_MASS_UPDATE_FIELDS_AVAILABLE'] . "</div>";
-            }
-
-            return $html;
         }
+        //If no fields are found, render either a form that still permits Mass Update deletes or just display a message that no fields are available
+        $html = "<div id='massupdate_form' style='display:none;'><table width='100%' cellpadding='0' cellspacing='0' border='0' class='formHeader h3Row'><tr><td nowrap><h3><span>" . $app_strings['LBL_MASS_UPDATE'] . "</h3></td></tr></table>";
+        if ($this->sugarbean->ACLAccess('Delete', true) && !$hideDeleteIfNoFieldsAvailable) {
+            $html .= "<table cellpadding='0' cellspacing='0' border='0' width='100%'><tr><td><input type='submit' name='Delete' value='$lang_delete' onclick=\"return confirm('{$lang_confirm}')\" class='button'></td></tr></table></div>";
+        } else {
+            $html .= $app_strings['LBL_NO_MASS_UPDATE_FIELDS_AVAILABLE'] . "</div>";
+        }
+
+        return $html;
     }
 
     public function getFunctionValue($focus, $vardef)
@@ -723,9 +722,9 @@ EOJS;
             }
 
             return call_user_func($function, $focus, $vardef['name'], '', 'MassUpdate');
-        } else {
-            return call_user_func($function, $focus, $vardef['name'], '', 'MassUpdate');
         }
+
+        return call_user_func($function, $focus, $vardef['name'], '', 'MassUpdate');
     }
 
     /**
@@ -936,8 +935,8 @@ EOQ;
             'call_back_function' => 'set_return',
             'form_name' => 'MassUpdate',
             'field_to_name_array' => array(
-                'id' => "{$id_name}",
-                "$reportsDisplayName" => "{$varname}",
+                'id' => (string)($id_name),
+                (string)$reportsDisplayName => (string)($varname),
             ),
         );
 
@@ -947,7 +946,7 @@ EOQ;
         $qsName = array(
             'form' => 'MassUpdate',
             'method' => 'get_user_array',
-            'modules' => array("{$mod_type}"),
+            'modules' => array((string)($mod_type)),
             'group' => 'or',
             'field_list' => array('user_name', 'id'),
             'populate_list' => array("mass_{$varname}", "mass_{$id_name}"),
@@ -1008,8 +1007,8 @@ EOHTML;
             'call_back_function' => 'set_return',
             'form_name' => 'MassUpdate',
             'field_to_name_array' => array(
-                'id' => "{$id_name}",
-                'name' => "{$varname}",
+                'id' => (string)($id_name),
+                'name' => (string)($varname),
             ),
         );
 
@@ -1019,7 +1018,7 @@ EOHTML;
         $qsName = array(
             'form' => 'MassUpdate',
             'method' => 'query',
-            'modules' => array("{$mod_type}"),
+            'modules' => array((string)($mod_type)),
             'group' => 'or',
             'field_list' => array('name', 'id'),
             'populate_list' => array("mass_{$varname}", "mass_{$id_name}"),
@@ -1079,8 +1078,8 @@ EOHTML;
             'call_back_function' => 'set_return',
             'form_name' => 'MassUpdate',
             'field_to_name_array' => array(
-                'id' => "{$id_name}",
-                'name' => "{$varname}",
+                'id' => (string)($id_name),
+                'name' => (string)($varname),
             ),
         );
 

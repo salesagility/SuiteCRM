@@ -278,7 +278,7 @@ eoq;
         if (function_exists('sugar_fopen')) {
             $fp = sugar_fopen($sqlScript, 'r');
         } else {
-            $fp = fopen($sqlScript, 'r');
+            $fp = fopen($sqlScript, 'rb');
         }
         $contents = stream_get_contents($fp);
         $anyScriptChanges =$contents;

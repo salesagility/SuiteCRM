@@ -99,7 +99,7 @@ class ViewCampaignconfig extends SugarView
         
         $this->ss->assign("MOD", $mod_strings);
         $this->ss->assign("APP", $app_strings);
-        $this->ss->assign("THEME", SugarThemeRegistry::current()->__toString());
+        $this->ss->assign("THEME", (string)SugarThemeRegistry::current());
         $this->ss->assign("RETURN_MODULE", "Administration");
         $this->ss->assign("RETURN_ACTION", "index");
         

@@ -12,7 +12,7 @@ class Dashboard extends Tester
     public function waitForDashboardVisible()
     {
         $I = $this;
-        $I->waitForElementVisible('.dashboard', 120);
-        $I->waitForElementVisible('.dashletcontainer', 5);
+        $I->waitForElementVisible('.dashboard');
+        $I->waitForElementVisible('.dashletcontainer');
     }
 }

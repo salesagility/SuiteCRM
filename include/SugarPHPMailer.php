@@ -110,21 +110,7 @@ class SugarPHPMailer extends PHPMailer
         $this->SMTPAutoTLS = false;
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8,
-     *     please update your code, use __construct instead
-     */
-    public function SugarPHPMailer()
-    {
-        $deprecatedMessage =
-            'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
     /**
      * Prefills outbound details
@@ -320,7 +306,7 @@ eoq;
         //Replace any embeded images using the secure entryPoint for src url.
         $this->replaceImageByRegex(
             "(?:{$sugar_config['site_url']})?index.php[?]entryPoint=download&(?:amp;)?[^\"]+?id=",
-            'upload://',
+            'upload/',
             true
         );
 
@@ -339,13 +325,13 @@ eoq;
                     $filename = $note->file->original_file_name;
                     $mime_type = $note->file->mime_type;
                 } else {
-                    $file_location = "upload://{$note->id}";
+                    $file_location = "upload/{$note->id}";
                     $filename = $note->id . $note->filename;
                     $mime_type = $note->file_mime_type;
                 }
             } elseif ($note->object_name === 'DocumentRevision') { // from Documents
                 $filename = $note->id . $note->filename;
-                $file_location = "upload://$filename";
+                $file_location = "upload/$filename";
                 $mime_type = $note->file_mime_type;
             }
 
