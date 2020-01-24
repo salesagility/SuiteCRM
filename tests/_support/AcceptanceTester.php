@@ -21,7 +21,7 @@ use Faker\Factory;
  * @method wait(int $int)
  * @method fillField(string $string, string $string1)
  * @method checkOption(string $string)
- * @method waitForElementVisible(string $string)
+ * @method waitForElementVisible($string, int $timeout = 3)
  * @method selectOption(string $string, string $string1)
  * @method see(string $string)
  * @method amOnUrl($getInstanceURL)

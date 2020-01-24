@@ -2,6 +2,7 @@
 
 namespace SuiteCRM\Test\Driver;
 
+use Exception;
 use Helper\WebDriverHelper;
 
 class WebDriver extends \Codeception\Module\WebDriver
@@ -26,5 +27,15 @@ class WebDriver extends \Codeception\Module\WebDriver
     public function _afterSuite()
     {
         parent::_afterSuite();
+    }
+
+    /**
+     * @param $element
+     * @param int $timeout
+     * @throws Exception
+     */
+    public function waitForElementVisible($element, $timeout = 3)
+    {
+        parent::waitForElementVisible($element, $timeout);
     }
 }
