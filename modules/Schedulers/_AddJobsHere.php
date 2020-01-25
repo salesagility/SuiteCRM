@@ -879,9 +879,14 @@ EOF;
     }
 }
 
-function runElasticSearchIndexerScheduler($data)
+function runElasticSearchIndexerScheduler(SchedulersJob $job)
 {
-    return \SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer::schedulerJob(json_decode($data));
+    $jobData = array();
+    if (isset($job) && isset($job->data) && ! empty($job->data) && is_string($job->data)) {
+        $jobDataJson = html_entity_decode($job->data);
+        $jobData = json_decode($jobDataJson, true);
+    }
+    return \SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer::schedulerJob($jobData);
 }
 
 if (file_exists('custom/modules/Schedulers/_AddJobsHere.php')) {
