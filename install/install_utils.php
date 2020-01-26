@@ -982,7 +982,6 @@ function handleHtaccess()
     $cacheDir = $sugar_config['cache_dir'];
 
     $restrict_str = <<<EOQ
-
 # BEGIN SUITECRM RESTRICTIONS
 
 EOQ;
@@ -1107,31 +1106,41 @@ EOQ;
 </IfModule>
 # END SUITECRM RESTRICTIONS
 EOQ;
+
+    // add custom content from current '.htaccess' before "# BEGIN SUITECRM RESTRICTIONS"
+    $haveBegin = false;
     if (file_exists($htaccess_file)) {
         $fp = fopen($htaccess_file, 'rb');
-        $skip = false;
         while ($line = fgets($fp)) {
             if (preg_match("/\s*#\s*BEGIN\s*SUITECRM\s*RESTRICTIONS/i",
                     $line) || preg_match("/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
-                if (!$skip) {
-                    $contents .= $line;
-                }
-                $skip = true;
-                if (preg_match("/\s*#\s*END\s*SUITECRM\s*RESTRICTIONS/i",
-                        $line) || preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
-                    $skip = false;
-                }
+                $haveBegin = true;
+                break;
+            }
+            $contents .= $line;
+        }
+        fclose($fp);
+    }
+    // add default content
+    $contents .= $restrict_str . $cache_headers;
+    // add custom content from current '.htaccess' after "# END SUITECRM RESTRICTIONS"
+    if ($haveBegin && file_exists($htaccess_file)) {
+        $skip = true;
+        $fp = fopen($htaccess_file, 'rb');
+        while ($line = fgets($fp)) {
+            if (preg_match("/\s*#\s*END\s*SUITECRM\s*RESTRICTIONS/i",
+                    $line) || preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
+                $skip = false;
+                $contents .= PHP_EOL;
+                continue;
             }
             if (!$skip) {
                 $contents .= $line;
             }
-            if (preg_match("/\s*#\s*END\s*SUITECRM\s*RESTRICTIONS/i",
-                    $line) || preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
-                $skip = false;
-            }
         }
+        fclose($fp);
     }
-    $status = file_put_contents($htaccess_file, $contents . $restrict_str . $cache_headers);
+    $status = file_put_contents($htaccess_file, $contents);
     if (!$status) {
         echo "<p>{$mod_strings['ERR_PERFORM_HTACCESS_1']}<span class=stop>{$htaccess_file}</span> {$mod_strings['ERR_PERFORM_HTACCESS_2']}</p>\n";
         echo "<p>{$mod_strings['ERR_PERFORM_HTACCESS_3']}</p>\n";
