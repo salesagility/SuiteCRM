@@ -1026,8 +1026,8 @@ EOQ;
     # -----------------------------
 
     RewriteRule ^Api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-    RewriteRule ^Api/access_token$ Api/index.php/access_token [L]
-    RewriteRule ^Api/V8/(.*?)$ Api/index.php/V8/$1 [L]
+    RewriteRule ^Api/access_token$ Api/index.php [L]
+    RewriteRule ^Api/V8/(.*?)$ Api/index.php [L]
 </IfModule>
 <IfModule mod_headers.c>
     Header unset ETag
